@@ -139,17 +139,69 @@ class QubitCsvTransform extends QubitFlatfileImport
 
   function addRowToMySQL($sortorder)
   {
+    // Normalize field values
+    $row = $this->status['row'];
+    foreach ($row as $index => $value)
+    {
+      $normalized = self::normalizeString($value);
+
+      if (strlen($normalized) != strlen($value))
+      {
+        $field = $this->columnNames[$index];
+        $idColumnIndex = array_search('legacyId', $this->status['row']);
+        $id = $this->status['row'][$idColumnIndex];
+
+        $error = "Character in %s couldn't be converted to ISO 8859-1 "
+          . "(legacy ID %d, strlen difference of %d)\n";
+
+        print sprintf(
+          $error,
+          $field,
+          $id,
+          strlen($value) - strlen($normalized)
+        );
+      }
+
+      $row[$index] = self::normalizeString($value);
+    }
+
     $sql = "INSERT INTO import_descriptions
         (sortorder, data)
         VALUES ('". mysqli_real_escape_string($this->link, $sortorder) ."',
-        '". mysqli_real_escape_string($this->link, serialize($this->status['row'])) ."')";
+        '". mysqli_real_escape_string($this->link, serialize($row)) ."')";
 
     $result = mysqli_query($this->link, $sql);
 
     if (!$result)
     {
-      throw new sfException('Failed to create MySQL DB row.');
+      throw new sfException('Failed to create MySQL DB row:' . mysqli_error($this->link));
     }
+  }
+
+  public static function normalizeString($string)
+  {
+    // Normalize smart quotes, etc.
+    $search = [chr(145),
+                chr(146),
+                chr(147),
+                chr(148),
+                chr(151),
+              ];
+
+    $replace = ["'",
+                 "'",
+                 '"',
+                 '"',
+                 '-',
+               ];
+
+    $normalizedString = str_replace($search, $replace, $string);
+
+    // Attempt to convert other characters into ISO-8859-1 (ignoring anything
+    // that can't be transliterated)
+    $normalizedString = iconv('UTF-8', 'UTF-8//IGNORE', $normalizedString);
+
+    return $normalizedString;
   }
 
   function numberedFilePathVariation($filename, $number)

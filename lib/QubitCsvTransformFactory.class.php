@@ -29,6 +29,7 @@ class QubitCsvTransformFactory
   public $rowParentKeyLookupLogic;
   public $setupLogic;
   public $transformLogic;
+  public $preserveOrder;
 
   public function __construct($options = array())
   {
@@ -42,7 +43,8 @@ class QubitCsvTransformFactory
       'parentKeyLogic',
       'rowParentKeyLookupLogic',
       'setupLogic',
-      'transformLogic'
+      'transformLogic',
+      'preserveOrder'
     );
 
     QubitFlatfileImport::setPropertiesFromArray(
@@ -74,7 +76,8 @@ class QubitCsvTransformFactory
         'tempFile'                => $tempCsvFile,
         'outFh'                   => fopen($tempCsvFile, 'w'),
         'parentKeyLogic'          => $this->parentKeyLogic,
-        'rowParentKeyLookupLogic' => $this->rowParentKeyLookupLogic
+        'rowParentKeyLookupLogic' => $this->rowParentKeyLookupLogic,
+        'preserveOrder'           => $this->preserveOrder
       ),
 
       'setupLogic' => $this->setupLogic,
@@ -128,7 +131,8 @@ class QubitCsvTransformFactory
             'tempFile'                => $self->status['tempFile'],
             'badLevelOfDescription'   => 0,
             'rowParentKeyLookupLogic' => $self->status['rowParentKeyLookupLogic'],
-            'ignoreBadLod'            => $self->status['ignoreBadLod']
+            'ignoreBadLod'            => $self->status['ignoreBadLod'],
+            'preserveOrder'           => $self->status['preserveOrder']
           ),
 
           'errorLog' => $self->errorLog,
@@ -173,9 +177,14 @@ class QubitCsvTransformFactory
 
             if ($levelOfDescriptionAvailable)
             {
-             // print "Found a level of description...\n";
-
-              $sortorder = $self->levelOfDescriptionToSortorder($self->columnValue('levelOfDescription'));
+              if (!empty($self->status['preserveOrder']))
+              {
+                $sortorder = $self->getStatus('rows');
+              }
+              else
+              {
+                $sortorder = $self->levelOfDescriptionToSortorder($self->columnValue('levelOfDescription'));
+              }
 
               if (is_numeric($sortorder))
               {
