@@ -25,8 +25,14 @@
 # Transifex files
 .tx/i18n
 
-# Composer installed vendor files
+# Composer and NPM dependencies
 /vendor/composer/
+node_modules
 
 # PHPUnit cache
 /.phpunit.result.cache
+
+# Cypress
+cypress/downloads
+cypress/screenshots
+cypress/videos
