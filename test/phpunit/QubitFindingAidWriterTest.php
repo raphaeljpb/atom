@@ -92,4 +92,26 @@ class QubitFindingAidWriterTest extends \PHPUnit\Framework\TestCase
     $this->expectException(UnexpectedValueException::class);
     $writer->setModel('foo');
   }
+
+  public function testGetXslFilePath()
+  {
+    $writer = new QubitFindingAidWriter(new QubitInformationObject);
+    $writer->setAppRoot('/tmp');
+
+    $this->assertSame(
+      '/tmp/lib/task/pdf/ead-pdf-inventory-summary.xsl',
+      $writer->getXslFilePath()
+    );
+  }
+
+  public function testGetSaxonPath()
+  {
+    $writer = new QubitFindingAidWriter(new QubitInformationObject);
+    $writer->setAppRoot('/tmp');
+
+    $this->assertSame(
+      '/tmp/' . QubitFindingAidWriter::SAXON_PATH,
+      $writer->getSaxonPath()
+    );
+  }
 }

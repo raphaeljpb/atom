@@ -1034,6 +1034,8 @@
             <fo:block xsl:use-attribute-sets="smp">
               <xsl:value-of select="ead:listhead/ead:head01"/>
             </fo:block>
+          </fo:table-cell>
+        </fo:table-row>
   </xsl:template>
 
   <!--
