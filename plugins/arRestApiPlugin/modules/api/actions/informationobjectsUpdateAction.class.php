@@ -28,7 +28,7 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
       throw new QubitApi404Exception('Information object not found');
     }
 
-    if (QubitInformationObject::ROOT_ID === (int)$this->io->id)
+    if (QubitInformationObject::ROOT_ID === (int) $this->io->id)
     {
       throw new QubitApiForbiddenException();
     }
@@ -46,8 +46,8 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
     }
 
     return [
-      'id' => (int)$this->io->id,
-      'parent_id' => (int)$this->io->parentId];
+      'id' => (int) $this->io->id,
+      'parent_id' => (int) $this->io->parentId];
   }
 
   protected function processField($field, $value)

@@ -148,7 +148,7 @@ class DigitalObjectMetadataComponent extends sfComponent
       sfConfig::get('app_toggleDigitalObjectMap', false)
       && is_numeric($this->latitude)
       && is_numeric($this->longitude)
-      && (bool)$this->googleMapsApiKey
+      && (bool) $this->googleMapsApiKey
     );
 
     $this->showMasterFileGeolocation = (

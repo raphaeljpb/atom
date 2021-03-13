@@ -56,7 +56,7 @@ class ClipboardExportCheckAction extends sfAction
       // Assemble job description
       $message = $this->context->i18n->__('%1% (started: %2%, status: %3%).',
         [
-          '%1%' => (string)$job,
+          '%1%' => (string) $job,
           '%2%' => $job->getCreationDateString(),
           '%3%' => $job->getStatusString()
         ]

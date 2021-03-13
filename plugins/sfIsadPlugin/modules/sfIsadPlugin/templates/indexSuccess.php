@@ -6,7 +6,7 @@
 
 <?php slot('title') ?>
 
-  <?php echo get_component('informationobject', 'descriptionHeader', ['resource' => $resource, 'title' => (string)$isad]) ?>
+  <?php echo get_component('informationobject', 'descriptionHeader', ['resource' => $resource, 'title' => (string) $isad]) ?>
 
   <?php if (isset($errorSchema)): ?>
     <div class="messages error">

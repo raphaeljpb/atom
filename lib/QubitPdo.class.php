@@ -61,7 +61,7 @@ class QubitPdo
 
   public static function fetchColumn($query, $parameters = [], $column = 0)
   {
-    $column = abs((int)$column);
+    $column = abs((int) $column);
 
     $readStmt = self::prepareAndExecute($query, $parameters);
     $fetchedColumn = $readStmt->fetchColumn($column);

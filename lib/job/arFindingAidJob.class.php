@@ -83,7 +83,7 @@ class arFindingAidJob extends arBaseJob
 
     $ret = QubitPdo::fetchOne($sql, [get_class(), $id]);
 
-    return $ret ? (int)$ret->statusId : null;
+    return $ret ? (int) $ret->statusId : null;
   }
 
   public static function getPossibleFilenames($id)

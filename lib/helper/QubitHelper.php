@@ -509,7 +509,7 @@ function render_search_result_date($date)
     return;
   }
 
-  foreach ((array)$date as $item)
+  foreach ((array) $date as $item)
   {
     $displayDate = get_search_i18n($item, 'date');
     $startDate = isset($item['startDateString']) ? $item['startDateString'] : null;

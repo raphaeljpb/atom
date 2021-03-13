@@ -21,7 +21,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
 {
   protected function post($request, $payload)
   {
-    if (QubitInformationObject::ROOT_ID === (int)$request->id)
+    if (QubitInformationObject::ROOT_ID === (int) $request->id)
     {
       throw new QubitApiForbiddenException();
     }
@@ -40,9 +40,9 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
     $this->response->setStatusCode(201);
 
     return [
-      'id' => (int)$this->io->id,
+      'id' => (int) $this->io->id,
       'slug' => $this->io->slug,
-      'parent_id' => (int)$this->io->parentId];
+      'parent_id' => (int) $this->io->parentId];
   }
 
   protected function processField($field, $value)

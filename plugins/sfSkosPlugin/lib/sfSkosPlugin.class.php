@@ -213,7 +213,7 @@ class sfSkosPlugin
     $this->notify();
 
     // Update graph resource with AtoM's given ID.
-    $concept->set('atom:id', (int)$term->id);
+    $concept->set('atom:id', (int) $term->id);
 
     foreach ($concept->allResources('skos:narrower') as $item)
     {

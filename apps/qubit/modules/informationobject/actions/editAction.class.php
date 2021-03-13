@@ -580,7 +580,7 @@ class InformationObjectEditAction extends DefaultEditAction
       {
         foreach ($sourceInformationObject->eventsRelatedByobjectId as $sourceEvent)
         {
-          if (false === array_search($this->context->routing->generate(null, [$sourceEvent, 'module' => 'event']), (array)$this->request->deleteEvents))
+          if (false === array_search($this->context->routing->generate(null, [$sourceEvent, 'module' => 'event']), (array) $this->request->deleteEvents))
           {
             $event = new QubitEvent();
             $event->actorId = $sourceEvent->actorId;

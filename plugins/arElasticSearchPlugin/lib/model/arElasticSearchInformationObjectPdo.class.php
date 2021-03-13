@@ -669,7 +669,7 @@ class arElasticSearchInformationObjectPdo
     // Finding aid status
     if (false !== $findingAidStatus = $this->getFindingAidStatus())
     {
-      $serialized['findingAid']['status'] = (int)$findingAidStatus;
+      $serialized['findingAid']['status'] = (int) $findingAidStatus;
     }
 
     // Repository

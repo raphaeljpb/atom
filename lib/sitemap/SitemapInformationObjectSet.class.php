@@ -70,7 +70,7 @@ class SitemapInformationObjectUrl extends AbstractSitemapUrl
       $criteria->add(QubitTermI18n::NAME, $level);
       if (null !== $term = QubitTerm::getOne($criteria))
       {
-        self::$priorities[(int)$term->id] = $priority;
+        self::$priorities[(int) $term->id] = $priority;
       }
     }
   }

@@ -122,7 +122,7 @@ class UserEditAction extends DefaultEditAction
       case 'active':
         if (isset($this->resource->id))
         {
-          $this->form->setDefault('active', (bool)$this->resource->active);
+          $this->form->setDefault('active', (bool) $this->resource->active);
         }
         else
         {

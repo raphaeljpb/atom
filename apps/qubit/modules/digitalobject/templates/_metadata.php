@@ -41,7 +41,7 @@
           <?php endif; ?>
 
           <?php if ($showOriginalFileSize): ?>
-            <?php echo render_show(__('Filesize'), hr_filesize(intval((string)$resource->object->originalFileSize)), ['fieldLabel' => 'originalFileSize']) ?>
+            <?php echo render_show(__('Filesize'), hr_filesize(intval((string) $resource->object->originalFileSize)), ['fieldLabel' => 'originalFileSize']) ?>
           <?php endif; ?>
 
           <?php if ($showOriginalFileIngestedAt): ?>
@@ -87,7 +87,7 @@
           <?php endif; ?>
 
           <?php if ($showPreservationCopyFileSize): ?>
-            <?php echo render_show(__('Filesize'), hr_filesize(intval((string)$resource->object->preservationCopyFileSize)), ['fieldLabel' => 'preservationCopyFileSize']) ?>
+            <?php echo render_show(__('Filesize'), hr_filesize(intval((string) $resource->object->preservationCopyFileSize)), ['fieldLabel' => 'preservationCopyFileSize']) ?>
           <?php endif; ?>
 
           <?php if ($showPreservationCopyNormalizedAt): ?>

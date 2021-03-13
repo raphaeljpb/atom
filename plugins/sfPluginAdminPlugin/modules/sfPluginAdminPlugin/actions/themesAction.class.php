@@ -83,7 +83,7 @@ class sfPluginAdminPluginThemesAction extends sfAction
 
         foreach (array_keys($this->plugins) as $item)
         {
-          if (in_array($item, (array)$this->form->getValue('enabled')))
+          if (in_array($item, (array) $this->form->getValue('enabled')))
           {
             $settings[] = $item;
           }

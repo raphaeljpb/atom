@@ -544,7 +544,7 @@ EOF;
         print ++$n . ") $theme\n";
       }
 
-      $choice = (int)readline('Select theme number: ');
+      $choice = (int) readline('Select theme number: ');
 
       if ($choice >= 1 && $choice <= count($themes))
       {

@@ -104,7 +104,7 @@ class csvActorExport extends QubitFlatfileExport
 
       $rows[] = [
         'subjectAuthorizedFormOfName' => $relatedEntity->authorizedFormOfName,
-        'relationType' => (string)$relationType, // Return string representation for QubitTerm
+        'relationType' => (string) $relationType, // Return string representation for QubitTerm
         'objectAuthorizedFormOfName' => $resource->authorizedFormOfName,
         'description' => $relation->description,
         'date' => $relation->date,
@@ -151,7 +151,7 @@ class csvActorExport extends QubitFlatfileExport
 
     if (null !== $note = QubitNote::getOne($criteria))
     {
-      $this->setColumn('maintenanceNotes', (string)$note);
+      $this->setColumn('maintenanceNotes', (string) $note);
     }
   }
 
@@ -162,7 +162,7 @@ class csvActorExport extends QubitFlatfileExport
 
     foreach ($this->resource->getOccupations() as $occupation)
     {
-      $actorOccupations[] = (string)$occupation->term;
+      $actorOccupations[] = (string) $occupation->term;
 
       $note = $occupation->getNotesByType([
         'noteTypeId' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID
@@ -171,7 +171,7 @@ class csvActorExport extends QubitFlatfileExport
       if (isset($note))
       {
         $addNotes = true;
-        $actorOccupationNotes[] = (string)$note->content;
+        $actorOccupationNotes[] = (string) $note->content;
       }
       else
       {

@@ -192,7 +192,7 @@ class QubitAclSearch
 
       while ($repo = array_shift($repositoryViewDrafts))
       {
-        $query->addShould(new \Elastica\Query\Term(['repository.id' => (int)$repo['id']]));
+        $query->addShould(new \Elastica\Query\Term(['repository.id' => (int) $repo['id']]));
       }
 
       $query->addShould(new \Elastica\Query\Term(['publicationStatusId' => QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID]));

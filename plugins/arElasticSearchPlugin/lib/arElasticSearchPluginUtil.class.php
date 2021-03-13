@@ -78,17 +78,17 @@ class arElasticSearchPluginUtil
 
     // Invalid year. Return null now since cal_days_in_month will fail
     // with year 0000. See #8796
-    if ((int)$year === 0)
+    if ((int) $year === 0)
     {
       return null;
     }
 
-    if ((int)$month === 0)
+    if ((int) $month === 0)
     {
       $month = $endDate ? '12' : '01';
     }
 
-    if ((int)$day === 0)
+    if ((int) $day === 0)
     {
       $day = $endDate ? cal_days_in_month(CAL_GREGORIAN, $month, $year) : '01';
     }
@@ -621,7 +621,7 @@ class arElasticSearchPluginUtil
 
     foreach (QubitSetting::getByScope('element_visibility') as $setting)
     {
-      if(!(bool)$setting->getValue(['sourceCulture' => true]) && isset($relations[$setting->name])
+      if(!(bool) $setting->getValue(['sourceCulture' => true]) && isset($relations[$setting->name])
         && $relations[$setting->name] != '')
       {
         $hiddenFields[] = $relations[$setting->name];

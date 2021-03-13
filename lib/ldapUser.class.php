@@ -91,7 +91,7 @@ class ldapUser extends myUser implements Zend_Acl_Role_Interface
     $user->username = $username;
 
     // Do LDAP search for user's email address
-    $base_dn = (string)QubitSetting::getByName('ldapBaseDn');
+    $base_dn = (string) QubitSetting::getByName('ldapBaseDn');
     $filter = '(uid='. $username .')';
 
     $result = ldap_search($this->getLdapConnection(), $base_dn, $filter);
@@ -133,8 +133,8 @@ class ldapUser extends myUser implements Zend_Acl_Role_Interface
   {
     if ($conn = $this->getLdapConnection())
     {
-      $base_dn = (string)QubitSetting::getByName('ldapBaseDn');
-      $bind_attribute = (string)QubitSetting::getByName('ldapBindAttribute');
+      $base_dn = (string) QubitSetting::getByName('ldapBaseDn');
+      $bind_attribute = (string) QubitSetting::getByName('ldapBindAttribute');
       $dn = $bind_attribute .'='. $username .','. $base_dn;
 
       // The @ suppresses a warning if the auth fails

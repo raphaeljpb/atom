@@ -39,7 +39,7 @@ class QubitCache
 
       if (null !== $setting = sfConfig::get('app_cache_engine_param_lifetime'))
       {
-        $options['lifetime'] = (float)$setting;
+        $options['lifetime'] = (float) $setting;
       }
 
       if ($cacheClass === 'sfMemcacheCache')
@@ -65,12 +65,12 @@ class QubitCache
 
         if (null !== $setting = sfConfig::get('app_cache_engine_param_storeCacheInfo'))
         {
-          $options['storeCacheInfo'] = (bool)$setting;
+          $options['storeCacheInfo'] = (bool) $setting;
         }
 
         if (null !== $setting = sfConfig::get('app_cache_engine_param_persistent'))
         {
-          $options['persistent'] = (bool)$setting;
+          $options['persistent'] = (bool) $setting;
         }
       }
 

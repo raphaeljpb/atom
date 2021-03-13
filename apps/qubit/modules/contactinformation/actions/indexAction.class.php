@@ -36,7 +36,7 @@ class ContactInformationIndexAction extends sfAction
 
     $value = [];
 
-    $value['primaryContact'] = (bool)$this->resource->primaryContact;
+    $value['primaryContact'] = (bool) $this->resource->primaryContact;
 
     if (isset($this->resource->contactPerson))
     {

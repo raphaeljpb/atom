@@ -102,11 +102,11 @@
     <odd type="publicationStatus"><p><?php echo escape_dc(esc_specialchars($resource->getPublicationStatus())) ?></p></odd>
   <?php endif; ?>
   <?php if ($resource->descriptionDetailId): ?>
-    <odd type="levelOfDetail"><p><?php echo escape_dc(esc_specialchars((string)QubitTerm::getById($resource->descriptionDetailId))) ?></p></odd>
+    <odd type="levelOfDetail"><p><?php echo escape_dc(esc_specialchars((string) QubitTerm::getById($resource->descriptionDetailId))) ?></p></odd>
   <?php endif; ?>
   <?php $descriptionStatus = ($resource->descriptionStatusId) ? QubitTerm::getById($resource->descriptionStatusId) : ''; ?>
   <?php if ($descriptionStatus): ?>
-    <odd type="statusDescription"><p><?php echo escape_dc(esc_specialchars((string)$descriptionStatus)) ?></p></odd>
+    <odd type="statusDescription"><p><?php echo escape_dc(esc_specialchars((string) $descriptionStatus)) ?></p></odd>
   <?php endif; ?>
   <?php if ($resource->descriptionIdentifier): ?>
     <odd type="descriptionIdentifier"><p><?php echo escape_dc(esc_specialchars($resource->descriptionIdentifier)) ?></p></odd>
@@ -210,33 +210,33 @@
       <?php endforeach; ?>
       <?php foreach ($names as $name): ?>
         <?php if (get_class($name->getObject()) === 'QubitTerm'): ?>
-          <name role="subject"><?php echo escape_dc(esc_specialchars((string)$name->getObject())) ?></name>
+          <name role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())) ?></name>
         <?php else: ?>
           <?php if ($name->getObject()->getEntityTypeId() == QubitTerm::PERSON_ID): ?>
-            <persname role="subject"><?php echo escape_dc(esc_specialchars((string)$name->getObject())) ?></persname>
+            <persname role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())) ?></persname>
           <?php elseif ($name->getObject()->getEntityTypeId() == QubitTerm::FAMILY_ID): ?>
-            <famname role="subject"><?php echo escape_dc(esc_specialchars((string)$name->getObject())) ?></famname>
+            <famname role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())) ?></famname>
           <?php elseif ($name->getObject()->getEntityTypeId() == QubitTerm::CORPORATE_BODY_ID): ?>
-            <corpname role="subject"><?php echo escape_dc(esc_specialchars((string)$name->getObject())) ?></corpname>
+            <corpname role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())) ?></corpname>
           <?php else: ?>
-            <name role="subject"><?php echo escape_dc(esc_specialchars((string)$name->getObject())) ?></name>
+            <name role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())) ?></name>
           <?php endif; ?>
         <?php endif; ?>
       <?php endforeach; ?>
       <?php foreach ($materialTypes as $materialtype): ?>
-        <genreform source="rad" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('materialType'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?>><?php echo escape_dc(escape_dc(esc_specialchars((string)$materialtype->getTerm()))) ?></genreform>
+        <genreform source="rad" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('materialType'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?>><?php echo escape_dc(escape_dc(esc_specialchars((string) $materialtype->getTerm()))) ?></genreform>
       <?php endforeach; ?>
       <?php foreach ($genres as $genre): ?>
-        <genreform><?php echo escape_dc(esc_specialchars((string)$genre->getTerm())) ?></genreform>
+        <genreform><?php echo escape_dc(esc_specialchars((string) $genre->getTerm())) ?></genreform>
       <?php endforeach; ?>
       <?php foreach ($subjects as $subject): ?>
-        <subject<?php if ($subject->getTerm()->code):?> authfilenumber="<?php echo $subject->getTerm()->code ?>"<?php endif; ?>><?php echo escape_dc(esc_specialchars((string)$subject->getTerm())) ?></subject>
+        <subject<?php if ($subject->getTerm()->code):?> authfilenumber="<?php echo $subject->getTerm()->code ?>"<?php endif; ?>><?php echo escape_dc(esc_specialchars((string) $subject->getTerm())) ?></subject>
       <?php endforeach; ?>
       <?php foreach ($places as $place): ?>
-        <geogname><?php echo escape_dc(esc_specialchars((string)$place->getTerm())) ?></geogname>
+        <geogname><?php echo escape_dc(esc_specialchars((string) $place->getTerm())) ?></geogname>
       <?php endforeach; ?>
       <?php foreach ($placeEvents as $place): ?>
-        <geogname role="<?php echo $place->getObject()->getType()->getRole() ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('geog'.$place->getObject()->getType()->getRole()))): ?>encodinganalog="<?php echo $encoding ?>"<?php elseif (0 < strlen($encoding = $ead->getMetadataParameter('geogDefault'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?> id="atom_<?php echo $place->objectId ?>_place"><?php echo escape_dc(esc_specialchars((string)$place->getTerm())) ?></geogname>
+        <geogname role="<?php echo $place->getObject()->getType()->getRole() ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('geog'.$place->getObject()->getType()->getRole()))): ?>encodinganalog="<?php echo $encoding ?>"<?php elseif (0 < strlen($encoding = $ead->getMetadataParameter('geogDefault'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?> id="atom_<?php echo $place->objectId ?>_place"><?php echo escape_dc(esc_specialchars((string) $place->getTerm())) ?></geogname>
       <?php endforeach; ?>
     </controlaccess>
   <?php endif; ?>
@@ -355,34 +355,34 @@
 
           <?php foreach ($names as $name): ?>
             <?php if ($name->getObject()->getEntityTypeId() == QubitTerm::PERSON_ID): ?>
-              <persname role="subject"><?php echo escape_dc(esc_specialchars((string)$name->getObject())) ?></persname>
+              <persname role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())) ?></persname>
             <?php elseif ($name->getObject()->getEntityTypeId() == QubitTerm::FAMILY_ID): ?>
-              <famname role="subject"><?php echo escape_dc(esc_specialchars((string)$name->getObject())) ?></famname>
+              <famname role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())) ?></famname>
             <?php elseif ($name->getObject()->getEntityTypeId() == QubitTerm::CORPORATE_BODY_ID): ?>
-              <corpname role="subject"><?php echo escape_dc(esc_specialchars((string)$name->getObject())) ?></corpname>
+              <corpname role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())) ?></corpname>
             <?php else: ?>
-              <name role="subject"><?php echo escape_dc(esc_specialchars((string)$name->getObject())) ?></name>
+              <name role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())) ?></name>
             <?php endif; ?>
           <?php endforeach; ?>
 
           <?php foreach ($materialTypes as $materialtype): ?>
-            <genreform source="rad" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('materialType'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?>><?php echo escape_dc(esc_specialchars((string)$materialtype->getTerm())) ?></genreform>
+            <genreform source="rad" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('materialType'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?>><?php echo escape_dc(esc_specialchars((string) $materialtype->getTerm())) ?></genreform>
           <?php endforeach; ?>
 
           <?php foreach ($genres as $genre): ?>
-            <genreform <?php if (0 < strlen($encoding = $ead->getMetadataParameter('genreform'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?>><?php echo escape_dc(escape_dc(esc_specialchars((string)$genre->getTerm()))) ?></genreform>
+            <genreform <?php if (0 < strlen($encoding = $ead->getMetadataParameter('genreform'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?>><?php echo escape_dc(escape_dc(esc_specialchars((string) $genre->getTerm()))) ?></genreform>
           <?php endforeach; ?>
 
           <?php foreach ($subjects as $subject): ?>
-            <subject><?php echo escape_dc(esc_specialchars((string)$subject->getTerm())) ?></subject>
+            <subject><?php echo escape_dc(esc_specialchars((string) $subject->getTerm())) ?></subject>
           <?php endforeach; ?>
 
           <?php foreach ($places as $place): ?>
-            <geogname><?php echo escape_dc(esc_specialchars((string)$place->getTerm())) ?></geogname>
+            <geogname><?php echo escape_dc(esc_specialchars((string) $place->getTerm())) ?></geogname>
           <?php endforeach; ?>
 
           <?php foreach ($placeEvents as $place): ?>
-            <geogname role="<?php echo $place->getObject()->getType()->getRole() ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('geog'.$place->getObject()->getType()->getRole()))): ?>encodinganalog="<?php echo $encoding ?>"<?php elseif (0 < strlen($encoding = $ead->getMetadataParameter('geogDefault'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?> id="atom_<?php echo $place->objectId ?>_place"><?php echo escape_dc(esc_specialchars((string)$place->getTerm())) ?></geogname>
+            <geogname role="<?php echo $place->getObject()->getType()->getRole() ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('geog'.$place->getObject()->getType()->getRole()))): ?>encodinganalog="<?php echo $encoding ?>"<?php elseif (0 < strlen($encoding = $ead->getMetadataParameter('geogDefault'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?> id="atom_<?php echo $place->objectId ?>_place"><?php echo escape_dc(esc_specialchars((string) $place->getTerm())) ?></geogname>
           <?php endforeach; ?>
 
         </controlaccess>

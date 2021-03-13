@@ -98,7 +98,7 @@ class arStorageServiceUtils
         return new QubitApiForbiddenException("Storage service resource forbidden");
 
       default:
-        return new Exception(sprintf('Storage service error %s', (string)$status));
+        return new Exception(sprintf('Storage service error %s', (string) $status));
     }
   }
 }

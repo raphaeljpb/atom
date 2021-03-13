@@ -46,7 +46,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
     // Avoid pagination over ES' max result window config (default: 10000)
     $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
 
-    if ((int)$limit + (int)$skip > $maxResultWindow)
+    if ((int) $limit + (int) $skip > $maxResultWindow)
     {
       // Return 400 response with error message
       $message = $this->context->i18n->__(

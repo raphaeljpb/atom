@@ -51,7 +51,7 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
     // Avoid pagination over ES' max result window config (default: 10000)
     $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
 
-    if ((int)$limit * $page > $maxResultWindow)
+    if ((int) $limit * $page > $maxResultWindow)
     {
       // Show alert
       $message = $this->context->i18n->__(

@@ -3184,11 +3184,11 @@ class QubitInformationObject extends BaseInformationObject
 
     switch (true)
     {
-      case strlen($date) >= 4: $year = (int)substr($date, 0, 4);
+      case strlen($date) >= 4: $year = (int) substr($date, 0, 4);
       // no break
-      case strlen($date) >= 6: $month = (int)substr($date, 4, 2);
+      case strlen($date) >= 6: $month = (int) substr($date, 4, 2);
       // no break
-      case strlen($date) == 8: $day = (int)substr($date, 6, 2);
+      case strlen($date) == 8: $day = (int) substr($date, 6, 2);
     }
 
     if ($year === 0)

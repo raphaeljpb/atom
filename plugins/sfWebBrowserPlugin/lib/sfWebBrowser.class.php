@@ -675,7 +675,7 @@ class sfWebBrowser
    */
   public function responseIsError()
   {
-    return in_array((int)($this->getResponseCode() / 100), [4, 5]);
+    return in_array((int) ($this->getResponseCode() / 100), [4, 5]);
   }
 
   /**

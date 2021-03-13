@@ -78,7 +78,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
 
     $this->response->setStatusCode(201);
 
-    return ['id' => (int)$this->do->id, 'slug' => $this->do->slug];
+    return ['id' => (int) $this->do->id, 'slug' => $this->do->slug];
   }
 
   protected function processField($field, $value)

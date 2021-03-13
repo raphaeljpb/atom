@@ -103,7 +103,7 @@ foreach ($graph->allOfType('skos:Concept') as $x)
     $idX = substr($x->getUri(), $prefixLen);
     $idY = substr($y->getUri(), $prefixLen);
 
-    $relations->insert((int)$idX, (int)$idY);
+    $relations->insert((int) $idX, (int) $idY);
   }
 }
 

@@ -85,7 +85,7 @@ class QubitMetsParser
           continue;
         }
 
-        $lodName = (string)$item['TYPE'];
+        $lodName = (string) $item['TYPE'];
 
         $sql = 'SELECT
                     term.id';
@@ -114,8 +114,8 @@ class QubitMetsParser
 
       if (0 < count($fptr = $item->xpath('m:fptr')))
       {
-        $dmdId = (string)$item['DMDID'];
-        $fileId = (string)$fptr[0]['FILEID'];
+        $dmdId = (string) $item['DMDID'];
+        $fileId = (string) $fptr[0]['FILEID'];
 
         if (strlen($fileId) > 0 && strlen($dmdId) > 0)
         {
@@ -129,7 +129,7 @@ class QubitMetsParser
     {
       // Get premis:objectIdentifiers in amd section for each file
       if (isset($file['ADMID']) && isset($file['ID'])
-       && false !== $identifiers = $this->document->xpath('//m:amdSec[@ID="'.(string)$file['ADMID'].'"]//p:objectIdentifier'))
+       && false !== $identifiers = $this->document->xpath('//m:amdSec[@ID="'.(string) $file['ADMID'].'"]//p:objectIdentifier'))
       {
         // Find UUID type
         foreach ($identifiers as $item)
@@ -138,9 +138,9 @@ class QubitMetsParser
 
           if (count($type = $item->xpath('p:objectIdentifierType')) > 0
             && count($value = $item->xpath('p:objectIdentifierValue')) > 0
-            && 'UUID' == (string)$type[0])
+            && 'UUID' == (string) $type[0])
           {
-            $uuidMapping[(string)$file['ID']] = (string)$value[0];
+            $uuidMapping[(string) $file['ID']] = (string) $value[0];
           }
         }
       }
@@ -169,7 +169,7 @@ class QubitMetsParser
       return;
     }
 
-    return $this->getDmdSec((string)$divs[0]['DMDID']);
+    return $this->getDmdSec((string) $divs[0]['DMDID']);
   }
 
   public function getDmdSec($dmdId)
@@ -520,7 +520,7 @@ class QubitMetsParser
       && (null !== $admId = $file['ADMID'])
       && (null !== $size = $this->getSizeFromAmdSec($admId))
     ) {
-      return (string)$size;
+      return (string) $size;
     }
   }
 
@@ -555,7 +555,7 @@ class QubitMetsParser
       && (null !== $admId = $file['ADMID'])
       && (null !== $size = $this->getSizeFromAmdSec($admId))
     ) {
-      return (string)$size;
+      return (string) $size;
     }
   }
 
@@ -691,7 +691,7 @@ class QubitMetsParser
       $types = $event->xpath('p:eventType');
       foreach ($types as $type)
       {
-        if ($eventType === (string)$type)
+        if ($eventType === (string) $type)
         {
           array_push($events, $event);
         }
@@ -715,7 +715,7 @@ class QubitMetsParser
       $eventDateTimes = $event->xpath('p:eventDateTime');
       if (false !== $eventDateTimes)
       {
-        return (string)$eventDateTimes[0];
+        return (string) $eventDateTimes[0];
       }
     }
   }
@@ -1340,28 +1340,28 @@ class QubitMetsParser
     switch ($type)
     {
       case 'lastPartOfPath':
-        $parts = explode('/', (string)$results[0]);
+        $parts = explode('/', (string) $results[0]);
 
         return end($parts);
 
       case 'string':
-        return (string)$results[0];
+        return (string) $results[0];
 
       case 'date':
-        return arElasticSearchPluginUtil::convertDate((string)$results[0]);
+        return arElasticSearchPluginUtil::convertDate((string) $results[0]);
 
       case 'boolean':
-        return strtolower((string)$results[0]) == 'yes' ? true : false;
+        return strtolower((string) $results[0]) == 'yes' ? true : false;
 
       case 'integer':
-        return (int)$results[0];
+        return (int) $results[0];
 
       case 'firstInteger':
         foreach ($results as $item)
         {
-          if (ctype_digit((string)$item))
+          if (ctype_digit((string) $item))
           {
-            return (int)$item;
+            return (int) $item;
           }
         }
 
@@ -1369,9 +1369,9 @@ class QubitMetsParser
       case 'firstFloat':
         foreach ($results as $item)
         {
-          if (is_float(floatval((string)$item)))
+          if (is_float(floatval((string) $item)))
           {
-            return floatval((string)$item);
+            return floatval((string) $item);
           }
         }
 
@@ -1379,9 +1379,9 @@ class QubitMetsParser
       case 'firstStringWithTwoPoints':
         foreach ($results as $item)
         {
-          if (strrpos((string)$item, ':') !== false)
+          if (strrpos((string) $item, ':') !== false)
           {
-            return (string)$item;
+            return (string) $item;
           }
         }
     }

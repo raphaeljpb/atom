@@ -85,7 +85,7 @@ class TaxonomyIndexAction extends sfAction
     // Avoid pagination over ES' max result window config (default: 10000)
     $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
 
-    if ((int)$request->limit * (int)$request->page > $maxResultWindow)
+    if ((int) $request->limit * (int) $request->page > $maxResultWindow)
     {
       // Don't show alert or redirect in XHR requests made
       // from the list tab in the terms index page. It requires

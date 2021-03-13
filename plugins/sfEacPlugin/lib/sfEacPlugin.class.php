@@ -1114,7 +1114,7 @@ str;
       $resource->getOccupations(),
     ];
 
-    return (bool)array_filter($descriptionElements);
+    return (bool) array_filter($descriptionElements);
   }
 
   protected static function fromDiscursiveSet($value)
