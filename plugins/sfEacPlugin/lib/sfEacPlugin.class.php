@@ -921,7 +921,7 @@ return;
 
         return 'associative';
 
-      case QubitTerm::FAMILY_RELATION_ID;
+      case QubitTerm::FAMILY_RELATION_ID:
 
         return 'family';
 

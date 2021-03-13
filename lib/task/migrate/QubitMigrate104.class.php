@@ -92,16 +92,16 @@ class QubitMigrate104 extends QubitMigrate
     {
       switch($role['name'])
       {
-        case 'administrator';
+        case 'administrator':
           $this->data['QubitRole'][$key]['id'] = '<?php echo QubitRole::ADMINISTRATOR_ID."\n" ?>';
           break;
-        case 'editor';
+        case 'editor':
           $this->data['QubitRole'][$key]['id'] = '<?php echo QubitRole::EDITOR_ID."\n" ?>';
           break;
-        case 'contributor';
+        case 'contributor':
           $this->data['QubitRole'][$key]['id'] = '<?php echo QubitRole::CONTRIBUTOR_ID."\n" ?>';
           break;
-        case 'translator';
+        case 'translator':
           $this->data['QubitRole'][$key]['id'] = '<?php echo QubitRole::TRANSLATOR_ID."\n" ?>';
           break;
       }
