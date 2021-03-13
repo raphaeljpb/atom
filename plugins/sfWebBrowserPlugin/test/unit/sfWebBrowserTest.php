@@ -311,7 +311,7 @@ foreach($adapter_list as $adapter)
   $target_headers = implode(',', $encodings);
   $t->like(
     $b->get($dump_headers_url, array(), $headers)->getResponseText(),
-    "/$target_headers/", 
+    "/$target_headers/",
     'sfWebBrowser autosets accept-encoding headers depending on php capabilities');
 
   $encodings = array();

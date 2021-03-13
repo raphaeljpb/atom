@@ -1560,7 +1560,7 @@ class QubitFlatfileImport
    *
    * @return bool  Array of all note content.
    */
-  private function getExistingNotes($objectId, $typeId,  $culture)
+  private function getExistingNotes($objectId, $typeId, $culture)
   {
     $existingNotes = array();
 

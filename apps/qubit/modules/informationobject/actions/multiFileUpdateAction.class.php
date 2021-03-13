@@ -70,7 +70,7 @@ class InformationObjectMultiFileUpdateAction extends sfAction
       }
     }
 
-    $this->digitalObjectTitleForm = new DigitalObjectTitleUpdateForm(array(), 
+    $this->digitalObjectTitleForm = new DigitalObjectTitleUpdateForm(array(),
       array('informationObjects' => $this->informationObjectList));
 
     // Handle POST data (form submit)

@@ -47,8 +47,8 @@ class sfFopenAdapter
     // Read the response from the server
     // FIXME: use sockets to avoid depending on allow_url_fopen
     $context = stream_context_create(array('http' => array_merge(
-      $this->options, 
-      array('method' => $method), 
+      $this->options,
+      array('method' => $method),
       array('content' => is_array($parameters) ? http_build_query($parameters) : $parameters),
       array('header' => $request_headers)
     )));

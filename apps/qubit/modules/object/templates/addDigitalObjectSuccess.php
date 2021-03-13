@@ -15,7 +15,7 @@
     </section>
 
       <div class="messages warning">
-        <?php echo __('The maximum disk space of %1% GB available for uploading digital objects has been reached. Please contact your AtoM system administrator to increase the available disk space.',  array('%1%' => sfConfig::get('app_upload_limit'))) ?>
+        <?php echo __('The maximum disk space of %1% GB available for uploading digital objects has been reached. Please contact your AtoM system administrator to increase the available disk space.', array('%1%' => sfConfig::get('app_upload_limit'))) ?>
       </div>
 
     <section class="actions">

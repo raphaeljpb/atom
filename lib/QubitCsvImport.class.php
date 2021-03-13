@@ -237,7 +237,7 @@ class QubitCsvImport
       // Log file contains details about the errors.
       $outputLines = file($logFileName, FILE_SKIP_EMPTY_LINES);
 
-      throw new sfException($this->i18n->__('Transform failed: %1; %2', array('%1' => $exitCode, '%2' => htmlspecialchars(implode('; ' , $outputLines)))));
+      throw new sfException($this->i18n->__('Transform failed: %1; %2', array('%1' => $exitCode, '%2' => htmlspecialchars(implode('; ', $outputLines)))));
     }
 
     if (!file_exists($outputFileName))

@@ -67,7 +67,7 @@ $t->is(qubit_auto_link_text('Go to '.$link2_raw, 'email_addresses'), 'Go to '.$l
 $t->is(qubit_auto_link_text('<p>Link '.$link2_raw.'</p>'), '<p>Link '.$link2_result.'</p>', 'qubit_auto_link_text() converts URLs to links');
 $t->is(qubit_auto_link_text('<p>'.$link2_raw.' Link</p>'), '<p>'.$link2_result.' Link</p>', 'qubit_auto_link_text() converts URLs to links');
 $t->is(qubit_auto_link_text('<p>http://www.google.com/?q=symfony Link</p>'), '<p><a href="http://www.google.com/?q=symfony">http://www.google.com/?q=symfony</a> Link</p>', 'qubit_auto_link_text() converts URLs to links');
-$t->is(qubit_auto_link_text('<p>http://twitter.com/#!/fabpot</p>'),'<p><a href="http://twitter.com/#!/fabpot">http://twitter.com/#!/fabpot</a></p>',"qubit_auto_link_text() converts URLs with complex fragments to links");
-$t->is(qubit_auto_link_text('<p>http://twitter.com/#!/fabpot is Fabien Potencier on Twitter</p>'),'<p><a href="http://twitter.com/#!/fabpot">http://twitter.com/#!/fabpot</a> is Fabien Potencier on Twitter</p>', "qubit_auto_link_text() converts URLs with complex fragments and trailing text to links");
+$t->is(qubit_auto_link_text('<p>http://twitter.com/#!/fabpot</p>'), '<p><a href="http://twitter.com/#!/fabpot">http://twitter.com/#!/fabpot</a></p>', "qubit_auto_link_text() converts URLs with complex fragments to links");
+$t->is(qubit_auto_link_text('<p>http://twitter.com/#!/fabpot is Fabien Potencier on Twitter</p>'), '<p><a href="http://twitter.com/#!/fabpot">http://twitter.com/#!/fabpot</a> is Fabien Potencier on Twitter</p>', "qubit_auto_link_text() converts URLs with complex fragments and trailing text to links");
 $t->is(qubit_auto_link_text('hello '.$email_result, 'email_addresses'), 'hello '.$email_result, "qubit_auto_link_text() does not double-link emails");
 $t->is(qubit_auto_link_text('<p>Link '.$link_result.'</p>'), '<p>Link '.$link_result.'</p>', "qubit_auto_link_text() does not double-link emails");

@@ -6,7 +6,7 @@ print_r($_SERVER);
 
 print_r($_POST);
 
-$putdata = urldecode(file_get_contents("php://input","r"));
+$putdata = urldecode(file_get_contents("php://input", "r"));
 print_r($putdata);
 
 print_r($_FILES);

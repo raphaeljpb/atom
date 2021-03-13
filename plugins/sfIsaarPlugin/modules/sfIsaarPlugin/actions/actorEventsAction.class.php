@@ -47,7 +47,7 @@ class sfIsaarPluginActorEventsAction extends sfAction
 
     $data['data'] = $this->assembleEventData($criteria);
 
-    $this->getResponse()->setHttpHeader('Content-type','application/json');
+    $this->getResponse()->setHttpHeader('Content-type', 'application/json');
     return $this->renderText(json_encode($data));
   }
 

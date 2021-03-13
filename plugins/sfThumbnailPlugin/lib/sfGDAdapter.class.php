@@ -120,7 +120,7 @@ class sfGDAdapter
 
   public function loadData($thumbnail, $image, $mime)
   {
-    if (in_array($mime,$this->imgTypes))
+    if (in_array($mime, $this->imgTypes))
     {
       $this->source = imagecreatefromstring($image);
       $this->sourceWidth = imagesx($this->source);

@@ -21,6 +21,6 @@ class TermBrowseTermAction extends sfAction
 {
   public function execute($request)
   {
-    $this->forward('term','index');
+    $this->forward('term', 'index');
   }
 }

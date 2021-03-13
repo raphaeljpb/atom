@@ -152,7 +152,7 @@ EOF;
     $this->logSection('digital-object', sprintf('%d digital objects deleted (%.2fs elapsed)', $nDeleted, $t->elapsed()));
   }
 
-  private function getIoDescendantIds($lft , $rgt)
+  private function getIoDescendantIds($lft, $rgt)
   {
     $sql = "SELECT io.id
               FROM ". QubitInformationObject::TABLE_NAME ." io

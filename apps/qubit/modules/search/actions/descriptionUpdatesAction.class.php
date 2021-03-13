@@ -215,7 +215,7 @@ class SearchDescriptionUpdatesAction extends sfAction
     }
 
     // Add date restriction
-    $criteria->add(QubitAuditLog::CREATED_AT , $this->form->getValue('startDate'), Criteria::GREATER_EQUAL);
+    $criteria->add(QubitAuditLog::CREATED_AT, $this->form->getValue('startDate'), Criteria::GREATER_EQUAL);
     $endDateTime = new DateTime($this->form->getValue('endDate'));
     $criteria->addAnd(QubitAuditLog::CREATED_AT, $endDateTime->modify('+1 day')->format('Y-m-d'), Criteria::LESS_THAN);
 

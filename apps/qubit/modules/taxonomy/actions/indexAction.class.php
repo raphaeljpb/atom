@@ -63,7 +63,7 @@ class TaxonomyIndexAction extends sfAction
     $unrestrictedTaxonomies = array(QubitTaxonomy::GENRE_ID, QubitTaxonomy::PLACE_ID, QubitTaxonomy::SUBJECT_ID);
     $allowedGroups = array(QubitAclGroup::EDITOR_ID, QubitAclGroup::ADMINISTRATOR_ID);
 
-    if (!in_array($this->resource->id,  $unrestrictedTaxonomies)
+    if (!in_array($this->resource->id, $unrestrictedTaxonomies)
        && !$this->context->user->hasGroup($allowedGroups))
     {
       $this->getResponse()->setStatusCode(403);

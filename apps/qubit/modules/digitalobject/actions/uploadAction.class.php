@@ -54,7 +54,7 @@ class DigitalObjectUploadAction extends sfAction
       $uploadLimit = $repo->uploadLimit;
       if (0 < $uploadLimit)
       {
-        $uploadLimit *= pow(10,9); // Convert to bytes
+        $uploadLimit *= pow(10, 9); // Convert to bytes
       }
 
       $diskUsage = $repo->getDiskUsage();
