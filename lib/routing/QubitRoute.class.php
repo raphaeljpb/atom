@@ -20,12 +20,12 @@
 class QubitRoute extends sfRoute
 {
   /**
-  * Used to correctly represent the characters * ; : @ = , in the slug part
-  * of a URI - this is the path segment.
-  * These chars are allowed in slugs when 'permissive slugs' setting is on.
-  * If 'permissive slugs' is OFF, use urlencode as normal.  This should ONLY
-  * affect the slug portion of an AtoM URI.
-  */
+   * Used to correctly represent the characters * ; : @ = , in the slug part
+   * of a URI - this is the path segment.
+   * These chars are allowed in slugs when 'permissive slugs' setting is on.
+   * If 'permissive slugs' is OFF, use urlencode as normal.  This should ONLY
+   * affect the slug portion of an AtoM URI.
+   */
   public static function urlencode3986($string)
   {
     if (QubitSlug::SLUG_PERMISSIVE == sfConfig::get('app_permissive_slug_creation', QubitSlug::SLUG_RESTRICTIVE))

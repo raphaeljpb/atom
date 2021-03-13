@@ -17,9 +17,9 @@
  * along with Access to Memory (AtoM).  If not, see <http://www.gnu.org/licenses/>.
  */
 
- /**
-  * Validate URLs, but also allow for intranet URLs such as 'http://localhost'.
-  */
+/**
+ * Validate URLs, but also allow for intranet URLs such as 'http://localhost'.
+ */
 class QubitValidatorUrl extends sfValidatorBase
 {
   /**

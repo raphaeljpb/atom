@@ -54,7 +54,7 @@ class arRestApiPluginUtils
        * Once we update our ES documents so they contain UTC dates, we'll be
        * able to stop using this hack.
        *
-      */
+       */
       if (substr($date, -1) === 'Z')
       {
         $e = new DateTime();

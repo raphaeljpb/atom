@@ -122,15 +122,15 @@ class sfThumbnail
   }
 
   /**
-  * Loads an image from a string (e.g. database) and creates an internal thumbnail out of it
-  *
-  * @param string the image string (must be a format accepted by imagecreatefromstring())
-  * @param string mime type of the image
-  *
-  * @return boolean True if the image was properly loaded
-  * @access public
-  * @throws Exception If image mime type is not supported
-  */
+   * Loads an image from a string (e.g. database) and creates an internal thumbnail out of it
+   *
+   * @param string the image string (must be a format accepted by imagecreatefromstring())
+   * @param string mime type of the image
+   *
+   * @return boolean True if the image was properly loaded
+   * @access public
+   * @throws Exception If image mime type is not supported
+   */
   public function loadData($image, $mime)
   {
     $this->adapter->loadData($this, $image, $mime);

@@ -17,7 +17,7 @@
  * along with Access to Memory (AtoM).  If not, see <http://www.gnu.org/licenses/>.
  */
 
- /**
+/**
  * Generate  listRecordsAction response of the OAI-PMH protocol for the Access to Memory (AtoM)
  *
  * @package    AccesstoMemory

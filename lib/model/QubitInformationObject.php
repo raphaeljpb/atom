@@ -1751,7 +1751,7 @@ class QubitInformationObject extends BaseInformationObject
     }
   }
 
-/**
+  /**
    * Import language-related data from a <langmaterial> tag in EAD2002
    *
    * @param $langmaterialNode  DOMNode  EAD langmaterial DOM node
