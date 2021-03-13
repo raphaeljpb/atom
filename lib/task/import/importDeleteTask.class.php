@@ -249,7 +249,7 @@ EOL;
 
     if (null == $obj)
     {
-      throw sfException("Error: couldn\'t get object id: $objectId");
+      throw sfException("Error: couldn\\'t get object id: $objectId");
     }
 
     $this->logMsg(

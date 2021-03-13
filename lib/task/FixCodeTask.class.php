@@ -59,10 +59,10 @@ EOF;
       $fileContents = preg_replace("/\n{2,}/", "\n\n", $fileContents);
 
       // Remove blank lines after open braces
-      $fileContents = preg_replace("/(\h*{)\n{2,}/", "\\1\n", $fileContents);
+      $fileContents = preg_replace("/(\\h*{)\n{2,}/", "\\1\n", $fileContents);
 
       // Remove blank lines before close braces
-      $fileContents = preg_replace("/\n{2,}(\h*})/", "\n\\1", $fileContents);
+      $fileContents = preg_replace("/\n{2,}(\\h*})/", "\n\\1", $fileContents);
 
       // Put open braces on next line
       $fileContents = preg_replace('/(\h*)(\S+(?:\h+\S+)*)\h*{/', "\\1\\2\n\\1{", $fileContents);

@@ -882,7 +882,7 @@ script;
 
     $script .= <<<script
 
-    throw new sfException("Unknown record property \"\$name\" on \"".get_class(\$this).'"');
+    throw new sfException("Unknown record property \\"\$name\\" on \\"".get_class(\$this).'"');
   }
 
 script;
@@ -1067,7 +1067,7 @@ script;
 
     $script .= <<<script
 
-    throw new sfException("Unknown record property \"\$name\" on \"".get_class(\$this).'"');
+    throw new sfException("Unknown record property \\"\$name\\" on \\"".get_class(\$this).'"');
   }
 
 script;
@@ -1462,14 +1462,14 @@ script;
     if (isset(\$value) && \$column->isTemporal() && !\$value instanceof DateTime)
     {
       // Year only: one or more digits.  Convert to SQL zero special case
-      if (preg_match('/^\d+$/', \$value))
+      if (preg_match('/^\\d+$/', \$value))
       {
         \$value .= '-0-0';
       }
 
       // Year and month only: one or more digits, plus separator, plus
       // one or more digits.  Convert to SQL zero special case
-      else if (preg_match('/^\d+[-\/]\d+$/', \$value))
+      else if (preg_match('/^\\d+[-\\/]\\d+$/', \$value))
       {
         \$value .= '-0';
       }
@@ -1477,7 +1477,7 @@ script;
       // Convert to DateTime if not SQL zero special case: year plus
       // separator plus zero to twelve (possibly zero padded) plus
       // separator plus one or more zeros
-      if (!preg_match('/^\d+[-\/]0*(?:1[0-2]|\d)[-\/]0+$/', \$value))
+      if (!preg_match('/^\\d+[-\\/]0*(?:1[0-2]|\\d)[-\\/]0+$/', \$value))
       {
         try
         {

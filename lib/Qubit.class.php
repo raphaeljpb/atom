@@ -52,9 +52,9 @@ class Qubit
     $trim = '[-\/]0+';
 
     // Trim trailing zero day and month
-    $pattern = "/0*(\d+)(?:([-\/])$natural(?:([-\/])$natural
+    $pattern = "/0*(\\d+)(?:([-\\/])$natural(?:([-\\/])$natural
       |$trim)
-      |([-\/])$zero$natural
+      |([-\\/])$zero$natural
       |$trim$trim)/x";
 
     $replacement = '$1$2$3$4$5$6$7$8';

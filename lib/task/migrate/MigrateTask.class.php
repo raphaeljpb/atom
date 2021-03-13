@@ -259,7 +259,7 @@ EOF;
     $yamlData = sfYaml::dump($this->data, 3);
 
     // Remove single quotes from <?php statements to prevent errors on load
-    $yamlData = preg_replace("/'(\<\?php echo .+ \?\>)'/", '$1', $yamlData);
+    $yamlData = preg_replace("/'(\\<\\?php echo .+ \\?\\>)'/", '$1', $yamlData);
 
     file_put_contents($migratedFileName, $yamlData);
     $this->logSection('migrate', 'Migrated data written to "'.$migratedFileName.'"');

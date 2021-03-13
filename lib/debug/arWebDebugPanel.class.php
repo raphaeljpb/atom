@@ -63,7 +63,7 @@ class arWebDebugPanel extends sfWebDebugPanel
       return;
     }
 
-    $refParts = preg_split("/[\s\t]+/", $line, -1, PREG_SPLIT_NO_EMPTY);
+    $refParts = preg_split("/[\\s\t]+/", $line, -1, PREG_SPLIT_NO_EMPTY);
     if (2 == count($refParts))
     {
       $ref = $gitDirectory.$refParts[1];

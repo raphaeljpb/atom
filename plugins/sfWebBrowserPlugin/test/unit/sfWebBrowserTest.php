@@ -242,7 +242,7 @@ foreach ($adapter_list as $adapter)
   {
     $t->like(
       $b->get($dump_headers_url, [], ['TE' => 'trailers, deflate;q=0.5'])->getResponseText(),
-      "/\[TE\] => trailers, deflate;q=0.5/",
+      '/\\[TE\\] => trailers, deflate;q=0.5/',
       $msg);
   }
   catch (Exception $e)
@@ -259,7 +259,7 @@ foreach ($adapter_list as $adapter)
     $resp = $b->get($dump_headers_url, [], $headers)->getResponseText();
     foreach ($headers as $field => $value)
     {
-      $t->like($resp, "/\[$field\] => $value/", $msg.$field);
+      $t->like($resp, "/\\[$field\\] => $value/", $msg.$field);
     }
   }
   catch (Exception $e)
