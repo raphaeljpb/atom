@@ -230,7 +230,7 @@ class RightEditAction extends sfAction
 
           // empty dates come in as empty strings, but propel wants 'null' or it'll default to today's date
           $grantedRight->startDate      = strlen($data['startDate'] > 0) ? $data['startDate'] : null;
-          $grantedRight->endDate        = strlen($data['endDate'] > 0)   ? $data['endDate']   : null;
+          $grantedRight->endDate        = strlen($data['endDate'] > 0) ? $data['endDate'] : null;
           $grantedRight->notes          = $data['notes'];
 
           // relate it to the Right if it is new

@@ -364,11 +364,11 @@ class sfImageMagickAdapter
     // extract images such as pages from a pdf doc
     $extract = $this->getExtract($this->image);
 
-    $output = (is_null($thumbDest))?'-':$thumbDest;
-    $output = (($mime = array_search($targetMime, $this->mimeMap))?$mime.':':'').$output;
+    $output = (is_null($thumbDest)) ? '-' : $thumbDest;
+    $output = (($mime = array_search($targetMime, $this->mimeMap)) ? $mime.':' : '').$output;
 
     $cmd = $this->magickCommands['convert'].' '.$command.' '.escapeshellarg($this->image).$extract.' '.escapeshellarg($output);
-    (is_null($thumbDest))?passthru($cmd):exec($cmd);
+    (is_null($thumbDest)) ? passthru($cmd) : exec($cmd);
   }
 
   public function freeSource()
