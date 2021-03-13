@@ -80,7 +80,7 @@ abstract class AbstractSitemapObjectSet implements Countable, Iterator
 
   public function next()
   {
-    $this->cursor++;
+    ++$this->cursor;
     $this->item = $this->rec->fetch(PDO::FETCH_ORI_NEXT);
   }
 

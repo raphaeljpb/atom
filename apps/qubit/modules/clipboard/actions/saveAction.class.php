@@ -63,7 +63,7 @@ class ClipboardSaveAction extends sfAction
   {
     // Try a max of 100 times before giving up (avoid infinite loops when
     // possible passwords exhausted)
-    for ($i = 0; $i < 100; $i++)
+    for ($i = 0; $i < 100; ++$i)
     {
       $password = $this->generatePassword();
 
@@ -129,7 +129,7 @@ class ClipboardSaveAction extends sfAction
     $alphabetSize = strlen($alphabet);
 
     $password = '';
-    for ($i = 0; $i < $passwordLength; $i++)
+    for ($i = 0; $i < $passwordLength; ++$i)
     {
       $password .= $alphabet[mt_rand(0, $alphabetSize - 1)];
     }

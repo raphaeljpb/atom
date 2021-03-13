@@ -292,7 +292,7 @@ EOF;
           $relation->save();
         }
 
-        $this->relationsUpdated++;
+        ++$this->relationsUpdated;
       }
 
       // Mark duplicate for deletion

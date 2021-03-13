@@ -294,7 +294,7 @@ EOF;
           if (!empty($self->rowStatusVars['placeAccessPoints']))
           {
             $places = explode('|', $self->rowStatusVars['placeAccessPoints']);
-            for ($i = 0; $i < count($places); $i++)
+            for ($i = 0; $i < count($places); ++$i)
             {
               if (empty($places[$i]))
               {
@@ -313,7 +313,7 @@ EOF;
           if (!empty($self->rowStatusVars['subjectAccessPoints']))
           {
             $subjects = explode('|', $self->rowStatusVars['subjectAccessPoints']);
-            for ($i = 0; $i < count($subjects); $i++)
+            for ($i = 0; $i < count($subjects); ++$i)
             {
               if (empty($subjects[$i]))
               {
@@ -339,7 +339,7 @@ EOF;
               $occupationNotes = explode('|', $self->rowStatusVars['actorOccupationNotes']);
             }
 
-            for ($i = 0; $i < count($occupations); $i++)
+            for ($i = 0; $i < count($occupations); ++$i)
             {
               if (empty($occupations[$i]))
               {

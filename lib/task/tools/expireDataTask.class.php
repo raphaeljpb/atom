@@ -200,7 +200,7 @@ EOF;
     foreach(QubitClipboardSave::get($criteria) as $save)
     {
       $save->delete();
-      $deletedCount++;
+      ++$deletedCount;
     }
 
     return $deletedCount;
@@ -230,7 +230,7 @@ EOF;
       }
 
       $job->delete();
-      $deletedCount++;
+      ++$deletedCount;
     }
 
     return $deletedCount;

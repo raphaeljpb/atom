@@ -84,6 +84,6 @@ class arActorXmlExportJob extends arActorExportJob
 
     $this->addDigitalObject($resource, $path);
 
-    $this->itemsExported++;
+    ++$this->itemsExported;
   }
 }

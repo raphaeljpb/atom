@@ -331,7 +331,7 @@ EOF;
         if (!is_array($item))
         {
           $this->auditDigitalObject($item);
-          $count++;
+          ++$count;
         }
         else
         {
@@ -339,7 +339,7 @@ EOF;
           foreach ($item as $filepath)
           {
             $this->auditDigitalObject($filepath);
-            $count++;
+            ++$count;
           }
         }
       }
@@ -350,7 +350,7 @@ EOF;
         if (!is_array($item))
         {
           $this->addDigitalObject($informationObject, $item, $undoLog);
-          $count++;
+          ++$count;
         }
         else
         {
@@ -366,7 +366,7 @@ EOF;
             $childInformationObject->save($this->conn);
 
             $this->addDigitalObject($childInformationObject, $filepath, $undoLog, true);
-            $count++;
+            ++$count;
           }
         }
       }

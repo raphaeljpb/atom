@@ -84,7 +84,7 @@ EOF;
         }
         else
         {
-          $this->errorCount++;
+          ++$this->errorCount;
         }
       }
     }

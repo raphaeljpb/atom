@@ -197,7 +197,7 @@ class QubitSaxParser
    */
   protected function startTagInternalHandler($sax, $tag, $attr)
   {
-    $this->level++;
+    ++$this->level;
     $this->storeAncestorIfNesting();
     $this->lastTagStartLevel = $this->level;
 
@@ -320,7 +320,7 @@ class QubitSaxParser
    */
   protected function endTagInternalHandler($sax, $tag)
   {
-    $this->level--;
+    --$this->level;
 
     // If we're one level less deep than last end tag, dump ancestor
     if ($this->level < $this->lastTagEndLevel)

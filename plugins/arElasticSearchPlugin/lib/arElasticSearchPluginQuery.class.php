@@ -273,7 +273,7 @@ class arElasticSearchPluginQuery
           'operator' => $operator];
       }
 
-      $count++;
+      ++$count;
     }
 
     if (0 == count($queryBool->getParams()))

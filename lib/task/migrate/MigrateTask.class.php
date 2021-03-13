@@ -190,7 +190,7 @@ EOF;
 
     if ($initialIndex !== false && $finalIndex !== false && $initialIndex < $finalIndex)
     {
-      for ($i = $initialIndex; $i < $finalIndex; $i++)
+      for ($i = $initialIndex; $i < $finalIndex; ++$i)
       {
         $this->migrator = QubitMigrateFactory::getMigrator($this->data, $this->validReleases[$i]);
         $this->data = $this->migrator->execute();

@@ -167,7 +167,7 @@ class QubitCsvTransform extends QubitFlatfileImport
       // if starting a new chunk, write CSV headers
       if (($currentRow % $this->rowsPerFile) == 0)
       {
-        $chunk++;
+        ++$chunk;
         $chunkFilePath = $this->numberedFilePathVariation($filepath, $chunk);
         $fhOut = fopen($chunkFilePath, 'w');
 
@@ -181,7 +181,7 @@ class QubitCsvTransform extends QubitFlatfileImport
       // write to CSV out
       fputcsv($fhOut, $data);
 
-      $currentRow++;
+      ++$currentRow;
     }
   }
 

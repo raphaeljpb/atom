@@ -136,7 +136,7 @@ EOF;
 
     if (isset($this->children[$node['id']]))
     {
-      $lft++;
+      ++$lft;
 
       foreach ($this->children[$node['id']] as $id)
       {

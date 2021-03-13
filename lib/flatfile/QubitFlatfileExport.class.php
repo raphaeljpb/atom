@@ -278,7 +278,7 @@ class QubitFlatfileExport
       // Increase file index and delete file pointer if reader to start new file
       if (!($this->rowsExported % $this->rowsPerFile))
       {
-        $this->fileIndex++;
+        ++$this->fileIndex;
         unset($this->currentFileHandle);
       }
 
@@ -316,7 +316,7 @@ class QubitFlatfileExport
     // Write row to file and initialize row
     $this->appendRowToCsvFile($filePath, $this->row);
     $this->row = array_fill(0, count($this->columnNames), null);
-    $this->rowsExported++;
+    ++$this->rowsExported;
   }
 
   /**

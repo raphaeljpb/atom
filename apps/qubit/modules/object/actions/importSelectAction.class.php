@@ -274,7 +274,7 @@ class ObjectImportSelectAction extends DefaultEditAction
     {
       if (in_array($column, $exportTypeConfig['columnNames']))
       {
-        $validColumnCount++;
+        ++$validColumnCount;
       }
     }
 

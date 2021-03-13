@@ -1041,7 +1041,7 @@ class QubitXmlImport
     $xp = new DOMXPath($doc);
     $nodes = $xp->query('//comment()');
 
-    for ($i = 0; $i < $nodes->length; $i++)
+    for ($i = 0; $i < $nodes->length; ++$i)
     {
       $nodes->item($i)->parentNode->removeChild($nodes->item($i));
     }

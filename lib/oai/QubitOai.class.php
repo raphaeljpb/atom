@@ -222,7 +222,7 @@ class QubitOai
         elseif (count($oaiSets) >= $options['limit'])
         {
           // The "page" is full so add this set to the remaining count
-          $remaining++;
+          ++$remaining;
         }
       }
     }
@@ -438,7 +438,7 @@ class QubitOai
       {
         $re = "{[\\s\n\r]*([^\\s\n\r]+)[\\s\n\r]*([^\\s\n\r]+)}";
         preg_match_all($re, $el->nodeValue, $mat);
-        for ($i = 0; $i < count($mat[0]); $i++)
+        for ($i = 0; $i < count($mat[0]); ++$i)
         {
           $value = $mat[2][$i];
           $doc->schemaLocations[$mat[1][$i]] = $value;

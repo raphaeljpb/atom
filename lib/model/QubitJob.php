@@ -222,7 +222,7 @@ class QubitJob extends BaseJob
 
       if ($count > 0)
       {
-        $tries++;
+        ++$tries;
       }
       else
       {

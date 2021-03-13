@@ -311,7 +311,7 @@ class sfSkosPlugin
 
   protected function notify()
   {
-    $this->total++;
+    ++$this->total;
 
     if (($this->total % $this->notifyAfter) === 0)
     {

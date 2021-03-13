@@ -1164,7 +1164,7 @@ class QubitMigrate110 extends QubitMigrate
   {
     $slug = $root = QubitSlug::slugify($str);
 
-    for ($i = 0; $i < 100; $i++)
+    for ($i = 0; $i < 100; ++$i)
     {
       foreach ($this->data['QubitRepository'] as $item)
       {

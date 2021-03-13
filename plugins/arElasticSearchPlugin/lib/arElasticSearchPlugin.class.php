@@ -581,7 +581,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
       if (!in_array(strtolower($typeName), $excludeTypes))
       {
         $this->log(' - '.$typeName);
-        $typeCount++;
+        ++$typeCount;
       }
     }
 

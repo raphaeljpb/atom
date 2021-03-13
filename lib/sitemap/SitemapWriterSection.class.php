@@ -117,8 +117,8 @@ class SitemapWriterSection
     }
 
     $this->buffer->writeRaw($item->getUrl($this->baseUrl, $this->indent));
-    $this->bufferSize++;
-    $this->size++;
+    ++$this->bufferSize;
+    ++$this->size;
   }
 
   public function isFull()

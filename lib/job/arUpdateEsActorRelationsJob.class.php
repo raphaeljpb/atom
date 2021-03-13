@@ -56,7 +56,7 @@ class arUpdateEsActorRelationsJob extends arBaseJob
       }
 
       // Don't count invalid description ids
-      $count++;
+      ++$count;
 
       self::updateActorRelationships($object);
       $message = $this->i18n->__('Updated %1 actors(s).', ['%1' => $count]);

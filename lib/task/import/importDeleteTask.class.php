@@ -70,7 +70,7 @@ EOF;
 
       $this->deleteKeymapRow($arguments['name'], $id);
 
-      $count++;
+      ++$count;
     }
 
     $this->logMsg(

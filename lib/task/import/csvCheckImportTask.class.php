@@ -169,7 +169,7 @@ EOF;
         if (!isset($nonEmptyColumns[$column]))
         {
           print $column.' ';
-          $emptyCount++;
+          ++$emptyCount;
         }
       }
       print ($emptyCount) ? '' : "[None]";
@@ -185,7 +185,7 @@ EOF;
       {
         print $column.'('.$count.')';
         print ($displayCount < count($multiValueColumns)) ? ', ' : '';
-        $displayCount++;
+        ++$displayCount;
       }
     }
 
@@ -203,7 +203,7 @@ EOF;
           {
             print ($shownCount) ? '    ' : ' ';
             print $value."\n";
-            $shownCount++;
+            ++$shownCount;
           }
         }
         else

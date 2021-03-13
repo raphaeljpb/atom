@@ -145,7 +145,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   public function next()
   {
-    $this->offset++;
+    ++$this->offset;
 
     list($objects, $sorted) = $this->getData($this);
 
@@ -340,7 +340,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
       if (isset($this->andSelf))
       {
-        $count++;
+        ++$count;
       }
 
       return $count;

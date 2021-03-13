@@ -2116,7 +2116,7 @@ class QubitDigitalObject extends BaseDigitalObject
       }
 
       // Build an array of the exploded file names
-      for ($i = 0; $i < $pageCount; $i++)
+      for ($i = 0; $i < $pageCount; ++$i)
       {
         $fileList[] = $filenameMinusExtension.sprintf('_%02d.', $i).self::THUMB_EXTENSION;
       }
@@ -2704,7 +2704,7 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       $error = true;
 
-      for ($i = count($output) - 1; $i >= 0; $i--)
+      for ($i = count($output) - 1; $i >= 0; --$i)
       {
         if (strpos($output[$i], 'output buffer too small'))
         {
@@ -3483,7 +3483,7 @@ class QubitDigitalObject extends BaseDigitalObject
     $retries = (isset($options['downloadRetries']) && 0 < $options['downloadRetries']) ? $options['downloadRetries'] : 0;
 
     // Attempt to download the digital object, with possible retries
-    for ($i = 0; $i <= $retries; $i++)
+    for ($i = 0; $i <= $retries; ++$i)
     {
       try
       {

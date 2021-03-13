@@ -35,25 +35,25 @@ class QubitValidatorPassword extends sfValidatorString
     // Check 1: contains upper case letters
     if (preg_match('/[A-Z]/', $value))
     {
-      $score++;
+      ++$score;
     }
 
     // Check 2: contains lower case letters
     if (preg_match('/[a-z]/', $value))
     {
-      $score++;
+      ++$score;
     }
 
     // Check 3: contains numbers
     if (preg_match('/[0-9]/', $value))
     {
-      $score++;
+      ++$score;
     }
 
     // Check 4: contains everything but 1), 2) and 3) (special characters)
     if (preg_match('/[^A-Za-z0-9]/', $value))
     {
-      $score++;
+      ++$score;
     }
 
     // If less than three checks were passed

@@ -634,7 +634,7 @@ EOF;
                   }
                 }
               }
-              $index++;
+              ++$index;
             }
           }
         }
@@ -664,7 +664,7 @@ EOF;
               $self->createRelation($self->object->id, $actor->id, QubitTerm::NAME_ACCESS_POINT_ID);
             }
 
-            $index++;
+            ++$index;
           }
         }
 

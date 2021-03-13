@@ -166,7 +166,7 @@ class QubitCsvTransformFactory
               {
                 // ...otherwise if the parent key didn't exist, note that it's bad
                 print "Bad parent found: ".$keyOfRowParent." (row ".($self->getStatus('rows') + 1).")\n";
-                $self->status['badParents']++;
+                ++$self->status['badParents'];
               }
             }
 
@@ -189,7 +189,7 @@ class QubitCsvTransformFactory
               //  print "Description sort order is ". $sortorder .".\n";
                 $self->addRowToMySQL($sortorder);
               } else {
-                $self->status['badLevelOfDescription']++;
+                ++$self->status['badLevelOfDescription'];
                 print "Ignoring data with bad level of description: '".$self->columnValue('levelOfDescription')."'.\n";
               }
             } else {

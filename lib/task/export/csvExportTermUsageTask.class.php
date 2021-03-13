@@ -154,7 +154,7 @@ class csvExportTermUsageTask extends exportBulkBaseTask
 
         $this->indicateProgress($rowsUntilUpdate);
 
-        $itemsExported++;
+        ++$itemsExported;
       }
     }
 

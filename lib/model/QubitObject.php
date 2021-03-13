@@ -219,7 +219,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
           else
           {
             // Simple increment in case SQL query doesn't work for some reason
-            $suffix++;
+            ++$suffix;
           }
 
           $this->slug = "$stem-$suffix";
@@ -634,7 +634,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
       }
 
       $item->delete();
-      $n++;
+      ++$n;
     }
 
     return $n;

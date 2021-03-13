@@ -54,7 +54,7 @@ class resetPasswordTask extends sfBaseTask
         // No, so it's OK to add it onto the end of whatever we've already got...
         $password .= $char;
         // ... and increase the counter by one
-        $i++;
+        ++$i;
       }
     }
 

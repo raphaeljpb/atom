@@ -63,7 +63,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
     {
       $ancestors = $inheritedCreators = [];
       $repository = null;
-      self::$counter++;
+      ++self::$counter;
 
       try
       {

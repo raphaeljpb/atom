@@ -238,7 +238,7 @@ EOF;
           {
             $identifierTypes = $self->rowStatusVars['alternativeIdentifierTypes'];
 
-            for ($index = 0; $index < max(count($identifiers), count($identifierNotes)); $index++)
+            for ($index = 0; $index < max(count($identifiers), count($identifierNotes)); ++$index)
             {
               $identifier = (empty($identifiers[$index])) ? null : $identifiers[$index];
 
@@ -297,7 +297,7 @@ EOF;
             $eventAgents = $self->rowStatusVars['accessionEventAgents'];
             $eventNotes = $self->rowStatusVars['accessionEventNotes'];
 
-            for ($index = 0; $index < count($eventTypes); $index++)
+            for ($index = 0; $index < count($eventTypes); ++$index)
             {
               $eventType = (empty($eventTypes[$index])) ? null : $eventTypes[$index];
               $eventDate = (empty($eventDates[$index])) ? null : $eventDates[$index];

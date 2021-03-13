@@ -275,7 +275,7 @@ class QubitPhysicalObjectCsvHoldingsReport
 
       unset($row['class_name']); // Unset as it'd be redundant
       $holdingsData['types'][$className]['holdings'][] = $row['object_id'];
-      $holdingsData['types'][$className]['total']++;
+      ++$holdingsData['types'][$className]['total'];
     }
 
     return $holdingsData;

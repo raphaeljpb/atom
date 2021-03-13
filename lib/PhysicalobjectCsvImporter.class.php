@@ -338,7 +338,7 @@ EOM;
 
     foreach ($records as $record)
     {
-      $this->offset++;
+      ++$this->offset;
 
       try
       {
@@ -353,7 +353,7 @@ EOM;
         continue;
       }
 
-      $this->rowsImported++;
+      ++$this->rowsImported;
       $this->log($this->progressUpdate($this->rowsImported, $data));
     }
 

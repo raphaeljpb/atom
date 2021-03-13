@@ -100,7 +100,7 @@ class QubitInformationObjectXmlCache
       {
         $io = QubitInformationObject::getById($row->id);
 
-        $exporting++;
+        ++$exporting;
         $this->logger->info($this->i18n->__('Exporting information object ID %1% (%2% of %3%)', ['%1%' => $io->id, '%2%' => $exporting, '%3%' => count($results)]));
         $this->export($io, $format);
 
@@ -215,7 +215,7 @@ class QubitInformationObjectXmlCache
     $dfp = fopen($destination, 'w');
 
     // Skip lines
-    for ($i = 1; $i <= $skipLines; $i++)
+    for ($i = 1; $i <= $skipLines; ++$i)
     {
       fgets($sfp);
     }

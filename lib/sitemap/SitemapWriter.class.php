@@ -160,7 +160,7 @@ class SitemapWriter
 
   private function addSitemap()
   {
-    $this->sitemapIndex++;
+    ++$this->sitemapIndex;
     $this->sitemap = new SitemapWriterSection($this->file, $this->sitemapIndex, $this->baseUrl, $this->indent, $this->compress);
     $this->writer->startElement('sitemap');
     $this->writer->writeElement('loc', $this->sitemap->getLocation());

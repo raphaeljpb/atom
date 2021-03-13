@@ -79,7 +79,7 @@ class ClipboardLoadAction extends DefaultEditAction
       {
         $type = lcfirst(str_replace('Qubit', '', $item->itemClassName));
         array_push($clipboard[$type], $item->slug);
-        $addedCount++;
+        ++$addedCount;
       }
     }
 

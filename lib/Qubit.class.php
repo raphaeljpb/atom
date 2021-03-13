@@ -186,7 +186,7 @@ class Qubit
               $stack[] = $current_file;
             }
           }
-          $i++;
+          ++$i;
         }
       }
     }

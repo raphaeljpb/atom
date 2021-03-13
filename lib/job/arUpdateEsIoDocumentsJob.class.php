@@ -67,7 +67,7 @@ class arUpdateEsIoDocumentsJob extends arBaseJob
       }
 
       // Don't count invalid description ids
-      $count++;
+      ++$count;
 
       if ($parameters['updateIos'] && $parameters['updateDescendants'])
       {

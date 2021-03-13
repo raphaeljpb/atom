@@ -229,7 +229,7 @@ class QubitMigrate103 extends QubitMigrate
           break;
       }
 
-      $i++;
+      ++$i;
     }
 
     // Add new Default Template Qubit Settings (insert in place of previous
@@ -762,7 +762,7 @@ class QubitMigrate103 extends QubitMigrate
 
             break;
           }
-          $i++;
+          ++$i;
         }
       }
     }

@@ -146,7 +146,7 @@ EOF;
 
         if ($subjectId)
         {
-          $self->status['goodSubjects']++;
+          ++$self->status['goodSubjects'];
 
           $objectKey = trim($self->columnValue($self->status['objectValueColumn']));
           $objectId = false;
@@ -160,7 +160,7 @@ EOF;
 
           if ($objectId)
           {
-            $self->status['goodObjects']++;
+            ++$self->status['goodObjects'];
 
             $type = $self->columnValue($self->status['relationTypeColumn']);
             print 'Relate '.$subjectId.' to '.$objectId.' as '.$type.".\n";
@@ -187,13 +187,13 @@ EOF;
           }
           else
           {
-            $self->status['badObjects']++;
+            ++$self->status['badObjects'];
             print 'ERROR: object '.$objectKey." not found.\n";
           }
         }
         else
         {
-          $self->status['badSubjects']++;
+          ++$self->status['badSubjects'];
           print 'ERROR: subject '.$subjectKey." not found.\n";
         }
       },

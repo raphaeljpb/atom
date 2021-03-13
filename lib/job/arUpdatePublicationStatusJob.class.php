@@ -57,7 +57,7 @@ class arUpdatePublicationStatusJob extends arBaseJob
       $descendant->setPublicationStatus($publicationStatus->id);
       $descendant->save();
 
-      $descriptionsUpdated++;
+      ++$descriptionsUpdated;
     }
 
     $message = $this->i18n->__('%1 descriptions updated.', ['%1' => $descriptionsUpdated]);

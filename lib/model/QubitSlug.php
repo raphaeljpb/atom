@@ -44,9 +44,9 @@ class QubitSlug extends BaseSlug
     $numBlocks = ceil($length / $blockLength);
 
     $slug = '';
-    for ($i = 0; $i < $numBlocks; $i++)
+    for ($i = 0; $i < $numBlocks; ++$i)
     {
-      for ($j = 0; $j < $blockLength; $j++)
+      for ($j = 0; $j < $blockLength; ++$j)
       {
         $slug .= $alphabet[mt_rand(0, $alphabetSize - 1)];
       }
@@ -120,7 +120,7 @@ class QubitSlug extends BaseSlug
 
     // Try a max of 10 times before giving up (avoid infinite loops when
     // possible slugs exhausted)
-    for ($i = 0; $i < 10; $i++)
+    for ($i = 0; $i < 10; ++$i)
     {
       $slug = self::random();
 

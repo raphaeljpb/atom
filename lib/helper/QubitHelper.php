@@ -190,7 +190,7 @@ function strip_markdown($value)
 function hr_filesize($val)
 {
   $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB'];
-  for ($i = 0; $i < count($units); $i++)
+  for ($i = 0; $i < count($units); ++$i)
   {
     if ($val / pow(1024, $i + 1) < 1)
     {

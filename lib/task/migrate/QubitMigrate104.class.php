@@ -477,7 +477,7 @@ class QubitMigrate104 extends QubitMigrate
 
             break;
           }
-          $i++;
+          ++$i;
         }
       }
     }

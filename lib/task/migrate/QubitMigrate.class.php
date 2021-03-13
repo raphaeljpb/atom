@@ -155,7 +155,7 @@ class QubitMigrate
       {
         return $index;
       }
-      $index++;
+      ++$index;
     }
 
     return false;
@@ -193,7 +193,7 @@ class QubitMigrate
 
             break;
           }
-          $i++;
+          ++$i;
         }
       }
     }
@@ -977,7 +977,7 @@ class QubitMigrate
 
         break;
       }
-      $i++;
+      ++$i;
     }
 
     // If a left value was found, then set merged values for lft & rgt columns
@@ -989,7 +989,7 @@ class QubitMigrate
       {
         $row['lft'] = $pivotLft + ($j * 2);
         $row['rgt'] = $pivotLft + ($j * 2) + 1;
-        $j++;
+        ++$j;
       }
 
       // Bump existing lft & rgt values

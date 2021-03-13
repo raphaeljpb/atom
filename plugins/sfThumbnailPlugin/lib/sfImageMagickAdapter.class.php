@@ -482,7 +482,7 @@ class sfImageMagickAdapter
     $n = $this->options['extract'];
     if ($n > 0)
     {
-      $n--;
+      --$n;
     }
 
     $extract = '['.escapeshellarg($n).'] ';

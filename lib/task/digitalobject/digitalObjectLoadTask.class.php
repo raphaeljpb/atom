@@ -133,7 +133,7 @@ class digitalObjectLoadTask extends sfBaseTask
         $digitalObjects[$id][] = $filename;
       }
 
-      $this->totalObjCount++;
+      ++$this->totalObjCount;
     }
 
     $this->curObjNum = 0;
@@ -192,13 +192,13 @@ class digitalObjectLoadTask extends sfBaseTask
             if (null !== $do = QubitDigitalObject::getById($results[1]))
             {
               $do->delete();
-              $this->deletedCount++;
+              ++$this->deletedCount;
             }
           }
           else
           {
             $this->log(sprintf("Couldn't read file '$digitalObjectName'"));
-            $this->skippedCount++;
+            ++$this->skippedCount;
 
             continue;
           }
@@ -214,7 +214,7 @@ class digitalObjectLoadTask extends sfBaseTask
         if ($results[1] !== null)
         {
           $this->log(sprintf("Information object $idType: %s already has a digital object. Skipping.", $key));
-          $this->skippedCount++;
+          ++$this->skippedCount;
 
           continue;
         }
@@ -222,7 +222,7 @@ class digitalObjectLoadTask extends sfBaseTask
         if (!file_exists($path = self::getPath($item, $options)))
         {
           $this->log(sprintf("Couldn't read file '$item'"));
-          $this->skippedCount++;
+          ++$this->skippedCount;
 
           continue;
         }
@@ -236,7 +236,7 @@ class digitalObjectLoadTask extends sfBaseTask
           if (!file_exists($path = self::getPath($item, $options)))
           {
             $this->log(sprintf("Couldn't read file '$item'"));
-            $this->skippedCount++;
+            ++$this->skippedCount;
 
             continue;
           }
@@ -246,12 +246,12 @@ class digitalObjectLoadTask extends sfBaseTask
         else
         {
           // If more than one digital object linked to this information object
-          for ($i = 0; $i < count($item); $i++)
+          for ($i = 0; $i < count($item); ++$i)
           {
             if (!file_exists($path = self::getPath($item[$i], $options)))
             {
               $this->log(sprintf("Couldn't read file '$item[$i]'"));
-              $this->skippedCount++;
+              ++$this->skippedCount;
 
               continue;
             }
@@ -261,7 +261,7 @@ class digitalObjectLoadTask extends sfBaseTask
         }
       }
 
-      $importedCount++;
+      ++$importedCount;
       Qubit::clearClassCaches();
     }
 
@@ -330,7 +330,7 @@ EOF;
 
   protected function addDigitalObject($objectId, $path, $options = [])
   {
-    $this->curObjNum++;
+    ++$this->curObjNum;
 
     $path = self::getPath($path, $options);
 
@@ -374,7 +374,7 @@ EOF;
 
     $do->save($options['conn']);
 
-    self::$count++;
+    ++self::$count;
   }
 
   protected function getUploadDir($options = [])

@@ -430,7 +430,7 @@ class QubitFlatfileImport
         // Skip blank rows, but keep track of rows parsed
         if (!$this->rowContainsData($item))
         {
-          $this->status['rows']++;
+          ++$this->status['rows'];
 
           continue;
         }
@@ -443,7 +443,7 @@ class QubitFlatfileImport
 
         $this->row($item);
 
-        $this->status['rows']++;
+        ++$this->status['rows'];
 
         if ($this->displayProgress)
         {
@@ -452,7 +452,7 @@ class QubitFlatfileImport
       }
       else
       {
-        $this->status['rows']++;
+        ++$this->status['rows'];
       }
     }
 
@@ -729,7 +729,7 @@ class QubitFlatfileImport
   {
     $connection = Propel::getConnection();
     $statement = $connection->prepare($query);
-    for($index = 0; $index < count($params); $index++)
+    for($index = 0; $index < count($params); ++$index)
     {
       $statement->bindValue($index + 1, $params[$index]);
     }
@@ -1652,7 +1652,7 @@ class QubitFlatfileImport
     $combined = [];
 
     // go through each array providesd
-    for($index = 0; $index < count($args); $index++)
+    for($index = 0; $index < count($args); ++$index)
     {
       // for each element of array, add to combined array if element isn't a dupe
       foreach ($args[$index] as $element)
@@ -1687,7 +1687,7 @@ class QubitFlatfileImport
         // Increment label number if column already exists
         while(in_array($baseLabel.$labelNumber, $this->columnNames))
         {
-          $labelNumber++;
+          ++$labelNumber;
         }
 
         $label = $baseLabel.$labelNumber;
@@ -1872,7 +1872,7 @@ class QubitFlatfileImport
    */
   protected function forEachRowColumn($row, $logic)
   {
-    for ($index = 0; $index < count($row); $index++)
+    for ($index = 0; $index < count($row); ++$index)
     {
       // determine what type of data should be in this column
       $columnName = $this->columnNames[$index];
@@ -2071,7 +2071,7 @@ class QubitFlatfileImport
 
       if ($this->isUpdating())
       {
-        $this->status['updated']++;
+        ++$this->status['updated'];
 
         if ($this->deleteAndReplace)
         {
@@ -2086,7 +2086,7 @@ class QubitFlatfileImport
       }
       else
       {
-        $this->status['duplicates']++;
+        ++$this->status['duplicates'];
         $skipRowProcessing = true;
       }
 
@@ -2262,7 +2262,7 @@ class QubitFlatfileImport
                       $this->columnValue('authorizedFormOfName'));
       print $this->logError($msg);
 
-      $this->status['duplicates']++;
+      ++$this->status['duplicates'];
       $this->object = null;
 
       return true;
@@ -2306,7 +2306,7 @@ class QubitFlatfileImport
                       $this->getActionDescription());
       print $this->logError($msg);
 
-      $this->status['updated']++;
+      ++$this->status['updated'];
       $this->object = call_user_func([$this->className, 'getById'], $result->id);
 
       // Execute ad-hoc row pre-update logic (remove related data, etc.)

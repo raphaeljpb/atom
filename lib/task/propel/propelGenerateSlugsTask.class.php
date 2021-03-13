@@ -158,7 +158,7 @@ class propelGenerateSlugsTask extends arBaseTask
 
         while (isset($this->slugs[$slug.$suffix]))
         {
-          $count++;
+          ++$count;
           $suffix = '-'.$count;
         }
 
@@ -176,7 +176,7 @@ class propelGenerateSlugsTask extends arBaseTask
         $sql = "INSERT INTO slug (object_id, slug) VALUES ";
 
         $last = min($i + $inc, count($newRows));
-        for ($j = $i; $j < $last; $j++)
+        for ($j = $i; $j < $last; ++$j)
         {
           // Use PDO param/value binding - ensures special chars are escaped on DB insert.
           $sql .= "(?, ?), ";

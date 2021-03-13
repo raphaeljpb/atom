@@ -101,7 +101,7 @@ class QubitAclSearch
 
           if ($resourceAccess[$permission->objectId])
           {
-            $grants++;
+            ++$grants;
           }
         }
       }

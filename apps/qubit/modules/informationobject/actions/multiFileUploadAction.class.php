@@ -94,7 +94,7 @@ class InformationObjectMultiFileUploadAction extends sfAction
         continue;
       }
 
-      $i++;
+      ++$i;
 
       // Create an information object for this digital object
       $informationObject = new QubitInformationObject();

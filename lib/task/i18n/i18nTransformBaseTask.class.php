@@ -128,7 +128,7 @@ abstract class i18nTransformBaseTask extends arBaseTask
         // Update total column values changed
         if ($columnsChanged)
         {
-          $changedCount++;
+          ++$changedCount;
           $columnsChangedCount += $columnsChanged;
         }
 
@@ -141,7 +141,7 @@ abstract class i18nTransformBaseTask extends arBaseTask
         }
 
         $this->logSection('i18n', $message);
-        $rowCount++;
+        ++$rowCount;
       }
     }
 

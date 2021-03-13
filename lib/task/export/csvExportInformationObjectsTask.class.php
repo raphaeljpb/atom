@@ -82,7 +82,7 @@ class csvExportInformationObjectsTask extends exportBulkBaseTask
 
       $this->indicateProgress($options['items-until-update']);
 
-      $itemsExported++;
+      ++$itemsExported;
     }
 
     print "\nExport complete (".$itemsExported." descriptions exported).\n";

@@ -85,7 +85,7 @@ class eacExportTask extends exportBulkBaseTask
 
         file_put_contents($filePath, $xml);
         $this->indicateProgress($options['items-until-update']);
-        $itemsExported++;
+        ++$itemsExported;
       }
       else
       {

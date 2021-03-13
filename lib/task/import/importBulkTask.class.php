@@ -158,7 +158,7 @@ EOF;
       // Try to free up memory
       unset($importer);
 
-      $count++;
+      ++$count;
       $split = round(microtime(true) - $start, 2);
 
       // Store details if output is specified
@@ -229,7 +229,7 @@ EOF;
             }
           }
 
-          $i++;
+          ++$i;
         }
       }
     }

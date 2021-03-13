@@ -107,7 +107,7 @@ class arRepositoryCsvExportJob extends arExportJob
         $this->info($this->i18n->__('%1 items exported.', ['%1' => $itemsExported]));
       }
 
-      $itemsExported++;
+      ++$itemsExported;
     }
 
     return $itemsExported;

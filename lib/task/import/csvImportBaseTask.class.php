@@ -333,7 +333,7 @@ abstract class csvImportBaseTask extends arBaseTask
           && !isset($import->rowStatusVars[$propertyColumns['endDate']][$index])
           && !isset($import->rowStatusVars[$propertyColumns['description']][$index]))
         {
-          $index++;
+          ++$index;
 
           continue;
         }
@@ -358,7 +358,7 @@ abstract class csvImportBaseTask extends arBaseTask
           $events[] = $eventData;
         }
 
-        $index++;
+        ++$index;
       }
     }
 
@@ -477,7 +477,7 @@ abstract class csvImportBaseTask extends arBaseTask
       throw new sfException('Number of alternative ids does not match number of alt id labels');
     }
 
-    for ($i = 0; $i < count($altIds); $i++)
+    for ($i = 0; $i < count($altIds); ++$i)
     {
       $io->addProperty($altIdLabels[$i], $altIds[$i], ['scope' => 'alternativeIdentifiers']);
     }
