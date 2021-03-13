@@ -516,7 +516,7 @@ class QubitMigrate109 extends QubitMigrate
           break;
 
         default:
-          continue;
+          break;
       }
 
       if (isset($row['value']['en']) && isset($standards[$row['value']['en']]))

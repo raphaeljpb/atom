@@ -128,7 +128,7 @@ class UserEditInformationObjectAclAction extends DefaultEditAction
               break;
 
             default:
-              continue;
+              break;
           }
 
           $this->resource->aclPermissions[] = $aclPermission;
