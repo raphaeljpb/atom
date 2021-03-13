@@ -35,7 +35,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
     {
       $setting = $query[0];
 
-      $this->form->setDefault('enabled', unserialize($setting->getValue(array('sourceCulture' => true))));
+      $this->form->setDefault('enabled', unserialize($setting->getValue(['sourceCulture' => true])));
     }
 
     $configuration = ProjectConfiguration::getActive();
@@ -45,7 +45,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
       unset($pluginPaths[$name]);
     }
 
-    $this->plugins = array();
+    $this->plugins = [];
     foreach ($pluginPaths as $name => $path)
     {
       $className = $name.'Configuration';
@@ -67,8 +67,8 @@ class sfPluginAdminPluginPluginsAction extends sfAction
 
     if ($request->isMethod('post'))
     {
-      $this->form->setValidators(array(
-        'enabled' => new sfValidatorChoice(array('choices' => array_keys($this->plugins), 'empty_value' => array(), 'multiple' => true))));
+      $this->form->setValidators([
+        'enabled' => new sfValidatorChoice(['choices' => array_keys($this->plugins), 'empty_value' => [], 'multiple' => true])]);
 
       $this->form->bind($request->getPostParameters());
 
@@ -80,7 +80,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
           $setting->name = 'plugins';
         }
 
-        $settings = unserialize($setting->getValue(array('sourceCulture' => true)));
+        $settings = unserialize($setting->getValue(['sourceCulture' => true]));
 
         $swordEnabled = in_array('qtSwordPlugin', $settings);
 
@@ -105,7 +105,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
           }
         }
 
-        $setting->setValue(serialize(array_unique($settings)), array('sourceCulture' => true));
+        $setting->setValue(serialize(array_unique($settings)), ['sourceCulture' => true]);
         $setting->save();
 
         QubitCache::getInstance()->removePattern('settings:i18n:*');
@@ -121,7 +121,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
           $this->getUser()->setFlash('info', $message);
         }
 
-        $this->redirect(array('module' => 'sfPluginAdminPlugin', 'action' => 'plugins'));
+        $this->redirect(['module' => 'sfPluginAdminPlugin', 'action' => 'plugins']);
       }
     }
   }

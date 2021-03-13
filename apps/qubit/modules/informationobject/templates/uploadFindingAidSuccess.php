@@ -16,7 +16,7 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'informationobject', 'action' => 'uploadFindingAid'))) ?>
+  <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'informationobject', 'action' => 'uploadFindingAid'])) ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -34,7 +34,7 @@
           </div>
         <?php endif; ?>
 
-        <?php echo $form->file->label(__('%1% file', array('%1%' => strtoupper($format))))->renderRow() ?>
+        <?php echo $form->file->label(__('%1% file', ['%1%' => strtoupper($format)]))->renderRow() ?>
 
       </fieldset>
 
@@ -43,7 +43,7 @@
     <section class="actions">
       <ul>
         <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Upload') ?>"/></li>
-        <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'informationobject'], ['class' => 'c-btn']) ?></li>
       </ul>
     </section>
 

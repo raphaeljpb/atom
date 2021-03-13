@@ -20,12 +20,12 @@
 class UserEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'active',
       'groups',
       'translate',
       'restApiKey',
-      'oaiApiKey');
+      'oaiApiKey'];
 
   public function execute($request)
   {
@@ -70,7 +70,7 @@ class UserEditAction extends DefaultEditAction
 
         if (is_array($languages))
         {
-          $permission->setConstants(array('languages' => $languages));
+          $permission->setConstants(['languages' => $languages]);
           $permission->save();
         }
 
@@ -81,7 +81,7 @@ class UserEditAction extends DefaultEditAction
           $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
         }
 
-        $this->redirect(array($this->resource, 'module' => 'user'));
+        $this->redirect([$this->resource, 'module' => 'user']);
       }
     }
   }
@@ -101,11 +101,11 @@ class UserEditAction extends DefaultEditAction
     $this->permissions = null;
     if (isset($this->resource->id))
     {
-      $permissions = QubitUser::getaclPermissionsById($this->resource->id, array('self' => $this))->orderBy('constants')->orderBy('object_id');
+      $permissions = QubitUser::getaclPermissionsById($this->resource->id, ['self' => $this])->orderBy('constants')->orderBy('object_id');
 
       foreach ($permissions as $item)
       {
-        $repository = $item->getConstants(array('name' => 'repository'));
+        $repository = $item->getConstants(['name' => 'repository']);
         $this->permissions[$repository][$item->objectId][$item->action] = $item->grantDeny;
       }
     }
@@ -136,7 +136,7 @@ class UserEditAction extends DefaultEditAction
         break;
 
       case 'groups':
-        $values = array();
+        $values = [];
         $criteria = new Criteria();
         $criteria->add(QubitAclUserGroup::USER_ID, $this->resource->id);
         foreach (QubitAclUserGroup::get($criteria) as $item)
@@ -144,24 +144,24 @@ class UserEditAction extends DefaultEditAction
           $values[] = $item->groupId;
         }
 
-        $choices = array();
+        $choices = [];
         $criteria = new Criteria();
         $criteria->add(QubitAclGroup::ID, 99, Criteria::GREATER_THAN);
         foreach (QubitAclGroup::get($criteria) as $item)
         {
-          $choices[$item->id] = $item->getName(array('cultureFallback' => true));
+          $choices[$item->id] = $item->getName(['cultureFallback' => true]);
         }
 
         $this->form->setDefault('groups', $values);
         $this->form->setValidator('groups', new sfValidatorPass());
-        $this->form->setWidget('groups', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+        $this->form->setWidget('groups', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
       case 'translate':
         $c = sfCultureInfo::getInstance($this->context->user->getCulture());
         $languages = $c->getLanguages();
-        $choices = array();
+        $choices = [];
 
         foreach (sfConfig::get('app_i18n_languages') as $item)
         {
@@ -176,26 +176,26 @@ class UserEditAction extends DefaultEditAction
         $defaults = null;
         if (null !== $permission = QubitAclPermission::getOne($criteria))
         {
-          $defaults = $permission->getConstants(array('name' => 'languages'));
+          $defaults = $permission->getConstants(['name' => 'languages']);
         }
 
         $this->form->setDefault('translate', $defaults);
         $this->form->setValidator('translate', new sfValidatorPass());
-        $this->form->setWidget('translate', new sfWidgetFormSelect(array('choices'  => $choices, 'multiple' => true)));
+        $this->form->setWidget('translate', new sfWidgetFormSelect(['choices'  => $choices, 'multiple' => true]));
 
         break;
 
       case 'restApiKey':
       case 'oaiApiKey':
         // Give user option of (re)generating or deleting API key
-        $choices = array(
+        $choices = [
           ''         => $this->context->i18n->__('-- Select action --'),
           'generate' => $this->context->i18n->__('(Re)generate API key'),
           'delete'   => $this->context->i18n->__('Delete API key')
-        );
+        ];
 
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         // Expose API key value to template if one exists
         $apiKey = QubitProperty::getOneByObjectIdAndName($this->resource->id, sfInflector::camelize($name));
@@ -228,7 +228,7 @@ class UserEditAction extends DefaultEditAction
         break;
 
       case 'groups':
-        $newGroupIds = $formGroupIds = array();
+        $newGroupIds = $formGroupIds = [];
 
         if (null != ($groups = $this->form->getValue('groups')))
         {
@@ -239,7 +239,7 @@ class UserEditAction extends DefaultEditAction
         }
         else
         {
-          $newGroupIds = $formGroupIds = array();
+          $newGroupIds = $formGroupIds = [];
         }
 
         // Don't re-add existing groups + delete exiting groups that are no longer

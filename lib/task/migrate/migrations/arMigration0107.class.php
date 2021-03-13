@@ -38,7 +38,7 @@ class arMigration0107
    */
   public function up($configuration)
   {
-    $elements = array(
+    $elements = [
       'rad_title_responsibility_area',
       'rad_edition_area',
       'rad_material_specific_details_area',
@@ -57,7 +57,7 @@ class arMigration0107
       'isad_allied_materials_area',
       'isad_notes_area',
       'isad_access_points_area',
-      'isad_description_control_area');
+      'isad_description_control_area'];
 
     // Add visibility settings
     foreach ($elements as $item)

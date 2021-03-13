@@ -39,7 +39,7 @@ class arBaseJob extends Net_Gearman_Job_Common
    * or the maximun amount of tries ($maxTries) is reached. Due to the limitations of the Gearman
    * job server, the waiting jobs will block the workers executing them until they are ended.
    */
-  protected $avoidParallelExecutionJobs = array('arObjectMoveJob', 'arFileImportJob');
+  protected $avoidParallelExecutionJobs = ['arObjectMoveJob', 'arFileImportJob'];
   protected $waitForRetryTime = 10;
   protected $maxRetries = 10;
   protected $dispatcher = null;
@@ -50,7 +50,7 @@ class arBaseJob extends Net_Gearman_Job_Common
    * extended on each job subclasse using the $extraRequiredParameters property.
    * If any of the required paramareters is missing the job will fail.
    */
-  private $requiredParameters = array('id', 'name');
+  private $requiredParameters = ['id', 'name'];
 
   public function run($parameters)
   {
@@ -68,7 +68,7 @@ class arBaseJob extends Net_Gearman_Job_Common
       throw new Net_Gearman_Job_Exception('Called a Gearman worker with an invalid QubitJob id.');
     }
 
-    $this->logger = new arJobLogger($this->dispatcher, array('level' => sfLogger::INFO, 'job' => $this->job));
+    $this->logger = new arJobLogger($this->dispatcher, ['level' => sfLogger::INFO, 'job' => $this->job]);
 
     // Catch all possible exceptions in job execution and throw
     // Net_Gearman_Job_Exception to avoid breaking the worker
@@ -86,13 +86,13 @@ class arBaseJob extends Net_Gearman_Job_Common
           // Fail the job if we have reached the max. amount of retries
           if ($retries++ == $this->maxRetries)
           {
-            $this->error($this->i18n->__('Maximum retries reached (%1). Please, try to launch the job again when other sensitive jobs are finished or contact an administrator', array('%1' => $this->maxRetries)));
+            $this->error($this->i18n->__('Maximum retries reached (%1). Please, try to launch the job again when other sensitive jobs are finished or contact an administrator', ['%1' => $this->maxRetries]));
 
             return false;
           }
 
           // Log retry info
-          $this->info($this->i18n->__('Another sensitive job is being executed, will retry in %1 seconds', array('%1' => $this->waitForRetryTime)));
+          $this->info($this->i18n->__('Another sensitive job is being executed, will retry in %1 seconds', ['%1' => $this->waitForRetryTime]));
 
           sleep($this->waitForRetryTime);
         }
@@ -258,8 +258,8 @@ class arBaseJob extends Net_Gearman_Job_Common
      AND job.name IN $jobNames
      ORDER BY object.created_at;";
 
-    $params = array(':statusId' => QubitTerm::JOB_STATUS_IN_PROGRESS_ID);
-    $runningJobs = QubitPdo::fetchAll($sql, $params, array('fetchMode' => PDO::FETCH_ASSOC));
+    $params = [':statusId' => QubitTerm::JOB_STATUS_IN_PROGRESS_ID];
+    $runningJobs = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
     // Edge case where the QubitJobs are cleared while this one is waiting
     if (count($runningJobs) == 0)

@@ -1,3 +1,3 @@
 <?php
 
-echo get_partial('term/format', array('resource' => $resource));
+echo get_partial('term/format', ['resource' => $resource]);

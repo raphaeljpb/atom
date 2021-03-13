@@ -45,7 +45,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
     {
       if (!isset($this->objects))
       {
-        return array();
+        return [];
       }
 
       return $this->objects;
@@ -81,7 +81,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
     return $this;
   }
 
-  public static function create(array $options = array())
+  public static function create(array $options = [])
   {
     $query = new QubitQuery();
     $query->options = $options;
@@ -89,7 +89,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
     return $query;
   }
 
-  public static function createFromCriteria(Criteria $criteria, $className, array $options = array())
+  public static function createFromCriteria(Criteria $criteria, $className, array $options = [])
   {
     $query = new QubitQuery();
     $query->criteria = $criteria;
@@ -103,21 +103,21 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__isset'), $args);
+    return call_user_func_array([$this, '__isset'], $args);
   }
 
   public function offsetGet($offset)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__get'), $args);
+    return call_user_func_array([$this, '__get'], $args);
   }
 
   public function offsetSet($offset, $value)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__set'), $args);
+    return call_user_func_array([$this, '__set'], $args);
   }
 
   public function offsetUnset($offset)
@@ -217,7 +217,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
     }
 
     // TODO Determine whether the sort order matches the previous sort order
-    return array($this->statement, $sorted);
+    return [$this->statement, $sorted];
   }
 
   protected function getData(QubitQuery $leaf)
@@ -234,7 +234,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
         // Possibly re-index
         if (isset($this->indexByName))
         {
-          $objects = array();
+          $objects = [];
           foreach ($this->objects as $object)
           {
             $objects[$object[$this->indexByName]] = $object;
@@ -245,7 +245,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
       }
       else
       {
-        $this->objects = array();
+        $this->objects = [];
         $sorted = true;
 
         if (isset($this->criteria))
@@ -259,7 +259,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
               $object = $row;
             } else {
               // $this->parent is unset, so we should have a className?
-              $object = call_user_func(array($this->className, 'getFromRow'), $row);
+              $object = call_user_func([$this->className, 'getFromRow'], $row);
             }
 
             // TODO $this->parent is unset, so we probably do not have
@@ -267,7 +267,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
             // of the leaf
             if (isset($this->indexByName))
             {
-              $this->objects[call_user_func(array($object, 'get'.$this->indexByName))] = $object;
+              $this->objects[call_user_func([$object, 'get'.$this->indexByName])] = $object;
             }
             else
             {
@@ -287,7 +287,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
         if (isset($this->indexByName))
         {
-          $this->objects[call_user_func(array($this->andSelf, 'get'.$this->indexByName))] = $this->andSelf;
+          $this->objects[call_user_func([$this->andSelf, 'get'.$this->indexByName])] = $this->andSelf;
         }
         else
         {
@@ -304,16 +304,16 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
       {
         if (isset($this->indexByName))
         {
-          $sorted = uasort($this->objects, array($leaf, 'sortCallback'));
+          $sorted = uasort($this->objects, [$leaf, 'sortCallback']);
         }
         else
         {
-          $sorted = usort($this->objects, array($leaf, 'sortCallback'));
+          $sorted = usort($this->objects, [$leaf, 'sortCallback']);
         }
       }
     }
 
-    return array($this->objects, $sorted);
+    return [$this->objects, $sorted];
   }
 
   protected function getCount(QubitQuery $leaf)
@@ -359,7 +359,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
       }
       else
       {
-        $this->orderByNames = array();
+        $this->orderByNames = [];
       }
 
       if (isset($this->orderByName))
@@ -375,8 +375,8 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
   {
     foreach ($this->getOrderByNames() as $name)
     {
-      $aGet = call_user_func(array($a, 'get'.$name));
-      $bGet = call_user_func(array($b, 'get'.$name));
+      $aGet = call_user_func([$a, 'get'.$name]);
+      $bGet = call_user_func([$b, 'get'.$name]);
 
       if ($aGet < $bGet)
       {
@@ -400,7 +400,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
       }
       else
       {
-        $this->options = array();
+        $this->options = [];
       }
     }
 

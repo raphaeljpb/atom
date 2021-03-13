@@ -19,20 +19,20 @@
 
 class sfDcPluginDcDatesComponent extends InformationObjectEventComponent
 {
-  public static $NAMES = array(
+  public static $NAMES = [
       'date',
       'endDate',
-      'startDate');
+      'startDate'];
 
   public function processForm()
   {
-    $params = array();
+    $params = [];
     if (isset($this->request->editDates))
     {
       $params = $this->request->editDates;
     }
 
-    $dontDeleteIds = array();
+    $dontDeleteIds = [];
     foreach ($params as $item)
     {
       // Continue only if user typed something

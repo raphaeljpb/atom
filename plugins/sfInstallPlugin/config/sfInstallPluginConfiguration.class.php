@@ -17,7 +17,7 @@ class sfInstallPluginConfiguration extends sfPluginConfiguration
     if ('sfInstallPlugin' != $context->request->module
       && !file_exists(sfConfig::get('sf_config_dir').'/config.php'))
     {
-      $context->controller->redirect(array('module' => 'sfInstallPlugin', 'action' => 'index'));
+      $context->controller->redirect(['module' => 'sfInstallPlugin', 'action' => 'index']);
     }
   }
 
@@ -96,7 +96,7 @@ class sfInstallPluginConfiguration extends sfPluginConfiguration
   {
     $routing = $event->getSubject();
 
-    $routing->insertRouteBefore('default', 'sfInstallPlugin/help', new sfRoute('http://accesstomemory.org/wiki/index.php?title=Installer_warnings', array('module' => 'sfInstallPlugin', 'action' => 'help')));
+    $routing->insertRouteBefore('default', 'sfInstallPlugin/help', new sfRoute('http://accesstomemory.org/wiki/index.php?title=Installer_warnings', ['module' => 'sfInstallPlugin', 'action' => 'help']));
 
     // See QubitMetadataResource
   }
@@ -112,12 +112,12 @@ class sfInstallPluginConfiguration extends sfPluginConfiguration
     sfConfig::set('sf_enabled_modules', $enabledModules);
 
     // Launch installer if config.php does not exist
-    $this->dispatcher->connect('application.throw_exception', array($this, 'applicationThrowException'));
+    $this->dispatcher->connect('application.throw_exception', [$this, 'applicationThrowException']);
 
     // Restrict sfInstallPlugin usage
-    $this->dispatcher->connect('controller.change_action', array($this, 'controllerChangeAction'));
+    $this->dispatcher->connect('controller.change_action', [$this, 'controllerChangeAction']);
 
     // Connect event listener to add routes
-    $this->dispatcher->connect('routing.load_configuration', array($this, 'routingLoadConfiguration'));
+    $this->dispatcher->connect('routing.load_configuration', [$this, 'routingLoadConfiguration']);
   }
 }

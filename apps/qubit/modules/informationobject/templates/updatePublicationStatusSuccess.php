@@ -16,7 +16,7 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'informationobject', 'action' => 'updatePublicationStatus'))) ?>
+  <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'informationobject', 'action' => 'updatePublicationStatus'])) ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -39,7 +39,7 @@
     <section class="actions">
       <ul>
         <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Update') ?>"/></li>
-        <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'informationobject'], ['class' => 'c-btn']) ?></li>
       </ul>
     </section>
 

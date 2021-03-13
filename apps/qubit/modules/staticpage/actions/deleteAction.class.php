@@ -49,7 +49,7 @@ class StaticPageDeleteAction extends sfAction
           }
         }
 
-        $this->redirect(array('module' => 'staticpage', 'action' => 'list'));
+        $this->redirect(['module' => 'staticpage', 'action' => 'list']);
       }
     }
   }

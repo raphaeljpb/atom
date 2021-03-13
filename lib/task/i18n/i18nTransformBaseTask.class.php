@@ -25,8 +25,8 @@
  */
 abstract class i18nTransformBaseTask extends arBaseTask
 {
-  private static $tables = array(
-    'information_object_i18n' => array(
+  private static $tables = [
+    'information_object_i18n' => [
       'title',
       'alternate_title',
       'edition',
@@ -48,8 +48,8 @@ abstract class i18nTransformBaseTask extends arBaseTask
       'rules',
       'sources',
       'revision_history',
-    ),
-    'actor_i18n' => array(
+    ],
+    'actor_i18n' => [
       'authorized_form_of_name',
       'dates_of_existence',
       'history',
@@ -63,11 +63,11 @@ abstract class i18nTransformBaseTask extends arBaseTask
       'rules',
       'sources',
       'revision_history',
-    ),
-    'note_i18n' => array(
+    ],
+    'note_i18n' => [
       'content',
-    ),
-    'repository_i18n' => array(
+    ],
+    'repository_i18n' => [
       'geocultural_context',
       'collecting_policies',
       'buildings',
@@ -83,8 +83,8 @@ abstract class i18nTransformBaseTask extends arBaseTask
       'desc_rules',
       'desc_sources',
       'desc_revision_history',
-    ),
-    'rights_i18n' => array(
+    ],
+    'rights_i18n' => [
       'rights_note',
       'copyright_note',
       'identifier_value',
@@ -94,13 +94,13 @@ abstract class i18nTransformBaseTask extends arBaseTask
       'license_note',
       'statute_jurisdiction',
       'statute_note',
-    ),
-  );
+    ],
+  ];
 
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -108,11 +108,11 @@ abstract class i18nTransformBaseTask extends arBaseTask
     $changedCount        = 0;
     $columnsChangedCount = 0;
 
-    $rootIds = implode(', ', array(
+    $rootIds = implode(', ', [
       QubitInformationObject::ROOT_ID,
       QubitActor::ROOT_ID,
       QubitRepository::ROOT_ID,
-    ));
+    ]);
 
     foreach (self::$tables as $tableName => $columns)
     {
@@ -162,11 +162,11 @@ abstract class i18nTransformBaseTask extends arBaseTask
    */
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-    ));
+    ]);
   }
 
   /**
@@ -192,7 +192,7 @@ abstract class i18nTransformBaseTask extends arBaseTask
    */
   protected function updateRow($table, $id, $culture, $columnValues)
   {
-    $values = array();
+    $values = [];
 
     $query = 'UPDATE '. $table .' SET ';
 

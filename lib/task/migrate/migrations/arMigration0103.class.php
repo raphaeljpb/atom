@@ -44,7 +44,7 @@ class arMigration0103
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::RELATION_TYPE_ID;
     $term->sourceCulture = 'en';
-    $term->setName('Related material descriptions', array('culture' => 'en'));
+    $term->setName('Related material descriptions', ['culture' => 'en']);
     $term->save();
 
     return true;

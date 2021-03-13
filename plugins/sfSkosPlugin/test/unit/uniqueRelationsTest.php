@@ -25,37 +25,37 @@ $t->diag('Initializing configuration.');
 $configuration = ProjectConfiguration::getApplicationConfiguration('qubit', 'test', true);
 
 
-$tests = array(
+$tests = [
 
-  array(
-    'relations' => array(
-      array(1, 2),
-      array(1, 3),
-      array(1, 4),
-      array(2, 3),
-      array(4, 1)
-    ),
-    'expected' => array(
-      array(1, 2),
-      array(1, 3),
-      array(1, 4),
-      array(2, 3)
-    )
-  ),
+  [
+    'relations' => [
+      [1, 2],
+      [1, 3],
+      [1, 4],
+      [2, 3],
+      [4, 1]
+    ],
+    'expected' => [
+      [1, 2],
+      [1, 3],
+      [1, 4],
+      [2, 3]
+    ]
+  ],
 
-  array(
-    'relations' => array(
-      array(10, 20),
-      array(3, 3),
-      array(3, 3)
-    ),
-    'expected' => array(
-      array(10, 20),
-      array(3, 3)
-    )
-  )
+  [
+    'relations' => [
+      [10, 20],
+      [3, 3],
+      [3, 3]
+    ],
+    'expected' => [
+      [10, 20],
+      [3, 3]
+    ]
+  ]
 
-);
+];
 
 foreach ($tests as $item)
 {
@@ -109,18 +109,18 @@ foreach ($graph->allOfType('skos:Concept') as $x)
 
 $results = $relations->getAll();
 
-$tests = array(
-  9345 => array(7050, 10321, 81, 8646, 9403, 13294, 9842, 83, 2073),
-  2340 => array(2327, 2328),
-  249  => array(1927, 219, 619, 8188, 11757, 12189),
-  1518 => array(1480, 3602, 11264, 1516, 17061)
-);
+$tests = [
+  9345 => [7050, 10321, 81, 8646, 9403, 13294, 9842, 83, 2073],
+  2340 => [2327, 2328],
+  249  => [1927, 219, 619, 8188, 11757, 12189],
+  1518 => [1480, 3602, 11264, 1516, 17061]
+];
 
 foreach ($tests as $s => $p)
 {
   foreach ($p as $pX)
   {
-    $rel = array($s, $pX);
+    $rel = [$s, $pX];
     $matched = $relations->exists($rel[0], $rel[1]);
     $t->is($matched, true, sprintf('Relation %s => %s should be found', $rel[0], $rel[1]));
   }

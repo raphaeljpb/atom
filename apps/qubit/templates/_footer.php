@@ -7,7 +7,7 @@
   <?php echo get_component_slot('footer') ?>
 
   <div id="print-date">
-    <?php echo __('Printed: %d%', array('%d%' => date('Y-m-d'))) ?>
+    <?php echo __('Printed: %d%', ['%d%' => date('Y-m-d')]) ?>
   </div>
 
 </footer>

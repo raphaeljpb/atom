@@ -20,9 +20,9 @@
 class ClipboardLoadAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'password',
-      'mode');
+      'mode'];
 
   public function execute($request)
   {
@@ -42,7 +42,7 @@ class ClipboardLoadAction extends DefaultEditAction
       $this->response->setStatusCode(400);
       $message = $this->context->i18n->__('Incorrect clipboard ID and/or action.');
 
-      return $this->renderText(json_encode(array('error' => $message)));
+      return $this->renderText(json_encode(['error' => $message]));
     }
 
     $this->processForm();
@@ -56,18 +56,18 @@ class ClipboardLoadAction extends DefaultEditAction
       $this->response->setStatusCode(404);
       $message = $this->context->i18n->__('Clipboard ID not found.');
 
-      return $this->renderText(json_encode(array('error' => $message)));
+      return $this->renderText(json_encode(['error' => $message]));
     }
 
     $criteria = new Criteria();
     $criteria->add(QubitClipboardSaveItem::SAVE_ID, $save->id);
     $items = QubitClipboardSaveItem::get($criteria);
 
-    $clipboard = array(
-      'informationObject' => array(),
-      'actor' => array(),
-      'repository' => array()
-    );
+    $clipboard = [
+      'informationObject' => [],
+      'actor' => [],
+      'repository' => []
+    ];
     $addedCount = 0;
 
     foreach ($items as $item)
@@ -94,12 +94,12 @@ class ClipboardLoadAction extends DefaultEditAction
 
     $message = $this->context->i18n->__(
       'Clipboard %1% loaded, %2% records %3%.',
-      array('%1%' => $this->password, '%2%' => $addedCount, '%3%' => $actionDescription)
+      ['%1%' => $this->password, '%2%' => $addedCount, '%3%' => $actionDescription]
     );
 
     $this->response->setStatusCode(200);
 
-    return $this->renderText(json_encode(array('success' => $message, 'clipboard' => $clipboard)));
+    return $this->renderText(json_encode(['success' => $message, 'clipboard' => $clipboard]));
   }
 
   protected function addField($name)
@@ -107,7 +107,7 @@ class ClipboardLoadAction extends DefaultEditAction
     switch ($name)
     {
       case 'password':
-        $this->form->setValidator('password', new sfValidatorString(array('required' => true)));
+        $this->form->setValidator('password', new sfValidatorString(['required' => true]));
         $this->form->setWidget('password', new sfWidgetFormInput());
 
         break;
@@ -115,11 +115,11 @@ class ClipboardLoadAction extends DefaultEditAction
       case 'mode':
         $this->form->setDefault('mode', 'merge');
         $this->form->setValidator('mode', new sfValidatorString());
-        $choices = array(
+        $choices = [
           'merge' => $this->context->i18n->__('Merge saved clipboard with existing clipboard results'),
           'replace' => $this->context->i18n->__('Replace existing clipboard results with saved clipboard')
-        );
-        $this->form->setWidget('mode', new sfWidgetFormSelect(array('choices' => $choices)));
+        ];
+        $this->form->setWidget('mode', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
     }

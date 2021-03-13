@@ -19,14 +19,14 @@
     </div>
   <?php endif; ?>
 
-  <?php echo get_component('default', 'translationLinks', array('resource' => $resource)) ?>
+  <?php echo get_component('default', 'translationLinks', ['resource' => $resource]) ?>
 
 <?php end_slot() ?>
 
 <div class="field">
   <h3>Accession record</h3>
   <div class="value">
-    <?php echo link_to(render_title($resource->accession, false), array($resource->accession, 'module' => 'accession')) ?>
+    <?php echo link_to(render_title($resource->accession, false), [$resource->accession, 'module' => 'accession']) ?>
   </div>
 </div>
 
@@ -46,10 +46,10 @@
   <section class="actions">
     <ul>
       <?php if (QubitAcl::check($resource, 'update') || (QubitAcl::check($resource, 'translate'))): ?>
-        <li><?php echo link_to(__('Edit'), array($resource, 'module' => 'deaccession', 'action' => 'edit'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'deaccession', 'action' => 'edit'], ['class' => 'c-btn']) ?></li>
       <?php endif; ?>
       <?php if (QubitAcl::check($resource, 'delete')): ?>
-        <li><?php echo link_to(__('Delete'), array($resource, 'module' => 'deaccession', 'action' => 'delete'), array('class' => 'c-btn c-btn-delete')) ?></li>
+        <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'deaccession', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete']) ?></li>
       <?php endif; ?>
     </ul>
   </section>

@@ -12,12 +12,12 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'user', 'action' => 'passwordEdit')), array('id' => 'editForm')) ?>
+  <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'user', 'action' => 'passwordEdit']), ['id' => 'editForm']) ?>
 
     <?php echo $form->renderHiddenFields() ?>
     
-    <?php $settings = json_encode(array(
-      'password' => array(
+    <?php $settings = json_encode([
+      'password' => [
         'strengthTitle' => __('Password strength:'),
         'hasWeaknesses' => __('To make your password stronger:'),
         'tooShort' => __('Make it at least six characters'),
@@ -29,7 +29,7 @@
         'confirmSuccess' => __('Yes'),
         'confirmFailure' => __('No'),
         'confirmTitle' => __('Passwords match:'),
-        'username' => ''))) ?>
+        'username' => '']]) ?>
     <?php echo javascript_tag(<<<EOF
 jQuery.extend(Drupal.settings, $settings);
 EOF
@@ -47,14 +47,14 @@ EOF
           <?php echo $form->password
             ->label(__('New password'))
             ->renderLabel() ?>
-          <?php echo $form->password->render(array('class' => 'password-field')) ?>
+          <?php echo $form->password->render(['class' => 'password-field']) ?>
         </div>
 
         <div class="form-item confirm-parent">
           <?php echo $form->confirmPassword
             ->label(__('Confirm password'))
             ->renderLabel() ?>
-          <?php echo $form->confirmPassword->render(array('class' => 'password-confirm')) ?>
+          <?php echo $form->confirmPassword->render(['class' => 'password-confirm']) ?>
         </div>
 
       </fieldset>
@@ -63,7 +63,7 @@ EOF
 
     <section class="actions">
       <ul>
-        <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'user'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'user'], ['class' => 'c-btn']) ?></li>
         <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
       </ul>
     </section>

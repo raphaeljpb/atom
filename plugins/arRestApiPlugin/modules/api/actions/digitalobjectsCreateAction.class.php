@@ -48,7 +48,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
     // Associate properties with information object
     if (!empty($this->do->objectId))
     {
-      $props = array(
+      $props = [
         'file_uuid' => 'objectUUID',
         'aip_uuid' => 'aipUUID',
         'format_name' => 'formatName',
@@ -57,7 +57,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
         'format_registry_name' => 'formatRegistryName',
         'relative_path_within_aip' => 'relativePathWithinAip',
         'aip_name' => 'aipName'
-      );
+      ];
 
       foreach ($props as $pkey => $pval)
       {
@@ -78,7 +78,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
 
     $this->response->setStatusCode(201);
 
-    return array('id' => (int)$this->do->id, 'slug' => $this->do->slug);
+    return ['id' => (int)$this->do->id, 'slug' => $this->do->slug];
   }
 
   protected function processField($field, $value)

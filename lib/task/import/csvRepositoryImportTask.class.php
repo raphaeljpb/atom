@@ -38,7 +38,7 @@ EOF;
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -64,13 +64,13 @@ EOF;
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
     // Load taxonomies into variables to avoid use of magic numbers
-    $termData = QubitFlatfileImport::loadTermsFromTaxonomies(array(
+    $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
       QubitTaxonomy::DESCRIPTION_STATUS_ID       => 'descriptionStatusTypes',
       QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID => 'levelOfDetailTypes'
-    ));
+    ]);
 
     // Define import
-    $import = new QubitFlatfileImport(array(
+    $import = new QubitFlatfileImport([
       // Pass context
       'context' => sfContext::createInstance($this->configuration),
 
@@ -85,15 +85,15 @@ EOF;
 
       // the status array is a place to put data that should be accessible
       // from closure logic using the getStatus method
-      'status' => array(
+      'status' => [
         'options'                => $options,
         'sourceName'             => $sourceName,
         'descriptionStatusTypes' => $termData['descriptionStatusTypes'],
         'levelOfDetailTypes'     => $termData['levelOfDetailTypes']
-      ),
+      ],
 
       // Import columns that map directory to QubitRepository properties
-      'standardColumns' => array(
+      'standardColumns' => [
         'identifier',
         'uploadLimit',
         'authorizedFormOfName',
@@ -112,40 +112,40 @@ EOF;
         'reproductionServices',
         'publicFacilities',
         'culture'
-      ),
+      ],
 
-      'columnMap' => array(
+      'columnMap' => [
         'descriptionIdentifier'      => 'descIdentifier',
         'institutionIdentifier'      => 'descInstitutionIdentifier',
         'descriptionRules'           => 'descRules',
         'descriptionRevisionHistory' => 'descRevisionHistory',
         'descriptionSources'         => 'descSources'
-      ),
+      ],
 
       // Import columns that map to taxonomy terms
-      'termRelations' => array(
+      'termRelations' => [
         'geographicSubregions' => QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID,
         'thematicAreas'        => QubitTaxonomy::THEMATIC_AREA_ID,
         'types'                => QubitTaxonomy::REPOSITORY_TYPE_ID
-      ),
+      ],
 
       // Import columns that can be added as QubitNote objects
-      'noteMap' => array(
-        'maintenanceNote' => array('typeId' => QubitTerm::MAINTENANCE_NOTE_ID)
-      ),
+      'noteMap' => [
+        'maintenanceNote' => ['typeId' => QubitTerm::MAINTENANCE_NOTE_ID]
+      ],
 
       // Import columns with values that should be serialized/added as a language property
-      'languageMap' => array(
+      'languageMap' => [
         'language' => 'language'
-      ),
+      ],
 
       // Import columns with values that should be serialized/added as a script property
-      'scriptMap' => array(
+      'scriptMap' => [
         'script' => 'script'
-      ),
+      ],
 
       // These values get stored to the rowStatusVars array
-      'variableColumns' => array(
+      'variableColumns' => [
         'contactPerson',
         'streetAddress',
         'city',
@@ -160,14 +160,14 @@ EOF;
         'descriptionStatus',
         'levelOfDetail',
         'legacyId'
-      ),
+      ],
 
       // These values get exploded and stored to the rowStatusVars array
-      'arrayColumns' => array(
+      'arrayColumns' => [
         'parallelFormsOfName' => '|',
         'otherFormsOfName' => '|',
         'script' => '|'
-      ),
+      ],
 
       // Import logic to execute before saving QubitRepository
       'preSaveLogic' => function (&$self)
@@ -182,7 +182,7 @@ EOF;
         $self->object->descStatusId = $self->translateNameToTermId(
           'description status',
           $self->rowStatusVars['descriptionStatus'],
-          array(),
+          [],
           $self->status['descriptionStatusTypes'][$self->columnValue('culture')]
         );
 
@@ -190,7 +190,7 @@ EOF;
         $self->object->descDetailId = $self->translateNameToTermId(
           'description detail',
           $self->rowStatusVars['levelOfDetail'],
-          array(),
+          [],
           $self->status['levelOfDetailTypes'][$self->columnValue('culture')]
         );
       },
@@ -202,7 +202,7 @@ EOF;
 
         // Check if any contact information data exists
         $addContactInfo = false;
-        $contactInfoFields = array('contactPerson', 'streetAddress', 'city', 'region', 'postalCode', 'country', 'telephone', 'email', 'fax', 'website');
+        $contactInfoFields = ['contactPerson', 'streetAddress', 'city', 'region', 'postalCode', 'country', 'telephone', 'email', 'fax', 'website'];
         foreach ($contactInfoFields as $field)
         {
           if (!empty($self->rowStatusVars[$field]))
@@ -266,7 +266,7 @@ EOF;
           QubitSearch::getInstance()->update($self->object);
         }
       }
-    ));
+    ]);
 
     // Allow search indexing to be enabled via a CLI option
     $import->searchIndexingDisabled = ($options['index']) ? false : true;
@@ -285,7 +285,7 @@ EOF;
   {
     parent::configure();
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption(
         'source-name',
         null,
@@ -321,7 +321,7 @@ EOF;
         null,
         sfCommandOption::PARAMETER_OPTIONAL,
         "Set the upload limit for repositories getting imported (default: disable uploads)")
-      )
+      ]
     );
   }
 }

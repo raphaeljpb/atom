@@ -26,12 +26,12 @@
  */
 class MenuEditAction extends sfAction
 {
-  public static $NAMES = array(
+  public static $NAMES = [
       'name',
       'label',
       'parentId',
       'path',
-      'description');
+      'description'];
 
   public function processForm()
   {
@@ -86,7 +86,7 @@ class MenuEditAction extends sfAction
           $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
         }
 
-        $this->redirect(array('module' => 'menu', 'action' => 'list'));
+        $this->redirect(['module' => 'menu', 'action' => 'list']);
       }
     }
 
@@ -105,7 +105,7 @@ class MenuEditAction extends sfAction
         }
 
         $this->form->setDefault($name, $this->menu[$name]);
-        $this->form->setValidator($name, new QubitValidatorMenuName(array('required' => true, 'resource' => $this->menu)));
+        $this->form->setValidator($name, new QubitValidatorMenuName(['required' => true, 'resource' => $this->menu]));
         $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
@@ -113,7 +113,7 @@ class MenuEditAction extends sfAction
       case 'path':
         $this->form->setDefault($name, $this->menu[$name]);
         $pathRequired = ($this->menu->parentId == QubitMenu::ROOT_ID) ? false : true;
-        $this->form->setValidator($name, new sfValidatorString(array('required' => $pathRequired)));
+        $this->form->setValidator($name, new sfValidatorString(['required' => $pathRequired]));
         $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
@@ -131,7 +131,7 @@ class MenuEditAction extends sfAction
         $menuTree = QubitMenu::getTreeById(QubitMenu::ROOT_ID);
 
         // Build an array of choices for "parentId" select box (with blank line)
-        $choices = array(1 => '[ '.$this->context->i18n->__('Top').' ]');
+        $choices = [1 => '[ '.$this->context->i18n->__('Top').' ]'];
         foreach ($menuTree as $menu)
         {
           $choices[$menu['id']] = str_repeat('-', $menu['depth']).' '.$menu['name'];
@@ -142,8 +142,8 @@ class MenuEditAction extends sfAction
           $this->form->setDefault('parentId', $this->menu->parentId);
         }
 
-        $this->form->setValidator('parentId', new sfValidatorString(array('required' => true)));
-        $this->form->setWidget('parentId', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator('parentId', new sfValidatorString(['required' => true]));
+        $this->form->setWidget('parentId', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 

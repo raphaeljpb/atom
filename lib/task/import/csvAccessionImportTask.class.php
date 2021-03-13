@@ -36,7 +36,7 @@ EOF;
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -57,7 +57,7 @@ EOF;
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
     // Load taxonomies into variables to avoid use of magic numbers
-    $termData = QubitFlatfileImport::loadTermsFromTaxonomies(array(
+    $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
       QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID    => 'acquisitionTypes',
       QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID       => 'resourceTypes',
       QubitTaxonomy::ACCESSION_PROCESSING_STATUS_ID   => 'processingStatus',
@@ -65,10 +65,10 @@ EOF;
       QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID => 'alternativeIdentifierTypes',
       QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID          => 'physicalObjectTypes',
       QubitTaxonomy::ACCESSION_EVENT_TYPE_ID          => 'accessionEventTypes'
-    ));
+    ]);
 
     // Define import
-    $import = new QubitFlatfileImport(array(
+    $import = new QubitFlatfileImport([
       // Pass context
       'context' => sfContext::createInstance($this->configuration),
 
@@ -80,7 +80,7 @@ EOF;
 
       // The status array is a place to put data that should be accessible
       // from closure logic using the getStatus method
-      'status' => array(
+      'status' => [
         'sourceName'                  => $sourceName,
         'acquisitionTypes'            => $termData['acquisitionTypes'],
         'resourceTypes'               => $termData['resourceTypes'],
@@ -90,9 +90,9 @@ EOF;
         'alternativeIdentifierTypes'  => $termData['alternativeIdentifierTypes'],
         'accessionEventTypes'         => $termData['accessionEventTypes'],
         'assignId'                    => $options['assign-id']
-      ),
+      ],
 
-      'standardColumns' => array(
+      'standardColumns' => [
         'appraisal',
         'archivalHistory',
         'acquisitionDate',
@@ -102,9 +102,9 @@ EOF;
         'scopeAndContent',
         'sourceOfAcquisition',
         'title'
-      ),
+      ],
 
-      'arrayColumns' => array(
+      'arrayColumns' => [
         'alternativeIdentifiers'     => '|',
         'alternativeIdentifierTypes' => '|',
         'alternativeIdentifierNotes' => '|',
@@ -135,14 +135,14 @@ EOF;
         'creationDatesEnd'   => '|',
         'creationDateNotes'  => '|',
         'creationDatesType'  => '|'
-      ),
+      ],
 
-      'columnMap' => array(
+      'columnMap' => [
         'physicalCondition' => 'physicalCharacteristics'
-      ),
+      ],
 
       // These values get stored to the rowStatusVars array
-      'variableColumns' => array(
+      'variableColumns' => [
         'accessionNumber',
         'acquisitionType',
         'resourceType',
@@ -162,7 +162,7 @@ EOF;
         'donorEmail',
         'donorNote',
         'qubitParentSlug'
-      ),
+      ],
 
       // Import logic to load accession
       'rowInitLogic' => function (&$self)
@@ -172,7 +172,7 @@ EOF;
         // Look up Qubit ID of pre-created accession
         $statement = $self->sqlQuery(
           "SELECT id FROM accession WHERE identifier=?",
-          $params = array($accessionNumber)
+          $params = [$accessionNumber]
         );
 
         $result = $statement->fetch(PDO::FETCH_OBJ);
@@ -258,7 +258,7 @@ EOF;
                     $term = new QubitTerm();
                     $term->parentId = QubitTerm::ROOT_ID;
                     $term->taxonomyId = QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID;
-                    $term->setName($typeName, array('culture' => $self->columnValue('culture')));
+                    $term->setName($typeName, ['culture' => $self->columnValue('culture')]);
                     $term->sourceCulture = $self->columnValue('culture');
                     $term->save();
 
@@ -273,7 +273,7 @@ EOF;
                 // Set type note, if specified
                 if (!empty($note = $identifierNotes[$index]))
                 {
-                  $otherName->setNote($note, array('culture' => $self->columnValue('culture')));
+                  $otherName->setNote($note, ['culture' => $self->columnValue('culture')]);
                 }
 
                 $otherName->culture = $self->columnValue('culture');
@@ -310,7 +310,7 @@ EOF;
                   $term = new QubitTerm();
                   $term->parentId = QubitTerm::ROOT_ID;
                   $term->taxonomyId = QubitTaxonomy::ACCESSION_EVENT_TYPE_ID;
-                  $term->setName($eventType, array('culture' => $self->columnValue('culture')));
+                  $term->setName($eventType, ['culture' => $self->columnValue('culture')]);
                   $term->sourceCulture = $self->columnValue('culture');
                   $term->save();
 
@@ -335,7 +335,7 @@ EOF;
                   $note = new QubitNote();
                   $note->objectId = $event->id;
                   $note->typeId = QubitTerm::ACCESSION_EVENT_NOTE_ID;
-                  $note->setContent($eventNoteText, array('culture' => $self->columnValue('culture')));
+                  $note->setContent($eventNoteText, ['culture' => $self->columnValue('culture')]);
                   $note->save();
                 }
               }
@@ -349,7 +349,7 @@ EOF;
             $donor = $self->createOrFetchDonor($self->rowStatusVars['donorName']);
 
             // Map column names to QubitContactInformation properties
-            $columnToProperty = array(
+            $columnToProperty = [
               'donorEmail'         => 'email',
               'donorTelephone'     => 'telephone',
               'donorFax'           => 'fax',
@@ -359,10 +359,10 @@ EOF;
               'donorPostalCode'    => 'postalCode',
               'donorNote'          => 'note',
               'donorContactPerson' => 'contactPerson'
-            );
+            ];
 
             // Set up creation of contact infomation
-            $contactData = array();
+            $contactData = [];
             foreach($columnToProperty as $column => $property)
             {
               if (isset($self->rowStatusVars[$column]))
@@ -397,7 +397,7 @@ EOF;
             && $self->rowStatusVars['qubitParentSlug'])
           {
             $query = "SELECT object_id FROM slug WHERE slug=?";
-            $statement = QubitFlatfileImport::sqlQuery($query, array($self->rowStatusVars['qubitParentSlug']));
+            $statement = QubitFlatfileImport::sqlQuery($query, [$self->rowStatusVars['qubitParentSlug']]);
             $result = $statement->fetch(PDO::FETCH_OBJ);
             if ($result)
             {
@@ -422,7 +422,7 @@ EOF;
           QubitSearch::getInstance()->update($self->object);
         }
       }
-    ));
+    ]);
 
     $import->addColumnHandler('acquisitionDate', function ($self, $data)
     {
@@ -526,7 +526,7 @@ EOF;
   {
     parent::configure();
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption(
         'source-name',
         null,
@@ -544,6 +544,6 @@ EOF;
         sfCommandOption::PARAMETER_NONE,
         "Assign identifier, based on mask and counter, if no accession number specified in row."
       )
-    ));
+    ]);
   }
 }

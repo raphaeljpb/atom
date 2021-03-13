@@ -12,9 +12,9 @@
   <?php echo $form->renderGlobalErrors() ?>
 
   <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
-    <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'deaccession', 'action' => 'edit')), array('id' => 'editForm')) ?>
+    <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'deaccession', 'action' => 'edit']), ['id' => 'editForm']) ?>
   <?php else: ?>
-    <?php echo $form->renderFormTag(url_for(array('module' => 'deaccession', 'action' => 'add')), array('id' => 'editForm')) ?>
+    <?php echo $form->renderFormTag(url_for(['module' => 'deaccession', 'action' => 'add']), ['id' => 'editForm']) ?>
   <?php endif; ?>
 
     <?php echo $form->renderHiddenFields() ?>
@@ -41,13 +41,13 @@
 
         <?php echo render_field($form->description
           ->help(__('Identify what materials are being deaccessioned.'))
-          ->label(__('Description').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>'), $resource, array('class' => 'resizable')) ?>
+          ->label(__('Description').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>'), $resource, ['class' => 'resizable']) ?>
 
         <?php echo render_field($form->extent
-          ->help(__('The number of units as a whole number and the measurement of the records to be deaccessioned.')), $resource, array('class' => 'resizable')) ?>
+          ->help(__('The number of units as a whole number and the measurement of the records to be deaccessioned.')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo render_field($form->reason
-          ->help(__('Provide a reason why the records are being deaccessioned.')), $resource, array('class' => 'resizable')) ?>
+          ->help(__('Provide a reason why the records are being deaccessioned.')), $resource, ['class' => 'resizable']) ?>
 
       </fieldset>
 
@@ -56,10 +56,10 @@
     <section class="actions">
       <ul>
         <?php if (isset($resource->id)): ?>
-          <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'deaccession'), array('class' => 'c-btn')) ?></li>
+          <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'deaccession'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
         <?php else: ?>
-          <li><?php echo link_to(__('Cancel'), array($resource->accession, 'module' => 'accession'), array('class' => 'c-btn')) ?></li>
+          <li><?php echo link_to(__('Cancel'), [$resource->accession, 'module' => 'accession'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create') ?>"/></li>
         <?php endif; ?>
       </ul>

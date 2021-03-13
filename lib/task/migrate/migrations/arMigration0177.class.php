@@ -39,7 +39,7 @@ class arMigration0177
   public function up($configuration)
   {
     // Remove old tables present, at least, on the demo data database
-    $oldTables = array(
+    $oldTables = [
       'historical_event',
       'system_event',
       'place_map_relation',
@@ -51,7 +51,7 @@ class arMigration0177
       'place',
       'right_i18n',
       'right',
-    );
+    ];
 
     foreach ($oldTables as $table)
     {
@@ -62,59 +62,59 @@ class arMigration0177
     // - IO `display_standard_id` (unnamed on migration 94).
     // - Job `user_id` and `object_id` (misnamed on migration 111).
     // - DO `parent_id` (not renamed in arUpgrader110).
-    QubitMigrate::updateIndexes(array(
-      array(
+    QubitMigrate::updateIndexes([
+      [
         'table' => 'information_object',
         'column' => 'display_standard_id',
         'index' => 'information_object_FI_8',
-      ),
-      array(
+      ],
+      [
         'table' => 'job',
         'column' => 'user_id',
         'index' => 'job_FI_2',
-      ),
-      array(
+      ],
+      [
         'table' => 'job',
         'column' => 'object_id',
         'index' => 'job_FI_3',
-      ),
-      array(
+      ],
+      [
         'table' => 'digital_object',
         'column' => 'parent_id',
         'index' => 'digital_object_FI_5',
-      ),
-    ));
+      ],
+    ]);
 
     // Fix foreign keys:
     // - Restore ON DELETE CASCADE on DO `object_id` (missing on migration 169).
     // - Rename IO `display_standard_id` constraint (unnamed on migration 94).
     // - Rename slug `object_id` constraint (unnamed on arUpgrader110).
-    QubitMigrate::updateForeignKeys(array(
-      array(
+    QubitMigrate::updateForeignKeys([
+      [
         'table' => 'digital_object',
         'column' => 'object_id',
         'refTable' => 'object',
         'constraint' => 'digital_object_FK_2',
         'onDelete' => 'ON DELETE CASCADE',
-      ),
-      array(
+      ],
+      [
         'table' => 'information_object',
         'column' => 'display_standard_id',
         'refTable' => 'term',
         'constraint' => 'information_object_FK_8',
         'onDelete' => 'ON DELETE SET NULL',
-      ),
-      array(
+      ],
+      [
         'table' => 'slug',
         'column' => 'object_id',
         'refTable' => 'object',
         'constraint' => 'slug_FK_1',
         'onDelete' => 'ON DELETE CASCADE',
-      ),
-    ));
+      ],
+    ]);
 
     // Restore NOT NULL constraint on culture columns (removed on migration 172)
-    $i18nTables = array(
+    $i18nTables = [
       'accession_i18n',
       'acl_group_i18n',
       'actor_i18n',
@@ -135,7 +135,7 @@ class arMigration0177
       'static_page_i18n',
       'taxonomy_i18n',
       'term_i18n'
-    );
+    ];
 
     foreach($i18nTables as $i18nTable)
     {
@@ -145,7 +145,7 @@ class arMigration0177
       $sql = 'UPDATE %s SET source_culture=:cul WHERE source_culture IS NULL;';
       QubitPdo::modify(
         sprintf($sql, $baseTable),
-        array(':cul' => sfConfig::get('sf_default_culture', 'en'))
+        [':cul' => sfConfig::get('sf_default_culture', 'en')]
       );
 
       // The culture and id together are a unique key on the i18n tables so
@@ -170,10 +170,10 @@ class arMigration0177
     foreach (QubitPdo::fetchAll($sql) as $slug)
     {
       $sql = 'UPDATE slug SET slug=:slug WHERE id=:id';
-      QubitPdo::modify($sql, array(
+      QubitPdo::modify($sql, [
         ':slug' => QubitSlug::getUnique(),
         ':id' => $slug->id
-      ));
+      ]);
     }
 
     $sql = 'ALTER TABLE slug MODIFY slug VARCHAR(255) ';

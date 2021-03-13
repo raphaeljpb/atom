@@ -18,7 +18,7 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array('module' => 'settings', 'action' => 'treeview'))) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'settings', 'action' => 'treeview'])) ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -95,12 +95,12 @@
               ->label(__('Items per page'))
               ->help(
                   __('Items per page can be a minimum of %1% and a maximum of %2%',
-                    array(
+                    [
                       '%1%' => format_number(10),
                       '%2%' => format_number(
                         sfConfig::get('app_treeview_items_per_page_max', 10000)
                       )
-                    )
+                    ]
                   )
                 )
               ->renderRow() ?>

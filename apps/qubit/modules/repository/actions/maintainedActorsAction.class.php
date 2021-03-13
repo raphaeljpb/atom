@@ -48,25 +48,25 @@ class RepositoryMaintainedActorsAction extends sfAction
     $pager->setPage($request->page);
     $pager->init();
 
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Qubit', 'Url'));
+    sfContext::getInstance()->getConfiguration()->loadHelpers(['Qubit', 'Url']);
 
-    $results = array();
+    $results = [];
     foreach ($pager->getResults() as $item)
     {
       $doc = $item->getData();
-      $results[] = array(
-        'url' => url_for(array('module' => 'actor', 'slug' => $doc['slug'])),
-        'title' => render_value_inline(get_search_i18n($doc, 'authorizedFormOfName', array('allowEmpty' => false, 'culture' => $culture, 'cultureFallback' => true)))
-      );
+      $results[] = [
+        'url' => url_for(['module' => 'actor', 'slug' => $doc['slug']]),
+        'title' => render_value_inline(get_search_i18n($doc, 'authorizedFormOfName', ['allowEmpty' => false, 'culture' => $culture, 'cultureFallback' => true]))
+      ];
     }
 
-    $data = array(
+    $data = [
       'results'     => $results,
       'start'       => $pager->getFirstIndice(),
       'end'         => $pager->getLastIndice(),
       'currentPage' => $pager->getPage(),
       'lastPage'    => $pager->getLastPage()
-    );
+    ];
 
     return $this->renderText(json_encode($data));
   }
@@ -74,14 +74,14 @@ class RepositoryMaintainedActorsAction extends sfAction
   public static function getActors($repositoryId, $page, $limit)
   {
     $query = new \Elastica\Query();
-    $queryTerm = new \Elastica\Query\Term(array('maintainingRepositoryId' => $repositoryId));
+    $queryTerm = new \Elastica\Query\Term(['maintainingRepositoryId' => $repositoryId]);
     $query->setQuery($queryTerm);
 
     $query->setSize($limit);
     $query->setFrom($limit * ($page - 1));
 
     $field = sprintf('i18n.%s.authorizedFormOfName.alphasort', sfContext::getInstance()->user->getCulture());
-    $query->setSort(array($field => 'asc'));
+    $query->setSort([$field => 'asc']);
 
     $resultSet = QubitSearch::getInstance()->index->getType('QubitActor')->search($query);
 

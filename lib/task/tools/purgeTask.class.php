@@ -29,11 +29,11 @@ class purgeTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     if (!$options['demo'] && !function_exists('readline'))
     {
-      $needed = array('title', 'description', 'url', 'email', 'username', 'password');
+      $needed = ['title', 'description', 'url', 'email', 'username', 'password'];
       if (!array_key_exists($needed, $options))
       {
         throw new Exception('At least one of the following command line '.
@@ -51,8 +51,8 @@ class purgeTask extends sfBaseTask
       $this->setDemoOptions($options);
     }
 
-    $insertSqlArguments = array();
-    $insertSqlOptions = array('no-confirmation' => $options['no-confirmation']);
+    $insertSqlArguments = [];
+    $insertSqlOptions = ['no-confirmation' => $options['no-confirmation']];
 
     $insertSql->run($insertSqlArguments, $insertSqlOptions);
 
@@ -131,10 +131,10 @@ class purgeTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-    ));
+    $this->addArguments([
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
@@ -147,7 +147,7 @@ class purgeTask extends sfBaseTask
       new sfCommandOption('password', null, sfCommandOption::PARAMETER_OPTIONAL, 'Desired admin password'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
       new sfCommandOption('demo', null, sfCommandOption::PARAMETER_NONE, 'Use default demo values, do not ask for confirmation')
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'purge';

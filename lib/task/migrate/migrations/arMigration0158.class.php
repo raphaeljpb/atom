@@ -38,7 +38,7 @@ class arMigration0158
    */
   public function up($configuration)
   {
-    $tables = array(
+    $tables = [
       'q_acl_action',
       'q_acl_action_i18n',
       'q_acl_group',
@@ -101,7 +101,7 @@ class arMigration0158
       'q_term_i18n',
       'q_user',
       'q_user_role_relation'
-    );
+    ];
 
     try
     {

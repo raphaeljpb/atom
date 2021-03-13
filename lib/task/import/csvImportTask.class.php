@@ -56,7 +56,7 @@ EOF;
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -77,7 +77,7 @@ EOF;
     $defaultStatusId = sfConfig::get('app_defaultPubStatus', QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID);
 
     // Load taxonomies into variables to avoid use of magic numbers
-    $termData = QubitFlatfileImport::loadTermsFromTaxonomies(array(
+    $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
       QubitTaxonomy::DESCRIPTION_STATUS_ID       => 'descriptionStatusTypes',
       QubitTaxonomy::PUBLICATION_STATUS_ID       => 'pubStatusTypes',
       QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID => 'levelOfDetailTypes',
@@ -88,19 +88,19 @@ EOF;
       QubitTaxonomy::RIGHT_ACT_ID                => 'copyrightActTypes',
       QubitTaxonomy::COPYRIGHT_STATUS_ID         => 'copyrightStatusTypes',
       QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID     => 'physicalObjectTypes'
-    ));
+    ]);
 
     if (
       $options['roundtrip']
       &&
       !$options['no-confirmation']
       &&
-      !$this->askConfirmation(array(
+      !$this->askConfirmation([
           'WARNING: In round trip mode legacy IDs will be treated as internal IDs.',
           'Please back-up your database manually before you proceed.',
           '',
           'Have you done a manual backup and wish to proceed? (y/N)'
-        ),
+        ],
         'QUESTION_LARGE', false)
     )
     {
@@ -110,7 +110,7 @@ EOF;
     }
 
     // Define import
-    $import = new QubitFlatfileImport(array(
+    $import = new QubitFlatfileImport([
       // Pass context
       'context' => $this->context,
 
@@ -128,7 +128,7 @@ EOF;
 
       // The status array is a place to put data that should be accessible
       // from closure logic using the getStatus method
-      'status' => array(
+      'status' => [
         'options'                => $options,
         'sourceName'             => $sourceName,
         'defaultParentId'        => $this->getDefaultParentId($sourceName, $options),
@@ -140,10 +140,10 @@ EOF;
         'levelOfDetailTypes'     => $termData['levelOfDetailTypes'],
         'materialTypes'          => $termData['materialTypes'],
         'physicalObjectTypes'    => $termData['physicalObjectTypes'],
-      ),
+      ],
 
       // Import columns that map directory to QubitInformationObject properties
-      'standardColumns' => array(
+      'standardColumns' => [
         'updatedAt',
         'createdAt',
         'accessConditions',
@@ -168,7 +168,7 @@ EOF;
         'scopeAndContent',
         'sources',
         'title'
-      ),
+      ],
 
       // Import columns that should be redirected to QubitInformationObject
       // properties (and optionally transformed). Example:
@@ -186,14 +186,14 @@ EOF;
       //   )
       // ),
 
-      'columnMap' => array(
+      'columnMap' => [
         'radEdition' => 'edition',
         'institutionIdentifier' => 'institutionResponsibleIdentifier'
-      ),
+      ],
 
       // Import columns that can be added using the
       // QubitInformationObject::addProperty method
-      'propertyMap' => array(
+      'propertyMap' => [
         'radOtherTitleInformation'            => 'otherTitleInformation',
         'radTitleStatementOfResponsibility'   => 'titleStatementOfResponsibility',
         'radStatementOfProjection'            => 'statementOfProjection',
@@ -209,92 +209,92 @@ EOF;
         'radStatementOfResponsibilityRelatingToPublishersSeries' => 'statementOfResponsibilityRelatingToPublishersSeries',
         'radNumberingWithinPublishersSeries'  => 'numberingWithinPublishersSeries',
         'radStandardNumber'                   => 'standardNumber'
-      ),
+      ],
 
       // Import columns that can be added as QubitNote objects
-      'noteMap' => array(
-        'languageNote' => array(
+      'noteMap' => [
+        'languageNote' => [
           'typeId' => array_search('Language note', $termData['noteTypes']['en'])
-        ),
-        'publicationNote' => array(
+        ],
+        'publicationNote' => [
           'typeId' => array_search('Publication note', $termData['noteTypes']['en'])
-        ),
-        'generalNote' => array(
+        ],
+        'generalNote' => [
           'typeId' => array_search('General note', $termData['noteTypes']['en'])
-        ),
-        'archivistNote' => array(
+        ],
+        'archivistNote' => [
           'typeId' => array_search("Archivist's note", $termData['noteTypes']['en'])
-        ),
-        'radNoteCast' => array(
+        ],
+        'radNoteCast' => [
           'typeId' => array_search('Cast note', $termData['radNoteTypes']['en'])
-        ),
-        'radNoteCredits' => array(
+        ],
+        'radNoteCredits' => [
           'typeId' => array_search('Credits note', $termData['radNoteTypes']['en'])
-        ),
-        'radNoteSignaturesInscriptions' => array(
+        ],
+        'radNoteSignaturesInscriptions' => [
           'typeId' => array_search('Signatures note', $termData['radNoteTypes']['en'])
-        ),
-        'radNoteConservation' => array(
+        ],
+        'radNoteConservation' => [
           'typeId' => array_search('Conservation', $termData['radNoteTypes']['en'])
-        ),
-        'radNoteGeneral' => array(
+        ],
+        'radNoteGeneral' => [
           'typeId' => array_search('General note', $termData['noteTypes']['en'])
-        ),
-        'radNotePhysicalDescription' => array(
+        ],
+        'radNotePhysicalDescription' => [
           'typeId' => array_search('Physical description', $termData['radNoteTypes']['en'])
-        ),
-        'radNotePublishersSeries' => array(
+        ],
+        'radNotePublishersSeries' => [
           'typeId' => array_search("Publisher's series", $termData['radNoteTypes']['en'])
-        ),
-        'radNoteRights' => array(
+        ],
+        'radNoteRights' => [
           'typeId' => array_search('Rights', $termData['radNoteTypes']['en'])
-        ),
-        'radNoteAccompanyingMaterial' => array(
+        ],
+        'radNoteAccompanyingMaterial' => [
           'typeId' => array_search('Accompanying material', $termData['radNoteTypes']['en'])
-        ),
-        'radNoteAlphaNumericDesignation' => array(
+        ],
+        'radNoteAlphaNumericDesignation' => [
           'typeId' => array_search('Alpha-numeric designations', $termData['radNoteTypes']['en'])
-        ),
-        'radNoteEdition' => array(
+        ],
+        'radNoteEdition' => [
           'typeId' => array_search('Edition', $termData['radNoteTypes']['en'])
-        ),
-        'radTitleStatementOfResponsibilityNote' => array(
+        ],
+        'radTitleStatementOfResponsibilityNote' => [
           'typeId' => array_search('Statements of responsibility', $termData['titleNoteTypes']['en'])
-        ),
-        'radTitleParallelTitles' => array(
+        ],
+        'radTitleParallelTitles' => [
           'typeId' => array_search('Parallel titles and other title information', $termData['titleNoteTypes']['en'])
-        ),
-        'radTitleSourceOfTitleProper' => array(
+        ],
+        'radTitleSourceOfTitleProper' => [
           'typeId' => array_search('Source of title proper', $termData['titleNoteTypes']['en'])
-        ),
-        'radTitleVariationsInTitle' => array(
+        ],
+        'radTitleVariationsInTitle' => [
           'typeId' => array_search('Variations in title', $termData['titleNoteTypes']['en'])
-        ),
-        'radTitleAttributionsAndConjectures' => array(
+        ],
+        'radTitleAttributionsAndConjectures' => [
           'typeId' => array_search('Attributions and conjectures', $termData['titleNoteTypes']['en'])
-        ),
-        'radTitleContinues' => array(
+        ],
+        'radTitleContinues' => [
           'typeId' => array_search('Continuation of title', $termData['titleNoteTypes']['en'])
-        ),
-        'radTitleNoteContinuationOfTitle' => array(
+        ],
+        'radTitleNoteContinuationOfTitle' => [
           'typeId' => array_search('Continuation of title', $termData['titleNoteTypes']['en'])
-        )
-      ),
+        ]
+      ],
 
       // Import columns with values that should be serialized/added as a language property
-      'languageMap' => array(
+      'languageMap' => [
         'language'              => 'language',
         'languageOfDescription' => 'languageOfDescription'
-      ),
+      ],
 
       // Import columns with values that should be serialized/added as a script property
-      'scriptMap' => array(
+      'scriptMap' => [
         'script'              => 'script',
         'scriptOfDescription' => 'scriptOfDescription'
-      ),
+      ],
 
       // These values get stored to the rowStatusVars array
-      'variableColumns' => array(
+      'variableColumns' => [
         'legacyId',
         'parentId',
         'copyrightStatus',
@@ -312,10 +312,10 @@ EOF;
         'digitalObjectPath',
         'digitalObjectURI',
         'digitalObjectChecksum'
-      ),
+      ],
 
       // These values get exploded and stored to the rowStatusVars array
-      'arrayColumns' => array(
+      'arrayColumns' => [
         'accessionNumber'              => '|',
         'alternativeIdentifiers'       => '|',
         'alternativeIdentifierLabels'  => '|',
@@ -348,7 +348,7 @@ EOF;
         'creationDatesStart' => '|',
         'creationDatesEnd'   => '|',
         'creationDateNotes'  => '|'
-      ),
+      ],
 
       'updatePreparationLogic' => function (&$self)
       {
@@ -364,7 +364,7 @@ EOF;
         if (!$notImportingTranslation)
         {
           // Determine which possible columns are allowable
-          $translationObjectProperties = array();
+          $translationObjectProperties = [];
           $dbMap = Propel::getDatabaseMap(QubitInformationObjectI18n::DATABASE_NAME);
           $translationTable = $dbMap->getTable(QubitInformationObjectI18n::TABLE_NAME);
           $columns = $translationTable->getColumns();
@@ -375,8 +375,8 @@ EOF;
           }
 
           // Determine which columns being used should be ignored
-          $allowedColumns = array('legacyId') + $translationObjectProperties;
-          $ignoredColumns = array();
+          $allowedColumns = ['legacyId'] + $translationObjectProperties;
+          $ignoredColumns = [];
 
           foreach ($self->rowStatusVars as $columnName => $value)
           {
@@ -556,7 +556,7 @@ EOF;
         {
           // Use raw SQL since we don't want an entire save() here.
           $sql = 'UPDATE information_object SET repository_id = NULL WHERE id = ?';
-          QubitPdo::prepareAndExecute($sql, array($self->object->id));
+          QubitPdo::prepareAndExecute($sql, [$self->object->id]);
 
           $self->object->repositoryId = null;
         }
@@ -565,11 +565,11 @@ EOF;
         csvImportBaseTask::importPhysicalObjects($self);
 
         // Add subject access points
-        $accessPointColumns = array(
+        $accessPointColumns = [
           'subjectAccessPoints' => QubitTaxonomy::SUBJECT_ID,
           'placeAccessPoints'   => QubitTaxonomy::PLACE_ID,
           'genreAccessPoints'   => QubitTaxonomy::GENRE_ID
-        );
+        ];
 
         foreach ($accessPointColumns as $columnName => $taxonomyId)
         {
@@ -598,7 +598,7 @@ EOF;
 
                   $statement = QubitFlatfileImport::sqlQuery(
                     $query,
-                    array($subject, $taxonomyId)
+                    [$subject, $taxonomyId]
                   );
 
                   $result = $statement->fetch(PDO::FETCH_OBJ);
@@ -612,7 +612,7 @@ EOF;
 
                     $statement = QubitFlatfileImport::sqlQuery(
                       $query,
-                      array($termId, QubitTerm::SCOPE_NOTE_ID)
+                      [$termId, QubitTerm::SCOPE_NOTE_ID]
                     );
 
                     $result = $statement->fetch(PDO::FETCH_OBJ);
@@ -649,13 +649,13 @@ EOF;
             // Skip blank names
             if ($name)
             {
-              $actorOptions = array();
+              $actorOptions = [];
               if (isset($self->rowStatusVars['nameAccessPointHistories'][$index]))
               {
                 $actorOptions['history'] = $self->rowStatusVars['nameAccessPointHistories'][$index];
               }
 
-              if (null !== $repo = $self->object->getRepository(array('inherit' => true)))
+              if (null !== $repo = $self->object->getRepository(['inherit' => true]))
               {
                 $actorOptions['repositoryId'] = $repo->id;
               }
@@ -755,7 +755,7 @@ EOF;
                   $restriction = 0;
                 }
 
-                $rightAndRelation = array(
+                $rightAndRelation = [
                   'restriction'       => $restriction,
                   'basisId'           => QubitTerm::RIGHT_BASIS_COPYRIGHT_ID,
                   'actId'             => array_search(
@@ -766,7 +766,7 @@ EOF;
                     'Under copyright',
                     $self->getStatus('copyrightStatusTypes')
                   )
-                );
+                ];
 
                 if (isset($endDates))
                 {
@@ -798,7 +798,7 @@ EOF;
               $rightsHolder   = $self->createOrFetchRightsHolder('Unknown');
               $rightsHolderId = $rightsHolder->id;
 
-              $rightAndRelation = array(
+              $rightAndRelation = [
                 'rightsHolderId'    => $rightsHolderId,
                 'restriction'       => 0,
                 'basisId'           => QubitTerm::RIGHT_BASIS_COPYRIGHT_ID,
@@ -810,7 +810,7 @@ EOF;
                   'Unknown',
                   $self->getStatus('copyrightStatusTypes')
                 )
-              );
+              ];
 
               if ($self->rowStatusVars['copyrightExpires'])
               {
@@ -822,7 +822,7 @@ EOF;
 
             case 'public domain':
 
-              $rightAndRelation = array(
+              $rightAndRelation = [
                 'restriction'       => 1,
                 'basisId'           => QubitTerm::RIGHT_BASIS_COPYRIGHT_ID,
                 'actId'             => array_search(
@@ -833,7 +833,7 @@ EOF;
                   'Public domain',
                   $self->getStatus('copyrightStatusTypes')
                 )
-              );
+              ];
 
               if ($self->rowStatusVars['copyrightExpires'])
               {
@@ -880,7 +880,7 @@ EOF;
         // Reduce memory usage
         Qubit::clearClassCaches();
       }
-    ));
+    ]);
 
     $import->searchIndexingDisabled = ($options['index']) ? false : true;
 
@@ -945,7 +945,7 @@ EOF;
   {
     parent::configure();
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption(
         'source-name',
         null,
@@ -1031,7 +1031,7 @@ EOF;
         sfCommandOption::PARAMETER_NONE,
         'Do not ask for confirmation'
       )
-    ));
+    ]);
   }
 
   /**
@@ -1079,7 +1079,7 @@ EOF;
     {
       $nestedSetTask = new propelBuildNestedSetTask($this->dispatcher, $this->formatter);
       $nestedSetTask->setConfiguration($this->configuration);
-      $nestedSetTask->run(array(), array('exclude-tables' => 'term,menu'));
+      $nestedSetTask->run([], ['exclude-tables' => 'term,menu']);
     }
     catch (PDOException $e)
     {

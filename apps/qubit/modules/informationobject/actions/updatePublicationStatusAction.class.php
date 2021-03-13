@@ -20,9 +20,9 @@
 class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'publicationStatus',
-      'updateDescendants');
+      'updateDescendants'];
 
   public function execute($request)
   {
@@ -42,21 +42,21 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
         // Update descendants using job scheduler
         if (filter_var($this->form->getValue('updateDescendants'), FILTER_VALIDATE_BOOLEAN))
         {
-          $options = array('objectId' => $this->resource->id, 'publicationStatusId' => $publicationStatusId);
+          $options = ['objectId' => $this->resource->id, 'publicationStatusId' => $publicationStatusId];
           QubitJob::runJob('arUpdatePublicationStatusJob', $options);
 
           // Let user know descendants update has started
           $i18n = $this->context->i18n;
-          $this->context->getConfiguration()->loadHelpers(array('Url'));
-          $jobsUrl = url_for(array('module' => 'jobs', 'action' => 'browse'));
-          $message = $i18n->__('Your description has been updated. Lower level descriptions are being updated now – check the <a href="%1">job scheduler page</a> for status and details.', array('%1' => $jobsUrl));
+          $this->context->getConfiguration()->loadHelpers(['Url']);
+          $jobsUrl = url_for(['module' => 'jobs', 'action' => 'browse']);
+          $message = $i18n->__('Your description has been updated. Lower level descriptions are being updated now – check the <a href="%1">job scheduler page</a> for status and details.', ['%1' => $jobsUrl]);
           $this->getUser()->setFlash('notice', $message);
         }
 
         // Create or delete DC and EAD XML exports
         $this->resource->updateXmlExports();
 
-        $this->redirect(array($this->resource, 'module' => 'informationobject'));
+        $this->redirect([$this->resource, 'module' => 'informationobject']);
       }
     }
   }
@@ -83,7 +83,7 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
     switch ($name)
     {
       case 'publicationStatus':
-        $publicationStatus = $this->resource->getStatus(array('typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID));
+        $publicationStatus = $this->resource->getStatus(['typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID]);
         if (isset($publicationStatus))
         {
           $this->form->setDefault('publicationStatus', $publicationStatus->statusId);
@@ -95,13 +95,13 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
 
         $this->form->setValidator('publicationStatus', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::PUBLICATION_STATUS_ID) as $item)
         {
           $choices[$item->id] = $item;
         }
 
-        $this->form->setWidget('publicationStatus', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('publicationStatus', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 

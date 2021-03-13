@@ -71,17 +71,17 @@ class DigitalObjectDeleteAction extends sfAction
         // Redirect to edit page for parent Object
         if (isset($parent))
         {
-          $this->redirect(array($parent, 'module' => 'digitalobject', 'action' => 'edit'));
+          $this->redirect([$parent, 'module' => 'digitalobject', 'action' => 'edit']);
         }
         else
         {
           if ($this->object instanceof QubitInformationObject)
           {
-            $this->redirect(array($this->object, 'module' => 'informationobject'));
+            $this->redirect([$this->object, 'module' => 'informationobject']);
           }
           elseif ($this->object instanceof QubitActor)
           {
-            $this->redirect(array($this->object, 'module' => 'actor'));
+            $this->redirect([$this->object, 'module' => 'actor']);
           }
         }
       }

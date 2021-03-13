@@ -19,7 +19,7 @@
 
 class digitalObjectRegenDerivativesTask extends arBaseTask
 {
-  public static function regenerateDerivatives(&$digitalObject, $options = array())
+  public static function regenerateDerivatives(&$digitalObject, $options = [])
   {
     // Determine usage ID from type flag
     switch($options['type'])
@@ -83,12 +83,12 @@ class digitalObjectRegenDerivativesTask extends arBaseTask
   protected function configure()
   {
     // Validate "type" options
-    $this->validTypes = array(
+    $this->validTypes = [
       'reference',
       'thumbnail'
-    );
+    ];
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
@@ -101,7 +101,7 @@ class digitalObjectRegenDerivativesTask extends arBaseTask
       new sfCommandOption('json', 'j', sfCommandOption::PARAMETER_OPTIONAL, 'Limit regenerating derivatives to IDs in a JSON file', null),
       new sfCommandOption('skip-to', null, sfCommandOption::PARAMETER_OPTIONAL, 'Skip regenerating derivatives until a certain filename is encountered', null),
       new sfCommandOption('no-overwrite', 'n', sfCommandOption::PARAMETER_NONE, 'Don\'t overwrite existing derivatives (and no confirmation message)', null),
-    ));
+    ]);
 
     $this->namespace = 'digitalobject';
     $this->name = 'regen-derivatives';
@@ -111,7 +111,7 @@ Regenerate digital object derivatives from master copy.
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -132,12 +132,12 @@ EOF;
     }
 
     // Validate "media-type" value
-    $validMediaTypes = array(
+    $validMediaTypes = [
       'audio' => QubitTerm::AUDIO_ID,
       'image' => QubitTerm::IMAGE_ID,
       'text'  => QubitTerm::TEXT_ID,
       'video' => QubitTerm::VIDEO_ID
-    );
+    ];
     if ($options['media-type'] && !array_key_exists($options['media-type'], $validMediaTypes))
     {
       // If value is not valid, show message and return error code 1
@@ -159,7 +159,7 @@ EOF;
     // Get all master digital objects
     $query = 'SELECT do.id
       FROM digital_object do JOIN information_object io ON do.object_id = io.id';
-    $whereClauses = array();
+    $whereClauses = [];
 
     // Limit to a branch
     if ($options['slug'])
@@ -168,7 +168,7 @@ EOF;
         FROM information_object io JOIN slug ON io.id = slug.object_id
         WHERE slug.slug = ?';
 
-      $row = QubitPdo::fetchOne($q2, array($options['slug']));
+      $row = QubitPdo::fetchOne($q2, [$options['slug']]);
 
       if (false === $row)
       {
@@ -208,7 +208,7 @@ EOF;
     // Final confirmation (skip if no-overwrite)
     if (!$options['force'] && !$options['no-overwrite'])
     {
-      $confirm = array();
+      $confirm = [];
 
       $changed = $options['media-type'] ? $options['media-type'] : 'ALL';
 

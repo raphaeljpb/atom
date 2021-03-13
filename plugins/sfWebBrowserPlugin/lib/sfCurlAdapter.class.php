@@ -20,9 +20,9 @@
 
 class sfCurlAdapter
 {
-  protected $options = array();
+  protected $options = [];
   protected $curl    = null;
-  protected $headers = array();
+  protected $headers = [];
 
   /**
    * Build a curl adapter instance
@@ -37,7 +37,7 @@ class sfCurlAdapter
    *
    * @param array $options Curl-specific options
    */
-  public function __construct($options = array())
+  public function __construct($options = [])
   {
     if (!extension_loaded('curl'))
     {
@@ -137,7 +137,7 @@ class sfCurlAdapter
     }
 
     // response header storage - uses callback function
-    curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, array($this, 'read_header'));
+    curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, [$this, 'read_header']);
   }
 
   public function __destruct()
@@ -155,7 +155,7 @@ class sfCurlAdapter
    *
    * @return sfWebBrowser The current browser object
    */
-  public function call($browser, $uri, $method = 'GET', $parameters = array(), $headers = array())
+  public function call($browser, $uri, $method = 'GET', $parameters = [], $headers = [])
   {
     // uri
     curl_setopt($this->curl, CURLOPT_URL, $uri);
@@ -227,7 +227,7 @@ class sfCurlAdapter
     $browser->setResponseText($response);
 
     // clear response headers
-    $this->headers = array();
+    $this->headers = [];
 
     return $browser;
   }

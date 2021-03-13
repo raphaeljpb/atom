@@ -17,7 +17,7 @@
 
         <?php echo $form->renderGlobalErrors() ?>
 
-        <?php echo $form->renderFormTag(url_for(array('module' => 'cas', 'action' => 'login'))) ?>
+        <?php echo $form->renderFormTag(url_for(['module' => 'cas', 'action' => 'login'])) ?>
 
           <?php echo $form->renderHiddenFields() ?>
 

@@ -27,7 +27,7 @@
  */
 class QubitSetting extends BaseSetting
 {
-  public static $premisAccessRightValueDefaults = array(
+  public static $premisAccessRightValueDefaults = [
       'allow_master'          => 0,
       'allow_reference'       => 0,
       'allow_thumb'           => 0,
@@ -37,17 +37,17 @@ class QubitSetting extends BaseSetting
       'disallow_master'       => 0,
       'disallow_reference'    => 0,
       'disallow_thumb'        => 0
-    );
+    ];
   // List of scopes with translatable settings,
     // QubitI18nConsolidatedExtract checks this array to add those
     // settings value from /data/fixtures/settings.yml to the XLIFF files
-    public static $translatableScopes = array('ui_label');
+    public static $translatableScopes = ['ui_label'];
 
   public function __toString()
   {
     if (null == $value = $this->value)
     {
-      $value = $this->getValue(array('sourceCulture' => true));
+      $value = $this->getValue(['sourceCulture' => true]);
     }
 
     return (string) $value;
@@ -83,10 +83,10 @@ class QubitSetting extends BaseSetting
       LEFT JOIN '.QubitSettingI18n::TABLE_NAME.' source
         ON (setting.ID = source.id AND source.CULTURE = setting.SOURCE_CULTURE)';
 
-    $settings = $i18nLanguages = array();
+    $settings = $i18nLanguages = [];
     $culture = sfContext::getInstance()->user->getCulture();
 
-    foreach (QubitPdo::fetchAll($sql, array($culture)) as $qubitSetting)
+    foreach (QubitPdo::fetchAll($sql, [$culture]) as $qubitSetting)
     {
       if ($qubitSetting->scope)
       {
@@ -115,7 +115,7 @@ class QubitSetting extends BaseSetting
     return $settings;
   }
 
-  public function getCulture(array $options = array())
+  public function getCulture(array $options = [])
   {
     // get culture based on i18n fallback criteria
     if ($settingI18n = QubitSettingI18n::getByIdAndCulture($this->id, sfContext::getInstance()->user->getCulture()))
@@ -134,7 +134,7 @@ class QubitSetting extends BaseSetting
    */
   public function getSourceCultureHelper($culture)
   {
-    if (strlen($sourceCultureValue = $this->getValue(array('sourceCulture' => true))) > 0 && $culture != $this->getSourceCulture())
+    if (strlen($sourceCultureValue = $this->getValue(['sourceCulture' => true])) > 0 && $culture != $this->getSourceCulture())
     {
       return $sourceCultureValue;
     }
@@ -250,7 +250,7 @@ class QubitSetting extends BaseSetting
    * @param string $value object value
    * @param array  $options array of options
    */
-  public static function createNewSetting($name, $value, $options = array())
+  public static function createNewSetting($name, $value, $options = [])
   {
     $setting = new QubitSetting();
     $setting->setName($name);

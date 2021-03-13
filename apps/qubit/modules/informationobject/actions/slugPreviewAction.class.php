@@ -36,10 +36,10 @@ class InformationObjectSlugPreviewAction extends sfAction
     // Return JSON containing first available slug
     $availableSlug = $this->determineAvailableSlug($this->request->getParameter('text'), $this->resource->id);
 
-    $response = array(
+    $response = [
       'slug'   => $availableSlug,
       'padded' => $availableSlug != QubitSlug::slugify($this->request->getParameter('text'))
-    );
+    ];
 
     $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
 

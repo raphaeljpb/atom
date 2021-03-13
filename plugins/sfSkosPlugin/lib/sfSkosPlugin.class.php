@@ -31,18 +31,18 @@ class sfSkosPlugin
     protected $parent = null;
   // List of languages which have been seen during the import but are not
     // available in AtoM. For reporting purposes.
-    protected $unsupportedLanguages = array();
+    protected $unsupportedLanguages = [];
   // Import errors registered.
-    protected $errors = array();
+    protected $errors = [];
 
-  public function __construct($taxonomyId, $options = array())
+  public function __construct($taxonomyId, $options = [])
   {
     $this->logger = isset($options['logger']) ? $options['logger'] : new sfNoLogger(new sfEventDispatcher());
     $this->i18n = sfContext::getInstance()->i18n;
 
     if (null === $this->taxonomy = QubitTaxonomy::getById($taxonomyId))
     {
-      throw new sfSkosPluginException($this->i18n->__('Taxonomy with ID %1% could not be found', array('%1%' => $taxonomyId)));
+      throw new sfSkosPluginException($this->i18n->__('Taxonomy with ID %1% could not be found', ['%1%' => $taxonomyId]));
     }
 
     if (is_null($options['parentId']))
@@ -51,7 +51,7 @@ class sfSkosPlugin
     }
     elseif (null === $this->parent = QubitTerm::getById($options['parentId']))
     {
-      throw new sfSkosPluginException($this->i18n->__('Term with ID %1% could not be found', array('%1%' => $options['parentId'])));
+      throw new sfSkosPluginException($this->i18n->__('Term with ID %1% could not be found', ['%1%' => $options['parentId']]));
     }
 
     $this->graph = new EasyRdf_Graph();
@@ -61,7 +61,7 @@ class sfSkosPlugin
 
   public static function import($resource, $taxonomyId, $parentId = null)
   {
-    $skos = new self($taxonomyId, array('parentId' => $parentId));
+    $skos = new self($taxonomyId, ['parentId' => $parentId]);
     $skos->load($resource);
 
     $skos->importGraph();
@@ -77,9 +77,9 @@ class sfSkosPlugin
       throw new sfSkosPluginException($this->i18n->__('Malformed URI.'));
     }
 
-    $this->logger->info($this->i18n->__('Type of scheme: %1%', array('%1%' => $scheme)));
-    $this->logger->info($this->i18n->__('Taxonomy: %1%', array('%1%' => $this->taxonomy->getName(array('cultureFallback' => true)))));
-    $this->logger->info($this->i18n->__('Term ID: %1%', array('%1%' => $this->parent-id)));
+    $this->logger->info($this->i18n->__('Type of scheme: %1%', ['%1%' => $scheme]));
+    $this->logger->info($this->i18n->__('Taxonomy: %1%', ['%1%' => $this->taxonomy->getName(['cultureFallback' => true])]));
+    $this->logger->info($this->i18n->__('Term ID: %1%', ['%1%' => $this->parent-id]));
 
     if ($scheme === 'file')
     {
@@ -89,7 +89,7 @@ class sfSkosPlugin
     {
       $this->graph->parse(file_get_contents($resource));
     }
-    elseif (in_array($scheme, array('http', 'https')))
+    elseif (in_array($scheme, ['http', 'https']))
     {
       $this->graph->load($resource);
     }
@@ -103,7 +103,7 @@ class sfSkosPlugin
       throw new sfSkosPluginException($this->i18n->__('The graph is empty.'));
     }
 
-    $this->logger->info($this->i18n->__('The graph contains %1% concepts.', array('%1%' => count($this->graph->allOfType('skos:Concept')))));
+    $this->logger->info($this->i18n->__('The graph contains %1% concepts.', ['%1%' => count($this->graph->allOfType('skos:Concept'))]));
   }
 
   public function importGraph()
@@ -113,7 +113,7 @@ class sfSkosPlugin
     {
       if (false === $item instanceof EasyRdf_Resource)
       {
-        $this->logger->info($this->i18n->__('Unexpected concept, type received: %1%.', array('%1%' => gettype($item))));
+        $this->logger->info($this->i18n->__('Unexpected concept, type received: %1%.', ['%1%' => gettype($item)]));
 
         continue;
       }
@@ -145,7 +145,7 @@ class sfSkosPlugin
     // Report error with unsupported languages
     if (0 < count($this->unsupportedLanguages))
     {
-      $this->errors[] = $this->i18n->__('The following languages are used in the dataset imported but not supported by AtoM: %1%', array('%1%' => implode(",", array_keys($this->unsupportedLanguages))));
+      $this->errors[] = $this->i18n->__('The following languages are used in the dataset imported but not supported by AtoM: %1%', ['%1%' => implode(",", array_keys($this->unsupportedLanguages))]);
     }
 
     // Re-index parent term so numberOfDescendants reflects the changes
@@ -236,7 +236,7 @@ class sfSkosPlugin
         continue;
       }
 
-      $term->setName($item->getValue(), array('culture' => $lang));
+      $term->setName($item->getValue(), ['culture' => $lang]);
     }
   }
 
@@ -258,7 +258,7 @@ class sfSkosPlugin
       $otherName = new QubitOtherName();
       $otherName->typeId = QubitTerm::ALTERNATIVE_LABEL_ID;
       $otherName->sourceCulture = $item->getLang();
-      $otherName->setName($item->getValue(), array('culture' => $lang));
+      $otherName->setName($item->getValue(), ['culture' => $lang]);
 
       $term->otherNames[] = $otherName;
     }
@@ -282,7 +282,7 @@ class sfSkosPlugin
       $note = new QubitNote();
       $note->typeId = QubitTerm::SCOPE_NOTE_ID;
       $note->sourceCulture = $item->getLang();
-      $note->setContent($item->getValue(), array('culture' => $lang));
+      $note->setContent($item->getValue(), ['culture' => $lang]);
 
       $term->notes[] = $note;
     }
@@ -315,7 +315,7 @@ class sfSkosPlugin
 
     if (($this->total % $this->notifyAfter) === 0)
     {
-      $this->logger->info($this->i18n->__('A total of %1% concepts have been processed so far.', array('%1%' => $this->total)));
+      $this->logger->info($this->i18n->__('A total of %1% concepts have been processed so far.', ['%1%' => $this->total]));
     }
   }
 }

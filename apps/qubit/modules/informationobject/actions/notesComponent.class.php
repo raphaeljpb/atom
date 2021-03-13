@@ -19,7 +19,7 @@
 
 class InformationObjectNotesComponent extends sfComponent
 {
-  public function execute($request, $options = array())
+  public function execute($request, $options = [])
   {
     $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
@@ -33,7 +33,7 @@ class InformationObjectNotesComponent extends sfComponent
         case 'radTitleNotes':
           $this->hiddenType = false;
           $this->taxonomyId = QubitTaxonomy::RAD_TITLE_NOTE_ID;
-          $this->allNotes = $this->resource->getNotesByTaxonomy(array('taxonomyId' => $this->taxonomyId));
+          $this->allNotes = $this->resource->getNotesByTaxonomy(['taxonomyId' => $this->taxonomyId]);
           $this->tableName = $this->context->i18n->__('Title notes');
           $this->arrayName = 'radTitleNotes';
           $this->help = $this->context->i18n->__('Select a note type from the drop-down menu and enter note text in accordance with RAD 1.8B1 through 1.8B6.');
@@ -45,7 +45,7 @@ class InformationObjectNotesComponent extends sfComponent
         case 'radOtherNotes':
           $this->hiddenType = false;
           $this->taxonomyId = QubitTaxonomy::RAD_NOTE_ID;
-          $this->allNotes = $this->resource->getNotesByTaxonomy(array('taxonomyId' => $this->taxonomyId));
+          $this->allNotes = $this->resource->getNotesByTaxonomy(['taxonomyId' => $this->taxonomyId]);
           $this->tableName = $this->context->i18n->__('Other notes');
           $this->arrayName = 'radOtherNotes';
           $this->help = $this->context->i18n->__('Select a note type from the drop-down menu and enter note text in accordance with the following sections in RAD: 1.5E (Accompanying material); 1.8 B11 (Alpha-numeric designations); 1.8B9b (Conservation); 1.8B7 (Edition); 1.8B9 (Physical Description); 1.8B16b (Rights).');
@@ -57,7 +57,7 @@ class InformationObjectNotesComponent extends sfComponent
         case 'isadPublicationNotes':
           $this->hiddenType = true;
           $this->hiddenTypeId = QubitTerm::PUBLICATION_NOTE_ID;
-          $this->allNotes = $this->resource->getNotesByType(array('noteTypeId' => $this->hiddenTypeId));
+          $this->allNotes = $this->resource->getNotesByType(['noteTypeId' => $this->hiddenTypeId]);
           $this->tableName = $this->context->i18n->__('Publication notes');
           $this->arrayName = 'isadPublicationNotes';
           $this->help = $this->context->i18n->__('Record a citation to, and/or information about a publication that is about or based on the use, study, or analysis of the unit of description. Include references to published facsimiles or transcriptions. (ISAD 3.5.4)');
@@ -67,7 +67,7 @@ class InformationObjectNotesComponent extends sfComponent
         case 'dacsPublicationNotes':
           $this->hiddenType = true;
           $this->hiddenTypeId = QubitTerm::PUBLICATION_NOTE_ID;
-          $this->allNotes = $this->resource->getNotesByType(array('noteTypeId' => $this->hiddenTypeId));
+          $this->allNotes = $this->resource->getNotesByType(['noteTypeId' => $this->hiddenTypeId]);
           $this->tableName = $this->context->i18n->__('Publication notes');
           $this->arrayName = 'dacsPublicationNotes';
           $this->help = $this->context->i18n->__('Record a citation to, or information about, a publication that is about or is based on the use, study, or analysis of the materials being described. Provide sufficient information to indicate the relationship between the publication and the unit being described. This includes annotated editions. (DACS 6.4.4)');
@@ -77,7 +77,7 @@ class InformationObjectNotesComponent extends sfComponent
         case 'radNotes':
           $this->hiddenType = true;
           $this->hiddenTypeId = QubitTerm::GENERAL_NOTE_ID;
-          $this->allNotes = $this->resource->getNotesByType(array('noteTypeId' => $this->hiddenTypeId));
+          $this->allNotes = $this->resource->getNotesByType(['noteTypeId' => $this->hiddenTypeId]);
           $this->tableName = $this->context->i18n->__('General note(s)');
           $this->arrayName = 'radNotes';
           $this->help = $this->context->i18n->__('"Use this note to record any other descriptive information considered important but not falling within the definitions of the other notes." (RAD 1.8B21)');
@@ -87,7 +87,7 @@ class InformationObjectNotesComponent extends sfComponent
         case 'isadNotes':
           $this->hiddenType = true;
           $this->hiddenTypeId = QubitTerm::GENERAL_NOTE_ID;
-          $this->allNotes = $this->resource->getNotesByType(array('noteTypeId' => $this->hiddenTypeId));
+          $this->allNotes = $this->resource->getNotesByType(['noteTypeId' => $this->hiddenTypeId]);
           $this->tableName = $this->context->i18n->__('Notes');
           $this->arrayName = 'isadNotes';
           $this->help = $this->context->i18n->__('Record specialized or other important information not accommodated by any of the defined elements of description. (ISAD 3.6.1)');
@@ -97,7 +97,7 @@ class InformationObjectNotesComponent extends sfComponent
         case 'dacsNotes':
           $this->hiddenType = true;
           $this->hiddenTypeId = QubitTerm::GENERAL_NOTE_ID;
-          $this->allNotes = $this->resource->getNotesByType(array('noteTypeId' => $this->hiddenTypeId));
+          $this->allNotes = $this->resource->getNotesByType(['noteTypeId' => $this->hiddenTypeId]);
           $this->tableName = $this->context->i18n->__('General note(s)');
           $this->arrayName = 'dacsNotes';
           $this->help = $this->context->i18n->__('Record, as needed, information not accommodated by any of the defined elements of description. (DACS 7.1.2)');
@@ -107,7 +107,7 @@ class InformationObjectNotesComponent extends sfComponent
         case 'dacsSpecializedNotes':
           $this->hiddenType = false;
           $this->taxonomyId = QubitTaxonomy::DACS_NOTE_ID;
-          $this->allNotes = $this->resource->getNotesByTaxonomy(array('taxonomyId' => $this->taxonomyId));
+          $this->allNotes = $this->resource->getNotesByTaxonomy(['taxonomyId' => $this->taxonomyId]);
           $this->tableName = $this->context->i18n->__('Specialized note(s)');
           $this->arrayName = 'dacsSpecializedNotes';
           $this->help = $this->context->i18n->__('Select a note type from the drop-down menu and record, as needed, specialized information not accommodated by any of the defined elements of description, including Conservation (DACS 7.1.3), Citation (DACS 7.1.5), Alphanumeric designations (DACS 7.1.6), Variant title information (DACS 7.1.7), or Processing information (DACS 7.1.8).');
@@ -119,7 +119,7 @@ class InformationObjectNotesComponent extends sfComponent
         case 'isadArchivistsNotes':
           $this->hiddenType = true;
           $this->hiddenTypeId = QubitTerm::ARCHIVIST_NOTE_ID;
-          $this->allNotes = $this->resource->getNotesByType(array('noteTypeId' => $this->hiddenTypeId));
+          $this->allNotes = $this->resource->getNotesByType(['noteTypeId' => $this->hiddenTypeId]);
           $this->tableName = $this->context->i18n->__('Archivist\'s notes');
           $this->arrayName = 'isadArchivistsNotes';
           $this->help = $this->context->i18n->__('Record notes on sources consulted in preparing the description and who prepared it. (ISAD 3.7.1)');
@@ -129,7 +129,7 @@ class InformationObjectNotesComponent extends sfComponent
         case 'dacsArchivistsNotes':
           $this->hiddenType = true;
           $this->hiddenTypeId = QubitTerm::ARCHIVIST_NOTE_ID;
-          $this->allNotes = $this->resource->getNotesByType(array('noteTypeId' => $this->hiddenTypeId));
+          $this->allNotes = $this->resource->getNotesByType(['noteTypeId' => $this->hiddenTypeId]);
           $this->tableName = $this->context->i18n->__('Archivist and date');
           $this->arrayName = 'dacsArchivistsNotes';
           $this->help = $this->context->i18n->__('Record the name(s) of the person(s) who created or revised the description, as well as the creation or revision date. (DACS 8.1.5)');
@@ -139,12 +139,12 @@ class InformationObjectNotesComponent extends sfComponent
 
       // Ignore notes where the desired translation is not available
       $culture = sfContext::getInstance()->getUser()->getCulture();
-      $this->notes = array();
+      $this->notes = [];
       if (isset($this->allNotes))
       {
         foreach ($this->allNotes as $note)
         {
-          if (0 < strlen($note->getContent(array('culture' => $culture))) || 0 < strlen($note->getContent(array('sourceCulture' => true))))
+          if (0 < strlen($note->getContent(['culture' => $culture])) || 0 < strlen($note->getContent(['sourceCulture' => true])))
           {
             $this->notes[] = $note;
           }
@@ -155,13 +155,13 @@ class InformationObjectNotesComponent extends sfComponent
 
   public function processForm()
   {
-    $params = array();
+    $params = [];
     if (isset($this->request->{$this->arrayName}))
     {
       $params = $this->request->{$this->arrayName};
     }
 
-    $finalNotes = array();
+    $finalNotes = [];
     foreach ($params as $item)
     {
       $this->note = null;
@@ -232,14 +232,14 @@ class InformationObjectNotesComponent extends sfComponent
         break;
 
       case 'type':
-        $choices = array();
+        $choices = [];
         foreach (QubitTerm::getOptionsForSelectList($this->taxonomyId) as $value => $label)
         {
           $choices[$value] = htmlentities($label, ENT_QUOTES, sfConfig::get('sf_charset'));
         }
 
         $this->form->setValidator('type', new sfValidatorString());
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
     }

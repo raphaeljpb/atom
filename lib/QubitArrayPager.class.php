@@ -39,7 +39,7 @@ class QubitArrayPager extends sfPager
     }
     else
     {
-      return call_user_func(array($this, 'get'.ucfirst($name)));
+      return call_user_func([$this, 'get'.ucfirst($name)]);
     }
   }
 
@@ -54,7 +54,7 @@ class QubitArrayPager extends sfPager
     }
     else
     {
-      call_user_func(array($this, 'set'.ucfirst($name)));
+      call_user_func([$this, 'set'.ucfirst($name)]);
     }
   }
 

@@ -45,9 +45,9 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
       $this->noteToDelete->delete();
     }
 
-    return array(
+    return [
       'id' => (int)$this->io->id,
-      'parent_id' => (int)$this->io->parentId);
+      'parent_id' => (int)$this->io->parentId];
   }
 
   protected function processField($field, $value)
@@ -289,7 +289,7 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
 
   protected function simplifyTermData($terms)
   {
-    $termData = array();
+    $termData = [];
 
     foreach($terms as $term)
     {

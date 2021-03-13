@@ -8,7 +8,7 @@
 
 <?php slot('title') ?>
 
-  <h1><?php echo __('%1% derivatives', array('%1%' => sfConfig::get('app_ui_label_digitalobject'))) ?></h1>
+  <h1><?php echo __('%1% derivatives', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]) ?></h1>
 
 <?php end_slot() ?>
 
@@ -16,7 +16,7 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array('module' => 'settings', 'action' => 'digitalObjectDerivatives'))) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'settings', 'action' => 'digitalObjectDerivatives'])) ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -24,7 +24,7 @@
 
       <fieldset class="collapsible">
 
-        <legend><?php echo __('%1% derivatives settings', array('%1%' => sfConfig::get('app_ui_label_digitalobject'))) ?></legend>
+        <legend><?php echo __('%1% derivatives settings', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]) ?></legend>
 
         <?php if ($pdfinfoAvailable): ?>
           <?php echo $form->digital_object_derivatives_pdf_page_number

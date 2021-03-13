@@ -3,7 +3,7 @@
 
 <?php slot('title') ?>
   <div class="multiline-header">
-    <h1 aria-describedby="results-label"><?php echo __('Showing %1% results', array('%1%' => $pager->getNbResults())) ?></h1>
+    <h1 aria-describedby="results-label"><?php echo __('Showing %1% results', ['%1%' => $pager->getNbResults()]) ?></h1>
     <span class="sub" id="results-label"><?php echo __('Rights holder') ?></span>
   </div>
 <?php end_slot() ?>
@@ -13,17 +13,17 @@
   <section class="header-options">
     <div class="row">
       <div class="span6">
-        <?php echo get_component('search', 'inlineSearch', array(
-          'label' => __('Search rights holder'))) ?>
+        <?php echo get_component('search', 'inlineSearch', [
+          'label' => __('Search rights holder')]) ?>
       </div>
 
       <div class="pickers">
         <?php echo get_partial('default/sortPickers',
-          array(
-            'options' => array(
+          [
+            'options' => [
               'lastUpdated' => __('Date modified'),
               'alphabetic' => __('Name'),
-              'identifier' => __('Identifier')))) ?>
+              'identifier' => __('Identifier')]]) ?>
       </div>
     </div>
   </section>
@@ -47,7 +47,7 @@
       <?php foreach ($pager->getResults() as $item): ?>
         <tr>
           <td>
-            <?php echo link_to(render_title($item), array($item, 'module' => 'rightsholder')) ?>
+            <?php echo link_to(render_title($item), [$item, 'module' => 'rightsholder']) ?>
           </td>
           <?php if ('alphabetic' != $sf_request->sort): ?>
             <td>
@@ -62,11 +62,11 @@
 
 <?php slot('after-content') ?>
 
-  <?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+  <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 
   <section class="actions">
     <ul>
-      <li><?php echo link_to(__('Add new'), array('module' => 'rightsholder', 'action' => 'add'), array('class' => 'c-btn')) ?></li>
+      <li><?php echo link_to(__('Add new'), ['module' => 'rightsholder', 'action' => 'add'], ['class' => 'c-btn']) ?></li>
     </ul>
   </section>
 

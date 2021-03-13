@@ -72,49 +72,49 @@ class QubitMigrate105 extends QubitMigrate
     // Add 'recent updates' menu
     if (false === $this->getRowKey('QubitMenu', 'name', 'recent updates'))
     {
-      $this->data['QubitMenu']['QubitMenu_recent_updates'] = array(
+      $this->data['QubitMenu']['QubitMenu_recent_updates'] = [
         'parent_id' => '<?php echo QubitMenu::ADD_EDIT_ID."\n" ?>',
         'source_culture' => 'en',
         'name' => 'recent updates',
-        'label' => array('en' => 'recent updates'),
+        'label' => ['en' => 'recent updates'],
         'path' => 'search/recentUpdates'
-      );
+      ];
     }
 
     // Add 'harvester' menu
     if (false === $this->getRowKey('QubitMenu', 'name', 'harvester'))
     {
-      $this->data['QubitMenu']['QubitMenu_admin_oaiHarvester'] = array(
+      $this->data['QubitMenu']['QubitMenu_admin_oaiHarvester'] = [
         'parent_id' => '<?php echo QubitMenu::ADMIN_ID."\n" ?>',
         'source_culture' => 'en',
         'name' => 'harvester',
-        'label' => array('en' => 'Harvester'),
+        'label' => ['en' => 'Harvester'],
         'path' => 'oai/harvesterList'
-      );
+      ];
     }
 
     // Add 'plugins' menu
     if (false === $this->getRowKey('QubitMenu', 'name', 'plugins'))
     {
-      $this->data['QubitMenu']['QubitMenu_admin_plugins'] = array(
+      $this->data['QubitMenu']['QubitMenu_admin_plugins'] = [
         'parent_id' => '<?php echo QubitMenu::ADMIN_ID."\n" ?>',
         'source_culture' => 'en',
         'name' => 'plugins',
-        'label' => array('en' => 'Plugins'),
+        'label' => ['en' => 'Plugins'],
         'path' => 'sfPluginAdminPlugin/index'
-      );
+      ];
     }
 
     // Add 'themes' menu
     if (false === $this->getRowKey('QubitMenu', 'name', 'themes'))
     {
-      $this->data['QubitMenu']['QubitMenu_admin_themes'] = array(
+      $this->data['QubitMenu']['QubitMenu_admin_themes'] = [
         'parent_id' => '<?php echo QubitMenu::ADMIN_ID."\n" ?>',
         'source_culture' => 'en',
         'name' => 'themes',
-        'label' => array('en' => 'Themes'),
+        'label' => ['en' => 'Themes'],
         'path' => 'sfThemePlugin/index'
-      );
+      ];
     }
 
     // Remove "translate" menu
@@ -125,11 +125,11 @@ class QubitMigrate105 extends QubitMigrate
     }
 
     // Pluralize 'Menus' menu label
-    if (false !== $adminMenusMenuKey = $this->getRowKey('QubitMenu', 'label', array('en' => 'menu')))
+    if (false !== $adminMenusMenuKey = $this->getRowKey('QubitMenu', 'label', ['en' => 'menu']))
     {
       $this->data['QubitMenu'][$adminMenusMenuKey]['label']['en'] = 'menus';
     }
-    elseif (false !== $adminMenusMenuKey = $this->getRowKey('QubitMenu', 'label', array('en' => 'Menu')))
+    elseif (false !== $adminMenusMenuKey = $this->getRowKey('QubitMenu', 'label', ['en' => 'Menu']))
     {
       $this->data['QubitMenu'][$adminMenusMenuKey]['label']['en'] = 'Menus';
     }
@@ -146,26 +146,26 @@ class QubitMigrate105 extends QubitMigrate
   {
     if (false === $this->getRowKey('QubitSetting', 'name', 'toggleDescription'))
     {
-      $this->data['QubitSetting']['QubitSetting_toggleDescription'] = array(
+      $this->data['QubitSetting']['QubitSetting_toggleDescription'] = [
         'name' => 'toggleDescription',
         'value' => 1
-      );
+      ];
     }
 
     if (false === $this->getRowKey('QubitSetting', 'name', 'toggleLogo'))
     {
-      $this->data['QubitSetting']['QubitSetting_toggleLogo'] = array(
+      $this->data['QubitSetting']['QubitSetting_toggleLogo'] = [
         'name' => 'toggleLogo',
         'value' => 1
-      );
+      ];
     }
 
     if (false === $this->getRowKey('QubitSetting', 'name', 'toggleTitle'))
     {
-      $this->data['QubitSetting']['QubitSetting_toggleTitle'] = array(
+      $this->data['QubitSetting']['QubitSetting_toggleTitle'] = [
         'name' => 'toggleTitle',
         'value' => 1
-      );
+      ];
     }
 
     // Update version number
@@ -213,37 +213,37 @@ class QubitMigrate105 extends QubitMigrate
     $taxonomyActorNameTypeKey = $this->getRowKey('QubitTaxonomy', 'id', '<?php echo QubitTaxonomy::ACTOR_NAME_TYPE_ID."\n" ?>');
 
     // Make "parallel form of name" a protected term
-    $termParallelFormKey = $this->getRowKey('QubitTerm', 'name', array('en' => 'Parallel form'));
+    $termParallelFormKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Parallel form']);
     if ($termParallelFormKey)
     {
       $this->data['QubitTerm'][$termParallelFormKey]['id'] = '<?php echo QubitTerm::PARALLEL_FORM_OF_NAME_ID."\n" ?>';
     }
     else
     {
-      $this->data['QubitTerm']['QubitTerm_parallel_form_of_name'] = array(
+      $this->data['QubitTerm']['QubitTerm_parallel_form_of_name'] = [
         'taxonomy_id' => $taxonomyActorNameTypeKey,
         'class_name' => 'QubitTerm',
         'id' => '<?php echo QubitTerm::PARALLEL_FORM_OF_NAME_ID."\n" ?>',
         'source_culture' => 'en',
-        'name' => array('en' => 'Parallel form', 'es' => 'Forma paralela', 'fr' => 'Forme parall̬le', 'it' => 'Forma parallela', 'nl' => 'Parallelle naam', 'pt' => 'Forma paralela', 'sl' => 'Vzporedna oblika')
-      );
+        'name' => ['en' => 'Parallel form', 'es' => 'Forma paralela', 'fr' => 'Forme parall̬le', 'it' => 'Forma parallela', 'nl' => 'Parallelle naam', 'pt' => 'Forma paralela', 'sl' => 'Vzporedna oblika']
+      ];
     }
 
     // Make "other form of name" a protected term
-    $termOtherFormKey = $this->getRowKey('QubitTerm', 'name', array('en' => 'Other name'));
+    $termOtherFormKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Other name']);
     if ($termParallelFormKey)
     {
       $this->data['QubitTerm'][$termOtherFormKey]['id'] = '<?php echo QubitTerm::OTHER_FORM_OF_NAME_ID."\n" ?>';
     }
     else
     {
-      $this->data['QubitTerm']['QubitTerm_other_form_of_name'] = array(
+      $this->data['QubitTerm']['QubitTerm_other_form_of_name'] = [
         'taxonomy_id' => $taxonomyActorNameTypeKey,
         'class_name' => 'QubitTerm',
         'id' => '<?php echo QubitTerm::OTHER_FORM_OF_NAME_ID."\n" ?>',
         'source_culture' => 'en',
-        'name' => array('en' => 'Other name', 'es' => 'Outra forma do nome', 'fr' => 'Autre nom', 'it' => 'Altro nome', 'nl' => 'Andere naam', 'pt' => 'Outra forma do nome', 'sl' => 'Drugo ime')
-      );
+        'name' => ['en' => 'Other name', 'es' => 'Outra forma do nome', 'fr' => 'Autre nom', 'it' => 'Altro nome', 'nl' => 'Andere naam', 'pt' => 'Outra forma do nome', 'sl' => 'Drugo ime']
+      ];
     }
 
     return $this;
@@ -270,7 +270,7 @@ class QubitMigrate105 extends QubitMigrate
    */
   protected function sortQubitTerms()
   {
-    $qubitTermConstantIds = array(
+    $qubitTermConstantIds = [
       //EventType taxonomy
       'CREATION_ID',
       'SUBJECT_ID',
@@ -318,7 +318,7 @@ class QubitMigrate105 extends QubitMigrate
       //Actor name type taxonomy
       'PARALLEL_FORM_OF_NAME_ID',
       'OTHER_FORM_OF_NAME_ID'
-    );
+    ];
 
     // Restack array with Constant values at top
     $qubitTermArray = $this->data['QubitTerm'];
@@ -353,7 +353,7 @@ class QubitMigrate105 extends QubitMigrate
    */
   protected function sortClasses()
   {
-    $ormSortOrder = array(
+    $ormSortOrder = [
       'QubitTaxonomy',
       'QubitTerm',
       'QubitSetting',
@@ -372,7 +372,7 @@ class QubitMigrate105 extends QubitMigrate
       'QubitRelation',
       'QubitProperty',
       'QubitNote'
-    );
+    ];
 
     $originalData = $this->data;
 

@@ -43,7 +43,7 @@ class arMigration0155
     $taxonomy->id = QubitTaxonomy::ACTOR_OCCUPATION_ID;
     $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
     $taxonomy->sourceCulture = 'en';
-    $taxonomy->setName('Actor occupations', array('culture' => 'en'));
+    $taxonomy->setName('Actor occupations', ['culture' => 'en']);
     $taxonomy->save();
 
     QubitMigrate::bumpTerm(QubitTerm::ACTOR_OCCUPATION_NOTE_ID, $configuration);
@@ -52,7 +52,7 @@ class arMigration0155
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::NOTE_TYPE_ID;
     $term->sourceCulture = 'en';
-    $term->setName('Actor occupation note', array('culture' => 'en'));
+    $term->setName('Actor occupation note', ['culture' => 'en']);
     $term->save();
 
     return true;

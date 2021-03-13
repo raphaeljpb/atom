@@ -41,24 +41,24 @@ class QubitFlatfileImport
   public $roundtrip                = false; // treat legacy ID as internal ID
   public $keepDigitalObjects       = false; // skip deletion of DOs when set. Works when --update set.
   public $limitToId                = 0;     // id of repository or TLD to limit our update matching under
-  public $status          = array(); // place to store data related to overall import
-  public $rowStatusVars   = array(); // place to store data related to current row
+  public $status          = []; // place to store data related to overall import
+  public $rowStatusVars   = []; // place to store data related to current row
 
-  public $columnNames     = array(); // column names from first row of imported CSV
-  public $ignoreColumns   = array(); // columns in CSV to ignore
-  public $renameColumns   = array(); // CSV header column substitutions
-  public $addColumns      = array(); // columns to add to internal row buffer
+  public $columnNames     = []; // column names from first row of imported CSV
+  public $ignoreColumns   = []; // columns in CSV to ignore
+  public $renameColumns   = []; // CSV header column substitutions
+  public $addColumns      = []; // columns to add to internal row buffer
 
-  public $standardColumns = array(); // columns in CSV are object properties
-  public $columnMap       = array(); // columns in CSV that map to object properties
-  public $propertyMap     = array(); // columns in CSV that map to Qubit properties
-  public $termRelations   = array(); // columns in CSV that map to terms in a given taxonomy
-  public $noteMap         = array(); // columns in CSV that should become notes
-  public $languageMap     = array(); // columns in CSV that map to serialized language Qubit properties
-  public $scriptMap       = array(); // columns in CSV that map to serialized script Qubit properties
-  public $handlers        = array(); // columns in CSV paired with custom handling logic
-  public $variableColumns = array(); // columns in CSV to be later referenced by logic
-  public $arrayColumns    = array(); // columns in CSV to explode and later reference
+  public $standardColumns = []; // columns in CSV are object properties
+  public $columnMap       = []; // columns in CSV that map to object properties
+  public $propertyMap     = []; // columns in CSV that map to Qubit properties
+  public $termRelations   = []; // columns in CSV that map to terms in a given taxonomy
+  public $noteMap         = []; // columns in CSV that should become notes
+  public $languageMap     = []; // columns in CSV that map to serialized language Qubit properties
+  public $scriptMap       = []; // columns in CSV that map to serialized script Qubit properties
+  public $handlers        = []; // columns in CSV paired with custom handling logic
+  public $variableColumns = []; // columns in CSV to be later referenced by logic
+  public $arrayColumns    = []; // columns in CSV to explode and later reference
 
   public $updatePreparationLogic;  // Optional pre-update logic (remove related data, etc.)
   public $rowInitLogic;            // Optional logic to create/load object if not using $className
@@ -70,7 +70,7 @@ class QubitFlatfileImport
   // Replaceable logic to filter content before entering Qubit
   public $contentFilterLogic;
 
-  public function __construct($options = array())
+  public function __construct($options = [])
   {
     // Replaceable logic to filter content before entering Qubit
     $this->contentLogic = function ($text)
@@ -105,7 +105,7 @@ class QubitFlatfileImport
    *
    * @return void
    */
-  public function setPropertiesFromArray(&$object, $propertyArray, $allowedProperties, $ignore = array())
+  public function setPropertiesFromArray(&$object, $propertyArray, $allowedProperties, $ignore = [])
   {
     // set properties from options, halting upon invalid option
     foreach ($propertyArray as $option => $value)
@@ -182,7 +182,7 @@ class QubitFlatfileImport
   {
     if ($this->contentFilterLogic)
     {
-      return trim(call_user_func_array($this->contentFilterLogic, array($text)));
+      return trim(call_user_func_array($this->contentFilterLogic, [$text]));
     }
     else
     {
@@ -274,7 +274,7 @@ class QubitFlatfileImport
     // closure results in "Fatal error: Call to undefined method"
     if ($this->$property)
     {
-      call_user_func_array($this->$property, array(&$this));
+      call_user_func_array($this->$property, [&$this]);
     }
   }
 
@@ -495,8 +495,8 @@ class QubitFlatfileImport
     $criteria->add(QubitEvent::OBJECT_ID, $this->object->id);
 
     // Compare fields of the event in question with each associated event
-    $fields = array('startDate', 'startTime', 'endDate', 'endTime', 'typeId', 'objectId', 'actorId', 'name',
-                    'description', 'date', 'culture');
+    $fields = ['startDate', 'startTime', 'endDate', 'endTime', 'typeId', 'objectId', 'actorId', 'name',
+                    'description', 'date', 'culture'];
 
     foreach (QubitEvent::get($criteria) as $existingEvent)
     {
@@ -538,7 +538,7 @@ class QubitFlatfileImport
    *
    * @return void
    */
-  public function row($row = array())
+  public function row($row = [])
   {
     $this->object = null; // Ensure object set to null so our --update options don't get confused between rows
     $this->status['row'] = $row; // Stash raw row data so it's accessible to closure logic
@@ -583,7 +583,7 @@ class QubitFlatfileImport
     }
 
     // reset row-specific status variables
-    $this->rowStatusVars = array();
+    $this->rowStatusVars = [];
   }
 
   public function isUpdating()
@@ -725,7 +725,7 @@ class QubitFlatfileImport
    *
    * @return object  database statement object
    */
-  public static function sqlQuery($query, $params = array())
+  public static function sqlQuery($query, $params = [])
   {
     $connection = Propel::getConnection();
     $statement = $connection->prepare($query);
@@ -754,14 +754,14 @@ class QubitFlatfileImport
       return;
     }
 
-    $noteIds = array();
+    $noteIds = [];
 
     // I18n row handler
     if ($this->columnValue('culture') != $this->object->sourceCulture)
     {
       $query = "SELECT id FROM note WHERE object_id = ? AND type_id = ?;";
 
-      $statement = self::sqlQuery($query, array($this->object->id, $typeId));
+      $statement = self::sqlQuery($query, [$this->object->id, $typeId]);
 
       while ($noteId = $statement->fetchColumn())
       {
@@ -776,7 +776,7 @@ class QubitFlatfileImport
 
     foreach ($textArray as $i => $text)
     {
-      $options = array();
+      $options = [];
 
       if ($transformationLogic)
       {
@@ -805,7 +805,7 @@ class QubitFlatfileImport
    *
    * @return QubitNote  created note
    */
-  public function createOrUpdateNote($typeId, $text, $options = array())
+  public function createOrUpdateNote($typeId, $text, $options = [])
   {
     // Trim whitespace
     $text = trim($text);
@@ -846,7 +846,7 @@ class QubitFlatfileImport
    * @param array $options  option parameter
    *
    */
-  public function createOrUpdateEvent($typeId, $options = array())
+  public function createOrUpdateEvent($typeId, $options = [])
   {
     if (isset($options['eventId']))
     {
@@ -868,8 +868,8 @@ class QubitFlatfileImport
       return;
     }
 
-    $allowedProperties = array('date', 'description', 'startDate', 'endDate', 'typeId');
-    $ignoreOptions  = array('actorName', 'actorHistory', 'place', 'culture');
+    $allowedProperties = ['date', 'description', 'startDate', 'endDate', 'typeId'];
+    $ignoreOptions  = ['actorName', 'actorHistory', 'place', 'culture'];
 
     $this->setPropertiesFromArray($event, $options, $allowedProperties, $ignoreOptions);
 
@@ -895,7 +895,7 @@ class QubitFlatfileImport
       else
       {
         // Link actor
-        $actorOptions = array();
+        $actorOptions = [];
         if (isset($options['actorHistory']))
         {
           $actorOptions['history'] = $options['actorHistory'];
@@ -951,7 +951,7 @@ class QubitFlatfileImport
       INNER JOIN physical_object_i18n pi ON p.id=pi.id
       WHERE pi.name=? AND pi.location=? AND p.type_id=?";
 
-    $statement = QubitFlatfileImport::sqlQuery($query, array($name, $location, $typeId));
+    $statement = QubitFlatfileImport::sqlQuery($query, [$name, $location, $typeId]);
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
     if ($result)
@@ -977,7 +977,7 @@ class QubitFlatfileImport
       INNER JOIN repository r ON a.id=r.id \r
       WHERE a.authorized_form_of_name=?";
 
-    $statement = QubitFlatfileImport::sqlQuery($query, array($name));
+    $statement = QubitFlatfileImport::sqlQuery($query, [$name]);
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
     if ($result && strlen($name) > 0)
@@ -1001,7 +1001,7 @@ class QubitFlatfileImport
    *
    * @return QubitActor  created or fetched actor
    */
-  public function createOrFetchAndUpdateActorForIo($name, $options = array())
+  public function createOrFetchAndUpdateActorForIo($name, $options = [])
   {
     // Create new actor if there is no match by
     // auth. form of name (do not match untitled actors)
@@ -1017,14 +1017,14 @@ class QubitFlatfileImport
     }
 
     // Check for a match with the same auth. form of name and history
-    if (null !== $actor = QubitActor::getByAuthorizedFormOfName($name, array('history' => $options['history'])))
+    if (null !== $actor = QubitActor::getByAuthorizedFormOfName($name, ['history' => $options['history']]))
     {
       return $actor;
     }
 
     // Importing to an IO without repository or in a repo not maintaining an actor match
     if (!isset($this->object->repository) ||
-      null === $actor = QubitActor::getByAuthorizedFormOfName($name, array('repositoryId' => $this->object->repository->id)))
+      null === $actor = QubitActor::getByAuthorizedFormOfName($name, ['repositoryId' => $this->object->repository->id]))
     {
       // Create a new one with the new history
       return $this->createActor($name, $options);
@@ -1051,7 +1051,7 @@ class QubitFlatfileImport
    *
    * @return QubitActor  created or fetched actor
    */
-  public static function createOrFetchActor($name, $options = array())
+  public static function createOrFetchActor($name, $options = [])
   {
     // Get actor or create a new one (don't match untitled actors).
     // If the actor exists the data is not overwritten
@@ -1078,7 +1078,7 @@ class QubitFlatfileImport
       WHERE i18n.authorized_form_of_name = ?
       AND object.class_name = 'QubitRightsHolder';";
 
-    $statement = QubitFlatfileImport::sqlQuery($query, array($name));
+    $statement = QubitFlatfileImport::sqlQuery($query, [$name]);
 
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
@@ -1111,7 +1111,7 @@ class QubitFlatfileImport
       WHERE i18n.authorized_form_of_name = ?
       AND object.class_name = 'QubitDonor';";
 
-    $statement = QubitFlatfileImport::sqlQuery($query, array($name));
+    $statement = QubitFlatfileImport::sqlQuery($query, [$name]);
 
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
@@ -1142,7 +1142,7 @@ class QubitFlatfileImport
   {
     $query = "SELECT id FROM contact_information WHERE actor_id=?";
 
-    $statement = QubitFlatfileImport::sqlQuery($query, array($actorId));
+    $statement = QubitFlatfileImport::sqlQuery($query, [$actorId]);
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
     if ($result)
@@ -1168,7 +1168,7 @@ class QubitFlatfileImport
     $info = new QubitContactInformation();
     $info->actorId = $actorId;
 
-    $allowedProperties = array(
+    $allowedProperties = [
       'email',
       'telephone',
       'streetAddress',
@@ -1179,7 +1179,7 @@ class QubitFlatfileImport
       'fax',
       'note',
       'contactPerson'
-    );
+    ];
 
     $this->setPropertiesFromArray($info, $options, $allowedProperties);
     $info->save();
@@ -1204,14 +1204,14 @@ class QubitFlatfileImport
     if (!is_array($names))
     {
       $notArray = true;
-      $names = array($names);
+      $names = [$names];
     }
 
     // Retrieve terms in taxonomy from the term table once only for this taxonomy.
     $query = "SELECT t.id, ti.name FROM term t LEFT JOIN term_i18n ti ON t.id=ti.id \r
       WHERE t.taxonomy_id=? AND ti.culture=?";
 
-    $rows = QubitPdo::fetchAll($query, array($taxonomyId, $culture), array('fetchMode' => PDO::FETCH_ASSOC));
+    $rows = QubitPdo::fetchAll($query, [$taxonomyId, $culture], ['fetchMode' => PDO::FETCH_ASSOC]);
 
     // Check if each term in array exists.
     foreach($names as $name)
@@ -1397,7 +1397,7 @@ class QubitFlatfileImport
       LEFT JOIN term_i18n ti ON t.id=ti.id
       WHERE taxonomy_id=?";
 
-    $statement = QubitFlatfileImport::sqlQuery($query, array($taxonomyId));
+    $statement = QubitFlatfileImport::sqlQuery($query, [$taxonomyId]);
 
     return $statement->fetchAll(PDO::FETCH_OBJ);
   }
@@ -1412,11 +1412,11 @@ class QubitFlatfileImport
    */
   public static function loadTermsFromTaxonomies($taxonomies)
   {
-    $taxonomyTerms = array();
+    $taxonomyTerms = [];
 
     foreach ($taxonomies as $taxonomyId => $varName)
     {
-      $taxonomyTerms[$varName] = array();
+      $taxonomyTerms[$varName] = [];
       foreach (QubitFlatfileImport::getTaxonomyTerms($taxonomyId) as $term)
       {
         $taxonomyTerms[$varName][$term->culture][$term->id] = $term->name;
@@ -1441,14 +1441,14 @@ class QubitFlatfileImport
     // add right
     $right = new QubitRights();
 
-    $allowedProperties = array(
+    $allowedProperties = [
       'rightsHolderId',
       'basisId',
       'actId',
       'copyrightStatusId',
       'restriction',
       'endDate'
-    );
+    ];
 
     $this->setPropertiesFromArray($right, $options, $allowedProperties);
     $right->save();
@@ -1535,7 +1535,7 @@ class QubitFlatfileImport
 
     $statement = QubitFlatfileImport::sqlQuery(
       $query,
-      array($sourceId, $sourceName, $targetName)
+      [$sourceId, $sourceName, $targetName]
     );
 
     return $statement->fetch(PDO::FETCH_OBJ);
@@ -1578,7 +1578,7 @@ class QubitFlatfileImport
   {
     $query = "SELECT object_id FROM slug WHERE slug=?";
 
-    $statement = QubitFlatfileImport::sqlQuery($query, array($slug));
+    $statement = QubitFlatfileImport::sqlQuery($query, [$slug]);
 
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
@@ -1642,7 +1642,7 @@ class QubitFlatfileImport
   protected function combineArraysWithoutDuplicates()
   {
     $args = func_get_args();
-    $combined = array();
+    $combined = [];
 
     // go through each array providesd
     for($index = 0; $index < count($args); $index++)
@@ -1786,7 +1786,7 @@ class QubitFlatfileImport
         // otherwise, if column is data and a handler for it is set, use it
         call_user_func_array(
           $self->handlers[$columnName],
-          array($self, $value)
+          [$self, $value]
         );
       }
       elseif (
@@ -2117,7 +2117,7 @@ class QubitFlatfileImport
 
     // Prevent FK restraint errors; we'll rebuild the hierarchy from the csv.
     QubitPdo::prepareAndExecute('UPDATE information_object SET parent_id=null WHERE parent_id=?',
-                                array($this->object->id));
+                                [$this->object->id]);
     $this->object->delete();
     $this->object = new QubitInformationObject();
     $this->object->slug = $oldSlug; // Retain previous record's slug
@@ -2157,7 +2157,7 @@ class QubitFlatfileImport
       return;
     }
 
-    if (null !== $repo = $this->object->getRepository(array('inherit' => true)))
+    if (null !== $repo = $this->object->getRepository(['inherit' => true]))
     {
       // This matching information object is under the repository specified in --limit, don't touch object.
       if ($this->limitToId == $repo->id)
@@ -2217,7 +2217,7 @@ class QubitFlatfileImport
     // Remove keymap entry if it doesn't point to a valid QubitInformationObject.
     if (null === $this->object)
     {
-      self::sqlQuery('DELETE FROM keymap WHERE id=?', array($mapEntry->id));
+      self::sqlQuery('DELETE FROM keymap WHERE id=?', [$mapEntry->id]);
     }
   }
 
@@ -2243,7 +2243,7 @@ class QubitFlatfileImport
       WHERE i18n.authorized_form_of_name = ?
       AND object.class_name = ?;";
 
-    $statement = QubitFlatfileImport::sqlQuery($query, array($this->columnValue('authorizedFormOfName'), $this->className));
+    $statement = QubitFlatfileImport::sqlQuery($query, [$this->columnValue('authorizedFormOfName'), $this->className]);
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
     // Not updating, skipping matches and match found: mark as duplicate and skip
@@ -2278,7 +2278,7 @@ class QubitFlatfileImport
       if ($this->className === 'QubitActor' && $this->limitToId)
       {
         $query = "SELECT id FROM relation WHERE subject_id = ? AND object_id = ?;";
-        $statement = QubitFlatfileImport::sqlQuery($query, array($this->limitToId, $result->id));
+        $statement = QubitFlatfileImport::sqlQuery($query, [$this->limitToId, $result->id]);
 
         if (false === $statement->fetch(PDO::FETCH_OBJ))
         {
@@ -2298,7 +2298,7 @@ class QubitFlatfileImport
       print $this->logError($msg);
 
       $this->status['updated']++;
-      $this->object = call_user_func(array($this->className, 'getById'), $result->id);
+      $this->object = call_user_func([$this->className, 'getById'], $result->id);
 
       // Execute ad-hoc row pre-update logic (remove related data, etc.)
       $this->executeClosurePropertyIfSet('updatePreparationLogic');
@@ -2336,7 +2336,7 @@ class QubitFlatfileImport
    */
   private function getExistingNotes($objectId, $typeId, $culture)
   {
-    $existingNotes = array();
+    $existingNotes = [];
 
     $query = "SELECT n.id, i.content FROM note n
       INNER JOIN note_i18n i ON n.id=i.id
@@ -2344,7 +2344,7 @@ class QubitFlatfileImport
       AND n.type_id=?
       AND i.culture=?";
 
-    $statement = self::sqlQuery($query, array($objectId, $typeId,  $culture));
+    $statement = self::sqlQuery($query, [$objectId, $typeId,  $culture]);
 
     foreach ($statement->fetchAll(PDO::FETCH_OBJ) as $row)
     {
@@ -2406,7 +2406,7 @@ class QubitFlatfileImport
    *
    * @return QubitActor  created actor
    */
-  private static function createActor($name, $options = array())
+  private static function createActor($name, $options = [])
   {
     $actor = new QubitActor();
     $actor->parentId = QubitActor::ROOT_ID;
@@ -2483,7 +2483,7 @@ class QubitFlatfileImport
       $property->name = $propertyName;
     }
 
-    $property->setValue(serialize(array_unique($values)), array('sourceCulture' => true));
+    $property->setValue(serialize(array_unique($values)), ['sourceCulture' => true]);
     $property->indexOnSave = false;
     $property->save();
   }

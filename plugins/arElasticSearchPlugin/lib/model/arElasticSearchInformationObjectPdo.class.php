@@ -30,16 +30,16 @@ class arElasticSearchInformationObjectPdo
   public $doc;
   public $repository;
   public $sourceCulture;
-  public $creators = array();
-  public $inheritedCreators = array();
+  public $creators = [];
+  public $inheritedCreators = [];
 
-  protected $data = array();
+  protected $data = [];
   protected $events;
 
   protected static $conn;
   protected static $statements;
 
-  public function __construct($id, $options = array())
+  public function __construct($id, $options = [])
   {
     if (isset($options['conn']))
     {
@@ -72,12 +72,12 @@ class arElasticSearchInformationObjectPdo
     }
 
     // Get creators
-    $this->creators = $this->getActors(array('typeId' => QubitTerm::CREATION_ID));
+    $this->creators = $this->getActors(['typeId' => QubitTerm::CREATION_ID]);
 
     // Ignore inherited creators if there are directly related creators
     if (!empty($this->creators))
     {
-      $this->inheritedCreators = array();
+      $this->inheritedCreators = [];
     }
     // Otherwise, get them from the options
     elseif (isset($options['inheritedCreators']))
@@ -147,8 +147,8 @@ class arElasticSearchInformationObjectPdo
 
       $this->ancestors = QubitPdo::fetchAll(
         $sql,
-        array($this->parent_id),
-        array('fetchMode' => PDO::FETCH_ASSOC)
+        [$this->parent_id],
+        ['fetchMode' => PDO::FETCH_ASSOC]
       );
     }
 
@@ -176,7 +176,7 @@ class arElasticSearchInformationObjectPdo
       $sql .= ' WHERE node.parent_id = :id';
       $sql .= ' ORDER BY lft';
 
-      $this->children = QubitPdo::fetchAll($sql, array(':id' => $this->id));
+      $this->children = QubitPdo::fetchAll($sql, [':id' => $this->id]);
     }
 
     return $this->children;
@@ -214,7 +214,7 @@ class arElasticSearchInformationObjectPdo
 
   public function getClosestCreators()
   {
-    $inheritedCreators = array();
+    $inheritedCreators = [];
 
     if (!isset(self::$statements['inheritedCreators']))
     {
@@ -230,7 +230,7 @@ class arElasticSearchInformationObjectPdo
 
     foreach (array_reverse($this->getAncestors()) as $ancestor)
     {
-      self::$statements['inheritedCreators']->execute(array($ancestor['id'], QubitTerm::CREATION_ID));
+      self::$statements['inheritedCreators']->execute([$ancestor['id'], QubitTerm::CREATION_ID]);
 
       foreach (self::$statements['inheritedCreators']->fetchAll(PDO::FETCH_OBJ) as $creator)
       {
@@ -264,7 +264,7 @@ class arElasticSearchInformationObjectPdo
 
     if (isset($this->repository) && $includeRepoAndCountry)
     {
-      if (null != $cc = $this->repository->getCountryCode(array('culture' => $this->__get('culture'))))
+      if (null != $cc = $this->repository->getCountryCode(['culture' => $this->__get('culture')]))
       {
         $refcode .= $cc.' ';
       }
@@ -275,7 +275,7 @@ class arElasticSearchInformationObjectPdo
       }
     }
 
-    $identifiers = array();
+    $identifiers = [];
 
     foreach ($this->getAncestors() as $item)
     {
@@ -295,9 +295,9 @@ class arElasticSearchInformationObjectPdo
     return $refcode;
   }
 
-  public function getActors($options = array())
+  public function getActors($options = [])
   {
-    $actors = array();
+    $actors = [];
 
     if (!isset(self::$statements['actor']))
     {
@@ -325,7 +325,7 @@ class arElasticSearchInformationObjectPdo
             continue;
           }
 
-          self::$statements['actor']->execute(array($item->actor_id));
+          self::$statements['actor']->execute([$item->actor_id]);
 
           if ($actor = self::$statements['actor']->fetch(PDO::FETCH_OBJ))
           {
@@ -340,7 +340,7 @@ class arElasticSearchInformationObjectPdo
 
   public function getNameAccessPoints()
   {
-    $names = array();
+    $names = [];
 
     // Subject relations
     if (!isset(self::$statements['actorRelation']))
@@ -355,9 +355,9 @@ class arElasticSearchInformationObjectPdo
       self::$statements['actorRelation'] = self::$conn->prepare($sql);
     }
 
-    self::$statements['actorRelation']->execute(array(
+    self::$statements['actorRelation']->execute([
       ':resourceId' => $this->__get('id'),
-      ':typeId' => QubitTerm::NAME_ACCESS_POINT_ID));
+      ':typeId' => QubitTerm::NAME_ACCESS_POINT_ID]);
 
     foreach (self::$statements['actorRelation']->fetchAll(PDO::FETCH_OBJ) as $item)
     {
@@ -385,7 +385,7 @@ class arElasticSearchInformationObjectPdo
               FROM '.QubitNote::TABLE_NAME.
               ' WHERE object_id = ? AND type_id = ?';
 
-    return QubitPdo::fetchAll($sql, array($this->__get('id'), $typeId));
+    return QubitPdo::fetchAll($sql, [$this->__get('id'), $typeId]);
   }
 
   public function getTermIdByNameAndTaxonomy($name, $taxonomyId, $culture = 'en')
@@ -396,7 +396,7 @@ class arElasticSearchInformationObjectPdo
               ON t.id=ti.id
               WHERE t.taxonomy_id=? AND ti.name=? AND ti.culture=?';
 
-    return QubitPdo::fetchColumn($sql, array($taxonomyId, $name, $culture));
+    return QubitPdo::fetchColumn($sql, [$taxonomyId, $name, $culture]);
   }
 
   public function getThumbnailPath()
@@ -449,8 +449,8 @@ class arElasticSearchInformationObjectPdo
       self::$statements['rights'] = self::$conn->prepare($sql);
     }
 
-    self::$statements['rights']->execute(array(
-      $this->__get('id')));
+    self::$statements['rights']->execute([
+      $this->__get('id')]);
 
     return self::$statements['rights']->fetchAll(PDO::FETCH_CLASS);
   }
@@ -470,7 +470,7 @@ class arElasticSearchInformationObjectPdo
       self::$statements['grantedRights'] = self::$conn->prepare($sql);
     }
 
-    self::$statements['grantedRights']->execute(array($this->__get('id')));
+    self::$statements['grantedRights']->execute([$this->__get('id')]);
 
     return self::$statements['grantedRights']->fetchAll(PDO::FETCH_CLASS);
   }
@@ -498,7 +498,7 @@ class arElasticSearchInformationObjectPdo
       self::$statements['transcript'] = self::$conn->prepare($sql);
     }
 
-    self::$statements['transcript']->execute(array($this->__get('digital_object_id')));
+    self::$statements['transcript']->execute([$this->__get('digital_object_id')]);
 
     return self::$statements['transcript']->fetchColumn();
   }
@@ -521,7 +521,7 @@ class arElasticSearchInformationObjectPdo
       self::$statements['findingAidTranscript'] = self::$conn->prepare($sql);
     }
 
-    self::$statements['findingAidTranscript']->execute(array($this->__get('id')));
+    self::$statements['findingAidTranscript']->execute([$this->__get('id')]);
 
     return self::$statements['findingAidTranscript']->fetchColumn();
   }
@@ -544,14 +544,14 @@ class arElasticSearchInformationObjectPdo
       self::$statements['findingAidStatus'] = self::$conn->prepare($sql);
     }
 
-    self::$statements['findingAidStatus']->execute(array($this->__get('id')));
+    self::$statements['findingAidStatus']->execute([$this->__get('id')]);
 
     return self::$statements['findingAidStatus']->fetchColumn();
   }
 
   public function serialize()
   {
-    $serialized = array();
+    $serialized = [];
 
     // Add default null values to allow document updates using partial data.
     // To remove fields from the document is required the use of scripts, which
@@ -559,10 +559,10 @@ class arElasticSearchInformationObjectPdo
     // is not a default value set in the mapping configuration, null values work
     // the same as missing fields in almost every case and allow us to 'remove'
     // fields without using scripts in partial updates.
-    $serialized['findingAid'] = array(
+    $serialized['findingAid'] = [
       'transcript' => null,
       'status' => null
-    );
+    ];
 
     $serialized['id'] = $this->id;
     $serialized['slug'] = $this->slug;
@@ -680,20 +680,20 @@ class arElasticSearchInformationObjectPdo
 
       $serialized['repository']['i18n'] = arElasticSearchModelBase::serializeI18ns(
         $repository->id,
-        array('QubitActor'),
-        array('fields' => array('authorized_form_of_name'))
+        ['QubitActor'],
+        ['fields' => ['authorized_form_of_name']]
       );
     }
 
     // Related terms
     $relatedTerms = arElasticSearchModelBase::getRelatedTerms(
       $this->id,
-      array(
+      [
         QubitTaxonomy::MATERIAL_TYPE_ID,
         QubitTaxonomy::PLACE_ID,
         QubitTaxonomy::SUBJECT_ID,
         QubitTaxonomy::GENRE_ID
-      )
+      ]
     );
 
     // Material types
@@ -752,14 +752,14 @@ class arElasticSearchInformationObjectPdo
     {
       $node = new arElasticSearchActorPdo($item->id);
 
-      $names = array(
+      $names = [
         'id' => $node->id,
         'i18n' => arElasticSearchModelBase::serializeI18ns(
           $node->id,
-          array('QubitActor'),
-          array('fields' => array('authorized_form_of_name'))
+          ['QubitActor'],
+          ['fields' => ['authorized_form_of_name']]
         )
-      );
+      ];
 
       // Add other names, parallel names, and standardized names
       $names += $node->serializeAltNames();
@@ -858,13 +858,13 @@ class arElasticSearchInformationObjectPdo
     $serialized['updatedAt'] = arElasticSearchPluginUtil::convertDate($this->updated_at);
 
     $serialized['sourceCulture'] = $this->source_culture;
-    $serialized['i18n'] = arElasticSearchModelBase::serializeI18ns($this->id, array('QubitInformationObject'));
+    $serialized['i18n'] = arElasticSearchModelBase::serializeI18ns($this->id, ['QubitInformationObject']);
 
     // Add "Part of" information if this isn't a top level description
     if (count($this->ancestors) > 1)
     {
       $collectionRootId = $this->ancestors[1]['id'];
-      $rootSlug = QubitPdo::fetchColumn('SELECT slug FROM slug WHERE object_id=?', array($collectionRootId));
+      $rootSlug = QubitPdo::fetchColumn('SELECT slug FROM slug WHERE object_id=?', [$collectionRootId]);
 
       if (!$rootSlug)
       {
@@ -872,7 +872,7 @@ class arElasticSearchInformationObjectPdo
       }
 
       $rootSourceCulture = QubitPdo::fetchColumn('SELECT source_culture FROM information_object WHERE id=?',
-                                                 array($collectionRootId));
+                                                 [$collectionRootId]);
       if (!$rootSourceCulture)
       {
         throw new sfException("No source culture found for information object $collectionRootId");
@@ -880,8 +880,8 @@ class arElasticSearchInformationObjectPdo
 
       $i18nFields = arElasticSearchModelBase::serializeI18ns(
         $collectionRootId,
-        array('QubitInformationObject'),
-        array('fields' => array('title'))
+        ['QubitInformationObject'],
+        ['fields' => ['title']]
       );
 
       $serialized['partOf']['id'] = $collectionRootId;
@@ -893,7 +893,7 @@ class arElasticSearchInformationObjectPdo
     return $serialized;
   }
 
-  protected function loadData($id, $options = array())
+  protected function loadData($id, $options = [])
   {
     if (!isset(self::$statements['informationObject']))
     {
@@ -922,7 +922,7 @@ class arElasticSearchInformationObjectPdo
     }
 
     // Do select
-    self::$statements['informationObject']->execute(array(':id' => $id));
+    self::$statements['informationObject']->execute([':id' => $id]);
 
     // Get first result
     $this->data = self::$statements['informationObject']->fetch(PDO::FETCH_ASSOC);
@@ -942,7 +942,7 @@ class arElasticSearchInformationObjectPdo
   {
     if (!isset($this->events))
     {
-      $events = array();
+      $events = [];
 
       if (!isset(self::$statements['event']))
       {
@@ -963,7 +963,7 @@ class arElasticSearchInformationObjectPdo
         self::$statements['event'] = self::$conn->prepare($sql);
       }
 
-      self::$statements['event']->execute(array($this->__get('id')));
+      self::$statements['event']->execute([$this->__get('id')]);
 
       foreach (self::$statements['event']->fetchAll() as $item)
       {
@@ -1007,14 +1007,14 @@ class arElasticSearchInformationObjectPdo
       self::$statements['alternativeIdentifiers'] = self::$conn->prepare($sql);
     }
 
-    self::$statements['alternativeIdentifiers']->execute(array(
+    self::$statements['alternativeIdentifiers']->execute([
       $this->__get('id'),
-      'alternativeIdentifiers'));
+      'alternativeIdentifiers']);
 
-    $alternativeIdentifiers = array();
+    $alternativeIdentifiers = [];
     foreach (self::$statements['alternativeIdentifiers']->fetchAll() as $item)
     {
-      $tmp = array();
+      $tmp = [];
 
       $tmp['label'] = $item['name'];
       $tmp['identifier'] = $item['value'];
@@ -1034,7 +1034,7 @@ class arElasticSearchInformationObjectPdo
                 AND prop.name = ?';
 
     self::$statements['property'] = self::$conn->prepare($sql);
-    self::$statements['property']->execute(array($this->__get('id'), $name));
+    self::$statements['property']->execute([$this->__get('id'), $name]);
 
     return self::$statements['property']->fetch(PDO::FETCH_OBJ);
   }
@@ -1050,7 +1050,7 @@ class arElasticSearchInformationObjectPdo
                 AND relation.type_id = ?';
 
     self::$statements['aips'] = self::$conn->prepare($sql);
-    self::$statements['aips']->execute(array($this->__get('id'), QubitTerm::AIP_RELATION_ID));
+    self::$statements['aips']->execute([$this->__get('id'), QubitTerm::AIP_RELATION_ID]);
 
     return self::$statements['aips']->fetchAll(PDO::FETCH_OBJ);
   }
@@ -1067,18 +1067,18 @@ class arElasticSearchInformationObjectPdo
                 AND relation.type_id = ?';
 
     self::$statements['physicalObjects'] = self::$conn->prepare($sql);
-    self::$statements['physicalObjects']->execute(array($this->__get('id'), QubitTerm::HAS_PHYSICAL_OBJECT_ID));
+    self::$statements['physicalObjects']->execute([$this->__get('id'), QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
 
     return self::$statements['physicalObjects']->fetchAll(PDO::FETCH_OBJ);
   }
 
   private function getBasisRights()
   {
-    $basisRights = array();
+    $basisRights = [];
 
     foreach ($this->getRights() as $right)
     {
-      $basisRight = array();
+      $basisRight = [];
 
       $basisRight['startDate'] = arElasticSearchPluginUtil::normalizeDateWithoutMonthOrDay($right->start_date);
       $basisRight['endDate'] = arElasticSearchPluginUtil::normalizeDateWithoutMonthOrDay($right->end_date, true);
@@ -1108,10 +1108,10 @@ class arElasticSearchInformationObjectPdo
 
   private function getActRights()
   {
-    $actRights = array();
+    $actRights = [];
     foreach ($this->getGrantedRights() as $grantedRight)
     {
-      $actRight = array();
+      $actRight = [];
 
       if ($grantedRight->act_id)
       {

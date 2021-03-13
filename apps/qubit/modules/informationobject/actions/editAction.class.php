@@ -47,7 +47,7 @@ class InformationObjectEditAction extends DefaultEditAction
         $this->resource->save();
         $this->resource->updateXmlExports();
 
-        $this->redirect(array($this->resource, 'module' => 'informationobject'));
+        $this->redirect([$this->resource, 'module' => 'informationobject']);
       }
     }
 
@@ -85,7 +85,7 @@ class InformationObjectEditAction extends DefaultEditAction
       $this->form->setValidator('serialNumber', new sfValidatorInteger());
       $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
 
-      $publicationStatus = $this->resource->getStatus(array('typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID));
+      $publicationStatus = $this->resource->getStatus(['typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID]);
       if (QubitAcl::check($this->resource, 'publish') && !isset($publicationStatus))
       {
         // Use app. default pub. status if the user can publish and
@@ -129,7 +129,7 @@ class InformationObjectEditAction extends DefaultEditAction
       unset($this->resource->identifier);
 
       // Inherit parent level
-      $this->form->setDefault('parent', $this->context->routing->generate(null, array($this->resource->parent, 'module' => 'informationobject')));
+      $this->form->setDefault('parent', $this->context->routing->generate(null, [$this->resource->parent, 'module' => 'informationobject']));
       $this->form->setValidator('parent', new sfValidatorString());
       $this->form->setWidget('parent', new sfWidgetFormInputHidden());
 
@@ -162,13 +162,13 @@ class InformationObjectEditAction extends DefaultEditAction
       {
         // Root is default parent
         $this->parent = QubitInformationObject::getById(QubitInformationObject::ROOT_ID);
-        $this->form->setDefault('parent', $this->context->routing->generate(null, array($this->parent, 'module' => 'informationobject')));
+        $this->form->setDefault('parent', $this->context->routing->generate(null, [$this->parent, 'module' => 'informationobject']));
       }
 
       if (isset($params['repository']))
       {
         $this->resource->repository = QubitRepository::getById($this->request->repository);
-        $this->form->setDefault('repository', $this->context->routing->generate(null, array($this->resource->repository, 'module' => 'repository')));
+        $this->form->setDefault('repository', $this->context->routing->generate(null, [$this->resource->repository, 'module' => 'repository']));
       }
 
       // Check authorization
@@ -193,17 +193,17 @@ class InformationObjectEditAction extends DefaultEditAction
     switch ($name)
     {
       case 'levelOfDescription':
-        $this->form->setDefault('levelOfDescription', $this->context->routing->generate(null, array($this->resource->levelOfDescription, 'module' => 'term')));
+        $this->form->setDefault('levelOfDescription', $this->context->routing->generate(null, [$this->resource->levelOfDescription, 'module' => 'term']));
         $this->form->setValidator('levelOfDescription', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('levelOfDescription', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('levelOfDescription', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
@@ -211,14 +211,14 @@ class InformationObjectEditAction extends DefaultEditAction
           $this->form->setDefault('displayStandard', $this->resource->displayStandardId);
           $this->form->setValidator('displayStandard', new sfValidatorString());
 
-          $choices = array();
+          $choices = [];
           $choices[null] = null;
           foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID) as $item)
           {
             $choices[$item->id] = $item;
           }
 
-          $this->form->setWidget('displayStandard', new sfWidgetFormSelect(array('choices' => $choices)));
+          $this->form->setWidget('displayStandard', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
@@ -229,24 +229,24 @@ class InformationObjectEditAction extends DefaultEditAction
         break;
 
       case 'repository':
-        $this->form->setDefault('repository', $this->context->routing->generate(null, array($this->resource->repository, 'module' => 'repository')));
+        $this->form->setDefault('repository', $this->context->routing->generate(null, [$this->resource->repository, 'module' => 'repository']));
         $this->form->setValidator('repository', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         if (isset($this->resource->repository))
         {
-          $choices[$this->context->routing->generate(null, array($this->resource->repository, 'module' => 'repository'))] = $this->resource->repository;
+          $choices[$this->context->routing->generate(null, [$this->resource->repository, 'module' => 'repository'])] = $this->resource->repository;
         }
 
-        $this->form->setWidget('repository', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('repository', new sfWidgetFormSelect(['choices' => $choices]));
 
         if (isset($this->getRoute()->resource))
         {
-          $this->repoAcParams = array('module' => 'repository', 'action' => 'autocomplete', 'aclAction' => 'update');
+          $this->repoAcParams = ['module' => 'repository', 'action' => 'autocomplete', 'aclAction' => 'update'];
         }
         else
         {
-          $this->repoAcParams = array('module' => 'repository', 'action' => 'autocomplete', 'aclAction' => 'create');
+          $this->repoAcParams = ['module' => 'repository', 'action' => 'autocomplete', 'aclAction' => 'create'];
         }
 
         break;
@@ -307,15 +307,15 @@ class InformationObjectEditAction extends DefaultEditAction
             break;
         }
 
-        $value = $choices = array();
+        $value = $choices = [];
         foreach ($this[$name] = QubitObjectTermRelation::get($criteria) as $item)
         {
-          $choices[$value[] = $this->context->routing->generate(null, array($item->term, 'module' => 'term'))] = $item->term;
+          $choices[$value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term'])] = $item->term;
         }
 
         $this->form->setDefault($name, $value);
         $this->form->setValidator($name, new sfValidatorPass());
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
@@ -324,7 +324,7 @@ class InformationObjectEditAction extends DefaultEditAction
         $criteria = new Criteria();
         $criteria->add(QubitRelation::SUBJECT_ID, $this->resource->id);
 
-        $value = $choices = array();
+        $value = $choices = [];
         switch ($name)
         {
           case 'nameAccessPoints':
@@ -332,7 +332,7 @@ class InformationObjectEditAction extends DefaultEditAction
 
             foreach ($this->nameAccessPoints = QubitRelation::get($criteria) as $item)
             {
-              $choices[$value[] = $this->context->routing->generate(null, array($item->object, 'module' => 'actor'))] = $item->object;
+              $choices[$value[] = $this->context->routing->generate(null, [$item->object, 'module' => 'actor'])] = $item->object;
             }
 
             break;
@@ -342,7 +342,7 @@ class InformationObjectEditAction extends DefaultEditAction
 
             foreach ($this->relatedMaterialDescriptions = QubitRelation::get($criteria) as $item)
             {
-              $choices[$value[] = $this->context->routing->generate(null, array($item->object, 'module' => 'informationobject'))] = $item->object;
+              $choices[$value[] = $this->context->routing->generate(null, [$item->object, 'module' => 'informationobject'])] = $item->object;
             }
 
             // Add also relations where it's the object
@@ -353,7 +353,7 @@ class InformationObjectEditAction extends DefaultEditAction
             foreach (QubitRelation::get($criteria) as $item)
             {
               $this->relatedMaterialDescriptions[] = $item;
-              $choices[$value[] = $this->context->routing->generate(null, array($item->subject, 'module' => 'informationobject'))] = $item->subject;
+              $choices[$value[] = $this->context->routing->generate(null, [$item->subject, 'module' => 'informationobject'])] = $item->subject;
             }
 
             break;
@@ -361,7 +361,7 @@ class InformationObjectEditAction extends DefaultEditAction
 
         $this->form->setDefault($name, $value);
         $this->form->setValidator($name, new sfValidatorPass());
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
@@ -385,7 +385,7 @@ class InformationObjectEditAction extends DefaultEditAction
           $criteria->add(QubitInformationObjectI18n::TITLE, $this->form->getValue('title'));
           if (null !== $io = QubitInformationObject::getOne($criteria))
           {
-            $this->redirect(array($io, 'module' => 'informationobject'));
+            $this->redirect([$io, 'module' => 'informationobject']);
 
             return;
           }
@@ -410,7 +410,7 @@ class InformationObjectEditAction extends DefaultEditAction
       case 'genreAccessPoints':
       case 'subjectAccessPoints':
       case 'placeAccessPoints':
-        $value = $filtered = array();
+        $value = $filtered = [];
         foreach ($this->form->getValue($field->getName()) as $item)
         {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));
@@ -443,7 +443,7 @@ class InformationObjectEditAction extends DefaultEditAction
 
       case 'nameAccessPoints':
       case 'relatedMaterialDescriptions':
-        $value = $filtered = array();
+        $value = $filtered = [];
         foreach ($this->form->getValue($field->getName()) as $item)
         {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));
@@ -561,7 +561,7 @@ class InformationObjectEditAction extends DefaultEditAction
       $this->duplicateNotes($sourceInformationObject);
       $this->duplicateAlternativeIdentifiers($sourceInformationObject);
 
-      foreach (QubitRelation::getRelationsBySubjectId($sourceInformationObject->id, array('typeId' => QubitTerm::RIGHT_ID)) as $item)
+      foreach (QubitRelation::getRelationsBySubjectId($sourceInformationObject->id, ['typeId' => QubitTerm::RIGHT_ID]) as $item)
       {
         $sourceRights = $item->object;
 
@@ -578,7 +578,7 @@ class InformationObjectEditAction extends DefaultEditAction
       {
         foreach ($sourceInformationObject->eventsRelatedByobjectId as $sourceEvent)
         {
-          if (false === array_search($this->context->routing->generate(null, array($sourceEvent, 'module' => 'event')), (array)$this->request->deleteEvents))
+          if (false === array_search($this->context->routing->generate(null, [$sourceEvent, 'module' => 'event']), (array)$this->request->deleteEvents))
           {
             $event = new QubitEvent();
             $event->actorId = $sourceEvent->actorId;
@@ -825,8 +825,8 @@ class InformationObjectEditAction extends DefaultEditAction
     }
 
     $counter = QubitInformationObject::getIdentifierCounter();
-    $counterValue = $counter->getValue(array('sourceCulture' => true));
-    $counter->setValue($counterValue + 1, array('sourceCulture' => true));
+    $counterValue = $counter->getValue(['sourceCulture' => true]);
+    $counter->setValue($counterValue + 1, ['sourceCulture' => true]);
     $counter->save();
   }
 }

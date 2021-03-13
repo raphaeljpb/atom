@@ -98,8 +98,8 @@ class arElasticSearchAccession extends arElasticSearchModelBase
       {
         $event['type'] = ['i18n' => arElasticSearchModelBase::serializeI18ns(
           $item['type_id'],
-          array('QubitTerm'),
-          array('fields' => array('name'))
+          ['QubitTerm'],
+          ['fields' => ['name']]
         )];
       }
 
@@ -108,8 +108,8 @@ class arElasticSearchAccession extends arElasticSearchModelBase
       {
         $event['notes'] = ['i18n' => arElasticSearchModelBase::serializeI18ns(
           $item['note_id'],
-          array('QubitNote'),
-          array('fields' => array('content'))
+          ['QubitNote'],
+          ['fields' => ['content']]
         )];
       }
 

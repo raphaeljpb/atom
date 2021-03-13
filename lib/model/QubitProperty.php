@@ -37,7 +37,7 @@ class QubitProperty extends BaseProperty
     $string = $this->value;
     if (!isset($string))
     {
-      $string = $this->getValue(array('sourceCulture' => true));
+      $string = $this->getValue(['sourceCulture' => true]);
     }
 
     return (string) $string;
@@ -46,7 +46,7 @@ class QubitProperty extends BaseProperty
   public function save($connection = null)
   {
     // TODO: $cleanObject = $this->object->clean;
-    $cleanObjectId = $this->__get('objectId', array('clean' => true));
+    $cleanObjectId = $this->__get('objectId', ['clean' => true]);
 
     parent::save($connection);
 
@@ -88,7 +88,7 @@ class QubitProperty extends BaseProperty
    */
   public function getSourceTextForTranslation($sfUserCulture)
   {
-    if (strlen($sourceCultureValue = $this->getValue(array('sourceCulture' => 'true'))) > 0 && $sfUserCulture != $this->getSourceCulture())
+    if (strlen($sourceCultureValue = $this->getValue(['sourceCulture' => 'true'])) > 0 && $sfUserCulture != $this->getSourceCulture())
     {
       return $sourceCultureValue;
     }
@@ -104,7 +104,7 @@ class QubitProperty extends BaseProperty
    * @param array $options optional parameter array
    * @return QubitProperty matching property (if any)
    */
-  public static function getOneByObjectIdAndName($objectId, $name, $options = array())
+  public static function getOneByObjectIdAndName($objectId, $name, $options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitProperty::OBJECT_ID, $objectId);
@@ -128,7 +128,7 @@ class QubitProperty extends BaseProperty
    * @param array   $options optional parameters
    * @return QubitProperty this property object
    */
-  public static function addUnique($objectId, $name, $value, $options = array())
+  public static function addUnique($objectId, $name, $value, $options = [])
   {
     // Only add if an existing property does not exist
     if (!QubitProperty::isExistent($objectId, $name, $value, $options))
@@ -165,7 +165,7 @@ class QubitProperty extends BaseProperty
    * @param string $options array of optional parameters
    * @return boolean true if QubitProperty exists
    */
-  public static function isExistent($objectId, $name, $value, $options = array())
+  public static function isExistent($objectId, $name, $value, $options = [])
   {
     $propertyExists = false;
 

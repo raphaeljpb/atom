@@ -43,18 +43,18 @@ The [tools:migrate|INFO] task modifies the SQL data structure for compatibility 
   [./symfony tools:upgrade-sql|INFO]
 EOF;
 
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('target', sfCommandArgument::OPTIONAL, 'Target version')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('no-confirmation', 'B', sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
       new sfCommandOption('verbose', 'v', sfCommandOption::PARAMETER_NONE, 'Verbose mode', null),
       new sfCommandOption('number', 'n', sfCommandOption::PARAMETER_OPTIONAL, 'Run only specific migration number(s) (separated by commas if multiple)', null),
-    ));
+    ]);
 
     // Disable plugin loading from plugins/ before this task.
     // Using command.pre_command to ensure that it happens early enough.
@@ -71,7 +71,7 @@ EOF;
   /**
    * @see sfBaseTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $dbManager = new sfDatabaseManager($this->configuration);
     $database = $dbManager->getDatabase($options['connection']);
@@ -108,11 +108,11 @@ EOF;
     // Use old migration script for versions before 62
     if (null == $this->initialVersion || 62 > $this->initialVersion)
     {
-      $this->logBlock(array(
+      $this->logBlock([
         '',
         'Please use the propel:migrate task for upgrading',
         'from Qubit releases prior to Release 1.1',
-        ''),
+        ''],
         'ERROR');
 
       return 1;
@@ -122,12 +122,12 @@ EOF;
     if (
       !$options['no-confirmation']
       &&
-      !$this->askConfirmation(array(
+      !$this->askConfirmation([
           'WARNING: Your database has not been backed up!',
           'Please back-up your database manually before you proceed.',
           'If this task fails you may lose your data.',
           '',
-          'Have you done a manual backup and wish to proceed? (y/N)'),
+          'Have you done a manual backup and wish to proceed? (y/N)'],
         'QUESTION_LARGE', false)
     )
     {
@@ -284,7 +284,7 @@ EOF;
   protected function updateDatabaseVersion($version)
   {
     $sql = 'UPDATE setting_i18n SET value = ? WHERE id = (SELECT id FROM setting WHERE name = ?);';
-    QubitPdo::modify($sql, array($version, 'version'));
+    QubitPdo::modify($sql, [$version, 'version']);
   }
 
   /**
@@ -298,14 +298,14 @@ EOF;
 
     // Run SQL query
     $sql = 'UPDATE setting_i18n SET value = ? WHERE id = (SELECT id FROM setting WHERE name = ?);';
-    QubitPdo::modify($sql, array($milestone, 'milestone'));
+    QubitPdo::modify($sql, [$milestone, 'milestone']);
   }
 
   protected function parseDsn($dsn)
   {
-    $params = array(
+    $params = [
       'host' => 'localhost',
-      'port' => '3307');
+      'port' => '3307'];
 
     // Require a prefix
     if (!preg_match('/^(\w+):/', $dsn, $matches))
@@ -449,7 +449,7 @@ EOF;
    */
   private function removeMissingPluginsFromSettings()
   {
-    $configuredPlugins = unserialize($this->pluginsSetting->getValue(array('sourceCulture' => true)));
+    $configuredPlugins = unserialize($this->pluginsSetting->getValue(['sourceCulture' => true]));
     $pluginsPresent = $this->getPluginsPresent();
 
     foreach ($configuredPlugins as $configPlugin)
@@ -460,7 +460,7 @@ EOF;
         {
           // Confirmation
           $question = "Plugin $configPlugin no longer exists. Remove it (Y/n)?";
-          if (!$options['no-confirmation'] && !$this->askConfirmation(array($question), 'QUESTION_LARGE', true))
+          if (!$options['no-confirmation'] && !$this->askConfirmation([$question], 'QUESTION_LARGE', true))
           {
             continue;
           }
@@ -471,7 +471,7 @@ EOF;
       }
     }
 
-    $this->pluginsSetting->setValue(serialize($configuredPlugins), array('sourceCulture' => true));
+    $this->pluginsSetting->setValue(serialize($configuredPlugins), ['sourceCulture' => true]);
     $this->pluginsSetting->save();
   }
 
@@ -482,7 +482,7 @@ EOF;
   private function checkMissingThemes()
   {
     $presentThemes = $this->getPluginsPresent(true);
-    $configuredPlugins = unserialize($this->pluginsSetting->getValue(array('sourceCulture' => true)));
+    $configuredPlugins = unserialize($this->pluginsSetting->getValue(['sourceCulture' => true]));
 
     // Check to see if any of the present themes in plugins/ are configured
     // to be used in the AtoM settings. If not, we'll prompt for a new theme.
@@ -505,7 +505,7 @@ EOF;
       // Confirmation
       $question = 'Would you like to choose a new theme (Y/n)?';
       $shouldConfirm = function_exists('readline') && !$options['no-confirmation'];
-      if ($shouldConfirm && !$this->askConfirmation(array($question), 'QUESTION_LARGE', true))
+      if ($shouldConfirm && !$this->askConfirmation([$question], 'QUESTION_LARGE', true))
       {
         return;
       }
@@ -513,7 +513,7 @@ EOF;
       $chosenTheme = $this->getNewTheme($presentThemes);
       $configuredPlugins[] = $chosenTheme;
 
-      $this->pluginsSetting->setValue(serialize($configuredPlugins), array('sourceCulture' => true));
+      $this->pluginsSetting->setValue(serialize($configuredPlugins), ['sourceCulture' => true]);
       $this->pluginsSetting->save();
 
       $this->logSection('upgrade-sql', "AtoM theme changed to $chosenTheme.");
@@ -563,7 +563,7 @@ EOF;
   {
     $pluginPaths = $this->configuration->getAllPluginPaths();
 
-    $plugins = array();
+    $plugins = [];
     foreach ($pluginPaths as $name => $path)
     {
       $className = $name . 'Configuration';

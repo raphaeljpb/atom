@@ -49,7 +49,7 @@ class QubitContactInformation extends BaseContactInformation
   {
     // TODO: This should be converted into a partial!
     sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
-    $cf = array('cultureFallback' => true);
+    $cf = ['cultureFallback' => true];
 
     $string = ($this->getStreetAddress($cf)) ? esc_specialchars($this->getStreetAddress($cf))."\n" : '';
     $string .= ($this->getCity($cf)) ? esc_specialchars($this->getCity($cf)) : '';

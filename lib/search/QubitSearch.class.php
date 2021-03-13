@@ -30,7 +30,7 @@ class QubitSearch
   // protected function __construct() { }
   // protected function __clone() { }
 
-  public static function getInstance(array $options = array())
+  public static function getInstance(array $options = [])
   {
     if (!isset(self::$instance))
     {
@@ -46,7 +46,7 @@ class QubitSearch
   {
     if (!isset(self::$instance))
     {
-      self::$instance = self::getInstance(array('initialize' => false));
+      self::$instance = self::getInstance(['initialize' => false]);
     }
 
     self::$instance->disable();

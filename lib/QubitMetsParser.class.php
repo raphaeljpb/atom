@@ -22,7 +22,7 @@ class QubitMetsParser
   private $document;
   private $resource;
 
-  public function __construct($document, $options = array())
+  public function __construct($document, $options = [])
   {
     // Load document
     $this->document = $document;
@@ -32,11 +32,11 @@ class QubitMetsParser
 
     // For backwards compatibility, add default namespaces as they
     // were declared without name in the METS file (fits still is).
-    $defaultNamespaces = array(
+    $defaultNamespaces = [
       'mets' => 'http://www.loc.gov/METS/',
       'premis' => 'info:lc/xmlns/premis-v2',
       'fits' => 'http://hul.harvard.edu/ois/xml/ns/fits/fits_output',
-    );
+    ];
     foreach ($defaultNamespaces as $name => $uri)
     {
       // Do not overwrite the ones declared in the METS file
@@ -47,7 +47,7 @@ class QubitMetsParser
     }
 
     // Register namespaces for XPath queries made directly over the document
-    $this->registerNamespaces($this->document, array('m' => 'mets', 'p' => 'premis', 'f' => 'fits'));
+    $this->registerNamespaces($this->document, ['m' => 'mets', 'p' => 'premis', 'f' => 'fits']);
   }
 
   public function getStructMap()
@@ -71,12 +71,12 @@ class QubitMetsParser
 
   public function getDipUploadMappings($structMap)
   {
-    $mappings = $lodMapping = $dmdMapping = $uuidMapping = array();
+    $mappings = $lodMapping = $dmdMapping = $uuidMapping = [];
 
     // LOD mapping (only for hierarchical DIP upload over logical structMap)
     if ($structMap['TYPE'] == 'logical')
     {
-      $this->registerNamespaces($structMap, array('m' => 'mets'));
+      $this->registerNamespaces($structMap, ['m' => 'mets']);
 
       foreach ($structMap->xpath('.//m:div') as $item)
       {
@@ -95,7 +95,7 @@ class QubitMetsParser
         $sql .= ' WHERE i18n.name = ?
                     AND term.taxonomy_id = ?';
 
-        if (false !== $id = QubitPdo::fetchColumn($sql, array($lodName, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID)))
+        if (false !== $id = QubitPdo::fetchColumn($sql, [$lodName, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID]))
         {
           $lodMapping[$lodName] = $id;
         }
@@ -110,7 +110,7 @@ class QubitMetsParser
     // FILEID to DMD mapping
     foreach ($this->document->xpath('//m:structMap[@TYPE="logical" or @TYPE="physical"]//m:div') as $item)
     {
-      $this->registerNamespaces($item, array('m' => 'mets'));
+      $this->registerNamespaces($item, ['m' => 'mets']);
 
       if (0 < count($fptr = $item->xpath('m:fptr')))
       {
@@ -134,7 +134,7 @@ class QubitMetsParser
         // Find UUID type
         foreach ($identifiers as $item)
         {
-          $this->registerNamespaces($item, array('p' => 'premis'));
+          $this->registerNamespaces($item, ['p' => 'premis']);
 
           if (count($type = $item->xpath('p:objectIdentifierType')) > 0
             && count($value = $item->xpath('p:objectIdentifierValue')) > 0
@@ -162,7 +162,7 @@ class QubitMetsParser
     }
 
     $structMap = $structMap[0];
-    $this->registerNamespaces($structMap, array('m' => 'mets'));
+    $this->registerNamespaces($structMap, ['m' => 'mets']);
     $divs = $structMap->xpath('m:div/m:div');
     if (count($divs) == 0 || !isset($divs[0]['DMDID']))
     {
@@ -255,7 +255,7 @@ class QubitMetsParser
 
     foreach ($this->document->xpath('//m:amdSec/m:techMD/m:mdWrap[@MDTYPE="PREMIS:OBJECT"]/m:xmlData') as $xmlData)
     {
-      $this->registerNamespaces($xmlData, array('p' => 'premis'));
+      $this->registerNamespaces($xmlData, ['p' => 'premis']);
 
       if (0 < count($size = $xmlData->xpath('p:object/p:objectCharacteristics/p:size')))
       {
@@ -282,12 +282,12 @@ class QubitMetsParser
 
   public function processDmdSec($xml, $informationObject)
   {
-    $this->registerNamespaces($xml, array('m' => 'mets'));
+    $this->registerNamespaces($xml, ['m' => 'mets']);
 
     // Use the local name to accept no namespace and dc or dcterms namespaces
     $dublincore = $xml->xpath('.//m:mdWrap/m:xmlData/*[local-name()="dublincore"]/*');
 
-    $creation = array();
+    $creation = [];
 
     foreach ($dublincore as $item)
     {
@@ -298,7 +298,7 @@ class QubitMetsParser
       }
 
       // Strip namespaces from element names
-      switch (str_replace(array('dcterms:', 'dc:'), '', $item->getName()))
+      switch (str_replace(['dcterms:', 'dc:'], '', $item->getName()))
       {
         case 'title':
           $informationObject->setTitle($value);
@@ -315,12 +315,12 @@ class QubitMetsParser
           break;
 
         case 'coverage':
-          $informationObject->setAccessPointByName($value, array('type_id' => QubitTaxonomy::PLACE_ID));
+          $informationObject->setAccessPointByName($value, ['type_id' => QubitTaxonomy::PLACE_ID]);
 
           break;
 
         case 'subject':
-          $informationObject->setAccessPointByName($value, array('type_id' => QubitTaxonomy::SUBJECT_ID));
+          $informationObject->setAccessPointByName($value, ['type_id' => QubitTaxonomy::SUBJECT_ID]);
 
           break;
 
@@ -330,12 +330,12 @@ class QubitMetsParser
           break;
 
         case 'publisher':
-          $informationObject->setActorByName($value, array('event_type_id' => QubitTerm::PUBLICATION_ID));
+          $informationObject->setActorByName($value, ['event_type_id' => QubitTerm::PUBLICATION_ID]);
 
           break;
 
         case 'contributor':
-          $informationObject->setActorByName($value, array('event_type_id' => QubitTerm::CONTRIBUTION_ID));
+          $informationObject->setActorByName($value, ['event_type_id' => QubitTerm::CONTRIBUTION_ID]);
 
           break;
 
@@ -378,7 +378,7 @@ class QubitMetsParser
 
         case 'language':
           // TODO: the user could write "English" instead of "en"? (see symfony...widget/i18n/*)
-          $informationObject->language = array($value);
+          $informationObject->language = [$value];
 
           break;
 
@@ -680,13 +680,13 @@ class QubitMetsParser
    */
   protected function getPremisEventsByType($admId, $eventType)
   {
-    $events = array();
+    $events = [];
     $selector = sprintf(
       '//m:amdSec[@ID="%s"]/m:digiprovMD/m:mdWrap[@MDTYPE="PREMIS:EVENT"]/m:xmlData/p:event', $admId
     );
     foreach ($this->document->xpath($selector) as $event)
     {
-      $this->registerNamespaces($event, array('p' => 'premis'));
+      $this->registerNamespaces($event, ['p' => 'premis']);
       $types = $event->xpath('p:eventType');
       foreach ($types as $type)
       {
@@ -723,22 +723,22 @@ class QubitMetsParser
   {
     $premisObject = new QubitPremisObject();
 
-    $fields = array(
-      'filename' => array(
+    $fields = [
+      'filename' => [
         'xpath' => $this->objectXpath.'p:originalName',
-        'type' => 'lastPartOfPath'),
-      'puid' => array(
+        'type' => 'lastPartOfPath'],
+      'puid' => [
         'xpath' => $this->objectXpath.'p:objectCharacteristics/p:format/p:formatRegistry[p:formatRegistryName="PRONOM"]/p:formatRegistryKey',
-        'type' => 'string'),
-      'lastModified' => array(
+        'type' => 'string'],
+      'lastModified' => [
         'xpath' => $this->objectXpath.'p:objectCharacteristics/p:objectCharacteristicsExtension/f:fits/f:toolOutput/f:tool/repInfo/lastModified',
-        'type' => 'date'),
-      'size' => array(
+        'type' => 'date'],
+      'size' => [
         'xpath' => $this->objectXpath.'p:objectCharacteristics/p:size',
-        'type' => 'string'),
-      'mimeType' => array(
+        'type' => 'string'],
+      'mimeType' => [
         'xpath' => $this->objectXpath.'p:objectCharacteristics/p:objectCharacteristicsExtension/f:fits/f:toolOutput/f:tool/fileUtilityOutput/mimetype',
-        'type' => 'string'));
+        'type' => 'string']];
 
     foreach ($fields as $fieldName => $options)
     {
@@ -754,28 +754,28 @@ class QubitMetsParser
 
   private function loadFitsAudioData()
   {
-    $fitsAudio = array();
+    $fitsAudio = [];
     $audioXpath = $this->objectXpath.'p:objectCharacteristics/p:objectCharacteristicsExtension/f:fits/f:metadata/f:audio/';
 
-    $fields = array(
-      'bitDepth' => array(
+    $fields = [
+      'bitDepth' => [
         'xpath' => $audioXpath.'f:bitDepth',
-        'type' => 'string'),
-      'sampleRate' => array(
+        'type' => 'string'],
+      'sampleRate' => [
         'xpath' => $audioXpath.'f:sampleRate',
-        'type' => 'string'),
-      'channels' => array(
+        'type' => 'string'],
+      'channels' => [
         'xpath' => $audioXpath.'f:channels',
-        'type' => 'string'),
-      'dataEncoding' => array(
+        'type' => 'string'],
+      'dataEncoding' => [
         'xpath' => $audioXpath.'f:audioDataEncoding',
-        'type' => 'string'),
-      'offset' => array(
+        'type' => 'string'],
+      'offset' => [
         'xpath' => $audioXpath.'f:offset',
-        'type' => 'string'),
-      'byteOrder' => array(
+        'type' => 'string'],
+      'byteOrder' => [
         'xpath' => $audioXpath.'f:byteOrder',
-        'type' => 'string'));
+        'type' => 'string']];
 
     foreach ($fields as $fieldName => $options)
     {
@@ -788,52 +788,52 @@ class QubitMetsParser
 
     if (!empty($fitsAudio))
     {
-      QubitProperty::addUnique($this->resource->id, 'fitsAudio', serialize($fitsAudio), array('scope' => 'premisData', 'indexOnSave' => false));
+      QubitProperty::addUnique($this->resource->id, 'fitsAudio', serialize($fitsAudio), ['scope' => 'premisData', 'indexOnSave' => false]);
     }
   }
 
   private function loadFitsDocumentData()
   {
-    $fitsDocument = array();
+    $fitsDocument = [];
     $documentXpath = $this->objectXpath.'p:objectCharacteristics/p:objectCharacteristicsExtension/f:fits/f:metadata/f:document/';
 
-    $fields = array(
-      'title' => array(
+    $fields = [
+      'title' => [
         'xpath' => $documentXpath.'f:title',
-        'type' => 'string'),
-      'author' => array(
+        'type' => 'string'],
+      'author' => [
         'xpath' => $documentXpath.'f:author',
-        'type' => 'string'),
-      'pageCount' => array(
+        'type' => 'string'],
+      'pageCount' => [
         'xpath' => $documentXpath.'f:pageCount',
-        'type' => 'string'),
-      'wordCount' => array(
+        'type' => 'string'],
+      'wordCount' => [
         'xpath' => $documentXpath.'f:wordCount',
-        'type' => 'string'),
-      'characterCount' => array(
+        'type' => 'string'],
+      'characterCount' => [
         'xpath' => $documentXpath.'f:characterCount',
-        'type' => 'string'),
-      'language' => array(
+        'type' => 'string'],
+      'language' => [
         'xpath' => $documentXpath.'f:language',
-        'type' => 'string'),
-      'isProtected' => array(
+        'type' => 'string'],
+      'isProtected' => [
         'xpath' => $documentXpath.'f:isProtected',
-        'type' => 'boolean'),
-      'isRightsManaged' => array(
+        'type' => 'boolean'],
+      'isRightsManaged' => [
         'xpath' => $documentXpath.'f:isRightsManaged',
-        'type' => 'boolean'),
-      'isTagged' => array(
+        'type' => 'boolean'],
+      'isTagged' => [
         'xpath' => $documentXpath.'f:isTagged',
-        'type' => 'boolean'),
-      'hasOutline' => array(
+        'type' => 'boolean'],
+      'hasOutline' => [
         'xpath' => $documentXpath.'f:hasOutline',
-        'type' => 'boolean'),
-      'hasAnnotations' => array(
+        'type' => 'boolean'],
+      'hasAnnotations' => [
         'xpath' => $documentXpath.'f:hasAnnotations',
-        'type' => 'boolean'),
-      'hasForms' => array(
+        'type' => 'boolean'],
+      'hasForms' => [
         'xpath' => $documentXpath.'f:hasForms',
-        'type' => 'boolean'));
+        'type' => 'boolean']];
 
     foreach ($fields as $fieldName => $options)
     {
@@ -846,31 +846,31 @@ class QubitMetsParser
 
     if (!empty($fitsDocument))
     {
-      QubitProperty::addUnique($this->resource->id, 'fitsDocument', serialize($fitsDocument), array('scope' => 'premisData', 'indexOnSave' => false));
+      QubitProperty::addUnique($this->resource->id, 'fitsDocument', serialize($fitsDocument), ['scope' => 'premisData', 'indexOnSave' => false]);
     }
   }
 
   private function loadFitsTextData()
   {
-    $fitsText = array();
+    $fitsText = [];
     $textXpath = $this->objectXpath.'p:objectCharacteristics/p:objectCharacteristicsExtension/f:fits/f:metadata/f:text/';
 
-    $fields = array(
-      'linebreak' => array(
+    $fields = [
+      'linebreak' => [
         'xpath' => $textXpath.'f:linebreak',
-        'type' => 'string'),
-      'charset' => array(
+        'type' => 'string'],
+      'charset' => [
         'xpath' => $textXpath.'f:charset',
-        'type' => 'string'),
-      'markupBasis' => array(
+        'type' => 'string'],
+      'markupBasis' => [
         'xpath' => $textXpath.'f:markupBasis',
-        'type' => 'string'),
-      'markupBasisVersion' => array(
+        'type' => 'string'],
+      'markupBasisVersion' => [
         'xpath' => $textXpath.'f:markupBasisVersion',
-        'type' => 'string'),
-      'markupLanguage' => array(
+        'type' => 'string'],
+      'markupLanguage' => [
         'xpath' => $textXpath.'f:markupLanguage',
-        'type' => 'string'));
+        'type' => 'string']];
 
     foreach ($fields as $fieldName => $options)
     {
@@ -883,238 +883,238 @@ class QubitMetsParser
 
     if (!empty($fitsText))
     {
-      QubitProperty::addUnique($this->resource->id, 'fitsText', serialize($fitsText), array('scope' => 'premisData', 'indexOnSave' => false));
+      QubitProperty::addUnique($this->resource->id, 'fitsText', serialize($fitsText), ['scope' => 'premisData', 'indexOnSave' => false]);
     }
   }
 
   private function loadMediainfoData()
   {
-    $trackFields = array(
-      'count' => array(
+    $trackFields = [
+      'count' => [
         'xpath' => 'Count',
-        'type' => 'integer'),
-      'videoFormatList' => array(
+        'type' => 'integer'],
+      'videoFormatList' => [
         'xpath' => 'Video_Format_List',
-        'type' => 'string'),
-      'videoFormatWithHintList' => array(
+        'type' => 'string'],
+      'videoFormatWithHintList' => [
         'xpath' => 'Video_Format_WithHint_List',
-        'type' => 'string'),
-      'codecsVideo' => array(
+        'type' => 'string'],
+      'codecsVideo' => [
         'xpath' => 'Codecs_Video',
-        'type' => 'string'),
-      'videoLanguageList' => array(
+        'type' => 'string'],
+      'videoLanguageList' => [
         'xpath' => 'Video_Language_List',
-        'type' => 'string'),
-      'audioFormatList' => array(
+        'type' => 'string'],
+      'audioFormatList' => [
         'xpath' => 'Audio_Format_List',
-        'type' => 'string'),
-      'audioFormatWithHintList' => array(
+        'type' => 'string'],
+      'audioFormatWithHintList' => [
         'xpath' => 'Audio_Format_WithHint_List',
-        'type' => 'string'),
-      'audioCodecs' => array(
+        'type' => 'string'],
+      'audioCodecs' => [
         'xpath' => 'Audio_codecs',
-        'type' => 'string'),
-      'audioLanguageList' => array(
+        'type' => 'string'],
+      'audioLanguageList' => [
         'xpath' => 'Audio_Language_List',
-        'type' => 'string'),
-      'completeName' => array(
+        'type' => 'string'],
+      'completeName' => [
         'xpath' => 'Complete_name',
-        'type' => 'string'),
-      'fileName' => array(
+        'type' => 'string'],
+      'fileName' => [
         'xpath' => 'File_name',
-        'type' => 'string'),
-      'fileExtension' => array(
+        'type' => 'string'],
+      'fileExtension' => [
         'xpath' => 'File_extension',
-        'type' => 'string'),
-      'format' => array(
+        'type' => 'string'],
+      'format' => [
         'xpath' => 'Format',
-        'type' => 'string'),
-      'formatInfo' => array(
+        'type' => 'string'],
+      'formatInfo' => [
         'xpath' => 'Format_Info',
-        'type' => 'string'),
-      'formatUrl' => array(
+        'type' => 'string'],
+      'formatUrl' => [
         'xpath' => 'Format_Url',
-        'type' => 'string'),
-      'formatProfile' => array(
+        'type' => 'string'],
+      'formatProfile' => [
         'xpath' => 'Format_profile',
-        'type' => 'string'),
-      'formatSettings' => array(
+        'type' => 'string'],
+      'formatSettings' => [
         'xpath' => 'Format_settings',
-        'type' => 'string'),
-      'formatSettingsCabac' => array(
+        'type' => 'string'],
+      'formatSettingsCabac' => [
         'xpath' => 'Format_settings__CABAC',
-        'type' => 'string'),
-      'formatSettingsReFrames' => array(
+        'type' => 'string'],
+      'formatSettingsReFrames' => [
         'xpath' => 'Format_settings__ReFrames',
-        'type' => 'string'),
-      'formatSettingsGop' => array(
+        'type' => 'string'],
+      'formatSettingsGop' => [
         'xpath' => 'Format_settings__GOP',
-        'type' => 'string'),
-      'formatExtensionsUsuallyUsed' => array(
+        'type' => 'string'],
+      'formatExtensionsUsuallyUsed' => [
         'xpath' => 'Format_Extensions_usually_used',
-        'type' => 'string'),
-      'commercialName' => array(
+        'type' => 'string'],
+      'commercialName' => [
         'xpath' => 'Commercial_name',
-        'type' => 'string'),
-      'internetMediaType' => array(
+        'type' => 'string'],
+      'internetMediaType' => [
         'xpath' => 'Internet_media_type',
-        'type' => 'string'),
-      'codecId' => array(
+        'type' => 'string'],
+      'codecId' => [
         'xpath' => 'Codec_ID',
-        'type' => 'string'),
-      'codecIdInfo' => array(
+        'type' => 'string'],
+      'codecIdInfo' => [
         'xpath' => 'Codec_ID_Info',
-        'type' => 'string'),
-      'codecIdUrl' => array(
+        'type' => 'string'],
+      'codecIdUrl' => [
         'xpath' => 'Codec_ID_Url',
-        'type' => 'string'),
-      'codec' => array(
+        'type' => 'string'],
+      'codec' => [
         'xpath' => 'Codec',
-        'type' => 'string'),
-      'codecFamily' => array(
+        'type' => 'string'],
+      'codecFamily' => [
         'xpath' => 'Codec_Family',
-        'type' => 'string'),
-      'codecInfo' => array(
+        'type' => 'string'],
+      'codecInfo' => [
         'xpath' => 'Codec_Info',
-        'type' => 'string'),
-      'codecUrl' => array(
+        'type' => 'string'],
+      'codecUrl' => [
         'xpath' => 'Codec_Url',
-        'type' => 'string'),
-      'codecCc' => array(
+        'type' => 'string'],
+      'codecCc' => [
         'xpath' => 'Codec_CC',
-        'type' => 'string'),
-      'codecProfile' => array(
+        'type' => 'string'],
+      'codecProfile' => [
         'xpath' => 'Codec_profile',
-        'type' => 'string'),
-      'codecSettings' => array(
+        'type' => 'string'],
+      'codecSettings' => [
         'xpath' => 'Codec_settings',
-        'type' => 'string'),
-      'codecSettingsCabac' => array(
+        'type' => 'string'],
+      'codecSettingsCabac' => [
         'xpath' => 'Codec_settings__CABAC',
-        'type' => 'string'),
-      'codecSettingsRefFrames' => array(
+        'type' => 'string'],
+      'codecSettingsRefFrames' => [
         'xpath' => 'Codec_Settings_RefFrames',
-        'type' => 'string'),
-      'codecExtensionsUsuallyUsed' => array(
+        'type' => 'string'],
+      'codecExtensionsUsuallyUsed' => [
         'xpath' => 'Codec_Extensions_usually_used',
-        'type' => 'string'),
-      'fileSize' => array(
+        'type' => 'string'],
+      'fileSize' => [
         'xpath' => 'File_size',
-        'type' => 'firstInteger'),
-      'duration' => array(
+        'type' => 'firstInteger'],
+      'duration' => [
         'xpath' => 'Duration',
-        'type' => 'firstInteger'),
-      'bitRate' => array(
+        'type' => 'firstInteger'],
+      'bitRate' => [
         'xpath' => 'Bit_rate',
-        'type' => 'firstInteger'),
-      'bitRateMode' => array(
+        'type' => 'firstInteger'],
+      'bitRateMode' => [
         'xpath' => 'Bit_rate_mode',
-        'type' => 'string'),
-      'overallBitRate' => array(
+        'type' => 'string'],
+      'overallBitRate' => [
         'xpath' => 'Overall_bit_rate',
-        'type' => 'firstInteger'),
-      'channels' => array(
+        'type' => 'firstInteger'],
+      'channels' => [
         'xpath' => 'Channel_s_',
-        'type' => 'firstInteger'),
-      'channelPositions' => array(
+        'type' => 'firstInteger'],
+      'channelPositions' => [
         'xpath' => 'Channel_positions',
-        'type' => 'string'),
-      'samplingRate' => array(
+        'type' => 'string'],
+      'samplingRate' => [
         'xpath' => 'Sampling_rate',
-        'type' => 'firstInteger'),
-      'samplesCount' => array(
+        'type' => 'firstInteger'],
+      'samplesCount' => [
         'xpath' => 'Samples_count',
-        'type' => 'firstInteger'),
-      'compressionMode' => array(
+        'type' => 'firstInteger'],
+      'compressionMode' => [
         'xpath' => 'Compression_mode',
-        'type' => 'string'),
-      'width' => array(
+        'type' => 'string'],
+      'width' => [
         'xpath' => 'Width',
-        'type' => 'firstInteger'),
-      'height' => array(
+        'type' => 'firstInteger'],
+      'height' => [
         'xpath' => 'Height',
-        'type' => 'firstInteger'),
-      'pixelAspectRatio' => array(
+        'type' => 'firstInteger'],
+      'pixelAspectRatio' => [
         'xpath' => 'Pixel_aspect_ratio',
-        'type' => 'firstFloat'),
-      'displayAspectRatio' => array(
+        'type' => 'firstFloat'],
+      'displayAspectRatio' => [
         'xpath' => 'Display_aspect_ratio',
-        'type' => 'firstStringWithTwoPoints'),
-      'rotation' => array(
+        'type' => 'firstStringWithTwoPoints'],
+      'rotation' => [
         'xpath' => 'Rotation',
-        'type' => 'firstFloat'),
-      'frameRateMode' => array(
+        'type' => 'firstFloat'],
+      'frameRateMode' => [
         'xpath' => 'Frame_rate_mode',
-        'type' => 'string'),
-      'frameRate' => array(
+        'type' => 'string'],
+      'frameRate' => [
         'xpath' => 'Frame_rate',
-        'type' => 'firstFloat'),
-      'frameCount' => array(
+        'type' => 'firstFloat'],
+      'frameCount' => [
         'xpath' => 'Frame_count',
-        'type' => 'firstInteger'),
-      'resolution' => array(
+        'type' => 'firstInteger'],
+      'resolution' => [
         'xpath' => 'Resolution',
-        'type' => 'firstInteger'),
-      'colorimetry' => array(
+        'type' => 'firstInteger'],
+      'colorimetry' => [
         'xpath' => 'Colorimetry',
-        'type' => 'string'),
-      'colorSpace' => array(
+        'type' => 'string'],
+      'colorSpace' => [
         'xpath' => 'Color_space',
-        'type' => 'string'),
-      'chromaSubsampling' => array(
+        'type' => 'string'],
+      'chromaSubsampling' => [
         'xpath' => 'Chroma_subsampling',
-        'type' => 'string'),
-      'bitDepth' => array(
+        'type' => 'string'],
+      'bitDepth' => [
         'xpath' => 'Bit_depth',
-        'type' => 'firstInteger'),
-      'scanType' => array(
+        'type' => 'firstInteger'],
+      'scanType' => [
         'xpath' => 'Scan_type',
-        'type' => 'string'),
-      'interlacement' => array(
+        'type' => 'string'],
+      'interlacement' => [
         'xpath' => 'Interlacement',
-        'type' => 'string'),
-      'bitsPixelFrame' => array(
+        'type' => 'string'],
+      'bitsPixelFrame' => [
         'xpath' => 'Bits__Pixel_Frame_',
-        'type' => 'firstFloat'),
-      'streamSize' => array(
+        'type' => 'firstFloat'],
+      'streamSize' => [
         'xpath' => 'Stream_size',
-        'type' => 'firstInteger'),
-      'proportionOfThisStream' => array(
+        'type' => 'firstInteger'],
+      'proportionOfThisStream' => [
         'xpath' => 'Proportion_of_this_stream',
-        'type' => 'firstFloat'),
-      'headerSize' => array(
+        'type' => 'firstFloat'],
+      'headerSize' => [
         'xpath' => 'HeaderSize',
-        'type' => 'firstInteger'),
-      'dataSize' => array(
+        'type' => 'firstInteger'],
+      'dataSize' => [
         'xpath' => 'DataSize',
-        'type' => 'firstInteger'),
-      'footerSize' => array(
+        'type' => 'firstInteger'],
+      'footerSize' => [
         'xpath' => 'FooterSize',
-        'type' => 'firstInteger'),
-      'language' => array(
+        'type' => 'firstInteger'],
+      'language' => [
         'xpath' => 'Language',
-        'type' => 'string'),
-      'colorPrimaries' => array(
+        'type' => 'string'],
+      'colorPrimaries' => [
         'xpath' => 'Color_primaries',
-        'type' => 'string'),
-      'transferCharacteristics' => array(
+        'type' => 'string'],
+      'transferCharacteristics' => [
         'xpath' => 'Transfer_characteristics',
-        'type' => 'string'),
-      'matrixCoefficients' => array(
+        'type' => 'string'],
+      'matrixCoefficients' => [
         'xpath' => 'Matrix_coefficients',
-        'type' => 'string'),
-      'isStreamable' => array(
+        'type' => 'string'],
+      'isStreamable' => [
         'xpath' => 'IsStreamable',
-        'type' => 'boolean'),
-      'writingApplication' => array(
+        'type' => 'boolean'],
+      'writingApplication' => [
         'xpath' => 'Writing_application',
-        'type' => 'string'),
-      'fileLastModificationDate' => array(
+        'type' => 'string'],
+      'fileLastModificationDate' => [
         'xpath' => 'File_last_modification_date',
-        'type' => 'date'),
-      'fileLastModificationDateLocal' => array(
+        'type' => 'date'],
+      'fileLastModificationDateLocal' => [
         'xpath' => 'File_last_modification_date__local_',
-        'type' => 'date'));
+        'type' => 'date']];
 
     // Get all tracks
     $mediainfoTracks = $this->document->xpath($this->objectXpath.'p:objectCharacteristics/p:objectCharacteristicsExtension/Mediainfo/File/track');
@@ -1129,9 +1129,9 @@ class QubitMetsParser
 
     foreach ($mediainfoTracks as $track)
     {
-      $this->registerNamespaces($track, array('p' => 'premis'));
+      $this->registerNamespaces($track, ['p' => 'premis']);
 
-      $esTrack = array();
+      $esTrack = [];
 
       // Load track data
       foreach ($trackFields as $fieldName => $options)
@@ -1156,17 +1156,17 @@ class QubitMetsParser
         switch ($type[0])
         {
           case 'General':
-            QubitProperty::addUnique($this->resource->id, 'mediainfoGeneralTrack', serialize($esTrack), array('scope' => 'premisData', 'indexOnSave' => false));
+            QubitProperty::addUnique($this->resource->id, 'mediainfoGeneralTrack', serialize($esTrack), ['scope' => 'premisData', 'indexOnSave' => false]);
 
             break;
 
           case 'Video':
-            QubitProperty::addUnique($this->resource->id, 'mediainfoVideoTrack', serialize($esTrack), array('scope' => 'premisData', 'indexOnSave' => false));
+            QubitProperty::addUnique($this->resource->id, 'mediainfoVideoTrack', serialize($esTrack), ['scope' => 'premisData', 'indexOnSave' => false]);
 
             break;
 
           case 'Audio':
-            QubitProperty::addUnique($this->resource->id, 'mediainfoAudioTrack', serialize($esTrack), array('scope' => 'premisData', 'indexOnSave' => false));
+            QubitProperty::addUnique($this->resource->id, 'mediainfoAudioTrack', serialize($esTrack), ['scope' => 'premisData', 'indexOnSave' => false]);
 
             break;
         }
@@ -1176,21 +1176,21 @@ class QubitMetsParser
 
   private function loadFormatData()
   {
-    $format = array();
+    $format = [];
 
-    $fields = array(
-      'formatName' => array(
+    $fields = [
+      'formatName' => [
         'xpath' => $this->objectXpath.'p:objectCharacteristics/p:format/p:formatDesignation/p:formatName',
-        'type' => 'string'),
-      'formatVersion' => array(
+        'type' => 'string'],
+      'formatVersion' => [
         'xpath' => $this->objectXpath.'p:objectCharacteristics/p:format/p:formatDesignation/p:formatVersion',
-        'type' => 'string'),
-      'formatRegistryName' => array(
+        'type' => 'string'],
+      'formatRegistryName' => [
         'xpath' => $this->objectXpath.'p:objectCharacteristics/p:format/p:formatRegistry/p:formatRegistryName',
-        'type' => 'string'),
-      'formatRegistryKey' => array(
+        'type' => 'string'],
+      'formatRegistryKey' => [
         'xpath' => $this->objectXpath.'p:objectCharacteristics/p:format/p:formatRegistry/p:formatRegistryKey',
-        'type' => 'string'));
+        'type' => 'string']];
 
     foreach ($fields as $fieldName => $options)
     {
@@ -1199,44 +1199,44 @@ class QubitMetsParser
         $this->resource->id,
         $fieldName,
         $this->getFieldValue($this->document, $options['xpath'], $options['type']),
-        array('scope' => 'premisData', 'indexOnSave' => false)
+        ['scope' => 'premisData', 'indexOnSave' => false]
       );
     }
   }
 
   private function loadEventsData($amdSecId)
   {
-    $eventFields = array(
-      'type' => array(
+    $eventFields = [
+      'type' => [
         'xpath' => 'p:eventType',
-        'type' => 'string'),
-      'dateTime' => array(
+        'type' => 'string'],
+      'dateTime' => [
         'xpath' => 'p:eventDateTime',
-        'type' => 'date'),
-      'detail' => array(
+        'type' => 'date'],
+      'detail' => [
         'xpath' => 'p:eventDetail',
-        'type' => 'string'),
-      'outcome' => array(
+        'type' => 'string'],
+      'outcome' => [
         'xpath' => 'p:eventOutcomeInformation/p:eventOutcome',
-        'type' => 'string'),
-      'outcomeDetailNote' => array(
+        'type' => 'string'],
+      'outcomeDetailNote' => [
         'xpath' => 'p:eventOutcomeInformation/p:eventOutcomeDetail/p:eventOutcomeDetailNote',
-        'type' => 'string'));
+        'type' => 'string']];
 
-    $linkingAgentIdentifierFields = array(
-      'type' => array(
+    $linkingAgentIdentifierFields = [
+      'type' => [
         'xpath' => 'p:linkingAgentIdentifierType',
-        'type' => 'string'),
-      'value' => array(
+        'type' => 'string'],
+      'value' => [
         'xpath' => 'p:linkingAgentIdentifierValue',
-        'type' => 'string'));
+        'type' => 'string']];
 
     // Get all events
     foreach ($this->document->xpath('//m:amdSec[@ID="'.$amdSecId.'"]/m:digiprovMD/m:mdWrap[@MDTYPE="PREMIS:EVENT"]/m:xmlData/p:event') as $item)
     {
-      $this->registerNamespaces($item, array('p' => 'premis'));
+      $this->registerNamespaces($item, ['p' => 'premis']);
 
-      $event = array();
+      $event = [];
 
       // Load event data
       foreach ($eventFields as $fieldName => $options)
@@ -1251,9 +1251,9 @@ class QubitMetsParser
       // Get all event linking agent identifiers
       foreach ($item->xpath('p:linkingAgentIdentifier') as $linkingAgent)
       {
-        $this->registerNamespaces($linkingAgent, array('p' => 'premis'));
+        $this->registerNamespaces($linkingAgent, ['p' => 'premis']);
 
-        $linkingAgentIdentifier = array();
+        $linkingAgentIdentifier = [];
 
         // Load linking agent identifier data
         foreach ($linkingAgentIdentifierFields as $fieldName => $options)
@@ -1280,11 +1280,11 @@ class QubitMetsParser
         // Format identification event is stored apart
         if (isset($event['type']) && $event['type'] == 'format identification')
         {
-          QubitProperty::addUnique($this->resource->id, 'formatIdentificationEvent', serialize($event), array('scope' => 'premisData', 'indexOnSave' => false));
+          QubitProperty::addUnique($this->resource->id, 'formatIdentificationEvent', serialize($event), ['scope' => 'premisData', 'indexOnSave' => false]);
         }
         else
         {
-          QubitProperty::addUnique($this->resource->id, 'otherEvent', serialize($event), array('scope' => 'premisData', 'indexOnSave' => false));
+          QubitProperty::addUnique($this->resource->id, 'otherEvent', serialize($event), ['scope' => 'premisData', 'indexOnSave' => false]);
         }
       }
     }
@@ -1292,25 +1292,25 @@ class QubitMetsParser
 
   private function loadAgentsData($amdSecId)
   {
-    $agentFields = array(
-      'identifierType' => array(
+    $agentFields = [
+      'identifierType' => [
         'xpath' => 'm:agentIdentifier/m:agentIdentifierType',
-        'type' => 'string'),
-      'identifierValue' => array(
+        'type' => 'string'],
+      'identifierValue' => [
         'xpath' => 'm:agentIdentifier/m:agentIdentifierValue',
-        'type' => 'string'),
-      'name' => array(
+        'type' => 'string'],
+      'name' => [
         'xpath' => 'm:agentName',
-        'type' => 'string'),
-      'type' => array(
+        'type' => 'string'],
+      'type' => [
         'xpath' => 'm:agentType',
-        'type' => 'string'));
+        'type' => 'string']];
 
     foreach ($this->document->xpath('//m:amdSec[@ID="'.$amdSecId.'"]/m:digiprovMD/m:mdWrap[@MDTYPE="PREMIS:AGENT"]/m:xmlData/m:agent') as $item)
     {
-      $this->registerNamespaces($item, array('m' => 'mets'));
+      $this->registerNamespaces($item, ['m' => 'mets']);
 
-      $agent = array();
+      $agent = [];
 
       foreach ($agentFields as $fieldName => $options)
       {
@@ -1323,7 +1323,7 @@ class QubitMetsParser
 
       if (!empty($agent))
       {
-        QubitProperty::addUnique($this->resource->id, 'agent', serialize($agent), array('scope' => 'premisData', 'indexOnSave' => false));
+        QubitProperty::addUnique($this->resource->id, 'agent', serialize($agent), ['scope' => 'premisData', 'indexOnSave' => false]);
       }
     }
   }

@@ -49,7 +49,7 @@ class arMigration0123
     {
       // Get all RAD General notes
       QubitPdo::prepareAndExecute('UPDATE note SET type_id=? WHERE type_id=?',
-                                  array(QubitTerm::GENERAL_NOTE_ID, $term->id));
+                                  [QubitTerm::GENERAL_NOTE_ID, $term->id]);
 
       // Remove RAD General note term
       $term->delete();

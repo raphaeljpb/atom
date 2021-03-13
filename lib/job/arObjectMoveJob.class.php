@@ -29,11 +29,11 @@ class arObjectMoveJob extends arBaseJob
   /**
    * @see arBaseJob::$requiredParameters
    */
-  protected $extraRequiredParameters = array('objectId');
+  protected $extraRequiredParameters = ['objectId'];
 
   public function runJob($parameters)
   {
-    $this->info($this->i18n->__('Moving object (id: %1)', array('%1' => $parameters['objectId'])));
+    $this->info($this->i18n->__('Moving object (id: %1)', ['%1' => $parameters['objectId']]));
 
     // Fetch object
     if (($object = QubitObject::getById($parameters['objectId'])) === null)
@@ -48,7 +48,7 @@ class arObjectMoveJob extends arBaseJob
     {
       if (($parent = QubitObject::getById($parameters['parentId'])) === null)
       {
-        $this->error($this->i18n->__('Invalid parent (id: %1)', array('%1' => $parameters['parentId'])));
+        $this->error($this->i18n->__('Invalid parent (id: %1)', ['%1' => $parameters['parentId']]));
 
         return false;
       }
@@ -66,7 +66,7 @@ class arObjectMoveJob extends arBaseJob
       // Avoid updating parent if not needed
       if ($object->parentId !== $newParentId)
       {
-        $this->info($this->i18n->__('Moving object to parent (id: %1)', array('%1' => $parameters['parentId'])));
+        $this->info($this->i18n->__('Moving object to parent (id: %1)', ['%1' => $parameters['parentId']]));
 
         $object->parentId = $newParentId;
         $object->save();
@@ -80,10 +80,10 @@ class arObjectMoveJob extends arBaseJob
 
       // Check current positions to avoid mismatch
       $sql = "SELECT id FROM information_object WHERE parent_id = :parentId ORDER BY lft;";
-      $params = array(':parentId' => $object->parentId);
-      $children = QubitPdo::fetchAll($sql, $params, array('fetchMode' => PDO::FETCH_ASSOC));
+      $params = [':parentId' => $object->parentId];
+      $children = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
-      if (array_search(array('id' => $object->id), $children) != $parameters['oldPosition'])
+      if (array_search(['id' => $object->id], $children) != $parameters['oldPosition'])
       {
         $this->error($this->i18n->__('Mismatch in current position'));
 
@@ -103,7 +103,7 @@ class arObjectMoveJob extends arBaseJob
 
       if (($targetSibling = QubitObject::getById($targetSiblingId)) === null)
       {
-        $this->error($this->i18n->__('Invalid target sibling (id: %1)', array('%1' => $targetSiblingId)));
+        $this->error($this->i18n->__('Invalid target sibling (id: %1)', ['%1' => $targetSiblingId]));
 
         return false;
       }
@@ -111,19 +111,19 @@ class arObjectMoveJob extends arBaseJob
       switch ($targetPosition)
       {
         case 'before':
-          $this->info($this->i18n->__('Moving object before sibling (id: %1)', array('%1' => $targetSiblingId)));
+          $this->info($this->i18n->__('Moving object before sibling (id: %1)', ['%1' => $targetSiblingId]));
           $object->moveToPrevSiblingOf($targetSibling);
 
           break;
 
         case 'after':
-          $this->info($this->i18n->__('Moving object after sibling (id: %1)', array('%1' => $targetSiblingId)));
+          $this->info($this->i18n->__('Moving object after sibling (id: %1)', ['%1' => $targetSiblingId]));
           $object->moveToNextSiblingOf($targetSibling);
 
           break;
 
         default:
-          $this->error($this->i18n->__('Invalid target position (%1)', array('%1' => $targetPosition)));
+          $this->error($this->i18n->__('Invalid target position (%1)', ['%1' => $targetPosition]));
 
           return false;
       }

@@ -92,7 +92,7 @@ class SitemapWriterSection
     $this->file = $parts['dirname'].DIRECTORY_SEPARATOR.$parts['filename'].'.'.$index.'.'.$parts['extension'];
 
     // __destructor() doesn't get called on fatal errors
-    register_shutdown_function(array($this, 'end'));
+    register_shutdown_function([$this, 'end']);
 
     $this->writer = new XMLWriter();
     $this->writer->openUri($this->file);

@@ -47,7 +47,7 @@ class arMigration0112
 
     $setting->setName('findingAidFormat');
     $setting->setSourceCulture('en');
-    $setting->setValue('pdf', array('culture' => 'en'));
+    $setting->setValue('pdf', ['culture' => 'en']);
     $setting->setEditable(1);
     $setting->setDeleteable(0);
     $setting->save();

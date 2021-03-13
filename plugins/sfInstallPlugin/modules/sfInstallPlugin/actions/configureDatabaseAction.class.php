@@ -21,7 +21,7 @@ class sfInstallPluginConfigureDatabaseAction extends sfAction
 {
   public function execute($request)
   {
-    $this->database = array();
+    $this->database = [];
 
     $this->form = new sfForm();
 
@@ -34,7 +34,7 @@ class sfInstallPluginConfigureDatabaseAction extends sfAction
     $this->form->setWidget('databaseHost', new sfWidgetFormInput());
 
     $this->form->setDefault('databaseName', 'atom');
-    $this->form->setValidator('databaseName', new sfValidatorString(array('required' => true)));
+    $this->form->setValidator('databaseName', new sfValidatorString(['required' => true]));
     $this->form->setWidget('databaseName', new sfWidgetFormInput());
 
     $this->form->setValidator('databasePassword', new sfValidatorString());
@@ -59,7 +59,7 @@ class sfInstallPluginConfigureDatabaseAction extends sfAction
         {
           $symlinks = sfInstall::addSymlinks();
 
-          $this->redirect(array('module' => 'sfInstallPlugin', 'action' => 'insertSql'));
+          $this->redirect(['module' => 'sfInstallPlugin', 'action' => 'insertSql']);
         }
       }
     }

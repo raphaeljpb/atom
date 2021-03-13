@@ -139,14 +139,14 @@ class TermAutocompleteAction extends sfAction
 
       $statement->execute();
 
-      $this->terms = array();
+      $this->terms = [];
       $rows = $statement->fetchAll();
       foreach ($rows as $row)
       {
         if (isset($row[1]))
         {
           // Alternative term
-          $this->terms[] = array(QubitTerm::getById($row[0]), $row[2]);
+          $this->terms[] = [QubitTerm::getById($row[0]), $row[2]];
         }
         else
         {

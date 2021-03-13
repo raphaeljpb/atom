@@ -25,7 +25,7 @@
  */
 class arSearchStatusTask extends arBaseTask
 {
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -54,10 +54,10 @@ class arSearchStatusTask extends arBaseTask
   }
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-    ));
+    ]);
 
     $this->namespace = 'search';
     $this->name = 'status';

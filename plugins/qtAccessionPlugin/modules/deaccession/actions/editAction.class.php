@@ -20,13 +20,13 @@
 class DeaccessionEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'date',
       'description',
       'extent',
       'identifier',
       'reason',
-      'scope');
+      'scope'];
 
   public function earlyExecute()
   {
@@ -67,7 +67,7 @@ class DeaccessionEditAction extends DefaultEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");
@@ -86,7 +86,7 @@ class DeaccessionEditAction extends DefaultEditAction
 
         $this->resource->save();
 
-        $this->redirect(array($this->resource->accession, 'module' => 'accession'));
+        $this->redirect([$this->resource->accession, 'module' => 'accession']);
       }
     }
 
@@ -98,17 +98,17 @@ class DeaccessionEditAction extends DefaultEditAction
     switch ($name)
     {
       case 'scope':
-        $this->form->setDefault('scope', $this->context->routing->generate(null, array($this->resource->scope, 'module' => 'term')));
+        $this->form->setDefault('scope', $this->context->routing->generate(null, [$this->resource->scope, 'module' => 'term']));
         $this->form->setValidator('scope', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DEACCESSION_SCOPE_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('scope', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('scope', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
@@ -131,9 +131,9 @@ class DeaccessionEditAction extends DefaultEditAction
         }
 
         $this->form->setWidget('date', new sfWidgetFormInput());
-        $this->form->setValidator('date', new sfValidatorDate(array(
+        $this->form->setValidator('date', new sfValidatorDate([
           'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
-          'date_format_error' => 'YYYY-MM-DD')));
+          'date_format_error' => 'YYYY-MM-DD']));
 
         break;
 

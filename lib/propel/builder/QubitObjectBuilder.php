@@ -160,7 +160,7 @@ class QubitObjectBuilder extends PHP5ObjectBuilder
 
   protected function getRetrieveMethodName()
   {
-    $names = array();
+    $names = [];
     foreach ($this->getTable()->getPrimaryKey() as $column)
     {
       $names[] = ucfirst($column->getPhpName());
@@ -182,7 +182,7 @@ class QubitObjectBuilder extends PHP5ObjectBuilder
 
   protected function addClassOpen(&$script)
   {
-    $this->refFks = array();
+    $this->refFks = [];
     foreach ($this->getTable()->getReferrers() as $refFk)
     {
       $foreignPeerBuilder = self::getNewPeerBuilder($refFk->getTable());
@@ -296,7 +296,7 @@ script;
 
   protected function addConstants(&$script)
   {
-    $consts = array();
+    $consts = [];
     foreach ($this->getTable()->getColumns() as $column)
     {
       $upperColumnName = strtoupper($column->getName());
@@ -343,7 +343,7 @@ script;
     {
       $foreignPeerBuilder = self::getNewPeerBuilder($this->getForeignTable($this->inheritanceFk));
 
-      $adds = array();
+      $adds = [];
       foreach ($this->inheritanceFk->getLocalForeignMapping() as $localName => $foreignName)
       {
         $adds[] = <<<adds
@@ -413,7 +413,7 @@ script;
     // we get the primary key values directly from the result set and possibly
     // avoid constructing a new object.  An alternative would be to construct a
     // new object, but return an old object if one existed.
-    $keys = array();
+    $keys = [];
     foreach ($this->getTable()->getPrimaryKey() as $primaryKey)
     {
       $position = $primaryKey->getPosition() - 1;
@@ -528,8 +528,8 @@ script;
   // 1 anyway.
   protected function addRetrieveByPkMethods(&$script)
   {
-    $args = array();
-    $adds = array();
+    $args = [];
+    $adds = [];
     foreach ($this->getTable()->getPrimaryKey() as $column)
     {
       $args[] = "\${$this->getColumnVarName($column)}";
@@ -633,7 +633,7 @@ script;
 
   protected function addAddRootsCriteria(&$script)
   {
-    $adds = array();
+    $adds = [];
     foreach ($this->selfFk->getLocalColumns() as $localName)
     {
       $adds[] = <<<script
@@ -720,7 +720,7 @@ script;
 
     if (!isset($this->inheritanceFk))
     {
-      $adds = array();
+      $adds = [];
       foreach ($this->getTable()->getPrimaryKey() as $column)
       {
         $adds[] = <<<adds
@@ -966,8 +966,8 @@ script;
 
     foreach ($this->refFks as $refFk)
     {
-      $args = array();
-      $conds = array();
+      $args = [];
+      $conds = [];
       foreach ($refFk->getLocalForeignMapping() as $localName => $foreignName)
       {
         $args[] = "\$this->$foreignName";
@@ -1416,7 +1416,7 @@ script;
     {
       $foreignPeerBuilder = self::getNewPeerBuilder($this->i18nFk->getTable());
 
-      $sets = array();
+      $sets = [];
       foreach ($this->i18nFk->getLocalForeignMapping() as $localName => $foreignName)
       {
         $sets[] = <<<script
@@ -1738,7 +1738,7 @@ script;
 
     if (!isset($this->inheritanceFk))
     {
-      $adds = array();
+      $adds = [];
       foreach ($this->getTable()->getPrimaryKey() as $column)
       {
         $adds[] = <<<adds
@@ -1784,7 +1784,7 @@ script;
   {
     $foreignPeerBuilder = self::getNewPeerBuilder($this->getForeignTable($fk));
 
-    $adds = array();
+    $adds = [];
     foreach ($fk->getLocalForeignMapping() as $localName => $foreignName)
     {
       $adds[] = <<<adds
@@ -1819,8 +1819,8 @@ script;
   {
     $foreignPeerBuilder = self::getNewPeerBuilder($refFk->getTable());
 
-    $args = array();
-    $adds = array();
+    $args = [];
+    $adds = [];
     foreach ($refFk->getLocalForeignMapping() as $localName => $foreignName)
     {
       $args[] = "$$foreignName";
@@ -1847,7 +1847,7 @@ script;
   {
     $foreignPeerBuilder = self::getNewPeerBuilder($refFk->getTable());
 
-    $args = array();
+    $args = [];
     foreach ($refFk->getForeignColumns() as $foreignName)
     {
       $args[] = "$$foreignName";
@@ -1869,7 +1869,7 @@ script;
 
   protected function addRefFkAddCriteria(&$script, ForeignKey $refFk)
   {
-    $args = array();
+    $args = [];
     foreach ($refFk->getForeignColumns() as $foreignName)
     {
       $args[] = "\$this->$foreignName";

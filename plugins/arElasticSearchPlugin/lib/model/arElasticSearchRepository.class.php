@@ -32,7 +32,7 @@ class arElasticSearchRepository extends arElasticSearchModelBase
 
   public function populate()
   {
-    $errors = array();
+    $errors = [];
 
     $repositories = $this->load();
 
@@ -57,7 +57,7 @@ class arElasticSearchRepository extends arElasticSearchModelBase
 
   public static function serialize($object)
   {
-    $serialized = array();
+    $serialized = [];
 
     $serialized['id'] = $object->id;
     $serialized['slug'] = $object->slug;
@@ -66,11 +66,11 @@ class arElasticSearchRepository extends arElasticSearchModelBase
     // Related terms
     $relatedTerms = arElasticSearchModelBase::getRelatedTerms(
       $object->id,
-      array(
+      [
         QubitTaxonomy::REPOSITORY_TYPE_ID,
         QubitTaxonomy::THEMATIC_AREA_ID,
         QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID
-      )
+      ]
     );
 
     if (isset($relatedTerms[QubitTaxonomy::REPOSITORY_TYPE_ID]))
@@ -94,13 +94,13 @@ class arElasticSearchRepository extends arElasticSearchModelBase
     }
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($object->id, QubitTerm::OTHER_FORM_OF_NAME_ID)) as $item)
+    foreach (QubitPdo::fetchAll($sql, [$object->id, QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item)
     {
       $serialized['otherNames'][] = arElasticSearchOtherName::serialize($item);
     }
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($object->id, QubitTerm::PARALLEL_FORM_OF_NAME_ID)) as $item)
+    foreach (QubitPdo::fetchAll($sql, [$object->id, QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item)
     {
       $serialized['parallelNames'][] = arElasticSearchOtherName::serialize($item);
     }
@@ -114,7 +114,7 @@ class arElasticSearchRepository extends arElasticSearchModelBase
     $serialized['updatedAt'] = arElasticSearchPluginUtil::convertDate($object->updatedAt);
 
     $serialized['sourceCulture'] = $object->sourceCulture;
-    $serialized['i18n'] = self::serializeI18ns($object->id, array('QubitActor', 'QubitRepository'));
+    $serialized['i18n'] = self::serializeI18ns($object->id, ['QubitActor', 'QubitRepository']);
     self::addExtraSortInfo($serialized['i18n'], $object);
 
     return $serialized;
@@ -139,14 +139,14 @@ class arElasticSearchRepository extends arElasticSearchModelBase
   {
     foreach (sfConfig::get('app_i18n_languages') as $lang)
     {
-      if ($object->getCity(array('culture' => $lang)))
+      if ($object->getCity(['culture' => $lang]))
       {
-        $i18n[$lang]['city'] = $object->getCity(array('culture' => $lang));
+        $i18n[$lang]['city'] = $object->getCity(['culture' => $lang]);
       }
 
-      if ($object->getRegion(array('culture' => $lang)))
+      if ($object->getRegion(['culture' => $lang]))
       {
-        $i18n[$lang]['region'] = $object->getRegion(array('culture' => $lang));
+        $i18n[$lang]['region'] = $object->getRegion(['culture' => $lang]);
       }
     }
   }

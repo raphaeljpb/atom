@@ -15,13 +15,13 @@
   ?>
 
   <?php echo link_to($label,
-    array('sort' => $next) + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(),
-    array('title' => __('Sort'), 'class' => 'sortable')) ?>
+    ['sort' => $next] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(),
+    ['title' => __('Sort'), 'class' => 'sortable']) ?>
 
   <?php if ($up === $sf_request->sort): ?>
-    <?php echo image_tag('up.gif', array('alt' => __('Sort ascending'))) ?>
+    <?php echo image_tag('up.gif', ['alt' => __('Sort ascending')]) ?>
   <?php elseif ($down === $sf_request->sort): ?>
-    <?php echo image_tag('down.gif', array('alt' => __('Sort descending'))) ?>
+    <?php echo image_tag('down.gif', ['alt' => __('Sort descending')]) ?>
   <?php endif; ?>
 
 </th>

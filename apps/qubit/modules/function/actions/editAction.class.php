@@ -39,7 +39,7 @@ class FunctionEditAction extends DefaultEditAction
 
         $this->resource->save();
 
-        $this->redirect(array($this->resource, 'module' => 'function'));
+        $this->redirect([$this->resource, 'module' => 'function']);
       }
     }
 

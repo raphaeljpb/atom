@@ -24,7 +24,7 @@ class RelationEditComponent extends sfComponent
     // HACK For now, parameter name and action name are the same. Should
     // really be configurable, ideally by interpreting
     // $form->getWidgetSchema()->getNameFormat()?
-    $params = array($this->request[$this->actionName]);
+    $params = [$this->request[$this->actionName]];
     if (isset($this->request["{$this->actionName}s"]))
     {
       // If dialog JavaScript did it's work, then use array of parameters
@@ -126,9 +126,9 @@ class RelationEditComponent extends sfComponent
         break;
 
       case 'resource':
-        $this->form->setValidator('resource', new QubitValidatorForbiddenValues(array(
-          'forbidden_values' => array($this->context->routing->generate(null, $this->resource)))));
-        $this->form->setWidget('resource', new sfWidgetFormSelect(array('choices' => array())));
+        $this->form->setValidator('resource', new QubitValidatorForbiddenValues([
+          'forbidden_values' => [$this->context->routing->generate(null, $this->resource)]]));
+        $this->form->setWidget('resource', new sfWidgetFormSelect(['choices' => []]));
 
         break;
     }

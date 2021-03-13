@@ -20,7 +20,7 @@
 class arDacsPluginEditAction extends InformationObjectEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'accessConditions',
       'accruals',
       'acquisition',
@@ -54,7 +54,7 @@ class arDacsPluginEditAction extends InformationObjectEditAction
       'title',
 
       // DACS, see arDacsPlugin
-      'technicalAccess');
+      'technicalAccess'];
 
   protected function earlyExecute()
   {
@@ -70,7 +70,7 @@ class arDacsPluginEditAction extends InformationObjectEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");
@@ -85,19 +85,19 @@ class arDacsPluginEditAction extends InformationObjectEditAction
 
     $this->publicationNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
     $this->publicationNotesComponent->resource = $this->resource;
-    $this->publicationNotesComponent->execute($this->request, $options = array('type' => 'dacsPublicationNotes'));
+    $this->publicationNotesComponent->execute($this->request, $options = ['type' => 'dacsPublicationNotes']);
 
     $this->notesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
     $this->notesComponent->resource = $this->resource;
-    $this->notesComponent->execute($this->request, $options = array('type' => 'dacsNotes'));
+    $this->notesComponent->execute($this->request, $options = ['type' => 'dacsNotes']);
 
     $this->specializedNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
     $this->specializedNotesComponent->resource = $this->resource;
-    $this->specializedNotesComponent->execute($this->request, $options = array('type' => 'dacsSpecializedNotes'));
+    $this->specializedNotesComponent->execute($this->request, $options = ['type' => 'dacsSpecializedNotes']);
 
     $this->archivistsNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
     $this->archivistsNotesComponent->resource = $this->resource;
-    $this->archivistsNotesComponent->execute($this->request, $options = array('type' => 'dacsArchivistsNotes'));
+    $this->archivistsNotesComponent->execute($this->request, $options = ['type' => 'dacsArchivistsNotes']);
   }
 
   protected function addField($name)
@@ -110,15 +110,15 @@ class arDacsPluginEditAction extends InformationObjectEditAction
         $criteria->add(QubitEvent::ACTOR_ID, null, Criteria::ISNOTNULL);
         $criteria->add(QubitEvent::TYPE_ID, QubitTerm::CREATION_ID);
 
-        $value = $choices = array();
+        $value = $choices = [];
         foreach ($this->events = QubitEvent::get($criteria) as $item)
         {
-          $choices[$value[] = $this->context->routing->generate(null, array($item->actor, 'module' => 'actor'))] = $item->actor;
+          $choices[$value[] = $this->context->routing->generate(null, [$item->actor, 'module' => 'actor'])] = $item->actor;
         }
 
         $this->form->setDefault('creators', $value);
         $this->form->setValidator('creators', new sfValidatorPass());
-        $this->form->setWidget('creators', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+        $this->form->setWidget('creators', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
@@ -148,7 +148,7 @@ class arDacsPluginEditAction extends InformationObjectEditAction
     switch ($field->getName())
     {
       case 'creators':
-        $value = $filtered = array();
+        $value = $filtered = [];
         foreach ($this->form->getValue('creators') as $item)
         {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));

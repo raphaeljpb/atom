@@ -19,18 +19,18 @@
     </div>
   <?php endif; ?>
 
-  <?php echo get_component('default', 'translationLinks', array('resource' => $resource)) ?>
+  <?php echo get_component('default', 'translationLinks', ['resource' => $resource]) ?>
 
 <?php end_slot() ?>
 
-<?php echo render_show(__('Authorized form of name'), render_value($resource->getAuthorizedFormOfName(array('cultureFallback' => true)))) ?>
+<?php echo render_show(__('Authorized form of name'), render_value($resource->getAuthorizedFormOfName(['cultureFallback' => true]))) ?>
 
 <div class="section" id="contactArea">
 
   <h2><?php echo __('Contact area') ?></h2>
 
   <?php foreach ($resource->contactInformations as $contactItem): ?>
-    <?php echo get_partial('contactinformation/contactInformation', array('contactInformation' => $contactItem)) ?>
+    <?php echo get_partial('contactinformation/contactInformation', ['contactInformation' => $contactItem]) ?>
   <?php endforeach; ?>
 
 </div> <!-- /.section#contactArea -->
@@ -39,13 +39,13 @@
   <section class="actions">
     <ul>
       <?php if (QubitAcl::check($resource, 'update')): ?>
-        <li><?php echo link_to(__('Edit'), array($resource, 'module' => 'rightsholder', 'action' => 'edit'), array('title' => __('Edit'), 'class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'rightsholder', 'action' => 'edit'], ['title' => __('Edit'), 'class' => 'c-btn']) ?></li>
       <?php endif; ?>
       <?php if (QubitAcl::check($resource, 'delete')): ?>
-        <li><?php echo link_to(__('Delete'), array($resource, 'module' => 'rightsholder', 'action' => 'delete'), array('title' => __('Delete'), 'class' => 'c-btn c-btn-delete')) ?></li>
+        <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'rightsholder', 'action' => 'delete'], ['title' => __('Delete'), 'class' => 'c-btn c-btn-delete']) ?></li>
       <?php endif; ?>
       <?php if (QubitAcl::check($resource, 'create')): ?>
-        <li><?php echo link_to(__('Add new'), array('module' => 'rightsholder', 'action' => 'add'), array('title' => __('Add new'), 'class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Add new'), ['module' => 'rightsholder', 'action' => 'add'], ['title' => __('Add new'), 'class' => 'c-btn']) ?></li>
       <?php endif; ?>
     </ul>
   </section>

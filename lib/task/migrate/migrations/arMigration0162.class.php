@@ -38,13 +38,13 @@ class arMigration0162
     $taxonomy->id = QubitTaxonomy::USER_ACTION_ID;
     $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
     $taxonomy->sourceCulture = 'en';
-    $taxonomy->setName('User actions', array('culture' => 'en'));
+    $taxonomy->setName('User actions', ['culture' => 'en']);
     $taxonomy->save();
 
-    $terms = array(
+    $terms = [
       QubitTerm::USER_ACTION_CREATION_ID => 'Creation',
       QubitTerm::USER_ACTION_MODIFICATION_ID => 'Modification'
-    );
+    ];
 
     foreach ($terms as $id => $name)
     {
@@ -54,7 +54,7 @@ class arMigration0162
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::USER_ACTION_ID;
       $term->sourceCulture = 'en';
-      $term->setName($name, array('culture' => 'en'));
+      $term->setName($name, ['culture' => 'en']);
       $term->save();
     }
 

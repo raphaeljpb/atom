@@ -32,7 +32,7 @@ class QubitPhysicalObject
     return \QubitQuery::create();
   }
 
-  public static function getByName($name, $options = array())
+  public static function getByName($name, $options = [])
   {
     $results = new \ArrayIterator();
 

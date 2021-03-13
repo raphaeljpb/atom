@@ -86,7 +86,7 @@ if ($configuration->isPluginEnabled('sfInstallPlugin'))
 {
   $t->diag('Test sfInstallPlugin');
 
-  $uri = $routing->generate(null, array('module' => 'sfInstallPlugin'));
+  $uri = $routing->generate(null, ['module' => 'sfInstallPlugin']);
   $t->is($uri, '/sfInstallPlugin');
   $info = $routing->parse('/sfInstallPlugin');
   $t->is($routing->getCurrentRouteName(), 'default_index');
@@ -121,7 +121,7 @@ $t->is($info['action'], 'oai');
 */
 
 $t->diag('Test /peanut-12345/addDigitalObject (route informationobject/action)');
-$uri = $routing->generate(null, array($io, 'action' => 'addDigitalObject'));
+$uri = $routing->generate(null, [$io, 'action' => 'addDigitalObject']);
 $t->is($uri, '/peanut-12345/addDigitalObject');
 $info = $routing->parse('/peanut-12345/addDigitalObject');
 $t->is($routing->getCurrentRouteName(), 'informationobject/action');
@@ -129,7 +129,7 @@ $t->is($info['module'], 'informationobject');
 $t->is($info['action'], 'addDigitalObject');
 
 $t->diag('Test /peanut-12345/multiFileUpload (route informationobject/action)');
-$uri = $routing->generate(null, array($io, 'action' => 'multiFileUpload'));
+$uri = $routing->generate(null, [$io, 'action' => 'multiFileUpload']);
 $t->is($uri, '/peanut-12345/multiFileUpload');
 $info = $routing->parse('/peanut-12345/multiFileUpload');
 $t->is($routing->getCurrentRouteName(), 'informationobject/action');
@@ -137,7 +137,7 @@ $t->is($info['module'], 'informationobject');
 $t->is($info['action'], 'multiFileUpload');
 
 $t->diag('Test sword/action/slug route');
-$uri = $routing->generate(null, array($io, 'module' => 'qtSwordPlugin', 'action' => 'deposit'));
+$uri = $routing->generate(null, [$io, 'module' => 'qtSwordPlugin', 'action' => 'deposit']);
 $t->is($uri, '/sword/deposit/peanut-12345');
 $info = $routing->parse('/sword/deposit/peanut-12345');
 $t->is($routing->getCurrentRouteName(), 'sword/action/slug');
@@ -145,7 +145,7 @@ $t->is($info['module'], 'qtSwordPlugin');
 $t->is($info['action'], 'deposit');
 
 $t->diag('Test sword route');
-$uri = $routing->generate(null, array('module' => 'qtSwordPlugin', 'action' => 'servicedocument'));
+$uri = $routing->generate(null, ['module' => 'qtSwordPlugin', 'action' => 'servicedocument']);
 $t->is($uri, '/sword/servicedocument');
 $info = $routing->parse('/sword/servicedocument');
 $t->is($routing->getCurrentRouteName(), 'sword');
@@ -153,7 +153,7 @@ $t->is($info['module'], 'qtSwordPlugin');
 $t->is($info['action'], 'servicedocument');
 
 $t->diag('Test route id/default');
-$uri = $routing->generate(null, array('module' => 'informationobject', 'action' => 'foobar', 'id' => '12345'));
+$uri = $routing->generate(null, ['module' => 'informationobject', 'action' => 'foobar', 'id' => '12345']);
 $t->is($uri, '/informationobject/foobar/id/12345');
 $info = $routing->parse('/informationobject/foobar/id/12345');
 $t->is($routing->getCurrentRouteName(), 'id/default');
@@ -162,7 +162,7 @@ $t->is($info['action'], 'foobar');
 $t->is($info['id'], '12345');
 
 $t->diag('Test route id/default passing contactinformation');
-$uri = $routing->generate(null, array($contactInformation, 'module' => 'contactinformation'));
+$uri = $routing->generate(null, [$contactInformation, 'module' => 'contactinformation']);
 $t->is($uri, '/contactinformation/index/id/'.$contactInformation->id);
 $info = $routing->parse('/contactinformation/index/id/'.$contactInformation->id);
 $t->is($routing->getCurrentRouteName(), 'id/default');
@@ -171,7 +171,7 @@ $t->is($info['action'], 'index');
 $t->is($info['id'], $contactInformation->id);
 
 $t->diag('Test route slug/default');
-$uri = $routing->generate(null, array($io, 'module' => 'foo', 'action' => 'bar'));
+$uri = $routing->generate(null, [$io, 'module' => 'foo', 'action' => 'bar']);
 $t->is($uri, '/peanut-12345/foo/bar');
 $info = $routing->parse('/peanut-12345/foo/bar');
 $t->is($routing->getCurrentRouteName(), 'slug/default');
@@ -179,7 +179,7 @@ $t->is($info['module'], 'foo');
 $t->is($info['action'], 'bar');
 
 $t->diag('Test route default_index');
-$uri = $routing->generate(null, array('module' => 'search'));
+$uri = $routing->generate(null, ['module' => 'search']);
 $t->is($uri, '/search');
 $info = $routing->parse('/search');
 $t->is($routing->getCurrentRouteName(), 'default_index');
@@ -187,7 +187,7 @@ $t->is($info['module'], 'search');
 $t->is($info['action'], 'index');
 
 $t->diag('Test route default');
-$uri = $routing->generate(null, array('module' => 'foo', 'action' => 'bar'));
+$uri = $routing->generate(null, ['module' => 'foo', 'action' => 'bar']);
 $t->is($uri, '/foo/bar');
 $info = $routing->parse('/foo/bar');
 $t->is($routing->getCurrentRouteName(), 'default');
@@ -198,7 +198,7 @@ $t->is($info['action'], 'bar');
 # QubitMetadataResource
 #
 
-$ioTemplates = array('dc' => 'sfDcPlugin', 'isad' => 'sfIsadPlugin', 'mods' => 'sfModsPlugin', 'rad' => 'sfRadPlugin', 'dacs' => 'arDacsPlugin');
+$ioTemplates = ['dc' => 'sfDcPlugin', 'isad' => 'sfIsadPlugin', 'mods' => 'sfModsPlugin', 'rad' => 'sfRadPlugin', 'dacs' => 'arDacsPlugin'];
 
 $defaultIoTemplateCode = sfConfig::get('app_default_template_informationobject');
 $defaultIoTemplateModule = $ioTemplates[$defaultIoTemplateCode];
@@ -206,7 +206,7 @@ $defaultIoTemplateModule = $ioTemplates[$defaultIoTemplateCode];
 foreach ($ioTemplates as $code => $module)
 {
   $t->diag('Uri /peanut-12345;'.$code);
-  $uri = $routing->generate(null, array($io, 'template' => $code));
+  $uri = $routing->generate(null, [$io, 'template' => $code]);
   $t->is($uri, '/peanut-12345;'.$code);
   $info = $routing->parse('/peanut-12345;'.$code);
   $t->is($routing->getCurrentRouteName(), 'slug;template');
@@ -233,7 +233,7 @@ $t->is($info['module'], $defaultIoTemplateModule, $defaultIoTemplateModule);
 $t->is($info['action'], 'index');
 
 $t->diag('/peanut-12345/edit');
-$uri = $routing->generate(null, array($io, 'module' => 'informationobject', 'action' => 'edit'));
+$uri = $routing->generate(null, [$io, 'module' => 'informationobject', 'action' => 'edit']);
 $t->is($uri, '/peanut-12345/edit');
 $info = $routing->parse('/peanut-12345/edit');
 $t->is($routing->getCurrentRouteName(), 'edit');
@@ -241,7 +241,7 @@ $t->is($info['module'], $defaultIoTemplateModule); // We know now that displaySt
 $t->is($info['action'], 'edit');
 
 $t->diag('/peanut-12345/copy');
-$uri = $routing->generate(null, array($io, 'module' => 'informationobject', 'action' => 'copy'));
+$uri = $routing->generate(null, [$io, 'module' => 'informationobject', 'action' => 'copy']);
 $t->is($uri, '/peanut-12345/copy');
 $info = $routing->parse('/peanut-12345/copy');
 $t->is($routing->getCurrentRouteName(), 'copy');
@@ -249,7 +249,7 @@ $t->is($info['module'], $defaultIoTemplateModule); // We know now that displaySt
 $t->is($info['action'], 'edit'); // Reusing edit template
 
 $t->diag('/informationobject/add');
-$uri = $routing->generate(null, array('module' => 'informationobject', 'action' => 'add'));
+$uri = $routing->generate(null, ['module' => 'informationobject', 'action' => 'add']);
 $t->is($uri, '/informationobject/add');
 $info = $routing->parse('/informationobject/add');
 $t->is($routing->getCurrentRouteName(), 'add');
@@ -257,7 +257,7 @@ $t->is($info['module'], $defaultIoTemplateModule); // We know now that displaySt
 $t->is($info['action'], 'edit'); // Reusing edit template
 
 $t->diag('/repository/add');
-$uri = $routing->generate(null, array('module' => 'repository', 'action' => 'add'));
+$uri = $routing->generate(null, ['module' => 'repository', 'action' => 'add']);
 $t->is($uri, '/repository/add');
 $info = $routing->parse('/repository/add');
 $t->is($routing->getCurrentRouteName(), 'add');
@@ -265,7 +265,7 @@ $t->is($info['module'], 'sfIsdiahPlugin', 'sfIsdiahPlugin');
 $t->is($info['action'], 'edit');
 
 $t->diag('/actor/add');
-$uri = $routing->generate(null, array('module' => 'actor', 'action' => 'add'));
+$uri = $routing->generate(null, ['module' => 'actor', 'action' => 'add']);
 $t->is($uri, '/actor/add');
 $info = $routing->parse('/actor/add');
 $t->is($routing->getCurrentRouteName(), 'add');
@@ -273,7 +273,7 @@ $t->is($info['module'], 'sfIsaarPlugin', 'sfIsaarPlugin');
 $t->is($info['action'], 'edit');
 
 $t->diag('/function/add');
-$uri = $routing->generate(null, array('module' => 'function', 'action' => 'add'));
+$uri = $routing->generate(null, ['module' => 'function', 'action' => 'add']);
 $t->is($uri, '/function/add');
 $info = $routing->parse('/function/add');
 $t->is($routing->getCurrentRouteName(), 'add');
@@ -281,13 +281,13 @@ $t->is($info['module'], 'sfIsdfPlugin', 'sfIsdfPlugin');
 $t->is($info['action'], 'edit');
 
 $t->diag('/foo/bar/peanut-12345 and /foo/bar with ->generate()');
-$uri = $routing->generate(null, array($io, 'module' => 'foo', 'action' => 'bar'));
+$uri = $routing->generate(null, [$io, 'module' => 'foo', 'action' => 'bar']);
 $t->is($uri, '/peanut-12345/foo/bar');
-$uri = $routing->generate(null, array('module' => 'foo', 'action' => 'bar'));
+$uri = $routing->generate(null, ['module' => 'foo', 'action' => 'bar']);
 $t->is($uri, '/foo/bar');
 
 $t->diag('/actor-12345');
-$uri = $routing->generate(null, array($actor));
+$uri = $routing->generate(null, [$actor]);
 $t->is($uri, '/actor-12345');
 $info = $routing->parse('/actor-12345');
 $t->is($routing->getCurrentRouteName(), 'slug');
@@ -295,7 +295,7 @@ $t->is($info['module'], 'sfIsaarPlugin', 'sfIsaarPlugin');
 $t->is($info['action'], 'index');
 
 $t->diag('/repository-12345');
-$uri = $routing->generate(null, array($repository));
+$uri = $routing->generate(null, [$repository]);
 $t->is($uri, '/repository-12345');
 $info = $routing->parse('/repository-12345');
 $t->is($routing->getCurrentRouteName(), 'slug');
@@ -303,7 +303,7 @@ $t->is($info['module'], 'sfIsdiahPlugin', 'sfIsdiahPlugin');
 $t->is($info['action'], 'index');
 
 $t->diag('/function-12345');
-$uri = $routing->generate(null, array($function));
+$uri = $routing->generate(null, [$function]);
 $t->is($uri, '/function-12345');
 $info = $routing->parse('/function-12345');
 $t->is($routing->getCurrentRouteName(), 'slug');
@@ -311,9 +311,9 @@ $t->is($info['module'], 'sfIsdfPlugin', 'sfIsdfPlugin');
 $t->is($info['action'], 'index');
 
 $t->diag('/peanut-12345 (slug passed as parameter instead of object)');
-$uri = $routing->generate(null, array('module' => 'informationobject', 'slug' => 'peanut-12345'));
+$uri = $routing->generate(null, ['module' => 'informationobject', 'slug' => 'peanut-12345']);
 $t->is($uri, '/peanut-12345');
 
 $t->diag('/peanut-12345/edit (slug passed as parameter instead of object)');
-$uri = $routing->generate(null, array('module' => 'informationobject', 'action' => 'edit', 'slug' => 'peanut-12345'));
+$uri = $routing->generate(null, ['module' => 'informationobject', 'action' => 'edit', 'slug' => 'peanut-12345']);
 $t->is($uri, '/peanut-12345/edit');

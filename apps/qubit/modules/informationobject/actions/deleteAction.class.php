@@ -48,10 +48,10 @@ class InformationObjectDeleteAction extends sfAction
 
         if (isset($parent->parent))
         {
-          $this->redirect(array($parent, 'module' => 'informationobject'));
+          $this->redirect([$parent, 'module' => 'informationobject']);
         }
 
-        $this->redirect(array('module' => 'informationobject', 'action' => 'browse'));
+        $this->redirect(['module' => 'informationobject', 'action' => 'browse']);
       }
     }
 

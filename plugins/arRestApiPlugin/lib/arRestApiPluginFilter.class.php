@@ -50,10 +50,10 @@ class arRestApiPluginFilter extends sfFilter
     // Translate exception into response data
     $response->setStatusCode($e->getStatusCode());
 
-    $responseData = array(
+    $responseData = [
       'id' => $e->getId(),
       'message' => $e->getMessage()
-    );
+    ];
 
     $response->setContent($response->getContent() . arRestApiPluginUtils::arrayToJson($responseData));
   }

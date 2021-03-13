@@ -4,7 +4,7 @@
 
   <div class="advanced-search animateNicely" <?php echo !$show ? 'style="display: none;"' : '' ?>>
 
-    <?php echo $form->renderFormTag(url_for(array('module' => 'search', 'action' => 'descriptionUpdates')), array('name' => 'advanced-search-form', 'method' => 'get')) ?>
+    <?php echo $form->renderFormTag(url_for(['module' => 'search', 'action' => 'descriptionUpdates']), ['name' => 'advanced-search-form', 'method' => 'get']) ?>
 
       <input type="hidden" name="showForm" value="1"/>
 
@@ -65,8 +65,8 @@
               <?php echo $form->user
                 ->label(__('User'))
                 ->renderLabel() ?>
-              <?php echo $form->user->render(array('class' => 'form-autocomplete')) ?>
-              <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'user', 'action' => 'autocomplete')) ?>"/>
+              <?php echo $form->user->render(['class' => 'form-autocomplete']) ?>
+              <input class="list" type="hidden" value="<?php echo url_for(['module' => 'user', 'action' => 'autocomplete']) ?>"/>
 
               <?php if (isset($user)): ?>
                 <div class="filter-description">

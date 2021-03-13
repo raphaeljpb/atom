@@ -19,18 +19,18 @@
     </div>
   <?php endif; ?>
 
-  <?php echo get_component('default', 'translationLinks', array('resource' => $resource)) ?>
+  <?php echo get_component('default', 'translationLinks', ['resource' => $resource]) ?>
 
 <?php end_slot() ?>
 
-<?php echo render_show(__('Authorized form of name'), render_value($resource->getAuthorizedFormOfName(array('cultureFallback' => true)))) ?>
+<?php echo render_show(__('Authorized form of name'), render_value($resource->getAuthorizedFormOfName(['cultureFallback' => true]))) ?>
 
 <div class="section" id="contactArea">
 
   <h2><?php echo __('Contact area') ?></h2>
 
   <?php foreach ($resource->contactInformations as $contactItem): ?>
-    <?php echo get_partial('contactinformation/contactInformation', array('contactInformation' => $contactItem)) ?>
+    <?php echo get_partial('contactinformation/contactInformation', ['contactInformation' => $contactItem]) ?>
   <?php endforeach; ?>
 
 </div> <!-- /.section#contactArea -->
@@ -45,8 +45,8 @@
 
     <div>
       <ul>
-        <?php foreach (QubitRelation::getRelationsByObjectId($resource->id, array('typeId' => QubitTerm::DONOR_ID)) as $item): ?>
-          <li><?php echo link_to(render_title($item->subject), array($item->subject, 'module' => 'accession')) ?></li>
+        <?php foreach (QubitRelation::getRelationsByObjectId($resource->id, ['typeId' => QubitTerm::DONOR_ID]) as $item): ?>
+          <li><?php echo link_to(render_title($item->subject), [$item->subject, 'module' => 'accession']) ?></li>
         <?php endforeach; ?>
       </ul>
     </div>
@@ -59,13 +59,13 @@
   <section class="actions">
     <ul>
       <?php if (QubitAcl::check($resource, 'update')): ?>
-        <li><?php echo link_to(__('Edit'), array($resource, 'module' => 'donor', 'action' => 'edit'), array('title' => __('Edit'), 'class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'donor', 'action' => 'edit'], ['title' => __('Edit'), 'class' => 'c-btn']) ?></li>
       <?php endif; ?>
       <?php if (QubitAcl::check($resource, 'delete')): ?>
-        <li><?php echo link_to(__('Delete'), array($resource, 'module' => 'donor', 'action' => 'delete'), array('title' => __('Delete'), 'class' => 'c-btn c-btn-delete')) ?></li>
+        <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'donor', 'action' => 'delete'], ['title' => __('Delete'), 'class' => 'c-btn c-btn-delete']) ?></li>
       <?php endif; ?>
       <?php if (QubitAcl::check($resource, 'create')): ?>
-        <li><?php echo link_to(__('Add new'), array('module' => 'donor', 'action' => 'add'), array('title' => __('Add new'), 'class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Add new'), ['module' => 'donor', 'action' => 'add'], ['title' => __('Add new'), 'class' => 'c-btn']) ?></li>
       <?php endif; ?>
     </ul>
   </section>

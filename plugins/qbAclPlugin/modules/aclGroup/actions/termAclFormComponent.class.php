@@ -27,8 +27,8 @@ class AclGroupTermAclFormComponent extends sfComponent
     unset($this->termActions['translate']);
 
     // Build separate list of permissions by taxonomy and by object
-    $this->taxonomyPermissions = array();
-    $this->rootPermissions = array();
+    $this->taxonomyPermissions = [];
+    $this->rootPermissions = [];
 
     if (0 < count($this->permissions))
     {
@@ -45,7 +45,7 @@ class AclGroupTermAclFormComponent extends sfComponent
             $this->taxonomyPermissions[$item->objectId]['create'] = $item;
           }
         }
-        elseif (null === ($taxonomy = $item->getConstants(array('name' => 'taxonomy'))))
+        elseif (null === ($taxonomy = $item->getConstants(['name' => 'taxonomy'])))
         {
           $this->rootPermissions[$item->action] = $item;
         }

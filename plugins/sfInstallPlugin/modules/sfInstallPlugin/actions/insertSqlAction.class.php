@@ -23,6 +23,6 @@ class sfInstallPluginInsertSqlAction extends sfAction
   {
     sfInstall::insertSql();
 
-    $this->redirect(array('module' => 'sfInstallPlugin', 'action' => 'configureSearch'));
+    $this->redirect(['module' => 'sfInstallPlugin', 'action' => 'configureSearch']);
   }
 }

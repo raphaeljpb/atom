@@ -3,10 +3,10 @@
     <h3><?php echo __('Name of creator') ?></h3>
     <div>
 
-      <?php echo link_to(render_title($item), array($item)) ?>
+      <?php echo link_to(render_title($item), [$item]) ?>
 
       <?php if (isset($item->datesOfExistence)): ?>
-        (<?php echo $item->getDatesOfExistence(array('cultureFallback' => true)) ?>)
+        (<?php echo $item->getDatesOfExistence(['cultureFallback' => true]) ?>)
       <?php endif; ?>
 
       <?php if (0 < count($resource->getCreators())): ?>
@@ -18,7 +18,7 @@
               <?php echo __('Biographical history') ?>
             <?php endif; ?>
           </h3><div>
-            <?php echo render_value($item->getHistory(array('cultureFallback' => true))) ?>
+            <?php echo render_value($item->getHistory(['cultureFallback' => true])) ?>
           </div>
         </div>
       <?php endif; ?>

@@ -8,7 +8,7 @@ $browser = new QubitTestFunctional(new sfBrowser());
 $browser->disableSecurity();
 
 $browser
-  ->post(';create/isad', array('title' => 'Example fonds'))
+  ->post(';create/isad', ['title' => 'Example fonds'])
 
   ->with('request')->begin()
     ->isParameter('module', 'sfIsadPlugin')

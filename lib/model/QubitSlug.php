@@ -128,7 +128,7 @@ class QubitSlug extends BaseSlug
         SELECT COUNT(*)
         FROM '.QubitSlug::TABLE_NAME.'
         WHERE '.QubitSlug::SLUG.' = ?;');
-      $statement->execute(array($slug));
+      $statement->execute([$slug]);
 
       if (0 == $statement->fetchColumn(0))
       {
@@ -137,7 +137,7 @@ class QubitSlug extends BaseSlug
     }
   }
 
-  public static function getByObjectId($id, array $options = array())
+  public static function getByObjectId($id, array $options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitSlug::OBJECT_ID, $id);

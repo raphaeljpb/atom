@@ -18,13 +18,13 @@
 
       <div class="top-dropdown-body">
 
-        <?php echo $form->renderFormTag(url_for(array('module' => 'user', 'action' => 'login'))) ?>
+        <?php echo $form->renderFormTag(url_for(['module' => 'user', 'action' => 'login'])) ?>
 
           <?php echo $form->renderHiddenFields() ?>
 
           <?php echo $form->email->renderRow() ?>
 
-          <?php echo $form->password->renderRow(array('autocomplete' => 'off')) ?>
+          <?php echo $form->password->renderRow(['autocomplete' => 'off']) ?>
 
           <button type="submit"><?php echo $menuLabels['login'] ?></button>
 
@@ -52,17 +52,17 @@
       </div>
 
       <div class="top-dropdown-header">
-        <?php echo image_tag($gravatar, array('alt' => '')) ?>&nbsp;
-        <h2><?php echo __('Hi, %1%', array('%1%' => $sf_user->user->username)) ?></h2>
+        <?php echo image_tag($gravatar, ['alt' => '']) ?>&nbsp;
+        <h2><?php echo __('Hi, %1%', ['%1%' => $sf_user->user->username]) ?></h2>
       </div>
 
       <div class="top-dropdown-body">
 
         <ul>
-          <li><?php echo link_to($menuLabels['myProfile'], array(
-            $sf_user->user, 'module' => 'user')) ?></li>
-          <li><?php echo link_to($menuLabels['logout'], array(
-            'module' => 'user', 'action' => 'logout')) ?></li>
+          <li><?php echo link_to($menuLabels['myProfile'], [
+            $sf_user->user, 'module' => 'user']) ?></li>
+          <li><?php echo link_to($menuLabels['logout'], [
+            'module' => 'user', 'action' => 'logout']) ?></li>
         </ul>
 
       </div>

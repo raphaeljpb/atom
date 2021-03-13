@@ -10,12 +10,12 @@
   <section class="header-options">
     <div class="row">
       <div class="span6">
-        <?php echo get_component('search', 'inlineSearch', array(
-          'label' => __('Search %1%', array('%1%' => strtolower(sfConfig::get('app_ui_label_accession')))))) ?>
+        <?php echo get_component('search', 'inlineSearch', [
+          'label' => __('Search %1%', ['%1%' => strtolower(sfConfig::get('app_ui_label_accession'))])]) ?>
       </div>
 
       <div class="pickers">
-        <?php echo get_partial('default/sortPickers', array('options' => $sortOptions)) ?>
+        <?php echo get_partial('default/sortPickers', ['options' => $sortOptions]) ?>
       </div>
     </div>
   </section>
@@ -47,10 +47,10 @@
         <?php $doc = $hit->getData() ?>
         <tr>
           <td width="20%">
-            <?php echo link_to($doc['identifier'], array('module' => 'accession', 'slug' => $doc['slug'])) ?>
+            <?php echo link_to($doc['identifier'], ['module' => 'accession', 'slug' => $doc['slug']]) ?>
           </td>
           <td>
-            <?php echo link_to(render_title(get_search_i18n($doc, 'title')), array('module' => 'accession', 'slug' => $doc['slug'])) ?>
+            <?php echo link_to(render_title(get_search_i18n($doc, 'title')), ['module' => 'accession', 'slug' => $doc['slug']]) ?>
           </td>
           <td width="20%">
             <?php echo format_date($doc['date'], 'i') ?>
@@ -69,11 +69,11 @@
 
 <?php slot('after-content') ?>
 
-  <?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+  <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 
   <section class="actions">
     <ul>
-      <li><?php echo link_to(__('Add new'), array('module' => 'accession', 'action' => 'add'), array('class' => 'c-btn')) ?></li>
+      <li><?php echo link_to(__('Add new'), ['module' => 'accession', 'action' => 'add'], ['class' => 'c-btn']) ?></li>
     </ul>
   </section>
 

@@ -19,7 +19,7 @@
 
 class QubitAclPermission extends BaseAclPermission
 {
-  public function check($userId, $objectId, $actionId, $parameters = array())
+  public function check($userId, $objectId, $actionId, $parameters = [])
   {
     $user = QubitUser::getById($userId);
 
@@ -37,12 +37,12 @@ class QubitAclPermission extends BaseAclPermission
   {
     if ($repository instanceof QubitRepository)
     {
-      $this->setConstants(array('repository' => $repository->slug));
+      $this->setConstants(['repository' => $repository->slug]);
       $this->conditional = '%p[repository] == %k[repository]';
     }
     elseif (null === $repository)
     {
-      $this->setConstants(array('repository' => null));
+      $this->setConstants(['repository' => null]);
       $this->conditional = null;
     }
 
@@ -53,12 +53,12 @@ class QubitAclPermission extends BaseAclPermission
   {
     if ($taxonomy instanceof QubitTaxonomy)
     {
-      $this->setConstants(array('taxonomy' => $taxonomy->slug));
+      $this->setConstants(['taxonomy' => $taxonomy->slug]);
       $this->conditional = '%p[taxonomy] == %k[taxonomy]';
     }
     elseif (null === $taxonomy)
     {
-      $this->setConstants(array('taxonomy' => null));
+      $this->setConstants(['taxonomy' => null]);
       $this->conditional = null;
     }
 
@@ -67,7 +67,7 @@ class QubitAclPermission extends BaseAclPermission
 
   public function getRepository()
   {
-    if (null !== $repository = $this->getConstants(array('name' => 'repository')))
+    if (null !== $repository = $this->getConstants(['name' => 'repository']))
     {
       $criteria = new Criteria();
       $criteria->add(QubitSlug::SLUG, $repository);
@@ -77,7 +77,7 @@ class QubitAclPermission extends BaseAclPermission
     }
   }
 
-  public function getConstants($options = array())
+  public function getConstants($options = [])
   {
     $value = null;
 
@@ -101,11 +101,11 @@ class QubitAclPermission extends BaseAclPermission
     return $value;
   }
 
-  public function setConstants($value, $options = array())
+  public function setConstants($value, $options = [])
   {
     if (is_array($value))
     {
-      $constants = array();
+      $constants = [];
       if (parent::__isset('constants', $options))
       {
         $constants = unserialize(parent::__get('constants', $options));

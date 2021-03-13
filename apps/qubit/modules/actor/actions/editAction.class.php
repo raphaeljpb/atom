@@ -46,7 +46,7 @@ class ActorEditAction extends DefaultEditAction
           $this->redirect($next);
         }
 
-        $this->redirect(array($this->resource, 'module' => 'actor'));
+        $this->redirect([$this->resource, 'module' => 'actor']);
       }
     }
 
@@ -101,17 +101,17 @@ class ActorEditAction extends DefaultEditAction
     switch ($name)
     {
       case 'entityType':
-        $this->form->setDefault('entityType', $this->context->routing->generate(null, array($this->resource->entityType, 'module' => 'term')));
+        $this->form->setDefault('entityType', $this->context->routing->generate(null, [$this->resource->entityType, 'module' => 'term']));
         $this->form->setValidator('entityType', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::ACTOR_ENTITY_TYPE_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('entityType', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('entityType', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
@@ -143,16 +143,16 @@ class ActorEditAction extends DefaultEditAction
         break;
 
       case 'maintainingRepository':
-        $choices = array();
+        $choices = [];
         if (null !== $repo = $this->resource->getMaintainingRepository())
         {
-          $repoRoute = $this->context->routing->generate(null, array($repo, 'module' => 'repository'));
+          $repoRoute = $this->context->routing->generate(null, [$repo, 'module' => 'repository']);
           $choices[$repoRoute] = $repo;
           $this->form->setDefault('maintainingRepository', $repoRoute);
         }
 
         $this->form->setValidator('maintainingRepository', new sfValidatorString());
-        $this->form->setWidget('maintainingRepository', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('maintainingRepository', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
@@ -174,15 +174,15 @@ class ActorEditAction extends DefaultEditAction
               break;
           }
 
-          $value = $choices = array();
+          $value = $choices = [];
           foreach ($this[$name] = QubitObjectTermRelation::get($criteria) as $item)
           {
-            $choices[$value[] = $this->context->routing->generate(null, array($item->term, 'module' => 'term'))] = $item->term;
+            $choices[$value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term'])] = $item->term;
           }
 
           $this->form->setDefault($name, $value);
           $this->form->setValidator($name, new sfValidatorPass());
-          $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+          $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
           break;
 
@@ -213,7 +213,7 @@ class ActorEditAction extends DefaultEditAction
           $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, $this->form->getValue('authorizedFormOfName'));
           if (null !== $actor = QubitActor::getOne($criteria))
           {
-            $this->redirect(array($actor));
+            $this->redirect([$actor]);
 
             return;
           }
@@ -249,7 +249,7 @@ class ActorEditAction extends DefaultEditAction
 
       case 'subjectAccessPoints':
       case 'placeAccessPoints':
-        $value = $filtered = array();
+        $value = $filtered = [];
         foreach ($this->form->getValue($field->getName()) as $item)
         {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));

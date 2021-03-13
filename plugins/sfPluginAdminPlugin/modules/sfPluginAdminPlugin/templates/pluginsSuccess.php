@@ -2,7 +2,7 @@
 
 <?php echo $form->renderGlobalErrors() ?>
 
-<?php echo $form->renderFormTag(url_for(array('module' => 'sfPluginAdminPlugin', 'action' => 'plugins'))) ?>
+<?php echo $form->renderFormTag(url_for(['module' => 'sfPluginAdminPlugin', 'action' => 'plugins'])) ?>
 
   <?php echo $form->renderHiddenFields() ?>
 
@@ -22,7 +22,7 @@
         <tr>
           <td>
             <?php if (file_exists($plugin->getRootDir().'/images/image.png')): ?>
-              <?php echo image_tag('/plugins/'.$name.'/images/image', array('alt' => $name)) ?>
+              <?php echo image_tag('/plugins/'.$name.'/images/image', ['alt' => $name]) ?>
             <?php endif; ?>
             <p class="plugin-name"><?php echo $name ?></p>
             <div class="plugin-description">

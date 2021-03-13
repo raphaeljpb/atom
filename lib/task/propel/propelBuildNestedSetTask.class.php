@@ -32,18 +32,18 @@ class propelBuildNestedSetTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
     $this->conn = $databaseManager->getDatabase('propel')->getConnection();
 
-    $tables = array(
+    $tables = [
       'information_object' => 'QubitInformationObject',
       'term' => 'QubitTerm',
       'menu' => 'QubitMenu'
-    );
+    ];
 
-    $excludeTables = array();
+    $excludeTables = [];
 
     if (!empty($options['exclude-tables']))
     {
@@ -67,7 +67,7 @@ class propelBuildNestedSetTask extends sfBaseTask
       $sql .= ' FROM '.constant($classname.'::TABLE_NAME');
       $sql .= ' ORDER BY parent_id ASC, lft ASC';
 
-      $this->children = array();
+      $this->children = [];
 
       // Build hash of child rows keyed on parent_id
       foreach ($this->conn->query($sql, PDO::FETCH_ASSOC) as $item)
@@ -78,15 +78,15 @@ class propelBuildNestedSetTask extends sfBaseTask
         }
         else
         {
-          $this->children[$item['parent_id']] = array($item['id']);
+          $this->children[$item['parent_id']] = [$item['id']];
         }
       }
 
-      $rootNode = array(
+      $rootNode = [
         'id' => $classname::ROOT_ID,
         'lft' => 1,
         'rgt' => null
-      );
+      ];
 
       try
       {
@@ -109,15 +109,15 @@ class propelBuildNestedSetTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-    ));
+    $this->addArguments([
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('exclude-tables', null, sfCommandOption::PARAMETER_OPTIONAL, 'Exclude tables (comma-separated). Options: information_object, term, menu'),
-    ));
+    ]);
 
     $this->namespace = 'propel';
     $this->name = 'build-nested-set';
@@ -139,7 +139,7 @@ EOF;
 
       foreach ($this->children[$node['id']] as $id)
       {
-        $child = array('id' => $id, 'lft' => $lft, 'rgt' => null);
+        $child = ['id' => $id, 'lft' => $lft, 'rgt' => null];
 
         // Update children first
         $w0 = self::recursivelyUpdateTree($child, $classname);

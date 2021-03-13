@@ -4,7 +4,7 @@
 
 <?php slot('before-content') ?>
   <?php echo $form->renderGlobalErrors() ?>
-  <?php echo $form->renderFormTag(url_for(array('module' => 'sfInstallPlugin', 'action' => 'configureSite'))) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'sfInstallPlugin', 'action' => 'configureSite'])) ?>
   <?php echo $form->renderHiddenFields() ?>
 <?php end_slot() ?>
 
@@ -50,8 +50,8 @@
 
     <div>
 
-      <?php $settings = json_encode(array(
-        'password' => array(
+      <?php $settings = json_encode([
+        'password' => [
           'strengthTitle' => __('Password strength:'),
           'hasWeaknesses' => __('To make your password stronger:'),
           'tooShort' => __('Make it at least six characters'),
@@ -63,14 +63,14 @@
           'confirmSuccess' => __('Yes'),
           'confirmFailure' => __('No'),
           'confirmTitle' => __('Passwords match:'),
-          'username' => ''))) ?>
+          'username' => '']]) ?>
       <?php echo javascript_tag(<<<EOF
 jQuery.extend(Drupal.settings, $settings);
 EOF
 ) ?>
 
-      <?php echo $form->password->renderRow(array('class' => 'password-field')) ?>
-      <?php echo $form->confirmPassword->renderRow(array('class' => 'password-confirm')) ?>
+      <?php echo $form->password->renderRow(['class' => 'password-field']) ?>
+      <?php echo $form->confirmPassword->renderRow(['class' => 'password-confirm']) ?>
 
     </div>
 

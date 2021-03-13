@@ -35,7 +35,7 @@
   
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array('module' => 'informationobject', 'action' => 'rename', 'slug' => $resource->slug)), array('id' => 'rename-form')) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'informationobject', 'action' => 'rename', 'slug' => $resource->slug]), ['id' => 'rename-form']) ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -45,7 +45,7 @@
 
         <legend><?php echo __('Rename') ?></legend>
 
-        <p><?php echo __('Use this interface to update the description title, slug (permalink), and/or %1% filename.', array('%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject')))) ?></p>
+        <p><?php echo __('Use this interface to update the description title, slug (permalink), and/or %1% filename.', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]) ?></p>
 
         <div class="rename-form-field-toggle"><input id="rename_enable_title" type="checkbox" checked="checked" /> <?php echo __('Update title') ?></div>
         <br />
@@ -84,7 +84,7 @@
     <section class="actions">
       <ul>
         <li><input class="c-btn c-btn-submit" id="rename-form-submit" type="submit" value="<?php echo __('Update') ?>"/></li>
-        <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'informationobject'], ['class' => 'c-btn']) ?></li>
       </ul>
     </section>
 

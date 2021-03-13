@@ -41,7 +41,7 @@ class QubitDigitalObject extends BaseDigitalObject
     THUMB_EXTENSION = 'jpg';
 
   // Variables for save actions
-  public $assets = array();
+  public $assets = [];
   public $indexOnSave = true;
   // Flag for updating search index on save or delete
     public $createDerivatives = true;
@@ -50,7 +50,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * The following mime-type array is taken from the Gallery 2 project
    * http://gallery.menalto.com
    */
-  public static $qubitMimeTypes = array(
+  public static $qubitMimeTypes = [
 
       /* This data was lifted from Apache's mime.types listing. */
       '123' => 'application/vnd.lotus-1-2-3',
@@ -1045,21 +1045,21 @@ class QubitDigitalObject extends BaseDigitalObject
       'pcd' => 'image/x-photo-cd',
       'jpgcmyk' => 'image/jpeg-cmyk',
       'tifcmyk' => 'image/tiff-cmyk',
-      'tgz' => 'application/x-compressed');
+      'tgz' => 'application/x-compressed'];
 
   // Temporary path for local copy of an external object (see importFromUri
   // method)
   protected $localPath;
 
   // List of web compatible image formats (supported in most major browsers)
-  protected static $webCompatibleImageFormats = array(
+  protected static $webCompatibleImageFormats = [
       'image/jpeg',
       'image/jpg',
       'image/jpe',
       'image/gif',
-      'image/png');
+      'image/png'];
   // Qubit generic icon list
-    protected static $qubitGenericThumbs = array(
+    protected static $qubitGenericThumbs = [
       'application/vnd.ms-excel'      => 'excel.png',
       'application/msword'            => 'word.png',
       'application/vnd.ms-powerpoint' => 'powerpoint.png',
@@ -1079,9 +1079,9 @@ class QubitDigitalObject extends BaseDigitalObject
       'image/jpg'                     => 'image.png',
       'image/jpe'                     => 'image.png',
       'image/gif'                     => 'image.png',
-      'image/png'                     => 'image.png');
-  protected static $qubitGenericReference = array(
-      '*/*' => 'blank.png');
+      'image/png'                     => 'image.png'];
+  protected static $qubitGenericReference = [
+      '*/*' => 'blank.png'];
 
   public function __toString()
   {
@@ -1092,7 +1092,7 @@ class QubitDigitalObject extends BaseDigitalObject
   {
     $args = func_get_args();
 
-    $options = array();
+    $options = [];
     if (1 < count($args))
     {
       $options = $args[1];
@@ -1127,13 +1127,13 @@ class QubitDigitalObject extends BaseDigitalObject
         return $this->values['reference'];
     }
 
-    return call_user_func_array(array($this, 'BaseDigitalObject::__get'), $args);
+    return call_user_func_array([$this, 'BaseDigitalObject::__get'], $args);
   }
 
   public function save($connection = null)
   {
     // TODO: $cleanObject = $this->object->clean;
-    $cleanObjectId = $this->__get('objectId', array('clean' => true));
+    $cleanObjectId = $this->__get('objectId', ['clean' => true]);
 
     // Write assets to storage device
     if (0 < count($this->assets))
@@ -1285,7 +1285,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * @param array options array of optional paramaters
    * @return QubitDigitalObject
    */
-  public function writeToFileSystem($asset, $options = array())
+  public function writeToFileSystem($asset, $options = [])
   {
     // Fail if filename is empty
     if (0 == strlen($asset->getName()))
@@ -1378,7 +1378,7 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * @return QubitDigitalObject this object
    */
-  public function importFromURI($uri, $options = array())
+  public function importFromURI($uri, $options = [])
   {
     $filename = $this->getFilenameFromUri($uri);
 
@@ -1407,7 +1407,7 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * @return QubitDigitalObject this object
    */
-  public function importFromFile($filepath, $options = array())
+  public function importFromFile($filepath, $options = [])
   {
     $filename = basename($filepath);
 
@@ -1439,7 +1439,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * @param string  $encodedString  base64-encoded string
    * @return boolean  success or failure
    */
-  public function importFromBase64($encodedString, $filename, $options = array())
+  public function importFromBase64($encodedString, $filename, $options = [])
   {
     $fileContents = base64_decode($encodedString);
 
@@ -1458,7 +1458,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Get count of digital objects by media-type
    */
-  public static function getCount($mediaTypeId, $options = array())
+  public static function getCount($mediaTypeId, $options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::PARENT_ID, null, Criteria::ISNULL);
@@ -1700,7 +1700,7 @@ class QubitDigitalObject extends BaseDigitalObject
   {
     $isCompoundObjectProp = QubitProperty::getOneByObjectIdAndName($this->id, 'is_compound_object');
 
-    return (null !== $isCompoundObjectProp && '1' == $isCompoundObjectProp->getValue(array('sourceCulture' => true)));
+    return (null !== $isCompoundObjectProp && '1' == $isCompoundObjectProp->getValue(['sourceCulture' => true]));
   }
 
   /**
@@ -1737,7 +1737,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
       // determine path for current repository
       $repoDir = '';
-      if ($object instanceof QubitInformationObject && null !== ($repo = $object->getRepository(array('inherit' => true))))
+      if ($object instanceof QubitInformationObject && null !== ($repo = $object->getRepository(['inherit' => true])))
       {
         $repoDir = $repo->slug;
       }
@@ -1967,12 +1967,12 @@ class QubitDigitalObject extends BaseDigitalObject
         break;
 
       case QubitTerm::AUDIO_ID:
-        if (in_array($usageId, array(
+        if (in_array($usageId, [
           QubitTerm::EXTERNAL_URI_ID,
           QubitTerm::EXTERNAL_FILE_ID,
           QubitTerm::MASTER_ID,
           QubitTerm::REFERENCE_ID
-        )))
+        ]))
         {
           $this->createAudioDerivative(QubitTerm::REFERENCE_ID, $connection);
         }
@@ -2023,7 +2023,7 @@ class QubitDigitalObject extends BaseDigitalObject
         $pageCount->setObjectId($this->id);
         $pageCount->setName('page_count');
         $pageCount->setScope('digital_object');
-        $pageCount->setValue($pages, array('sourceCulture' => true));
+        $pageCount->setValue($pages, ['sourceCulture' => true]);
         $pageCount->save($connection);
       }
     }
@@ -2191,7 +2191,7 @@ class QubitDigitalObject extends BaseDigitalObject
    */
   public static function getMaxPostSize()
   {
-    $settings = array();
+    $settings = [];
     $settings[] = self::returnBytes(ini_get('post_max_size'));
     $settings[] = self::returnBytes(ini_get('memory_limit'));
 
@@ -2206,7 +2206,7 @@ class QubitDigitalObject extends BaseDigitalObject
    */
   public static function getMaxUploadSize()
   {
-    $settings = array();
+    $settings = [];
     $settings[] = self::returnBytes(ini_get('post_max_size'));
     $settings[] = self::returnBytes(ini_get('upload_max_filesize'));
     $settings[] = self::returnBytes(ini_get('memory_limit'));
@@ -2419,7 +2419,7 @@ class QubitDigitalObject extends BaseDigitalObject
         break;
     }
 
-    return array($maxwidth, $maxheight);
+    return [$maxwidth, $maxheight];
   }
 
   /**
@@ -2452,7 +2452,7 @@ class QubitDigitalObject extends BaseDigitalObject
     if ($mimeType === 'application/pdf' &&
       null !== $setting = QubitSetting::getByName('digital_object_derivatives_pdf_page_number'))
     {
-      if (0 !== $p = intval($setting->getValue(array('sourceCulture' => true))))
+      if (0 !== $p = intval($setting->getValue(['sourceCulture' => true])))
       {
         $page = $p;
       }
@@ -2461,7 +2461,7 @@ class QubitDigitalObject extends BaseDigitalObject
     // Create a thumbnail
     try
     {
-      $newImage = new sfThumbnail($width, $height, true, false, 75, $adapter, array('extract' => $page));
+      $newImage = new sfThumbnail($width, $height, true, false, 75, $adapter, ['extract' => $page]);
       $newImage->loadFile($originalImageName);
     }
     catch (Exception $e)
@@ -3093,7 +3093,7 @@ class QubitDigitalObject extends BaseDigitalObject
       $displayAsCompoundProp->setName('displayAsCompound');
     }
 
-    $displayAsCompoundProp->setValue($value, array('sourceCulture' => true));
+    $displayAsCompoundProp->setValue($value, ['sourceCulture' => true]);
     $displayAsCompoundProp->save();
 
     return $this;
@@ -3109,7 +3109,7 @@ class QubitDigitalObject extends BaseDigitalObject
     $displayAsCompoundProp = QubitProperty::getOneByObjectIdAndName($this->id, 'displayAsCompound');
     if (null !== $displayAsCompoundProp)
     {
-      return $displayAsCompoundProp->getValue(array('sourceCulture' => true));
+      return $displayAsCompoundProp->getValue(['sourceCulture' => true]);
     }
   }
 
@@ -3133,7 +3133,7 @@ class QubitDigitalObject extends BaseDigitalObject
       $digitalObjectAltText->setName('digitalObjectAltText');
     }
 
-    $digitalObjectAltText->setValue($value, array('sourceCulture' => true));
+    $digitalObjectAltText->setValue($value, ['sourceCulture' => true]);
     $digitalObjectAltText->save();
 
     return $this;
@@ -3150,12 +3150,12 @@ class QubitDigitalObject extends BaseDigitalObject
     // This is most likely going to be a derivative so check by parentId first.
     if (null !== $digitalObjectAltText = QubitProperty::getOneByObjectIdAndName($this->parentId, 'digitalObjectAltText'))
     {
-      return $digitalObjectAltText->getValue(array('sourceCulture' => true));
+      return $digitalObjectAltText->getValue(['sourceCulture' => true]);
     }
 
     if (null !== $digitalObjectAltText = QubitProperty::getOneByObjectIdAndName($this->id, 'digitalObjectAltText'))
     {
-      return $digitalObjectAltText->getValue(array('sourceCulture' => true));
+      return $digitalObjectAltText->getValue(['sourceCulture' => true]);
     }
   }
 
@@ -3176,7 +3176,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
     // Return false if "show compound" toggle is not set to '1' (yes)
     $showCompoundProp = QubitProperty::getOneByObjectIdAndName($this->id, 'displayAsCompound');
-    if (null === $showCompoundProp || '1' != $showCompoundProp->getValue(array('sourceCulture' => true)))
+    if (null === $showCompoundProp || '1' != $showCompoundProp->getValue(['sourceCulture' => true]))
     {
       return false;
     }
@@ -3314,11 +3314,11 @@ class QubitDigitalObject extends BaseDigitalObject
         gr.restriction = ? AND
         r.basis_id = ?
       LIMIT 1) AS has';
-    $r = QubitPdo::fetchOne($sql, array(
+    $r = QubitPdo::fetchOne($sql, [
         $object->id,
         QubitTerm::RIGHT_ID,
         QubitGrantedRight::CONDITIONAL_RIGHT,
-        QubitTerm::RIGHT_BASIS_COPYRIGHT_ID));
+        QubitTerm::RIGHT_BASIS_COPYRIGHT_ID]);
 
     if (false === $r || !isset($r->has))
     {
@@ -3353,7 +3353,7 @@ class QubitDigitalObject extends BaseDigitalObject
   {
     if (!isset($this->slug))
     {
-      $this->slug = QubitSlug::slugify($this->__get('name', array('sourceCulture' => true)));
+      $this->slug = QubitSlug::slugify($this->__get('name', ['sourceCulture' => true]));
     }
 
     return parent::insert($connection);
@@ -3441,11 +3441,11 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * @return string contents
    */
-  private function downloadExternalObject($uri, $options = array())
+  private function downloadExternalObject($uri, $options = [])
   {
     // Initialize web browser
     $timeout = sfConfig::get("app_download_timeout");
-    $browser = new sfWebBrowser(array(), 'sfCurlAdapter', array('Timeout' => $timeout));
+    $browser = new sfWebBrowser([], 'sfCurlAdapter', ['Timeout' => $timeout]);
 
     // Set retries from optional argument
     $retries = (isset($options['downloadRetries']) && 0 < $options['downloadRetries']) ? $options['downloadRetries'] : 0;

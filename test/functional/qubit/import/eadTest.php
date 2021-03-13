@@ -18,11 +18,11 @@ class Browser extends sfBrowser
         $size = filesize($path);
       }
 
-      $this->files[$key] = array('error' => $error,
+      $this->files[$key] = ['error' => $error,
         'name' => basename($path),
         'size' => $size,
         'tmp_name' => $path,
-        'type' => '');
+        'type' => ''];
     }
 
     return $this;
@@ -33,7 +33,7 @@ $browser = new QubitTestFunctional(new Browser());
 $browser->disableSecurity();
 
 $browser
-  ->files(array('file' => dirname(__FILE__).'/../../../fixtures/ead.xml'))
+  ->files(['file' => dirname(__FILE__).'/../../../fixtures/ead.xml'])
   ->post(';object/import')
 
   ->with('request')->begin()

@@ -31,7 +31,7 @@ class arElasticSearchMapping
    * analyzers that have been defined in search.yml for each stopword list
    * provided by Elasticsearch.
    */
-  private static $analyzers = array(
+  private static $analyzers = [
     'ar' => 'arabic',
     'hy' => 'armenian',
     'ba' => 'basque',
@@ -59,7 +59,7 @@ class arElasticSearchMapping
     'es' => 'spanish',
     'sv' => 'swedish',
     'tr' => 'turkish'
-  );
+  ];
 
   /**
    * Dumps schema as array
@@ -171,7 +171,7 @@ class arElasticSearchMapping
 
     $map = new $className();
 
-    $fields = array();
+    $fields = [];
     foreach ($map->getColumns() as $column)
     {
       if (!$column->isPrimaryKey() && !$column->isForeignKey())
@@ -269,10 +269,10 @@ class arElasticSearchMapping
             throw new sfException('No i18n_languages in database settings.');
           }
 
-          $this->setIfNotSet($typeProperties['properties'], 'sourceCulture', array('type' => 'keyword', 'include_in_all' => false));
+          $this->setIfNotSet($typeProperties['properties'], 'sourceCulture', ['type' => 'keyword', 'include_in_all' => false]);
 
           // We are using the same mapping for all the i18n fields
-          $nestedI18nFields = array();
+          $nestedI18nFields = [];
           foreach ($this->getI18nFields(lcfirst(sfInflector::camelize($typeName))) as $fieldName)
           {
             $nestedI18nFields[$fieldName] = $this->getI18nFieldMapping($fieldName);
@@ -293,12 +293,12 @@ class arElasticSearchMapping
           {
             foreach ($typeProperties['_attributes']['autocompleteFields'] as $item)
             {
-              $nestedI18nFields[$item]['fields']['autocomplete'] = array(
+              $nestedI18nFields[$item]['fields']['autocomplete'] = [
                 'type' => 'text',
                 'analyzer' => 'autocomplete',
                 'search_analyzer' => 'standard',
                 'store' => 'true',
-                'term_vector' => 'with_positions_offsets');
+                'term_vector' => 'with_positions_offsets'];
             }
           }
 
@@ -306,7 +306,7 @@ class arElasticSearchMapping
           {
             foreach ($typeProperties['_attributes']['rawFields'] as $item)
             {
-              $nestedI18nFields[$item]['fields']['untouched'] = array('type' => 'keyword');
+              $nestedI18nFields[$item]['fields']['untouched'] = ['type' => 'keyword'];
             }
           }
 
@@ -316,17 +316,17 @@ class arElasticSearchMapping
           $nestedI18nObjects = $this->getNestedI18nObjects($languages, $nestedI18nFields);
 
           // Main i18n object
-          $this->setIfNotSet($typeProperties['properties'], 'i18n', array(
+          $this->setIfNotSet($typeProperties['properties'], 'i18n', [
             'type' => 'object',
             'dynamic' => 'strict',
             'include_in_root' => true,
-            'properties' => $nestedI18nObjects));
+            'properties' => $nestedI18nObjects]);
 
           break;
 
         case 'timestamp':
-          $this->setIfNotSet($typeProperties['properties'], 'createdAt', array('type' => 'date'));
-          $this->setIfNotSet($typeProperties['properties'], 'updatedAt', array('type' => 'date'));
+          $this->setIfNotSet($typeProperties['properties'], 'createdAt', ['type' => 'date']);
+          $this->setIfNotSet($typeProperties['properties'], 'updatedAt', ['type' => 'date']);
 
           break;
       }
@@ -357,7 +357,7 @@ class arElasticSearchMapping
       $mapping = $this->mapping[$foreignTypeNameCamelized];
 
       // Add id of the foreign resource
-      $mapping['properties']['id'] = array('type' => 'integer', 'include_in_all' => 'false');
+      $mapping['properties']['id'] = ['type' => 'integer', 'include_in_all' => 'false'];
 
       $typeProperties['properties'][$fieldNameCamelized] = $mapping;
     }
@@ -387,9 +387,9 @@ class arElasticSearchMapping
         }
 
         // Add source culture property
-        $this->setIfNotSet($mapping['properties'], 'sourceCulture', array('type' => 'keyword', 'include_in_all' => false));
+        $this->setIfNotSet($mapping['properties'], 'sourceCulture', ['type' => 'keyword', 'include_in_all' => false]);
 
-        $nestedI18nFields = array();
+        $nestedI18nFields = [];
         foreach ($mapping['_i18nFields'] as $i18nFieldName)
         {
           $i18nFieldNameCamelized = lcfirst(sfInflector::camelize($i18nFieldName));
@@ -403,7 +403,7 @@ class arElasticSearchMapping
         {
           foreach ($mapping['_rawFields'] as $item)
           {
-            $nestedI18nFields[$item]['fields']['untouched'] = array('type' => 'keyword');
+            $nestedI18nFields[$item]['fields']['untouched'] = ['type' => 'keyword'];
           }
           unset($mapping['_rawFields']);
         }
@@ -412,11 +412,11 @@ class arElasticSearchMapping
         $nestedI18nObjects = $this->getNestedI18nObjects($languages, $nestedI18nFields);
 
         // Main i18n object
-        $this->setIfNotSet($mapping['properties'], 'i18n', array(
+        $this->setIfNotSet($mapping['properties'], 'i18n', [
           'type' => 'object',
           'dynamic' => 'strict',
           'include_in_root' => true,
-          'properties' => $nestedI18nObjects));
+          'properties' => $nestedI18nObjects]);
       }
 
       if (isset($mapping['_foreign_types']))
@@ -425,7 +425,7 @@ class arElasticSearchMapping
       }
 
       // Add id of the partial foreign resource
-      $mapping['properties']['id'] = array('type' => 'integer', 'include_in_all' => 'false');
+      $mapping['properties']['id'] = ['type' => 'integer', 'include_in_all' => 'false'];
 
       $typeProperties['properties'][$fieldNameCamelized] = $mapping;
     }
@@ -466,14 +466,14 @@ class arElasticSearchMapping
 
   protected function getI18nFieldMapping($fieldName)
   {
-    return array(
+    return [
       'type' => 'text',
-      'include_in_all' => true);
+      'include_in_all' => true];
   }
 
   protected function getNestedI18nObjects($languages, $nestedI18nFields)
   {
-    $mapping = array();
+    $mapping = [];
     foreach ($languages as $culture)
     {
       // Iterate each field and assign a custom standard analyzer (e.g.
@@ -487,15 +487,15 @@ class arElasticSearchMapping
       }
       unset($fv);
 
-      $mapping[$culture] = array(
+      $mapping[$culture] = [
         'type' => 'object',
         'dynamic' => 'strict',
         'include_in_parent' => false,
-        'properties' => $nestedI18nFields);
+        'properties' => $nestedI18nFields];
     }
 
     // Create a list of languages for aggregations
-    $mapping['languages'] = array('type' => 'keyword');
+    $mapping['languages'] = ['type' => 'keyword'];
 
     return $mapping;
   }
@@ -515,11 +515,11 @@ class arElasticSearchMapping
 
     foreach ($typeProperties['_attributes']['sortFields'] as $item)
     {
-      $nestedI18nFields[$item]['fields']['alphasort'] = array(
+      $nestedI18nFields[$item]['fields']['alphasort'] = [
         'type' => 'keyword',
         'normalizer' => 'alphasort',
         'include_in_all' => false,
-      );
+      ];
     }
 
     return $nestedI18nFields;

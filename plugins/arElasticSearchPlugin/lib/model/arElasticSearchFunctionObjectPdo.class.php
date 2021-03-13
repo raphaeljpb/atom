@@ -28,7 +28,7 @@ class arElasticSearchFunctionObjectPdo
 {
   public $i18ns;
 
-  protected $data = array();
+  protected $data = [];
 
   protected static $conn;
   protected static $lookups;
@@ -37,7 +37,7 @@ class arElasticSearchFunctionObjectPdo
   /**
    * METHODS
    */
-  public function __construct($id, $options = array())
+  public function __construct($id, $options = [])
   {
     if (isset($options['conn']))
     {
@@ -72,7 +72,7 @@ class arElasticSearchFunctionObjectPdo
 
   public function serialize()
   {
-    $serialized = array();
+    $serialized = [];
 
     $serialized['id'] = $this->id;
     $serialized['slug'] = $this->slug;
@@ -81,13 +81,13 @@ class arElasticSearchFunctionObjectPdo
     $serialized['descriptionIdentifier'] = $this->description_identifier;
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::OTHER_FORM_OF_NAME_ID)) as $item)
+    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item)
     {
       $serialized['otherNames'][] = arElasticSearchOtherName::serialize($item);
     }
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::PARALLEL_FORM_OF_NAME_ID)) as $item)
+    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item)
     {
       $serialized['parallelNames'][] = arElasticSearchOtherName::serialize($item);
     }
@@ -96,7 +96,7 @@ class arElasticSearchFunctionObjectPdo
     $serialized['updatedAt'] = arElasticSearchPluginUtil::convertDate($this->updated_at);
 
     $serialized['sourceCulture'] = $this->source_culture;
-    $serialized['i18n'] = arElasticSearchModelBase::serializeI18ns($this->id, array('QubitFunctionObject'));
+    $serialized['i18n'] = arElasticSearchModelBase::serializeI18ns($this->id, ['QubitFunctionObject']);
 
     return $serialized;
   }
@@ -121,7 +121,7 @@ class arElasticSearchFunctionObjectPdo
     }
 
     // Do select
-    self::$statements['function']->execute(array(':id' => $id));
+    self::$statements['function']->execute([':id' => $id]);
 
     // Get first result
     $this->data = self::$statements['function']->fetch(PDO::FETCH_ASSOC);

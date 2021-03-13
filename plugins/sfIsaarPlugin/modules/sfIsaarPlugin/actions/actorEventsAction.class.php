@@ -31,7 +31,7 @@ class sfIsaarPluginActorEventsAction extends sfAction
     {
       $this->response->setStatusCode(400);
       $errorMessage = sfContext::getInstance()->i18n->__('Slug must be provided');
-      return $this->renderText(json_encode(array('error' => $errorMessage)));
+      return $this->renderText(json_encode(['error' => $errorMessage]));
     }
 
     $actor = QubitActor::getBySlug($request->slug);
@@ -39,7 +39,7 @@ class sfIsaarPluginActorEventsAction extends sfAction
     $criteria = new Criteria();
     $criteria->add(QubitEvent::ACTOR_ID, $actor->id);
 
-    $data = array();
+    $data = [];
     $data['total'] = count(QubitEvent::get($criteria));
 
     $criteria->setOffset($request->skip);
@@ -53,19 +53,19 @@ class sfIsaarPluginActorEventsAction extends sfAction
 
   private function assembleEventData($criteria)
   {
-    $events = array();
+    $events = [];
 
     sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
     sfContext::getInstance()->getConfiguration()->loadHelpers('Qubit');
 
     foreach(QubitEvent::get($criteria) as $event)
     {
-      $eventData = array(
-        'url' => url_for(array($event, 'module' => 'event')),
+      $eventData = [
+        'url' => url_for([$event, 'module' => 'event']),
         'title' => render_title($event->object),
         'type' => render_value_inline($event->type),
         'date' => render_value_inline(Qubit::renderDateStartEnd($event->date, $event->startDate, $event->endDate))
-      );
+      ];
 
       array_push($events, $eventData);
     }

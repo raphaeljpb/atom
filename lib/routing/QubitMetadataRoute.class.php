@@ -19,7 +19,7 @@
 
 class QubitMetadataRoute extends QubitRoute
 {
-  public static $METADATA_PLUGINS = array(
+  public static $METADATA_PLUGINS = [
       'isaar' => 'sfIsaarPlugin',
       'eac'   => 'sfEacPlugin',
       'ead'   => 'sfEadPlugin',
@@ -29,13 +29,13 @@ class QubitMetadataRoute extends QubitRoute
       'rad'   => 'sfRadPlugin',
       'mods'  => 'sfModsPlugin',
       'dacs'  => 'arDacsPlugin',
-      'isdf'  => 'sfIsdfPlugin');
-  public static $DEFAULT_MODULES = array(
+      'isdf'  => 'sfIsdfPlugin'];
+  public static $DEFAULT_MODULES = [
       'informationobject' => false,
       'term'              => 'term',
       'actor'             => 'sfIsaarPlugin',
       'repository'        => 'sfIsdiahPlugin',
-      'function'          => 'sfIsdfPlugin');
+      'function'          => 'sfIsdfPlugin'];
 
   /**
    * Returns an array of parameters if the $url matches this route by looking up
@@ -53,7 +53,7 @@ class QubitMetadataRoute extends QubitRoute
    *
    * @see sfRoute
    */
-  public function matchesUrl($url, $context = array())
+  public function matchesUrl($url, $context = [])
   {
     // Delegate basic matching to sfRoute
     if (false === $parameters = parent::matchesUrl($url, $context))
@@ -62,7 +62,7 @@ class QubitMetadataRoute extends QubitRoute
     }
 
     // Rewrite action add/copy to edit
-    if (in_array($parameters['action'], array('add', 'copy')))
+    if (in_array($parameters['action'], ['add', 'copy']))
     {
       $parameters['action'] = 'edit';
     }
@@ -129,7 +129,7 @@ class QubitMetadataRoute extends QubitRoute
           break;
 
         case $this->resource instanceof QubitActor:
-          $parameters['module'] = $this->getActionParameter(array('isaar', 'eac'), $this->getDefaultTemplate('actor'), $parameters);
+          $parameters['module'] = $this->getActionParameter(['isaar', 'eac'], $this->getDefaultTemplate('actor'), $parameters);
 
           break;
 
@@ -151,12 +151,12 @@ class QubitMetadataRoute extends QubitRoute
             FROM information_object JOIN term ON information_object.display_standard_id = term.id
             WHERE information_object.id = ? AND taxonomy_id = ?';
 
-          if (false !== $defaultSetting = QubitPdo::fetchColumn($sql, array($this->resource->id, QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID)))
+          if (false !== $defaultSetting = QubitPdo::fetchColumn($sql, [$this->resource->id, QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID]))
           {
             $default = $defaultSetting;
           }
 
-          $parameters['module'] = $this->getActionParameter(array('isad', 'dc', 'mods', 'rad', 'ead', 'dacs'), $default, $parameters);
+          $parameters['module'] = $this->getActionParameter(['isad', 'dc', 'mods', 'rad', 'ead', 'dacs'], $default, $parameters);
 
           break;
 
@@ -232,7 +232,7 @@ class QubitMetadataRoute extends QubitRoute
   /**
    * @see sfRoute
    */
-  public function matchesParameters($params, $context = array())
+  public function matchesParameters($params, $context = [])
   {
     $params = $this->parseParameters($params);
 
@@ -251,7 +251,7 @@ class QubitMetadataRoute extends QubitRoute
   /**
    * @see sfRoute
    */
-  public function generate($params, $context = array(), $absolute = false)
+  public function generate($params, $context = [], $absolute = false)
   {
     $params = $this->parseParameters($params);
 
@@ -263,7 +263,7 @@ class QubitMetadataRoute extends QubitRoute
     // Fill in missing parameters with attributes of $params[0]
     if (!is_array($params))
     {
-      $params = array($params);
+      $params = [$params];
     }
 
     // Look for the slug property if an object is passed
@@ -326,6 +326,6 @@ class QubitMetadataRoute extends QubitRoute
       FROM setting JOIN setting_i18n ON setting.id = setting_i18n.id
       WHERE scope = "default_template" AND name = ?';
 
-    return QubitPdo::fetchColumn($sql, array($module));
+    return QubitPdo::fetchColumn($sql, [$module]);
   }
 }

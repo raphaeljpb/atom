@@ -13,7 +13,7 @@
     <?php foreach ($pager->getResults() as $item): ?>
       <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?>">
         <td>
-          <?php echo link_to(render_title($item->title), array($item, 'module' => 'staticpage')) ?>
+          <?php echo link_to(render_title($item->title), [$item, 'module' => 'staticpage']) ?>
         </td><td>
           <?php echo $item->slug ?>
         </td>
@@ -22,10 +22,10 @@
   </tbody>
 </table>
 
-<?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+<?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 
 <section class="actions">
   <ul>
-    <li><?php echo link_to(__('Add new'), array('module' => 'staticpage', 'action' => 'add'), array('class' => 'c-btn c-btn-submit')) ?></li>
+    <li><?php echo link_to(__('Add new'), ['module' => 'staticpage', 'action' => 'add'], ['class' => 'c-btn c-btn-submit']) ?></li>
   </ul>
 </section>

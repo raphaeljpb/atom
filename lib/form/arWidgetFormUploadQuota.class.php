@@ -19,13 +19,13 @@
 
 class arWidgetFormUploadQuota extends sfWidgetFormInput
 {
-  public function render($name, $value = null, $attributes = array(), $errors = array())
+  public function render($name, $value = null, $attributes = [], $errors = [])
   {
     $uploadLimit = (int) sfConfig::get('app_upload_limit');
 
     if ($uploadLimit === 0)
     {
-      return '<label>' . __('%1% upload is disabled', array('%1%' => sfConfig::get('app_ui_label_digitalobject'))) . '</label>';
+      return '<label>' . __('%1% upload is disabled', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]) . '</label>';
     }
     elseif ($uploadLimit === -1)
     {
@@ -38,11 +38,11 @@ class arWidgetFormUploadQuota extends sfWidgetFormInput
       return '<label>'.__('The uploads directory has not been created yet.').'</label>';
     }
 
-    return '<label>' . __('%1% used of %2%', array(
+    return '<label>' . __('%1% used of %2%', [
       '%1%' => hr_filesize($size),
-      '%2%' => $uploadLimit.' GB')).'</label>';
+      '%2%' => $uploadLimit.' GB']).'</label>';
   }
-  protected function configure($options = array(), $attributes = array())
+  protected function configure($options = [], $attributes = [])
   {
     parent::configure($options, $attributes);
   }

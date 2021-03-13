@@ -44,7 +44,7 @@ class arExportJob extends arBaseJob
 
     // Export CSV to temp directory
     $this->info($this->i18n->__(
-      'Starting export to %1.', array('%1' => $tempPath))
+      'Starting export to %1.', ['%1' => $tempPath])
     );
 
     $this->doExport($tempPath);
@@ -52,12 +52,12 @@ class arExportJob extends arBaseJob
     if (count($this->itemsExported) > 0)
     {
       $this->info($this->i18n->__(
-        'Exported %1 records.', array('%1' => $this->itemsExported)
+        'Exported %1 records.', ['%1' => $this->itemsExported]
       ));
 
       $this->info($this->i18n->__(
         'Creating ZIP file %1.',
-        array('%1' => $this->getDownloadFilePath())
+        ['%1' => $this->getDownloadFilePath()]
       ));
 
       // Create ZIP file and add metadata file(s) and digital objects
@@ -184,7 +184,7 @@ class arExportJob extends arBaseJob
    */
   protected function createZipForDownload($tempDir)
   {
-    $errors = array();
+    $errors = [];
 
     if (!is_writable($this->getJobsDownloadDirectory()))
     {
@@ -358,7 +358,7 @@ class arExportJob extends arBaseJob
     if ($this->itemsExported % self::LOG_INTERVAL == 0)
     {
       $this->info($this->i18n->__(
-        'Exported %1 items...', array('%1' => $this->itemsExported))
+        'Exported %1 items...', ['%1' => $this->itemsExported])
       );
 
       Qubit::clearClassCaches();

@@ -75,7 +75,7 @@ class arGearman
    * specified as options, the worker will have all abilities defined under
    * lib/job/.
    */
-  public static function getAbilities($options = array())
+  public static function getAbilities($options = [])
   {
     $config = self::getConfiguration();
 
@@ -84,7 +84,7 @@ class arGearman
       throw new sfConfigurationException('No abilities (worker_types) specified in gearman.yml');
     }
 
-    $abilities = array();
+    $abilities = [];
 
     if (isset($options['types']))
     {

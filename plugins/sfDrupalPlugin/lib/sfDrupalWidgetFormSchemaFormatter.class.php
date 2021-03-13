@@ -30,7 +30,7 @@ class sfDrupalWidgetFormSchemaFormatter extends sfWidgetFormSchemaFormatter
 return;
   }
 
-  public function formatRow($label, $field, $errors = array(), $help = '', $hiddenFields = null)
+  public function formatRow($label, $field, $errors = [], $help = '', $hiddenFields = null)
   {
     if (preg_match('/<input [^>]*type="checkbox"/', $field))
     {

@@ -5,23 +5,23 @@
     <div class="span8" id="homepage-nav">
       <p><?php echo __('Browse by') ?></p>
       <ul>
-        <?php $icons = array(
+        <?php $icons = [
           'browseInformationObjects' => '/images/icons-large/icon-archival.png',
           'browseActors' => '/images/icons-large/icon-people.png',
           'browseRepositories' => '/images/icons-large/icon-institutions.png',
           'browseSubjects' => '/images/icons-large/icon-subjects.png',
           'browseFunctions' => '/images/icons-large/icon-functions.png',
           'browsePlaces' => '/images/icons-large/icon-places.png',
-          'browseDigitalObjects' => '/images/icons-large/icon-media.png') ?>
+          'browseDigitalObjects' => '/images/icons-large/icon-media.png'] ?>
         <?php $browseMenu = QubitMenu::getById(QubitMenu::BROWSE_ID) ?>
         <?php if ($browseMenu->hasChildren()): ?>
           <?php foreach ($browseMenu->getChildren() as $item): ?>
             <li>
-              <a href="<?php echo url_for($item->getPath(array('getUrl' => true, 'resolveAlias' => true))) ?>">
+              <a href="<?php echo url_for($item->getPath(['getUrl' => true, 'resolveAlias' => true])) ?>">
                 <?php if (isset($icons[$item->name])): ?>
-                  <?php echo image_tag($icons[$item->name], array('width' => 42, 'height' => 42, 'alt' => '')) ?>
+                  <?php echo image_tag($icons[$item->name], ['width' => 42, 'height' => 42, 'alt' => '']) ?>
                 <?php endif; ?>
-                <?php echo esc_specialchars($item->getLabel(array('cultureFallback' => true))) ?>
+                <?php echo esc_specialchars($item->getLabel(['cultureFallback' => true])) ?>
               </a>
             </li>
           <?php endforeach; ?>
@@ -52,7 +52,7 @@
 <div id="homepage" class="row">
 
   <div class="span4">
-    <?php echo get_component('default', 'popular', array('limit' => 10, 'sf_cache_key' => $sf_user->getCulture())) ?>
+    <?php echo get_component('default', 'popular', ['limit' => 10, 'sf_cache_key' => $sf_user->getCulture()]) ?>
   </div>
 
   <div class="span8" id="virtual-exhibit">

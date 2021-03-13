@@ -40,7 +40,7 @@ class arMigration0117
     $setting->editable = 1;
     $setting->deleteable = 0;
     $setting->source_culture = 'en';
-    $setting->setValue('Genre', array('culture' => 'en'));
+    $setting->setValue('Genre', ['culture' => 'en']);
     $setting->save();
 
     // Add the genre taxonomy
@@ -54,51 +54,51 @@ class arMigration0117
     $taxonomy->save();
 
     // Add genre terms
-    foreach (array(
-      array('en' => 'Advertisements'),
-      array('en' => 'Albums'),
-      array('en' => 'Architecture'),
-      array('en' => 'Blank forms'),
-      array('en' => 'Books'),
-      array('en' => 'Broadsides'),
-      array('en' => 'Cartoons (Commentary)'),
-      array('en' => 'Catalogs'),
-      array('en' => 'Cityscapes'),
-      array('en' => 'Clippings'),
-      array('en' => 'Correspondence'),
-      array('en' => 'Diaries'),
-      array('en' => 'Drawings'),
-      array('en' => 'Ephemera'),
-      array('en' => 'Essays'),
-      array('en' => 'Ethnography'),
-      array('en' => 'Fieldnotes'),
-      array('en' => 'Illustrations'),
-      array('en' => 'Interviews'),
-      array('en' => 'Landscapes'),
-      array('en' => 'Leaflets'),
-      array('en' => 'Manuscripts'),
-      array('en' => 'Maps'),
-      array('en' => 'Miscellaneous Documents'),
-      array('en' => 'Motion Pictures'),
-      array('en' => 'Music'),
-      array('en' => 'Narratives'),
-      array('en' => 'Paintings'),
-      array('en' => 'Pamphlets'),
-      array('en' => 'Periodicals'),
-      array('en' => 'Petitions'),
-      array('en' => 'Photographs'),
-      array('en' => 'Physical Objects'),
-      array('en' => 'Poetry'),
-      array('en' => 'Portraits'),
-      array('en' => 'Postcards'),
-      array('en' => 'Posters'),
-      array('en' => 'Prints'),
-      array('en' => 'Programs'),
-      array('en' => 'Recording logs'),
-      array('en' => 'Scores'),
-      array('en' => 'Sheet Music'),
-      array('en' => 'Timetables'),
-      array('en' => 'Transcriptions')) as $termNames)
+    foreach ([
+      ['en' => 'Advertisements'],
+      ['en' => 'Albums'],
+      ['en' => 'Architecture'],
+      ['en' => 'Blank forms'],
+      ['en' => 'Books'],
+      ['en' => 'Broadsides'],
+      ['en' => 'Cartoons (Commentary)'],
+      ['en' => 'Catalogs'],
+      ['en' => 'Cityscapes'],
+      ['en' => 'Clippings'],
+      ['en' => 'Correspondence'],
+      ['en' => 'Diaries'],
+      ['en' => 'Drawings'],
+      ['en' => 'Ephemera'],
+      ['en' => 'Essays'],
+      ['en' => 'Ethnography'],
+      ['en' => 'Fieldnotes'],
+      ['en' => 'Illustrations'],
+      ['en' => 'Interviews'],
+      ['en' => 'Landscapes'],
+      ['en' => 'Leaflets'],
+      ['en' => 'Manuscripts'],
+      ['en' => 'Maps'],
+      ['en' => 'Miscellaneous Documents'],
+      ['en' => 'Motion Pictures'],
+      ['en' => 'Music'],
+      ['en' => 'Narratives'],
+      ['en' => 'Paintings'],
+      ['en' => 'Pamphlets'],
+      ['en' => 'Periodicals'],
+      ['en' => 'Petitions'],
+      ['en' => 'Photographs'],
+      ['en' => 'Physical Objects'],
+      ['en' => 'Poetry'],
+      ['en' => 'Portraits'],
+      ['en' => 'Postcards'],
+      ['en' => 'Posters'],
+      ['en' => 'Prints'],
+      ['en' => 'Programs'],
+      ['en' => 'Recording logs'],
+      ['en' => 'Scores'],
+      ['en' => 'Sheet Music'],
+      ['en' => 'Timetables'],
+      ['en' => 'Transcriptions']] as $termNames)
     {
       $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;
@@ -106,7 +106,7 @@ class arMigration0117
       $term->sourceCulture = 'en';
       foreach ($termNames as $key => $value)
       {
-        $term->setName($value, array('culture' => $key));
+        $term->setName($value, ['culture' => $key]);
       }
 
       $term->save();

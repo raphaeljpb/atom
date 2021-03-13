@@ -44,7 +44,7 @@ class FunctionListAction extends sfAction
     }
     else
     {
-      $this->redirect(array('module' => 'function', 'action' => 'browse'));
+      $this->redirect(['module' => 'function', 'action' => 'browse']);
     }
 
     // Page results

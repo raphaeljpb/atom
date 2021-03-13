@@ -21,11 +21,11 @@ class getVersionTask extends sfBaseTask
 {
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel')
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'get-version';
@@ -35,12 +35,12 @@ FIXME
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
-    $setting = QubitSetting::getByName('version')->getValue(array('sourceCulture' => true));
+    $setting = QubitSetting::getByName('version')->getValue(['sourceCulture' => true]);
 
     $this->log(qubitConfiguration::VERSION.' v'.$setting);
   }

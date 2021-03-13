@@ -1,14 +1,14 @@
 <?php decorate_with('layout_1col.php') ?>
 
 <?php slot('title') ?>
-  <h1><?php echo __('Are you sure you want to delete the finding aid of %1%?', array('%1%' => $resource->title)) ?></h1>
+  <h1><?php echo __('Are you sure you want to delete the finding aid of %1%?', ['%1%' => $resource->title]) ?></h1>
 <?php end_slot() ?>
 
 <?php slot('content') ?>
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'informationobject', 'action' => 'deleteFindingAid')), array('method' => 'delete')) ?>
+  <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'informationobject', 'action' => 'deleteFindingAid']), ['method' => 'delete']) ?>
 
     <?php echo $form->renderHiddenFields() ?>
     
@@ -27,7 +27,7 @@
 
     <section class="actions">
       <ul>
-        <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'informationobject'], ['class' => 'c-btn']) ?></li>
         <li><input class="c-btn c-btn-delete" type="submit" value="<?php echo __('Delete') ?>"/></li>
       </ul>
     </section>

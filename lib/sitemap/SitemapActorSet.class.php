@@ -29,10 +29,10 @@ LEFT JOIN slug S ON (A.id = S.object_id)
 WHERE A.id != ? AND O.class_name = 'QubitActor'
 EOF;
 
-    $this->rec = $this->conn->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $this->rec = $this->conn->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $this->rec->setFetchMode(PDO::FETCH_INTO, new SitemapActorUrl($this->config));
-    $this->rec->execute(array(
-      QubitActor::ROOT_ID));
+    $this->rec->execute([
+      QubitActor::ROOT_ID]);
   }
 }
 

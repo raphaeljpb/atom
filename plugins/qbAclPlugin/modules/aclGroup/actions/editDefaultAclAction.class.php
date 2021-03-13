@@ -42,7 +42,7 @@ class AclGroupEditDefaultAclAction extends sfAction
   protected function addField($name)
   {
     $this->form->setValidator($name, new sfValidatorString());
-    $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => array())));
+    $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => []]));
   }
 
   protected function processForm()

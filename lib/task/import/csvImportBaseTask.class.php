@@ -114,7 +114,7 @@ abstract class csvImportBaseTask extends arBaseTask
     else
     {
       // Try downloading external object up to three times (2 retries)
-      $options = array('downloadRetries' => 2);
+      $options = ['downloadRetries' => 2];
     }
 
     // Catch digital object import errors to avoid killing whole import
@@ -170,11 +170,11 @@ abstract class csvImportBaseTask extends arBaseTask
 
   public static function importAlternateFormsOfName($self)
   {
-    $typeIds = array(
+    $typeIds = [
       'parallel'     => QubitTerm::PARALLEL_FORM_OF_NAME_ID,
       'standardized' => QubitTerm::STANDARDIZED_FORM_OF_NAME_ID,
       'other'        => QubitTerm::OTHER_FORM_OF_NAME_ID
-    );
+    ];
 
     foreach ($typeIds as $typeName => $typeId)
     {
@@ -211,7 +211,7 @@ abstract class csvImportBaseTask extends arBaseTask
       $locations = explode('|', $self->rowStatusVars['physicalObjectLocation']);
       $types = (isset($self->rowStatusVars['physicalObjectType']))
         ? explode('|', $self->rowStatusVars['physicalObjectType'])
-        : array();
+        : [];
 
       foreach ($names as $index => $name)
       {
@@ -277,11 +277,11 @@ abstract class csvImportBaseTask extends arBaseTask
    */
   public static function importEvents(&$import)
   {
-    $events = array();
+    $events = [];
 
     // Event columns grouped by version
-    foreach (array(
-      '2.1' => array(
+    foreach ([
+      '2.1' => [
         'actorName'    => 'creators',
         'actorHistory' => 'creatorHistories',
         'date'         => 'creatorDates',
@@ -289,8 +289,8 @@ abstract class csvImportBaseTask extends arBaseTask
         'endDate'      => 'creatorDatesEnd',
         'description'  => 'creatorDateNotes',
         'type'         => '-',
-        'place'        => '-'),
-      '2.2' => array(
+        'place'        => '-'],
+      '2.2' => [
         'actorName'    => 'creators',
         'actorHistory' => 'creatorHistories',
         'date'         => 'creationDates',
@@ -298,8 +298,8 @@ abstract class csvImportBaseTask extends arBaseTask
         'endDate'      => 'creationDatesEnd',
         'description'  => 'creationDateNotes',
         'type'         => 'creationDatesType',
-        'place'        => '-'),
-      '2.3' => array(
+        'place'        => '-'],
+      '2.3' => [
         'actorName'    => 'eventActors',
         'actorHistory' => 'eventActorHistories',
         'date'         => 'eventDates',
@@ -307,7 +307,7 @@ abstract class csvImportBaseTask extends arBaseTask
         'endDate'      => 'eventEndDates',
         'description'  => 'eventDescriptions',
         'type'         => 'eventTypes',
-        'place'        => 'eventPlaces')) as $version => $propertyColumns)
+        'place'        => 'eventPlaces']] as $version => $propertyColumns)
     {
       // Get event data if one of the columns is populated in the current index
       $index = 0;
@@ -337,7 +337,7 @@ abstract class csvImportBaseTask extends arBaseTask
           continue;
         }
 
-        $eventData = array();
+        $eventData = [];
         foreach ($propertyColumns as $property => $column)
         {
           // Ignore 'NULL' values
@@ -439,7 +439,7 @@ abstract class csvImportBaseTask extends arBaseTask
         $self->object->$property = $self->translateNameToTermId(
           $propertyDescription,
           $termName,
-          array(),
+          [],
           $termNameArray
         );
       }
@@ -478,7 +478,7 @@ abstract class csvImportBaseTask extends arBaseTask
 
     for ($i = 0; $i < count($altIds); $i++)
     {
-      $io->addProperty($altIdLabels[$i], $altIds[$i], array('scope' => 'alternativeIdentifiers'));
+      $io->addProperty($altIdLabels[$i], $altIds[$i], ['scope' => 'alternativeIdentifiers']);
     }
   }
 
@@ -493,7 +493,7 @@ abstract class csvImportBaseTask extends arBaseTask
    */
   public static function refreshTaxonomyTerms($taxonomyId)
   {
-    $result = QubitFlatfileImport::loadTermsFromTaxonomies(array($taxonomyId => 'terms'));
+    $result = QubitFlatfileImport::loadTermsFromTaxonomies([$taxonomyId => 'terms']);
 
     return $result['terms'];
   }
@@ -502,18 +502,18 @@ abstract class csvImportBaseTask extends arBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The input file (csv format).')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('rows-until-update', null, sfCommandOption::PARAMETER_OPTIONAL, 'Output total rows imported every n rows.'),
       new sfCommandOption('skip-rows', null, sfCommandOption::PARAMETER_OPTIONAL, 'Skip n rows before importing.'),
       new sfCommandOption('error-log', null, sfCommandOption::PARAMETER_OPTIONAL, 'File to log errors to.')
-    ));
+    ]);
   }
 
   /**
@@ -526,7 +526,7 @@ abstract class csvImportBaseTask extends arBaseTask
    */
   protected function validateOptions($options)
   {
-    $numericOptions = array('rows-until-update', 'skip-rows');
+    $numericOptions = ['rows-until-update', 'skip-rows'];
 
     foreach($numericOptions as $option)
     {
@@ -574,7 +574,7 @@ abstract class csvImportBaseTask extends arBaseTask
       return;
     }
 
-    $validParams = array('match-and-update', 'delete-and-replace');
+    $validParams = ['match-and-update', 'delete-and-replace'];
 
     if (!in_array(trim($options['update']), $validParams))
     {

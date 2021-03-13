@@ -88,14 +88,14 @@ class arElasticSearchPluginQuery
    */
   public function addAggFilters($aggs, $params)
   {
-    $this->filters = array();
+    $this->filters = [];
 
     // Filter languages only if the languages aggregation
     // is being used and languages is set in the request
     if (isset($aggs['languages']) && isset($params['languages']))
     {
       $this->filters['languages'] = $params['languages'];
-      $term = new \Elastica\Query\Term(array($aggs['languages']['field'] => $params['languages']));
+      $term = new \Elastica\Query\Term([$aggs['languages']['field'] => $params['languages']]);
 
       $this->queryBool->addMust($term);
     }
@@ -114,7 +114,7 @@ class arElasticSearchPluginQuery
 
       $this->filters[$param] = $value;
 
-      $query = new \Elastica\Query\Term(array($aggs[$param]['field'] => $value));
+      $query = new \Elastica\Query\Term([$aggs[$param]['field'] => $value]);
 
       // Collection agg must select all descendants and itself
       if ($param == 'collection')
@@ -168,7 +168,7 @@ class arElasticSearchPluginQuery
     // Default to show only top level descriptions
     if ($archivalStandard != 'isaar' && (!isset($params['topLod']) || filter_var($params['topLod'], FILTER_VALIDATE_BOOLEAN)))
     {
-      $this->queryBool->addMust(new \Elastica\Query\Term(array('parentId' => QubitInformationObject::ROOT_ID)));
+      $this->queryBool->addMust(new \Elastica\Query\Term(['parentId' => QubitInformationObject::ROOT_ID]));
     }
 
     // Show descriptions related to an actor by an event type,
@@ -177,8 +177,8 @@ class arElasticSearchPluginQuery
       && isset($params['eventTypeId']) && ctype_digit($params['eventTypeId']))
     {
       $queryBool = new \Elastica\Query\BoolQuery();
-      $queryBool->addMust(new \Elastica\Query\Term(array('dates.actorId' => $params['actorId'])));
-      $queryBool->addMust(new \Elastica\Query\Term(array('dates.typeId' => $params['eventTypeId'])));
+      $queryBool->addMust(new \Elastica\Query\Term(['dates.actorId' => $params['actorId']]));
+      $queryBool->addMust(new \Elastica\Query\Term(['dates.typeId' => $params['eventTypeId']]));
 
       // Use nested query and mapping object to allow querying
       // over the actor and event ids from the same event
@@ -192,7 +192,7 @@ class arElasticSearchPluginQuery
     // Show descendants from resource
     if (isset($params['ancestor']) && ctype_digit($params['ancestor']))
     {
-      $this->queryBool->addMust(new \Elastica\Query\Term(array('ancestors' => $params['ancestor'])));
+      $this->queryBool->addMust(new \Elastica\Query\Term(['ancestors' => $params['ancestor']]));
     }
   }
 
@@ -242,7 +242,7 @@ class arElasticSearchPluginQuery
    */
   protected function parseQuery($params, $archivalStandard)
   {
-    $this->criteria = array();
+    $this->criteria = [];
     $queryBool = new \Elastica\Query\BoolQuery();
     $count = 0;
 
@@ -267,10 +267,10 @@ class arElasticSearchPluginQuery
         $queryField = $this->queryField($field, $query, $archivalStandard);
         $this->addToQueryBool($queryBool, $operator, $queryField);
 
-        $this->criteria[] = array(
+        $this->criteria[] = [
           'query' => $query,
           'field' => $field,
-          'operator' => $operator);
+          'operator' => $operator];
       }
 
       $count++;
@@ -291,7 +291,7 @@ class arElasticSearchPluginQuery
       case 'identifier':
       case 'referenceCode':
       case 'descriptionIdentifier':
-        $fields = array($field => 1);
+        $fields = [$field => 1];
 
         break;
 
@@ -306,12 +306,12 @@ class arElasticSearchPluginQuery
       case 'institutionResponsibleIdentifier':
       case 'sources':
       case 'places':
-        $fields = array('i18n.%s.'.$field => 1);
+        $fields = ['i18n.%s.'.$field => 1];
 
         break;
 
       case 'archivalHistory':
-        ProjectConfiguration::getActive()->loadHelpers(array('Asset', 'Qubit'));
+        ProjectConfiguration::getActive()->loadHelpers(['Asset', 'Qubit']);
 
         // Check archival history visibility
         if (($archivalStandard == 'rad' && !check_field_visibility('app_element_visibility_rad_archival_history'))
@@ -320,54 +320,54 @@ class arElasticSearchPluginQuery
           return;
         }
 
-        $fields = array('i18n.%s.archivalHistory' => 1);
+        $fields = ['i18n.%s.archivalHistory' => 1];
 
         break;
 
       case 'genre':
-        $fields = array('genres.i18n.%s.name' => 1);
+        $fields = ['genres.i18n.%s.name' => 1];
 
         break;
 
       case 'subject':
-        $fields = array('subjects.i18n.%s.name' => 1);
+        $fields = ['subjects.i18n.%s.name' => 1];
 
         break;
 
       case 'name':
-        $fields = array('names.i18n.%s.authorizedFormOfName' => 1);
+        $fields = ['names.i18n.%s.authorizedFormOfName' => 1];
 
         break;
 
       case 'creator':
-        $fields = array(
+        $fields = [
           'creators.i18n.%s.authorizedFormOfName' => 1,
           'inheritedCreators.i18n.%s.authorizedFormOfName' => 1
-        );
+        ];
 
         break;
 
       case 'place':
-        $fields = array(
+        $fields = [
           'places.i18n.%s.name' => 1,
           'places.useFor.i18n.%s.name' => 1
-        );
+        ];
 
         break;
 
       case 'findingAidTranscript':
-        $fields = array('findingAid.transcript' => 1);
+        $fields = ['findingAid.transcript' => 1];
 
         break;
 
       case 'digitalObjectTranscript':
-        $fields = array('transcript' => 1);
+        $fields = ['transcript' => 1];
 
         break;
 
       case 'allExceptFindingAidTranscript':
         $fields = arElasticSearchPluginUtil::getAllFields(
-          'informationObject', array('findingAid.transcript')
+          'informationObject', ['findingAid.transcript']
         );
 
         break;
@@ -375,17 +375,17 @@ class arElasticSearchPluginQuery
       case 'parallelNames':
       case 'otherNames':
       case 'occupations':
-        $fields = array($field.'.i18n.%s.name' => 1);
+        $fields = [$field.'.i18n.%s.name' => 1];
 
         break;
 
       case 'occupationNotes':
-        $fields = array('occupations.i18n.%s.content' => 1);
+        $fields = ['occupations.i18n.%s.content' => 1];
 
         break;
 
       case 'maintenanceNotes':
-        $fields = array('maintenanceNotes.i18n.%s.content' => 1);
+        $fields = ['maintenanceNotes.i18n.%s.content' => 1];
 
         break;
 
@@ -535,7 +535,7 @@ class arElasticSearchPluginQuery
     }
 
     $query = new \Elastica\Query\BoolQuery();
-    $range = array();
+    $range = [];
 
     if (!empty($params['startDate']))
     {
@@ -545,7 +545,7 @@ class arElasticSearchPluginQuery
       {
         // Start date before range and end date missing
         $queryBool = new \Elastica\Query\BoolQuery();
-        $start = new \Elastica\Query\Range('dates.startDate', array('lt' => $params['startDate']));
+        $start = new \Elastica\Query\Range('dates.startDate', ['lt' => $params['startDate']]);
         $exists = new \Elastica\Query\Exists('dates.endDate');
         $queryBool->addMust($start);
         $queryBool->addMustNot($exists);
@@ -562,7 +562,7 @@ class arElasticSearchPluginQuery
       {
         // End date after range and start date missing
         $queryBool = new \Elastica\Query\BoolQuery();
-        $end = new \Elastica\Query\Range('dates.endDate', array('gt' => $params['endDate']));
+        $end = new \Elastica\Query\Range('dates.endDate', ['gt' => $params['endDate']]);
         $exists = new \Elastica\Query\Exists('dates.startDate');
         $queryBool->addMust($end);
         $queryBool->addMustNot($exists);
@@ -575,8 +575,8 @@ class arElasticSearchPluginQuery
     {
       // Start date before range and end date after range
       $queryBool = new \Elastica\Query\BoolQuery();
-      $queryBool->addMust(new \Elastica\Query\Range('dates.startDate', array('lt' => $params['startDate'])));
-      $queryBool->addMust(new \Elastica\Query\Range('dates.endDate', array('gt' => $params['endDate'])));
+      $queryBool->addMust(new \Elastica\Query\Range('dates.startDate', ['lt' => $params['startDate']]));
+      $queryBool->addMust(new \Elastica\Query\Range('dates.endDate', ['gt' => $params['endDate']]));
 
       $query->addShould($queryBool);
     }

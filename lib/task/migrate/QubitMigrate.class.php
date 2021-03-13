@@ -168,7 +168,7 @@ class QubitMigrate
    */
   public static function sortByLft(&$objectList)
   {
-    $newList = array();
+    $newList = [];
     $highLft = 0;
     foreach ($objectList as $key => $row)
     {
@@ -189,7 +189,7 @@ class QubitMigrate
         {
           if ($newRow['lft'] > $row['lft'])
           {
-            self::array_insert($newList, $i, array($key => $row));
+            self::array_insert($newList, $i, [$key => $row]);
             break;
           }
           $i++;
@@ -234,7 +234,7 @@ class QubitMigrate
   public static function findForeignKeys(array $tables, $configuration)
   {
     $finder = sfFinder::type('file')->name('*schema.yml')->prune('doctrine');
-    $dirs = array_merge(array(sfConfig::get('sf_config_dir')), $configuration->getPluginSubPaths('/config'));
+    $dirs = array_merge([sfConfig::get('sf_config_dir')], $configuration->getPluginSubPaths('/config'));
     $schemas = $finder->in($dirs);
     if (!count($schemas))
     {
@@ -288,9 +288,9 @@ class QubitMigrate
             continue;
           }
 
-          $columns[] = array(
+          $columns[] = [
             'table' => $tableName,
-            'column' => $columnKey);
+            'column' => $columnKey];
         }
       }
     }
@@ -300,15 +300,15 @@ class QubitMigrate
       switch ($item)
       {
         case 'object':
-          $columns[] = array('table' => 'object', 'column' => 'id');
+          $columns[] = ['table' => 'object', 'column' => 'id'];
 
           break;
 
         case 'term':
         case 'taxonomy':
         case 'menu':
-          $columns[] = array('table' => $item, 'column' => 'id');
-          $columns[] = array('table' => $item.'_i18n', 'column' => 'id');
+          $columns[] = ['table' => $item, 'column' => 'id'];
+          $columns[] = ['table' => $item.'_i18n', 'column' => 'id'];
       }
     }
 
@@ -346,22 +346,22 @@ class QubitMigrate
       // Get new autonumeric
       $last = QubitPdo::fetchOne('SELECT (MAX(id) + 1) AS last FROM object')->last;
 
-      $foreignKeys = self::findForeignKeys(array(QubitObject::TABLE_NAME, QubitTerm::TABLE_NAME), $configuration);
+      $foreignKeys = self::findForeignKeys([QubitObject::TABLE_NAME, QubitTerm::TABLE_NAME], $configuration);
 
       foreach ($foreignKeys as $item)
       {
         // From the list of columns that the codebase is giving us, it may happen that some of them are
         // not available yet in the database since we are still running the migration. If this is the case,
         // ignore it, otherwise the UPDATE will fail.
-        if (false === QubitPdo::fetchOne("SHOW COLUMNS FROM $item[table] LIKE ?", array($item['column'])))
+        if (false === QubitPdo::fetchOne("SHOW COLUMNS FROM $item[table] LIKE ?", [$item['column']]))
         {
           continue;
         }
 
         QubitPdo::modify(
-          "UPDATE $item[table] SET $item[column] = ? WHERE $item[column] = ?", array(
+          "UPDATE $item[table] SET $item[column] = ? WHERE $item[column] = ?", [
             $last,
-            $id));
+            $id]);
       }
 
       $connection->exec('SET FOREIGN_KEY_CHECKS = 1');
@@ -402,14 +402,14 @@ class QubitMigrate
       // Get new autonumeric
       $last = QubitPdo::fetchOne('SELECT (MAX(id) + 1) AS last FROM object')->last;
 
-      $foreignKeys = self::findForeignKeys(array(QubitObject::TABLE_NAME, QubitTaxonomy::TABLE_NAME), $configuration);
+      $foreignKeys = self::findForeignKeys([QubitObject::TABLE_NAME, QubitTaxonomy::TABLE_NAME], $configuration);
 
       foreach ($foreignKeys as $item)
       {
         QubitPdo::modify(
-          "UPDATE $item[table] SET $item[column] = ? WHERE $item[column] = ?", array(
+          "UPDATE $item[table] SET $item[column] = ? WHERE $item[column] = ?", [
             $last,
-            $id));
+            $id]);
       }
 
       $connection->exec('SET FOREIGN_KEY_CHECKS = 1');
@@ -450,14 +450,14 @@ class QubitMigrate
       // Get new autonumeric
       $last = QubitPdo::fetchOne('SELECT (MAX(id) + 1) AS last FROM object')->last;
 
-      $foreignKeys = self::findForeignKeys(array(QubitMenu::TABLE_NAME), $configuration);
+      $foreignKeys = self::findForeignKeys([QubitMenu::TABLE_NAME], $configuration);
 
       foreach ($foreignKeys as $item)
       {
         QubitPdo::modify(
-          "UPDATE $item[table] SET $item[column] = ? WHERE $item[column] = ?", array(
+          "UPDATE $item[table] SET $item[column] = ? WHERE $item[column] = ?", [
             $last,
-            $id));
+            $id]);
       }
 
       self::updateAutoNumeric();
@@ -472,12 +472,12 @@ class QubitMigrate
     $connection->commit();
   }
 
-  public static function addColumn($table, $column, array $options = array())
+  public static function addColumn($table, $column, array $options = [])
   {
     $connection = Propel::getConnection();
     $connection->beginTransaction();
 
-    $queries = array();
+    $queries = [];
 
     $sql = "ALTER TABLE $table ADD $column";
 
@@ -644,7 +644,7 @@ class QubitMigrate
   {
     $conn = Propel::getConnection();
 
-    $fixtures = array();
+    $fixtures = [];
 
     foreach (sfFinder::type('file')->name('*.yml')->in(sfConfig::get('sf_data_dir').'/fixtures/') as $yaml)
     {
@@ -693,7 +693,7 @@ class QubitMigrate
       foreach ($row as $key => $columns)
       {
         $id = null;
-        $existingCultures = array();
+        $existingCultures = [];
 
         if (!is_array($columns[$colname]) || !isset($columns['id']))
         {
@@ -701,8 +701,8 @@ class QubitMigrate
         }
 
         // Build array of existing cultures, so we don't stomp user values
-        $selectStmt->execute(array(
-          $columns[$colname]['en']));
+        $selectStmt->execute([
+          $columns[$colname]['en']]);
 
         while ($item = $selectStmt->fetch(PDO::FETCH_OBJ))
         {
@@ -727,10 +727,10 @@ class QubitMigrate
             // Insert new culture values
             try
             {
-              $insertStmt->execute(array(
+              $insertStmt->execute([
                 $value,
                 $id,
-                $culture));
+                $culture]);
             }
             catch (PDOException $e)
             {
@@ -751,7 +751,7 @@ class QubitMigrate
       $sql = 'SHOW INDEX FROM %s WHERE Column_name=:column;';
       $result = QubitPdo::fetchOne(
         sprintf($sql, $data['table']),
-        array(':column' => $data['column'])
+        [':column' => $data['column']]
       );
 
       // Stop if the index is missing
@@ -790,12 +790,12 @@ class QubitMigrate
       $sql .= 'WHERE TABLE_NAME=:table AND COLUMN_NAME=:column ';
       $sql .= 'AND REFERENCED_TABLE_NAME=:refTable ';
       $sql .= 'AND CONSTRAINT_SCHEMA=:dbname';
-      $oldConstraintName = QubitPdo::fetchColumn($sql, array(
+      $oldConstraintName = QubitPdo::fetchColumn($sql, [
         ':table' => $foreignKey['table'],
         ':column' => $foreignKey['column'],
         ':refTable' => $foreignKey['refTable'],
         ':dbname' => $dbname,
-      ));
+      ]);
 
       // Stop if the foreign key is missing
       if (!$oldConstraintName)

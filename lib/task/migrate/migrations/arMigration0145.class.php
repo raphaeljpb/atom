@@ -39,7 +39,7 @@ class arMigration0145
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::RELATION_TYPE_ID;
     $term->sourceCulture = 'en';
-    $term->setName('Maintaining repository', array('culture' => 'en'));
+    $term->setName('Maintaining repository', ['culture' => 'en']);
     $term->save();
 
     return true;

@@ -28,7 +28,7 @@ class sfTranslatePluginConfiguration extends sfPluginConfiguration
    */
   public function initialize()
   {
-    $this->dispatcher->connect('context.load_factories', array($this, 'contextLoadFactories'));
+    $this->dispatcher->connect('context.load_factories', [$this, 'contextLoadFactories']);
 
     $enabledModules = sfConfig::get('sf_enabled_modules');
     $enabledModules[] = 'sfTranslatePlugin';

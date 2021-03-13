@@ -49,25 +49,25 @@ class ActorRelatedInformationObjectsAction extends sfAction
     $pager->setPage($request->page);
     $pager->init();
 
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Qubit', 'Url'));
+    sfContext::getInstance()->getConfiguration()->loadHelpers(['Qubit', 'Url']);
 
-    $results = array();
+    $results = [];
     foreach ($pager->getResults() as $item)
     {
       $doc = $item->getData();
-      $results[] = array(
-        'url' => url_for(array('module' => 'informationobject', 'slug' => $doc['slug'])),
-        'title' => render_value_inline(get_search_i18n($doc, 'title', array('allowEmpty' => false, 'culture' => $culture, 'cultureFallback' => true)))
-      );
+      $results[] = [
+        'url' => url_for(['module' => 'informationobject', 'slug' => $doc['slug']]),
+        'title' => render_value_inline(get_search_i18n($doc, 'title', ['allowEmpty' => false, 'culture' => $culture, 'cultureFallback' => true]))
+      ];
     }
 
-    $data = array(
+    $data = [
       'results'     => $results,
       'start'       => $pager->getFirstIndice(),
       'end'         => $pager->getLastIndice(),
       'currentPage' => $pager->getPage(),
       'lastPage'    => $pager->getLastPage()
-    );
+    ];
 
     return $this->renderText(json_encode($data));
   }
@@ -84,7 +84,7 @@ class ActorRelatedInformationObjectsAction extends sfAction
     if (!isset($eventTypeId))
     {
       // Get subject of IOs (name access points)
-      $queryTerm = new \Elastica\Query\Term(array('names.id' => $actorId));
+      $queryTerm = new \Elastica\Query\Term(['names.id' => $actorId]);
 
       $queryBool->addMust($queryTerm);
     }
@@ -92,8 +92,8 @@ class ActorRelatedInformationObjectsAction extends sfAction
     {
       // Get related by event IOs
       $queryBoolDates = new \Elastica\Query\BoolQuery();
-      $queryBoolDates->addMust(new \Elastica\Query\Term(array('dates.actorId' => $actorId)));
-      $queryBoolDates->addMust(new \Elastica\Query\Term(array('dates.typeId' => $eventTypeId)));
+      $queryBoolDates->addMust(new \Elastica\Query\Term(['dates.actorId' => $actorId]));
+      $queryBoolDates->addMust(new \Elastica\Query\Term(['dates.typeId' => $eventTypeId]));
 
       // Use nested query and mapping object to allow querying
       // over the actor and event ids from the same event
@@ -108,7 +108,7 @@ class ActorRelatedInformationObjectsAction extends sfAction
     $title = sprintf('i18n.%s.title.alphasort', sfContext::getInstance()->user->getCulture());
 
     $query->setQuery($queryBool);
-    $query->setSort(array($title => 'asc'));
+    $query->setSort([$title => 'asc']);
     $query->setSize($limit);
     $query->setFrom($limit * ($page - 1));
 

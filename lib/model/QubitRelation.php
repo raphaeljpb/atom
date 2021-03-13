@@ -42,10 +42,10 @@ class QubitRelation extends BaseRelation
   public function save($connection = null)
   {
     // TODO $cleanObject = $this->object->clean;
-    $cleanObjectId = $this->__get('objectId', array('clean' => true));
+    $cleanObjectId = $this->__get('objectId', ['clean' => true]);
 
     // TODO $cleanSubject = $this->subject->clean;
-    $cleanSubjectId = $this->__get('subjectId', array('clean' => true));
+    $cleanSubjectId = $this->__get('subjectId', ['clean' => true]);
 
     parent::save($connection);
 
@@ -98,7 +98,7 @@ class QubitRelation extends BaseRelation
    * @param array   $options optional parameters
    * @return QubitQuery collection of QubitRelation objects
    */
-  public static function getRelationsByObjectId($id, $options = array())
+  public static function getRelationsByObjectId($id, $options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitRelation::OBJECT_ID, $id);
@@ -119,7 +119,7 @@ class QubitRelation extends BaseRelation
    * @param array   $options optional parameters
    * @return QubitQuery collection of QubitRelation objects
    */
-  public static function getRelationsBySubjectId($id, $options = array())
+  public static function getRelationsBySubjectId($id, $options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitRelation::SUBJECT_ID, $id);
@@ -139,7 +139,7 @@ class QubitRelation extends BaseRelation
    * @param array   $options optional parameters
    * @return QubitQuery collection of QubitRelation objects
    */
-  public static function getBySubjectOrObjectId($id, $options = array())
+  public static function getBySubjectOrObjectId($id, $options = [])
   {
     $criteria = new Criteria();
 
@@ -168,7 +168,7 @@ class QubitRelation extends BaseRelation
    * @param array   $options list of options to pass to QubitQuery
    * @return QubitQuery collection of QubitObjects
    */
-  public static function getRelatedSubjectsByObjectId($className, $objectId, $options = array())
+  public static function getRelatedSubjectsByObjectId($className, $objectId, $options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitRelation::OBJECT_ID, $objectId);
@@ -180,7 +180,7 @@ class QubitRelation extends BaseRelation
       $criteria->add(QubitRelation::TYPE_ID, $options['typeId']);
     }
 
-    return call_user_func(array($className, 'get'), $criteria, $options);
+    return call_user_func([$className, 'get'], $criteria, $options);
   }
 
   /**
@@ -191,7 +191,7 @@ class QubitRelation extends BaseRelation
    * @param array   $options list of options to pass to QubitQuery
    * @return QubitQuery collection of QubitObjects
    */
-  public static function getRelatedObjectsBySubjectId($className, $subjectId, $options = array())
+  public static function getRelatedObjectsBySubjectId($className, $subjectId, $options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitRelation::SUBJECT_ID, $subjectId);
@@ -203,7 +203,7 @@ class QubitRelation extends BaseRelation
       $criteria->add(QubitRelation::TYPE_ID, $options['typeId']);
     }
 
-    return call_user_func(array($className, 'get'), $criteria, $options);
+    return call_user_func([$className, 'get'], $criteria, $options);
   }
 
   /**

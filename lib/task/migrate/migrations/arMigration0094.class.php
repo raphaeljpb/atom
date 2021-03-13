@@ -43,14 +43,14 @@ class arMigration0094
     QubitMigrate::addColumn(
       QubitInformationObject::TABLE_NAME,
       'display_standard_id INT NULL',
-      array(
+      [
         'after' => 'source_standard',
         'idx' => true,
-        'fk' => array(
+        'fk' => [
           'referenceTable' => 'term',
           'referenceColumn' => 'id',
           'onDelete' => 'SET NULL',
-          'onUpdate' => 'RESTRICT')));
+          'onUpdate' => 'RESTRICT']]);
 
 
     // Add the "Information object templates" taxonomy
@@ -62,11 +62,11 @@ class arMigration0094
     $taxonomy->save();
 
     // Add also the available templates
-    foreach (array(
+    foreach ([
       'isad'  => 'ISAD(G), 2nd ed. International Council on Archives',
       'dc'    => 'Dublin Core, Version 1.1. Dublin Core Metadata Initiative',
       'mods'  => 'MODS, Version 3.3. U.S. Library of Congress',
-      'rad'   => 'RAD, July 2008 version. Canadian Council of Archives') as $key => $value)
+      'rad'   => 'RAD, July 2008 version. Canadian Council of Archives'] as $key => $value)
     {
       $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;

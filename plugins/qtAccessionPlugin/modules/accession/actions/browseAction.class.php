@@ -41,7 +41,7 @@ class AccessionBrowseAction extends sfAction
         "We've redirected you to the first page of results." .
         " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
         " To view the last records in the current result set, try changing the sort direction.",
-        array('%1%' => $maxResultWindow)
+        ['%1%' => $maxResultWindow]
       );
       $this->getUser()->setFlash('notice', $message);
 
@@ -51,11 +51,11 @@ class AccessionBrowseAction extends sfAction
       $this->redirect($params);
     }
 
-    $this->sortOptions = array(
+    $this->sortOptions = [
       'lastUpdated' => $this->context->i18n->__('Date modified'),
       'accessionNumber' => $this->context->i18n->__('Accession number'),
       'title' => $this->context->i18n->__('Title'),
-      'acquisitionDate' => $this->context->i18n->__('Acquisition date'));
+      'acquisitionDate' => $this->context->i18n->__('Acquisition date')];
 
     if (!isset($request->sort))
     {
@@ -81,7 +81,7 @@ class AccessionBrowseAction extends sfAction
     }
 
     // Set default sort direction in request if not present or not valid
-    if (!isset($request->sortDir) || !in_array($request->sortDir, array('asc', 'desc')))
+    if (!isset($request->sortDir) || !in_array($request->sortDir, ['asc', 'desc']))
     {
       $request->sortDir = $sortDir;
     }
@@ -100,7 +100,7 @@ class AccessionBrowseAction extends sfAction
     }
     else
     {
-      $fields = array(
+      $fields = [
         'identifier' => 10,
         'donors.i18n.%s.authorizedFormOfName' => 10,
         'i18n.%s.title' => 10,
@@ -121,7 +121,7 @@ class AccessionBrowseAction extends sfAction
         'accessionEvents.notes.i18n.%s.content' => 1,
         'donors.contactInformations.contactPerson' => 1,
         'accessionEvents.dateString' => 1
-      );
+      ];
 
       $this->queryBool->addMust(
         arElasticSearchPluginUtil::generateBoolQueryString($request->subquery, $fields)
@@ -138,19 +138,19 @@ class AccessionBrowseAction extends sfAction
     {
       case 'identifier': // For backward compatibility
       case 'accessionNumber':
-        $this->query->setSort(array('identifier.untouched' => $request->sortDir));
+        $this->query->setSort(['identifier.untouched' => $request->sortDir]);
 
         break;
 
       case 'title':
       case 'alphabetic': // For backward compatibility
         $field = sprintf('i18n.%s.title.alphasort', $this->context->user->getCulture());
-        $this->query->addSort(array($field => $request->sortDir));
+        $this->query->addSort([$field => $request->sortDir]);
 
         break;
 
       case 'acquisitionDate':
-        $this->query->addSort(array('date' => array('order' => $request->sortDir, 'missing' => '_last')));
+        $this->query->addSort(['date' => ['order' => $request->sortDir, 'missing' => '_last']]);
 
         break;
 
@@ -160,7 +160,7 @@ class AccessionBrowseAction extends sfAction
 
       case 'lastUpdated':
       default:
-        $this->query->setSort(array('updatedAt' => $request->sortDir));
+        $this->query->setSort(['updatedAt' => $request->sortDir]);
 
         break;
     }

@@ -23,7 +23,7 @@ class RepositoryAdvancedFiltersComponent extends sfComponent
   {
     // Store current params to add them as hidden inputs
     // in the form, to keep GET and POST params in sync
-    $this->hiddenFields = array();
+    $this->hiddenFields = [];
     foreach ($request->getGetParameters() as $key => $value)
     {
       // Keep control of what is added to avoid
@@ -35,9 +35,9 @@ class RepositoryAdvancedFiltersComponent extends sfComponent
       // - thematicAreas, types and regions
       $allowed = array_merge(
         array_keys(RepositoryBrowseAction::$AGGS),
-        array('view', 'sort', 'subquery')
+        ['view', 'sort', 'subquery']
       );
-      $ignored = array('thematicAreas', 'types', 'regions');
+      $ignored = ['thematicAreas', 'types', 'regions'];
       if (!in_array($key, $allowed) || in_array($key, $ignored))
       {
         continue;

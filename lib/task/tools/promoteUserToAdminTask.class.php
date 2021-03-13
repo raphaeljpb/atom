@@ -28,7 +28,7 @@ class promoteUserToAdminTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     sfContext::createInstance($this->configuration);
     $databaseManager = new sfDatabaseManager($this->configuration);
@@ -63,15 +63,15 @@ class promoteUserToAdminTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('username', sfCommandArgument::REQUIRED, 'The username')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'promote-user-to-admin';

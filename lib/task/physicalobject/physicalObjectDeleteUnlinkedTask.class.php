@@ -37,7 +37,7 @@ EOF;
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -86,14 +86,14 @@ EOF;
       // Show details of each individual physical object being deleted, if in verbose mode
       if ($options['verbose'])
       {
-        $description = sprintf(" - Name: '%s'", $po->getName(array('cultureFallback' => true)));
+        $description = sprintf(" - Name: '%s'", $po->getName(['cultureFallback' => true]));
 
-        if (!empty($location = $po->getLocation(array('cultureFallback' => true))))
+        if (!empty($location = $po->getLocation(['cultureFallback' => true])))
         {
           $description .= sprintf(", Location: '%s'", $location);
         }
 
-        $description .= sprintf(", Type: '%s'", $po->getType(array('cultureFallback' => true)));
+        $description .= sprintf(", Type: '%s'", $po->getType(['cultureFallback' => true]));
 
         $this->log($description);
       }
@@ -130,14 +130,14 @@ EOF;
    */
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('verbose', 'v', sfCommandOption::PARAMETER_NONE, "Verbose (shows details of what's marked for deletion", null),
       new sfCommandOption('force', 'f', sfCommandOption::PARAMETER_NONE, 'Delete without confirmation', null),
       new sfCommandOption('dry-run', 'd', sfCommandOption::PARAMETER_NONE, 'Dry run (no database changes)', null),
-    ));
+    ]);
   }
 
   private function getPhysicalObjectCount()
@@ -154,14 +154,14 @@ EOF;
 
   private function checkPhysicalObjects()
   {
-    $toDelete = array();
+    $toDelete = [];
 
     $sql = "SELECT id FROM physical_object";
 
     foreach (QubitPdo::fetchAll($sql) as $physicalObject)
     {
       // Get relations to physical object
-      $relations = QubitRelation::getRelationsBySubjectId($physicalObject->id, array('typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID));
+      $relations = QubitRelation::getRelationsBySubjectId($physicalObject->id, ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
 
       $informationObjectFound = false;
 

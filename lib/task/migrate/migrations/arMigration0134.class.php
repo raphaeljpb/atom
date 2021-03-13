@@ -116,7 +116,7 @@ class arMigration0134
     // Query 3: set the column `rights`.`statute_citation_id`
     $sql3 = "UPDATE `rights`, `rights_i18n` SET `rights`.`statute_citation_id` = ? WHERE `rights`.`id` = `rights_i18n`.`id` AND `rights_i18n`.`statute_citation` = ? AND `rights_i18n`.`culture` = ?";
     $stmt3 = QubitPdo::prepare($sql3);
-    if ($stmt1->execute(array($defaultCulture)))
+    if ($stmt1->execute([$defaultCulture]))
     {
       while ($row = $stmt1->fetch())
       {
@@ -124,18 +124,18 @@ class arMigration0134
         $term = new QubitTerm();
         $term->parentId = QubitTerm::ROOT_ID;
         $term->taxonomyId = QubitTaxonomy::RIGHTS_STATUTES_ID;
-        $term->setName($row['statute_citation'], array('culture' => $defaultCulture));
-        if ($stmt2->execute(array($row['id'], $defaultCulture)))
+        $term->setName($row['statute_citation'], ['culture' => $defaultCulture]);
+        if ($stmt2->execute([$row['id'], $defaultCulture]))
         {
           while ($i18nRow = $stmt2->fetch())
           {
-            $term->setName($i18nRow['statute_citation'], array('culture' => $i18nRow['culture']));
+            $term->setName($i18nRow['statute_citation'], ['culture' => $i18nRow['culture']]);
           }
         }
         $term->save();
 
         // We have to link the new term to its rights
-        $stmt3->execute(array($term->id, $row['statute_citation'], $defaultCulture));
+        $stmt3->execute([$term->id, $row['statute_citation'], $defaultCulture]);
       }
     }
 

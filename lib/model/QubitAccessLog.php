@@ -18,7 +18,7 @@
  */
 class QubitAccessLog extends BaseAccessLog
 {
-  public static function getPopularThisWeek(array $options = array())
+  public static function getPopularThisWeek(array $options = [])
   {
     $sql  = 'SELECT access_log.object_id, COUNT(access_log.object_id) AS count';
     $sql .= ' FROM access_log';

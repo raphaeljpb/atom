@@ -33,8 +33,8 @@
         <?php if (QubitTerm::ROOT_ID == $ancestor->id) continue; ?>
         <?php echo render_treeview_node(
           $ancestor,
-          array('ancestor' => true),
-          array('browser' => $browser, 'xhr-location' => url_for(array($ancestor, 'module' => 'term', 'action' => 'treeView')))); ?>
+          ['ancestor' => true],
+          ['browser' => $browser, 'xhr-location' => url_for([$ancestor, 'module' => 'term', 'action' => 'treeView'])]); ?>
       <?php endforeach; ?>
 
       <?php // Prev siblings (if there's no children)?>
@@ -44,8 +44,8 @@
         <?php if ($hasPrevSiblings): ?>
           <?php echo render_treeview_node(
             null,
-            array('more' => true),
-            array('browser' => $browser, 'xhr-location' => url_for(array($prevSiblings[0], 'module' => 'term', 'action' => 'treeView')))); ?>
+            ['more' => true],
+            ['browser' => $browser, 'xhr-location' => url_for([$prevSiblings[0], 'module' => 'term', 'action' => 'treeView'])]); ?>
         <?php endif; ?>
 
         <?php // N prev items?>
@@ -53,8 +53,8 @@
           <?php foreach ($prevSiblings as $prev): ?>
             <?php echo render_treeview_node(
               $prev,
-              array('expand' => 1 < $prev->rgt - $prev->lft),
-              array('browser' => $browser, 'xhr-location' => url_for(array($prev, 'module' => 'term', 'action' => 'treeView')))); ?>
+              ['expand' => 1 < $prev->rgt - $prev->lft],
+              ['browser' => $browser, 'xhr-location' => url_for([$prev, 'module' => 'term', 'action' => 'treeView'])]); ?>
           <?php endforeach; ?>
         <?php endif; ?>
 
@@ -63,8 +63,8 @@
       <?php // Current?>
       <?php echo render_treeview_node(
         $resource,
-        array('ancestor' => $resource->hasChildren(), 'active' => $getChildrensAndShowActive),
-        array('browser' => $browser, 'xhr-location' => url_for(array($resource, 'module' => 'term', 'action' => 'treeView')))); ?>
+        ['ancestor' => $resource->hasChildren(), 'active' => $getChildrensAndShowActive],
+        ['browser' => $browser, 'xhr-location' => url_for([$resource, 'module' => 'term', 'action' => 'treeView'])]); ?>
 
       <?php // Children?>
       <?php if (isset($children)): ?>
@@ -72,8 +72,8 @@
         <?php foreach ($children as $child): ?>
           <?php echo render_treeview_node(
             $child,
-            array('expand' => $child->hasChildren()),
-            array('browser' => $browser, 'xhr-location' => url_for(array($child, 'module' => 'term', 'action' => 'treeView')))); ?>
+            ['expand' => $child->hasChildren()],
+            ['browser' => $browser, 'xhr-location' => url_for([$child, 'module' => 'term', 'action' => 'treeView'])]); ?>
         <?php endforeach; ?>
 
         <?php // More button?>
@@ -81,8 +81,8 @@
         <?php if ($hasNextSiblings): ?>
           <?php echo render_treeview_node(
             null,
-            array('more' => true),
-            array('browser' => $browser, 'xhr-location' => url_for(array($child, 'module' => 'term', 'action' => 'treeView')))); ?>
+            ['more' => true],
+            ['browser' => $browser, 'xhr-location' => url_for([$child, 'module' => 'term', 'action' => 'treeView'])]); ?>
         <?php endif; ?>
 
       <?php // Or siblings?>
@@ -93,8 +93,8 @@
           <?php foreach ($nextSiblings as $next): ?>
             <?php echo render_treeview_node(
               $next,
-              array('expand' => 1 < $next->rgt - $next->lft),
-              array('browser' => $browser, 'xhr-location' => url_for(array('module' => 'term', 'action' => 'treeView', 'slug' => $next->slug)))); ?>
+              ['expand' => 1 < $next->rgt - $next->lft],
+              ['browser' => $browser, 'xhr-location' => url_for(['module' => 'term', 'action' => 'treeView', 'slug' => $next->slug])]); ?>
           <?php endforeach; ?>
         <?php endif; ?>
 
@@ -103,8 +103,8 @@
         <?php if ($hasNextSiblings): ?>
           <?php echo render_treeview_node(
             null,
-            array('more' => true),
-            array('browser' => $browser, 'xhr-location' => url_for(array('module' => 'term', 'action' => 'treeView', 'slug' => $last->slug)))); ?>
+            ['more' => true],
+            ['browser' => $browser, 'xhr-location' => url_for(['module' => 'term', 'action' => 'treeView', 'slug' => $last->slug])]); ?>
         <?php endif; ?>
 
       <?php endif; ?>
@@ -125,9 +125,9 @@
 
             <li>
               <?php if ($doc['isProtected']): ?>
-                <?php echo link_to(render_title(get_search_i18n($doc, 'name', array('allowEmpty' => false))), array('module' => 'term', 'slug' => $doc['slug']), array('class' => 'readOnly')) ?>
+                <?php echo link_to(render_title(get_search_i18n($doc, 'name', ['allowEmpty' => false])), ['module' => 'term', 'slug' => $doc['slug']], ['class' => 'readOnly']) ?>
               <?php else: ?>
-                <?php echo link_to(render_title(get_search_i18n($doc, 'name', array('allowEmpty' => false))), array('module' => 'term', 'slug' => $doc['slug'])) ?>
+                <?php echo link_to(render_title(get_search_i18n($doc, 'name', ['allowEmpty' => false])), ['module' => 'term', 'slug' => $doc['slug']]) ?>
               <?php endif; ?>
             </li>
 
@@ -140,7 +140,7 @@
           <section>
 
             <div class="result-count">
-              <?php echo __('Results %1% to %2% of %3%', array('%1%' => $pager->getFirstIndice(), '%2%' => $pager->getLastIndice(), '%3%' => $pager->getNbResults())) ?>
+              <?php echo __('Results %1% to %2% of %3%', ['%1%' => $pager->getFirstIndice(), '%2%' => $pager->getLastIndice(), '%3%' => $pager->getNbResults()]) ?>
             </div>
 
             <div>
@@ -149,13 +149,13 @@
 
                   <?php if (1 < $pager->getPage()): ?>
                     <li class="previous">
-                      <?php echo link_to('&laquo; '. __('Previous'), array('listPage' => $pager->getPage() - 1) + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
+                      <?php echo link_to('&laquo; '. __('Previous'), ['listPage' => $pager->getPage() - 1] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
                     </li>
                   <?php endif; ?>
 
                   <?php if ($pager->getLastPage() > $pager->getPage()): ?>
                     <li class="next">
-                      <?php echo link_to(__('Next'). ' &raquo;', array('listPage' => $pager->getPage() + 1) + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
+                      <?php echo link_to(__('Next'). ' &raquo;', ['listPage' => $pager->getPage() + 1] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
                     </li>
                   <?php endif; ?>
 
@@ -173,9 +173,9 @@
 
     <div id="treeview-search">
 
-      <form method="get" action="<?php echo url_for(array($resource->taxonomy, 'module' => 'taxonomy')) ?>" data-not-found="<?php echo __('No results found.') ?>">
+      <form method="get" action="<?php echo url_for([$resource->taxonomy, 'module' => 'taxonomy']) ?>" data-not-found="<?php echo __('No results found.') ?>">
         <div class="search-box">
-          <input type="text" name="query" placeholder="<?php echo __('Search %1%', array('%1%' => strip_markdown($resource->taxonomy))) ?>" />
+          <input type="text" name="query" placeholder="<?php echo __('Search %1%', ['%1%' => strip_markdown($resource->taxonomy)]) ?>" />
           <button type="submit"><i class="fa fa-search"></i></button>
           <button id="treeview-search-settings" href="#"><i class="fa fa-cog"></i></button>
         </div>

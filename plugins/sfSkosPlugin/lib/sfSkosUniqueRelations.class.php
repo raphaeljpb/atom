@@ -23,8 +23,8 @@
  */
 class sfSkosUniqueRelations implements Iterator, Countable
 {
-  private $relations = array();
-  private $visited = array();
+  private $relations = [];
+  private $visited = [];
 
   public function __construct() {
     $this->position = 0;
@@ -41,7 +41,7 @@ class sfSkosUniqueRelations implements Iterator, Countable
     // Mark pair as visited
     $this->visited[$sum] = true;
 
-    $this->relations[] = array($x, $y);
+    $this->relations[] = [$x, $y];
 
     return true;
   }
@@ -103,7 +103,7 @@ class sfSkosUniqueRelations implements Iterator, Countable
    */
   protected function hash($x, $y)
   {
-    $vec = array($x, $y);
+    $vec = [$x, $y];
     sort($vec);
     list($x, $y) = $vec;
 

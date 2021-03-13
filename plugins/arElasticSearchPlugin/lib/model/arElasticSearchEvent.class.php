@@ -21,7 +21,7 @@ class arElasticSearchEvent extends arElasticSearchModelBase
 {
   public static function serialize($event)
   {
-    $serialized = array();
+    $serialized = [];
 
     if (isset($event->start_date))
     {
@@ -43,7 +43,7 @@ class arElasticSearchEvent extends arElasticSearchModelBase
     $serialized['typeId'] = $event->type_id;
     $serialized['sourceCulture'] = $event->source_culture;
 
-    $serialized['i18n'] = self::serializeI18ns($event->id, array('QubitEvent'));
+    $serialized['i18n'] = self::serializeI18ns($event->id, ['QubitEvent']);
 
     return $serialized;
   }

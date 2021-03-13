@@ -58,7 +58,7 @@ class SettingsVisibleElementsAction extends sfAction
   {
     $name = $setting->name;
 
-    $this->form->setDefault($name, (bool) $setting->getValue(array('sourceCulture' => true)));
+    $this->form->setDefault($name, (bool) $setting->getValue(['sourceCulture' => true]));
     $this->form->setValidator($name, new sfValidatorBoolean());
     $this->form->setWidget($name, new sfWidgetFormInputCheckbox());
   }
@@ -94,7 +94,7 @@ class SettingsVisibleElementsAction extends sfAction
     // It may be better to use $this->form->getValue($name)
     $value = isset($this->request[$name]) ? 1 : 0;
 
-    $setting->setValue($value, array('sourceCulture' => true));
+    $setting->setValue($value, ['sourceCulture' => true]);
 
     $setting->save();
   }

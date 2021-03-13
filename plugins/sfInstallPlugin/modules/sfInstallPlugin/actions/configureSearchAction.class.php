@@ -21,7 +21,7 @@ class sfInstallPluginConfigureSearchAction extends sfAction
 {
   public function execute($request)
   {
-    $this->search = array();
+    $this->search = [];
 
     $this->form = new sfForm();
 
@@ -38,7 +38,7 @@ class sfInstallPluginConfigureSearchAction extends sfAction
     $this->form->setWidget('searchPort', new sfWidgetFormInput());
 
     $this->form->setDefault('searchIndex', 'atom');
-    $this->form->setValidator('searchIndex', new sfValidatorString(array('required' => true)));
+    $this->form->setValidator('searchIndex', new sfValidatorString(['required' => true]));
     $this->form->setWidget('searchIndex', new sfWidgetFormInput());
 
     if ($request->isMethod('post'))
@@ -52,7 +52,7 @@ class sfInstallPluginConfigureSearchAction extends sfAction
         {
           $symlinks = sfInstall::addSymlinks();
 
-          $this->redirect(array('module' => 'sfInstallPlugin', 'action' => 'loadData'));
+          $this->redirect(['module' => 'sfInstallPlugin', 'action' => 'loadData']);
         }
       }
     }

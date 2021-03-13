@@ -21,7 +21,7 @@ class ldapUser extends myUser implements Zend_Acl_Role_Interface
   protected $ldapConnection;
   protected $ldapBound;
 
-  public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = [])
   {
     // initialize parent
     parent::initialize($dispatcher, $storage, $options);
@@ -120,7 +120,7 @@ class ldapUser extends myUser implements Zend_Acl_Role_Interface
 
     if (null !== $host && null !== $port)
     {
-      $connection = ldap_connect($host->getValue(array('sourceCulture' => true)), $port->getValue(array('sourceCulture' => true)));
+      $connection = ldap_connect($host->getValue(['sourceCulture' => true]), $port->getValue(['sourceCulture' => true]));
       ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
 
       $this->ldapConnection = $connection;

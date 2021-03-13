@@ -48,7 +48,7 @@ class MenuDeleteAction extends sfAction
           $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
         }
 
-        $this->redirect(array('module' => 'menu', 'action' => 'list'));
+        $this->redirect(['module' => 'menu', 'action' => 'list']);
       }
     }
   }

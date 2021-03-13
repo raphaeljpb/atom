@@ -1,7 +1,7 @@
 <?php if ($pager->getNbResults()): ?>
 
   <?php foreach ($pager->getResults() as $hit): ?>
-    <?php echo get_partial('search/searchResult', array('hit' => $hit, 'culture' => $culture)) ?>
+    <?php echo get_partial('search/searchResult', ['hit' => $hit, 'culture' => $culture]) ?>
   <?php endforeach; ?>
 
 <?php else: ?>

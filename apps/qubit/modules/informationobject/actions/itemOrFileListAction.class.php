@@ -28,15 +28,15 @@
 class InformationObjectItemOrFileListAction extends sfAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'sortBy',
       'includeThumbnails',
       'format'
-    );
+    ];
 
   public function execute($request)
   {
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
+    sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
     $this->resource = $this->getRoute()->resource;
     $this->type = isset($request->type) ? ucfirst($request->type) : $this->context->i18n->__('Item');
 
@@ -59,7 +59,7 @@ class InformationObjectItemOrFileListAction extends sfAction
       if ($this->form->isValid())
       {
         $this->initiateReportGeneration();
-        $this->redirect(array($this->resource, 'module' => 'informationobject'));
+        $this->redirect([$this->resource, 'module' => 'informationobject']);
       }
     }
 
@@ -71,11 +71,11 @@ class InformationObjectItemOrFileListAction extends sfAction
     switch ($name)
     {
       case 'sortBy':
-        $choices = array(
+        $choices = [
           'referenceCode' => $this->context->i18n->__('Reference code'),
           'title' => $this->context->i18n->__('Title'),
           'startDate' => $this->context->i18n->__('Date (based on start date)')
-        );
+        ];
 
         if ($this->getUser()->isAuthenticated())
         {
@@ -83,33 +83,33 @@ class InformationObjectItemOrFileListAction extends sfAction
         }
 
         $this->form->setDefault($name, 'referenceCode');
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormChoice(array(
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormChoice([
           'expanded' => true,
-          'choices' => $choices)));
+          'choices' => $choices]));
 
         break;
 
       case 'includeThumbnails':
-        $choices = array(
-          '1' => $this->context->i18n->__('Yes'));
+        $choices = [
+          '1' => $this->context->i18n->__('Yes')];
 
-        $this->form->setValidator($name, new sfValidatorChoice(array(
+        $this->form->setValidator($name, new sfValidatorChoice([
           'choices' => array_keys($choices),
-          'multiple' => true)));
+          'multiple' => true]));
 
-        $this->form->setWidget($name, new sfWidgetFormChoice(array(
+        $this->form->setWidget($name, new sfWidgetFormChoice([
           'expanded' => true,
           'multiple' => true,
-          'choices' => $choices)));
+          'choices' => $choices]));
 
         break;
 
       case 'format':
-        $choices = array('html' => 'HTML', 'csv' => 'CSV');
+        $choices = ['html' => 'HTML', 'csv' => 'CSV'];
         $this->form->setDefault($name, 'html');
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormChoice(array('expanded' => true, 'choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormChoice(['expanded' => true, 'choices' => $choices]));
     }
   }
 
@@ -127,20 +127,20 @@ class InformationObjectItemOrFileListAction extends sfAction
       $includeThumbnails = false;
     }
 
-    $params = array(
+    $params = [
         'objectId' => $this->resource->id,
         'reportType' => $reportType,
         'reportTypeLabel' => $this->type,
         'sortBy' => $this->form->sortBy->getValue(),
         'reportFormat' => $this->form->format->getValue(),
         'includeThumbnails' => $includeThumbnails
-    );
+    ];
 
     QubitJob::runJob('arGenerateReportJob', $params);
 
-    $reportsUrl = url_for(array($this->resource, 'module' => 'informationobject', 'action' => 'reports'));
+    $reportsUrl = url_for([$this->resource, 'module' => 'informationobject', 'action' => 'reports']);
     $message = $this->context->i18n->__('Report generation has started, please check the <a href="%1">reports</a> page again soon.',
-                                        array('%1' => $reportsUrl));
+                                        ['%1' => $reportsUrl]);
 
     $this->getUser()->setFlash('notice', $message);
   }

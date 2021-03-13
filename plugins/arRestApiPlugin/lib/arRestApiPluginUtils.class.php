@@ -23,7 +23,7 @@ class arRestApiPluginUtils
    * Convert dates into ISO 8601 and UTC, recommended format in REST APIs.
    * Integers are treated as timestamps. Strings will be parsed using strtotime().
    */
-  public static function convertDate($date, array $options = array())
+  public static function convertDate($date, array $options = [])
   {
     if (empty($date))
     {

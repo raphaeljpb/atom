@@ -19,7 +19,7 @@
 
 class QubitGenerator extends sfPropelAdminGenerator
 {
-  public function getColumnEditTag($column, $params = array())
+  public function getColumnEditTag($column, $params = [])
   {
     if ($column->isComponent())
     {

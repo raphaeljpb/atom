@@ -39,12 +39,12 @@ class RightsHolderIndexAction extends sfAction
     if (QubitAcl::check($this->resource, 'update'))
     {
       $validatorSchema = new sfValidatorSchema();
-      $values = array();
+      $values = [];
 
-      $validatorSchema->authorizedFormOfName = new sfValidatorString(array(
-        'required' => true), array(
-        'required' => $this->context->i18n->__('Authorized form of name - This is a mandatory element.')));
-      $values['authorizedFormOfName'] = $this->resource->getAuthorizedFormOfName(array('cultureFallback' => true));
+      $validatorSchema->authorizedFormOfName = new sfValidatorString([
+        'required' => true], [
+        'required' => $this->context->i18n->__('Authorized form of name - This is a mandatory element.')]);
+      $values['authorizedFormOfName'] = $this->resource->getAuthorizedFormOfName(['cultureFallback' => true]);
 
       try
       {

@@ -32,7 +32,7 @@ class sfEacPluginIndexAction extends ActorIndexAction
     require_once sfConfig::get('sf_root_dir').'/vendor/FluentDOM/FluentDOM.php';
 
     return FluentDOM($content)
-      ->namespaces(array('eac' => 'urn:isbn:1-931666-33-4'))
+      ->namespaces(['eac' => 'urn:isbn:1-931666-33-4'])
       ->find('//eac:languageDeclaration[not(*)]')
       ->remove();
   }
@@ -45,6 +45,6 @@ class sfEacPluginIndexAction extends ActorIndexAction
 
     $this->eac = new sfEacPlugin($this->resource);
 
-    $this->dispatcher->connect('response.filter_content', array($this, 'responseFilterContent'));
+    $this->dispatcher->connect('response.filter_content', [$this, 'responseFilterContent']);
   }
 }

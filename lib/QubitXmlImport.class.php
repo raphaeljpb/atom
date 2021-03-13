@@ -31,12 +31,12 @@ class QubitXmlImport
   protected $errors = null;
   protected $rootObject = null;
   protected $parent = null;
-  protected $events = array();
+  protected $events = [];
   protected $eadUrl = null;
   protected $sourceName = null;
-  protected $options = array();
+  protected $options = [];
 
-  public function import($xmlFile, $options = array(), $xmlOrigFileName = null)
+  public function import($xmlFile, $options = [], $xmlOrigFileName = null)
   {
     // Needs to be created before validateOptions() is called.
     $this->i18n = sfContext::getInstance()->i18n;
@@ -74,7 +74,7 @@ class QubitXmlImport
       // warning condition, XML file has errors (perhaps not well-formed or invalid?)
       foreach ($importDOM->libxmlerrors as $libxmlerror)
       {
-        $xmlerrors[] = $this->i18n->__('libxml error %code% on line %line% in input file: %message%', array('%code%' => $libxmlerror->code, '%message%' => $libxmlerror->message, '%line%' => $libxmlerror->line));
+        $xmlerrors[] = $this->i18n->__('libxml error %code% on line %line% in input file: %message%', ['%code%' => $libxmlerror->code, '%message%' => $libxmlerror->message, '%line%' => $libxmlerror->line]);
       }
 
       $this->errors = array_merge((array) $this->errors, $xmlerrors);
@@ -98,7 +98,7 @@ class QubitXmlImport
       // Populate errors to show in the template
       foreach (libxml_get_errors() as $libxmlerror)
       {
-        $this->errors[] = $this->i18n->__('libxml error %code% on line %line% in input file: %message%', array('%code%' => $libxmlerror->code, '%message%' => $libxmlerror->message, '%line%' => $libxmlerror->line));
+        $this->errors[] = $this->i18n->__('libxml error %code% on line %line% in input file: %message%', ['%code%' => $libxmlerror->code, '%message%' => $libxmlerror->message, '%line%' => $libxmlerror->line]);
       }
 
       $parser = new sfModsConvertor();
@@ -109,7 +109,7 @@ class QubitXmlImport
       else
       {
         $errorData = $parser->getErrorData();
-        $this->errors[] = array($this->i18n->__('SAX xml parse error %code% on line %line% in input file: %message%', array('%code%' => $errorData['code'], '%message%' => $errorData['string'], '%line%' => $errorData['line'])));
+        $this->errors[] = [$this->i18n->__('SAX xml parse error %code% on line %line% in input file: %message%', ['%code%' => $errorData['code'], '%message%' => $errorData['string'], '%line%' => $errorData['line']])];
       }
 
       return $this;
@@ -147,7 +147,7 @@ class QubitXmlImport
     }
 
     // FIXME hardcoded until we decide how these will be developed
-    $validSchemas = array(
+    $validSchemas = [
       // document type declarations
       '+//ISBN 1-931666-00-8//DTD ead.dtd Encoded Archival Description (EAD) Version 2002//EN' => 'ead',
       '-//Society of American Archivists//DTD ead.dtd (Encoded Archival Description (EAD) Version 1.0)//EN' => 'ead1',
@@ -168,10 +168,10 @@ class QubitXmlImport
       'ead' => 'ead',
       'add' => 'alouette',
       'http://www.w3.org/2004/02/skos/core#' => 'skos'
-    );
+    ];
 
     // determine what kind of schema we're trying to import
-    $schemaDescriptors = array($importDOM->documentElement->tagName);
+    $schemaDescriptors = [$importDOM->documentElement->tagName];
     if (!empty($importDOM->namespaces))
     {
       krsort($importDOM->namespaces);
@@ -179,7 +179,7 @@ class QubitXmlImport
     }
     if (!empty($importDOM->doctype))
     {
-      $schemaDescriptors = array_merge($schemaDescriptors, array($importDOM->doctype->name, $importDOM->doctype->systemId, $importDOM->doctype->publicId));
+      $schemaDescriptors = array_merge($schemaDescriptors, [$importDOM->doctype->name, $importDOM->doctype->systemId, $importDOM->doctype->publicId]);
     }
 
     foreach ($schemaDescriptors as $descriptor)
@@ -204,7 +204,7 @@ class QubitXmlImport
         // if libxml threw errors, populate them to show in the template
         foreach (libxml_get_errors() as $libxmlerror)
         {
-          $this->errors[] = $this->i18n->__('libxml error %code% on line %line% in input file: %message%', array('%code%' => $libxmlerror->code, '%message%' => $libxmlerror->message, '%line%' => $libxmlerror->line));
+          $this->errors[] = $this->i18n->__('libxml error %code% on line %line% in input file: %message%', ['%code%' => $libxmlerror->code, '%message%' => $libxmlerror->message, '%line%' => $libxmlerror->line]);
         }
 
         break;
@@ -230,7 +230,7 @@ class QubitXmlImport
         // Populate errors to show in the template
         foreach (libxml_get_errors() as $libxmlerror)
         {
-          $this->errors[] = $this->i18n->__('libxml error %code% on line %line% in input file: %message%', array('%code%' => $libxmlerror->code, '%message%' => $libxmlerror->message, '%line%' => $libxmlerror->line));
+          $this->errors[] = $this->i18n->__('libxml error %code% on line %line% in input file: %message%', ['%code%' => $libxmlerror->code, '%message%' => $libxmlerror->message, '%line%' => $libxmlerror->line]);
         }
 
         break;
@@ -240,7 +240,7 @@ class QubitXmlImport
         $criteria = new Criteria();
         $criteria->add(QubitSetting::NAME, 'plugins');
         $setting = QubitSetting::getOne($criteria);
-        if (null === $setting || !in_array('sfSkosPlugin', unserialize($setting->getValue(array('sourceCulture' => true)))))
+        if (null === $setting || !in_array('sfSkosPlugin', unserialize($setting->getValue(['sourceCulture' => true]))))
         {
           throw new sfException($this->i18n->__('The SKOS plugin is not enabled'));
         }
@@ -259,7 +259,7 @@ class QubitXmlImport
     if (!file_exists($importMap))
     {
       // error condition, unknown schema or no import filter
-      $errorMsg = $this->i18n->__('Unknown schema or import format: "%format%"', array('%format%' => $importSchema));
+      $errorMsg = $this->i18n->__('Unknown schema or import format: "%format%"', ['%format%' => $importSchema]);
 
       throw new Exception($errorMsg);
     }
@@ -291,7 +291,7 @@ class QubitXmlImport
         }
         else
         {
-          $this->errors[] = $this->i18n->__('Unable to load import XSL filter: "%importXSL%"', array('%importXSL%' => $importXSL));
+          $this->errors[] = $this->i18n->__('Unable to load import XSL filter: "%importXSL%"', ['%importXSL%' => $importXSL]);
         }
       }
 
@@ -361,7 +361,7 @@ class QubitXmlImport
       // if object is not defined or a valid class, we can't process this mapping
       if (empty($mapping['Object']) || !class_exists('Qubit'.$mapping['Object']))
       {
-        $this->errors[] = $this->i18n->__('Non-existent class defined in import mapping: "%class%"', array('%class%' => 'Qubit'.$mapping['Object']));
+        $this->errors[] = $this->i18n->__('Non-existent class defined in import mapping: "%class%"', ['%class%' => 'Qubit'.$mapping['Object']]);
         continue;
       }
 
@@ -448,10 +448,10 @@ class QubitXmlImport
    *
    * @return node value without linebreaks tags
    */
-  public static function replaceLineBreaks($node, $methodMap = array())
+  public static function replaceLineBreaks($node, $methodMap = [])
   {
     $nodeValue = '';
-    $fieldsArray = array('extent', 'physfacet', 'dimensions');
+    $fieldsArray = ['extent', 'physfacet', 'dimensions'];
 
     foreach ($node->childNodes as $child)
     {
@@ -519,11 +519,11 @@ class QubitXmlImport
             $element = $elementList->item(0);
 
             $parameters = [];
-            if (is_callable(array($class, $method)))
+            if (is_callable([$class, $method]))
             {
               $parameters[] = $tag;
               $parameters[] = $element;
-              $textValue = call_user_func_array(array($class, $method), $parameters);
+              $textValue = call_user_func_array([$class, $method], $parameters);
 
               $newTextNode = $node->ownerDocument->createTextNode($textValue);
               $element->parentNode->replaceChild($newTextNode, $element);
@@ -539,7 +539,7 @@ class QubitXmlImport
    *
    * @return node value normalized
    */
-  public static function normalizeNodeValue($node, $methodMap = array())
+  public static function normalizeNodeValue($node, $methodMap = [])
   {
     $nodeValue = '';
 
@@ -579,11 +579,11 @@ class QubitXmlImport
   {
     $appRoot = sfConfig::get('sf_root_dir');
 
-    $includes = array(
+    $includes = [
       '/plugins/sfSkosPlugin/lib/sfSkosPlugin.class.php',
       '/plugins/sfSkosPlugin/lib/sfSkosPluginException.class.php',
       '/plugins/sfSkosPlugin/lib/sfSkosUniqueRelations.class.php',
-    );
+    ];
 
     foreach ($includes as $include)
     {
@@ -604,7 +604,7 @@ class QubitXmlImport
    * @param array $options optional parameters
    * @return DOMDocument an object representation of the XML document
    */
-  protected function loadXML($xmlFile, $options = array())
+  protected function loadXML($xmlFile, $options = [])
   {
     libxml_use_internal_errors(true);
     libxml_clear_errors();
@@ -639,7 +639,7 @@ class QubitXmlImport
     $doc->loadXML($this->removeDefaultNamespace($rawXML));
 
     $xsi = false;
-    $doc->namespaces = array();
+    $doc->namespaces = [];
     $doc->xpath = new DOMXPath($doc);
 
     // pass along any XML errors that have been generated
@@ -703,7 +703,7 @@ class QubitXmlImport
       $parentId = $parentNodes->item($parentNodes->length - 1)->getAttribute('xml:id');
       unset($parentNodes);
 
-      if (!empty($parentId) && is_callable(array($currentObject, 'setParentId')))
+      if (!empty($parentId) && is_callable([$currentObject, 'setParentId']))
       {
         $currentObject->parentId = $parentId;
       }
@@ -715,7 +715,7 @@ class QubitXmlImport
       {
         $currentObject->parentId = $this->parent->id;
       }
-      elseif (is_callable(array($currentObject, 'setRoot')))
+      elseif (is_callable([$currentObject, 'setRoot']))
       {
         $currentObject->setRoot();
       }
@@ -766,15 +766,15 @@ class QubitXmlImport
     // if multiple selectors apply to it (for example the generic "odd" tag
     // handler should not trigger if a specific "odd" handler was previously
     // triggered for the same node)
-    $processed = array();
+    $processed = [];
 
     // go through methods and populate properties
     foreach ($methods as $name => $methodMap)
     {
       // if method is not defined, we can't process this mapping
-      if (empty($methodMap['Method']) || !is_callable(array($currentObject, $methodMap['Method'])))
+      if (empty($methodMap['Method']) || !is_callable([$currentObject, $methodMap['Method']]))
       {
-        $this->errors[] = $this->i18n->__('Non-existent method defined in import mapping: "%method%"', array('%method%' => $methodMap['Method']));
+        $this->errors[] = $this->i18n->__('Non-existent method defined in import mapping: "%method%"', ['%method%' => $methodMap['Method']]);
         continue;
       }
 
@@ -800,7 +800,7 @@ class QubitXmlImport
             $langCodeConvertor = new fbISO639_Map();
             $isID3 = ($importSchhema == 'dc') ? true : false;
 
-            $value = array();
+            $value = [];
             foreach ($nodeList2 as $item)
             {
               if ($twoCharCode = $langCodeConvertor->getID1($item->nodeValue, $isID3))
@@ -818,7 +818,7 @@ class QubitXmlImport
 
           case 'flocat':
           case 'digital_object':
-            $resources = array();
+            $resources = [];
             foreach ($nodeList2 as $item)
             {
               $resources[] = $item->nodeValue;
@@ -844,10 +844,10 @@ class QubitXmlImport
               $parent = $importDOM->xpath->query('@parent', $item)->item(0)->nodeValue;
               $location = $importDOM->xpath->query('did/physloc[@id="'.$parent.'"]', $domNode)->item(0)->nodeValue;
 
-              $options = array(
+              $options = [
                 'type' => $importDOM->xpath->query('@type', $item)->item(0)->nodeValue,
                 'label' => $importDOM->xpath->query('@label', $item)->item(0)->nodeValue
-              );
+              ];
 
               if ($this->collectionRoot)
               {
@@ -905,11 +905,11 @@ class QubitXmlImport
               // set the parameters for the method call
               if (empty($methodMap['Parameters']))
               {
-                $parameters = array($nodeValue);
+                $parameters = [$nodeValue];
               }
               else
               {
-                $parameters = array();
+                $parameters = [];
                 foreach ((array) $methodMap['Parameters'] as $parameter)
                 {
                   // if the parameter begins with %, evaluate it as an XPath expression relative to the current node
@@ -962,12 +962,12 @@ class QubitXmlImport
               }
 
               // Load taxonomies into variables to avoid use of magic numbers
-              $termData = QubitFlatfileImport::loadTermsFromTaxonomies(array(
+              $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
                 QubitTaxonomy::NOTE_TYPE_ID      => 'noteTypes',
                 QubitTaxonomy::RAD_NOTE_ID       => 'radNoteTypes',
                 QubitTaxonomy::RAD_TITLE_NOTE_ID => 'titleNoteTypes',
                 QubitTaxonomy::DACS_NOTE_ID      => 'dacsSpecializedNotesTypes'
-              ));
+              ]);
 
               $titleVariationNoteTypeId            = array_search('Variations in title', $termData['titleNoteTypes']['en']);
               $titleAttributionsNoteTypeId         = array_search('Attributions and conjectures', $termData['titleNoteTypes']['en']);
@@ -992,7 +992,7 @@ class QubitXmlImport
               $dacsVariantTitleInformationNoteTypeId   = array_search("Variant title information", $termData['dacsSpecializedNotesTypes']['en']);
 
               // Invoke the object and method defined in the schema map
-              $result = call_user_func_array(array( & $currentObject, $methodMap['Method']), $parameters);
+              $result = call_user_func_array([ & $currentObject, $methodMap['Method']], $parameters);
 
               // If an actor/event object was returned, track that
               // in the events cache for later cleanup
@@ -1059,7 +1059,7 @@ class QubitXmlImport
     {
       $key = 'event';
     }
-    elseif (in_array($kind, array('name', 'persname', 'corpname', 'famname')))
+    elseif (in_array($kind, ['name', 'persname', 'corpname', 'famname']))
     {
       $key = 'actor';
     }
@@ -1080,7 +1080,7 @@ class QubitXmlImport
       if (substr($id, 0, 4) == 'atom' && substr($id, -strlen($key)) == $key) {
         // chop off atom_ prefix and the _category suffix
         $id = substr($id, 5, -strlen($key) - 1);
-        array_key_exists($id, $this->events) || $this->events[$id] = array();
+        array_key_exists($id, $this->events) || $this->events[$id] = [];
         $this->events[$id][$key] = $object;
       }
     }
@@ -1193,7 +1193,7 @@ class QubitXmlImport
           WHERE i18n.authorized_form_of_name = ?
           AND object.class_name = 'QubitActor';";
 
-        $matchId = QubitPdo::fetchColumn($query, array($resource->authorizedFormOfName));
+        $matchId = QubitPdo::fetchColumn($query, [$resource->authorizedFormOfName]);
 
         if ($matchId)
         {
@@ -1204,49 +1204,49 @@ class QubitXmlImport
 
       default:
         // Create new record for not supported resources
-        $this->errors[] = $this->i18n->__('Pre-save logic not supported for %class_name%', array('%class_name%' => get_class($resource)));
+        $this->errors[] = $this->i18n->__('Pre-save logic not supported for %class_name%', ['%class_name%' => get_class($resource)]);
         return true;
     }
 
     // No need to check match if we're not updating nor skipping matches
     if (!$this->options['update'] && !$this->options['skip-matched'])
     {
-      $this->errors[] = $this->i18n->__('Creating a new record: %title%', array('%title%' => $title));
+      $this->errors[] = $this->i18n->__('Creating a new record: %title%', ['%title%' => $title]);
       return true;
     }
 
     // Match found, but not updating and skipping matches
     if (isset($matchResource) && !$this->options['update'] && $this->options['skip-matched'])
     {
-      $this->errors[] = $this->i18n->__('Found duplicated record for %title%, skipping', array('%title%' => $title));
+      $this->errors[] = $this->i18n->__('Found duplicated record for %title%, skipping', ['%title%' => $title]);
       return false;
     }
 
     // No match found and updating with skip unmatched
     if (!isset($matchResource) && $this->options['update'] && $this->options['skip-unmatched'])
     {
-      $this->errors[] = $this->i18n->__('No match found for %title%, skipping', array('%title%' => $title));
+      $this->errors[] = $this->i18n->__('No match found for %title%, skipping', ['%title%' => $title]);
       return false;
     }
 
     // Match found and updating, check limit option
     if (isset($matchResource) && $this->options['update'])
     {
-      if (!call_user_func(array($this, $passesLimitFunctionName), $matchResource))
+      if (!call_user_func([$this, $passesLimitFunctionName], $matchResource))
       {
-        $this->errors[] = $this->i18n->__('Match found for %title% outside the limit, skipping', array('%title%' => $title));
+        $this->errors[] = $this->i18n->__('Match found for %title% outside the limit, skipping', ['%title%' => $title]);
         return false;
       }
       else
       {
-        $this->errors[] = $this->i18n->__('Deleting and replacing record: %title%', array('%title%' => $title));
-        call_user_func(array($matchResource, $deleteFunctionName));
+        $this->errors[] = $this->i18n->__('Deleting and replacing record: %title%', ['%title%' => $title]);
+        call_user_func([$matchResource, $deleteFunctionName]);
         return true;
       }
     }
 
     // Match not found when not updating and skipping matches
-    $this->errors[] = $this->i18n->__('Creating a new record: %title%', array('%title%' => $title));
+    $this->errors[] = $this->i18n->__('Creating a new record: %title%', ['%title%' => $title]);
     return true;
   }
 
@@ -1270,7 +1270,7 @@ class QubitXmlImport
     switch ($limit->class_name)
     {
       case 'QubitRepository':
-        $repo = $io->getRepository(array('inherit' => true));
+        $repo = $io->getRepository(['inherit' => true]);
         return isset($repo) && $repo->id == $limit->id;
 
       case 'QubitInformationObject':
@@ -1278,7 +1278,7 @@ class QubitXmlImport
         return isset($collectionRoot) && $collectionRoot->id == $limit->id;
 
       default:
-        throw new sfException($this->i18n->__('Slugs from %class_name% are not accepted as limit option for information objects', array('%class_name%' => $limit->class_name)));
+        throw new sfException($this->i18n->__('Slugs from %class_name% are not accepted as limit option for information objects', ['%class_name%' => $limit->class_name]));
     }
   }
 
@@ -1305,7 +1305,7 @@ class QubitXmlImport
         return isset($repo) && $repo->id == $limit->id;
 
       default:
-        throw new sfException($this->i18n->__('Slugs from %class_name% are not accepted as limit option for actors', array('%class_name%' => $limit->class_name)));
+        throw new sfException($this->i18n->__('Slugs from %class_name% are not accepted as limit option for actors', ['%class_name%' => $limit->class_name]));
     }
   }
 
@@ -1326,7 +1326,7 @@ class QubitXmlImport
               FROM object JOIN slug ON slug.object_id = object.id
               WHERE slug.slug = ?";
 
-    return QubitPdo::fetchOne($query, array($this->options['limit']));
+    return QubitPdo::fetchOne($query, [$this->options['limit']]);
   }
 
   /**
@@ -1352,7 +1352,7 @@ class QubitXmlImport
   {
     if ($this->options['update'] && $this->options['update'] !== 'delete-and-replace')
     {
-      throw new sfException($this->i18n->__('EAD import currently only supports %mode% update mode.', array('%mode%' => '"delete-and-replace"')));
+      throw new sfException($this->i18n->__('EAD import currently only supports %mode% update mode.', ['%mode%' => '"delete-and-replace"']));
     }
   }
 }

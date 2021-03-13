@@ -22,7 +22,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
   public $user = null;
 
   // Module-specific permissions get temporarily stored here for access checks
-  protected $security = array();
+  protected $security = [];
 
   /**
    * Required for Zend_Acl_Role_Interface
@@ -39,7 +39,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
     }
   }
 
-  public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = [])
   {
     // initialize parent
     parent::initialize($dispatcher, $storage, $options);
@@ -86,7 +86,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
 
     foreach ($user->getAclGroups() as $group)
     {
-      $this->addCredential($group->getName(array('culture' => 'en')));
+      $this->addCredential($group->getName(['culture' => 'en']));
     }
 
     $this->setAttribute('user_id', $user->id);
@@ -167,7 +167,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
   {
     if (!$this->isAuthenticated())
     {
-      return array(QubitAclGroup::getById(QubitAclGroup::ANONYMOUS_ID));
+      return [QubitAclGroup::getById(QubitAclGroup::ANONYMOUS_ID)];
     }
     else
     {
@@ -187,7 +187,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
     {
       if (!is_array($checkGroups))
       {
-        $checkGroups = array($checkGroups);
+        $checkGroups = [$checkGroups];
       }
 
       if (in_array(QubitAclGroup::ANONYMOUS_ID, $checkGroups))
@@ -203,7 +203,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
   {
     if ($this->isAuthenticated())
     {
-      $groups = array(QubitAclGroup::getById(QubitAclGroup::AUTHENTICATED_ID));
+      $groups = [QubitAclGroup::getById(QubitAclGroup::AUTHENTICATED_ID)];
 
       if (null !== $this->user->aclUserGroups)
       {

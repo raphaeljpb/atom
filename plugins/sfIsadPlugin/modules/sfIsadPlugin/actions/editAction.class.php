@@ -28,7 +28,7 @@
 class sfIsadPluginEditAction extends InformationObjectEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'accessConditions',
       'accruals',
       'acquisition',
@@ -66,7 +66,7 @@ class sfIsadPluginEditAction extends InformationObjectEditAction
       'descriptionStatus',
       'displayStandard',
       'displayStandardUpdateDescendants',
-      'title');
+      'title'];
 
   protected function earlyExecute()
   {
@@ -82,7 +82,7 @@ class sfIsadPluginEditAction extends InformationObjectEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");
@@ -97,15 +97,15 @@ class sfIsadPluginEditAction extends InformationObjectEditAction
 
     $this->publicationNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
     $this->publicationNotesComponent->resource = $this->resource;
-    $this->publicationNotesComponent->execute($this->request, $options = array('type' => 'isadPublicationNotes'));
+    $this->publicationNotesComponent->execute($this->request, $options = ['type' => 'isadPublicationNotes']);
 
     $this->notesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
     $this->notesComponent->resource = $this->resource;
-    $this->notesComponent->execute($this->request, $options = array('type' => 'isadNotes'));
+    $this->notesComponent->execute($this->request, $options = ['type' => 'isadNotes']);
 
     $this->archivistsNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
     $this->archivistsNotesComponent->resource = $this->resource;
-    $this->archivistsNotesComponent->execute($this->request, $options = array('type' => 'isadArchivistsNotes'));
+    $this->archivistsNotesComponent->execute($this->request, $options = ['type' => 'isadArchivistsNotes']);
   }
 
   protected function addField($name)
@@ -118,15 +118,15 @@ class sfIsadPluginEditAction extends InformationObjectEditAction
         $criteria->add(QubitEvent::ACTOR_ID, null, Criteria::ISNOTNULL);
         $criteria->add(QubitEvent::TYPE_ID, QubitTerm::CREATION_ID);
 
-        $value = $choices = array();
+        $value = $choices = [];
         foreach ($this->events = QubitEvent::get($criteria) as $item)
         {
-          $choices[$value[] = $this->context->routing->generate(null, array($item->actor, 'module' => 'actor'))] = $item->actor;
+          $choices[$value[] = $this->context->routing->generate(null, [$item->actor, 'module' => 'actor'])] = $item->actor;
         }
 
         $this->form->setDefault('creators', $value);
         $this->form->setValidator('creators', new sfValidatorPass());
-        $this->form->setWidget('creators', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+        $this->form->setWidget('creators', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
@@ -156,7 +156,7 @@ class sfIsadPluginEditAction extends InformationObjectEditAction
     switch ($field->getName())
     {
       case 'creators':
-        $value = $filtered = array();
+        $value = $filtered = [];
         foreach ($this->form->getValue('creators') as $item)
         {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));

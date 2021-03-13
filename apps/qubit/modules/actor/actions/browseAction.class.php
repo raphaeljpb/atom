@@ -31,54 +31,54 @@ class ActorBrowseAction extends DefaultBrowseAction
   public const INDEX_TYPE = 'QubitActor';
 
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'repository',
       'hasDigitalObject',
       'entityType',
       'emptyField',
       'relatedType',
       'relatedAuthority'
-    );
-  public static $FILTERTAGS = array(
-      'hasDigitalObject' => array(),
-      'repository'       => array('model' => 'QubitRepository'),
-      'entityType'       => array('model' => 'QubitTerm'),
-      'relatedType'      => array('model' => 'QubitTerm'),
-      'occupation'       => array('model' => 'QubitTerm'),
-      'place'            => array('model' => 'QubitTerm'),
-      'subject'          => array('model' => 'QubitTerm'),
-      'mediatypes'       => array('model' => 'QubitTerm'),
-      'emptyField'       => array()
-    );
-  public static $AGGS = array(
+    ];
+  public static $FILTERTAGS = [
+      'hasDigitalObject' => [],
+      'repository'       => ['model' => 'QubitRepository'],
+      'entityType'       => ['model' => 'QubitTerm'],
+      'relatedType'      => ['model' => 'QubitTerm'],
+      'occupation'       => ['model' => 'QubitTerm'],
+      'place'            => ['model' => 'QubitTerm'],
+      'subject'          => ['model' => 'QubitTerm'],
+      'mediatypes'       => ['model' => 'QubitTerm'],
+      'emptyField'       => []
+    ];
+  public static $AGGS = [
       'languages' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'i18n.languages',
-              'size' => 10),
+              'size' => 10],
       'mediatypes' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'digitalObject.mediaTypeId',
-              'size' => 10),
+              'size' => 10],
       'entityType' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'entityTypeId',
-              'size' => 10),
+              'size' => 10],
       'repository' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'maintainingRepositoryId',
-              'size' => 10),
+              'size' => 10],
       'occupation' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'occupations.id',
-              'size' => 10),
+              'size' => 10],
       'place' =>
-        array('type'   => 'term',
+        ['type'   => 'term',
               'field'  => 'places.id',
-              'size'   => 10),
+              'size'   => 10],
       'subject' =>
-        array('type'   => 'term',
+        ['type'   => 'term',
               'field'  => 'subjects.id',
-              'size'   => 10));
+              'size'   => 10]];
 
   /**
    * Return ElasticSearch field(s) for a given "friendly" field name
@@ -89,7 +89,7 @@ class ActorBrowseAction extends DefaultBrowseAction
    */
   public function getEsFields($field)
   {
-    $esFields = array();
+    $esFields = [];
 
     switch ($field)
     {
@@ -127,7 +127,7 @@ class ActorBrowseAction extends DefaultBrowseAction
         break;
 
       case 'descriptionIdentifier':
-        $esFields = array('descriptionIdentifier');
+        $esFields = ['descriptionIdentifier'];
         break;
     }
 
@@ -139,7 +139,7 @@ class ActorBrowseAction extends DefaultBrowseAction
     // Translate field labels
     $this->i18n = $this->context->i18n;
 
-    $this->fieldOptions = array(
+    $this->fieldOptions = [
       'authorizedFormOfName'             => $this->i18n->__('Authorized form of name'),
       'parallelNames'                    => $this->i18n->__('Parallel form(s) of name'),
       'otherNames'                       => $this->i18n->__('Other form(s) of name'),
@@ -156,7 +156,7 @@ class ActorBrowseAction extends DefaultBrowseAction
       'institutionResponsibleIdentifier' => $this->i18n->__('Institution identifier'),
       'sources'                          => $this->i18n->__('Sources'),
       'maintenanceNotes'                 => $this->i18n->__('Maintenance notes')
-    );
+    ];
 
     // If a global search has been requested, translate that into an advanced search
     if (isset($request->subquery))
@@ -225,7 +225,7 @@ class ActorBrowseAction extends DefaultBrowseAction
         }
         else
         {
-          $choices = array(null => null);
+          $choices = [null => null];
 
           foreach (QubitRepository::get($criteria) as $repository)
           {
@@ -235,8 +235,8 @@ class ActorBrowseAction extends DefaultBrowseAction
           $cache->set($cacheKey, $choices, 3600);
         }
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         // Set field defaults based on filter data values
         if (!empty($this->getFilterTagObject('repository')))
@@ -247,14 +247,14 @@ class ActorBrowseAction extends DefaultBrowseAction
         break;
 
       case 'hasDigitalObject':
-        $choices = array(
+        $choices = [
           ''  => '',
           '1' => $this->context->i18n->__('Yes'),
           '0' => $this->context->i18n->__('No')
-        );
+        ];
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         if (isset($request->hasDigitalObject))
         {
@@ -264,15 +264,15 @@ class ActorBrowseAction extends DefaultBrowseAction
         break;
 
       case 'entityType':
-        $choices = array(null => null);
+        $choices = [null => null];
 
         foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::ACTOR_ENTITY_TYPE_ID) as $item)
         {
           $choices[$item->id] = $item->__toString();
         }
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         if (!empty($this->getFilterTagObject('entityType')))
         {
@@ -282,15 +282,15 @@ class ActorBrowseAction extends DefaultBrowseAction
         break;
 
       case 'emptyField':
-        $choices = array(null => null);
+        $choices = [null => null];
 
         foreach ($this->fieldOptions as $field => $label)
         {
           $choices[$field] = $label;
         }
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         if (!empty($request->emptyField))
         {
@@ -300,7 +300,7 @@ class ActorBrowseAction extends DefaultBrowseAction
         break;
 
       case 'relatedType':
-        $choices = array(null => null);
+        $choices = [null => null];
 
         foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::ACTOR_RELATION_TYPE_ID) as $item)
         {
@@ -311,8 +311,8 @@ class ActorBrowseAction extends DefaultBrowseAction
           }
         }
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         if (!empty($this->getFilterTagObject($name)))
         {
@@ -322,15 +322,15 @@ class ActorBrowseAction extends DefaultBrowseAction
         break;
 
       case 'relatedAuthority':
-        $defaultChoices = array();
+        $defaultChoices = [];
 
         if (!empty($this->relatedAuthority))
         {
-          $defaultChoices = array($request->$name => $this->relatedAuthority->getAuthorizedFormOfName(array('cultureFallback' => true)));
+          $defaultChoices = [$request->$name => $this->relatedAuthority->getAuthorizedFormOfName(['cultureFallback' => true])];
         }
 
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $defaultChoices)));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $defaultChoices]));
 
         break;
     }
@@ -351,7 +351,7 @@ class ActorBrowseAction extends DefaultBrowseAction
 
         foreach (QubitTerm::get($criteria) as $item)
         {
-          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(array('cultureFallback' => true));
+          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
         }
 
         break;
@@ -363,7 +363,7 @@ class ActorBrowseAction extends DefaultBrowseAction
 
         foreach (QubitActor::get($criteria) as $item)
         {
-          $buckets[array_search($item->id, $ids)]['display'] = $item->getAuthorizedFormOfName(array('cultureFallback' => true));
+          $buckets[array_search($item->id, $ids)]['display'] = $item->getAuthorizedFormOfName(['cultureFallback' => true]);
         }
 
         break;
@@ -392,7 +392,7 @@ class ActorBrowseAction extends DefaultBrowseAction
     if (!empty($request->emptyField))
     {
       // Set label for empty field filter tag
-      $labelText = $this->i18n->__('Empty: %1%', array('%1%' => $this->fieldOptions[$request->emptyField]));
+      $labelText = $this->i18n->__('Empty: %1%', ['%1%' => $this->fieldOptions[$request->emptyField]]);
       $this->setFilterTagLabel('emptyField', $labelText);
     }
   }
@@ -404,18 +404,18 @@ class ActorBrowseAction extends DefaultBrowseAction
       // I don't think that this is going to scale, but let's leave it for now
       case 'alphabetic':
         $field = sprintf('i18n.%s.authorizedFormOfName.alphasort', $this->selectedCulture);
-        $this->search->query->setSort(array($field => $request->sortDir));
+        $this->search->query->setSort([$field => $request->sortDir]);
 
         break;
 
       case 'identifier':
-        $this->search->query->setSort(array('descriptionIdentifier.untouched' => $request->sortDir));
+        $this->search->query->setSort(['descriptionIdentifier.untouched' => $request->sortDir]);
 
         break;
 
       case 'lastUpdated':
       default:
-        $this->search->query->setSort(array('updatedAt' => $request->sortDir));
+        $this->search->query->setSort(['updatedAt' => $request->sortDir]);
     }
   }
 
@@ -451,11 +451,11 @@ class ActorBrowseAction extends DefaultBrowseAction
     // Set which values will be relayed as hidden fields via the advanced search form
     $allowed = array_merge(
       array_keys($this::$AGGS),
-      array('sort', 'sortDir')
+      ['sort', 'sortDir']
     );
 
     // These get relayed as form field default values
-    $ignored = array('repository', 'entityType', 'relatedType', 'relatedAuthority');
+    $ignored = ['repository', 'entityType', 'relatedType', 'relatedAuthority'];
 
     $this->setHiddenFields($request, $allowed, $ignored);
   }

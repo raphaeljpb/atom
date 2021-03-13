@@ -29,13 +29,13 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
 
     $this->csvHeader = 'legacyId,name,type,location,culture,descriptionSlugs';
 
-    $this->csvData = array(
+    $this->csvData = [
       // Note: leading and trailing whitespace in first row is intentional
       '"B10101 "," DJ001","Folder "," Aisle 25,Shelf D"," en","test-fonds-1 | test-collection"',
       '"","","Chemise","","fr",""',
       '"", "DJ002", "", "Voûte, étagère 0074", "", ""',
       '"", "DJ003", "Hollinger box", "Aisle 11, Shelf J", "en", ""',
-    );
+    ];
 
     $this->typeIdLookupTableFixture = [
       'en' => [
@@ -101,7 +101,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
 
     $inputs = [
       null,
-      array(),
+      [],
       [
         'insertNew'      => false,
         'onMultiMatch'   => 'first',
@@ -506,7 +506,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
   public function testGetRecordCulture()
   {
     $importer = new PhysicalObjectCsvImporter(
-      $this->context, $this->vdbcon, array('defaultCulture' => 'de'));
+      $this->context, $this->vdbcon, ['defaultCulture' => 'de']);
 
     // Passed direct value
     $this->assertSame('fr', $importer->getRecordCulture('fr'));

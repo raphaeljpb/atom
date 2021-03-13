@@ -1,6 +1,6 @@
 <div id="update-check">
 
-  <?php $notificationMessage = __('A %1%release %2%%3% upgrade is available.', array('%1%' => '<a href="https://www.accesstomemory.org/download/%1%/" target="_blank">', '%2%' => '%1%', '%3%' => '</a>')) ?>
+  <?php $notificationMessage = __('A %1%release %2%%3% upgrade is available.', ['%1%' => '<a href="https://www.accesstomemory.org/download/%1%/" target="_blank">', '%2%' => '%1%', '%3%' => '</a>']) ?>
 
   <?php if ($sf_request->getCookie('has_js')): ?>
 
@@ -21,7 +21,7 @@ EOF
 
   <?php else: ?>
 
-    <div id="update-check"><span><?php echo __($notificationMessage, array('%1%' => $lastVersion)) ?></span></div>
+    <div id="update-check"><span><?php echo __($notificationMessage, ['%1%' => $lastVersion]) ?></span></div>
 
   <?php endif; ?>
 

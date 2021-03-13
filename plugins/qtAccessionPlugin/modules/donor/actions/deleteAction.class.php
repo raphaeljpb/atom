@@ -44,7 +44,7 @@ class DonorDeleteAction extends sfAction
 
         $this->resource->delete();
 
-        $this->redirect(array('module' => 'donor', 'action' => 'browse'));
+        $this->redirect(['module' => 'donor', 'action' => 'browse']);
       }
     }
   }

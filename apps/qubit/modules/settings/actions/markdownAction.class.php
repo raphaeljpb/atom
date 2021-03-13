@@ -20,7 +20,7 @@
 class SettingsMarkdownAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array('enabled');
+  public static $NAMES = ['enabled'];
 
   public function execute($request)
   {
@@ -38,7 +38,7 @@ class SettingsMarkdownAction extends DefaultEditAction
 
         $this->getUser()->setFlash('notice', $this->i18n->__('Markdown settings saved.'));
 
-        $this->redirect(array('module' => 'settings', 'action' => 'markdown'));
+        $this->redirect(['module' => 'settings', 'action' => 'markdown']);
       }
     }
   }
@@ -56,12 +56,12 @@ class SettingsMarkdownAction extends DefaultEditAction
         $default = 1;
         if (null !== $this->settingEnabled = QubitSetting::getByName('markdown_enabled'))
         {
-          $default = $this->settingEnabled->getValue(array('sourceCulture' => true));
+          $default = $this->settingEnabled->getValue(['sourceCulture' => true]);
         }
 
         $this->form->setDefault($name, $default);
-        $this->form->setValidator($name, new sfValidatorInteger(array('required' => false)));
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(array('choices' => array(1 => 'yes', 0 => 'no')), array('class' => 'radio')));
+        $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
+        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
 
         break;
     }
@@ -79,7 +79,7 @@ class SettingsMarkdownAction extends DefaultEditAction
           $this->settingEnabled->sourceCulture = 'en';
         }
 
-        $this->settingEnabled->setValue($field->getValue(), array('culture' => 'en'));
+        $this->settingEnabled->setValue($field->getValue(), ['culture' => 'en']);
         $this->settingEnabled->save();
 
         break;

@@ -75,69 +75,69 @@ class QubitMigrate106 extends QubitMigrate
   protected function addModsResourceTaxonomyTerms()
   {
     // Add MODS resource type taxonomy
-    $this->data['QubitTaxonomy']['QubitTaxonomy_mods_resource_type'] = array(
+    $this->data['QubitTaxonomy']['QubitTaxonomy_mods_resource_type'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::MODS_RESOURCE_TYPE_ID."\n" ?>',
-      'name' => array('en' => 'MODS Resource Type'),
-      'note' => array('en' => 'Fixed values for the typeOfResource element as prescribed by the The Library of Congress\'\' \'\'Metadata Object Description Schema (MODS)\'\'')
-    );
+      'name' => ['en' => 'MODS Resource Type'],
+      'note' => ['en' => 'Fixed values for the typeOfResource element as prescribed by the The Library of Congress\'\' \'\'Metadata Object Description Schema (MODS)\'\'']
+    ];
 
     // Add MODS resource type terms
-    $this->data['QubitTerm']['QubitTerm_mods_resource_type_text'] = array(
+    $this->data['QubitTerm']['QubitTerm_mods_resource_type_text'] = [
       'taxonomy_id' => 'QubitTaxonomy_mods_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'text')
-    );
-    $this->data['QubitTerm']['QubitTerm_mods_resource_type_cartographic'] = array(
+      'name' => ['en' => 'text']
+    ];
+    $this->data['QubitTerm']['QubitTerm_mods_resource_type_cartographic'] = [
       'taxonomy_id' => 'QubitTaxonomy_mods_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'cartographic')
-    );
-    $this->data['QubitTerm']['QubitTerm_mods_resource_type_notated_music'] = array(
+      'name' => ['en' => 'cartographic']
+    ];
+    $this->data['QubitTerm']['QubitTerm_mods_resource_type_notated_music'] = [
       'taxonomy_id' => 'QubitTaxonomy_mods_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'notated music')
-    );
-    $this->data['QubitTerm']['QubitTerm_mods_resource_type_sound_recording'] = array(
+      'name' => ['en' => 'notated music']
+    ];
+    $this->data['QubitTerm']['QubitTerm_mods_resource_type_sound_recording'] = [
       'taxonomy_id' => 'QubitTaxonomy_mods_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'sound recording')
-    );
-    $this->data['QubitTerm']['QubitTerm_mods_resource_type_sound_recording_musical'] = array(
+      'name' => ['en' => 'sound recording']
+    ];
+    $this->data['QubitTerm']['QubitTerm_mods_resource_type_sound_recording_musical'] = [
       'taxonomy_id' => 'QubitTaxonomy_mods_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'sound recording - musical')
-    );
-    $this->data['QubitTerm']['QubitTerm_mods_resource_type_sound_recording_nonmusical'] = array(
+      'name' => ['en' => 'sound recording - musical']
+    ];
+    $this->data['QubitTerm']['QubitTerm_mods_resource_type_sound_recording_nonmusical'] = [
       'taxonomy_id' => 'QubitTaxonomy_mods_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'sound recording - nonmusical')
-    );
-    $this->data['QubitTerm']['QubitTerm_mods_resource_type_stillimage'] = array(
+      'name' => ['en' => 'sound recording - nonmusical']
+    ];
+    $this->data['QubitTerm']['QubitTerm_mods_resource_type_stillimage'] = [
       'taxonomy_id' => 'QubitTaxonomy_mods_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'still image')
-    );
-    $this->data['QubitTerm']['QubitTerm_mods_resource_type_moving_image'] = array(
+      'name' => ['en' => 'still image']
+    ];
+    $this->data['QubitTerm']['QubitTerm_mods_resource_type_moving_image'] = [
       'taxonomy_id' => 'QubitTaxonomy_mods_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'moving image')
-    );
-    $this->data['QubitTerm']['QubitTerm_mods_resource_type_three_dimensional_object'] = array(
+      'name' => ['en' => 'moving image']
+    ];
+    $this->data['QubitTerm']['QubitTerm_mods_resource_type_three_dimensional_object'] = [
       'taxonomy_id' => 'QubitTaxonomy_mods_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'three dimensional object')
-    );
-    $this->data['QubitTerm']['QubitTerm_mods_resource_type_software_multimedia'] = array(
+      'name' => ['en' => 'three dimensional object']
+    ];
+    $this->data['QubitTerm']['QubitTerm_mods_resource_type_software_multimedia'] = [
       'taxonomy_id' => 'QubitTaxonomy_mods_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'software, multimedia')
-    );
-    $this->data['QubitTerm']['QubitTerm_mods_resource_type_mixed_material'] = array(
+      'name' => ['en' => 'software, multimedia']
+    ];
+    $this->data['QubitTerm']['QubitTerm_mods_resource_type_mixed_material'] = [
       'taxonomy_id' => 'QubitTaxonomy_mods_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'mixed material')
-    );
+      'name' => ['en' => 'mixed material']
+    ];
 
     return $this;
   }
@@ -150,74 +150,74 @@ class QubitMigrate106 extends QubitMigrate
   protected function addDcTypeTaxonomyTerms()
   {
     // Add DC type taxonomy
-    $this->data['QubitTaxonomy']['QubitTaxonomy_dc_type'] = array(
+    $this->data['QubitTaxonomy']['QubitTaxonomy_dc_type'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::DC_TYPE_ID."\n" ?>',
-      'name' => array('en' => 'Dublin Core Types'),
-      'note' => array('en' => 'Fixed values for the DC Type element as prescribed by the DCMI Type Vocabulary')
-    );
+      'name' => ['en' => 'Dublin Core Types'],
+      'note' => ['en' => 'Fixed values for the DC Type element as prescribed by the DCMI Type Vocabulary']
+    ];
 
     // Add DC type terms
-    $this->data['QubitTerm']['QubitTerm_dc_type_collection'] = array(
+    $this->data['QubitTerm']['QubitTerm_dc_type_collection'] = [
       'taxonomy_id' => 'QubitTaxonomy_dc_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'collection')
-    );
-    $this->data['QubitTerm']['QubitTerm_dc_type_dataset'] = array(
+      'name' => ['en' => 'collection']
+    ];
+    $this->data['QubitTerm']['QubitTerm_dc_type_dataset'] = [
       'taxonomy_id' => 'QubitTaxonomy_dc_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'dataset')
-    );
-    $this->data['QubitTerm']['QubitTerm_dc_type_event'] = array(
+      'name' => ['en' => 'dataset']
+    ];
+    $this->data['QubitTerm']['QubitTerm_dc_type_event'] = [
       'taxonomy_id' => 'QubitTaxonomy_dc_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'event')
-    );
-    $this->data['QubitTerm']['QubitTerm_dc_type_image'] = array(
+      'name' => ['en' => 'event']
+    ];
+    $this->data['QubitTerm']['QubitTerm_dc_type_image'] = [
       'taxonomy_id' => 'QubitTaxonomy_dc_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'image')
-    );
-    $this->data['QubitTerm']['QubitTerm_dc_type_interactive_resource'] = array(
+      'name' => ['en' => 'image']
+    ];
+    $this->data['QubitTerm']['QubitTerm_dc_type_interactive_resource'] = [
       'taxonomy_id' => 'QubitTaxonomy_dc_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'interactive resource')
-    );
-    $this->data['QubitTerm']['QubitTerm_dc_type_moving_image'] = array(
+      'name' => ['en' => 'interactive resource']
+    ];
+    $this->data['QubitTerm']['QubitTerm_dc_type_moving_image'] = [
       'taxonomy_id' => 'QubitTaxonomy_dc_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'moving image')
-    );
-    $this->data['QubitTerm']['QubitTerm_dc_type_physical_object'] = array(
+      'name' => ['en' => 'moving image']
+    ];
+    $this->data['QubitTerm']['QubitTerm_dc_type_physical_object'] = [
       'taxonomy_id' => 'QubitTaxonomy_dc_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'physical object')
-    );
-    $this->data['QubitTerm']['QubitTerm_dc_type_service'] = array(
+      'name' => ['en' => 'physical object']
+    ];
+    $this->data['QubitTerm']['QubitTerm_dc_type_service'] = [
       'taxonomy_id' => 'QubitTaxonomy_dc_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'service')
-    );
-    $this->data['QubitTerm']['QubitTerm_dc_type_software'] = array(
+      'name' => ['en' => 'service']
+    ];
+    $this->data['QubitTerm']['QubitTerm_dc_type_software'] = [
       'taxonomy_id' => 'QubitTaxonomy_dc_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'software')
-    );
-    $this->data['QubitTerm']['QubitTerm_dc_type_sound'] = array(
+      'name' => ['en' => 'software']
+    ];
+    $this->data['QubitTerm']['QubitTerm_dc_type_sound'] = [
       'taxonomy_id' => 'QubitTaxonomy_dc_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'sound')
-    );
-    $this->data['QubitTerm']['QubitTerm_dc_type_still_image'] = array(
+      'name' => ['en' => 'sound']
+    ];
+    $this->data['QubitTerm']['QubitTerm_dc_type_still_image'] = [
       'taxonomy_id' => 'QubitTaxonomy_dc_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'still image')
-    );
-    $this->data['QubitTerm']['QubitTerm_dc_type_text'] = array(
+      'name' => ['en' => 'still image']
+    ];
+    $this->data['QubitTerm']['QubitTerm_dc_type_text'] = [
       'taxonomy_id' => 'QubitTaxonomy_dc_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'text')
-    );
+      'name' => ['en' => 'text']
+    ];
 
     return $this;
   }
@@ -241,20 +241,20 @@ class QubitMigrate106 extends QubitMigrate
       $this->data['QubitMenu'][$pluginsMenuKey]['label']['en'] = 'Themes';
 
       // Add sub-menus for themes
-      $this->data['QubitMenu']['QubitMenu_mainmenu_admin_plugins_list'] = array(
+      $this->data['QubitMenu']['QubitMenu_mainmenu_admin_plugins_list'] = [
         'parent_id' => $pluginsMenuKey,
         'name' => 'list',
         'path' => 'sfPluginAdminPlugin/index',
         'source_culture' => 'en',
-        'label' => array('en' => 'list')
-      );
-      $this->data['QubitMenu']['QubitMenu_mainmenu_admin_plugins_configure'] = array(
+        'label' => ['en' => 'list']
+      ];
+      $this->data['QubitMenu']['QubitMenu_mainmenu_admin_plugins_configure'] = [
         'parent_id' => $pluginsMenuKey,
         'name' => 'configure',
         'path' => 'sfThemePlugin/index',
         'source_culture' => 'en',
-        'label' => array('en' => 'configure')
-      );
+        'label' => ['en' => 'configure']
+      ];
     }
 
     // Move 'harvester' menu after 'themes' menu
@@ -275,70 +275,70 @@ class QubitMigrate106 extends QubitMigrate
   protected function alterQubitNotes()
   {
     // Add source notes (with Term constant)
-    $this->data['QubitNote']['QubitNote_creationSource'] = array(
+    $this->data['QubitNote']['QubitNote_creationSource'] = [
       'object_id' => '<?php echo QubitTerm::CREATION_ID."\n" ?>',
       'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
       'source_culture' => 'en',
-      'content' => array('en' => 'ISAD(G) 3.2.1, 3.1.3; DC 1.1 core element (Creator); Rules for Archival Description 1.4B')
-    );
-    $this->data['QubitNote']['QubitNote_custodySource'] = array(
+      'content' => ['en' => 'ISAD(G) 3.2.1, 3.1.3; DC 1.1 core element (Creator); Rules for Archival Description 1.4B']
+    ];
+    $this->data['QubitNote']['QubitNote_custodySource'] = [
       'object_id' => '<?php echo QubitTerm::CUSTODY_ID."\n" ?>',
       'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
       'source_culture' => 'en',
-      'content' => array('en' => 'Rules for Archival Description 1.7C')
-    );
-    $this->data['QubitNote']['QubitNote_publicationSource'] = array(
+      'content' => ['en' => 'Rules for Archival Description 1.7C']
+    ];
+    $this->data['QubitNote']['QubitNote_publicationSource'] = [
       'object_id' => '<?php echo QubitTerm::PUBLICATION_ID."\n" ?>',
       'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
       'source_culture' => 'en',
-      'content' => array('en' => 'DC 1.1 element (Publisher); Rules for Archival Description 1.4, 1.8B8')
-    );
-    $this->data['QubitNote']['QubitNote_contributionSource'] = array(
+      'content' => ['en' => 'DC 1.1 element (Publisher); Rules for Archival Description 1.4, 1.8B8']
+    ];
+    $this->data['QubitNote']['QubitNote_contributionSource'] = [
       'object_id' => '<?php echo QubitTerm::CONTRIBUTION_ID."\n" ?>',
       'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
       'source_culture' => 'en',
-      'content' => array('en' => 'DC 1.1 element (Contributor)')
-    );
-    $this->data['QubitNote']['QubitNote_collectionSource'] = array(
+      'content' => ['en' => 'DC 1.1 element (Contributor)']
+    ];
+    $this->data['QubitNote']['QubitNote_collectionSource'] = [
       'object_id' => '<?php echo QubitTerm::COLLECTION_ID."\n" ?>',
       'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
       'source_culture' => 'en',
-      'content' => array('en' => 'Rules for Archival Description 1.4A6, 1.8B8a')
-    );
-    $this->data['QubitNote']['QubitNote_accumulationSource'] = array(
+      'content' => ['en' => 'Rules for Archival Description 1.4A6, 1.8B8a']
+    ];
+    $this->data['QubitNote']['QubitNote_accumulationSource'] = [
       'object_id' => '<?php echo QubitTerm::ACCUMULATION_ID."\n" ?>',
       'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
       'source_culture' => 'en',
-      'content' => array('en' => 'ISAD(G) 3.1.3; Rules for Archival Description 1.4A6, 1.8B8a')
-    );
+      'content' => ['en' => 'ISAD(G) 3.1.3; Rules for Archival Description 1.4A6, 1.8B8a']
+    ];
 
     // Add Source notes with no Term constant
-    if ($distributionTermKey = $this->getRowKey('QubitTerm', 'name', array('en' => 'Distribution')))
+    if ($distributionTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Distribution']))
     {
-      $this->data['QubitNote']['QubitNote_distributionSource'] = array(
+      $this->data['QubitNote']['QubitNote_distributionSource'] = [
         'object_id' => $distributionTermKey,
         'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
         'source_culture' => 'en',
-        'content' => array('en' => 'Rules for Archival Description 1.4, 1.8B8')
-      );
+        'content' => ['en' => 'Rules for Archival Description 1.4, 1.8B8']
+      ];
     }
-    if ($broadcastingTermKey = $this->getRowKey('QubitTerm', 'name', array('en' => 'Broadcasting')))
+    if ($broadcastingTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Broadcasting']))
     {
-      $this->data['QubitNote']['QubitNote_broadcastingSource'] = array(
+      $this->data['QubitNote']['QubitNote_broadcastingSource'] = [
         'object_id' => $broadcastingTermKey,
         'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
         'source_culture' => 'en',
-        'content' => array('en' => 'Rules for Archival Description 8.4F')
-      );
+        'content' => ['en' => 'Rules for Archival Description 8.4F']
+      ];
     }
-    if ($manufacturingTermKey = $this->getRowKey('QubitTerm', 'name', array('en' => 'Manufacturing')))
+    if ($manufacturingTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Manufacturing']))
     {
-      $this->data['QubitNote']['QubitNote_manufacturingSource'] = array(
+      $this->data['QubitNote']['QubitNote_manufacturingSource'] = [
         'object_id' => $manufacturingTermKey,
         'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
         'source_culture' => 'en',
-        'content' => array('en' => 'Rules for Archival Description 1.4G')
-      );
+        'content' => ['en' => 'Rules for Archival Description 1.4G']
+      ];
     }
 
     return $this;
@@ -426,25 +426,25 @@ class QubitMigrate106 extends QubitMigrate
     $creationEventTypeKey = $this->getTermKey('<?php echo QubitTerm::CREATION_ID."\n" ?>');
 
     // Add 'Reproduction' term
-    if (false === $this->getRowKey('QubitTerm', 'name', array('en' => 'Reproduction')))
+    if (false === $this->getRowKey('QubitTerm', 'name', ['en' => 'Reproduction']))
     {
-      $this->data['QubitTerm']['QubitTerm_reproduction'] = array(
+      $this->data['QubitTerm']['QubitTerm_reproduction'] = [
         'taxonomy_id' => 'QubitTaxonomy_10',
         'source_culture' => 'en',
-        'name' => array('en' => 'Reproduction')
-      );
+        'name' => ['en' => 'Reproduction']
+      ];
 
       // Add reproduction source note
-      $this->data['QubitNote']['QubitNote_reproductionSource'] = array(
+      $this->data['QubitNote']['QubitNote_reproductionSource'] = [
         'object_id' => 'QubitTerm_reproduction',
         'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
         'source_culture' => 'en',
-        'content' => array('en' => 'Rules for Archival Description 1.4A5')
-      );
+        'content' => ['en' => 'Rules for Archival Description 1.4A5']
+      ];
     }
 
     // Delete author terms
-    if (($authoringTermKey = $this->getRowKey('QubitTerm', 'name', array('en' => 'Authoring'))) &&
+    if (($authoringTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Authoring'])) &&
       ($eventTypeTaxonomyKey == $this->data['QubitTerm'][$authoringTermKey]['taxonomy_id']))
     {
       unset($this->data['QubitTerm'][$authoringTermKey]);
@@ -463,7 +463,7 @@ class QubitMigrate106 extends QubitMigrate
     }
 
     // Delete editing terms
-    if (($editingTermKey = $this->getRowKey('QubitTerm', 'name', array('en' => 'Editing'))) &&
+    if (($editingTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Editing'])) &&
       $eventTypeTaxonomyKey == $this->data['QubitTerm'][$editingTermKey]['taxonomy_id'])
     {
       unset($this->data['QubitTerm'][$editingTermKey]);
@@ -482,7 +482,7 @@ class QubitMigrate106 extends QubitMigrate
     }
 
     // Delete translation terms
-    if (($translationTermKey = $this->getRowKey('QubitTerm', 'name', array('en' => 'Translation'))) &&
+    if (($translationTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Translation'])) &&
       $eventTypeTaxonomyKey == $this->data['QubitTerm'][$translationTermKey]['taxonomy_id'])
     {
       unset($this->data['QubitTerm'][$translationTermKey]);
@@ -501,7 +501,7 @@ class QubitMigrate106 extends QubitMigrate
     }
 
     // Delete compilation terms
-    if (($compilationTermKey = $this->getRowKey('QubitTerm', 'name', array('en' => 'Compilation'))) &&
+    if (($compilationTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Compilation'])) &&
       $eventTypeTaxonomyKey == $this->data['QubitTerm'][$compilationTermKey]['taxonomy_id'])
     {
       unset($this->data['QubitTerm'][$compilationTermKey]);
@@ -543,7 +543,7 @@ class QubitMigrate106 extends QubitMigrate
    */
   protected function sortQubitTerms()
   {
-    $qubitTermConstantIds = array(
+    $qubitTermConstantIds = [
       //EventType taxonomy
       'CREATION_ID',
       'SUBJECT_ID',
@@ -591,7 +591,7 @@ class QubitMigrate106 extends QubitMigrate
       //Actor name type taxonomy
       'PARALLEL_FORM_OF_NAME_ID',
       'OTHER_FORM_OF_NAME_ID'
-    );
+    ];
 
     // Restack array with Constant values at top
     $qubitTermArray = $this->data['QubitTerm'];
@@ -626,7 +626,7 @@ class QubitMigrate106 extends QubitMigrate
    */
   protected function sortClasses()
   {
-    $ormSortOrder = array(
+    $ormSortOrder = [
       'QubitTaxonomy',
       'QubitTerm',
       'QubitSetting',
@@ -645,7 +645,7 @@ class QubitMigrate106 extends QubitMigrate
       'QubitRelation',
       'QubitProperty',
       'QubitNote'
-    );
+    ];
 
     $originalData = $this->data;
 

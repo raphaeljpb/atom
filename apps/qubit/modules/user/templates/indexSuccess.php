@@ -1,4 +1,4 @@
-<h1><?php echo __('User %1%', array('%1%' => render_title($resource))) ?></h1>
+<h1><?php echo __('User %1%', ['%1%' => render_title($resource)]) ?></h1>
 
 <?php echo get_component('user', 'aclMenu') ?>
 
@@ -16,7 +16,7 @@
 
   <section id="userDetails">
 
-    <?php echo link_to_if(QubitAcl::check($resource, 'update'), '<h2>'.__('User details').'</h2>', array($resource, 'module' => 'user', 'action' => 'edit')) ?>
+    <?php echo link_to_if(QubitAcl::check($resource, 'update'), '<h2>'.__('User details').'</h2>', [$resource, 'module' => 'user', 'action' => 'edit']) ?>
 
     <?php echo render_show(__('User name'), render_value($resource->username.($sf_user->user === $resource ? ' ('.__('you').')' : ''))) ?>
 
@@ -25,7 +25,7 @@
     <?php if (!$sf_user->isAdministrator()): ?>
       <div class="field">
         <h3><?php echo __('Password') ?></h3>
-        <div><?php echo link_to(__('Reset password'), array($resource, 'module' => 'user', 'action' => 'passwordEdit')) ?></div>
+        <div><?php echo link_to(__('Reset password'), [$resource, 'module' => 'user', 'action' => 'passwordEdit']) ?></div>
       </div>
     <?php endif; ?>
 
@@ -92,7 +92,7 @@
         <fieldset class="collapsible collapsed hidden" id="editingHistory">
           <legend>
             <?php echo __('Editing history') ?>
-            <?php echo image_tag('/vendor/jstree/themes/default/throbber.gif', array('id' => 'editingHistoryActivityIndicator', 'class' => 'hidden', 'alt' => __('Loading ...'))) ?>
+            <?php echo image_tag('/vendor/jstree/themes/default/throbber.gif', ['id' => 'editingHistoryActivityIndicator', 'class' => 'hidden', 'alt' => __('Loading ...')]) ?>
           </legend>
 
           <table class="table table-bordered table-striped sticky-enabled">
@@ -125,4 +125,4 @@
   </section>
 </section>
 
-<?php echo get_partial('showActions', array('resource' => $resource)) ?>
+<?php echo get_partial('showActions', ['resource' => $resource]) ?>

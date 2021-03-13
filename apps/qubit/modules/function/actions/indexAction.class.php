@@ -23,6 +23,6 @@ class FunctionIndexAction extends sfAction
   {
     $this->resource = $this->getRoute()->resource;
 
-    $this->dispatcher->notify(new sfEvent($this, 'access_log.view', array('object' => $this->resource)));
+    $this->dispatcher->notify(new sfEvent($this, 'access_log.view', ['object' => $this->resource]));
   }
 }

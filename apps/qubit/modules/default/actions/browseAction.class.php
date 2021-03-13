@@ -48,13 +48,13 @@ class DefaultBrowseAction extends sfAction
 
     // Default sort direction
     $sortDir = 'asc';
-    if (in_array($request->sort, array('lastUpdated', 'relevance', 'endDate')))
+    if (in_array($request->sort, ['lastUpdated', 'relevance', 'endDate']))
     {
       $sortDir = 'desc';
     }
 
     // Set default sort direction in request if not present or not valid
-    if (!isset($request->sortDir) || !in_array($request->sortDir, array('asc', 'desc')))
+    if (!isset($request->sortDir) || !in_array($request->sortDir, ['asc', 'desc']))
     {
       $request->sortDir = $sortDir;
     }
@@ -81,7 +81,7 @@ class DefaultBrowseAction extends sfAction
         "We've redirected you to the first page of results." .
         " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
         " To view the last records in the current result set, try changing the sort direction.",
-        array('%1%' => $maxResultWindow)
+        ['%1%' => $maxResultWindow]
       );
       $this->getUser()->setFlash('notice', $message);
 
@@ -115,7 +115,7 @@ class DefaultBrowseAction extends sfAction
   }
   protected function populateAggs($resultSet)
   {
-    $this->aggs = array();
+    $this->aggs = [];
 
     // Stop if no aggregations available
     if (!$resultSet->hasAggregations())
@@ -149,7 +149,7 @@ class DefaultBrowseAction extends sfAction
         {
           // Find an remove language clause from the query
           $queryParams = $this->search->query->toArray();
-          $mustClauses = array();
+          $mustClauses = [];
 
           foreach ($queryParams['query']['bool']['must'] as $mustClause)
           {
@@ -177,16 +177,16 @@ class DefaultBrowseAction extends sfAction
 
         $i18n = sfContext::getInstance()->i18n;
 
-        $uniqueTerm = array(
+        $uniqueTerm = [
           'key' => 'unique_language',
           'display' => $i18n->__('Unique records'),
-          'doc_count' => $count);
+          'doc_count' => $count];
 
         // Add unique term at the biginning of the array
         // only when there are other terms
         if (!empty($this->aggs[$name]))
         {
-          $this->aggs[$name] = array_merge(array($uniqueTerm), $this->aggs[$name]);
+          $this->aggs[$name] = array_merge([$uniqueTerm], $this->aggs[$name]);
         }
       }
     }
@@ -236,7 +236,7 @@ class DefaultBrowseAction extends sfAction
   {
     // Store current params to add them as hidden inputs
     // in the form, to keep GET and POST params in sync
-    $this->hiddenFields = array();
+    $this->hiddenFields = [];
 
     // Keep control of what is added to avoid
     // Cross-Site Scripting vulnerability.

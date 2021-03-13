@@ -26,7 +26,7 @@
  */
 class deleteUserTask extends arBaseTask
 {
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -70,17 +70,17 @@ class deleteUserTask extends arBaseTask
   }
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('username', sfCommandArgument::REQUIRED, 'The username to delete.')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('force', 'f', sfCommandOption::PARAMETER_NONE, 'Delete without confirmation', null),
       new sfCommandOption('update-notes', 'n', sfCommandOption::PARAMETER_NONE, 'Dissassociate any notes the user has created', null)
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'delete-user';

@@ -25,7 +25,7 @@ class QubitCsvTransform extends QubitFlatfileImport
 
   private $link;
 
-  public function __construct($options = array())
+  public function __construct($options = [])
   {
     if (
       !isset($options['skipOptionsAndEnvironmentCheck'])
@@ -69,7 +69,7 @@ class QubitCsvTransform extends QubitFlatfileImport
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
     $criteria->addAscendingOrderByColumn('lft');
 
-    $this->levelsOfDescription = array();
+    $this->levelsOfDescription = [];
     foreach (QubitTerm::get($criteria) as $term)
     {
       $this->levelsOfDescription[] = strtolower($term->name);
@@ -196,7 +196,7 @@ class QubitCsvTransform extends QubitFlatfileImport
       throw new sfException('You must specifiy the output-file option.');
     }
 
-    foreach(array('MYSQL_HOST', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DB') as $var)
+    foreach(['MYSQL_HOST', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DB'] as $var)
     {
       if (getEnv($var) === false)
       {

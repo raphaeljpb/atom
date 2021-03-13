@@ -1,6 +1,6 @@
 <div id="preview-message">
   <?php echo __('Print preview') ?>
-  <?php echo link_to('Close', array($resource, 'module' => 'physicalobject')) ?>
+  <?php echo link_to('Close', [$resource, 'module' => 'physicalobject']) ?>
 </div>
 
 <h1 class="do-print"><?php echo sfConfig::get('app_ui_label_physicalobject') ?></h1>
@@ -35,7 +35,7 @@
           <ul>
             <?php foreach ($item->getDates() as $date): ?>
               <li>
-                <?php echo render_value_inline(Qubit::renderDateStartEnd($date->getDate(array('cultureFallback' => true)), $date->startDate, $date->endDate)) ?> (<?php echo $date->getType(array('cultureFallback' => true)) ?>)
+                <?php echo render_value_inline(Qubit::renderDateStartEnd($date->getDate(['cultureFallback' => true]), $date->startDate, $date->endDate)) ?> (<?php echo $date->getType(['cultureFallback' => true]) ?>)
                 <?php if (isset($date->actor)): ?>
                   <?php echo render_title($date->actor) ?>
                 <?php endif; ?>
@@ -47,7 +47,7 @@
             <?php echo render_title($item->getCollectionRoot()) ?>
           <?php endif; ?>
         </td><td>
-        <?php if (null != ($accessConditions = $item->getAccessConditions(array('cultureFallback' => true)))): ?>
+        <?php if (null != ($accessConditions = $item->getAccessConditions(['cultureFallback' => true]))): ?>
           <?php echo render_value_inline($accessConditions) ?>
         <?php else: ?>
           <?php echo __('None') ?>
@@ -59,5 +59,5 @@
 </table>
 
 <div id="result-count">
-  <?php echo __('Showing %1% results', array('%1%' => $foundcount)) ?>
+  <?php echo __('Showing %1% results', ['%1%' => $foundcount]) ?>
 </div>

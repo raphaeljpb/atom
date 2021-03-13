@@ -39,7 +39,7 @@ class RightDeleteAction extends sfAction
       {
         $this->right->delete();
 
-        return $this->redirect(array($this->relatedObject));
+        return $this->redirect([$this->relatedObject]);
       }
     }
   }

@@ -19,16 +19,16 @@
 
 class AclGroupEditRepositoryAclAction extends AclGroupEditDefaultAclAction
 {
-  public static $NAMES = array(
+  public static $NAMES = [
     'repository'
-  );
+  ];
 
   public function execute($request)
   {
     parent::execute($request);
 
     // Always include root repository permissions
-    $this->repositories = array(QubitRepository::ROOT_ID => null);
+    $this->repositories = [QubitRepository::ROOT_ID => null];
 
     // Get repository permissions for this group
     $criteria = new Criteria();
@@ -56,7 +56,7 @@ class AclGroupEditRepositoryAclAction extends AclGroupEditDefaultAclAction
       if ($this->form->isValid())
       {
         $this->processForm();
-        $this->redirect(array($this->resource, 'module' => 'aclGroup', 'action' => 'indexRepositoryAcl'));
+        $this->redirect([$this->resource, 'module' => 'aclGroup', 'action' => 'indexRepositoryAcl']);
       }
     }
   }

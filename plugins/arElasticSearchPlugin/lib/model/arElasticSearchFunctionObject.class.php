@@ -26,7 +26,7 @@ class arElasticSearchFunctionObject extends arElasticSearchModelBase
     $sql .= ' JOIN '.QubitObject::TABLE_NAME.' object ON func.id = object.id';
     $sql .= ' WHERE object.class_name = ?';
 
-    $actors = QubitPdo::fetchAll($sql, array('QubitFunctionObject'));
+    $actors = QubitPdo::fetchAll($sql, ['QubitFunctionObject']);
 
     $this->count = count($actors);
 
@@ -35,7 +35,7 @@ class arElasticSearchFunctionObject extends arElasticSearchModelBase
 
   public function populate()
   {
-    $errors = array();
+    $errors = [];
 
     // Loop through results, and add to search index
     foreach ($this->load() as $key => $item)

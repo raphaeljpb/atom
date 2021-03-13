@@ -8,13 +8,13 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array($right, 'module' => 'right', 'action' => 'delete')), array('method' => 'delete')) ?>
+  <?php echo $form->renderFormTag(url_for([$right, 'module' => 'right', 'action' => 'delete']), ['method' => 'delete']) ?>
 
     <?php echo $form->renderHiddenFields() ?>
     
     <section class="actions">
       <ul>
-        <li><?php echo link_to(__('Cancel'), $relatedObject, array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), $relatedObject, ['class' => 'c-btn']) ?></li>
         <li><input class="c-btn c-btn-delete" type="submit" value="<?php echo __('Delete') ?>"/></li>
       </ul>
     </section>

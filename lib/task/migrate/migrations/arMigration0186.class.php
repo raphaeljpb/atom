@@ -38,12 +38,12 @@ class arMigration0186
    */
   public function up($configuration)
   {
-    $menuPaths = array(
+    $menuPaths = [
       'user/clipboardClear' => '#',
       'user/clipboardLoad' => 'clipboard/load',
       'user/clipboardSave' => 'clipboard/save',
       'user/clipboard' => 'clipboard/view',
-    );
+    ];
 
     foreach ($menuPaths as $oldPath => $newPath)
     {

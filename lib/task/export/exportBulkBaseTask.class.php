@@ -38,7 +38,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
   {
     $appRoot = sfConfig::get('sf_root_dir');
 
-    $includes = array(
+    $includes = [
       '/plugins/sfEadPlugin/lib/sfEadPlugin.class.php',
       '/plugins/sfModsPlugin/lib/sfModsPlugin.class.php',
       '/plugins/sfDcPlugin/lib/sfDcPlugin.class.php',
@@ -49,7 +49,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
       '/vendor/FreeBeerIso639Map.php',
       '/vendor/symfony/lib/helper/EscapingHelper.php',
       '/lib/helper/QubitHelper.php'
-    );
+    ];
 
     foreach ($includes as $include)
     {
@@ -57,7 +57,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
     }
   }
 
-  public static function captureResourceExportTemplateOutput($resource, $format, $options = array())
+  public static function captureResourceExportTemplateOutput($resource, $format, $options = [])
   {
     $pluginName = 'sf'. ucfirst($format) .'Plugin';
     $template = sprintf('plugins/%s/modules/%s/templates/indexSuccess.xml.php', $pluginName, $pluginName);
@@ -65,7 +65,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
     switch($format)
     {
       case 'ead':
-        $eadLevels = array('class', 'collection', 'file', 'fonds', 'item', 'otherlevel', 'recordgrp', 'series', 'subfonds', 'subgrp', 'subseries');
+        $eadLevels = ['class', 'collection', 'file', 'fonds', 'item', 'otherlevel', 'recordgrp', 'series', 'subfonds', 'subgrp', 'subseries'];
         $ead = new sfEadPlugin($resource);
         break;
 
@@ -130,7 +130,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
     {
       // Fetch description for specific slug and its children
       $query = 'SELECT i.lft, i.rgt, i.id FROM information_object i INNER JOIN slug s ON i.id=s.object_id WHERE s.slug = ?';
-      $slug = QubitPdo::fetchOne($query, array($options['single-slug']));
+      $slug = QubitPdo::fetchOne($query, [$options['single-slug']]);
 
       if (false === $slug)
       {
@@ -175,28 +175,28 @@ abstract class exportBulkBaseTask extends sfBaseTask
 
   protected function addCoreArgumentsAndOptions()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('path', sfCommandArgument::REQUIRED, 'The destination directory for export file(s).')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('items-until-update', null, sfCommandOption::PARAMETER_OPTIONAL, 'Indicate progress every n items.')
-    ));
+    ]);
   }
 
   protected function addCommonArgumentsAndOptions()
   {
     $this->addCoreArgumentsAndOptions();
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('criteria', null, sfCommandOption::PARAMETER_OPTIONAL, 'Export criteria'),
       new sfCommandOption('current-level-only', null, sfCommandOption::PARAMETER_NONE, 'Do not export child descriptions of exported items'),
       new sfCommandOption('single-slug', null, sfCommandOption::PARAMETER_OPTIONAL, 'Export a single fonds or collection based on slug'),
       new sfCommandOption('public', null, sfCommandOption::PARAMETER_NONE, 'Do not export draft physical locations or child descriptions')
-    ));
+    ]);
   }
 
   protected function checkPathIsWritable($path)

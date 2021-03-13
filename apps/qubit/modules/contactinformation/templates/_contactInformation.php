@@ -17,7 +17,7 @@
   <div class="field">
     <h3><?php echo __('Type') ?></h3>
     <div class="type">
-      <?php echo render_value_inline($contactInformation->getContactType(array('cultureFallback' => true))) ?>
+      <?php echo render_value_inline($contactInformation->getContactType(['cultureFallback' => true])) ?>
     </div>
   </div>
 
@@ -37,14 +37,14 @@
       <div class="field">
         <h3><?php echo __('Locality') ?></h3>
         <div class="locality">
-          <?php echo render_value_inline($contactInformation->getCity(array('cultureFallback' => true))) ?>
+          <?php echo render_value_inline($contactInformation->getCity(['cultureFallback' => true])) ?>
         </div>
       </div>
 
       <div class="field">
         <h3><?php echo __('Region') ?></h3>
         <div class="region">
-          <?php echo render_value_inline($contactInformation->getRegion(array('cultureFallback' => true))) ?>
+          <?php echo render_value_inline($contactInformation->getRegion(['cultureFallback' => true])) ?>
         </div>
       </div>
 
@@ -97,7 +97,7 @@
   <div class="field">
     <h3><?php echo __('Note') ?></h3>
     <div class="note">
-      <?php echo render_value_inline($contactInformation->getNote(array('cultureFallback' => true))) ?>
+      <?php echo render_value_inline($contactInformation->getNote(['cultureFallback' => true])) ?>
     </div>
   </div>
 

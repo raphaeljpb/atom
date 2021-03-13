@@ -1,6 +1,6 @@
 <?php if ($pager->getNbResults()): ?>
   <?php foreach ($pager->getResults() as $hit): ?>
-    <?php echo get_partial('search/searchResult', array('hit' => $hit, 'culture' => $selectedCulture)) ?>
+    <?php echo get_partial('search/searchResult', ['hit' => $hit, 'culture' => $selectedCulture]) ?>
   <?php endforeach; ?>
 <?php else: ?>
   <section id="no-search-results">

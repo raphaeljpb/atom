@@ -24,7 +24,7 @@ class arElasticSearchAip extends arElasticSearchModelBase
     $sql  = 'SELECT id';
     $sql .= ' FROM '.QubitAip::TABLE_NAME;
 
-    $aips = QubitPdo::fetchAll($sql, array('QubitAip'));
+    $aips = QubitPdo::fetchAll($sql, ['QubitAip']);
 
     $this->count = count($aips);
 
@@ -33,7 +33,7 @@ class arElasticSearchAip extends arElasticSearchModelBase
 
   public function populate()
   {
-    $errors = array();
+    $errors = [];
 
     // Loop through results, and add to search index
     foreach ($this->load() as $key => $item)

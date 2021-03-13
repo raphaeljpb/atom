@@ -20,9 +20,9 @@
 class ObjectImportSelectAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'repos',
-      'collection');
+      'collection'];
 
   public function execute($request)
   {
@@ -62,7 +62,7 @@ class ObjectImportSelectAction extends DefaultEditAction
           break;
 
         default:
-          $this->redirect(array('module' => 'object', 'action' => 'importSelect', 'type' => 'xml'));
+          $this->redirect(['module' => 'object', 'action' => 'importSelect', 'type' => 'xml']);
           break;
       }
     }
@@ -76,7 +76,7 @@ class ObjectImportSelectAction extends DefaultEditAction
     {
       $this->resource = $this->getRoute()->resource;
 
-      $this->form->setDefault('parent', $this->context->routing->generate(null, array($this->resource)));
+      $this->form->setDefault('parent', $this->context->routing->generate(null, [$this->resource]));
       $this->form->setValidator('parent', new sfValidatorString());
       $this->form->setWidget('parent', new sfWidgetFormInputHidden());
     }
@@ -103,7 +103,7 @@ class ObjectImportSelectAction extends DefaultEditAction
         }
         else
         {
-          $choices = array();
+          $choices = [];
           $choices[null] = null;
           foreach (QubitRepository::get($criteria) as $repository)
           {
@@ -111,25 +111,25 @@ class ObjectImportSelectAction extends DefaultEditAction
           }
           $cache->set($cacheKey, $choices, 3600);
         }
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'collection':
         $this->form->setValidator($name, new sfValidatorString());
-        $choices = array();
+        $choices = [];
 
         if (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection'])
           && null !== $collection = QubitInformationObject::getById($this->getParameters['collection']))
         {
-          sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
+          sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
           $collectionUrl = url_for($collection);
           $this->form->setDefault($name, $collectionUrl);
 
           $choices[$collectionUrl] = $collection;
         }
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
@@ -176,11 +176,11 @@ class ObjectImportSelectAction extends DefaultEditAction
     // We will use this later to redirect users back to the importSelect page
     if (isset($this->getRoute()->resource))
     {
-      $importSelectRoute = array($this->getRoute()->resource, 'module' => 'object', 'action' => 'importSelect', 'type' => $importType);
+      $importSelectRoute = [$this->getRoute()->resource, 'module' => 'object', 'action' => 'importSelect', 'type' => $importType];
     }
     else
     {
-      $importSelectRoute = array('module' => 'object', 'action' => 'importSelect', 'type' => $importType);
+      $importSelectRoute = ['module' => 'object', 'action' => 'importSelect', 'type' => $importType];
     }
 
     // Move uploaded file to new location to pass off to background arFileImportJob.
@@ -208,7 +208,7 @@ class ObjectImportSelectAction extends DefaultEditAction
       $this->redirect($importSelectRoute);
     }
 
-    $options = array('index' => ($request->getParameter('noIndex') == 'on') ? false : true,
+    $options = ['index' => ($request->getParameter('noIndex') == 'on') ? false : true,
                      'doCsvTransform' => ($request->getParameter('doCsvTransform') == 'on') ? true : false,
                      'skip-unmatched' => ($request->getParameter('skipUnmatched') == 'on') ? true : false,
                      'skip-matched' => ($request->getParameter('skipMatched') == 'on') ? true : false,
@@ -221,17 +221,17 @@ class ObjectImportSelectAction extends DefaultEditAction
                      'update' => $request->getParameter('updateType'),
                      'repositorySlug' => $this->repositorySlug,
                      'collectionSlug' => $this->collectionSlug,
-                     'file' => $file);
+                     'file' => $file];
 
     try
     {
       $job = QubitJob::runJob('arFileImportJob', $options);
 
-      $this->getUser()->setFlash('notice', $this->context->i18n->__('Import file initiated. Check %1%job %2%%3% to view the status of the import.', array(
-        '%1%' => sprintf('<a href="%s">', $this->context->routing->generate(null, array('module' => 'jobs', 'action' => 'report', 'id' => $job->id))),
+      $this->getUser()->setFlash('notice', $this->context->i18n->__('Import file initiated. Check %1%job %2%%3% to view the status of the import.', [
+        '%1%' => sprintf('<a href="%s">', $this->context->routing->generate(null, ['module' => 'jobs', 'action' => 'report', 'id' => $job->id])),
         '%2%' => $job->id,
         '%3%' => '</a>'
-      )), array('persist' => false));
+      ]), ['persist' => false]);
     }
     catch (sfException $e)
     {
@@ -242,14 +242,14 @@ class ObjectImportSelectAction extends DefaultEditAction
 
   private function checkForValidCsvFile($request, $fileName)
   {
-    $importOjectClassNames = array(
+    $importOjectClassNames = [
       'informationObject'           => 'QubitInformationObject',
       'accession'                   => 'QubitAccession',
       'authorityRecord'             => 'QubitActor',
       'event'                       => 'QubitEvent',
       'repository'                  => 'QubitRepository',
       'authorityRecordRelationship' => 'QubitRelation-actor',
-    );
+    ];
 
     $className = $importOjectClassNames[$request->getParameter('objectType')];
 

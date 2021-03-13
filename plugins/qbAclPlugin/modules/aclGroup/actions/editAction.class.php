@@ -20,10 +20,10 @@
 class AclGroupEditAction extends sfAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'name',
       'description',
-      'translate');
+      'translate'];
 
   public function execute($request)
   {
@@ -54,7 +54,7 @@ class AclGroupEditAction extends sfAction
       if ($this->form->isValid())
       {
         $this->processForm();
-        $this->redirect(array($this->group, 'module' => 'aclGroup'));
+        $this->redirect([$this->group, 'module' => 'aclGroup']);
       }
     }
   }
@@ -78,7 +78,7 @@ class AclGroupEditAction extends sfAction
         break;
 
       case 'translate':
-        $choices = array(1 => 'Yes', 0 => 'No');
+        $choices = [1 => 'Yes', 0 => 'No'];
 
         // Check for grant permission
         $criteria = new Criteria();
@@ -94,8 +94,8 @@ class AclGroupEditAction extends sfAction
 
         // Search for translate permissions
         $this->form->setDefault($name, $default);
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormChoice(array('expanded' => true, 'choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormChoice(['expanded' => true, 'choices' => $choices]));
 
         break;
     }

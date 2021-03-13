@@ -32,7 +32,7 @@ class DefaultEditAction extends sfAction
     // Call early execute logic, if defined by a child class
     if (method_exists($this, 'earlyExecute'))
     {
-      call_user_func(array($this, 'earlyExecute'));
+      call_user_func([$this, 'earlyExecute']);
     }
 
     // Mainly used in autocomplete.js, this tells us that the user wants to
@@ -54,40 +54,40 @@ class DefaultEditAction extends sfAction
     switch ($name)
     {
       case 'descriptionDetail':
-        $this->form->setDefault('descriptionDetail', $this->context->routing->generate(null, array($this->resource->descriptionDetail, 'module' => 'term')));
+        $this->form->setDefault('descriptionDetail', $this->context->routing->generate(null, [$this->resource->descriptionDetail, 'module' => 'term']));
         $this->form->setValidator('descriptionDetail', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('descriptionDetail', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('descriptionDetail', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'descriptionStatus':
-        $this->form->setDefault('descriptionStatus', $this->context->routing->generate(null, array($this->resource->descriptionStatus, 'module' => 'term')));
+        $this->form->setDefault('descriptionStatus', $this->context->routing->generate(null, [$this->resource->descriptionStatus, 'module' => 'term']));
         $this->form->setValidator('descriptionStatus', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DESCRIPTION_STATUS_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('descriptionStatus', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('descriptionStatus', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'language':
       case 'languageOfDescription':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorI18nChoiceLanguage(array('multiple' => true)));
-        $this->form->setWidget($name, new sfWidgetFormI18nChoiceLanguage(array('culture' => $this->context->user->getCulture(), 'multiple' => true)));
+        $this->form->setValidator($name, new sfValidatorI18nChoiceLanguage(['multiple' => true]));
+        $this->form->setWidget($name, new sfWidgetFormI18nChoiceLanguage(['culture' => $this->context->user->getCulture(), 'multiple' => true]));
 
         break;
 
@@ -114,7 +114,7 @@ class DefaultEditAction extends sfAction
             break;
         }
 
-        $value = $defaults = array();
+        $value = $defaults = [];
         foreach ($this[$name] = QubitOtherName::get($criteria) as $item)
         {
           $defaults[$value[] = $item->id] = $item;
@@ -122,7 +122,7 @@ class DefaultEditAction extends sfAction
 
         $this->form->setDefault($name, $value);
         $this->form->setValidator($name, new sfValidatorPass());
-        $this->form->setWidget($name, new QubitWidgetFormInputMany(array('defaults' => $defaults)));
+        $this->form->setWidget($name, new QubitWidgetFormInputMany(['defaults' => $defaults]));
 
         break;
 
@@ -132,8 +132,8 @@ class DefaultEditAction extends sfAction
 
         $c = sfCultureInfo::getInstance($this->context->user->getCulture());
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($c->getScripts()), 'multiple' => true)));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $c->getScripts(), 'multiple' => true)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($c->getScripts()), 'multiple' => true]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $c->getScripts(), 'multiple' => true]));
 
         break;
     }

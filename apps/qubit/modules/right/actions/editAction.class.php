@@ -20,7 +20,7 @@
 class RightEditAction extends sfAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'basis',
       'endDate',
       'startDate',
@@ -38,7 +38,7 @@ class RightEditAction extends sfAction
       'statuteJurisdiction',
       'statuteCitation',
       'statuteDeterminationDate',
-      'statuteNote');
+      'statuteNote'];
 
 
   public function execute($request)
@@ -103,43 +103,43 @@ class RightEditAction extends sfAction
         {
           if (QubitTerm::RIGHT_BASIS_POLICY_ID == $item->id)
           {
-            $this->form->setDefault('basis', $this->context->routing->generate(null, array($item, 'module' => 'term')));
+            $this->form->setDefault('basis', $this->context->routing->generate(null, [$item, 'module' => 'term']));
           }
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
         }
         $this->form->setValidator('basis', new sfValidatorString());
-        $this->form->setWidget('basis', new sfWidgetFormSelect(array('choices' => $choices)));
-        $this->form->setDefault('basis', $this->context->routing->generate(null, array($this->right->basis, 'module' => 'term')));
+        $this->form->setWidget('basis', new sfWidgetFormSelect(['choices' => $choices]));
+        $this->form->setDefault('basis', $this->context->routing->generate(null, [$this->right->basis, 'module' => 'term']));
 
         break;
 
       case 'copyrightStatus':
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::COPYRIGHT_STATUS_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
         }
 
         $this->form->setValidator('copyrightStatus', new sfValidatorString());
-        $this->form->setWidget('copyrightStatus', new sfWidgetFormSelect(array('choices' => $choices)));
-        $this->form->setDefault('copyrightStatus', $this->context->routing->generate(null, array($this->right->copyrightStatus, 'module' => 'term')));
+        $this->form->setWidget('copyrightStatus', new sfWidgetFormSelect(['choices' => $choices]));
+        $this->form->setDefault('copyrightStatus', $this->context->routing->generate(null, [$this->right->copyrightStatus, 'module' => 'term']));
 
         break;
 
       case 'rightsHolder':
-        $choices = array();
+        $choices = [];
         if ($this->right->rightsHolder)
         {
-          $choices[$this->context->routing->generate(null, array($this->right->rightsHolder, 'module' => 'actor'))] = $this->right->rightsHolder->__toString();
+          $choices[$this->context->routing->generate(null, [$this->right->rightsHolder, 'module' => 'actor'])] = $this->right->rightsHolder->__toString();
         }
         $this->form->setValidator('rightsHolder', new sfValidatorString());
-        $this->form->setWidget('rightsHolder', new sfWidgetFormSelect(array('choices' => $choices)));
-        $this->form->setDefault('rightsHolder', $this->context->routing->generate(null, array($this->right->rightsHolder, 'module' => 'actor')));
+        $this->form->setWidget('rightsHolder', new sfWidgetFormSelect(['choices' => $choices]));
+        $this->form->setDefault('rightsHolder', $this->context->routing->generate(null, [$this->right->rightsHolder, 'module' => 'actor']));
 
         break;
 
       case 'copyrightJurisdiction':
         $this->form->setValidator('copyrightJurisdiction', new sfValidatorI18nChoiceCountry());
-        $this->form->setWidget('copyrightJurisdiction', new sfWidgetFormI18nChoiceCountry(array('add_empty' => true, 'culture' => $this->context->user->getCulture())));
+        $this->form->setWidget('copyrightJurisdiction', new sfWidgetFormI18nChoiceCountry(['add_empty' => true, 'culture' => $this->context->user->getCulture()]));
         $this->form->setDefault('copyrightJurisdiction', $this->right->copyrightJurisdiction);
 
         break;
@@ -156,16 +156,16 @@ class RightEditAction extends sfAction
         break;
 
       case 'statuteCitation':
-        $this->form->setDefault('statuteCitation', $this->context->routing->generate(null, array($this->right->statuteCitation, 'module' => 'term')));
+        $this->form->setDefault('statuteCitation', $this->context->routing->generate(null, [$this->right->statuteCitation, 'module' => 'term']));
         $this->form->setValidator('statuteCitation', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         if (isset($this->right->statuteCitation))
         {
-          $choices[$this->context->routing->generate(null, array($this->right->statuteCitation, 'module' => 'term'))] = $this->right->statuteCitation;
+          $choices[$this->context->routing->generate(null, [$this->right->statuteCitation, 'module' => 'term'])] = $this->right->statuteCitation;
         }
 
-        $this->form->setWidget('statuteCitation', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('statuteCitation', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
@@ -277,7 +277,7 @@ class RightEditAction extends sfAction
   protected function getRelatedObject($id)
   {
     $results = QubitRelation::getRelatedSubjectsByObjectId(
-        'QubitInformationObject', $id, array('typeId' => QubitTerm::RIGHT_ID)
+        'QubitInformationObject', $id, ['typeId' => QubitTerm::RIGHT_ID]
     );
 
     if (0 < count($results))
@@ -286,7 +286,7 @@ class RightEditAction extends sfAction
     }
 
     $results = QubitRelation::getRelatedSubjectsByObjectId(
-      'QubitDigitalObject', $id, array('typeId' => QubitTerm::RIGHT_ID)
+      'QubitDigitalObject', $id, ['typeId' => QubitTerm::RIGHT_ID]
     );
 
     if (0 < count($results))
@@ -295,7 +295,7 @@ class RightEditAction extends sfAction
     }
 
     $results = QubitRelation::getRelatedSubjectsByObjectId(
-      'QubitAccession', $id, array('typeId' => QubitTerm::RIGHT_ID)
+      'QubitAccession', $id, ['typeId' => QubitTerm::RIGHT_ID]
     );
 
     if (0 < count($results))
@@ -322,12 +322,12 @@ class RightEditAction extends sfAction
     {
       case 'QubitInformationObject':
       case 'QubitDigitalObject':
-        $this->redirectTo = array($this->informationObject, 'module' => 'informationObject');
+        $this->redirectTo = [$this->informationObject, 'module' => 'informationObject'];
 
         break;
 
       case 'QubitAccession':
-        $this->redirectTo = array($this->resource, 'module' => 'accession');
+        $this->redirectTo = [$this->resource, 'module' => 'accession'];
 
         break;
     }
@@ -414,12 +414,12 @@ class RightEditAction extends sfAction
 
     foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_ACT_ID) as $item)
     {
-      $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
+      $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
     }
 
     $form->setValidator('act', new sfValidatorString());
-    $form->setWidget('act', new sfWidgetFormSelect(array('choices' => $choices)));
-    $form->setDefault('act', $this->context->routing->generate(null, array($grantedRight->act, 'module' => 'term')));
+    $form->setWidget('act', new sfWidgetFormSelect(['choices' => $choices]));
+    $form->setDefault('act', $this->context->routing->generate(null, [$grantedRight->act, 'module' => 'term']));
 
     $form->setValidator('startDate', new sfValidatorString());
     $form->setWidget('startDate', $this->dateWidget());
@@ -435,7 +435,7 @@ class RightEditAction extends sfAction
     $res_choices[2] = $this->context->i18n->__('Conditional');
     $res_choices[0] = $this->context->i18n->__('Disallow');
     $form->setValidator('restriction', new sfValidatorInteger());
-    $form->setWidget('restriction', new sfWidgetFormSelect(array('choices' => $res_choices)));
+    $form->setWidget('restriction', new sfWidgetFormSelect(['choices' => $res_choices]));
     $form->setDefault('restriction', $grantedRight->restriction);
 
     $form->setValidator('notes', new sfValidatorString());

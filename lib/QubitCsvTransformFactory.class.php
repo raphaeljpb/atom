@@ -30,9 +30,9 @@ class QubitCsvTransformFactory
   public $setupLogic;
   public $transformLogic;
 
-  public function __construct($options = array())
+  public function __construct($options = [])
   {
-    $allowedProperties = array(
+    $allowedProperties = [
       'cliOptions',
       'machineName',
       'addColumns',
@@ -43,7 +43,7 @@ class QubitCsvTransformFactory
       'rowParentKeyLookupLogic',
       'setupLogic',
       'transformLogic'
-    );
+    ];
 
     QubitFlatfileImport::setPropertiesFromArray(
       $this,
@@ -61,13 +61,13 @@ class QubitCsvTransformFactory
   {
     $tempCsvFile = sys_get_temp_dir() .'/'. $this->machineName .'_stage1.csv';
 
-    return new QubitCsvTransform(array(
+    return new QubitCsvTransform([
 
       'options' => $this->cliOptions,
 
-      'status' => array(
+      'status' => [
         'cliOptions'              => $this->cliOptions,
-        'parentKeys'              => array(),
+        'parentKeys'              => [],
         'ignoreRows'              => $this->ignoreRows,
         'ignoreRowCheckLogic'     => $this->ignoreRowCheckLogic,
         'noIdentifierCount'       => 0,
@@ -75,7 +75,7 @@ class QubitCsvTransformFactory
         'outFh'                   => fopen($tempCsvFile, 'w'),
         'parentKeyLogic'          => $this->parentKeyLogic,
         'rowParentKeyLookupLogic' => $this->rowParentKeyLookupLogic
-      ),
+      ],
 
       'setupLogic' => $this->setupLogic,
 
@@ -114,11 +114,11 @@ class QubitCsvTransformFactory
 
         if (!$fhIn) throw new sfException('Error reading '. $self->status['tempFile'] .'.');
 
-        $stage2 = new QubitCsvTransform(array(
+        $stage2 = new QubitCsvTransform([
 
           'skipOptionsAndEnvironmentCheck' => true,
 
-          'status' => array(
+          'status' => [
             'cliOptions'              => $self->status['cliOptions'],
             'finalOutputFile'         => $self->status['finalOutputFile'],
             'parentKeys'              => $self->status['parentKeys'],
@@ -129,7 +129,7 @@ class QubitCsvTransformFactory
             'badLevelOfDescription'   => 0,
             'rowParentKeyLookupLogic' => $self->status['rowParentKeyLookupLogic'],
             'ignoreBadLod'            => $self->status['ignoreBadLod']
-          ),
+          ],
 
           'errorLog' => $self->errorLog,
 
@@ -204,11 +204,11 @@ class QubitCsvTransformFactory
             print "Bad parents found: ". $self->status['badParents'] .".\n";
             print "Bad level of description found: ". $self->status['badLevelOfDescription'] .".\n";
           }
-        ));
+        ]);
 
         $stage2->initializeMySQLtemp();
         $stage2->csv($fhIn);
       }
-    ));
+    ]);
   }
 }

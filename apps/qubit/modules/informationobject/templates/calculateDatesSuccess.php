@@ -14,7 +14,7 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'informationobject', 'action' => 'calculateDates'))) ?>
+  <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'informationobject', 'action' => 'calculateDates'])) ?>
 
     <?php echo $form->renderHiddenFields() ?>
     
@@ -60,13 +60,13 @@
           <div class="alert alert-info">
             <?php echo __('Note: While the date range update is running, the selected description should not be edited.') ?>
             <?php echo __('You can check %1% page to determine the current status of the update job.',
-              array('%1%' => link_to(__('Manage jobs'), array('module' => 'jobs', 'action' => 'browse')))) ?>
+              ['%1%' => link_to(__('Manage jobs'), ['module' => 'jobs', 'action' => 'browse'])]) ?>
           </div>
 
 
     <section class="actions">
       <ul>
-        <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'informationobject'], ['class' => 'c-btn']) ?></li>
       </ul>
       <ul>
         <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Continue') ?>"/></li>

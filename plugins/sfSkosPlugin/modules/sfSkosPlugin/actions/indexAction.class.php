@@ -41,13 +41,13 @@ class sfSkosPluginIndexAction extends sfAction
       $this->selectedTerm = QubitTerm::getById($resource->id);
       $this->terms = $this->selectedTerm->descendants->andSelf()->orderBy('lft');
       $this->taxonomy = $this->selectedTerm->taxonomy;
-      $this->topLevelTerms = array($this->selectedTerm);
+      $this->topLevelTerms = [$this->selectedTerm];
     }
     else
     {
       $this->terms = QubitTaxonomy::getTaxonomyTerms($resource->id);
       $this->taxonomy = QubitTaxonomy::getById($resource->id);
-      $this->topLevelTerms = QubitTaxonomy::getTaxonomyTerms($resource->id, array('level' => 'top'));
+      $this->topLevelTerms = QubitTaxonomy::getTaxonomyTerms($resource->id, ['level' => 'top']);
     }
 
     $request->setRequestFormat('xml');

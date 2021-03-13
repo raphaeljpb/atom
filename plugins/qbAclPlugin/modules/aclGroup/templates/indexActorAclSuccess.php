@@ -1,4 +1,4 @@
-<h1><?php echo __('Group %1%', array('%1%' => render_title($group))) ?></h1>
+<h1><?php echo __('Group %1%', ['%1%' => render_title($group)]) ?></h1>
 
 <?php echo get_component('aclGroup', 'tabs') ?>
 
@@ -20,7 +20,7 @@
               <?php if (1 < $objectId): ?>
                 <?php echo esc_entities(render_title(QubitActor::getById($objectId))) ?>
               <?php else: ?>
-                <em><?php echo __('All %1%', array('%1%' => lcfirst(sfConfig::get('app_ui_label_actor')))) ?></em>
+                <em><?php echo __('All %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_actor'))]) ?></em>
               <?php endif; ?>
             </strong>
           </td>
@@ -51,4 +51,4 @@
   </table>
 <?php endif; ?>
 
-<?php echo get_partial('showActions', array('group' => $group)) ?>
+<?php echo get_partial('showActions', ['group' => $group]) ?>

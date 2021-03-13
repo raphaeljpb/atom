@@ -8,14 +8,14 @@
 
 <?php if (isset($form->confirm)): ?>
 
-  <h3 style="font-weight: normal;"><?php echo __('This will permanently modify %1% records.', array('%1%' => count($pager->hits))) ?></h3>
+  <h3 style="font-weight: normal;"><?php echo __('This will permanently modify %1% records.', ['%1%' => count($pager->hits)]) ?></h3>
   <div class="error">
     <h2><?php echo __('This action cannot be undone!') ?></li></h2>
   </div>
 
 <?php endif; ?>
 
-<?php echo get_partial('search/advancedSearch', array('form' => $form, 'action' => 'globalReplace')) ?>
+<?php echo get_partial('search/advancedSearch', ['form' => $form, 'action' => 'globalReplace']) ?>
 
 <?php if (isset($error)): ?>
 

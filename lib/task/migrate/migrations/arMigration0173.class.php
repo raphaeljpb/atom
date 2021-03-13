@@ -39,7 +39,7 @@ class arMigration0173
    */
   public function up($configuration)
   {
-    $dacsVisibilitySettingNames = array(
+    $dacsVisibilitySettingNames = [
       'dacs_physical_access',
       'dacs_identity_area',
       'dacs_content_area',
@@ -49,7 +49,7 @@ class arMigration0173
       'dacs_notes_area',
       'dacs_control_area',
       'dacs_access_points_area'
-    );
+    ];
 
     foreach ($dacsVisibilitySettingNames as $settingName)
     {

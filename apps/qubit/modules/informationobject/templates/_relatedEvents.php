@@ -17,7 +17,7 @@
     </tr>
   </thead><tbody>
     <?php foreach ($resource->eventsRelatedByobjectId as $item): ?>
-      <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for(array($item, 'module' => 'event')) ?>">
+      <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for([$item, 'module' => 'event']) ?>">
         <td>
           <div>
             <?php if (isset($item->actor)): ?>
@@ -36,10 +36,10 @@
           </div>
         </td><td>
           <div>
-            <?php echo render_value_inline(Qubit::renderDateStartEnd($item->getDate(array('cultureFallback' => true)), $item->startDate, $item->endDate)) ?>
+            <?php echo render_value_inline(Qubit::renderDateStartEnd($item->getDate(['cultureFallback' => true]), $item->startDate, $item->endDate)) ?>
           </div>
         </td><td style="text-align: right">
-          <input class="multiDelete" name="deleteEvents[]" type="checkbox" value="<?php echo url_for(array($item, 'module' => 'event')) ?>"/>
+          <input class="multiDelete" name="deleteEvents[]" type="checkbox" value="<?php echo url_for([$item, 'module' => 'event']) ?>"/>
         </td>
       </tr>
     <?php endforeach; ?>

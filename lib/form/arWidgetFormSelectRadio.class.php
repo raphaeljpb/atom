@@ -21,18 +21,18 @@ class arWidgetFormSelectRadio extends sfWidgetFormSelectRadio
 {
   public function formatter($widget, $inputs)
   {
-    $rows = array();
+    $rows = [];
     foreach ($inputs as $input)
     {
       $rows[] = $this->renderContentTag(
         'label',
         $input['input'].$this->getOption('label_separator').$input['label'],
-        array('class' => 'radio'));
+        ['class' => 'radio']);
     }
 
-    return !$rows ? '' : $this->renderContentTag('div', implode($this->getOption('separator'), $rows), array('class' => $this->getOption('class')));
+    return !$rows ? '' : $this->renderContentTag('div', implode($this->getOption('separator'), $rows), ['class' => $this->getOption('class')]);
   }
-  protected function configure($options = array(), $attributes = array())
+  protected function configure($options = [], $attributes = [])
   {
     parent::configure($options, $attributes);
 

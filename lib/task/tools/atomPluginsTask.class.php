@@ -25,7 +25,7 @@
  */
 class atomPluginsTask extends sfBaseTask
 {
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
     $conn = $databaseManager->getDatabase('propel')->getConnection();
@@ -39,9 +39,9 @@ class atomPluginsTask extends sfBaseTask
     }
 
     // Array of plugins
-    $plugins = array_values(unserialize($setting->getValue(array('sourceCulture' => true))));
+    $plugins = array_values(unserialize($setting->getValue(['sourceCulture' => true])));
 
-    if (in_array($arguments['action'], array('add', 'delete')) && !isset($arguments['plugin']))
+    if (in_array($arguments['action'], ['add', 'delete']) && !isset($arguments['plugin']))
     {
       throw new sfException('Missing plugin name.');
     }
@@ -52,7 +52,7 @@ class atomPluginsTask extends sfBaseTask
         $plugins[] = $arguments['plugin'];
 
         // Save changes
-        $setting->setValue(serialize(array_unique($plugins)), array('sourceCulture' => true));
+        $setting->setValue(serialize(array_unique($plugins)), ['sourceCulture' => true]);
         $setting->save();
 
         break;
@@ -68,7 +68,7 @@ class atomPluginsTask extends sfBaseTask
         }
 
         // Save changes
-        $setting->setValue(serialize(array_unique($plugins)), array('sourceCulture' => true));
+        $setting->setValue(serialize(array_unique($plugins)), ['sourceCulture' => true]);
         $setting->save();
 
         break;
@@ -88,17 +88,17 @@ class atomPluginsTask extends sfBaseTask
   }
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('action', sfCommandArgument::REQUIRED, 'The action (add, delete or list).'),
       new sfCommandArgument('plugin', sfCommandArgument::OPTIONAL, 'The plugin name.')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('action', null, sfCommandOption::PARAMETER_REQUIRED, 'Desired action')
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'atom-plugins';

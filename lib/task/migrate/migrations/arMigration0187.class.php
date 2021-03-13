@@ -35,7 +35,7 @@ class arMigration0187
   {
     $SCOPE = 'element_visibility';
     $VALUE = 1;
-    $settingNames = array(
+    $settingNames = [
       // Master file
       'digital_object_permissions',
 
@@ -70,7 +70,7 @@ class arMigration0187
       'digital_object_preservation_system_preservation_file_size',
       'digital_object_preservation_system_preservation_normalized',
       'digital_object_preservation_system_preservation_permissions',
-    );
+    ];
 
     foreach ($settingNames as $settingName)
     {
@@ -78,7 +78,7 @@ class arMigration0187
       {
         $setting = new QubitSetting();
         $setting->name  = $settingName;
-        $setting->setValue($VALUE, array('sourceCulture' => true));
+        $setting->setValue($VALUE, ['sourceCulture' => true]);
         $setting->scope = $SCOPE;
         $setting->culture = 'en';
         $setting->save();

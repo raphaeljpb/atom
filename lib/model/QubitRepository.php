@@ -31,7 +31,7 @@ class QubitRepository extends BaseRepository
   {
     $args = func_get_args();
 
-    $options = array();
+    $options = [];
     if (1 < count($args))
     {
       $options = $args[1];
@@ -63,7 +63,7 @@ class QubitRepository extends BaseRepository
 
       default:
 
-        return call_user_func_array(array($this, 'BaseRepository::__get'), $args);
+        return call_user_func_array([$this, 'BaseRepository::__get'], $args);
     }
   }
 
@@ -71,7 +71,7 @@ class QubitRepository extends BaseRepository
   {
     $args = func_get_args();
 
-    $options = array();
+    $options = [];
     if (2 < count($args))
     {
       $options = $args[2];
@@ -106,7 +106,7 @@ class QubitRepository extends BaseRepository
 
       default:
 
-        return call_user_func_array(array($this, 'BaseRepository::__set'), $args);
+        return call_user_func_array([$this, 'BaseRepository::__set'], $args);
     }
   }
 
@@ -143,9 +143,9 @@ class QubitRepository extends BaseRepository
   {
     $sql = "SELECT id FROM ". QubitInformationObject::TABLE_NAME ." WHERE repository_id=:repository_id";
 
-    $params = array(':repository_id' => $this->id);
+    $params = [':repository_id' => $this->id];
 
-    return QubitPdo::fetchAll($sql, $params, array('fetchMode' => PDO::FETCH_COLUMN));
+    return QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_COLUMN]);
   }
 
   public function updateInformationObjects($ioIds, $operationDescription)
@@ -158,20 +158,20 @@ class QubitRepository extends BaseRepository
     // Handle web request asynchronously
     $context = sfContext::getInstance();
 
-    if (!in_array($context->getConfiguration()->getEnvironment(), array('cli', 'worker')))
+    if (!in_array($context->getConfiguration()->getEnvironment(), ['cli', 'worker']))
     {
       // Let user know related descriptions update has started
-      $jobsUrl = $context->routing->generate(null, array('module' => 'jobs', 'action' => 'browse'));
-      $messageParams = array('%1' => $operationDescription, '%2' => $jobsUrl);
+      $jobsUrl = $context->routing->generate(null, ['module' => 'jobs', 'action' => 'browse']);
+      $messageParams = ['%1' => $operationDescription, '%2' => $jobsUrl];
       $message = $context->i18n->__('Your repository has been %1. Its related descriptions are being updated asynchronously – check the <a href="%2">job scheduler page</a> for status and details.', $messageParams);
       $context->user->setFlash('notice', $message);
 
       // Update asynchronously the saved IOs ids
-      $jobOptions = array(
+      $jobOptions = [
         'ioIds' => $ioIds,
         'updateIos' => true,
         'updateDescendants' => true
-      );
+      ];
       QubitJob::runJob('arUpdateEsIoDocumentsJob', $jobOptions);
 
       return;
@@ -181,7 +181,7 @@ class QubitRepository extends BaseRepository
     foreach ($ioIds as $id)
     {
       $io = QubitInformationObject::getById($id);
-      QubitSearch::getInstance()->update($io, array('updateDescendants' => true));
+      QubitSearch::getInstance()->update($io, ['updateDescendants' => true]);
 
       // Keep caches clear to prevent memory use from ballooning
       Qubit::clearClassCaches();
@@ -207,7 +207,7 @@ class QubitRepository extends BaseRepository
               SET repository_id=NULL \r
               WHERE repository_id=:repository_id";
 
-      QubitPdo::modify($sql, array(':repository_id' => $this->id));
+      QubitPdo::modify($sql, [':repository_id' => $this->id]);
 
       // Trigger updating of the information objects
       $operationDescription = sfContext::getInstance()->i18n->__('deleted');
@@ -264,17 +264,17 @@ class QubitRepository extends BaseRepository
     }
   }
 
-  public function getCountryCode($options = array())
+  public function getCountryCode($options = [])
   {
     return $this->getFromPrimaryOrFirstValidContact('getCountryCode', $options);
   }
 
-  public function getRegion($options = array())
+  public function getRegion($options = [])
   {
     return $this->getFromPrimaryOrFirstValidContact('getRegion', $options);
   }
 
-  public function getCity($options = array())
+  public function getCity($options = [])
   {
     return $this->getFromPrimaryOrFirstValidContact('getCity', $options);
   }
@@ -312,7 +312,7 @@ class QubitRepository extends BaseRepository
    * @param array $options optional parameters
    * @return array options_for_select compatible array
    */
-  public static function getOptionsForSelectList($default, $options = array())
+  public static function getOptionsForSelectList($default, $options = [])
   {
     $repositories = self::getAll($options);
 
@@ -333,7 +333,7 @@ class QubitRepository extends BaseRepository
    *
    * @return integer disk usage in bytes
    */
-  public function getDiskUsage($options = array())
+  public function getDiskUsage($options = [])
   {
     $repoDir = sfConfig::get('app_upload_dir').'/r/'.$this->slug;
 

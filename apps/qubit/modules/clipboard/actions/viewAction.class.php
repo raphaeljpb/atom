@@ -43,7 +43,7 @@ class ClipboardViewAction extends DefaultBrowseAction
 
     if (empty($slugs))
     {
-      $resultSet = new \Elastica\ResultSet(new Elastica\Response(null), new Elastica\Query(), array());
+      $resultSet = new \Elastica\ResultSet(new Elastica\Response(null), new Elastica\Query(), []);
     }
     else
     {
@@ -67,11 +67,11 @@ class ClipboardViewAction extends DefaultBrowseAction
     $this->pager->setMaxPerPage($maxPerPage);
     $this->pager->init();
 
-    $this->uiLabels = array(
+    $this->uiLabels = [
       'informationObject' => sfConfig::get('app_ui_label_informationobject'),
       'actor'             => sfConfig::get('app_ui_label_actor'),
       'repository'        => sfConfig::get('app_ui_label_repository')
-    );
+    ];
 
     // Remove slugs parameter. In some templates (entity type dropdown
     // for example) the links are generated with all the request params
@@ -84,13 +84,13 @@ class ClipboardViewAction extends DefaultBrowseAction
    */
   private function setSortOptions()
   {
-    $this->sortOptions = array(
+    $this->sortOptions = [
       'lastUpdated' => $this->context->i18n->__('Date modified'),
       'alphabetic'  => $this->context->i18n->__('Name'),
-    );
+    ];
 
     // IOs and Repos have identifier sort option in common
-    if (in_array($this->entityType, array('QubitInformationObject', 'QubitRepository')))
+    if (in_array($this->entityType, ['QubitInformationObject', 'QubitRepository']))
     {
       $this->sortOptions['identifier'] = $this->context->i18n->__('Identifier');
     }
@@ -121,17 +121,17 @@ class ClipboardViewAction extends DefaultBrowseAction
     {
       // Sort by highest ES score
       case 'relevance':
-        $this->search->query->addSort(array('_score' => $request->sortDir));
+        $this->search->query->addSort(['_score' => $request->sortDir]);
 
         break;
 
       case 'identifier':
-        $this->search->query->addSort(array('identifier.untouched' => $request->sortDir));
+        $this->search->query->addSort(['identifier.untouched' => $request->sortDir]);
 
         break;
 
       case 'referenceCode':
-        $this->search->query->addSort(array('referenceCode.untouched' => $request->sortDir));
+        $this->search->query->addSort(['referenceCode.untouched' => $request->sortDir]);
 
         break;
 
@@ -139,23 +139,23 @@ class ClipboardViewAction extends DefaultBrowseAction
       case 'alphabetic':
         $fieldName = 'QubitInformationObject' === $this->entityType ? 'title' : 'authorizedFormOfName';
         $field = sprintf('i18n.%s.%s.untouched', $this->selectedCulture, $fieldName);
-        $this->search->query->addSort(array($field => $request->sortDir));
+        $this->search->query->addSort([$field => $request->sortDir]);
 
         break;
 
       case 'startDate':
-        $this->search->query->setSort(array('startDateSort' => $request->sortDir));
+        $this->search->query->setSort(['startDateSort' => $request->sortDir]);
 
         break;
 
       case 'endDate':
-        $this->search->query->setSort(array('endDateSort' => $request->sortDir));
+        $this->search->query->setSort(['endDateSort' => $request->sortDir]);
 
         break;
 
       case 'lastUpdated':
       default:
-        $this->search->query->setSort(array('updatedAt' => $request->sortDir));
+        $this->search->query->setSort(['updatedAt' => $request->sortDir]);
     }
   }
 }

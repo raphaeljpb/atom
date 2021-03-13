@@ -20,7 +20,7 @@
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
 global $preambleExceptions;
-$preambleExceptions = '/'.implode('|', array(
+$preambleExceptions = '/'.implode('|', [
   '\.yml$',
   preg_quote(SF_ROOT_DIR, '/').'\/apps\/qubit\/config\/config\.php$',
   preg_quote(SF_ROOT_DIR, '/').'\/apps\/qubit\/config\/tidy\.conf$',
@@ -43,7 +43,7 @@ $preambleExceptions = '/'.implode('|', array(
   preg_quote(SF_ROOT_DIR, '/').'\/symfony$',
   preg_quote(SF_ROOT_DIR, '/').'\/test\/bootstrap\/[^\/.]+\.php$',
   preg_quote(SF_ROOT_DIR, '/').'\/test\/functional\/qubit\/[^\/.]+\.php$',
-  preg_quote(SF_ROOT_DIR, '/').'\/web\/')).'/';
+  preg_quote(SF_ROOT_DIR, '/').'\/web\/']).'/';
 
 // Use this file's preamble
 global $preamble;
@@ -59,7 +59,7 @@ foreach ($filePaths as $filePath)
   checkPreamble($filePath);
 }
 
-$snifferExceptions = array(
+$snifferExceptions = [
   //'\.yml$',
   //preg_quote(SF_ROOT_DIR, '/').'\/apps\/qubit\/config\/config\.php$',
   //preg_quote(SF_ROOT_DIR, '/').'\/apps\/qubit\/config\/tidy\.conf$',
@@ -81,7 +81,7 @@ $snifferExceptions = array(
   preg_quote(SF_ROOT_DIR, '/').'\/test\/bootstrap\/[^\/.]+\.php$',
   //preg_quote(SF_ROOT_DIR, '/').'\/test\/functional\/qubit\/[^\/.]+\.php$',
   //preg_quote(SF_ROOT_DIR, '/').'\/web')).'/';
-);
+];
 
 function _readDir($dirPath, &$filePaths)
 {

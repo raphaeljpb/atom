@@ -8,7 +8,7 @@ $informationObject = new QubitInformationObject();
 $informationObject->save();
 
 $browser
-  ->post(';digitalobject/create', array('file' => sfConfig::get('sf_test_dir').'/fixtures/echo.jpg', 'informationObject' => $informationObject->id.';isad'))
+  ->post(';digitalobject/create', ['file' => sfConfig::get('sf_test_dir').'/fixtures/echo.jpg', 'informationObject' => $informationObject->id.';isad'])
 
   ->with('request')->begin()
     ->isParameter('module', 'digitalobject')

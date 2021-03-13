@@ -24,42 +24,42 @@ class sfInstallDatabaseConfigHandler extends sfDatabaseConfigHandler
   public static function getConfiguration(array $files)
   {
     // Basic parameters
-    $config = array(
-      'all' => array(
-        'propel' => array(
+    $config = [
+      'all' => [
+        'propel' => [
           'class' => 'sfPropelDatabase',
-          'param' => array(
+          'param' => [
             'encoding'   => 'utf8mb4',
             'persistent' => true,
             'pooling'    => true
-          )
-        )
-      ),
-      'dev' => array(
-        'propel' => array(
-          'param' => array(
+          ]
+        ]
+      ],
+      'dev' => [
+        'propel' => [
+          'param' => [
             'classname' => 'DebugPDO',
-            'debug' => array(
+            'debug' => [
               'realmemoryusage' => true,
-              'details' => array(
-                'time'     => array('enabled' => true),
-                'slow'     => array('enabled' => true, 'threshold' => 0.1),
-                'mem'      => array('enabled' => true),
-                'mempeak'  => array('enabled' => true),
-                'memdelta' => array('enabled' => true)
-              )
-            )
-          )
-        )
-      ),
-      'test' => array(
-        'propel' => array(
-          'param' => array(
+              'details' => [
+                'time'     => ['enabled' => true],
+                'slow'     => ['enabled' => true, 'threshold' => 0.1],
+                'mem'      => ['enabled' => true],
+                'mempeak'  => ['enabled' => true],
+                'memdelta' => ['enabled' => true]
+              ]
+            ]
+          ]
+        ]
+      ],
+      'test' => [
+        'propel' => [
+          'param' => [
             'classname' => 'DebugPDO'
-          )
-        )
-      )
-    );
+          ]
+        ]
+      ]
+    ];
 
     // DSN config
     $config['all']['propel']['param']['dsn'] = 'mysql:dbname='.self::$options['databaseName'];
@@ -91,7 +91,7 @@ class sfInstallDatabaseConfigHandler extends sfDatabaseConfigHandler
 
   public function execute($configFiles)
   {
-    $includes = array();
+    $includes = [];
     $config = self::getConfiguration($configFiles);
 
     // compile data

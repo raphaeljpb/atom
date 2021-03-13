@@ -38,7 +38,7 @@ class UserIndexTermAclAction extends sfAction
     }
 
     // Get user's groups
-    $this->roles = array();
+    $this->roles = [];
     if (0 < count($aclUserGroups = $this->resource->aclUserGroups))
     {
       foreach ($aclUserGroups as $item)
@@ -49,7 +49,7 @@ class UserIndexTermAclAction extends sfAction
     else
     {
       // User is *always* part of authenticated group
-      $this->roles = array(QubitAclGroup::AUTHENTICATED_ID);
+      $this->roles = [QubitAclGroup::AUTHENTICATED_ID];
     }
 
     // Table width
@@ -83,7 +83,7 @@ class UserIndexTermAclAction extends sfAction
     $this->roles[] = $this->resource->username;
 
     // Build ACL
-    $this->acl = array();
+    $this->acl = [];
     if (0 < count($permissions = QubitAclPermission::get($criteria)))
     {
       foreach ($permissions as $item)
@@ -93,7 +93,7 @@ class UserIndexTermAclAction extends sfAction
 
         if ('createTerm' != $item->action)
         {
-          $taxonomy = $item->getConstants(array('name' => 'taxonomy'));
+          $taxonomy = $item->getConstants(['name' => 'taxonomy']);
           $action = $item->action;
         }
         else

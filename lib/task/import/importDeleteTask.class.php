@@ -42,7 +42,7 @@ EOF;
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $count = 0;
 
@@ -174,7 +174,7 @@ EOF;
     $flogger = new sfFileLogger($this->dispatcher, ['file' => $filename]);
 
     $this->dispatcher->connect(
-      'command.log', array($flogger, 'listenToLogEvent')
+      'command.log', [$flogger, 'listenToLogEvent']
     );
   }
 

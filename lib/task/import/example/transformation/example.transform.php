@@ -13,23 +13,23 @@
 include(dirname(__FILE__) .'/lib/QubitCsvTransform.class.php');
 include(dirname(__FILE__) .'/lib/QubitCsvTransformFactory.class.php');
 
-$addColumns = array(
+$addColumns = [
   'parentId',
   'generalNote'
-);
+];
 
-$renameColumns = array(
+$renameColumns = [
   'ID' => 'legacyId',
   'TITLE' => 'title',
   'LEVEL' => 'levelOfDescription'
-);
+];
 
 $transformLogic = function (&$self)
 {
-  $self->amalgamateColumns(array(
+  $self->amalgamateColumns([
     'NOTES',
     'More:' => 'MORE NOTES'
-  ), 'generalNote');
+  ], 'generalNote');
 };
 
 $parentKeyLogic = function (&$self) {
@@ -55,7 +55,7 @@ $rowParentKeyLookupLogic = function (&$self) {
   }
 };
 
-$setup = new QubitCsvTransformFactory(array(
+$setup = new QubitCsvTransformFactory([
   'cliOptions'              => $options,
   'machineName'             => 'accessions',
   'addColumns'              => $addColumns,
@@ -63,6 +63,6 @@ $setup = new QubitCsvTransformFactory(array(
   'transformLogic'          => $transformLogic,
   'parentKeyLogic'          => $parentKeyLogic,
   'rowParentKeyLookupLogic' => $rowParentKeyLookupLogic
-));
+]);
 
 return $setup->make();

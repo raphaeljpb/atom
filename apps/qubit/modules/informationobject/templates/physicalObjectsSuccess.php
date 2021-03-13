@@ -17,9 +17,9 @@
     <?php foreach ($physicalObjects as $item): ?>
       <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?>">
         <td>
-          <?php echo link_to(render_title($item), array($item, 'module' => 'physicalobject')) ?>
+          <?php echo link_to(render_title($item), [$item, 'module' => 'physicalobject']) ?>
         </td><td>
-          <?php echo render_value($item->getLocation(array('cultureFallback' => true))) ?>
+          <?php echo render_value($item->getLocation(['cultureFallback' => true])) ?>
         </td><td>
           <?php echo render_value($item->type) ?>
         </td>
@@ -28,4 +28,4 @@
   <tbody>
 </table>
 
-<?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+<?php echo get_partial('default/pager', ['pager' => $pager]) ?>

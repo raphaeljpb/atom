@@ -43,7 +43,7 @@ class QubitInformationObjectXmlCacheResource
   public function generateXmlRepresentation($format)
   {
     exportBulkBaseTask::includeXmlExportClassesAndHelpers();
-    $options = ($format == 'ead') ? array('public' => true) : array();
+    $options = ($format == 'ead') ? ['public' => true] : [];
     $rawXml = exportBulkBaseTask::captureResourceExportTemplateOutput($this->resource, $format, $options);
     return Qubit::tidyXml($rawXml);
   }

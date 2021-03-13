@@ -46,13 +46,13 @@ class arMigration0098
     //   the nested set will be removed from the actor table in arMigration0181.
     $sql = "INSERT INTO object (class_name, created_at, updated_at, id, serial_number)
             VALUES ('QubitRepository', now(), now(), ?, 0);";
-    QubitPdo::modify($sql, array(QubitRepository::ROOT_ID));
+    QubitPdo::modify($sql, [QubitRepository::ROOT_ID]);
 
     $sql = "INSERT INTO actor (id, lft, rgt, source_culture) VALUES (?, 0, 0, ?);";
-    QubitPdo::modify($sql, array(QubitRepository::ROOT_ID, $defaultCulture));
+    QubitPdo::modify($sql, [QubitRepository::ROOT_ID, $defaultCulture]);
 
     $sql = "INSERT INTO repository (id, source_culture) VALUES (?, ?);";
-    QubitPdo::modify($sql, array(QubitRepository::ROOT_ID, $defaultCulture));
+    QubitPdo::modify($sql, [QubitRepository::ROOT_ID, $defaultCulture]);
 
     // Obtain all repositories except the root
     $sql = sprintf("SELECT t1.id
@@ -62,7 +62,7 @@ class arMigration0098
       WHERE class_name = ?
       AND t1.id != ?;", QubitActor::TABLE_NAME, QubitObject::TABLE_NAME);
 
-    $rows = QubitPdo::fetchAll($sql, array('QubitRepository', QubitRepository::ROOT_ID));
+    $rows = QubitPdo::fetchAll($sql, ['QubitRepository', QubitRepository::ROOT_ID]);
 
     // Add parent to all existing repositories
     foreach ($rows as $repository)
@@ -74,8 +74,8 @@ class arMigration0098
         WHERE t1.id = ?
         AND t1.id != ?;", QubitActor::TABLE_NAME, QubitObject::TABLE_NAME);
 
-      QubitPdo::modify($sql, array(QubitRepository::ROOT_ID,
-        $repository->id, QubitRepository::ROOT_ID));
+      QubitPdo::modify($sql, [QubitRepository::ROOT_ID,
+        $repository->id, QubitRepository::ROOT_ID]);
     }
 
     // Add menu nodes for repository permissions

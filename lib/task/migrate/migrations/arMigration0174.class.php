@@ -38,10 +38,10 @@ class arMigration0174
    */
   public function up($configuration)
   {
-    $settings = array(
+    $settings = [
       'fullTreeviewCollapseOpenedButtonText' => 'Hide hierarchy',
       'fullTreeviewCollapseClosedButtonText' => 'Show hierarchy'
-    );
+    ];
 
     foreach ($settings as $settingName => $settingValue)
     {
@@ -53,7 +53,7 @@ class arMigration0174
         $setting->editable = 1;
         $setting->deleteable = 0;
         $setting->source_culture = 'en';
-        $setting->setValue($settingValue, array('culture' => 'en'));
+        $setting->setValue($settingValue, ['culture' => 'en']);
         $setting->save();
       }
     }

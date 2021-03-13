@@ -14,9 +14,9 @@
       <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?>">
         <td>
           <?php if ($item->isProtected()): ?>
-            <?php echo link_to($item->getName(array('cultureFallback' => true)), array($item, 'module' => 'aclGroup'), array('class' => 'readOnly')) ?>
+            <?php echo link_to($item->getName(['cultureFallback' => true]), [$item, 'module' => 'aclGroup'], ['class' => 'readOnly']) ?>
           <?php else: ?>
-            <?php echo link_to($item->getName(array('cultureFallback' => true)), array($item, 'module' => 'aclGroup')) ?>
+            <?php echo link_to($item->getName(['cultureFallback' => true]), [$item, 'module' => 'aclGroup']) ?>
           <?php endif; ?>
         </td><td>
           <?php echo count($item->aclUserGroups) ?>
@@ -26,10 +26,10 @@
   </tbody>
 </table>
 
-<?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+<?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 
 <section class="actions">
   <ul>
-    <li><?php echo link_to(__('Add new'), array('module' => 'aclGroup', 'action' => 'add'), array('class' => 'c-btn')) ?></li>
+    <li><?php echo link_to(__('Add new'), ['module' => 'aclGroup', 'action' => 'add'], ['class' => 'c-btn']) ?></li>
   </ul>
 </div>

@@ -96,13 +96,13 @@ abstract class arOaiPluginComponent extends sfComponent
     }
   }
 
-  public function getUpdates($options = array())
+  public function getUpdates($options = [])
   {
-    $presetOptions = array(
+    $presetOptions = [
       'from'   => $this->from,
       'until'  => $this->until,
       'offset' => $this->cursor,
-      'limit' => QubitSetting::getByName('resumption_token_limit')->__toString());
+      'limit' => QubitSetting::getByName('resumption_token_limit')->__toString()];
 
     // Get set if one has been named
     if ($this->set != '')
@@ -119,11 +119,11 @@ abstract class arOaiPluginComponent extends sfComponent
     $this->remaining        = $update['remaining'];
     $this->recordsCount     = count($this->publishedRecords);
     $resumptionCursor       = $this->cursor + $options['limit'];
-    $this->resumptionToken  = base64_encode(json_encode(array('from' => $this->from,
+    $this->resumptionToken  = base64_encode(json_encode(['from' => $this->from,
                                                               'until' => $this->until,
                                                               'cursor' => $resumptionCursor,
                                                               'metadataPrefix' => $this->metadataPrefix,
-                                                              'set' => $this->set)));
+                                                              'set' => $this->set]));
   }
 
   public function setRequestAttributes($request)

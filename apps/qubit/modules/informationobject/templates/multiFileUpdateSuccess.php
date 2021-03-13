@@ -10,7 +10,7 @@
 <?php slot('content') ?>
 
   <?php echo $digitalObjectTitleForm->renderGlobalErrors() ?>
-  <?php echo $digitalObjectTitleForm->renderFormTag(url_for(array($resource, 'module' => 'informationobject', 'action' => 'multiFileUpdate', 'items' => $sf_request->items)), array('method' => 'post', 'id' => 'bulk-title-update-form')) ?>
+  <?php echo $digitalObjectTitleForm->renderFormTag(url_for([$resource, 'module' => 'informationobject', 'action' => 'multiFileUpdate', 'items' => $sf_request->items]), ['method' => 'post', 'id' => 'bulk-title-update-form']) ?>
     <?php echo $digitalObjectTitleForm->renderHiddenFields() ?>
 
     <div id="content">
@@ -31,9 +31,9 @@
                     (null !== $thumbnail = $do->getRepresentationByUsage(QubitTerm::THUMBNAIL_ID))
                     && QubitAcl::check($io, 'readThumbnail')
                   ): ?>
-                    <?php echo image_tag($thumbnail->getFullPath(), array('alt' => __($do->getDigitalObjectAltText() ?: 'Original %1% not accessible', array('%1%' => sfConfig::get('app_ui_label_digitalobject'))))) ?>
+                    <?php echo image_tag($thumbnail->getFullPath(), ['alt' => __($do->getDigitalObjectAltText() ?: 'Original %1% not accessible', ['%1%' => sfConfig::get('app_ui_label_digitalobject')])]) ?>
                   <?php else: ?>
-                    <?php echo image_tag(QubitDigitalObject::getGenericIconPathByMediaTypeId($do->mediaTypeId), array('alt' => __($do->getDigitalObjectAltText() ?: 'Original %1% not accessible', array('%1%' => sfConfig::get('app_ui_label_digitalobject'))))) ?>
+                    <?php echo image_tag(QubitDigitalObject::getGenericIconPathByMediaTypeId($do->mediaTypeId), ['alt' => __($do->getDigitalObjectAltText() ?: 'Original %1% not accessible', ['%1%' => sfConfig::get('app_ui_label_digitalobject')])]) ?>
                   <?php endif; ?>
                 <?php endforeach; ?>
               </td>

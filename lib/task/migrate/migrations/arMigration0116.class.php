@@ -33,10 +33,10 @@ class arMigration0116
 
   public function up($configuration)
   {
-    $termNames = array(
+    $termNames = [
       'sound recording - musical' => 'sound recording-musical',
       'sound recording - nonmusical' => 'sound recording-nonmusical'
-    );
+    ];
 
     foreach ($termNames as $oldName => $newName)
     {
@@ -48,7 +48,7 @@ class arMigration0116
 
       if (null !== $term = QubitTerm::getOne($criteria))
       {
-        $term->setName($newName, array('culture' => 'en'));
+        $term->setName($newName, ['culture' => 'en']);
         $term->save();
       }
     }

@@ -49,14 +49,14 @@ class arStorageServiceUtils
 
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); // Storage service redirects
     curl_setopt($ch, CURLOPT_FAILONERROR, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
       sprintf(
         'Authorization: ApiKey %s:%s',
         (string) QubitSetting::getByName('storage_service_username'),
         (string) QubitSetting::getByName('storage_service_api_key')
       ),
       'User-Agent: DRMC',
-    ));
+    ]);
 
     curl_exec($ch);
     $status = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
@@ -77,7 +77,7 @@ class arStorageServiceUtils
     if ($configuration->isPluginEnabled('arStorageServicePlugin')
       && null !== $setting = QubitSetting::getByName('download_aip_enabled'))
     {
-      return boolval($setting->getValue(array('sourceCulture' => true)));
+      return boolval($setting->getValue(['sourceCulture' => true]));
     }
   }
 

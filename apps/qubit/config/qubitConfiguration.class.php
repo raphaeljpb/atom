@@ -27,7 +27,7 @@ class qubitConfiguration extends sfApplicationConfiguration
   {
     ProjectConfiguration::getActive()->loadHelpers('Javascript');
 
-    return str_ireplace('</head>', javascript_tag('jQuery.extend(Qubit, '.json_encode(array('relativeUrlRoot' => sfContext::getInstance()->request->getRelativeUrlRoot())).');').'</head>', $content);
+    return str_ireplace('</head>', javascript_tag('jQuery.extend(Qubit, '.json_encode(['relativeUrlRoot' => sfContext::getInstance()->request->getRelativeUrlRoot()]).');').'</head>', $content);
   }
 
   public function listenToChangeCultureEvent(sfEvent $event)
@@ -40,11 +40,11 @@ class qubitConfiguration extends sfApplicationConfiguration
    */
   public function configure()
   {
-    $this->dispatcher->connect('response.filter_content', array($this, 'responseFilterContent'));
+    $this->dispatcher->connect('response.filter_content', [$this, 'responseFilterContent']);
 
-    $this->dispatcher->connect('access_log.view', array('QubitAccessLogObserver', 'view'));
+    $this->dispatcher->connect('access_log.view', ['QubitAccessLogObserver', 'view']);
 
-    $this->dispatcher->connect('user.change_culture', array($this, 'listenToChangeCultureEvent'));
+    $this->dispatcher->connect('user.change_culture', [$this, 'listenToChangeCultureEvent']);
   }
 
   /**
@@ -68,7 +68,7 @@ class qubitConfiguration extends sfApplicationConfiguration
   {
     if (!isset($this->cache['getControllerDirs'][$moduleName]))
     {
-      $this->cache['getControllerDirs'][$moduleName] = array();
+      $this->cache['getControllerDirs'][$moduleName] = [];
 
       // HACK Currently plugins only override application templates, not the
       // other way around

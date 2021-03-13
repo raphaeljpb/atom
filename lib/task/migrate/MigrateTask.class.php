@@ -43,14 +43,14 @@ EOL;
   protected $initialVersion;
   protected $targetVersion;
   // list of migratable releases
-    protected $validReleases = array(
+    protected $validReleases = [
       '1.0.3',
       '1.0.4',
       '1.0.5',
       '1.0.6',
       '1.0.7',
       '1.0.8'
-    );
+    ];
 
   /**
    * @see sfBaseTask
@@ -66,21 +66,21 @@ The [propel:migrate|INFO] task modifies the given YAML dump file with changes to
   [./symfony propel:migrate qubit_data_1.0.8.yml|INFO]
 EOF;
 
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('datafile', sfCommandArgument::REQUIRED, 'The yaml data file containing the current site data')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('target-version', 'T', sfCommandOption::PARAMETER_OPTIONAL, 'Specify the target version for the migrated data')
-    ));
+    ]);
   }
 
   /**
    * @see sfBaseTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     if (!is_readable($arguments['datafile']))
     {
@@ -101,7 +101,7 @@ EOF;
     {
       $this->logBlock(array_merge(
         explode("\n", sprintf(self::NOTICE_FINAL_VERSION, self::FINAL_VERSION)),
-        array('Exiting.', '')), 'ERROR');
+        ['Exiting.', '']), 'ERROR');
 
       return 1;
     }
@@ -126,7 +126,7 @@ EOF;
       {
         if (!$this->askConfirmation(array_merge(
           explode("\n", sprintf(self::NOTICE_FINAL_VERSION, self::FINAL_VERSION)),
-          array(sprintf('Do you want to proceed with migrating your data to version %s (Y/n)?', self::FINAL_VERSION), '')),
+          [sprintf('Do you want to proceed with migrating your data to version %s (Y/n)?', self::FINAL_VERSION), '']),
           'QUESTION_LARGE'))
         {
           $this->log('Halting migration.');

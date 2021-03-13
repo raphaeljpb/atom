@@ -28,11 +28,11 @@ class taxonomyNormalizeTask extends arBaseTask
 {
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('taxonomy-name', sfCommandArgument::REQUIRED, 'The name of the taxonomy to normalize')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption(
         'application',
         null,
@@ -53,7 +53,7 @@ class taxonomyNormalizeTask extends arBaseTask
         'The name of the culture to normalize (defaults to "en")',
         'en'
       )
-    ));
+    ]);
 
     $this->namespace        = 'taxonomy';
     $this->name             = 'normalize';
@@ -63,7 +63,7 @@ Normalize taxonomy terms
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -77,8 +77,8 @@ EOF;
     $this->log("Normalizing for '". $options['culture'] ."' culture...");
 
     // Determine taxonomy term usage then normalize
-    $names = array();
-    $affectedObjects = array();
+    $names = [];
+    $affectedObjects = [];
     $this->populateTaxonomyNameUsage($names, $options['culture']);
     $this->normalizeTaxonomy($names, $affectedObjects);
     $this->reindexAffectedObjects($affectedObjects);
@@ -92,7 +92,7 @@ EOF;
       WHERE culture=? \r
       AND name=?";
 
-    $statement = QubitFlatfileImport::sqlQuery($sql, array($culture, $name));
+    $statement = QubitFlatfileImport::sqlQuery($sql, [$culture, $name]);
 
     if ($object = $statement->fetch(PDO::FETCH_OBJ))
     {
@@ -111,15 +111,15 @@ EOF;
       WHERE t.taxonomy_id=:id AND i.culture=:culture
       ORDER BY t.id";
 
-    $params = array(':id' => $this->taxonomyId, ':culture' => $culture);
+    $params = [':id' => $this->taxonomyId, ':culture' => $culture];
 
-    $terms = QubitPdo::fetchAll($sql, $params, array('fetchMode' => PDO::FETCH_OBJ));
+    $terms = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_OBJ]);
 
     foreach ($terms as $term)
     {
       if (!isset($names[$term->name]))
       {
-        $names[$term->name] = array();
+        $names[$term->name] = [];
       }
 
       array_push($names[$term->name], $term->id);
@@ -147,7 +147,7 @@ EOF;
     foreach ($usage as $id)
     {
       $sql = "select object_id from object_term_relation where term_id=?";
-      $statement = QubitFlatfileImport::sqlQuery($sql, array($id));
+      $statement = QubitFlatfileImport::sqlQuery($sql, [$id]);
       while ($object = $statement->fetch(PDO::FETCH_OBJ))
       {
         $affectedObjects[] = $object->object_id;
@@ -156,7 +156,7 @@ EOF;
       $this->log("Changing object term relations from term ". $id ." to ". $selected_id .".");
 
       $sql = "UPDATE object_term_relation SET term_id=:newId WHERE term_id=:oldId";
-      $params = array(':newId' => $selected_id, ':oldId' => $id);
+      $params = [':newId' => $selected_id, ':oldId' => $id];
       QubitPdo::modify($sql, $params);
 
       if ($this->taxonomyId == QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID)

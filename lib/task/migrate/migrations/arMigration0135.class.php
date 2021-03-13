@@ -42,14 +42,14 @@ class arMigration0135
 
     // Convert premisAccessRightValues into a multidimensional array where each basis
     // has its own permissions (allow_master, allow_reference, allow_thumb, etc...)
-    $premisAccessRightValues = array();
+    $premisAccessRightValues = [];
     foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
     {
       $premisAccessRightValues[$item->slug] = unserialize($setting->value);
     }
 
     // Serialize and save
-    $setting->setValue(serialize($premisAccessRightValues), array('sourceCulture' => true));
+    $setting->setValue(serialize($premisAccessRightValues), ['sourceCulture' => true]);
     $setting->save();
 
     return true;

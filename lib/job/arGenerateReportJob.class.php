@@ -35,16 +35,16 @@ class arGenerateReportJob extends arBaseJob
   /**
    * @see arBaseJob::$requiredParameters
    */
-  protected $extraRequiredParameters = array('objectId', 'reportType', 'reportTypeLabel', 'reportFormat');
+  protected $extraRequiredParameters = ['objectId', 'reportType', 'reportTypeLabel', 'reportFormat'];
 
   private $resource = null;
 
-  private $templatePaths = array(
+  private $templatePaths = [
       'itemList' => self::itemOrFileTemplatePath,
       'fileList' => self::itemOrFileTemplatePath,
       'storageLocations' => self::storageLocationsTemplatePath,
       'boxLabel' => self::boxLabelTemplatePath,
-    );
+    ];
 
   public function runJob($parameters)
   {
@@ -55,7 +55,7 @@ class arGenerateReportJob extends arBaseJob
     if (null === $this->resource = QubitInformationObject::getById($this->params['objectId']))
     {
       $this->error($this->i18n->__('Error: Could not find an information object with id: %1',
-                                   array('%1' => $this->params['objectId'])));
+                                   ['%1' => $this->params['objectId']]));
       return false;
     }
 
@@ -107,7 +107,7 @@ class arGenerateReportJob extends arBaseJob
         break;
 
       default:
-        $this->error($this->i18n->__('Invalid report type: %1', array('%1' => $this->params['reportType'])));
+        $this->error($this->i18n->__('Invalid report type: %1', ['%1' => $this->params['reportType']]));
         return false;
     }
 
@@ -181,11 +181,11 @@ class arGenerateReportJob extends arBaseJob
     $criteria->addAscendingOrderByColumn(QubitInformationObject::LFT);
 
     $criteria = QubitAcl::addFilterDraftsCriteria($criteria);
-    $results = array();
+    $results = [];
 
     if (null === $ios = QubitInformationObject::get($criteria))
     {
-      return array();
+      return [];
     }
 
     foreach ($ios as $item)
@@ -198,16 +198,16 @@ class arGenerateReportJob extends arBaseJob
       $parentTitle = QubitInformationObject::getStandardsBasedInstance($item->parent)->__toString();
       $creationDates = $this->getCreationDates($item);
 
-      $results[$parentFile][] = array(
+      $results[$parentFile][] = [
         'resource' => $item,
         'referenceCode' => QubitInformationObject::getStandardsBasedInstance($item)->referenceCode,
-        'title' => $item->getTitle(array('cultureFallback' => true)),
-        'dates' => isset($creationDates) ? Qubit::renderDateStartEnd($creationDates->getDate(array('cultureFallback' => true)),
+        'title' => $item->getTitle(['cultureFallback' => true]),
+        'dates' => isset($creationDates) ? Qubit::renderDateStartEnd($creationDates->getDate(['cultureFallback' => true]),
                    $creationDates->startDate, $creationDates->endDate) : '',
         'startDate' => isset($creationDates) ? $creationDates->startDate : null,
-        'accessConditions' => $item->getAccessConditions(array('cultureFallback' => true)),
+        'accessConditions' => $item->getAccessConditions(['cultureFallback' => true]),
         'locations' => $this->getLocationString($item)
-      );
+      ];
     }
 
     // Sort items by selected criteria
@@ -226,26 +226,26 @@ class arGenerateReportJob extends arBaseJob
    */
   private function getBoxLabelResults()
   {
-    $results = array();
+    $results = [];
 
     foreach ($this->resource->descendants->andSelf()->orderBy('rgt') as $informationObject)
     {
-      $creationDates = array();
+      $creationDates = [];
 
-      foreach ($informationObject->getDates(array('type_id' => QubitTerm::CREATION_ID)) as $item)
+      foreach ($informationObject->getDates(['type_id' => QubitTerm::CREATION_ID]) as $item)
       {
-        $creationDates[] = $item->getDate(array('cultureFallback' => true));
+        $creationDates[] = $item->getDate(['cultureFallback' => true]);
       }
 
       // Write reference code, container name, title, creation dates
       foreach ($informationObject->getPhysicalObjects() as $item)
       {
-        $results[] = array(
+        $results[] = [
           'referenceCode' => $informationObject->referenceCode,
           'physicalObjectName' => $item->__toString(),
           'title' => $informationObject->__toString(),
           'creationDates' => implode($creationDates, '|'),
-        );
+        ];
       }
     }
 
@@ -298,11 +298,11 @@ class arGenerateReportJob extends arBaseJob
       throw new sfException('Unable to open file '.$this->filename.' - please check permissions.');
     }
 
-    fputcsv($fh, array($this->i18n->__('Name'), $this->i18n->__('Location'), $this->i18n->__('Type')));
+    fputcsv($fh, [$this->i18n->__('Name'), $this->i18n->__('Location'), $this->i18n->__('Type')]);
 
     foreach ($results as $item)
     {
-      fputcsv($fh, array($item->name, $item->location, $item->type));
+      fputcsv($fh, [$item->name, $item->location, $item->type]);
     }
 
     fclose($fh);
@@ -329,18 +329,18 @@ class arGenerateReportJob extends arBaseJob
     // Iterate over descriptions and their report results
     foreach ($results as $tldTitle => $items)
     {
-      fputcsv($fh, array($this->i18n->__('Archival description hierarchy:')));
+      fputcsv($fh, [$this->i18n->__('Archival description hierarchy:')]);
 
       // Display hierarchy leading up to the top level of description before report results for items / files
       foreach ($items[0]['resource']->getAncestors()->orderBy('lft') as $ancestor)
       {
         if ($ancestor->id != QubitInformationObject::ROOT_ID)
         {
-          fputcsv($fh, array($ancestor->getTitle(array('cultureFallback' => true))));
+          fputcsv($fh, [$ancestor->getTitle(['cultureFallback' => true])]);
         }
       }
 
-      fputcsv($fh, array('---'));
+      fputcsv($fh, ['---']);
       $first = true;
 
       // Display items or files
@@ -376,7 +376,7 @@ class arGenerateReportJob extends arBaseJob
       return;
     }
 
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Asset', 'Tag', 'Url', 'Qubit'));
+    sfContext::getInstance()->getConfiguration()->loadHelpers(['Asset', 'Tag', 'Url', 'Qubit']);
 
     if (null === $fh = fopen($this->filename, 'w'))
     {
@@ -405,7 +405,7 @@ class arGenerateReportJob extends arBaseJob
    */
   private function getLocationString($resource)
   {
-    $locations = array();
+    $locations = [];
     if (null !== ($physicalObjects = $resource->getPhysicalObjects()))
     {
       foreach ($physicalObjects as $item)
@@ -426,7 +426,7 @@ class arGenerateReportJob extends arBaseJob
   {
     foreach ($resource->getCreationEvents() as $item)
     {
-      if (null != $item->getDate(array('cultureFallback' => true)) || null != $item->startDate)
+      if (null != $item->getDate(['cultureFallback' => true]) || null != $item->startDate)
       {
         return $item;
       }

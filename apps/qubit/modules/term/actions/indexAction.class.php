@@ -22,27 +22,27 @@ class TermIndexAction extends DefaultBrowseAction
   public const INDEX_TYPE = 'QubitInformationObject';
 
   // Arrays not allowed in class constants
-  public static $AGGS = array(
+  public static $AGGS = [
       'languages' =>
-        array('type'  => 'term',
+        ['type'  => 'term',
               'field' => 'i18n.languages',
-              'size'  => 10),
+              'size'  => 10],
       'places' =>
-        array('type'  => 'term',
+        ['type'  => 'term',
               'field' => 'places.id',
-              'size'  => 10),
+              'size'  => 10],
       'subjects' =>
-        array('type'  => 'term',
+        ['type'  => 'term',
               'field' => 'subjects.id',
-              'size'  => 10),
+              'size'  => 10],
       'genres' =>
-        array('type'  => 'term',
+        ['type'  => 'term',
               'field' => 'genres.id',
-              'size'  => 10),
+              'size'  => 10],
       'direct' =>
-        array('type' => 'filter',
+        ['type' => 'filter',
               'field'  => '',
-              'populate' => false));
+              'populate' => false]];
 
   public function checkForRepeatedNames($validator, $value)
   {
@@ -88,10 +88,10 @@ class TermIndexAction extends DefaultBrowseAction
     if (QubitAcl::check($this->resource, 'update'))
     {
       $validatorSchema = new sfValidatorSchema();
-      $values = array();
+      $values = [];
 
-      $validatorSchema->name = new sfValidatorCallback(array('callback' => array($this, 'checkForRepeatedNames')));
-      $values['name'] = $this->resource->getName(array('cultureFallback' => true));
+      $validatorSchema->name = new sfValidatorCallback(['callback' => [$this, 'checkForRepeatedNames']]);
+      $values['name'] = $this->resource->getName(['cultureFallback' => true]);
 
       try
       {
@@ -122,26 +122,26 @@ class TermIndexAction extends DefaultBrowseAction
 
         sfContext::getInstance()->getConfiguration()->loadHelpers('Url', 'Qubit');
 
-        $response = array('results' => array());
+        $response = ['results' => []];
         foreach ($this->listResultSet->getResults() as $item)
         {
           $data = $item->getData();
 
-          $result = array(
-            'url' => url_for(array('module' => 'term', 'slug' => $data['slug'])),
-            'title' => render_title(get_search_i18n($data, 'name')));
+          $result = [
+            'url' => url_for(['module' => 'term', 'slug' => $data['slug']]),
+            'title' => render_title(get_search_i18n($data, 'name'))];
 
           $response['results'][] = $result;
         }
 
         if ($this->listPager->haveToPaginate())
         {
-          $resultCount = $this->context->i18n->__('Results %1% to %2% of %3%', array('%1%' => $this->listPager->getFirstIndice(), '%2%' => $this->listPager->getLastIndice(), '%3%' => $this->listPager->getNbResults()));
+          $resultCount = $this->context->i18n->__('Results %1% to %2% of %3%', ['%1%' => $this->listPager->getFirstIndice(), '%2%' => $this->listPager->getLastIndice(), '%3%' => $this->listPager->getNbResults()]);
 
           $previous = $next = '';
           if (1 < $this->listPager->getPage())
           {
-            $url = url_for(array($this->resource, 'module' => 'term', 'listPage' => $this->listPager->getPage() - 1, 'listLimit' => $request->listLimit));
+            $url = url_for([$this->resource, 'module' => 'term', 'listPage' => $this->listPager->getPage() - 1, 'listLimit' => $request->listLimit]);
             $link = '&laquo; ' . $this->context->i18n->__('Previous');
 
             $previous = <<<EOF
@@ -155,7 +155,7 @@ EOF;
 
           if ($this->listPager->getLastPage() > $this->listPager->getPage())
           {
-            $url = url_for(array($this->resource, 'module' => 'term', 'listPage' => $this->listPager->getPage() + 1, 'listLimit' => $request->listLimit));
+            $url = url_for([$this->resource, 'module' => 'term', 'listPage' => $this->listPager->getPage() + 1, 'listLimit' => $request->listLimit]);
             $link = $this->context->i18n->__('Next') . ' &raquo;';
 
             $next = <<<EOF
@@ -194,34 +194,34 @@ EOF;
         switch ($this->resource->taxonomyId)
         {
           case QubitTaxonomy::PLACE_ID:
-            $query = new \Elastica\Query\Terms('places.id', array($this->resource->id));
-            $this::$AGGS['direct']['field'] = array('directPlaces' => $this->resource->id);
+            $query = new \Elastica\Query\Terms('places.id', [$this->resource->id]);
+            $this::$AGGS['direct']['field'] = ['directPlaces' => $this->resource->id];
 
             if (isset($request->onlyDirect))
             {
-              $queryDirect = new \Elastica\Query\Terms('directPlaces', array($this->resource->id));
+              $queryDirect = new \Elastica\Query\Terms('directPlaces', [$this->resource->id]);
             }
 
             break;
 
           case QubitTaxonomy::SUBJECT_ID:
-            $query = new \Elastica\Query\Terms('subjects.id', array($this->resource->id));
-            $this::$AGGS['direct']['field'] = array('directSubjects' => $this->resource->id);
+            $query = new \Elastica\Query\Terms('subjects.id', [$this->resource->id]);
+            $this::$AGGS['direct']['field'] = ['directSubjects' => $this->resource->id];
 
             if (isset($request->onlyDirect))
             {
-              $queryDirect = new \Elastica\Query\Terms('directSubjects', array($this->resource->id));
+              $queryDirect = new \Elastica\Query\Terms('directSubjects', [$this->resource->id]);
             }
 
             break;
 
           case QubitTaxonomy::GENRE_ID:
-            $query = new \Elastica\Query\Terms('genres.id', array($this->resource->id));
-            $this::$AGGS['direct']['field'] = array('directGenres' => $this->resource->id);
+            $query = new \Elastica\Query\Terms('genres.id', [$this->resource->id]);
+            $this::$AGGS['direct']['field'] = ['directGenres' => $this->resource->id];
 
             if (isset($request->onlyDirect))
             {
-              $queryDirect = new \Elastica\Query\Terms('directGenres', array($this->resource->id));
+              $queryDirect = new \Elastica\Query\Terms('directGenres', [$this->resource->id]);
             }
 
             break;
@@ -239,21 +239,21 @@ EOF;
         switch ($request->sort)
         {
           case 'referenceCode':
-            $this->search->query->setSort(array('referenceCode.untouched' => $request->sortDir));
+            $this->search->query->setSort(['referenceCode.untouched' => $request->sortDir]);
             break;
 
           case 'alphabetic':
             $field = sprintf('i18n.%s.title.alphasort', $this->culture);
-            $this->search->query->setSort(array($field => $request->sortDir));
+            $this->search->query->setSort([$field => $request->sortDir]);
             break;
 
           case 'date':
-            $this->search->query->setSort(array('startDateSort' => $request->sortDir));
+            $this->search->query->setSort(['startDateSort' => $request->sortDir]);
             break;
 
           case 'lastUpdated':
           default:
-            $this->search->query->setSort(array('updatedAt' => $request->sortDir));
+            $this->search->query->setSort(['updatedAt' => $request->sortDir]);
         }
 
         QubitAclSearch::filterDrafts($this->search->queryBool);
@@ -288,7 +288,7 @@ EOF;
 
         foreach (QubitTerm::get($criteria) as $item)
         {
-          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(array('cultureFallback' => true));
+          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
         }
 
         break;
@@ -338,7 +338,7 @@ EOF;
 
     $listQuery = new \Elastica\Query();
     $listQuery->setSize($request->listLimit);
-    $listQuery->setSort(array(sprintf('i18n.%s.name.alphasort', $this->culture) => 'asc'));
+    $listQuery->setSort([sprintf('i18n.%s.name.alphasort', $this->culture) => 'asc']);
 
     if (!empty($request->listPage))
     {
@@ -346,7 +346,7 @@ EOF;
     }
 
     $listQueryBool = new \Elastica\Query\BoolQuery();
-    $listQueryBool->addMust(new \Elastica\Query\Term(array('taxonomyId' => $this->resource->taxonomyId)));
+    $listQueryBool->addMust(new \Elastica\Query\Term(['taxonomyId' => $this->resource->taxonomyId]));
 
     $listQuery->setQuery($listQueryBool);
     $this->listResultSet = QubitSearch::getInstance()->index->getType('QubitTerm')->search($listQuery);

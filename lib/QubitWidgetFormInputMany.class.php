@@ -38,7 +38,7 @@ class QubitWidgetFormInputMany extends sfWidgetFormInput
    *
    * @see sfWidgetForm
    */
-  public function render($name, $value = null, $attributes = array(), $errors = array())
+  public function render($name, $value = null, $attributes = [], $errors = [])
   {
     $inputStr = '';
 
@@ -50,7 +50,7 @@ class QubitWidgetFormInputMany extends sfWidgetFormInput
     }
 
     // http://trac.symfony-project.org/ticket/7208
-    $null = $this->renderTag('input', array('name' => $name, 'type' => 'hidden'));
+    $null = $this->renderTag('input', ['name' => $name, 'type' => 'hidden']);
 
     if (is_array($defaults) && 0 < count($defaults))
     {
@@ -58,7 +58,7 @@ class QubitWidgetFormInputMany extends sfWidgetFormInput
       foreach ($defaults as $key => $default)
       {
         $inputStr .= "\t<li>";
-        if (sfContext::getInstance()->user->getCulture() != $default->sourceCulture && 0 < strlen($source = $default->__get($fieldname, array('sourceCulture' => true))))
+        if (sfContext::getInstance()->user->getCulture() != $default->sourceCulture && 0 < strlen($source = $default->__get($fieldname, ['sourceCulture' => true])))
         {
           $inputStr .= <<<EOF
       <div class="default-translation">
@@ -66,7 +66,7 @@ class QubitWidgetFormInputMany extends sfWidgetFormInput
       </div>
 EOF;
         }
-        $inputStr .= $this->renderTag('input', array_merge(array('type' => $this->getOption('type'), 'name' => $name.'['.$key.']', 'value' => $default->__get($fieldname)), $attributes))."</li>\n";
+        $inputStr .= $this->renderTag('input', array_merge(['type' => $this->getOption('type'), 'name' => $name.'['.$key.']', 'value' => $default->__get($fieldname)], $attributes))."</li>\n";
       }
       $inputStr .= "</ul>\n";
     }
@@ -74,7 +74,7 @@ EOF;
     $attributes['class'] = (isset($attributes['class'])) ? $attributes['class'] + ' multiInput' : 'multiInput';
 
     // Add a new value
-    $new = $this->renderTag('input', array_merge(array('name' => $name.'[new]', 'type' => $this->getOption('type')), $attributes));
+    $new = $this->renderTag('input', array_merge(['name' => $name.'[new]', 'type' => $this->getOption('type')], $attributes));
 
     return $null.$inputStr.$new;
   }
@@ -84,7 +84,7 @@ EOF;
    *
    * @see sfWidgetFormSelect
    */
-  protected function configure($options = array(), $attributes = array())
+  protected function configure($options = [], $attributes = [])
   {
     parent::configure($options, $attributes);
     $this->addRequiredOption('defaults');

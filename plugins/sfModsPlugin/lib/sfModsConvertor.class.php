@@ -5,27 +5,27 @@ class sfModsConvertor extends QubitSaxParser
   protected $resource;
 
   // Name access point-related bookkeeping
-  protected $names = array();
+  protected $names = [];
   protected $name;
   protected $entityType;
   protected $role;
 
   // Origin info bookkeeping
-  protected $places = array();
+  protected $places = [];
   protected $originTypeId;
   protected $originDate;
   protected $originDateStart;
   protected $originDateEnd;
 
   // Misc. import bookkeeping
-  protected $subjects         = array();
-  protected $geographic       = array();
-  protected $typesOfResources = array();
-  protected $genres           = array();
-  protected $languages        = array();
-  protected $notes            = array();
-  protected $materialTypes    = array();
-  protected $digitalObjects   = array();
+  protected $subjects         = [];
+  protected $geographic       = [];
+  protected $typesOfResources = [];
+  protected $genres           = [];
+  protected $languages        = [];
+  protected $notes            = [];
+  protected $materialTypes    = [];
+  protected $digitalObjects   = [];
 
   /*
    * Import helpers
@@ -127,7 +127,7 @@ class sfModsConvertor extends QubitSaxParser
         $this->resource->addProperty(
           'Source URI',
           $this->data(),
-          array('scope' => 'alternativeIdentifiers')
+          ['scope' => 'alternativeIdentifiers']
         );
         break;
 
@@ -135,7 +135,7 @@ class sfModsConvertor extends QubitSaxParser
         $this->resource->addProperty(
           'Source ID',
           $this->data(),
-          array('scope' => 'alternativeIdentifiers')
+          ['scope' => 'alternativeIdentifiers']
         );
         break;
     }
@@ -236,11 +236,11 @@ class sfModsConvertor extends QubitSaxParser
   // </name>
   protected function nameTag()
   {
-    $eventData = array(
+    $eventData = [
       'name' => $this->name,
       'role' => $this->role,
       'type' => $this->entityType
-    );
+    ];
 
     array_push($this->names, $eventData);
   }
@@ -347,10 +347,10 @@ class sfModsConvertor extends QubitSaxParser
     }
     else
     {
-      $this->digitalObjects[] = array(
+      $this->digitalObjects[] = [
         'filename' => $pathParts['basename'],
         'tempFile' => $tempFile
-      );
+      ];
     }
   }
 
@@ -381,7 +381,7 @@ class sfModsConvertor extends QubitSaxParser
   protected function addNote($typeName, $content, $taxonomyId = QubitTaxonomy::NOTE_TYPE_ID)
   {
     $noteTerm = QubitFlatfileImport::createOrFetchTerm($taxonomyId, $typeName);
-    array_push($this->notes, array('typeId' => $noteTerm->id, 'content' => $content));
+    array_push($this->notes, ['typeId' => $noteTerm->id, 'content' => $content]);
   }
 
   protected function addRadNote($typeName, $content)
@@ -408,7 +408,7 @@ class sfModsConvertor extends QubitSaxParser
 
   protected function importGenres($genres)
   {
-    $sanitizedGenres = array();
+    $sanitizedGenres = [];
 
     foreach ($genres as $genre)
     {
@@ -421,7 +421,7 @@ class sfModsConvertor extends QubitSaxParser
 
   protected function importTypesOfResources($typeOfResources)
   {
-    $map = array(
+    $map = [
       'text'                          => 'Textual record',
       'cartographic'                  => 'Cartographic material',
       'notated music'                 => 'Textual record',
@@ -433,9 +433,9 @@ class sfModsConvertor extends QubitSaxParser
       'three dimensional object'      => 'Object',
       'software, multimedia'          => 'Multiple media',
       'mixed material'                => 'Multiple media'
-    );
+    ];
 
-    $typeOfResourceTermNames = $gmdTermNames = array();
+    $typeOfResourceTermNames = $gmdTermNames = [];
 
     // Only existing ones are added
     foreach ($typeOfResources as $typeOfResource)

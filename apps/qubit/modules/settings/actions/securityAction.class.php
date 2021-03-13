@@ -30,10 +30,10 @@
 class SettingsSecurityAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'limit_admin_ip',
       'require_ssl_admin',
-      'require_strong_passwords');
+      'require_strong_passwords'];
 
   public function earlyExecute()
   {
@@ -53,23 +53,23 @@ class SettingsSecurityAction extends SettingsEditAction
     {
       case 'limit_admin_ip':
         $this->form->setWidget($name, new sfWidgetFormInput());
-        $this->form->setValidator($name, new sfValidatorString(array('required' => false)));
+        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
         $labelText = $this->i18n->__('Limit administrator functionality to one or more IP addresses, separated by semicolons.');
         $this->form->getWidgetSchema()->$name->setLabel($labelText);
 
         break;
 
       case 'require_ssl_admin':
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(array('choices' => array(1 => 'yes', 0 => 'no')), array('class' => 'radio')));
-        $this->form->setValidator($name, new sfValidatorInteger(array('required' => false)));
+        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
+        $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
         $labelText = $this->i18n->__('Require SSL for all administrator functionality');
         $this->form->getWidgetSchema()->$name->setLabel($labelText);
 
         break;
 
       case 'require_strong_passwords':
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(array('choices' => array(1 => 'yes', 0 => 'no')), array('class' => 'radio')));
-        $this->form->setValidator($name, new sfValidatorInteger(array('required' => false)));
+        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
+        $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
         $labelText = $this->i18n->__('Require strong passwords');
         $this->form->getWidgetSchema()->$name->setLabel($labelText);
 

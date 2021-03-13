@@ -57,7 +57,7 @@ class InformationObjectListAction extends sfAction
     $this->pager->setMaxPerPage($request->limit);
     $this->pager->setPage($request->page);
 
-    $ids = array();
+    $ids = [];
     foreach ($this->pager->getResults() as $hit)
     {
       $ids[] = $hit->getDocument()->id;

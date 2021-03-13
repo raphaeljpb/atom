@@ -37,7 +37,7 @@ class RightsHolderListAction extends sfAction
     }
     else
     {
-      $this->redirect(array('module' => 'rightsholder', 'action' => 'browse'));
+      $this->redirect(['module' => 'rightsholder', 'action' => 'browse']);
     }
 
     // Page results

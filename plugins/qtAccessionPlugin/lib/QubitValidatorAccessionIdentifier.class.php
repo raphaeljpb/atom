@@ -32,7 +32,7 @@ class QubitValidatorAccessionIdentifier extends sfValidatorBase
 
     return (0 == count(QubitAccession::get($criteria)));
   }
-  protected function configure($options = array(), $messages = array())
+  protected function configure($options = [], $messages = [])
   {
     parent::configure($options, $messages);
 
@@ -47,6 +47,6 @@ class QubitValidatorAccessionIdentifier extends sfValidatorBase
       return $value;
     }
 
-    throw new sfValidatorError($this, sfContext::getInstance()->i18n->__('This identifer is already in use.'), array('value' => $value));
+    throw new sfValidatorError($this, sfContext::getInstance()->i18n->__('This identifer is already in use.'), ['value' => $value]);
   }
 }

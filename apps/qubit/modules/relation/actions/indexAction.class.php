@@ -36,7 +36,7 @@ class RelationIndexAction extends sfAction
 
     $this->resource = $this->getRoute()->resource;
 
-    $value = array();
+    $value = [];
 
     $value['date'] = $this->resource->date;
     $value['endDate'] = Qubit::renderDate($this->resource->endDate);
@@ -45,13 +45,13 @@ class RelationIndexAction extends sfAction
 
     if (isset($this->resource->object))
     {
-      $value['object'] = $this->context->routing->generate(null, array($this->resource->object));
+      $value['object'] = $this->context->routing->generate(null, [$this->resource->object]);
       $value['objectDisplay'] = strval($this->resource->object);
     }
 
     if (isset($this->resource->subject))
     {
-      $value['subject'] = $this->context->routing->generate(null, array($this->resource->subject));
+      $value['subject'] = $this->context->routing->generate(null, [$this->resource->subject]);
       $value['subjectDisplay'] = strval($this->resource->subject);
     }
 
@@ -60,18 +60,18 @@ class RelationIndexAction extends sfAction
       if ($this->resource->type->taxonomyId == QubitTaxonomy::ACTOR_RELATION_TYPE_ID &&
         $this->resource->type->parentId != QubitTerm::ROOT_ID)
       {
-        $value['type'] = $this->context->routing->generate(null, array($this->resource->type->parent, 'module' => 'term'));
-        $value['subType'] = $this->context->routing->generate(null, array($this->resource->type, 'module' => 'term'));
+        $value['type'] = $this->context->routing->generate(null, [$this->resource->type->parent, 'module' => 'term']);
+        $value['subType'] = $this->context->routing->generate(null, [$this->resource->type, 'module' => 'term']);
 
         $value['converseSubType'] = '';
-        if (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($this->resource->type->id, array('typeId' => QubitTerm::CONVERSE_TERM_ID))))
+        if (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($this->resource->type->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID])))
         {
-          $value['converseSubType'] = $this->context->routing->generate(null, array($converseTerms[0]->getOpposedObject($this->resource->type), 'module' => 'term'));
+          $value['converseSubType'] = $this->context->routing->generate(null, [$converseTerms[0]->getOpposedObject($this->resource->type), 'module' => 'term']);
         }
       }
       else
       {
-        $value['type'] = $this->context->routing->generate(null, array($this->resource->type, 'module' => 'term'));
+        $value['type'] = $this->context->routing->generate(null, [$this->resource->type, 'module' => 'term']);
       }
     }
 

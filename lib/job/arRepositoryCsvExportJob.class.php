@@ -31,7 +31,7 @@ class arRepositoryCsvExportJob extends arExportJob
    */
   protected $downloadFileExtension = 'zip';
   protected $search;
-  protected $params = array();
+  protected $params = [];
 
   public function runJob($parameters)
   {
@@ -44,17 +44,17 @@ class arRepositoryCsvExportJob extends arExportJob
     $tempPath = $this->createJobTempDir();
 
     // Export CSV to temp directory
-    $this->info($this->i18n->__('Starting export to %1', array('%1' => $tempPath)));
+    $this->info($this->i18n->__('Starting export to %1', ['%1' => $tempPath]));
 
     if (-1 === $itemsExported = $this->exportResults($tempPath))
     {
       return false;
     }
 
-    $this->info($this->i18n->__('Exported %1 repositories.', array('%1' => $itemsExported)));
+    $this->info($this->i18n->__('Exported %1 repositories.', ['%1' => $itemsExported]));
 
     // Compress CSV export files as a ZIP archive
-    $this->info($this->i18n->__('Creating ZIP file %1', array('%1' => $this->getDownloadFilePath())));
+    $this->info($this->i18n->__('Creating ZIP file %1', ['%1' => $this->getDownloadFilePath()]));
     $errors = $this->createZipForDownload($tempPath);
 
     if (!empty($errors))
@@ -94,7 +94,7 @@ class arRepositoryCsvExportJob extends arExportJob
     {
       if (null === $resource = QubitRepository::getById($id))
       {
-        $this->error($this->i18n->__('Cannot fetch repository, id: %1', array('%1' => $id)));
+        $this->error($this->i18n->__('Cannot fetch repository, id: %1', ['%1' => $id]));
         return -1;
       }
 
@@ -103,7 +103,7 @@ class arRepositoryCsvExportJob extends arExportJob
       // Log progress every 1000 rows
       if ($itemsExported && ($itemsExported % 1000 == 0))
       {
-        $this->info($this->i18n->__('%1 items exported.', array('%1' => $itemsExported)));
+        $this->info($this->i18n->__('%1 items exported.', ['%1' => $itemsExported]));
       }
 
       $itemsExported++;

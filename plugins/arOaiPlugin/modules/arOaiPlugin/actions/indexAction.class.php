@@ -26,7 +26,7 @@
  */
 class arOaiPluginIndexAction extends sfAction
 {
-  public $oaiErrorArr = array(
+  public $oaiErrorArr = [
     'badArgument' => 'The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax.',
     'badResumptionToken' => 'The value of the resumptionToken argument is invalid or expired.',
     'badVerb' => 'Value of the verb argument is not a legal OAI-PMH verb, the verb argument is missing, or the verb argument is repeated.',
@@ -35,9 +35,9 @@ class arOaiPluginIndexAction extends sfAction
     'noRecordsMatch' => 'The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.',
     'noMetadataFormats' => 'There are no metadata formats available for the specified item.',
     'noSetHierarchy' => 'The repository does not support sets.'
-  );
+  ];
 
-  public $oaiVerbArr = array('Identify', 'ListMetadataFormats', 'ListSets', 'ListRecords', 'ListIdentifiers', 'GetRecord');
+  public $oaiVerbArr = ['Identify', 'ListMetadataFormats', 'ListSets', 'ListRecords', 'ListIdentifiers', 'GetRecord'];
 
   /**
    * Executes action
@@ -57,7 +57,7 @@ class arOaiPluginIndexAction extends sfAction
     // If auth key specified or authentication is required then attempt to
     // authenticate, responding with 403 if authentication fails. X-OAI-API-Key
     // is an old name but we still check for backward compatibility.
-    $requestOaiApiKey = Qubit::getHttpHeader(array('OAI-API-Key', 'X-OAI-API-Key'));
+    $requestOaiApiKey = Qubit::getHttpHeader(['OAI-API-Key', 'X-OAI-API-Key']);
 
     if (!empty($requestOaiApiKey) || null !== $authenticationRequiredSetting && $authenticationRequiredSetting->value)
     {
@@ -208,7 +208,7 @@ class arOaiPluginIndexAction extends sfAction
       $this->sendResumptionTokenError($request);
     }
 
-    $settableAttributes = array('from', 'until', 'cursor', 'set', 'metadataPrefix');
+    $settableAttributes = ['from', 'until', 'cursor', 'set', 'metadataPrefix'];
 
     foreach ($settableAttributes as $attribute)
     {

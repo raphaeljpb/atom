@@ -6,7 +6,7 @@
         <?php if (isset($resource) && $object == $resource): ?>
           <li class="active"><span><?php echo render_title($object) ?></span></li>
         <?php else: ?>
-          <li><?php echo link_to(render_title($object), array($object, 'module' => 'informationobject')) ?></li>
+          <li><?php echo link_to(render_title($object), [$object, 'module' => 'informationobject']) ?></li>
         <?php endif; ?>
       <?php endif; ?>
     <?php endforeach; ?>

@@ -19,16 +19,16 @@
 
 class AclGroupEditActorAclAction extends AclGroupEditDefaultAclAction
 {
-  public static $NAMES = array(
+  public static $NAMES = [
     'actor'
-  );
+  ];
 
   public function execute($request)
   {
     parent::execute($request);
 
     // Always include root actor permissions
-    $this->actors = array(QubitActor::ROOT_ID => null);
+    $this->actors = [QubitActor::ROOT_ID => null];
 
     // Get actor permissions for this resource
     $criteria = new Criteria();
@@ -56,7 +56,7 @@ class AclGroupEditActorAclAction extends AclGroupEditDefaultAclAction
       if ($this->form->isValid())
       {
         $this->processForm();
-        $this->redirect(array($this->resource, 'module' => 'aclGroup', 'action' => 'indexActorAcl'));
+        $this->redirect([$this->resource, 'module' => 'aclGroup', 'action' => 'indexActorAcl']);
       }
     }
   }

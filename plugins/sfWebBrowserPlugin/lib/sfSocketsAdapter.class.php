@@ -19,11 +19,11 @@
  */
 class sfSocketsAdapter
 {
-  protected $options             = array();
+  protected $options             = [];
   protected $adapterErrorMessage = null;
   protected $browser             = null;
 
-  public function __construct($options = array())
+  public function __construct($options = [])
   {
     $this->options = $options;
   }
@@ -38,9 +38,9 @@ class sfSocketsAdapter
    *
    * @return sfWebBrowser The current browser object
    */
-  public function call($browser, $uri, $method = 'GET', $parameters = array(), $headers = array())
+  public function call($browser, $uri, $method = 'GET', $parameters = [], $headers = [])
   {
-    $m_headers = array_merge(array('Content-Type' => 'application/x-www-form-urlencoded'), $browser->getDefaultRequestHeaders(), $browser->initializeRequestHeaders($headers));
+    $m_headers = array_merge(['Content-Type' => 'application/x-www-form-urlencoded'], $browser->getDefaultRequestHeaders(), $browser->initializeRequestHeaders($headers));
     $request_headers = $browser->prepareHeaders($m_headers);
 
     $url_info = parse_url($uri);
@@ -109,7 +109,7 @@ class sfSocketsAdapter
     $status_line = array_shift($response_lines);
 
     $start_body = false;
-    $response_headers = array();
+    $response_headers = [];
     for($i=0; $i<count($response_lines); $i++)
     {
       // grab body

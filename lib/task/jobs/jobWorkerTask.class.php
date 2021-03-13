@@ -39,15 +39,15 @@ class jobWorkerTask extends arBaseTask
   }
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'worker'),
       new sfCommandOption('types', null, sfCommandOption::PARAMETER_REQUIRED, 'Type of jobs to perform (check config/gearman.yml for details)', ''),
       new sfCommandOption('abilities', null, sfCommandOption::PARAMETER_REQUIRED, 'A comma separated string indicating which jobs this worker can do.', '')
-    ));
+    ]);
 
-    $this->addArguments(array(
-    ));
+    $this->addArguments([
+    ]);
 
     $this->namespace        = 'jobs';
     $this->name             = 'worker';
@@ -57,13 +57,13 @@ Usage: php symfony [jobs:worker|INFO] [--abilities="myAbility1, myAbility2, ..."
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $configuration = ProjectConfiguration::getApplicationConfiguration($options['application'], $options['env'], false);
     $context = sfContext::createInstance($configuration);
 
     // Using the current context, get the event dispatcher and suscribe an event in it
-    $context->getEventDispatcher()->connect('gearman.worker.log', array($this, 'gearmanWorkerLogger'));
+    $context->getEventDispatcher()->connect('gearman.worker.log', [$this, 'gearmanWorkerLogger']);
 
     // QubitSetting are not available for tasks? See lib/SiteSettingsFilter.class.php
     sfConfig::add(QubitSetting::getSettingsArray());
@@ -77,7 +77,7 @@ EOF;
     }
     else
     {
-      $opts = array();
+      $opts = [];
       if (0 < strlen($options['types']))
       {
         $opts['types'] = $options['types'];

@@ -28,7 +28,7 @@ class SearchAutocompleteAction extends sfAction
   public function execute($request)
   {
     // Store user query string, erase wildcards
-    $this->queryString = strtr($request->query, array('*' => '', '?' => ''));
+    $this->queryString = strtr($request->query, ['*' => '', '?' => '']);
 
     // If the query is empty, don't query
     if (1 === preg_match('/^[\s\t\r\n]*$/', $this->queryString))
@@ -48,29 +48,29 @@ class SearchAutocompleteAction extends sfAction
     // Multisearch object
     $mSearch = new \Elastica\Multi\Search($client);
 
-    foreach (array(
-      array(
+    foreach ([
+      [
         'type' => 'QubitInformationObject',
         'field' => sprintf('i18n.%s.title', $culture),
-        'fields' => array('slug', sprintf('i18n.%s.title', $culture), 'levelOfDescriptionId')),
-      array(
+        'fields' => ['slug', sprintf('i18n.%s.title', $culture), 'levelOfDescriptionId']],
+      [
         'type' => 'QubitRepository',
         'field' => sprintf('i18n.%s.authorizedFormOfName', $culture),
-        'fields' => array('slug', sprintf('i18n.%s.authorizedFormOfName', $culture))),
-      array(
+        'fields' => ['slug', sprintf('i18n.%s.authorizedFormOfName', $culture)]],
+      [
         'type' => 'QubitActor',
         'field' => sprintf('i18n.%s.authorizedFormOfName', $culture),
-        'fields' => array('slug', sprintf('i18n.%s.authorizedFormOfName', $culture))),
-      array(
+        'fields' => ['slug', sprintf('i18n.%s.authorizedFormOfName', $culture)]],
+      [
         'type' => 'QubitTerm',
         'field' => sprintf('i18n.%s.name', $culture),
-        'fields' => array('slug', sprintf('i18n.%s.name', $culture)),
-        'term_filter' => array('taxonomyId' => QubitTaxonomy::PLACE_ID)),
-      array(
+        'fields' => ['slug', sprintf('i18n.%s.name', $culture)],
+        'term_filter' => ['taxonomyId' => QubitTaxonomy::PLACE_ID]],
+      [
         'type' => 'QubitTerm',
         'field' => sprintf('i18n.%s.name', $culture),
-        'fields' => array('slug', sprintf('i18n.%s.name', $culture)),
-        'term_filter' => array('taxonomyId' => QubitTaxonomy::SUBJECT_ID))) as $item)
+        'fields' => ['slug', sprintf('i18n.%s.name', $culture)],
+        'term_filter' => ['taxonomyId' => QubitTaxonomy::SUBJECT_ID]]] as $item)
     {
       $search = new \Elastica\Search($client);
       $search
@@ -97,7 +97,7 @@ class SearchAutocompleteAction extends sfAction
 
       if (isset($request->repos) && ctype_digit($request->repos) && 'QubitInformationObject' == $item['type'])
       {
-        $queryBool->addMust(new \Elastica\Query\Term(array('repository.id' => $request->repos)));
+        $queryBool->addMust(new \Elastica\Query\Term(['repository.id' => $request->repos]));
 
         // Store realm in user session
         $this->context->user->setAttribute('search-realm', $request->repos);
@@ -152,8 +152,8 @@ class SearchAutocompleteAction extends sfAction
         WHERE
           t.taxonomy_id = ?';
 
-      $this->levelsOfDescription = array();
-      foreach (QubitPdo::fetchAll($sql, array($this->context->user->getCulture(), QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID)) as $item)
+      $this->levelsOfDescription = [];
+      foreach (QubitPdo::fetchAll($sql, [$this->context->user->getCulture(), QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID]) as $item)
       {
         $this->levelsOfDescription[$item->id] = $item->name;
       }

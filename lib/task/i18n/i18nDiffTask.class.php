@@ -36,7 +36,7 @@ class i18nDiffTask extends sfBaseTask
    * @see sfTask
    * @see sfI18nExtract
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $output = "";
 
@@ -63,18 +63,18 @@ class i18nDiffTask extends sfBaseTask
     }
 
     // Column headers
-    $rows[0] = array('Action', 'Source', 'Target');
+    $rows[0] = ['Action', 'Source', 'Target'];
 
     // Old messages
     foreach ($this->getOldTranslations($extract) as $source=>$target)
     {
-      $rows[] = array('Removed', $source, $target);
+      $rows[] = ['Removed', $source, $target];
     }
 
     // New messages
     foreach ($extract->getNewMessages() as $message)
     {
-      $rows[] = array('Added', $message);
+      $rows[] = ['Added', $message];
     }
 
     // Choose output format
@@ -139,15 +139,15 @@ class i18nDiffTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'),
       new sfCommandArgument('culture', sfCommandArgument::REQUIRED, 'The target culture'),
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('file', 'f', sfCommandOption::PARAMETER_OPTIONAL, 'Specify a destination filename for writing output', 'stdout'),
       new sfCommandOption('format', 'o', sfCommandOption::PARAMETER_OPTIONAL, 'Specify an output format (currently only supports csv & tab-delimited)', self::FORMAT_CSV)
-    ));
+    ]);
 
     $this->namespace = 'i18n';
     $this->name = 'diff';

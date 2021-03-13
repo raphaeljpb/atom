@@ -38,11 +38,11 @@ class arMigration0183
    */
   public function up($configuration)
   {
-    $alterTables = array(
+    $alterTables = [
       'ALTER TABLE `information_object` MODIFY `lft` INTEGER, MODIFY `rgt` INTEGER;',
       'ALTER TABLE `menu` MODIFY `lft` INTEGER, MODIFY `rgt` INTEGER;',
       'ALTER TABLE `term` MODIFY `lft` INTEGER, MODIFY `rgt` INTEGER;',
-    );
+    ];
 
     foreach ($alterTables as $sql)
     {

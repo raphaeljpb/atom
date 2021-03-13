@@ -27,7 +27,7 @@
 class QubitInformationObjectAcl extends QubitAcl
 {
   // Add viewDraft and publish actions to list
-  public static $ACTIONS = array(
+  public static $ACTIONS = [
     'read' => 'Read',
     'create' => 'Create',
     'update' => 'Update',
@@ -38,7 +38,7 @@ class QubitInformationObjectAcl extends QubitAcl
     'readMaster' => 'Access master',
     'readReference' => 'Access reference',
     'readThumbnail' => 'Access thumbnail'
-  );
+  ];
 
   // For information objects check parent authorization for create OR publish
   // actions
@@ -55,7 +55,7 @@ class QubitInformationObjectAcl extends QubitAcl
    *
    * @return bool true if the access request is authorized
    */
-  public static function isAllowed($user, $resource, $action, $options = array())
+  public static function isAllowed($user, $resource, $action, $options = [])
   {
     if ('read' == $action)
     {
@@ -84,7 +84,7 @@ class QubitInformationObjectAcl extends QubitAcl
    *
    * @return bool true if the access request is authorized
    */
-  private static function isReadAllowed($user, $resource, $action, $options = array())
+  private static function isReadAllowed($user, $resource, $action, $options = [])
   {
     if (null === $resource->getPublicationStatus())
     {

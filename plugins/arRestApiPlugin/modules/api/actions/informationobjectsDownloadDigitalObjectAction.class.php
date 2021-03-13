@@ -51,7 +51,7 @@ class ApiInformationObjectsDownloadDigitalObjectAction extends QubitApiAction
     }
 
     // Check that a master or external digital object exists
-    $digitalObjectTypes = array(QubitTerm::MASTER_ID, QubitTerm::EXTERNAL_URI_ID);
+    $digitalObjectTypes = [QubitTerm::MASTER_ID, QubitTerm::EXTERNAL_URI_ID];
     $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitDigitalObject::USAGE_ID, $digitalObjectTypes, Criteria::IN);

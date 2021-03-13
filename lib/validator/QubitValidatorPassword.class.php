@@ -19,7 +19,7 @@
 
 class QubitValidatorPassword extends sfValidatorString
 {
-  protected function configure($options = array(), $messages = array())
+  protected function configure($options = [], $messages = [])
   {
     parent::configure($options, $messages);
 
@@ -59,7 +59,7 @@ class QubitValidatorPassword extends sfValidatorString
     // If less than three checks were passed
     if ($score < 3)
     {
-      throw new sfValidatorError($this, 'invalid', array('value' => null));
+      throw new sfValidatorError($this, 'invalid', ['value' => null]);
     }
 
     return $value;

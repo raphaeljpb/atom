@@ -25,7 +25,7 @@ class DigitalObjectUploadAction extends sfAction
 
     $uploadLimt = -1;
     $diskUsage = 0;
-    $uploadFiles = array();
+    $uploadFiles = [];
     $warning = null;
 
     $this->object = QubitObject::getBySlug($request->parentSlug);
@@ -47,7 +47,7 @@ class DigitalObjectUploadAction extends sfAction
       QubitAcl::forwardToSecureAction();
     }
 
-    $repo = $this->object->getRepository(array('inherit' => true));
+    $repo = $this->object->getRepository(['inherit' => true]);
 
     if (isset($repo))
     {
@@ -64,13 +64,13 @@ class DigitalObjectUploadAction extends sfAction
     {
       if (null != $repo && 0 <= $uploadLimit && $uploadLimit < $diskUsage + $file['size'])
       {
-        $uploadFiles = array('error' => $this->context->i18n->__(
-          '%1% upload limit of %2% GB exceeded for %3%', array(
+        $uploadFiles = ['error' => $this->context->i18n->__(
+          '%1% upload limit of %2% GB exceeded for %3%', [
             '%1%' => sfConfig::get('app_ui_label_digitalobject'),
             '%2%' => $repo->uploadLimit,
-            '%4%' => $this->context->routing->generate(null, array($repo, 'module' => 'repository')),
-            '%3%' => $repo->__toString())
-        ));
+            '%4%' => $this->context->routing->generate(null, [$repo, 'module' => 'repository']),
+            '%3%' => $repo->__toString()]
+        )];
 
         continue;
       }
@@ -81,7 +81,7 @@ class DigitalObjectUploadAction extends sfAction
       }
       catch (Exception $e)
       {
-        $uploadFile = array('error' => $e->getMessage());
+        $uploadFile = ['error' => $e->getMessage()];
 
         continue;
       }
@@ -91,12 +91,12 @@ class DigitalObjectUploadAction extends sfAction
       $tmpFileName = basename($tmpFilePath);
       $tmpFileMimeType = QubitDigitalObject::deriveMimeType($tmpFileName);
 
-      $uploadFiles = array(
+      $uploadFiles = [
         'name' => $file['name'],
         'md5sum' => md5_file($tmpFilePath),
         'size' => hr_filesize($file['size']),
         'tmpName' => $tmpFileName,
-        'warning' => $warning);
+        'warning' => $warning];
 
       // Keep running total of disk usage
       $diskUsage += $file['size'];

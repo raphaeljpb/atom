@@ -16,7 +16,7 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array('module' => 'settings', 'action' => 'privacyNotification'))) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'settings', 'action' => 'privacyNotification'])) ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -31,11 +31,11 @@
           ->renderRow() ?>
 
         <?php echo get_partial('settings/i18n_form_field',
-          array(
+          [
             'name' => 'privacy_notification',
             'label' => __('Privacy Notification Message'),
             'settings' => $settings,
-            'form' => $form)) ?>
+            'form' => $form]) ?>
 
       </fieldset>
 

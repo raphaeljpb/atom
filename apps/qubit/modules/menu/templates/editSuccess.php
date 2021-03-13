@@ -8,7 +8,7 @@
       <?php echo __('Add new menu') ?>
     <?php endif; ?>
     <?php if (isset($sf_request->id)): ?>
-      <span class="sub"><?php echo $menu->getName(array('sourceCulture' => true)) ?></h1>
+      <span class="sub"><?php echo $menu->getName(['sourceCulture' => true]) ?></h1>
     <?php endif; ?>
   </h1>
 <?php end_slot() ?>
@@ -18,9 +18,9 @@
   <?php echo $form->renderGlobalErrors() ?>
 
   <?php if (isset($sf_request->id)): ?>
-    <?php echo $form->renderFormTag(url_for(array($menu, 'module' => 'menu', 'action' => 'edit'))) ?>
+    <?php echo $form->renderFormTag(url_for([$menu, 'module' => 'menu', 'action' => 'edit'])) ?>
   <?php else: ?>
-    <?php echo $form->renderFormTag(url_for(array('module' => 'menu', 'action' => 'add'))) ?>
+    <?php echo $form->renderFormTag(url_for(['module' => 'menu', 'action' => 'add'])) ?>
   <?php endif; ?>
 
     <?php echo $form->renderHiddenFields() ?>
@@ -65,9 +65,9 @@
 
     <section class="actions">
       <ul>
-        <li><?php echo link_to(__('Cancel'), array('module' => 'menu', 'action' => 'list'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), ['module' => 'menu', 'action' => 'list'], ['class' => 'c-btn']) ?></li>
         <?php if (!$menu->isProtected() && isset($menu->id)): ?>
-          <li><?php echo link_to(__('Delete'), array($menu, 'module' => 'menu', 'action' => 'delete'), array('class' => 'c-btn c-btn-delete')) ?></li>
+          <li><?php echo link_to(__('Delete'), [$menu, 'module' => 'menu', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete']) ?></li>
         <?php endif; ?>
         <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
       </ul>

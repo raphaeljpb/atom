@@ -12,8 +12,8 @@
 
 <?php slot('content') ?>
 
-  <?php echo $form->renderFormTag(url_for(array(
-    $resource, 'module' => 'informationobject', 'action' => 'calculateDates')
+  <?php echo $form->renderFormTag(url_for([
+    $resource, 'module' => 'informationobject', 'action' => 'calculateDates']
   )) ?>
 
     <div id="content">
@@ -42,8 +42,8 @@
       <ul>
         <li><?php echo link_to(
           __('Cancel'),
-          array($resource, 'module' => 'informationobject'),
-          array('class' => 'c-btn')
+          [$resource, 'module' => 'informationobject'],
+          ['class' => 'c-btn']
         ) ?></li>
       </ul>
     </section>

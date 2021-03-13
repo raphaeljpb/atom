@@ -35,9 +35,9 @@ class DonorPrimaryContactAction extends sfAction
       $this->forward404();
     }
 
-    $data = array();
+    $data = [];
 
-    foreach (array(
+    foreach ([
       'city',
       'contactPerson',
       'countryCode',
@@ -51,7 +51,7 @@ class DonorPrimaryContactAction extends sfAction
       'fax',
       'latitude',
       'longitude',
-      'note') as $field)
+      'note'] as $field)
     {
       if (isset($primaryContactInformation->$field))
       {

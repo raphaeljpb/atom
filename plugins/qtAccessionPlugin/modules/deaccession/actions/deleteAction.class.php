@@ -41,7 +41,7 @@ class DeaccessionDeleteAction extends sfAction
 
         $this->resource->delete();
 
-        $this->redirect(array($accession, 'module' => 'accession'));
+        $this->redirect([$accession, 'module' => 'accession']);
       }
     }
   }

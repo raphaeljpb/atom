@@ -58,7 +58,7 @@ class sfRadPlugin implements ArrayAccess
   {
     $args = func_get_args();
 
-    $options = array();
+    $options = [];
     if (1 < count($args))
     {
       $options = $args[1];
@@ -94,7 +94,7 @@ class sfRadPlugin implements ArrayAccess
 
       case 'languageNotes':
 
-        return $this->resource->getNotesByType(array('noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID))->offsetGet(0);
+        return $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
 
     }
   }
@@ -125,7 +125,7 @@ class sfRadPlugin implements ArrayAccess
 
       case 'languageNotes':
 
-        $note = $this->resource->getNotesByType(array('noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID))->offsetGet(0);
+        $note = $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
         $missingNote = count($note) === 0;
 
         if (0 == strlen($value))
@@ -158,28 +158,28 @@ class sfRadPlugin implements ArrayAccess
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__isset'), $args);
+    return call_user_func_array([$this, '__isset'], $args);
   }
 
   public function offsetGet($offset)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__get'), $args);
+    return call_user_func_array([$this, '__get'], $args);
   }
 
   public function offsetSet($offset, $value)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__set'), $args);
+    return call_user_func_array([$this, '__set'], $args);
   }
 
   public function offsetUnset($offset)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__unset'), $args);
+    return call_user_func_array([$this, '__unset'], $args);
   }
 
   protected function property($name)

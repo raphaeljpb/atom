@@ -155,7 +155,7 @@ class QubitMigrate109 extends QubitMigrate
         {
           if (isset($value['path']))
           {
-            $this->data['QubitMenu'][$key]['path'] = str_replace(array('create', 'duplicate'), array('add', 'copy'), $value['path']);
+            $this->data['QubitMenu'][$key]['path'] = str_replace(['create', 'duplicate'], ['add', 'copy'], $value['path']);
           }
         }
 
@@ -278,7 +278,7 @@ class QubitMigrate109 extends QubitMigrate
       return $this;
     }
 
-    $slug = array();
+    $slug = [];
     foreach ($this->data['QubitSlug'] as $item)
     {
       $slug[$item['object_id']] = $item['slug'];
@@ -360,12 +360,12 @@ class QubitMigrate109 extends QubitMigrate
         continue;
       }
 
-      $otherName = array(
+      $otherName = [
         'object_id' => $row['subject_id'],
         'type_id' => $row['type_id'],
         'source_culture' => $eqTerm['source_culture'],
         'name' => $eqTerm['name']
-      );
+      ];
 
       $this->data['QubitOtherName'][rand()] = $otherName;
       unset($this->data['QubitRelation'][$key]);
@@ -387,7 +387,7 @@ class QubitMigrate109 extends QubitMigrate
     {
       $this->data['QubitTerm'][$key]['id'] = '<?php echo QubitTerm::ALTERNATIVE_LABEL_ID."\n" ?>';
       $this->data['QubitTerm'][$key]['source_culture'] = 'en';
-      $this->data['QubitTerm'][$key]['name'] = array('en' => 'alternative label');
+      $this->data['QubitTerm'][$key]['name'] = ['en' => 'alternative label'];
     }
 
     return $this;
@@ -401,7 +401,7 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function activateEacIsaarIsdiahAndSkosPlugins()
   {
-    $plugins = array('sfEacPlugin', 'sfIsaarPlugin', 'sfIsdiahPlugin', 'sfSkosPlugin');
+    $plugins = ['sfEacPlugin', 'sfIsaarPlugin', 'sfIsdiahPlugin', 'sfSkosPlugin'];
 
     // Find setting
     $found = false;
@@ -420,7 +420,7 @@ class QubitMigrate109 extends QubitMigrate
     if (!$found)
     {
       // No setting, add one
-      $value = array();
+      $value = [];
       $value['name'] = 'plugins';
       $value['source_culture'] = 'en';
       $value['value']['en'] = serialize($plugins);
@@ -459,10 +459,10 @@ class QubitMigrate109 extends QubitMigrate
   {
     if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_checkForUpdates'))
     {
-      $this->data['QubitSetting']['QubitSetting_checkForUpdates'] = array(
+      $this->data['QubitSetting']['QubitSetting_checkForUpdates'] = [
         'name' => 'check_for_updates',
         'value' => 1
-      );
+      ];
     }
 
     return $this;
@@ -476,7 +476,7 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function updateFunctionRelationTaxonomyName()
   {
-    if ($key = $this->getRowKey('QubitTaxonomy', 'name', array('en' => 'ISDF Relation Type')))
+    if ($key = $this->getRowKey('QubitTaxonomy', 'name', ['en' => 'ISDF Relation Type']))
     {
       $this->data['QubitTaxonomy'][$key]['name']['en'] = 'Function Relation Type';
     }
@@ -491,14 +491,14 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function guessSourceStandard()
   {
-    $standards = array(
+    $standards = [
       'dc' => 'Dublin Core Simple version 1.1',
       'isad' => 'ISAD(G) 2nd edition',
       'isaar' => 'ISAAR(CPF) 2nd edition',
       'isdiah' => 'ICA-ISDIAH 1st edition',
       'mods' => 'MODS version 3.3',
       'rad' => 'RAD version Jul2008'
-    );
+    ];
 
     foreach ($this->data['QubitSetting'] as $key => $row)
     {
@@ -537,7 +537,7 @@ class QubitMigrate109 extends QubitMigrate
       {
         foreach ($this->data[$className] as $key2 => $row2)
         {
-          if (!isset($row2['source_standard']) && false === strpos(@$row2['id'], 'ROOT_ID') && !in_array(@$row2['id'], array(QubitInformationObject::ROOT_ID, QubitActor::ROOT_ID, QubitRepository::ROOT_ID)))
+          if (!isset($row2['source_standard']) && false === strpos(@$row2['id'], 'ROOT_ID') && !in_array(@$row2['id'], [QubitInformationObject::ROOT_ID, QubitActor::ROOT_ID, QubitRepository::ROOT_ID]))
           {
             $this->data[$className][$key2]['source_standard'] = $standard;
           }
@@ -557,10 +557,10 @@ class QubitMigrate109 extends QubitMigrate
   {
     if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_explodeMultipageFiles'))
     {
-      $this->data['QubitSetting']['QubitSetting_explodeMultipageFiles'] = array(
+      $this->data['QubitSetting']['QubitSetting_explodeMultipageFiles'] = [
         'name' => 'explode_multipage_files',
         'value' => 0
-      );
+      ];
     }
 
     return $this;
@@ -575,10 +575,10 @@ class QubitMigrate109 extends QubitMigrate
   {
     if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_showTooltips'))
     {
-      $this->data['QubitSetting']['QubitSetting_showTooltips'] = array(
+      $this->data['QubitSetting']['QubitSetting_showTooltips'] = [
         'name' => 'show_tooltips',
         'value' => 1
-      );
+      ];
     }
 
     return $this;
@@ -591,17 +591,17 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function addFunctionUiLabel()
   {
-    $this->data['QubitSetting']['function_ui_label'] = array(
+    $this->data['QubitSetting']['function_ui_label'] = [
       'name' => 'function',
       'scope' => 'ui_label',
       'editable' => 1,
       'deleteable' => 0,
       'source_culture' => 'en',
-      'value' => array(
+      'value' => [
         'en' => 'Function',
         'es' => 'Función',
         'fr' => 'Fonction',
-        'pt' => 'Funçao'));
+        'pt' => 'Funçao']];
 
     return $this;
   }
@@ -614,12 +614,12 @@ class QubitMigrate109 extends QubitMigrate
   protected function addDescriptionUpdatesToAdminMenu()
   {
     // $recentUpdatesMenu = array(
-    $this->data['QubitMenu']['QubitMenu_admin_descriptionUpdates'] = array(
+    $this->data['QubitMenu']['QubitMenu_admin_descriptionUpdates'] = [
       'parent_id' => '<?php echo QubitMenu::ADMIN_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => 'descriptionUpdates',
-      'label' => array('en' => 'Description updates'),
-      'path' => 'search/descriptionUpdates');
+      'label' => ['en' => 'Description updates'],
+      'path' => 'search/descriptionUpdates'];
 
     return $this;
   }
@@ -631,11 +631,11 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function addDefaultPubStatusSetting()
   {
-    $this->data['QubitSetting']['QubitSetting_default_pub_status'] = array(
+    $this->data['QubitSetting']['QubitSetting_default_pub_status'] = [
       'name' => 'defaultPubStatus',
       'editable' => 1,
       'value' => '<?php echo QubitTerm::PUBLICATION_STATUS_DRAFT_ID."\n" ?>'
-    );
+    ];
 
     return $this;
   }
@@ -657,7 +657,7 @@ class QubitMigrate109 extends QubitMigrate
 
       if (false === $this->getRowKey('QubitStatus', 'object_id', $key))
       {
-        $keys = array($key);
+        $keys = [$key];
 
         // Build array of all descriptions from the current one until we reach
         // an ancestor with a publication status
@@ -679,7 +679,7 @@ class QubitMigrate109 extends QubitMigrate
         // Duplicate ancestor's publication status
         if ($statusKey)
         {
-          $status = array();
+          $status = [];
           $status['type_id'] = $this->data['QubitStatus'][$statusKey]['type_id'];
           $status['status_id'] = $this->data['QubitStatus'][$statusKey]['status_id'];
 
@@ -704,7 +704,7 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function activateIsdfPlugin()
   {
-    $plugin = array('sfIsdfPlugin');
+    $plugin = ['sfIsdfPlugin'];
 
     // Find setting
     $found = false;
@@ -723,7 +723,7 @@ class QubitMigrate109 extends QubitMigrate
     if (!$found)
     {
       // No setting, add one
-      $value = array();
+      $value = [];
       $value['name'] = 'plugins';
       $value['source_culture'] = 'en';
       $value['value']['en'] = serialize($plugin);
@@ -771,7 +771,7 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function sortQubitTerms()
   {
-    $qubitTermConstantIds = array(
+    $qubitTermConstantIds = [
       'ROOT_ID',
       //EventType taxonomy
       'CREATION_ID',
@@ -845,7 +845,7 @@ class QubitMigrate109 extends QubitMigrate
       // ISAAR standardized form name
       'STANDARDIZED_FORM_OF_NAME_ID',
       'EXTERNAL_URI_ID'
-    );
+    ];
 
     // Restack array with Constant values at top
     $qubitTermArray = $this->data['QubitTerm'];
@@ -883,7 +883,7 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function sortClasses()
   {
-    $ormSortOrder = array(
+    $ormSortOrder = [
       'QubitTaxonomy',
       'QubitTerm',
       'QubitActor',
@@ -908,7 +908,7 @@ class QubitMigrate109 extends QubitMigrate
       'QubitOaiHarvest',
       'QubitProperty',
       'QubitSetting'
-    );
+    ];
 
     $originalData = $this->data;
 

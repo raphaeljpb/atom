@@ -34,7 +34,7 @@ class InformationObjectTreeViewAction extends sfAction
     {
       case 'prevSiblings':
 
-        $this->items = $this->resource->getTreeViewSiblings(array('limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous'), $this->siblingCountPrev);
+        $this->items = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous'], $this->siblingCountPrev);
         $this->hasPrevSiblings = count($this->items) > $numberOfPreviousOrNextSiblings;
 
         if ($this->hasPrevSiblings)
@@ -49,7 +49,7 @@ class InformationObjectTreeViewAction extends sfAction
 
       case 'nextSiblings':
 
-        $this->items = $this->resource->getTreeViewSiblings(array('limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'next'), $this->siblingCountNext);
+        $this->items = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'next'], $this->siblingCountNext);
         $this->hasNextSiblings = count($this->items) > $numberOfPreviousOrNextSiblings;
 
         if ($this->hasNextSiblings)
@@ -62,7 +62,7 @@ class InformationObjectTreeViewAction extends sfAction
       case 'item':
       default:
 
-        list($this->items, $this->hasNextSiblings) = $this->resource->getTreeViewChildren(array('numberOfPreviousOrNextSiblings' => $numberOfPreviousOrNextSiblings), $this->siblingCountNext);
+        list($this->items, $this->hasNextSiblings) = $this->resource->getTreeViewChildren(['numberOfPreviousOrNextSiblings' => $numberOfPreviousOrNextSiblings], $this->siblingCountNext);
     }
   }
 }

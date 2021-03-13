@@ -72,7 +72,7 @@ class sfModsPlugin implements ArrayAccess
         return $this->baseUrl() .'/index.php/'. $this->resource->slug;
 
       case 'name':
-        $name = array();
+        $name = [];
         foreach ($this->resource->getActorEvents() as $item)
         {
           if (isset($item->actor))
@@ -93,10 +93,10 @@ class sfModsPlugin implements ArrayAccess
 
       case 'typeOfResourceForXml':
 
-        $typeOfResources = array();
+        $typeOfResources = [];
 
         // Map to translate RAD GMD terms to MODS resource types
-        $map = array(
+        $map = [
           'architectural drawing' => 'still image',
           'cartographic material' => 'cartographic',
           'graphic material'      => 'still image',
@@ -107,18 +107,18 @@ class sfModsPlugin implements ArrayAccess
           'sound recording'       => 'sound recording',
           'technical drawing'     => 'still image',
           'textual record'        => 'text'
-        );
+        ];
 
         // Real MODS resource types
         foreach ($this->resource->getTermRelations(QubitTaxonomy::MODS_RESOURCE_TYPE_ID) as $relation)
         {
-          $typeOfResources[] = $relation->term->getName(array('culture' => 'en'));
+          $typeOfResources[] = $relation->term->getName(['culture' => 'en']);
         }
 
         // Translated RAD material types
         foreach ($this->resource->getTermRelations(QubitTaxonomy::MATERIAL_TYPE_ID) as $relation)
         {
-          $gmd = trim(strtolower($relation->term->getName(array('culture' => 'en'))));
+          $gmd = trim(strtolower($relation->term->getName(['culture' => 'en'])));
 
           if (isset($map[$gmd]))
           {
@@ -131,11 +131,11 @@ class sfModsPlugin implements ArrayAccess
 
       case 'genres':
 
-        $genres = array();
+        $genres = [];
 
         foreach ($this->resource->getTermRelations(QubitTaxonomy::GENRE_ID) as $relation)
         {
-          array_push($genres, $relation->term->getName(array('cultureFallback' => true)));
+          array_push($genres, $relation->term->getName(['cultureFallback' => true]));
         }
 
         return $genres;
@@ -188,7 +188,7 @@ class sfModsPlugin implements ArrayAccess
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__isset'), $args);
+    return call_user_func_array([$this, '__isset'], $args);
   }
 
   public function getDateTagNameForEventType($typeId)
@@ -217,12 +217,12 @@ class sfModsPlugin implements ArrayAccess
 
   public function getNoteTexts($noteTypeId)
   {
-    $notes = array();
+    $notes = [];
 
-    $noteData = $this->resource->getNotesByType(array('noteTypeId' => $noteTypeId));
+    $noteData = $this->resource->getNotesByType(['noteTypeId' => $noteTypeId]);
     foreach ($noteData as $note)
     {
-      array_push($notes, $note->getContent(array('cultureFallback' => true)));
+      array_push($notes, $note->getContent(['cultureFallback' => true]));
     }
 
     return $notes;
@@ -259,21 +259,21 @@ class sfModsPlugin implements ArrayAccess
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__get'), $args);
+    return call_user_func_array([$this, '__get'], $args);
   }
 
   public function offsetSet($offset, $value)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__set'), $args);
+    return call_user_func_array([$this, '__set'], $args);
   }
 
   public function offsetUnset($offset)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__unset'), $args);
+    return call_user_func_array([$this, '__unset'], $args);
   }
 
   protected function baseUrl()

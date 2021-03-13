@@ -15,7 +15,7 @@ $user->save();
 $browser
   ->info('Log in')
 
-  ->post(';user/login', array('email' => 'test@example.com', 'password' => 'test1234'))
+  ->post(';user/login', ['email' => 'test@example.com', 'password' => 'test1234'])
 
   ->with('request')->begin()
     ->isParameter('module', 'user')
@@ -53,7 +53,7 @@ $browser = new sfTestFunctional(new sfBrowser());
 $browser
   ->info('Incorrect log in')
 
-  ->post(';user/login', array('email' => 'test@example.com', 'password' => 'wrongpass'))
+  ->post(';user/login', ['email' => 'test@example.com', 'password' => 'wrongpass'])
 
   ->with('request')->begin()
     ->isParameter('module', 'user')
@@ -71,7 +71,7 @@ $browser = new sfTestFunctional(new sfBrowser());
 $browser
   ->info('"localhost" "next" parameter, issue 1342')
 
-  ->post(';user/login', array('email' => 'test@example.com', 'password' => 'test1234', 'next' => 'http://localhost/example'))
+  ->post(';user/login', ['email' => 'test@example.com', 'password' => 'test1234', 'next' => 'http://localhost/example'])
 
   ->with('request')->begin()
     ->isParameter('module', 'user')
@@ -89,7 +89,7 @@ $browser = new sfTestFunctional(new sfBrowser());
 $browser
   ->info('Empty "next" parameter')
 
-  ->post(';user/login', array('email' => 'test@example.com', 'password' => 'test1234', 'next' => ''))
+  ->post(';user/login', ['email' => 'test@example.com', 'password' => 'test1234', 'next' => ''])
 
   ->with('request')->begin()
     ->isParameter('module', 'user')

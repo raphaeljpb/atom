@@ -39,11 +39,11 @@ class MenuMainMenuComponent extends sfComponent
     $this->addMenu = false;
 
     // Specify what groups can add content
-    $groupsAllowedToAddContent = array(
+    $groupsAllowedToAddContent = [
       QubitAclGroup::CONTRIBUTOR_ID,
       QubitAclGroup::EDITOR_ID,
       QubitAclGroup::ADMINISTRATOR_ID
-    );
+    ];
 
     // Add, if applicable, menu for adding content
     if ($this->context->user->hasGroup($groupsAllowedToAddContent) || $this->userCanCreate())

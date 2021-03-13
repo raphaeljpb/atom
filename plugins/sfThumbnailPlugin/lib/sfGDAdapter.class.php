@@ -34,32 +34,32 @@ class sfGDAdapter
    * List of accepted image types based on MIME
    * descriptions that this adapter supports
    */
-  protected $imgTypes = array(
+  protected $imgTypes = [
     'image/jpeg',
     'image/pjpeg',
     'image/png',
     'image/gif',
-  );
+  ];
 
   /**
    * Stores function names for each image type
    */
-  protected $imgLoaders = array(
+  protected $imgLoaders = [
     'image/jpeg'  => 'imagecreatefromjpeg',
     'image/pjpeg' => 'imagecreatefromjpeg',
     'image/png'   => 'imagecreatefrompng',
     'image/gif'   => 'imagecreatefromgif',
-  );
+  ];
 
   /**
    * Stores function names for each image type
    */
-  protected $imgCreators = array(
+  protected $imgCreators = [
     'image/jpeg'  => 'imagejpeg',
     'image/pjpeg' => 'imagejpeg',
     'image/png'   => 'imagepng',
     'image/gif'   => 'imagegif',
-  );
+  ];
 
   public function __construct($maxWidth, $maxHeight, $scale, $inflate, $quality, $options)
   {

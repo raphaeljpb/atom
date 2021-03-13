@@ -1,7 +1,7 @@
 <?php decorate_with('layout_2col') ?>
 
 <?php slot('title') ?>
-  <h1><?php echo render_title($resource->getTitle(array('cultureFallback' => true))) ?></h1>
+  <h1><?php echo render_title($resource->getTitle(['cultureFallback' => true])) ?></h1>
 <?php end_slot() ?>
 
 <?php slot('sidebar') ?>
@@ -14,13 +14,13 @@
       <?php $browseMenu = QubitMenu::getById(QubitMenu::BROWSE_ID) ?>
       <?php if ($browseMenu->hasChildren()): ?>
         <?php foreach ($browseMenu->getChildren() as $item): ?>
-          <li><a href="<?php echo url_for($item->getPath(array('getUrl' => true, 'resolveAlias' => true))) ?>"><?php echo esc_specialchars($item->getLabel(array('cultureFallback' => true))) ?></a></li>
+          <li><a href="<?php echo url_for($item->getPath(['getUrl' => true, 'resolveAlias' => true])) ?>"><?php echo esc_specialchars($item->getLabel(['cultureFallback' => true])) ?></a></li>
         <?php endforeach; ?>
       <?php endif; ?>
     </ul>
   </section>
 
-  <?php echo get_component('default', 'popular', array('limit' => 10, 'sf_cache_key' => $sf_user->getCulture())) ?>
+  <?php echo get_component('default', 'popular', ['limit' => 10, 'sf_cache_key' => $sf_user->getCulture()]) ?>
 
 <?php end_slot() ?>
 
@@ -32,7 +32,7 @@
   <?php slot('after-content') ?>
     <section class="actions">
       <ul>
-        <li><?php echo link_to(__('Edit'), array($resource, 'module' => 'staticpage', 'action' => 'edit'), array('title' => __('Edit this page'), 'class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'staticpage', 'action' => 'edit'], ['title' => __('Edit this page'), 'class' => 'c-btn']) ?></li>
       </ul>
     </section>
   <?php end_slot() ?>

@@ -52,10 +52,10 @@ class InformationObjectFullWidthTreeViewAction extends DefaultFullTreeViewAction
     }
 
     // Allow the ability to page through children
-    $options = array(
+    $options = [
       'skip' => $request->skip,
       'limit' => $request->nodeLimit
-    );
+    ];
 
     // On first load, retrieve the ancestors of the selected resource, the
     // resource and its siblings, otherwise get only the resource's siblings

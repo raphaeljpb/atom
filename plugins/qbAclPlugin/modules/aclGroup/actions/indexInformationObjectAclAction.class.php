@@ -24,7 +24,7 @@ class AclGroupIndexInformationObjectAclAction extends sfAction
     $this->group = QubitAclGroup::getById($this->request->id);
     $this->forward404Unless($this->group);
 
-    $this->groups = array();
+    $this->groups = [];
     foreach ($this->group->getAncestorsAndSelfForAcl() as $group)
     {
       if (QubitAclGroup::ROOT_ID < $group->id)
@@ -63,7 +63,7 @@ class AclGroupIndexInformationObjectAclAction extends sfAction
     $criteria->addAscendingOrderByColumn(QubitAclPermission::GROUP_ID);
 
     // Build ACL
-    $this->acl = array();
+    $this->acl = [];
     if (0 < count($permissions = QubitAclPermission::get($criteria)))
     {
       foreach ($permissions as $permission)
@@ -72,7 +72,7 @@ class AclGroupIndexInformationObjectAclAction extends sfAction
         // object are equivalent
         $objectId = (QubitInformationObject::ROOT_ID != $permission->objectId) ? $permission->objectId : null;
 
-        $this->acl[$permission->getConstants(array('name' => 'repository'))][$objectId][$permission->action][$permission->groupId] = $permission;
+        $this->acl[$permission->getConstants(['name' => 'repository'])][$objectId][$permission->action][$permission->groupId] = $permission;
       }
     }
   }

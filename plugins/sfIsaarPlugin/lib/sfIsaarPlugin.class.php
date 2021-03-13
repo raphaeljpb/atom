@@ -17,7 +17,7 @@ class sfIsaarPlugin implements ArrayAccess
   {
     $args = func_get_args();
 
-    $options = array();
+    $options = [];
     if (1 < count($args))
     {
       $options = $args[1];
@@ -73,27 +73,27 @@ class sfIsaarPlugin implements ArrayAccess
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__isset'), $args);
+    return call_user_func_array([$this, '__isset'], $args);
   }
 
   public function offsetGet($offset)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__get'), $args);
+    return call_user_func_array([$this, '__get'], $args);
   }
 
   public function offsetSet($offset, $value)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__set'), $args);
+    return call_user_func_array([$this, '__set'], $args);
   }
 
   public function offsetUnset($offset)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__unset'), $args);
+    return call_user_func_array([$this, '__unset'], $args);
   }
 }

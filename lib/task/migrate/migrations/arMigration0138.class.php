@@ -33,7 +33,7 @@ class arMigration0138
 
   public function up($configuration)
   {
-    $settingNames = array('toggleCopyrightFilter', 'toggleMaterialFilter');
+    $settingNames = ['toggleCopyrightFilter', 'toggleMaterialFilter'];
     foreach ($settingNames as $name)
     {
       if (null === QubitSetting::getByName($name))

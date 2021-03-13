@@ -20,7 +20,7 @@
 class SettingsEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $I18N = array();
+  public static $I18N = [];
 
   public function execute($request)
   {
@@ -42,10 +42,10 @@ class SettingsEditAction extends DefaultEditAction
           $this->getUser()->setFlash('notice', $this->updateMessage);
         }
 
-        $this->redirect(array(
+        $this->redirect([
           'module' => $this->getContext()->getModuleName(),
           'action' => $this->getContext()->getActionName()
-        ));
+        ]);
       }
     }
 
@@ -58,7 +58,7 @@ class SettingsEditAction extends DefaultEditAction
 
   protected function earlyExecute()
   {
-    $this->settings = array();
+    $this->settings = [];
     $this->culture = $this->context->user->getCulture();
     $this->i18n = sfContext::getInstance()->i18n;
 
@@ -76,7 +76,7 @@ class SettingsEditAction extends DefaultEditAction
       ? $this->settingDefaults[$name] : '';
 
     // Default setting value in form will be current setting value or, if none exists, settings default
-    $settingGetOptions = (in_array($name, $this::$I18N)) ? array('culture' => $this->culture) : array('cultureFallback' => true);
+    $settingGetOptions = (in_array($name, $this::$I18N)) ? ['culture' => $this->culture] : ['cultureFallback' => true];
 
     // Use setting default if setting hasn't been saved yet
     $settingValue = (null !== $this->settings[$name]->id)
@@ -101,7 +101,7 @@ class SettingsEditAction extends DefaultEditAction
         $this->settings[$name]->culture = $this->culture;
       }
 
-      $settingSetOptions = (in_array($name, $this::$I18N)) ? array('culture' => $this->culture) : array('sourceCulture' => true);
+      $settingSetOptions = (in_array($name, $this::$I18N)) ? ['culture' => $this->culture] : ['sourceCulture' => true];
 
       // Checkbox submissions get handled differently
       if ($field->getWidget() instanceof sfWidgetFormInputCheckbox)

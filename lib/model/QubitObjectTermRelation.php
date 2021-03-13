@@ -26,7 +26,7 @@ class QubitObjectTermRelation extends BaseObjectTermRelation
   public function save($connection = null)
   {
     // TODO: $cleanObject = $this->object->clean;
-    $cleanObjectId = $this->__get('objectId', array('clean' => true));
+    $cleanObjectId = $this->__get('objectId', ['clean' => true]);
 
     parent::save($connection);
 

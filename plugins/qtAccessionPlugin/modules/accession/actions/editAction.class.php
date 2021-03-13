@@ -20,7 +20,7 @@
 class AccessionEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'acquisitionType',
       'appraisal',
       'archivalHistory',
@@ -38,7 +38,7 @@ class AccessionEditAction extends DefaultEditAction
       'receivedExtentUnits',
       'scopeAndContent',
       'sourceOfAcquisition',
-      'title');
+      'title'];
 
   public function earlyExecute()
   {
@@ -73,7 +73,7 @@ class AccessionEditAction extends DefaultEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");
@@ -161,7 +161,7 @@ class AccessionEditAction extends DefaultEditAction
 
         QubitSearch::getInstance()->update($this->resource);
 
-        $this->redirect(array($this->resource, 'module' => 'accession'));
+        $this->redirect([$this->resource, 'module' => 'accession']);
       }
     }
 
@@ -173,75 +173,75 @@ class AccessionEditAction extends DefaultEditAction
     switch ($name)
     {
       case 'acquisitionType':
-        $this->form->setDefault('acquisitionType', $this->context->routing->generate(null, array($this->resource->acquisitionType, 'module' => 'term')));
+        $this->form->setDefault('acquisitionType', $this->context->routing->generate(null, [$this->resource->acquisitionType, 'module' => 'term']));
         $this->form->setValidator('acquisitionType', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('acquisitionType', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('acquisitionType', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'processingPriority':
-        $this->form->setDefault('processingPriority', $this->context->routing->generate(null, array($this->resource->processingPriority, 'module' => 'term')));
+        $this->form->setDefault('processingPriority', $this->context->routing->generate(null, [$this->resource->processingPriority, 'module' => 'term']));
         $this->form->setValidator('processingPriority', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ACCESSION_PROCESSING_PRIORITY_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('processingPriority', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('processingPriority', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'processingStatus':
-        $this->form->setDefault('processingStatus', $this->context->routing->generate(null, array($this->resource->processingStatus, 'module' => 'term')));
+        $this->form->setDefault('processingStatus', $this->context->routing->generate(null, [$this->resource->processingStatus, 'module' => 'term']));
         $this->form->setValidator('processingStatus', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ACCESSION_PROCESSING_STATUS_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('processingStatus', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('processingStatus', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'resourceType':
-        $this->form->setDefault('resourceType', $this->context->routing->generate(null, array($this->resource->resourceType, 'module' => 'term')));
+        $this->form->setDefault('resourceType', $this->context->routing->generate(null, [$this->resource->resourceType, 'module' => 'term']));
         $this->form->setValidator('resourceType', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('resourceType', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('resourceType', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'creators':
-        $value = $choices = array();
-        foreach ($this->creators = QubitRelation::getRelationsByObjectId($this->resource->id, array('typeId' => QubitTerm::CREATION_ID)) as $item)
+        $value = $choices = [];
+        foreach ($this->creators = QubitRelation::getRelationsByObjectId($this->resource->id, ['typeId' => QubitTerm::CREATION_ID]) as $item)
         {
-          $choices[$value[] = $this->context->routing->generate(null, array($item->subject, 'module' => 'actor'))] = $item->subject;
+          $choices[$value[] = $this->context->routing->generate(null, [$item->subject, 'module' => 'actor'])] = $item->subject;
         }
 
         $this->form->setDefault('creators', $value);
         $this->form->setValidator('creators', new sfValidatorPass());
-        $this->form->setWidget('creators', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+        $this->form->setWidget('creators', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
@@ -255,9 +255,9 @@ class AccessionEditAction extends DefaultEditAction
         }
 
         $this->form->setWidget('date', new sfWidgetFormInput());
-        $this->form->setValidator('date', new sfValidatorDate(array(
+        $this->form->setValidator('date', new sfValidatorDate([
           'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
-          'date_format_error' => 'YYYY-MM-DD')));
+          'date_format_error' => 'YYYY-MM-DD']));
 
         break;
 
@@ -271,14 +271,14 @@ class AccessionEditAction extends DefaultEditAction
           $this->form->setDefault('identifier', QubitAccession::nextAvailableIdentifier());
         }
 
-        $this->form->setValidator('identifier', new QubitValidatorAccessionIdentifier(array('required' => true, 'resource' => $this->resource)));
+        $this->form->setValidator('identifier', new QubitValidatorAccessionIdentifier(['required' => true, 'resource' => $this->resource]));
         $this->form->setWidget('identifier', new sfWidgetFormInput());
 
         break;
 
       case 'identifierAvailableCheckUrl':
         // Store URL for checking identifiers as a hidden field so we can relay it to JavaScript validation
-        $routingParams = array('module' => 'accession', 'action' => 'checkIdentifierAvailable', 'accession_id' => $this->resource->id);
+        $routingParams = ['module' => 'accession', 'action' => 'checkIdentifierAvailable', 'accession_id' => $this->resource->id];
         $this->form->setDefault($name, $this->context->getRouting()->generate(null, $routingParams));
         $this->form->setWidget($name, new sfWidgetFormInputHidden());
 
@@ -312,15 +312,15 @@ class AccessionEditAction extends DefaultEditAction
 
         ProjectConfiguration::getActive()->loadHelpers('Qubit');
 
-        $value = $choices = array();
+        $value = $choices = [];
         foreach ($this->informationObjects = QubitRelation::get($criteria) as $item)
         {
-          $choices[$value[] = $this->context->routing->generate(null, array($item->subject, 'module' => 'informationobject'))] = render_title($item->subject, false);
+          $choices[$value[] = $this->context->routing->generate(null, [$item->subject, 'module' => 'informationobject'])] = render_title($item->subject, false);
         }
 
         $this->form->setDefault($name, $value);
         $this->form->setValidator($name, new sfValidatorPass());
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
@@ -335,7 +335,7 @@ class AccessionEditAction extends DefaultEditAction
     switch ($field->getName())
     {
       case 'creators':
-        $value = $filtered = array();
+        $value = $filtered = [];
         foreach ($this->form->getValue('creators') as $item)
         {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));
@@ -387,7 +387,7 @@ class AccessionEditAction extends DefaultEditAction
         break;
 
       case 'informationObjects':
-        $value = $filtered = array();
+        $value = $filtered = [];
         foreach ($this->form->getValue('informationObjects') as $item)
         {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));

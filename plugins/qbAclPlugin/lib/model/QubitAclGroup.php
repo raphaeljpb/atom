@@ -37,7 +37,7 @@ class QubitAclGroup extends BaseAclGroup implements Zend_Acl_Role_Interface
 
   public function __toString()
   {
-    return (string) $this->getName(array('cultureFallback' => true));
+    return (string) $this->getName(['cultureFallback' => true]);
   }
 
   /**
@@ -63,10 +63,10 @@ class QubitAclGroup extends BaseAclGroup implements Zend_Acl_Role_Interface
 
   public function isProtected()
   {
-    return in_array($this->id, array(
+    return in_array($this->id, [
       self::ROOT_ID,
       self::ANONYMOUS_ID,
       self::AUTHENTICATED_ID,
-      self::ADMINISTRATOR_ID));
+      self::ADMINISTRATOR_ID]);
   }
 }

@@ -30,13 +30,13 @@ class unlinkCreatorTask extends sfBaseTask
 
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('creator-slug', null, sfCommandOption::PARAMETER_REQUIRED, 'Restrict changes to specific creator.', null),
       new sfCommandOption('description-slug', null, sfCommandOption::PARAMETER_REQUIRED, 'Restrict changes to this information object hierarchy.', null),
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'unlink-creators';
@@ -52,7 +52,7 @@ description.
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     if ($options['creator-slug'] && $options['description-slug'])
     {
@@ -71,7 +71,7 @@ EOF;
   /**
    * Parse out the params and set the criteria that will drive the data lookup.
    */
-  private function getCriteria($options = array())
+  private function getCriteria($options = [])
   {
     // Get actor records from slug if supplied.
     if ($options['creator-slug'])
@@ -136,8 +136,8 @@ EOF;
     foreach (QubitInformationObject::get($criteria)->orderBy('lft') as $io)
     {
       $deleteCreators = false;
-      $creatorIds = array();
-      $ancestorCreatorIds = array();
+      $creatorIds = [];
+      $ancestorCreatorIds = [];
 
       $this->logSection('Description', sprintf('%s %d', $io->slug, $io->id));
 
@@ -218,7 +218,7 @@ EOF;
   private function removeCreator($infoObj = null, $creatorIds)
   {
     // This will unlink this Actor from all creation events on this IO.
-    foreach ($infoObj->getActorEvents(array('eventTypeId' => QubitTerm::CREATION_ID)) as $event)
+    foreach ($infoObj->getActorEvents(['eventTypeId' => QubitTerm::CREATION_ID]) as $event)
     {
       if (in_array($event->actor->id, $creatorIds))
       {

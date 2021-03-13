@@ -18,11 +18,11 @@
  */
 class sfFopenAdapter
 {
-  protected $options             = array();
+  protected $options             = [];
   protected $adapterErrorMessage = null;
   protected $browser             = null;
 
-  public function __construct($options = array())
+  public function __construct($options = [])
   {
     $this->options = $options;
   }
@@ -38,24 +38,24 @@ class sfFopenAdapter
    *
    * @return sfWebBrowser The current browser object
    */
-  public function call($browser, $uri, $method = 'GET', $parameters = array(), $headers = array())
+  public function call($browser, $uri, $method = 'GET', $parameters = [], $headers = [])
   {
-    $m_headers = array_merge(array('Content-Type' => 'application/x-www-form-urlencoded'), $browser->getDefaultRequestHeaders(), $browser->initializeRequestHeaders($headers));
+    $m_headers = array_merge(['Content-Type' => 'application/x-www-form-urlencoded'], $browser->getDefaultRequestHeaders(), $browser->initializeRequestHeaders($headers));
     $request_headers = $browser->prepareHeaders($m_headers);
 
     // Read the response from the server
     // FIXME: use sockets to avoid depending on allow_url_fopen
-    $context = stream_context_create(array('http' => array_merge(
+    $context = stream_context_create(['http' => array_merge(
       $this->options,
-      array('method' => $method),
-      array('content' => is_array($parameters) ? http_build_query($parameters) : $parameters),
-      array('header' => $request_headers)
-    )));
+      ['method' => $method],
+      ['content' => is_array($parameters) ? http_build_query($parameters) : $parameters],
+      ['header' => $request_headers]
+    )]);
 
     // Custom error handler
     // -- browser instance must be accessible from handleRuntimeError()
     $this->browser = $browser;
-    set_error_handler(array($this, 'handleRuntimeError'), E_WARNING);
+    set_error_handler([$this, 'handleRuntimeError'], E_WARNING);
     if($handle = fopen($uri, 'r', false, $context))
     {
       $response_headers = stream_get_meta_data($handle);
@@ -85,9 +85,9 @@ class sfFopenAdapter
    *
    * @see  http://php.net/set_error_handler
    */
-  public function handleRuntimeError($errno, $errstr, $errfile = null, $errline = null, $errcontext = array())
+  public function handleRuntimeError($errno, $errstr, $errfile = null, $errline = null, $errcontext = [])
   {
-     $error_types = array(
+     $error_types = [
                 E_ERROR              => 'Error',
                 E_WARNING            => 'Warning',
                 E_PARSE              => 'Parsing Error',
@@ -101,12 +101,12 @@ class sfFopenAdapter
                 E_USER_NOTICE        => 'User Notice',
                 E_STRICT             => 'Runtime Notice',
                 E_RECOVERABLE_ERROR  => 'Catchable Fatal Error'
-                );
+                ];
 
     $msg = sprintf('%s : "%s" occured in %s on line %d',
                    $error_types[$errno], $errstr, $errfile, $errline);
 
-    $matches = array();
+    $matches = [];
     if (preg_match('/HTTP\/\d\.\d (\d{3}) (.*)$/', $errstr, $matches))
     {
       $this->browser->setResponseCode($matches[1]);

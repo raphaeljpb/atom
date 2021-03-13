@@ -28,7 +28,7 @@
 class sfModsPluginEditAction extends InformationObjectEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'accessConditions',
       'identifier',
       'language',
@@ -40,7 +40,7 @@ class sfModsPluginEditAction extends InformationObjectEditAction
       'repository',
       'scopeAndContent',
       'displayStandard',
-      'displayStandardUpdateDescendants');
+      'displayStandardUpdateDescendants'];
 
   protected function earlyExecute()
   {
@@ -56,7 +56,7 @@ class sfModsPluginEditAction extends InformationObjectEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");
@@ -78,22 +78,22 @@ class sfModsPluginEditAction extends InformationObjectEditAction
         QubitObjectTermRelation::addJoinTermCriteria($criteria);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MODS_RESOURCE_TYPE_ID);
 
-        $value = array();
+        $value = [];
         foreach ($this->relations = QubitObjectTermRelation::get($criteria) as $item)
         {
-          $value[] = $this->context->routing->generate(null, array($item->term, 'module' => 'term'));
+          $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
         }
 
         $this->form->setDefault('type', $value);
         $this->form->setValidator('type', new sfValidatorPass());
 
-        $choices = array();
+        $choices = [];
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::MODS_RESOURCE_TYPE_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
@@ -108,7 +108,7 @@ class sfModsPluginEditAction extends InformationObjectEditAction
     switch ($field->getName())
     {
       case 'type':
-        $value = $filtered = array();
+        $value = $filtered = [];
         foreach ($this->form->getValue('type') as $item)
         {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));

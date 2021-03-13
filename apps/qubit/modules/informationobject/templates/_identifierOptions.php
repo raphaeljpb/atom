@@ -7,7 +7,7 @@
 
   <?php if (empty($hideGenerateButton)): // Some AtoM data types don't support ID generation?>
     <a href="#" class="identifier-action" id="generate-identifier"
-      data-generate-identifier-url="<?php echo url_for(array('module' => 'informationobject', 'action' => 'generateIdentifier')) ?>">
+      data-generate-identifier-url="<?php echo url_for(['module' => 'informationobject', 'action' => 'generateIdentifier']) ?>">
       <?php echo __('Generate identifier') ?>
     </a>
   <?php endif; ?>

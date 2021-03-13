@@ -26,10 +26,10 @@
  */
 class QubitFlatfileExport
 {
-  public $columnNames     = array();       // ordered header column names
-  public $standardColumns = array();       // flatfile columns that are object properties
-  public $columnMap       = array();       // flatfile columns that map to object properties
-  public $propertyMap     = array();       // flatfile columns that map to Qubit properties
+  public $columnNames     = [];       // ordered header column names
+  public $standardColumns = [];       // flatfile columns that are object properties
+  public $columnMap       = [];       // flatfile columns that map to object properties
+  public $propertyMap     = [];       // flatfile columns that map to Qubit properties
   public $user            = null;          // user doing the export
   protected $configurationLoaded = false;  // has the configuuration been loaded?
 
@@ -109,15 +109,15 @@ class QubitFlatfileExport
     }
 
     $this->columnNames     = $config['columnNames'];
-    $this->standardColumns = isset($config['direct']) ? $config['direct'] : array();
-    $this->columnMap       = isset($config['map']) ? $config['map'] : array();
-    $this->propertyMap     = isset($config['property']) ? $config['property'] : array();
+    $this->standardColumns = isset($config['direct']) ? $config['direct'] : [];
+    $this->columnMap       = isset($config['map']) ? $config['map'] : [];
+    $this->propertyMap     = isset($config['property']) ? $config['property'] : [];
 
     // If column names/order aren't specified, derive them
     if ($this->columnNames === null)
     {
       // Add standard columns
-      $this->columnNames = ($this->standardColumns !== null) ? $this->standardColumns : array();
+      $this->columnNames = ($this->standardColumns !== null) ? $this->standardColumns : [];
 
       // Add from column map
       if ($this->columnMap !== null)
@@ -199,7 +199,7 @@ class QubitFlatfileExport
         // (e.g. rad 'map').
         if ($config[$key] === array_values($config[$key]))
         {
-          $config[$key] = array();
+          $config[$key] = [];
         }
 
         $this->overrideConfigData($config[$key], $mixin[$key]);
@@ -245,9 +245,9 @@ class QubitFlatfileExport
 
   public function setColumnToNotes($column, $noteTypeId)
   {
-    $noteContent = array();
+    $noteContent = [];
 
-    foreach ($this->resource->getNotesByType(array('noteTypeId' => $noteTypeId)) as $note)
+    foreach ($this->resource->getNotesByType(['noteTypeId' => $noteTypeId]) as $note)
     {
       $noteContent[] = $note->content;
     }
@@ -387,7 +387,7 @@ class QubitFlatfileExport
    */
   protected function cacheTaxonomies($map)
   {
-    $taxonomyCacheMap = array();
+    $taxonomyCacheMap = [];
 
     // Prepare taxonomy cache map
     foreach ($map as $property => $taxonomy)
@@ -438,7 +438,7 @@ class QubitFlatfileExport
    */
   protected function getTaxonomyTermValues($taxonomyId)
   {
-    $terms = array();
+    $terms = [];
 
     foreach (QubitFlatfileImport::getTaxonomyTerms($taxonomyId) as $term)
     {

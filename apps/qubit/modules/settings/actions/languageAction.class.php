@@ -32,8 +32,8 @@ class SettingsLanguageAction extends sfAction
   public function execute($request)
   {
     $this->form = new sfForm();
-    $this->form->setValidator('languageCode', new sfValidatorI18nChoiceLanguage(array('required' => true)));
-    $this->form->setWidget('languageCode', new sfWidgetFormI18nChoiceLanguage(array('add_empty' => true, 'culture' => $this->context->user->getCulture())));
+    $this->form->setValidator('languageCode', new sfValidatorI18nChoiceLanguage(['required' => true]));
+    $this->form->setWidget('languageCode', new sfWidgetFormI18nChoiceLanguage(['add_empty' => true, 'culture' => $this->context->user->getCulture()]));
 
     // Handle POST data (form submit)
     if ($request->isMethod('post'))
@@ -50,7 +50,7 @@ class SettingsLanguageAction extends sfAction
         }
         catch (Exception $e)
         {
-          $this->redirect(array('module' => 'settings', 'action' => 'language'));
+          $this->redirect(['module' => 'settings', 'action' => 'language']);
         }
 
         QubitCache::getInstance()->removePattern('settings:i18n:*');

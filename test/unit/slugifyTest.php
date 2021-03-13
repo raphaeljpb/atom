@@ -24,35 +24,35 @@ $t = new lime_test(20, new lime_output_color());
 /*
  * QubitSlug::slugify
  */
- $testsRestrictive = array(
+ $testsRestrictive = [
    # GIVEN - EXPECTED
-   array('test slug', 'test-slug'),
-   array('test-slug', 'test-slug'),
-   array('test----slug', 'test-slug'),
-   array('Test Slug', 'test-slug'),
-   array('Test Slug 123', 'test-slug-123'),
+   ['test slug', 'test-slug'],
+   ['test-slug', 'test-slug'],
+   ['test----slug', 'test-slug'],
+   ['Test Slug', 'test-slug'],
+   ['Test Slug 123', 'test-slug-123'],
 
-   array('Test \'Slug\'', 'test-slug'),
-   array('test ~\'`!@#$%^&*()_{}[]+=-;:"<>,.\\/? slug', 'test-slug'),
-   array('Tést Slug', 'test-slug'),
-   array('Tést SLÜG', 'test-slug'),
-   array('TEST АБВ абв', 'test'),
- );
+   ['Test \'Slug\'', 'test-slug'],
+   ['test ~\'`!@#$%^&*()_{}[]+=-;:"<>,.\\/? slug', 'test-slug'],
+   ['Tést Slug', 'test-slug'],
+   ['Tést SLÜG', 'test-slug'],
+   ['TEST АБВ абв', 'test'],
+ ];
 
-$testsPermissive = array(
+$testsPermissive = [
   # GIVEN - EXPECTED
-  array('test slug', 'test-slug'),
-  array('test-slug', 'test-slug'),
-  array('test----slug', 'test-slug'),
-  array('Test Slug', 'Test-Slug'),
-  array('Test Slug 123', 'Test-Slug-123'),
+  ['test slug', 'test-slug'],
+  ['test-slug', 'test-slug'],
+  ['test----slug', 'test-slug'],
+  ['Test Slug', 'Test-Slug'],
+  ['Test Slug 123', 'Test-Slug-123'],
 
-  array('Test \'Slug\'', 'Test-Slug'),
-  array('test ~\'`|!@#$%^&*()_{}[]+=-;:"<>,.\\/? slug', 'test-~-@-*-_-=-;:-,-slug'),
-  array('Tést Slug', 'Tést-Slug'),
-  array('Tést SLÜG', 'Tést-SLÜG'),
-  array('TEST АБВ абв', 'TEST-АБВ-абв'),
-);
+  ['Test \'Slug\'', 'Test-Slug'],
+  ['test ~\'`|!@#$%^&*()_{}[]+=-;:"<>,.\\/? slug', 'test-~-@-*-_-=-;:-,-slug'],
+  ['Tést Slug', 'Tést-Slug'],
+  ['Tést SLÜG', 'Tést-SLÜG'],
+  ['TEST АБВ абв', 'TEST-АБВ-абв'],
+];
 
 
 // Test Restrictive mode slug creation.

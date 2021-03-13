@@ -40,53 +40,53 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
     $this->functionRelations = QubitRelation::get($criteria);
 
     // Set creator history label
-    $this->creatorHistoryLabels = array(
+    $this->creatorHistoryLabels = [
       null => $this->context->i18n->__('Administrative / Biographical history'),
       QubitTerm::CORPORATE_BODY_ID => $this->context->i18n->__('Administrative history'),
       QubitTerm::PERSON_ID => $this->context->i18n->__('Biographical history'),
       QubitTerm::FAMILY_ID => $this->context->i18n->__('Biographical history')
-    );
+    ];
 
     if (QubitAcl::check($this->resource, 'update'))
     {
       $validatorSchema = new sfValidatorSchema();
-      $values = array();
+      $values = [];
 
-      $validatorSchema->identifier = new sfValidatorString(array(
-        'required' => true), array(
-        'required' => $this->context->i18n->__('Identifier - This is a mandatory element.')));
+      $validatorSchema->identifier = new sfValidatorString([
+        'required' => true], [
+        'required' => $this->context->i18n->__('Identifier - This is a mandatory element.')]);
       $values['identifier'] = $this->resource->identifier;
 
-      $validatorSchema->repository = new QubitValidatorCountable(array(
-        'required' => true), array(
-        'required' => $this->context->i18n->__('Name and location of repository - This is a mandatory element.')));
-      if (null !== $repository = $this->resource->getRepository(array('inherit' => true)))
+      $validatorSchema->repository = new QubitValidatorCountable([
+        'required' => true], [
+        'required' => $this->context->i18n->__('Name and location of repository - This is a mandatory element.')]);
+      if (null !== $repository = $this->resource->getRepository(['inherit' => true]))
       {
         $values['repository'] = $repository;
       }
 
-      $validatorSchema->title = new sfValidatorString(array(
-        'required' => true), array(
-        'required' => $this->context->i18n->__('Title - This is a mandatory element.')));
-      $values['title'] = $this->resource->getTitle(array('cultureFallback' => true));
+      $validatorSchema->title = new sfValidatorString([
+        'required' => true], [
+        'required' => $this->context->i18n->__('Title - This is a mandatory element.')]);
+      $values['title'] = $this->resource->getTitle(['cultureFallback' => true]);
 
-      $validatorSchema->dateRange = new QubitValidatorDates(array(), array(
-        'invalid' => $this->context->i18n->__('Date(s) - are not consistent with higher levels.')));
+      $validatorSchema->dateRange = new QubitValidatorDates([], [
+        'invalid' => $this->context->i18n->__('Date(s) - are not consistent with higher levels.')]);
       $values['dateRange'] = $this->resource;
 
-      $validatorSchema->dates = new QubitValidatorCountable(array(
-        'required' => true), array(
-        'required' => $this->context->i18n->__('Date(s) - This is a mandatory element.')));
+      $validatorSchema->dates = new QubitValidatorCountable([
+        'required' => true], [
+        'required' => $this->context->i18n->__('Date(s) - This is a mandatory element.')]);
       $values['dates'] = $this->resource->getDates();
 
-      $validatorSchema->extentAndMedium = new sfValidatorString(array(
-        'required' => true), array(
-        'required' => $this->context->i18n->__('Extent - This is a mandatory element.')));
-      $values['extentAndMedium'] = $this->resource->getExtentAndMedium(array('cultureFallback' => true));
+      $validatorSchema->extentAndMedium = new sfValidatorString([
+        'required' => true], [
+        'required' => $this->context->i18n->__('Extent - This is a mandatory element.')]);
+      $values['extentAndMedium'] = $this->resource->getExtentAndMedium(['cultureFallback' => true]);
 
-      $validatorSchema->creators = new QubitValidatorCountable(array(
-        'required' => true), array(
-        'required' => $this->context->i18n->__('This archival description, or one of its higher levels, requires at least one creator.')));
+      $validatorSchema->creators = new QubitValidatorCountable([
+        'required' => true], [
+        'required' => $this->context->i18n->__('This archival description, or one of its higher levels, requires at least one creator.')]);
       foreach ($this->resource->ancestors->andSelf()->orderBy('rgt') as $item)
       {
         $values['creators'] = $item->getCreators();
@@ -96,10 +96,10 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
         }
       }
 
-      $validatorSchema->scopeAndContent = new sfValidatorString(array(
-        'required' => true), array(
-        'required' => $this->context->i18n->__('Scope and content - This is a mandatory element.')));
-      $values['scopeAndContent'] = $this->resource->getScopeAndContent(array('cultureFallback' => true));
+      $validatorSchema->scopeAndContent = new sfValidatorString([
+        'required' => true], [
+        'required' => $this->context->i18n->__('Scope and content - This is a mandatory element.')]);
+      $values['scopeAndContent'] = $this->resource->getScopeAndContent(['cultureFallback' => true]);
 
       try
       {

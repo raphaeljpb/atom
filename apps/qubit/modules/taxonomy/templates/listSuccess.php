@@ -19,9 +19,9 @@
       <?php foreach ($taxonomies as $item): ?>
         <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?>">
           <td>
-            <?php echo link_to(render_title($item), array($item, 'module' => 'taxonomy')) ?>
+            <?php echo link_to(render_title($item), [$item, 'module' => 'taxonomy']) ?>
           </td><td>
-            <?php echo render_value_inline($item->getNote(array('cultureFallback' => true))) ?>
+            <?php echo render_value_inline($item->getNote(['cultureFallback' => true])) ?>
           </td>
         </tr>
       <?php endforeach; ?>
@@ -31,5 +31,5 @@
 <?php end_slot() ?>
 
 <?php slot('after-content') ?>
-  <?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+  <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 <?php end_slot() ?>

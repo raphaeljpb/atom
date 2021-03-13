@@ -33,7 +33,7 @@ class csvExportTermUsageTask extends exportBulkBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     if (isset($options['items-until-update']) && !ctype_digit($options['items-until-update']))
     {
@@ -64,15 +64,15 @@ class csvExportTermUsageTask extends exportBulkBaseTask
   {
     $this->addCoreArgumentsAndOptions();
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('taxonomy-id', null, sfCommandOption::PARAMETER_OPTIONAL, 'ID of taxonomy')
-    ));
-    $this->addOptions(array(
+    ]);
+    $this->addOptions([
       new sfCommandOption('taxonomy-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'Name of taxonomy')
-    ));
-    $this->addOptions(array(
+    ]);
+    $this->addOptions([
       new sfCommandOption('taxonomy-name-culture', null, sfCommandOption::PARAMETER_OPTIONAL, 'Culture to use for taxonomy name lookup')
-    ));
+    ]);
   }
 
   private function determineTaxonomyId($options)
@@ -137,7 +137,7 @@ class csvExportTermUsageTask extends exportBulkBaseTask
     $format = 'SELECT DISTINCT t.id, COUNT(i.id) AS use_count FROM %s t INNER JOIN %s r ON r.term_id=t.id INNER JOIN %s i ON r.object_id=i.id WHERE t.taxonomy_id=? GROUP BY (t.id) ORDER BY t.id';
     $sql = sprintf($format, QubitTerm::TABLE_NAME, QubitObjectTermRelation::TABLE_NAME, QubitInformationObject::TABLE_NAME);
 
-    $result = QubitPdo::prepareAndExecute($sql, array($taxonomyId));
+    $result = QubitPdo::prepareAndExecute($sql, [$taxonomyId]);
 
     if ($result->rowCount())
     {
@@ -148,7 +148,7 @@ class csvExportTermUsageTask extends exportBulkBaseTask
       while ($row = $result->fetch(PDO::FETCH_OBJ))
       {
         $resource = QubitTerm::getById($row->id);
-        $writer->setColumn('name', $resource->getName(array('cultureFallback' => true)));
+        $writer->setColumn('name', $resource->getName(['cultureFallback' => true]));
         $writer->setColumn('use_count', $row->use_count);
         $writer->exportResource($resource);
 

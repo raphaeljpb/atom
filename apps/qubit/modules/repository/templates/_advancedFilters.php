@@ -26,7 +26,7 @@
           <option selected="selected"></option>
           <?php foreach ($thematicAreas as $r): ?>
             <option value="<?php echo $r->getId() ?>">
-              <?php echo get_search_i18n($r->getData(), 'name', array('cultureFallback' => true)) ?>
+              <?php echo get_search_i18n($r->getData(), 'name', ['cultureFallback' => true]) ?>
             </option>
           <?php endforeach; ?>
         </select>
@@ -37,7 +37,7 @@
           <option selected="selected"></option>
           <?php foreach ($repositoryTypes as $r): ?>
             <option value="<?php echo $r->getId() ?>">
-              <?php echo get_search_i18n($r->getData(), 'name', array('cultureFallback' => true)) ?>
+              <?php echo get_search_i18n($r->getData(), 'name', ['cultureFallback' => true]) ?>
             </option>
           <?php endforeach; ?>
         </select>
@@ -46,9 +46,9 @@
       <div class="span4">
         <select name="regions">
           <option selected="selected"></option>
-          <?php $regions = array() ?>
+          <?php $regions = [] ?>
           <?php foreach ($repositories as $r): ?>
-            <?php $region = get_search_i18n($r->getData(), 'region', array('allowEmpty' => true, 'culture' => $sf_user->getCulture(), 'cultureFallback' => false)) ?>
+            <?php $region = get_search_i18n($r->getData(), 'region', ['allowEmpty' => true, 'culture' => $sf_user->getCulture(), 'cultureFallback' => false]) ?>
 
             <?php if ($region && !in_array($region, $regions)): ?>
               <?php $regions[] = $region ?>

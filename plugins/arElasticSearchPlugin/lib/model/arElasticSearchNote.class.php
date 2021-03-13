@@ -21,10 +21,10 @@ class arElasticSearchNote extends arElasticSearchModelBase
 {
   public static function serialize($object)
   {
-    $serialized = array();
+    $serialized = [];
 
     $serialized['sourceCulture'] = $object->source_culture;
-    $serialized['i18n'] = self::serializeI18ns($object->id, array('QubitNote'));
+    $serialized['i18n'] = self::serializeI18ns($object->id, ['QubitNote']);
 
     return $serialized;
   }

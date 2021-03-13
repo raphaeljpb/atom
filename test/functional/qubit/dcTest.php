@@ -17,7 +17,7 @@ $relation->userId = $user->id;
 $relation->roleId = QubitRole::ADMINISTRATOR_ID;
 $relation->save();
 
-$browser->post(';user/login', array('login' => array('email' => $email, 'password' => $password)));
+$browser->post(';user/login', ['login' => ['email' => $email, 'password' => $password]]);
 
 $scopeAndContent = rand();
 $identifier = rand();

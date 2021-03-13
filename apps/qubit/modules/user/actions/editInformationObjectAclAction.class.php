@@ -19,7 +19,7 @@
 
 class UserEditInformationObjectAclAction extends DefaultEditAction
 {
-  public static $NAMES = array();
+  public static $NAMES = [];
 
   public function execute($request)
   {
@@ -35,7 +35,7 @@ class UserEditInformationObjectAclAction extends DefaultEditAction
 
         $this->resource->save();
 
-        $this->redirect(array($this->resource, 'module' => 'user', 'action' => 'indexInformationObjectAcl'));
+        $this->redirect([$this->resource, 'module' => 'user', 'action' => 'indexInformationObjectAcl']);
       }
     }
   }
@@ -54,9 +54,9 @@ class UserEditInformationObjectAclAction extends DefaultEditAction
     }
 
     // Build separate list of permissions by repository and by object
-    $this->repositories = array();
-    $this->informationObjects = array();
-    $this->root = array();
+    $this->repositories = [];
+    $this->informationObjects = [];
+    $this->root = [];
 
     if (isset($this->resource->id))
     {
@@ -76,7 +76,7 @@ class UserEditInformationObjectAclAction extends DefaultEditAction
       {
         foreach ($permissions as $item)
         {
-          if (null != ($repository = $item->getConstants(array('name' => 'repository'))))
+          if (null != ($repository = $item->getConstants(['name' => 'repository'])))
           {
             $this->repositories[$repository][$item->action] = $item;
           }

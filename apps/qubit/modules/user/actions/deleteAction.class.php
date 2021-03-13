@@ -45,7 +45,7 @@ class UserDeleteAction extends sfAction
       {
         $this->resource->delete();
 
-        $this->redirect(array('module' => 'user', 'action' => 'list'));
+        $this->redirect(['module' => 'user', 'action' => 'list']);
       }
     }
   }

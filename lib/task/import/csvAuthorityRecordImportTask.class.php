@@ -36,7 +36,7 @@ EOF;
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -57,16 +57,16 @@ EOF;
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
     // Load taxonomies into variables to avoid use of magic numbers
-    $termData = QubitFlatfileImport::loadTermsFromTaxonomies(array(
+    $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
       QubitTaxonomy::NOTE_TYPE_ID                => 'noteTypes',
       QubitTaxonomy::ACTOR_ENTITY_TYPE_ID        => 'actorTypes',
       QubitTaxonomy::ACTOR_RELATION_TYPE_ID      => 'actorRelationTypes',
       QubitTaxonomy::DESCRIPTION_STATUS_ID       => 'descriptionStatusTypes',
       QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID => 'detailLevelTypes'
-    ));
+    ]);
 
     // Define import
-    $import = new QubitFlatfileImport(array(
+    $import = new QubitFlatfileImport([
       // Pass context
       'context' => sfContext::createInstance($this->configuration),
 
@@ -81,17 +81,17 @@ EOF;
 
       // The status array is a place to put data that should be accessible
       // from closure logic using the getStatus method
-      'status' => array(
+      'status' => [
         'sourceName'             => $sourceName,
         'actorTypes'             => $termData['actorTypes'],
         'descriptionStatusTypes' => $termData['descriptionStatusTypes'],
         'detailLevelTypes'       => $termData['detailLevelTypes'],
         'aliases'                => $aliases,
-        'actorNames'             => array()
-      ),
+        'actorNames'             => []
+      ],
 
       // Import columns that map directory to QubitActor properties
-      'standardColumns' => array(
+      'standardColumns' => [
         'authorizedFormOfName',
         'corporateBodyIdentifiers',
         'datesOfExistence',
@@ -106,7 +106,7 @@ EOF;
         'rules',
         'revisionHistory',
         'sources'
-      ),
+      ],
 
       // Import columns that should be redirected to QubitActor
       // properties (and optionally transformed). Example:
@@ -124,19 +124,19 @@ EOF;
       //   )
       // ),
 
-      'columnMap' => array(
+      'columnMap' => [
         'institutionIdentifier' => 'institutionResponsibleIdentifier'
-      ),
+      ],
 
       // Import columns that can be added as QubitNote objects
-      'noteMap' => array(
-        'maintenanceNotes' => array(
+      'noteMap' => [
+        'maintenanceNotes' => [
           'typeId' => array_search('Maintenance note', $termData['noteTypes']['en'])
-        )
-      ),
+        ]
+      ],
 
       // These values get stored to the rowStatusVars array
-      'variableColumns' => array(
+      'variableColumns' => [
         'typeOfEntity',
         'status',
         'levelOfDetail',
@@ -155,15 +155,15 @@ EOF;
         'digitalObjectPath',
         'digitalObjectURI',
         'digitalObjectChecksum'
-      ),
+      ],
 
       // These values get exploded and stored to the rowStatusVars array
-      'arrayColumns' => array(
+      'arrayColumns' => [
         'parallelFormsOfName' => '|',
         'standardizedFormsOfName' => '|',
         'otherFormsOfName' => '|',
         'script' => '|'
-      ),
+      ],
 
       'updatePreparationLogic' => function (&$self)
       {
@@ -183,10 +183,10 @@ EOF;
                        ->i18n
                        ->__(
                          '%1% identifier "%2%" not unique.',
-                         array(
+                         [
                            '%1%' => sfConfig::get('app_ui_label_actor'),
                            '%2%' => $identifier
-                         )
+                         ]
                        );
 
             if (sfConfig::get('app_prevent_duplicate_actor_identifiers', false))
@@ -208,7 +208,7 @@ EOF;
             $self->object->entityTypeId = $self->translateNameToTermId(
               'type of entity',
               $self->rowStatusVars['typeOfEntity'],
-              array(),
+              [],
               $self->status['actorTypes'][$self->columnValue('culture')]
             );
           }
@@ -221,7 +221,7 @@ EOF;
             $self->object->descriptionStatusId = $self->translateNameToTermId(
               'status',
               $self->rowStatusVars['status'],
-              array(),
+              [],
               $self->status['descriptionStatusTypes'][$self->columnValue('culture')]
             );
           }
@@ -234,7 +234,7 @@ EOF;
             $self->object->descriptionDetailId = $self->translateNameToTermId(
               'level of detail',
               $self->rowStatusVars['levelOfDetail'],
-              array(),
+              [],
               $self->status['detailLevelTypes'][$self->columnValue('culture')]
             );
           }
@@ -252,7 +252,7 @@ EOF;
           csvImportBaseTask::importAlternateFormsOfName($self);
 
           // Add contact information, if applicable
-          $contactVariables = array(
+          $contactVariables = [
             'email',
             'notes',
             'countryCode',
@@ -261,7 +261,7 @@ EOF;
             'postalCode',
             'streetAddress',
             'region'
-          );
+          ];
 
           $hasContactInfo = false;
           foreach(array_keys($self->rowStatusVars) as $name)
@@ -300,7 +300,7 @@ EOF;
                 continue;
               }
 
-              if (null !== $relation = QubitActor::setTermRelationByName($places[$i], $options = array('taxonomyId' => QubitTaxonomy::PLACE_ID, 'culture' => $self->columnValue('culture'))))
+              if (null !== $relation = QubitActor::setTermRelationByName($places[$i], $options = ['taxonomyId' => QubitTaxonomy::PLACE_ID, 'culture' => $self->columnValue('culture')]))
               {
                 $relation->object = $self->object;
                 $relation->save();
@@ -319,7 +319,7 @@ EOF;
                 continue;
               }
 
-              if (null !== $relation = QubitActor::setTermRelationByName($subjects[$i], $options = array('taxonomyId' => QubitTaxonomy::SUBJECT_ID, 'culture' => $self->columnValue('culture'))))
+              if (null !== $relation = QubitActor::setTermRelationByName($subjects[$i], $options = ['taxonomyId' => QubitTaxonomy::SUBJECT_ID, 'culture' => $self->columnValue('culture')]))
               {
                 $relation->object = $self->object;
                 $relation->save();
@@ -331,7 +331,7 @@ EOF;
           if (!empty($self->rowStatusVars['actorOccupations']))
           {
             $occupations = explode('|', $self->rowStatusVars['actorOccupations']);
-            $occupationNotes = array();
+            $occupationNotes = [];
 
             if (!empty($self->rowStatusVars['actorOccupationNotes']))
             {
@@ -345,7 +345,7 @@ EOF;
                 continue;
               }
 
-              if (null !== $relation = QubitActor::setTermRelationByName($occupations[$i], $options = array('taxonomyId' => QubitTaxonomy::ACTOR_OCCUPATION_ID, 'culture' => $self->columnValue('culture'))))
+              if (null !== $relation = QubitActor::setTermRelationByName($occupations[$i], $options = ['taxonomyId' => QubitTaxonomy::ACTOR_OCCUPATION_ID, 'culture' => $self->columnValue('culture')]))
               {
                 $relation->object = $self->object;
                 $relation->save();
@@ -372,7 +372,7 @@ EOF;
           }
         }
       }
-    ));
+    ]);
 
     // Allow search indexing to be enabled via a CLI option
     $import->searchIndexingDisabled = ($options['index']) ? false : true;
@@ -390,7 +390,7 @@ EOF;
   {
     parent::configure();
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption(
         'source-name',
         null,
@@ -439,6 +439,6 @@ EOF;
         sfCommandOption::PARAMETER_REQUIRED,
         'Limit --update matching to under a specified maintaining repository via slug.'
       ),
-    ));
+    ]);
   }
 }

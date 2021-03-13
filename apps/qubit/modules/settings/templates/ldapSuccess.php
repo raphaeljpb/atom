@@ -16,7 +16,7 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array('module' => 'settings', 'action' => 'ldap'))) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'settings', 'action' => 'ldap'])) ?>
 
     <?php echo $form->renderHiddenFields() ?>
 

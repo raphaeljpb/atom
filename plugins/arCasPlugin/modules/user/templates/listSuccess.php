@@ -3,16 +3,16 @@
 <section class="header-options">
   <div class="row">
     <div class="span6">
-      <?php echo get_component('search', 'inlineSearch', array(
+      <?php echo get_component('search', 'inlineSearch', [
         'label' => __('Search users'),
-        'route' => url_for(array('module' => 'user', 'action' => 'list')))) ?>
+        'route' => url_for(['module' => 'user', 'action' => 'list'])]) ?>
     </div>
   </div>
 </section>
 
 <ul class="nav nav-pills">
-  <li<?php if ('onlyInactive' != $sf_request->filter): ?> class="active"<?php endif; ?>><?php echo link_to(__('Show active only'), array('filter' => 'onlyActive') + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
-  <li<?php if ('onlyInactive' == $sf_request->filter): ?> class="active"<?php endif; ?>><?php echo link_to(__('Show inactive only'), array('filter' => 'onlyInactive') + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
+  <li<?php if ('onlyInactive' != $sf_request->filter): ?> class="active"<?php endif; ?>><?php echo link_to(__('Show active only'), ['filter' => 'onlyActive'] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
+  <li<?php if ('onlyInactive' == $sf_request->filter): ?> class="active"<?php endif; ?>><?php echo link_to(__('Show inactive only'), ['filter' => 'onlyInactive'] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
 </ul>
 
 <table class="table table-bordered sticky-enabled">
@@ -30,7 +30,7 @@
     <?php foreach ($users as $item): ?>
       <tr>
         <td>
-          <?php echo link_to($item->username, array($item, 'module' => 'user')) ?>
+          <?php echo link_to($item->username, [$item, 'module' => 'user']) ?>
           <?php if (!$item->active): ?>
             (<?php echo __('inactive') ?>)
           <?php endif; ?>
@@ -51,4 +51,4 @@
   </tbody>
 </table>
 
-<?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+<?php echo get_partial('default/pager', ['pager' => $pager]) ?>

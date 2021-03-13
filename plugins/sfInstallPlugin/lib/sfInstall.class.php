@@ -31,7 +31,7 @@ class sfInstall
   {
     require_once sfConfig::get('sf_root_dir').'/vendor/FluentDOM/FluentDOM.php';
 
-    $dependencies = array();
+    $dependencies = [];
 
     // Check if any dependencies are defined
     $packageXmlPath = sfConfig::get('sf_config_dir').'/package.xml';
@@ -41,7 +41,7 @@ class sfInstall
     }
 
     $fd = FluentDOM($packageXmlPath)
-      ->namespaces(array('p' => 'http://pear.php.net/dtd/package-2.0'));
+      ->namespaces(['p' => 'http://pear.php.net/dtd/package-2.0']);
 
     // Check if a minimum PHP version is defined, and if it is less than our
     // current version
@@ -81,17 +81,17 @@ class sfInstall
     Qubit::createUploadDirsIfNeeded();
     Qubit::createDownloadsDirIfNeeded();
 
-    $writablePaths = array();
+    $writablePaths = [];
 
     $finder = sfFinder::type('any');
 
-    $pathsToCheck = array(
+    $pathsToCheck = [
       sfConfig::get('sf_cache_dir'),
       sfConfig::get('sf_data_dir'),
       sfConfig::get('sf_log_dir'),
       sfConfig::get('sf_upload_dir'),
       sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . 'downloads'
-    );
+    ];
 
     foreach ($pathsToCheck as $path)
     {
@@ -115,14 +115,14 @@ class sfInstall
 
   public static function checkDatabasesYml()
   {
-    $databasesYml = array();
+    $databasesYml = [];
 
     $databasesYmlPath = sfConfig::get('sf_config_dir').'/databases.yml';
 
     // Read databases.yml contents from existing databases.yml,
     // databases.yml.tmpl (for a Subversion checkout), or symfony skeleton
     // databases.yml, whichever is found first
-    $databasesYmlPaths = array();
+    $databasesYmlPaths = [];
     $databasesYmlPaths[] = $databasesYmlPath;
     $databasesYmlPaths[] = $databasesYmlPath.'.tmpl';
     $databasesYmlPaths[] = sfConfig::get('sf_lib_dir').'/task/generator/skeleton/project/config/databases.yml';
@@ -145,14 +145,14 @@ class sfInstall
 
   public static function checkPropelIni()
   {
-    $propelIni = array();
+    $propelIni = [];
 
     $propelIniPath = sfConfig::get('sf_config_dir').'/propel.ini';
 
     // Read propel.ini contents from existing propel.ini, propel.ini.tmpl (for
     // a Subversion checkout), or symfony skeleton propel.ini, whichever is
     // found first
-    $propelIniPaths = array();
+    $propelIniPaths = [];
     $propelIniPaths[] = $propelIniPath;
     $propelIniPaths[] = $propelIniPath.'.tmpl';
     $propelIniPaths[] = sfConfig::get('sf_lib_dir').'/task/generator/skeleton/project/config/propel.ini';
@@ -184,14 +184,14 @@ class sfInstall
 
   public static function checkSettingsYml($noScriptName)
   {
-    $settingsYml = array();
+    $settingsYml = [];
 
     $settingsYmlPath = sfConfig::get('sf_app_config_dir').'/settings.yml';
 
     // Read settings.yml contents from existing settings.yml, settings.yml.tmpl
     // (for a Subversion checkout), or symfony skeleton settings.yml, whichever
     // is found first
-    $settingsYmlPaths = array();
+    $settingsYmlPaths = [];
     $settingsYmlPaths[] = $settingsYmlPath;
     $settingsYmlPaths[] = $settingsYmlPath.'.tmpl';
     $settingsYmlPaths[] = sfConfig::get('sf_lib_dir').'/task/generator/skeleton/app/app/config/settings.yml';
@@ -284,9 +284,9 @@ class sfInstall
     }
   }
 
-  public static function configureDatabase(array $options = array())
+  public static function configureDatabase(array $options = [])
   {
-    $database = array();
+    $database = [];
     $configFile = sfConfig::get('sf_config_dir').'/config.php';
 
     $configHandler = new sfInstallDatabaseConfigHandler();
@@ -317,11 +317,11 @@ class sfInstall
     return $database;
   }
 
-  public static function configureSearch(array $options = array())
+  public static function configureSearch(array $options = [])
   {
-    $errors = array();
+    $errors = [];
     $defaults = sfConfig::get('sf_plugins_dir').'/arElasticSearchPlugin/config/search.yml';
-    $config = arElasticSearchConfigHandler::getConfiguration(array($defaults));
+    $config = arElasticSearchConfigHandler::getConfiguration([$defaults]);
 
     if (isset($options['searchHost']))
     {
@@ -381,7 +381,7 @@ class sfInstall
       $config['index']['name'] = 'atom';
     }
 
-    $env = array();
+    $env = [];
     $env['all'] = $config;
 
     $location = sfConfig::get('sf_config_dir').'/search.yml';
@@ -395,9 +395,9 @@ class sfInstall
 
   public static function insertSql()
   {
-    $arguments = array();
+    $arguments = [];
 
-    $options = array();
+    $options = [];
     $options[] = 'no-confirmation';
 
     $dispatcher = sfContext::getInstance()->getEventDispatcher();
@@ -431,7 +431,7 @@ class sfInstall
 
     $object = new QubitSetting();
     $object->name = 'plugins';
-    $object->value = serialize(array(
+    $object->value = serialize([
       'sfDcPlugin',
       'arDominionPlugin',
       'sfEacPlugin',
@@ -443,7 +443,7 @@ class sfInstall
       'sfIsdiahPlugin',
       'sfModsPlugin',
       'sfRadPlugin',
-      'sfSkosPlugin'));
+      'sfSkosPlugin']);
     $object->save();
 
     $dispatcher = sfContext::getInstance()->getEventDispatcher();
@@ -454,10 +454,10 @@ class sfInstall
     $loadData = new sfPropelDataLoadTask($dispatcher, $formatter);
     $loadData->run();
 
-    $premisAccessRightValues = array();
+    $premisAccessRightValues = [];
     foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
     {
-      $premisAccessRightValues[$item->slug] = array(
+      $premisAccessRightValues[$item->slug] = [
         'allow_master'          => 1,
         'allow_reference'       => 1,
         'allow_thumb'           => 1,
@@ -467,12 +467,12 @@ class sfInstall
         'disallow_master'       => 0,
         'disallow_reference'    => 0,
         'disallow_thumb'        => 0
-      );
+      ];
     }
     $setting = new QubitSetting();
     $setting->name = 'premisAccessRightValues';
     $setting->sourceCulture = sfConfig::get('sf_default_culture');
-    $setting->setValue(serialize($premisAccessRightValues), array('sourceCulture' => true));
+    $setting->setValue(serialize($premisAccessRightValues), ['sourceCulture' => true]);
     $setting->save();
 
     $accessDisallowWarning = sfContext::getInstance()->i18n->__('Access to this record is restricted because it contains personal or confidential information. Please contact the Reference Archivist for more information on accessing this record.');
@@ -482,11 +482,11 @@ class sfInstall
       $setting = new QubitSetting();
       $setting->name = "{$item->slug}_disallow";
       $setting->scope = 'access_statement';
-      $setting->setValue($accessDisallowWarning, array('culture' => 'en'));
+      $setting->setValue($accessDisallowWarning, ['culture' => 'en']);
 
       foreach (QubitI18N::getTranslations($accessDisallowWarning) as $langCode => $message)
       {
-        $setting->setValue($message, array('culture' => $langCode));
+        $setting->setValue($message, ['culture' => $langCode]);
       }
 
       $setting->save();
@@ -494,11 +494,11 @@ class sfInstall
       $setting = new QubitSetting();
       $setting->name = "{$item->slug}_conditional";
       $setting->scope = 'access_statement';
-      $setting->setValue($accessConditionalWarning, array('culture' => 'en'));
+      $setting->setValue($accessConditionalWarning, ['culture' => 'en']);
 
       foreach (QubitI18N::getTranslations($accessConditionalWarning) as $langCode => $message)
       {
-        $setting->setValue($message, array('culture' => $langCode));
+        $setting->setValue($message, ['culture' => $langCode]);
       }
 
       $setting->save();
@@ -521,7 +521,7 @@ class sfInstall
       return;
     }
 
-    $symlinks = array('sf' => sfConfig::get('sf_root_dir').'/vendor/symfony/data/web/sf');
+    $symlinks = ['sf' => sfConfig::get('sf_root_dir').'/vendor/symfony/data/web/sf'];
 
     foreach ($symlinks as $name => $path)
     {

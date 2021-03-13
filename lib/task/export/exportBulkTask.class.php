@@ -33,11 +33,11 @@ class exportBulkTask extends exportBulkBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $options['format'] = $this->normalizeExportFormat(
       $options['format'],
-      array('ead', 'mods')
+      ['ead', 'mods']
     );
 
     if (!isset($options['single-slug']))
@@ -123,8 +123,8 @@ class exportBulkTask extends exportBulkBaseTask
   protected function configure()
   {
     $this->addCommonArgumentsAndOptions();
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('format', null, sfCommandOption::PARAMETER_OPTIONAL, 'XML format ("ead" or "mods")', 'ead')
-    ));
+    ]);
   }
 }

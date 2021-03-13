@@ -39,7 +39,7 @@ class QubitActor extends BaseActor
     $string = $this->authorizedFormOfName;
     if (!isset($string))
     {
-      $string = $this->getAuthorizedFormOfName(array('sourceCulture' => true));
+      $string = $this->getAuthorizedFormOfName(['sourceCulture' => true]);
     }
 
     return (string) $string;
@@ -49,7 +49,7 @@ class QubitActor extends BaseActor
   {
     $args = func_get_args();
 
-    $options = array();
+    $options = [];
     if (1 < count($args))
     {
       $options = $args[1];
@@ -72,22 +72,22 @@ class QubitActor extends BaseActor
           }
         }
 
-        if (isset($this->values[$name]) && null !== $value = unserialize($this->values[$name]->__get('value', $options + array('sourceCulture' => true))))
+        if (isset($this->values[$name]) && null !== $value = unserialize($this->values[$name]->__get('value', $options + ['sourceCulture' => true])))
         {
           return $value;
         }
 
-        return array();
+        return [];
     }
 
-    return call_user_func_array(array($this, 'BaseActor::__get'), $args);
+    return call_user_func_array([$this, 'BaseActor::__get'], $args);
   }
 
   public function __set($name, $value)
   {
     $args = func_get_args();
 
-    $options = array();
+    $options = [];
     if (2 < count($args))
     {
       $options = $args[2];
@@ -116,12 +116,12 @@ class QubitActor extends BaseActor
           }
         }
 
-        $this->values[$name]->__set('value', serialize($value), $options + array('sourceCulture' => true));
+        $this->values[$name]->__set('value', serialize($value), $options + ['sourceCulture' => true]);
 
         return $this;
     }
 
-    return call_user_func_array(array($this, 'BaseActor::__set'), $args);
+    return call_user_func_array([$this, 'BaseActor::__set'], $args);
   }
 
   public function save($connection = null)
@@ -158,7 +158,7 @@ class QubitActor extends BaseActor
 
     parent::save($connection);
 
-    $creationIoIds = $otherIoIds = array();
+    $creationIoIds = $otherIoIds = [];
     $context = sfContext::getInstance();
     $env = $context->getConfiguration()->getEnvironment();
 
@@ -169,7 +169,7 @@ class QubitActor extends BaseActor
 
       // Update search index for related info object, update them
       // in QubitEvent synchronously in CLI tasks and jobs
-      if (in_array($env, array('cli', 'worker')))
+      if (in_array($env, ['cli', 'worker']))
       {
         $event->indexOnSave = true;
       }
@@ -198,27 +198,27 @@ class QubitActor extends BaseActor
     {
       if (count($creationIoIds) > 0)
       {
-        $jobOptions = array(
+        $jobOptions = [
           'ioIds' => $creationIoIds,
           'updateIos' => true,
           'updateDescendants' => true
-        );
+        ];
         QubitJob::runJob('arUpdateEsIoDocumentsJob', $jobOptions);
       }
 
       if (count($otherIoIds) > 0)
       {
-        $jobOptions = array(
+        $jobOptions = [
           'ioIds' => $otherIoIds,
           'updateIos' => true,
           'updateDescendants' => false
-        );
+        ];
         QubitJob::runJob('arUpdateEsIoDocumentsJob', $jobOptions);
       }
 
       // Let user know related descriptions update has started
-      $jobsUrl = $context->routing->generate(null, array('module' => 'jobs', 'action' => 'browse'));
-      $message = $context->i18n->__('Your actor has been updated. Its related descriptions are being updated asynchronously – check the <a href="%1">job scheduler page</a> for status and details.', array('%1' => $jobsUrl));
+      $jobsUrl = $context->routing->generate(null, ['module' => 'jobs', 'action' => 'browse']);
+      $message = $context->i18n->__('Your actor has been updated. Its related descriptions are being updated asynchronously – check the <a href="%1">job scheduler page</a> for status and details.', ['%1' => $jobsUrl]);
       $context->user->setFlash('notice', $message);
     }
 
@@ -299,7 +299,7 @@ class QubitActor extends BaseActor
     return self::getById(self::ROOT_ID);
   }
 
-  public static function getAllExceptUsers($options = array())
+  public static function getAllExceptUsers($options = [])
   {
     //returns all Actor objects except those that are
     //also an instance of the User class
@@ -322,7 +322,7 @@ class QubitActor extends BaseActor
    * @param array $options optional parameters
    * @return array options_for_select compatible array
    */
-  public static function getOptionsForSelectList($default, $options = array())
+  public static function getOptionsForSelectList($default, $options = [])
   {
     $actors = self::getAllExceptUsers($options);
 
@@ -359,7 +359,7 @@ class QubitActor extends BaseActor
    *
    * @return QubitQuery array of QubitActor objects
    */
-  public static function getOnlyActors($criteria=null, $options=array())
+  public static function getOnlyActors($criteria=null, $options=[])
   {
     if (is_null($criteria))
     {
@@ -374,16 +374,16 @@ class QubitActor extends BaseActor
   public static function getAllNames()
   {
     $actors = self::getOnlyActors();
-    $allActorNames = array();
+    $allActorNames = [];
     foreach ($actors as $actor)
     {
       $actorId = $actor->id;
-      $allActorNames[] = array('actorId' => $actorId, 'nameId' => null, 'name' => $actor->getAuthorizedFormOfName());
-      $actorNames = array();
+      $allActorNames[] = ['actorId' => $actorId, 'nameId' => null, 'name' => $actor->getAuthorizedFormOfName()];
+      $actorNames = [];
       $actorNames = $actor->getOtherNames();
       foreach ($actorNames as $name)
       {
-        $allActorNames[] = array('actorId' => $actorId, 'nameId' => $name->id, 'name' => $name.' ('.$name->getType().')');
+        $allActorNames[] = ['actorId' => $actorId, 'nameId' => $name->id, 'name' => $name.' ('.$name->getType().')'];
       }
     }
 
@@ -398,7 +398,7 @@ class QubitActor extends BaseActor
    * @param string $options array of optional parameters
    * @return QubitActor this object
    */
-  public function addProperty($name, $value, $options = array())
+  public function addProperty($name, $value, $options = [])
   {
     $property = QubitProperty::addUnique($this->id, $name, $value, $options);
 
@@ -542,7 +542,7 @@ class QubitActor extends BaseActor
    * @param array $options optional parameters
    * @return QubitActor found actor
    */
-  public static function getByAuthorizedFormOfName($name, $options = array())
+  public static function getByAuthorizedFormOfName($name, $options = [])
   {
     $criteria = new Criteria();
     $criteria->addJoin(QubitActor::ID, QubitActorI18n::ID);
@@ -575,7 +575,7 @@ class QubitActor extends BaseActor
     {
       $label .= $this->descriptionIdentifier;
     }
-    if (null !== $value = $this->getAuthorizedFormOfName(array('cultureFallback' => true)))
+    if (null !== $value = $this->getAuthorizedFormOfName(['cultureFallback' => true]))
     {
       $label = (0 < strlen($label)) ? $label.' - '.$value : $value;
     }
@@ -662,7 +662,7 @@ class QubitActor extends BaseActor
     return QubitObjectTermRelation::get($criteria);
   }
 
-  public static function setTermRelationByName($name, $options = array())
+  public static function setTermRelationByName($name, $options = [])
   {
     $criteria = new Criteria();
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
@@ -785,7 +785,7 @@ class QubitActor extends BaseActor
   {
     if (!isset($this->slug))
     {
-      $this->slug = QubitSlug::slugify($this->__get('authorizedFormOfName', array('sourceCulture' => true)));
+      $this->slug = QubitSlug::slugify($this->__get('authorizedFormOfName', ['sourceCulture' => true]));
     }
 
     return parent::insert($connection);
@@ -796,7 +796,7 @@ class QubitActor extends BaseActor
     if (!empty($actorIds))
     {
       // Update, in Elasticsearch, relations of actors previously related to actor
-      if (!in_array(sfContext::getInstance()->getConfiguration()->getEnvironment(), array('cli', 'worker')))
+      if (!in_array(sfContext::getInstance()->getConfiguration()->getEnvironment(), ['cli', 'worker']))
       {
         QubitJob::runJob('arUpdateEsActorRelationsJob', ['actorIds' => $actorIds]);
       }

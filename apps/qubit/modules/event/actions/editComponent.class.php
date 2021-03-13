@@ -21,7 +21,7 @@ class EventEditComponent extends sfComponent
 {
   public function processForm()
   {
-    $params = array($this->request->editEvent);
+    $params = [$this->request->editEvent];
     if (isset($this->request->editEvents))
     {
       // If dialog JavaScript did it's work, then use array of parameters
@@ -158,20 +158,20 @@ class EventEditComponent extends sfComponent
           $eventTypes = sfDcPlugin::eventTypes();
         }
 
-        $choices = array();
+        $choices = [];
         foreach ($eventTypes as $item)
         {
           // Default event type is creation
           if (QubitTerm::CREATION_ID == $item->id)
           {
-            $this->form->setDefault('type', $this->context->routing->generate(null, array($item, 'module' => 'term')));
+            $this->form->setDefault('type', $this->context->routing->generate(null, [$item, 'module' => 'term']));
           }
 
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
         }
 
         $this->form->setValidator('type', new sfValidatorString());
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
     }

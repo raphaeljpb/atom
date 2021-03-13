@@ -23,7 +23,7 @@ class QubitOtherName extends BaseOtherName
   {
     if (!$this->getName())
     {
-      return (string) $this->getName(array('sourceCulture' => true));
+      return (string) $this->getName(['sourceCulture' => true]);
     }
 
     return (string) $this->getName();

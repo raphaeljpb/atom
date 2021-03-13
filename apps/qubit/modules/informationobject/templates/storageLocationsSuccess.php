@@ -40,11 +40,11 @@
           <td>
             <?php echo $row++ ?>
           </td><td>
-            <?php echo link_to(render_title($item->getName(array('cultureFallback' => true))), sfConfig::get('app_siteBaseUrl').'/'.$item->slug) ?>
+            <?php echo link_to(render_title($item->getName(['cultureFallback' => true])), sfConfig::get('app_siteBaseUrl').'/'.$item->slug) ?>
           </td><td>
-            <?php echo render_value_inline($item->getLocation(array('cultureFallback' => true))) ?>
+            <?php echo render_value_inline($item->getLocation(['cultureFallback' => true])) ?>
           </td><td>
-            <?php echo render_value_inline($item->getType(array('cultureFallback' => true))) ?>
+            <?php echo render_value_inline($item->getType(['cultureFallback' => true])) ?>
           </td>
         </tr>
       <?php endforeach; ?>
@@ -52,7 +52,7 @@
   </table>
 
   <div id="result-count">
-    <?php echo $this->i18n->__('Showing %1% results', array('%1%' => count($results))) ?>
+    <?php echo $this->i18n->__('Showing %1% results', ['%1%' => count($results)]) ?>
   </div>
 </body>
 </html>

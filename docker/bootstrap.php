@@ -39,11 +39,11 @@ function get_host_and_port($value, $default_port)
     $parts[1] = $default_port;
   }
 
-  return array('host' => $parts[0], 'port' => $parts[1]);
+  return ['host' => $parts[0], 'port' => $parts[1]];
 }
 
 
-$CONFIG = array(
+$CONFIG = [
   'atom.development_mode'   => filter_var(getenv_default('ATOM_DEVELOPMENT_MODE', false), FILTER_VALIDATE_BOOLEAN),
   'atom.elasticsearch_host' => getenv_or_fail('ATOM_ELASTICSEARCH_HOST'),
   'atom.memcached_host'     => getenv_or_fail('ATOM_MEMCACHED_HOST'),
@@ -59,7 +59,7 @@ $CONFIG = array(
   'php.upload_max_filesize' => getenv_default('ATOM_PHP_UPLOAD_MAX_FILESIZE', '64M'),
   'php.max_file_uploads'    => getenv_default('ATOM_PHP_MAX_FILE_UPLOADS', '20'),
   'php.date.timezone'       => getenv_default('ATOM_PHP_DATE_TIMEZONE', 'America/Vancouver')
-);
+];
 
 
 #
@@ -185,45 +185,45 @@ file_put_contents(_ATOM_DIR.'/config/search.yml', $search_yml);
 # /config/config.php
 #
 
-$mysql_config = array(
-  'all' => array(
-    'propel' => array(
+$mysql_config = [
+  'all' => [
+    'propel' => [
       'class' => 'sfPropelDatabase',
-      'param' => array(
+      'param' => [
         'encoding' => 'utf8mb4',
         'persistent' => true,
         'pooling' => true,
         'dsn' => $CONFIG['atom.mysql_dsn'],
         'username' => $CONFIG['atom.mysql_username'],
         'password' => $CONFIG['atom.mysql_password'],
-      ),
-    ),
-  ),
-  'dev' => array(
-    'propel' => array(
-      'param' => array(
+      ],
+    ],
+  ],
+  'dev' => [
+    'propel' => [
+      'param' => [
         'classname' => 'DebugPDO',
-        'debug' => array(
+        'debug' => [
           'realmemoryusage' => true,
-          'details' => array(
-            'time' => array('enabled' => true,),
-            'slow' => array('enabled' => true, 'threshold' => 0.1,),
-            'mem' => array('enabled' => true,),
-            'mempeak' => array('enabled' => true,),
-            'memdelta' => array('enabled' => true,),
-          ),
-        ),
-      ),
-    ),
-  ),
-  'test' => array(
-    'propel' => array(
-      'param' => array(
+          'details' => [
+            'time' => ['enabled' => true,],
+            'slow' => ['enabled' => true, 'threshold' => 0.1,],
+            'mem' => ['enabled' => true,],
+            'mempeak' => ['enabled' => true,],
+            'memdelta' => ['enabled' => true,],
+          ],
+        ],
+      ],
+    ],
+  ],
+  'test' => [
+    'propel' => [
+      'param' => [
         'classname' => 'DebugPDO',
-      ),
-    ),
-  ),
-);
+      ],
+    ],
+  ],
+];
 
 $config_php = "<?php\n\nreturn ".var_export($mysql_config, 1).";\n\n?>\n";
 

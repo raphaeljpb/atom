@@ -33,12 +33,12 @@ class csvExportInformationObjectsTask extends exportBulkBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     // Make sure standard is lower case
     $options['standard'] = $this->normalizeExportFormat(
       $options['standard'],
-      array('isad', 'rad')
+      ['isad', 'rad']
     );
 
     $configuration = ProjectConfiguration::getApplicationConfiguration(
@@ -94,11 +94,11 @@ class csvExportInformationObjectsTask extends exportBulkBaseTask
   protected function configure()
   {
     $this->addCommonArgumentsAndOptions();
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('standard', null, sfCommandOption::PARAMETER_OPTIONAL, 'Description format ("isad" or "rad")', 'isad')
-    ));
-    $this->addOptions(array(
+    ]);
+    $this->addOptions([
       new sfCommandOption('rows-per-file', null, sfCommandOption::PARAMETER_OPTIONAL, 'Rows per file (disregarded if writing to a file, not a directory)', false)
-    ));
+    ]);
   }
 }

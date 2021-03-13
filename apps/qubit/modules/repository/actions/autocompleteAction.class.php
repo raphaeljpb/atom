@@ -44,7 +44,7 @@ class RepositoryAutocompleteAction extends sfAction
     // information object form
     if (isset($request->aclAction))
     {
-      $repositoryList = array();
+      $repositoryList = [];
       $repositoryAccess = QubitAcl::getRepositoryAccess($request->aclAction);
 
       // If all repositories are denied, no response
@@ -66,7 +66,7 @@ class RepositoryAutocompleteAction extends sfAction
             {
               // Require repositories to be specifically allowed (all others
               // prohibited)
-              $criteria->add(QubitRepository::ID, $repositoryList + array('null'), Criteria::IN);
+              $criteria->add(QubitRepository::ID, $repositoryList + ['null'], Criteria::IN);
             }
             else
             {

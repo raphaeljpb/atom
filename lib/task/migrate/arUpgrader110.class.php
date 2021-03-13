@@ -78,11 +78,11 @@ class arUpgrader110
         $node->path = 'accession/add';
         $node->label = 'Accession records';
 
-        foreach (array(
+        foreach ([
           'es' => 'Registros de adhesiones',
           'fr' => 'Registre des entrées',
           'pl' => 'Nabytki',
-          'sl' => 'Zapisi o prevzemu') as $key => $value)
+          'sl' => 'Zapisi o prevzemu'] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -109,11 +109,11 @@ class arUpgrader110
         $node->label = 'Manage';
         $node->culture = 'en';
 
-        foreach (array(
+        foreach ([
           'es' => 'Administrar',
           'fr' => 'Gérer',
           'pl' => 'Zarządzanie',
-          'sl' => 'Upravljaj') as $key => $value)
+          'sl' => 'Upravljaj'] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -145,11 +145,11 @@ class arUpgrader110
         $node->label = 'Accession records';
         $node->culture = 'en';
 
-        foreach (array(
+        foreach ([
           'es' => 'Registros de adhesiones',
           'fr' => 'Registre des entrées',
           'pl' => 'Nabytki',
-          'sl' => 'Zapisi o prevzemu') as $key => $value)
+          'sl' => 'Zapisi o prevzemu'] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -174,12 +174,12 @@ class arUpgrader110
         $node->label = 'Donors';
         $node->culture = 'en';
 
-        foreach (array(
+        foreach ([
           'es' => 'Donantes',
           'fr' => 'Donateurs',
           'nl' => 'Schenkers',
           'pl' => 'Przekazujący (materiały archiwalne)',
-          'sl' => 'Donatorji') as $key => $value)
+          'sl' => 'Donatorji'] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -204,12 +204,12 @@ class arUpgrader110
         $node->label = 'Rights holders';
         $node->culture = 'en';
 
-        foreach (array(
+        foreach ([
           'es' => 'Titulares de derechos',
           'fr' => 'Détenteurs de droits',
           'nl' => 'Houders van rechten',
           'pl' => 'Posiadacze praw',
-          'sl' => 'Imetniki pravic') as $key => $value)
+          'sl' => 'Imetniki pravic'] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -264,10 +264,10 @@ class arUpgrader110
         $taxonomy->culture = 'en';
         $taxonomy->save();
 
-        foreach (array(
+        foreach ([
           'Public transfer',
           'Private transfer',
-          'Acquisition type') as $item)
+          'Acquisition type'] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -285,11 +285,11 @@ class arUpgrader110
         $taxonomy->culture = 'en';
         $taxonomy->save();
 
-        foreach (array(
+        foreach ([
           'Deposit',
           'Gift',
           'Purchase',
-          'Transfer') as $item)
+          'Transfer'] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -307,10 +307,10 @@ class arUpgrader110
         $taxonomy->culture = 'en';
         $taxonomy->save();
 
-        foreach (array(
+        foreach ([
           'High',
           'Medium',
-          'Low') as $item)
+          'Low'] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -328,10 +328,10 @@ class arUpgrader110
         $taxonomy->culture = 'en';
         $taxonomy->save();
 
-        foreach (array(
+        foreach ([
           'Complete',
           'Incomplete',
-          'In-Progress') as $item)
+          'In-Progress'] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -349,9 +349,9 @@ class arUpgrader110
         $taxonomy->culture = 'en';
         $taxonomy->save();
 
-        foreach (array(
+        foreach ([
           'Whole',
-          'Part') as $item)
+          'Part'] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -369,14 +369,14 @@ class arUpgrader110
         $taxonomy->culture = 'en';
         $taxonomy->save();
 
-        foreach (array(
+        foreach ([
           'Delete',
           'Discover',
           'Display',
           'Disseminate',
           'Migrate',
           'Modify',
-          'Replicate') as $item)
+          'Replicate'] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -394,12 +394,12 @@ class arUpgrader110
         $taxonomy->culture = 'en';
         $taxonomy->save();
 
-        foreach (array(
+        foreach ([
           'Copyright',
           'License',
           'Statute',
           'Policy',
-          'Donor') as $item)
+          'Donor'] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -417,10 +417,10 @@ class arUpgrader110
         $taxonomy->culture = 'en';
         $taxonomy->save();
 
-        foreach (array(
+        foreach ([
           'Under copyright',
           'Public domain',
-          'Unknown') as $item)
+          'Unknown'] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -452,12 +452,12 @@ class arUpgrader110
           switch ($note->typeId)
           {
             case QubitTerm::RELATION_NOTE_DATE_ID:
-              $relation->date = $note->getContent(array('sourceCulture' => true));
+              $relation->date = $note->getContent(['sourceCulture' => true]);
 
               break;
 
             case QubitTerm::RELATION_NOTE_DESCRIPTION_ID:
-              $relation->description = $note->getContent(array('sourceCulture' => true));
+              $relation->description = $note->getContent(['sourceCulture' => true]);
 
               break;
           }
@@ -533,12 +533,12 @@ class arUpgrader110
         $node->path = 'sfPluginAdminPlugin/themes';
         $node->label = 'Themes';
 
-        foreach (array(
+        foreach ([
           'es' => 'Temas',
           'fr' => 'Thèmes',
           'nl' => 'Thema\'s',
           'pl' => 'Motywy',
-          'sl' => 'Teme') as $key => $value)
+          'sl' => 'Teme'] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -578,11 +578,11 @@ class arUpgrader110
           $io = QubitInformationObject::getById($item->information_object_id);
 
           // Build repository dirname
-          if (null !== $repository = $io->getRepository(array('inherit' => true)))
+          if (null !== $repository = $io->getRepository(['inherit' => true]))
           {
             if (!isset($repository->slug))
             {
-              $slug = $this->getUniqueSlug($repository->getAuthorizedFormOfName(array('sourceCulture' => true)));
+              $slug = $this->getUniqueSlug($repository->getAuthorizedFormOfName(['sourceCulture' => true]));
               if (!isset($slug) || 0 == strlen($slug))
               {
                 continue;
@@ -677,12 +677,12 @@ class arUpgrader110
         $node->path = 'physicalobject/browse';
         $node->label = 'Physical storage';
 
-        foreach (array(
+        foreach ([
           'es' => 'Almacenamiento físico',
           'fr' => 'Localisation physique',
           'nl' => 'Bergplaats',
           'pl' => 'Składowanie w ujęciu fizycznym',
-          'sl' => 'Fizična hramba') as $key => $value)
+          'sl' => 'Fizična hramba'] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -708,7 +708,7 @@ class arUpgrader110
           $plugin = 'sfClassicPlugin';
           $replacement = 'qtTrilliumPlugin';
 
-          $settings = unserialize($setting->getValue(array('sourceCulture' => true)));
+          $settings = unserialize($setting->getValue(['sourceCulture' => true]));
 
           // Find plugin
           if (-1 < ($index = array_search($plugin, $settings)))
@@ -717,7 +717,7 @@ class arUpgrader110
             $settings[$index] = $replacement;
 
             // Serialize
-            $setting->setValue(serialize($settings), array('sourceCulture' => true));
+            $setting->setValue(serialize($settings), ['sourceCulture' => true]);
 
             // Save
             $setting->save();
@@ -791,17 +791,17 @@ class arUpgrader110
     QubitMigrate::dropColumn(QubitNote::TABLE_NAME, 'rgt');
 
     // Add start_date and end_date in table other_name
-    QubitMigrate::addColumn(QubitOtherName::TABLE_NAME, 'start_date DATE', array('after' => 'type_id'));
-    QubitMigrate::addColumn(QubitOtherName::TABLE_NAME, 'end_date DATE', array('after' => 'start_date'));
+    QubitMigrate::addColumn(QubitOtherName::TABLE_NAME, 'start_date DATE', ['after' => 'type_id']);
+    QubitMigrate::addColumn(QubitOtherName::TABLE_NAME, 'end_date DATE', ['after' => 'start_date']);
 
     // Add dates column to other_name_i18n
-    QubitMigrate::addColumn(QubitOtherNameI18n::TABLE_NAME, 'dates TEXT', array('after' => 'note'));
+    QubitMigrate::addColumn(QubitOtherNameI18n::TABLE_NAME, 'dates TEXT', ['after' => 'note']);
 
     // Add relation.source_culture
-    QubitMigrate::addColumn(QubitRelation::TABLE_NAME, 'source_culture VARCHAR(7) NOT NULL', array('after' => 'end_date'));
+    QubitMigrate::addColumn(QubitRelation::TABLE_NAME, 'source_culture VARCHAR(7) NOT NULL', ['after' => 'end_date']);
 
     // Add repository.upload_limit
-    QubitMigrate::addColumn(QubitRepository::TABLE_NAME, 'upload_limit FLOAT', array('after' => 'desc_identifier'));
+    QubitMigrate::addColumn(QubitRepository::TABLE_NAME, 'upload_limit FLOAT', ['after' => 'desc_identifier']);
 
     // Drop column digital_object.checksum_type_id
     QubitMigrate::dropColumn(QubitDigitalObject::TABLE_NAME, 'checksum_type_id');
@@ -829,7 +829,7 @@ sql;
     QubitPdo::modify($sql);
 
     // Drop unneeded tables
-    foreach (array(
+    foreach ([
       'historical_event',
       'map',
       'map_i18n',
@@ -840,19 +840,19 @@ sql;
       'rights_i18n',
       'rights_actor_relation',
       'rights_term_relation',
-      'system_event') as $item)
+      'system_event'] as $item)
     {
       QubitMigrate::dropTable($item);
     }
 
     // Drop updated_at and created_at columns
-    foreach (array(
+    foreach ([
       'note',
       'other_name',
       'property',
       'status',
       'taxonomy'
-      ) as $item)
+      ] as $item)
     {
       // Copy column updated_at and drop it
       $sql  = "UPDATE object, $item";

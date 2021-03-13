@@ -19,7 +19,7 @@
 
 class UserEditActorAclAction extends DefaultEditAction
 {
-  public static $NAMES = array();
+  public static $NAMES = [];
 
   public function execute($request)
   {
@@ -35,7 +35,7 @@ class UserEditActorAclAction extends DefaultEditAction
 
         $this->resource->save();
 
-        $this->redirect(array($this->resource, 'module' => 'user', 'action' => 'indexActorAcl'));
+        $this->redirect([$this->resource, 'module' => 'user', 'action' => 'indexActorAcl']);
       }
     }
   }
@@ -54,7 +54,7 @@ class UserEditActorAclAction extends DefaultEditAction
     }
 
     // Always include root actor permissions
-    $this->actors = array(QubitActor::ROOT_ID => null);
+    $this->actors = [QubitActor::ROOT_ID => null];
 
     // Get actor permissions for this group
     $criteria = new Criteria();

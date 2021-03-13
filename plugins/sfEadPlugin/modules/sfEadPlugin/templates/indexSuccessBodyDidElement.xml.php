@@ -3,11 +3,11 @@
   <?php if (check_field_visibility('app_element_visibility_physical_storage', $options)): ?>
     <?php $objects = $$resourceVar->getPhysicalObjects() ?>
     <?php foreach ($objects as $object): ?>
-      <?php if (0 < strlen($location = $object->getLocation(array('cultureFallback' => true)))): ?>
+      <?php if (0 < strlen($location = $object->getLocation(['cultureFallback' => true]))): ?>
         <physloc id="<?php echo 'physloc'.str_pad(++$$counterVar, 4, '0', STR_PAD_LEFT) ?>"><?php echo escape_dc(esc_specialchars($location)) ?></physloc>
       <?php endif; ?>
       <container <?php echo $ead->getEadContainerAttributes($object) ?><?php if (0 < strlen($location)): ?> parent="<?php echo 'physloc'.str_pad($$counterVar, 4, '0', STR_PAD_LEFT) ?>"<?php endif; ?>>
-        <?php if (0 < strlen($name = $object->getName(array('cultureFallback' => true)))): ?>
+        <?php if (0 < strlen($name = $object->getName(['cultureFallback' => true]))): ?>
           <?php echo escape_dc(esc_specialchars($name)) ?>
         <?php endif; ?>
       </container>
@@ -44,7 +44,7 @@
 
   <?php endif; ?>
 
-  <?php if (0 < strlen($value = $$resourceVar->getTitle(array('cultureFallback' => true)))): ?>
+  <?php if (0 < strlen($value = $$resourceVar->getTitle(['cultureFallback' => true]))): ?>
     <unittitle encodinganalog="<?php echo $ead->getMetadataParameter('unittitle') ?>"><?php echo escape_dc(esc_specialchars($value)) ?></unittitle>
   <?php endif; ?>
 
@@ -60,7 +60,7 @@
     <unittitle type="statRep" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('statrep'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?>><?php echo escape_dc(esc_specialchars($value)) ?></unittitle>
   <?php endif; ?>
 
-  <?php if (0 < strlen($value = $$resourceVar->getEdition(array('cultureFallback' => true)))): ?>
+  <?php if (0 < strlen($value = $$resourceVar->getEdition(['cultureFallback' => true]))): ?>
     <unittitle type="editionStat" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('editionstatement'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?>><edition><?php echo escape_dc(esc_specialchars($value)) ?></edition></unittitle>
   <?php endif; ?>
 
@@ -80,7 +80,7 @@
   <?php endif; ?>
 
   <?php foreach ($$resourceVar->getProperties(null, 'alternativeIdentifiers') as $item): ?>
-    <unitid type="alternative" label="<?php echo escape_dc(esc_specialchars($item->name)) ?>"><?php echo escape_dc(esc_specialchars($item->getValue(array('sourceCulture' => true)))) ?></unitid>
+    <unitid type="alternative" label="<?php echo escape_dc(esc_specialchars($item->name)) ?>"><?php echo escape_dc(esc_specialchars($item->getValue(['sourceCulture' => true]))) ?></unitid>
   <?php endforeach; ?>
 
   <?php if (0 < strlen($value = $$resourceVar->getPropertyByName('standardNumber')->__toString())): ?>
@@ -88,16 +88,16 @@
   <?php endif; ?>
 
   <?php foreach ($$resourceVar->getDates() as $date): ?>
-    <unitdate <?php if ($date->getActor() !== null || $date->getPlace() !== null): ?> <?php echo 'id="atom_'.$date->id.'_event"' ?> <?php endif; ?> <?php if ($date->typeId != QubitTerm::CREATION_ID): ?><?php if ($type = $date->getType()->__toString()): ?><?php echo 'datechar="'.strtolower($type).'" ' ?><?php endif; ?><?php else: ?><?php $type = null; ?><?php endif; ?><?php if ($startdate = $date->getStartDate()): ?><?php echo 'normal="'?><?php echo Qubit::renderDate($startdate) ?><?php if (0 < strlen($enddate = $date->getEndDate())): ?><?php echo '/'?><?php echo Qubit::renderDate($enddate) ?><?php endif; ?><?php echo '"' ?><?php endif; ?> <?php if (0 < strlen($encoding = $ead->getMetadataParameter('unitdate'.strtolower($type)))): ?>encodinganalog="<?php echo $encoding ?>"<?php elseif (0 < strlen($encoding = $ead->getMetadataParameter('unitdateDefault'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?>><?php echo escape_dc(esc_specialchars(Qubit::renderDateStartEnd($date->getDate(array('cultureFallback' => true)), $date->startDate, $date->endDate))) ?></unitdate>
+    <unitdate <?php if ($date->getActor() !== null || $date->getPlace() !== null): ?> <?php echo 'id="atom_'.$date->id.'_event"' ?> <?php endif; ?> <?php if ($date->typeId != QubitTerm::CREATION_ID): ?><?php if ($type = $date->getType()->__toString()): ?><?php echo 'datechar="'.strtolower($type).'" ' ?><?php endif; ?><?php else: ?><?php $type = null; ?><?php endif; ?><?php if ($startdate = $date->getStartDate()): ?><?php echo 'normal="'?><?php echo Qubit::renderDate($startdate) ?><?php if (0 < strlen($enddate = $date->getEndDate())): ?><?php echo '/'?><?php echo Qubit::renderDate($enddate) ?><?php endif; ?><?php echo '"' ?><?php endif; ?> <?php if (0 < strlen($encoding = $ead->getMetadataParameter('unitdate'.strtolower($type)))): ?>encodinganalog="<?php echo $encoding ?>"<?php elseif (0 < strlen($encoding = $ead->getMetadataParameter('unitdateDefault'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?>><?php echo escape_dc(esc_specialchars(Qubit::renderDateStartEnd($date->getDate(['cultureFallback' => true]), $date->startDate, $date->endDate))) ?></unitdate>
   <?php endforeach; // dates?>
 
-  <?php if (0 < strlen($value = $$resourceVar->getExtentAndMedium(array('cultureFallback' => true)))): ?>
+  <?php if (0 < strlen($value = $$resourceVar->getExtentAndMedium(['cultureFallback' => true]))): ?>
     <physdesc <?php if (0 < strlen($encoding = $ead->getMetadataParameter('extent'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?>>
         <?php echo escape_dc(esc_specialchars($value)) ?>
     </physdesc>
   <?php endif; ?>
 
-  <?php if ($value = $$resourceVar->getRepository(array('inherit' => $topLevelDid))): ?>
+  <?php if ($value = $$resourceVar->getRepository(['inherit' => $topLevelDid])): ?>
     <repository>
       <corpname><?php echo escape_dc(esc_specialchars($value->__toString())) ?></corpname>
       <?php if ($address = $value->getPrimaryContact()): ?>
@@ -134,7 +134,7 @@
     </repository>
   <?php endif; ?>
 
-  <?php if (0 < count($$resourceVar->language) || 0 < count($$resourceVar->script) || 0 < count($$resourceVar->getNotesByType(array('noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID))->offsetGet(0))): ?>
+  <?php if (0 < count($$resourceVar->language) || 0 < count($$resourceVar->script) || 0 < count($$resourceVar->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0))): ?>
     <langmaterial encodinganalog="<?php echo $ead->getMetadataParameter('langmaterial') ?>">
     <?php foreach ($$resourceVar->language as $languageCode): ?>
       <language langcode="<?php echo strtolower($iso639convertor->getID2($languageCode)) ?>"><?php echo format_language($languageCode) ?></language>
@@ -142,8 +142,8 @@
     <?php foreach ($$resourceVar->script as $scriptCode): ?>
       <language scriptcode="<?php echo $scriptCode ?>"><?php echo format_script($scriptCode) ?></language>
     <?php endforeach; ?>
-    <?php if (0 < count($notes = $$resourceVar->getNotesByType(array('noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID)))): ?>
-      <?php echo escape_dc(esc_specialchars($notes[0]->getContent(array('cultureFallback' => true)))) ?>
+    <?php if (0 < count($notes = $$resourceVar->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID]))): ?>
+      <?php echo escape_dc(esc_specialchars($notes[0]->getContent(['cultureFallback' => true]))) ?>
     <?php endif; ?>
     </langmaterial>
   <?php endif; ?>
@@ -152,10 +152,10 @@
     <note type="sourcesDescription"><p><?php echo escape_dc(esc_specialchars($$resourceVar->sources)) ?></p></note>
   <?php endif; ?>
 
-  <?php if (0 < count($notes = $$resourceVar->getNotesByType(array('noteTypeId' => QubitTerm::GENERAL_NOTE_ID)))): ?>
+  <?php if (0 < count($notes = $$resourceVar->getNotesByType(['noteTypeId' => QubitTerm::GENERAL_NOTE_ID]))): ?>
     <?php foreach ($notes as $note): ?>
       <note type="generalNote" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('generalNote'))): ?>encodinganalog="<?php echo $encoding ?>"<?php endif; ?>>
-        <p><?php echo escape_dc(esc_specialchars($note->getContent(array('cultureFallback' => true)))) ?></p>
+        <p><?php echo escape_dc(esc_specialchars($note->getContent(['cultureFallback' => true]))) ?></p>
       </note>
     <?php endforeach; ?>
   <?php endif; ?>
@@ -195,16 +195,16 @@
       <?php foreach($events as $date): ?>
         <?php if ($type = $date->actor->getEntityTypeId()): ?>
           <?php if (QubitTerm::PERSON_ID == $type): ?>
-            <persname <?php echo 'id="atom_'.$date->id.'_actor"' ?>><?php echo escape_dc(esc_specialchars($date->actor->getAuthorizedFormOfName(array('cultureFallback' => true)))) ?></persname>
+            <persname <?php echo 'id="atom_'.$date->id.'_actor"' ?>><?php echo escape_dc(esc_specialchars($date->actor->getAuthorizedFormOfName(['cultureFallback' => true]))) ?></persname>
           <?php endif; ?>
           <?php if (QubitTerm::FAMILY_ID == $type): ?>
-            <famname <?php echo 'id="atom_'.$date->id.'_actor"' ?>><?php echo escape_dc(esc_specialchars($date->actor->getAuthorizedFormOfName(array('cultureFallback' => true)))) ?></famname>
+            <famname <?php echo 'id="atom_'.$date->id.'_actor"' ?>><?php echo escape_dc(esc_specialchars($date->actor->getAuthorizedFormOfName(['cultureFallback' => true]))) ?></famname>
           <?php endif; ?>
           <?php if (QubitTerm::CORPORATE_BODY_ID == $type): ?>
-            <corpname <?php echo 'id="atom_'.$date->id.'_actor"' ?>><?php echo escape_dc(esc_specialchars($date->actor->getAuthorizedFormOfName(array('cultureFallback' => true)))) ?></corpname>
+            <corpname <?php echo 'id="atom_'.$date->id.'_actor"' ?>><?php echo escape_dc(esc_specialchars($date->actor->getAuthorizedFormOfName(['cultureFallback' => true]))) ?></corpname>
           <?php endif; ?>
         <?php else: ?>
-          <name <?php echo 'id="atom_'.$date->id.'_actor"' ?>><?php echo escape_dc(esc_specialchars($date->actor->getAuthorizedFormOfName(array('cultureFallback' => true)))) ?></name>
+          <name <?php echo 'id="atom_'.$date->id.'_actor"' ?>><?php echo escape_dc(esc_specialchars($date->actor->getAuthorizedFormOfName(['cultureFallback' => true]))) ?></name>
         <?php endif; ?>
       <?php endforeach; ?>
     </origination>

@@ -20,7 +20,7 @@
 class AccessionRelatedDonorComponent extends RelationEditComponent
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'authorizedFormOfName',
       'type',
 
@@ -42,7 +42,7 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
       'fax',
       'latitude',
       'longitude',
-      'note');
+      'note'];
 
   public function processForm()
   {
@@ -75,7 +75,7 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
 
     $this->form->getWidgetSchema()->setNameFormat('relatedDonor[%s]');
 
-    $this->relatedDonorRecord = QubitRelation::getRelationsBySubjectId($this->resource->id, array('typeId' => QubitTerm::DONOR_ID));
+    $this->relatedDonorRecord = QubitRelation::getRelationsBySubjectId($this->resource->id, ['typeId' => QubitTerm::DONOR_ID]);
   }
 
   protected function addField($name)
@@ -84,12 +84,12 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
     {
       case 'authorizedFormOfName':
         $this->form->setValidator('authorizedFormOfName', new sfValidatorString());
-        $this->form->setWidget('authorizedFormOfName', new sfWidgetFormSelect(array('choices' => array())));
+        $this->form->setWidget('authorizedFormOfName', new sfWidgetFormSelect(['choices' => []]));
 
         break;
 
       case 'type':
-        $this->form->setDefault('type', $this->context->routing->generate(null, array(QubitTerm::getById(QubitTerm::DONOR_ID), 'module' => 'term')));
+        $this->form->setDefault('type', $this->context->routing->generate(null, [QubitTerm::getById(QubitTerm::DONOR_ID), 'module' => 'term']));
         $this->form->setValidator('type', new sfValidatorString());
         $this->form->setWidget('type', new sfWidgetFormInputHidden());
 
@@ -105,13 +105,13 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
       case 'streetAddress':
       case 'note':
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormTextArea(array(), array('rows' => 2)));
+        $this->form->setWidget($name, new sfWidgetFormTextArea([], ['rows' => 2]));
 
         break;
 
       case 'countryCode':
         $this->form->setValidator('countryCode', new sfValidatorI18nChoiceCountry());
-        $this->form->setWidget('countryCode', new sfWidgetFormI18nChoiceCountry(array('add_empty' => true, 'culture' => $this->context->user->getCulture())));
+        $this->form->setWidget('countryCode', new sfWidgetFormI18nChoiceCountry(['add_empty' => true, 'culture' => $this->context->user->getCulture()]));
 
         break;
 

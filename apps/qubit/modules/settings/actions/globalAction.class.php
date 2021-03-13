@@ -45,8 +45,8 @@ class SettingsGlobalAction extends sfAction
         // if validation fails. By default, their values are not included in
         // $request->parameterHolder (and thus are not bound) because their
         // <input> field is disabled.
-        $version = (null !== $setting = QubitSetting::getByName('version')) ? $setting->getValue(array('sourceCulture'=>true)) : null;
-        $this->globalForm->bind(array_merge($request->global_settings, array('version'=>$version)));
+        $version = (null !== $setting = QubitSetting::getByName('version')) ? $setting->getValue(['sourceCulture'=>true]) : null;
+        $this->globalForm->bind(array_merge($request->global_settings, ['version'=>$version]));
         if ($this->globalForm->isValid())
         {
           // Do update and redirect to avoid repeat submit wackiness
@@ -72,7 +72,7 @@ class SettingsGlobalAction extends sfAction
     $version = qubitConfiguration::VERSION;
     if (null !== $setting = QubitSetting::getByName('version'))
     {
-      $version .= ' - '.$setting->getValue(array('sourceCulture' => true));
+      $version .= ' - '.$setting->getValue(['sourceCulture' => true]);
     }
 
     $checkForUpdates = QubitSetting::getByName('check_for_updates');
@@ -96,28 +96,28 @@ class SettingsGlobalAction extends sfAction
     $cacheXmlOnSave = QubitSetting::getByName('cache_xml_on_save');
 
     // Set defaults for global form
-    $this->globalForm->setDefaults(array(
+    $this->globalForm->setDefaults([
       'version' => $version,
-      'check_for_updates' => (isset($checkForUpdates)) ? intval($checkForUpdates->getValue(array('sourceCulture'=>true))) : 1,
-      'hits_per_page' => (isset($hitsPerPage)) ? $hitsPerPage->getValue(array('sourceCulture'=>true)) : null,
-      'escape_queries' => (isset($escapeQueries)) ? $escapeQueries->getValue(array('sourceCulture'=>true)) : null,
-      'sort_browser_user' => (isset($sortBrowserUser)) ? $sortBrowserUser->getValue(array('sourceCulture'=>true)) : 0,
-      'sort_browser_anonymous' => (isset($sortBrowserAnonymous)) ? $sortBrowserAnonymous->getValue(array('sourceCulture'=>true)) : 0,
-      'default_repository_browse_view' => (isset($defaultRepositoryView)) ? $defaultRepositoryView->getValue(array('sourceCulture' => true)) : 'card',
-      'default_archival_description_browse_view' => (isset($defaultArchivalDescriptionView)) ? $defaultArchivalDescriptionView->getValue(array('sourceCulture' => true)) : 'table',
-      'multi_repository' => (isset($multiRepository)) ? intval($multiRepository->getValue(array('sourceCulture'=>true))) : 1,
-      'audit_log_enabled' => (isset($auditLogEnabled)) ? intval($auditLogEnabled->getValue(array('sourceCulture'=>true))) : 0,
-      'slug_basis_informationobject' => (isset($slugTypeInformationObject)) ? intval($slugTypeInformationObject->getValue(array('sourceCulture'=>true))) : QubitSlug::SLUG_BASIS_TITLE,
-      'permissive_slug_creation' => (isset($permissiveSlugCreation)) ? intval($permissiveSlugCreation->getValue(array('sourceCulture'=>true))) : QubitSlug::SLUG_RESTRICTIVE,
-      'show_tooltips' => (isset($showTooltips)) ? intval($showTooltips->getValue(array('sourceCulture'=>true))) : 1,
-      'defaultPubStatus' => (isset($defaultPubStatus)) ? $defaultPubStatus->getValue(array('sourceCulture'=>true)) : QubitTerm::PUBLICATION_STATUS_DRAFT_ID,
-      'draft_notification_enabled' => (isset($draftNotificationEnabled)) ? intval($draftNotificationEnabled->getValue(array('sourceCulture'=>true))) : 0,
-      'sword_deposit_dir' => (isset($swordDepositDir)) ? $swordDepositDir->getValue(array('sourceCulture'=>true)) : null,
-      'google_maps_api_key' => (isset($googleMapsApiKey)) ? $googleMapsApiKey->getValue(array('sourceCulture'=>true)) : null,
-      'generate_reports_as_pub_user' => (isset($generateReportsAsPubUser)) ? $generateReportsAsPubUser->getValue(array('sourceCulture'=>true)) : 1,
-      'enable_institutional_scoping' => (isset($enableInstitutionalScoping)) ? intval($enableInstitutionalScoping->getValue(array('sourceCulture'=>true))) : 0,
-      'cache_xml_on_save' => (isset($cacheXmlOnSave)) ? intval($cacheXmlOnSave->getValue(array('sourceCulture'=>true))) : 0,
-    ));
+      'check_for_updates' => (isset($checkForUpdates)) ? intval($checkForUpdates->getValue(['sourceCulture'=>true])) : 1,
+      'hits_per_page' => (isset($hitsPerPage)) ? $hitsPerPage->getValue(['sourceCulture'=>true]) : null,
+      'escape_queries' => (isset($escapeQueries)) ? $escapeQueries->getValue(['sourceCulture'=>true]) : null,
+      'sort_browser_user' => (isset($sortBrowserUser)) ? $sortBrowserUser->getValue(['sourceCulture'=>true]) : 0,
+      'sort_browser_anonymous' => (isset($sortBrowserAnonymous)) ? $sortBrowserAnonymous->getValue(['sourceCulture'=>true]) : 0,
+      'default_repository_browse_view' => (isset($defaultRepositoryView)) ? $defaultRepositoryView->getValue(['sourceCulture' => true]) : 'card',
+      'default_archival_description_browse_view' => (isset($defaultArchivalDescriptionView)) ? $defaultArchivalDescriptionView->getValue(['sourceCulture' => true]) : 'table',
+      'multi_repository' => (isset($multiRepository)) ? intval($multiRepository->getValue(['sourceCulture'=>true])) : 1,
+      'audit_log_enabled' => (isset($auditLogEnabled)) ? intval($auditLogEnabled->getValue(['sourceCulture'=>true])) : 0,
+      'slug_basis_informationobject' => (isset($slugTypeInformationObject)) ? intval($slugTypeInformationObject->getValue(['sourceCulture'=>true])) : QubitSlug::SLUG_BASIS_TITLE,
+      'permissive_slug_creation' => (isset($permissiveSlugCreation)) ? intval($permissiveSlugCreation->getValue(['sourceCulture'=>true])) : QubitSlug::SLUG_RESTRICTIVE,
+      'show_tooltips' => (isset($showTooltips)) ? intval($showTooltips->getValue(['sourceCulture'=>true])) : 1,
+      'defaultPubStatus' => (isset($defaultPubStatus)) ? $defaultPubStatus->getValue(['sourceCulture'=>true]) : QubitTerm::PUBLICATION_STATUS_DRAFT_ID,
+      'draft_notification_enabled' => (isset($draftNotificationEnabled)) ? intval($draftNotificationEnabled->getValue(['sourceCulture'=>true])) : 0,
+      'sword_deposit_dir' => (isset($swordDepositDir)) ? $swordDepositDir->getValue(['sourceCulture'=>true]) : null,
+      'google_maps_api_key' => (isset($googleMapsApiKey)) ? $googleMapsApiKey->getValue(['sourceCulture'=>true]) : null,
+      'generate_reports_as_pub_user' => (isset($generateReportsAsPubUser)) ? $generateReportsAsPubUser->getValue(['sourceCulture'=>true]) : 1,
+      'enable_institutional_scoping' => (isset($enableInstitutionalScoping)) ? intval($enableInstitutionalScoping->getValue(['sourceCulture'=>true])) : 0,
+      'cache_xml_on_save' => (isset($cacheXmlOnSave)) ? intval($cacheXmlOnSave->getValue(['sourceCulture'=>true])) : 0,
+    ]);
   }
 
   /**
@@ -130,7 +130,7 @@ class SettingsGlobalAction extends sfAction
     if (null !== $generateReportsAsPubUser = $thisForm->getValue('generate_reports_as_pub_user'))
     {
       $setting = QubitSetting::getByName('generate_reports_as_pub_user');
-      $setting->setValue($generateReportsAsPubUser, array('sourceCulture' => true));
+      $setting->setValue($generateReportsAsPubUser, ['sourceCulture' => true]);
       $setting->save();
     }
 
@@ -140,7 +140,7 @@ class SettingsGlobalAction extends sfAction
       $setting = QubitSetting::getByName('check_for_updates');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($checkForUpdates, array('sourceCulture' => true));
+      $setting->setValue($checkForUpdates, ['sourceCulture' => true]);
       $setting->save();
     }
 
@@ -152,7 +152,7 @@ class SettingsGlobalAction extends sfAction
         $setting = QubitSetting::getByName('hits_per_page');
 
         // Force sourceCulture update to prevent discrepency in settings between cultures
-        $setting->setValue($hitsPerPage, array('sourceCulture'=>true));
+        $setting->setValue($hitsPerPage, ['sourceCulture'=>true]);
         $setting->save();
       }
     }
@@ -164,7 +164,7 @@ class SettingsGlobalAction extends sfAction
     }
 
     // Force sourceCulture update to prevent discrepency in settings between cultures
-    $setting->setValue($thisForm->getValue('escape_queries'), array('sourceCulture' => true));
+    $setting->setValue($thisForm->getValue('escape_queries'), ['sourceCulture' => true]);
     $setting->save();
 
     // Sort Browser (for users)
@@ -173,7 +173,7 @@ class SettingsGlobalAction extends sfAction
       $setting = QubitSetting::getByName('sort_browser_user');
 
        // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($sortBrowserUser, array('sourceCulture'=>true));
+      $setting->setValue($sortBrowserUser, ['sourceCulture'=>true]);
       $setting->save();
     }
 
@@ -183,7 +183,7 @@ class SettingsGlobalAction extends sfAction
       $setting = QubitSetting::getByName('sort_browser_anonymous');
 
        // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($sortBrowserAnonymous, array('sourceCulture'=>true));
+      $setting->setValue($sortBrowserAnonymous, ['sourceCulture'=>true]);
       $setting->save();
     }
 
@@ -193,7 +193,7 @@ class SettingsGlobalAction extends sfAction
       $setting = QubitSetting::getByName('default_repository_browse_view');
 
        // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($defaultRepositoryView, array('sourceCulture'=>true));
+      $setting->setValue($defaultRepositoryView, ['sourceCulture'=>true]);
       $setting->save();
     }
 
@@ -203,7 +203,7 @@ class SettingsGlobalAction extends sfAction
       $setting = QubitSetting::getByName('default_archival_description_browse_view');
 
        // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($defaultArchivalDescriptionView, array('sourceCulture'=>true));
+      $setting->setValue($defaultArchivalDescriptionView, ['sourceCulture'=>true]);
       $setting->save();
     }
 
@@ -216,11 +216,11 @@ class SettingsGlobalAction extends sfAction
       // backwards compatiblity with v1.0.3 sampleData.yml file
       if (null === $setting)
       {
-        $setting = QubitSetting::createNewSetting('multi_repository', null, array('deleteable'=>false));
+        $setting = QubitSetting::createNewSetting('multi_repository', null, ['deleteable'=>false]);
       }
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($multiRepositoryValue, array('sourceCulture'=>true));
+      $setting->setValue($multiRepositoryValue, ['sourceCulture'=>true]);
       $setting->save();
     }
 
@@ -234,7 +234,7 @@ class SettingsGlobalAction extends sfAction
       }
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($auditLogEnabled, array('sourceCulture' => true));
+      $setting->setValue($auditLogEnabled, ['sourceCulture' => true]);
       $setting->save();
     }
 
@@ -243,7 +243,7 @@ class SettingsGlobalAction extends sfAction
       $setting = QubitSetting::getByName('slug_basis_informationobject');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($slugTypeInformationObject, array('sourceCulture' => true));
+      $setting->setValue($slugTypeInformationObject, ['sourceCulture' => true]);
       $setting->save();
     }
 
@@ -252,7 +252,7 @@ class SettingsGlobalAction extends sfAction
       $setting = QubitSetting::getByName('permissive_slug_creation');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($permissiveSlugCreation, array('sourceCulture' => true));
+      $setting->setValue($permissiveSlugCreation, ['sourceCulture' => true]);
       $setting->save();
     }
 
@@ -262,7 +262,7 @@ class SettingsGlobalAction extends sfAction
       $setting = QubitSetting::getByName('show_tooltips');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($showTooltips, array('sourceCulture' => true));
+      $setting->setValue($showTooltips, ['sourceCulture' => true]);
       $setting->save();
     }
 
@@ -272,7 +272,7 @@ class SettingsGlobalAction extends sfAction
       $setting = QubitSetting::getByName('defaultPubStatus');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($defaultPubStatus, array('sourceCulture' => true));
+      $setting->setValue($defaultPubStatus, ['sourceCulture' => true]);
       $setting->save();
     }
 
@@ -286,7 +286,7 @@ class SettingsGlobalAction extends sfAction
       }
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($draftNotificationEnabled, array('sourceCulture' => true));
+      $setting->setValue($draftNotificationEnabled, ['sourceCulture' => true]);
       $setting->save();
     }
 
@@ -296,7 +296,7 @@ class SettingsGlobalAction extends sfAction
       $setting = QubitSetting::getByName('sword_deposit_dir');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($swordDepositDir, array('sourceCulture' => true));
+      $setting->setValue($swordDepositDir, ['sourceCulture' => true]);
       $setting->save();
     }
 
@@ -310,7 +310,7 @@ class SettingsGlobalAction extends sfAction
     }
 
     // Force sourceCulture update to prevent discrepency in settings between cultures
-    $setting->setValue($googleMapsApiKey, array('sourceCulture' => true));
+    $setting->setValue($googleMapsApiKey, ['sourceCulture' => true]);
     $setting->save();
 
     // Enable Institutional Scoping
@@ -319,7 +319,7 @@ class SettingsGlobalAction extends sfAction
       $setting = QubitSetting::getByName('enable_institutional_scoping');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
-      $setting->setValue($enableInstitutionalScoping, array('sourceCulture' => true));
+      $setting->setValue($enableInstitutionalScoping, ['sourceCulture' => true]);
       $setting->save();
     }
 
@@ -332,7 +332,7 @@ class SettingsGlobalAction extends sfAction
       $setting->name = 'cache_xml_on_save';
     }
 
-    $setting->setValue($cacheXmlOnSave, array('sourceCulture' => true));
+    $setting->setValue($cacheXmlOnSave, ['sourceCulture' => true]);
     $setting->save();
 
     return $this;

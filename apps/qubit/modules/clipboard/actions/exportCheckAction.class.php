@@ -20,11 +20,11 @@
 class ClipboardExportCheckAction extends sfAction
 {
   // Arrays not allowed in class constants
-  public static $ALERT_TYPES = array(
+  public static $ALERT_TYPES = [
       QubitTerm::JOB_STATUS_IN_PROGRESS_ID => 'info',
       QubitTerm::JOB_STATUS_COMPLETED_ID   => 'success',
       QubitTerm::JOB_STATUS_ERROR_ID       => 'error'
-    );
+    ];
 
   public function execute($request)
   {
@@ -55,31 +55,31 @@ class ClipboardExportCheckAction extends sfAction
 
       // Assemble job description
       $message = $this->context->i18n->__('%1% (started: %2%, status: %3%).',
-        array(
+        [
           '%1%' => (string)$job,
           '%2%' => $job->getCreationDateString(),
           '%3%' => $job->getStatusString()
-        )
+        ]
       );
 
       // Add download path if applicable
       if (isset($job->downloadPath) && $job->statusId == QubitTerm::JOB_STATUS_COMPLETED_ID)
       {
         $message .= $this->context->i18n->__(' %1%Download%2% (%3% b)',
-          array(
+          [
             '%1%' => sprintf('<a href="%s">', sfConfig::get('app_siteBaseUrl') .'/'. $job->downloadPath),
             '%2%' => '</a>',
             '%3%' => hr_filesize(filesize($job->downloadPath))
-          )
+          ]
         );
       }
       else
       {
         $message .= ' ' . $this->context->i18n->__('%1%Refresh the page%2% for progress updates.',
-          array(
+          [
             '%1%' => '<a href="javascript:location.reload();">',
             '%2%' => '</a>'
-          )
+          ]
         );
       }
 

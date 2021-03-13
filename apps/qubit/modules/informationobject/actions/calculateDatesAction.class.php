@@ -20,7 +20,7 @@
 class InformationObjectCalculateDatesAction extends sfAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array('eventIdOrTypeId');
+  public static $NAMES = ['eventIdOrTypeId'];
 
   public function execute($request)
   {
@@ -68,7 +68,7 @@ class InformationObjectCalculateDatesAction extends sfAction
       {
         $this->processForm();
         $this->beginDateCalculation();
-        $this->redirect(array($this->resource, 'module' => 'informationobject'));
+        $this->redirect([$this->resource, 'module' => 'informationobject']);
       }
       else
       {
@@ -80,7 +80,7 @@ class InformationObjectCalculateDatesAction extends sfAction
 
   public static function getDescendantDateTypes($resource)
   {
-    $eventTypes = array();
+    $eventTypes = [];
 
     $sql = "SELECT
       DISTINCT e.type_id
@@ -91,17 +91,17 @@ class InformationObjectCalculateDatesAction extends sfAction
         i.lft > :lft
         AND i.lft < :rgt";
 
-    $params = array(
+    $params = [
       ':lft' => $resource->lft,
       ':rgt' => $resource->rgt
-    );
+    ];
 
-    $eventData = QubitPdo::fetchAll($sql, $params, array('fetchMode' => PDO::FETCH_ASSOC));
+    $eventData = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
     foreach($eventData as $event)
     {
       $eventTypeTerm = QubitTerm::getById($event['type_id']);
-      $eventTypes[($event['type_id'])] = $eventTypeTerm->getName(array('cultureFallback' => true));
+      $eventTypes[($event['type_id'])] = $eventTypeTerm->getName(['cultureFallback' => true]);
     }
 
     return $eventTypes;
@@ -115,8 +115,8 @@ class InformationObjectCalculateDatesAction extends sfAction
         if (count($this->events) || count($this->descendantEventTypes))
         {
           $eventIdChoices = $this->events + $this->descendantEventTypes;
-          $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $eventIdChoices)));
-          $this->form->setValidator($name, new sfValidatorInteger(array('required' => true)));
+          $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $eventIdChoices]));
+          $this->form->setValidator($name, new sfValidatorInteger(['required' => true]));
         }
 
         break;
@@ -161,11 +161,11 @@ class InformationObjectCalculateDatesAction extends sfAction
   protected function beginDateCalculation()
   {
     // Specify parameters for job
-    $params = array(
+    $params = [
       'objectId' => $this->resource->id,
       'eventId' => $this->eventId,
       'eventTypeId' => $this->eventTypeId
-    );
+    ];
 
     // Catch no Gearman worker available exception
     // and others to show alert with exception message
@@ -187,7 +187,7 @@ class InformationObjectCalculateDatesAction extends sfAction
   {
     $validEventTypes = (is_null($validEventTypes)) ? self::getDescendentDateTypes($resource) : $validEventTypes;
 
-    $events = array();
+    $events = [];
 
     $criteria = new Criteria();
     $criteria->add(QubitEvent::OBJECT_ID, $resource->id);
@@ -197,8 +197,8 @@ class InformationObjectCalculateDatesAction extends sfAction
     {
       if ($this->eventHasDateAndDateRangeSet($event) && null !== $event->typeId && isset($validEventTypes[$event->typeId]))
       {
-        $eventTypeName = $event->type->getName(array('cultureFallback' => true));
-        $eventRange = Qubit::renderDateStartEnd($event->getDate(array('cultureFallback' => true)), $event->startDate, $event->endDate);
+        $eventTypeName = $event->type->getName(['cultureFallback' => true]);
+        $eventRange = Qubit::renderDateStartEnd($event->getDate(['cultureFallback' => true]), $event->startDate, $event->endDate);
         $events[$event->id] = sprintf('%s [%s]', $eventRange, $eventTypeName);
       }
     }

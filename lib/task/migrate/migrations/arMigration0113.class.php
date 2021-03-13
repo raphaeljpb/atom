@@ -138,16 +138,16 @@ sql;
       VALUES (?, ?, "readThumbnail", 1, NOW(), NOW())
     ';
 
-    $permissionCount = QubitPdo::fetchColumn($sqlCount, array(QubitAclGroup::ANONYMOUS_ID));
+    $permissionCount = QubitPdo::fetchColumn($sqlCount, [QubitAclGroup::ANONYMOUS_ID]);
     if ($permissionCount == 0)
     {
-      QubitPdo::prepareAndExecute($sqlInsert, array(QubitAclGroup::ANONYMOUS_ID, QubitInformationObject::ROOT_ID));
+      QubitPdo::prepareAndExecute($sqlInsert, [QubitAclGroup::ANONYMOUS_ID, QubitInformationObject::ROOT_ID]);
     }
 
-    $permissionCount = QubitPdo::fetchColumn($sqlCount, array(QubitAclGroup::AUTHENTICATED_ID));
+    $permissionCount = QubitPdo::fetchColumn($sqlCount, [QubitAclGroup::AUTHENTICATED_ID]);
     if ($permissionCount == 0)
     {
-      QubitPdo::prepareAndExecute($sqlInsert, array(QubitAclGroup::AUTHENTICATED_ID, QubitInformationObject::ROOT_ID));
+      QubitPdo::prepareAndExecute($sqlInsert, [QubitAclGroup::AUTHENTICATED_ID, QubitInformationObject::ROOT_ID]);
     }
 
     return true;

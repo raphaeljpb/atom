@@ -38,7 +38,7 @@ class UserIndexRepositoryAclAction extends sfAction
     }
 
     // Get user's groups
-    $this->userGroups = array();
+    $this->userGroups = [];
     if (0 < count($aclUserGroups = $this->resource->aclUserGroups))
     {
       foreach ($aclUserGroups as $item)
@@ -49,7 +49,7 @@ class UserIndexRepositoryAclAction extends sfAction
     else
     {
       // User is *always* part of authenticated group
-      $this->userGroups = array(QubitAclGroup::AUTHENTICATED_ID);
+      $this->userGroups = [QubitAclGroup::AUTHENTICATED_ID];
     }
 
     // Table width
@@ -82,7 +82,7 @@ class UserIndexRepositoryAclAction extends sfAction
     $this->userGroups[] = $this->resource->username;
 
     // Build ACL
-    $this->acl = array();
+    $this->acl = [];
     if (0 < count($permissions = QubitAclPermission::get($criteria)))
     {
       foreach ($permissions as $item)

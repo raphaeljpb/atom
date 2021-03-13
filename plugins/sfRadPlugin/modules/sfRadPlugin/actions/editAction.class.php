@@ -28,7 +28,7 @@
 class sfRadPluginEditAction extends InformationObjectEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'accessConditions',
       'accruals',
       'acquisition',
@@ -82,7 +82,7 @@ class sfRadPluginEditAction extends InformationObjectEditAction
       'titleProperOfPublishersSeries',
       'type',
       'displayStandard',
-      'displayStandardUpdateDescendants');
+      'displayStandardUpdateDescendants'];
 
   public function earlyExecute()
   {
@@ -98,7 +98,7 @@ class sfRadPluginEditAction extends InformationObjectEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");
@@ -118,15 +118,15 @@ class sfRadPluginEditAction extends InformationObjectEditAction
 
     $this->titleNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
     $this->titleNotesComponent->resource = $this->resource;
-    $this->titleNotesComponent->execute($this->request, $options = array('type' => 'radTitleNotes'));
+    $this->titleNotesComponent->execute($this->request, $options = ['type' => 'radTitleNotes']);
 
     $this->notesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
     $this->notesComponent->resource = $this->resource;
-    $this->notesComponent->execute($this->request, $options = array('type' => 'radNotes'));
+    $this->notesComponent->execute($this->request, $options = ['type' => 'radNotes']);
 
     $this->otherNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
     $this->otherNotesComponent->resource = $this->resource;
-    $this->otherNotesComponent->execute($this->request, $options = array('type' => 'radOtherNotes'));
+    $this->otherNotesComponent->execute($this->request, $options = ['type' => 'radOtherNotes']);
   }
 
   protected function addField($name)
@@ -175,22 +175,22 @@ class sfRadPluginEditAction extends InformationObjectEditAction
         QubitObjectTermRelation::addJoinTermCriteria($criteria);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MATERIAL_TYPE_ID);
 
-        $value = array();
+        $value = [];
         foreach ($this->relations = QubitObjectTermRelation::get($criteria) as $item)
         {
-          $value[] = $this->context->routing->generate(null, array($item->term, 'module' => 'term'));
+          $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
         }
 
         $this->form->setDefault('type', $value);
         $this->form->setValidator('type', new sfValidatorPass());
 
-        $choices = array();
+        $choices = [];
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::MATERIAL_TYPE_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
@@ -225,7 +225,7 @@ class sfRadPluginEditAction extends InformationObjectEditAction
         break;
 
       case 'type':
-        $value = $filtered = array();
+        $value = $filtered = [];
         foreach ($this->form->getValue('type') as $item)
         {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));

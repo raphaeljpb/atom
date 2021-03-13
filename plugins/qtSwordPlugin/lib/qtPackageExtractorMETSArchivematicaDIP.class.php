@@ -452,7 +452,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    */
   protected function getChildDataFromFileGrp($files)
   {
-    $children = array();
+    $children = [];
 
     foreach ($files as $file)
     {
@@ -579,11 +579,11 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    */
   protected function recursivelyAddChildrenFromStructMap($element, $parent)
   {
-    $this->metsParser->registerNamespaces($element, array('m' => 'mets'));
+    $this->metsParser->registerNamespaces($element, ['m' => 'mets']);
 
     foreach ($element->xpath('m:div') as $div)
     {
-      $this->metsParser->registerNamespaces($div, array('m' => 'mets'));
+      $this->metsParser->registerNamespaces($div, ['m' => 'mets']);
 
       // If this element has no child file pointer <fptr> elements, then it is
       // directory node and we should recursively add it's children

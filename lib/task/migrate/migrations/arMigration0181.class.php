@@ -57,54 +57,54 @@ class arMigration0181
     // Fix function_object table indexes and foreign keys.
     // Needed after removing the parent_id column to keep them
     // in sync. with the ones from a new install.
-    QubitMigrate::updateIndexes(array(
-      array(
+    QubitMigrate::updateIndexes([
+      [
         'table' => 'function_object',
         'column' => 'type_id',
         'index' => 'function_object_FI_2',
-      ),
-      array(
+      ],
+      [
         'table' => 'function_object',
         'column' => 'description_status_id',
         'index' => 'function_object_FI_3',
-      ),
-      array(
+      ],
+      [
         'table' => 'function_object',
         'column' => 'description_detail_id',
         'index' => 'function_object_FI_4',
-      ),
-    ));
+      ],
+    ]);
 
-    QubitMigrate::updateForeignKeys(array(
-      array(
+    QubitMigrate::updateForeignKeys([
+      [
         'table' => 'function_object',
         'column' => 'id',
         'refTable' => 'object',
         'constraint' => 'function_object_FK_1',
         'onDelete' => 'ON DELETE CASCADE',
-      ),
-      array(
+      ],
+      [
         'table' => 'function_object',
         'column' => 'type_id',
         'refTable' => 'term',
         'constraint' => 'function_object_FK_2',
         'onDelete' => '',
-      ),
-      array(
+      ],
+      [
         'table' => 'function_object',
         'column' => 'description_status_id',
         'refTable' => 'term',
         'constraint' => 'function_object_FK_3',
         'onDelete' => '',
-      ),
-      array(
+      ],
+      [
         'table' => 'function_object',
         'column' => 'description_detail_id',
         'refTable' => 'term',
         'constraint' => 'function_object_FK_4',
         'onDelete' => '',
-      ),
-    ));
+      ],
+    ]);
 
     return true;
   }

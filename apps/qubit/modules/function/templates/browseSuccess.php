@@ -3,8 +3,8 @@
 
 <?php slot('title') ?>
   <div class="multiline-header">
-    <?php echo image_tag('/images/icons-large/icon-functions.png', array('alt' => '')) ?>
-    <h1 aria-describedby="results-label"><?php echo __('Showing %1% results', array('%1%' => $pager->getNbResults())) ?></h1>
+    <?php echo image_tag('/images/icons-large/icon-functions.png', ['alt' => '']) ?>
+    <h1 aria-describedby="results-label"><?php echo __('Showing %1% results', ['%1%' => $pager->getNbResults()]) ?></h1>
     <span class="sub" id="results-label"><?php echo sfConfig::get('app_ui_label_function') ?></span>
   </div>
 <?php end_slot() ?>
@@ -14,17 +14,17 @@
   <section class="header-options">
     <div class="row">
       <div class="span6">
-        <?php echo get_component('search', 'inlineSearch', array(
-          'label' => __('Search %1%', array('%1%' => strtolower(sfConfig::get('app_ui_label_function')))))) ?>
+        <?php echo get_component('search', 'inlineSearch', [
+          'label' => __('Search %1%', ['%1%' => strtolower(sfConfig::get('app_ui_label_function'))])]) ?>
       </div>
 
       <div class="pickers">
         <?php echo get_partial('default/sortPickers',
-          array(
-            'options' => array(
+          [
+            'options' => [
               'lastUpdated' => __('Date modified'),
               'alphabetic' => __('Name'),
-              'identifier' => __('Identifier')))) ?>
+              'identifier' => __('Identifier')]]) ?>
       </div>
     </div>
   </section>
@@ -53,7 +53,7 @@
       <?php foreach ($pager->getResults() as $item): ?>
         <tr>
           <td>
-            <?php echo link_to(render_title($item), array($item, 'module' => 'function')) ?>
+            <?php echo link_to(render_title($item), [$item, 'module' => 'function']) ?>
           </td>
           <?php if ('alphabetic' == $sf_request->sort): ?>
             <td>
@@ -73,12 +73,12 @@
 
 <?php slot('after-content') ?>
 
-  <?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+  <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 
-  <?php if ($sf_user->hasCredential(array('contributor', 'editor', 'administrator'), false)): ?>
+  <?php if ($sf_user->hasCredential(['contributor', 'editor', 'administrator'], false)): ?>
     <section class="actions">
       <ul>
-        <li><?php echo link_to(__('Add new'), array('module' => 'function', 'action' => 'add'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Add new'), ['module' => 'function', 'action' => 'add'], ['class' => 'c-btn']) ?></li>
       </ul>
     </section>
   <?php endif; ?>

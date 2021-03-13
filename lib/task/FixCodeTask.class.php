@@ -24,8 +24,8 @@ class FixCodeTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-      new sfCommandArgument('path', sfCommandArgument::REQUIRED | sfCommandArgument::IS_ARRAY, 'FIXME')));
+    $this->addArguments([
+      new sfCommandArgument('path', sfCommandArgument::REQUIRED | sfCommandArgument::IS_ARRAY, 'FIXME')]);
 
     $this->name = '';
     $this->briefDescription = 'FIXME';
@@ -37,7 +37,7 @@ EOF;
   /**
    * @see BaseTask::execute()
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     foreach ($arguments['path'] as $filePath)
     {

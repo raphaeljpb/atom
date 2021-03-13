@@ -30,33 +30,33 @@ class qtSwordPluginDepositAction extends sfAction
   {
     if ($request->isMethod('put') || $request->isMethod('delete'))
     {
-      return $this->generateResponse(501, 'error/ErrorNotImplemented', array('summary' => $this->context->i18n->__('Not implemented')));
+      return $this->generateResponse(501, 'error/ErrorNotImplemented', ['summary' => $this->context->i18n->__('Not implemented')]);
     }
 
     if (!$request->isMethod('post'))
     {
-      return $this->generateResponse(400, 'error/ErrorBadRequest', array('summary' => $this->context->i18n->__('Bad request')));
+      return $this->generateResponse(400, 'error/ErrorBadRequest', ['summary' => $this->context->i18n->__('Bad request')]);
     }
 
     if (!QubitAcl::check(QubitInformationObject::getRoot(), 'create'))
     {
-      return $this->generateResponse(403, 'error/ErrorBadRequest', array('summary' => $this->context->i18n->__('Forbidden')));
+      return $this->generateResponse(403, 'error/ErrorBadRequest', ['summary' => $this->context->i18n->__('Forbidden')]);
     }
 
     if (!isset($this->getRoute()->resource))
     {
-      return $this->generateResponse(404, 'error/ErrorBadRequest', array('summary' => $this->context->i18n->__('Not found')));
+      return $this->generateResponse(404, 'error/ErrorBadRequest', ['summary' => $this->context->i18n->__('Not found')]);
     }
 
     $this->resource = $this->getRoute()->resource;
     $this->user = $this->context->user;
-    $this->package = array();
+    $this->package = [];
 
     // Package format, check if supported
     $this->package['format'] = $request->getHttpHeader('X-Packaging');
     if (!in_array($this->package['format'], qtSwordPluginConfiguration::$packaging))
     {
-      return $this->generateResponse(415, 'error/ErrorContent', array('summary' => $this->context->i18n->__('The supplied format is not supported by this server')));
+      return $this->generateResponse(415, 'error/ErrorContent', ['summary' => $this->context->i18n->__('The supplied format is not supported by this server')]);
     }
 
     // Package content is part of the request or sent by reference?
@@ -73,7 +73,7 @@ class qtSwordPluginDepositAction extends sfAction
       $this->package['type'] = $request->getContentType();
       if (!in_array($this->package['type'], qtSwordPluginConfiguration::$mediaRanges))
       {
-        return $this->generateResponse(415, 'error/ErrorContent', array('summary' => $this->context->i18n->__('The supplied content type is not supported by this server')));
+        return $this->generateResponse(415, 'error/ErrorContent', ['summary' => $this->context->i18n->__('The supplied content type is not supported by this server')]);
       }
     }
 
@@ -96,18 +96,18 @@ class qtSwordPluginDepositAction extends sfAction
 
     $this->informationObject = $this->resource;
 
-    $data = $this->package + array('information_object_id' => $this->informationObject->id);
+    $data = $this->package + ['information_object_id' => $this->informationObject->id];
 
     QubitJob::runJob('qtSwordPluginWorker', $data);
 
     // Job accepted!
     return $this->generateResponse(202, 'deposit',
-      array('headers' =>
-        array('Location' =>
-          $this->context->routing->generate(null, array($this->informationObject, 'module' => 'informationobject')))));
+      ['headers' =>
+        ['Location' =>
+          $this->context->routing->generate(null, [$this->informationObject, 'module' => 'informationobject'])]]);
   }
 
-  protected function generateResponse($code, $template = null, array $options = array())
+  protected function generateResponse($code, $template = null, array $options = [])
   {
     $this->response->setStatusCode($code);
 

@@ -29,7 +29,7 @@ class qtIsaarCsv extends sfIsaarPlugin
   public static $keymapSource;
   public static $keymapTarget = 'actor';
   public static $entityTypeLookup;
-  public static $NAMES = array(
+  public static $NAMES = [
       'authorizedFormOfName',
       'datesOfExistence',
       'descriptionIdentifier',
@@ -52,7 +52,7 @@ class qtIsaarCsv extends sfIsaarPlugin
       'sources',
       //'standardizedNames'
       'uniqueId'
-    );
+    ];
   protected $resource;
   protected $isaar;
   protected $sourceId;

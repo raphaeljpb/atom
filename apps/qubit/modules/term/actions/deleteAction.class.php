@@ -53,10 +53,10 @@ class TermDeleteAction extends sfAction
 
         if (isset($this->resource->taxonomy))
         {
-          $this->redirect(array($this->resource->taxonomy, 'module' => 'taxonomy'));
+          $this->redirect([$this->resource->taxonomy, 'module' => 'taxonomy']);
         }
 
-        $this->redirect(array('module' => 'taxonomy', 'action' => 'list'));
+        $this->redirect(['module' => 'taxonomy', 'action' => 'list']);
       }
     }
 

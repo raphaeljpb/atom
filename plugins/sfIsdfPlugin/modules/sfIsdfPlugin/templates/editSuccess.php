@@ -2,7 +2,7 @@
 
 <?php slot('title') ?>
   <h1 class="multiline">
-    <?php echo __('Edit %1% - ISDF', array('%1%' => sfConfig::get('app_ui_label_function'))) ?>
+    <?php echo __('Edit %1% - ISDF', ['%1%' => sfConfig::get('app_ui_label_function')]) ?>
     <span class="sub"><?php echo render_title($resource->getLabel()) ?></span>
   </h1>
 <?php end_slot() ?>
@@ -12,9 +12,9 @@
   <?php echo $form->renderGlobalErrors() ?>
 
   <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
-    <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'function', 'action' => 'edit')), array('id' => 'editForm')) ?>
+    <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'function', 'action' => 'edit']), ['id' => 'editForm']) ?>
   <?php else: ?>
-    <?php echo $form->renderFormTag(url_for(array('module' => 'function', 'action' => 'add')), array('id' => 'editForm')) ?>
+    <?php echo $form->renderFormTag(url_for(['module' => 'function', 'action' => 'add']), ['id' => 'editForm']) ?>
   <?php endif; ?>
 
     <?php echo $form->renderHiddenFields() ?>
@@ -57,13 +57,13 @@
           ->help(__('"Provide a date or date span which covers the dates when the function was started and when it finished. If a function is ongoing, no end date is needed." (ISDF 5.2.1)')), $resource) ?>
 
         <?php echo render_field($form->description
-          ->help(__('"Record a narrative description of the purpose of the function." (ISDF 5.2.2)')), $resource, array('class' => 'resizable')) ?>
+          ->help(__('"Record a narrative description of the purpose of the function." (ISDF 5.2.2)')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo render_field($form->history
-          ->help(__('"Record in narrative form or as a chronology the main events relating to the function." (ISDF 5.2.3)')), $resource, array('class' => 'resizable')) ?>
+          ->help(__('"Record in narrative form or as a chronology the main events relating to the function." (ISDF 5.2.3)')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo render_field($form->legislation
-          ->help(__('"Record any law, directive or charter which creates, changes or ends the function." (ISDF 5.2.4)')), $resource, array('class' => 'resizable')) ?>
+          ->help(__('"Record any law, directive or charter which creates, changes or ends the function." (ISDF 5.2.4)')), $resource, ['class' => 'resizable']) ?>
 
       </fieldset>
 
@@ -93,7 +93,7 @@
 
         <?php echo render_field($form->rules
           ->help(__('"Purpose: To identify the national or international conventions or rules applied in creating the archival description. Rule: Record the names and where useful the editions or publication dates of the conventions or rules applied." (ISDF 5.4.3)'))
-          ->label(__('Rules and/or conventions used')), $resource, array('class' => 'resizable')) ?>
+          ->label(__('Rules and/or conventions used')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo $form->descriptionStatus
           ->help(__('The purpose of this field is "[t]o indicate the drafting status of the description so that users can understand the current status of the description." (ISDF 5.4.4). Select Final, Revised or Draft from the drop-down menu.'))
@@ -107,23 +107,23 @@
 
         <?php echo render_field($form->revisionHistory
           ->help(__('"Record the date the description was created and the dates of any revisions to the description." (ISDF 5.4.6)'))
-          ->label(__('Dates of creation, revision or deletion')), $resource, array('class' => 'resizable')) ?>
+          ->label(__('Dates of creation, revision or deletion')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo $form->language
           ->help(__('Select the language(s) of this record from the drop-down menu; enter the first few letters to narrow the choices. (ISDF 5.4.7)'))
           ->label(__('Language(s)'))
-          ->renderRow(array('class' => 'form-autocomplete')) ?>
+          ->renderRow(['class' => 'form-autocomplete']) ?>
 
         <?php echo $form->script
           ->help(__('Select the script(s) of this record from the drop-down menu; enter the first few letters to narrow the choices. (ISDF 5.4.7)'))
           ->label(__('Script(s)'))
-          ->renderRow(array('class' => 'form-autocomplete')) ?>
+          ->renderRow(['class' => 'form-autocomplete']) ?>
 
         <?php echo render_field($form->sources
-          ->help(__('"Record the sources consulted in establishing the function description." (ISDF 5.4.8)')), $resource, array('class' => 'resizable')) ?>
+          ->help(__('"Record the sources consulted in establishing the function description." (ISDF 5.4.8)')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo render_field($form->maintenanceNotes
-          ->help(__('"Record notes pertinent to the creation and maintenance of the description." (ISDF 5.4.9)')), $isdf, array('class' => 'resizable')) ?>
+          ->help(__('"Record notes pertinent to the creation and maintenance of the description." (ISDF 5.4.9)')), $isdf, ['class' => 'resizable']) ?>
 
       </fieldset>
 
@@ -132,10 +132,10 @@
     <section class="actions">
       <ul>
         <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
-          <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'function'), array('class' => 'c-btn')) ?></li>
+          <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'function'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
         <?php else: ?>
-          <li><?php echo link_to(__('Cancel'), array('module' => 'function', 'action' => 'list'), array('class' => 'c-btn')) ?></li>
+          <li><?php echo link_to(__('Cancel'), ['module' => 'function', 'action' => 'list'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create') ?>"/></li>
         <?php endif; ?>
       </ul>

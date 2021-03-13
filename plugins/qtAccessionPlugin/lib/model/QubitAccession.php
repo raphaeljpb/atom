@@ -74,20 +74,20 @@ class QubitAccession extends BaseAccession
   public static function maskEnabled()
   {
     $setting = QubitSetting::getByName('accession_mask_enabled');
-    return (null === $setting || boolval($setting->getValue(array('sourceCulture' => true))));
+    return (null === $setting || boolval($setting->getValue(['sourceCulture' => true])));
   }
 
   public static function nextAccessionNumber()
   {
     $setting = QubitSetting::getByName('accession_counter');
-    return $setting->getValue(array('sourceCulture' => true)) + 1;
+    return $setting->getValue(['sourceCulture' => true]) + 1;
   }
 
   public static function incrementAccessionCounter()
   {
     $setting = QubitSetting::getByName('accession_counter');
-    $value = $setting->getValue(array('sourceCulture' => true)) + 1;
-    $setting->setValue($value, array('sourceCulture' => true));
+    $value = $setting->getValue(['sourceCulture' => true]) + 1;
+    $setting->setValue($value, ['sourceCulture' => true]);
     $setting->save();
   }
 
@@ -123,7 +123,7 @@ class QubitAccession extends BaseAccession
   /**
    * Get related actors
    */
-  public function getActors($options = array())
+  public function getActors($options = [])
   {
     $criteria = new Criteria();
     $criteria->addJoin(QubitActor::ID, QubitEvent::ACTOR_ID);
@@ -148,22 +148,22 @@ class QubitAccession extends BaseAccession
   /**
    * Get creators
    */
-  public function getCreators($options = array())
+  public function getCreators($options = [])
   {
-    return $this->getActors($options = array('eventTypeId' => QubitTerm::CREATION_ID));
+    return $this->getActors($options = ['eventTypeId' => QubitTerm::CREATION_ID]);
   }
 
   /**
    * Related events which have a date
    */
-  public function getDates(array $options = array())
+  public function getDates(array $options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitEvent::OBJECT_ID, $this->id);
 
-    $criteria->addMultipleJoin(array(
-      array(QubitEvent::ID, QubitEventI18n::ID),
-      array(QubitEvent::SOURCE_CULTURE, QubitEventI18n::CULTURE)),
+    $criteria->addMultipleJoin([
+      [QubitEvent::ID, QubitEventI18n::ID],
+      [QubitEvent::SOURCE_CULTURE, QubitEventI18n::CULTURE]],
       Criteria::LEFT_JOIN);
 
     $criteria->add($criteria->getNewCriterion(QubitEvent::END_DATE, null, Criteria::ISNOTNULL)
@@ -221,7 +221,7 @@ class QubitAccession extends BaseAccession
 
     if (!isset($this->slug))
     {
-      $this->slug = QubitSlug::slugify($this->__get('identifier', array('sourceCulture' => true)));
+      $this->slug = QubitSlug::slugify($this->__get('identifier', ['sourceCulture' => true]));
     }
 
     parent::insert($connection);

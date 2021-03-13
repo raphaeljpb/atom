@@ -28,7 +28,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
     $archivalStandard = 'isad';
     if (null !== $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template'))
     {
-      $archivalStandard = $infoObjectTemplate->getValue(array('sourceCulture'=>true));
+      $archivalStandard = $infoObjectTemplate->getValue(['sourceCulture'=>true]);
     }
 
     $limit = sfConfig::get('app_hits_per_page');
@@ -52,7 +52,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
       $message = $this->context->i18n->__(
         "Pagination limit reached. To avoid using vast amounts of memory," .
         " AtoM limits pagination to %1% records. Please, narrow down your results.",
-        array('%1%' => $maxResultWindow)
+        ['%1%' => $maxResultWindow]
       );
 
       throw new QubitApiBadRequestException($message);
@@ -99,16 +99,16 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
       $order = ($order == 'asc') ? 'desc' : 'asc';
     }
 
-    $this->search->query->setSort(array($field => $order));
+    $this->search->query->setSort([$field => $order]);
 
     $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($this->search->getQuery(false, true));
 
     // Build array from results
-    $results = $lodMapping = array();
+    $results = $lodMapping = [];
     foreach ($resultSet as $hit)
     {
       $doc = $hit->getData();
-      $result = array();
+      $result = [];
 
       if ('1' == sfConfig::get('app_inherit_code_informationobject', 1))
       {
@@ -150,7 +150,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
       // Create array with creator names
       if (isset($doc['creators']) && count($doc['creators']) > 0)
       {
-        $creators = array();
+        $creators = [];
         foreach ($doc['creators'] as $creator)
         {
           $creatorName = get_search_i18n($creator, 'authorizedFormOfName');
@@ -166,7 +166,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
       // Create array with creation dates
       if (isset($doc['dates']) && count($doc['dates']) > 0)
       {
-        $dates = array();
+        $dates = [];
         foreach ($doc['dates'] as $event)
         {
           if (isset($event['typeId']) && $event['typeId'] == QubitTerm::CREATION_ID)
@@ -185,7 +185,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
       // Create array with place names
       if (isset($doc['places']) && count($doc['places']) > 0)
       {
-        $places = array();
+        $places = [];
         foreach ($doc['places'] as $place)
         {
           $placeName = get_search_i18n($place, 'name');
@@ -208,8 +208,8 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
     }
 
     return
-      array(
+      [
         'total' => $resultSet->getTotalHits(),
-        'results' => $results);
+        'results' => $results];
   }
 }

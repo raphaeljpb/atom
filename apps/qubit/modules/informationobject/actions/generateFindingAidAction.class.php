@@ -38,18 +38,18 @@ class InformationObjectGenerateFindingAidAction extends sfAction
     // Check if a finding aid file already exists
     if (null !== arFindingAidJob::getFindingAidPathForDownload($this->resource->id))
     {
-      $this->redirect(array($this->resource, 'module' => 'informationobject'));
+      $this->redirect([$this->resource, 'module' => 'informationobject']);
     }
 
     $i18n = $this->context->i18n;
 
-    $params = array(
+    $params = [
       'objectId' => $this->resource->id,
-      'description' => $i18n->__('Generating finding aid for: %1%', array('%1%' => $this->resource->getTitle(array('cultureFallback' => true)))),
-    );
+      'description' => $i18n->__('Generating finding aid for: %1%', ['%1%' => $this->resource->getTitle(['cultureFallback' => true])]),
+    ];
 
     QubitJob::runJob('arFindingAidJob', $params);
 
-    $this->redirect(array($this->resource, 'module' => 'informationobject'));
+    $this->redirect([$this->resource, 'module' => 'informationobject']);
   }
 }

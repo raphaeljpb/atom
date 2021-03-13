@@ -31,11 +31,11 @@ class arInheritRightsJob extends arBaseJob
   /**
    * @see arBaseJob::$requiredParameters
    */
-  protected $extraRequiredParameters = array(
+  protected $extraRequiredParameters = [
     'overwrite_or_combine', // Values: overwrite, combine
     'all_or_digital_only',  // Values: all, digital_only
     'objectId'
-  );
+  ];
 
   public function runJob($parameters)
   {
@@ -44,20 +44,20 @@ class arInheritRightsJob extends arBaseJob
     // Check that object exists and that it is not the root
     if (!isset($io) || !isset($io->parent))
     {
-      $this->error($this->i18n->__('Could not find an information object with id: %1', array('%1' => $parameters['objectId'])));
+      $this->error($this->i18n->__('Could not find an information object with id: %1', ['%1' => $parameters['objectId']]));
 
       return false;
     }
 
     // Info object IDs to recalculate rights based on PREMIS
-    $idsToUpdate = array();
+    $idsToUpdate = [];
 
     foreach ($io->descendants as $descendant)
     {
       // If digital only and descendant isn't a digital object, skip
       if ('digital_only' === $parameters['all_or_digital_only'] && null === $descendant->getDigitalObject())
       {
-        $this->info($this->i18n->__('Skipping descendant %1', array('%1' => $descendant->getId())));
+        $this->info($this->i18n->__('Skipping descendant %1', ['%1' => $descendant->getId()]));
 
         continue;
       }

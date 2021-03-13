@@ -1,13 +1,13 @@
 <div class="field">
   <h3><?php echo __('Related right') ?></h3>
   <?php if (QubitAcl::check($relatedObject, 'update')): ?>
-    <a href="<?php echo url_for(array('module' => 'right', 'action' => 'edit', 'slug' => $resource->slug)) ?>">&nbsp;Edit</a> |
-    <a href="<?php echo url_for(array('module' => 'right', 'action' => 'delete', 'slug' => $resource->slug)) ?>">Delete</a>
+    <a href="<?php echo url_for(['module' => 'right', 'action' => 'edit', 'slug' => $resource->slug]) ?>">&nbsp;Edit</a> |
+    <a href="<?php echo url_for(['module' => 'right', 'action' => 'delete', 'slug' => $resource->slug]) ?>">Delete</a>
   <?php endif; ?>
 
   <div>
     <?php if (isset($inherit)): ?>
-      <?php echo link_to(render_title($inherit), array($inherit, 'module' => 'informationobject'), array('title' => __('Inherited from %1%', array('%1%' => $inherit)))) ?>
+      <?php echo link_to(render_title($inherit), [$inherit, 'module' => 'informationobject'], ['title' => __('Inherited from %1%', ['%1%' => $inherit])]) ?>
     <?php endif; ?>
 
     <?php echo render_show(__('Basis'), render_value_inline($resource->basis)) ?>
@@ -23,10 +23,10 @@
     <?php echo render_show(__('Documentation Identifier Role'), render_value_inline($resource->identifierRole)) ?>
 
     <?php if (isset($resource->rightsHolder)): ?>
-      <?php echo render_show(__('Rights holder'), link_to(render_value_inline($resource->rightsHolder), array($resource->rightsHolder, 'module' => 'rightsholder'))) ?>
+      <?php echo render_show(__('Rights holder'), link_to(render_value_inline($resource->rightsHolder), [$resource->rightsHolder, 'module' => 'rightsholder'])) ?>
     <?php endif; ?>
 
-    <?php echo render_show(__('Rights note(s)'), render_value_inline($resource->getRightsNote(array('cultureFallback' => true)))) ?>
+    <?php echo render_show(__('Rights note(s)'), render_value_inline($resource->getRightsNote(['cultureFallback' => true]))) ?>
 
     <?php if (QubitTerm::RIGHT_BASIS_COPYRIGHT_ID == $resource->basisId): ?>
 
@@ -36,27 +36,27 @@
 
       <?php echo render_show(__('Copyright jurisdiction'), render_value_inline($resource->copyrightJurisdiction)) ?>
 
-      <?php echo render_show(__('Copyright note'), render_value_inline($resource->getCopyrightNote(array('cultureFallback' => true)))) ?>
+      <?php echo render_show(__('Copyright note'), render_value_inline($resource->getCopyrightNote(['cultureFallback' => true]))) ?>
 
     <?php elseif (QubitTerm::RIGHT_BASIS_LICENSE_ID == $resource->basisId): ?>
 
-      <?php echo render_show(__('License identifier'), render_value_inline($resource->getIdentifierValue(array('cultureFallback' => true)))) ?>
+      <?php echo render_show(__('License identifier'), render_value_inline($resource->getIdentifierValue(['cultureFallback' => true]))) ?>
 
-      <?php echo render_show(__('License terms'), render_value_inline($resource->getLicenseTerms(array('cultureFallback' => true)))) ?>
+      <?php echo render_show(__('License terms'), render_value_inline($resource->getLicenseTerms(['cultureFallback' => true]))) ?>
 
-      <?php echo render_show(__('License note'), render_value_inline($resource->getLicenseNote(array('cultureFallback' => true)))) ?>
+      <?php echo render_show(__('License note'), render_value_inline($resource->getLicenseNote(['cultureFallback' => true]))) ?>
 
     <?php elseif (QubitTerm::RIGHT_BASIS_STATUTE_ID == $resource->basisId): ?>
 
-      <?php echo render_show(__('Statute jurisdiction'), render_value_inline($resource->getStatuteJurisdiction(array('cultureFallback' => true)))) ?>
+      <?php echo render_show(__('Statute jurisdiction'), render_value_inline($resource->getStatuteJurisdiction(['cultureFallback' => true]))) ?>
 
       <?php if (null !== $statuteCitation = $resource->statuteCitation): ?>
-        <?php echo render_show(__('Statute citation'), render_value_inline($statuteCitation->getName(array('cultureFallback' => true)))) ?>
+        <?php echo render_show(__('Statute citation'), render_value_inline($statuteCitation->getName(['cultureFallback' => true]))) ?>
       <?php endif; ?>
 
       <?php echo render_show(__('Statute determination date'), render_value_inline($resource->statuteDeterminationDate)) ?>
 
-      <?php echo render_show(__('Statute note'), render_value_inline($resource->getStatuteNote(array('cultureFallback' => true)))) ?>
+      <?php echo render_show(__('Statute note'), render_value_inline($resource->getStatuteNote(['cultureFallback' => true]))) ?>
 
     <?php endif; ?>
 

@@ -66,7 +66,7 @@ class JobsDeleteAction extends sfAction
         $this->deleteJobsNotInProgress($jobs);
       }
 
-      $this->redirect(array('module' => 'jobs', 'action' => 'browse'));
+      $this->redirect(['module' => 'jobs', 'action' => 'browse']);
     }
     else
     {

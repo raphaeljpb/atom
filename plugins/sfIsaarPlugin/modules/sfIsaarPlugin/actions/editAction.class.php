@@ -27,7 +27,7 @@
 class sfIsaarPluginEditAction extends ActorEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'authorizedFormOfName',
       'corporateBodyIdentifiers',
       'datesOfExistence',
@@ -54,7 +54,7 @@ class sfIsaarPluginEditAction extends ActorEditAction
       'script',
       'sources',
       'standardizedName',
-      'subjectAccessPoints');
+      'subjectAccessPoints'];
 
   protected function earlyExecute()
   {
@@ -70,7 +70,7 @@ class sfIsaarPluginEditAction extends ActorEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");
@@ -104,7 +104,7 @@ class sfIsaarPluginEditAction extends ActorEditAction
         if (sfConfig::get('app_prevent_duplicate_actor_identifiers', false))
         {
           $this->form->setDefault($name, $this->resource[$name]);
-          $identifierValidator = new QubitValidatorActorDescriptionIdentifier(array('resource' => $this->resource));
+          $identifierValidator = new QubitValidatorActorDescriptionIdentifier(['resource' => $this->resource]);
           $this->form->setValidator($name, $identifierValidator);
           $this->form->setWidget($name, new sfWidgetFormInput());
         }

@@ -22,7 +22,7 @@ class sfEacPlugin implements ArrayAccess
   protected $resource;
 
   // Arrays not allowed in class constants
-  protected static $from6392 = array(
+  protected static $from6392 = [
 
       // :r !curl http://loc.gov/standards/iso639-2/ISO-639-2_utf-8.txt
       // 2>/dev/null | sed -n "s/\([^|]\+\)|[^|]*|\([^|]\+\)|\([^|]*\).*/'\1'
@@ -212,7 +212,7 @@ class sfEacPlugin implements ArrayAccess
       'yid' => 'yi', // Yiddish
       'yor' => 'yo', // Yoruba
       'zha' => 'za', // Zhuang; Chuang
-      'zul' => 'zu'); // Zulu
+      'zul' => 'zu']; // Zulu
 
   public function __construct(QubitActor $resource)
   {
@@ -270,7 +270,7 @@ class sfEacPlugin implements ArrayAccess
 
         $isaar = new sfIsaarPlugin($this->resource);
 
-        $revisionHistory = $this->resource->getRevisionHistory(array('cultureFallback' => true));
+        $revisionHistory = $this->resource->getRevisionHistory(['cultureFallback' => true]);
         $maintenanceNotes = $isaar->maintenanceNotes;
 
         return <<<return
@@ -412,7 +412,7 @@ return;
 
       case 'maintenanceStatus':
 
-        $descriptionStatusMap = array();
+        $descriptionStatusMap = [];
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DESCRIPTION_STATUS_ID) as $item)
         {
           $descriptionStatusMap[$item->name] = $item->id;
@@ -467,28 +467,28 @@ return;
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__isset'), $args);
+    return call_user_func_array([$this, '__isset'], $args);
   }
 
   public function offsetGet($offset)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__get'), $args);
+    return call_user_func_array([$this, '__get'], $args);
   }
 
   public function offsetSet($offset, $value)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__set'), $args);
+    return call_user_func_array([$this, '__set'], $args);
   }
 
   public function offsetUnset($offset)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__unset'), $args);
+    return call_user_func_array([$this, '__unset'], $args);
   }
 
   public function parse($doc)
@@ -496,7 +496,7 @@ return;
     require_once sfConfig::get('sf_root_dir').'/vendor/FluentDOM/FluentDOM.php';
 
     $fd = FluentDOM($doc)
-      ->namespaces(array('eac' => 'urn:isbn:1-931666-33-4'));
+      ->namespaces(['eac' => 'urn:isbn:1-931666-33-4']);
 
     $this->resource->sourceStandard = 'http://eac.staatsbibliothek-berlin.de/schema/cpf.xsd';
 
@@ -509,7 +509,7 @@ return;
     {
       $error = sfContext::getInstance()->i18n->__(
                  'Import aborted: %1% identifier "%2%" not unique.',
-                 array('%1%' => sfConfig::get('app_ui_label_actor'), '%2%' => $identifier));
+                 ['%1%' => sfConfig::get('app_ui_label_actor'), '%2%' => $identifier]);
 
       throw new sfException($error);
     }
@@ -525,14 +525,14 @@ return;
 
     // TODO <descriptiveNote/>
 
-    $languages = array();
+    $languages = [];
     foreach ($fd->find('eac:control/eac:languageDeclaration/eac:language') as $node)
     {
       $languages[] = $this->from6392($node->attributes->getNamedItem("languageCode")->textContent);
     }
     $this->resource->language = $languages;
 
-    $scripts = array();
+    $scripts = [];
     foreach ($fd->find('eac:control/eac:languageDeclaration/eac:script') as $node)
     {
       $scripts[] = $this->from6392($node->attributes->getNamedItem("scriptCode")->textContent);
@@ -583,7 +583,7 @@ return;
 
       foreach ($fd->spawn()->add($node)->find('eac:nameEntry[@xml:lang]') as $node2)
       {
-        $item->setName($fd->spawn()->add($node2)->find('eac:part')->text(), array('culture' => $this->from6392($node2->getAttribute('xml:lang'))));
+        $item->setName($fd->spawn()->add($node2)->find('eac:part')->text(), ['culture' => $this->from6392($node2->getAttribute('xml:lang'))]);
       }
 
       $this->resource->otherNames[] = $item;
@@ -693,7 +693,7 @@ return;
       $this->resource->relationsRelatedBysubjectId[] = $relation;
     }
 
-    $this->itemsSubjectOf = array();
+    $this->itemsSubjectOf = [];
     // TODO @lastDateTimeVerified, <date/>, <dateRange/>, <dateSet/>,
     // <descriptiveNote/>, <placeEntry/>
     foreach ($fd->find('eac:cpfDescription/eac:relations/eac:resourceRelation') as $node)
@@ -803,7 +803,7 @@ return;
         continue;
       }
 
-      if (null !== $relation = QubitActor::setTermRelationByName($termName, $options = array('taxonomyId' => QubitTaxonomy::ACTOR_OCCUPATION_ID, 'culture' => sfContext::getInstance()->user->getCulture())))
+      if (null !== $relation = QubitActor::setTermRelationByName($termName, $options = ['taxonomyId' => QubitTaxonomy::ACTOR_OCCUPATION_ID, 'culture' => sfContext::getInstance()->user->getCulture()]))
       {
         $noteContent = trim($fd->spawn()->add($node)->find('eac:descriptiveNote')->text());
 
@@ -829,7 +829,7 @@ return;
         continue;
       }
 
-      if (null !== $relation = QubitActor::setTermRelationByName($termName, $options = array('taxonomyId' => QubitTaxonomy::PLACE_ID, 'culture' => sfContext::getInstance()->user->getCulture())))
+      if (null !== $relation = QubitActor::setTermRelationByName($termName, $options = ['taxonomyId' => QubitTaxonomy::PLACE_ID, 'culture' => sfContext::getInstance()->user->getCulture()]))
       {
         $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
       }
@@ -844,7 +844,7 @@ return;
         continue;
       }
 
-      if (null !== $relation = QubitActor::setTermRelationByName($termName, $options = array('taxonomyId' => QubitTaxonomy::SUBJECT_ID, 'culture' => sfContext::getInstance()->user->getCulture())))
+      if (null !== $relation = QubitActor::setTermRelationByName($termName, $options = ['taxonomyId' => QubitTaxonomy::SUBJECT_ID, 'culture' => sfContext::getInstance()->user->getCulture()]))
       {
         $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
       }
@@ -933,7 +933,7 @@ return;
 
       default:
         $type = QubitTerm::getById($value);
-        $typeName = $type->getName(array('culture' => 'en'));
+        $typeName = $type->getName(['culture' => 'en']);
 
         if ($typeName == 'is the superior of' || $typeName == 'controls' || $typeName == 'is the owner of')
         {
@@ -1025,9 +1025,9 @@ return;
 
   public function parseDates($node)
   {
-    $dates = array();
+    $dates = [];
     $fd = FluentDOM($node)
-      ->namespaces(array('eac' => 'urn:isbn:1-931666-33-4'));
+      ->namespaces(['eac' => 'urn:isbn:1-931666-33-4']);
 
     if (0 < $fd->find('./eac:dateSet/eac:dateRange')->length)
     {
@@ -1045,7 +1045,7 @@ return;
     }
     elseif (0 < $fd->find('./eac:date')->length)
     {
-      $dates[] = array($fd->find('eac:date')->attr('standardDate'), null);
+      $dates[] = [$fd->find('eac:date')->attr('standardDate'), null];
     }
 
     return $dates;
@@ -1054,9 +1054,9 @@ return;
   public static function parseDateRange($node)
   {
     $fd = FluentDOM($node)
-      ->namespaces(array('eac' => 'urn:isbn:1-931666-33-4'));
+      ->namespaces(['eac' => 'urn:isbn:1-931666-33-4']);
 
-    $range = array($fd->find('eac:fromDate')->attr('standardDate'), $fd->find('eac:toDate')->attr('standardDate'));
+    $range = [$fd->find('eac:fromDate')->attr('standardDate'), $fd->find('eac:toDate')->attr('standardDate')];
 
     return $range;
   }
@@ -1102,7 +1102,7 @@ str;
   public function hasDescriptionElements($resource)
   {
     // Use @ to coerce non-isset properties to NULL
-    $descriptionElements = @array(
+    $descriptionElements = @[
       $this->existDates,
       $resource->places,
       $resource->legalStatus,
@@ -1112,14 +1112,14 @@ str;
       $this->generalContext,
       $this->biogHist,
       $resource->getOccupations(),
-    );
+    ];
 
     return (bool)array_filter($descriptionElements);
   }
 
   protected static function fromDiscursiveSet($value)
   {
-    $value->namespaces(array('eac' => 'urn:isbn:1-931666-33-4'))
+    $value->namespaces(['eac' => 'urn:isbn:1-931666-33-4'])
       ->find('eac:list/eac:item')
       ->replaceWith(function ($node)
         {

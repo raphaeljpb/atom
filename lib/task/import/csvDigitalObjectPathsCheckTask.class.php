@@ -26,7 +26,7 @@
  */
 class csvDigitalObjectPathsCheckTask extends arBaseTask
 {
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -48,17 +48,17 @@ class csvDigitalObjectPathsCheckTask extends arBaseTask
   }
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('path-to-images', sfCommandArgument::REQUIRED, 'Path to directory containing images.'),
       new sfCommandArgument('path-to-csv-file', sfCommandArgument::REQUIRED, 'Path to CSV file.')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('csv-column-name', 'n', sfCommandOption::PARAMETER_OPTIONAL, 'CSV column name containing digital object paths', null)
-    ));
+    ]);
 
     $this->namespace = 'csv';
     $this->name = 'digital-object-path-check';
@@ -87,7 +87,7 @@ EOF;
 
   private function getImageFiles($pathToImages)
   {
-    $imageFiles = array();
+    $imageFiles = [];
 
     $pathToImages = realpath($pathToImages);
     $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($pathToImages));
@@ -107,7 +107,7 @@ EOF;
 
   private function getCsvColumnValues($filepath, $columnName)
   {
-    $values = array();
+    $values = [];
 
     $fh = fopen($filepath, 'r');
 
@@ -128,7 +128,7 @@ EOF;
 
   private function summarizeImageUsage($columnValues)
   {
-    $imageUses = array();
+    $imageUses = [];
 
     foreach ($columnValues as $columnValue)
     {
@@ -140,7 +140,7 @@ EOF;
 
   private function printImageUses($imageUses)
   {
-    $usedMoreThanOnce = array();
+    $usedMoreThanOnce = [];
 
     foreach ($imageUses as $image => $uses)
     {
@@ -155,7 +155,7 @@ EOF;
 
   private function printUnusedFiles($imageFiles, $imageUses)
   {
-    $unusedFiles = array();
+    $unusedFiles = [];
 
     foreach($imageFiles as $imageFile)
     {
@@ -170,7 +170,7 @@ EOF;
 
   private function printMissingFiles($imageUses, $pathToImages)
   {
-    $missingFiles = array();
+    $missingFiles = [];
 
     foreach ($imageUses as $image => $uses)
     {

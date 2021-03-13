@@ -29,7 +29,7 @@ class addSuperuserTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     if ($options['demo'])
     {
@@ -100,18 +100,18 @@ class addSuperuserTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('username', sfCommandArgument::OPTIONAL, 'The username to create.')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('email', null, sfCommandOption::PARAMETER_OPTIONAL, 'Desired user email address'),
       new sfCommandOption('password', null, sfCommandOption::PARAMETER_OPTIONAL, 'Desired user password'),
       new sfCommandOption('demo', null, sfCommandOption::PARAMETER_NONE, 'Use default demo values')
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'add-superuser';

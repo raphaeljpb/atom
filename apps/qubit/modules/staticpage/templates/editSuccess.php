@@ -12,9 +12,9 @@
   <?php echo $form->renderGlobalErrors() ?>
 
   <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
-    <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'staticpage', 'action' => 'edit'))) ?>
+    <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'staticpage', 'action' => 'edit'])) ?>
   <?php else: ?>
-    <?php echo $form->renderFormTag(url_for(array('module' => 'staticpage', 'action' => 'add'))) ?>
+    <?php echo $form->renderFormTag(url_for(['module' => 'staticpage', 'action' => 'add'])) ?>
   <?php endif; ?>
 
     <?php echo $form->renderHiddenFields() ?>
@@ -28,12 +28,12 @@
         <?php echo render_field($form->title, $resource) ?>
 
         <?php if ($resource->isProtected()): ?>
-          <?php echo $form->slug->renderRow(array('class' => 'readOnly', 'disabled' => 'disabled')) ?>
+          <?php echo $form->slug->renderRow(['class' => 'readOnly', 'disabled' => 'disabled']) ?>
         <?php else: ?>
           <?php echo $form->slug->renderRow() ?>
         <?php endif; ?>
 
-        <?php echo render_field($form->content, $resource, array('class' => 'resizable')) ?>
+        <?php echo render_field($form->content, $resource, ['class' => 'resizable']) ?>
 
       </fieldset>
 
@@ -42,10 +42,10 @@
     <section class="actions">
       <ul>
         <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
-          <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'staticpage'), array('title' => __('Cancel'), 'class' => 'c-btn')) ?></li>
+          <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'staticpage'], ['title' => __('Cancel'), 'class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
         <?php else: ?>
-          <li><?php echo link_to(__('Cancel'), array('module' => 'staticpage', 'action' => 'list'), array('title' => __('Cancel'), 'class' => 'c-btn')) ?></li>
+          <li><?php echo link_to(__('Cancel'), ['module' => 'staticpage', 'action' => 'list'], ['title' => __('Cancel'), 'class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create') ?>"/></li>
         <?php endif; ?>
       </ul>

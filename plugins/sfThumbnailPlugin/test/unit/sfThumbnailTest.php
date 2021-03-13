@@ -7,13 +7,13 @@ require_once(dirname(__FILE__).'/../../lib/sfImageMagickAdapter.class.php');
 
 // These tests require you have both [http://php.net/gd GD]
 // and [http://www.imagemagick.org ImageMagick] installed
-$adapters = array('sfGDAdapter', 'sfImageMagickAdapter');
+$adapters = ['sfGDAdapter', 'sfImageMagickAdapter'];
 
 $tests_generic = 31;
 $tests_imagemagick = 3;
 $tests_gd = 3;
 
-$data = array(
+$data = [
   'invalid'      => dirname(__FILE__).'/../data/invalid.txt',
   'blob'         => dirname(__FILE__).'/../data/image.blob',
   'image/jpeg'   => dirname(__FILE__).'/../data/einstein.jpg',
@@ -21,7 +21,7 @@ $data = array(
   'image/png'    => dirname(__FILE__).'/../data/gnome.png',
   'image/gif'    => dirname(__FILE__).'/../data/symfony.gif',
   'document/pdf' => dirname(__FILE__).'/../data/mogpres.pdf',
-);
+];
 
 $result  = getResultPath();
 $mimeMap = unserialize(file_get_contents(dirname(__FILE__).'/../data/mime_types.dat'));
@@ -66,19 +66,19 @@ $t->todo('loadFile() throws an exception when an invalid file is loaded');
 
   // default options
   $t->diag('creates standard thumbnail', $adapter);
-  $thmb = new sfThumbnail(150, 150, true, true, 75, $adapter, array());
+  $thmb = new sfThumbnail(150, 150, true, true, 75, $adapter, []);
   $thmb->loadFile($data['image/jpeg']);
   $thmb->save($result.'.jpg');
   checkResult($t, 150, 113, 'image/jpeg');
 
   $t->diag('saves a file to a different mime type');
-  $thmb = new sfThumbnail(150, 150, true, true, 75, $adapter, array());
+  $thmb = new sfThumbnail(150, 150, true, true, 75, $adapter, []);
   $thmb->loadFile($data['image/jpeg']);
   $thmb->save($result.'.png', 'image/png');
   checkResult($t, 150, 113, 'image/png');
 
   $t->diag('creates absolutely sized thumbnail');
-  $thmb = new sfThumbnail(150, 150, false, true, 75, $adapter, array());
+  $thmb = new sfThumbnail(150, 150, false, true, 75, $adapter, []);
   $thmb->loadFile($data['image/jpeg']);
   $thmb->save($result.'.jpg');
   checkResult($t, 150, 150, 'image/jpeg');
@@ -91,7 +91,7 @@ $t->todo('loadFile() throws an exception when an invalid file is loaded');
   //checkResult($t, 150, 150, 'image/jpeg');
 
   $t->diag('creates inflated thumbnail');
-  $thmb = new sfThumbnail(200, 200, false, true, 75, $adapter, array());
+  $thmb = new sfThumbnail(200, 200, false, true, 75, $adapter, []);
   $thmb->loadFile($data['image/gif']);
   $thmb->save($result.'.gif');
   checkResult($t, 200, 200, 'image/gif');
@@ -102,7 +102,7 @@ $t->todo('loadFile() throws an exception when an invalid file is loaded');
     $t = new my_lime_test($tests_imagemagick, new lime_output_color());
 
     $t->diag('creates thumbnail from pdf', $adapter);
-    $thmb = new sfThumbnail(150, 150, true, true, 75, $adapter, array('extract' => 1));
+    $thmb = new sfThumbnail(150, 150, true, true, 75, $adapter, ['extract' => 1]);
     $thmb->loadFile($data['document/pdf']);
     $thmb->save($result.'.jpg');
     checkResult($t, 150, 116, 'image/jpeg');
@@ -112,7 +112,7 @@ $t->todo('loadFile() throws an exception when an invalid file is loaded');
   if ($adapter == 'sfGDAdapter')
   {
     $t->diag('creates image from string');
-    $thmb = new sfThumbnail(200, 200, false, true, 75, $adapter, array());
+    $thmb = new sfThumbnail(200, 200, false, true, 75, $adapter, []);
     $blob = file_get_contents($data['blob']);
     $thmb->loadData($blob, 'image/jpeg');
     $thmb->save($result.'.jpg', 'image/jpeg');

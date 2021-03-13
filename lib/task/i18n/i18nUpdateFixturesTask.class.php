@@ -30,7 +30,7 @@ class I18nUpdateFixturesTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     // Extract translation strings from XLIFF files
     $translations = $this->extractTranslations($arguments, $options);
@@ -42,16 +42,16 @@ class I18nUpdateFixturesTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('path', sfCommandArgument::REQUIRED, 'Path for xliff files'),
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       // http://trac.symfony-project.org/ticket/8352
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('filename', 'f', sfCommandOption::PARAMETER_OPTIONAL, 'Name of XLIFF files', 'messages.xml'),
-    ));
+    ]);
 
     $this->namespace = 'i18n';
     $this->name = 'update-fixtures';
@@ -62,9 +62,9 @@ Reads XLIFF files from {{path}} and merges translations to database fixture file
 EOF;
   }
 
-  protected function extractTranslations($arguments = array(), $options = array())
+  protected function extractTranslations($arguments = [], $options = [])
   {
-    $translations = array();
+    $translations = [];
 
     $this->logSection('i18n', sprintf('Find XLIFF files named "%s"', $options['filename']));
 
@@ -107,7 +107,7 @@ EOF;
     $this->logSection('i18n', 'Writing new translations to fixtures...');
 
     // Search for YAML files
-    $fixturesDirs = array_merge(array(sfConfig::get('sf_data_dir').'/fixtures'), $this->configuration->getPluginSubPaths('/data/fixtures'));
+    $fixturesDirs = array_merge([sfConfig::get('sf_data_dir').'/fixtures'], $this->configuration->getPluginSubPaths('/data/fixtures'));
     $files = sfFinder::type('file')->name('*.yml')->in($fixturesDirs);
 
     if (0 == count($files))

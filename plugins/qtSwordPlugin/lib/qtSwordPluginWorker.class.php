@@ -22,7 +22,7 @@ class qtSwordPluginWorker extends arBaseJob
   /**
    * @see arBaseJob::$requiredParameters
    */
-  protected $extraRequiredParameters = array('information_object_id');
+  protected $extraRequiredParameters = ['information_object_id'];
 
   public function runJob($package)
   {
@@ -43,7 +43,7 @@ class qtSwordPluginWorker extends arBaseJob
     $this->info(sprintf('Object slug: %s', $resource->slug));
 
     $extractor = qtPackageExtractorFactory::build($package['format'],
-      $package + array('resource' => $resource, 'job' => $this->job));
+      $package + ['resource' => $resource, 'job' => $this->job]);
 
     $extractor->run();
 

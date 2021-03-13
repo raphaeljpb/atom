@@ -48,11 +48,11 @@ class InformationObjectMultiFileUploadAction extends sfAction
     $this->maxPostSize = QubitDigitalObject::getMaxPostSize();
 
     // Paths for uploader javascript
-    $this->uploadResponsePath = "{$this->context->routing->generate(null, array('module' => 'digitalobject', 'action' => 'upload'))}?".http_build_query(array(session_name() => session_id()));
+    $this->uploadResponsePath = "{$this->context->routing->generate(null, ['module' => 'digitalobject', 'action' => 'upload'])}?".http_build_query([session_name() => session_id()]);
     $this->uploadTmpDir = "{$this->request->getRelativeUrlRoot()}/uploads/tmp";
 
     // Build form
-    $this->form->setValidator('files', new QubitValidatorCountable(array('required' => true)));
+    $this->form->setValidator('files', new QubitValidatorCountable(['required' => true]));
 
     $this->form->setValidator('title', new sfValidatorString());
     $this->form->setWidget('title', new sfWidgetFormInput());
@@ -60,14 +60,14 @@ class InformationObjectMultiFileUploadAction extends sfAction
 
     $this->form->setValidator('levelOfDescription', new sfValidatorString());
 
-    $choices = array();
+    $choices = [];
     $choices[null] = null;
     foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID) as $item)
     {
-      $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+      $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
     }
 
-    $this->form->setWidget('levelOfDescription', new sfWidgetFormSelect(array('choices' => $choices)));
+    $this->form->setWidget('levelOfDescription', new sfWidgetFormSelect(['choices' => $choices]));
 
     if ($request->isMethod('post'))
     {
@@ -85,7 +85,7 @@ class InformationObjectMultiFileUploadAction extends sfAction
 
     // Upload files
     $i = 0;
-    $informationObjectSlugList = array();
+    $informationObjectSlugList = [];
 
     foreach ($this->form->getValue('files') as $file)
     {
@@ -111,7 +111,7 @@ class InformationObjectMultiFileUploadAction extends sfAction
         $informationObject->levelOfDescription = $params['_sf_route']->resource;
       }
 
-      $informationObject->setStatus(array('typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID, 'statusId' => sfConfig::get('app_defaultPubStatus')));
+      $informationObject->setStatus(['typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID, 'statusId' => sfConfig::get('app_defaultPubStatus')]);
 
       // Save description
       $informationObject->save();
@@ -136,6 +136,6 @@ class InformationObjectMultiFileUploadAction extends sfAction
       }
     }
 
-    $this->redirect(array($this->resource, 'module' => 'informationobject', 'action' => 'multiFileUpdate', 'items' => implode(",", $informationObjectSlugList)));
+    $this->redirect([$this->resource, 'module' => 'informationobject', 'action' => 'multiFileUpdate', 'items' => implode(",", $informationObjectSlugList)]);
   }
 }

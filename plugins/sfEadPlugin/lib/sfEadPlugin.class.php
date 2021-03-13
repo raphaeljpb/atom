@@ -27,8 +27,8 @@ class sfEadPlugin
   public $resource;
   public $siteBaseUrl;
 
-  public static $ENCODING_MAP = array(
-      'isad' => array(
+  public static $ENCODING_MAP = [
+      'isad' => [
         'relatedencoding'       => 'ISAD(G)v2',
         'eadid'                 => 'identifier',
         'titleproper'           => 'title',
@@ -62,8 +62,8 @@ class sfEadPlugin
         'langmaterial'          => '3.4.3',
         'note'                  => '3.6.1',
         'bioghist'              => '3.2.2',
-        'origination'           => '3.2.1'),
-      'rad' => array(
+        'origination'           => '3.2.1'],
+      'rad' => [
         'relatedencoding'       => 'RAD',
         'eadid'                 => 'identifier',
         'titleproper'           => 'title',
@@ -130,7 +130,7 @@ class sfEadPlugin
         'nameDefault' => '1.4D',
         'nameManufacturer' => '1.4G',
         'geogDefault' => '1.4C',
-        'geogManufacturer' => '1.4G'));
+        'geogManufacturer' => '1.4G']];
 
   public function __construct($resource)
   {
@@ -182,14 +182,14 @@ class sfEadPlugin
   {
     $countryCode = $mainAgencyCode = '';
 
-    if (null !== $this->resource->getRepository(array('inherit' => true)))
+    if (null !== $this->resource->getRepository(['inherit' => true]))
     {
-      if (null !== $country = $this->resource->getRepository(array('inherit' => true))->getCountryCode())
+      if (null !== $country = $this->resource->getRepository(['inherit' => true])->getCountryCode())
       {
         $countryCode = " countrycode=\"$country\"";
       }
 
-      if (null !== $agency = $this->resource->getRepository(array('inherit' => true))->getIdentifier())
+      if (null !== $agency = $this->resource->getRepository(['inherit' => true])->getIdentifier())
       {
         $mainAgencyCode = " mainagencycode=\"$agency\"";
       }
@@ -272,7 +272,7 @@ class sfEadPlugin
 
   public static function parseEadDenormalizedDateData($date)
   {
-    $parsedData = array();
+    $parsedData = [];
     $dates = explode('/', $date);
 
     $parsedData['start'] = sfEadPlugin::renderEadDenormalizedDate($dates[0]);
@@ -364,7 +364,7 @@ class sfEadPlugin
       return $resource->identifier;
     }
 
-    $identifier = array();
+    $identifier = [];
     foreach ($resource->ancestors->andSelf()->orderBy('lft') as $item)
     {
       if (isset($item->identifier))
@@ -382,19 +382,19 @@ class sfEadPlugin
   public static function renderLOD($resource, $eadLevels)
   {
     // Mapping of EAD levels to possible AtoM LOD names
-    $variations = array(
-      'recordgrp' => array('record-group', 'record group', 'recordgroup'),
-      'subfonds' => array('sous fonds', 'sous-fonds', 'sousfonds', 'sub-fonds', 'sub fonds'),
-      'subgrp' => array('subgroup', 'sub-group', 'sub group'),
-      'subseries' => array('sub-series', 'sub series')
-    );
+    $variations = [
+      'recordgrp' => ['record-group', 'record group', 'recordgroup'],
+      'subfonds' => ['sous fonds', 'sous-fonds', 'sousfonds', 'sub-fonds', 'sub fonds'],
+      'subgrp' => ['subgroup', 'sub-group', 'sub group'],
+      'subseries' => ['sub-series', 'sub series']
+    ];
     $defaultLevel = 'otherlevel';
     $renderedLOD = '';
     $levelOfDescription = $defaultLevel;
 
     if ($resource->levelOfDescriptionId)
     {
-      $levelOfDescription = strtolower($resource->getLevelOfDescription()->getName(array('culture' => 'en')));
+      $levelOfDescription = strtolower($resource->getLevelOfDescription()->getName(['culture' => 'en']));
 
       // Check EAD levels variations
       foreach ($variations as $eadLevel => $lods)
@@ -431,7 +431,7 @@ class sfEadPlugin
     $subjects = $io->getSubjectAccessPoints();
     $names = $io->getNameAccessPoints();
     $places = $io->getPlaceAccessPoints();
-    $placeEvents = $io->getPlaceAccessPoints(array('events' => true));
+    $placeEvents = $io->getPlaceAccessPoints(['events' => true]);
 
     // Special case: we don't add actors from creation events to <controlaccess>, to
     // prevent duplication during round tripping (AtoM will get the creator from <origination>).

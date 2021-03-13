@@ -28,12 +28,12 @@ class sitemapTask extends sfBaseTask
   /**
    * Sitemap services for submission
    */
-  private static $urls = array(
+  private static $urls = [
     'Google' => 'http://www.google.com/webmasters/sitemaps/ping?sitemap=%s',
     'Bing' => 'http://www.bing.com/webmaster/ping.aspx?siteMap=%s'
-  );
+  ];
 
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     sfContext::createInstance($this->configuration);
 
@@ -65,7 +65,7 @@ class sitemapTask extends sfBaseTask
     {
       if (!$options['no-confirmation'])
       {
-        $result = $this->askConfirmation(array('Do you want to delete the previous sitemap(s)? (Y/n)'), 'QUESTION_LARGE', true);
+        $result = $this->askConfirmation(['Do you want to delete the previous sitemap(s)? (Y/n)'], 'QUESTION_LARGE', true);
         if (!$result)
         {
           $this->log('Quitting');
@@ -113,7 +113,7 @@ class sitemapTask extends sfBaseTask
   {
     $outputDirectory =  sfConfig::get('sf_root_dir');
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
@@ -124,7 +124,7 @@ class sitemapTask extends sfBaseTask
       new sfCommandOption('no-compress', null, sfCommandOption::PARAMETER_NONE, 'Compress XML output with Gzip'),
       new sfCommandOption('no-confirmation', '-B', sfCommandOption::PARAMETER_NONE, 'Avoid prompting the user'),
       new sfCommandOption('ping', null, sfCommandOption::PARAMETER_NONE, 'Submit sitemap to Google and Bing'),
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'sitemap';

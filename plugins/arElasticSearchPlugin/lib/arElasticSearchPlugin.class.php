@@ -67,19 +67,19 @@ class arElasticSearchPlugin extends QubitSearchEngine
    *
    * @var array
    */
-  private $batchAddDocs = array();
+  private $batchAddDocs = [];
 
   /**
    * This array will be used to store documents to delete in a batch.
    *
    * @var array
    */
-  private $batchDeleteDocs = array();
+  private $batchDeleteDocs = [];
 
   /**
    * Constructor
    */
-  public function __construct(array $options = array())
+  public function __construct(array $options = [])
   {
     parent::__construct();
 
@@ -138,7 +138,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
   /**
    * Optimize index
    */
-  public function optimize($args = array())
+  public function optimize($args = [])
   {
     return $this->client->optimizeAll($args);
   }
@@ -177,12 +177,12 @@ class arElasticSearchPlugin extends QubitSearchEngine
         catch (Exception $e)
         {
           // Clear batchAddDocs if something went wrong too
-          $this->batchAddDocs = array();
+          $this->batchAddDocs = [];
 
           throw $e;
         }
 
-        $this->batchAddDocs = array();
+        $this->batchAddDocs = [];
       }
 
       // Batch delete documents, if any
@@ -195,12 +195,12 @@ class arElasticSearchPlugin extends QubitSearchEngine
         catch (Exception $e)
         {
           // Clear batchDeleteDocs if something went wrong too
-          $this->batchDeleteDocs = array();
+          $this->batchDeleteDocs = [];
 
           throw $e;
         }
 
-        $this->batchDeleteDocs = array();
+        $this->batchDeleteDocs = [];
       }
     }
   }
@@ -208,9 +208,9 @@ class arElasticSearchPlugin extends QubitSearchEngine
   /**
    * Populate index
    */
-  public function populate($options = array())
+  public function populate($options = [])
   {
-    $excludeTypes = (!empty($options['excludeTypes'])) ? $options['excludeTypes'] : array();
+    $excludeTypes = (!empty($options['excludeTypes'])) ? $options['excludeTypes'] : [];
     $update = (!empty($options['update'])) ? $options['update'] : false;
 
     // Delete index and initialize again if all document types are to be
@@ -241,7 +241,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
     if ($indexingIos || $indexingActors)
     {
-      $taxonomies = array(QubitTaxonomy::SUBJECT_ID, QubitTaxonomy::PLACE_ID);
+      $taxonomies = [QubitTaxonomy::SUBJECT_ID, QubitTaxonomy::PLACE_ID];
 
       if ($indexingIos)
       {
@@ -259,7 +259,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
     // Document counter, timer and errors
     $total = 0;
     $timer = new QubitTimer();
-    $errors = array();
+    $errors = [];
     $showErrors = false;
 
     foreach ($this->mappings as $typeName => $typeProperties)
@@ -291,9 +291,9 @@ class arElasticSearchPlugin extends QubitSearchEngine
     }
 
     $this->log(vsprintf('Index populated with %s documents in %s seconds.',
-      array(
+      [
         $total,
-        $timer->elapsed())));
+        $timer->elapsed()]));
 
     if (!$showErrors)
     {
@@ -437,7 +437,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
     }
   }
 
-  public function update($object, $options = array())
+  public function update($object, $options = [])
   {
     if (!$this->enabled)
     {
@@ -454,12 +454,12 @@ class arElasticSearchPlugin extends QubitSearchEngine
     // Pass options only to information object update
     if ($object instanceof QubitInformationObject)
     {
-      call_user_func(array($className, 'update'), $object, $options);
+      call_user_func([$className, 'update'], $object, $options);
 
       return;
     }
 
-    call_user_func(array($className, 'update'), $object);
+    call_user_func([$className, 'update'], $object);
   }
 
   /**
@@ -482,12 +482,12 @@ class arElasticSearchPlugin extends QubitSearchEngine
         {
           foreach ($this->config['index']['configuration']['analysis']['analyzer'] as $key => $analyzer)
           {
-            $this->config['index']['configuration']['analysis']['analyzer'][$key]['char_filter'] = array('strip_md');
+            $this->config['index']['configuration']['analysis']['analyzer'][$key]['char_filter'] = ['strip_md'];
           }
         }
 
         $this->index->create($this->config['index']['configuration'],
-          array('recreate' => true));
+          ['recreate' => true]);
       }
 
       // Load and normalize mappings

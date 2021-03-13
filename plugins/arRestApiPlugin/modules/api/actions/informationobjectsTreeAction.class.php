@@ -21,7 +21,7 @@ class ApiInformationObjectsTreeAction extends QubitApiAction
 {
   public function getChildren($parentId)
   {
-    $results = array();
+    $results = [];
 
     $criteria = new Criteria();
     $criteria->add(QubitInformationObject::PARENT_ID, $parentId);
@@ -68,15 +68,15 @@ class ApiInformationObjectsTreeAction extends QubitApiAction
 
   private function informationObjectToArray($io)
   {
-    $ioData = array(
+    $ioData = [
       'title' => $io->title,
       'identifier' => $io->identifier,
       'slug' => $io->slug
-    );
+    ];
 
     if (null !== $io->getLevelOfDescription())
     {
-      $ioData['level'] = $io->getLevelOfDescription()->getName(array('culture' => 'en'));
+      $ioData['level'] = $io->getLevelOfDescription()->getName(['culture' => 'en']);
     }
 
     return $ioData;

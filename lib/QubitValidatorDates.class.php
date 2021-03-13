@@ -32,7 +32,7 @@ class QubitValidatorDates extends sfValidatorBase
         // type as event we're validating
         foreach ($value->ancestors->orderBy('rgt') as $ancestor)
         {
-          foreach ($ancestor->getDates(array('type_id' => $item->type->id)) as $event)
+          foreach ($ancestor->getDates(['type_id' => $item->type->id]) as $event)
           {
             // Found at least one such event, if event we're validating isn't
             // valid according to at least one of this ancestor's events, then
@@ -62,7 +62,7 @@ class QubitValidatorDates extends sfValidatorBase
           // then throw validation error
           if (!$valid)
           {
-            throw new sfValidatorError($this, 'invalid', array('ancestor' => sfContext::getInstance()->routing->generate(null, array($ancestor, 'module' => 'informationobject'))));
+            throw new sfValidatorError($this, 'invalid', ['ancestor' => sfContext::getInstance()->routing->generate(null, [$ancestor, 'module' => 'informationobject'])]);
           }
         }
       }

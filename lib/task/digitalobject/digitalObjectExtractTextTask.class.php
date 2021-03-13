@@ -21,18 +21,18 @@ class digitalObjectExtractTextTask extends sfBaseTask
 {
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-    ));
+    ]);
 
     $this->namespace = 'digitalobject';
     $this->name = 'extract-text';
     $this->briefDescription = 'Extracts text from PDFs for search indexing';
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $timer = new QubitTimer();
 

@@ -48,25 +48,25 @@ class RepositoryHoldingsAction extends sfAction
     $pager->setPage($request->page);
     $pager->init();
 
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Qubit', 'Url'));
+    sfContext::getInstance()->getConfiguration()->loadHelpers(['Qubit', 'Url']);
 
-    $results = array();
+    $results = [];
     foreach ($pager->getResults() as $item)
     {
       $doc = $item->getData();
-      $results[] = array(
-        'url' => url_for(array('module' => 'informationobject', 'slug' => $doc['slug'])),
-        'title' => render_value_inline(get_search_i18n($doc, 'title', array('allowEmpty' => false, 'culture' => $culture, 'cultureFallback' => true)))
-      );
+      $results[] = [
+        'url' => url_for(['module' => 'informationobject', 'slug' => $doc['slug']]),
+        'title' => render_value_inline(get_search_i18n($doc, 'title', ['allowEmpty' => false, 'culture' => $culture, 'cultureFallback' => true]))
+      ];
     }
 
-    $data = array(
+    $data = [
       'results'     => $results,
       'start'       => $pager->getFirstIndice(),
       'end'         => $pager->getLastIndice(),
       'currentPage' => $pager->getPage(),
       'lastPage'    => $pager->getLastPage()
-    );
+    ];
 
     return $this->renderText(json_encode($data));
   }
@@ -78,8 +78,8 @@ class RepositoryHoldingsAction extends sfAction
   {
     $queryBool = new \Elastica\Query\BoolQuery();
     $queryBool->addShould(new \Elastica\Query\MatchAll());
-    $queryBool->addMust(new \Elastica\Query\Term(array('parentId' => QubitInformationObject::ROOT_ID)));
-    $queryBool->addMust(new \Elastica\Query\Term(array('repository.id' => $id)));
+    $queryBool->addMust(new \Elastica\Query\Term(['parentId' => QubitInformationObject::ROOT_ID]));
+    $queryBool->addMust(new \Elastica\Query\Term(['repository.id' => $id]));
 
     QubitAclSearch::filterDrafts($queryBool);
     $query = new \Elastica\Query($queryBool);
@@ -88,7 +88,7 @@ class RepositoryHoldingsAction extends sfAction
     $query->setFrom($limit * ($page - 1));
 
     $title = sprintf('i18n.%s.title.alphasort', sfContext::getInstance()->user->getCulture());
-    $query->setSort(array($title => 'asc'));
+    $query->setSort([$title => 'asc']);
 
     $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($query);
 

@@ -23,7 +23,7 @@
       </tr>
     </thead><tbody>
       <?php foreach ($resource->contactInformations as $item): ?>
-        <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for(array($item, 'module' => 'contactinformation')) ?>">
+        <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for([$item, 'module' => 'contactinformation']) ?>">
           <td>
             <?php echo render_title($item->contactPerson) ?>
           </td><td>
@@ -39,7 +39,7 @@
 <?php
 
 // Template for new display table rows
-$editHtml = '<a href="#">' . image_tag('pencil', array('alt' => __('Edit'), 'style' => 'align: top')) . '</a>';
+$editHtml = '<a href="#">' . image_tag('pencil', ['alt' => __('Edit'), 'style' => 'align: top']) . '</a>';
 
 $rowTemplate = json_encode(<<<value
 <tr id="{{$form->getWidgetSchema()->generateName('id')}}">

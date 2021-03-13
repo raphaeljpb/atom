@@ -36,7 +36,7 @@ EOF;
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $this->validateOptions($options);
 
@@ -51,12 +51,12 @@ EOF;
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
     // Load taxonomies into variables to avoid use of magic numbers
-    $termData = QubitFlatfileImport::loadTermsFromTaxonomies(array(
+    $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
       QubitTaxonomy::DEACCESSION_SCOPE_ID    => 'scopeTypes',     // part or whole
-    ));
+    ]);
 
     // Define import
-    $import = new QubitFlatfileImport(array(
+    $import = new QubitFlatfileImport([
       // Pass context
       'context' => sfContext::createInstance($this->configuration),
 
@@ -68,27 +68,27 @@ EOF;
 
       // The status array is a place to put data that should be accessible
       // from closure logic using the getStatus method
-      'status' => array(
+      'status' => [
         'scopeTypes'          => $termData['scopeTypes'],
         'options'             => $options,
-      ),
+      ],
 
-      'standardColumns' => array(
+      'standardColumns' => [
         'date',
         'description',
         'extent',
         'reason',
-      ),
+      ],
 
-      'columnMap' => array(
+      'columnMap' => [
         'deaccessionNumber' => 'identifier',
-      ),
+      ],
 
       // These values get stored to the rowStatusVars array
-      'variableColumns' => array(
+      'variableColumns' => [
         'scope',
         'accessionNumber',
-      ),
+      ],
 
       // Import logic to load deaccession
       'rowInitLogic' => function (&$self)
@@ -98,7 +98,7 @@ EOF;
         // Look up Qubit ID of pre-created accession
         $accessionQueryStatement = $self->sqlQuery(
           "SELECT id FROM accession WHERE identifier=?",
-          $params = array($accessionIdentifier)
+          $params = [$accessionIdentifier]
         );
 
         $result = $accessionQueryStatement->fetch(PDO::FETCH_OBJ);
@@ -135,13 +135,13 @@ EOF;
             " AND deaccession_i18n.extent=?" .
             " AND deaccession_i18n.reason=?" .
             " AND deaccession.source_culture=?",
-            $params = array($self->object->identifier,
+            $params = [$self->object->identifier,
               $self->object->date,
               $self->object->scopeId,
               $self->object->description,
               $self->object->extent,
               $self->object->reason,
-              $self->object->culture)
+              $self->object->culture]
           );
           $deaccessionResult = $deaccessionQueryStatement->fetch(PDO::FETCH_OBJ);
 
@@ -167,7 +167,7 @@ EOF;
           $self->object->save();
         }
       }
-    ));
+    ]);
 
     $import->addColumnHandler('scope', function ($self, $data)
     {
@@ -189,13 +189,13 @@ EOF;
   protected function configure()
   {
     parent::configure();
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption(
         'ignore-duplicates',
         null,
         sfCommandOption::PARAMETER_NONE,
         'Load all records from csv, including duplicates.'
       ),
-    ));
+    ]);
   }
 }

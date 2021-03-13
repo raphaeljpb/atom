@@ -92,7 +92,7 @@ class arInformationObjectXmlExportJob extends arInformationObjectExportJob
       catch (Exception $e)
       {
         throw new sfException($this->i18n->__(
-          'Invalid XML generated for object %1%.', array('%1%' => $row['id'])
+          'Invalid XML generated for object %1%.', ['%1%' => $row['id']]
         ));
       }
     }
@@ -105,7 +105,7 @@ class arInformationObjectXmlExportJob extends arInformationObjectExportJob
     if (false === file_put_contents($filePath, $xml))
     {
       throw new sfException($this->i18n->__(
-        'Cannot write to path: %1%', array('%1%' => $filePath)
+        'Cannot write to path: %1%', ['%1%' => $filePath]
       ));
     }
 

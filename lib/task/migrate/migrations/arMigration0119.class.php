@@ -41,7 +41,7 @@ class arMigration0119
     $setting = new QubitSetting();
     $setting->setName('findingAidModel');
     $setting->setSourceCulture('en');
-    $setting->setValue('inventory-summary', array('culture' => 'en'));
+    $setting->setValue('inventory-summary', ['culture' => 'en']);
     $setting->setEditable(1);
     $setting->setDeleteable(0);
     $setting->save();

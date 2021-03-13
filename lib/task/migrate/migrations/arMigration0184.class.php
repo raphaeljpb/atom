@@ -38,8 +38,8 @@ class arMigration0184
    */
   public function up($configuration)
   {
-    $lockedMenus = array(
-      'byName' => array(
+    $lockedMenus = [
+      'byName' => [
         'accessions',
         'browseInstitution',
         'clipboard',
@@ -56,8 +56,8 @@ class arMigration0184
         'staticPagesMenu',
         'taxonomies',
         'users'
-      ),
-      'byId' => array(
+      ],
+      'byId' => [
         QubitMenu::ROOT_ID,
         QubitMenu::BROWSE_ID,
         QubitMenu::IMPORT_ID,
@@ -66,8 +66,8 @@ class arMigration0184
         QubitMenu::QUICK_LINKS_ID,
         QubitMenu::ADD_EDIT_ID,
         QubitMenu::ADMIN_ID
-      )
-    );
+      ]
+    ];
 
     $setting = QubitSetting::getByName('menu_locking_info');
     if (isset($setting))

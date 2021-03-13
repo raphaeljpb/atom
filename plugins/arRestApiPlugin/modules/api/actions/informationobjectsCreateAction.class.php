@@ -39,10 +39,10 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
 
     $this->response->setStatusCode(201);
 
-    return array(
+    return [
       'id' => (int)$this->io->id,
       'slug' => $this->io->slug,
-      'parent_id' => (int)$this->io->parentId);
+      'parent_id' => (int)$this->io->parentId];
   }
 
   protected function processField($field, $value)
@@ -292,7 +292,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
 
   protected function simplifyTermData($terms)
   {
-    $termData = array();
+    $termData = [];
 
     foreach($terms as $term)
     {

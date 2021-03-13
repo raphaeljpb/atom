@@ -33,7 +33,7 @@ class AccessionCheckIdentifierAvailableAction extends sfAction
     // Assemble response data
     $valid = $this->validateAccessionIdentifier($request->identifier, $request->accession_id);
     $message = ($valid) ? $this->context->i18n->__('Identifier available.') : $this->context->i18n->__('Identifier unavailable.');
-    $responseData = array('allowable' => $valid, 'message' => $message);
+    $responseData = ['allowable' => $valid, 'message' => $message];
 
     $this->getResponse()->setContent(json_encode($responseData));
 
@@ -60,7 +60,7 @@ class AccessionCheckIdentifierAvailableAction extends sfAction
       $resource = new QubitAccession();
     }
 
-    $validator = new QubitValidatorAccessionIdentifier(array('required' => true, 'resource' => $resource));
+    $validator = new QubitValidatorAccessionIdentifier(['required' => true, 'resource' => $resource]);
 
     try
     {

@@ -19,13 +19,13 @@
           <?php echo $form->renderGlobalErrors() ?>
         <?php endif; ?>
 
-        <?php echo $form->renderFormTag(url_for(array('module' => 'user', 'action' => 'login'))) ?>
+        <?php echo $form->renderFormTag(url_for(['module' => 'user', 'action' => 'login'])) ?>
 
           <?php echo $form->renderHiddenFields() ?>
 
-          <?php echo $form->email->renderRow(array('autofocus' => 'autofocus', 'class' => 'input-block-level')) ?>
+          <?php echo $form->email->renderRow(['autofocus' => 'autofocus', 'class' => 'input-block-level']) ?>
 
-          <?php echo $form->password->renderRow(array('class' => 'input-block-level', 'autocomplete' => 'off')) ?>
+          <?php echo $form->password->renderRow(['class' => 'input-block-level', 'autocomplete' => 'off']) ?>
 
           <section class="actions">
             <button type="submit" class="btn btn-primary btn-block btn-large"><?php echo __('Log in') ?></button>

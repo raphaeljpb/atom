@@ -21,7 +21,7 @@ class arElasticSearchDonor extends arElasticSearchModelBase
 {
   public static function serialize($object)
   {
-    $serialized = array();
+    $serialized = [];
 
     $serialized['id'] = $object->id;
     $serialized['slug'] = $object->slug;
@@ -31,7 +31,7 @@ class arElasticSearchDonor extends arElasticSearchModelBase
       $serialized['contactInformations'][] = arElasticSearchContactInformation::serialize($contactInformation);
     }
 
-    $serialized['i18n'] = self::serializeI18ns($object->id, array('QubitActor'));
+    $serialized['i18n'] = self::serializeI18ns($object->id, ['QubitActor']);
 
     return $serialized;
   }

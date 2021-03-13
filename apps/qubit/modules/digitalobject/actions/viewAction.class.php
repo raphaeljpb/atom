@@ -124,7 +124,7 @@ class DigitalObjectViewAction extends sfAction
         throw new sfException("Invalid usageId given in digitalobject/view: {$this->resource->usageId}");
     }
 
-    return array($obj, $action);
+    return [$obj, $action];
   }
 
   private function isAccessTokenValid()

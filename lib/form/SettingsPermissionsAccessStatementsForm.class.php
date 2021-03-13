@@ -23,11 +23,11 @@ class SettingsPermissionsAccessStatementsForm extends sfForm
   {
     $this->widgetSchema->setNameFormat('accessStatements[%s]');
 
-    $this->settings = array();
+    $this->settings = [];
 
     foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
     {
-      foreach (array("{$item->slug}_disallow", "{$item->slug}_conditional") as $name)
+      foreach (["{$item->slug}_disallow", "{$item->slug}_conditional"] as $name)
       {
         $this->setWidget($name, new sfWidgetFormTextarea());
         $this->setValidator($name, new sfValidatorString());

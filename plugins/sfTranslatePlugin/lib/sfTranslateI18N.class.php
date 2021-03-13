@@ -21,7 +21,7 @@ class sfTranslateI18N extends sfI18N
 
       if (sfConfig::get('sf_debug') && sfConfig::get('sf_i18n_debug'))
       {
-        $this->messageFormat->setUntranslatedPS(array(sfConfig::get('sf_i18n_untranslated_prefix'), sfConfig::get('sf_i18n_unstranslated_suffix')));
+        $this->messageFormat->setUntranslatedPS([sfConfig::get('sf_i18n_untranslated_prefix'), sfConfig::get('sf_i18n_unstranslated_suffix')]);
       }
     }
 

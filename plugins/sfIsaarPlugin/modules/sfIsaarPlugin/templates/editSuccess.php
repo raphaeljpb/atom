@@ -3,7 +3,7 @@
 
 <?php slot('title') ?>
   <h1 class="multiline">
-    <?php echo __('Edit %1% - ISAAR', array('%1%' => sfConfig::get('app_ui_label_actor'))) ?>
+    <?php echo __('Edit %1% - ISAAR', ['%1%' => sfConfig::get('app_ui_label_actor')]) ?>
     <span class="sub"><?php echo render_title($resource) ?></span>
   </h1>
 <?php end_slot() ?>
@@ -13,9 +13,9 @@
   <?php echo $form->renderGlobalErrors(); ?>
 
   <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
-    <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'actor', 'action' => 'edit')), array('id' => 'editForm')) ?>
+    <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'actor', 'action' => 'edit']), ['id' => 'editForm']) ?>
   <?php else: ?>
-    <?php echo $form->renderFormTag(url_for(array('module' => 'actor', 'action' => 'add')), array('id' => 'editForm')) ?>
+    <?php echo $form->renderFormTag(url_for(['module' => 'actor', 'action' => 'add']), ['id' => 'editForm']) ?>
   <?php endif; ?>
 
     <?php echo $form->renderHiddenFields() ?>
@@ -65,28 +65,28 @@
           ->label(__('Dates of existence').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>'), $resource) ?>
 
         <?php echo render_field($form->history
-          ->help(__('"Record in narrative form or as a chronology the main life events, activities, achievements and/or roles of the entity being described. This may include information on gender, nationality, family and religious or political affiliations. Wherever possible, supply dates as an integral component of the narrative description." (ISAAR 5.2.2)')), $resource, array('class' => 'resizable')) ?>
+          ->help(__('"Record in narrative form or as a chronology the main life events, activities, achievements and/or roles of the entity being described. This may include information on gender, nationality, family and religious or political affiliations. Wherever possible, supply dates as an integral component of the narrative description." (ISAAR 5.2.2)')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo render_field($form->places
-          ->help(__('"Purpose: to indicate the predominant places and/or jurisdictions where the corporate body, person or family was based, lived or resided or had some other connection. Rule: record the name of the predominant place(s)/jurisdiction(s), together with the nature and covering dates of the relationship with the entity." (ISAAR 5.2.3)')), $resource, array('class' => 'resizable')) ?>
+          ->help(__('"Purpose: to indicate the predominant places and/or jurisdictions where the corporate body, person or family was based, lived or resided or had some other connection. Rule: record the name of the predominant place(s)/jurisdiction(s), together with the nature and covering dates of the relationship with the entity." (ISAAR 5.2.3)')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo render_field($form->legalStatus
-          ->help(__('"Record the legal status and where appropriate the type of corporate body together with the covering dates when this status applied." (ISAAR 5.2.4)')), $resource, array('class' => 'resizable')) ?>
+          ->help(__('"Record the legal status and where appropriate the type of corporate body together with the covering dates when this status applied." (ISAAR 5.2.4)')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo render_field($form->functions
           ->help(__('"Record the functions, occupations and activities performed by the entity being described, together with the covering dates when useful. If necessary, describe the nature of the function, occupation or activity." (ISAAR 5.2.5)'))
-          ->label(__('Functions, occupations and activities')), $resource, array('class' => 'resizable')) ?>
+          ->label(__('Functions, occupations and activities')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo render_field($form->mandates
           ->help(__('"Record any document, law, directive or charter which acts as a source of authority for the powers, functions and responsibilities of the entity being described, together with information on the jurisdiction(s) and covering dates when the mandate(s) applied or were changed." (ISAAR 5.2.6)'))
-          ->label(__('Mandates/sources of authority')), $resource, array('class' => 'resizable')) ?>
+          ->label(__('Mandates/sources of authority')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo render_field($form->internalStructures
           ->help(__('"Describe the internal structure of a corporate body and the dates of any changes to that structure that are significant to the understanding of the way that corporate body conducted its affairs (e.g. by means of dated organization charts). Describe the genealogy of a family (e.g. by means of a family tree) in a way that demonstrates the inter-relationships of its members with covering dates." (ISAAR 5.2.7)'))
-          ->label(__('Internal structures/genealogy')), $resource, array('class' => 'resizable')) ?>
+          ->label(__('Internal structures/genealogy')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo render_field($form->generalContext
-          ->help(__('"Provide any significant information on the social, cultural, economic, political and/or historical context in which the entity being described operated." (ISAAR 5.2.8)')), $resource, array('class' => 'resizable')) ?>
+          ->help(__('"Provide any significant information on the social, cultural, economic, political and/or historical context in which the entity being described operated." (ISAAR 5.2.8)')), $resource, ['class' => 'resizable']) ?>
 
       </fieldset>
 
@@ -109,22 +109,22 @@
           <?php echo $form->subjectAccessPoints
             ->label(__('Subject access points'))
             ->renderLabel() ?>
-          <?php echo $form->subjectAccessPoints->render(array('class' => 'form-autocomplete')) ?>
+          <?php echo $form->subjectAccessPoints->render(['class' => 'form-autocomplete']) ?>
           <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')): ?>
-            <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'term', 'action' => 'add', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy')))) ?> #name"/>
+            <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?> #name"/>
           <?php endif; ?>
-          <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy')))) ?>"/>
+          <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?>"/>
         </div>
 
         <div class="form-item">
           <?php echo $form->placeAccessPoints
             ->label(__('Place access points'))
             ->renderLabel() ?>
-          <?php echo $form->placeAccessPoints->render(array('class' => 'form-autocomplete')) ?>
+          <?php echo $form->placeAccessPoints->render(['class' => 'form-autocomplete']) ?>
           <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')): ?>
-            <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'term', 'action' => 'add', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy')))) ?> #name"/>
+            <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?> #name"/>
           <?php endif; ?>
-          <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy')))) ?>"/>
+          <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?>"/>
         </div>
 
         <?php echo get_partial('actor/occupations', $sf_data->getRaw('occupationsComponent')->getVarHolder()->getAll()) ?>
@@ -141,9 +141,9 @@
 
         <div class="form-item">
           <?php echo $form->maintainingRepository->label(__('Maintaining repository'))->renderLabel() ?>
-          <?php echo $form->maintainingRepository->render(array('class' => 'form-autocomplete')) ?>
-          <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'repository', 'action' => 'add')) ?> #authorizedFormOfName"/>
-          <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'repository', 'action' => 'autocomplete')) ?>"/>
+          <?php echo $form->maintainingRepository->render(['class' => 'form-autocomplete']) ?>
+          <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'repository', 'action' => 'add']) ?> #authorizedFormOfName"/>
+          <input class="list" type="hidden" value="<?php echo url_for(['module' => 'repository', 'action' => 'autocomplete']) ?>"/>
           <?php echo $form->maintainingRepository
             ->help(__('"Record the full authorized form of name(s) of the agency(ies) responsible for creating, modifying or disseminating the authority record or, alternatively, record a code for the agency in accordance with the national or international agency code standard. Include reference to any systems of identification used to identify the institutions (e.g. ISO 15511)." (ISAAR 5.4.2)'))
             ->renderHelp(); ?>
@@ -155,7 +155,7 @@
 
         <?php echo render_field($form->rules
           ->help(__('"Purpose: To identify the national or international conventions or rules applied in creating the archival authority record. Rule: Record the names and where useful the editions or publication dates of the conventions or rules applied. Specify separately which rules have been applied for creating the Authorized form of name. Include reference to any system(s) of dating used to identify dates in this authority record (e.g. ISO 8601)." (ISAAR 5.4.3)'))
-          ->label(__('Rules and/or conventions used')), $resource, array('class' => 'resizable')) ?>
+          ->label(__('Rules and/or conventions used')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo $form->descriptionStatus
           ->help(__('The purpose of this field is "[t]o indicate the drafting status of the authority record so that users can understand the current status of the authority record." (ISAAR 5.4.4). Select Final, Revised or Draft from the drop-down menu.'))
@@ -169,7 +169,7 @@
 
         <?php echo render_field($form->revisionHistory
           ->help(__('"Record the date the authority record was created and the dates of any revisions to the record." (ISAAR 5.4.6)'))
-          ->label(__('Dates of creation, revision and deletion')), $resource, array('class' => 'resizable')) ?>
+          ->label(__('Dates of creation, revision and deletion')), $resource, ['class' => 'resizable']) ?>
 
         <?php if (isset($resource->updatedAt)): ?>
           <div class="field">
@@ -183,18 +183,18 @@
         <?php echo $form->language
           ->help(__('Select the language(s) of the authority record from the drop-down menu; enter the first few letters to narrow the choices. (ISAAR 5.4.7)'))
           ->label('Language(s)')
-          ->renderRow(array('class' => 'form-autocomplete')) ?>
+          ->renderRow(['class' => 'form-autocomplete']) ?>
 
         <?php echo $form->script
           ->help(__('Select the script(s) of the authority record from the drop-down menu; enter the first few letters to narrow the choices. (ISAAR 5.4.7)'))
           ->label('Script(s)')
-          ->renderRow(array('class' => 'form-autocomplete')) ?>
+          ->renderRow(['class' => 'form-autocomplete']) ?>
 
         <?php echo render_field($form->sources
-          ->help(__('"Record the sources consulted in establishing the authority record." (ISAAR 5.4.8)')), $resource, array('class' => 'resizable')) ?>
+          ->help(__('"Record the sources consulted in establishing the authority record." (ISAAR 5.4.8)')), $resource, ['class' => 'resizable']) ?>
 
         <?php echo render_field($form->maintenanceNotes
-          ->help(__('"Record notes pertinent to the creation and maintenance of the authority record. The names of persons responsible for creating the authority record may be recorded here." (ISAAR 5.4.9)')), $isaar, array('class' => 'resizable')) ?>
+          ->help(__('"Record notes pertinent to the creation and maintenance of the authority record. The names of persons responsible for creating the authority record may be recorded here." (ISAAR 5.4.9)')), $isaar, ['class' => 'resizable']) ?>
 
       </fieldset>
 
@@ -203,11 +203,11 @@
     <section class="actions">
       <ul>
         <?php if (0 < strlen($next = $form->next->getValue())): ?>
-          <li><?php echo link_to(__('Cancel'), $next, array('title' => __('Cancel'), 'class' => 'c-btn')) ?>
+          <li><?php echo link_to(__('Cancel'), $next, ['title' => __('Cancel'), 'class' => 'c-btn']) ?>
         <?php elseif (isset($sf_request->id)): ?>
-          <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'actor'), array('title' => __('Cancel'), 'class' => 'c-btn')) ?></li>
+          <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'actor'], ['title' => __('Cancel'), 'class' => 'c-btn']) ?></li>
         <?php else: ?>
-          <li><?php echo link_to(__('Cancel'), array('module' => 'actor', 'action' => 'browse'), array('title' => __('Cancel'), 'class' => 'c-btn')) ?></li>
+          <li><?php echo link_to(__('Cancel'), ['module' => 'actor', 'action' => 'browse'], ['title' => __('Cancel'), 'class' => 'c-btn']) ?></li>
         <?php endif; ?>
         <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>

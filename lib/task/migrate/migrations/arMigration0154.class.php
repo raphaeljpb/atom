@@ -38,11 +38,11 @@ class arMigration0154
    */
   public function up($configuration)
   {
-    $identifierSettings = array(
-      array('identifier_mask', '%Y-%m-%d/#i'),
-      array('identifier_mask_enabled', 0),
-      array('identifier_counter', 0)
-    );
+    $identifierSettings = [
+      ['identifier_mask', '%Y-%m-%d/#i'],
+      ['identifier_mask_enabled', 0],
+      ['identifier_counter', 0]
+    ];
 
     foreach ($identifierSettings as $setting)
     {

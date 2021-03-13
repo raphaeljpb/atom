@@ -54,7 +54,7 @@
     <?php if (count($subjects = $resource->getSubjectAccessPoints()) > 0): ?>
       <?php foreach ($subjects as $item): ?>
         <localControl localType="subjectAccessPoint">
-          <term vocalularySource="<?php echo url_for(array($item->term, 'module' => 'term'), true) ?>"><?php echo esc_specialchars($item->term->getName(array('cultureFallback' => true))) ?></term>
+          <term vocalularySource="<?php echo url_for([$item->term, 'module' => 'term'], true) ?>"><?php echo esc_specialchars($item->term->getName(['cultureFallback' => true])) ?></term>
         </localControl>
       <?php endforeach; ?>
     <?php endif; ?>
@@ -90,7 +90,7 @@
         <authorizedForm>conventionDeclaration</authorizedForm>
       </nameEntry>
 
-      <?php foreach ($resource->getOtherNames(array('typeId' => QubitTerm::STANDARDIZED_FORM_OF_NAME_ID)) as $item): ?>
+      <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::STANDARDIZED_FORM_OF_NAME_ID]) as $item): ?>
         <nameEntry localType="standardized">
 
           <part><?php echo esc_specialchars($item->name) ?></part>
@@ -100,7 +100,7 @@
         </nameEntry>
       <?php endforeach; ?>
 
-      <?php foreach ($resource->getOtherNames(array('typeId' => QubitTerm::OTHER_FORM_OF_NAME_ID)) as $item): ?>
+      <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item): ?>
         <nameEntry>
 
           <part><?php echo esc_specialchars($item->name) ?></part>
@@ -110,7 +110,7 @@
         </nameEntry>
       <?php endforeach; ?>
 
-      <?php foreach ($resource->getOtherNames(array('typeId' => QubitTerm::PARALLEL_FORM_OF_NAME_ID)) as $item): ?>
+      <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item): ?>
         <nameEntryParallel>
           <?php foreach ($item->otherNameI18ns as $otherName): ?>
             <?php if (sfContext::getInstance()->getUser()->getCulture() == $otherName->culture): ?>
@@ -178,18 +178,18 @@
         <?php endif; ?>
 
         <?php if ($eac->biogHist): ?>
-          <biogHist id="<?php echo 'md5-' . md5(url_for(array($resource, 'module' => 'actor'), true)) ?>"><?php echo $eac->biogHist ?></biogHist>
+          <biogHist id="<?php echo 'md5-' . md5(url_for([$resource, 'module' => 'actor'], true)) ?>"><?php echo $eac->biogHist ?></biogHist>
         <?php endif; ?>
 
         <?php if (count($occupations = $resource->getOccupations()) > 0): ?>
           <occupations>
             <?php foreach ($occupations as $item): ?>
               <occupation>
-                <term><?php echo esc_specialchars($item->term->getName(array('cultureFallback' => true))) ?></term>
-                <?php $note = $item->getNotesByType(array('noteTypeId' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID))->offsetGet(0) ?>
+                <term><?php echo esc_specialchars($item->term->getName(['cultureFallback' => true])) ?></term>
+                <?php $note = $item->getNotesByType(['noteTypeId' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID])->offsetGet(0) ?>
                 <?php if (isset($note)): ?>
                   <descriptiveNote>
-                    <?php echo render_value($note->getContent(array('cultureFallback' => true))) ?>
+                    <?php echo render_value($note->getContent(['cultureFallback' => true])) ?>
                   </descriptiveNote>
                 <?php endif; ?>
               </occupation>
@@ -200,7 +200,7 @@
         <?php if (count($places = $resource->getPlaceAccessPoints()) > 0): ?>
           <?php foreach ($places as $item): ?>
             <place localType="placeAccessPoint">
-              <placeEntry vocabularySource="<?php echo url_for(array($item->term, 'module' => 'term'), true) ?>"><?php echo esc_specialchars($item->term->getName(array('cultureFallback' => true))) ?></placeEntry>
+              <placeEntry vocabularySource="<?php echo url_for([$item->term, 'module' => 'term'], true) ?>"><?php echo esc_specialchars($item->term->getName(['cultureFallback' => true])) ?></placeEntry>
             </place>
           <?php endforeach; ?>
         <?php endif; ?>
@@ -213,7 +213,7 @@
 
       <relations>
         <?php foreach ($resource->getActorRelations() as $item): ?>
-          <cpfRelation cpfRelationType="<?php echo sfEacPlugin::toCpfRelationType($item->type->id) ?>" xlink:href="<?php echo url_for(array($item->getOpposedObject($resource), 'module' => 'actor'), true) ?>" xlink:type="simple">
+          <cpfRelation cpfRelationType="<?php echo sfEacPlugin::toCpfRelationType($item->type->id) ?>" xlink:href="<?php echo url_for([$item->getOpposedObject($resource), 'module' => 'actor'], true) ?>" xlink:type="simple">
             <relationEntry><?php echo esc_specialchars(render_title($item->getOpposedObject($resource))) ?></relationEntry>
             <?php echo sfEacPlugin::renderDates($item) ?>
             <?php if (isset($item->description)): ?>
@@ -225,13 +225,13 @@
         <?php endforeach; ?>
 
         <?php foreach ($eac->subjectOf as $item): ?>
-          <resourceRelation resourceRelationType="subjectOf" xlink:href="<?php echo url_for(array($item->subject, 'module' => 'informationobject'), true) ?>" xlink:type="simple">
+          <resourceRelation resourceRelationType="subjectOf" xlink:href="<?php echo url_for([$item->subject, 'module' => 'informationobject'], true) ?>" xlink:type="simple">
             <relationEntry><?php echo esc_specialchars(render_title($item->subject)) ?></relationEntry>
           </resourceRelation>
         <?php endforeach; ?>
 
         <?php foreach ($eac->resourceRelation as $item): ?>
-          <resourceRelation <?php echo sfEacPlugin::toResourceRelationTypeAndXlinkRole($item->type) ?> xlink:href="<?php echo url_for(array($item->object, 'module' => 'informationobject'), true) ?>" xlink:type="simple">
+          <resourceRelation <?php echo sfEacPlugin::toResourceRelationTypeAndXlinkRole($item->type) ?> xlink:href="<?php echo url_for([$item->object, 'module' => 'informationobject'], true) ?>" xlink:type="simple">
             <relationEntry><?php echo esc_specialchars(render_title($item->object)) ?></relationEntry>
             <?php echo sfEacPlugin::renderDates($item) ?>
             <?php if (isset($item->date)): ?>
@@ -243,10 +243,10 @@
         <?php endforeach; ?>
 
         <?php foreach ($eac->functionRelation as $item): ?>
-          <functionRelation xlink:href="<?php echo url_for(array($item, 'module' => 'function'), true) ?>" xlink:type="simple">
+          <functionRelation xlink:href="<?php echo url_for([$item, 'module' => 'function'], true) ?>" xlink:type="simple">
             <relationEntry><?php echo esc_specialchars(render_title($item->subject)) ?></relationEntry>
             <?php echo sfEacPlugin::renderDates($item) ?>
-            <?php if (0 < count($date = $item->getNotesByType(array('noteTypeId' => QubitTerm::RELATION_NOTE_DATE_ID)))): ?>
+            <?php if (0 < count($date = $item->getNotesByType(['noteTypeId' => QubitTerm::RELATION_NOTE_DATE_ID]))): ?>
               <descriptiveNote>
                 <?php echo render_value($date[0]) ?>
               </descriptiveNote>

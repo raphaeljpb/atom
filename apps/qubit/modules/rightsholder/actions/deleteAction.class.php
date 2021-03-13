@@ -38,7 +38,7 @@ class RightsHolderDeleteAction extends sfAction
 
         $this->resource->delete();
 
-        $this->redirect(array('module' => 'rightsholder', 'action' => 'browse'));
+        $this->redirect(['module' => 'rightsholder', 'action' => 'browse']);
       }
     }
   }

@@ -56,7 +56,7 @@ class arMigration0149
       $setting->editable = 1;
       $setting->deleteable = 0;
       $setting->source_culture = 'en';
-      $setting->setValue('Search', array('culture' => 'en'));
+      $setting->setValue('Search', ['culture' => 'en']);
       $setting->save();
     }
 
@@ -68,7 +68,7 @@ class arMigration0149
       $setting->editable = 1;
       $setting->deleteable = 0;
       $setting->source_culture = 'en';
-      $setting->setValue('Search our collection', array('culture' => 'en'));
+      $setting->setValue('Search our collection', ['culture' => 'en']);
       $setting->save();
     }
 

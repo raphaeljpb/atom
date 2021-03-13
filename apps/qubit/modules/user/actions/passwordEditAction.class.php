@@ -20,9 +20,9 @@
 class UserPasswordEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'confirmPassword',
-      'password');
+      'password'];
 
   public function execute($request)
   {
@@ -38,7 +38,7 @@ class UserPasswordEditAction extends DefaultEditAction
 
         $this->resource->save();
 
-        $this->redirect(array($this->resource, 'module' => 'user'));
+        $this->redirect([$this->resource, 'module' => 'user']);
       }
     }
   }
@@ -48,8 +48,8 @@ class UserPasswordEditAction extends DefaultEditAction
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
     $this->form->getValidatorSchema()->setPreValidator(new sfValidatorSchemaCompare(
       'password', '==', 'confirmPassword',
-      array(),
-      array('invalid' => $this->context->i18n->__('Your password confirmation did not match your password.'))));
+      [],
+      ['invalid' => $this->context->i18n->__('Your password confirmation did not match your password.')]));
 
     $this->resource = new QubitUser();
     if (isset($this->getRoute()->resource))
@@ -78,13 +78,13 @@ class UserPasswordEditAction extends DefaultEditAction
         if (sfConfig::get('app_require_strong_passwords'))
         {
           $this->form->setValidator('password', new QubitValidatorPassword(
-            array(),
-            array('invalid' => $this->context->i18n->__('Your password is not strong enough.'),
-                  'min_length' => $this->context->i18n->__('Your password is not strong enough (too short).'))));
+            [],
+            ['invalid' => $this->context->i18n->__('Your password is not strong enough.'),
+                  'min_length' => $this->context->i18n->__('Your password is not strong enough (too short).')]));
         }
         else
         {
-          $this->form->setValidator('password', new sfValidatorString(array('required' => !isset($this->getRoute()->resource))));
+          $this->form->setValidator('password', new sfValidatorString(['required' => !isset($this->getRoute()->resource)]));
         }
 
         $this->form->setWidget('password', new sfWidgetFormInputPassword());

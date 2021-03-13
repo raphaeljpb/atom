@@ -13,13 +13,13 @@
 
 <?php slot('content') ?>
 
-  <?php echo $form->renderFormTag(url_for(array('module' => 'clipboard', 'action' => 'export')), array('id' => 'clipboard-export-form')) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'clipboard', 'action' => 'export']), ['id' => 'clipboard-export-form']) ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
     <section id="content">
 
-      <div id="export-options" data-export-toggle="tooltip" data-export-title="<?php echo __('Export') ?>" data-export-alert-message="<?php echo __('Error: You must have at least one %1%Level of description%2% selected or choose %1%Include all descendant levels of description%2% to proceed.', array('%1%' => '<strong>', '%2%' => '</strong>')) ?>">
+      <div id="export-options" data-export-toggle="tooltip" data-export-title="<?php echo __('Export') ?>" data-export-alert-message="<?php echo __('Error: You must have at least one %1%Level of description%2% selected or choose %1%Include all descendant levels of description%2% to proceed.', ['%1%' => '<strong>', '%2%' => '</strong>']) ?>">
         
         <fieldset class="collapsible">
 
@@ -76,7 +76,7 @@
     <section class="actions">
       <ul>
         <li><input class="c-btn c-btn-submit" type="submit" id="exportSubmit" value="<?php echo __('Export') ?>"/></li>
-        <li><?php echo link_to(__('Cancel'), !empty($sf_request->getReferer()) ? $sf_request->getReferer() : array('module' => 'clipboard', 'action' => 'view'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), !empty($sf_request->getReferer()) ? $sf_request->getReferer() : ['module' => 'clipboard', 'action' => 'view'], ['class' => 'c-btn']) ?></li>
       </ul>
     </section>
 

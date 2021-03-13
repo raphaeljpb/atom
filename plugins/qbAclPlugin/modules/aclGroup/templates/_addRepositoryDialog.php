@@ -2,13 +2,13 @@
 
 <!-- form for yui dialog -->
 <div id="myDialog">
-  <div class="hd"><?php echo __('Add %1%', array('%1%' => lcfirst(sfConfig::get('app_ui_label_repository')))) ?></div>
+  <div class="hd"><?php echo __('Add %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_repository'))]) ?></div>
   <div class="bd">
     <form name="repositoryAcl" method="post">
       <div class="form-item">
-        <label for="addRepository"><?php echo __('%1% name', array('%1%' => sfConfig::get('app_ui_label_repository'))) ?></label>
+        <label for="addRepository"><?php echo __('%1% name', ['%1%' => sfConfig::get('app_ui_label_repository')]) ?></label>
         <select name="addRepository" id="addRepository" class="form-autocomplete"></select>
-        <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'repository', 'action' => 'autocomplete')) ?>"/>
+        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'repository', 'action' => 'autocomplete']) ?>"/>
       </div>
     </form>
   </div>

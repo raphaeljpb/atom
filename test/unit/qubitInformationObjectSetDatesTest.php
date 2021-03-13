@@ -28,7 +28,7 @@ sfContext::createInstance($configuration);
 function testGetDefaultDateValue($normalizedDates)
 {
   $io = new QubitInformationObject();
-  $io->setDates('foobar', array('normalized_dates' => $normalizedDates));
+  $io->setDates('foobar', ['normalized_dates' => $normalizedDates]);
 
   $io->save();
 
@@ -36,7 +36,7 @@ function testGetDefaultDateValue($normalizedDates)
 
   $event = $io->eventsRelatedByobjectId[0];
 
-  return array($event->startDate, $event->endDate, $io->id);
+  return [$event->startDate, $event->endDate, $io->id];
 }
 
 list($start, $end, $io) = testGetDefaultDateValue('1984-12-31/2056');

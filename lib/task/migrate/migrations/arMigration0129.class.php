@@ -33,11 +33,11 @@ class arMigration0129
 
   public function up($configuration)
   {
-    $newRadNotes = array(
+    $newRadNotes = [
       'Signatures note',
       'Cast note',
       'Credits note'
-    );
+    ];
 
     // Create RAD note types if they don't already exist
     foreach($newRadNotes as $note)

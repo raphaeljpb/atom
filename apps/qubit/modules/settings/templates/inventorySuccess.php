@@ -16,7 +16,7 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array('module' => 'settings', 'action' => 'inventory'))) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'settings', 'action' => 'inventory'])) ?>
 
     <?php echo $form->renderHiddenFields() ?>
     
@@ -35,11 +35,11 @@
         <?php echo $form->levels
           ->label(__('Levels of description'))
           ->help(__('Select the levels of description to be included in the inventory list. If no levels are selected, the inventory list link will not be displayed. You can use the control (Mac ⌘) and/or shift keys to multi-select values from the Levels of description menu.'))
-          ->renderRow(array('class' => 'form-autocomplete')) ?>
+          ->renderRow(['class' => 'form-autocomplete']) ?>
 
         <br />
         <?php $taxonomy = QubitTaxonomy::getById(QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID) ?>
-        <?php echo link_to(__('Review the current terms in the Levels of description taxonomy.'), array($taxonomy, 'module' => 'taxonomy')) ?>
+        <?php echo link_to(__('Review the current terms in the Levels of description taxonomy.'), [$taxonomy, 'module' => 'taxonomy']) ?>
 
       </fieldset>
 

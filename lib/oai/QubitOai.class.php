@@ -31,7 +31,7 @@ class QubitOai
 {
   // Any custom OAI set implementations that are available (in addition to the
   // standard collection sets)
-  private static $additionalOaiSets = array();
+  private static $additionalOaiSets = [];
 
   /**
    * Check that all supplied keys are valid for the provided request
@@ -90,7 +90,7 @@ class QubitOai
    */
   public function hasNullParameter($parameters)
   {
-    $verb = array('verb');
+    $verb = ['verb'];
     $parametersKeys = array_diff(array_keys($parameters), $verb);
     foreach ($parametersKeys as $key)
     {
@@ -178,10 +178,10 @@ class QubitOai
    */
   public static function getMetadataFormats()
   {
-    $metadataFormats = array(
-      array('prefix' => 'oai_dc', 'namespace' => 'http://www.openarchives.org/OAI/2.0/oai_dc/', 'schema' => 'http://www.openarchives.org/OAI/2.0/oai_dc.xsd'),
-      array('prefix' => 'oai_ead', 'namespace' => 'urn:isbn:1-931666-22-9', 'schema' => 'http://www.loc.gov/ead/ead.xsd')
-    );
+    $metadataFormats = [
+      ['prefix' => 'oai_dc', 'namespace' => 'http://www.openarchives.org/OAI/2.0/oai_dc/', 'schema' => 'http://www.openarchives.org/OAI/2.0/oai_dc.xsd'],
+      ['prefix' => 'oai_ead', 'namespace' => 'urn:isbn:1-931666-22-9', 'schema' => 'http://www.loc.gov/ead/ead.xsd']
+    ];
 
     return $metadataFormats;
   }
@@ -191,14 +191,14 @@ class QubitOai
    *
    * @return array of available OAI sets
    */
-  public static function getOaiSets($options = array())
+  public static function getOaiSets($options = [])
   {
     $result = QubitInformationObject::getCollections($options);
     $collections = $result['data'];
     $collectionCount = $result['count'];
     $remaining = $result['remaining'];
 
-    $oaiSets = array();
+    $oaiSets = [];
 
     foreach ($collections as $collection)
     {
@@ -227,10 +227,10 @@ class QubitOai
       }
     }
 
-    return array(
+    return [
       'data' => $oaiSets,
       'remaining' => $remaining
-    );
+    ];
   }
 
   /**
@@ -282,7 +282,7 @@ class QubitOai
 
   public static function getOaiNamespaceIdentifier()
   {
-    $siteBaseUrl = QubitSetting::getByName('siteBaseUrl')->getValue(array('cultureFallback' => true));
+    $siteBaseUrl = QubitSetting::getByName('siteBaseUrl')->getValue(['cultureFallback' => true]);
     $oaiNamespaceIdentifier = QubitOai::parseUrlHost($siteBaseUrl);
 
     return $oaiNamespaceIdentifier;
@@ -394,7 +394,7 @@ class QubitOai
     $doc->loadXML($XMLString);
 
     $xsi = false;
-    $doc->namespaces = array();
+    $doc->namespaces = [];
     $doc->xpath = new DOMXPath($doc);
 
     // Pass along any XML errors that have been generated
@@ -432,7 +432,7 @@ class QubitOai
 
     if ($xsi)
     {
-      $doc->schemaLocations = array();
+      $doc->schemaLocations = [];
       $lst = $doc->xpath->query('//@$xsi:schemaLocation');
       foreach ($lst as $el)
       {

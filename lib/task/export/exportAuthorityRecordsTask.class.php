@@ -37,7 +37,7 @@ EOF;
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $this->checkPathIsWritable($arguments['path']);
 
@@ -46,7 +46,7 @@ EOF;
 
     // Prepare CSV exporter
     $writer = new csvActorExport($arguments['path']);
-    $writer->setOptions(array('relations' => true));
+    $writer->setOptions(['relations' => true]);
 
     // Export actors and, optionally, related data
     $itemsExported = 0;
@@ -79,6 +79,6 @@ EOF;
     $sql = "SELECT ai.id, ai.culture FROM actor_i18n ai INNER JOIN object o ON ai.id=o.id
             WHERE o.class_name='QubitActor' AND ai.id <> ?";
 
-    return QubitPdo::fetchAll($sql, array(QubitActor::ROOT_ID), array('fetchMode' => PDO::FETCH_ASSOC));
+    return QubitPdo::fetchAll($sql, [QubitActor::ROOT_ID], ['fetchMode' => PDO::FETCH_ASSOC]);
   }
 }

@@ -20,7 +20,7 @@
 
   <generator uri="<?php echo url_for('@homepage', true) ?>" version="<?php echo qubitConfiguration::VERSION ?>">Qubit <?php echo qubitConfiguration::VERSION ?></generator>
 
-  <content type="text/html" src="<?php echo url_for(array($informationObject, 'module' => 'informationobject'), true) ?>" />
+  <content type="text/html" src="<?php echo url_for([$informationObject, 'module' => 'informationobject'], true) ?>" />
 
   <sword:noOp>false</sword:noOp>
 

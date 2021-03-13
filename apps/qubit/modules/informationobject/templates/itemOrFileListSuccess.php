@@ -18,7 +18,7 @@
   <h1 class="label"><?php echo $reportTypeLabel.$this->i18n->__(' report') ?></h1><hr>
 
   <?php $row = 1; foreach ($results as $parent => $items): ?>
-    <h2 class="element-invisible"><?php echo $this->i18n->__('%1% hierarchy', array('%1%' => sfConfig::get('app_ui_label_informationobject'))) ?></h2>
+    <h2 class="element-invisible"><?php echo $this->i18n->__('%1% hierarchy', ['%1%' => sfConfig::get('app_ui_label_informationobject')]) ?></h2>
     <div class="resource-hierarchy">
       <ul>
       <?php foreach ($items[0]['resource']->getAncestors()->orderBy('lft') as $ancestor): ?>

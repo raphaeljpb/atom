@@ -173,7 +173,7 @@ class InformationObjectFindingAidComponent extends sfComponent
     // if the public finding aid setting is set to false
     $setting = QubitSetting::getByName('publicFindingAid');
     if ($this->resource->getPublicationStatus()->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID
-      || (isset($setting) && !$setting->getValue(array('sourceCulture' => true))))
+      || (isset($setting) && !$setting->getValue(['sourceCulture' => true])))
     {
       $this->showGenerate = true;
     }

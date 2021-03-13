@@ -18,7 +18,7 @@
   <h1 class="do-print"><?php echo $this->i18n->__('Box labels') ?></h1>
 
   <h1 class="label">
-    <?php echo $resource->getTitle(array('cultureFallback' => true)) ?>
+    <?php echo $resource->getTitle(['cultureFallback' => true]) ?>
   </h1>
 
   <table class="sticky-enabled">
@@ -62,7 +62,7 @@
   </table>
 
   <div id="result-count">
-    <?php echo $this->i18n->__('Showing %1% results', array('%1%' => count($results))) ?>
+    <?php echo $this->i18n->__('Showing %1% results', ['%1%' => count($results)]) ?>
   </div>
 </body>
 </html>

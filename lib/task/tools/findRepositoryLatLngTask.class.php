@@ -23,15 +23,15 @@ class findRepositoryLatLngTask extends sfBaseTask
 
   protected function configure()
   {
-    $this->addArguments(array(
-    ));
+    $this->addArguments([
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('overwrite', null, sfCommandOption::PARAMETER_NONE, 'Overwrite existing values'),
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'find-repository-latlng';
@@ -41,7 +41,7 @@ This task won't overwrite existing values unless you use "--overwrite".
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
     $conn = $databaseManager->getDatabase('propel')->getConnection();
@@ -57,9 +57,9 @@ EOF;
         }
       }
 
-      $address = array();
+      $address = [];
 
-      foreach (array('streetAddress', 'city', 'region', 'postalCode', 'countryCode') as $field)
+      foreach (['streetAddress', 'city', 'region', 'postalCode', 'countryCode'] as $field)
       {
         if (isset($item->$field) && !empty($item->$field))
         {
@@ -120,7 +120,7 @@ EOF;
 
       $this->logSection('latlng', sprintf('Latitude: %s. Longitude: %s.', $lat, $lng));
 
-      return array($lat, $lng);
+      return [$lat, $lng];
     }
   }
 

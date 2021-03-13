@@ -19,7 +19,7 @@
 
 class casUser extends myUser implements Zend_Acl_Role_Interface
 {
-  public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = [])
   {
     // initialize parent
     parent::initialize($dispatcher, $storage, $options);
@@ -98,7 +98,7 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
     // a string, we convert into an array to simplify the checking routine.
     if (!is_array($attributeToCheck))
     {
-      $attributeToCheck = array($attributeToCheck);
+      $attributeToCheck = [$attributeToCheck];
     }
 
     // Delete existing AclUserGroups for this user. This allows us to reset

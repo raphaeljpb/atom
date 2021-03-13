@@ -44,7 +44,7 @@ class InformationObjectIndexAction extends sfAction
       QubitAcl::forwardToSecureAction();
     }
 
-    $this->dispatcher->notify(new sfEvent($this, 'access_log.view', array('object' => $this->resource)));
+    $this->dispatcher->notify(new sfEvent($this, 'access_log.view', ['object' => $this->resource]));
 
     if (sfConfig::get('app_treeview_type__source', 'sidebar') == 'fullWidth')
     {
@@ -60,10 +60,10 @@ class InformationObjectIndexAction extends sfAction
       $this->getResponse()->addStyleSheet('/vendor/mediaelement/mediaelementplayer.min.css');
     }
 
-    $scopeAndContent = $this->resource->getScopeAndContent(array('cultureFallback' => true));
+    $scopeAndContent = $this->resource->getScopeAndContent(['cultureFallback' => true]);
     if (!empty($scopeAndContent))
     {
-      $this->getContext()->getConfiguration()->loadHelpers(array('Text', 'Qubit'));
+      $this->getContext()->getConfiguration()->loadHelpers(['Text', 'Qubit']);
       $this->response->addMeta('description', truncate_text(strip_markdown($scopeAndContent), 150));
     }
 
@@ -74,12 +74,12 @@ class InformationObjectIndexAction extends sfAction
     switch ($name)
     {
       case 'levelOfDescription':
-        $forbiddenValues = array();
+        $forbiddenValues = [];
         foreach ($this->resource->ancestors->orderBy('rgt') as $item)
         {
           if (isset($item->levelOfDescription))
           {
-            switch ($item->levelOfDescription->getName(array('sourceCulture' => true)))
+            switch ($item->levelOfDescription->getName(['sourceCulture' => true]))
             {
               case 'Item':
                 $forbiddenValues[] = 'Item';
@@ -131,9 +131,9 @@ class InformationObjectIndexAction extends sfAction
           }
         }
 
-        $validatorSchema->levelOfDescription = new QubitValidatorForbiddenValues(array(
+        $validatorSchema->levelOfDescription = new QubitValidatorForbiddenValues([
           'forbidden_values' => $forbiddenValues,
-          'required' => true));
+          'required' => true]);
 
         break;
     }

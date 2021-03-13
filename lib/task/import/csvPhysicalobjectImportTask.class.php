@@ -29,7 +29,7 @@ class csvPhysicalobjectImportTask extends arBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -68,12 +68,12 @@ class csvPhysicalobjectImportTask extends arBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('filename', sfCommandArgument::REQUIRED,
         'The input file name (csv format).')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null,
         sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'
       ),
@@ -143,7 +143,7 @@ class csvPhysicalobjectImportTask extends arBaseTask
         sfCommandOption::PARAMETER_NONE,
         'Update existing record if name matches imported name.'
       ),
-    ));
+    ]);
 
     $this->namespace = 'csv';
     $this->name = 'physicalobject-import';
@@ -164,7 +164,7 @@ EOF;
   {
     $this->validateOptions($options);
 
-    $opts = array();
+    $opts = [];
 
     $keymap = [
       'culture'           => 'defaultCulture',

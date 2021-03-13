@@ -4,7 +4,7 @@
 
   <div class="advanced-search animateNicely" <?php echo !$show ? 'style="display: none;"' : '' ?>>
 
-    <?php echo $form->renderFormTag(url_for(array('module' => 'informationobject', 'action' => 'browse')), array('name' => 'advanced-search-form', 'method' => 'get')) ?>
+    <?php echo $form->renderFormTag(url_for(['module' => 'informationobject', 'action' => 'browse']), ['name' => 'advanced-search-form', 'method' => 'get']) ?>
 
       <?php foreach ($hiddenFields as $name => $value): ?>
         <input type="hidden" name="<?php echo $name ?>" value="<?php echo $value ?>"/>
@@ -134,8 +134,8 @@
             <?php echo $form->collection
               ->label(__('Top-level description'))
               ->renderLabel() ?>
-            <?php echo $form->collection->render(array('class' => 'form-autocomplete')) ?>
-            <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'informationobject', 'action' => 'autocomplete', 'parent' => QubitInformationObject::ROOT_ID, 'filterDrafts' => true)) ?>"/>
+            <?php echo $form->collection->render(['class' => 'form-autocomplete']) ?>
+            <input class="list" type="hidden" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'autocomplete', 'parent' => QubitInformationObject::ROOT_ID, 'filterDrafts' => true]) ?>"/>
           </div>
         </div>
 
@@ -155,7 +155,7 @@
 
           <div class="filter-center">
             <?php echo $form->onlyMedia
-              ->label(__('%1% available', array('%1%' => sfConfig::get('app_ui_label_digitalobject'))))
+              ->label(__('%1% available', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]))
               ->renderRow() ?>
           </div>
 

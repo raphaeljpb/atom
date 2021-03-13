@@ -25,7 +25,7 @@
           <td>
             <div class="animateNicely">
               <input type="hidden" name="editDates[<?php echo $i ?>][id]" value="<?php echo $item->id ?>"/>
-              <?php echo $form->getWidgetSchema()->renderField('date', $item->getDate(array('cultureFallback' => true))) ?>
+              <?php echo $form->getWidgetSchema()->renderField('date', $item->getDate(['cultureFallback' => true])) ?>
             </div>
           </td><td>
             <div class="animateNicely">

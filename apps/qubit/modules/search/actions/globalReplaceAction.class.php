@@ -38,7 +38,7 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
       // Make sure we have confirmed the action
       elseif (!isset($request->confirm))
       {
-        $this->title = $this->context->i18n->__('Are you sure you want to replace "%1%" with "%2%" in %3%?', array('%1%' => $request->pattern, '%2%' => $request->replacement, '%3%' => sfInflector::humanize(sfInflector::underscore($request->column))));
+        $this->title = $this->context->i18n->__('Are you sure you want to replace "%1%" with "%2%" in %3%?', ['%1%' => $request->pattern, '%2%' => $request->replacement, '%3%' => sfInflector::humanize(sfInflector::underscore($request->column))]);
         return;
       }
 
@@ -56,10 +56,10 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
 
         if (isset($request->allowRegex))
         {
-          $pattern = '/' . strtr($request->pattern, array('/' => '\/')) . '/';
+          $pattern = '/' . strtr($request->pattern, ['/' => '\/']) . '/';
           if (!isset($request->caseSensitive)) $pattern .= 'i';
 
-          $replacement = strtr($request->replacement, array('/' => '\/'));
+          $replacement = strtr($request->replacement, ['/' => '\/']);
 
           $replaced = preg_replace($pattern, $replacement, $io->__get($request->column));
         }
@@ -80,7 +80,7 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
       QubitSearch::getInstance()->optimize();
 
       // When complete, redirect to GSR home
-      $this->redirect(array('module' => 'search', 'action' => 'globalReplace'));
+      $this->redirect(['module' => 'search', 'action' => 'globalReplace']);
     }
   }
 
@@ -100,7 +100,7 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
     $choices['identifier'] = $this->context->i18n->__('Identifier');
 
     $this->form->setValidator('column', new sfValidatorString());
-    $this->form->setWidget('column', new sfWidgetFormSelect(array('choices' => $choices), array('style' => 'width: auto')));
+    $this->form->setWidget('column', new sfWidgetFormSelect(['choices' => $choices], ['style' => 'width: auto']));
 
     // Search-replace values
     $this->form->setValidator('pattern', new sfValidatorString());
@@ -118,7 +118,7 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
     if ($this->request->isMethod('post') && !isset($this->request->confirm) && !empty($this->request->pattern) && !empty($this->request->replacement))
     {
       $this->form->setValidator('confirm', new sfValidatorBoolean());
-      $this->form->setWidget('confirm', new sfWidgetFormInputHidden(array(), array('value' => true)));
+      $this->form->setWidget('confirm', new sfWidgetFormInputHidden([], ['value' => true]));
     }
   }
 }

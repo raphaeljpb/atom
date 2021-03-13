@@ -27,7 +27,7 @@
  */
 class DefaultFullTreeViewAction extends sfAction
 {
-  protected $ancestorIds = array();
+  protected $ancestorIds = [];
 
   public function execute($request)
   {
@@ -51,7 +51,7 @@ class DefaultFullTreeViewAction extends sfAction
    *
    * @return array treeview data
    */
-  public function getChildren($informationObjectId, $options = array())
+  public function getChildren($informationObjectId, $options = [])
   {
     // Get child data
     $results = $this->findChildren($informationObjectId, $options);
@@ -67,7 +67,7 @@ class DefaultFullTreeViewAction extends sfAction
    *
    * @return array treeview data
    */
-  public function getAncestorsAndSiblings($options = array())
+  public function getAncestorsAndSiblings($options = [])
   {
     $this->ancestorIds = $this->getAncestorIds($this->resource->id);
     $this->collectionRootId = $this->getCollectionRootId();
@@ -219,7 +219,7 @@ class DefaultFullTreeViewAction extends sfAction
    *
    * @return \Elastica\ResultSet search result set
    */
-  protected function findChildren($id, $options = array())
+  protected function findChildren($id, $options = [])
   {
     $term = new \Elastica\Query\Term(['parentId' => $id]);
 
@@ -258,7 +258,7 @@ class DefaultFullTreeViewAction extends sfAction
    */
   protected function formatResultsData($results, $options)
   {
-    $data = array();
+    $data = [];
 
     foreach ($results as $result)
     {
@@ -273,7 +273,7 @@ class DefaultFullTreeViewAction extends sfAction
       $this->memorySort($data);
     }
 
-    return array('nodes' => $data, 'total' => $results->getTotalHits());
+    return ['nodes' => $data, 'total' => $results->getTotalHits()];
   }
 
   /**
@@ -289,15 +289,15 @@ class DefaultFullTreeViewAction extends sfAction
     // Get Elasticsearch search result data as an array
     $data = $result->getData();
 
-    $node = array();
+    $node = [];
     $node['id'] = $result->getId();
     $node['text'] = $this->getNodeText($data);
 
     // Set some special flags on our currently selected node
     if ($result->getId() == $this->resource->id)
     {
-      $node['state'] = array('opened' => true, 'selected' => true);
-      $node['li_attr'] = array('selected_on_load' => true);
+      $node['state'] = ['opened' => true, 'selected' => true];
+      $node['li_attr'] = ['selected_on_load' => true];
     }
 
     // Set root item's parent to hash symbol for jstree compatibility
@@ -590,7 +590,7 @@ class DefaultFullTreeViewAction extends sfAction
    */
   protected function memorySort(&$data)
   {
-    $titles = array();
+    $titles = [];
 
     foreach ($data as $key => $node)
     {

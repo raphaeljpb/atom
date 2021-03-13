@@ -26,21 +26,21 @@
  */
 class arCacheDescriptionXmlTask extends arBaseTask
 {
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
     $this->exportAll($options);
   }
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('skip', null, sfCommandOption::PARAMETER_OPTIONAL, 'Number of information objects to skip', 0),
       new sfCommandOption('limit', null, sfCommandOption::PARAMETER_OPTIONAL, 'Number of information objects to export', null),
       new sfCommandOption('format', null, sfCommandOption::PARAMETER_OPTIONAL, 'Format to export ("ead" or "dc")', null)
-    ));
+    ]);
 
     $this->namespace = 'cache';
     $this->name = 'xml-representations';
@@ -56,8 +56,8 @@ EOF;
     $logger = new sfCommandLogger(new sfEventDispatcher());
     $logger->log('Caching XML representations of information objects...');
 
-    $cache = new QubitInformationObjectXmlCache(array('logger' => $logger));
-    $cache->exportAll(array('skip' => $options['skip'], 'limit' => $options['limit'], 'format' => $options['format']));
+    $cache = new QubitInformationObjectXmlCache(['logger' => $logger]);
+    $cache->exportAll(['skip' => $options['skip'], 'limit' => $options['limit'], 'format' => $options['format']]);
 
     $logger->log('Done.');
   }

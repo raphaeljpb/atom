@@ -37,7 +37,7 @@ class SearchIndexAction extends DefaultBrowseAction
     // Realm filter
     if (isset($request->repos) && ctype_digit($request->repos))
     {
-      $this->search->queryBool->addMust(new \Elastica\Query\Term(array('repository.id' => $request->repos)));
+      $this->search->queryBool->addMust(new \Elastica\Query\Term(['repository.id' => $request->repos]));
 
       // Store realm in user session
       $this->context->user->setAttribute('search-realm', $request->repos);
@@ -45,7 +45,7 @@ class SearchIndexAction extends DefaultBrowseAction
 
     if (isset($request->collection) && ctype_digit($request->collection))
     {
-      $this->search->queryBool->addMust(new \Elastica\Query\Term(array('ancestors' => $request->collection)));
+      $this->search->queryBool->addMust(new \Elastica\Query\Term(['ancestors' => $request->collection]));
     }
 
     QubitAclSearch::filterDrafts($this->search->queryBool);
@@ -61,30 +61,30 @@ class SearchIndexAction extends DefaultBrowseAction
       return;
     }
 
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url', 'Escaping', 'Qubit'));
+    sfContext::getInstance()->getConfiguration()->loadHelpers(['Url', 'Escaping', 'Qubit']);
 
-    $response = array('results' => array());
+    $response = ['results' => []];
     foreach ($resultSet->getResults() as $item)
     {
       $data = $item->getData();
       $levelOfDescription = QubitTerm::getById($data['levelOfDescriptionId']);
 
-      $result = array(
-        'url' => url_for(array('module' => 'informationobject', 'slug' => $data['slug'])),
-        'title' => render_title(get_search_i18n($data, 'title', array('allowEmpty' => false))),
+      $result = [
+        'url' => url_for(['module' => 'informationobject', 'slug' => $data['slug']]),
+        'title' => render_title(get_search_i18n($data, 'title', ['allowEmpty' => false])),
         'identifier' => isset($data['identifier']) && !empty($data['identifier']) ? render_value_inline($data['identifier']).' - ' : '',
-        'level' => null !== $levelOfDescription ? render_value_inline($levelOfDescription) : '');
+        'level' => null !== $levelOfDescription ? render_value_inline($levelOfDescription) : ''];
 
       $response['results'][] = $result;
     }
 
     if (sfConfig::get('app_enable_institutional_scoping') && $this->context->user->hasAttribute('search-realm'))
     {
-      $url = url_for(array('module' => 'informationobject', 'action' => 'browse', 'collection' =>  $request->collection, 'repos' => $this->context->user->getAttribute('search-realm'), 'query' => $request->query, 'topLod' => '0'));
+      $url = url_for(['module' => 'informationobject', 'action' => 'browse', 'collection' =>  $request->collection, 'repos' => $this->context->user->getAttribute('search-realm'), 'query' => $request->query, 'topLod' => '0']);
     }
     else
     {
-      $url = url_for(array('module' => 'informationobject', 'action' => 'browse', 'collection' =>  $request->collection, 'query' => $request->query, 'topLod' => '0'));
+      $url = url_for(['module' => 'informationobject', 'action' => 'browse', 'collection' =>  $request->collection, 'query' => $request->query, 'topLod' => '0']);
     }
 
     $link = $this->context->i18n->__('Browse all descriptions');

@@ -21,12 +21,12 @@ class updatePublicationStatusTask extends arBaseTask
 {
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('publicationStatus', sfCommandArgument::REQUIRED, 'Desired publication status'),
       new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Resource slug')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
@@ -34,7 +34,7 @@ class updatePublicationStatusTask extends arBaseTask
       new sfCommandOption('ignore-descendants', 'i', sfCommandOption::PARAMETER_NONE, 'Don\'t update descendants', null),
       new sfCommandOption('no-confirm', 'y', sfCommandOption::PARAMETER_NONE, 'No confirmation message', null),
       new sfCommandOption('repo', 'r', sfCommandOption::PARAMETER_NONE, 'Update all description in given repository', null)
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'update-publication-status';
@@ -44,7 +44,7 @@ FIXME
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -82,10 +82,10 @@ EOF;
     // Final confirmation
     if (!$options['no-confirm'])
     {
-      if (!$this->askConfirmation(array(
+      if (!$this->askConfirmation([
         'Please, confirm that you want to change',
         'the publication status of "' . $resource->__toString() . '"',
-        'to "' . $publicationStatus . '" (y/N)'), 'QUESTION_LARGE', false))
+        'to "' . $publicationStatus . '" (y/N)'], 'QUESTION_LARGE', false))
         {
           $this->logSection('tools', 'Bye!');
 
@@ -149,7 +149,7 @@ EOF;
       WHERE t.taxonomy_id = ? AND ti.name = ?
     ';
 
-    $pubStatusId = QubitPdo::fetchColumn($sql, array(QubitTaxonomy::PUBLICATION_STATUS_ID, $pubStatus));
+    $pubStatusId = QubitPdo::fetchColumn($sql, [QubitTaxonomy::PUBLICATION_STATUS_ID, $pubStatus]);
     if (!$pubStatusId)
     {
       throw new sfException("Invalid publication status specified: $pubStatus");

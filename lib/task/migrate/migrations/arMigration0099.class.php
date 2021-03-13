@@ -38,9 +38,9 @@ class arMigration0099
    */
   public function up($configuration)
   {
-    foreach (array(
+    foreach ([
       'taxonomies' => 'taxonomy/browse',
-      'browseDigitalObjects' => 'digitalobject/browse') as $key => $value)
+      'browseDigitalObjects' => 'digitalobject/browse'] as $key => $value)
     {
       if (null !== $menu = QubitMenu::getByName($key))
       {

@@ -20,10 +20,10 @@
 class InformationObjectRenameAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'title',
       'slug',
-      'filename');
+      'filename'];
 
 
   // Allow modification of title, slug, and digital object filename
@@ -54,7 +54,7 @@ class InformationObjectRenameAction extends DefaultEditAction
 
         $this->getUser()->setFlash('notice', $message);
 
-        $this->redirect(array($this->resource, 'module' => 'informationobject'));
+        $this->redirect([$this->resource, 'module' => 'informationobject']);
       }
     }
   }
@@ -143,7 +143,7 @@ class InformationObjectRenameAction extends DefaultEditAction
       $digitalObject->save();
 
       // Regenerate derivatives
-      digitalObjectRegenDerivativesTask::regenerateDerivatives($digitalObject, array('keepTranscript' => true));
+      digitalObjectRegenDerivativesTask::regenerateDerivatives($digitalObject, ['keepTranscript' => true]);
     }
 
     $this->resource->save();

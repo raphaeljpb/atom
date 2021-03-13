@@ -20,13 +20,13 @@
 class sfIsdfPluginRelatedFunctionComponent extends RelationEditComponent
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'resource',
       'type',
       'description',
       'startDate',
       'endDate',
-      'date');
+      'date'];
 
   public function execute($request)
   {
@@ -42,14 +42,14 @@ class sfIsdfPluginRelatedFunctionComponent extends RelationEditComponent
       case 'type':
         $this->form->setValidator('type', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ISDF_RELATION_TYPE_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 

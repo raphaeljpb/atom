@@ -12,12 +12,12 @@
 
   <noscript>
     <div class="messages warning">
-      <?php echo __('Your browser does not support JavaScript. See %1%minimum requirements%2%.', array('%1%' => '<a href="https://www.accesstomemory.org/wiki/index.php?title=Minimum_requirements">', '%2%' => '</a>')) ?>
+      <?php echo __('Your browser does not support JavaScript. See %1%minimum requirements%2%.', ['%1%' => '<a href="https://www.accesstomemory.org/wiki/index.php?title=Minimum_requirements">', '%2%' => '</a>']) ?>
     </div>
 
     <section class="actions">
       <ul>
-        <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'informationobject'], ['class' => 'c-btn']) ?></li>
       </ul>
     </section>
   </noscript>
@@ -26,12 +26,12 @@
 
     <div id="upload_limit_reached">
       <div class="messages warning">
-        <?php echo __('The maximum disk space of %1% GB available for uploading digital objects has been reached. Please contact your system administrator to increase the available disk space.', array('%1%' => sfConfig::get('app_upload_limit'))) ?>
+        <?php echo __('The maximum disk space of %1% GB available for uploading digital objects has been reached. Please contact your system administrator to increase the available disk space.', ['%1%' => sfConfig::get('app_upload_limit')]) ?>
       </div>
 
       <section class="actions">
         <ul>
-          <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject')) ?></li>
+          <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'informationobject']) ?></li>
         </ul>
       </section>
     </div>
@@ -40,7 +40,7 @@
 
     <?php echo $form->renderGlobalErrors() ?>
 
-    <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'informationobject', 'action' => 'multiFileUpload')), array('id' => 'multiFileUploadForm', 'style' => 'inline')) ?>
+    <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'informationobject', 'action' => 'multiFileUpload']), ['id' => 'multiFileUploadForm', 'style' => 'inline']) ?>
 
       <?php echo $form->renderHiddenFields() ?>
 
@@ -83,7 +83,7 @@
 
       <section class="actions">
         <ul>
-          <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject'), array('class' => 'c-btn')) ?></li>
+          <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'informationobject'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Upload') ?>"/></li>
         </ul>
       </section>

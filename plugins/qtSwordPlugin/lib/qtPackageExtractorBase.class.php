@@ -19,10 +19,10 @@
 
 class qtPackageExtractorBase
 {
-  public function __construct(array $options = array())
+  public function __construct(array $options = [])
   {
     // Check arguments, maybe better as an array property
-    if (0 < count(array_diff(array('format', 'resource'), array_keys($options))))
+    if (0 < count(array_diff(['format', 'resource'], array_keys($options))))
     {
       throw new Exception('Missing arguments.');
     }
@@ -101,7 +101,7 @@ class qtPackageExtractorBase
 
         case 'application/zip':
           $directory = $this->filename.'_dir';
-          $command = vsprintf('unzip -n -d %s %s', array($directory, $this->filename));
+          $command = vsprintf('unzip -n -d %s %s', [$directory, $this->filename]);
           exec($command, $output, $return);
           if (2 > $return)
           {
@@ -204,7 +204,7 @@ class qtPackageExtractorBase
 
   protected function getFilesFromDirectory($dir)
   {
-    $files = array();
+    $files = [];
 
     if ($handle = opendir($dir))
     {

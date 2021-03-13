@@ -8,7 +8,7 @@ $sf_response->addJavaScript('dialog', 'last');
 use_helper('Javascript');
 
 // Template for new display table rows
-$editHtml = image_tag('pencil', array('alt' => __('Edit'), 'style' => 'align: top'));
+$editHtml = image_tag('pencil', ['alt' => __('Edit'), 'style' => 'align: top']);
 
 $rowTemplate = json_encode(<<<value
 <tr id="{{$form->getWidgetSchema()->generateName('id')}}">
@@ -85,13 +85,13 @@ content
     <?php echo $form->actor
       ->label(__('Actor name'))
       ->renderLabel() ?>
-    <?php echo $form->actor->render(array('class' => 'form-autocomplete')) ?>
+    <?php echo $form->actor->render(['class' => 'form-autocomplete']) ?>
 
     <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')): ?>
-      <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'actor', 'action' => 'add')) ?> #authorizedFormOfName"/>
+      <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'actor', 'action' => 'add']) ?> #authorizedFormOfName"/>
     <?php endif; ?>
 
-    <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'actor', 'action' => 'autocomplete')) ?>"/>
+    <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete']) ?>"/>
     <?php echo $form->actor->renderHelp() ?>
 
   </div>
@@ -103,13 +103,13 @@ content
   <div class="form-item form-item-place">
 
     <?php echo $form->place->renderLabel() ?>
-    <?php echo $form->place->render(array('class' => 'form-autocomplete')) ?>
+    <?php echo $form->place->render(['class' => 'form-autocomplete']) ?>
 
     <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')): ?>
-      <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'term', 'action' => 'add', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy')))) ?> #name"/>
+      <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?> #name"/>
     <?php endif; ?>
 
-    <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy')))) ?>"/>
+    <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?>"/>
     <?php echo $form->place->renderHelp() ?>
 
   </div>

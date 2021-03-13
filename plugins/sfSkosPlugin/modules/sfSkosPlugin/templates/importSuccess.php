@@ -24,9 +24,9 @@
   <?php endif; ?>
 
   <?php if (QubitTerm::ROOT_ID == $parent->id): ?>
-    <?php echo $form->renderFormTag(url_for(array($taxonomy, 'module' => 'sfSkosPlugin', 'action' => 'import'))) ?>
+    <?php echo $form->renderFormTag(url_for([$taxonomy, 'module' => 'sfSkosPlugin', 'action' => 'import'])) ?>
   <?php else: ?>
-    <?php echo $form->renderFormTag(url_for(array($parent, 'module' => 'sfSkosPlugin', 'action' => 'import'))) ?>
+    <?php echo $form->renderFormTag(url_for([$parent, 'module' => 'sfSkosPlugin', 'action' => 'import'])) ?>
   <?php endif; ?>
 
     <?php echo $form->renderHiddenFields() ?>
@@ -48,7 +48,7 @@
           <?php echo $form->taxonomy->renderLabel() ?>
           <?php echo $form->taxonomy->renderError() ?>
           <?php echo $form->taxonomy->render() ?> 
-          <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'taxonomy', 'action' => 'autocomplete')) ?>"/>
+          <input class="list" type="hidden" value="<?php echo url_for(['module' => 'taxonomy', 'action' => 'autocomplete']) ?>"/>
         <?php endif; ?>
 
       </fieldset>

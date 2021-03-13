@@ -44,9 +44,9 @@ class sfPluginAdminPluginConfiguration extends sfPluginConfiguration
       if (sfPluginAdminPluginConfiguration::$loadPlugins && 1 == count($query = QubitSetting::get($criteria)))
       {
         // http://accesstomemory.org/wiki/index.php?title=Autoload
-        $this->dispatcher->disconnect('autoload.filter_config', array($this->configuration, 'filterAutoloadConfig'));
+        $this->dispatcher->disconnect('autoload.filter_config', [$this->configuration, 'filterAutoloadConfig']);
 
-        $pluginNames = unserialize($query[0]->__get('value', array('sourceCulture' => true)));
+        $pluginNames = unserialize($query[0]->__get('value', ['sourceCulture' => true]));
 
         // if (isset($_GET['t']))
         // {
@@ -67,7 +67,7 @@ class sfPluginAdminPluginConfiguration extends sfPluginConfiguration
           {
             unset($pluginNames[$pos]);
 
-            $this->dispatcher->notify(new sfEvent($this, 'application.log', array(sprintf('The plugin "%s" does not exist.', $item))));
+            $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('The plugin "%s" does not exist.', $item)]));
           }
         }
 
@@ -99,7 +99,7 @@ class sfPluginAdminPluginConfiguration extends sfPluginConfiguration
           $this->configuration->pluginConfigurations[$name] = $configuration;
         }
 
-        $this->dispatcher->connect('autoload.filter_config', array($this->configuration, 'filterAutoloadConfig'));
+        $this->dispatcher->connect('autoload.filter_config', [$this->configuration, 'filterAutoloadConfig']);
       }
     }
     catch (PropelException $e)

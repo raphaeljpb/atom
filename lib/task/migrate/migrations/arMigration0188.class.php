@@ -35,12 +35,12 @@ class arMigration0188
   public function up($configuration)
   {
     // This maps existing names to the ones expected by QubitInformationObject
-    $propertyNamesMap = array(
+    $propertyNamesMap = [
       'name' => 'formatName',
       'version' => 'formatVersion',
       'registryName' => 'formatRegistryName',
       'registryKey' => 'formatRegistryKey'
-    );
+    ];
 
     // Criteria for getting all the QubitProperty objects with format metadata
     $propertyName = 'format';
@@ -55,7 +55,7 @@ class arMigration0188
     //   3. Delete the existing property
     foreach (QubitProperty::get($criteria) as $property)
     {
-      if (null !== $value = $property->getValue(array('sourceCulture' => true)))
+      if (null !== $value = $property->getValue(['sourceCulture' => true]))
       {
         $data = unserialize($value);
         if (is_array($data))
@@ -69,7 +69,7 @@ class arMigration0188
                 $objectId,
                 $newName,
                 $data[$oldName],
-                array('scope' => $propertyScope, 'indexOnSave' => false)
+                ['scope' => $propertyScope, 'indexOnSave' => false]
               );
             }
           }

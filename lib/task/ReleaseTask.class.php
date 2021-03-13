@@ -15,28 +15,28 @@ class ReleaseTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('version', sfCommandArgument::REQUIRED, 'FIXME'),
-      new sfCommandArgument('stability', sfCommandArgument::REQUIRED, 'FIXME')));
+      new sfCommandArgument('stability', sfCommandArgument::REQUIRED, 'FIXME')]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
-    ));
+    ]);
   }
 
   /**
    * @see sfBaseTask
    */
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     // Confirmation
     if (
       !$options['no-confirmation']
       &&
-      !$this->askConfirmation(array(
+      !$this->askConfirmation([
           'WARNING: Your changes in your local index and your working tree will',
           'be lost, including ignored files. Are you sure you want to proceed? (y/N)',
-        ), 'QUESTION_LARGE', false)
+        ], 'QUESTION_LARGE', false)
     )
     {
       $this->logSection('release', 'Task aborted.');
@@ -100,7 +100,7 @@ class ReleaseTask extends sfBaseTask
       $contentsNode->appendChild($dirNode);
     }
 
-    $patternNodes = array();
+    $patternNodes = [];
     foreach ($xpath->query('p:contents//p:file', $doc->documentElement) as $patternNode)
     {
       // Globs like //foo/... must be matched against paths with a leading

@@ -4,7 +4,7 @@
 
   <div class="advanced-search animateNicely" <?php echo !$show ? 'style="display: none;"' : '' ?>>
 
-    <?php echo $form->renderFormTag(url_for(array('module' => 'actor', 'action' => 'browse')), array('name' => 'advanced-search-form', 'method' => 'get')) ?>
+    <?php echo $form->renderFormTag(url_for(['module' => 'actor', 'action' => 'browse']), ['name' => 'advanced-search-form', 'method' => 'get']) ?>
 
       <?php foreach ($hiddenFields as $name => $value): ?>
         <input type="hidden" name="<?php echo $name ?>" value="<?php echo $value ?>"/>
@@ -108,13 +108,13 @@
 
           <div class="filter-left">
             <?php echo $form->hasDigitalObject
-              ->label(__('%1% available', array('%1%' => sfConfig::get('app_ui_label_digitalobject'))))
+              ->label(__('%1% available', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]))
               ->renderRow() ?>
           </div>
 
           <div class="filter-center">
             <?php echo $form->entityType
-              ->label(__('%1% available', array('%1%' => __('Entity type'))))
+              ->label(__('%1% available', ['%1%' => __('Entity type')]))
               ->renderRow() ?>
           </div>
 
@@ -141,10 +141,10 @@
 
           <div class="filter-right relation">
             <?php echo $form->relatedAuthority
-              ->label(__('Related %1%', array('%1%' => sfConfig::get('app_ui_label_actor'))))
+              ->label(__('Related %1%', ['%1%' => sfConfig::get('app_ui_label_actor')]))
               ->renderLabel() ?>
-            <?php echo $form->relatedAuthority->render(array('class' => 'form-autocomplete')) ?>
-            <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'actor', 'action' => 'autocomplete')) ?>"/>
+            <?php echo $form->relatedAuthority->render(['class' => 'form-autocomplete']) ?>
+            <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete']) ?>"/>
           </div>
 
         </div>

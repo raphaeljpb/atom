@@ -26,6 +26,6 @@ class InformationObjectAccessionsComponent extends sfComponent
       return sfView::NONE;
     }
 
-    $this->accessions = QubitRelation::getRelationsBySubjectId($this->resource->id, array('typeId' => QubitTerm::ACCESSION_ID));
+    $this->accessions = QubitRelation::getRelationsBySubjectId($this->resource->id, ['typeId' => QubitTerm::ACCESSION_ID]);
   }
 }

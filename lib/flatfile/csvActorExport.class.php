@@ -22,14 +22,14 @@
  */
 class csvActorExport extends QubitFlatfileExport
 {
-  protected $options = array();
+  protected $options = [];
 
   /*
    * Store export parameters for use.
    *
    * @return void
    */
-  public function setOptions($options = array())
+  public function setOptions($options = [])
   {
     $this->options = $options;
   }
@@ -75,7 +75,7 @@ class csvActorExport extends QubitFlatfileExport
 
   private function exportRelations($filename, $resource)
   {
-    $rows = array();
+    $rows = [];
 
     foreach ($resource->getActorRelations() as $relation)
     {
@@ -102,7 +102,7 @@ class csvActorExport extends QubitFlatfileExport
         $relationType = (empty($converseRelation)) ? $relationType : $converseRelation;
       }
 
-      $rows[] = array(
+      $rows[] = [
         'subjectAuthorizedFormOfName' => $relatedEntity->authorizedFormOfName,
         'relationType'                => (string)$relationType, // Return string representation for QubitTerm
         'objectAuthorizedFormOfName'  => $resource->authorizedFormOfName,
@@ -111,7 +111,7 @@ class csvActorExport extends QubitFlatfileExport
         'startDate'                   => $relation->startDate,
         'endDate'                     => $relation->endDate,
         'culture'                     => $resource->culture
-      );
+      ];
     }
 
     $this->appendToCompanionCsv($filename, $rows);
@@ -158,15 +158,15 @@ class csvActorExport extends QubitFlatfileExport
   private function setOccupations()
   {
     $addNotes = false;
-    $actorOccupations = $actorOccupationNotes = array();
+    $actorOccupations = $actorOccupationNotes = [];
 
     foreach ($this->resource->getOccupations() as $occupation)
     {
       $actorOccupations[] = (string)$occupation->term;
 
-      $note = $occupation->getNotesByType(array(
+      $note = $occupation->getNotesByType([
         'noteTypeId' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID
-      ))->offsetGet(0);
+      ])->offsetGet(0);
 
       if (isset($note))
       {
@@ -197,8 +197,8 @@ class csvActorExport extends QubitFlatfileExport
 
     $accessPoints = $this->resource->getPlaceAccessPoints();
 
-    $data          = array();
-    $data['names'] = array();
+    $data          = [];
+    $data['names'] = [];
 
     foreach ($accessPoints as $accessPoint)
     {
@@ -221,8 +221,8 @@ class csvActorExport extends QubitFlatfileExport
 
     $accessPoints = $this->resource->getSubjectAccessPoints();
 
-    $data = array();
-    $data['names'] = array();
+    $data = [];
+    $data['names'] = [];
 
     foreach ($accessPoints as $accessPoint)
     {
@@ -242,9 +242,9 @@ class csvActorExport extends QubitFlatfileExport
    */
   private function getNames($typeId)
   {
-    $results = array();
+    $results = [];
 
-    foreach ($this->resource->getOtherNames(array('typeId' => $typeId)) as $name)
+    foreach ($this->resource->getOtherNames(['typeId' => $typeId]) as $name)
     {
       $results[] = $name->getName();
     }

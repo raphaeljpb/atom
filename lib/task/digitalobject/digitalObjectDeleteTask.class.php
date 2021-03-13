@@ -24,17 +24,17 @@ class digitalObjectDeleteTask extends arBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $nDeleted = 0;
-    $objectIds = array();
+    $objectIds = [];
 
-    $this->validMediaTypes = array(
+    $this->validMediaTypes = [
       'audio' => QubitTerm::AUDIO_ID,
       'image' => QubitTerm::IMAGE_ID,
       'text'  => QubitTerm::TEXT_ID,
       'video' => QubitTerm::VIDEO_ID
-    );
+    ];
 
     parent::execute($arguments, $options);
 
@@ -68,7 +68,7 @@ class digitalObjectDeleteTask extends arBaseTask
       throw new sfException('Invalid slug "'.$arguments['slug'].'" entered.');
     }
 
-    if (!in_array($row['class_name'], array('QubitInformationObject', 'QubitRepository')))
+    if (!in_array($row['class_name'], ['QubitInformationObject', 'QubitRepository']))
     {
       throw new sfException('Invalid slug with object type "'.$row['class_name'].'" entered.');
     }
@@ -87,15 +87,15 @@ class digitalObjectDeleteTask extends arBaseTask
     switch ($row['class_name'])
     {
       case 'QubitInformationObject':
-        $objectIds = $options['and-descendants'] ? $this->getIoDescendantIds($informationObject->lft, $informationObject->rgt) : array($informationObject->id);
+        $objectIds = $options['and-descendants'] ? $this->getIoDescendantIds($informationObject->lft, $informationObject->rgt) : [$informationObject->id];
 
         break;
 
       case 'QubitRepository':
         // Get all linked top level information object recs.
         $sql = "SELECT id, lft, rgt FROM " . QubitInformationObject::TABLE_NAME . " WHERE repository_id=:repository_id";
-        $params = array(':repository_id' => $repository->id);
-        $relatedInformationObjects = QubitPdo::fetchAll($sql, $params, array('fetchMode' => PDO::FETCH_ASSOC));
+        $params = [':repository_id' => $repository->id];
+        $relatedInformationObjects = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
         foreach ($relatedInformationObjects as $io)
         {
@@ -116,7 +116,7 @@ class digitalObjectDeleteTask extends arBaseTask
           $success ? ++$nDeleted : $nDeleted,
           count($objectIds),
           $success ? "deleting digital object for" : "nothing to delete",
-          $object->getTitle(array('cultureFallback' => true)))
+          $object->getTitle(['cultureFallback' => true]))
         );
       }
       Qubit::clearClassCaches();
@@ -129,18 +129,18 @@ class digitalObjectDeleteTask extends arBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Slug.')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('and-descendants', null, sfCommandOption::PARAMETER_NONE, 'Remove digital objects for descendant archival descriptions as well'),
       new sfCommandOption('media-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'Limit digital object deletion to a specific media type (e.g. "audio" or "image" or "text" or "video). "Other" is not supported', null),
       new sfCommandOption('dry-run', 'd', sfCommandOption::PARAMETER_NONE, 'Dry run (no database changes)', null),
-    ));
+    ]);
 
     $this->namespace = 'digitalobject';
     $this->name = 'delete';
@@ -160,12 +160,12 @@ EOF;
               AND io.rgt <= :rgt
               ORDER BY io.lft ASC";
 
-    $params = array(':lft' => $lft, ':rgt' => $rgt);
+    $params = [':lft' => $lft, ':rgt' => $rgt];
 
-    return QubitPDO::fetchAll($sql, $params, array('fetchMode' => PDO::FETCH_COLUMN));
+    return QubitPDO::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_COLUMN]);
   }
 
-  private function deleteDigitalObject($object, $options = array())
+  private function deleteDigitalObject($object, $options = [])
   {
     foreach ($object->digitalObjectsRelatedByobjectId as $do)
     {

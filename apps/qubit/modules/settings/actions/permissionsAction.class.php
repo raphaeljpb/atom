@@ -36,10 +36,10 @@ class SettingsPermissionsAction extends sfAction
     $this->permissionsCopyrightStatementForm = new SettingsPermissionsCopyrightStatementForm();
     $this->permissionsPreservationSystemAccessStatementForm = new SettingsPermissionsPreservationSystemAccessStatementForm();
 
-    $this->basis = array();
+    $this->basis = [];
     foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
     {
-      $this->basis[$item->slug] = $item->getName(array('cultureFallback' => true));
+      $this->basis[$item->slug] = $item->getName(['cultureFallback' => true]);
     }
 
     $this->copyrightStatementSetting = QubitSetting::getByName('digitalobject_copyright_statement');
@@ -91,11 +91,11 @@ class SettingsPermissionsAction extends sfAction
 
       // PREMIS access permissions
       $premisAccessRight = QubitSetting::getByName('premisAccessRight');
-      $premisAccessRight->setValue($this->permissionsForm->getValue('granted_right'), array('sourceCulture' => true));
+      $premisAccessRight->setValue($this->permissionsForm->getValue('granted_right'), ['sourceCulture' => true]);
       $premisAccessRight->save();
 
       $premisAccessRightValues = QubitSetting::getByName('premisAccessRightValues');
-      $premisAccessRightValues->setValue(serialize($this->permissionsForm->getValue('permissions')), array('sourceCulture' => true));
+      $premisAccessRightValues->setValue(serialize($this->permissionsForm->getValue('permissions')), ['sourceCulture' => true]);
       $premisAccessRightValues->save();
 
       // PREMIS access statements
@@ -133,7 +133,7 @@ class SettingsPermissionsAction extends sfAction
         $setting->name = 'digitalobject_copyright_statement_enabled';
         $setting->sourceCulture = sfConfig::get('sf_default_culture');
       }
-      $setting->setValue($this->permissionsCopyrightStatementForm->getValue('copyrightStatementEnabled'), array('sourceCulture' => true));
+      $setting->setValue($this->permissionsCopyrightStatementForm->getValue('copyrightStatementEnabled'), ['sourceCulture' => true]);
       $setting->save();
 
       $statement = $this->permissionsCopyrightStatementForm->getValue('copyrightStatement');
@@ -163,7 +163,7 @@ class SettingsPermissionsAction extends sfAction
         $this->permissionsPreservationSystemAccessStatementForm->getValue(
           'preservationSystemAccessStatementEnabled'
         ),
-        array('sourceCulture' => true)
+        ['sourceCulture' => true]
       );
       $setting->save();
 

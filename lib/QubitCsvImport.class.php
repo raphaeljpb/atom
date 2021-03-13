@@ -123,7 +123,7 @@ class QubitCsvImport
           break;
 
         default:
-          throw new sfException($this->i18n->__('Unknown update type specified: %1', array('%1' => $updateType)));
+          throw new sfException($this->i18n->__('Unknown update type specified: %1', ['%1' => $updateType]));
           break;
       }
     }
@@ -206,7 +206,7 @@ class QubitCsvImport
     // ensure we can find the uploaded source csv file.
     if (!file_exists($csvFile))
     {
-      throw new sfException($this->i18n->__('Transform failed. Unable to locate file: %1', array('%1' => $csvFile)));
+      throw new sfException($this->i18n->__('Transform failed. Unable to locate file: %1', ['%1' => $csvFile]));
     }
 
     // build output filename and path. Take source dir and name and create a
@@ -230,17 +230,17 @@ class QubitCsvImport
       if (!file_exists($logFileName))
       {
         // Can't find output file.
-        throw new sfException($this->i18n->__('Transform failed: %1; Outputfile not found: %2', array('%1' => $exitCode, '%2' => $logFileName)));
+        throw new sfException($this->i18n->__('Transform failed: %1; Outputfile not found: %2', ['%1' => $exitCode, '%2' => $logFileName]));
       }
       // Log file contains details about the errors.
       $outputLines = file($logFileName, FILE_SKIP_EMPTY_LINES);
 
-      throw new sfException($this->i18n->__('Transform failed: %1; %2', array('%1' => $exitCode, '%2' => htmlspecialchars(implode('; ', $outputLines)))));
+      throw new sfException($this->i18n->__('Transform failed: %1; %2', ['%1' => $exitCode, '%2' => htmlspecialchars(implode('; ', $outputLines))]));
     }
 
     if (!file_exists($outputFileName))
     {
-      throw new sfException($this->i18n->__('Transform failed: Unable to find transformed file: %1', array('%1' => $outputFileName)));
+      throw new sfException($this->i18n->__('Transform failed: Unable to find transformed file: %1', ['%1' => $outputFileName]));
     }
 
     return $outputFileName;

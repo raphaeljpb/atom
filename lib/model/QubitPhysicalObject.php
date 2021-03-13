@@ -32,7 +32,7 @@ class QubitPhysicalObject extends BasePhysicalObject
     $string = $this->name;
     if (!isset($string))
     {
-      $string = $this->getName(array('sourceCulture' => true));
+      $string = $this->getName(['sourceCulture' => true]);
     }
 
     return (string) $string;
@@ -42,7 +42,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   {
     if (!isset($this->slug))
     {
-      $this->slug = QubitSlug::slugify($this->__get('name', array('sourceCulture' => true)));
+      $this->slug = QubitSlug::slugify($this->__get('name', ['sourceCulture' => true]));
     }
 
     return parent::insert($connection);
@@ -61,7 +61,7 @@ class QubitPhysicalObject extends BasePhysicalObject
 
     if (0 == strlen($location = $this->getLocation()))
     {
-      $location = $this->getLocation(array('sourceCulture' => true));
+      $location = $this->getLocation(['sourceCulture' => true]);
     }
 
     if (0 < strlen($location))
@@ -91,7 +91,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   public function deleteInformationObjectRelations()
   {
     $informationObjectRelations = QubitRelation::getRelationsBySubjectId($this->id,
-    array('typeId'=>QubitTerm::HAS_PHYSICAL_OBJECT_ID));
+    ['typeId'=>QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
 
     foreach ($informationObjectRelations as $relation)
     {
@@ -105,7 +105,7 @@ class QubitPhysicalObject extends BasePhysicalObject
    * @param array $options list of options to pass to QubitQuery
    * @return QubitQuery collection of Information Objects
    */
-  public function getInformationObjects($options = array())
+  public function getInformationObjects($options = [])
   {
     $criteria = new Criteria();
     $criteria->addJoin(QubitPhysicalObject::ID, QubitRelation::SUBJECT_ID);
@@ -151,7 +151,7 @@ class QubitPhysicalObject extends BasePhysicalObject
    *
    * @return QubitQuery A collection of matching physicalobject objects
    */
-  public static function getByName($name, $options = array())
+  public static function getByName($name, $options = [])
   {
     $criteria = new Criteria();
 
@@ -195,7 +195,7 @@ class QubitPhysicalObject extends BasePhysicalObject
     // Get collection lft and rgt values from the database as they are not
     // always being updated in the class cache in multi-level imports
     $sql = 'SELECT lft, rgt FROM information_object WHERE id = :id;';
-    $collection = QubitPdo::fetchOne($sql, array(':id' => $collectionId));
+    $collection = QubitPdo::fetchOne($sql, [':id' => $collectionId]);
     if (!isset($collection))
     {
       return;
@@ -209,12 +209,12 @@ class QubitPhysicalObject extends BasePhysicalObject
         WHERE rel.subject_id = :id AND rel.type_id = :typeId
         AND io.lft >= :lft AND io.lft <= :rgt;';
 
-      $params = array(
+      $params = [
         ':id' => $physObj->id,
         ':typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID,
         ':lft' => $collection->lft,
         ':rgt' => $collection->rgt
-      );
+      ];
 
       if (QubitPdo::fetchOne($sql, $params))
       {
@@ -319,10 +319,10 @@ SQL;
       $sql .= ' AND type_id = :typeId';
     }
 
-    $results = QubitPdo::prepareAndExecute($sql, array(
+    $results = QubitPdo::prepareAndExecute($sql, [
       ':id' => $this->id,
       ':typeId' => $typeId,
-    ));
+    ]);
 
     return $results->fetchAll(PDO::FETCH_ASSOC);
   }

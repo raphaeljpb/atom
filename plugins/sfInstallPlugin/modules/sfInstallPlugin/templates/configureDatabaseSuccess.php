@@ -16,7 +16,7 @@
 
 <?php slot('before-content') ?>
   <?php echo $form->renderGlobalErrors() ?>
-  <?php echo $form->renderFormTag(url_for(array('module' => 'sfInstallPlugin', 'action' => 'configureDatabase'))) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'sfInstallPlugin', 'action' => 'configureDatabase'])) ?>
   <?php echo $form->renderHiddenFields() ?>
 <?php end_slot() ?>
 

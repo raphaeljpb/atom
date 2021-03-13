@@ -30,13 +30,13 @@ class QubitAcl
   public const INHERIT = 1;
   public const DENY  = 0;
 
-  public static $ACTIONS = array(
+  public static $ACTIONS = [
     'read' => 'Read',
     'create' => 'Create',
     'update' => 'Update',
     'delete' => 'Delete',
     'translate' => 'Translate'
-  );
+  ];
 
   public $acl;
 
@@ -45,8 +45,8 @@ class QubitAcl
   // Always authorize against parent resource when creating a new resource
   protected static $_parentAuthActions = ['create'];
 
-  protected $_roles = array();
-  protected $_resources = array();
+  protected $_roles = [];
+  protected $_resources = [];
   protected $_user;
 
   public function __construct($user = null)
@@ -95,7 +95,7 @@ class QubitAcl
    * @param integer $actions requested action key
    * @param array   $options optional parameters
    */
-  public static function check($resource, $actions, $options = array())
+  public static function check($resource, $actions, $options = [])
   {
     if ($resource instanceof sfOutputEscaper)
     {
@@ -112,7 +112,7 @@ class QubitAcl
 
     if (!is_array($actions))
     {
-      $actions = array($actions);
+      $actions = [$actions];
     }
 
     // Get the current user from sfContext, if a user is not explicitly set
@@ -165,7 +165,7 @@ class QubitAcl
    *
    * @return bool true if the access request is authorized
    */
-  public static function isAllowed($role, $resource, $action, $options = array())
+  public static function isAllowed($role, $resource, $action, $options = [])
   {
     if (!isset(class_implements($role)['Zend_Acl_Role_Interface']))
     {
@@ -221,7 +221,7 @@ class QubitAcl
       // If no repository specified, then apply rule to all repositories
       if (null === ($repository = $permission->getRepository()))
       {
-        $repositoryAccess[] = array('id' => '*', 'access' => $access);
+        $repositoryAccess[] = ['id' => '*', 'access' => $access];
         break;
       }
 
@@ -240,7 +240,7 @@ class QubitAcl
 
         if (!$preExistingRule)
         {
-          $repositoryAccess[] = array('id' => $repository->id, 'access' => $access);
+          $repositoryAccess[] = ['id' => $repository->id, 'access' => $access];
         }
       }
     }
@@ -255,10 +255,10 @@ class QubitAcl
    * @param $options array optional parameters
    * @return array
    */
-  public static function getRepositoryAccess($action, $options = array())
+  public static function getRepositoryAccess($action, $options = [])
   {
-    $repositoryAccess = array();
-    $userGroupIds = array();
+    $repositoryAccess = [];
+    $userGroupIds = [];
 
     // If user is logged in
     if (sfContext::getInstance()->user->isAuthenticated())
@@ -320,14 +320,14 @@ class QubitAcl
     // Default is to deny access if no permissions specified
     if (0 == count($repositoryAccess) || '*' != $repositoryAccess[count($repositoryAccess) - 1]['id'])
     {
-      $repositoryAccess[] = array('id' => '*', 'access' => self::DENY);
+      $repositoryAccess[] = ['id' => '*', 'access' => self::DENY];
     }
 
     // Collapse access rules so that e.g.
     // ('1' => deny, '2' => allow, '*' => deny) -> ('2' => allow, '*' => deny)
     // ('1' => deny, '2' => allow, '*' => allow) -> (1' => deny, '*' => allow)
     $globalPermission = $repositoryAccess[count($repositoryAccess) - 1]['access'];
-    $collapsedRules = array();
+    $collapsedRules = [];
     foreach ($repositoryAccess as $i => $val)
     {
       if ('*' == $val['id'] || $globalPermission != $val['access'])
@@ -409,7 +409,7 @@ class QubitAcl
     }
     else
     {
-      $userGroupIds = array(QubitAclGroup::ANONYMOUS_ID);
+      $userGroupIds = [QubitAclGroup::ANONYMOUS_ID];
     }
 
     // Find relevant rules
@@ -491,7 +491,7 @@ class QubitAcl
     }
 
     // Build access control list
-    $allows = $bans = $ids = array();
+    $allows = $bans = $ids = [];
     $forceBan = false;
 
     if (0 < count($permissions))
@@ -501,7 +501,7 @@ class QubitAcl
         switch ($action)
         {
           case 'createTerm':
-            if (null !== $slug = $permission->getConstants(array('name' => 'taxonomy')))
+            if (null !== $slug = $permission->getConstants(['name' => 'taxonomy']))
             {
               $criteria2 = new Criteria();
               $criteria2->add(QubitSlug::SLUG, $slug);
@@ -530,9 +530,9 @@ class QubitAcl
             break;
 
           case 'viewDraft':
-            if (null !== $repository = $permission->getConstants(array('name' => 'repository')))
+            if (null !== $repository = $permission->getConstants(['name' => 'repository']))
             {
-              $repoId = QubitPdo::fetchColumn('SELECT object_id FROM slug WHERE slug=?', array($repository));
+              $repoId = QubitPdo::fetchColumn('SELECT object_id FROM slug WHERE slug=?', [$repository]);
               $sql = 'SELECT id FROM information_object WHERE repository_id=?';
 
               // Stay within the query limit
@@ -541,7 +541,7 @@ class QubitAcl
                 $sql .= ' LIMIT ' . $criteria->getLimit();
               }
 
-              $rows = QubitPdo::fetchAll($sql, array($repoId));
+              $rows = QubitPdo::fetchAll($sql, [$repoId]);
               foreach ($rows as $row)
               {
                 $ids[] = $row->id;
@@ -560,7 +560,7 @@ class QubitAcl
         }
       }
 
-      $resourceCache = array(); // Hydrating tons of ORM objects via getById() is very slow, cache results
+      $resourceCache = []; // Hydrating tons of ORM objects via getById() is very slow, cache results
 
       foreach ($ids as $id)
       {
@@ -569,7 +569,7 @@ class QubitAcl
           continue;
         }
 
-        $resource = call_user_func(array($rootClass, 'getById'), $id);
+        $resource = call_user_func([$rootClass, 'getById'], $id);
         $resourceCache[$id] = $resource;
 
         if (self::isAllowed($user, $resource, $action))
@@ -670,7 +670,7 @@ class QubitAcl
       return $this;
     }
 
-    $parents = array(); // Immediate parents of user role
+    $parents = []; // Immediate parents of user role
 
     if ($user->isAuthenticated())
     {
@@ -708,7 +708,7 @@ class QubitAcl
     return $this;
   }
 
-  protected function buildResourceList($resource, $options = array())
+  protected function buildResourceList($resource, $options = [])
   {
     $resourceId = (is_object($resource)) ? $resource->id : $resource;
 
@@ -739,7 +739,7 @@ class QubitAcl
     return $this;
   }
 
-  protected function buildAcl($resource, $options = array())
+  protected function buildAcl($resource, $options = [])
   {
     $resources = $this->_resources;
 
@@ -755,7 +755,7 @@ class QubitAcl
 
     // Only add permissions for resources that have not already been added
     $newResources = array_diff($this->_resources, $resources);
-    if (array() === $newResources)
+    if ([] === $newResources)
     {
       return $this;
     }
@@ -802,21 +802,21 @@ class QubitAcl
 
         // Test assertion for translate, update and any permission with a conditional
         if (
-          null != $permission->conditional || in_array($permission->action, array('update', 'translate')))
+          null != $permission->conditional || in_array($permission->action, ['update', 'translate']))
         {
-          call_user_func_array(array($this->acl, $aclMethod), array(
+          call_user_func_array([$this->acl, $aclMethod], [
             $roleId,
             $permission->objectId,
             $permission->action,
             new QubitAclConditionalAssert($permission)
-          ));
+          ]);
         }
         else
         {
-          call_user_func_array(array($this->acl, $aclMethod), array(
+          call_user_func_array([$this->acl, $aclMethod], [
             $roleId,
             $permission->objectId,
-            $permission->action)
+            $permission->action]
           );
         }
       }
@@ -904,7 +904,7 @@ class QubitAcl
       }
       else
       {
-        $resource = call_user_func(array($rootClass, 'getById'), $resourceId);
+        $resource = call_user_func([$rootClass, 'getById'], $resourceId);
       }
 
       // If object has no children include it by id and carry on

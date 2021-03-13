@@ -30,14 +30,14 @@
 class SettingsSiteInformationAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'siteTitle',
       'siteDescription',
-      'siteBaseUrl');
-  public static $I18N = array(
+      'siteBaseUrl'];
+  public static $I18N = [
       'siteTitle',
       'siteDescription',
-      'siteBaseUrl');
+      'siteBaseUrl'];
 
   public function earlyExecute()
   {
@@ -57,21 +57,21 @@ class SettingsSiteInformationAction extends SettingsEditAction
     {
       case 'siteTitle':
         $this->form->setWidget($name, new sfWidgetFormInput());
-        $this->form->setValidator($name, new sfValidatorString(array('required' => false)));
+        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
         $this->form->getWidgetSchema()->$name->setLabel($this->i18n->__('Site title'));
 
         break;
 
       case 'siteDescription':
         $this->form->setWidget($name, new sfWidgetFormInput());
-        $this->form->setValidator($name, new sfValidatorString(array('required' => false)));
+        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
         $this->form->getWidgetSchema()->$name->setLabel($this->i18n->__('Site description'));
 
         break;
 
       case 'siteBaseUrl':
         $this->form->setWidget($name, new sfWidgetFormInput());
-        $this->form->setValidator($name, new sfValidatorString(array('required' => false)));
+        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
         $this->form->getWidgetSchema()->$name->setLabel(
           $this->i18n->__('Site base URL (used in MODS and EAD exports)'));
 

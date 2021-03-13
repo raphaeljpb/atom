@@ -28,7 +28,7 @@
       </tr>
     </thead><tbody>
       <?php foreach ($resource->getActorRelations() as $item): ?>
-        <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for(array($item, 'module' => 'relation')) ?>">
+        <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for([$item, 'module' => 'relation']) ?>">
           <td>
             <?php if ($resource->id == $item->objectId): ?>
               <?php echo render_title($item->subject) ?>
@@ -45,7 +45,7 @@
             <?php if ($item->type->parentId != QubitTerm::ROOT_ID): ?>
               <?php if ($resource->id != $item->objectId): ?>
                 <?php echo render_title($item->type).' '.render_title($resource) ?>
-              <?php elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($item->type->id, array('typeId' => QubitTerm::CONVERSE_TERM_ID)))): ?>
+              <?php elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($item->type->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]))): ?>
                 <?php echo render_title($converseTerms[0]->getOpposedObject($item->type)).' '.render_title($resource) ?>
               <?php endif; ?>
             <?php endif; ?>
@@ -54,7 +54,7 @@
           </td><td>
             <?php echo render_value_inline($item->description) ?>
           </td><td style="text-align: center">
-            <input class="multiDelete" name="deleteRelations[]" type="checkbox" value="<?php echo url_for(array($item, 'module' => 'relation')) ?>"/>
+            <input class="multiDelete" name="deleteRelations[]" type="checkbox" value="<?php echo url_for([$item, 'module' => 'relation']) ?>"/>
           </td>
         </tr>
       <?php endforeach; ?>
@@ -64,7 +64,7 @@
 <?php
 
 // Template for new display table rows
-$editHtml = image_tag('pencil', array('alt' => __('Edit'), 'style' => 'align: top'));
+$editHtml = image_tag('pencil', ['alt' => __('Edit'), 'style' => 'align: top']);
 
 $rowTemplate = json_encode(<<<value
 <tr id="{{$form->getWidgetSchema()->generateName('id')}}">
@@ -150,8 +150,8 @@ content
         <?php echo $form->resource
           ->label(__('Authorized form of name'))
           ->renderLabel() ?>
-        <?php echo $form->resource->render(array('class' => 'form-autocomplete')) ?>
-        <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'actor', 'action' => 'autocomplete')) ?>"/>
+        <?php echo $form->resource->render(['class' => 'form-autocomplete']) ?>
+        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete']) ?>"/>
         <?php echo $form->resource
           ->help(__('"Record the authorized form of name and any relevant unique identifiers, including the authority record identifier, for the related entity." (ISAAR 5.3.1) Select the name from the drop-down menu; enter the first few letters to narrow the choices.'))
           ->renderHelp() ?>
@@ -166,8 +166,8 @@ content
         <?php echo $form->subType
           ->label(__('Relationship type'))
           ->renderLabel() ?>
-        <?php echo $form->subType->render(array('class' => 'form-autocomplete', 'disabled' => 'true')) ?>
-        <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::ACTOR_RELATION_TYPE_ID), 'module' => 'taxonomy')), 'addWords' => isset($resource->id) ? render_title($resource) : '')) ?>"/>
+        <?php echo $form->subType->render(['class' => 'form-autocomplete', 'disabled' => 'true']) ?>
+        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::ACTOR_RELATION_TYPE_ID), 'module' => 'taxonomy']), 'addWords' => isset($resource->id) ? render_title($resource) : '']) ?>"/>
         <?php echo $form->subType
           ->help(__('"Select a descriptive term from the drop-down menu to clarify the type of relationship between these two actors."'))
           ->renderHelp() ?>

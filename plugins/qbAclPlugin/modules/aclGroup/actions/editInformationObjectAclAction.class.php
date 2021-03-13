@@ -19,19 +19,19 @@
 
 class AclGroupEditInformationObjectAclAction extends AclGroupEditDefaultAclAction
 {
-  public static $NAMES = array(
+  public static $NAMES = [
     'informationObject',
     'repository'
-  );
+  ];
 
   public function execute($request)
   {
     parent::execute($request);
 
     // Build separate list of permissions by repository and by object
-    $this->repositories = array();
-    $this->informationObjects = array();
-    $this->root = array();
+    $this->repositories = [];
+    $this->informationObjects = [];
+    $this->root = [];
 
     if (null != $this->resource->id)
     {
@@ -51,7 +51,7 @@ class AclGroupEditInformationObjectAclAction extends AclGroupEditDefaultAclActio
       {
         foreach ($permissions as $p)
         {
-          if (null != ($repository = $p->getConstants(array('name' => 'repository'))))
+          if (null != ($repository = $p->getConstants(['name' => 'repository'])))
           {
             $this->repositories[$repository][$p->action] = $p;
           }
@@ -78,7 +78,7 @@ class AclGroupEditInformationObjectAclAction extends AclGroupEditDefaultAclActio
       if ($this->form->isValid())
       {
         $this->processForm();
-        $this->redirect(array($this->resource, 'module' => 'aclGroup', 'action' => 'indexInformationObjectAcl'));
+        $this->redirect([$this->resource, 'module' => 'aclGroup', 'action' => 'indexInformationObjectAcl']);
       }
     }
   }

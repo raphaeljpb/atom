@@ -26,7 +26,7 @@
 
 class QubitJob extends BaseJob
 {
-  private $notes = array();
+  private $notes = [];
 
   public function __toString()
   {
@@ -146,7 +146,7 @@ class QubitJob extends BaseJob
    */
   public function getObjectModule()
   {
-    $className = QubitPdo::fetchColumn('SELECT class_name FROM object WHERE id = ?', array($this->objectId));
+    $className = QubitPdo::fetchColumn('SELECT class_name FROM object WHERE id = ?', [$this->objectId]);
     if (!$className)
     {
       return null;
@@ -162,7 +162,7 @@ class QubitJob extends BaseJob
    */
   public function getObjectSlug()
   {
-    return QubitPdo::fetchColumn('SELECT slug FROM slug WHERE object_id = ?', array($this->objectId));
+    return QubitPdo::fetchColumn('SELECT slug FROM slug WHERE object_id = ?', [$this->objectId]);
   }
 
   /**
@@ -215,7 +215,7 @@ class QubitJob extends BaseJob
       $sql = 'SELECT COUNT(p.id) FROM property p
               JOIN property_i18n i18n ON p.id = i18n.id
               WHERE p.name = ? AND i18n.value = ?';
-      $count = QubitPdo::fetchColumn($sql, array('userToken', $tokenToCheck));
+      $count = QubitPdo::fetchColumn($sql, ['userToken', $tokenToCheck]);
 
       if ($count > 0)
       {
@@ -254,7 +254,7 @@ class QubitJob extends BaseJob
             JOIN property_i18n i18n ON p.id = i18n.id
             WHERE p.name = ? AND i18n.value = ?';
 
-    $jobId = QubitPdo::fetchColumn($sql, array('userToken', $token));
+    $jobId = QubitPdo::fetchColumn($sql, ['userToken', $token]);
 
     if (false !== $jobId)
     {
@@ -285,7 +285,7 @@ class QubitJob extends BaseJob
    *
    * @return  QubitJob  The job that was just created for the running job
    */
-  public static function runJob($jobName, $jobParams = array())
+  public static function runJob($jobName, $jobParams = [])
   {
     if (!self::checkWorkerAvailable(self::getJobPrefix() . $jobName))
     {

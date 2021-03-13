@@ -49,7 +49,7 @@
   <?php if ($job->getObjectModule() && $job->getObjectSlug()): ?>
     <div class="job-report-field">
       <div><?php echo __('Associated record') ?></div>
-      <div><?php echo link_to(__('Link'), array('module' => $job->getObjectModule(), 'slug' => $job->getObjectSlug())) ?></div>
+      <div><?php echo link_to(__('Link'), ['module' => $job->getObjectModule(), 'slug' => $job->getObjectSlug()]) ?></div>
     </div>
   <?php endif; ?>
 
@@ -77,7 +77,7 @@
   <section class="actions">
     <ul>
       <li>
-        <?php echo link_to(__('Return to jobs management page'), array('module' => 'jobs', 'action' => 'browse'), array('class' => 'c-btn')) ?>
+        <?php echo link_to(__('Return to jobs management page'), ['module' => 'jobs', 'action' => 'browse'], ['class' => 'c-btn']) ?>
       </li>
     </ul>
   </section>

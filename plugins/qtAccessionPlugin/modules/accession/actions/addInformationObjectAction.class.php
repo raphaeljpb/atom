@@ -42,7 +42,7 @@ class AccessionAddInformationObjectAction extends sfAction
     $informationObject->appraisal = $this->resource->appraisal;
 
     // Copy (not link) rights
-    foreach (QubitRelation::getRelationsBySubjectId($this->resource->id, array('typeId' => QubitTerm::RIGHT_ID)) as $item)
+    foreach (QubitRelation::getRelationsBySubjectId($this->resource->id, ['typeId' => QubitTerm::RIGHT_ID]) as $item)
     {
       $sourceRights = $item->object;
 
@@ -56,7 +56,7 @@ class AccessionAddInformationObjectAction extends sfAction
     }
 
     // Populate creators (from QubitRelation to QubitEvent)
-    foreach (QubitRelation::getRelationsByObjectId($this->resource->id, array('typeId' => QubitTerm::CREATION_ID)) as $item)
+    foreach (QubitRelation::getRelationsByObjectId($this->resource->id, ['typeId' => QubitTerm::CREATION_ID]) as $item)
     {
       $event = new QubitEvent();
       $event->actor = $item->subject;
@@ -89,6 +89,6 @@ class AccessionAddInformationObjectAction extends sfAction
 
     $informationObject->save();
 
-    $this->redirect(array($informationObject, 'module' => 'informationobject'));
+    $this->redirect([$informationObject, 'module' => 'informationobject']);
   }
 }

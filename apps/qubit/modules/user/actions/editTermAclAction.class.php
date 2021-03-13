@@ -19,8 +19,8 @@
 
 class UserEditTermAclAction extends DefaultEditAction
 {
-  public static $NAMES = array(
-      'taxonomy');
+  public static $NAMES = [
+      'taxonomy'];
 
   public function execute($request)
   {
@@ -36,7 +36,7 @@ class UserEditTermAclAction extends DefaultEditAction
 
         $this->resource->save();
 
-        $this->redirect(array($this->resource, 'module' => 'user', 'action' => 'indexTermAcl'));
+        $this->redirect([$this->resource, 'module' => 'user', 'action' => 'indexTermAcl']);
       }
     }
   }
@@ -54,7 +54,7 @@ class UserEditTermAclAction extends DefaultEditAction
       $this->forward404();
     }
 
-    $this->permissions = array();
+    $this->permissions = [];
     if (isset($this->resource->id))
     {
       // Get info object permissions for this group
@@ -81,17 +81,17 @@ class UserEditTermAclAction extends DefaultEditAction
     switch ($name)
     {
       case 'taxonomy':
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
 
         foreach (QubitTaxonomy::getEditableTaxonomies() as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'taxonomy'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'taxonomy'])] = $item;
         }
 
         $this->form->setDefault('taxonomy', null);
         $this->form->setValidator('taxonomy', new sfValidatorString());
-        $this->form->setWidget('taxonomy', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('taxonomy', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
     }

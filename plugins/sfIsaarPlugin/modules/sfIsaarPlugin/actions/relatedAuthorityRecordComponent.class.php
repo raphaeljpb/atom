@@ -20,14 +20,14 @@
 class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'resource',
       'type',
       'subType',
       'description',
       'startDate',
       'endDate',
-      'date');
+      'date'];
 
   public function processForm()
   {
@@ -55,25 +55,25 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
     switch ($name)
     {
       case 'type':
-        $this->form->setValidator('type', new sfValidatorString(array('required' => true)));
+        $this->form->setValidator('type', new sfValidatorString(['required' => true]));
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ACTOR_RELATION_TYPE_ID) as $item)
         {
           if ($item->parentId == QubitTerm::ROOT_ID)
           {
-            $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
           }
         }
 
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'subType':
         $this->form->setValidator('subType', new sfValidatorString());
-        $this->form->setWidget('subType', new sfWidgetFormSelect(array('choices' => array())));
+        $this->form->setWidget('subType', new sfWidgetFormSelect(['choices' => []]));
 
         break;
 
@@ -125,7 +125,7 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
           {
             $this->relation->type = $params['_sf_route']->resource;
           }
-          elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($params['_sf_route']->resource->id, array('typeId' => QubitTerm::CONVERSE_TERM_ID))))
+          elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($params['_sf_route']->resource->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID])))
           {
             $this->relation->type = $converseTerms[0]->getOpposedObject($params['_sf_route']->resource);
           }

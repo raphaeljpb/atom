@@ -43,7 +43,7 @@ class RepositoryEditAction extends DefaultEditAction
 
         $this->resource->save();
 
-        $this->redirect(array($this->resource, 'module' => 'repository'));
+        $this->redirect([$this->resource, 'module' => 'repository']);
       }
     }
 
@@ -103,22 +103,22 @@ class RepositoryEditAction extends DefaultEditAction
         $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::REPOSITORY_TYPE_ID);
 
-        $value = array();
+        $value = [];
         foreach ($this->relations = QubitObjectTermRelation::get($criteria) as $item)
         {
-          $value[] = $this->context->routing->generate(null, array($item->term, 'module' => 'term'));
+          $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
         }
 
         $this->form->setDefault('type', $value);
         $this->form->setValidator('type', new sfValidatorPass());
 
-        $choices = array();
+        $choices = [];
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::REPOSITORY_TYPE_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
         }
 
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
@@ -128,24 +128,24 @@ class RepositoryEditAction extends DefaultEditAction
         $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::THEMATIC_AREA_ID);
 
-        $value = array();
+        $value = [];
         foreach ($this->thematicAreaRelations = QubitObjectTermRelation::get($criteria) as $item)
         {
-          $value[] = $this->context->routing->generate(null, array($item->term, 'module' => 'term'));
+          $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
         }
 
         $this->form->setDefault('thematicArea', $value);
         $this->form->setValidator('thematicArea', new sfValidatorPass());
 
-        $choices = array();
+        $choices = [];
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::THEMATIC_AREA_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
         }
 
         $choice[] = asort($choices);
 
-        $this->form->setWidget('thematicArea', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+        $this->form->setWidget('thematicArea', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
@@ -155,30 +155,30 @@ class RepositoryEditAction extends DefaultEditAction
         $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID);
 
-        $value = array();
+        $value = [];
         foreach ($this->geographicSubregionRelations = QubitObjectTermRelation::get($criteria) as $item)
         {
-          $value[] = $this->context->routing->generate(null, array($item->term, 'module' => 'term'));
+          $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
         }
 
         $this->form->setDefault('geographicSubregion', $value);
         $this->form->setValidator('geographicSubregion', new sfValidatorPass());
 
-        $choices = array();
+        $choices = [];
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
         }
 
         $choice[] = asort($choices);
 
-        $this->form->setWidget('geographicSubregion', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
+        $this->form->setWidget('geographicSubregion', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
       case 'descDetail':
       case 'descStatus':
-        $this->form->setDefault($name, $this->context->routing->generate(null, array($this->resource[$name], 'module' => 'term')));
+        $this->form->setDefault($name, $this->context->routing->generate(null, [$this->resource[$name], 'module' => 'term']));
         $this->form->setValidator($name, new sfValidatorString());
 
         switch ($name)
@@ -194,14 +194,14 @@ class RepositoryEditAction extends DefaultEditAction
             break;
         }
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById($id) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
@@ -249,7 +249,7 @@ class RepositoryEditAction extends DefaultEditAction
     switch ($field->getName())
     {
       case 'type':
-        $value = $filtered = array();
+        $value = $filtered = [];
         foreach ($this->form->getValue('type') as $item)
         {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));
@@ -280,7 +280,7 @@ class RepositoryEditAction extends DefaultEditAction
         break;
 
       case 'geographicSubregion':
-        $value = $filtered = array();
+        $value = $filtered = [];
         foreach ($this->form->getValue('geographicSubregion') as $item)
         {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));
@@ -311,7 +311,7 @@ class RepositoryEditAction extends DefaultEditAction
         break;
 
       case 'thematicArea':
-        $value = $filtered = array();
+        $value = $filtered = [];
         foreach ($this->form->getValue('thematicArea') as $item)
         {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));

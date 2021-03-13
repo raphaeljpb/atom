@@ -27,7 +27,7 @@ class arElasticSearchAipPdo
 {
   public $i18ns;
 
-  protected $data = array();
+  protected $data = [];
 
   protected static $conn;
   protected static $lookups;
@@ -36,7 +36,7 @@ class arElasticSearchAipPdo
   /**
    * METHODS
    */
-  public function __construct($id, $options = array())
+  public function __construct($id, $options = [])
   {
     if (isset($options['conn']))
     {
@@ -71,7 +71,7 @@ class arElasticSearchAipPdo
 
   public function serialize()
   {
-    $serialized = array();
+    $serialized = [];
 
     $serialized['id'] = $this->id;
     $serialized['uuid'] = $this->uuid;
@@ -106,7 +106,7 @@ class arElasticSearchAipPdo
     }
 
     // Do select
-    self::$statements['aip']->execute(array(':id' => $id));
+    self::$statements['aip']->execute([':id' => $id]);
 
     // Get first result
     $this->data = self::$statements['aip']->fetch(PDO::FETCH_ASSOC);
@@ -137,14 +137,14 @@ class arElasticSearchAipPdo
                 AND relation.type_id = ?';
 
     self::$statements['do'] = self::$conn->prepare($sql);
-    self::$statements['do']->execute(array($this->id, QubitTerm::AIP_RELATION_ID));
+    self::$statements['do']->execute([$this->id, QubitTerm::AIP_RELATION_ID]);
 
-    $digitalObjects = array();
+    $digitalObjects = [];
     foreach (self::$statements['do']->fetchAll(PDO::FETCH_OBJ) as $item)
     {
       if (null !== $premisData = arElasticSearchPluginUtil::getPremisData($item->object_id, self::$conn))
       {
-        $digitalObjects[] = array('metsData' => $premisData);
+        $digitalObjects[] = ['metsData' => $premisData];
       }
     }
 

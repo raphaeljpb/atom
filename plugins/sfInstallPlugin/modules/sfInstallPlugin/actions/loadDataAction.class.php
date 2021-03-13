@@ -30,6 +30,6 @@ class sfInstallPluginLoadDataAction extends sfAction
     sfInstall::loadData();
     sfInstall::populateSearchIndex();
 
-    $this->redirect(array('module' => 'sfInstallPlugin', 'action' => 'configureSite'));
+    $this->redirect(['module' => 'sfInstallPlugin', 'action' => 'configureSite']);
   }
 }

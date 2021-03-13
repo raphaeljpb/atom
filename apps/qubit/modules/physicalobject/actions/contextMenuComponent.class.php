@@ -30,7 +30,7 @@ class PhysicalObjectContextMenuComponent extends sfComponent
   {
     $this->resource = $request->getAttribute('sf_route')->resource;
 
-    $this->physicalObjects = array();
+    $this->physicalObjects = [];
     foreach ($this->resource->getPhysicalObjects() as $item)
     {
       $this->physicalObjects[$item->id] = $item;

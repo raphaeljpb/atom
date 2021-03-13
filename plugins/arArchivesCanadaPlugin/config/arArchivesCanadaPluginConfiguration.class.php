@@ -31,17 +31,17 @@ class arArchivesCanadaPluginConfiguration extends sfPluginConfiguration
     if ($context->getConfiguration()->isDebug())
     {
       $context->response->addJavaScript('/vendor/less.js', 'last');
-      $context->response->addStylesheet('/plugins/arArchivesCanadaPlugin/css/main.less', 'last', array('rel' => 'stylesheet/less', 'type' => 'text/css', 'media' => 'all'));
+      $context->response->addStylesheet('/plugins/arArchivesCanadaPlugin/css/main.less', 'last', ['rel' => 'stylesheet/less', 'type' => 'text/css', 'media' => 'all']);
     }
     else
     {
-      $context->response->addStylesheet('/plugins/arArchivesCanadaPlugin/css/min.css', 'last', array('media' => 'all'));
+      $context->response->addStylesheet('/plugins/arArchivesCanadaPlugin/css/min.css', 'last', ['media' => 'all']);
     }
   }
 
   public function initialize()
   {
-    $this->dispatcher->connect('context.load_factories', array($this, 'contextLoadFactories'));
+    $this->dispatcher->connect('context.load_factories', [$this, 'contextLoadFactories']);
 
     $decoratorDirs = sfConfig::get('sf_decorator_dirs');
     $decoratorDirs[] = $this->rootDir.'/templates';

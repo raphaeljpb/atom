@@ -8,7 +8,7 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array('module' => 'physicalobject', 'action' => 'holdingsReportExport'))) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'physicalobject', 'action' => 'holdingsReportExport'])) ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -43,7 +43,7 @@
     <section class="actions">
       <ul>
         <li><input class="c-btn c-btn-submit" type="submit" id="exportSubmit" value="<?php echo __('Export') ?>"/></li>
-        <li><?php echo link_to(__('Cancel'), array('module' => 'physicalobject', 'action' => 'browse'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), ['module' => 'physicalobject', 'action' => 'browse'], ['class' => 'c-btn']) ?></li>
       </ul>
     </section>
 

@@ -405,7 +405,7 @@ class QubitTerm extends BaseTerm
     $string = $this->name;
     if (!isset($string))
     {
-      $string = $this->getName(array('sourceCulture' => true));
+      $string = $this->getName(['sourceCulture' => true]);
     }
 
     return (string) $string;
@@ -414,7 +414,7 @@ class QubitTerm extends BaseTerm
   public static function isProtected($id)
   {
     // The following terms cannot be edited by users because their values are used in application logic
-    return in_array($id, array(
+    return in_array($id, [
       QubitTerm::ACCESSION_ID,
       QubitTerm::ACCRUAL_ID,
       QubitTerm::ACCUMULATION_ID,
@@ -481,7 +481,7 @@ class QubitTerm extends BaseTerm
       QubitTerm::JOB_STATUS_ERROR_ID,
       QubitTerm::ACTOR_OCCUPATION_NOTE_ID,
       QubitTerm::ACCESSION_EVENT_PHYSICAL_TRANSFER_ID,
-      QubitTerm::ACCESSION_EVENT_NOTE_ID));
+      QubitTerm::ACCESSION_EVENT_NOTE_ID]);
   }
 
   public function save($connection = null)
@@ -560,11 +560,11 @@ class QubitTerm extends BaseTerm
 
   public function getRole()
   {
-    $notes = $this->getNotesByType($options = array('noteTypeId' => QubitTerm::DISPLAY_NOTE_ID));
+    $notes = $this->getNotesByType($options = ['noteTypeId' => QubitTerm::DISPLAY_NOTE_ID]);
 
     if (count($notes) > 0)
     {
-      return $notes[0]->getContent($options = array('cultureFallback' => true));
+      return $notes[0]->getContent($options = ['cultureFallback' => true]);
     }
     else
     {
@@ -572,107 +572,107 @@ class QubitTerm extends BaseTerm
     }
   }
 
-  public static function getCollectionTypes($options = array())
+  public static function getCollectionTypes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::COLLECTION_TYPE_ID, $options);
   }
 
-  public static function getLevelsOfDescription($options = array())
+  public static function getLevelsOfDescription($options = [])
   {
     return QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID, $options);
   }
 
-  public static function getNoteTypes($options = array())
+  public static function getNoteTypes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::NOTE_TYPE_ID, $options);
   }
 
   public function getSourceNotes()
   {
-    return $this->getNotesByType(array('noteTypeId' => QubitTerm::SOURCE_NOTE_ID));
+    return $this->getNotesByType(['noteTypeId' => QubitTerm::SOURCE_NOTE_ID]);
   }
 
-  public static function getSubjects($options = array())
+  public static function getSubjects($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::SUBJECT_ID, $options);
   }
 
-  public static function getPlaces($options = array())
+  public static function getPlaces($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::PLACE_ID, $options);
   }
 
-  public static function getActorEntityTypes($options = array())
+  public static function getActorEntityTypes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::ACTOR_ENTITY_TYPE_ID, $options);
   }
 
-  public static function getActorNameTypes($options = array())
+  public static function getActorNameTypes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::ACTOR_NAME_TYPE_ID, $options);
   }
 
-  public static function getDescriptionStatuses($options = array())
+  public static function getDescriptionStatuses($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::DESCRIPTION_STATUS_ID, $options);
   }
 
-  public static function getDescriptionDetailLevels($options = array())
+  public static function getDescriptionDetailLevels($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID, $options);
   }
 
-  public static function getRepositoryTypes($options = array())
+  public static function getRepositoryTypes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::REPOSITORY_TYPE_ID, $options);
   }
 
-  public static function getActorRoles($options = array())
+  public static function getActorRoles($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::ACTOR_ROLE_ID, $options);
   }
 
-  public static function getEventTypes($options = array())
+  public static function getEventTypes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::EVENT_TYPE_ID, $options);
   }
 
-  public static function getMediaTypes($options = array())
+  public static function getMediaTypes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::MEDIA_TYPE_ID, $options);
   }
 
-  public static function getUsageTypes($options = array())
+  public static function getUsageTypes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::DIGITAL_OBJECT_USAGE_ID, $options);
   }
 
-  public static function getMaterialTypes($options = array())
+  public static function getMaterialTypes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::MATERIAL_TYPE_ID, $options);
   }
 
-  public static function getRADNotes($options = array())
+  public static function getRADNotes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::RAD_NOTE_ID, $options);
   }
 
-  public static function getRADTitleNotes($options = array())
+  public static function getRADTitleNotes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::RAD_TITLE_NOTE_ID, $options);
   }
 
-  public static function getModsTitleTypes($options = array())
+  public static function getModsTitleTypes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::MODS_TITLE_TYPE_ID, $options);
   }
 
-  public static function getThematicAreas($options = array())
+  public static function getThematicAreas($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::THEMATIC_AREA_ID, $options);
   }
 
-  public static function getGeographicSubregions($options = array())
+  public static function getGeographicSubregions($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID, $options);
   }
@@ -683,7 +683,7 @@ class QubitTerm extends BaseTerm
    * @param array $options  option array to pass to Qubit Query object
    * @return QubitQuery array of Physical Object QubitTerm objects
    */
-  public static function getPhysicalObjectTypes($options = array())
+  public static function getPhysicalObjectTypes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID, $options);
   }
@@ -694,7 +694,7 @@ class QubitTerm extends BaseTerm
    * @param array $options  option array to pass to Qubit Query object
    * @return QubitQuery object
    */
-  public static function getRelationTypes($options = array())
+  public static function getRelationTypes($options = [])
   {
     return QubitTaxonomy::getTermsById(QubitTaxonomy::RELATION_TYPE_ID, $options);
   }
@@ -719,25 +719,25 @@ class QubitTerm extends BaseTerm
    *
    * @return mixed  false on failure, else array of children formatted for select box
    */
-  public static function getIndentedChildTree($parentTermId, $indentStr = '&nbsp;', $options = array())
+  public static function getIndentedChildTree($parentTermId, $indentStr = '&nbsp;', $options = [])
   {
     if (!$parentTerm = QubitTerm::getById($parentTermId))
     {
       return false;
     }
 
-    $tree = array();
+    $tree = [];
 
     $parentDepth = count($parentTerm->getAncestors());
 
     foreach ($parentTerm->getDescendants()->orderBy('lft') as $i => $node)
     {
       $relativeDepth = intval(count($node->getAncestors()) - $parentDepth - 1);
-      $indentedName = str_repeat($indentStr, $relativeDepth).$node->getName(array('cultureFallback' => 'true'));
+      $indentedName = str_repeat($indentStr, $relativeDepth).$node->getName(['cultureFallback' => 'true']);
 
       if (isset($options['returnObjectInstances']) && true == $options['returnObjectInstances'])
       {
-        $tree[sfContext::getInstance()->routing->generate(null, array($node, 'module' => 'term'))] = $indentedName;
+        $tree[sfContext::getInstance()->routing->generate(null, [$node, 'module' => 'term'])] = $indentedName;
       }
       else
       {
@@ -959,7 +959,7 @@ class QubitTerm extends BaseTerm
    * @param array $options optional paramters
    * @return array select box options
    */
-  public static function getOptionsForSelectList($taxonomyId, $options = array())
+  public static function getOptionsForSelectList($taxonomyId, $options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitTerm::TAXONOMY_ID, $taxonomyId);
@@ -968,7 +968,7 @@ class QubitTerm extends BaseTerm
     if (isset($options['exclude']))
     {
       // Turn string into a single entity array
-      $excludes = (is_array($options['exclude'])) ? $options['exclude'] : array($options['exclude']);
+      $excludes = (is_array($options['exclude'])) ? $options['exclude'] : [$options['exclude']];
 
       foreach ($excludes as $exclude)
       {
@@ -980,14 +980,14 @@ class QubitTerm extends BaseTerm
     $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitTerm', $options);
     $terms = QubitTerm::get($criteria);
 
-    $selectList = array();
+    $selectList = [];
     if (isset($options['include_blank']))
     {
       $selectList[null] = '';
     }
     foreach ($terms as $term)
     {
-      $displayValue = $term->getName(array('cultureFallback'=>true));
+      $displayValue = $term->getName(['cultureFallback'=>true]);
 
       // Display note content instead of term name - used mainly for displaying
       // event type actor vs. action (e.g. "creator" vs. "creation")
@@ -995,7 +995,7 @@ class QubitTerm extends BaseTerm
       {
         if (count($notes = $term->getNotesByType(QubitTerm::DISPLAY_NOTE_ID)))
         {
-          $displayValue = $notes[0]->getContent(array('cultureFallback'=>true));
+          $displayValue = $notes[0]->getContent(['cultureFallback'=>true]);
         }
       }
 
@@ -1011,7 +1011,7 @@ class QubitTerm extends BaseTerm
    * @param array $options optional paramters
    * @return QubitQuery collection of QubitTerm objects
    */
-  public function getChildren($options = array())
+  public function getChildren($options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitTerm::PARENT_ID, $this->id);
@@ -1032,7 +1032,7 @@ class QubitTerm extends BaseTerm
     return QubitTerm::get($criteria, $options);
   }
 
-  public function getTreeViewChildren(array $options = array())
+  public function getTreeViewChildren(array $options = [])
   {
     $numberOfPreviousOrNextSiblings = 4;
     if (isset($options['numberOfPreviousOrNextSiblings']))
@@ -1051,11 +1051,11 @@ class QubitTerm extends BaseTerm
     $first = QubitTerm::getOne($criteria);
 
     // Create array
-    $items = array();
+    $items = [];
     $items[] = $first;
 
     // Merge following siblings to the array
-    $items = array_merge($items, $first->getTreeViewSiblings(array('limit' => $numberOfPreviousOrNextSiblings + 2, 'position' => 'next')));
+    $items = array_merge($items, $first->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 2, 'position' => 'next']));
 
     $hasNextSiblings = count($items) > $numberOfPreviousOrNextSiblings;
     if ($hasNextSiblings)
@@ -1063,10 +1063,10 @@ class QubitTerm extends BaseTerm
       array_pop($items);
     }
 
-    return array($items, $hasNextSiblings);
+    return [$items, $hasNextSiblings];
   }
 
-  public function getTreeViewSiblings(array $options = array())
+  public function getTreeViewSiblings(array $options = [])
   {
     // The max number of items that will be shown
     // The final amount may be smaller if there are no result enough
@@ -1098,7 +1098,7 @@ class QubitTerm extends BaseTerm
                 THEN current.NAME
               ELSE
                 source.NAME
-              END), "") < '.Propel::getConnection()->quote($this->getName(array('cultureFallback' => true))), Criteria::CUSTOM);
+              END), "") < '.Propel::getConnection()->quote($this->getName(['cultureFallback' => true])), Criteria::CUSTOM);
 
         $criteria->addDescendingOrderByColumn('name');
         $criteria->addDescendingOrderByColumn('lft');
@@ -1115,7 +1115,7 @@ class QubitTerm extends BaseTerm
                 THEN current.NAME
               ELSE
                 source.NAME
-              END), "") > '.Propel::getConnection()->quote($this->getName(array('cultureFallback' => true))), Criteria::CUSTOM);
+              END), "") > '.Propel::getConnection()->quote($this->getName(['cultureFallback' => true])), Criteria::CUSTOM);
 
         $criteria->addAscendingOrderByColumn('name');
         $criteria->addAscendingOrderByColumn('lft');
@@ -1126,7 +1126,7 @@ class QubitTerm extends BaseTerm
     $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitTerm');
     $criteria->setLimit($limit);
 
-    $results = array();
+    $results = [];
     foreach (QubitTerm::get($criteria) as $item)
     {
       $results[] = $item;
@@ -1156,7 +1156,7 @@ class QubitTerm extends BaseTerm
    * Get an array of term id => parent id excluding the root
    * and optionally filtering by taxonomies.
    */
-  public static function loadTermParentList($taxonomyIds = array())
+  public static function loadTermParentList($taxonomyIds = [])
   {
     $sql  = 'SELECT term.id, term.parent_id';
     $sql .= ' FROM '.QubitTerm::TABLE_NAME.' term';
@@ -1169,8 +1169,8 @@ class QubitTerm extends BaseTerm
 
     return QubitPdo::fetchAll(
       $sql,
-      array(self::ROOT_ID),
-      array('fetchMode' => PDO::FETCH_KEY_PAIR)
+      [self::ROOT_ID],
+      ['fetchMode' => PDO::FETCH_KEY_PAIR]
     );
   }
 
@@ -1183,7 +1183,7 @@ class QubitTerm extends BaseTerm
   {
     // Get any converse relations to the term
     $converseTerms = QubitRelation::getBySubjectOrObjectId(
-      $this->id, array('typeId' => QubitTerm::CONVERSE_TERM_ID)
+      $this->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]
     );
 
     // If converse relations exist, return related term ID of first found
@@ -1197,7 +1197,7 @@ class QubitTerm extends BaseTerm
   {
     if (!isset($this->slug))
     {
-      $this->slug = QubitSlug::slugify($this->__get('name', array('sourceCulture' => true)));
+      $this->slug = QubitSlug::slugify($this->__get('name', ['sourceCulture' => true]));
     }
 
     return parent::insert($connection);

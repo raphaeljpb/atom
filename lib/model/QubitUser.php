@@ -116,7 +116,7 @@ class QubitUser extends BaseUser
     // Add all users to 'authenticated' group
     $authenticatedGroup = QubitAclGroup::getById(QubitAclGroup::AUTHENTICATED_ID);
 
-    $groups = array($authenticatedGroup);
+    $groups = [$authenticatedGroup];
     foreach ($this->getAclUserGroups() as $userGroup)
     {
       $groups[] = $userGroup->getGroup();
@@ -190,7 +190,7 @@ class QubitUser extends BaseUser
     // Cast $checkGroups as an array
     if (!is_array($checkGroups))
     {
-      $checkGroups = array($checkGroups);
+      $checkGroups = [$checkGroups];
     }
 
     // A user is always part of the authenticated group
@@ -252,7 +252,7 @@ class QubitUser extends BaseUser
   public function getRepositories()
   {
     // Get user's groups
-    $userGroups = array();
+    $userGroups = [];
     if (0 < count($aclUserGroups = $this->aclUserGroups))
     {
       foreach ($aclUserGroups as $aclUserGroup)
@@ -263,7 +263,7 @@ class QubitUser extends BaseUser
     else
     {
       // User is *always* part of authenticated group
-      $userGroups = array(QubitAclGroup::AUTHENTICATED_ID);
+      $userGroups = [QubitAclGroup::AUTHENTICATED_ID];
     }
 
     // Get access control permissions
@@ -296,12 +296,12 @@ class QubitUser extends BaseUser
     $criteria->addAscendingOrderByColumn(QubitAclPermission::GROUP_ID);
 
     // Build ACL
-    $repositories = array();
+    $repositories = [];
     if (0 < count($permissions = QubitAclPermission::get($criteria)))
     {
       foreach ($permissions as $item)
       {
-        if (null !== $constant = $item->getConstants(array('name' => 'repository')))
+        if (null !== $constant = $item->getConstants(['name' => 'repository']))
         {
           if (!isset($repositories[$constant]))
           {

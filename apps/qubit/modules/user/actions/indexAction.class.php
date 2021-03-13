@@ -28,7 +28,7 @@ class UserIndexAction extends sfAction
       $this->forward404();
     }
 
-    foreach (array('restApiKey', 'oaiApiKey') as $key)
+    foreach (['restApiKey', 'oaiApiKey'] as $key)
     {
       // Get API key value, if any
       $apiKeyProperty = QubitProperty::getOneByObjectIdAndName($this->resource->id, sfInflector::camelize($key));

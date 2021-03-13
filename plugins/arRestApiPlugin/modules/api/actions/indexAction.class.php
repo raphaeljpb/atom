@@ -23,6 +23,6 @@ class ApiIndexAction extends QubitApiAction
   {
     $config = sfContext::getInstance()->getConfiguration();
 
-    return array('version' => $config::VERSION);
+    return ['version' => $config::VERSION];
   }
 }

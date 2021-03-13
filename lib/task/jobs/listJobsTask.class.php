@@ -37,7 +37,7 @@ EOF;
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -87,12 +87,12 @@ EOF;
    */
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('completed', null, sfCommandOption::PARAMETER_NONE, 'List only completed jobs'),
       new sfCommandOption('running', null, sfCommandOption::PARAMETER_NONE, 'List only running jobs'),
-    ));
+    ]);
   }
 }

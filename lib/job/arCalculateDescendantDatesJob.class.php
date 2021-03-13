@@ -30,7 +30,7 @@ class arCalculateDescendantDatesJob extends arBaseJob
   /**
    * @see arBaseJob::$requiredParameters
    */
-  protected $extraRequiredParameters = array('objectId');
+  protected $extraRequiredParameters = ['objectId'];
 
   public function runJob($parameters)
   {
@@ -44,7 +44,7 @@ class arCalculateDescendantDatesJob extends arBaseJob
     $eventTargetId = (empty($parameters['eventId'])) ? $parameters['eventTypeId'] : $parameters['eventId'];
     $this->info($this->i18n->__(
       'Calculating dates for information object (ID: %1, %2: %3)',
-      array('%1' => $parameters['objectId'], '%2' => $eventTargetDescription, '%3' => $eventTargetId)
+      ['%1' => $parameters['objectId'], '%2' => $eventTargetDescription, '%3' => $eventTargetId]
     ));
 
     // Load information object
@@ -68,7 +68,7 @@ class arCalculateDescendantDatesJob extends arBaseJob
       // Describe original dates
       $this->info($this->i18n->__(
         'Original start date of event is %1 and end date is %2.',
-        array('%1' => $this->describeDate($event->startDate), '%2' => $this->describeDate($event->endDate))
+        ['%1' => $this->describeDate($event->startDate), '%2' => $this->describeDate($event->endDate)]
       ));
     }
 
@@ -90,13 +90,13 @@ class arCalculateDescendantDatesJob extends arBaseJob
         AND e.type_id=:eventType
         AND (e.start_date IS NOT NULL OR e.end_date IS NOT NULL)";
 
-    $params = array(
+    $params = [
       ':lft' => $io->lft,
       ':rgt' => $io->rgt,
       ':eventType' => $event->typeId
-    );
+    ];
 
-    $eventData = QubitPdo::fetchOne($sql, $params, array('fetchMode' => PDO::FETCH_ASSOC));
+    $eventData = QubitPdo::fetchOne($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
     // Update event with start and end dates if descendant events were found
     if ($eventData->found)
@@ -104,7 +104,7 @@ class arCalculateDescendantDatesJob extends arBaseJob
       // Describe new dates
       $this->info($this->i18n->__(
         'Setting start date of event to %1 and end date to %2.',
-        array('%1' => $this->describeDate($eventData->min), '%2' => $this->describeDate($eventData->max))
+        ['%1' => $this->describeDate($eventData->min), '%2' => $this->describeDate($eventData->max)]
       ));
 
       $event->startDate = $eventData->min;

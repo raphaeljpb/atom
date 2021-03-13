@@ -34,14 +34,14 @@ class QubitPager extends sfPropelPager
    */
   public function doCount(Criteria $criteria)
   {
-    call_user_func(array($this->class, 'addSelectColumns'), $criteria);
+    call_user_func([$this->class, 'addSelectColumns'], $criteria);
 
     return BasePeer::doCount($criteria)->fetchColumn(0);
   }
 
   public function doSelect(Criteria $criteria)
   {
-    return call_user_func(array($this->class, 'get'), $criteria);
+    return call_user_func([$this->class, 'get'], $criteria);
   }
 
   /**
@@ -93,7 +93,7 @@ class QubitPager extends sfPropelPager
 
     $class = $this->class;
 
-    $options = array();
+    $options = [];
     $options['connection'] = Propel::getConnection($class::DATABASE_NAME);
     $options['rows'] = true;
 

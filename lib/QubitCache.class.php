@@ -21,7 +21,7 @@ class QubitCache
 {
   protected static $instance = null;
 
-  public static function getInstance(array $options = array())
+  public static function getInstance(array $options = [])
   {
     if (!isset(self::$instance))
     {
@@ -30,7 +30,7 @@ class QubitCache
         $cacheClass = sfConfig::get('app_cache_engine_class', 'sfAPCCache');
       }
 
-      $options = array();
+      $options = [];
 
       if (null !== $setting = sfConfig::get('app_cache_engine_param_prefix'))
       {
@@ -46,13 +46,13 @@ class QubitCache
       {
         if (null !== $setting = sfConfig::get('app_cache_engine_param_servers'))
         {
-          $servers = array();
+          $servers = [];
           foreach ($setting as $item)
           {
-            $servers[] = array(
+            $servers[] = [
               'host' => $item[0]['host'],
               'port' => $item[1]['port']
-            );
+            ];
           }
 
           $options['servers'] = $servers;

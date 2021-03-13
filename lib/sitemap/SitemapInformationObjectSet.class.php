@@ -30,11 +30,11 @@ LEFT JOIN status SS ON (IO.id = SS.object_id)
 WHERE SS.status_id = ? AND IO.id != ?
 EOF;
 
-    $this->rec = $this->conn->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $this->rec = $this->conn->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $this->rec->setFetchMode(PDO::FETCH_INTO, new SitemapInformationObjectUrl($this->config));
-    $this->rec->execute(array(
+    $this->rec->execute([
       QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID,
-      QubitInformationObject::ROOT_ID));
+      QubitInformationObject::ROOT_ID]);
   }
 }
 
@@ -43,7 +43,7 @@ class SitemapInformationObjectUrl extends AbstractSitemapUrl
   /**
    * A map of (int)levelOfDescriptionId => (string)priority
    */
-  public static $priorities = array();
+  public static $priorities = [];
 
   public function __construct(&$config)
   {

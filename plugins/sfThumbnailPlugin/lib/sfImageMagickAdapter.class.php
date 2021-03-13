@@ -33,7 +33,7 @@ class sfImageMagickAdapter
   /**
    * Mime types this adapter supports
    */
-  protected $imgTypes = array(
+  protected $imgTypes = [
     'application/pdf',
     'application/postscript',
     'application/vnd.palm',
@@ -76,12 +76,12 @@ class sfImageMagickAdapter
     'video/mng',
     'video/mpeg',
     'video/mpeg2',
-  );
+  ];
 
   /**
    * Imagemagick-specific Type to Mime type map
    */
-  protected $mimeMap = array(
+  protected $mimeMap = [
     'bmp'   => 'image/bmp',
     'bmp2'  => 'image/bmp',
     'bmp3'  => 'image/bmp',
@@ -131,11 +131,11 @@ class sfImageMagickAdapter
     'png'   => 'image/png',
     'png24' => 'image/png',
     'png32' => 'image/png',
-  );
+  ];
 
   public function __construct($maxWidth, $maxHeight, $scale, $inflate, $quality, $options)
   {
-    $this->magickCommands = array();
+    $this->magickCommands = [];
     $this->magickCommands['convert'] = isset($options['convert']) ? escapeshellcmd($options['convert']) : 'convert';
     $this->magickCommands['identify'] = isset($options['identify']) ? escapeshellcmd($options['identify']) : 'identify';
 
@@ -449,7 +449,7 @@ class sfImageMagickAdapter
     return intval(@$stdout[0]);
   }
 
-  private function getExtract($image, array $options = array())
+  private function getExtract($image, array $options = [])
   {
     $extract = '';
     if (empty($this->options['extract']) && !is_int($this->options['extract']))

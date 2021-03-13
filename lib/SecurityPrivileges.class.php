@@ -24,16 +24,16 @@ class SecurityPrivileges
     switch (strtolower($object))
     {
       case 'informationobject':
-        return $user->hasCredential(array('administrator', 'editor', 'contributor', 'translator'), false);
+        return $user->hasCredential(['administrator', 'editor', 'contributor', 'translator'], false);
 
       case 'actor':
-        return $user->hasCredential(array('administrator', 'editor', 'contributor', 'translator'), false);
+        return $user->hasCredential(['administrator', 'editor', 'contributor', 'translator'], false);
 
       case 'repository':
-        return $user->hasCredential(array('administrator', 'editor', 'contributor', 'translator'), false);
+        return $user->hasCredential(['administrator', 'editor', 'contributor', 'translator'], false);
 
       case 'term':
-        return $user->hasCredential(array('administrator', 'editor', 'translator'), false);
+        return $user->hasCredential(['administrator', 'editor', 'translator'], false);
     }
 
     return false;

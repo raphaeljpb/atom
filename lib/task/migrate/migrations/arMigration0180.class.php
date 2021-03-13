@@ -46,7 +46,7 @@ class arMigration0180
       $setting->editable = 1;
       $setting->deleteable = 0;
       $setting->source_culture = 'en';
-      $setting->setValue('Authority record relationships', array('culture' => 'en'));
+      $setting->setValue('Authority record relationships', ['culture' => 'en']);
       $setting->save();
     }
 

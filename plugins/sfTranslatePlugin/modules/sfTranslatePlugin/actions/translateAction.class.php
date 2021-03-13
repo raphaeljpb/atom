@@ -30,13 +30,13 @@ class sfTranslatePluginTranslateAction extends sfAction
 
     $user = $this->context->user;
 
-    $error = array();
-    $status = array();
+    $error = [];
+    $status = [];
 
     $messageSource = $this->context->i18n->getMessageSource();
 
-    $sourceMessages = $request->getParameter('source', array());
-    $targetMessages = $request->getParameter('target', array());
+    $sourceMessages = $request->getParameter('source', []);
+    $targetMessages = $request->getParameter('target', []);
     foreach ($sourceMessages as $key => $sourceMessage)
     {
       if (!$messageSource->update($sourceMessage, $targetMessages[$key], null))

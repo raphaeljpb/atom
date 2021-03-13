@@ -23,7 +23,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
   protected static $statement;
   protected static $counter = 0;
 
-  protected $errors = array();
+  protected $errors = [];
 
   public function load()
   {
@@ -32,7 +32,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
     $sql .= ' FROM '.QubitInformationObject::TABLE_NAME;
     $sql .= ' WHERE id > ?';
 
-    $this->count = QubitPdo::fetchColumn($sql, array(QubitInformationObject::ROOT_ID));
+    $this->count = QubitPdo::fetchColumn($sql, [QubitInformationObject::ROOT_ID]);
   }
 
   public function populate()
@@ -40,28 +40,28 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
     $this->load();
 
     // Pass root data to top-levels to avoid ancestors query
-    $ancestors = array(array(
+    $ancestors = [[
       'id' => QubitInformationObject::ROOT_ID,
       'identifier' => null,
       'repository_id' => null
-    ));
+    ]];
 
     // Recursively descend down hierarchy
     $this->recursivelyAddInformationObjects(
       QubitInformationObject::ROOT_ID,
       $this->count,
-      array('ancestors' => $ancestors)
+      ['ancestors' => $ancestors]
     );
 
     return $this->errors;
   }
 
-  public function recursivelyAddInformationObjects($parentId, $totalRows, $options = array())
+  public function recursivelyAddInformationObjects($parentId, $totalRows, $options = [])
   {
     // Loop through children and add to search index
     foreach (self::getChildren($parentId) as $item)
     {
-      $ancestors = $inheritedCreators = array();
+      $ancestors = $inheritedCreators = [];
       $repository = null;
       self::$counter++;
 
@@ -74,11 +74,11 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
 
         $this->logEntry($data['i18n'][$data['sourceCulture']]['title'], self::$counter);
 
-        $ancestors = array_merge($node->getAncestors(), array(array(
+        $ancestors = array_merge($node->getAncestors(), [[
           'id' => $node->id,
           'identifier' => $node->identifier,
           'repository_id' => $node->repository_id
-        )));
+        ]]);
         $repository = $node->getRepository();
         $inheritedCreators = array_merge($node->inheritedCreators, $node->creators);
       }
@@ -91,16 +91,16 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
       if (1 < ($item->rgt - $item->lft))
       {
         // Pass ancestors, repository and creators down to descendants
-        $this->recursivelyAddInformationObjects($item->id, $totalRows, array(
+        $this->recursivelyAddInformationObjects($item->id, $totalRows, [
           'ancestors'  => $ancestors,
           'repository' => $repository,
           'inheritedCreators' => $inheritedCreators
-        ));
+        ]);
       }
     }
   }
 
-  public static function update($object, $options = array())
+  public static function update($object, $options = [])
   {
     // Update description
     $node = new arElasticSearchInformationObjectPdo($object->id);
@@ -118,7 +118,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
     // Update synchronously in CLI tasks and jobs
     $context = sfContext::getInstance();
     $env = $context->getConfiguration()->getEnvironment();
-    if (in_array($env, array('cli', 'worker')))
+    if (in_array($env, ['cli', 'worker']))
     {
       foreach (self::getChildren($object->id) as $child)
       {
@@ -127,23 +127,23 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
         // Be aware that transient descendants are entirely
         // added the first time to the search index in here
         // and they will require a complete update.
-        self::update($child, array('updateDescendants' => true));
+        self::update($child, ['updateDescendants' => true]);
       }
 
       return;
     }
 
     // Update asynchronously in other environments
-    $jobOptions = array(
-      'ioIds' => array($object->id),
+    $jobOptions = [
+      'ioIds' => [$object->id],
       'updateIos' => false,
       'updateDescendants' => true
-    );
+    ];
     QubitJob::runJob('arUpdateEsIoDocumentsJob', $jobOptions);
 
     // Let user know descendants update has started
-    $jobsUrl = $context->routing->generate(null, array('module' => 'jobs', 'action' => 'browse'));
-    $message = $context->i18n->__('Your description has been updated. Its descendants are being updated asynchronously – check the <a href="%1">job scheduler page</a> for status and details.', array('%1' => $jobsUrl));
+    $jobsUrl = $context->routing->generate(null, ['module' => 'jobs', 'action' => 'browse']);
+    $message = $context->i18n->__('Your description has been updated. Its descendants are being updated asynchronously – check the <a href="%1">job scheduler page</a> for status and details.', ['%1' => $jobsUrl]);
     $context->user->setFlash('notice', $message);
   }
 
@@ -167,7 +167,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
       self::$statement = self::$conn->prepare($sql);
     }
 
-    self::$statement->execute(array($parentId));
+    self::$statement->execute([$parentId]);
     $children = self::$statement->fetchAll(PDO::FETCH_OBJ);
 
     return $children;

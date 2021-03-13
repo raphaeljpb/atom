@@ -22,7 +22,7 @@
 <?php slot('after-content') ?>
   <section class="actions">
     <ul class="clearfix links">
-      <li><?php echo link_to(__('Back'), array($resource, 'module' => 'informationobject', 'action' => 'reports'), array('class' => 'c-btn')) ?></li>
+      <li><?php echo link_to(__('Back'), [$resource, 'module' => 'informationobject', 'action' => 'reports'], ['class' => 'c-btn']) ?></li>
     </ul>
   </section>
 <?php end_slot() ?>

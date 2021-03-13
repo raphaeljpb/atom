@@ -37,7 +37,7 @@
 
     <section class="actions">
       <ul>
-        <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'informationobject'], ['class' => 'c-btn']) ?></li>
         <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Apply') ?>"/></li>
       </ul>
     </section>

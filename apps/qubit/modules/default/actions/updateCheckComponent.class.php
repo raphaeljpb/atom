@@ -47,7 +47,7 @@ class DefaultUpdateCheckComponent extends sfComponent
     }
 
     // Build array with user data that will be sent to the service
-    $this->updateCheckData = array();
+    $this->updateCheckData = [];
 
     // Absolute URL
     $this->updateCheckData['address'] = $request->getUriPrefix() . $request->getScriptName() . $request->getPathInfo();

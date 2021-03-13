@@ -24,7 +24,7 @@ class InformationObjectTreeViewSortAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check parameter
-    if (!in_array($request->move, array('moveAfter', 'moveBefore')))
+    if (!in_array($request->move, ['moveAfter', 'moveBefore']))
     {
       $this->forward404();
     }

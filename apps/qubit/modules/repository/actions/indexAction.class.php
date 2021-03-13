@@ -35,12 +35,12 @@ class RepositoryIndexAction extends sfAction
       QubitAcl::forwardUnauthorized();
     }
 
-    $this->dispatcher->notify(new sfEvent($this, 'access_log.view', array('object' => $this->resource)));
+    $this->dispatcher->notify(new sfEvent($this, 'access_log.view', ['object' => $this->resource]));
 
     // Per-institution stylesheet
     if (file_exists(sfConfig::get('sf_upload_dir').'/r/'.$this->resource->slug.'/conf/style.css'))
     {
-      $this->response->addStyleSheet('/uploads/r/'.$this->resource->slug.'/conf/style.css', 'last', array('media' => 'all'));
+      $this->response->addStyleSheet('/uploads/r/'.$this->resource->slug.'/conf/style.css', 'last', ['media' => 'all']);
     }
 
     // Primary contact

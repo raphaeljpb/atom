@@ -26,7 +26,7 @@
       </tr>
     </thead><tbody>
       <?php foreach ($isdf->relatedFunction as $item): ?>
-        <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for(array($item, 'module' => 'relation')) ?>">
+        <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for([$item, 'module' => 'relation']) ?>">
           <td>
             <?php if ($resource->id == $item->objectId): ?>
               <?php echo render_title($item->subject) ?>
@@ -40,7 +40,7 @@
           </td><td>
             <?php echo render_value_inline(Qubit::renderDateStartEnd($item->date, $item->startDate, $item->endDate)) ?>
           </td><td style="text-align: center">
-            <input class="multiDelete" name="deleteRelations[]" type="checkbox" value="<?php echo url_for(array($item, 'module' => 'relation')) ?>"/>
+            <input class="multiDelete" name="deleteRelations[]" type="checkbox" value="<?php echo url_for([$item, 'module' => 'relation']) ?>"/>
           </td>
         </tr>
       <?php endforeach; ?>
@@ -50,7 +50,7 @@
 <?php
 
 // Template for new display table rows
-$editHtml = image_tag('pencil', array('alt' => __('Edit'), 'style' => 'align: top'));
+$editHtml = image_tag('pencil', ['alt' => __('Edit'), 'style' => 'align: top']);
 
 $rowTemplate = json_encode(<<<value
 <tr id="{{$form->getWidgetSchema()->generateName('id')}}">
@@ -131,8 +131,8 @@ content
         <?php echo $form->resource
           ->label(__('Authorized form of name'))
           ->renderLabel() ?>
-        <?php echo $form->resource->render(array('class' => 'form-autocomplete')) ?>
-        <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'function', 'action' => 'autocomplete')) ?>"/>
+        <?php echo $form->resource->render(['class' => 'form-autocomplete']) ?>
+        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'function', 'action' => 'autocomplete']) ?>"/>
         <?php echo $form->resource
           ->help(__('"Record the authorised form of name and any unique identifier of the related function." (ISDF 5.3.1)'))
           ->renderHelp() ?>

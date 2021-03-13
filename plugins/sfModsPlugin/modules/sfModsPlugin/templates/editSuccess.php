@@ -9,11 +9,11 @@
 
 <?php slot('title') ?>
 
-  <?php echo get_component('informationobject', 'descriptionHeader', array('resource' => $resource, 'title' => (string)$mods)) ?>
+  <?php echo get_component('informationobject', 'descriptionHeader', ['resource' => $resource, 'title' => (string)$mods]) ?>
 
   <?php if (isset($sf_request->source)): ?>
     <div class="messages status">
-      <?php echo __('This is a duplicate of record %1%', array('%1%' => $sourceInformationObjectLabel)) ?>
+      <?php echo __('This is a duplicate of record %1%', ['%1%' => $sourceInformationObjectLabel]) ?>
     </div>
   <?php endif; ?>
 
@@ -24,9 +24,9 @@
   <?php echo $form->renderGlobalErrors() ?>
 
   <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
-    <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'informationobject', 'action' => 'edit')), array('id' => 'editForm')) ?>
+    <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'informationobject', 'action' => 'edit']), ['id' => 'editForm']) ?>
   <?php else: ?>
-    <?php echo $form->renderFormTag(url_for(array('module' => 'informationobject', 'action' => 'add')), array('id' => 'editForm')) ?>
+    <?php echo $form->renderFormTag(url_for(['module' => 'informationobject', 'action' => 'add']), ['id' => 'editForm']) ?>
   <?php endif; ?>
 
     <?php echo $form->renderHiddenFields() ?>
@@ -41,7 +41,7 @@
           ->help(__('Contains a unique standard number or code that distinctively identifies a resource.'))
           ->renderRow() ?>
 
-        <?php echo get_partial('informationobject/identifierOptions', array('mask' => $mask, 'hideAltIdButton' => true)) ?>
+        <?php echo get_partial('informationobject/identifierOptions', ['mask' => $mask, 'hideAltIdButton' => true]) ?>
 
         <?php echo render_field($form->title
           ->help(__('A word, phrase, character, or group of characters, normally appearing in a resource, that names it or the work contained in it. Choice and format of titles should be governed by a content standard such as the Anglo-American Cataloging Rules, 2nd edition (AACR2), Cataloguing Cultural Objects (CCO), or Describing Archives: A Content Standard (DACS). Details such as capitalization, choosing among the forms of titles presented on an item, and use of abbreviations should be determined based on the rules in a content standard. One standard should be chosen and used consistently for all records in a set.')), $resource) ?>
@@ -50,7 +50,7 @@
 
           <h3><?php echo __('Names and origin info') ?></h3>
 
-          <?php echo get_partial('informationobject/relatedEvents', array('resource' => $resource)) ?>
+          <?php echo get_partial('informationobject/relatedEvents', ['resource' => $resource]) ?>
 
         </section>
 
@@ -106,31 +106,31 @@
 
         <?php echo $form->language
           ->help(__('A designation of the language in which the content of a resource is expressed. Select as many languages as required.'))
-          ->renderRow(array('class' => 'form-autocomplete')) ?>
+          ->renderRow(['class' => 'form-autocomplete']) ?>
 
         <div class="form-item">
           <?php echo $form->subjectAccessPoints
             ->label(__('Subject'))
             ->renderLabel() ?>
-          <?php echo $form->subjectAccessPoints->render(array('class' => 'form-autocomplete')) ?>
+          <?php echo $form->subjectAccessPoints->render(['class' => 'form-autocomplete']) ?>
           <?php echo $form->subjectAccessPoints
             ->help(__('A term or phrase representing the primary topic(s) on which a work is focused. Search for an existing term in the Subjects taxonomy by typing the first few characters of the term name. Alternatively, type a new name to create and link to a new subject term.'))
             ->renderHelp() ?>
           <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')): ?>
-            <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'term', 'action' => 'add', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy')))) ?> #name"/>
+            <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?> #name"/>
           <?php endif; ?>
-          <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy')))) ?>"/>
+          <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?>"/>
         </div>
 
         <div class="form-item">
           <?php echo $form->placeAccessPoints
             ->label(__('Places'))
             ->renderLabel() ?>
-          <?php echo $form->placeAccessPoints->render(array('class' => 'form-autocomplete')) ?>
+          <?php echo $form->placeAccessPoints->render(['class' => 'form-autocomplete']) ?>
           <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')): ?>
-            <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'term', 'action' => 'add', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy')))) ?> #name"/>
+            <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?> #name"/>
           <?php endif; ?>
-          <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy')))) ?>"/>
+          <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?>"/>
           <?php echo $form->placeAccessPoints
             ->help(__('Search for an existing term in the Places taxonomy by typing the first few characters of the term name. Alternatively, type a new term to create and link to a new place term.'))
             ->renderHelp() ?>
@@ -140,40 +140,40 @@
           <?php echo $form->nameAccessPoints
             ->label(__('Names'))
             ->renderLabel() ?>
-          <?php echo $form->nameAccessPoints->render(array('class' => 'form-autocomplete')) ?>
+          <?php echo $form->nameAccessPoints->render(['class' => 'form-autocomplete']) ?>
           <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')): ?>
-            <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'actor', 'action' => 'add')) ?> #authorizedFormOfName"/>
+            <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'actor', 'action' => 'add']) ?> #authorizedFormOfName"/>
           <?php endif; ?>
-          <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'actor', 'action' => 'autocomplete', 'showOnlyActors' => 'true')) ?>"/>
+          <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete', 'showOnlyActors' => 'true']) ?>"/>
           <?php echo $form->nameAccessPoints
             ->help(__('"Choose provenance, author and other non-subject access points from the archival description, as appropriate. All access points must be apparent from the archival description to which they relate." (RAD 21.0B) The values in this field are drawn from the Authorized form of name field in authority records. Search for an existing name by typing the first few characters of the name. Alternatively, type a new name to create and link to a new authority record.'))
             ->renderHelp() ?>
         </div>
 
         <?php echo render_field($form->accessConditions
-          ->help(__('Information about restrictions imposed on access to a resource. See MODS accessCondition top-level element for more information on how to use this field.')), $resource, array('class' => 'resizable')) ?>
+          ->help(__('Information about restrictions imposed on access to a resource. See MODS accessCondition top-level element for more information on how to use this field.')), $resource, ['class' => 'resizable']) ?>
 
         <div class="form-item">
           <?php echo $form->repository->renderLabel() ?>
-          <?php echo $form->repository->render(array('class' => 'form-autocomplete')) ?>
+          <?php echo $form->repository->render(['class' => 'form-autocomplete']) ?>
           <?php echo $form->repository
             ->help(__('Identifies the institution or repository holding the resource. Search for an existing repository name by typing the first few letters of the name. ALternatively, type a new name to create and link to a new repository record.'))
             ->renderHelp() ?>
-          <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'repository', 'action' => 'add')) ?> #authorizedFormOfName"/>
+          <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'repository', 'action' => 'add']) ?> #authorizedFormOfName"/>
           <input class="list" type="hidden" value="<?php echo url_for($sf_data->getRaw('repoAcParams')) ?>"/>
         </div>
 
         <?php echo render_field($form->scopeAndContent
           ->help(__('An abstract, table of contents or description of the resource\'s scope and contents.'))
-          ->label(__('Description')), $resource, array('class' => 'resizable')) ?>
+          ->label(__('Description')), $resource, ['class' => 'resizable']) ?>
 
       </fieldset> <!-- #elementsArea -->
 
-      <?php echo get_partial('informationobject/adminInfo', array('form' => $form, 'resource' => $resource)) ?>
+      <?php echo get_partial('informationobject/adminInfo', ['form' => $form, 'resource' => $resource]) ?>
 
     </div>
 
-    <?php echo get_partial('informationobject/editActions', array('resource' => ($parent !== null ? $parent : $resource))) ?>
+    <?php echo get_partial('informationobject/editActions', ['resource' => ($parent !== null ? $parent : $resource)]) ?>
 
   </form>
 

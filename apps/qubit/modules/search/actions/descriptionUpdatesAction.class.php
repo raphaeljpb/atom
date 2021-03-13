@@ -26,7 +26,7 @@
  */
 class SearchDescriptionUpdatesAction extends sfAction
 {
-  public static $NAMES = array(
+  public static $NAMES = [
       'className',
       'startDate',
       'endDate',
@@ -34,7 +34,7 @@ class SearchDescriptionUpdatesAction extends sfAction
       'publicationStatus',
       'repository',
       'user'
-    );
+    ];
 
   public function execute($request)
   {
@@ -54,7 +54,7 @@ class SearchDescriptionUpdatesAction extends sfAction
       $this->addField($name);
     }
 
-    $defaults = array(
+    $defaults = [
       'className' => 'QubitInformationObject',
       'startDate' => date('Y-m-d', strtotime('-1 month')),
       'endDate' => date('Y-m-d'),
@@ -62,7 +62,7 @@ class SearchDescriptionUpdatesAction extends sfAction
       'publicationStatus' => 'all',
       'repository' => null,
       'user' => null
-    );
+    ];
 
     $this->form->bind($request->getGetParameters() + $defaults);
 
@@ -152,12 +152,12 @@ class SearchDescriptionUpdatesAction extends sfAction
     {
       if ('all' != $this->form->getValue('publicationStatus'))
       {
-        $queryBool->addMust(new \Elastica\Query\Term(array('publicationStatusId' => $this->form->getValue('publicationStatus'))));
+        $queryBool->addMust(new \Elastica\Query\Term(['publicationStatusId' => $this->form->getValue('publicationStatus')]));
       }
 
       if (null !== $this->form->getValue('repository'))
       {
-        $queryBool->addMust(new \Elastica\Query\Term(array('repository.id' => $this->form->getValue('repository'))));
+        $queryBool->addMust(new \Elastica\Query\Term(['repository.id' => $this->form->getValue('repository')]));
       }
     }
 
@@ -187,7 +187,7 @@ class SearchDescriptionUpdatesAction extends sfAction
         "We've redirected you to the first page of results." .
         " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
         " Please, narrow down your results.",
-        array('%1%' => $maxResultWindow)
+        ['%1%' => $maxResultWindow]
       );
       $this->getUser()->setFlash('notice', $message);
 
@@ -199,7 +199,7 @@ class SearchDescriptionUpdatesAction extends sfAction
 
     $query->setSize($limit);
     $query->setFrom($limit * ($page - 1));
-    $query->setSort(array('createdAt' => 'desc'));
+    $query->setSort(['createdAt' => 'desc']);
 
     $resultSet = QubitSearch::getInstance()->index->getType($this->form->getValue('className'))->search($query);
 
@@ -215,51 +215,51 @@ class SearchDescriptionUpdatesAction extends sfAction
     switch ($name)
     {
       case 'className':
-        $choices = array(
+        $choices = [
           'QubitInformationObject' => sfConfig::get('app_ui_label_informationobject'),
           'QubitActor' => sfConfig::get('app_ui_label_actor'),
           'QubitRepository' => sfConfig::get('app_ui_label_repository'),
           'QubitTerm' => sfConfig::get('app_ui_label_term'),
-          'QubitFunctionObject' => sfConfig::get('app_ui_label_function'));
+          'QubitFunctionObject' => sfConfig::get('app_ui_label_function')];
 
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'startDate':
-        $this->form->setValidator($name, new sfValidatorDate(array(), array('invalid' => $this->context->i18n->__('Invalid start date'))));
+        $this->form->setValidator($name, new sfValidatorDate([], ['invalid' => $this->context->i18n->__('Invalid start date')]));
         $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'endDate':
-        $this->form->setValidator($name, new sfValidatorDate(array(), array('invalid' => $this->context->i18n->__('Invalid end date'))));
+        $this->form->setValidator($name, new sfValidatorDate([], ['invalid' => $this->context->i18n->__('Invalid end date')]));
         $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'dateOf':
-        $choices = array(
+        $choices = [
           'CREATED_AT' => $this->context->i18n->__('Creation'),
           'UPDATED_AT' => $this->context->i18n->__('Revision'),
           'both' => $this->context->i18n->__('Both')
-        );
+        ];
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new arWidgetFormSelectRadio(array('choices' => $choices, 'class' => 'radio inline')));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new arWidgetFormSelectRadio(['choices' => $choices, 'class' => 'radio inline']));
 
         break;
 
       case 'publicationStatus':
-        $choices = array(
+        $choices = [
           QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID => QubitTerm::getById(QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)->name,
           QubitTerm::PUBLICATION_STATUS_DRAFT_ID => QubitTerm::getById(QubitTerm::PUBLICATION_STATUS_DRAFT_ID)->name,
           'all' => $this->context->i18n->__('All')
-        );
+        ];
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new arWidgetFormSelectRadio(array('choices' => $choices, 'class' => 'radio inline')));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new arWidgetFormSelectRadio(['choices' => $choices, 'class' => 'radio inline']));
 
         break;
 
@@ -283,7 +283,7 @@ class SearchDescriptionUpdatesAction extends sfAction
         }
         else
         {
-          $choices = array();
+          $choices = [];
           $choices[null] = null;
           foreach (QubitRepository::get($criteria) as $repository)
           {
@@ -293,14 +293,14 @@ class SearchDescriptionUpdatesAction extends sfAction
           $cache->set($cacheKey, $choices, 3600);
         }
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'user':
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => array()), array('class' => 'form-autocomplete')));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => []], ['class' => 'form-autocomplete']));
 
         break;
     }
@@ -342,12 +342,12 @@ class SearchDescriptionUpdatesAction extends sfAction
   {
     if (null !== $startDate)
     {
-      $queryBool->addMust(new \Elastica\Query\Range($field, array('gte' => $startDate)));
+      $queryBool->addMust(new \Elastica\Query\Range($field, ['gte' => $startDate]));
     }
 
     if (null !== $endDate)
     {
-      $queryBool->addMust(new \Elastica\Query\Range($field, array('lte' => $endDate)));
+      $queryBool->addMust(new \Elastica\Query\Range($field, ['lte' => $endDate]));
     }
   }
 }

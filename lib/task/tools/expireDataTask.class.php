@@ -20,17 +20,17 @@
 class expireDataTask extends arBaseTask
 {
   // Arrays not allowed in class constants
-  public static $TYPE_SPECIFICATONS = array(
-      'clipboard' => array(
+  public static $TYPE_SPECIFICATONS = [
+      'clipboard' => [
         'name' => 'saved clipboard',
         'plural_name' => 'saved clipboards',
         'age_setting_name' => 'app_clipboard_save_max_age'
-      ),
-      'job' => array(
+      ],
+      'job' => [
         'name' => 'job (and any related file)',
         'plural_name' => 'jobs (and any related files)'
-      )
-    );
+      ]
+    ];
 
   protected function configure()
   {
@@ -39,17 +39,17 @@ class expireDataTask extends arBaseTask
       $this->supportedTypesDescription()
     );
 
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('data-type', sfCommandArgument::REQUIRED, $dataTypeArgDescription)
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('older-than', null, sfCommandOption::PARAMETER_OPTIONAL, 'Expiry date expressed as YYYY-MM-DD'),
       new sfCommandOption('force', 'f', sfCommandOption::PARAMETER_NONE, 'Delete without confirmation', null),
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'expire-data';
@@ -59,7 +59,7 @@ Delete expired data (in entirety or by age)
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 

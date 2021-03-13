@@ -31,14 +31,14 @@ class InformationObjectFullWidthTreeViewMoveAction extends sfAction
     {
       $this->response->setStatusCode(404);
 
-      return $this->renderText(json_encode(array('error' => $i18n->__('Move failed: resource not found'))));
+      return $this->renderText(json_encode(['error' => $i18n->__('Move failed: resource not found')]));
     }
 
     if (!$this->getUser()->isAuthenticated())
     {
       $this->response->setStatusCode(401);
 
-      return $this->renderText(json_encode(array('error' => $i18n->__('Move not allowed: log in required'))));
+      return $this->renderText(json_encode(['error' => $i18n->__('Move not allowed: log in required')]));
     }
 
     // Check user authorization
@@ -46,7 +46,7 @@ class InformationObjectFullWidthTreeViewMoveAction extends sfAction
     {
       $this->response->setStatusCode(403);
 
-      return $this->renderText(json_encode(array('error' => $i18n->__('Move not allowed: not enough permissions'))));
+      return $this->renderText(json_encode(['error' => $i18n->__('Move not allowed: not enough permissions')]));
     }
 
     $oldPosition = $request->getParameter('oldPosition');
@@ -57,7 +57,7 @@ class InformationObjectFullWidthTreeViewMoveAction extends sfAction
     {
       $this->response->setStatusCode(400);
 
-      return $this->renderText(json_encode(array('error' => $i18n->__('Move failed: new and old positions required as numbers'))));
+      return $this->renderText(json_encode(['error' => $i18n->__('Move failed: new and old positions required as numbers')]));
     }
 
     // Moving to the same position
@@ -65,14 +65,14 @@ class InformationObjectFullWidthTreeViewMoveAction extends sfAction
     {
       $this->response->setStatusCode(400);
 
-      return $this->renderText(json_encode(array('error' => $i18n->__('Move not needed: new and old positions are the same'))));
+      return $this->renderText(json_encode(['error' => $i18n->__('Move not needed: new and old positions are the same')]));
     }
 
-    $params = array(
+    $params = [
       'objectId' => $this->resource->id,
       'oldPosition' => $oldPosition,
       'newPosition' => $newPosition
-    );
+    ];
 
     // Catch no Gearman worker available exception
     // and others to show alert with exception message
@@ -84,19 +84,19 @@ class InformationObjectFullWidthTreeViewMoveAction extends sfAction
     {
       $this->response->setStatusCode(500);
 
-      return $this->renderText(json_encode(array('error' => $i18n->__('Move failed: ') . $e->getMessage())));
+      return $this->renderText(json_encode(['error' => $i18n->__('Move failed: ') . $e->getMessage()]));
     }
 
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
+    sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
 
-    $jobManageUrl = url_for(array('module' => 'jobs', 'action' => 'browse'));
+    $jobManageUrl = url_for(['module' => 'jobs', 'action' => 'browse']);
     $jobManageLink = '<a href="'. $jobManageUrl . '">'. $i18n->__('job management') .'</a>';
 
     $message = '<strong>'. $i18n->__('Move initiated.') .'</strong> ';
-    $message .= $i18n->__("Check the %1% page to determine present status. You can keep moving nodes if you don't reload the page. Once the page is reloaded, if a move job hasn't ended, your recent change(s) may not yet be displayed and new changes may fail. After the move job ends and the page is reloaded, the treeview will be back to a stable status.", array('%1%' => $jobManageLink));
+    $message .= $i18n->__("Check the %1% page to determine present status. You can keep moving nodes if you don't reload the page. Once the page is reloaded, if a move job hasn't ended, your recent change(s) may not yet be displayed and new changes may fail. After the move job ends and the page is reloaded, the treeview will be back to a stable status.", ['%1%' => $jobManageLink]);
 
     $this->response->setStatusCode(201);
 
-    return $this->renderText(json_encode(array('success' => $message)));
+    return $this->renderText(json_encode(['success' => $message]));
   }
 }

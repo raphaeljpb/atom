@@ -129,7 +129,7 @@ class QubitTaxonomy extends BaseTaxonomy
     ACCESSION_EVENT_TYPE_ID = 83;
   public $disableNestedSetUpdating = false;
 
-  public static $lockedTaxonomies = array(
+  public static $lockedTaxonomies = [
       self::QUBIT_SETTING_LABEL_ID,
       self::COLLECTION_TYPE_ID,
       self::DIGITAL_OBJECT_USAGE_ID,
@@ -142,7 +142,7 @@ class QubitTaxonomy extends BaseTaxonomy
       self::PUBLICATION_STATUS_ID,
       self::ACTOR_NAME_TYPE_ID,
       self::INFORMATION_OBJECT_TEMPLATE_ID,
-      self::JOB_STATUS_ID);
+      self::JOB_STATUS_ID];
 
   public function __construct($id = null)
   {
@@ -158,7 +158,7 @@ class QubitTaxonomy extends BaseTaxonomy
   {
     if (!$this->getName())
     {
-      return (string) $this->getName(array('sourceCulture' => true));
+      return (string) $this->getName(['sourceCulture' => true]);
     }
 
     return (string) $this->getName();
@@ -183,13 +183,13 @@ class QubitTaxonomy extends BaseTaxonomy
 
     // Add criteria to sort by name with culture fallback
     $criteria->addAscendingOrderByColumn('name');
-    $options = array('returnClass'=>'QubitTaxonomy');
+    $options = ['returnClass'=>'QubitTaxonomy'];
     $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitTaxonomy', $options);
 
     return QubitTaxonomy::get($criteria);
   }
 
-  public static function getTaxonomyTerms($taxonomyId, $options = array())
+  public static function getTaxonomyTerms($taxonomyId, $options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitTerm::TAXONOMY_ID, $taxonomyId);
@@ -272,7 +272,7 @@ SQL;
   {
     if (!isset($this->slug))
     {
-      $this->slug = QubitSlug::slugify($this->__get('name', array('sourceCulture' => true)));
+      $this->slug = QubitSlug::slugify($this->__get('name', ['sourceCulture' => true]));
     }
 
     return parent::insert($connection);

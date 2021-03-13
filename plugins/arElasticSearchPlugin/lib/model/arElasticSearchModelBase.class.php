@@ -48,7 +48,7 @@ abstract class arElasticSearchModelBase
     $this->timer = $timer;
   }
 
-  public static function serializeI18ns($id, array $classes, $options = array())
+  public static function serializeI18ns($id, array $classes, $options = [])
   {
     if (empty($classes))
     {
@@ -62,7 +62,7 @@ abstract class arElasticSearchModelBase
     }
 
     // Properties
-    $i18ns = array('languages' => array());
+    $i18ns = ['languages' => []];
 
     // Allow merging i18n fields, used for partial foreign types
     // when different object fields are included in the same object
@@ -78,8 +78,8 @@ abstract class arElasticSearchModelBase
       // not possible to bind and use a variable for the table name.
       $rows = QubitPdo::fetchAll(
         sprintf('SELECT * FROM %s WHERE id = ?', ($class.'I18n')::TABLE_NAME),
-        array($id),
-        array('fetchMode' => PDO::FETCH_ASSOC)
+        [$id],
+        ['fetchMode' => PDO::FETCH_ASSOC]
       );
 
       foreach ($rows as $row)
@@ -97,7 +97,7 @@ abstract class arElasticSearchModelBase
         foreach ($row as $key => $value)
         {
           // Pass if the column is unneeded or null, or if it's not set in options fields
-          if (in_array($key, array('id', 'culture')) || is_null($value)
+          if (in_array($key, ['id', 'culture']) || is_null($value)
             || (isset($options['fields']) && !in_array($key, $options['fields'])))
           {
             continue;
@@ -135,8 +135,8 @@ abstract class arElasticSearchModelBase
     // an array of term ids grouped by taxonomy.
     return QubitPdo::fetchAll(
       $sql,
-      array($objectId),
-      array('fetchMode' => PDO::FETCH_GROUP|PDO::FETCH_COLUMN)
+      [$objectId],
+      ['fetchMode' => PDO::FETCH_GROUP|PDO::FETCH_COLUMN]
     );
   }
 
@@ -144,7 +144,7 @@ abstract class arElasticSearchModelBase
   {
     if (empty($termIds))
     {
-      return array();
+      return [];
     }
 
     // Try to get term parent list from sfConfig, added in
@@ -157,7 +157,7 @@ abstract class arElasticSearchModelBase
     // If the term parent list is populated, recursively extend the terms
     if (isset(self::$termParentList))
     {
-      $relatedTerms = array();
+      $relatedTerms = [];
 
       // Iterate over each directly related term, adding all ancestors of each
       foreach($termIds as $id)
@@ -187,8 +187,8 @@ abstract class arElasticSearchModelBase
 
     return QubitPdo::fetchAll(
       $sql,
-      array(QubitTerm::ROOT_ID),
-      array('fetchMode' => PDO::FETCH_COLUMN)
+      [QubitTerm::ROOT_ID],
+      ['fetchMode' => PDO::FETCH_COLUMN]
     );
   }
 
@@ -217,9 +217,9 @@ abstract class arElasticSearchModelBase
   {
     if (!isset(self::$termParentList) || null === $parent = self::$termParentList[$id])
     {
-      return array($id);
+      return [$id];
     }
 
-    return array_merge(array($id), self::recursivelyGetParentTerms($parent));
+    return array_merge([$id], self::recursivelyGetParentTerms($parent));
   }
 }

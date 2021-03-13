@@ -48,7 +48,7 @@ class arMigration0178
     // - Use MODIFY over each column instead of a single CONVERT because the
     //   later transforms TEXT columns to MEDIUMTEXT.
     // - Reduce DO path index size for the extra byte.
-    $alterTables = array(
+    $alterTables = [
       'ALTER TABLE `access_log` %1$s;',
 
       'ALTER TABLE `actor` %1$s, '.
@@ -384,7 +384,7 @@ class arMigration0178
       'MODIFY `culture` VARCHAR(16) %1$s NOT NULL;',
 
       'ALTER TABLE `donor` %1$s;',
-    );
+    ];
 
     foreach ($alterTables as $sql)
     {

@@ -56,7 +56,7 @@ class MenuListAction extends sfAction
     {
       // Build an array of siblings for each parentId for figuring out
       // prev/next buttons
-      $siblingList[$menu['parentId']][] = array('id' => $menu['id'], 'pos' => $i);
+      $siblingList[$menu['parentId']][] = ['id' => $menu['id'], 'pos' => $i];
     }
 
     // Build prev/next values based on number of siblings

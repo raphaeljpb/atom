@@ -82,7 +82,7 @@ class sfDcPlugin implements ArrayAccess
         // Because simple Dublin Core cannot qualify the <date/> or <coverage/>
         // elements, we only return a limited set of events: just those that
         // are related to creation/origination
-        $event = array();
+        $event = [];
         foreach ($this->resource->eventsRelatedByobjectId as $item)
         {
           switch ($item->typeId)
@@ -101,7 +101,7 @@ class sfDcPlugin implements ArrayAccess
         return $event;
 
       case 'coverage':
-        $coverage = array();
+        $coverage = [];
 
         foreach ($this->resource->eventsRelatedByobjectId as $item)
         {
@@ -119,10 +119,10 @@ class sfDcPlugin implements ArrayAccess
         return $coverage;
 
       case 'date':
-        $list = array();
+        $list = [];
         foreach ($this->_event as $item)
         {
-          if (0 < strlen($date = $item->getDate(array('cultureFallback' => true))))
+          if (0 < strlen($date = $item->getDate(['cultureFallback' => true])))
           {
             $list[] = $date;
           }
@@ -131,7 +131,7 @@ class sfDcPlugin implements ArrayAccess
         return $list;
 
       case 'format':
-        $format = array();
+        $format = [];
 
         if (null !== $digitalObject = $this->resource->getDigitalObject())
         {
@@ -143,7 +143,7 @@ class sfDcPlugin implements ArrayAccess
 
         if (isset($this->resource->extentAndMedium))
         {
-          $format[] = $this->resource->getCleanExtentAndMedium(array('cultureFallback' => true));
+          $format[] = $this->resource->getCleanExtentAndMedium(['cultureFallback' => true]);
         }
 
         return $format;
@@ -157,7 +157,7 @@ class sfDcPlugin implements ArrayAccess
         return $this->resource->sourceCulture;
 
       case 'subject':
-        $subject = array();
+        $subject = [];
         foreach ($this->resource->getSubjectAccessPoints() as $item)
         {
           $subject[] = $item->term;
@@ -176,7 +176,7 @@ class sfDcPlugin implements ArrayAccess
         return $subject;
 
       case 'type':
-        $type = array();
+        $type = [];
 
         foreach ($this->resource->getTermRelations(QubitTaxonomy::DC_TYPE_ID) as $item)
         {
@@ -218,34 +218,34 @@ class sfDcPlugin implements ArrayAccess
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__isset'), $args);
+    return call_user_func_array([$this, '__isset'], $args);
   }
 
   public function offsetGet($offset)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__get'), $args);
+    return call_user_func_array([$this, '__get'], $args);
   }
 
   public function offsetSet($offset, $value)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__set'), $args);
+    return call_user_func_array([$this, '__set'], $args);
   }
 
   public function offsetUnset($offset)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__unset'), $args);
+    return call_user_func_array([$this, '__unset'], $args);
   }
 
   public static function eventTypes()
   {
-    return array(QubitTerm::getById(QubitTerm::CONTRIBUTION_ID),
+    return [QubitTerm::getById(QubitTerm::CONTRIBUTION_ID),
       QubitTerm::getById(QubitTerm::CREATION_ID),
-      QubitTerm::getById(QubitTerm::PUBLICATION_ID));
+      QubitTerm::getById(QubitTerm::PUBLICATION_ID)];
   }
 }

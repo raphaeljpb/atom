@@ -27,7 +27,7 @@ class arElasticSearchTerm extends arElasticSearchModelBase
     $sql .= ' WHERE term.id != ? AND object.class_name = ?';
     $sql .= ' ORDER BY term.lft';
 
-    $terms = QubitPdo::fetchAll($sql, array(QubitTerm::ROOT_ID, 'QubitTerm'));
+    $terms = QubitPdo::fetchAll($sql, [QubitTerm::ROOT_ID, 'QubitTerm']);
 
     $this->count = count($terms);
 
@@ -36,7 +36,7 @@ class arElasticSearchTerm extends arElasticSearchModelBase
 
   public function populate()
   {
-    $errors = array();
+    $errors = [];
 
     // Loop through results, and add to search index
     foreach ($this->load() as $key => $item)

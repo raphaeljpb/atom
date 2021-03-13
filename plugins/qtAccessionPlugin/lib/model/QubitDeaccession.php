@@ -40,7 +40,7 @@ class QubitDeaccession extends BaseDeaccession
   {
     if (!isset($this->slug))
     {
-      $this->slug = QubitSlug::slugify($this->__get('identifier', array('sourceCulture' => true)));
+      $this->slug = QubitSlug::slugify($this->__get('identifier', ['sourceCulture' => true]));
     }
 
     return parent::insert($connection);

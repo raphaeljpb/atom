@@ -19,7 +19,7 @@
 
 class arWidgetFormInputFileEditable extends sfWidgetFormInputFile
 {
-  public function render($name, $value = null, $attributes = array(), $errors = array())
+  public function render($name, $value = null, $attributes = [], $errors = [])
   {
     $input = parent::render($name, $value, $attributes, $errors);
 
@@ -32,7 +32,7 @@ class arWidgetFormInputFileEditable extends sfWidgetFormInputFile
     {
       $deleteName = ']' == substr($name, -1) ? substr($name, 0, -1).'_delete]' : $name.'_delete';
 
-      $delete = $this->renderTag('input', array_merge(array('type' => 'checkbox', 'name' => $deleteName), $attributes));
+      $delete = $this->renderTag('input', array_merge(['type' => 'checkbox', 'name' => $deleteName], $attributes));
       $deleteLabel = $this->translate($this->getOption('delete_label'));
       $deleteLabel = $this->renderContentTag('i', $deleteLabel);
 
@@ -43,7 +43,7 @@ class arWidgetFormInputFileEditable extends sfWidgetFormInputFile
       return $this->getFileAsTag($attributes).$input;
     }
   }
-  protected function configure($options = array(), $attributes = array())
+  protected function configure($options = [], $attributes = [])
   {
     parent::configure($options, $attributes);
 
@@ -61,7 +61,7 @@ class arWidgetFormInputFileEditable extends sfWidgetFormInputFile
   {
     if ($this->getOption('is_image'))
     {
-      return false !== $this->getOption('file_src') ? $this->renderTag('img', array_merge(array('src' => $this->getOption('file_src')), $attributes)) : '';
+      return false !== $this->getOption('file_src') ? $this->renderTag('img', array_merge(['src' => $this->getOption('file_src')], $attributes)) : '';
     }
     else
     {

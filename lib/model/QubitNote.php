@@ -26,7 +26,7 @@ class QubitNote extends BaseNote
   {
     if (null === $content = $this->getContent())
     {
-      $content = $this->getContent(array('sourceCulture' => true));
+      $content = $this->getContent(['sourceCulture' => true]);
     }
 
     return (string) $content;
@@ -35,7 +35,7 @@ class QubitNote extends BaseNote
   public function save($connection = null)
   {
     // TODO: $cleanObject = $this->object->clean;
-    $cleanObjectId = $this->__get('objectId', array('clean' => true));
+    $cleanObjectId = $this->__get('objectId', ['clean' => true]);
 
     parent::save($connection);
 

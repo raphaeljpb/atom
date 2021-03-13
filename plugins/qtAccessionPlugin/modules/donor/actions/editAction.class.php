@@ -20,8 +20,8 @@
 class DonorEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
-      'authorizedFormOfName');
+  public static $NAMES = [
+      'authorizedFormOfName'];
 
   public function execute($request)
   {
@@ -39,7 +39,7 @@ class DonorEditAction extends DefaultEditAction
 
         $this->resource->save();
 
-        $this->redirect(array($this->resource, 'module' => 'donor'));
+        $this->redirect([$this->resource, 'module' => 'donor']);
       }
     }
   }
@@ -82,7 +82,7 @@ class DonorEditAction extends DefaultEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");

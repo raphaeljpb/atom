@@ -30,7 +30,7 @@ class i18nConsolidateTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     if (!file_exists($arguments['target']))
     {
@@ -39,8 +39,8 @@ class i18nConsolidateTask extends sfBaseTask
 
     $this->logSection('i18n', sprintf('Consolidating "%s" i18n messages', $arguments['culture']));
 
-    $i18n = new sfI18N($this->configuration, new sfNoCache(), array('source' => 'XLIFF', 'debug' => false));
-    $extract = new QubitI18nConsolidatedExtract($i18n, $arguments['culture'], array('target' => $arguments['target']));
+    $i18n = new sfI18N($this->configuration, new sfNoCache(), ['source' => 'XLIFF', 'debug' => false]);
+    $extract = new QubitI18nConsolidatedExtract($i18n, $arguments['culture'], ['target' => $arguments['target']]);
     $extract->extract();
     $extract->save();
   }
@@ -49,15 +49,15 @@ class i18nConsolidateTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('culture', sfCommandArgument::REQUIRED, 'Message culture'),
       new sfCommandArgument('target', sfCommandArgument::REQUIRED, 'Target directory')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       // http://trac.symfony-project.org/ticket/8352
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', true),
-    ));
+    ]);
 
     $this->namespace = 'i18n';
     $this->name = 'consolidate';

@@ -1,18 +1,18 @@
 <?php decorate_with('layout_1col') ?>
 
 <?php slot('title') ?>
-  <h1><?php echo __('Move %1%', array('%1%' => render_title($resource))) ?></h1>
+  <h1><?php echo __('Move %1%', ['%1%' => render_title($resource)]) ?></h1>
 <?php end_slot() ?>
 
 <?php slot('before-content') ?>
 
   <div class="row">
     <div class="inline-search span6">
-      <form action="<?php echo url_for(array($resource, 'module' => 'default', 'action' => 'move')) ?>">
+      <form action="<?php echo url_for([$resource, 'module' => 'default', 'action' => 'move']) ?>">
         <div class="input-append">
           <?php if (isset($sf_request->query)): ?>
             <input type="text" name="query" value="<?php echo $sf_request->query ?>" />
-            <a class="btn" href="<?php echo url_for(array($resource, 'module' => 'default', 'action' => 'move')) ?>">
+            <a class="btn" href="<?php echo url_for([$resource, 'module' => 'default', 'action' => 'move']) ?>">
               <i class="fa fa-times"></i>
             </a>
           <?php else: ?>
@@ -32,7 +32,7 @@
     <ul>
       <?php foreach ($parent->ancestors as $item): ?>
         <?php if (isset($item->parent)): ?>
-          <li><?php echo link_to(render_title($item), array($resource, 'module' => 'default', 'action' => 'move', 'parent' => $item->slug)) ?></li>
+          <li><?php echo link_to(render_title($item), [$resource, 'module' => 'default', 'action' => 'move', 'parent' => $item->slug]) ?></li>
         <?php endif; ?>
       <?php endforeach; ?>
 
@@ -60,7 +60,7 @@
               <?php echo render_value_inline($item->identifier) ?>
             </td>
             <td width="85%">
-              <?php echo link_to_if($resource->lft > $item->lft || $resource->rgt < $item->rgt, render_title($item), array($resource, 'module' => 'default', 'action' => 'move', 'parent' => $item->slug)) ?>
+              <?php echo link_to_if($resource->lft > $item->lft || $resource->rgt < $item->rgt, render_title($item), [$resource, 'module' => 'default', 'action' => 'move', 'parent' => $item->slug]) ?>
             </td>
           </tr>
         <?php endforeach; ?>
@@ -71,18 +71,18 @@
 <?php end_slot() ?>
 
 <?php slot('after-content') ?>
-  <?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+  <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'default', 'action' => 'move'))) ?>
+  <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'default', 'action' => 'move'])) ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
     <section class="actions">
       <ul>
         <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Move here') ?>"/></li>
-        <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'informationobject'], ['class' => 'c-btn']) ?></li>
       </ul>
     </section>
 

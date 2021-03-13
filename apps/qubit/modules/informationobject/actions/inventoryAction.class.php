@@ -32,7 +32,7 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
     }
 
     // Set title header
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Qubit'));
+    sfContext::getInstance()->getConfiguration()->loadHelpers(['Qubit']);
     $title = strip_markdown($this->resource);
     $this->response->setTitle("$title - Inventory list - {$this->response->getTitle()}");
 
@@ -58,7 +58,7 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
         "We've redirected you to the first page of results." .
         " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
         " To view the last records in the current result set, try changing the sort direction.",
-        array('%1%' => $maxResultWindow)
+        ['%1%' => $maxResultWindow]
       );
       $this->getUser()->setFlash('notice', $message);
 
@@ -134,41 +134,41 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
     switch ($sort)
     {
       case 'identifierDown':
-        $query->setSort(array('identifier.untouched' => 'desc'));
+        $query->setSort(['identifier.untouched' => 'desc']);
 
         break;
 
       case 'titleUp':
-        $query->setSort(array($i18n.'title.alphasort' => 'asc'));
+        $query->setSort([$i18n.'title.alphasort' => 'asc']);
 
         break;
 
       case 'titleDown':
-        $query->setSort(array($i18n.'title.alphasort' => 'desc'));
+        $query->setSort([$i18n.'title.alphasort' => 'desc']);
 
         break;
 
       case 'levelUp':
-        $query->setSort(array('levelOfDescriptionId' => 'asc'));
+        $query->setSort(['levelOfDescriptionId' => 'asc']);
 
         break;
 
       case 'levelDown':
-        $query->setSort(array('levelOfDescriptionId' => 'desc'));
+        $query->setSort(['levelOfDescriptionId' => 'desc']);
 
         break;
 
       case 'dateUp':
-        $query->setSort(array(
+        $query->setSort([
           'startDateSort' => 'asc',
-          'endDateSort' => 'asc'));
+          'endDateSort' => 'asc']);
 
         break;
 
       case 'dateDown':
-        $query->setSort(array(
+        $query->setSort([
           'startDateSort' => 'desc',
-          'endDateSort' => 'desc'));
+          'endDateSort' => 'desc']);
 
         break;
 
@@ -178,7 +178,7 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
 
       case 'identifierUp':
       default:
-        $query->setSort(array('identifier.untouched' => 'asc'));
+        $query->setSort(['identifier.untouched' => 'asc']);
     }
 
     QubitAclSearch::filterDrafts($queryBool);

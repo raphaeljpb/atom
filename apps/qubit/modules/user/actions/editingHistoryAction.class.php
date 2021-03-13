@@ -39,11 +39,11 @@ class UserEditingHistoryAction extends sfAction
     $pager->setMaxPerPage($limit);
 
     // Return results and paging data
-    $data = array(
+    $data = [
       'results' => $this->summarizeCurrentPage($pager),
       'items' => $pager->getNbResults(),
       'pages' => $pager->getLastPage()
-    );
+    ];
 
     return $this->renderText(json_encode($data));
   }
@@ -71,18 +71,18 @@ class UserEditingHistoryAction extends sfAction
     $dateFormatter = new sfDateFormat($culture);
 
     // Summarize page results
-    $results = array();
+    $results = [];
 
     foreach ($pager->getResults() as $modification)
     {
       $io = QubitInformationObject::getById($modification->objectId);
 
-      $result = array(
+      $result = [
         'createdAt' => $dateFormatter->format($modification->createdAt, 'f'),
-        'title' => $io->getTitle(array('cultureFallback' => true)),
+        'title' => $io->getTitle(['cultureFallback' => true]),
         'slug' => $io->slug,
         'actionType' => QubitTerm::getById($modification->actionTypeId)->name
-      );
+      ];
 
       array_push($results, $result);
     }

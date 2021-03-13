@@ -2,7 +2,7 @@
 <?php use_helper('Javascript') ?>
 
 <?php slot('title') ?>
-  <h1><?php echo __('User %1%', array('%1%' => render_title($resource))) ?></h1>
+  <h1><?php echo __('User %1%', ['%1%' => render_title($resource)]) ?></h1>
 <?php end_slot() ?>
 
 <?php slot('content') ?>
@@ -10,9 +10,9 @@
   <?php echo $form->renderGlobalErrors(); ?>
 
   <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
-    <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'user', 'action' => 'edit')), array('id' => 'editForm')) ?>
+    <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'user', 'action' => 'edit']), ['id' => 'editForm']) ?>
   <?php else: ?>
-    <?php echo $form->renderFormTag(url_for(array('module' => 'user', 'action' => 'add')), array('id' => 'editForm')) ?>
+    <?php echo $form->renderFormTag(url_for(['module' => 'user', 'action' => 'add']), ['id' => 'editForm']) ?>
   <?php endif; ?>
 
     <?php echo $form->renderHiddenFields() ?>
@@ -27,8 +27,8 @@
 
         <?php echo $form->email->renderRow() ?>
 
-        <?php $settings = json_encode(array(
-          'password' => array(
+        <?php $settings = json_encode([
+          'password' => [
             'strengthTitle' => __('Password strength:'),
             'hasWeaknesses' => __('To make your password stronger:'),
             'tooShort' => __('Make it at least six characters'),
@@ -40,7 +40,7 @@
             'confirmSuccess' => __('Yes'),
             'confirmFailure' => __('No'),
             'confirmTitle' => __('Passwords match:'),
-            'username' => ''))) ?>
+            'username' => '']]) ?>
 
         <?php echo javascript_tag(<<<EOF
 jQuery.extend(Drupal.settings, $settings);
@@ -61,7 +61,7 @@ EOF
               ->renderLabel() ?>
           <?php endif; ?>
 
-          <?php echo $form->password->render(array('class' => 'password-field')) ?>
+          <?php echo $form->password->render(['class' => 'password-field']) ?>
 
         </div>
 
@@ -69,7 +69,7 @@ EOF
           <?php echo $form->password
             ->label(__('Confirm password'))
             ->renderLabel() ?>
-          <?php echo $form->confirmPassword->render(array('class' => 'password-confirm')) ?>
+          <?php echo $form->confirmPassword->render(['class' => 'password-confirm']) ?>
         </div>
 
         <?php if ($sf_user->user != $resource): ?>
@@ -86,11 +86,11 @@ EOF
 
         <?php echo $form->groups
           ->label(__('User groups'))
-          ->renderRow(array('class' => 'form-autocomplete')) ?>
+          ->renderRow(['class' => 'form-autocomplete']) ?>
 
         <?php echo $form->translate
           ->label(__('Allowed languages for translation'))
-          ->renderRow(array('class' => 'form-autocomplete')) ?>
+          ->renderRow(['class' => 'form-autocomplete']) ?>
 
         <?php if ($restEnabled): ?>
           <?php echo $form->restApiKey
@@ -111,10 +111,10 @@ EOF
     <section class="actions">
       <ul>
         <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
-          <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'user'), array('class' => 'c-btn')) ?></li>
+          <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'user'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
         <?php else: ?>
-          <li><?php echo link_to(__('Cancel'), array('module' => 'user', 'action' => 'list'), array('class' => 'c-btn')) ?></li>
+          <li><?php echo link_to(__('Cancel'), ['module' => 'user', 'action' => 'list'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create') ?>"/></li>
         <?php endif; ?>
       </ul>

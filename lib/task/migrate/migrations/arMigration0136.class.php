@@ -48,7 +48,7 @@ class arMigration0136
       $setting->scope = 'access_statement';
       foreach ($accessDisallowWarningI18nValues as $langCode => $value)
       {
-        $setting->setValue($value, array('culture' => $langCode));
+        $setting->setValue($value, ['culture' => $langCode]);
       }
       $setting->save();
 
@@ -57,13 +57,13 @@ class arMigration0136
       $setting->scope = 'access_statement';
       foreach ($accessConditionalWarningI18nValues as $langCode => $value)
       {
-        $setting->setValue($value, array('culture' => $langCode));
+        $setting->setValue($value, ['culture' => $langCode]);
       }
       $setting->save();
     }
 
     // Delete UI labels access_disallow_warning and access_conditional_warning
-    foreach (array('access_disallow_warning', 'access_conditional_warning') as $item)
+    foreach (['access_disallow_warning', 'access_conditional_warning'] as $item)
     {
       $setting = QubitSetting::getByNameAndScope($item, 'ui_label');
       if (null !== $setting)
@@ -81,9 +81,9 @@ class arMigration0136
    */
   protected function getSettingI18nValues($name, $scope)
   {
-    $values = array();
+    $values = [];
     $sql = "SELECT `setting_i18n`.`value`, `setting_i18n`.`culture` FROM `setting` LEFT JOIN `setting_i18n` ON (`setting`.`id` = `setting_i18n`.`id`) WHERE `setting`.`name` = ? AND `setting`.`scope` = ?;";
-    foreach (QubitPdo::fetchAll($sql, array($name, $scope)) as $item)
+    foreach (QubitPdo::fetchAll($sql, [$name, $scope]) as $item)
     {
       if (empty($item->value))
       {

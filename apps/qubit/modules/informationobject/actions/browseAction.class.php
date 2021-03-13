@@ -28,7 +28,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
   public const INDEX_TYPE = 'QubitInformationObject';
 
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'copyrightStatus',
       'onlyMedia',
       'levels',
@@ -40,69 +40,69 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
       'topLod',
       'rangeType',
       'findingAidStatus'
-    );
-  public static $FILTERTAGS = array(
-      'repos'            => array('model' => 'QubitRepository'),
-      'collection'       => array('model' => 'QubitInformationObject'),
-      'creators'         => array('model' => 'QubitActor'),
-      'names'            => array('model' => 'QubitActor'),
-      'places'           => array('model' => 'QubitTerm'),
-      'levels'           => array('model' => 'QubitTerm'),
-      'subjects'         => array('model' => 'QubitTerm'),
-      'mediatypes'       => array('model' => 'QubitTerm'),
-      'copyrightStatus'  => array('model' => 'QubitTerm'),
-      'materialType'     => array('model' => 'QubitTerm'),
-      'onlyMedia'        => array(),
-      'languages'        => array(),
-      'dateRange'        => array('params' => array('startDate', 'endDate'), 'operator' => 'or'),
-      'findingAidStatus' => array(),
-      'ancestor'         => array('model' => 'QubitInformationObject')
-    );
-  public static $AGGS = array(
+    ];
+  public static $FILTERTAGS = [
+      'repos'            => ['model' => 'QubitRepository'],
+      'collection'       => ['model' => 'QubitInformationObject'],
+      'creators'         => ['model' => 'QubitActor'],
+      'names'            => ['model' => 'QubitActor'],
+      'places'           => ['model' => 'QubitTerm'],
+      'levels'           => ['model' => 'QubitTerm'],
+      'subjects'         => ['model' => 'QubitTerm'],
+      'mediatypes'       => ['model' => 'QubitTerm'],
+      'copyrightStatus'  => ['model' => 'QubitTerm'],
+      'materialType'     => ['model' => 'QubitTerm'],
+      'onlyMedia'        => [],
+      'languages'        => [],
+      'dateRange'        => ['params' => ['startDate', 'endDate'], 'operator' => 'or'],
+      'findingAidStatus' => [],
+      'ancestor'         => ['model' => 'QubitInformationObject']
+    ];
+  public static $AGGS = [
       'languages' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'i18n.languages',
-              'size' => 10),
+              'size' => 10],
       'levels' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'levelOfDescriptionId',
-              'size' => 10),
+              'size' => 10],
       'mediatypes' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'digitalObject.mediaTypeId',
-              'size' => 10),
+              'size' => 10],
       'digitalobjects' =>
-        array('type' => 'filter',
-              'field' => array('hasDigitalObject' => true),
-              'populate' => false),
+        ['type' => 'filter',
+              'field' => ['hasDigitalObject' => true],
+              'populate' => false],
       'repos' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'repository.id',
-              'size' => 10),
+              'size' => 10],
       'places' =>
-        array('type'   => 'term',
+        ['type'   => 'term',
               'field'  => 'places.id',
-              'size'   => 10),
+              'size'   => 10],
       'subjects' =>
-        array('type'   => 'term',
+        ['type'   => 'term',
               'field'  => 'subjects.id',
-              'size'   => 10),
+              'size'   => 10],
       'genres' =>
-        array('type'   => 'term',
+        ['type'   => 'term',
               'field'  => 'genres.id',
-              'size'   => 10),
+              'size'   => 10],
       'creators' =>
-        array('type'   => 'term',
+        ['type'   => 'term',
               'field'  => 'creators.id',
-              'size'   => 10),
+              'size'   => 10],
       'names' =>
-        array('type'   => 'term',
+        ['type'   => 'term',
               'field'  => 'names.id',
-              'size'   => 10),
+              'size'   => 10],
       'collection' =>
-        array('type'   => 'term',
+        ['type'   => 'term',
               'field'  => 'partOf.id',
-              'size'   => 10));
+              'size'   => 10]];
 
   public function execute($request)
   {
@@ -173,7 +173,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     $this->template = 'isad';
     if (null !== $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template'))
     {
-      $this->template = $infoObjectTemplate->getValue(array('sourceCulture'=>true));
+      $this->template = $infoObjectTemplate->getValue(['sourceCulture'=>true]);
     }
 
     // Add print preview style
@@ -222,39 +222,39 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     {
       // Sort by highest ES score
       case 'relevance':
-        $this->search->query->addSort(array('_score' => $request->sortDir));
+        $this->search->query->addSort(['_score' => $request->sortDir]);
 
         break;
 
       case 'identifier':
-        $this->search->query->addSort(array('identifier.untouched' => $request->sortDir));
+        $this->search->query->addSort(['identifier.untouched' => $request->sortDir]);
 
         break;
 
       case 'referenceCode':
-        $this->search->query->addSort(array('referenceCode.untouched' => $request->sortDir));
+        $this->search->query->addSort(['referenceCode.untouched' => $request->sortDir]);
 
         break;
 
       case 'alphabetic':
         $field = sprintf('i18n.%s.title.alphasort', $this->selectedCulture);
-        $this->search->query->addSort(array($field => $request->sortDir));
+        $this->search->query->addSort([$field => $request->sortDir]);
 
         break;
 
       case 'startDate':
-        $this->search->query->setSort(array('startDateSort' => $request->sortDir));
+        $this->search->query->setSort(['startDateSort' => $request->sortDir]);
 
         break;
 
       case 'endDate':
-        $this->search->query->setSort(array('endDateSort' => $request->sortDir));
+        $this->search->query->setSort(['endDateSort' => $request->sortDir]);
 
         break;
 
       case 'lastUpdated':
       default:
-        $this->search->query->setSort(array('updatedAt' => $request->sortDir));
+        $this->search->query->setSort(['updatedAt' => $request->sortDir]);
     }
 
     $this->setView($request);
@@ -277,7 +277,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
       case 'copyrightStatus':
         $this->form->setValidator($name, new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::COPYRIGHT_STATUS_ID) as $item)
         {
@@ -285,19 +285,19 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         }
 
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'onlyMedia':
-        $choices = array(
+        $choices = [
           ''  => '',
           '1' => $this->context->i18n->__('Yes'),
           '0' => $this->context->i18n->__('No')
-        );
+        ];
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
@@ -309,15 +309,15 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitTerm');
         $criteria->addAscendingOrderByColumn('name');
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTerm::get($criteria) as $item)
         {
           $choices[$item->id] = $item->__toString();
         }
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
@@ -329,15 +329,15 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitTerm');
         $criteria->addAscendingOrderByColumn('name');
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTerm::get($criteria) as $item)
         {
           $choices[$item->id] = $item->__toString();
         }
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
@@ -361,7 +361,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         }
         else
         {
-          $choices = array();
+          $choices = [];
           $choices[null] = null;
           foreach (QubitRepository::get($criteria) as $repository)
           {
@@ -371,50 +371,50 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
           $cache->set($cacheKey, $choices, 3600);
         }
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'collection':
         $this->form->setValidator($name, new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         if (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection'])
           && null !== $collection = QubitInformationObject::getById($this->getParameters['collection']))
         {
-          sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
+          sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
           $collectionUrl = url_for($collection);
 
           $this->form->setDefault($name, $collectionUrl);
           $choices[$collectionUrl] = $collection;
         }
 
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 
       case 'startDate':
       case 'endDate':
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput(array(), array('placeholder' => 'YYYY-MM-DD')));
-        $this->form->setValidator($name, new sfValidatorDate(array(
+        $this->form->setWidget($name, new sfWidgetFormInput([], ['placeholder' => 'YYYY-MM-DD']));
+        $this->form->setValidator($name, new sfValidatorDate([
           'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
-          'date_format_error' => 'YYYY-MM-DD')));
+          'date_format_error' => 'YYYY-MM-DD']));
 
         break;
 
       case 'findingAidStatus':
-        $choices = array(
+        $choices = [
           ''  => '',
           'yes' => $this->context->i18n->__('Yes'),
           'no' => $this->context->i18n->__('No'),
           'generated' => $this->context->i18n->__('Generated'),
           'uploaded' => $this->context->i18n->__('Uploaded')
-        );
+        ];
 
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
     }
@@ -447,7 +447,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
         foreach (QubitTerm::get($criteria) as $item)
         {
-          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(array('cultureFallback' => true));
+          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
         }
 
         break;
@@ -493,13 +493,13 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     // - actorId, eventTypeId and ancestor params
     $allowed = array_merge(
       array_keys($this::$AGGS),
-      array('view', 'sort', 'media'),
-      array('actorId', 'eventTypeId', 'ancestor')
+      ['view', 'sort', 'media'],
+      ['actorId', 'eventTypeId', 'ancestor']
     );
 
     // But ignore aggs already included in the form:
     // - repos, collection and levels
-    $ignored = array('repos', 'collection', 'levels');
+    $ignored = ['repos', 'collection', 'levels'];
 
     $this->setHiddenFields($request, $allowed, $ignored);
   }
@@ -552,12 +552,12 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     // Set label for finding aid status
     if (!empty($request->findingAidStatus))
     {
-      $labels = array(
+      $labels = [
         'yes'       => $i18n->__('With finding aid'),
         'no'        => $i18n->__('Without finding aid'),
         'generated' => $i18n->__('With generated finding aid'),
         'uploaded'  => $i18n->__('With uploaded finding aid')
-      );
+      ];
 
       $this->setFilterTagLabel('findingAidStatus', $labels[$request->findingAidStatus]);
     }
@@ -570,7 +570,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
   {
     $this->cardView = 'card';
     $this->tableView = 'table';
-    $allowedViews = array($this->cardView, $this->tableView);
+    $allowedViews = [$this->cardView, $this->tableView];
 
     if (isset($request->view) && in_array($request->view, $allowedViews))
     {

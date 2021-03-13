@@ -27,8 +27,8 @@
  */
 class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
 {
-  protected $messageSource = array();
-  protected $sourceFiles = array();
+  protected $messageSource = [];
+  protected $sourceFiles = [];
 
   /**
    * Override sfI18nApplicationExtract::configure() so we extract from plugin
@@ -40,7 +40,7 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
     // that have been explicilty enabled, including those set in the database.
     // That was causing this task to produce files with less strings than the
     // expected.
-    $dirs = array(sfConfig::get('sf_app_i18n_dir'));
+    $dirs = [sfConfig::get('sf_app_i18n_dir')];
     $plugins = sfFinder::type('dir')->name('i18n')->maxdepth(1)->not_name('.')->in(sfConfig::get('sf_plugins_dir'));
     foreach ($plugins as $plugin)
     {
@@ -69,11 +69,11 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
     $modules = sfFinder::type('dir')->maxdepth(0)->in(sfConfig::get('sf_app_module_dir'));
     foreach ($modules as $module)
     {
-      $this->extractFromPhpFiles(array(
+      $this->extractFromPhpFiles([
         $module.'/actions',
         $module.'/lib',
         $module.'/templates',
-      ));
+      ]);
     }
 
     // Extract plugin strings
@@ -83,11 +83,11 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
       // XLIFFs
       foreach (sfFinder::type('dir')->maxdepth(0)->in($plugin.'/modules') as $piModule)
       {
-        $this->extractFromPhpFiles(array(
+        $this->extractFromPhpFiles([
           $piModule.'/actions',
           $piModule.'/lib',
           $piModule.'/templates',
-        ));
+        ]);
       }
     }
   }
@@ -98,8 +98,8 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
    */
   public function save()
   {
-    $messages = array();
-    $translates = array();
+    $messages = [];
+    $translates = [];
 
     // Get messages from the current message source
     foreach ($this->i18n->getMessageSource()->read() as $catalogue => $translations)
@@ -164,7 +164,7 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
     $phpExtractor = new sfI18nPhpExtractor();
 
     $files = sfFinder::type('file')->name('*.php');
-    $messages = array();
+    $messages = [];
     foreach ($files->in($dir) as $file)
     {
       $extracted = $phpExtractor->extract(file_get_contents($file));
@@ -201,7 +201,7 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
       return;
     }
 
-    $translations = array();
+    $translations = [];
     foreach ($files as $file)
     {
       $yaml = new sfYaml();
@@ -254,10 +254,10 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
           }
 
           // Mimic XLIFF translation array structure: (target, id, note)
-          $translations[$values['en']] = array(
+          $translations[$values['en']] = [
             $target,
             null,
-            str_replace(sfConfig::get('sf_web_dir'), 'https://github.com/artefactual/atom/blob/master', $file));
+            str_replace(sfConfig::get('sf_web_dir'), 'https://github.com/artefactual/atom/blob/master', $file)];
         }
       }
     }

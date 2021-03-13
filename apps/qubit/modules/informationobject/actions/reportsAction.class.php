@@ -20,18 +20,18 @@
 class InformationObjectReportsAction extends sfAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'report'
-    );
+    ];
 
   public function execute($request)
   {
-    $this->typeLabels = array(
+    $this->typeLabels = [
       'fileList' => $this->context->i18n->__('File list'),
       'itemList' => $this->context->i18n->__('Item list'),
       'storageLocations' => $this->context->i18n->__('Physical storage locations'),
       'boxLabel' => $this->context->i18n->__('Box label')
-    );
+    ];
 
     $this->resource = $this->getRoute()->resource;
     $this->getExistingReports();
@@ -65,27 +65,27 @@ class InformationObjectReportsAction extends sfAction
       case 'report':
 
         // Hide if DC or MODS since they don't use such levels of description
-        if (!in_array($this->resource->sourceStandard, array('Dublin Core Simple version 1.1', 'MODS version 3.3')))
+        if (!in_array($this->resource->sourceStandard, ['Dublin Core Simple version 1.1', 'MODS version 3.3']))
         {
-          $choices = array();
+          $choices = [];
 
           if ($this->resource->containsLevelOfDescription('File')) {
-            $choices[$this->context->routing->generate(null, array($this->resource, 'module' => 'informationobject', 'action' => 'itemOrFileList', 'type' => 'file'))] = $this->context->i18n->__('File list');
+            $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'itemOrFileList', 'type' => 'file'])] = $this->context->i18n->__('File list');
           }
 
           if ($this->resource->containsLevelOfDescription('Item')) {
-            $choices[$this->context->routing->generate(null, array($this->resource, 'module' => 'informationobject', 'action' => 'itemOrFileList', 'type' => 'item'))] = $this->context->i18n->__('Item list');
+            $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'itemOrFileList', 'type' => 'item'])] = $this->context->i18n->__('Item list');
           }
         }
         else
         {
-          $choices = array();
+          $choices = [];
         }
 
         if ($this->getUser()->isAuthenticated())
         {
-          $choices[$this->context->routing->generate(null, array($this->resource, 'module' => 'informationobject', 'action' => 'storageLocations'))] = $this->context->i18n->__('Physical storage locations');
-          $choices[$this->context->routing->generate(null, array($this->resource, 'module' => 'informationobject', 'action' => 'boxLabel'))] = $this->context->i18n->__('Box label');
+          $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'storageLocations'])] = $this->context->i18n->__('Physical storage locations');
+          $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'boxLabel'])] = $this->context->i18n->__('Box label');
         }
 
         $this->reportsAvailable = !empty($choices);
@@ -94,10 +94,10 @@ class InformationObjectReportsAction extends sfAction
         {
           $available_routes = array_keys($choices);
           $this->form->setDefault($name, $available_routes[0]);
-          $this->form->setValidator($name, new sfValidatorChoice(array('choices' => $available_routes)));
-          $this->form->setWidget($name, new sfWidgetFormChoice(array(
+          $this->form->setValidator($name, new sfValidatorChoice(['choices' => $available_routes]));
+          $this->form->setWidget($name, new sfWidgetFormChoice([
             'expanded' => true,
-            'choices' => $choices)));
+            'choices' => $choices]));
         }
 
         break;
@@ -106,9 +106,9 @@ class InformationObjectReportsAction extends sfAction
 
   private function getExistingReports()
   {
-    $formats = array('csv', 'html');
+    $formats = ['csv', 'html'];
     $types = array_keys($this->typeLabels);
-    $this->existingReports = array();
+    $this->existingReports = [];
 
     foreach ($types as $type)
     {
@@ -119,16 +119,16 @@ class InformationObjectReportsAction extends sfAction
         if (file_exists($path))
         {
           if (!sfContext::getInstance()->user->isAuthenticated() &&
-              in_array($type, array('storageLocations', 'boxLabel')))
+              in_array($type, ['storageLocations', 'boxLabel']))
           {
             continue;
           }
 
-          $this->existingReports[] = array(
+          $this->existingReports[] = [
             'path' => sfConfig::get('app_siteBaseUrl').'/'.$path,
             'type' => $this->typeLabels[$type],
             'format' => strtoupper($format),
-          );
+          ];
         }
       }
     }

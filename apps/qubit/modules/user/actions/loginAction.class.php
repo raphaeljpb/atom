@@ -45,20 +45,20 @@ class UserLoginAction extends sfAction
     // Use string validation if LDAP authentication's used as email not used to log in
     if ($this->context->user instanceof ldapUser)
     {
-      $this->form->setValidator('email', new sfValidatorString(array('required' => true), array(
-        'required' => $this->context->i18n->__('You must enter your username'))));
+      $this->form->setValidator('email', new sfValidatorString(['required' => true], [
+        'required' => $this->context->i18n->__('You must enter your username')]));
     }
     else
     {
-      $this->form->setValidator('email', new sfValidatorEmail(array('required' => true), array(
+      $this->form->setValidator('email', new sfValidatorEmail(['required' => true], [
         'required' => $this->context->i18n->__('You must enter your email address'),
-        'invalid' => $this->context->i18n->__('This isn\'t a valid email address'))));
+        'invalid' => $this->context->i18n->__('This isn\'t a valid email address')]));
     }
 
     $this->form->setWidget('email', new sfWidgetFormInput());
 
-    $this->form->setValidator('password', new sfValidatorString(array('required' => true), array(
-      'required' => $this->context->i18n->__('You must enter your password'))));
+    $this->form->setValidator('password', new sfValidatorString(['required' => true], [
+      'required' => $this->context->i18n->__('You must enter your password')]));
     $this->form->setWidget('password', new sfWidgetFormInputPassword());
 
     if ($request->isMethod('post'))
@@ -95,7 +95,7 @@ class UserLoginAction extends sfAction
 
   private function getDraftNotificationText($draftCount)
   {
-    $draftUrl = $this->context->routing->generate(null, array(
+    $draftUrl = $this->context->routing->generate(null, [
       'module' => 'search',
       'action' => 'descriptionUpdates',
       'limit' => 10,
@@ -103,8 +103,8 @@ class UserLoginAction extends sfAction
       'className' => 'QubitInformationObject',
       'dateOf' => 'CREATED_AT',
       'publicationStatus' => QubitTerm::PUBLICATION_STATUS_DRAFT_ID,
-    ));
+    ]);
 
-    return $this->context->i18n->__('%1% draft(s) available (visit %2%newest additions%3% page to browse them)', array('%1%' => $draftCount, '%2%' => '<a href="'. $draftUrl .'">', '%3%' => '</a>'));
+    return $this->context->i18n->__('%1% draft(s) available (visit %2%newest additions%3% page to browse them)', ['%1%' => $draftCount, '%2%' => '<a href="'. $draftUrl .'">', '%3%' => '</a>']);
   }
 }

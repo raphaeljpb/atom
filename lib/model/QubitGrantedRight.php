@@ -105,7 +105,7 @@ class QubitGrantedRight extends BaseGrantedRight
   public static function getPremisSettings()
   {
     $premisAccessRight = QubitSetting::getByName('premisAccessRight');
-    $act = QubitTaxonomy::getBySlug($premisAccessRight->getValue(array('sourceCulture' => true)));
+    $act = QubitTaxonomy::getBySlug($premisAccessRight->getValue(['sourceCulture' => true]));
 
     if ($act === null)
     {
@@ -128,7 +128,7 @@ class QubitGrantedRight extends BaseGrantedRight
      */
     $permissions = QubitSetting::getByName('premisAccessRightValues');
 
-    return array($act->id, unserialize($permissions->getValue(array('sourceCulture' => true))));
+    return [$act->id, unserialize($permissions->getValue(['sourceCulture' => true]))];
   }
 
   /**
@@ -139,11 +139,11 @@ class QubitGrantedRight extends BaseGrantedRight
    */
   public static function getRestrictionString($restrictionId)
   {
-    $mapConst = array(
+    $mapConst = [
       self::DENY_RIGHT => 'Disallow',
       self::GRANT_RIGHT => 'Allow',
       self::CONDITIONAL_RIGHT => 'Conditional'
-    );
+    ];
 
     if (!array_key_exists($restrictionId, $mapConst))
     {
@@ -192,11 +192,11 @@ class QubitGrantedRight extends BaseGrantedRight
     list($actId, $premisPerms) = self::getPremisSettings();
     $grantedRights = self::getByObjectIdAndAct($id, $actId);
 
-    $groupIds = array(
+    $groupIds = [
       QubitAclGroup::AUTHENTICATED_ID,
       QubitAclGroup::ADMINISTRATOR_ID,
       QubitAclGroup::ANONYMOUS_ID
-    );
+    ];
 
     if ($id == QubitInformationObject::ROOT_ID)
     {
@@ -277,6 +277,6 @@ class QubitGrantedRight extends BaseGrantedRight
       return false;
     }
 
-    return $setting->getValue(array('cultureFallback' => true));
+    return $setting->getValue(['cultureFallback' => true]);
   }
 }

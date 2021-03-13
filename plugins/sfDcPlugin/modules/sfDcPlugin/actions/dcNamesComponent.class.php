@@ -19,19 +19,19 @@
 
 class sfDcPluginDcNamesComponent extends InformationObjectEventComponent
 {
-  public static $NAMES = array(
+  public static $NAMES = [
       'actor',
-      'type');
+      'type'];
 
   public function processForm()
   {
-    $params = array();
+    $params = [];
     if (isset($this->request->editNames))
     {
       $params = $this->request->editNames;
     }
 
-    $dontDeleteIds = array();
+    $dontDeleteIds = [];
     foreach ($params as $item)
     {
       if (isset($item['id']))

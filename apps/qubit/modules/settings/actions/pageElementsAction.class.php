@@ -29,7 +29,7 @@
 
 class SettingsPageElementsAction extends sfAction
 {
-  public static $NAMES = array(
+  public static $NAMES = [
       'toggleDescription',
       'toggleLogo',
       'toggleTitle',
@@ -38,11 +38,11 @@ class SettingsPageElementsAction extends sfAction
       'toggleDigitalObjectMap',
       'toggleCopyrightFilter',
       'toggleMaterialFilter'
-    );
+    ];
 
   public function execute($request)
   {
-    $settings = array();
+    $settings = [];
     $this->form = new sfForm();
 
     // Take note if a Google Maps API key has been set
@@ -57,7 +57,7 @@ class SettingsPageElementsAction extends sfAction
       // Disable checkbox to show digital object maps if it's not currently enabled and no Google Maps API key is defined
       if ($name == 'toggleDigitalObjectMap' && empty($toggleDigitalObjectMapSetting->value) && empty($googleMapsApiKeySetting->value))
       {
-        $this->form->setWidget($name, new sfWidgetFormInputCheckbox(array(), array('class' => 'disabled', 'disabled' => true)));
+        $this->form->setWidget($name, new sfWidgetFormInputCheckbox([], ['class' => 'disabled', 'disabled' => true]));
       }
       else
       {
@@ -68,7 +68,7 @@ class SettingsPageElementsAction extends sfAction
 
       if (null !== $settings[$name] = QubitSetting::getByName($name))
       {
-        $this->form->setDefault($name, filter_var($settings[$name]->__get('value', array('sourceCulture' => true)), FILTER_VALIDATE_BOOLEAN));
+        $this->form->setDefault($name, filter_var($settings[$name]->__get('value', ['sourceCulture' => true]), FILTER_VALIDATE_BOOLEAN));
       }
     }
     if ($request->isMethod('post'))
@@ -88,7 +88,7 @@ class SettingsPageElementsAction extends sfAction
           $settings[$name]->name = $name;
         }
 
-        $settings[$name]->__set('value', filter_var($this->form->getValue($name), FILTER_VALIDATE_BOOLEAN), array('sourceCulture' => true));
+        $settings[$name]->__set('value', filter_var($this->form->getValue($name), FILTER_VALIDATE_BOOLEAN), ['sourceCulture' => true]);
         $settings[$name]->save();
       }
 
@@ -99,7 +99,7 @@ class SettingsPageElementsAction extends sfAction
 
       // Redirect to display changes in the interface
       // because the settings are added to sfConfig in a filter
-      $this->redirect(array('module' => 'settings', 'action' => 'pageElements'));
+      $this->redirect(['module' => 'settings', 'action' => 'pageElements']);
     }
   }
 }

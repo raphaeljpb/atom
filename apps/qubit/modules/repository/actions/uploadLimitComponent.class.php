@@ -31,7 +31,7 @@ class RepositoryUploadLimitComponent extends sfComponent
 
     if (isset($this->resource) && 'QubitInformationObject' == get_class($this->resource))
     {
-      $this->resource = $this->resource->getRepository(array('inherit' => true));
+      $this->resource = $this->resource->getRepository(['inherit' => true]);
     }
 
     if (!isset($this->resource) || !QubitAcl::check($this->resource, 'update'))
@@ -56,10 +56,10 @@ class RepositoryUploadLimitComponent extends sfComponent
 
     // Usage bar defaults
     $this->usageBarPixels = 0;
-    $this->usageBarColors = array(
+    $this->usageBarColors = [
       'default' => '#390',
       'warning' => '#C33'
-    );
+    ];
 
     // Hide edit component for ajax response
     if (!isset($this->noedit))

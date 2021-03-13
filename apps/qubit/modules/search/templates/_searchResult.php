@@ -9,7 +9,7 @@
 
   <?php if (!empty($doc['hasDigitalObject'])): ?>
     <div class="search-result-preview">
-      <a href="<?php echo url_for(array('module' => 'informationobject', 'slug' => $doc['slug'])) ?>">
+      <a href="<?php echo url_for(['module' => 'informationobject', 'slug' => $doc['slug']]) ?>">
         <div class="preview-container">
           <?php if (
               isset($doc['digitalObject']['thumbnailPath']) &&
@@ -17,10 +17,10 @@
             ):
           ?>
             <?php echo image_tag($doc['digitalObject']['thumbnailPath'],
-              array('alt' => isset($doc['digitalObject']['digitalObjectAltText']) ? $doc['digitalObject']['digitalObjectAltText'] : truncate_text(strip_markdown(get_search_i18n($doc, 'title', array('allowEmpty' => false, 'culture' => $culture))), 100))) ?>
+              ['alt' => isset($doc['digitalObject']['digitalObjectAltText']) ? $doc['digitalObject']['digitalObjectAltText'] : truncate_text(strip_markdown(get_search_i18n($doc, 'title', ['allowEmpty' => false, 'culture' => $culture])), 100)]) ?>
           <?php else: ?>
             <?php echo image_tag(QubitDigitalObject::getGenericIconPathByMediaTypeId($doc['digitalObject']['mediaTypeId']),
-              array('alt' => isset($doc['digitalObject']['digitalObjectAltText']) ? $doc['digitalObject']['digitalObjectAltText'] : truncate_text(strip_markdown(get_search_i18n($doc, 'title', array('allowEmpty' => false, 'culture' => $culture))), 100))) ?>
+              ['alt' => isset($doc['digitalObject']['digitalObjectAltText']) ? $doc['digitalObject']['digitalObjectAltText'] : truncate_text(strip_markdown(get_search_i18n($doc, 'title', ['allowEmpty' => false, 'culture' => $culture])), 100)]) ?>
           <?php endif; ?>
         </div>
       </a>
@@ -29,9 +29,9 @@
 
   <div class="search-result-description">
 
-    <p class="title"><?php echo link_to(render_title(get_search_i18n($doc, 'title', array('allowEmpty' => false, 'culture' => $culture))), array('module' => 'informationobject', 'slug' => $doc['slug'])) ?></p>
+    <p class="title"><?php echo link_to(render_title(get_search_i18n($doc, 'title', ['allowEmpty' => false, 'culture' => $culture])), ['module' => 'informationobject', 'slug' => $doc['slug']]) ?></p>
 
-    <?php echo get_component('clipboard', 'button', array('slug' => $doc['slug'], 'wide' => false, 'type' => 'informationObject')) ?>
+    <?php echo get_component('clipboard', 'button', ['slug' => $doc['slug'], 'wide' => false, 'type' => 'informationObject']) ?>
 
     <ul class="result-details">
 
@@ -58,12 +58,12 @@
       <?php endif; ?>
       <?php if (isset($doc['partOf'])): ?>
         <p><?php echo __('Part of '), link_to(render_title(get_search_i18n($doc['partOf'], 'title',
-                 array('allowEmpty' => false, 'culture' => $culture, 'cultureFallback' => true))),
-                 array('slug' => $doc['partOf']['slug'], 'module' => 'informationobject')) ?></p>
+                 ['allowEmpty' => false, 'culture' => $culture, 'cultureFallback' => true])),
+                 ['slug' => $doc['partOf']['slug'], 'module' => 'informationobject']) ?></p>
       <?php endif; ?>
     </ul>
 
-    <?php if (null !== $scopeAndContent = get_search_i18n($doc, 'scopeAndContent', array('culture' => $culture))): ?>
+    <?php if (null !== $scopeAndContent = get_search_i18n($doc, 'scopeAndContent', ['culture' => $culture])): ?>
       <div class="scope-and-content"><?php echo render_value($scopeAndContent) ?></div>
     <?php endif; ?>
 

@@ -31,7 +31,7 @@ class AclGroupIndexRepositoryAclAction extends sfAction
     }
 
     // Add roles
-    $this->roles = array();
+    $this->roles = [];
     foreach ($this->group->getAncestorsAndSelfForAcl() as $group)
     {
       // Omit ROOT group
@@ -56,7 +56,7 @@ class AclGroupIndexRepositoryAclAction extends sfAction
     $criteria->add($c1);
 
     // Build ACL
-    $this->acl = array();
+    $this->acl = [];
     if (0 < count($permissions = QubitAclPermission::get($criteria)))
     {
       foreach ($permissions as $permission)

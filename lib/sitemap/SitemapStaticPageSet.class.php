@@ -28,7 +28,7 @@ LEFT JOIN object O ON (ST.id = O.id)
 LEFT JOIN slug S ON (ST.id = S.object_id)
 EOF;
 
-    $this->rec = $this->conn->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $this->rec = $this->conn->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $this->rec->setFetchMode(PDO::FETCH_INTO, new SitemapStaticPageUrl());
     $this->rec->execute();
   }

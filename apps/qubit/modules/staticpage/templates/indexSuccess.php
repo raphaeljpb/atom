@@ -9,7 +9,7 @@
 <?php decorate_with($layout) ?>
 
 <?php slot('title') ?>
-  <h1><?php echo render_title($resource->getTitle(array('cultureFallback' => true))) ?></h1>
+  <h1><?php echo render_title($resource->getTitle(['cultureFallback' => true])) ?></h1>
 <?php end_slot() ?>
 
 <div class="page">
@@ -24,9 +24,9 @@
   <?php slot('after-content') ?>
       <section class="actions">
         <ul>
-          <li><?php echo link_to(__('Edit'), array($resource, 'module' => 'staticpage', 'action' => 'edit'), array('class' => 'c-btn c-btn-submit', 'title' => __('Edit this page'))) ?></li>
+          <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'staticpage', 'action' => 'edit'], ['class' => 'c-btn c-btn-submit', 'title' => __('Edit this page')]) ?></li>
           <?php if (QubitAcl::check($resource, 'delete')): ?>
-            <li><?php echo link_to(__('Delete'), array($resource, 'module' => 'staticpage', 'action' => 'delete'), array('class' => 'c-btn c-btn-delete')) ?></li>
+            <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'staticpage', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete']) ?></li>
           <?php endif; ?>
         </ul>
       </section>

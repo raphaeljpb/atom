@@ -29,54 +29,54 @@ class propelGenerateSlugsTask extends arBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
     $databaseManager = new sfDatabaseManager($this->configuration);
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
-    $classesData = array(
-      'QubitAccession' => array(
+    $classesData = [
+      'QubitAccession' => [
         'select'    => 'SELECT base.id, base.identifier',
-        'i18nQuery' => false),
-      'QubitActor' => array(
+        'i18nQuery' => false],
+      'QubitActor' => [
         'select'    => 'SELECT base.id, i18n.authorized_form_of_name',
-        'i18nQuery' => true),
-      'QubitDeaccession' => array(
+        'i18nQuery' => true],
+      'QubitDeaccession' => [
         'select'    => 'SELECT base.id, base.identifier',
-        'i18nQuery' => false),
-      'QubitDigitalObject' => array(
+        'i18nQuery' => false],
+      'QubitDigitalObject' => [
         'select'    => 'SELECT base.id, base.name',
-        'i18nQuery' => false),
-      'QubitEvent' => array(
+        'i18nQuery' => false],
+      'QubitEvent' => [
         'select'    => 'SELECT base.id, i18n.name',
-        'i18nQuery' => true),
-      'QubitFunctionObject' => array(
+        'i18nQuery' => true],
+      'QubitFunctionObject' => [
         'select'    => 'SELECT base.id, i18n.authorized_form_of_name',
-        'i18nQuery' => true),
-      'QubitInformationObject' => array(
+        'i18nQuery' => true],
+      'QubitInformationObject' => [
         'select'    => 'SELECT base.id, i18n.title',
-        'i18nQuery' => true),
-      'QubitPhysicalObject' => array(
+        'i18nQuery' => true],
+      'QubitPhysicalObject' => [
         'select'    => 'SELECT base.id, i18n.name',
-        'i18nQuery' => true),
-      'QubitRelation' => array(
+        'i18nQuery' => true],
+      'QubitRelation' => [
         'select'    => 'SELECT base.id',
-        'i18nQuery' => false),
-      'QubitRights' => array(
+        'i18nQuery' => false],
+      'QubitRights' => [
         'select'    => 'SELECT base.id',
-        'i18nQuery' => false),
-      'QubitStaticPage' => array(
+        'i18nQuery' => false],
+      'QubitStaticPage' => [
         'select'    => 'SELECT base.id, i18n.title',
-        'i18nQuery' => true),
-      'QubitTaxonomy' => array(
+        'i18nQuery' => true],
+      'QubitTaxonomy' => [
         'select'    => 'SELECT base.id, i18n.name',
-        'i18nQuery' => true),
-      'QubitTerm' => array(
+        'i18nQuery' => true],
+      'QubitTerm' => [
         'select'    => 'SELECT base.id, i18n.name',
-        'i18nQuery' => true)
-    );
+        'i18nQuery' => true]
+    ];
 
     // Optionally delete existing slugs
     if ($options['delete'])
@@ -114,7 +114,7 @@ class propelGenerateSlugsTask extends arBaseTask
       $table = constant($class.'::TABLE_NAME');
 
       $this->logSection('propel', "Generate $table slugs...");
-      $newRows = array(); // reset
+      $newRows = []; // reset
 
       $sql = $data['select'].' FROM '.$table.' base';
 
@@ -165,14 +165,14 @@ class propelGenerateSlugsTask extends arBaseTask
         $slug .= $suffix;
 
         $this->slugs[$slug] = true; // Add to lookup table
-        $newRows[] = array($row[0], $slug); // To add to slug table
+        $newRows[] = [$row[0], $slug]; // To add to slug table
       }
 
       // Do inserts
       $inc = 1000;
       for ($i = 0; $i < count($newRows); $i += $inc)
       {
-        $values = array();
+        $values = [];
         $sql = "INSERT INTO slug (object_id, slug) VALUES ";
 
         $last = min($i+$inc, count($newRows));
@@ -201,15 +201,15 @@ class propelGenerateSlugsTask extends arBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
-    ));
+    $this->addArguments([
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('delete', null, sfCommandOption::PARAMETER_NONE, 'Delete existing slugs before generating'),
-    ));
+    ]);
 
     $this->namespace = 'propel';
     $this->name = 'generate-slugs';
@@ -297,7 +297,7 @@ EOF;
     $query = new \Elastica\Query();
     $queryBool = new \Elastica\Query\BoolQuery();
 
-    $queryBool->addMust(new \Elastica\Query\Term(array('_id' => $id)));
+    $queryBool->addMust(new \Elastica\Query\Term(['_id' => $id]));
     $query->setQuery($queryBool);
     $query->setSize(1);
 

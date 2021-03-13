@@ -11,11 +11,11 @@
   <div>
     <ul>
       <?php if (isset($showActorEvents) || isset($sidebar)): ?>
-        <?php $actorsShown = array(); ?>
+        <?php $actorsShown = []; ?>
         <?php foreach ($resource->getActorEvents() as $item): ?>
           <?php if (isset($sidebar) || $item->type->id != QubitTerm::CREATION_ID): ?>
             <?php if (isset($item->actor) && !isset($actorsShown[$item->actor->id])): ?>
-              <li><?php echo link_to(render_title($item->actor), array($item->actor)) ?> <span class="note2">(<?php echo render_value_inline($item->type->getRole()) ?>)</span></li>
+              <li><?php echo link_to(render_title($item->actor), [$item->actor]) ?> <span class="note2">(<?php echo render_value_inline($item->type->getRole()) ?>)</span></li>
               <?php $actorsShown[$item->actor->id] = true; ?>
             <?php endif; ?>
           <?php endif; ?>
@@ -24,7 +24,7 @@
 
       <?php foreach ($resource->relationsRelatedBysubjectId as $item): ?>
         <?php if (isset($item->type) && QubitTerm::NAME_ACCESS_POINT_ID == $item->type->id): ?>
-          <li><?php echo link_to(render_title($item->object), array($item->object, 'module' => 'actor')) ?><span class="note2"> <?php if (!isset($mods)): ?>(<?php echo __('Subject') ?>)<?php endif; ?></span></li>
+          <li><?php echo link_to(render_title($item->object), [$item->object, 'module' => 'actor']) ?><span class="note2"> <?php if (!isset($mods)): ?>(<?php echo __('Subject') ?>)<?php endif; ?></span></li>
         <?php endif; ?>
       <?php endforeach; ?>
     </ul>

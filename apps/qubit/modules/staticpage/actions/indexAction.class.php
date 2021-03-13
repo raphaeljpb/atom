@@ -55,7 +55,7 @@ class StaticPageIndexAction extends sfAction
       return $cache->get($cacheKey);
     }
 
-    $content = $this->resource->getContent(array('cultureFallback' => true));
+    $content = $this->resource->getContent(['cultureFallback' => true]);
     $content = QubitHtmlPurifier::getInstance()->purify($content);
 
     $cache->set($cacheKey, $content);

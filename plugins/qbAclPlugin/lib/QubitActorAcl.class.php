@@ -27,7 +27,7 @@
 class QubitActorAcl extends QubitAcl
 {
   // Add viewDraft and publish actions to list
-  public static $ACTIONS = array(
+  public static $ACTIONS = [
     'read' => 'Read',
     'create' => 'Create',
     'update' => 'Update',
@@ -38,7 +38,7 @@ class QubitActorAcl extends QubitAcl
     'readMaster' => 'Access master',
     'readReference' => 'Access reference',
     'readThumbnail' => 'Access thumbnail'
-  );
+  ];
 
   protected static $_digitalObjectActions = ['readMaster', 'readReference', 'readThumbnail'];
 
@@ -52,7 +52,7 @@ class QubitActorAcl extends QubitAcl
    *
    * @return bool true if the access request is authorized
    */
-  public static function isAllowed($user, $resource, $action, $options = array())
+  public static function isAllowed($user, $resource, $action, $options = [])
   {
     // Do custom ACL checks for digital object actions
     if (in_array($action, self::$_digitalObjectActions))

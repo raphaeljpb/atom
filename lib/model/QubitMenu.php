@@ -82,7 +82,7 @@ class QubitMenu extends BaseMenu
    * @param array $options Optional parameters
    * @return string Path or url for menu
    */
-  public function getPath($options = array())
+  public function getPath($options = [])
   {
     // 'currentRealm' is used by menu items on the Institutional Block as part of the
     // enable_institutional_scoping feature. Try using search-realm if available, else
@@ -107,12 +107,12 @@ class QubitMenu extends BaseMenu
     $currentSlug = isset(sfContext::getInstance()->request->getAttribute('sf_route')->resource->slug) ?
       sfContext::getInstance()->request->getAttribute('sf_route')->resource->slug : null;
 
-    $aliases = array(
-      '%profile%' => sfContext::getInstance()->routing->generate(null, array('module' => 'user', 'slug' => sfContext::getInstance()->user->getUserSlug())),
+    $aliases = [
+      '%profile%' => sfContext::getInstance()->routing->generate(null, ['module' => 'user', 'slug' => sfContext::getInstance()->user->getUserSlug()]),
       '%currentId%' => sfContext::getInstance()->request->id,
       '%currentSlug%' => $currentSlug,
       '%currentRealm%' => $currentRealm
-    );
+    ];
 
     $path = parent::offsetGet('path', $options);
 
@@ -159,7 +159,7 @@ class QubitMenu extends BaseMenu
       return false;
     }
 
-    $lockInfo = unserialize(sfConfig::get('app_menu_locking_info', array()));
+    $lockInfo = unserialize(sfConfig::get('app_menu_locking_info', []));
 
     // If lock info isn't empty and the menu's ID or name indicates it should be locked, then lock it
     if (count($lockInfo) && (in_array($this->id, $lockInfo['byId']) || in_array($this->name, $lockInfo['byName'])))
@@ -179,7 +179,7 @@ class QubitMenu extends BaseMenu
    * @param array $options optional parameters
    * @return array of menu columns, with an additional 'depth' column
    */
-  public static function getByName($menuName, $options = array())
+  public static function getByName($menuName, $options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitMenu::NAME, $menuName);
@@ -201,7 +201,7 @@ class QubitMenu extends BaseMenu
 
     // Yucky Hack: Don't display "static" menu as selected when displaying
     // an action from staticpage module (See FIXME below)
-    if ($currentModule == 'staticpage' && in_array($currentAction, array('edit', 'index', 'list', 'static')))
+    if ($currentModule == 'staticpage' && in_array($currentAction, ['edit', 'index', 'list', 'static']))
     {
       return false;
     }
@@ -218,20 +218,20 @@ class QubitMenu extends BaseMenu
       return ($this->getPath() == 'informationobject/list');
     }
     // And even more hacks
-    elseif (in_array($currentModule, array('sfIsadPlugin', 'sfRadPlugin', 'sfDcPlugin', 'sfModsPlugin', 'arDacsPlugin')))
+    elseif (in_array($currentModule, ['sfIsadPlugin', 'sfRadPlugin', 'sfDcPlugin', 'sfModsPlugin', 'arDacsPlugin']))
     {
       return ($this->getPath() == 'informationobject/list');
     }
 
     // son of hack
-    if (in_array($currentModule, array('term', 'taxonomy')))
+    if (in_array($currentModule, ['term', 'taxonomy']))
     {
       return ($this->getPath() == 'taxonomy/list');
     }
 
     // If passed $url matches the url for this menu AND is not the base url
     // for the application (url_for()), return true
-    $menuUrl = $this->getPath(array('getUrl' => true, 'resolveAlias' => true));
+    $menuUrl = $this->getPath(['getUrl' => true, 'resolveAlias' => true]);
     if ($menuUrl == $currentUrl && $currentUrl != url_for(''))
     {
       $isSelected = true;
@@ -326,7 +326,7 @@ class QubitMenu extends BaseMenu
    * @param array $options optional parameters
    * @return array of menu columns, with an additional 'depth' column
    */
-  public static function getTreeById($id, $options=array())
+  public static function getTreeById($id, $options=[])
   {
     // Attempt to grab topMenu object via id
     if (null === $topMenu = QubitMenu::getById($id))
@@ -346,7 +346,7 @@ class QubitMenu extends BaseMenu
    * @param array $options optional parameters
    * @return array of menu columns, with an additional 'depth' column
    */
-  public static function getTree(QubitMenu $topMenu, $options=array())
+  public static function getTree(QubitMenu $topMenu, $options=[])
   {
     $maxDepth = 0;
 
@@ -364,7 +364,7 @@ class QubitMenu extends BaseMenu
 
     // labouriously calculate depth of current menu from top of hierarchy by
     // looping through results and tracking "ancestors"
-    $ancestors = array($topMenu->id);
+    $ancestors = [$topMenu->id];
     foreach ($menus as $menu)
     {
       $thisParentId = $menu->getParentId();
@@ -387,14 +387,14 @@ class QubitMenu extends BaseMenu
       $depth = count($ancestors);
       if ($maxDepth == 0 || $depth <= $maxDepth)
       {
-        $menuTree[] = array(
+        $menuTree[] = [
           'id' => $menu->id,
           'parentId' => $menu->getParentId(),
-          'name' => $menu->getName(array('cultureFallback' => true)),
-          'label' => $menu->getLabel(array('cultureFallback' => true)),
+          'name' => $menu->getName(['cultureFallback' => true]),
+          'label' => $menu->getLabel(['cultureFallback' => true]),
           'depth' => $depth,
           'protected' => ($menu->isProtected()) ? true : false
-        );
+        ];
       }
     }
 
@@ -413,7 +413,7 @@ class QubitMenu extends BaseMenu
    * @param array $options optional parameters
    * @return string an indented, nested XHTML list
    */
-  public static function displayHierarchyAsList($parent, $depth = 0, $options = array())
+  public static function displayHierarchyAsList($parent, $depth = 0, $options = [])
   {
     // Set current depth if not defined yet
     // We're using it to track the depth of the recursion
@@ -423,7 +423,7 @@ class QubitMenu extends BaseMenu
     }
 
     // An array of <li/> elements for the list
-    $li = array();
+    $li = [];
 
     foreach ($parent->getChildren() as $child)
     {
@@ -438,7 +438,7 @@ class QubitMenu extends BaseMenu
       $continueHierarchy = $options['current-depth'] < $depth && $child->hasChildren();
 
       // Declare some options for the link for this node
-      $anchorPath = $child->getPath(array('getUrl' => true, 'resolveAlias' => true));
+      $anchorPath = $child->getPath(['getUrl' => true, 'resolveAlias' => true]);
 
       // Parse module and action from path
       $routeProperties = sfContext::getInstance()->getRouting()->findRoute($anchorPath);
@@ -451,8 +451,8 @@ class QubitMenu extends BaseMenu
         continue;
       }
 
-      $anchorLabel = $child->getLabel(array('cultureFallback' => true));
-      $anchorOptions = array();
+      $anchorLabel = $child->getLabel(['cultureFallback' => true]);
+      $anchorOptions = [];
       if ($continueHierarchy)
       {
         $anchorLabel .= ' <b class="caret"></b>';
@@ -464,7 +464,7 @@ class QubitMenu extends BaseMenu
       $a = link_to($anchorLabel, $anchorPath, $anchorOptions);
 
       // An array of CSS classes for the li element
-      $class = array();
+      $class = [];
       if ($child->isSelected() || $child->isDescendantSelected())
       {
         $class[] = 'active';
@@ -473,7 +473,7 @@ class QubitMenu extends BaseMenu
       if ($continueHierarchy)
       {
         // Nested nodes
-        $a .= self::displayHierarchyAsList($child, $depth, array_merge($options, array('ulWrap' => true, 'ulClass' => 'dropdown-menu', 'current-depth' => ($depth + 1))));
+        $a .= self::displayHierarchyAsList($child, $depth, array_merge($options, ['ulWrap' => true, 'ulClass' => 'dropdown-menu', 'current-depth' => ($depth + 1)]));
 
         // We need this class for the <li> element
         $class[] = 'dropdown';

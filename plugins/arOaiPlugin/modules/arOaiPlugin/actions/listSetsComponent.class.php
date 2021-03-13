@@ -40,7 +40,7 @@ class arOaiPluginlistSetsComponent extends arOaiPluginComponent
 
   private function getPagedOaiSets($request)
   {
-    $options = array('filterDrafts' => true);
+    $options = ['filterDrafts' => true];
     if (isset($this->cursor))
     {
       $options['offset'] = $this->cursor;
@@ -51,6 +51,6 @@ class arOaiPluginlistSetsComponent extends arOaiPluginComponent
     $this->oaiSets = $results['data'];
     $this->remaining = $results['remaining'];
     $resumptionCursor = $this->cursor + $options['limit'];
-    $this->resumptionToken  = base64_encode(json_encode(array('cursor' => $resumptionCursor)));
+    $this->resumptionToken  = base64_encode(json_encode(['cursor' => $resumptionCursor]));
   }
 }

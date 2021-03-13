@@ -31,7 +31,7 @@
                 <input type="hidden" name="<?php echo $arrayName ?>[<?php echo $i ?>][type]" value="<?php echo $hiddenTypeId ?>"/>
               <?php endif; ?>
               <?php $form->setDefault('content', $item->getContent()); ?>
-              <?php echo render_field($form->content, $item, array('onlyInput' => true, 'class' => 'resizable')) ?>
+              <?php echo render_field($form->content, $item, ['onlyInput' => true, 'class' => 'resizable']) ?>
             </div>
           </td>
           <?php if (!$hiddenType): ?>
@@ -55,7 +55,7 @@
               <input type="hidden" name="<?php echo $arrayName ?>[<?php echo $i ?>][type]" value="<?php echo $hiddenTypeId ?>"/>
             <?php endif; ?>
             <?php $form->setDefault('content', ''); ?>
-            <?php echo $form->content->render(array('class' => 'resizable')) ?>
+            <?php echo $form->content->render(['class' => 'resizable']) ?>
           </div>
         </td>
         <?php if (!$hiddenType): ?>

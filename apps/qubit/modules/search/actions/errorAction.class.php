@@ -38,7 +38,7 @@ class SearchErrorAction extends sfAction
     }
 
     // $this->reason is going to be logged and shown in the template
-    $this->reason = $context->i18n->__('Elasticsearch error: %1%', array('%1%' => $exceptionName));
+    $this->reason = $context->i18n->__('Elasticsearch error: %1%', ['%1%' => $exceptionName]);
 
     $message = sprintf("%s - %s", $this->reason, $this->error);
     $this->logMessage($message, 'err');

@@ -29,14 +29,14 @@ class ActorContextMenuComponent extends sfComponent
 {
   public function execute($request)
   {
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
+    sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
 
     $page = 1;
     $limit = sfConfig::get('app_hits_per_page', 10);
 
     // Store related information objects in lists with pagination, lists for
     // all event types and for name access point relations (subject of)
-    $this->lists = array();
+    $this->lists = [];
 
     // Subject of
     $resultSet = ActorRelatedInformationObjectsAction::getRelatedInformationObjects($this->resource->id, $page, $limit);
@@ -48,11 +48,11 @@ class ActorContextMenuComponent extends sfComponent
       $pager->setMaxPerPage($limit);
       $pager->init();
 
-      $this->lists[] = array(
+      $this->lists[] = [
         'label' => $this->context->i18n->__('Subject'),
         'pager' => $pager,
-        'dataUrl' => url_for(array('module' => 'actor', 'action' => 'relatedInformationObjects', 'actorId' => $this->resource->id)),
-        'moreUrl' => url_for(array('module' => 'informationobject', 'action' => 'browse', 'topLod' => 0, 'names' => $this->resource->id)));
+        'dataUrl' => url_for(['module' => 'actor', 'action' => 'relatedInformationObjects', 'actorId' => $this->resource->id]),
+        'moreUrl' => url_for(['module' => 'informationobject', 'action' => 'browse', 'topLod' => 0, 'names' => $this->resource->id])];
     }
 
     // All event types
@@ -67,11 +67,11 @@ class ActorContextMenuComponent extends sfComponent
         $pager->setMaxPerPage($limit);
         $pager->init();
 
-        $this->lists[] = array(
+        $this->lists[] = [
           'label' => $eventType->getRole(),
           'pager' => $pager,
-          'dataUrl' => url_for(array('module' => 'actor', 'action' => 'relatedInformationObjects', 'actorId' => $this->resource->id, 'eventTypeId' => $eventType->id)),
-          'moreUrl' => url_for(array('module' => 'informationobject', 'action' => 'browse', 'topLod' => 0, 'actorId' => $this->resource->id, 'eventTypeId' => $eventType->id)));
+          'dataUrl' => url_for(['module' => 'actor', 'action' => 'relatedInformationObjects', 'actorId' => $this->resource->id, 'eventTypeId' => $eventType->id]),
+          'moreUrl' => url_for(['module' => 'informationobject', 'action' => 'browse', 'topLod' => 0, 'actorId' => $this->resource->id, 'eventTypeId' => $eventType->id])];
       }
     }
   }

@@ -38,7 +38,7 @@ class RightManageAction extends sfAction
         $jobParams['name'] = $this->context->i18n->__('Inherit rights');
 
         $desc = $this->context->i18n->__('Children inheriting rights from record: ') .
-                $this->resource->getTitle(array('cultureFallback' => true));
+                $this->resource->getTitle(['cultureFallback' => true]);
 
         $jobParams['description'] = $desc;
 
@@ -46,7 +46,7 @@ class RightManageAction extends sfAction
         $job = QubitJob::runJob('arInheritRightsJob', $jobParams);
 
         // redirect to info object view page
-        $this->redirect(array($this->resource, 'module' => 'informationobject'));
+        $this->redirect([$this->resource, 'module' => 'informationobject']);
       }
     }
   }
@@ -72,27 +72,27 @@ class RightManageAction extends sfAction
     $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', false);
 
-    $this->form->setWidget('all_or_digital_only', new sfWidgetFormChoice(array(
+    $this->form->setWidget('all_or_digital_only', new sfWidgetFormChoice([
       'expanded' => true,
-      'choices'  => array('all' => $this->context->i18n->__('Apply to all descendants'),
-                          'digital_only' => $this->context->i18n->__('Apply only to %1% descendants', array('%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))))),
+      'choices'  => ['all' => $this->context->i18n->__('Apply to all descendants'),
+                          'digital_only' => $this->context->i18n->__('Apply only to %1% descendants', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))])],
       'default'  => 'all'
-    )));
+    ]));
 
-    $choices = array(
+    $choices = [
       'overwrite' => $this->context->i18n->__('Delete current rights in descendants and replace with parent rights.'),
       'combine' => $this->context->i18n->__('Keep current rights in descendants and add parent rights.')
-    );
+    ];
 
-    $this->form->setWidget('overwrite_or_combine', new sfWidgetFormChoice(array(
+    $this->form->setWidget('overwrite_or_combine', new sfWidgetFormChoice([
       'expanded' => true,
       'choices'  => $choices,
       'default'  => 'overwrite'
-    )));
+    ]));
 
-    $this->form->setValidators(array(
-      'all_or_digital_only' => new sfValidatorChoice(array('choices' => array('all', 'digital_only'), 'required' => true)),
-      'overwrite_or_combine' => new sfValidatorChoice(array('choices' => array('overwrite', 'combine'), 'required' => true))
-    ));
+    $this->form->setValidators([
+      'all_or_digital_only' => new sfValidatorChoice(['choices' => ['all', 'digital_only'], 'required' => true]),
+      'overwrite_or_combine' => new sfValidatorChoice(['choices' => ['overwrite', 'combine'], 'required' => true])
+    ]);
   }
 }

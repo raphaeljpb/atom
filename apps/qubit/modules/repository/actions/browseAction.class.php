@@ -28,31 +28,31 @@ class RepositoryBrowseAction extends DefaultBrowseAction
   public const INDEX_TYPE = 'QubitRepository';
 
   // Arrays not allowed in class constants
-  public static $AGGS = array(
+  public static $AGGS = [
       'languages' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'i18n.languages',
-              'size' => 10),
+              'size' => 10],
       'types' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'types',
-              'size' => 10),
+              'size' => 10],
       'regions' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'contactInformations.i18n.%s.region.untouched',
-              'size' => 10),
+              'size' => 10],
       'geographicSubregions' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'geographicSubregions',
-              'size' => 10),
+              'size' => 10],
       'locality' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'contactInformations.i18n.%s.city.untouched',
-              'size' => 10),
+              'size' => 10],
       'thematicAreas' =>
-        array('type' => 'term',
+        ['type' => 'term',
               'field' => 'thematicAreas',
-              'size' => 10));
+              'size' => 10]];
 
   public function execute($request)
   {
@@ -63,13 +63,13 @@ class RepositoryBrowseAction extends DefaultBrowseAction
 
     $this->cardView = 'card';
     $this->tableView = 'table';
-    $allowedViews = array($this->cardView, $this->tableView);
+    $allowedViews = [$this->cardView, $this->tableView];
 
     if (sfConfig::get('app_enable_institutional_scoping'))
     {
       if (isset($request->repos) && ctype_digit($request->repos) && null !== $this->repos = QubitRepository::getById($request->repos))
       {
-        $this->search->queryBool->addMust(new \Elastica\Query\Term(array('repository.id' => $request->repos)));
+        $this->search->queryBool->addMust(new \Elastica\Query\Term(['repository.id' => $request->repos]));
 
         // Store realm in user session
         $this->context->user->setAttribute('search-realm', $request->repos);
@@ -99,40 +99,40 @@ class RepositoryBrowseAction extends DefaultBrowseAction
     switch ($request->sort)
     {
       case 'nameUp':
-        $this->search->query->setSort(array($i18n.'authorizedFormOfName.alphasort' => 'asc'));
+        $this->search->query->setSort([$i18n.'authorizedFormOfName.alphasort' => 'asc']);
         break;
 
       case 'nameDown':
-        $this->search->query->setSort(array($i18n.'authorizedFormOfName.alphasort' => 'desc'));
+        $this->search->query->setSort([$i18n.'authorizedFormOfName.alphasort' => 'desc']);
         break;
 
       case 'regionUp':
-        $this->search->query->setSort(array($i18n.'region.untouched' => 'asc'));
+        $this->search->query->setSort([$i18n.'region.untouched' => 'asc']);
         break;
 
       case 'regionDown':
-        $this->search->query->setSort(array($i18n.'region.untouched' => 'desc'));
+        $this->search->query->setSort([$i18n.'region.untouched' => 'desc']);
         break;
 
       case 'localityUp':
-        $this->search->query->setSort(array($i18n.'city.untouched' => 'asc'));
+        $this->search->query->setSort([$i18n.'city.untouched' => 'asc']);
         break;
 
       case 'localityDown':
-        $this->search->query->setSort(array($i18n.'city.untouched' => 'desc'));
+        $this->search->query->setSort([$i18n.'city.untouched' => 'desc']);
         break;
 
       case 'identifier':
-        $this->search->query->addSort(array('identifier.untouched' => $request->sortDir));
+        $this->search->query->addSort(['identifier.untouched' => $request->sortDir]);
 
         // no break
       case 'alphabetic':
-        $this->search->query->addSort(array($i18n.'authorizedFormOfName.alphasort' => $request->sortDir));
+        $this->search->query->addSort([$i18n.'authorizedFormOfName.alphasort' => $request->sortDir]);
         break;
 
       case 'lastUpdated':
       default:
-        $this->search->query->setSort(array('updatedAt' => $request->sortDir));
+        $this->search->query->setSort(['updatedAt' => $request->sortDir]);
     }
 
     $this->search->query->setQuery($this->search->queryBool);
@@ -171,7 +171,7 @@ class RepositoryBrowseAction extends DefaultBrowseAction
 
         foreach (QubitTerm::get($criteria) as $item)
         {
-          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(array('cultureFallback' => true));
+          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
         }
 
         break;

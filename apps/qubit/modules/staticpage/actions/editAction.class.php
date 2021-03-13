@@ -19,10 +19,10 @@
 
 class StaticPageEditAction extends DefaultEditAction
 {
-  public static $NAMES = array(
+  public static $NAMES = [
       'title',
       'slug',
-      'content');
+      'content'];
 
   public function execute($request)
   {
@@ -47,7 +47,7 @@ class StaticPageEditAction extends DefaultEditAction
           }
         }
 
-        $this->redirect(array($this->resource, 'module' => 'staticpage'));
+        $this->redirect([$this->resource, 'module' => 'staticpage']);
       }
     }
   }
@@ -70,7 +70,7 @@ class StaticPageEditAction extends DefaultEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
     else
     {
@@ -93,7 +93,7 @@ class StaticPageEditAction extends DefaultEditAction
 
       case 'slug':
         $this->form->setDefault('slug', $this->resource->slug);
-        $this->form->setValidator('slug', new sfValidatorRegex(array('pattern' => '/^[^;]*$/'), array('invalid' => $this->context->i18n->__('Mustn\'t contain ";"'))));
+        $this->form->setValidator('slug', new sfValidatorRegex(['pattern' => '/^[^;]*$/'], ['invalid' => $this->context->i18n->__('Mustn\'t contain ";"')]));
         $this->form->setWidget('slug', new sfWidgetFormInput());
 
         // no break

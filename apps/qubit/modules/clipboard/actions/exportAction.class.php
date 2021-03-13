@@ -20,16 +20,16 @@
 class ClipboardExportAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'levels',
       'type',
       'format',
       'includeDescendants',
       'includeAllLevels',
       'includeDigitalObjects',
-      'includeDrafts');
+      'includeDrafts'];
 
-  private $choices = array();
+  private $choices = [];
 
   public function execute($request)
   {
@@ -134,7 +134,7 @@ class ClipboardExportAction extends DefaultEditAction
       $this->response->setStatusCode(400);
       $message = $this->context->i18n->__('Invalid export options.');
 
-      return $this->renderText(json_encode(array('error' => $message)));
+      return $this->renderText(json_encode(['error' => $message]));
     }
 
     $slugs = $request->getPostParameter('slugs', []);
@@ -146,26 +146,26 @@ class ClipboardExportAction extends DefaultEditAction
         'The clipboard is empty for this entity type.'
       );
 
-      return $this->renderText(json_encode(array('error' => $message)));
+      return $this->renderText(json_encode(['error' => $message]));
     }
 
     $this->processForm();
 
     // Create array of selections to pass to background job where
     // Term ID will be key, and Term description is value
-    $levelsOfDescription = array();
+    $levelsOfDescription = [];
     foreach ($this->levels as $value)
     {
       $levelsOfDescription[$value] = $this->choices[$value];
     }
 
-    $options = array(
-      'params' => array('fromClipboard' => true, 'slugs' => $slugs),
+    $options = [
+      'params' => ['fromClipboard' => true, 'slugs' => $slugs],
       'current-level-only' => !$this->descendantsIncluded,
       'public' => !$this->draftsIncluded,
       'objectType' => $this->objectType,
       'levels' => $levelsOfDescription
-    );
+    ];
 
     $msg = ('xml' == $this->formatType) ? 'XML export' : 'CSV export';
     $options['name'] = $this->context->i18n->__($msg);
@@ -173,10 +173,10 @@ class ClipboardExportAction extends DefaultEditAction
     if ($this->includeDigitalObjects)
     {
       $options['name'] = $this->context->i18n->__('%1% and %2%',
-        array(
+        [
           '%1%' => sfConfig::get('app_ui_label_digitalobject'),
           '%2%' => $options['name']
-        )
+        ]
       );
       $options['includeDigitalObjects'] = true;
     }
@@ -196,29 +196,29 @@ class ClipboardExportAction extends DefaultEditAction
     {
       $this->response->setStatusCode(500);
 
-      return $this->renderText(json_encode(array('error' => $e->getMessage())));
+      return $this->renderText(json_encode(['error' => $e->getMessage()]));
     }
   }
 
   protected function earlyExecute()
   {
-    sfProjectConfiguration::getActive()->loadHelpers(array('I18N'));
+    sfProjectConfiguration::getActive()->loadHelpers(['I18N']);
 
     // Initialize help array: messages added depending on visibility of fields
-    $this->helpMessages = array();
+    $this->helpMessages = [];
 
-    $this->typeChoices = array(
+    $this->typeChoices = [
       'informationObject' => sfConfig::get('app_ui_label_informationobject'),
       'actor' => sfConfig::get('app_ui_label_actor'),
       'repository' => sfConfig::get('app_ui_label_repository')
-    );
+    ];
 
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
   }
 
   protected function runExportJob($options)
   {
-    $responseData = array();
+    $responseData = [];
 
     $jobName = $this->getJobNameString();
 
@@ -233,10 +233,10 @@ class ClipboardExportAction extends DefaultEditAction
           'No records were exported for your current selection. Please'
           . ' %open_link%refresh the page and choose different export options'
           . ' %close_link%.',
-          array(
+          [
             '%open_link%' => '<a href="javascript:location.reload();">',
             '%close_link%' => '</a>',
-          )
+          ]
         ));
       }
     }
@@ -264,16 +264,16 @@ class ClipboardExportAction extends DefaultEditAction
       $responseData['success'] .= $this->context->i18n->__(
         'The %open_link%job management page%close_link% will show progress'
         . ' and a download link when complete.',
-        array(
+        [
           '%open_link%' => sprintf(
             '<strong><a href="%s">',
-            $this->context->routing->generate(null, array(
+            $this->context->routing->generate(null, [
               'module' => 'jobs',
               'action' => 'browse'
-            ))
+            ])
           ),
           '%close_link%' => '</a></strong>'
-        )
+        ]
       );
     }
     else
@@ -281,10 +281,10 @@ class ClipboardExportAction extends DefaultEditAction
       $responseData['success'] .= $this->context->i18n->__(
         'Please %open_link%refresh the page%close_link% to see progress and'
         . ' a download link when complete.',
-        array(
+        [
           '%open_link%' => '<strong><a href="javascript:location.reload();">',
           '%close_link%' => '</a></strong>'
-        )
+        ]
       );
     }
 
@@ -293,10 +293,10 @@ class ClipboardExportAction extends DefaultEditAction
       '%open_strong_tag%Note:%close_strong_tag% AtoM may remove export'
       . ' packages after aperiod of time to free up storage space. When'
       . ' your export is ready you should download it as soon as possible.',
-      array(
+      [
         '%open_strong_tag%' => '<strong>',
         '%close_strong_tag%' => '</strong>'
-      )
+      ]
     );
     $responseData['success'] .= '</p>';
 
@@ -311,10 +311,10 @@ class ClipboardExportAction extends DefaultEditAction
     {
       case 'type':
         $this->form->setValidator('type', new sfValidatorString(
-          array('required' => true)
+          ['required' => true]
         ));
         $this->form->setWidget('type', new sfWidgetFormSelect(
-          array('label' => __('Type'), 'choices' => $this->typeChoices)
+          ['label' => __('Type'), 'choices' => $this->typeChoices]
         ));
         $this->form->setDefault('type', $this->objectType);
 
@@ -322,16 +322,16 @@ class ClipboardExportAction extends DefaultEditAction
 
       case 'format':
         $this->form->setValidator('format', new sfValidatorString(
-          array('required' => true)
+          ['required' => true]
         ));
-        $choices = array();
+        $choices = [];
         $choices['csv'] = $this->context->i18n->__('CSV');
         if('repository' != $this->objectType)
         {
           $choices['xml'] = $this->context->i18n->__('XML');
         }
         $this->form->setWidget('format', new sfWidgetFormSelect(
-          array('label' => __('Format'), 'choices' => $choices)
+          ['label' => __('Format'), 'choices' => $choices]
         ));
         $this->form->setDefault(
           'format',
@@ -349,7 +349,7 @@ class ClipboardExportAction extends DefaultEditAction
           $this->form->setWidget(
             'includeDescendants',
             new sfWidgetFormInputCheckbox(
-              array('label' => __('Include descendants'))
+              ['label' => __('Include descendants')]
             )
           );
           $this->form->setDefault('includeDescendants', false);
@@ -370,9 +370,9 @@ class ClipboardExportAction extends DefaultEditAction
         {
           $this->form->setWidget(
             'includeAllLevels',
-            new sfWidgetFormInputCheckbox(array(
+            new sfWidgetFormInputCheckbox([
               'label' => __('Include all descendant levels of description')
-            )
+            ]
           ));
           $this->form->setDefault('includeAllLevels', true);
         }
@@ -386,7 +386,7 @@ class ClipboardExportAction extends DefaultEditAction
 
         $this->form->setValidator('levels', new sfValidatorPass());
 
-        $this->levelChoices = array();
+        $this->levelChoices = [];
         foreach (QubitTerm::getLevelsOfDescription() as $item)
         {
           $this->levelChoices[$item->id] = $item->__toString();
@@ -401,7 +401,7 @@ class ClipboardExportAction extends DefaultEditAction
         if ($this->showOptions && 'informationObject' == $this->objectType)
         {
           $this->form->setWidget('levels', new sfWidgetFormSelect(
-            array(
+            [
               'label' => __(
                 'Select levels of descendant descriptions for inclusion'
               ),
@@ -415,10 +415,10 @@ class ClipboardExportAction extends DefaultEditAction
               ),
               'choices' => $this->levelChoices,
               'multiple' => true
-            ),
-            array(
+            ],
+            [
               'size' => $size
-            )
+            ]
           ));
         }
 
@@ -446,7 +446,7 @@ class ClipboardExportAction extends DefaultEditAction
           $this->form->setWidget(
             'includeDigitalObjects',
             new sfWidgetFormInputCheckbox(
-              array('label' => __('Include digital objects'))
+              ['label' => __('Include digital objects')]
             )
           );
           $this->form->setDefault('includeDigitalObjects', true);
@@ -466,7 +466,7 @@ class ClipboardExportAction extends DefaultEditAction
           $this->form->setWidget(
             'includeDrafts',
             new sfWidgetFormInputCheckbox(
-              array('label' => __('Include draft records'))
+              ['label' => __('Include draft records')]
             )
           );
 
@@ -495,7 +495,7 @@ class ClipboardExportAction extends DefaultEditAction
         $this->levels = $this->form->getValue('levels');
         if (empty($this->levels))
         {
-          $this->levels = array();
+          $this->levels = [];
         }
 
         break;

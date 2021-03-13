@@ -52,11 +52,11 @@
 
           <div class="form-item form-item-statuteCitation">
             <?php echo $form->statuteCitation->renderLabel() ?>
-            <?php echo $form->statuteCitation->render(array('class' => 'form-autocomplete')) ?>
+            <?php echo $form->statuteCitation->render(['class' => 'form-autocomplete']) ?>
             <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::RIGHTS_STATUTES_ID), 'createTerm')): ?>
-              <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'term', 'action' => 'add', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::RIGHTS_STATUTES_ID), 'module' => 'taxonomy')))) ?> #name"/>
+              <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::RIGHTS_STATUTES_ID), 'module' => 'taxonomy'])]) ?> #name"/>
             <?php endif; ?>
-            <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for(array(QubitTaxonomy::getById(QubitTaxonomy::RIGHTS_STATUTES_ID), 'module' => 'taxonomy')))) ?>"/>
+            <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::RIGHTS_STATUTES_ID), 'module' => 'taxonomy'])]) ?>"/>
             <?php echo $form->statuteCitation
               ->help(__('An identifying designation for the statute. Use standard citation form when applicable, e.g. bibliographic citation.'))
               ->renderHelp() ?>
@@ -80,9 +80,9 @@
 
           <div class="form-item">
             <?php echo $form->rightsHolder->renderLabel() ?>
-            <?php echo $form->rightsHolder->render(array('class' => 'form-autocomplete')) ?>
-            <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'rightsholder', 'action' => 'add')) ?> #authorizedFormOfName"/>
-            <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'rightsholder', 'action' => 'autocomplete')) ?>"/>
+            <?php echo $form->rightsHolder->render(['class' => 'form-autocomplete']) ?>
+            <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'rightsholder', 'action' => 'add']) ?> #authorizedFormOfName"/>
+            <input class="list" type="hidden" value="<?php echo url_for(['module' => 'rightsholder', 'action' => 'autocomplete']) ?>"/>
             <?php echo $form->rightsHolder
               ->help(__('Name of the person(s) or organization(s) which has the authority to grant permissions or set rights restrictions.'))
               ->renderHelp() ?>
@@ -171,7 +171,7 @@
 
     <section class="actions">
       <ul>
-        <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject'), array('class' => 'c-btn')) ?></li>
+        <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'informationobject'], ['class' => 'c-btn']) ?></li>
         <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
       </ul>
     </section>

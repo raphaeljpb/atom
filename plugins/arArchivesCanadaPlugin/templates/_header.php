@@ -6,7 +6,7 @@
 
 <?php if ($sf_user->isAdministrator() && (string)QubitSetting::getByName('siteBaseUrl') === ''): ?>
   <div class="site-warning">
-    <?php echo link_to(__('Please configure your site base URL'), 'settings/siteInformation', array('rel' => 'home', 'title' => __('Home'))) ?>
+    <?php echo link_to(__('Please configure your site base URL'), 'settings/siteInformation', ['rel' => 'home', 'title' => __('Home')]) ?>
   </div>
 <?php endif; ?>
 
@@ -18,7 +18,7 @@
       <?php if (sfConfig::get('app_toggleLanguageMenu')): ?>
         <?php echo get_component('menu', 'changeLanguageMenu') ?>
       <?php endif; ?>
-      <?php echo get_component('menu', 'mainMenu', array('sf_cache_key' => $sf_user->getCulture().$sf_user->getUserID())) ?>
+      <?php echo get_component('menu', 'mainMenu', ['sf_cache_key' => $sf_user->getCulture().$sf_user->getUserID()]) ?>
     </nav>
   </div>
 <?php endif; ?>
@@ -32,9 +32,9 @@
         <div class="span12">
 
           <?php if ('fr' == $sf_user->getCulture()): ?>
-            <a id="header-council" href="http://cdncouncilarchives.ca"><?php echo image_tag('/plugins/arArchivesCanadaPlugin/images/council.fr.png', array('width' => '156', 'height' => '42', 'alt' => __('Canadian Council of Archives'))) ?></a>
+            <a id="header-council" href="http://cdncouncilarchives.ca"><?php echo image_tag('/plugins/arArchivesCanadaPlugin/images/council.fr.png', ['width' => '156', 'height' => '42', 'alt' => __('Canadian Council of Archives')]) ?></a>
           <?php else: ?>
-            <a id="header-council" href="http://cdncouncilarchives.ca"><?php echo image_tag('/plugins/arArchivesCanadaPlugin/images/council.en.png', array('width' => '156', 'height' => '42', 'alt' => __('Canadian Council of Archives'))) ?></a>
+            <a id="header-council" href="http://cdncouncilarchives.ca"><?php echo image_tag('/plugins/arArchivesCanadaPlugin/images/council.en.png', ['width' => '156', 'height' => '42', 'alt' => __('Canadian Council of Archives')]) ?></a>
           <?php endif; ?>
 
           <ul id="header-nav" class="nav nav-pills">
@@ -46,20 +46,20 @@
             <?php endif; ?>
 
             <?php if ('fr' == $sf_user->getCulture()): ?>
-              <li><?php echo link_to(__('Contactez-nous'), array('module' => 'staticpage', 'slug' => 'contact')) ?></li>
+              <li><?php echo link_to(__('Contactez-nous'), ['module' => 'staticpage', 'slug' => 'contact']) ?></li>
             <?php else: ?>
-              <li><?php echo link_to(__('Contact us'), array('module' => 'staticpage', 'slug' => 'contact')) ?></li>
+              <li><?php echo link_to(__('Contact us'), ['module' => 'staticpage', 'slug' => 'contact']) ?></li>
             <?php endif; ?>
 
-            <?php foreach (array('en', 'fr') as $item): ?>
+            <?php foreach (['en', 'fr'] as $item): ?>
               <?php if ($sf_user->getCulture() != $item): ?>
-                <li><?php echo link_to(format_language($item, $item), array('sf_culture' => $item) + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
+                <li><?php echo link_to(format_language($item, $item), ['sf_culture' => $item] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
                 <?php break; ?>
               <?php endif; ?>
             <?php endforeach; ?>
 
             <?php if (!$sf_user->isAuthenticated()): ?>
-              <li><?php echo link_to(__('Log in'), array('module' => 'user', 'action' => 'login')) ?></li>
+              <li><?php echo link_to(__('Log in'), ['module' => 'user', 'action' => 'login']) ?></li>
             <?php endif; ?>
 
           </ul>
@@ -73,9 +73,9 @@
 
         <div id="logo-and-name" class="span6">
           <?php if ('fr' == $sf_user->getCulture()): ?>
-            <h1><?php echo link_to(image_tag('/plugins/arArchivesCanadaPlugin/images/logo.png', array('alt' => __('Archives Canada'))), 'http://archivescanada.ca/homeFR', array('rel' => 'home')) ?></h1>
+            <h1><?php echo link_to(image_tag('/plugins/arArchivesCanadaPlugin/images/logo.png', ['alt' => __('Archives Canada')]), 'http://archivescanada.ca/homeFR', ['rel' => 'home']) ?></h1>
           <?php else: ?>
-            <h1><?php echo link_to(image_tag('/plugins/arArchivesCanadaPlugin/images/logo.png', array('alt' => __('Archives Canada'))), 'http://archivescanada.ca', array('rel' => 'home')) ?></h1>
+            <h1><?php echo link_to(image_tag('/plugins/arArchivesCanadaPlugin/images/logo.png', ['alt' => __('Archives Canada')]), 'http://archivescanada.ca', ['rel' => 'home']) ?></h1>
           <?php endif; ?>
         </div>
 

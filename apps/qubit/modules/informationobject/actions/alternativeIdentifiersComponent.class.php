@@ -32,7 +32,7 @@ class InformationObjectAlternativeIdentifiersComponent extends sfComponent
 
   public function processForm()
   {
-    $finalAlternativeIdentifiers = array();
+    $finalAlternativeIdentifiers = [];
 
     if (is_array($this->request->alternativeIdentifiers))
     {

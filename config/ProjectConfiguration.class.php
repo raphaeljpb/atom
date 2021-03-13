@@ -31,7 +31,7 @@ class ProjectConfiguration extends sfProjectConfiguration
   {
     $this->namespacesClassLoader();
 
-    $plugins = array(
+    $plugins = [
       'qbAclPlugin',
       'qtAccessionPlugin',
       'sfDrupalPlugin',
@@ -45,12 +45,12 @@ class ProjectConfiguration extends sfProjectConfiguration
       // sfInstallPlugin and sfPluginAdminPlugin depend on sfPropelPlugin, so
       // must be enabled last
       'sfInstallPlugin',
-      'sfPluginAdminPlugin');
+      'sfPluginAdminPlugin'];
 
     $this->enablePlugins($plugins);
 
     $this->dispatcher->connect('debug.web.load_panels',
-      array('arWebDebugPanel', 'listenToLoadDebugWebPanelEvent'));
+      ['arWebDebugPanel', 'listenToLoadDebugWebPanelEvent']);
   }
 
   public function isPluginEnabled($pluginName)
@@ -74,10 +74,10 @@ class ProjectConfiguration extends sfProjectConfiguration
       $loader = new UniversalClassLoader();
     }
 
-    $loader->registerNamespaces(array(
+    $loader->registerNamespaces([
       'Elastica' => $rootDir.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'elastica',
       'Elasticsearch' => $rootDir.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'elastica',
-      'Psr' => $rootDir.DIRECTORY_SEPARATOR.'vendor'));
+      'Psr' => $rootDir.DIRECTORY_SEPARATOR.'vendor']);
 
     $loader->register();
   }

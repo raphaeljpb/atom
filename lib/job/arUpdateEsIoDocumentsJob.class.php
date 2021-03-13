@@ -29,7 +29,7 @@ class arUpdateEsIoDocumentsJob extends arBaseJob
   /**
    * @see arBaseJob::$requiredParameters
    */
-  protected $extraRequiredParameters = array('ioIds', 'updateIos', 'updateDescendants');
+  protected $extraRequiredParameters = ['ioIds', 'updateIos', 'updateDescendants'];
 
   public function runJob($parameters)
   {
@@ -42,15 +42,15 @@ class arUpdateEsIoDocumentsJob extends arBaseJob
 
     if ($parameters['updateIos'] && $parameters['updateDescendants'])
     {
-      $message = $this->i18n->__('Updating %1 description(s) and their descendants.', array('%1' => count($parameters['ioIds'])));
+      $message = $this->i18n->__('Updating %1 description(s) and their descendants.', ['%1' => count($parameters['ioIds'])]);
     }
     elseif ($parameters['updateIos'])
     {
-      $message = $this->i18n->__('Updating %1 description(s).', array('%1' => count($parameters['ioIds'])));
+      $message = $this->i18n->__('Updating %1 description(s).', ['%1' => count($parameters['ioIds'])]);
     }
     else
     {
-      $message = $this->i18n->__('Updating descendants of %1 description(s).', array('%1' => count($parameters['ioIds'])));
+      $message = $this->i18n->__('Updating descendants of %1 description(s).', ['%1' => count($parameters['ioIds'])]);
     }
 
     $this->job->addNoteText($message);
@@ -61,7 +61,7 @@ class arUpdateEsIoDocumentsJob extends arBaseJob
     {
       if (null === $object = QubitInformationObject::getById($id))
       {
-        $this->info($this->i18n->__('Invalid archival description id: %1', array('%1' => $id)));
+        $this->info($this->i18n->__('Invalid archival description id: %1', ['%1' => $id]));
 
         continue;
       }
@@ -71,18 +71,18 @@ class arUpdateEsIoDocumentsJob extends arBaseJob
 
       if ($parameters['updateIos'] && $parameters['updateDescendants'])
       {
-        arElasticSearchInformationObject::update($object, array('updateDescendants' => true));
-        $message = $this->i18n->__('Updated %1 description(s) and their descendants.', array('%1' => $count));
+        arElasticSearchInformationObject::update($object, ['updateDescendants' => true]);
+        $message = $this->i18n->__('Updated %1 description(s) and their descendants.', ['%1' => $count]);
       }
       elseif ($parameters['updateIos'])
       {
         arElasticSearchInformationObject::update($object);
-        $message = $this->i18n->__('Updated %1 description(s).', array('%1' => $count));
+        $message = $this->i18n->__('Updated %1 description(s).', ['%1' => $count]);
       }
       else
       {
         arElasticSearchInformationObject::updateDescendants($object);
-        $message = $this->i18n->__('Updating descendant of %1 description(s).', array('%1' => $count));
+        $message = $this->i18n->__('Updating descendant of %1 description(s).', ['%1' => $count]);
       }
 
       // Minimize memory use in case we're dealing with a large number of information objects

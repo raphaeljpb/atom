@@ -92,11 +92,11 @@ sql;
     $taxonomy->save();
 
     // Add "AIP types" terms
-    foreach (array(
+    foreach ([
       QubitTerm::ARTWORK_COMPONENT_ID => 'Artwork component',
       QubitTerm::ARTWORK_MATERIAL_ID => 'Artwork material',
       QubitTerm::SUPPORTING_DOCUMENTATION_ID => 'Supporting documentation',
-      QubitTerm::SUPPORTING_TECHNOLOGY_ID => 'Supporting technology') as $id => $value)
+      QubitTerm::SUPPORTING_TECHNOLOGY_ID => 'Supporting technology'] as $id => $value)
     {
       QubitMigrate::bumpTerm($id, $configuration);
       $term = new QubitTerm();

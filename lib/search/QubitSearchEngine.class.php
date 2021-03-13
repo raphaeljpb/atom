@@ -49,6 +49,6 @@ abstract class QubitSearchEngine
    */
   public function log($message)
   {
-    $this->dispatcher->notify(new sfEvent($this, $this->event, array($message)));
+    $this->dispatcher->notify(new sfEvent($this, $this->event, [$message]));
   }
 }

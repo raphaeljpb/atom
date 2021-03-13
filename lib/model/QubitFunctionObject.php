@@ -24,7 +24,7 @@ class QubitFunctionObject extends BaseFunctionObject
     $string = $this->authorizedFormOfName;
     if (!isset($string))
     {
-      $string = $this->getAuthorizedFormOfName(array('sourceCulture' => true));
+      $string = $this->getAuthorizedFormOfName(['sourceCulture' => true]);
     }
 
     return (string) $string;
@@ -34,7 +34,7 @@ class QubitFunctionObject extends BaseFunctionObject
   {
     $args = func_get_args();
 
-    $options = array();
+    $options = [];
     if (1 < count($args))
     {
       $options = $args[1];
@@ -57,22 +57,22 @@ class QubitFunctionObject extends BaseFunctionObject
           }
         }
 
-        if (isset($this->values[$name]) && null !== $value = unserialize($this->values[$name]->__get('value', $options + array('sourceCulture' => true))))
+        if (isset($this->values[$name]) && null !== $value = unserialize($this->values[$name]->__get('value', $options + ['sourceCulture' => true])))
         {
           return $value;
         }
 
-        return array();
+        return [];
     }
 
-    return call_user_func_array(array($this, 'BaseFunctionObject::__get'), $args);
+    return call_user_func_array([$this, 'BaseFunctionObject::__get'], $args);
   }
 
   public function __set($name, $value)
   {
     $args = func_get_args();
 
-    $options = array();
+    $options = [];
     if (2 < count($args))
     {
       $options = $args[2];
@@ -101,12 +101,12 @@ class QubitFunctionObject extends BaseFunctionObject
           }
         }
 
-        $this->values[$name]->__set('value', serialize($value), $options + array('sourceCulture' => true));
+        $this->values[$name]->__set('value', serialize($value), $options + ['sourceCulture' => true]);
 
         return $this;
     }
 
-    return call_user_func_array(array($this, 'BaseFunctionObject::__set'), $args);
+    return call_user_func_array([$this, 'BaseFunctionObject::__set'], $args);
   }
   public function save($connection = null)
   {
@@ -122,7 +122,7 @@ class QubitFunctionObject extends BaseFunctionObject
     {
       $label .= $this->descriptionIdentifier;
     }
-    if (null !== $value = $this->getAuthorizedFormOfName(array('cultureFallback' => true)))
+    if (null !== $value = $this->getAuthorizedFormOfName(['cultureFallback' => true]))
     {
       $label = (0 < strlen($label)) ? $label.' - '.$value : $value;
     }
@@ -134,7 +134,7 @@ class QubitFunctionObject extends BaseFunctionObject
   {
     if (!isset($this->slug))
     {
-      $this->slug = QubitSlug::slugify($this->__get('authorizedFormOfName', array('sourceCulture' => true)));
+      $this->slug = QubitSlug::slugify($this->__get('authorizedFormOfName', ['sourceCulture' => true]));
     }
 
     return parent::insert($connection);

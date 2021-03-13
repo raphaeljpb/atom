@@ -30,7 +30,7 @@ class i18nRectifyTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $this->logSection('i18n', sprintf('Rectifying existing i18n strings for the "%s" application', $options['application']));
 
@@ -46,7 +46,7 @@ class i18nRectifyTask extends sfBaseTask
     $this->i18n->getMessageSource()->setCulture($arguments['culture']);
     $this->i18n->getMessageSource()->load();
 
-    $currentMessages = array();
+    $currentMessages = [];
     foreach ($this->i18n->getMessageSource()->read() as $catalogue => $translations)
     {
       foreach ($translations as $key => $value)
@@ -90,15 +90,15 @@ class i18nRectifyTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('culture', sfCommandArgument::REQUIRED, 'The target culture'),
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
 
       // http://trac.symfony-project.org/ticket/8352
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', true),
-    ));
+    ]);
 
     $this->namespace = 'i18n';
     $this->name = 'rectify';

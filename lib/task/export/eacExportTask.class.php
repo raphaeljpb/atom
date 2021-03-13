@@ -34,7 +34,7 @@ class eacExportTask extends exportBulkBaseTask
   /**
    * @see exportBulkBaseTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $this->checkPathIsWritable($arguments['path']);
 
@@ -58,7 +58,7 @@ class eacExportTask extends exportBulkBaseTask
       $query .= ' AND '.$options['criteria'];
     }
 
-    foreach (QubitPdo::fetchAll($query, array(QubitActor::ROOT_ID, 'QubitActor')) as $row)
+    foreach (QubitPdo::fetchAll($query, [QubitActor::ROOT_ID, 'QubitActor']) as $row)
     {
       // Fetch description then assocated actors
       $resource = QubitActor::getById($row->id);
@@ -100,16 +100,16 @@ class eacExportTask extends exportBulkBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('path', sfCommandArgument::REQUIRED, 'The destination path for export file(s).')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('items-until-update', null, sfCommandOption::PARAMETER_OPTIONAL, 'Indicate progress every n items.'),
       new sfCommandOption('criteria', null, sfCommandOption::PARAMETER_OPTIONAL, 'Export criteria')
-    ));
+    ]);
   }
 }

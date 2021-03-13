@@ -29,9 +29,9 @@ class arXmlExportSingleFileJob extends arBaseJob
   /**
    * @see arBaseJob::$requiredParameters
    */
-  protected $extraRequiredParameters = array('objectId', 'format');
+  protected $extraRequiredParameters = ['objectId', 'format'];
 
-  protected $params = array();
+  protected $params = [];
 
   public function runJob($parameters)
   {
@@ -44,7 +44,7 @@ class arXmlExportSingleFileJob extends arBaseJob
       return false;
     }
 
-    $this->info($this->i18n->__('Starting %1 export of information object %2.', array('%1' => strtoupper($this->params['format']), '%2' => $this->params['objectId'])));
+    $this->info($this->i18n->__('Starting %1 export of information object %2.', ['%1' => strtoupper($this->params['format']), '%2' => $this->params['objectId']]));
     $this->exportResource();
 
     // Mark job as complete
@@ -68,7 +68,7 @@ class arXmlExportSingleFileJob extends arBaseJob
 
     if (null === $resource)
     {
-      throw new sfException($this->i18n->__('Information object %1% does not eist', array('%1%' => $this->params['objectId'])));
+      throw new sfException($this->i18n->__('Information object %1% does not eist', ['%1%' => $this->params['objectId']]));
     }
 
     try
@@ -83,7 +83,7 @@ class arXmlExportSingleFileJob extends arBaseJob
     }
     catch (Exception $e)
     {
-      throw new sfException($this->i18n->__('Invalid XML generated for information object %1%.', array('%1%' => $this->params['objectId'])));
+      throw new sfException($this->i18n->__('Invalid XML generated for information object %1%.', ['%1%' => $this->params['objectId']]));
     }
   }
 }

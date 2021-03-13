@@ -38,14 +38,14 @@ class arMigration0153
     $taxonomy->id = QubitTaxonomy::JOB_STATUS_ID;
     $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
     $taxonomy->sourceCulture = 'en';
-    $taxonomy->setName('Job status', array('culture' => 'en'));
+    $taxonomy->setName('Job status', ['culture' => 'en']);
     $taxonomy->save();
 
-    $terms = array(
+    $terms = [
       QubitTerm::JOB_STATUS_IN_PROGRESS_ID => 'In progress',
       QubitTerm::JOB_STATUS_COMPLETED_ID => 'Completed',
       QubitTerm::JOB_STATUS_ERROR_ID => 'Error'
-    );
+    ];
 
     foreach ($terms as $id => $name)
     {
@@ -55,7 +55,7 @@ class arMigration0153
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::JOB_STATUS_ID;
       $term->sourceCulture = 'en';
-      $term->setName($name, array('culture' => 'en'));
+      $term->setName($name, ['culture' => 'en']);
       $term->save();
     }
 

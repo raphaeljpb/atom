@@ -6,7 +6,7 @@
 
 <?php slot('title') ?>
 
-  <?php echo get_component('informationobject', 'descriptionHeader', array('resource' => $resource, 'title' => (string)$mods)) ?>
+  <?php echo get_component('informationobject', 'descriptionHeader', ['resource' => $resource, 'title' => (string)$mods]) ?>
 
   <?php if (isset($errorSchema)): ?>
     <div class="messages error">
@@ -20,48 +20,48 @@
   <?php endif; ?>
 
   <?php if (QubitInformationObject::ROOT_ID != $resource->parentId): ?>
-    <?php echo include_partial('default/breadcrumb', array('resource' => $resource, 'objects' => $resource->getAncestors()->andSelf()->orderBy('lft'))) ?>
+    <?php echo include_partial('default/breadcrumb', ['resource' => $resource, 'objects' => $resource->getAncestors()->andSelf()->orderBy('lft')]) ?>
   <?php endif; ?>
 
-  <?php echo get_component('default', 'translationLinks', array('resource' => $resource)) ?>
+  <?php echo get_component('default', 'translationLinks', ['resource' => $resource]) ?>
 
 <?php end_slot() ?>
 
 <?php slot('context-menu') ?>
 
-  <?php echo get_partial('informationobject/actionIcons', array('resource' => $resource)) ?>
+  <?php echo get_partial('informationobject/actionIcons', ['resource' => $resource]) ?>
 
-  <?php echo get_partial('object/subjectAccessPoints', array('resource' => $resource, 'sidebar' => true)) ?>
+  <?php echo get_partial('object/subjectAccessPoints', ['resource' => $resource, 'sidebar' => true]) ?>
 
-  <?php echo get_partial('informationobject/nameAccessPoints', array('resource' => $resource, 'sidebar' => true)) ?>
+  <?php echo get_partial('informationobject/nameAccessPoints', ['resource' => $resource, 'sidebar' => true]) ?>
 
-  <?php echo get_partial('object/placeAccessPoints', array('resource' => $resource, 'sidebar' => true)) ?>
+  <?php echo get_partial('object/placeAccessPoints', ['resource' => $resource, 'sidebar' => true]) ?>
 
   <?php if (check_field_visibility('app_element_visibility_physical_storage')): ?>
-    <?php echo get_component('physicalobject', 'contextMenu', array('resource' => $resource)) ?>
+    <?php echo get_component('physicalobject', 'contextMenu', ['resource' => $resource]) ?>
   <?php endif; ?>
 
 <?php end_slot() ?>
 
 <?php slot('before-content') ?>
 
-  <?php echo get_component('digitalobject', 'imageflow', array('resource' => $resource)) ?>
+  <?php echo get_component('digitalobject', 'imageflow', ['resource' => $resource]) ?>
 
 <?php end_slot() ?>
 
 <section id="elementsArea">
 
-  <?php echo link_to_if(SecurityPrivileges::editCredentials($sf_user, 'informationObject'), '<h2>'.__('Elements area').'</h2>', array($resource, 'module' => 'informationobject', 'action' => 'edit'), array('anchor' => 'mainArea', 'title' => __('Edit elements area'))) ?>
+  <?php echo link_to_if(SecurityPrivileges::editCredentials($sf_user, 'informationObject'), '<h2>'.__('Elements area').'</h2>', [$resource, 'module' => 'informationobject', 'action' => 'edit'], ['anchor' => 'mainArea', 'title' => __('Edit elements area')]) ?>
 
   <?php if (0 < count($resource->digitalObjectsRelatedByobjectId)): ?>
-    <?php echo get_component('digitalobject', 'show', array('link' => $digitalObjectLink, 'resource' => $resource->digitalObjectsRelatedByobjectId[0], 'usageType' => QubitTerm::REFERENCE_ID)) ?>
+    <?php echo get_component('digitalobject', 'show', ['link' => $digitalObjectLink, 'resource' => $resource->digitalObjectsRelatedByobjectId[0], 'usageType' => QubitTerm::REFERENCE_ID]) ?>
   <?php endif; ?>
 
   <?php echo render_show(__('Identifier'), $resource->identifier) ?>
 
-  <?php echo render_show(__('Title'), render_value($resource->getTitle(array('cultureFallback' => true)))) ?>
+  <?php echo render_show(__('Title'), render_value($resource->getTitle(['cultureFallback' => true]))) ?>
 
-  <?php echo get_partial('informationobject/dates', array('resource' => $resource)) ?>
+  <?php echo get_partial('informationobject/dates', ['resource' => $resource]) ?>
 
   <?php foreach ($mods->typeOfResource as $item): ?>
     <?php echo render_show(__('Type of resource'), render_value($item->term)) ?>
@@ -75,13 +75,13 @@
     <?php echo render_show(__('Internet media type'), render_value($resource->digitalObjectsRelatedByobjectId[0]->mimeType)) ?>
   <?php endif; ?>
 
-  <?php echo get_partial('object/subjectAccessPoints', array('resource' => $resource, 'mods' => true)) ?>
+  <?php echo get_partial('object/subjectAccessPoints', ['resource' => $resource, 'mods' => true]) ?>
 
-  <?php echo get_partial('object/placeAccessPoints', array('resource' => $resource, 'mods' => true)) ?>
+  <?php echo get_partial('object/placeAccessPoints', ['resource' => $resource, 'mods' => true]) ?>
 
-  <?php echo get_partial('informationobject/nameAccessPoints', array('resource' => $resource, 'mods' => true, 'showActorEvents' => true)) ?>
+  <?php echo get_partial('informationobject/nameAccessPoints', ['resource' => $resource, 'mods' => true, 'showActorEvents' => true]) ?>
 
-  <?php echo render_show(__('Access condition'), render_value($resource->getAccessConditions(array('cultureFallback' => true)))) ?>
+  <?php echo render_show(__('Access condition'), render_value($resource->getAccessConditions(['cultureFallback' => true]))) ?>
 
   <?php if (0 < count($resource->digitalObjectsRelatedByobjectId)): ?>
     <?php echo render_show(__('URL'), link_to(null, $resource->getDigitalObjectPublicUrl())) ?>
@@ -96,7 +96,7 @@
           <?php echo render_value_inline($resource->repository->identifier) ?> -
         <?php endif; ?>
 
-        <?php echo link_to(render_title($resource->repository), array($resource->repository, 'module' => 'repository')) ?>
+        <?php echo link_to(render_title($resource->repository), [$resource->repository, 'module' => 'repository']) ?>
 
         <?php if (null !== $contact = $resource->repository->getPrimaryContact()): ?>
 
@@ -118,7 +118,7 @@
     </div>
   </div>
 
-  <?php echo render_show(__('Description'), render_value($resource->getScopeAndContent(array('cultureFallback' => true)))) ?>
+  <?php echo render_show(__('Description'), render_value($resource->getScopeAndContent(['cultureFallback' => true]))) ?>
 
 </section> <!-- /section#elementsArea -->
 
@@ -130,7 +130,7 @@
       <h2><?php echo __('Rights area') ?> </h2>
     <?php endif; ?>
 
-    <?php echo get_component('right', 'relatedRights', array('resource' => $resource)) ?>
+    <?php echo get_component('right', 'relatedRights', ['resource' => $resource]) ?>
 
   </section> <!-- /section#rightsArea -->
 
@@ -138,9 +138,9 @@
 
 <?php if (0 < count($resource->digitalObjectsRelatedByobjectId)): ?>
 
-  <?php echo get_component('digitalobject', 'metadata', array('resource' => $resource->digitalObjectsRelatedByobjectId[0], 'object' => $resource)) ?>
+  <?php echo get_component('digitalobject', 'metadata', ['resource' => $resource->digitalObjectsRelatedByobjectId[0], 'object' => $resource]) ?>
 
-  <?php echo get_partial('digitalobject/rights', array('resource' => $resource->digitalObjectsRelatedByobjectId[0])) ?>
+  <?php echo get_partial('digitalobject/rights', ['resource' => $resource->digitalObjectsRelatedByobjectId[0]]) ?>
 
 <?php endif; ?>
 
@@ -148,12 +148,12 @@
 
   <h2><?php echo __('Accession area') ?></h2>
 
-  <?php echo get_component('informationobject', 'accessions', array('resource' => $resource)) ?>
+  <?php echo get_component('informationobject', 'accessions', ['resource' => $resource]) ?>
 
 </section> <!-- /section#accessionArea -->
 
 <?php slot('after-content') ?>
-  <?php echo get_partial('informationobject/actions', array('resource' => $resource)) ?>
+  <?php echo get_partial('informationobject/actions', ['resource' => $resource]) ?>
 <?php end_slot() ?>
 
-<?php echo get_component('object', 'gaInstitutionsDimension', array('resource' => $resource)) ?>
+<?php echo get_component('object', 'gaInstitutionsDimension', ['resource' => $resource]) ?>

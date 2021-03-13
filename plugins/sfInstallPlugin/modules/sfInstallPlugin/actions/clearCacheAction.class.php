@@ -25,6 +25,6 @@ class sfInstallPluginClearCacheAction extends sfAction
     $cacheClear = new sfCacheClearTask(sfContext::getInstance()->getEventDispatcher(), new sfFormatter());
     $cacheClear->run();
 
-    $this->redirect(array('module' => 'sfInstallPlugin', 'action' => 'finishInstall'));
+    $this->redirect(['module' => 'sfInstallPlugin', 'action' => 'finishInstall']);
   }
 }

@@ -50,7 +50,7 @@ class TaxonomyIndexAction extends sfAction
 
     if (!$this->resource instanceof QubitTaxonomy)
     {
-      $this->redirect(array('module' => 'taxonomy', 'action' => 'list'));
+      $this->redirect(['module' => 'taxonomy', 'action' => 'list']);
     }
 
     // Check that this isn't the root
@@ -60,8 +60,8 @@ class TaxonomyIndexAction extends sfAction
     }
 
     // Restrict access (except to places and subject taxonomies)
-    $unrestrictedTaxonomies = array(QubitTaxonomy::GENRE_ID, QubitTaxonomy::PLACE_ID, QubitTaxonomy::SUBJECT_ID);
-    $allowedGroups = array(QubitAclGroup::EDITOR_ID, QubitAclGroup::ADMINISTRATOR_ID);
+    $unrestrictedTaxonomies = [QubitTaxonomy::GENRE_ID, QubitTaxonomy::PLACE_ID, QubitTaxonomy::SUBJECT_ID];
+    $allowedGroups = [QubitAclGroup::EDITOR_ID, QubitAclGroup::ADMINISTRATOR_ID];
 
     if (!in_array($this->resource->id, $unrestrictedTaxonomies)
        && !$this->context->user->hasGroup($allowedGroups))
@@ -100,7 +100,7 @@ class TaxonomyIndexAction extends sfAction
         "We've redirected you to the first page of results." .
         " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
         " To view the last records in the current result set, try changing the sort direction.",
-        array('%1%' => $maxResultWindow)
+        ['%1%' => $maxResultWindow]
       );
       $this->getUser()->setFlash('notice', $message);
 
@@ -126,13 +126,13 @@ class TaxonomyIndexAction extends sfAction
 
     // Default sort direction
     $sortDir = 'asc';
-    if (in_array($request->sort, array('lastUpdated', 'relevance')))
+    if (in_array($request->sort, ['lastUpdated', 'relevance']))
     {
       $sortDir = 'desc';
     }
 
     // Set default sort direction in request if not present or not valid
-    if (!isset($request->sortDir) || !in_array($request->sortDir, array('asc', 'desc')))
+    if (!isset($request->sortDir) || !in_array($request->sortDir, ['asc', 'desc']))
     {
       $request->sortDir = $sortDir;
     }
@@ -180,19 +180,19 @@ class TaxonomyIndexAction extends sfAction
       switch ($request->subqueryField)
       {
         case 'preferredLabel':
-          $fields = array('i18n.%s.name' => 1);
+          $fields = ['i18n.%s.name' => 1];
 
           break;
 
         case 'useForLabels':
-          $fields = array('useFor.i18n.%s.name' => 1);
+          $fields = ['useFor.i18n.%s.name' => 1];
 
           break;
 
         case 'allLabels':
         default:
           // Search over preferred label (boosted by five) and "Use for" labels
-          $fields = array('i18n.%s.name' => 5, 'useFor.i18n.%s.name' => 1);
+          $fields = ['i18n.%s.name' => 5, 'useFor.i18n.%s.name' => 1];
 
           break;
       }
@@ -212,13 +212,13 @@ class TaxonomyIndexAction extends sfAction
       // I don't think that this is going to scale, but let's leave it for now
       case 'alphabetic':
         $field = sprintf('i18n.%s.name.alphasort', $culture);
-        $this->query->setSort(array($field => $request->sortDir));
+        $this->query->setSort([$field => $request->sortDir]);
 
         break;
 
       case 'lastUpdated':
       default:
-        $this->query->setSort(array('updatedAt' => $request->sortDir));
+        $this->query->setSort(['updatedAt' => $request->sortDir]);
     }
 
     $resultSet = QubitSearch::getInstance()->index->getType('QubitTerm')->search($this->query);
@@ -234,23 +234,23 @@ class TaxonomyIndexAction extends sfAction
         return;
       }
 
-      sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url', 'Qubit'));
+      sfContext::getInstance()->getConfiguration()->loadHelpers(['Url', 'Qubit']);
 
-      $response = array('results' => array());
+      $response = ['results' => []];
       foreach ($resultSet->getResults() as $item)
       {
         $data = $item->getData();
 
-        $result = array(
-          'url' => url_for(array('module' => 'term', 'slug' => $data['slug'])),
+        $result = [
+          'url' => url_for(['module' => 'term', 'slug' => $data['slug']]),
           'title' => render_title(get_search_i18n($data, 'name')),
           'identifier' => '',
-          'level' => '');
+          'level' => ''];
 
         $response['results'][] = $result;
       }
 
-      $url = url_for(array($this->resource, 'module' => 'taxonomy', 'subquery' => $request->subquery));
+      $url = url_for([$this->resource, 'module' => 'taxonomy', 'subquery' => $request->subquery]);
       $link = $this->context->i18n->__('Browse all terms');
       $response['more'] = <<<EOF
 <div class="more">

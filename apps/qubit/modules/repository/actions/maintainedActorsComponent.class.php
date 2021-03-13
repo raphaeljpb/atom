@@ -27,7 +27,7 @@ class RepositoryMaintainedActorsComponent extends sfComponent
 {
   public function execute($request)
   {
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
+    sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
 
     $page = 1;
     $limit = sfConfig::get('app_hits_per_page', 10);
@@ -43,10 +43,10 @@ class RepositoryMaintainedActorsComponent extends sfComponent
     $pager->setMaxPerPage($limit);
     $pager->init();
 
-    $this->list = array(
+    $this->list = [
       'label' => $this->context->i18n->__('Maintainer of'),
       'pager' => $pager,
-      'dataUrl' => url_for(array('module' => 'repository', 'action' => 'maintainedActors', 'repositoryId' => $this->resource->id)),
-      'moreUrl' => url_for(array('module' => 'actor', 'action' => 'browse', 'maintainingRepository' => $this->resource->id)));
+      'dataUrl' => url_for(['module' => 'repository', 'action' => 'maintainedActors', 'repositoryId' => $this->resource->id]),
+      'moreUrl' => url_for(['module' => 'actor', 'action' => 'browse', 'maintainingRepository' => $this->resource->id])];
   }
 }

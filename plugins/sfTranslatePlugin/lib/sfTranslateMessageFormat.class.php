@@ -13,7 +13,7 @@ class sfTranslateMessageFormat extends sfMessageFormat
   /**
    * @see MessageFormat::formatString()
    */
-  protected function formatString($string, $args = array(), $catalogue = null)
+  protected function formatString($string, $args = [], $catalogue = null)
   {
     if (empty($catalogue))
     {
@@ -22,7 +22,7 @@ class sfTranslateMessageFormat extends sfMessageFormat
 
     $this->loadCatalogue($catalogue);
 
-    $messages = sfContext::getInstance()->request->getAttribute('messages', array());
+    $messages = sfContext::getInstance()->request->getAttribute('messages', []);
     foreach ($this->messages[$catalogue] as $variant)
     {
       if (isset($variant[$string]))

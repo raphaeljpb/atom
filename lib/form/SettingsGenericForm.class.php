@@ -31,7 +31,7 @@ class SettingsGenericForm extends sfForm
     // Build widgets and validators
     foreach($this->getSettings() as $setting) {
       $widgets[$setting->getName()] = new sfWidgetFormInput();
-      $validators[$setting->getName()] = new sfValidatorString(array('required'=>$this->areFieldsRequired()));
+      $validators[$setting->getName()] = new sfValidatorString(['required'=>$this->areFieldsRequired()]);
     }
 
     // Set them

@@ -30,7 +30,7 @@ class arFindingAidJob extends arBaseJob
   /**
    * @see arBaseJob::$requiredParameters
    */
-  protected $extraRequiredParameters = array('objectId');
+  protected $extraRequiredParameters = ['objectId'];
 
   private $resource = null;
 
@@ -41,7 +41,7 @@ class arFindingAidJob extends arBaseJob
     // Check that object exists and that it is not the root
     if (!isset($this->resource) || !isset($this->resource->parent))
     {
-      $this->error($this->i18n->__('Error: Could not find an information object with id: %1', array('%1' => $parameters['objectId'])));
+      $this->error($this->i18n->__('Error: Could not find an information object with id: %1', ['%1' => $parameters['objectId']]));
 
       return false;
     }
@@ -81,17 +81,17 @@ class arFindingAidJob extends arBaseJob
       ORDER BY o.created_at DESC
     ';
 
-    $ret = QubitPdo::fetchOne($sql, array(get_class(), $id));
+    $ret = QubitPdo::fetchOne($sql, [get_class(), $id]);
 
     return $ret ? (int)$ret->statusId : null;
   }
 
   public static function getPossibleFilenames($id)
   {
-    $filenames = array(
+    $filenames = [
       $id . '.pdf',
       $id . '.rtf'
-    );
+    ];
 
     if (null !== $slug = QubitSlug::getByObjectId($id))
     {
@@ -136,7 +136,7 @@ class arFindingAidJob extends arBaseJob
   {
     if (null !== $setting = QubitSetting::getByName('findingAidFormat'))
     {
-      $format = $setting->getValue(array('sourceCulture' => true));
+      $format = $setting->getValue(['sourceCulture' => true]);
     }
 
     return isset($format) ? $format : 'pdf';
@@ -144,7 +144,7 @@ class arFindingAidJob extends arBaseJob
 
   private function generate()
   {
-    $this->info($this->i18n->__('Generating finding aid (%1)...', array('%1' => $this->resource->slug)));
+    $this->info($this->i18n->__('Generating finding aid (%1)...', ['%1' => $this->resource->slug]));
 
     $appRoot = rtrim(sfConfig::get('sf_root_dir'), '/');
 
@@ -165,14 +165,14 @@ class arFindingAidJob extends arBaseJob
 
     $public = '';
     if ((null !== $setting = QubitSetting::getByName('publicFindingAid'))
-      && $setting->getValue(array('sourceCulture' => true)))
+      && $setting->getValue(['sourceCulture' => true]))
     {
       $public = '--public';
     }
 
     // Call generate EAD task
     $slug = $this->resource->slug;
-    $output = array();
+    $output = [];
     exec(PHP_BINARY ." $appRoot/symfony export:bulk --single-slug=\"$slug\" $public $eadFilePath 2>&1", $output, $exitCode);
 
     if ($exitCode > 0)
@@ -187,7 +187,7 @@ class arFindingAidJob extends arBaseJob
     $findingAidModel = 'inventory-summary';
     if (null !== $setting = QubitSetting::getByName('findingAidModel'))
     {
-      $findingAidModel = $setting->getValue(array('sourceCulture' => true));
+      $findingAidModel = $setting->getValue(['sourceCulture' => true]);
     }
 
     $eadXslFilePath = $appRoot . '/lib/task/pdf/ead-pdf-' . $findingAidModel . '.xsl';
@@ -202,7 +202,7 @@ class arFindingAidJob extends arBaseJob
     $pdfPath = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . self::getFindingAidPath($this->resource->id);
     $cmd = sprintf("java -jar '%s' -s:'%s' -xsl:'%s' -o:'%s' 2>&1", $saxonPath, $eadFilePath, $eadXslFilePath, $foFilePath);
     $this->info(sprintf('Running: %s', $cmd));
-    $output = array();
+    $output = [];
     exec($cmd, $output, $exitCode);
 
     if ($exitCode > 0)
@@ -216,7 +216,7 @@ class arFindingAidJob extends arBaseJob
     // Use FOP generated in previous step to generate PDF
     $cmd = sprintf("fop -r -q -fo '%s' -%s '%s' 2>&1", $foFilePath, self::getFindingAidFormat(), $pdfPath);
     $this->info(sprintf('Running: %s', $cmd));
-    $output = array();
+    $output = [];
     exec($cmd, $output, $exitCode);
 
     if ($exitCode != 0)
@@ -239,19 +239,19 @@ class arFindingAidJob extends arBaseJob
       $property->name = 'findingAidStatus';
     }
 
-    $property->setValue(self::GENERATED_STATUS, array('sourceCulture' => true));
+    $property->setValue(self::GENERATED_STATUS, ['sourceCulture' => true]);
     $property->indexOnSave = false;
     $property->save();
 
     // Update ES document with finding aid status
-    $partialData = array(
-      'findingAid' => array(
+    $partialData = [
+      'findingAid' => [
         'status' => self::GENERATED_STATUS
-    ));
+    ]];
 
     QubitSearch::getInstance()->partialUpdate($this->resource, $partialData);
 
-    $this->info($this->i18n->__('Finding aid generated successfully: %1', array('%1' => $pdfPath)));
+    $this->info($this->i18n->__('Finding aid generated successfully: %1', ['%1' => $pdfPath]));
 
     fclose($eadFileHandle); // Will delete the tmp file
     fclose($foFileHandle);
@@ -261,7 +261,7 @@ class arFindingAidJob extends arBaseJob
 
   private function upload($path)
   {
-    $this->info($this->i18n->__('Uploading finding aid (%1)...', array('%1' => $this->resource->slug)));
+    $this->info($this->i18n->__('Uploading finding aid (%1)...', ['%1' => $this->resource->slug]));
 
     // Update or create 'findingAidStatus' property
     $criteria = new Criteria();
@@ -275,17 +275,17 @@ class arFindingAidJob extends arBaseJob
       $property->name = 'findingAidStatus';
     }
 
-    $property->setValue(self::UPLOADED_STATUS, array('sourceCulture' => true));
+    $property->setValue(self::UPLOADED_STATUS, ['sourceCulture' => true]);
     $property->indexOnSave = false;
     $property->save();
 
-    $partialData = array(
-      'findingAid' => array(
+    $partialData = [
+      'findingAid' => [
         'transcript' => null,
         'status' => self::UPLOADED_STATUS
-    ));
+    ]];
 
-    $this->info($this->i18n->__('Finding aid uploaded successfully: %1', array('%1' => $path)));
+    $this->info($this->i18n->__('Finding aid uploaded successfully: %1', ['%1' => $path]));
 
     // Extract finding aid transcript
     $mimeType = 'application/' . self::getFindingAidFormat();
@@ -331,7 +331,7 @@ class arFindingAidJob extends arBaseJob
           $property->scope = 'Text extracted from finding aid PDF file text layer using pdftotext';
         }
 
-        $property->setValue($text, array('sourceCulture' => true));
+        $property->setValue($text, ['sourceCulture' => true]);
         $property->indexOnSave = false;
         $property->save();
 
@@ -348,7 +348,7 @@ class arFindingAidJob extends arBaseJob
 
   private function delete()
   {
-    $this->info($this->i18n->__('Deleting finding aid (%1)...', array('%1' => $this->resource->slug)));
+    $this->info($this->i18n->__('Deleting finding aid (%1)...', ['%1' => $this->resource->slug]));
 
     foreach (self::getPossibleFilenames($this->resource->id) as $filename)
     {
@@ -386,11 +386,11 @@ class arFindingAidJob extends arBaseJob
     }
 
     // Update ES document removing finding aid status and transcript
-    $partialData = array(
-      'findingAid' => array(
+    $partialData = [
+      'findingAid' => [
         'transcript' => null,
         'status' => null
-    ));
+    ]];
 
     QubitSearch::getInstance()->partialUpdate($this->resource, $partialData);
 

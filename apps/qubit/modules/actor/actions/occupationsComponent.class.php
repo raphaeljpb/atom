@@ -26,7 +26,7 @@ class ActorOccupationsComponent extends sfComponent
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
     $this->form->setValidator('occupation', new sfValidatorString());
     $this->form->setValidator('content', new sfValidatorString());
-    $this->form->setWidget('occupation', new sfWidgetFormSelect(array('choices' => array())));
+    $this->form->setWidget('occupation', new sfWidgetFormSelect(['choices' => []]));
     $this->form->setWidget('content', new sfWidgetFormTextarea());
 
     $this->occupations = $this->resource->getOccupations();
@@ -35,7 +35,7 @@ class ActorOccupationsComponent extends sfComponent
 
   public function processForm()
   {
-    $finalOccupations = array();
+    $finalOccupations = [];
 
     if (is_array($this->request->occupations))
     {
@@ -78,9 +78,9 @@ class ActorOccupationsComponent extends sfComponent
         if (isset($item['id']))
         {
           // Check existing note
-          $note = $relation->getNotesByType(array(
+          $note = $relation->getNotesByType([
             'noteTypeId' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID
-          ))->offsetGet(0);
+          ])->offsetGet(0);
 
           if (!isset($note) && strlen($item['content']) > 0)
           {

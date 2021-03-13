@@ -20,12 +20,12 @@
 class SettingsPrivacyNotificationAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'privacy_notification_enabled',
-      'privacy_notification');
-  public static $I18N = array(
+      'privacy_notification'];
+  public static $I18N = [
       'privacy_notification'
-    );
+    ];
 
   public function earlyExecute()
   {
@@ -39,10 +39,10 @@ class SettingsPrivacyNotificationAction extends SettingsEditAction
     switch ($name)
     {
       case 'privacy_notification_enabled':
-        $options = array($this->i18n->__('No'), $this->i18n->__('Yes'));
+        $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
 
-        $this->form->setValidator($name, new sfValidatorString(array('required' => false)));
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(array('choices' => $options), array('class' => 'radio')));
+        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
+        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => $options], ['class' => 'radio']));
 
         break;
 

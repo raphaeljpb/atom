@@ -39,7 +39,7 @@ class SearchBoxComponent extends sfComponent
       }
       elseif ($route->resource instanceof QubitInformationObject)
       {
-        $this->repository = $route->resource->getRepository(array('inherit' => true));
+        $this->repository = $route->resource->getRepository(['inherit' => true]);
       }
     }
 

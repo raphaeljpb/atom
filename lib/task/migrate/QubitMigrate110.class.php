@@ -123,19 +123,19 @@ class QubitMigrate110 extends QubitMigrate
     // Add accession mask user setting
     if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_accessionMask'))
     {
-      $this->data['QubitSetting']['QubitSetting_accessionMask'] = array(
+      $this->data['QubitSetting']['QubitSetting_accessionMask'] = [
         'name' => 'accession_mask',
         'value' => '%Y-%m-%d/#i'
-      );
+      ];
     }
 
     // Add accession counter setting
     if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_accessionCounter'))
     {
-      $this->data['QubitSetting']['QubitSetting_accessionCounter'] = array(
+      $this->data['QubitSetting']['QubitSetting_accessionCounter'] = [
         'name' => 'accession_counter',
         'value' => 0
-      );
+      ];
     }
 
     // Update add button, accession is now the default action
@@ -145,22 +145,22 @@ class QubitMigrate110 extends QubitMigrate
     }
 
     // Create accessioning menu node
-    $accessionAddMenu = array(
+    $accessionAddMenu = [
       'parent_id' => '<?php echo QubitMenu::ADD_EDIT_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => 'addAccessionRecord',
-      'label' => array(
+      'label' => [
         'en' => 'Accession records',
         'es' => 'Registros de adhesiones',
         'fr' => 'Registre des entrées',
         'pl' => 'Nabytki',
-        'sl' => 'Zapisi o prevzemu'),
-      'path' => 'accession/add');
+        'sl' => 'Zapisi o prevzemu'],
+      'path' => 'accession/add'];
 
     // Introduce it before "addInformationObject"
     if ($pivotKey = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'addInformationObject'))
     {
-      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, array('QubitMenu_mainmenu_addedit_accession' => $accessionAddMenu));
+      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_addedit_accession' => $accessionAddMenu]);
     }
     else
     {
@@ -168,23 +168,23 @@ class QubitMigrate110 extends QubitMigrate
     }
 
     // Create manage menu node
-    $manageMenu = array(
+    $manageMenu = [
       'id' => '<?php echo QubitMenu::MANAGE_ID."\n" ?>',
       'parent_id' => '<?php echo QubitMenu::MAIN_MENU_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => 'manage',
-      'label' => array(
+      'label' => [
         'en' => 'Manage',
         'es' => 'Administrar',
         'fr' => 'Gérer',
         'pl' => 'Zarządzanie',
-        'sl' => 'Upravljaj'),
-      'path' => 'accession/browse');
+        'sl' => 'Upravljaj'],
+      'path' => 'accession/browse'];
 
     // Introduce it before taxonomies
     if ($pivotKey = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'taxonomies'))
     {
-      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, array('QubitMenu_mainmenu_manage' => $manageMenu));
+      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_manage' => $manageMenu]);
     }
     else
     {
@@ -195,22 +195,22 @@ class QubitMigrate110 extends QubitMigrate
     $this->data['QubitMenu'][$pivotKey]['parent_id'] = QubitMenu::MANAGE_ID;
 
     // Create manage accession menu node
-    $accessionsManageMenu = array(
+    $accessionsManageMenu = [
       'parent_id' => '<?php echo QubitMenu::MANAGE_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => 'accessions',
-      'label' => array(
+      'label' => [
         'en' => 'Accession records',
         'es' => 'Registros de adhesiones',
         'fr' => 'Registre des entrées',
         'pl' => 'Nabytki',
-        'sl' => 'Zapisi o prevzemu'),
-      'path' => 'accession/browse');
+        'sl' => 'Zapisi o prevzemu'],
+      'path' => 'accession/browse'];
 
     // Introduce it before taxonomies
     if ($pivotKey)
     {
-      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, array('QubitMenu_mainmenu_manage_accessions' => $accessionsManageMenu));
+      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_manage_accessions' => $accessionsManageMenu]);
     }
     else
     {
@@ -218,23 +218,23 @@ class QubitMigrate110 extends QubitMigrate
     }
 
     // Create manage donor menu node
-    $donorsManageMenu = array(
+    $donorsManageMenu = [
       'parent_id' => '<?php echo QubitMenu::MANAGE_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => 'donors',
-      'label' => array(
+      'label' => [
         'en' => 'Donors',
         'es' => 'Donantes',
         'fr' => 'Donateurs',
         'nl' => 'Schenkers',
         'pl' => 'Przekazujący (materiały archiwalne)',
-        'sl' => 'Donatorji'),
-      'path' => 'donor/browse');
+        'sl' => 'Donatorji'],
+      'path' => 'donor/browse'];
 
     // Introduce it before taxonomies
     if ($pivotKey)
     {
-      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, array('QubitMenu_mainmenu_manage_donors' => $donorsManageMenu));
+      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_manage_donors' => $donorsManageMenu]);
     }
     else
     {
@@ -242,23 +242,23 @@ class QubitMigrate110 extends QubitMigrate
     }
 
     // Create manage rightsholder menu node
-    $rightsHoldersManageMenu = array(
+    $rightsHoldersManageMenu = [
       'parent_id' => '<?php echo QubitMenu::MANAGE_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => 'rightsholders',
-      'label' => array(
+      'label' => [
         'en' => 'Rights holders',
         'es' => 'Titulares de derechos',
         'fr' => 'Détenteurs de droits',
         'nl' => 'Houders van rechten',
         'pl' => 'Posiadacze praw',
-        'sl' => 'Imetniki pravic'),
-      'path' => 'rightsholder/browse');
+        'sl' => 'Imetniki pravic'],
+      'path' => 'rightsholder/browse'];
 
     // Introduce it before taxonomies
     if ($pivotKey)
     {
-      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, array('QubitMenu_mainmenu_manage_rightsholders' => $rightsHoldersManageMenu));
+      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_manage_rightsholders' => $rightsHoldersManageMenu]);
     }
     else
     {
@@ -266,192 +266,192 @@ class QubitMigrate110 extends QubitMigrate
     }
 
     // New type of relations: accession and right
-    $this->data['QubitTerm']['QubitTerm_accession'] = array(
+    $this->data['QubitTerm']['QubitTerm_accession'] = [
       'id' => '<?php echo QubitTerm::ACCESSION_ID."\n" ?>',
       'parent_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
-      'name' => array('en' => 'Accession'),
+      'name' => ['en' => 'Accession'],
       'source_culture' => 'en',
-      'taxonomy_id' => '<?php echo QubitTaxonomy::RELATION_TYPE_ID."\n" ?>');
-    $this->data['QubitTerm']['QubitTerm_right'] = array(
+      'taxonomy_id' => '<?php echo QubitTaxonomy::RELATION_TYPE_ID."\n" ?>'];
+    $this->data['QubitTerm']['QubitTerm_right'] = [
       'id' => '<?php echo QubitTerm::RIGHT_ID."\n" ?>',
       'parent_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
-      'name' => array('en' => 'Right'),
+      'name' => ['en' => 'Right'],
       'source_culture' => 'en',
-      'taxonomy_id' => '<?php echo QubitTaxonomy::RELATION_TYPE_ID."\n" ?>');
-    $this->data['QubitTerm']['QubitTerm_donor'] = array(
+      'taxonomy_id' => '<?php echo QubitTaxonomy::RELATION_TYPE_ID."\n" ?>'];
+    $this->data['QubitTerm']['QubitTerm_donor'] = [
       'id' => '<?php echo QubitTerm::DONOR_ID."\n" ?>',
       'parent_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
-      'name' => array('en' => 'Donor'),
+      'name' => ['en' => 'Donor'],
       'source_culture' => 'en',
-      'taxonomy_id' => '<?php echo QubitTaxonomy::RELATION_TYPE_ID."\n" ?>');
+      'taxonomy_id' => '<?php echo QubitTaxonomy::RELATION_TYPE_ID."\n" ?>'];
 
     // Accession resource type taxonomy and terms
-    $this->data['QubitTaxonomy']['QubitTaxonomy_accession_resource_type'] = array(
+    $this->data['QubitTaxonomy']['QubitTaxonomy_accession_resource_type'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID."\n" ?>',
-      'name' => array('en' => 'Accession resource type'));
-    $this->data['QubitTerm']['QubitTerm_accession_resource_type_public'] = array(
+      'name' => ['en' => 'Accession resource type']];
+    $this->data['QubitTerm']['QubitTerm_accession_resource_type_public'] = [
       'taxonomy_id' => 'QubitTaxonomy_accession_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'Public transfer'));
-    $this->data['QubitTerm']['QubitTerm_accession_resource_type_private'] = array(
+      'name' => ['en' => 'Public transfer']];
+    $this->data['QubitTerm']['QubitTerm_accession_resource_type_private'] = [
       'taxonomy_id' => 'QubitTaxonomy_accession_resource_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'Private transfer'));
+      'name' => ['en' => 'Private transfer']];
 
     // Acquisition type taxonomy and terms
-    $this->data['QubitTaxonomy']['QubitTaxonomy_accession_acquisition_type'] = array(
+    $this->data['QubitTaxonomy']['QubitTaxonomy_accession_acquisition_type'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID."\n" ?>',
-      'name' => array('en' => 'Acquisition type'));
-    $this->data['QubitTerm']['QubitTerm_accession_acquisition_type_deposit'] = array(
+      'name' => ['en' => 'Acquisition type']];
+    $this->data['QubitTerm']['QubitTerm_accession_acquisition_type_deposit'] = [
       'taxonomy_id' => 'QubitTaxonomy_accession_acquisition_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'Deposit'));
-    $this->data['QubitTerm']['QubitTerm_accession_acquisition_type_gift'] = array(
+      'name' => ['en' => 'Deposit']];
+    $this->data['QubitTerm']['QubitTerm_accession_acquisition_type_gift'] = [
       'taxonomy_id' => 'QubitTaxonomy_accession_acquisition_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'Gift'));
-    $this->data['QubitTerm']['QubitTerm_accession_acquisition_type_purchase'] = array(
+      'name' => ['en' => 'Gift']];
+    $this->data['QubitTerm']['QubitTerm_accession_acquisition_type_purchase'] = [
       'taxonomy_id' => 'QubitTaxonomy_accession_acquisition_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'Purchase'));
-    $this->data['QubitTerm']['QubitTerm_accession_acquisition_type_transfer'] = array(
+      'name' => ['en' => 'Purchase']];
+    $this->data['QubitTerm']['QubitTerm_accession_acquisition_type_transfer'] = [
       'taxonomy_id' => 'QubitTaxonomy_accession_acquisition_type',
       'source_culture' => 'en',
-      'name' => array('en' => 'Transfer'));
+      'name' => ['en' => 'Transfer']];
 
     // Processing priority taxonomy and terms
-    $this->data['QubitTaxonomy']['QubitTaxonomy_accession_processing_priority'] = array(
+    $this->data['QubitTaxonomy']['QubitTaxonomy_accession_processing_priority'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::ACCESSION_PROCESSING_PRIORITY_ID."\n" ?>',
-      'name' => array('en' => 'Processing priority'));
-    $this->data['QubitTerm']['QubitTerm_accession_processing_priority_high'] = array(
+      'name' => ['en' => 'Processing priority']];
+    $this->data['QubitTerm']['QubitTerm_accession_processing_priority_high'] = [
       'taxonomy_id' => 'QubitTaxonomy_accession_processing_priority',
       'source_culture' => 'en',
-      'name' => array('en' => 'High'));
-    $this->data['QubitTerm']['QubitTerm_accession_processing_priority_medium'] = array(
+      'name' => ['en' => 'High']];
+    $this->data['QubitTerm']['QubitTerm_accession_processing_priority_medium'] = [
       'taxonomy_id' => 'QubitTaxonomy_accession_processing_priority',
       'source_culture' => 'en',
-      'name' => array('en' => 'Medium'));
-    $this->data['QubitTerm']['QubitTerm_accession_processing_priority_low'] = array(
+      'name' => ['en' => 'Medium']];
+    $this->data['QubitTerm']['QubitTerm_accession_processing_priority_low'] = [
       'taxonomy_id' => 'QubitTaxonomy_accession_processing_priority',
       'source_culture' => 'en',
-      'name' => array('en' => 'Low'));
+      'name' => ['en' => 'Low']];
 
     // Processing status taxonomy and terms
-    $this->data['QubitTaxonomy']['QubitTaxonomy_accession_processing_status'] = array(
+    $this->data['QubitTaxonomy']['QubitTaxonomy_accession_processing_status'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::ACCESSION_PROCESSING_STATUS_ID."\n" ?>',
-      'name' => array('en' => 'Processing status'));
-    $this->data['QubitTerm']['QubitTerm_accession_processing_status_complete'] = array(
+      'name' => ['en' => 'Processing status']];
+    $this->data['QubitTerm']['QubitTerm_accession_processing_status_complete'] = [
       'taxonomy_id' => 'QubitTaxonomy_accession_processing_status',
       'source_culture' => 'en',
-      'name' => array('en' => 'Complete'));
-    $this->data['QubitTerm']['QubitTerm_accession_processing_status_incomplete'] = array(
+      'name' => ['en' => 'Complete']];
+    $this->data['QubitTerm']['QubitTerm_accession_processing_status_incomplete'] = [
       'taxonomy_id' => 'QubitTaxonomy_accession_processing_status',
       'source_culture' => 'en',
-      'name' => array('en' => 'Incomplete'));
-    $this->data['QubitTerm']['QubitTerm_accession_processing_status_inprogress'] = array(
+      'name' => ['en' => 'Incomplete']];
+    $this->data['QubitTerm']['QubitTerm_accession_processing_status_inprogress'] = [
       'taxonomy_id' => 'QubitTaxonomy_accession_processing_status',
       'source_culture' => 'en',
-      'name' => array('en' => 'In-Progress'));
+      'name' => ['en' => 'In-Progress']];
 
     // Deaccession scope taxonomy and terms
-    $this->data['QubitTaxonomy']['QubitTaxonomy_deaccession_scope'] = array(
+    $this->data['QubitTaxonomy']['QubitTaxonomy_deaccession_scope'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::DEACCESSION_SCOPE_ID."\n" ?>',
-      'name' => array('en' => 'Deaccession scope'));
-    $this->data['QubitTerm']['QubitTerm_deaccession_scope_whole'] = array(
+      'name' => ['en' => 'Deaccession scope']];
+    $this->data['QubitTerm']['QubitTerm_deaccession_scope_whole'] = [
       'taxonomy_id' => 'QubitTaxonomy_deaccession_scope',
       'source_culture' => 'en',
-      'name' => array('en' => 'Whole'));
-    $this->data['QubitTerm']['QubitTerm_deaccession_scope_part'] = array(
+      'name' => ['en' => 'Whole']];
+    $this->data['QubitTerm']['QubitTerm_deaccession_scope_part'] = [
       'taxonomy_id' => 'QubitTaxonomy_deaccession_scope',
       'source_culture' => 'en',
-      'name' => array('en' => 'Part'));
+      'name' => ['en' => 'Part']];
 
     // Right act taxonomy and terms
-    $this->data['QubitTaxonomy']['QubitTaxonomy_right_act'] = array(
+    $this->data['QubitTaxonomy']['QubitTaxonomy_right_act'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::RIGHT_ACT_ID."\n" ?>',
-      'name' => array('en' => 'Rights act'));
-    $this->data['QubitTerm']['QubitTerm_right_act_delete'] = array(
+      'name' => ['en' => 'Rights act']];
+    $this->data['QubitTerm']['QubitTerm_right_act_delete'] = [
       'taxonomy_id' => 'QubitTaxonomy_right_act',
       'source_culture' => 'en',
-      'name' => array('en' => 'Delete'));
-    $this->data['QubitTerm']['QubitTerm_right_act_discover'] = array(
+      'name' => ['en' => 'Delete']];
+    $this->data['QubitTerm']['QubitTerm_right_act_discover'] = [
       'taxonomy_id' => 'QubitTaxonomy_right_act',
       'source_culture' => 'en',
-      'name' => array('en' => 'Discover'));
-    $this->data['QubitTerm']['QubitTerm_right_act_display'] = array(
+      'name' => ['en' => 'Discover']];
+    $this->data['QubitTerm']['QubitTerm_right_act_display'] = [
       'taxonomy_id' => 'QubitTaxonomy_right_act',
       'source_culture' => 'en',
-      'name' => array('en' => 'Display'));
-    $this->data['QubitTerm']['QubitTerm_right_act_disemanite'] = array(
+      'name' => ['en' => 'Display']];
+    $this->data['QubitTerm']['QubitTerm_right_act_disemanite'] = [
       'taxonomy_id' => 'QubitTaxonomy_right_act',
       'source_culture' => 'en',
-      'name' => array('en' => 'Disseminate'));
-    $this->data['QubitTerm']['QubitTerm_right_act_migrate'] = array(
+      'name' => ['en' => 'Disseminate']];
+    $this->data['QubitTerm']['QubitTerm_right_act_migrate'] = [
       'taxonomy_id' => 'QubitTaxonomy_right_act',
       'source_culture' => 'en',
-      'name' => array('en' => 'Migrate'));
-    $this->data['QubitTerm']['QubitTerm_right_act_modify'] = array(
+      'name' => ['en' => 'Migrate']];
+    $this->data['QubitTerm']['QubitTerm_right_act_modify'] = [
       'taxonomy_id' => 'QubitTaxonomy_right_act',
       'source_culture' => 'en',
-      'name' => array('en' => 'Modify'));
-    $this->data['QubitTerm']['QubitTerm_right_act_replicate'] = array(
+      'name' => ['en' => 'Modify']];
+    $this->data['QubitTerm']['QubitTerm_right_act_replicate'] = [
       'taxonomy_id' => 'QubitTaxonomy_right_act',
       'source_culture' => 'en',
-      'name' => array('en' => 'Replicate'));
+      'name' => ['en' => 'Replicate']];
 
     // Right basis taxonomy and terms
-    $this->data['QubitTaxonomy']['QubitTaxonomy_right_basis'] = array(
+    $this->data['QubitTaxonomy']['QubitTaxonomy_right_basis'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::RIGHT_BASIS_ID."\n" ?>',
-      'name' => array('en' => 'Rights basis'));
-    $this->data['QubitTerm']['QubitTerm_right_basis_copyright'] = array(
+      'name' => ['en' => 'Rights basis']];
+    $this->data['QubitTerm']['QubitTerm_right_basis_copyright'] = [
       'id' => '<?php echo QubitTerm::RIGHT_BASIS_COPYRIGHT_ID."\n" ?>',
       'taxonomy_id' => 'QubitTaxonomy_right_basis',
       'source_culture' => 'en',
-      'name' => array('en' => 'Copyright'));
-    $this->data['QubitTerm']['QubitTerm_right_basis_license'] = array(
+      'name' => ['en' => 'Copyright']];
+    $this->data['QubitTerm']['QubitTerm_right_basis_license'] = [
       'id' => '<?php echo QubitTerm::RIGHT_BASIS_LICENSE_ID."\n" ?>',
       'taxonomy_id' => 'QubitTaxonomy_right_basis',
       'source_culture' => 'en',
-      'name' => array('en' => 'License'));
-    $this->data['QubitTerm']['QubitTerm_right_basis_statute'] = array(
+      'name' => ['en' => 'License']];
+    $this->data['QubitTerm']['QubitTerm_right_basis_statute'] = [
       'id' => '<?php echo QubitTerm::RIGHT_BASIS_STATUTE_ID."\n" ?>',
       'taxonomy_id' => 'QubitTaxonomy_right_basis',
       'source_culture' => 'en',
-      'name' => array('en' => 'Statute'));
-    $this->data['QubitTerm']['QubitTerm_right_basis_policy'] = array(
+      'name' => ['en' => 'Statute']];
+    $this->data['QubitTerm']['QubitTerm_right_basis_policy'] = [
       'id' => '<?php echo QubitTerm::RIGHT_BASIS_POLICY_ID."\n" ?>',
       'taxonomy_id' => 'QubitTaxonomy_right_basis',
       'source_culture' => 'en',
-      'name' => array('en' => 'Policy'));
-    $this->data['QubitTerm']['QubitTerm_right_basis_donor'] = array(
+      'name' => ['en' => 'Policy']];
+    $this->data['QubitTerm']['QubitTerm_right_basis_donor'] = [
       'taxonomy_id' => 'QubitTaxonomy_right_basis',
       'source_culture' => 'en',
-      'name' => array('en' => 'Donor'));
+      'name' => ['en' => 'Donor']];
 
     // Copyright status taxonomy and terms
-    $this->data['QubitTaxonomy']['QubitTaxonomy_copyright_status'] = array(
+    $this->data['QubitTaxonomy']['QubitTaxonomy_copyright_status'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::COPYRIGHT_STATUS_ID."\n" ?>',
-      'name' => array('en' => 'Copyright status'));
-    $this->data['QubitTerm']['QubitTerm_copyright_status_under_copyright'] = array(
+      'name' => ['en' => 'Copyright status']];
+    $this->data['QubitTerm']['QubitTerm_copyright_status_under_copyright'] = [
       'taxonomy_id' => 'QubitTaxonomy_copyright_status',
       'source_culture' => 'en',
-      'name' => array('en' => 'Under copyright'));
-    $this->data['QubitTerm']['QubitTerm_copyright_status_public_domain'] = array(
+      'name' => ['en' => 'Under copyright']];
+    $this->data['QubitTerm']['QubitTerm_copyright_status_public_domain'] = [
       'taxonomy_id' => 'QubitTaxonomy_copyright_status',
       'source_culture' => 'en',
-      'name' => array('en' => 'Public domain'));
-    $this->data['QubitTerm']['QubitTerm_copyright_status_unknown'] = array(
+      'name' => ['en' => 'Public domain']];
+    $this->data['QubitTerm']['QubitTerm_copyright_status_unknown'] = [
       'taxonomy_id' => 'QubitTaxonomy_copyright_status',
       'source_culture' => 'en',
-      'name' => array('en' => 'Unknown'));
+      'name' => ['en' => 'Unknown']];
 
     return $this;
   }
@@ -537,13 +537,13 @@ class QubitMigrate110 extends QubitMigrate
    */
   protected function addCsvMenu()
   {
-    $this->data['QubitMenu']['QubitMenu_mainmenu_import_csv'] = array(
+    $this->data['QubitMenu']['QubitMenu_mainmenu_import_csv'] = [
       'parent_id' => '<?php echo QubitMenu::IMPORT_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => 'importCsv',
-      'label' => array('en' => 'CSV'),
+      'label' => ['en' => 'CSV'],
       'path' => 'object/importSelect?type=csv'
-    );
+    ];
 
     return $this;
   }
@@ -555,13 +555,13 @@ class QubitMigrate110 extends QubitMigrate
    */
   protected function addGlobalReplaceMenu()
   {
-    $this->data['QubitMenu']['QubitMenu_mainmenu_admin_globalreplace'] = array(
+    $this->data['QubitMenu']['QubitMenu_mainmenu_admin_globalreplace'] = [
       'parent_id' => '<?php echo QubitMenu::ADMIN_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => 'globalReplace',
-      'label' => array('en' => 'Global search/replace'),
+      'label' => ['en' => 'Global search/replace'],
       'path' => 'search/globalReplace'
-    );
+    ];
 
     return $this;
   }
@@ -573,13 +573,13 @@ class QubitMigrate110 extends QubitMigrate
    */
   protected function addRepositoryQuotaSetting()
   {
-    $this->data['QubitSetting']['QubitSetting_repositoryQuota'] = array(
+    $this->data['QubitSetting']['QubitSetting_repositoryQuota'] = [
       'name' => 'repository_quota',
       'editable' => 1,
       'deleteable' => 0,
-      'value' => array('en' => '-1'),
+      'value' => ['en' => '-1'],
       'source_culture' => 'en'
-    );
+    ];
 
     return $this;
   }
@@ -594,10 +594,10 @@ class QubitMigrate110 extends QubitMigrate
     // Add separator character
     if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_separatorCharacter'))
     {
-      $this->data['QubitSetting']['QubitSetting_separatorCharacter'] = array(
+      $this->data['QubitSetting']['QubitSetting_separatorCharacter'] = [
         'name' => 'separator_character',
         'value' => '-'
-      );
+      ];
     }
 
     return $this;
@@ -611,23 +611,23 @@ class QubitMigrate110 extends QubitMigrate
   protected function addThemesMenu()
   {
     // Create themes menu node
-    $themesMenu = array(
+    $themesMenu = [
       'parent_id' => '<?php echo QubitMenu::ADMIN_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => 'themes',
-      'label' => array(
+      'label' => [
         'en' => 'Themes',
         'es' => 'Temas',
         'fr' => 'Thèmes',
         'nl' => 'Thema\'s',
         'pl' => 'Motywy',
-        'sl' => 'Teme'),
-      'path' => 'sfPluginAdminPlugin/themes');
+        'sl' => 'Teme'],
+      'path' => 'sfPluginAdminPlugin/themes'];
 
     // Introduce themes menu before settings
     if ($pivotKey = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'settings'))
     {
-      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, array('QubitMenu_mainmenu_admin_themes' => $themesMenu));
+      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_admin_themes' => $themesMenu]);
     }
     else
     {
@@ -775,23 +775,23 @@ class QubitMigrate110 extends QubitMigrate
    */
   protected function addPhysicalObjectBrowseMenu()
   {
-    $menu = array(
+    $menu = [
       'parent_id' => '<?php echo QubitMenu::MANAGE_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => 'browsePhysicalObjects',
-      'label' => array(
+      'label' => [
         'en' => 'Physical storage',
         'es' => 'Almacenamiento físico',
         'fr' => 'Localisation physique',
         'nl' => 'Bergplaats',
         'pl' => 'Składowanie w ujęciu fizycznym',
-        'sl' => 'Fizična hramba'),
-      'path' => 'physicalobject/browse');
+        'sl' => 'Fizična hramba'],
+      'path' => 'physicalobject/browse'];
 
     // Introduce Physical objects menu before Rights-holders
     if ($pivotKey = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'rightsholders'))
     {
-      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, array('QubitMenu_mainmenu_manage_physicalobjects' => $menu));
+      self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_manage_physicalobjects' => $menu]);
     }
     else
     {
@@ -879,10 +879,10 @@ class QubitMigrate110 extends QubitMigrate
         }
       }
 
-      $this->data['QubitStatus']['QubitStatus_'.$key] = array(
+      $this->data['QubitStatus']['QubitStatus_'.$key] = [
         'object_id' => $key,
         'type_id' => $this->data['QubitStatus'][$inheritedStatusKey]['type_id'],
-        'status_id' => $this->data['QubitStatus'][$inheritedStatusKey]['status_id']);
+        'status_id' => $this->data['QubitStatus'][$inheritedStatusKey]['status_id']];
     }
 
     return $this;
@@ -901,7 +901,7 @@ class QubitMigrate110 extends QubitMigrate
       return $this;
     }
 
-    $slug = array();
+    $slug = [];
     foreach ($this->data['QubitSlug'] as $item)
     {
       $slug[$item['object_id']] = $item['slug'];
@@ -983,7 +983,7 @@ class QubitMigrate110 extends QubitMigrate
    */
   protected function sortQubitTerms()
   {
-    $qubitTermConstantIds = array(
+    $qubitTermConstantIds = [
       'ROOT_ID',
       //EventType taxonomy
       'CREATION_ID',
@@ -1066,7 +1066,7 @@ class QubitMigrate110 extends QubitMigrate
       'RIGHT_BASIS_LICENSE_ID',
       'RIGHT_BASIS_STATUTE_ID',
       'RIGHT_BASIS_POLICY_ID'
-    );
+    ];
 
     // Restack array with Constant values at top
     $qubitTermArray = $this->data['QubitTerm'];
@@ -1104,7 +1104,7 @@ class QubitMigrate110 extends QubitMigrate
    */
   protected function sortClasses()
   {
-    $ormSortOrder = array(
+    $ormSortOrder = [
       'QubitTaxonomy',
       'QubitTerm',
       'QubitActor',
@@ -1129,7 +1129,7 @@ class QubitMigrate110 extends QubitMigrate
       'QubitOaiHarvest',
       'QubitProperty',
       'QubitSetting'
-    );
+    ];
 
     $originalData = $this->data;
 

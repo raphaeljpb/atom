@@ -32,7 +32,7 @@ class QubitValidatorActorDescriptionIdentifier extends sfValidatorBase
 
     return count(QubitActor::get($criteria)) > 0;
   }
-  protected function configure($options = array(), $messages = array())
+  protected function configure($options = [], $messages = [])
   {
     parent::configure($options, $messages);
 
@@ -46,9 +46,9 @@ class QubitValidatorActorDescriptionIdentifier extends sfValidatorBase
     {
       $message = sfContext::getInstance()->i18n->__(
                    '%1%Authority record identifier%2% - value not unique.',
-                   array('%1%' => '<a href="http://ica-atom.org/doc/RS-2#5.4.1">', '%2%' => '</a>'));
+                   ['%1%' => '<a href="http://ica-atom.org/doc/RS-2#5.4.1">', '%2%' => '</a>']);
 
-      throw new sfValidatorError($this, $message, array('value' => $value));
+      throw new sfValidatorError($this, $message, ['value' => $value]);
     }
 
     return $value;

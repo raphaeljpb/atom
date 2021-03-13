@@ -37,7 +37,7 @@ EOF;
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $this->validateOptions($options);
 
@@ -45,9 +45,9 @@ EOF;
 
     $filenames = explode(',', $arguments['filename']);
 
-    $nonEmptyColumns    = array();
-    $sampleColumnValues = array();
-    $multiValueColumns  = array();
+    $nonEmptyColumns    = [];
+    $sampleColumnValues = [];
+    $multiValueColumns  = [];
     $rowCount           = 0;
 
     foreach($filenames as $filename)
@@ -59,17 +59,17 @@ EOF;
       }
 
       // Get import definition
-      $import = new QubitFlatfileImport(array(
+      $import = new QubitFlatfileImport([
         // Pass context
         'context' => sfContext::createInstance($this->configuration),
 
-        'status' => array(
+        'status' => [
           'nonEmptyColumns'             => $nonEmptyColumns,
           'sampleColumnValues'          => $sampleColumnValues,
-          'multiValueColumns'           => array(),
+          'multiValueColumns'           => [],
           'sampleOnlyMultivalueColumns' => false,
           'numberOfSampleValues'        => 1
-        ),
+        ],
 
         'saveLogic' => function (&$self)
         {
@@ -81,7 +81,7 @@ EOF;
             $self->status['sampleColumnValues'][$column]
               = (isset($self->status['sampleColumnValues'][$column]))
                 ? $self->status['sampleColumnValues'][$column]
-                : array();
+                : [];
 
             // Check if column isn't empty
             if (trim($value))
@@ -113,7 +113,7 @@ EOF;
             }
           }
         }
-      ));
+      ]);
 
       $import->csv($fh, $skipRows);
 
@@ -125,7 +125,7 @@ EOF;
       // Add values of both arrays together
       $a = $multiValueColumns;
       $b = $import->status['multiValueColumns'];
-      $c = array();
+      $c = [];
 
       // Add values of both arrays if possible
       foreach($a as $key => $value)

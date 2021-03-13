@@ -64,11 +64,11 @@ class SettingsFindingAidAction extends sfAction
     $findingAidModel = QubitSetting::getByName('findingAidModel');
     $publicFindingAid = QubitSetting::getByName('publicFindingAid');
 
-    $this->findingAidForm->setDefaults(array(
-      'finding_aid_format' => (isset($findingAidFormat)) ? $findingAidFormat->getValue(array('sourceCulture'=>true)) : 'pdf',
-      'finding_aid_model' => (isset($findingAidModel)) ? $findingAidModel->getValue(array('sourceCulture'=>true)) : 'inventory-summary',
-      'public_finding_aid' => (isset($publicFindingAid)) ? $publicFindingAid->getValue(array('sourceCulture'=>true)) : 1
-    ));
+    $this->findingAidForm->setDefaults([
+      'finding_aid_format' => (isset($findingAidFormat)) ? $findingAidFormat->getValue(['sourceCulture'=>true]) : 'pdf',
+      'finding_aid_model' => (isset($findingAidModel)) ? $findingAidModel->getValue(['sourceCulture'=>true]) : 'inventory-summary',
+      'public_finding_aid' => (isset($publicFindingAid)) ? $publicFindingAid->getValue(['sourceCulture'=>true]) : 1
+    ]);
   }
 
   /**
@@ -81,21 +81,21 @@ class SettingsFindingAidAction extends sfAction
     if (null !== $findingAidFormat = $thisForm->getValue('finding_aid_format'))
     {
       $setting = QubitSetting::getByName('findingAidFormat');
-      $setting->setValue($findingAidFormat, array('sourceCulture' => true));
+      $setting->setValue($findingAidFormat, ['sourceCulture' => true]);
       $setting->save();
     }
 
     if (null !== $findingAidModel = $thisForm->getValue('finding_aid_model'))
     {
       $setting = QubitSetting::getByName('findingAidModel');
-      $setting->setValue($findingAidModel, array('sourceCulture' => true));
+      $setting->setValue($findingAidModel, ['sourceCulture' => true]);
       $setting->save();
     }
 
     if (null !== $publicFindingAid = $thisForm->getValue('public_finding_aid'))
     {
       $setting = QubitSetting::getByName('publicFindingAid');
-      $setting->setValue($publicFindingAid, array('sourceCulture' => true));
+      $setting->setValue($publicFindingAid, ['sourceCulture' => true]);
       $setting->save();
     }
 

@@ -30,8 +30,8 @@ class QubitRoute extends sfRoute
   {
     if (QubitSlug::SLUG_PERMISSIVE == sfConfig::get('app_permissive_slug_creation', QubitSlug::SLUG_RESTRICTIVE))
     {
-      $entities = array('%2A', '%3A', '%40', '%3D', '%2C');
-      $replacements = array('*', ':', '@', '=', ',');
+      $entities = ['%2A', '%3A', '%40', '%3D', '%2C'];
+      $replacements = ['*', ':', '@', '=', ','];
       return str_replace($entities, $replacements, urlencode($string));
     }
 
@@ -41,7 +41,7 @@ class QubitRoute extends sfRoute
   /**
    * @see sfRoute
    */
-  public function matchesParameters($params, $context = array())
+  public function matchesParameters($params, $context = [])
   {
     return parent::matchesParameters($this->filterParams($params), $context);
   }
@@ -53,7 +53,7 @@ class QubitRoute extends sfRoute
    * (AtoM ticket 11761).
    *
    */
-  public function generate($params, $context = array(), $absolute = false)
+  public function generate($params, $context = [], $absolute = false)
   {
     $params = $this->filterParams($params);
 
@@ -80,7 +80,7 @@ class QubitRoute extends sfRoute
     else
     {
       $variables = $this->variables;
-      uasort($variables, array('sfRoute', 'generateCompareVarsByStrlen'));
+      uasort($variables, ['sfRoute', 'generateCompareVarsByStrlen']);
       foreach ($variables as $variable => $value)
       {
         $url = str_replace($value, urlencode($tparams[$variable]), $url);
@@ -109,7 +109,7 @@ class QubitRoute extends sfRoute
     // Fill in missing parameters with attributes of $params[0]
     if (!is_array($params))
     {
-      $params = array($params);
+      $params = [$params];
     }
 
     if (isset($params[0]))
@@ -146,7 +146,7 @@ class QubitRoute extends sfRoute
    */
   protected function generateWithTokens($parameters)
   {
-    $url = array();
+    $url = [];
     $optional = $this->options['generate_shortest_url'];
     $first = true;
     $tokens = array_reverse($this->tokens);
@@ -173,7 +173,7 @@ class QubitRoute extends sfRoute
           break;
         default:
           // Handle custom tokens.
-          if ($segment = call_user_func_array(array($this, 'generateFor'.ucfirst(array_shift($token))), array_merge(array($optional, $parameters), $token)))
+          if ($segment = call_user_func_array([$this, 'generateFor'.ucfirst(array_shift($token))], array_merge([$optional, $parameters], $token)))
           {
             $url[] = $segment;
             $optional = false;

@@ -69,7 +69,7 @@ class csvRepositoryExport extends QubitFlatfileExport
 
   private function getRelatedTermNames($taxonomyId)
   {
-    $results = array();
+    $results = [];
 
     foreach ($this->resource->getTermRelations($taxonomyId) as $r)
     {
@@ -103,9 +103,9 @@ class csvRepositoryExport extends QubitFlatfileExport
 
   private function getNames($typeId)
   {
-    $results = array();
+    $results = [];
 
-    foreach ($this->resource->getOtherNames(array('typeId' => $typeId)) as $name)
+    foreach ($this->resource->getOtherNames(['typeId' => $typeId]) as $name)
     {
       $results[] = $name->__toString();
     }

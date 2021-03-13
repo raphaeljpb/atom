@@ -20,12 +20,12 @@
 class arStorageServiceSettingsSettingsAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'storage_service_api_url',
       'storage_service_username',
       'storage_service_api_key',
       'download_aip_enabled',
-    );
+    ];
 
   public function earlyExecute()
   {
@@ -33,9 +33,9 @@ class arStorageServiceSettingsSettingsAction extends SettingsEditAction
 
     $this->updateMessage = $this->i18n->__('Storage service settings saved.');
 
-    $this->settingDefaults = array(
+    $this->settingDefaults = [
       'download_aip_enabled' => '0',
-    );
+    ];
   }
 
   protected function addField($name)
@@ -52,16 +52,16 @@ class arStorageServiceSettingsSettingsAction extends SettingsEditAction
         break;
 
       case 'download_aip_enabled':
-        $options = array(
+        $options = [
           '0' => $this->i18n->__('Disabled'),
           '1' => $this->i18n->__('Enabled')
-        );
+        ];
 
         $this->form->setValidator($name, new sfValidatorString(
-          array('required' => false)
+          ['required' => false]
         ));
         $this->form->setWidget($name, new sfWidgetFormSelectRadio(
-          array('choices' => $options), array('class' => 'radio')
+          ['choices' => $options], ['class' => 'radio']
         ));
 
         break;

@@ -51,14 +51,14 @@ class InformationObjectTreeViewComponent extends sfComponent
     // Child descriptions
     if ($this->resource->hasChildren())
     {
-      list($this->children, $this->hasNextSiblings) = $this->resource->getTreeViewChildren(array('numberOfPreviousOrNextSiblings' => $numberOfPreviousOrNextSiblings), $this->siblingCountNext);
+      list($this->children, $this->hasNextSiblings) = $this->resource->getTreeViewChildren(['numberOfPreviousOrNextSiblings' => $numberOfPreviousOrNextSiblings], $this->siblingCountNext);
     }
     // Show siblings if there's no children, but not for root descriptions
     elseif (QubitInformationObject::ROOT_ID != $this->resource->parentId)
     {
       // Previous siblings
       // Get an extra sibling just to know if the + button is necessary
-      $this->prevSiblings = $this->resource->getTreeViewSiblings(array('limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous'), $this->siblingCountPrev);
+      $this->prevSiblings = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous'], $this->siblingCountPrev);
       $this->hasPrevSiblings = count($this->prevSiblings) > $numberOfPreviousOrNextSiblings;
 
       if ($this->hasPrevSiblings)
@@ -70,7 +70,7 @@ class InformationObjectTreeViewComponent extends sfComponent
       $this->prevSiblings = array_reverse($this->prevSiblings);
 
       // Next siblings, same logic than above with the + button
-      $this->nextSiblings = $this->resource->getTreeViewSiblings(array('limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'next'), $this->siblingCountNext);
+      $this->nextSiblings = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'next'], $this->siblingCountNext);
       $this->hasNextSiblings = count($this->nextSiblings) > $numberOfPreviousOrNextSiblings;
 
       if ($this->hasNextSiblings)

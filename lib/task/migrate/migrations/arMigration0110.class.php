@@ -44,12 +44,12 @@ class arMigration0110
     $taxonomy->save();
 
     // Add the "DACS Note" terms
-    foreach (array(
-      array('en' => 'Conservation'),
-      array('en' => 'Citation'),
-      array('en' => 'Alphanumeric designations'),
-      array('en' => 'Variant title information'),
-      array('en' => 'Processing information')) as $termNames)
+    foreach ([
+      ['en' => 'Conservation'],
+      ['en' => 'Citation'],
+      ['en' => 'Alphanumeric designations'],
+      ['en' => 'Variant title information'],
+      ['en' => 'Processing information']] as $termNames)
     {
       $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;
@@ -57,7 +57,7 @@ class arMigration0110
       $term->sourceCulture = 'en';
       foreach ($termNames as $key => $value)
       {
-        $term->setName($value, array('culture' => $key));
+        $term->setName($value, ['culture' => $key]);
       }
 
       $term->save();
@@ -68,7 +68,7 @@ class arMigration0110
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::EVENT_TYPE_ID;
     $term->sourceCulture = 'en';
-    $term->setName('Record-keeping activity', array('culture' => 'en'));
+    $term->setName('Record-keeping activity', ['culture' => 'en']);
     $term->save();
 
     return true;

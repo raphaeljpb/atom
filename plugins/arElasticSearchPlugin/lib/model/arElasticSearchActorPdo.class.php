@@ -29,7 +29,7 @@ class arElasticSearchActorPdo
   //      $ancestors,
     public $i18ns;
 
-  protected $data = array();
+  protected $data = [];
 
   protected static $conn;
   protected static $lookups;
@@ -39,7 +39,7 @@ class arElasticSearchActorPdo
   /**
    * METHODS
    */
-  public function __construct($id, $options = array())
+  public function __construct($id, $options = [])
   {
     if (isset($options['conn']))
     {
@@ -125,7 +125,7 @@ class arElasticSearchActorPdo
 
   public function serialize()
   {
-    $serialized = array();
+    $serialized = [];
 
     $serialized['id'] = $this->id;
     $serialized['slug'] = $this->slug;
@@ -146,20 +146,20 @@ class arElasticSearchActorPdo
 
     foreach ($this->getOccupations() as $occupation)
     {
-      $occupationArray = array();
+      $occupationArray = [];
 
       $i18nFields = arElasticSearchModelBase::serializeI18ns(
         $occupation->term_id,
-        array('QubitTerm'),
-        array('fields' => array('name'))
+        ['QubitTerm'],
+        ['fields' => ['name']]
       );
 
       if (isset($occupation->note_id))
       {
         $i18nFields = arElasticSearchModelBase::serializeI18ns(
           $occupation->note_id,
-          array('QubitNote'),
-          array('fields' => array('content'), 'merge' => $i18nFields)
+          ['QubitNote'],
+          ['fields' => ['content'], 'merge' => $i18nFields]
         );
       }
 
@@ -172,7 +172,7 @@ class arElasticSearchActorPdo
     // Related terms
     $relatedTerms = arElasticSearchModelBase::getRelatedTerms(
       $this->id,
-      array(QubitTaxonomy::PLACE_ID, QubitTaxonomy::SUBJECT_ID)
+      [QubitTaxonomy::PLACE_ID, QubitTaxonomy::SUBJECT_ID]
     );
 
     // Related objects
@@ -211,7 +211,7 @@ class arElasticSearchActorPdo
 
     // Maintenance notes
     $sql = 'SELECT id, source_culture FROM '.QubitNote::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::MAINTENANCE_NOTE_ID)) as $item)
+    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::MAINTENANCE_NOTE_ID]) as $item)
     {
       $serialized['maintenanceNotes'][] = arElasticSearchNote::serialize($item);
     }
@@ -236,29 +236,29 @@ class arElasticSearchActorPdo
     $serialized['updatedAt'] = arElasticSearchPluginUtil::convertDate($this->updated_at);
 
     $serialized['sourceCulture'] = $this->source_culture;
-    $serialized['i18n'] = arElasticSearchModelBase::serializeI18ns($this->id, array('QubitActor'));
+    $serialized['i18n'] = arElasticSearchModelBase::serializeI18ns($this->id, ['QubitActor']);
 
     return $serialized;
   }
 
   public function serializeAltNames()
   {
-    $serialized = array();
+    $serialized = [];
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::OTHER_FORM_OF_NAME_ID)) as $item)
+    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item)
     {
       $serialized['otherNames'][] = arElasticSearchOtherName::serialize($item);
     }
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::PARALLEL_FORM_OF_NAME_ID)) as $item)
+    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item)
     {
       $serialized['parallelNames'][] = arElasticSearchOtherName::serialize($item);
     }
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::STANDARDIZED_FORM_OF_NAME_ID)) as $item)
+    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::STANDARDIZED_FORM_OF_NAME_ID]) as $item)
     {
       $serialized['standardizedNames'][] = arElasticSearchOtherName::serialize($item);
     }
@@ -299,7 +299,7 @@ class arElasticSearchActorPdo
                     WHERE (object_id=? or subject_id=?)
                     AND type_id=?";
 
-          $result = QubitPdo::fetchColumn($sql, array($typeId, $typeId, $typeId, QubitTerm::CONVERSE_TERM_ID));
+          $result = QubitPdo::fetchColumn($sql, [$typeId, $typeId, $typeId, QubitTerm::CONVERSE_TERM_ID]);
 
           $converseTermId = !empty($result) ? $result : $typeId;
 
@@ -326,7 +326,7 @@ class arElasticSearchActorPdo
              WHERE t.taxonomy_id=".QubitTaxonomy::ACTOR_RELATION_TYPE_ID."
              AND object_id=? OR r.subject_id=?";
 
-    return QubitPdo::fetchAll($sql, array($actorId, $actorId), array('fetchMode' => PDO::FETCH_ASSOC));
+    return QubitPdo::fetchAll($sql, [$actorId, $actorId], ['fetchMode' => PDO::FETCH_ASSOC]);
   }
 
   protected function loadData($id)
@@ -355,7 +355,7 @@ class arElasticSearchActorPdo
     }
 
     // Do select
-    self::$statements['actor']->execute(array(':id' => $id));
+    self::$statements['actor']->execute([':id' => $id]);
 
     // Get first result
     $this->data = self::$statements['actor']->fetch(PDO::FETCH_ASSOC);
@@ -382,9 +382,9 @@ class arElasticSearchActorPdo
       self::$statements['maintainingRepository'] = self::$conn->prepare($sql);
     }
 
-    self::$statements['maintainingRepository']->execute(array(
+    self::$statements['maintainingRepository']->execute([
       ':object_id' => $this->id,
-      ':type_id' => QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID));
+      ':type_id' => QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID]);
 
     return self::$statements['maintainingRepository']->fetchColumn();
   }
@@ -406,10 +406,10 @@ class arElasticSearchActorPdo
       self::$statements['occupations'] = self::$conn->prepare($sql);
     }
 
-    self::$statements['occupations']->execute(array(
+    self::$statements['occupations']->execute([
       ':type_id' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID,
       ':object_id' => $this->id,
-      ':taxonomy_id' => QubitTaxonomy::ACTOR_OCCUPATION_ID));
+      ':taxonomy_id' => QubitTaxonomy::ACTOR_OCCUPATION_ID]);
 
     return self::$statements['occupations']->fetchAll(PDO::FETCH_OBJ);
   }
@@ -423,7 +423,7 @@ class arElasticSearchActorPdo
                 AND prop.name = ?';
 
     self::$statements['property'] = self::$conn->prepare($sql);
-    self::$statements['property']->execute(array($this->__get('id'), $name));
+    self::$statements['property']->execute([$this->__get('id'), $name]);
 
     return self::$statements['property']->fetch(PDO::FETCH_OBJ);
   }

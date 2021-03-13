@@ -27,11 +27,11 @@
 class QubitMarkdown
 {
   protected static $instance = null;
-  protected static $markdownMap = array(
+  protected static $markdownMap = [
       'bolditalic' => '___',
       'italic' => '_',
       'bold' => '__',
-    );
+    ];
 
   private $enabled;
 
@@ -71,7 +71,7 @@ class QubitMarkdown
    * @param array $options  Set of options (safe mode and inline).
    * @return string  Parsed content.
    */
-  public function parse($content, $options = array())
+  public function parse($content, $options = [])
   {
     $content = $this->getUnescapedString($content);
 

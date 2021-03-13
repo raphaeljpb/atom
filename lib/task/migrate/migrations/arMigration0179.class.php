@@ -41,7 +41,7 @@ class arMigration0179
       $taxonomy->id = QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID;
       $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
       $taxonomy->sourceCulture = 'en';
-      $taxonomy->setName('Accession alternative identifier type', array('culture' => 'en'));
+      $taxonomy->setName('Accession alternative identifier type', ['culture' => 'en']);
       $taxonomy->save();
     }
 
@@ -53,7 +53,7 @@ class arMigration0179
               AND ti.culture='en'
               AND t.id=?";
 
-    if (null == QubitPdo::fetchOne($sql, array(QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID, QubitTerm::ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID)))
+    if (null == QubitPdo::fetchOne($sql, [QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID, QubitTerm::ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID]))
     {
       QubitMigrate::bumpTerm(QubitTerm::ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID, $configuration);
       $term = new QubitTerm();
@@ -61,7 +61,7 @@ class arMigration0179
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID;
       $term->sourceCulture = 'en';
-      $term->setName('Accession alternative identifier', array('culture' => 'en'));
+      $term->setName('Accession alternative identifier', ['culture' => 'en']);
       $term->save();
     }
 

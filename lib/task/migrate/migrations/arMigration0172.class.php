@@ -36,7 +36,7 @@ class arMigration0172
 
   public function up($configuration)
   {
-    $i18nTables = array(
+    $i18nTables = [
       'accession_i18n',
       'acl_group_i18n',
       'actor_i18n',
@@ -57,7 +57,7 @@ class arMigration0172
       'static_page_i18n',
       'taxonomy_i18n',
       'term_i18n'
-    );
+    ];
 
     // Increase size of culture-related columns
     foreach($i18nTables as $table)

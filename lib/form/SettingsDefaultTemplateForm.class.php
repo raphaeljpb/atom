@@ -33,7 +33,7 @@ class SettingsDefaultTemplateForm extends sfForm
     // Available templates
     $configuration = ProjectConfiguration::getActive();
 
-    $informationObjectTemplates = array();
+    $informationObjectTemplates = [];
 
     if ($configuration->isPluginEnabled('sfIsadPlugin'))
     {
@@ -56,27 +56,27 @@ class SettingsDefaultTemplateForm extends sfForm
       $informationObjectTemplates['dacs'] = $i18n->__('DACS, 2nd ed. Society of American Archivists');
     }
 
-    $actorTemplates = array(
+    $actorTemplates = [
       'isaar' => $i18n->__('ISAAR(CPF), 2nd ed. International Council on Archives')
-    );
+    ];
 
-    $repositoryTemplates = array(
+    $repositoryTemplates = [
       'isdiah' => $i18n->__('ISDIAH, 1st ed. International Council on Archives')
-    );
+    ];
 
     // Build widgets
-    $this->setWidgets(array(
-      'informationobject' => new sfWidgetFormSelect(array('choices'=>$informationObjectTemplates)),
-      'actor' => new sfWidgetFormSelect(array('choices'=>$actorTemplates)),
-      'repository' => new sfWidgetFormSelect(array('choices'=>$repositoryTemplates)),
-    ));
+    $this->setWidgets([
+      'informationobject' => new sfWidgetFormSelect(['choices'=>$informationObjectTemplates]),
+      'actor' => new sfWidgetFormSelect(['choices'=>$actorTemplates]),
+      'repository' => new sfWidgetFormSelect(['choices'=>$repositoryTemplates]),
+    ]);
 
     // Add labels
-    $this->widgetSchema->setLabels(array(
+    $this->widgetSchema->setLabels([
       'informationobject' => sfConfig::get('app_ui_label_informationobject'),
       'actor' => sfConfig::get('app_ui_label_actor'),
       'repository' => sfConfig::get('app_ui_label_repository')
-    ));
+    ]);
 
     // Add helper text
     // NOTE: This is implemented in the template because it was too much

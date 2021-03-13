@@ -22,35 +22,35 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
   public const INDEX_TYPE = 'QubitActor';
 
   // Arrays not allowed in class constants
-  public static $FILTERTAGS = array();
-  public static $AGGS = array(
+  public static $FILTERTAGS = [];
+  public static $AGGS = [
       'languages' =>
-        array('type'  => 'term',
+        ['type'  => 'term',
               'field' => 'i18n.languages',
-              'size'  => 10),
+              'size'  => 10],
       'occupations' =>
-        array('type'  => 'term',
+        ['type'  => 'term',
               'field' => 'occupations.id',
-              'size'  => 10),
+              'size'  => 10],
       'places' =>
-        array('type'  => 'term',
+        ['type'  => 'term',
               'field' => 'places.id',
-              'size'  => 10),
+              'size'  => 10],
       'subjects' =>
-        array('type'  => 'term',
+        ['type'  => 'term',
               'field' => 'subjects.id',
-              'size'  => 10),
+              'size'  => 10],
       'direct' =>
-        array('type' => 'filter',
+        ['type' => 'filter',
               'field'  => '',
-              'populate' => false));
+              'populate' => false]];
 
   public function execute($request)
   {
     $this->setAndCheckResource();
 
     $directField = TermNavigateRelatedComponent::$TAXONOMY_ES_DIRECT_FIELDS[$this->resource->taxonomyId];
-    $this::$AGGS['direct']['field'] = array($directField => $this->resource->id);
+    $this::$AGGS['direct']['field'] = [$directField => $this->resource->id];
 
     DefaultBrowseAction::execute($request);
 
@@ -98,7 +98,7 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
 
         foreach (QubitTerm::get($criteria) as $item)
         {
-          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(array('cultureFallback' => true));
+          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
         }
 
         break;
@@ -116,18 +116,18 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
     {
       case 'alphabetic':
         $field = sprintf('i18n.%s.authorizedFormOfName.alphasort', $this->selectedCulture);
-        $this->search->query->setSort(array($field => $request->sortDir));
+        $this->search->query->setSort([$field => $request->sortDir]);
 
         break;
 
       case 'identifier':
-        $this->search->query->setSort(array('descriptionIdentifier.untouched' => $request->sortDir));
+        $this->search->query->setSort(['descriptionIdentifier.untouched' => $request->sortDir]);
 
         break;
 
       case 'lastUpdated':
       default:
-        $this->search->query->setSort(array('updatedAt' => $request->sortDir));
+        $this->search->query->setSort(['updatedAt' => $request->sortDir]);
     }
   }
 
@@ -135,7 +135,7 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
   {
     $this->setSort($request);
 
-    $options = array('search' => $this->search);
+    $options = ['search' => $this->search];
 
     // Allow for only searching for actors directly related to term
     if(!empty($request->onlyDirect))

@@ -74,7 +74,7 @@ class arMigration0165
       $setting->value = $privacy_statement;
       $setting->editable = 1;
       $setting->source_culture = 'en';
-      $setting->setValue($privacy_statement, array('culture' => 'en'));
+      $setting->setValue($privacy_statement, ['culture' => 'en']);
       $setting->save();
     }
 

@@ -20,8 +20,8 @@
 class RightsHolderEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
-      'authorizedFormOfName');
+  public static $NAMES = [
+      'authorizedFormOfName'];
 
   public function execute($request)
   {
@@ -39,7 +39,7 @@ class RightsHolderEditAction extends DefaultEditAction
 
         $this->resource->save();
 
-        $this->redirect(array($this->resource, 'module' => 'rightsholder'));
+        $this->redirect([$this->resource, 'module' => 'rightsholder']);
       }
     }
   }
@@ -82,7 +82,7 @@ class RightsHolderEditAction extends DefaultEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");

@@ -44,7 +44,7 @@ class DefaultMoveAction extends sfAction
     }
 
     // Parent form field
-    $this->form->setValidator('parent', new sfValidatorString(array('required' => true)));
+    $this->form->setValidator('parent', new sfValidatorString(['required' => true]));
     $this->form->setWidget('parent', new sfWidgetFormInputHidden());
 
     // Get parent from GET parameters
@@ -73,21 +73,21 @@ class DefaultMoveAction extends sfAction
       {
         $parent = QubitObject::getBySlug($this->form->parent->getValue());
 
-        $params = array(
+        $params = [
           'objectId' => $this->resource->id,
           'parentId' => $parent->id
-        );
+        ];
 
         QubitJob::runJob('arObjectMoveJob', $params);
 
         // Notify user move has started
-        sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
+        sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
 
-        $jobManageUrl = url_for(array('module' => 'jobs', 'action' => 'browse'));
+        $jobManageUrl = url_for(['module' => 'jobs', 'action' => 'browse']);
         $jobManageLink = '<a href="'. $jobManageUrl . '">'. $this->context->i18n->__('job management') .'</a>';
 
         $message = '<strong>'. $this->context->i18n->__('Move initiated.') .'</strong> ';
-        $message .= $this->context->i18n->__("If job hasn't already completed, check %1% page to determine present status.", array('%1%' => $jobManageLink));
+        $message .= $this->context->i18n->__("If job hasn't already completed, check %1% page to determine present status.", ['%1%' => $jobManageLink]);
         $this->getUser()->setFlash('notice', $message);
 
         if ($request->isXmlHttpRequest())
@@ -121,7 +121,7 @@ class DefaultMoveAction extends sfAction
         "We've redirected you to the first page of results." .
         " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
         " Please, narrow down your results.",
-        array('%1%' => $maxResultWindow)
+        ['%1%' => $maxResultWindow]
       );
       $this->getUser()->setFlash('notice', $message);
 
@@ -139,10 +139,10 @@ class DefaultMoveAction extends sfAction
 
     if (isset($request->query))
     {
-      $fields = array(
+      $fields = [
         'identifier' => 1,
         'referenceCode' => 1,
-        sprintf('i18n.%s.title', sfContext::getInstance()->user->getCulture()) => 1);
+        sprintf('i18n.%s.title', sfContext::getInstance()->user->getCulture()) => 1];
       $this->queryBool->addMust(
         arElasticSearchPluginUtil::generateBoolQueryString($request->query, $fields)
       );
@@ -172,7 +172,7 @@ class DefaultMoveAction extends sfAction
     $this->pager->setMaxPerPage($limit);
     $this->pager->init();
 
-    $slugs = array();
+    $slugs = [];
     foreach ($this->pager->getResults() as $hit)
     {
       $data = $hit->getData();

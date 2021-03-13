@@ -47,7 +47,7 @@ class QubitHtmlPurifier
     $config->set('Cache.SerializerPath', $purifierCacheDirectory);
     $config->set('AutoFormat.AutoParagraph', true);
     $config->set('HTML', 'Doctype', 'XHTML 1.1');
-    $config->set('HTML.Allowed', implode(',', array(
+    $config->set('HTML.Allowed', implode(',', [
       'div', 'span', 'p',
       'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
       'strong', 'em',
@@ -61,9 +61,9 @@ class QubitHtmlPurifier
       'tbody', 'thead', 'tfoot',
       'col', 'colgroup', 'caption',
       'b', 'i', 'tt',
-      'sub', 'sup', 'big', 'small', 'hr')));
-    $config->set('HTML.AllowedAttributes', implode(',', array(
-      'class', 'title', 'src', 'href')));
+      'sub', 'sup', 'big', 'small', 'hr']));
+    $config->set('HTML.AllowedAttributes', implode(',', [
+      'class', 'title', 'src', 'href']));
 
     $this->purifier = new HTMLPurifier($config);
   }

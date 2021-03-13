@@ -41,71 +41,71 @@ class arRestApiPluginConfiguration extends sfPluginConfiguration
     // there's no way to bypass some of the catch-any routes in the main yaml.
     // This is probably not being cached at all :(
 
-    $this->addRoute('GET', '/api', array(
+    $this->addRoute('GET', '/api', [
       'module' => 'api',
-      'action' => 'index'));
+      'action' => 'index']);
 
     /**
      * Taxonomies and terms
      */
 
-    $this->addRoute('GET', '/api/taxonomies/:id', array(
+    $this->addRoute('GET', '/api/taxonomies/:id', [
       'module' => 'api',
       'action' => 'taxonomiesBrowse',
-      'params' => array('id' => self::REGEX_ID)));
+      'params' => ['id' => self::REGEX_ID]]);
 
     /**
      * Information objects
      */
 
-    $this->addRoute('GET', '/api/informationobjects', array(
+    $this->addRoute('GET', '/api/informationobjects', [
       'module' => 'api',
-      'action' => 'informationobjectsBrowse'));
+      'action' => 'informationobjectsBrowse']);
 
-    $this->addRoute('GET', '/api/informationobjects/:slug', array(
+    $this->addRoute('GET', '/api/informationobjects/:slug', [
       'module' => 'api',
       'action' => 'informationobjectsRead',
-      'params' => array('slug' => self::REGEX_SLUG)));
+      'params' => ['slug' => self::REGEX_SLUG]]);
 
-    $this->addRoute('GET', '/api/informationobjects/:slug/digitalobject', array(
+    $this->addRoute('GET', '/api/informationobjects/:slug/digitalobject', [
       'module' => 'api',
       'action' => 'informationobjectsDownloadDigitalObject',
-      'params' => array('slug' => self::REGEX_SLUG)));
+      'params' => ['slug' => self::REGEX_SLUG]]);
 
-    $this->addRoute('GET', '/api/informationobjects/tree/:parent_slug', array(
+    $this->addRoute('GET', '/api/informationobjects/tree/:parent_slug', [
       'module' => 'api',
       'action' => 'informationobjectsTree',
-      'params' => array('parent_slug' => self::REGEX_SLUG)));
+      'params' => ['parent_slug' => self::REGEX_SLUG]]);
 
-    $this->addRoute('PUT', '/api/informationobjects/:slug', array(
+    $this->addRoute('PUT', '/api/informationobjects/:slug', [
       'module' => 'api',
       'action' => 'informationobjectsUpdate',
-      'params' => array('slug' => self::REGEX_SLUG)));
+      'params' => ['slug' => self::REGEX_SLUG]]);
 
-    $this->addRoute('DELETE', '/api/informationobjects/:slug', array(
+    $this->addRoute('DELETE', '/api/informationobjects/:slug', [
       'module' => 'api',
       'action' => 'informationobjectsDelete',
-      'params' => array('slug' => self::REGEX_SLUG)));
+      'params' => ['slug' => self::REGEX_SLUG]]);
 
-    $this->addRoute('POST', '/api/informationobjects', array(
+    $this->addRoute('POST', '/api/informationobjects', [
       'module' => 'api',
-      'action' => 'informationobjectsCreate'));
+      'action' => 'informationobjectsCreate']);
 
     /**
      * Digital objects
      */
 
-    $this->addRoute('GET', '/api/digitalobjects', array(
+    $this->addRoute('GET', '/api/digitalobjects', [
       'module' => 'api',
-      'action' => 'digitalobjectsBrowse'));
+      'action' => 'digitalobjectsBrowse']);
 
-    $this->addRoute('POST', '/api/digitalobjects', array(
+    $this->addRoute('POST', '/api/digitalobjects', [
       'module' => 'api',
-      'action' => 'digitalobjectsCreate'));
+      'action' => 'digitalobjectsCreate']);
 
-    $this->addRoute('*', '/api/*', array(
+    $this->addRoute('*', '/api/*', [
       'module' => 'api',
-      'action' => 'endpointNotFound'));
+      'action' => 'endpointNotFound']);
   }
 
   /**
@@ -119,12 +119,12 @@ class arRestApiPluginConfiguration extends sfPluginConfiguration
     sfConfig::set('sf_enabled_modules', $enabledModules);
 
     // Connect event listener to add routes
-    $this->dispatcher->connect('routing.load_configuration', array($this, 'routingLoadConfiguration'));
+    $this->dispatcher->connect('routing.load_configuration', [$this, 'routingLoadConfiguration']);
   }
 
-  protected function addRoute($method, $pattern, array $options = array())
+  protected function addRoute($method, $pattern, array $options = [])
   {
-    $defaults = $requirements = array();
+    $defaults = $requirements = [];
 
     // Allow routes to only apply to specific HTTP methods
     if ($method != '*')

@@ -33,8 +33,8 @@ $informationObject->title = 'test title';
 $t->is($informationObject->__toString(), 'test title',
   '"->__toString()" returns the title');
 
-$informationObject->language = array('en', 'fr');
-$t->is($informationObject->language, array('en', 'fr'),
+$informationObject->language = ['en', 'fr'];
+$t->is($informationObject->language, ['en', 'fr'],
   '"->language" can be set and got');
 
 $informationObject->save();

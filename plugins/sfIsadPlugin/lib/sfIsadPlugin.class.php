@@ -62,7 +62,7 @@ class sfIsadPlugin implements ArrayAccess
     {
       case 'languageNotes':
 
-        return $this->resource->getNotesByType(array('noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID))->offsetGet(0);
+        return $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
 
       case 'referenceCode':
 
@@ -80,7 +80,7 @@ class sfIsadPlugin implements ArrayAccess
     {
       case 'languageNotes':
 
-        $note = $this->resource->getNotesByType(array('noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID))->offsetGet(0);
+        $note = $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
         $missingNote = count($note) === 0;
 
         if (0 == strlen($value))
@@ -113,33 +113,33 @@ class sfIsadPlugin implements ArrayAccess
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__isset'), $args);
+    return call_user_func_array([$this, '__isset'], $args);
   }
 
   public function offsetGet($offset)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__get'), $args);
+    return call_user_func_array([$this, '__get'], $args);
   }
 
   public function offsetSet($offset, $value)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__set'), $args);
+    return call_user_func_array([$this, '__set'], $args);
   }
 
   public function offsetUnset($offset)
   {
     $args = func_get_args();
 
-    return call_user_func_array(array($this, '__unset'), $args);
+    return call_user_func_array([$this, '__unset'], $args);
   }
 
   public static function eventTypes()
   {
-    return array(QubitTerm::getById(QubitTerm::CREATION_ID),
-      QubitTerm::getById(QubitTerm::ACCUMULATION_ID));
+    return [QubitTerm::getById(QubitTerm::CREATION_ID),
+      QubitTerm::getById(QubitTerm::ACCUMULATION_ID)];
   }
 }

@@ -881,7 +881,7 @@ withTransaction(function ($conn) use ($t, $vocabCSS2)
   $term->save();
   $termId = $term->id;
 
-  $importer = new sfSkosPlugin(QubitTaxonomy::SUBJECT_ID, array('parentId' => $termId));
+  $importer = new sfSkosPlugin(QubitTaxonomy::SUBJECT_ID, ['parentId' => $termId]);
   $importer->load(toDataScheme($vocabCSS2));
   $importer->importGraph();
 
@@ -905,7 +905,7 @@ withTransaction(function ($conn) use ($t, $vocabCSS2)
   $term = QubitTerm::getOne($criteria);
 
   $t->is(get_class($term), 'QubitTerm', 'skos:Concept is created');
-  $t->is($term->getName(array('culture' => 'en')), 'user agent (UA)', 'skos:Concept\'s prefLabel matches the term name');
+  $t->is($term->getName(['culture' => 'en']), 'user agent (UA)', 'skos:Concept\'s prefLabel matches the term name');
 
   $t->is($importer->hasErrors(), true, 'sfSkosPlugin has errors');
   $t->is(count($importer->getErrors()), 1, 'sfSkosPlugin has *one* error');
@@ -939,7 +939,7 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
   $match = null;
   foreach ($terms as $item)
   {
-    if ($item->getName(array('culture' => 'es')) == 'Bar ESPAÑOL')
+    if ($item->getName(['culture' => 'es']) == 'Bar ESPAÑOL')
     {
       $match = $item;
       break;
@@ -956,11 +956,11 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
   $parent->parentId = QubitTerm::ROOT_ID;
   $parent->taxonomyId = QubitTaxonomy::SUBJECT_ID;
   $parent->sourceCulture = 'eu'; // Basque!
-  $parent->setName('proba', array('culture' => 'eu'));
+  $parent->setName('proba', ['culture' => 'eu']);
   $parent->save();
 
   // Import graph
-  $importer = new sfSkosPlugin(QubitTaxonomy::SUBJECT_ID, array('parentId' => $parent->id));
+  $importer = new sfSkosPlugin(QubitTaxonomy::SUBJECT_ID, ['parentId' => $parent->id]);
   $importer->load(toDataScheme($vocabSimple));
   $importer->importGraph();
 
@@ -1007,23 +1007,23 @@ function getPrivateMethod($object, $name)
   return $method;
 }
 
-$testingDataSets = array(
-  array(
+$testingDataSets = [
+  [
     'name' => 'vocabCSS2',
     'data' => $vocabCSS2,
     'totalConcepts' => 20
-  ),
-  array(
+  ],
+  [
     'name' => 'vocabSimple',
     'data' => $vocabSimple,
     'totalConcepts' => 22
-  ),
-  array(
+  ],
+  [
     'name' => 'europeUnescoThesaurus',
     'data' => $europeUnescoThesaurus,
     'totalConcepts' => 100
-  )
-);
+  ]
+];
 
 $importer = new sfSkosPlugin(QubitTaxonomy::PLACE_ID);
 $methodGetRootConcepts = getPrivateMethod($importer, 'getRootConcepts');

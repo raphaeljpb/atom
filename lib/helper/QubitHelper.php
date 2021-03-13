@@ -31,9 +31,9 @@ function format_script($script_iso, $culture = null)
   return isset($scripts[$script_iso]) ? $scripts[$script_iso] : '';
 }
 
-function render_field($field, $resource, array $options = array())
+function render_field($field, $resource, array $options = [])
 {
-  $options += array('name' => $field->getName());
+  $options += ['name' => $field->getName()];
 
   $div = null;
   $culture = sfContext::getInstance()->user->getCulture();
@@ -43,7 +43,7 @@ function render_field($field, $resource, array $options = array())
   {
     try
     {
-      $source = $resourceRaw->__get($options['name'], array('sourceCulture' => true));
+      $source = $resourceRaw->__get($options['name'], ['sourceCulture' => true]);
       $fallback = $resourceRaw->__get($options['name']);
     }
     catch (Exception $e)
@@ -89,7 +89,7 @@ div;
   return $field;
 }
 
-function render_show($label, $value, $options = array())
+function render_show($label, $value, $options = [])
 {
   // Optional labels in the div class containing this field, to help with data mining.
   $fieldLabel = isset($options['fieldLabel']) ? ' class="'.$options['fieldLabel'].'"' : '';
@@ -111,14 +111,14 @@ function render_show_repository($label, $resource)
 {
   if (isset($resource->repository))
   {
-    return render_show($label, link_to(render_title($resource->repository), array($resource->repository, 'module' => 'repository')));
+    return render_show($label, link_to(render_title($resource->repository), [$resource->repository, 'module' => 'repository']));
   }
 
   foreach ($resource->ancestors->orderBy('rgt') as $item)
   {
     if (isset($item->repository))
     {
-      return render_show($label, link_to(render_title($item->repository), array($item->repository, 'module' => 'repository'), array('title' => __('Inherited from %1%', array('%1%' => $item)))));
+      return render_show($label, link_to(render_title($item->repository), [$item->repository, 'module' => 'repository'], ['title' => __('Inherited from %1%', ['%1%' => $item])]));
     }
   }
 }
@@ -146,7 +146,7 @@ function render_value($value)
 function render_value_inline($value)
 {
   // Parse using Parsedown's inline method in safe mode
-  $options = array('inline' => true);
+  $options = ['inline' => true];
   $value = QubitMarkdown::getInstance()->parse($value, $options);
 
   return $value;
@@ -155,7 +155,7 @@ function render_value_inline($value)
 function render_value_html($value)
 {
   // Parse using Parsedown's text method in unsafe mode
-  $options = array('safeMode' => false);
+  $options = ['safeMode' => false];
   $value = QubitMarkdown::getInstance()->parse($value, $options);
 
   return add_paragraphs_and_linebreaks($value);
@@ -189,7 +189,7 @@ function strip_markdown($value)
  */
 function hr_filesize($val)
 {
-  $units = array('B', 'KiB', 'MiB', 'GiB', 'TiB');
+  $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB'];
   for ($i = 0; $i < count($units); $i++)
   {
     if ($val / pow(1024, $i + 1) < 1)
@@ -201,10 +201,10 @@ function hr_filesize($val)
   return round(($val / pow(1024, $i)), 1).' '.$units[$i];
 }
 
-function render_treeview_node($item, array $classes = array(), array $options = array())
+function render_treeview_node($item, array $classes = [], array $options = [])
 {
   // Build array of classes
-  $_classes = array();
+  $_classes = [];
   foreach ($classes as $key => $value)
   {
     if ($value)
@@ -230,7 +230,7 @@ function render_treeview_node($item, array $classes = array(), array $options = 
 
   if ($item instanceof QubitInformationObject)
   {
-    $dataTitle = array();
+    $dataTitle = [];
 
     if (isset($item->levelOfDescription))
     {
@@ -269,7 +269,7 @@ function render_treeview_node($item, array $classes = array(), array $options = 
 
     if (isset($options['numSiblingsLeft']))
     {
-      $node .= sfContext::getInstance()->i18n->__('%1% more', array('%1%' => abs($options['numSiblingsLeft'])));
+      $node .= sfContext::getInstance()->i18n->__('%1% more', ['%1%' => abs($options['numSiblingsLeft'])]);
     }
 
     $node .= '...</a>';
@@ -294,7 +294,7 @@ function render_treeview_node($item, array $classes = array(), array $options = 
       $title .= render_title($item);
 
       // Add link
-      $node .= link_to($title, array($item, 'module' => 'informationobject'), array('title' => null));
+      $node .= link_to($title, [$item, 'module' => 'informationobject'], ['title' => null]);
 
       // Publication status
       if ((null !== $status = $item->getPublicationStatus()) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $status->statusId)
@@ -307,7 +307,7 @@ function render_treeview_node($item, array $classes = array(), array $options = 
       $action = isset($options['browser']) && true === $options['browser'] ? 'browseTerm' : 'index';
 
       // Add link
-      $node .= link_to(render_title($item), array($item, 'module' => 'term', 'action' => $action));
+      $node .= link_to(render_title($item), [$item, 'module' => 'term', 'action' => $action]);
     }
   }
 
@@ -322,7 +322,7 @@ function is_using_cli()
   return php_sapi_name() === 'cli';
 }
 
-function check_field_visibility($fieldName, $options = array())
+function check_field_visibility($fieldName, $options = [])
 {
   // Check always field if public option is set to true
   if (isset($options['public']) && $options['public'])
@@ -333,7 +333,7 @@ function check_field_visibility($fieldName, $options = array())
   return (is_using_cli() || sfContext::getInstance()->user->isAuthenticated()) || sfConfig::get($fieldName, false);
 }
 
-function get_search_i18n($hit, $fieldName, $options = array())
+function get_search_i18n($hit, $fieldName, $options = [])
 {
   // Return empty string by default or "Untitled" if allowEmpty is false
   $allowEmpty = true;
@@ -425,13 +425,13 @@ function get_search_creation_details($hit, $culture = null)
     $hit = $hit->getData(); // type=sfOutputEscaperArrayDecorator
   }
 
-  $details = array();
+  $details = [];
 
   // Get creators
   $creators = $hit['creators'];
   if (null !== $creators && 0 < count($creators))
   {
-    $details[] = get_search_i18n($creators[0], 'authorizedFormOfName', array('allowEmpty' => false, 'cultureFallback' => true));
+    $details[] = get_search_i18n($creators[0], 'authorizedFormOfName', ['allowEmpty' => false, 'cultureFallback' => true]);
   }
 
   // WIP, we are not showing labels for now. See #5202.
@@ -451,9 +451,9 @@ function render_autocomplete_string($hit)
     $hit = $hit->getData(); // type=sfOutputEscaperArrayDecorator
   }
 
-  $string = array();
+  $string = [];
 
-  $levelOfDescriptionAndIdentifier = array();
+  $levelOfDescriptionAndIdentifier = [];
 
   if (isset($hit['levelOfDescriptionId']))
   {
@@ -475,7 +475,7 @@ function render_autocomplete_string($hit)
     $string[] = implode($levelOfDescriptionAndIdentifier, ' ');
   }
 
-  $titleAndPublicationStatus = array();
+  $titleAndPublicationStatus = [];
 
   if (null !== $title = get_search_i18n($hit, 'title'))
   {

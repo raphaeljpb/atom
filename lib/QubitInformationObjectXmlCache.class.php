@@ -28,7 +28,7 @@ class QubitInformationObjectXmlCache
 {
   protected $logger;
 
-  public function __construct($options = array())
+  public function __construct($options = [])
   {
     $this->logger = isset($options['logger']) ? $options['logger'] : new sfNoLogger(new sfEventDispatcher());
     $this->i18n = sfContext::getInstance()->i18n;
@@ -62,13 +62,13 @@ class QubitInformationObjectXmlCache
    *
    * @return null
    */
-  public function exportAll($options = array())
+  public function exportAll($options = [])
   {
     $skip = isset($options['skip']) ? $options['skip'] : 0;
     $limit = isset($options['limit']) ? $options['limit'] : 0;
 
     // Use format if specified and valid; otherwise, default to null
-    $valid_formats = array('dc', 'ead');
+    $valid_formats = ['dc', 'ead'];
     $format = isset($options['format']) && in_array($options['format'], $valid_formats) ? $options['format'] : null;
 
     // Get not-root and published information objects (sorted by ID so optional
@@ -79,11 +79,11 @@ class QubitInformationObjectXmlCache
       AND s.status_id=:status_id AND s.type_id=:type_id \r
       ORDER BY i.id";
 
-    $params = array(
+    $params = [
       ':status_id' => QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID,
       ':type_id' => QubitTerm::STATUS_TYPE_PUBLICATION_ID,
       ':root_id' => QubitInformationObject::ROOT_ID,
-    );
+    ];
 
     $exporting = 0;
 
@@ -93,7 +93,7 @@ class QubitInformationObjectXmlCache
 
     if (count($results))
     {
-      $this->logger->info($this->i18n->__('%1% published information objects found.', array('%1%' => count($results))));
+      $this->logger->info($this->i18n->__('%1% published information objects found.', ['%1%' => count($results)]));
 
       // Export each information object
       foreach ($results as $row)
@@ -101,7 +101,7 @@ class QubitInformationObjectXmlCache
         $io = QubitInformationObject::getById($row->id);
 
         $exporting++;
-        $this->logger->info($this->i18n->__('Exporting information object ID %1% (%2% of %3%)', array('%1%' => $io->id, '%2%' => $exporting, '%3%' => count($results))));
+        $this->logger->info($this->i18n->__('Exporting information object ID %1% (%2% of %3%)', ['%1%' => $io->id, '%2%' => $exporting, '%3%' => count($results)]));
         $this->export($io, $format);
 
         // Keep caches clear to prevent memory use from ballooning

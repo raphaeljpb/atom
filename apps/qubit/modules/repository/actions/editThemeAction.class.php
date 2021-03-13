@@ -19,13 +19,13 @@
 
 class RepositoryEditThemeAction extends sfAction
 {
-  public static $NAMES = array(
+  public static $NAMES = [
       'backgroundColor',
       'banner',
       'banner_delete',
       'htmlSnippet',
       'logo',
-      'logo_delete');
+      'logo_delete'];
 
   public function processForm()
   {
@@ -102,7 +102,7 @@ class RepositoryEditThemeAction extends sfAction
           $cache->remove($cacheKey);
         }
 
-        $this->redirect(array($this->resource, 'module' => 'repository'));
+        $this->redirect([$this->resource, 'module' => 'repository']);
       }
     }
   }
@@ -113,8 +113,8 @@ class RepositoryEditThemeAction extends sfAction
     {
       case 'backgroundColor':
         $this->form->setDefault('backgroundColor', $this->resource->backgroundColor);
-        $this->form->setValidator('backgroundColor', new sfValidatorRegex(array('pattern' => '/^#(?:[0-9a-fA-F]{3}){1,2}$/'), array('invalid' => $this->context->i18n->__('Only hexadecimal color value'))));
-        $this->form->setWidget('backgroundColor', new sfWidgetFormInput(array('type' => 'minicolors')));
+        $this->form->setValidator('backgroundColor', new sfValidatorRegex(['pattern' => '/^#(?:[0-9a-fA-F]{3}){1,2}$/'], ['invalid' => $this->context->i18n->__('Only hexadecimal color value')]));
+        $this->form->setWidget('backgroundColor', new sfWidgetFormInput(['type' => 'minicolors']));
 
         break;
 
@@ -128,24 +128,24 @@ class RepositoryEditThemeAction extends sfAction
       case 'banner':
         sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
 
-        $this->form->setValidator($name, new sfValidatorFile(array(
+        $this->form->setValidator($name, new sfValidatorFile([
           'max_size' => '262144', // 256K
-          'mime_types' => array('image/png'),
+          'mime_types' => ['image/png'],
           // Crop image, it is synchronous but it should be fast
           'validated_file_class' => 'arRepositoryThemeCropValidatedFile',
           'path' => $this->resource->getUploadsPath(true),
-          'required' => false)));
+          'required' => false]));
 
-        $this->form->setWidget($name, new arWidgetFormInputFileEditable(array(
+        $this->form->setWidget($name, new arWidgetFormInputFileEditable([
           'label' => $this->context->i18n->__('Banner'),
           'help' => $this->context->i18n->__('Requirements: PNG format, 256K max. size.<br />Recommended dimensions of %1%x%2%px, it will be cropped if ImageMagick is installed.',
-            array(
+            [
               '%1%' => arRepositoryThemeCropValidatedFile::BANNER_MAX_WIDTH,
-              '%2%' => arRepositoryThemeCropValidatedFile::BANNER_MAX_HEIGHT)),
+              '%2%' => arRepositoryThemeCropValidatedFile::BANNER_MAX_HEIGHT]),
           'file_src' => $this->existsBanner ? public_path($this->resource->getBannerPath()) : false,
           'edit_mode' => true,
           'is_image' => true,
-          'with_delete' => $this->existsBanner)));
+          'with_delete' => $this->existsBanner]));
         break;
 
       case 'banner_delete':
@@ -160,24 +160,24 @@ class RepositoryEditThemeAction extends sfAction
       case 'logo':
         sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
 
-        $this->form->setValidator($name, new sfValidatorFile(array(
+        $this->form->setValidator($name, new sfValidatorFile([
           'max_size' => '262144', // 256K
-          'mime_types' => array('image/png'),
+          'mime_types' => ['image/png'],
           // Crop image, it is synchronous but it should be fast
           'validated_file_class' => 'arRepositoryThemeCropValidatedFile',
           'path' => $this->resource->getUploadsPath(true),
-          'required' => false)));
+          'required' => false]));
 
-        $this->form->setWidget($name, new arWidgetFormInputFileEditable(array(
+        $this->form->setWidget($name, new arWidgetFormInputFileEditable([
           'label' => $this->context->i18n->__('Logo'),
           'help' => $this->context->i18n->__('Requirements: PNG format, 256K max. size.<br />Recommended dimensions of %1%x%2%px, it will be cropped if ImageMagick is installed.',
-            array(
+            [
               '%1%' => arRepositoryThemeCropValidatedFile::LOGO_MAX_WIDTH,
-              '%2%' => arRepositoryThemeCropValidatedFile::LOGO_MAX_HEIGHT)),
+              '%2%' => arRepositoryThemeCropValidatedFile::LOGO_MAX_HEIGHT]),
           'file_src' => $this->existsLogo ? public_path($this->resource->getLogoPath()) : false,
           'edit_mode' => true,
           'is_image' => true,
-          'with_delete' => $this->existsLogo)));
+          'with_delete' => $this->existsLogo]));
 
         break;
 
@@ -197,7 +197,7 @@ class RepositoryEditThemeAction extends sfAction
     switch ($name = $field->getName())
     {
       case 'backgroundColor':
-        $this->resource->setBackgroundColor($this->form->getValue($field->getName()), array('sourceCulture' => true));
+        $this->resource->setBackgroundColor($this->form->getValue($field->getName()), ['sourceCulture' => true]);
 
         // no break
       case 'htmlSnippet':

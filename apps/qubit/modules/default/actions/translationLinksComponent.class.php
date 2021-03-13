@@ -29,7 +29,7 @@ class DefaultTranslationLinksComponent extends sfComponent
         $this->module = 'informationobject';
         $i18ns = $this->resource->informationObjectI18ns;
         $propertyName = 'title';
-        $sourceCultureProperty = $this->resource->getTitle(array('sourceCulture' => true));
+        $sourceCultureProperty = $this->resource->getTitle(['sourceCulture' => true]);
 
         break;
 
@@ -37,7 +37,7 @@ class DefaultTranslationLinksComponent extends sfComponent
         $this->module = 'actor';
         $i18ns = $this->resource->actorI18ns;
         $propertyName = 'authorizedFormOfName';
-        $sourceCultureProperty = $this->resource->getAuthorizedFormOfName(array('sourceCulture' => true));
+        $sourceCultureProperty = $this->resource->getAuthorizedFormOfName(['sourceCulture' => true]);
 
         break;
 
@@ -45,7 +45,7 @@ class DefaultTranslationLinksComponent extends sfComponent
         $this->module = 'repository';
         $i18ns = $this->resource->actorI18ns;
         $propertyName = 'authorizedFormOfName';
-        $sourceCultureProperty = $this->resource->getAuthorizedFormOfName(array('sourceCulture' => true));
+        $sourceCultureProperty = $this->resource->getAuthorizedFormOfName(['sourceCulture' => true]);
 
         break;
 
@@ -67,7 +67,7 @@ class DefaultTranslationLinksComponent extends sfComponent
         $this->module = 'donor';
         $i18ns = $this->resource->actorI18ns;
         $propertyName = 'authorizedFormOfName';
-        $sourceCultureProperty = $this->resource->getAuthorizedFormOfName(array('sourceCulture' => true));
+        $sourceCultureProperty = $this->resource->getAuthorizedFormOfName(['sourceCulture' => true]);
 
         break;
 
@@ -75,7 +75,7 @@ class DefaultTranslationLinksComponent extends sfComponent
         $this->module = 'function';
         $i18ns = $this->resource->functionObjectI18ns;
         $propertyName = 'authorizedFormOfName';
-        $sourceCultureProperty = $this->resource->getAuthorizedFormOfName(array('sourceCulture' => true));
+        $sourceCultureProperty = $this->resource->getAuthorizedFormOfName(['sourceCulture' => true]);
 
         break;
 
@@ -83,7 +83,7 @@ class DefaultTranslationLinksComponent extends sfComponent
         $this->module = 'physicalobject';
         $i18ns = $this->resource->physicalObjectI18ns;
         $propertyName = 'name';
-        $sourceCultureProperty = $this->resource->getName(array('sourceCulture' => true));
+        $sourceCultureProperty = $this->resource->getName(['sourceCulture' => true]);
 
         break;
 
@@ -91,7 +91,7 @@ class DefaultTranslationLinksComponent extends sfComponent
         $this->module = 'rightsholder';
         $i18ns = $this->resource->actorI18ns;
         $propertyName = 'authorizedFormOfName';
-        $sourceCultureProperty = $this->resource->getAuthorizedFormOfName(array('sourceCulture' => true));
+        $sourceCultureProperty = $this->resource->getAuthorizedFormOfName(['sourceCulture' => true]);
 
         break;
 
@@ -99,7 +99,7 @@ class DefaultTranslationLinksComponent extends sfComponent
         $this->module = 'term';
         $i18ns = $this->resource->termI18ns;
         $propertyName = 'name';
-        $sourceCultureProperty = $this->resource->getName(array('sourceCulture' => true));
+        $sourceCultureProperty = $this->resource->getName(['sourceCulture' => true]);
 
         break;
     }
@@ -111,7 +111,7 @@ class DefaultTranslationLinksComponent extends sfComponent
     }
 
     // Get other cultures available
-    $this->translations = array();
+    $this->translations = [];
     foreach ($i18ns as $i18n)
     {
       if ($i18n->culture == $currentCulture)
@@ -123,10 +123,10 @@ class DefaultTranslationLinksComponent extends sfComponent
       $langCode = $i18n->culture;
       $langName = format_language($langCode);
 
-      $this->translations[$langCode] = array(
+      $this->translations[$langCode] = [
         'name' => $name,
         'language' => ucfirst($langName)
-      );
+      ];
     }
   }
 }

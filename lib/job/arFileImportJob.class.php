@@ -33,11 +33,11 @@ class arFileImportJob extends arBaseJob
   {
     if (isset($parameters['file']))
     {
-      $this->info($this->i18n->__('Importing %1 file: %2.', array('%1' => strtoupper($parameters['importType']), '%2' => $parameters['file']['name'])));
+      $this->info($this->i18n->__('Importing %1 file: %2.', ['%1' => strtoupper($parameters['importType']), '%2' => $parameters['file']['name']]));
     }
     else
     {
-      $this->info($this->i18n->__('Importing %1.', array('%1' => strtoupper($parameters['importType']))));
+      $this->info($this->i18n->__('Importing %1.', ['%1' => strtoupper($parameters['importType'])]));
     }
 
     // Set indexing preference.
@@ -69,7 +69,7 @@ class arFileImportJob extends arBaseJob
           break;
 
         case 'skos':
-          $importer = new sfSkosPlugin($parameters['taxonomyId'], array('parentId' => $parameters['parentId'], 'logger' => $this->logger));
+          $importer = new sfSkosPlugin($parameters['taxonomyId'], ['parentId' => $parameters['parentId'], 'logger' => $this->logger]);
           $importer->load($parameters['location']);
           $importer->importGraph();
 
@@ -79,7 +79,7 @@ class arFileImportJob extends arBaseJob
           // 'importType' defaults to 'CSV' by design if extension is blank or something unknown.
           // This was to prevent errors if csv file does not have the correct extension. See
           // modules/object/actions/importAction.class.php.  This default case should never be called.
-          $this->error($this->i18n->__('Unable to import selected file: unknown format %1%.', array('%1%' => $parameters['importType'])));
+          $this->error($this->i18n->__('Unable to import selected file: unknown format %1%.', ['%1%' => $parameters['importType']]));
           return false;
 
           break;
@@ -103,7 +103,7 @@ class arFileImportJob extends arBaseJob
     if (isset($parameters['file']) && false === unlink($parameters['file']['tmp_name']))
     {
       // Issue warning if unable to delete but do not show job as failed because of this.
-      $this->error($this->i18n->__('Failed to delete temporary file %1 -- please check your folder permissions.', array('%1' => $parameters['file']['tmp_name'])));
+      $this->error($this->i18n->__('Failed to delete temporary file %1 -- please check your folder permissions.', ['%1' => $parameters['file']['tmp_name']]));
     }
 
     // Mark job as complete.
@@ -153,16 +153,16 @@ class arFileImportJob extends arBaseJob
           $importer->skipMatched = $parameters['skip-matched'];
           break;
         case 'update':
-          $this->info($this->i18n->__('Update type: %1', array('%1' => $parameters['update'])));
+          $this->info($this->i18n->__('Update type: %1', ['%1' => $parameters['update']]));
           $importer->updateType = $parameters['update'];
           break;
         case 'repositorySlug':
-          $this->info($this->i18n->__('Repository: %1', array('%1' => $parameters['repositorySlug'])));
+          $this->info($this->i18n->__('Repository: %1', ['%1' => $parameters['repositorySlug']]));
           $importer->limit = $parameters['repositorySlug'];
           break;
         case 'collectionSlug':
           // collectionSlug, if specified, should take precedence over repositorySlug.
-          $this->info($this->i18n->__('Collection: %1', array('%1' => $parameters['collectionSlug'])));
+          $this->info($this->i18n->__('Collection: %1', ['%1' => $parameters['collectionSlug']]));
           $importer->limit = $parameters['collectionSlug'];
           break;
         case 'parentId':
@@ -182,7 +182,7 @@ class arFileImportJob extends arBaseJob
    */
   private function setXmlImportParams(&$importer, &$parameters)
   {
-    $options = array();
+    $options = [];
 
     $options['strictXmlParsing'] = false;
 
@@ -208,18 +208,18 @@ class arFileImportJob extends arBaseJob
           $options['skip-matched'] = $parameters['skip-matched'];
           break;
         case 'update':
-          $this->info($this->i18n->__('Update type: %1', array('%1' => $parameters['update'])));
+          $this->info($this->i18n->__('Update type: %1', ['%1' => $parameters['update']]));
           if ('import-as-new' != $parameters['update'])
           {
             $options['update'] = $parameters['update'];
           }
           break;
         case 'repositorySlug':
-          $this->info($this->i18n->__('Repository: %1', array('%1' => $parameters['repositorySlug'])));
+          $this->info($this->i18n->__('Repository: %1', ['%1' => $parameters['repositorySlug']]));
           $options['limit'] = $parameters['repositorySlug'];
           break;
         case 'collectionSlug':
-          $this->info($this->i18n->__('Collection: %1', array('%1' => $parameters['collectionSlug'])));
+          $this->info($this->i18n->__('Collection: %1', ['%1' => $parameters['collectionSlug']]));
           $options['limit'] = $parameters['collectionSlug'];
           break;
         case 'parentId':

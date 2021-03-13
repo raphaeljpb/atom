@@ -20,7 +20,7 @@
 class sfIsdfPluginEditAction extends FunctionEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'type',
       'authorizedFormOfName',
       'parallelName',
@@ -39,7 +39,7 @@ class sfIsdfPluginEditAction extends FunctionEditAction
       'language',
       'script',
       'sources',
-      'maintenanceNotes');
+      'maintenanceNotes'];
 
   protected function earlyExecute()
   {
@@ -55,7 +55,7 @@ class sfIsdfPluginEditAction extends FunctionEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");
@@ -87,17 +87,17 @@ class sfIsdfPluginEditAction extends FunctionEditAction
     switch ($name)
     {
       case 'type':
-        $this->form->setDefault('type', $this->context->routing->generate(null, array($this->resource->type, 'module' => 'term')));
+        $this->form->setDefault('type', $this->context->routing->generate(null, [$this->resource->type, 'module' => 'term']));
         $this->form->setValidator('type', new sfValidatorString());
 
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::FUNCTION_ID) as $item)
         {
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item;
+          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
 

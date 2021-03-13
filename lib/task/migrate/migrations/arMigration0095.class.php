@@ -51,10 +51,10 @@ class arMigration0095
     }
 
     // Unserialize
-    $plugins = array_values(unserialize($setting->getValue(array('sourceCulture' => true))));
+    $plugins = array_values(unserialize($setting->getValue(['sourceCulture' => true])));
 
     // Define list of plugins that will be disabled
-    $disable = array('qtTrilliumPlugin', 'sfAlouettePlugin', 'sfCaribouPlugin', 'sfColumbiaPlugin');
+    $disable = ['qtTrilliumPlugin', 'sfAlouettePlugin', 'sfCaribouPlugin', 'sfColumbiaPlugin'];
 
     // Remove them
     $plugins = array_diff($plugins, $disable);
@@ -63,7 +63,7 @@ class arMigration0095
     $plugins[] = 'arDominionPlugin';
 
     // Save
-    $setting->setValue(serialize(array_unique($plugins)), array('sourceCulture' => true));
+    $setting->setValue(serialize(array_unique($plugins)), ['sourceCulture' => true]);
     $setting->save();
   }
 }

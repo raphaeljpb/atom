@@ -19,20 +19,20 @@
  */
 class sfWebBrowser
 {
-  protected $defaultHeaders          = array();
-  protected $stack                   = array();
+  protected $defaultHeaders          = [];
+  protected $stack                   = [];
   protected $stackPosition           = -1;
-  protected $responseHeaders         = array();
+  protected $responseHeaders         = [];
   protected $responseCode            = '';
   protected $responseMessage         = '';
   protected $responseText            = '';
   protected $responseDom             = null;
   protected $responseDomCssSelector  = null;
   protected $responseXml             = null;
-  protected $fields                  = array();
-  protected $urlInfo                 = array();
+  protected $fields                  = [];
+  protected $urlInfo                 = [];
 
-  public function __construct($defaultHeaders = array(), $adapterClass = null, $adapterOptions = array())
+  public function __construct($defaultHeaders = [], $adapterClass = null, $adapterOptions = [])
   {
     if(!$adapterClass)
     {
@@ -62,12 +62,12 @@ class sfWebBrowser
    *
    * @return sfWebBrowser The current browser object
    */
-  public function restart($defaultHeaders = array())
+  public function restart($defaultHeaders = [])
   {
     $this->defaultHeaders = $this->fixHeaders($defaultHeaders);
-    $this->stack          = array();
+    $this->stack          = [];
     $this->stackPosition  = -1;
-    $this->urlInfo        = array();
+    $this->urlInfo        = [];
     $this->initializeResponse();
 
     return $this;
@@ -106,22 +106,22 @@ class sfWebBrowser
    *
    * @return sfWebBrowser The current browser object
    */
-  public function get($uri, $parameters = array(), $headers = array())
+  public function get($uri, $parameters = [], $headers = [])
   {
     if ($parameters)
     {
       $uri .= ((false !== strpos($uri, '?')) ? '&' : '?') . http_build_query($parameters, '', '&');
     }
-    return $this->call($uri, 'GET', array(), $headers);
+    return $this->call($uri, 'GET', [], $headers);
   }
 
-  public function head($uri, $parameters = array(), $headers = array())
+  public function head($uri, $parameters = [], $headers = [])
   {
     if ($parameters)
     {
       $uri .= ((false !== strpos($uri, '?')) ? '&' : '?') . http_build_query($parameters, '', '&');
     }
-    return $this->call($uri, 'HEAD', array(), $headers);
+    return $this->call($uri, 'HEAD', [], $headers);
   }
 
   /**
@@ -133,7 +133,7 @@ class sfWebBrowser
    *
    * @return sfWebBrowser The current browser object
    */
-  public function post($uri, $parameters = array(), $headers = array())
+  public function post($uri, $parameters = [], $headers = [])
   {
     return $this->call($uri, 'POST', $parameters, $headers);
   }
@@ -147,7 +147,7 @@ class sfWebBrowser
    *
    * @return sfWebBrowser The current browser object
    */
-  public function put($uri, $parameters = array(), $headers = array())
+  public function put($uri, $parameters = [], $headers = [])
   {
     return $this->call($uri, 'PUT', $parameters, $headers);
   }
@@ -161,7 +161,7 @@ class sfWebBrowser
    *
    * @return sfWebBrowser The current browser object
    */
-  public function delete($uri, $parameters = array(), $headers = array())
+  public function delete($uri, $parameters = [], $headers = [])
   {
     return $this->call($uri, 'DELETE', $parameters, $headers);
   }
@@ -177,7 +177,7 @@ class sfWebBrowser
    *
    * @return sfWebBrowser The current browser object
    */
-  public function call($uri, $method = 'GET', $parameters = array(), $headers = array(), $changeStack = true)
+  public function call($uri, $method = 'GET', $parameters = [], $headers = [], $changeStack = true)
   {
     $urlInfo = parse_url($uri);
 
@@ -216,9 +216,9 @@ class sfWebBrowser
     $browser = $this->adapter->call($this, $uri, $method, $parameters, $headers);
 
     // redirect support
-    if ((in_array($browser->getResponseCode(), array(301, 307)) && in_array($method, array('GET', 'HEAD'))) || in_array($browser->getResponseCode(), array(302,303)))
+    if ((in_array($browser->getResponseCode(), [301, 307]) && in_array($method, ['GET', 'HEAD'])) || in_array($browser->getResponseCode(), [302,303]))
     {
-      $this->call($browser->getResponseHeader('Location'), 'GET', array(), $headers);
+      $this->call($browser->getResponseHeader('Location'), 'GET', [], $headers);
     }
 
     return $browser;
@@ -248,7 +248,7 @@ class sfWebBrowser
    *
    * @return sfWebBrowser The current browser object
    */
-  public function click($name, $arguments = array())
+  public function click($name, $arguments = [])
   {
     if (!$dom = $this->getResponseDom())
     {
@@ -268,7 +268,7 @@ class sfWebBrowser
     {
       foreach($links as $link)
       {
-        if(preg_replace(array('/\s{2,}/', '/\\r\\n|\\n|\\r/'), array(' ', ''), $link->nodeValue) == $name)
+        if(preg_replace(['/\s{2,}/', '/\\r\\n|\\n|\\r/'], [' ', ''], $link->nodeValue) == $name)
         {
           return $this->get($link->getAttribute('href'));
         }
@@ -292,7 +292,7 @@ class sfWebBrowser
     $method = $form->getAttribute('method') ? strtolower($form->getAttribute('method')) : 'get';
 
     // merge form default values and arguments
-    $defaults = array();
+    $defaults = [];
     foreach ($xpath->query('descendant::input | descendant::textarea | descendant::select', $form) as $element)
     {
       $elementName = $element->getAttribute('name');
@@ -328,7 +328,7 @@ class sfWebBrowser
         if ($multiple = $element->hasAttribute('multiple'))
         {
           $elementName = str_replace('[]', '', $elementName);
-          $value = array();
+          $value = [];
         }
         else
         {
@@ -390,12 +390,12 @@ class sfWebBrowser
   public function addToStack($uri, $method, $parameters, $headers)
   {
     $this->stack = array_slice($this->stack, 0, $this->stackPosition + 1);
-    $this->stack[] = array(
+    $this->stack[] = [
       'uri'        => $uri,
       'method'     => $method,
       'parameters' => $parameters,
       'headers'    => $headers
-    );
+    ];
     $this->stackPosition = count($this->stack) - 1;
 
     return $this;
@@ -466,9 +466,9 @@ class sfWebBrowser
    * @param    array     $headers
    * @return   string
    */
-  public function prepareHeaders($headers = array())
+  public function prepareHeaders($headers = [])
   {
-    $prepared_headers = array();
+    $prepared_headers = [];
     foreach ($headers as $name => $value)
     {
       $prepared_headers[] = sprintf("%s: %s\r\n", ucfirst($name), $value);
@@ -484,13 +484,13 @@ class sfWebBrowser
    */
   public function initializeResponse()
   {
-    $this->responseHeaders        = array();
+    $this->responseHeaders        = [];
     $this->responseCode           = '';
     $this->responseText           = '';
     $this->responseDom            = null;
     $this->responseDomCssSelector = null;
     $this->responseXml            = null;
-    $this->fields                 = array();
+    $this->fields                 = [];
   }
 
   /**
@@ -500,9 +500,9 @@ class sfWebBrowser
    *
    * @return sfWebBrowser The current browser object
    */
-  public function setResponseHeaders($headers = array())
+  public function setResponseHeaders($headers = [])
   {
-    $header_array = array();
+    $header_array = [];
     foreach($headers as $header)
     {
       $arr = explode(': ', $header);
@@ -668,7 +668,7 @@ class sfWebBrowser
    */
   public function responseIsError()
   {
-    return in_array((int)($this->getResponseCode() / 100), array(4, 5));
+    return in_array((int)($this->getResponseCode() / 100), [4, 5]);
   }
 
   /**
@@ -740,10 +740,10 @@ class sfWebBrowser
    * @param       array    $headers
    * @return      array
    */
-  public function initializeRequestHeaders($headers = array())
+  public function initializeRequestHeaders($headers = [])
   {
     // Supported encodings
-    $encodings = array();
+    $encodings = [];
     if (isset($headers['Accept-Encoding']))
     {
       $encodings = explode(',', $headers['Accept-Encoding']);
@@ -776,7 +776,7 @@ class sfWebBrowser
       {
         if (!is_array($var))
         {
-          $var = array($var);
+          $var = [$var];
         }
         $var[] = $value;
       }
@@ -821,7 +821,7 @@ class sfWebBrowser
    */
   protected function fixHeaders($headers)
   {
-    $fixed_headers = array();
+    $fixed_headers = [];
     foreach ($headers as $name => $value)
     {
       if (!preg_match('/([a-z]*)(-[a-z]*)*/i', $name))

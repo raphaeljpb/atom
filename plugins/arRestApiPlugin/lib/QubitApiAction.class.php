@@ -38,8 +38,8 @@ class QubitApiAction extends sfAction
     }
 
     // Define function callable
-    $fnCallable = array($this, $method);
-    $fnParamaters = array($request);
+    $fnCallable = [$this, $method];
+    $fnParamaters = [$request];
 
     // Modern frameworks support application/json, Symfony1 is too old :)
     // AngularJS doesn't use application/x-www-form-urlencoded
@@ -49,13 +49,13 @@ class QubitApiAction extends sfAction
     }
 
     // Load Qubit helper before calling it
-    ProjectConfiguration::getActive()->loadHelpers(array('Asset', 'Qubit', 'Date', 'I18N'));
+    ProjectConfiguration::getActive()->loadHelpers(['Asset', 'Qubit', 'Date', 'I18N']);
 
     // Load site base URL
     $this->siteBaseUrl = '';
     if (null !== $setting = QubitSetting::getByName('siteBaseUrl'))
     {
-      $this->siteBaseUrl = $setting->getValue(array('sourceCulture' => true));
+      $this->siteBaseUrl = $setting->getValue(['sourceCulture' => true]);
     }
 
     $result = call_user_func_array($fnCallable, $fnParamaters);
@@ -102,7 +102,7 @@ class QubitApiAction extends sfAction
     }
   }
 
-  protected function prepareEsSorting(\Elastica\Query &$query, $fields = array())
+  protected function prepareEsSorting(\Elastica\Query &$query, $fields = [])
   {
     // Stop if preferred option is not set or $fields empty
     if (1 > count($fields) || !isset($this->request->sort))
@@ -126,7 +126,7 @@ class QubitApiAction extends sfAction
     }
 
     // TODO: allow $request->sort to be multi-value
-    $query->setSort(array($fields[$this->request->sort] => $sortDirection));
+    $query->setSort([$fields[$this->request->sort] => $sortDirection]);
   }
 
   protected function addItemToArray(&$array, $key, $value)
@@ -157,7 +157,7 @@ class QubitApiAction extends sfAction
     }
 
     // X_REST_API_KEY is and old name still checked for backward compatibility. Last attempt!
-    if (null !== $key = Qubit::getHttpHeader(array('REST-API-Key', 'HTTP_X_REST_API_KEY')))
+    if (null !== $key = Qubit::getHttpHeader(['REST-API-Key', 'HTTP_X_REST_API_KEY']))
     {
       $criteria = new Criteria();
       $criteria->add(QubitProperty::NAME, 'restApiKey');

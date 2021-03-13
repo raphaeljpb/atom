@@ -54,16 +54,16 @@ class InformationObjectExportCsvAction extends sfAction
       }
 
       // Do not add descendants in search results
-      $options = array(
+      $options = [
         'params' => $getParameters,
         'current-level-only' => true
-      );
+      ];
 
       QubitJob::runJob('arInformationObjectCsvExportJob', $options);
 
       // Let user know export has started
-      sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
-      $jobManageUrl = url_for(array('module' => 'jobs', 'action' => 'browse'));
+      sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
+      $jobManageUrl = url_for(['module' => 'jobs', 'action' => 'browse']);
       $message = '<strong>Export of descriptions initiated.</strong> Check <a href="'. $jobManageUrl . '">job management</a> page to download the results when it has completed.';
       $this->getUser()->setFlash('notice', $message);
     }
@@ -75,7 +75,7 @@ class InformationObjectExportCsvAction extends sfAction
     }
     else
     {
-      $this->redirect($this->context->routing->generate(null, array(null, 'module' => 'informationobject', 'action' => 'browse')));
+      $this->redirect($this->context->routing->generate(null, [null, 'module' => 'informationobject', 'action' => 'browse']));
     }
   }
 }

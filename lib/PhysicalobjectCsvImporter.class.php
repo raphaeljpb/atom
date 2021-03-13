@@ -76,7 +76,7 @@ class PhysicalObjectCsvImporter
   #
 
   public function __construct(sfContext $context = null, $dbcon = null,
-    $options = array())
+    $options = [])
   {
     if (null === $context)
     {

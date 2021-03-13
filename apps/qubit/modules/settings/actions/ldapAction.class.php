@@ -20,11 +20,11 @@
 class SettingsLdapAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'ldapHost',
       'ldapPort',
       'ldapBaseDn',
-      'ldapBindAttribute');
+      'ldapBindAttribute'];
 
   public function execute($request)
   {
@@ -40,7 +40,7 @@ class SettingsLdapAction extends DefaultEditAction
 
         QubitCache::getInstance()->removePattern('settings:i18n:*');
 
-        $this->redirect(array('module' => 'settings', 'action' => 'ldap'));
+        $this->redirect(['module' => 'settings', 'action' => 'ldap']);
       }
     }
   }
@@ -56,14 +56,14 @@ class SettingsLdapAction extends DefaultEditAction
         // Determine and set field default value
         if (null !== $this->{$name} = QubitSetting::getByName($name))
         {
-          $default = $this->{$name}->getValue(array('sourceCulture' => true));
+          $default = $this->{$name}->getValue(['sourceCulture' => true]);
         }
         else
         {
-          $defaults = array(
+          $defaults = [
             'ldapPort' => '389',
             'ldapBindAttribute' => 'uid'
-          );
+          ];
 
           $default = (isset($defaults[$name])) ? $defaults[$name] : '';
         }
@@ -71,7 +71,7 @@ class SettingsLdapAction extends DefaultEditAction
         $this->form->setDefault($name, $default);
 
         // Set validator and widget
-        $validator = ($name == 'ldapPort') ? new sfValidatorInteger(array('min' => 1, 'max' => 65535)) : new sfValidatorPass();
+        $validator = ($name == 'ldapPort') ? new sfValidatorInteger(['min' => 1, 'max' => 65535]) : new sfValidatorPass();
         $this->form->setValidator($name, $validator);
         $this->form->setWidget($name, new sfWidgetFormInput());
 
@@ -93,7 +93,7 @@ class SettingsLdapAction extends DefaultEditAction
           $this->{$name}->name = $name;
           $this->{$name}->scope = 'ldap';
         }
-        $this->{$name}->setValue($field->getValue(), array('sourceCulture' => true));
+        $this->{$name}->setValue($field->getValue(), ['sourceCulture' => true]);
         $this->{$name}->save();
 
         break;

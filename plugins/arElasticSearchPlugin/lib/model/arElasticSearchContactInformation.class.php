@@ -21,7 +21,7 @@ class arElasticSearchContactInformation extends arElasticSearchModelBase
 {
   public static function serialize($object)
   {
-    $serialized = array();
+    $serialized = [];
 
     $serialized['contactPerson'] = $object->contactPerson;
     $serialized['streetAddress'] = $object->streetAddress;
@@ -36,7 +36,7 @@ class arElasticSearchContactInformation extends arElasticSearchModelBase
     }
 
     $serialized['sourceCulture'] = $object->sourceCulture;
-    $serialized['i18n'] = self::serializeI18ns($object->id, array('QubitContactInformation', 'QubitActor'));
+    $serialized['i18n'] = self::serializeI18ns($object->id, ['QubitContactInformation', 'QubitActor']);
 
     return $serialized;
   }

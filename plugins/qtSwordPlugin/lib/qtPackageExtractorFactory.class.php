@@ -19,7 +19,7 @@
 
 class qtPackageExtractorFactory
 {
-  public static function build($format, array $options = array())
+  public static function build($format, array $options = [])
   {
     preg_match_all('/^.*\/(.*)\/*$/', $format, $matches);
 
@@ -37,6 +37,6 @@ class qtPackageExtractorFactory
       throw new Exception('Package format not recognized.');
     }
 
-    return new $className($options + array('format' => $format));
+    return new $className($options + ['format' => $format]);
   }
 }

@@ -19,7 +19,7 @@
 
 class UserEditRepositoryAclAction extends DefaultEditAction
 {
-  public static $NAMES = array();
+  public static $NAMES = [];
 
   public function execute($request)
   {
@@ -35,7 +35,7 @@ class UserEditRepositoryAclAction extends DefaultEditAction
 
         $this->resource->save();
 
-        $this->redirect(array($this->resource, 'module' => 'user', 'action' => 'indexRepositoryAcl'));
+        $this->redirect([$this->resource, 'module' => 'user', 'action' => 'indexRepositoryAcl']);
       }
     }
   }
@@ -54,7 +54,7 @@ class UserEditRepositoryAclAction extends DefaultEditAction
     }
 
     // Always include root repository permissions
-    $this->repositories = array(QubitRepository::ROOT_ID => null);
+    $this->repositories = [QubitRepository::ROOT_ID => null];
 
     // Get repository permissions for this group
     $criteria = new Criteria();

@@ -45,7 +45,7 @@ class arMigration0093
     // Store it
     $setting = new QubitSetting();
     $setting->name = 'milestone';
-    $setting->setValue($milestone, array('sourceCulture' => true));
+    $setting->setValue($milestone, ['sourceCulture' => true]);
     $setting->save();
 
     return true;

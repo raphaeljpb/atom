@@ -93,7 +93,7 @@ class arElasticSearchPluginUtil
       $day = $endDate ? cal_days_in_month(CAL_GREGORIAN, $month, $year) : '01';
     }
 
-    return implode('-', array($year, $month, $day));
+    return implode('-', [$year, $month, $day]);
   }
 
   /**
@@ -105,7 +105,7 @@ class arElasticSearchPluginUtil
    * Tried to add the result fields to the cache but APC (our default caching engine) uses separate
    * memory spaces for web/cli and the cached fields can't be removed in arSearchPopulateTask
    */
-  public static function getAllFields($indexType, $except = array())
+  public static function getAllFields($indexType, $except = [])
   {
     // Load ES mappings
     $mappings = arElasticSearchPlugin::loadMappings()->asArray();
@@ -168,10 +168,10 @@ class arElasticSearchPluginUtil
     // Make sure fields is an array
     if (!is_array($fields))
     {
-      $fields = array($fields);
+      $fields = [$fields];
     }
 
-    $i18nFieldNames = array();
+    $i18nFieldNames = [];
 
     // Format fields
     foreach ($cultures as $culture)
@@ -246,14 +246,14 @@ class arElasticSearchPluginUtil
    */
   public static function getPremisData($ioId, $conn)
   {
-    $premisData = array();
+    $premisData = [];
 
     $sql  = 'SELECT *
       FROM '.QubitPremisObject::TABLE_NAME.' premis
       WHERE premis.information_object_id = ?';
 
     $statement = $conn->prepare($sql);
-    $statement->execute(array($ioId));
+    $statement->execute([$ioId]);
     $row = $statement->fetch();
 
     // Return if no results found
@@ -312,7 +312,7 @@ class arElasticSearchPluginUtil
         AND property.object_id = ?';
 
     $statement = $conn->prepare($sql);
-    $statement->execute(array($ioId));
+    $statement->execute([$ioId]);
 
     foreach ($statement->fetchAll(PDO::FETCH_OBJ) as $property)
     {
@@ -432,7 +432,7 @@ class arElasticSearchPluginUtil
    */
   public static function getScrolledSearchResultIdentifiers($search)
   {
-    $hitIds = array();
+    $hitIds = [];
 
     // Create scroll of search
     $scroll = new \Elastica\Scroll($search);
@@ -471,7 +471,7 @@ class arElasticSearchPluginUtil
   protected static function getAllObjectStringFields($rootIndexType, $object, $prefix, $foreignType = false,
                                                      $i18nIncludeInAll = null)
   {
-    $fields = array();
+    $fields = [];
 
     if (isset($object['properties']))
     {
@@ -550,7 +550,7 @@ class arElasticSearchPluginUtil
         $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template');
         if (isset($infoObjectTemplate))
         {
-          return $infoObjectTemplate->getValue(array('sourceCulture'=>true));
+          return $infoObjectTemplate->getValue(['sourceCulture'=>true]);
         }
 
       // TODO: Other index types (actor, term, etc)
@@ -565,7 +565,7 @@ class arElasticSearchPluginUtil
   private static function getHiddenFields()
   {
     // Create array with relations (hidden field => ES mapping field) for the actual template
-    $relations = array();
+    $relations = [];
 
     if (null !== $template = self::getTemplate('informationObject'))
     {
@@ -573,7 +573,7 @@ class arElasticSearchPluginUtil
       {
         case 'isad':
 
-          $relations = array(
+          $relations = [
             'isad_archival_history' => 'i18n.%s.archivalHistory',
             'isad_immediate_source' => 'i18n.%s.acquisition',
             'isad_appraisal_destruction' => 'i18n.%s.appraisal',
@@ -588,13 +588,13 @@ class arElasticSearchPluginUtil
             'isad_control_languages' => '',
             'isad_control_scripts' => '',
             'isad_control_sources' => 'i18n.%s.sources',
-            'isad_control_archivists_notes' => '');
+            'isad_control_archivists_notes' => ''];
 
           break;
 
         case 'rad':
 
-          $relations = array(
+          $relations = [
             'rad_archival_history' => 'i18n.%s.archivalHistory',
             'rad_physical_condition' => 'i18n.%s.physicalCharacteristics',
             'rad_immediate_source' => 'i18n.%s.acquisition',
@@ -608,7 +608,7 @@ class arElasticSearchPluginUtil
             'rad_control_dates' => 'i18n.%s.revisionHistory',
             'rad_control_language' => '',
             'rad_control_script' => '',
-            'rad_control_sources' => 'i18n.%s.sources');
+            'rad_control_sources' => 'i18n.%s.sources'];
 
           break;
 
@@ -617,11 +617,11 @@ class arElasticSearchPluginUtil
     }
 
     // Obtain hidden fields
-    $hiddenFields = array();
+    $hiddenFields = [];
 
     foreach (QubitSetting::getByScope('element_visibility') as $setting)
     {
-      if(!(bool)$setting->getValue(array('sourceCulture' => true)) && isset($relations[$setting->name])
+      if(!(bool)$setting->getValue(['sourceCulture' => true]) && isset($relations[$setting->name])
         && $relations[$setting->name] != '')
       {
         $hiddenFields[] = $relations[$setting->name];
@@ -641,12 +641,12 @@ class arElasticSearchPluginUtil
    */
   private static function setBoostValues($indexType, $fields)
   {
-    $boost = $boostedFields = array();
+    $boost = $boostedFields = [];
 
     switch ($indexType)
     {
       case 'informationObject':
-        $boost = array(
+        $boost = [
           'i18n.%s.title' => 10,
           'creators.i18n.%s.authorizedFormOfName' => 6,
           'identifier' => 5,
@@ -654,7 +654,7 @@ class arElasticSearchPluginUtil
           'i18n.%s.scopeAndContent' => 5,
           'names.i18n.%s.authorizedFormOfName' => 3,
           'places.i18n.%s.name' => 3,
-        );
+        ];
 
         break;
     }

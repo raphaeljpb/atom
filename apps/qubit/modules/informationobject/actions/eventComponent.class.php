@@ -27,14 +27,14 @@
 class InformationObjectEventComponent extends EventEditComponent
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'actor',
       'date',
       'endDate',
       'startDate',
       'description',
       'place',
-      'type');
+      'type'];
 
   protected function addField($name)
   {
@@ -42,7 +42,7 @@ class InformationObjectEventComponent extends EventEditComponent
     {
       case 'actor':
         $this->form->setValidator('actor', new sfValidatorString());
-        $this->form->setWidget('actor', new sfWidgetFormSelect(array('choices' => array())));
+        $this->form->setWidget('actor', new sfWidgetFormSelect(['choices' => []]));
 
         $this->form->getWidgetSchema()->actor->setHelp($this->context->i18n->__('Use the actor name field to link an authority record to this description. Search for an existing name in the authority records by typing the first few characters of the name. Alternatively, type a new name to create and link to a new authority record.'));
 
@@ -56,7 +56,7 @@ class InformationObjectEventComponent extends EventEditComponent
 
       case 'place':
         $this->form->setValidator('place', new sfValidatorString());
-        $this->form->setWidget('place', new sfWidgetFormSelect(array('choices' => array())));
+        $this->form->setWidget('place', new sfWidgetFormSelect(['choices' => []]));
 
         $this->form->getWidgetSchema()->place->setHelp($this->context->i18n->__('Search for an existing term in the places taxonomy by typing the first few characters of the term name. Alternatively, type a new term to create and link to a new place term.'));
 

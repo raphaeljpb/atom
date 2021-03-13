@@ -30,7 +30,7 @@ class QubitI18N
    */
   public static function getTranslations($string)
   {
-    $translations = array();
+    $translations = [];
 
     // Index the array with all the language codes available in the application
     foreach (new DirectoryIterator(sfConfig::get('sf_app_i18n_dir')) as $fileInfo)
@@ -47,10 +47,10 @@ class QubitI18N
     $cache = new sfNoCache();
     foreach ($translations as $langCode => &$value)
     {
-      $i18n = new sfI18N($configuration, $cache, array('culture' => $langCode));
+      $i18n = new sfI18N($configuration, $cache, ['culture' => $langCode]);
 
       // Mark untranslated messages
-      $i18n->getMessageFormat()->setUntranslatedPS(array('[T]','[/T]'));
+      $i18n->getMessageFormat()->setUntranslatedPS(['[T]','[/T]']);
 
       // Update the value of this language in the dictionary
       $value = $i18n->__($string);

@@ -47,7 +47,7 @@ EOF;
   protected function processRow($row, $tableName, $columns)
   {
     // Determine what column values have custom links
-    $columnValues = array();
+    $columnValues = [];
 
     foreach ($columns as $column)
     {

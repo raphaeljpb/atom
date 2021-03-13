@@ -10,17 +10,17 @@
   <section class="header-options">
     <div class="row">
       <div class="span6">
-        <?php echo get_component('search', 'inlineSearch', array(
-          'label' => __('Search %1%', array('%1%' => strtolower(sfConfig::get('app_ui_label_donor')))))) ?>
+        <?php echo get_component('search', 'inlineSearch', [
+          'label' => __('Search %1%', ['%1%' => strtolower(sfConfig::get('app_ui_label_donor'))])]) ?>
       </div>
 
       <div class="pickers">
         <?php echo get_partial('default/sortPickers',
-          array(
-            'options' => array(
+          [
+            'options' => [
               'alphabetic' => __('Name'),
               'lastUpdated' => __('Date modified'),
-              'identifier' => __('Identifier')))) ?>
+              'identifier' => __('Identifier')]]) ?>
       </div>
     </div>
   </section>
@@ -44,7 +44,7 @@
       <?php foreach ($pager->getResults() as $item): ?>
         <tr>
           <td>
-            <?php echo link_to(render_title($item), array($item, 'module' => 'donor')) ?>
+            <?php echo link_to(render_title($item), [$item, 'module' => 'donor']) ?>
           </td>
           <?php if ('alphabetic' != $sf_request->sort): ?>
             <td>
@@ -59,11 +59,11 @@
 
 <?php slot('after-content') ?>
 
-  <?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+  <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 
   <section class="actions">
     <ul>
-      <li><?php echo link_to(__('Add new'), array('module' => 'donor', 'action' => 'add'), array('class' => 'c-btn')) ?></li>
+      <li><?php echo link_to(__('Add new'), ['module' => 'donor', 'action' => 'add'], ['class' => 'c-btn']) ?></li>
     </ul>
   </section>
 

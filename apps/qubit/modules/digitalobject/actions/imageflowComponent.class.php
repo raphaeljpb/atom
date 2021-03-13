@@ -33,7 +33,7 @@ class DigitalObjectImageflowComponent extends sfComponent
       return sfView::NONE;
     }
 
-    $this->thumbnails = array();
+    $this->thumbnails = [];
 
     // Set limit (null for no limit)
     if (!isset($request->showFullImageflow) || 'true' != $request->showFullImageflow)

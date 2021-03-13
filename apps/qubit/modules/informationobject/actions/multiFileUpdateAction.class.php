@@ -19,8 +19,8 @@
 
 class InformationObjectMultiFileUpdateAction extends sfAction
 {
-  protected $informationObjectList = array();
-  protected $informationObjectOrignalTitles = array();
+  protected $informationObjectList = [];
+  protected $informationObjectOrignalTitles = [];
 
   public function execute($request)
   {
@@ -70,8 +70,8 @@ class InformationObjectMultiFileUpdateAction extends sfAction
       }
     }
 
-    $this->digitalObjectTitleForm = new DigitalObjectTitleUpdateForm(array(),
-      array('informationObjects' => $this->informationObjectList));
+    $this->digitalObjectTitleForm = new DigitalObjectTitleUpdateForm([],
+      ['informationObjects' => $this->informationObjectList]);
 
     // Handle POST data (form submit)
     if ($request->isMethod('post'))
@@ -81,7 +81,7 @@ class InformationObjectMultiFileUpdateAction extends sfAction
         if ($this->digitalObjectTitleForm->isValid())
         {
           $this->updateDigitalObjectTitles();
-          $this->redirect(array($this->resource, 'module' => 'informationobject'));
+          $this->redirect([$this->resource, 'module' => 'informationobject']);
         }
     }
 
@@ -95,7 +95,7 @@ class InformationObjectMultiFileUpdateAction extends sfAction
   {
     foreach ($this->digitalObjectTitleForm->getInformationObjects() as $io)
     {
-      $this->digitalObjectTitleForm->setDefault($io->id, $io->getTitle(array('cultureFallback' => true)));
+      $this->digitalObjectTitleForm->setDefault($io->id, $io->getTitle(['cultureFallback' => true]));
     }
   }
 

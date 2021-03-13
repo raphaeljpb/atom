@@ -38,10 +38,10 @@ class InformationObjectAutocompleteAction extends sfAction
 
     $this->query = new \Elastica\Query();
     $this->query->setSize($request->limit);
-    $this->query->setSort(array(
+    $this->query->setSort([
       'levelOfDescriptionId' => 'asc',
       'identifier.untouched' => 'asc',
-      'i18n.'.$culture.'.title.alphasort' => 'asc'));
+      'i18n.'.$culture.'.title.alphasort' => 'asc']);
 
     $this->queryBool = new \Elastica\Query\BoolQuery();
 
@@ -51,7 +51,7 @@ class InformationObjectAutocompleteAction extends sfAction
     }
     else
     {
-      $fields = array('i18n.'.$culture.'.title.autocomplete' => 1);
+      $fields = ['i18n.'.$culture.'.title.autocomplete' => 1];
 
       // Search for referenceCode or identifier, and title
       if (1 == sfConfig::get('app_inherit_code_informationobject', 1))
@@ -59,10 +59,10 @@ class InformationObjectAutocompleteAction extends sfAction
         $fields['referenceCode.autocomplete'] = 1;
 
         // Change sort order
-        $this->query->setSort(array(
+        $this->query->setSort([
           'levelOfDescriptionId' => 'asc',
           'referenceCode.untouched' => 'asc',
-          'i18n.'.$culture.'.title.alphasort' => 'asc'));
+          'i18n.'.$culture.'.title.alphasort' => 'asc']);
       }
       else
       {

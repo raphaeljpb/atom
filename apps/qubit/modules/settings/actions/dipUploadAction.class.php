@@ -20,8 +20,8 @@
 class SettingsDipUploadAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
-      'stripExtensions');
+  public static $NAMES = [
+      'stripExtensions'];
 
   public function earlyExecute()
   {
@@ -29,9 +29,9 @@ class SettingsDipUploadAction extends SettingsEditAction
 
     $this->updateMessage = $this->i18n->__('DIP upload settings saved.');
 
-    $this->settingDefaults = array(
+    $this->settingDefaults = [
       'stripExtensions' => '0'
-    );
+    ];
   }
 
   protected function addField($name)
@@ -39,8 +39,8 @@ class SettingsDipUploadAction extends SettingsEditAction
     switch ($name)
     {
       case 'stripExtensions':
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(array('choices' => array(1 => 'yes', 0 => 'no')), array('class' => 'radio')));
-        $this->form->setValidator($name, new sfValidatorInteger(array('required' => false)));
+        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
+        $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
 
         break;
     }

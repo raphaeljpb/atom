@@ -27,7 +27,7 @@ class arElasticSearchTermPdo
 {
   public $i18ns;
 
-  protected $data = array();
+  protected $data = [];
 
   protected static $conn;
   protected static $lookups;
@@ -36,7 +36,7 @@ class arElasticSearchTermPdo
   /**
    * METHODS
    */
-  public function __construct($id, $options = array())
+  public function __construct($id, $options = [])
   {
     if (isset($options['conn']))
     {
@@ -71,7 +71,7 @@ class arElasticSearchTermPdo
 
   public function serialize()
   {
-    $serialized = array();
+    $serialized = [];
 
     $serialized['id'] = $this->id;
     $serialized['slug'] = $this->slug;
@@ -79,13 +79,13 @@ class arElasticSearchTermPdo
     $serialized['taxonomyId'] = $this->taxonomy_id;
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::ALTERNATIVE_LABEL_ID)) as $item)
+    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::ALTERNATIVE_LABEL_ID]) as $item)
     {
       $serialized['useFor'][] = arElasticSearchOtherName::serialize($item);
     }
 
     $sql = 'SELECT id, source_culture FROM '.QubitNote::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::SCOPE_NOTE_ID)) as $item)
+    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::SCOPE_NOTE_ID]) as $item)
     {
       $serialized['scopeNotes'][] = arElasticSearchNote::serialize($item);
     }
@@ -97,7 +97,7 @@ class arElasticSearchTermPdo
     $serialized['updatedAt'] = arElasticSearchPluginUtil::convertDate($this->updated_at);
 
     $serialized['sourceCulture'] = $this->source_culture;
-    $serialized['i18n'] = arElasticSearchModelBase::serializeI18ns($this->id, array('QubitTerm'));
+    $serialized['i18n'] = arElasticSearchModelBase::serializeI18ns($this->id, ['QubitTerm']);
 
     return $serialized;
   }
@@ -122,7 +122,7 @@ class arElasticSearchTermPdo
     }
 
     // Do select
-    self::$statements['term']->execute(array(':id' => $id));
+    self::$statements['term']->execute([':id' => $id]);
 
     // Get first result
     $this->data = self::$statements['term']->fetch(PDO::FETCH_ASSOC);

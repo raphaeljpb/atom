@@ -29,25 +29,25 @@ class arUpdatePublicationStatusJob extends arBaseJob
   /**
    * @see arBaseJob::$requiredParameters
    */
-  protected $extraRequiredParameters = array('objectId', 'publicationStatusId');
+  protected $extraRequiredParameters = ['objectId', 'publicationStatusId'];
 
   public function runJob($parameters)
   {
     if (null === $resource = QubitInformationObject::getById($parameters['objectId']))
     {
-      $this->error($this->i18n->__('Invalid description id: %1', array('%1' => $parameters['objectId'])));
+      $this->error($this->i18n->__('Invalid description id: %1', ['%1' => $parameters['objectId']]));
 
       return false;
     }
 
     if (null === $publicationStatus = QubitTerm::getById($parameters['publicationStatusId']))
     {
-      $this->error($this->i18n->__('Invalid publication status id: %1', array('%1' => $parameters['publicationStatusId'])));
+      $this->error($this->i18n->__('Invalid publication status id: %1', ['%1' => $parameters['publicationStatusId']]));
 
       return false;
     }
 
-    $message = $this->i18n->__('Updating publication status for the descendants of "%1" to "%2".', array('%1' => $resource->getTitle(array('cultureFallback' => true)), '%2' => $publicationStatus->name));
+    $message = $this->i18n->__('Updating publication status for the descendants of "%1" to "%2".', ['%1' => $resource->getTitle(['cultureFallback' => true]), '%2' => $publicationStatus->name]);
     $this->job->addNoteText($message);
     $this->info($message);
 
@@ -60,7 +60,7 @@ class arUpdatePublicationStatusJob extends arBaseJob
       $descriptionsUpdated++;
     }
 
-    $message = $this->i18n->__('%1 descriptions updated.', array('%1' => $descriptionsUpdated));
+    $message = $this->i18n->__('%1 descriptions updated.', ['%1' => $descriptionsUpdated]);
     $this->job->addNoteText($message);
     $this->info($message);
 

@@ -30,10 +30,10 @@
           <?php echo format_date($modification->createdAt, 'f') ?>
         </td>
         <td>
-          <?php echo QubitTerm::getById($modification->actionTypeId)->getName(array('cultureFallback' => true)); ?>
+          <?php echo QubitTerm::getById($modification->actionTypeId)->getName(['cultureFallback' => true]); ?>
         </td>
         <td>
-          <?php echo link_to_if($sf_user->isAdministrator() && $modification->userId, $modification->userName, array(QubitUser::getById($modification->userId), 'module' => 'user')); ?>
+          <?php echo link_to_if($sf_user->isAdministrator() && $modification->userId, $modification->userName, [QubitUser::getById($modification->userId), 'module' => 'user']); ?>
         </td>
       </tr>
     <?php endforeach; ?>
@@ -43,5 +43,5 @@
 <?php end_slot() ?>
 
 <?php slot('after-content') ?>
-  <?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+  <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 <?php end_slot() ?>

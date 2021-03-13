@@ -51,7 +51,7 @@ class QubitCultureFallback
    * @param array $options
    * @return QubitQuery array of objects
    */
-  public static function addFallbackCriteria($criteria, $fallbackClassName, $options = array())
+  public static function addFallbackCriteria($criteria, $fallbackClassName, $options = [])
   {
     if (isset($options['culture']))
     {
@@ -82,10 +82,10 @@ class QubitCultureFallback
     $criteria->addAlias('current', $fallbackClassI18n->getConstant('TABLE_NAME'));
     $criteria->addAlias('source', $fallbackClassI18n->getConstant('TABLE_NAME'));
 
-    $criteria->addJoin(array($fallbackClass->getConstant('ID'), 'current.'.$cultureColName), array('current.id', '\''.$culture.'\''), Criteria::LEFT_JOIN);
+    $criteria->addJoin([$fallbackClass->getConstant('ID'), 'current.'.$cultureColName], ['current.id', '\''.$culture.'\''], Criteria::LEFT_JOIN);
     $criteria->addJoin(
-      array($fallbackClass->getConstant('ID'), 'source.'.$cultureColName),
-      array('source.id', $fallbackClass->getConstant('SOURCE_CULTURE').' AND source.'.$cultureColName.' <> \''.$culture.'\''),
+      [$fallbackClass->getConstant('ID'), 'source.'.$cultureColName],
+      ['source.id', $fallbackClass->getConstant('SOURCE_CULTURE').' AND source.'.$cultureColName.' <> \''.$culture.'\''],
       Criteria::LEFT_JOIN);
 
     return $criteria;

@@ -48,7 +48,7 @@ class QubitAclConditionalAssert implements Zend_Acl_Assert_Interface
       }
 
       // Test that user can translate into current language
-      if (!$this->permission->evaluateConditional(array('language' => sfContext::getInstance()->user->getCulture())))
+      if (!$this->permission->evaluateConditional(['language' => sfContext::getInstance()->user->getCulture()]))
       {
         return false;
       }
@@ -63,13 +63,13 @@ class QubitAclConditionalAssert implements Zend_Acl_Assert_Interface
     if ($resource instanceof QubitInformationObject)
     {
       $repositorySlug = null;
-      if (null !== $repository = $resource->getRepository(array('inherit' => true)))
+      if (null !== $repository = $resource->getRepository(['inherit' => true]))
       {
         $repositorySlug = $repository->slug;
       }
 
       // Test repository conditional
-      if (!$this->permission->evaluateConditional(array('repository' => $repositorySlug)))
+      if (!$this->permission->evaluateConditional(['repository' => $repositorySlug]))
       {
         return false;
       }
@@ -77,7 +77,7 @@ class QubitAclConditionalAssert implements Zend_Acl_Assert_Interface
     elseif ($resource instanceof QubitTerm)
     {
       // Test taxonomy conditional
-      if (!$this->permission->evaluateConditional(array('taxonomy' => $resource->taxonomy->slug)))
+      if (!$this->permission->evaluateConditional(['taxonomy' => $resource->taxonomy->slug]))
       {
         return false;
       }

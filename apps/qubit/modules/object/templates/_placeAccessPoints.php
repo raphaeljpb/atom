@@ -18,9 +18,9 @@
               &raquo;
             <?php endif; ?>
             <?php if ($resource->getClass() == 'QubitActor'): ?>
-              <?php echo link_to(render_title($place), array($place, 'module' => 'term', 'action' => 'relatedAuthorities')) ?>
+              <?php echo link_to(render_title($place), [$place, 'module' => 'term', 'action' => 'relatedAuthorities']) ?>
             <?php else: ?>
-              <?php echo link_to(render_title($place), array($place, 'module' => 'term')) ?>
+              <?php echo link_to(render_title($place), [$place, 'module' => 'term']) ?>
             <?php endif; ?>
           <?php endforeach; ?>
         </li>

@@ -23,7 +23,7 @@ class AccessionRelatedDonorAction extends RelationIndexAction
   {
     if (null !== $contact = $this->resource->object->getPrimaryContact())
     {
-      foreach (array(
+      foreach ([
         'city',
         'contactPerson',
         'countryCode',
@@ -37,7 +37,7 @@ class AccessionRelatedDonorAction extends RelationIndexAction
         'fax',
         'latitude',
         'longitude',
-        'note') as $field)
+        'note'] as $field)
       {
         if (isset($contact->$field))
         {

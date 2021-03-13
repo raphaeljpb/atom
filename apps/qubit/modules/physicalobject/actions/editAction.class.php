@@ -26,10 +26,10 @@
  */
 class PhysicalObjectEditAction extends DefaultEditAction
 {
-  public static $NAMES = array(
+  public static $NAMES = [
       'location',
       'name',
-      'type');
+      'type'];
 
   public function execute($request)
   {
@@ -49,7 +49,7 @@ class PhysicalObjectEditAction extends DefaultEditAction
           $this->redirect($next);
         }
 
-        $this->redirect(array($this->resource, 'module' => 'physicalobject'));
+        $this->redirect([$this->resource, 'module' => 'physicalobject']);
       }
     }
   }
@@ -70,7 +70,7 @@ class PhysicalObjectEditAction extends DefaultEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");
@@ -89,9 +89,9 @@ class PhysicalObjectEditAction extends DefaultEditAction
         break;
 
       case 'type':
-        $this->form->setDefault('type', $this->context->routing->generate(null, array($this->resource->type, 'module' => 'term')));
+        $this->form->setDefault('type', $this->context->routing->generate(null, [$this->resource->type, 'module' => 'term']));
         $this->form->setValidator('type', new sfValidatorString());
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => QubitTerm::getIndentedChildTree(QubitTerm::CONTAINER_ID, '&nbsp;', array('returnObjectInstances' => true)))));
+        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => QubitTerm::getIndentedChildTree(QubitTerm::CONTAINER_ID, '&nbsp;', ['returnObjectInstances' => true])]));
 
         break;
 

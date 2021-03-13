@@ -50,7 +50,7 @@ EOF;
   protected function processRow($row, $tableName, $columns)
   {
     // Determine what column values contain HTML
-    $columnValues = array();
+    $columnValues = [];
 
     foreach ($columns as $column)
     {

@@ -41,10 +41,10 @@ class arMigration0176
   {
     // Update `class_name` in `object` table
     $sql = 'UPDATE object SET class_name=:new WHERE class_name=:old;';
-    QubitPdo::modify($sql, array(
+    QubitPdo::modify($sql, [
       ':new' => 'QubitFunctionObject',
       ':old' => 'QubitFunction',
-    ));
+    ]);
 
     // Rename tables (backquotes needed to pass the reserved word issue)
     $sql = 'RENAME TABLE `function` TO function_object, ';
@@ -52,18 +52,18 @@ class arMigration0176
     QubitPdo::modify($sql);
 
     // Rename indexes to match a new install
-    $indexes = array(
+    $indexes = [
       'type_id' => 'function_object_FI_2',
       'parent_id' => 'function_object_FI_3',
       'description_status_id' => 'function_object_FI_4',
       'description_detail_id' => 'function_object_FI_5',
-    );
+    ];
 
     foreach ($indexes as $columnName => $indexName)
     {
       // Get actual index name
       $sql = 'SHOW INDEX FROM function_object WHERE Column_name=:column_name;';
-      $result = QubitPdo::fetchOne($sql, array(':column_name' => $columnName));
+      $result = QubitPdo::fetchOne($sql, [':column_name' => $columnName]);
 
       // Stop if the index is missing
       if (!$result || !$result->Key_name)
@@ -85,50 +85,50 @@ class arMigration0176
     }
 
     // Recreate foreign keys to match a new install
-    QubitMigrate::updateForeignKeys(array(
-      array(
+    QubitMigrate::updateForeignKeys([
+      [
         'table' => 'function_object',
         'column' => 'id',
         'refTable' => 'object',
         'constraint' => 'function_object_FK_1',
         'onDelete' => 'ON DELETE CASCADE',
-      ),
-      array(
+      ],
+      [
         'table' => 'function_object',
         'column' => 'type_id',
         'refTable' => 'term',
         'constraint' => 'function_object_FK_2',
         'onDelete' => '',
-      ),
-      array(
+      ],
+      [
         'table' => 'function_object',
         'column' => 'parent_id',
         'refTable' => 'function_object',
         'constraint' => 'function_object_FK_3',
         'onDelete' => '',
-      ),
-      array(
+      ],
+      [
         'table' => 'function_object',
         'column' => 'description_status_id',
         'refTable' => 'term',
         'constraint' => 'function_object_FK_4',
         'onDelete' => '',
-      ),
-      array(
+      ],
+      [
         'table' => 'function_object',
         'column' => 'description_detail_id',
         'refTable' => 'term',
         'constraint' => 'function_object_FK_5',
         'onDelete' => '',
-      ),
-      array(
+      ],
+      [
         'table' => 'function_object_i18n',
         'column' => 'id',
         'refTable' => 'function_object',
         'constraint' => 'function_object_i18n_FK_1',
         'onDelete' => 'ON DELETE CASCADE',
-      ),
-    ));
+      ],
+    ]);
 
     return true;
   }

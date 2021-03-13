@@ -118,7 +118,7 @@ class QubitAclSearch
     {
       $allows = array_keys($resourceAccess, true, true);
 
-      $ids = array();
+      $ids = [];
       while ($resourceId = array_shift($allows))
       {
         // (ZSL) $query->addSubquery(QubitSearch::getInstance()->addTerm($resourceId, 'id'), true);
@@ -139,7 +139,7 @@ class QubitAclSearch
     {
       $bans = array_keys($resourceAccess, false, true);
 
-      $ids = array();
+      $ids = [];
       while ($resourceId = array_shift($bans))
       {
         // (ZSL) $query->addSubquery(QubitSearch::getInstance()->addTerm($resourceId, 'id'), false);
@@ -192,10 +192,10 @@ class QubitAclSearch
 
       while ($repo = array_shift($repositoryViewDrafts))
       {
-        $query->addShould(new \Elastica\Query\Term(array('repository.id' => (int)$repo['id'])));
+        $query->addShould(new \Elastica\Query\Term(['repository.id' => (int)$repo['id']]));
       }
 
-      $query->addShould(new \Elastica\Query\Term(array('publicationStatusId' => QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)));
+      $query->addShould(new \Elastica\Query\Term(['publicationStatusId' => QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID]));
 
       // Does this ever happen in AtoM?
       if ($globalRule['access'] == QubitAcl::GRANT)

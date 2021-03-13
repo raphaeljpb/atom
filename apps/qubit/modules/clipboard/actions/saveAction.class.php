@@ -27,17 +27,17 @@ class ClipboardSaveAction extends sfAction
     if (empty($slugs) || (empty($slugs['informationObject']) && empty($slugs['actor']) && empty($slugs['repository'])))
     {
       $this->response->setStatusCode(400);
-      $responseData = array('error' => $failMessage.' '.$this->context->i18n->__('No items in clipboard to save.'));
+      $responseData = ['error' => $failMessage.' '.$this->context->i18n->__('No items in clipboard to save.')];
     }
     elseif (null === $validatedSlugs = $this->validateSlugs($slugs))
     {
       $this->response->setStatusCode(400);
-      $responseData = array('error' => $failMessage.' '.$this->context->i18n->__('No items found.'));
+      $responseData = ['error' => $failMessage.' '.$this->context->i18n->__('No items found.')];
     }
     elseif (null === $password = $this->getUniquePassword())
     {
       $this->response->setStatusCode(500);
-      $responseData = array('error' => $failMessage.' '.$this->context->i18n->__('Please try again.'));
+      $responseData = ['error' => $failMessage.' '.$this->context->i18n->__('Please try again.')];
     }
     else
     {
@@ -47,11 +47,11 @@ class ClipboardSaveAction extends sfAction
                     count($validatedSlugs['actor']) +
                     count($validatedSlugs['repository']);
 
-      $loadUrl = $this->context->routing->generate(null, array('module' => 'clipboard', 'action' => 'load'));
-      $message = $this->context->i18n->__('Clipboard saved with %1% items. Clipboard ID is <b>%2%</b>. Please write this number down. When you want to reload this clipboard in the future, open the Clipboard menu, select <a href="%3%">Load clipboard</a>, and enter this number in the Clipboard ID field.', array('%1%' => $itemsCount,'%2%' => $password, '%3%' => $loadUrl));
+      $loadUrl = $this->context->routing->generate(null, ['module' => 'clipboard', 'action' => 'load']);
+      $message = $this->context->i18n->__('Clipboard saved with %1% items. Clipboard ID is <b>%2%</b>. Please write this number down. When you want to reload this clipboard in the future, open the Clipboard menu, select <a href="%3%">Load clipboard</a>, and enter this number in the Clipboard ID field.', ['%1%' => $itemsCount,'%2%' => $password, '%3%' => $loadUrl]);
 
       $this->response->setStatusCode(200);
-      $responseData = array('success' => $message);
+      $responseData = ['success' => $message];
     }
 
     $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
@@ -81,11 +81,11 @@ class ClipboardSaveAction extends sfAction
 
   private function validateSlugs($allSlugs)
   {
-    $validatedSlugs = array();
+    $validatedSlugs = [];
 
     foreach($allSlugs as $type => $slugs)
     {
-      $validatedSlugs[$type] = array();
+      $validatedSlugs[$type] = [];
 
       foreach($slugs as $slug)
       {
@@ -96,13 +96,13 @@ class ClipboardSaveAction extends sfAction
 
         $count = QubitPdo::fetchColumn(
           $sql,
-          array(
+          [
             $slug,
             'Qubit'.ucfirst($type),
             QubitInformationObject::ROOT_ID,
             QubitActor::ROOT_ID,
             QubitRepository::ROOT_ID
-          )
+          ]
         );
 
         if ($count == 1)

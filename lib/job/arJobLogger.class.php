@@ -19,7 +19,7 @@
 
 class arJobLogger extends sfLogger
 {
-  public function initialize(sfEventDispatcher $dispatcher, $options = array())
+  public function initialize(sfEventDispatcher $dispatcher, $options = [])
   {
     $this->dispatcher = $dispatcher;
     $this->options = $options;
@@ -50,9 +50,9 @@ class arJobLogger extends sfLogger
     // and coerce them into a string with an empty string separater. Truncate the result of the concat
     // so it fits in column limit.
     $sql = 'UPDATE job SET output = SUBSTR(CONCAT_WS("", output, ?, "\n"), 1, 65534) WHERE id = ?';
-    QubitPdo::prepareAndExecute($sql, array($fMessage, $this->job->id));
+    QubitPdo::prepareAndExecute($sql, [$fMessage, $this->job->id]);
 
     // Forward to `gearman.worker.log` observers, jobWorkerTask will log to console via sfTask.
-    $this->dispatcher->notify(new sfEvent($this, 'gearman.worker.log', array('message' => $message)));
+    $this->dispatcher->notify(new sfEvent($this, 'gearman.worker.log', ['message' => $message]));
   }
 }

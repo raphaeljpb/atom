@@ -21,7 +21,7 @@ class ActorMoveDescriptionRelationsTask extends arBaseTask
 {
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument(
         'source',
         sfCommandArgument::REQUIRED,
@@ -32,9 +32,9 @@ class ActorMoveDescriptionRelationsTask extends arBaseTask
         sfCommandArgument::REQUIRED,
         'The slug of the target actor'
       ),
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption(
         'application',
         null,
@@ -62,7 +62,7 @@ class ActorMoveDescriptionRelationsTask extends arBaseTask
         sfCommandOption::PARAMETER_NONE,
         "Skip Elasticsearch indexing"
       ),
-    ));
+    ]);
 
     $this->namespace = 'actor';
     $this->name = 'move-description-relations';
@@ -73,7 +73,7 @@ including all events and name access point relations.
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -93,14 +93,14 @@ EOF;
 
     $this->log(
       'Moving description relations from "'.
-      $source->getAuthorizedFormOfName(array('cultureFallback' => true)).
+      $source->getAuthorizedFormOfName(['cultureFallback' => true]).
       '" to "'.
-      $target->getAuthorizedFormOfName(array('cultureFallback' => true)).
+      $target->getAuthorizedFormOfName(['cultureFallback' => true]).
       '" ...'
     );
 
     // Amalgamate related description ids before update
-    $relatedIoIds = array();
+    $relatedIoIds = [];
     if (!$options['skip-index'])
     {
       $sql = "SELECT event.object_id FROM event
@@ -113,14 +113,14 @@ EOF;
         WHERE relation.object_id=:sourceId
         AND relation.type_id=:typeId
         AND object.class_name='QubitInformationObject'";
-      $params = array(
+      $params = [
         ':sourceId' => $source->id,
         ':typeId' => QubitTerm::NAME_ACCESS_POINT_ID
-      );
+      ];
       $relatedIoIds = QubitPdo::fetchAll(
         $sql,
         $params,
-        array('fetchMode' => PDO::FETCH_COLUMN)
+        ['fetchMode' => PDO::FETCH_COLUMN]
       );
     }
 
@@ -130,7 +130,7 @@ EOF;
       SET event.actor_id=:targetId
       WHERE event.actor_id=:sourceId
       AND object.class_name='QubitInformationObject'";
-    $params = array(':targetId' => $target->id, ':sourceId' => $source->id);
+    $params = [':targetId' => $target->id, ':sourceId' => $source->id];
     $updatedCount = QubitPdo::modify($sql, $params);
 
     // Move name access point relations
@@ -140,11 +140,11 @@ EOF;
       WHERE relation.object_id=:sourceId
       AND relation.type_id=:typeId
       AND object.class_name='QubitInformationObject'";
-    $params = array(
+    $params = [
       ':targetId' => $target->id,
       ':sourceId' => $source->id,
       ':typeId' => QubitTerm::NAME_ACCESS_POINT_ID
-    );
+    ];
     $updatedCount += QubitPdo::modify($sql, $params);
 
     $this->log($updatedCount.' description relations moved.');

@@ -10,10 +10,10 @@
   <?php echo get_partial('default/printPreviewBar') ?>
 
   <div class="multiline-header">
-    <?php echo image_tag('/images/icons-large/icon-archival.png', array('alt' => '')) ?>
+    <?php echo image_tag('/images/icons-large/icon-archival.png', ['alt' => '']) ?>
     <h1 aria-describedby="results-label">
       <?php if (isset($pager) && $pager->getNbResults()): ?>
-        <?php echo __('Showing %1% results', array('%1%' => $pager->getNbResults())) ?>
+        <?php echo __('Showing %1% results', ['%1%' => $pager->getNbResults()]) ?>
       <?php else: ?>
         <?php echo __('No results found') ?>
       <?php endif; ?>
@@ -38,82 +38,82 @@
       <div class="content">
 
         <?php if ($sf_user->getAttribute('search-realm') && sfConfig::get('app_enable_institutional_scoping')): ?>
-          <?php include_component('repository', 'holdingsInstitution', array('resource' => QubitRepository::getById($sf_user->getAttribute('search-realm')))) ?>
+          <?php include_component('repository', 'holdingsInstitution', ['resource' => QubitRepository::getById($sf_user->getAttribute('search-realm'))]) ?>
         <?php endif; ?>
 
         <h2><?php echo sfConfig::get('app_ui_label_facetstitle') ?></h2>
 
-        <?php echo get_partial('search/aggregation', array(
+        <?php echo get_partial('search/aggregation', [
           'id' => '#facet-languages',
           'label' => __('Language'),
           'name' => 'languages',
           'aggs' => $aggs,
-          'filters' => $search->filters)) ?>
+          'filters' => $search->filters]) ?>
 
-        <?php echo get_partial('search/aggregation', array(
+        <?php echo get_partial('search/aggregation', [
           'id' => '#facet-collection',
           'label' => __('Part of'),
           'name' => 'collection',
           'aggs' => $aggs,
-          'filters' => $search->filters)) ?>
+          'filters' => $search->filters]) ?>
 
         <?php if (sfConfig::get('app_multi_repository')): ?>
-          <?php echo get_partial('search/aggregation', array(
+          <?php echo get_partial('search/aggregation', [
             'id' => '#facet-repository',
             'label' => sfConfig::get('app_ui_label_repository'),
             'name' => 'repos',
             'aggs' => $aggs,
-            'filters' => $search->filters)) ?>
+            'filters' => $search->filters]) ?>
         <?php endif; ?>
 
-        <?php echo get_partial('search/aggregation', array(
+        <?php echo get_partial('search/aggregation', [
           'id' => '#facet-names',
           'label' => sfConfig::get('app_ui_label_creator'),
           'name' => 'creators',
           'aggs' => $aggs,
-          'filters' => $search->filters)) ?>
+          'filters' => $search->filters]) ?>
 
-        <?php echo get_partial('search/aggregation', array(
+        <?php echo get_partial('search/aggregation', [
           'id' => '#facet-names',
           'label' => sfConfig::get('app_ui_label_name'),
           'name' => 'names',
           'aggs' => $aggs,
-          'filters' => $search->filters)) ?>
+          'filters' => $search->filters]) ?>
 
-        <?php echo get_partial('search/aggregation', array(
+        <?php echo get_partial('search/aggregation', [
           'id' => '#facet-places',
           'label' => sfConfig::get('app_ui_label_place'),
           'name' => 'places',
           'aggs' => $aggs,
-          'filters' => $search->filters)) ?>
+          'filters' => $search->filters]) ?>
 
-        <?php echo get_partial('search/aggregation', array(
+        <?php echo get_partial('search/aggregation', [
           'id' => '#facet-subjects',
           'label' => sfConfig::get('app_ui_label_subject'),
           'name' => 'subjects',
           'aggs' => $aggs,
-          'filters' => $search->filters)) ?>
+          'filters' => $search->filters]) ?>
 
-        <?php echo get_partial('search/aggregation', array(
+        <?php echo get_partial('search/aggregation', [
           'id' => '#facet-genres',
           'label' => sfConfig::get('app_ui_label_genre'),
           'name' => 'genres',
           'aggs' => $aggs,
-          'filters' => $search->filters)) ?>
+          'filters' => $search->filters]) ?>
 
-        <?php echo get_partial('search/aggregation', array(
+        <?php echo get_partial('search/aggregation', [
           'id' => '#facet-levelOfDescription',
           'label' => __('Level of description'),
           'name' => 'levels',
           'aggs' => $aggs,
-          'filters' => $search->filters)) ?>
+          'filters' => $search->filters]) ?>
 
-        <?php echo get_partial('search/aggregation', array(
+        <?php echo get_partial('search/aggregation', [
           'id' => '#facet-mediaTypes',
           'label' => sfConfig::get('app_ui_label_mediatype'),
           'name' => 'mediatypes',
           'aggs' => $aggs,
-          'filters' => $search->filters)) ?>
+          'filters' => $search->filters]) ?>
 
       </div>
 
@@ -132,11 +132,11 @@
         <?php echo __('Only top-level descriptions') ?>
         <?php $params = $sf_data->getRaw('sf_request')->getGetParameters() ?>
         <?php $params['topLod'] = 0 ?>
-        <a href="<?php echo url_for(array('module' => 'informationobject', 'action' => 'browse') + $params) ?>" class="remove-filter"><i class="fa fa-times"></i></a>
+        <a href="<?php echo url_for(['module' => 'informationobject', 'action' => 'browse'] + $params) ?>" class="remove-filter"><i class="fa fa-times"></i></a>
       </span>
     <?php endif; ?>
 
-    <?php echo get_partial('search/filterTags', array('filterTags' => $filterTags)) ?>
+    <?php echo get_partial('search/filterTags', ['filterTags' => $filterTags]) ?>
 
   </section>
 
@@ -144,14 +144,14 @@
 
 <?php slot('content') ?>
 
-  <?php echo get_partial('search/advancedSearch', array(
+  <?php echo get_partial('search/advancedSearch', [
     'criteria'     => $search->criteria,
     'template'     => $template,
     'form'         => $form,
     'show'         => $showAdvanced,
     'topLod'       => $topLod,
     'rangeType'    => $rangeType,
-    'hiddenFields' => $hiddenFields)) ?>
+    'hiddenFields' => $hiddenFields]) ?>
 
   <?php if (isset($pager) && $pager->getNbResults()): ?>
 
@@ -159,34 +159,34 @@
       <?php echo get_partial('default/printPreviewButton') ?>
 
       <?php if (sfConfig::get('app_treeview_show_browse_hierarchy_page', 'no') === 'yes'): ?>
-        <a href="<?php echo url_for(array('module' => 'browse', 'action' => 'hierarchy')) ?>">
+        <a href="<?php echo url_for(['module' => 'browse', 'action' => 'hierarchy']) ?>">
           <i class="fa fa-sitemap"></i>
           Hierarchy
         </a>
       <?php endif; ?>
 
       <?php if ($sf_user->isAuthenticated()): ?>
-        <a href="<?php echo url_for(array_merge($sf_data->getRaw('sf_request')->getParameterHolder()->getAll(), array('module' => 'informationobject', 'action' => 'exportCsv'))) ?>">
+        <a href="<?php echo url_for(array_merge($sf_data->getRaw('sf_request')->getParameterHolder()->getAll(), ['module' => 'informationobject', 'action' => 'exportCsv'])) ?>">
           <i class="fa fa-upload"></i>
           <?php echo __('Export CSV') ?>
         </a>
       <?php endif; ?>
 
       <span>
-        <?php echo get_partial('default/viewPicker', array('view' => $view, 'cardView' => $cardView,
-          'tableView' => $tableView, 'module' => 'informationobject')) ?>
+        <?php echo get_partial('default/viewPicker', ['view' => $view, 'cardView' => $cardView,
+          'tableView' => $tableView, 'module' => 'informationobject']) ?>
       </span>
 
       <div class="pickers">
-        <?php echo get_partial('default/sortPickers', array(
-          'options' => array(
+        <?php echo get_partial('default/sortPickers', [
+          'options' => [
             'lastUpdated'   => __('Date modified'),
             'alphabetic'    => __('Title'),
             'relevance'     => __('Relevance'),
             'identifier'    => __('Identifier'),
             'referenceCode' => __('Reference code'),
             'startDate'     => __('Start date'),
-            'endDate'       => __('End date')))) ?>
+            'endDate'       => __('End date')]]) ?>
       </div>
     </section>
 
@@ -194,11 +194,11 @@
       <?php if (!isset($sf_request->onlyMedia) && isset($aggs['digitalobjects']) && 0 < $aggs['digitalobjects']['doc_count']): ?>
         <div class="search-result media-summary">
           <p>
-            <?php echo __('%1% results with digital objects', array(
-              '%1%' => $aggs['digitalobjects']['doc_count'])) ?>
+            <?php echo __('%1% results with digital objects', [
+              '%1%' => $aggs['digitalobjects']['doc_count']]) ?>
             <?php $params = $sf_data->getRaw('sf_request')->getGetParameters() ?>
             <?php unset($params['page']) ?>
-            <a href="<?php echo url_for(array('module' => 'informationobject', 'action' => 'browse') + $params + array('onlyMedia' => true)) ?>">
+            <a href="<?php echo url_for(['module' => 'informationobject', 'action' => 'browse'] + $params + ['onlyMedia' => true]) ?>">
               <i class="fa fa-search"></i>
               <?php echo __('Show results with digital objects') ?>
             </a>
@@ -207,9 +207,9 @@
       <?php endif; ?>
 
       <?php if ($view === $tableView): ?>
-        <?php echo get_partial('informationobject/tableViewResults', array('pager' => $pager, 'selectedCulture' => $selectedCulture)) ?>
+        <?php echo get_partial('informationobject/tableViewResults', ['pager' => $pager, 'selectedCulture' => $selectedCulture]) ?>
       <?php elseif ($view === $cardView): ?>
-        <?php echo get_partial('informationobject/cardViewResults', array('pager' => $pager, 'selectedCulture' => $selectedCulture)) ?>
+        <?php echo get_partial('informationobject/cardViewResults', ['pager' => $pager, 'selectedCulture' => $selectedCulture]) ?>
       <?php endif; ?>
     </div>
 
@@ -219,6 +219,6 @@
 
 <?php if (isset($pager)): ?>
   <?php slot('after-content') ?>
-    <?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+    <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
   <?php end_slot() ?>
 <?php endif; ?>

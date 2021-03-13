@@ -33,7 +33,7 @@ class QubitStaticPage extends BaseStaticPage
   {
     if (!isset($this->slug))
     {
-      $this->slug = QubitSlug::slugify($this->__get('title', array('sourceCulture' => true)));
+      $this->slug = QubitSlug::slugify($this->__get('title', ['sourceCulture' => true]));
     }
 
     return parent::insert($connection);
@@ -53,20 +53,20 @@ class QubitStaticPage extends BaseStaticPage
 
     if (1 > strlen($this->slug))
     {
-      $statement->execute(array(QubitSlug::random(), $this->id));
+      $statement->execute([QubitSlug::random(), $this->id]);
 
       return;
     }
 
     try
     {
-      $statement->execute(array($this->slug, $this->id));
+      $statement->execute([$this->slug, $this->id]);
     }
 
     // Collision? Try random, digit and letter slug
     catch (PDOException $e)
     {
-      $statement->execute(array(QubitSlug::random(), $this->id));
+      $statement->execute([QubitSlug::random(), $this->id]);
     }
 
     return parent::update($connection);

@@ -26,21 +26,21 @@
  */
 class ObjectEditPhysicalObjectsAction extends DefaultEditAction
 {
-  public static $NAMES = array(
+  public static $NAMES = [
       'containers',
       'location',
       'name',
-      'type');
-  public static $MODEL_MODULE = array(
+      'type'];
+  public static $MODEL_MODULE = [
       'QubitInformationObject' => 'informationobject',
       'QubitAccession' => 'accession'
-    );
+    ];
 
   public function execute($request)
   {
     parent::execute($request);
 
-    $this->relations = QubitRelation::getRelationsByObjectId($this->resource->id, array('typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID));
+    $this->relations = QubitRelation::getRelationsByObjectId($this->resource->id, ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
 
     if ($request->isMethod('post'))
     {
@@ -51,7 +51,7 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
 
         $this->resource->save();
 
-        $this->redirect(array($this->resource, 'module' => $this->moduleForAllowedResource()));
+        $this->redirect([$this->resource, 'module' => $this->moduleForAllowedResource()]);
       }
     }
   }
@@ -87,7 +87,7 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
     {
       case 'containers':
         $this->form->setValidator('containers', new sfValidatorPass());
-        $this->form->setWidget('containers', new sfWidgetFormSelect(array('choices' => array(), 'multiple' => true)));
+        $this->form->setWidget('containers', new sfWidgetFormSelect(['choices' => [], 'multiple' => true]));
 
         break;
 
@@ -100,7 +100,7 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
 
       case 'type':
         $this->form->setValidator('type', new sfValidatorString());
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => QubitTerm::getIndentedChildTree(QubitTerm::CONTAINER_ID, '&nbsp;', array('returnObjectInstances' => true)))));
+        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => QubitTerm::getIndentedChildTree(QubitTerm::CONTAINER_ID, '&nbsp;', ['returnObjectInstances' => true])]));
 
         break;
 

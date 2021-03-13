@@ -116,7 +116,7 @@ class arUpgrader120
       // Add 'active' column to user table
       case 80:
         // NOTE: ALTER automatically sets `active`=1 (the DEFAULT) for existing rows
-        QubitMigrate::addColumn(QubitUser::TABLE_NAME, 'active TINYINT DEFAULT 1', array('after' => 'salt'));
+        QubitMigrate::addColumn(QubitUser::TABLE_NAME, 'active TINYINT DEFAULT 1', ['after' => 'salt']);
 
         break;
 
@@ -149,7 +149,7 @@ class arUpgrader120
 
           // Get slug
           $sql = 'SELECT slug FROM slug WHERE object_id = ?';
-          $slug = QubitPdo::fetchOne($sql, array($arr[$name.'Id']));
+          $slug = QubitPdo::fetchOne($sql, [$arr[$name.'Id']]);
 
           // Update acl_permission values
           if ($slug)
@@ -159,10 +159,10 @@ class arUpgrader120
                 constants = ?
               WHERE id = ?;", QubitAclPermission::TABLE_NAME);
 
-            QubitPdo::modify($sql, array(
+            QubitPdo::modify($sql, [
               "%p[$name] == %k[$name]",
-              serialize(array($name => $slug->slug)),
-              $item->id));
+              serialize([$name => $slug->slug]),
+              $item->id]);
           }
         }
 
@@ -172,58 +172,58 @@ class arUpgrader120
       // Issue 1628
       case 82:
         // TEXT
-        $textColumns = array(
-          'actor' => array(
-            'corporate_body_identifiers', 'description_identifier', 'source_standard'),
-          'actor_i18n' => array(
-            'authorized_form_of_name', 'dates_of_existence', 'institution_responsible_identifier'),
-          'contact_information' => array(
-            'contact_person', 'website'),
-          'contact_information_i18n' => array(
-            'contact_type', 'city', 'region'),
-          'event_i18n' => array(
-            'name', 'date'),
-          'function' => array(
-            'description_identifier', 'source_standard'),
-          'function_i18n' => array(
-            'authorized_form_of_name', 'classification', 'dates'),
-          'information_object' => array(
-            'identifier', 'description_identifier', 'source_standard'),
-          'information_object_i18n' => array(
-            'title', 'alternate_title', 'edition', 'institution_responsible_identifier'),
-          'note' => array(
-            'scope'),
-          'oai_harvest' => array(
-            'set'),
-          'oai_repository' => array(
-            'name', 'uri'),
-          'other_name_i18n' => array(
-            'name', 'note'),
-          'physical_object_i18n' => array(
-            'name'),
-          'property' => array(
-            'scope', 'name'),
-          'property_i18n' => array(
-            'value'),
-          'relation_i18n' => array(
-            'date'),
-          'repository' => array(
-            'identifier', 'desc_identifier'),
-          'repository_i18n' => array(
-            'desc_institution_identifier'),
-          'rights' => array(
-            'copyright_jurisdiction'),
-          'static_page_i18n' => array(
-            'title'),
-          'taxonomy' => array(
-            'usage'),
-          'taxonomy_i18n' => array(
-            'name'),
-          'term' => array(
-            'code'),
-          'term_i18n' => array(
-            'name')
-        );
+        $textColumns = [
+          'actor' => [
+            'corporate_body_identifiers', 'description_identifier', 'source_standard'],
+          'actor_i18n' => [
+            'authorized_form_of_name', 'dates_of_existence', 'institution_responsible_identifier'],
+          'contact_information' => [
+            'contact_person', 'website'],
+          'contact_information_i18n' => [
+            'contact_type', 'city', 'region'],
+          'event_i18n' => [
+            'name', 'date'],
+          'function' => [
+            'description_identifier', 'source_standard'],
+          'function_i18n' => [
+            'authorized_form_of_name', 'classification', 'dates'],
+          'information_object' => [
+            'identifier', 'description_identifier', 'source_standard'],
+          'information_object_i18n' => [
+            'title', 'alternate_title', 'edition', 'institution_responsible_identifier'],
+          'note' => [
+            'scope'],
+          'oai_harvest' => [
+            'set'],
+          'oai_repository' => [
+            'name', 'uri'],
+          'other_name_i18n' => [
+            'name', 'note'],
+          'physical_object_i18n' => [
+            'name'],
+          'property' => [
+            'scope', 'name'],
+          'property_i18n' => [
+            'value'],
+          'relation_i18n' => [
+            'date'],
+          'repository' => [
+            'identifier', 'desc_identifier'],
+          'repository_i18n' => [
+            'desc_institution_identifier'],
+          'rights' => [
+            'copyright_jurisdiction'],
+          'static_page_i18n' => [
+            'title'],
+          'taxonomy' => [
+            'usage'],
+          'taxonomy_i18n' => [
+            'name'],
+          'term' => [
+            'code'],
+          'term_i18n' => [
+            'name']
+        ];
 
         // Convert varchar columns to text
         foreach ($textColumns as $tablename => $cols)
@@ -236,10 +236,10 @@ class arUpgrader120
         }
 
         // TEXT NOT NULL
-        $textNotNullColumns = array(
-          'digital_object' => array(
-            'name', 'path')
-        );
+        $textNotNullColumns = [
+          'digital_object' => [
+            'name', 'path']
+        ];
 
         foreach ($textNotNullColumns as $tablename => $cols)
         {
@@ -340,7 +340,7 @@ class arUpgrader120
 
       // Add "Visible elements" assets
       case 89:
-        $elements = array(
+        $elements = [
           'isad_immediate_source',
           'isad_appraisal_destruction',
           'isad_notes',
@@ -374,7 +374,7 @@ class arUpgrader120
           'digital_object_mime_type',
           'digital_object_file_size',
           'digital_object_uploaded',
-          'physical_storage');
+          'physical_storage'];
 
         // Add visibility settings
         foreach ($elements as $item)

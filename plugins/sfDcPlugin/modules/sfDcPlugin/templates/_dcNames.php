@@ -41,13 +41,13 @@
       <tr class="<?php echo 0 == $i % 2 ? 'even' : 'odd' ?>">
         <td>
           <div class="animateNicely">
-            <?php echo $form->actor->render(array('class' => 'form-autocomplete')) ?>
+            <?php echo $form->actor->render(['class' => 'form-autocomplete']) ?>
 
             <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')): ?>
-              <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'actor', 'action' => 'add')) ?> #authorizedFormOfName"/>
+              <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'actor', 'action' => 'add']) ?> #authorizedFormOfName"/>
             <?php endif; ?>
 
-            <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'actor', 'action' => 'autocomplete')) ?>"/>
+            <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete']) ?>"/>
           </div>
         </td><td>
           <div class="animateNicely">

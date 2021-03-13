@@ -69,7 +69,7 @@ class arActorExportJob extends arExportJob
       if (null === $resource = QubitActor::getById($id))
       {
         $this->error($this->i18n->__(
-          'Cannot fetch actor, id: %1', array('%1' => $id)
+          'Cannot fetch actor, id: %1', ['%1' => $id]
         ));
 
         return;

@@ -2,8 +2,8 @@
 
 <div>
   <ul class="nav nav-tabs" id="job-tabs">
-    <li<?php if ('all' === $filter): ?> class="active"<?php endif; ?>><?php echo link_to(__('All jobs'), array('filter' => 'all') + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
-    <li<?php if ('active' === $filter): ?> class="active"<?php endif; ?>><?php echo link_to(__('Active jobs'), array('filter' => 'active') + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
+    <li<?php if ('all' === $filter): ?> class="active"<?php endif; ?>><?php echo link_to(__('All jobs'), ['filter' => 'all'] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
+    <li<?php if ('active' === $filter): ?> class="active"<?php endif; ?>><?php echo link_to(__('Active jobs'), ['filter' => 'active'] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
   </ul>
 </div>
 
@@ -48,8 +48,8 @@
           <?php echo $job->getStatusString() ?>
 
           <?php if ($job->getObjectModule() && $job->getObjectSlug()): ?>
-            <a href="<?php echo url_for(array('module' => $job->getObjectModule(),
-                    'slug' => $job->getObjectSlug())) ?>" class="fa fa-share"></a>
+            <a href="<?php echo url_for(['module' => $job->getObjectModule(),
+                    'slug' => $job->getObjectSlug()]) ?>" class="fa fa-share"></a>
 
           <?php endif; ?>
         </td>
@@ -60,12 +60,12 @@
             <p><?php echo $note->__toString() ?></p>
           <?php endforeach; ?>
           <?php if (isset($job->downloadPath)): ?>
-            <?php echo link_to(__('Download'), public_path($job->downloadPath), array('class' => 'job-link')) ?>
+            <?php echo link_to(__('Download'), public_path($job->downloadPath), ['class' => 'job-link']) ?>
             (<?php echo hr_filesize(filesize($job->downloadPath)) ?>)
           <?php endif; ?>
 
-          <?php echo link_to(__('Full report'), array('module' => 'jobs', 'action' => 'report', 'id' => $job->id),
-            array('class' => 'job-link')) ?>
+          <?php echo link_to(__('Full report'), ['module' => 'jobs', 'action' => 'report', 'id' => $job->id],
+            ['class' => 'job-link']) ?>
         </td>
 
         <!-- User who created the job -->
@@ -77,7 +77,7 @@
   </table>
 </div>
 
-<?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+<?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 
 <!-- User tips -->
 <?php if ($this->context->user->isAdministrator() && $jobs->count()): ?>
@@ -102,18 +102,18 @@
     </li>
     <li>
       <?php $autoRefreshIcons = sprintf("c-btn fa %s", $autoRefresh ? 'fa-check-circle-o' : 'fa-circle-o') ?>
-      <?php echo link_to(__(' Auto refresh'), array('module' => 'jobs', 'action' => 'browse',
-        'autoRefresh' => !$autoRefresh) + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(),
-        array('class' => $autoRefreshIcons)) ?>
+      <?php echo link_to(__(' Auto refresh'), ['module' => 'jobs', 'action' => 'browse',
+        'autoRefresh' => !$autoRefresh] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(),
+        ['class' => $autoRefreshIcons]) ?>
     </li>
     <?php if ($jobs->count()): ?>
       <li>
-        <?php echo link_to(__('Export history CSV'), array('module' => 'jobs', 'action' => 'export'),
-          array('class' => 'c-btn')) ?>
+        <?php echo link_to(__('Export history CSV'), ['module' => 'jobs', 'action' => 'export'],
+          ['class' => 'c-btn']) ?>
       </li>
       <li>
-        <?php echo link_to(__('Clear inactive jobs'), array('module' => 'jobs', 'action' => 'delete'),
-          array('class' => 'c-btn c-btn-delete')) ?>
+        <?php echo link_to(__('Clear inactive jobs'), ['module' => 'jobs', 'action' => 'delete'],
+          ['class' => 'c-btn c-btn-delete']) ?>
       </li>
     <?php endif; ?>
   </ul>

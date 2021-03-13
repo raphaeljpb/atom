@@ -30,10 +30,10 @@ class arInformationObjectExportJob extends arExportJob
   /**
    * @see arBaseJob::$requiredParameters
    */
-  protected $extraRequiredParameters = array('params');  // Search params
+  protected $extraRequiredParameters = ['params'];  // Search params
   protected $downloadFileExtension = 'zip';
   protected $search;            // arElasticSearchPluginQuery instance
-  protected $params = array();
+  protected $params = [];
 
   /**
    * Find records for export based on export parameters
@@ -67,7 +67,7 @@ class arInformationObjectExportJob extends arExportJob
       );
     }
 
-    $query->query->setSort(array('lft' => 'asc'));
+    $query->query->setSort(['lft' => 'asc']);
 
     return QubitSearch::getInstance()
       ->index
@@ -124,7 +124,7 @@ class arInformationObjectExportJob extends arExportJob
     }
 
     $this->info($this->i18n->__(
-      'Exporting %1 clipboard item(s).', array('%1' => $search->count())
+      'Exporting %1 clipboard item(s).', ['%1' => $search->count()]
     ));
 
     // Scroll through results then iterate through resulting IDs

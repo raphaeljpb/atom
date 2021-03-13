@@ -28,12 +28,12 @@ class EventIndexAction extends sfAction
 
     $this->resource = $this->getRoute()->resource;
 
-    $value = array();
+    $value = [];
 
     if (isset($this->resource->actor))
     {
-      $value['actor'] = $this->context->routing->generate(null, array($this->resource->actor, 'module' => 'actor'));
-      $value['actorDisplay'] = $this->resource->actor->getAuthorizedFormOfName(array('cultureFallback' => true));
+      $value['actor'] = $this->context->routing->generate(null, [$this->resource->actor, 'module' => 'actor']);
+      $value['actorDisplay'] = $this->resource->actor->getAuthorizedFormOfName(['cultureFallback' => true]);
     }
 
     if (isset($this->resource->date))
@@ -51,19 +51,19 @@ class EventIndexAction extends sfAction
 
     if (isset($this->resource->object))
     {
-      $value['informationObject'] = $this->context->routing->generate(null, array($this->resource->object, 'module' => 'informationobject'));
+      $value['informationObject'] = $this->context->routing->generate(null, [$this->resource->object, 'module' => 'informationobject']);
     }
 
     $place = $this->resource->getPlace();
     if (isset($place))
     {
-      $value['place'] = $this->context->routing->generate(null, array($place, 'module' => 'term'));
-      $value['placeDisplay'] = $place->getName(array('cultureFallback' => true));
+      $value['place'] = $this->context->routing->generate(null, [$place, 'module' => 'term']);
+      $value['placeDisplay'] = $place->getName(['cultureFallback' => true]);
     }
 
     if (isset($this->resource->type))
     {
-      $value['type'] = $this->context->routing->generate(null, array($this->resource->type, 'module' => 'term'));
+      $value['type'] = $this->context->routing->generate(null, [$this->resource->type, 'module' => 'term']);
     }
 
     return $this->renderText(json_encode($value));

@@ -37,7 +37,7 @@ EOF;
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -49,7 +49,7 @@ EOF;
       $repository = QubitRepository::getById($r->id);
 
       $writer->exportResource($repository);
-      $this->logSection('csv', 'exported '.$repository->getAuthorizedFormOfName(array('cultureFallback' => true)).
+      $this->logSection('csv', 'exported '.$repository->getAuthorizedFormOfName(['cultureFallback' => true]).
                         " (culture: {$r->culture})");
     }
   }
@@ -59,20 +59,20 @@ EOF;
    */
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-    ));
+    ]);
 
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'Filename for the CSV')
-    ));
+    ]);
   }
 
   private function getRepositories()
   {
     return QubitPdo::fetchAll('SELECT id, culture FROM repository_i18n WHERE id <> ?',
-                              array(QubitRepository::ROOT_ID));
+                              [QubitRepository::ROOT_ID]);
   }
 }

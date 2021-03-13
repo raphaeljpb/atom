@@ -55,9 +55,9 @@ class DigitalObjectEditAction extends sfAction
     }
 
     // Get representations
-    $this->representations = array(
+    $this->representations = [
       QubitTerm::REFERENCE_ID => $this->resource->getChildByUsageId(QubitTerm::REFERENCE_ID),
-      QubitTerm::THUMBNAIL_ID => $this->resource->getChildByUsageId(QubitTerm::THUMBNAIL_ID));
+      QubitTerm::THUMBNAIL_ID => $this->resource->getChildByUsageId(QubitTerm::THUMBNAIL_ID)];
 
     $this->addFormFields();
 
@@ -76,7 +76,7 @@ class DigitalObjectEditAction extends sfAction
           $this->object->updateXmlExports();
         }
 
-        $this->redirect(array($this->object, 'module' => 'informationobject'));
+        $this->redirect([$this->object, 'module' => 'informationobject']);
       }
     }
   }
@@ -97,7 +97,7 @@ class DigitalObjectEditAction extends sfAction
     $this->resource->mediaTypeId = $this->form->getValue('mediaType');
 
     // Upload new representations
-    $uploadedFiles = array();
+    $uploadedFiles = [];
     foreach ($this->representations as $usageId => $representation)
     {
       if (null !== $uf = $this->form->getValue("repFile_$usageId"))
@@ -151,7 +151,7 @@ class DigitalObjectEditAction extends sfAction
     }
 
     // Store latitude and longitude as properties
-    foreach (array('latitude', 'longitude') as $geoPropertyField)
+    foreach (['latitude', 'longitude'] as $geoPropertyField)
     {
       // Create or update property
       $geoProperty = $this->resource->getPropertyByName($geoPropertyField);
@@ -173,18 +173,18 @@ class DigitalObjectEditAction extends sfAction
   protected function addFormFields()
   {
     // Media type field
-    $choices = array();
+    $choices = [];
     $criteria = new Criteria();
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MEDIA_TYPE_ID);
     foreach (QubitTerm::get($criteria) as $item)
     {
-      $choices[$item->id] = $item->getName(array('cultureFallback' => true));
+      $choices[$item->id] = $item->getName(['cultureFallback' => true]);
     }
 
     asort($choices); // Sort media types by name
 
-    $this->form->setValidator('mediaType', new sfValidatorChoice(array('choices' => array_keys($choices))));
-    $this->form->setWidget('mediaType', new sfWidgetFormSelect(array('choices' => $choices)));
+    $this->form->setValidator('mediaType', new sfValidatorChoice(['choices' => array_keys($choices)]));
+    $this->form->setWidget('mediaType', new sfWidgetFormSelect(['choices' => $choices]));
     $this->form->setDefault('mediaType', $this->resource->mediaTypeId);
 
     // Only display "compound digital object" toggle if we have a child with a
@@ -207,9 +207,9 @@ class DigitalObjectEditAction extends sfAction
     {
       $this->form->setValidator('displayAsCompound', new sfValidatorBoolean());
       $this->form->setWidget('displayAsCompound', new sfWidgetFormSelectRadio(
-        array('choices' => array(
+        ['choices' => [
           '1' => $this->context->i18n->__('Yes'),
-          '0' => $this->context->i18n->__('No')))));
+          '0' => $this->context->i18n->__('No')]]));
 
       // Set "displayAsCompound" value from QubitProperty
       $criteria = new Criteria();
@@ -218,7 +218,7 @@ class DigitalObjectEditAction extends sfAction
 
       if (null != $compoundProperty = QubitProperty::getOne($criteria))
       {
-        $this->form->setDefault('displayAsCompound', $compoundProperty->getValue(array('sourceCulture' => true)));
+        $this->form->setDefault('displayAsCompound', $compoundProperty->getValue(['sourceCulture' => true]));
       }
     }
 
@@ -246,7 +246,7 @@ class DigitalObjectEditAction extends sfAction
 
         if (-1 < $maxUploadSize)
         {
-          $this->form->getWidgetSchema()->$repName->setHelp($this->context->i18n->__('Max. size ~%1%', array('%1%' => hr_filesize($maxUploadSize))));
+          $this->form->getWidgetSchema()->$repName->setHelp($this->context->i18n->__('Max. size ~%1%', ['%1%' => hr_filesize($maxUploadSize)]));
         }
         else
         {
@@ -255,12 +255,12 @@ class DigitalObjectEditAction extends sfAction
 
         // Add "auto-generate" checkbox
         $this->form->setValidator($derName, new sfValidatorBoolean());
-        $this->form->setWidget($derName, new sfWidgetFormInputCheckbox(array(), array('value' => 1)));
+        $this->form->setWidget($derName, new sfWidgetFormInputCheckbox([], ['value' => 1]));
       }
     }
 
     // Add latitude and longitude fields
-    foreach (array('latitude', 'longitude') as $geoPropertyField)
+    foreach (['latitude', 'longitude'] as $geoPropertyField)
     {
       $this->form->setValidator($geoPropertyField, new sfValidatorNumber());
       $this->form->setWidget($geoPropertyField, new sfWidgetFormInput());

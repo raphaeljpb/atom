@@ -26,12 +26,12 @@
         <tr class="date <?php echo 0 == ++$i % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>">
           <td>
             <div class="animateNicely">
-              <input name="<?php echo $form->getWidgetSchema()->generateName('id') ?>" type="hidden" value="<?php echo url_for(array($item, 'module' => 'event')) ?>"/>
-              <?php $save = $form->type->choices; $form->type->choices += array(url_for(array($item->type, 'module' => 'term')) => $item->type); echo $form->getWidgetSchema()->renderField('type', url_for(array($item->type, 'module' => 'term'))); $form->type->choices = $save ?>
+              <input name="<?php echo $form->getWidgetSchema()->generateName('id') ?>" type="hidden" value="<?php echo url_for([$item, 'module' => 'event']) ?>"/>
+              <?php $save = $form->type->choices; $form->type->choices += [url_for([$item->type, 'module' => 'term']) => $item->type]; echo $form->getWidgetSchema()->renderField('type', url_for([$item->type, 'module' => 'term'])); $form->type->choices = $save ?>
             </div>
           </td><td>
             <div class="animateNicely">
-              <?php echo $form->getWidgetSchema()->renderField('date', $item->getDate(array('cultureFallback' => true))) ?>
+              <?php echo $form->getWidgetSchema()->renderField('date', $item->getDate(['cultureFallback' => true])) ?>
             </div>
           </td><td>
             <div class="animateNicely">

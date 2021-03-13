@@ -31,16 +31,16 @@ class importDipObjectsTask extends arBaseTask
   // Database connection
     protected $dipDir;
   // Path to DIP
-    protected $columnNames = array();
+    protected $columnNames = [];
   // Sequence of column names
-    protected $columnIndexes = array();
+    protected $columnIndexes = [];
   // Index in CSV row for each column
     protected $uniqueValueColumnName;   // Column name of unique identifier ("identifier" or "slug")
 
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $this->checkArgumentsAndOptions($arguments, $options);
 
@@ -101,17 +101,17 @@ class importDipObjectsTask extends arBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('dip', sfCommandArgument::REQUIRED, 'The DIP directory.'),
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('undo-log-dir', null, sfCommandOption::PARAMETER_OPTIONAL, 'Directory to write undo logs to', false),
       new sfCommandOption('audit', null, sfCommandOption::PARAMETER_NONE, 'Audit mode')
-    ));
+    ]);
 
     $this->namespace = 'import';
     $this->name = 'dip-objects';
@@ -222,7 +222,7 @@ EOF;
     // information objects (slug or identifier)
     $this->processCsvHeaderRow($fh);
 
-    $digitalObjects = array();
+    $digitalObjects = [];
 
     // Build hash on information_object key, with value being an array if information
     // object has multiple digital objects attached
@@ -261,7 +261,7 @@ EOF;
       }
       elseif (!is_array($digitalObjects[$uniqueValue]))
       {
-        $digitalObjects[$uniqueValue] = array($digitalObjects[$uniqueValue], $filepath);
+        $digitalObjects[$uniqueValue] = [$digitalObjects[$uniqueValue], $filepath];
       }
       else
       {
@@ -426,7 +426,7 @@ EOF;
 
     $query = "SELECT id FROM digital_object WHERE name=?";
 
-    $statement = QubitFlatfileImport::sqlQuery($query, array($filename));
+    $statement = QubitFlatfileImport::sqlQuery($query, [$filename]);
 
     if (!$statement->fetchColumn())
     {

@@ -19,11 +19,11 @@
       </tr>
     </thead><tbody>
       <?php foreach ($relatedDonorRecord as $item): ?>
-        <tr class="<?php echo 0 == @@++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for(array($item, 'module' => 'accession', 'action' => 'relatedDonor')) ?>">
+        <tr class="<?php echo 0 == @@++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for([$item, 'module' => 'accession', 'action' => 'relatedDonor']) ?>">
           <td>
             <?php echo render_title($item->object) ?>
           </td><td style="text-align: right;">
-            <input class="multiDelete" name="deleteRelations[]" type="checkbox" value="<?php echo url_for(array($item, 'module' => 'relation')) ?>"/>
+            <input class="multiDelete" name="deleteRelations[]" type="checkbox" value="<?php echo url_for([$item, 'module' => 'relation']) ?>"/>
           </td>
         </tr>
       <?php endforeach; ?>
@@ -33,7 +33,7 @@
 <?php
 
 // Template for new display table rows
-$editHtml = image_tag('pencil', array('alt' => __('Edit'), 'style' => 'align: top'));
+$editHtml = image_tag('pencil', ['alt' => __('Edit'), 'style' => 'align: top']);
 
 $rowTemplate = json_encode(<<<value
 <tr id="{{$form->getWidgetSchema()->generateName('id')}}">
@@ -117,12 +117,12 @@ content
         <?php echo $form->resource
           ->label(__('Name'))
           ->renderLabel() ?>
-        <?php echo $form->resource->render(array('class' => 'form-autocomplete')) ?>
+        <?php echo $form->resource->render(['class' => 'form-autocomplete']) ?>
         <?php echo $form->resource
           ->help(__('This is the legal entity field and provides the contact information for the person(s) or the institution that donated or transferred the materials. It has the option of multiple instances and provides the option of creating more than one contact record using the same form.'))
           ->renderHelp() ?>
-        <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(array('module' => 'donor', 'action' => 'add')) ?> #authorizedFormOfName"/>
-        <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'donor', 'action' => 'autocomplete')) ?>"/>
+        <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'donor', 'action' => 'add']) ?> #authorizedFormOfName"/>
+        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'donor', 'action' => 'autocomplete']) ?>"/>
       </div>
 
       <fieldset>

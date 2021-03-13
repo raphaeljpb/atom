@@ -23,7 +23,7 @@ class SearchInlineSearchComponent extends sfComponent
   {
     if (!isset($this->route))
     {
-      $params = array('module' => $request->module, 'action' => $request->action);
+      $params = ['module' => $request->module, 'action' => $request->action];
 
       if (isset($request->view))
       {
@@ -44,7 +44,7 @@ class SearchInlineSearchComponent extends sfComponent
       }
       else
       {
-        $this->cleanRoute = $this->context->routing->generate(null, array('module' => $request->module, 'action' => $request->action) + $params);
+        $this->cleanRoute = $this->context->routing->generate(null, ['module' => $request->module, 'action' => $request->action] + $params);
       }
     }
   }

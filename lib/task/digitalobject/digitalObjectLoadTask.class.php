@@ -36,7 +36,7 @@ class digitalObjectLoadTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     sfContext::createInstance($this->configuration);
     $databaseManager = new sfDatabaseManager($this->configuration);
@@ -126,7 +126,7 @@ class digitalObjectLoadTask extends sfBaseTask
       }
       elseif (!is_array($digitalObjects[$id]))
       {
-        $digitalObjects[$id] = array($digitalObjects[$id], $filename);
+        $digitalObjects[$id] = [$digitalObjects[$id], $filename];
       }
       else
       {
@@ -171,7 +171,7 @@ class digitalObjectLoadTask extends sfBaseTask
         break;
       }
 
-      $ioQuery->execute(array($key));
+      $ioQuery->execute([$key]);
       $results = $ioQuery->fetch();
       if (!$results)
       {
@@ -279,11 +279,11 @@ class digitalObjectLoadTask extends sfBaseTask
    */
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The input file (csv format).')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
@@ -294,7 +294,7 @@ class digitalObjectLoadTask extends sfBaseTask
       new sfCommandOption('replace', 'r', sfCommandOption::PARAMETER_NONE, 'Delete and replace digital objects', null),
       new sfCommandOption('index', 'i', sfCommandOption::PARAMETER_NONE, 'Update search index (defaults to false)', null),
       new sfCommandOption('skip-nested-set-build', null, sfCommandOption::PARAMETER_NONE, "Don't build the nested set upon import completion.", null),
-    ));
+    ]);
 
     $this->namespace = 'digitalobject';
     $this->name = 'load';
@@ -305,7 +305,7 @@ Load a csv list of digital objects
 EOF;
   }
 
-  protected function attachDigitalObject($item, $informationObjectId, $options = array())
+  protected function attachDigitalObject($item, $informationObjectId, $options = [])
   {
     // Create new information objects, to maintain one-to-one
     // relationship with digital objects
@@ -318,7 +318,7 @@ EOF;
     self::addDigitalObject($informationObject->id, $item, $options);
   }
 
-  protected function getPath($path, $options = array())
+  protected function getPath($path, $options = [])
   {
     if (isset($options['path']))
     {
@@ -327,7 +327,7 @@ EOF;
     return $path;
   }
 
-  protected function addDigitalObject($objectId, $path, $options = array())
+  protected function addDigitalObject($objectId, $path, $options = [])
   {
     $this->curObjNum++;
 
@@ -375,7 +375,7 @@ EOF;
     self::$count++;
   }
 
-  protected function getUploadDir($options = array())
+  protected function getUploadDir($options = [])
   {
     $uploadDir = 'uploads'; // Default value
 

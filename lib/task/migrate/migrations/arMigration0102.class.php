@@ -45,7 +45,7 @@ class arMigration0102
     $setting->editable = 1;
     $setting->deleteable = 0;
     $setting->source_culture = 'en';
-    $setting->setValue('Narrow your results by:', array('culture' => 'en'));
+    $setting->setValue('Narrow your results by:', ['culture' => 'en']);
     $setting->save();
 
     return true;

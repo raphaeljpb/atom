@@ -41,14 +41,14 @@ class SettingsPermissionsForm extends sfForm
       throw new sfException('Setting premisAccessRight cannot be found');
     }
 
-    $choices = array();
+    $choices = [];
     foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_ACT_ID) as $item)
     {
       $choices[$item->slug] = $item->__toString();
     }
-    $this->setWidget('granted_right', new sfWidgetFormSelect(array('choices' => $choices)));
-    $this->setDefault('granted_right', $premisAccessRight->getValue(array('sourceCulture' => true)));
-    $this->setValidator('granted_right', new sfValidatorChoice(array('choices' => array_keys($choices))));
+    $this->setWidget('granted_right', new sfWidgetFormSelect(['choices' => $choices]));
+    $this->setDefault('granted_right', $premisAccessRight->getValue(['sourceCulture' => true]));
+    $this->setValidator('granted_right', new sfValidatorChoice(['choices' => array_keys($choices)]));
 
     //
     // PREMIS permissionss
@@ -65,7 +65,7 @@ class SettingsPermissionsForm extends sfForm
       throw new sfException('Setting premisAccessRightValues cannot be found');
     }
 
-    $premisAccessRightValues = unserialize($premisAccessRightValues->getValue(array('sourceCulture' => true)));
+    $premisAccessRightValues = unserialize($premisAccessRightValues->getValue(['sourceCulture' => true]));
     $defaults = QubitSetting::$premisAccessRightValueDefaults;
 
     $form = new sfForm();
@@ -83,7 +83,7 @@ class SettingsPermissionsForm extends sfForm
       foreach ($defaults as $key => $value)
       {
         $formBasis->setWidget($key, new sfWidgetFormInputCheckbox());
-        $formBasis->setValidator($key, new sfValidatorBoolean(array('empty_value' => false)));
+        $formBasis->setValidator($key, new sfValidatorBoolean(['empty_value' => false]));
 
         // The default value is obtained from the existing QubitSetting
         // premisAccessRightValues

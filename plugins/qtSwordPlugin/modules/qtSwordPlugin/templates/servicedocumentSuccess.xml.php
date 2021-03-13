@@ -14,7 +14,7 @@
 
     <?php foreach ($workspaces as $item): ?>
 
-      <collection href="<?php echo url_for(array($item, 'module' => 'qtSwordPlugin', 'action' => 'deposit'), true) ?>">
+      <collection href="<?php echo url_for([$item, 'module' => 'qtSwordPlugin', 'action' => 'deposit'], true) ?>">
 
         <atom:title type="text"><?php echo render_title($item) ?></atom:title>
 
@@ -39,7 +39,7 @@
 
         <?php # 0 or more MAY be included to direct clients to nested service definitions. If present, the value MUST be a URI that dereferences to another SWORD Service Document.?>
         <?php if (0 < count($item->getChildren())): ?>
-          <sword:service><?php echo url_for(array($item, 'module' => 'qtSwordPlugin', 'action' => 'servicedocument'), true) ?></sword:service>
+          <sword:service><?php echo url_for([$item, 'module' => 'qtSwordPlugin', 'action' => 'servicedocument'], true) ?></sword:service>
         <?php endif; ?>
 
         <?php # The use of a Dublin Core dcterms:abstract element containing a description of the Collection is RECOMMENDED.?>

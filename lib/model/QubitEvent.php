@@ -40,14 +40,14 @@ class QubitEvent extends BaseEvent
   public function save($connection = null)
   {
     // TODO $cleanObject = $this->object->clean;
-    $cleanObjectId = $this->__get('objectId', array('clean' => true));
+    $cleanObjectId = $this->__get('objectId', ['clean' => true]);
 
     parent::save($connection);
 
     if ($this->indexOnSave)
     {
       // Update IO descendants in creation events
-      $options = array();
+      $options = [];
       if ($this->typeId == QubitTerm::CREATION_ID)
       {
         $options['updateDescendants'] = true;
@@ -79,7 +79,7 @@ class QubitEvent extends BaseEvent
     if (isset($object) && $this->indexOnSave)
     {
       // Update IO descendants in creation events
-      $options = array();
+      $options = [];
       if ($this->typeId == QubitTerm::CREATION_ID)
       {
         $options['updateDescendants'] = true;
@@ -89,7 +89,7 @@ class QubitEvent extends BaseEvent
     }
   }
 
-  public function getPlace(array $options = array())
+  public function getPlace(array $options = [])
   {
     $criteria = new Criteria();
     $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->id);

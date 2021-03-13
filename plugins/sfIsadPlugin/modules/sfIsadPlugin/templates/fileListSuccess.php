@@ -1,6 +1,6 @@
 <h1><?php echo __('File list') ?></h1>
 
-<?php echo get_partial('default/breadcrumb', array('objects' => $resource->ancestors->andSelf())) ?>
+<?php echo get_partial('default/breadcrumb', ['objects' => $resource->ancestors->andSelf()]) ?>
 
 <table class="sticky-enabled">
   <thead>
@@ -21,24 +21,24 @@
         <td>
           <?php $isad = new sfIsadPlugin($item); echo render_value_inline($isad->referenceCode) ?>
         </td><td>
-          <?php echo link_to(render_title($item), array($item, 'module' => 'informationobject')) ?>
+          <?php echo link_to(render_title($item), [$item, 'module' => 'informationobject']) ?>
         </td><td>
           <ul>
             <?php foreach ($item->getDates() as $date): ?>
               <li>
-                <?php echo render_value_inline(Qubit::renderDateStartEnd($date->getDate(array('cultureFallback' => true)), $date->startDate, $date->endDate)) ?> (<?php echo $date->getType(array('cultureFallback' => true)) ?>)
+                <?php echo render_value_inline(Qubit::renderDateStartEnd($date->getDate(['cultureFallback' => true]), $date->startDate, $date->endDate)) ?> (<?php echo $date->getType(['cultureFallback' => true]) ?>)
                 <?php if (isset($date->actor)): ?>
-                  <?php echo link_to(render_title($date->actor), array($date->actor, 'module' => 'actor')) ?>
+                  <?php echo link_to(render_title($date->actor), [$date->actor, 'module' => 'actor']) ?>
                 <?php endif; ?>
               </li>
             <?php endforeach; ?>
           </ul>
         </td><td>
-          <?php echo render_value_inline($item->getAccessConditions(array('cultureFallback' => true))) ?>
+          <?php echo render_value_inline($item->getAccessConditions(['cultureFallback' => true])) ?>
         </td>
       </tr>
     <?php endforeach; ?>
   </tbody>
 </table>
 
-<?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+<?php echo get_partial('default/pager', ['pager' => $pager]) ?>

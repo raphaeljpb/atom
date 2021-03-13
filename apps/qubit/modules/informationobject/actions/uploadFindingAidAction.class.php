@@ -38,12 +38,12 @@ class InformationObjectUploadFindingAidAction extends sfAction
     // Check if a finding aid file already exists
     if (null !== arFindingAidJob::getFindingAidPathForDownload($this->resource->id))
     {
-      $this->redirect(array($this->resource, 'module' => 'informationobject'));
+      $this->redirect([$this->resource, 'module' => 'informationobject']);
     }
 
     $this->format = arFindingAidJob::getFindingAidFormat();
     $accept = 'application/' . $this->format;
-    $mimeTypes = array($accept);
+    $mimeTypes = [$accept];
 
     // sfValidatorFile gets 'text/rtf' as the mime type of RTF files
     // but the accept attribute works better with only 'application/rtf'
@@ -54,13 +54,13 @@ class InformationObjectUploadFindingAidAction extends sfAction
 
     // Create form for file upload
     $this->form = new sfForm();
-    $this->form->setWidget('file', new sfWidgetFormInputFile(array(), array('accept' => $accept)));
-    $this->form->setValidator('file', new sfValidatorFile(array('required' => true, 'mime_types' => $mimeTypes)));
+    $this->form->setWidget('file', new sfWidgetFormInputFile([], ['accept' => $accept]));
+    $this->form->setValidator('file', new sfValidatorFile(['required' => true, 'mime_types' => $mimeTypes]));
 
     // Process form
     if ($request->isMethod('post'))
     {
-      $this->form->bind(array(), $request->getFiles());
+      $this->form->bind([], $request->getFiles());
 
       if (!$this->form->isValid())
       {
@@ -82,15 +82,15 @@ class InformationObjectUploadFindingAidAction extends sfAction
       }
 
       // Obtain FA transcript and properties using the AtoM worker
-      $params = array(
+      $params = [
         'objectId'    => $this->resource->id,
-        'description' => $i18n->__('Uploading finding aid for: %1%', array('%1%' => $this->resource->getTitle(array('cultureFallback' => true)))),
+        'description' => $i18n->__('Uploading finding aid for: %1%', ['%1%' => $this->resource->getTitle(['cultureFallback' => true])]),
         'uploadPath'  => $path
-      );
+      ];
 
       QubitJob::runJob('arFindingAidJob', $params);
 
-      $this->redirect(array($this->resource, 'module' => 'informationobject'));
+      $this->redirect([$this->resource, 'module' => 'informationobject']);
     }
   }
 }

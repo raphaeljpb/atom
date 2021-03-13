@@ -40,12 +40,12 @@ class BrowseHierarchyDataAction extends DefaultFullTreeViewAction
     }
 
     // Do ordering during query as we need to page through the results
-    $options = array(
+    $options = [
       'orderColumn' => 'title',
       'memorySort' => true,
       'skip' => $request->skip,
       'limit' => $request->nodeLimit
-    );
+    ];
 
     // Load the children of the root node (top-level descriptions)
     $data = $this->getChildren($this->resource->id, $options);

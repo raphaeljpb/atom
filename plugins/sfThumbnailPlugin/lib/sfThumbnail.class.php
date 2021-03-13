@@ -45,7 +45,7 @@ class sfThumbnail
    * @param string (optional) adapter class name
    * @param array (optional) adapter options
    */
-  public function __construct($maxWidth = null, $maxHeight = null, $scale = true, $inflate = true, $quality = 75, $adapterClass = null, $adapterOptions = array())
+  public function __construct($maxWidth = null, $maxHeight = null, $scale = true, $inflate = true, $quality = 75, $adapterClass = null, $adapterOptions = [])
   {
     if (!$adapterClass)
     {

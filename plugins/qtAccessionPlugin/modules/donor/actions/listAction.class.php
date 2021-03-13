@@ -21,7 +21,7 @@ class DonorListAction extends sfAction
 {
   public function execute($request)
   {
-    if (!$this->context->user->hasCredential(array('contributor', 'editor', 'administrator'), false))
+    if (!$this->context->user->hasCredential(['contributor', 'editor', 'administrator'], false))
     {
       QubitAcl::forwardUnauthorized();
     }
@@ -42,7 +42,7 @@ class DonorListAction extends sfAction
     }
     else
     {
-      $this->redirect(array('module' => 'donor', 'action' => 'browse'));
+      $this->redirect(['module' => 'donor', 'action' => 'browse']);
     }
 
     // Page results

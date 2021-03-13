@@ -21,7 +21,7 @@ class QubitRights extends BaseRights
 {
   public function __toString()
   {
-    $string = array();
+    $string = [];
 
     if (isset($this->basis))
     {
@@ -46,7 +46,7 @@ class QubitRights extends BaseRights
   public function delete($connection = null)
   {
     // Make sure that the associated QubitRelation object is removed before
-    foreach (QubitRelation::getRelationsByObjectId($this->id, array('typeId' => QubitTerm::RIGHT_ID)) as $item)
+    foreach (QubitRelation::getRelationsByObjectId($this->id, ['typeId' => QubitTerm::RIGHT_ID]) as $item)
     {
       $item->indexObjectOnDelete = false;
       $item->delete();

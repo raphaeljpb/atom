@@ -30,7 +30,7 @@ class QubitPdo
 {
   protected static $conn;
 
-  public static function fetchAll($query, $parameters = array(), $options = array())
+  public static function fetchAll($query, $parameters = [], $options = [])
   {
     $readStmt = self::prepareAndExecute($query, $parameters);
 
@@ -43,7 +43,7 @@ class QubitPdo
     return $fetchedRows;
   }
 
-  public static function fetchOne($query, $parameters = array())
+  public static function fetchOne($query, $parameters = [])
   {
     $readStmt = self::prepareAndExecute($query, $parameters);
 
@@ -59,7 +59,7 @@ class QubitPdo
     return $fetchedRow;
   }
 
-  public static function fetchColumn($query, $parameters = array(), $column = 0)
+  public static function fetchColumn($query, $parameters = [], $column = 0)
   {
     $column = abs((int)$column);
 
@@ -72,7 +72,7 @@ class QubitPdo
     return $fetchedColumn;
   }
 
-  public static function modify($query, $parameters = array())
+  public static function modify($query, $parameters = [])
   {
     $modifyStmt = self::prepareAndExecute($query, $parameters);
 
@@ -89,7 +89,7 @@ class QubitPdo
     return self::$conn->prepare($query);
   }
 
-  public static function prepareAndExecute($query, $parameters = array())
+  public static function prepareAndExecute($query, $parameters = [])
   {
     $prepStmt = self::prepare($query);
     $prepStmt->execute($parameters);

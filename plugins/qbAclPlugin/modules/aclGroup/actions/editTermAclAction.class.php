@@ -24,15 +24,15 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
    *
    * @var string
    */
-  public static $NAMES = array(
+  public static $NAMES = [
     'taxonomy'
-  );
+  ];
 
   public function execute($request)
   {
     parent::execute($request);
 
-    $this->permissions = array();
+    $this->permissions = [];
     if (null != $this->resource->id)
     {
       // Get term permissions for this group
@@ -65,7 +65,7 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
       if ($this->form->isValid())
       {
         $this->processForm();
-        $this->redirect(array($this->resource, 'module' => 'aclGroup', 'action' => 'indexTermAcl'));
+        $this->redirect([$this->resource, 'module' => 'aclGroup', 'action' => 'indexTermAcl']);
       }
     }
   }
@@ -75,17 +75,17 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
     switch ($name)
     {
       case 'taxonomy':
-        $choices = array();
+        $choices = [];
         $choices[null] = null;
 
         foreach (QubitTaxonomy::getEditableTaxonomies() as $taxonomy)
         {
-          $choices[$this->context->routing->generate(null, array($taxonomy, 'module' => 'taxonomy'))] = $taxonomy;
+          $choices[$this->context->routing->generate(null, [$taxonomy, 'module' => 'taxonomy'])] = $taxonomy;
         }
 
         $this->form->setDefault($name, null);
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
         break;
     }

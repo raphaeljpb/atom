@@ -19,10 +19,10 @@
 
 class sfSkosPluginImportAction extends DefaultEditAction
 {
-  public static $NAMES = array(
+  public static $NAMES = [
       'file',
       'taxonomy',
-      'url');
+      'url'];
 
   public function execute($request)
   {
@@ -44,18 +44,18 @@ class sfSkosPluginImportAction extends DefaultEditAction
         }
         catch (Exception $e)
         {
-          $this->getUser()->setFlash('error', $this->context->i18n->__('Something wrong happened! Please check out the logs. Error: %1%', array('%1%' => $e->getMessage()), array('persist' => false)));
+          $this->getUser()->setFlash('error', $this->context->i18n->__('Something wrong happened! Please check out the logs. Error: %1%', ['%1%' => $e->getMessage()], ['persist' => false]));
 
           return;
         }
 
-        $this->getUser()->setFlash('notice', $this->context->i18n->__('Import file initiated. Check %1%job %2%%3% to view the status of the import.', array(
-          '%1%' => sprintf('<a href="%s">', $this->context->routing->generate(null, array('module' => 'jobs', 'action' => 'report', 'id' => $job->id))),
+        $this->getUser()->setFlash('notice', $this->context->i18n->__('Import file initiated. Check %1%job %2%%3% to view the status of the import.', [
+          '%1%' => sprintf('<a href="%s">', $this->context->routing->generate(null, ['module' => 'jobs', 'action' => 'report', 'id' => $job->id])),
           '%2%' => $job->id,
           '%3%' => '</a>'
-        )));
+        ]));
 
-        $this->redirect(array('module' => 'sfSkosPlugin', 'action' => 'import'));
+        $this->redirect(['module' => 'sfSkosPlugin', 'action' => 'import']);
       }
     }
   }
@@ -71,8 +71,8 @@ class sfSkosPluginImportAction extends DefaultEditAction
         break;
 
       case 'taxonomy':
-        $id = $this->context->routing->generate(null, array($this->taxonomy, 'module' => 'taxonomy'));
-        $this->form->setValidator('taxonomy', new sfValidatorString(array('required' => true)));
+        $id = $this->context->routing->generate(null, [$this->taxonomy, 'module' => 'taxonomy']);
+        $this->form->setValidator('taxonomy', new sfValidatorString(['required' => true]));
 
         if (isset($this->resource))
         {
@@ -81,16 +81,16 @@ class sfSkosPluginImportAction extends DefaultEditAction
         }
         else
         {
-          $choices = array($id => $this->taxonomy); reset($choices);
+          $choices = [$id => $this->taxonomy]; reset($choices);
           $this->form->setDefault('taxonomy', key($choices));
-          $this->form->setWidget('taxonomy', new sfWidgetFormSelect(array('choices' => $choices), array('class' => 'form-autocomplete')));
+          $this->form->setWidget('taxonomy', new sfWidgetFormSelect(['choices' => $choices], ['class' => 'form-autocomplete']));
         }
 
         break;
 
       case 'url':
         $this->form->setValidator('url', new QubitValidatorUrl());
-        $this->form->setWidget('url', new sfWidgetFormInput(array(), array('placeholder' => 'https://')));
+        $this->form->setWidget('url', new sfWidgetFormInput([], ['placeholder' => 'https://']));
 
         break;
     }
@@ -124,7 +124,7 @@ class sfSkosPluginImportAction extends DefaultEditAction
     }
 
     // Setup custom form validator
-    $this->form->getValidatorSchema()->setPostValidator(new sfValidatorCallback(array('callback' => function ($validator, $values) {
+    $this->form->getValidatorSchema()->setPostValidator(new sfValidatorCallback(['callback' => function ($validator, $values) {
       if ($this->parent->id != QubitTerm::ROOT_ID && $this->parent->taxonomyId != $this->taxonomy->id)
       {
         throw new sfValidatorError($validator, $this->context->i18n->__('The current term does not belong to the taxonomy chosen.'));
@@ -136,15 +136,15 @@ class sfSkosPluginImportAction extends DefaultEditAction
       }
 
       return $values;
-    })));
+    }]));
   }
 
   protected function doBackgroundImport($taxonomyId, $parentId)
   {
-    $payload = array(
+    $payload = [
       'importType' => 'skos',
       'taxonomyId' => $taxonomyId,
-      'parentId' => $parentId);
+      'parentId' => $parentId];
 
     // We know at this point that we have either a file or a remote resource
     if (null !== $this->form->getValue('file'))

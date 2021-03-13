@@ -7,4 +7,4 @@
   </div>
 </div>
 
-<?php echo get_partial('term/format', array('resource' => $resource)) ?>
+<?php echo get_partial('term/format', ['resource' => $resource]) ?>

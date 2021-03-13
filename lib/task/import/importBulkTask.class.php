@@ -21,11 +21,11 @@ class importBulkTask extends arBaseTask
 {
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('folder', sfCommandArgument::REQUIRED, 'The import folder or file')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', 'qubit'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('index', null, sfCommandOption::PARAMETER_NONE, 'Set to enable indexing on imported objects'),
@@ -58,7 +58,7 @@ class importBulkTask extends arBaseTask
         sfCommandOption::PARAMETER_REQUIRED,
         'Limit --update matching to under a specified top level description or repository via slug.'
       ),
-    ));
+    ]);
 
     $this->namespace        = 'import';
     $this->name             = 'bulk';
@@ -68,7 +68,7 @@ Bulk import multiple XML/CSV files at once
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -93,7 +93,7 @@ EOF;
     }
     else
     {
-      $files = array($arguments['folder']);
+      $files = [$arguments['folder']];
     }
 
     // TODO: Add some colour
@@ -164,7 +164,7 @@ EOF;
       // Store details if output is specified
       if ($options['output'])
       {
-        $rows[] = array($file, $split . 's', memory_get_usage() . 'B');
+        $rows[] = [$file, $split . 's', memory_get_usage() . 'B'];
       }
 
       if ($options['verbose'])
@@ -178,15 +178,15 @@ EOF;
     {
       $fh = fopen($options['output'], 'w+');
 
-      fputcsv($fh, array('File', 'Time elapsed (secs)', 'Memory used'));
+      fputcsv($fh, ['File', 'Time elapsed (secs)', 'Memory used']);
       foreach ($rows as $row)
       {
         fputcsv($fh, $row);
       }
 
-      fputcsv($fh, array()); // Blank row to separate our summary info
-      fputcsv($fh, array('Total time elapsed:', $timer->elapsed() . 's'));
-      fputcsv($fh, array('Peak memory usage:', round(memory_get_peak_usage() / 1048576, 2) . 'MB'));
+      fputcsv($fh, []); // Blank row to separate our summary info
+      fputcsv($fh, ['Total time elapsed:', $timer->elapsed() . 's']);
+      fputcsv($fh, ['Peak memory usage:', round(memory_get_peak_usage() / 1048576, 2) . 'MB']);
 
       fclose($fh);
     }
@@ -202,7 +202,7 @@ EOF;
 
   protected function dir_tree($dir)
   {
-    $path = array();
+    $path = [];
     $stack[] = $dir;
 
     while ($stack)

@@ -34,7 +34,7 @@ class ContactInformationIndexAction extends sfAction
       $this->forward404();
     }
 
-    $value = array();
+    $value = [];
 
     $value['primaryContact'] = (bool)$this->resource->primaryContact;
 
@@ -113,7 +113,7 @@ class ContactInformationIndexAction extends sfAction
 
     if ($culture != $this->resource->sourceCulture)
     {
-      $sourceCultureData = array('fields' => array());
+      $sourceCultureData = ['fields' => []];
 
       // Add source culture text direction, if different from user's culture,
       // so source culture value can be displayed appropriately (some languages
@@ -125,10 +125,10 @@ class ContactInformationIndexAction extends sfAction
       }
 
       // Add source culture field values
-      foreach(array('contactType', 'city', 'region', 'note') as $propertyName)
+      foreach(['contactType', 'city', 'region', 'note'] as $propertyName)
       {
         $propertyGetMethod = 'get'. ucwords($propertyName);
-        $sourceCultureData['fields'][$propertyName] = $this->resource->$propertyGetMethod(array('sourceCulture' => true));
+        $sourceCultureData['fields'][$propertyName] = $this->resource->$propertyGetMethod(['sourceCulture' => true]);
       }
 
       $value['_sourceCulture'] = $sourceCultureData;

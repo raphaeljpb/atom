@@ -21,7 +21,7 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array('module' => 'settings', 'action' => 'markdown'))) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'settings', 'action' => 'markdown'])) ?>
 
     <?php echo $form->renderHiddenFields() ?>
 

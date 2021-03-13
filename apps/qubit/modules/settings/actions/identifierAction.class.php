@@ -20,7 +20,7 @@
 class SettingsIdentifierAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'accession_mask_enabled',
       'accession_mask',
       'accession_counter',
@@ -31,7 +31,7 @@ class SettingsIdentifierAction extends DefaultEditAction
       'inherit_code_informationobject',
       'inherit_code_dc_xml',
       'prevent_duplicate_actor_identifiers'
-    );
+    ];
 
   public function execute($request)
   {
@@ -49,7 +49,7 @@ class SettingsIdentifierAction extends DefaultEditAction
 
         $this->getUser()->setFlash('notice', $this->i18n->__('Identifier settings saved.'));
 
-        $this->redirect(array('module' => 'settings', 'action' => 'identifier'));
+        $this->redirect(['module' => 'settings', 'action' => 'identifier']);
       }
     }
   }
@@ -70,12 +70,12 @@ class SettingsIdentifierAction extends DefaultEditAction
       case 'separator_character':
         // Determine default value
         $default = (null !== $this->$name = QubitSetting::getByName($name))
-          ? $this->$name->getValue(array('sourceCulture' => true))
+          ? $this->$name->getValue(['sourceCulture' => true])
           : '';
 
         // Set default, validator, and widget
         $this->form->setDefault($name, $default);
-        $this->form->setValidator($name, new sfValidatorString(array('required' => true)));
+        $this->form->setValidator($name, new sfValidatorString(['required' => true]));
         $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
@@ -87,21 +87,21 @@ class SettingsIdentifierAction extends DefaultEditAction
       case 'prevent_duplicate_actor_identifiers':
         // Determine default value
         // (accession mask enabled setting doesn't get created in DB by default)
-        $defaults = array(
+        $defaults = [
           'accession_mask_enabled' => 1,
           'inherit_code_dc_xml' => 0,
           'prevent_duplicate_actor_identifiers' => 0
-        );
+        ];
 
         $default = (null !== $this->$name = QubitSetting::getByName($name))
-          ? $this->$name->getValue(array('sourceCulture' => true))
+          ? $this->$name->getValue(['sourceCulture' => true])
           : $defaults[$name];
 
         // Set default, validator, and widget
-        $options = array($this->i18n->__('No'), $this->i18n->__('Yes'));
+        $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
         $this->form->setDefault($name, $default);
-        $this->form->setValidator($name, new sfValidatorString(array('required' => false)));
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(array('choices' => $options), array('class' => 'radio')));
+        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
+        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => $options], ['class' => 'radio']));
 
         break;
     }
@@ -126,7 +126,7 @@ class SettingsIdentifierAction extends DefaultEditAction
           $this->$name = new QubitSetting();
           $this->$name->name = $name;
         }
-        $this->$name->setValue($field->getValue(), array('sourceCulture' => true));
+        $this->$name->setValue($field->getValue(), ['sourceCulture' => true]);
         $this->$name->save();
 
         break;

@@ -63,17 +63,17 @@ class resetPasswordTask extends sfBaseTask
   }
   protected function configure()
   {
-    $this->addArguments(array(
+    $this->addArguments([
       new sfCommandArgument('username', sfCommandArgument::REQUIRED, 'Username/E-Mail'),
       new sfCommandArgument('password', sfCommandArgument::OPTIONAL, 'Password')
-    ));
+    ]);
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('activate', null, sfCommandOption::PARAMETER_NONE, 'Activate'),
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'reset-password';
@@ -83,7 +83,7 @@ FIXME
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
     $conn = $databaseManager->getDatabase('propel')->getConnection();

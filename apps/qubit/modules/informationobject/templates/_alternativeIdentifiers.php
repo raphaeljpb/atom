@@ -25,7 +25,7 @@
             </div>
           </td><td>
             <div class="animateNicely">
-              <?php $form->setDefault('identifier', $item->getValue(array('sourceCulture' => true))); ?>
+              <?php $form->setDefault('identifier', $item->getValue(['sourceCulture' => true])); ?>
               <?php echo $form->identifier ?>
             </div>
           </td>

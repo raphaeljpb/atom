@@ -21,12 +21,12 @@ class deleteDraftsTask extends sfBaseTask
 {
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('no-confirmation', 'B', sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
-    ));
+    ]);
 
     $this->namespace = 'tools';
     $this->name = 'delete-drafts';
@@ -36,7 +36,7 @@ Delete all information objects with publication status: DRAFT
 EOF;
   }
 
-  protected function execute($arguments = array(), $options = array())
+  protected function execute($arguments = [], $options = [])
   {
     $configuration = ProjectConfiguration::getApplicationConfiguration('qubit', 'test', false);
     $sf_context = sfContext::createInstance($configuration);
@@ -53,7 +53,7 @@ EOF;
 
     // Confirmation
     $question = 'Are you SURE you want to do this (y/N)?';
-    if (!$options['no-confirmation'] && !$this->askConfirmation(array($question), 'QUESTION_LARGE', false))
+    if (!$options['no-confirmation'] && !$this->askConfirmation([$question], 'QUESTION_LARGE', false))
     {
       return 1;
     }

@@ -23,11 +23,11 @@ class RightIndexAction extends sfAction
   {
     $this->resource = $this->getRoute()->resource;
 
-    $value = array();
+    $value = [];
 
     if (isset($this->resource->act))
     {
-      $value['act'] = $this->context->routing->generate(null, array($this->resource->act, 'module' => 'term'));
+      $value['act'] = $this->context->routing->generate(null, [$this->resource->act, 'module' => 'term']);
     }
 
     $value['restriction'] = $this->resource->restriction;
@@ -38,7 +38,7 @@ class RightIndexAction extends sfAction
 
     if (isset($this->resource->rightsHolder))
     {
-      $value['rightsHolder'] = $this->context->routing->generate(null, array($this->resource->rightsHolder, 'module' => 'rightsholder'));
+      $value['rightsHolder'] = $this->context->routing->generate(null, [$this->resource->rightsHolder, 'module' => 'rightsholder']);
     }
 
     if (isset($this->resource->rightsNote))
@@ -48,7 +48,7 @@ class RightIndexAction extends sfAction
 
     if (isset($this->resource->basis))
     {
-      $value['basis'] = $this->context->routing->generate(null, array($this->resource->basis, 'module' => 'term'));
+      $value['basis'] = $this->context->routing->generate(null, [$this->resource->basis, 'module' => 'term']);
     }
 
     /**
@@ -57,7 +57,7 @@ class RightIndexAction extends sfAction
 
     if (isset($this->resource->copyrightStatus))
     {
-      $value['copyrightStatus'] = $this->context->routing->generate(null, array($this->resource->copyrightStatus, 'module' => 'term'));
+      $value['copyrightStatus'] = $this->context->routing->generate(null, [$this->resource->copyrightStatus, 'module' => 'term']);
     }
 
     if (isset($this->resource->copyrightStatusDate))

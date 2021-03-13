@@ -45,7 +45,7 @@ class arMigration0159
       $setting->value = QubitSlug::SLUG_RESTRICTIVE;
       $setting->editable = 1;
       $setting->source_culture = 'en';
-      $setting->setValue(QubitSlug::SLUG_RESTRICTIVE, array('culture' => 'en'));
+      $setting->setValue(QubitSlug::SLUG_RESTRICTIVE, ['culture' => 'en']);
       $setting->save();
     }
 

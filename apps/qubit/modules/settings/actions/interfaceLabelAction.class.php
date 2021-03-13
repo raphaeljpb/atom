@@ -31,8 +31,8 @@ class SettingsInterfaceLabelAction extends sfAction
 {
   public function execute($request)
   {
-    $this->uiLabelForm = new SettingsGenericForm(array(), array(
-      'settings' => QubitSetting::getByScope('ui_label'), 'scope'=>'ui_label', 'fieldsRequired' => false));
+    $this->uiLabelForm = new SettingsGenericForm([], [
+      'settings' => QubitSetting::getByScope('ui_label'), 'scope'=>'ui_label', 'fieldsRequired' => false]);
 
     // Handle POST data (form submit)
     if ($request->isMethod('post'))
@@ -95,7 +95,7 @@ class SettingsInterfaceLabelAction extends sfAction
     // Add a new ui_label
     if (null !== ($newName = $form->getValue('new_setting_name')) && strlen($newValue = $form->getValue('new_setting_value')))
     {
-      $setting = QubitSetting::createNewSetting($newName, $newValue, array('scope'=>$form->getScope()));
+      $setting = QubitSetting::createNewSetting($newName, $newValue, ['scope'=>$form->getScope()]);
       $setting->save();
     }
 

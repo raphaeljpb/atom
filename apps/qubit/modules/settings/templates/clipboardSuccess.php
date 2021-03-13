@@ -16,7 +16,7 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form->renderFormTag(url_for(array('module' => 'settings', 'action' => 'clipboard'))) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'settings', 'action' => 'clipboard'])) ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -46,18 +46,18 @@
           ->renderRow() ?>
 
         <?php echo get_partial('settings/i18n_form_field',
-          array(
+          [
             'name' => 'clipboard_send_button_text',
             'label' => __('Send button text'),
             'settings' => $settings,
-            'form' => $form)) ?>
+            'form' => $form]) ?>
 
         <?php echo get_partial('settings/i18n_form_field',
-          array(
+          [
             'name' => 'clipboard_send_message_html',
             'label' => __('Text or HTML to display when sending clipboard contents'),
             'settings' => $settings,
-            'form' => $form)) ?>
+            'form' => $form]) ?>
 
         <?php echo $form->clipboard_send_http_method
           ->label(__('HTTP method to use when sending clipboard contents'))

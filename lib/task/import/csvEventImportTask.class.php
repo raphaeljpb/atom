@@ -36,7 +36,7 @@ EOF;
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     $this->validateOptions($options);
 
@@ -55,9 +55,9 @@ EOF;
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
     // Load taxonomies into variables to avoid use of magic numbers
-    $termData = QubitFlatfileImport::loadTermsFromTaxonomies(array(
+    $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
       QubitTaxonomy::EVENT_TYPE_ID => 'eventTypes'
-    ));
+    ]);
 
     $subjectTable       = 'actor_i18n';
     $subjectKeyColumn   = 'authorized_form_of_name';
@@ -71,11 +71,11 @@ EOF;
 
     $relationTypeColumn = 'eventType';
 
-    $import = new QubitFlatfileImport(array(
+    $import = new QubitFlatfileImport([
       // Pass context
       'context' => sfContext::createInstance($this->configuration),
 
-      'status' => array(
+      'status' => [
         'sourceName'         => $sourceName,
         'eventTypes'         => $termData['eventTypes'],
         'subjectTable'       => $subjectTable,
@@ -88,13 +88,13 @@ EOF;
         'objectIdColumn'     => $objectIdColumn,
         'relationTypeColumn' => $relationTypeColumn,
         'dataCached'         => false,
-        'subjectKeys'        => array(),
-        'objectKeys'         => array(),
+        'subjectKeys'        => [],
+        'objectKeys'         => [],
         'goodSubjects'       => 0,
         'badSubjects'        => 0,
         'goodObjects'        => 0,
         'badObjects'         => 0
-      ),
+      ],
 
       'errorLog' => $options['error-log'],
 
@@ -206,7 +206,7 @@ EOF;
         print "Good objects:  ". $self->status['goodObjects'] ."\n";
         print "Bad objects:   ". $self->status['badObjects'] ."\n";
       }
-    ));
+    ]);
 
     $import->csv($fh, $skipRows);
   }
@@ -218,16 +218,16 @@ EOF;
   {
     parent::configure();
 
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('event-types', null, sfCommandOption::PARAMETER_OPTIONAL, 'Event type terms to create, if they do not yet exist, before import.'),
       new sfCommandOption('source-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'Source name to use when inserting keymap entries.')
-    ));
+    ]);
   }
 }
 
 function getNameIdArrayFromTable(&$self, $tableName, $keyColumn, $idColumn, $whereClause = false)
 {
-  $names = array();
+  $names = [];
 
   $query = "SELECT ". $keyColumn .", ". $idColumn ." FROM ". $tableName;
 

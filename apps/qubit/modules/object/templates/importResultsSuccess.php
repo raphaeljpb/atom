@@ -2,6 +2,6 @@
 
 <section class="actions">
   <ul>
-    <li><?php echo link_to(__('Back'), array('module' => 'object', 'action' => 'importSelect', 'type' => $sf_request->importType), array('class' => 'c-btn')) ?></li>
+    <li><?php echo link_to(__('Back'), ['module' => 'object', 'action' => 'importSelect', 'type' => $sf_request->importType], ['class' => 'c-btn']) ?></li>
   </ul>
 </section>

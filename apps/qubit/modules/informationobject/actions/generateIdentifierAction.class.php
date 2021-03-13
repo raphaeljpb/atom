@@ -24,6 +24,6 @@ class InformationObjectGenerateIdentifierAction extends sfAction
     $identifier = QubitInformationObject::generateIdentiferFromMask();
     $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
 
-    return $this->renderText(json_encode(array('identifier' => $identifier)));
+    return $this->renderText(json_encode(['identifier' => $identifier]));
   }
 }

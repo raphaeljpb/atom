@@ -31,7 +31,7 @@ class RepositoryStylesheetComponent extends sfComponent
     switch (true)
     {
       case $resource instanceof QubitInformationObject:
-        $repository = $resource->getRepository(array('inherit' => true));
+        $repository = $resource->getRepository(['inherit' => true]);
 
         break;
 

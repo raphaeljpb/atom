@@ -20,8 +20,8 @@
 class SettingsInventoryAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
-      'levels');
+  public static $NAMES = [
+      'levels'];
 
   public function execute($request)
   {
@@ -45,7 +45,7 @@ class SettingsInventoryAction extends DefaultEditAction
         $notice = sfContext::getInstance()->i18n->__('Inventory settings saved.');
         $this->getUser()->setFlash('notice', $notice);
 
-        $this->redirect(array('module' => 'settings', 'action' => 'inventory'));
+        $this->redirect(['module' => 'settings', 'action' => 'inventory']);
       }
     }
   }
@@ -82,7 +82,7 @@ class SettingsInventoryAction extends DefaultEditAction
 
         $this->form->setValidator('levels', new sfValidatorPass());
 
-        $choices = array();
+        $choices = [];
         foreach (QubitTerm::getLevelsOfDescription() as $item)
         {
           $choices[$item->id] = $item->__toString();
@@ -94,7 +94,7 @@ class SettingsInventoryAction extends DefaultEditAction
           $size = 4;
         }
 
-        $this->form->setWidget('levels', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true), array('size' => $size)));
+        $this->form->setWidget('levels', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true], ['size' => $size]));
 
         break;
     }
@@ -108,7 +108,7 @@ class SettingsInventoryAction extends DefaultEditAction
         $levels = $this->form->getValue('levels');
         if (empty($levels))
         {
-          $levels = array();
+          $levels = [];
         }
         $this->settingLevels->value = serialize($levels);
 

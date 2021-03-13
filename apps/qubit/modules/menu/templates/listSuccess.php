@@ -26,21 +26,21 @@
             <?php echo str_repeat('&nbsp;&nbsp;', ($item['depth'] - 1)) ?>
 
             <?php if (isset($item['prev'])): ?>
-              <?php echo link_to(image_tag('up.gif', array('alt' => __('Move up'))), array('module' => 'menu', 'action' => 'list', 'move' => $item['id'], 'before' => $item['prev']), array('title' => __('Move item up in list'))) ?>
+              <?php echo link_to(image_tag('up.gif', ['alt' => __('Move up')]), ['module' => 'menu', 'action' => 'list', 'move' => $item['id'], 'before' => $item['prev']], ['title' => __('Move item up in list')]) ?>
             <?php else: ?>
               &nbsp;&nbsp;
             <?php endif; ?>
 
             <?php if (isset($item['next'])): ?>
-              <?php echo link_to(image_tag('down.gif', array('alt' => __('Move down'))), array('module' => 'menu', 'action' => 'list', 'move' => $item['id'], 'after' => $item['next']), array('title' => __('Move item down in list'))) ?>
+              <?php echo link_to(image_tag('down.gif', ['alt' => __('Move down')]), ['module' => 'menu', 'action' => 'list', 'move' => $item['id'], 'after' => $item['next']], ['title' => __('Move item down in list')]) ?>
             <?php else: ?>
               &nbsp;&nbsp;
             <?php endif; ?>
 
             <?php if ($item['protected']): ?>
-              <?php echo link_to($item['name'], array(QubitMenu::getById($item['id']), 'module' => 'menu', 'action' => 'edit'), array('class' => 'readOnly', 'title' => __('Edit menu'))) ?>
+              <?php echo link_to($item['name'], [QubitMenu::getById($item['id']), 'module' => 'menu', 'action' => 'edit'], ['class' => 'readOnly', 'title' => __('Edit menu')]) ?>
             <?php else: ?>
-              <?php echo link_to($item['name'], array(QubitMenu::getById($item['id']), 'module' => 'menu', 'action' => 'edit'), array('title' => __('Edit menu'))) ?>
+              <?php echo link_to($item['name'], [QubitMenu::getById($item['id']), 'module' => 'menu', 'action' => 'edit'], ['title' => __('Edit menu')]) ?>
             <?php endif; ?>
 
           </td><td>
@@ -56,7 +56,7 @@
 <?php slot('after-content') ?>
   <section class="actions">
     <ul>
-      <li><?php echo link_to(__('Add new'), array('module' => 'menu', 'action' => 'add'), array('class' => 'c-btn c-btn-submit')) ?></li>
+      <li><?php echo link_to(__('Add new'), ['module' => 'menu', 'action' => 'add'], ['class' => 'c-btn c-btn-submit']) ?></li>
     </ul>
   </section>
 <?php end_slot() ?>

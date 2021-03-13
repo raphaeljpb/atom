@@ -29,7 +29,7 @@ class RepositoryEditUploadLimitAction extends sfAction
     if ($form->isCSRFProtected())
     {
       $fieldName = $form->getCSRFFieldName();
-      $form->bind(array($fieldName => $request->getParameter($fieldName)));
+      $form->bind([$fieldName => $request->getParameter($fieldName)]);
     }
 
     if (!$this->context->user->isAdministrator() || !$form->isValid())

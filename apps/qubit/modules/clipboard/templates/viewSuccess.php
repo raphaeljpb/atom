@@ -3,7 +3,7 @@
 <?php if ($sf_request->isMethod('get')): ?>
   <?php slot('title') ?>
     <div class="multiline-header">
-      <?php echo image_tag('/images/icons-large/icon-archival.png', array('alt' => '')) ?>
+      <?php echo image_tag('/images/icons-large/icon-archival.png', ['alt' => '']) ?>
       <h1 aria-describedby="results-label"><?php echo __('Loading ...') ?></h1>
       <span class="sub" id="results-label"><?php echo __('Clipboard') ?></span>
     </div>
@@ -15,24 +15,24 @@
     <?php echo get_partial('default/printPreviewBar') ?>
 
     <div class="multiline-header">
-      <?php echo image_tag('/images/icons-large/icon-archival.png', array('alt' => '')) ?>
-      <h1 aria-describedby="results-label"><?php echo __('Showing %1% results', array('%1%' => $pager->getNbResults())) ?></h1>
+      <?php echo image_tag('/images/icons-large/icon-archival.png', ['alt' => '']) ?>
+      <h1 aria-describedby="results-label"><?php echo __('Showing %1% results', ['%1%' => $pager->getNbResults()]) ?></h1>
       <span class="sub" id="results-label"><?php echo __('Clipboard') ?></span>
     </div>
   <?php end_slot() ?>
 
   <?php slot('before-content') ?>
     <section class="browse-options">
-      <?php echo get_partial('default/printPreviewButton', array('class' => 'clipboard-print')) ?>
+      <?php echo get_partial('default/printPreviewButton', ['class' => 'clipboard-print']) ?>
 
       <div class="pickers">
-        <?php echo get_partial('default/genericPicker', array(
+        <?php echo get_partial('default/genericPicker', [
           'options' => $uiLabels,
           'label' => __('Entity type'),
-          'param' => 'type')) ?>
+          'param' => 'type']) ?>
 
         <?php if ($pager->getNbResults()): ?>
-          <?php echo get_partial('default/sortPickers', array('options' => $sortOptions)) ?>
+          <?php echo get_partial('default/sortPickers', ['options' => $sortOptions]) ?>
         <?php endif; ?>
       </div>
     </section>
@@ -48,23 +48,23 @@
 
       <?php foreach ($pager->getResults() as $hit): ?>
         <?php if ('QubitInformationObject' === $entityType): ?>
-          <?php echo get_partial('search/searchResult', array('hit' => $hit, 'culture' => $selectedCulture)) ?>
+          <?php echo get_partial('search/searchResult', ['hit' => $hit, 'culture' => $selectedCulture]) ?>
         <?php elseif ('QubitActor' === $entityType): ?>
-          <?php echo get_partial('actor/searchResult', array('doc' => $hit->getData(), 'culture' => $selectedCulture, 'clipboardType' => 'actor')) ?>
+          <?php echo get_partial('actor/searchResult', ['doc' => $hit->getData(), 'culture' => $selectedCulture, 'clipboardType' => 'actor']) ?>
         <?php elseif ('QubitRepository' === $entityType): ?>
-          <?php echo get_partial('actor/searchResult', array('doc' => $hit->getData(), 'culture' => $selectedCulture, 'clipboardType' => 'repository')) ?>
+          <?php echo get_partial('actor/searchResult', ['doc' => $hit->getData(), 'culture' => $selectedCulture, 'clipboardType' => 'repository']) ?>
         <?php endif; ?>
       <?php endforeach; ?>
     </div>
 
-    <?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+    <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 
     <?php if (isset($pager) && $pager->getNbResults()): ?>
       <section class="actions">
         <ul>
-          <li><button class="c-btn c-btn-delete" id="clipboard-clear" data-clipboard-type="<?php echo $type ?>"><?php echo __('Clear %1 clipboard', array('%1' => lcfirst($uiLabels[$type]))) ?></button></li>
-          <li><?php echo link_to(__('Save'), array('module' => 'clipboard', 'action' => 'save'), array('class' => 'c-btn', 'id' => 'clipboard-save')) ?></li>
-          <li><?php echo link_to(__('Export'), array('module' => 'clipboard', 'action' => 'export', 'type' => $type), array('class' => 'c-btn')) ?></li>
+          <li><button class="c-btn c-btn-delete" id="clipboard-clear" data-clipboard-type="<?php echo $type ?>"><?php echo __('Clear %1 clipboard', ['%1' => lcfirst($uiLabels[$type])]) ?></button></li>
+          <li><?php echo link_to(__('Save'), ['module' => 'clipboard', 'action' => 'save'], ['class' => 'c-btn', 'id' => 'clipboard-save']) ?></li>
+          <li><?php echo link_to(__('Export'), ['module' => 'clipboard', 'action' => 'export', 'type' => $type], ['class' => 'c-btn']) ?></li>
           <?php if (sfConfig::get('app_clipboard_send_enabled', false) && !empty(sfConfig::get('app_clipboard_send_url', ''))): ?>
             <li>
               <button class="c-btn"

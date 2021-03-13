@@ -58,7 +58,7 @@ class FunctionBrowseAction extends sfAction
     }
 
     // Set default sort direction in request if not present or not valid
-    if (!isset($request->sortDir) || !in_array($request->sortDir, array('asc', 'desc')))
+    if (!isset($request->sortDir) || !in_array($request->sortDir, ['asc', 'desc']))
     {
       $request->sortDir = $sortDir;
     }

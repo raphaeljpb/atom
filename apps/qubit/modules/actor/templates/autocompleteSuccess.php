@@ -1,4 +1,4 @@
-<h1><?php echo __('Search %1%', array('%1%' => sfConfig::get('app_ui_label_actor'))) ?></h1>
+<h1><?php echo __('Search %1%', ['%1%' => sfConfig::get('app_ui_label_actor')]) ?></h1>
 
 <?php if (isset($error)): ?>
 
@@ -23,7 +23,7 @@
       <?php foreach ($actors as $item): ?>
         <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?>">
           <td>
-            <?php echo link_to(render_title($item), array($item, 'module' => 'actor')) ?>
+            <?php echo link_to(render_title($item), [$item, 'module' => 'actor']) ?>
           </td><td>
             <?php echo render_value_inline($item->entityType) ?>
           </td>
@@ -32,6 +32,6 @@
     </tbody>
   </table>
 
-  <?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+  <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 
 <?php endif; ?>

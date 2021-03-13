@@ -34,13 +34,13 @@ class physicalObjectNormalizeTask extends arBaseTask
 Normalize physical object data
 EOF;
 
-  private $toDelete = array();
+  private $toDelete = [];
   private $relationsUpdated = 0;
 
   /**
    * @see sfTask
    */
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     parent::execute($arguments, $options);
 
@@ -147,7 +147,7 @@ EOF;
    */
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
@@ -155,7 +155,7 @@ EOF;
       new sfCommandOption('verbose', 'v', sfCommandOption::PARAMETER_NONE, "Verbose (shows details of what's marked for deletion", null),
       new sfCommandOption('force', 'f', sfCommandOption::PARAMETER_NONE, 'Normalize without confirmation', null),
       new sfCommandOption('dry-run', 'd', sfCommandOption::PARAMETER_NONE, 'Dry run (no database changes)', null),
-    ));
+    ]);
   }
 
   private function getPhysicalObjectCount()
@@ -167,7 +167,7 @@ EOF;
   private function getPhysicalObjectRelationCount()
   {
     $sql = 'SELECT count(*) FROM relation WHERE type_id=?';
-    return QubitPdo::fetchColumn($sql, array(QubitTerm::HAS_PHYSICAL_OBJECT_ID));
+    return QubitPdo::fetchColumn($sql, [QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
   }
 
   private function displayPhysicalObjectAndRelationCounts($stage, $physicalObjectsCount, $relationsCount)
@@ -202,7 +202,7 @@ EOF;
       $sql = $this->sqlForPhysicalObjectsBySourceCulture();
       $sql .= ' WHERE pi.name=:name';
 
-      $params = array(':name' => $physicalObject->name);
+      $params = [':name' => $physicalObject->name];
 
       $this->findAndMarkDuplicates($sql, $params, $physicalObject->id, $dryRun);
     }
@@ -226,11 +226,11 @@ EOF;
       $sql = $this->sqlForPhysicalObjectsBySourceCulture();
       $sql .= ' WHERE p.type_id=:type_id AND pi.name=:name AND pi.location=:location';
 
-      $params = array(
+      $params = [
         ':type_id'  => $physicalObject->type_id,
         ':name'     => $physicalObject->name,
         ':location' => $physicalObject->location
-      );
+      ];
 
       $this->findAndMarkDuplicates($sql, $params, $physicalObject->id, $dryRun);
     }
@@ -254,7 +254,7 @@ EOF;
       $sql = $this->sqlForPhysicalObjectsBySourceCulture();
       $sql .= ' WHERE pi.name=:name AND pi.location IS NULL';
 
-      $params = array(':name' => $physicalObject->name);
+      $params = [':name' => $physicalObject->name];
 
       $this->findAndMarkDuplicates($sql, $params, $physicalObject->id, $dryRun);
     }
@@ -277,7 +277,7 @@ EOF;
       }
 
       // Get relations to physical objects
-      $relations = QubitRelation::getRelationsBySubjectId($duplicate->id, array('typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID));
+      $relations = QubitRelation::getRelationsBySubjectId($duplicate->id, ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
 
       foreach ($relations as $relation)
       {
@@ -301,14 +301,14 @@ EOF;
   {
     $po = QubitPhysicalObject::getById($physicalObject->id);
 
-    $description = sprintf("Name: '%s'", $po->getName(array('cultureFallback' => true)));
+    $description = sprintf("Name: '%s'", $po->getName(['cultureFallback' => true]));
 
-    if (!empty($location = $po->getLocation(array('cultureFallback' => true))))
+    if (!empty($location = $po->getLocation(['cultureFallback' => true])))
     {
       $description .= sprintf(", Location: '%s'", $location);
     }
 
-    $description .= sprintf(", Type: '%s'", $po->getType(array('cultureFallback' => true)));
+    $description .= sprintf(", Type: '%s'", $po->getType(['cultureFallback' => true]));
 
     return $description;
   }

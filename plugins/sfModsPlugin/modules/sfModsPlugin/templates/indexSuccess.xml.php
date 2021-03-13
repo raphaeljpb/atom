@@ -38,7 +38,7 @@
         <place><placeTerm><?php echo $item->getPlace() ?></placeTerm></place>
 
         <?php $dateTagName = $mods->getDateTagNameForEventType($item->typeId) ?>
-        <<?php echo $dateTagName ?><?php if ($dateTagName == 'dateOther'): ?> type="Broadcasting"<?php endif; ?>><?php echo $item->getDate(array('cultureFallback' => true)) ?></<?php echo $dateTagName ?>>
+        <<?php echo $dateTagName ?><?php if ($dateTagName == 'dateOther'): ?> type="Broadcasting"<?php endif; ?>><?php echo $item->getDate(['cultureFallback' => true]) ?></<?php echo $dateTagName ?>>
         <?php if (!empty($item->startDate)): ?>
           <<?php echo $dateTagName ?><?php if ($dateTagName == 'dateOther'): ?> type="Broadcasting"<?php endif; ?> point="start"><?php echo $item->startDate ?></<?php echo $dateTagName ?>>
         <?php endif; ?>
@@ -65,19 +65,19 @@
   <identifier type="local"><?php echo esc_specialchars($mods->identifier) ?></identifier>
   <identifier type="uri"><?php echo esc_specialchars($mods->uri) ?></identifier>
 
-  <?php if ($extentAndMedium = $resource->getCleanExtentAndMedium(array('cultureFallback' => true))): ?>
+  <?php if ($extentAndMedium = $resource->getCleanExtentAndMedium(['cultureFallback' => true])): ?>
     <physicalDescription><extent><?php echo esc_specialchars($extentAndMedium) ?></extent></physicalDescription>
   <?php endif; ?>
 
-  <?php if ($scopeAndContent = $resource->getScopeAndContent(array('cultureFallback' => true))): ?>
+  <?php if ($scopeAndContent = $resource->getScopeAndContent(['cultureFallback' => true])): ?>
     <abstract type="description"><?php echo esc_specialchars($scopeAndContent) ?></abstract>
   <?php endif; ?>
 
-  <?php if ($locationOfOriginals = $resource->getLocationOfOriginals(array('cultureFallback' => true))): ?>
+  <?php if ($locationOfOriginals = $resource->getLocationOfOriginals(['cultureFallback' => true])): ?>
     <note type="originalLocation"><?php echo esc_specialchars($locationOfOriginals) ?></note>
   <?php endif; ?>
 
-  <?php if ($otherFormats = $resource->getLocationOfCopies(array('cultureFallback' => true))): ?>
+  <?php if ($otherFormats = $resource->getLocationOfCopies(['cultureFallback' => true])): ?>
     <note type="otherFormats"><?php echo esc_specialchars($otherFormats) ?></note>
   <?php endif; ?>
 
@@ -168,8 +168,8 @@
     <?php endforeach; ?>
   <?php endif; ?>
 
-  <accessCondition type="restriction on access"><?php echo esc_specialchars($resource->getAccessConditions(array('cultureFallback' => true))) ?></accessCondition>
-  <accessCondition><?php echo esc_specialchars($resource->getReproductionConditions(array('cultureFallback' => true))) ?></accessCondition>
+  <accessCondition type="restriction on access"><?php echo esc_specialchars($resource->getAccessConditions(['cultureFallback' => true])) ?></accessCondition>
+  <accessCondition><?php echo esc_specialchars($resource->getReproductionConditions(['cultureFallback' => true])) ?></accessCondition>
 
   <recordInfo>
     <recordCreationDate><?php echo $resource->createdAt ?></recordCreationDate>

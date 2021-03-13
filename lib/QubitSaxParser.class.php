@@ -60,7 +60,7 @@ class QubitSaxParser
   protected $error = null;
 
   // Ancestor tag data stack
-  protected $ancestors = array();
+  protected $ancestors = [];
 
   // Nesting level bookkeeping
   protected $level             = 0;
@@ -70,10 +70,10 @@ class QubitSaxParser
   // Get set to properties of current tag being processed
   protected $tag;
   protected $data;
-  protected $attrStack = array();
+  protected $attrStack = [];
 
   // Keep note of which handlers have been triggered
-  protected $triggeredHandlers = array();
+  protected $triggeredHandlers = [];
 
   public function __construct($encoding = 'UTF-8')
   {
@@ -106,9 +106,9 @@ class QubitSaxParser
 
     if (!$fp)
     {
-      $this->error = array(
+      $this->error = [
         'string' => 'Unable to open file'
-      );
+      ];
 
       return false;
     }
@@ -130,13 +130,13 @@ class QubitSaxParser
     {
       $errorCode = xml_get_error_code($this->sax);
 
-      $this->error = array(
+      $this->error = [
         'code'   => $errorCode,
         'string' => xml_error_string($errorCode),
         'line'   => xml_get_current_line_number($this->sax),
         'column' => xml_get_current_column_number($this->sax),
         'byte'   => xml_get_current_byte_index($this->sax)
-      );
+      ];
 
       $this->error['summary'] = sprintf(
         'Parsing error %d: "%s" at line %d, column %d (byte %d)',
@@ -242,7 +242,7 @@ class QubitSaxParser
     if (isset($executeMethod))
     {
       $this->logTriggeredHandler($executeMethod);
-      call_user_func(array($this, $executeMethod));
+      call_user_func([$this, $executeMethod]);
     }
   }
 
@@ -271,11 +271,11 @@ class QubitSaxParser
     // If we're one level deeper than last start tag, store ancestor
     if ($this->level > $this->lastTagStartLevel)
     {
-      $ancestorData = array(
+      $ancestorData = [
         'tag'  => $this->tag,
         'attr' => $this->currentAttr(),
         'data' => $this->data
-      );
+      ];
 
       array_push($this->ancestors, $ancestorData);
     }
@@ -404,7 +404,7 @@ class QubitSaxParser
    */
   protected function path()
   {
-    $path = array();
+    $path = [];
 
     foreach ($this->ancestors as $ancestor)
     {
@@ -441,7 +441,7 @@ class QubitSaxParser
    */
   protected function handlers()
   {
-    $handlers = array();
+    $handlers = [];
 
     foreach (get_class_methods(get_class($this)) as $method)
     {

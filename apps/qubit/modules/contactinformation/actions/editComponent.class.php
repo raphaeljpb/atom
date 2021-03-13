@@ -20,7 +20,7 @@
 class ContactInformationEditComponent extends sfComponent
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'city',
       'contactPerson',
       'contactType',
@@ -35,14 +35,14 @@ class ContactInformationEditComponent extends sfComponent
       'primaryContact',
       'telephone',
       'streetAddress',
-      'website');
+      'website'];
 
   public function processForm()
   {
     // HACK For now, parameter name and action name are the same. Should
     // really be configurable, ideally by interpreting
     // $form->getWidgetSchema()->getNameFormat()?
-    $params = array($this->request[$this->actionName]);
+    $params = [$this->request[$this->actionName]];
     if (isset($this->request["{$this->actionName}s"]))
     {
       // If dialog JavaScript did it's work, then use array of parameters
@@ -129,7 +129,7 @@ class ContactInformationEditComponent extends sfComponent
     {
       case 'countryCode':
         $this->form->setValidator('countryCode', new sfValidatorI18nChoiceCountry());
-        $this->form->setWidget('countryCode', new sfWidgetFormI18nChoiceCountry(array('add_empty' => true, 'culture' => $this->context->user->getCulture())));
+        $this->form->setWidget('countryCode', new sfWidgetFormI18nChoiceCountry(['add_empty' => true, 'culture' => $this->context->user->getCulture()]));
 
         break;
 
@@ -150,7 +150,7 @@ class ContactInformationEditComponent extends sfComponent
       case 'streetAddress':
       case 'note':
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormTextArea(array(), array('rows' => 2)));
+        $this->form->setWidget($name, new sfWidgetFormTextArea([], ['rows' => 2]));
 
         break;
 

@@ -5,7 +5,7 @@
 
 <?php echo $form->renderGlobalErrors() ?>
 
-<?php echo $form->renderFormTag(url_for(array($resource, 'module' => $sf_context->getModuleName(), 'action' => 'editTermAcl')), array('id' => 'editForm')) ?>
+<?php echo $form->renderFormTag(url_for([$resource, 'module' => $sf_context->getModuleName(), 'action' => 'editTermAcl']), ['id' => 'editForm']) ?>
 
   <?php echo $form->renderHiddenFields() ?>
 
@@ -13,12 +13,12 @@
 
     <fieldset class="collapsible" id="allTermsArea">
 
-      <legend><?php echo __('Permissions for all %1%', array('%1%' => lcfirst(sfConfig::get('app_ui_label_term')))) ?></legend>
+      <legend><?php echo __('Permissions for all %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_term'))]) ?></legend>
 
       <div class="form-item">
 
         <table id="allTerms" class="table table-bordered">
-          <caption><em><?php echo __('All %1%', array('%1%' => lcfirst(sfConfig::get('app_ui_label_term')))) ?></em></caption>
+          <caption><em><?php echo __('All %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_term'))]) ?></em></caption>
           <thead>
             <tr>
               <th scope="col"><?php echo __('Action') ?></th>
@@ -35,7 +35,7 @@
                       <li><input type="radio" name="acl[<?php echo $rootPermissions[$key]->id ?>]" value="<?php echo QubitAcl::DENY ?>"<?php echo (0 == $rootPermissions[$key]->grantDeny) ? ' checked="checked"' : '' ?>><?php echo __('Deny') ?></li>
                       <li><input type="radio" name="acl[<?php echo $rootPermissions[$key]->id ?>]" value="<?php echo QubitAcl::INHERIT?>"><?php echo __('Inherit') ?></li>
                     <?php else: ?>
-                      <?php $rootTermUrl = url_for(array(QubitTerm::getById(QubitTerm::ROOT_ID), 'module' => 'term')) ?>
+                      <?php $rootTermUrl = url_for([QubitTerm::getById(QubitTerm::ROOT_ID), 'module' => 'term']) ?>
                       <li><input type="radio" name="acl[<?php echo $key ?>_<?php echo $rootTermUrl ?>]" value="<?php echo QubitAcl::GRANT ?>"><?php echo __('Grant') ?></li>
                       <li><input type="radio" name="acl[<?php echo $key ?>_<?php echo $rootTermUrl ?> ?>]" value="<?php echo QubitAcl::DENY ?>"><?php echo __('Deny') ?></li>
                       <li><input type="radio" name="acl[<?php echo $key ?>_<?php echo $rootTermUrl ?> ?>]" value="<?php echo QubitAcl::INHERIT ?>" checked="checked"><?php echo __('Inherit') ?></li>
@@ -78,7 +78,7 @@
                           <li><input type="radio" name="acl[<?php echo $item[$action]->id ?>]" value="<?php echo QubitAcl::DENY ?>"<?php echo (0 == $item[$action]->grantDeny) ? ' checked="checked"' : '' ?>><?php echo __('Deny') ?></li>
                           <li><input type="radio" name="acl[<?php echo $item[$action]->id ?>]" value="<?php echo QubitAcl::INHERIT?>"><?php echo __('Inherit') ?></li>
                         <?php else: ?>
-                          <?php $rootTermUrl = url_for(array(QubitTerm::getById(QubitTerm::ROOT_ID), 'module' => 'term')) ?>
+                          <?php $rootTermUrl = url_for([QubitTerm::getById(QubitTerm::ROOT_ID), 'module' => 'term']) ?>
                           <li><input type="radio" name="acl[<?php echo $action.'_'.$rootTermUrl ?>]" value="<?php echo QubitAcl::GRANT ?>"><?php echo __('Grant') ?></li>
                           <li><input type="radio" name="acl[<?php echo $action.'_'.$rootTermUrl ?>]" value="<?php echo QubitAcl::DENY ?>"><?php echo __('Deny') ?></li>
                           <li><input type="radio" name="acl[<?php echo $action.'_'.$rootTermUrl ?>]" value="<?php echo QubitAcl::INHERIT ?>" checked="checked"><?php echo __('Inherit') ?></li>
@@ -142,7 +142,7 @@ EOL
       <div class="form-item" id="addTaxonomy">
         <?php echo $form->taxonomy->
           label(__('Taxonomy name'))->
-          renderRow(array('class' => 'form-autocomplete')) ?>
+          renderRow(['class' => 'form-autocomplete']) ?>
       </div>
 
       <div class="form-item">
@@ -156,7 +156,7 @@ EOL
 
   <section class="actions">
     <ul>
-      <li><?php echo link_to(__('Cancel'), array($resource, 'module' => $sf_context->getModuleName(), 'action' => 'indexTermAcl'), array('class' => 'c-btn')) ?></li>
+      <li><?php echo link_to(__('Cancel'), [$resource, 'module' => $sf_context->getModuleName(), 'action' => 'indexTermAcl'], ['class' => 'c-btn']) ?></li>
       <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
     </ul>
   </section>

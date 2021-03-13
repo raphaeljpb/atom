@@ -36,7 +36,7 @@ class ObjectAddDigitalObjectAction extends sfAction
     // Get repository to test upload limits
     if ($this->resource instanceof QubitInformationObject)
     {
-      $this->repository = $this->resource->getRepository(array('inherit' => true));
+      $this->repository = $this->resource->getRepository(['inherit' => true]);
     }
     elseif ($this->resource instanceof QubitActor)
     {
@@ -50,7 +50,7 @@ class ObjectAddDigitalObjectAction extends sfAction
     }
 
     // Assemble resource description
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Qubit'));
+    sfContext::getInstance()->getConfiguration()->loadHelpers(['Qubit']);
 
     if ($this->resource instanceof QubitActor)
     {
@@ -71,7 +71,7 @@ class ObjectAddDigitalObjectAction extends sfAction
     // Check if already exists a digital object
     if (null !== $digitalObject = $this->resource->getDigitalObject())
     {
-      $this->redirect(array($digitalObject, 'module' => 'digitalobject', 'action' => 'edit'));
+      $this->redirect([$digitalObject, 'module' => 'digitalobject', 'action' => 'edit']);
     }
 
     // Check user authorization
@@ -103,7 +103,7 @@ class ObjectAddDigitalObjectAction extends sfAction
         {
           $this->resource->updateXmlExports();
         }
-        $this->redirect(array($this->resource, 'module' => 'object'));
+        $this->redirect([$this->resource, 'module' => 'object']);
       }
     }
   }

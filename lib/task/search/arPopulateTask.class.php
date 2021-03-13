@@ -25,7 +25,7 @@
  */
 class arSearchPopulateTask extends sfBaseTask
 {
-  public function execute($arguments = array(), $options = array())
+  public function execute($arguments = [], $options = [])
   {
     sfContext::createInstance($this->configuration);
     sfConfig::add(QubitSetting::getSettingsArray());
@@ -47,7 +47,7 @@ class arSearchPopulateTask extends sfBaseTask
     }
     else
     {
-      $populateOptions = array();
+      $populateOptions = [];
       $populateOptions['excludeTypes'] = (!empty($options['exclude-types'])) ? explode(',', strtolower($options['exclude-types'])) : null;
       $populateOptions['update'] = $options['update'];
 
@@ -56,14 +56,14 @@ class arSearchPopulateTask extends sfBaseTask
   }
   protected function configure()
   {
-    $this->addOptions(array(
+    $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('slug', null, sfCommandOption::PARAMETER_OPTIONAL, 'Slug of resource to index (ignoring exclude-types option).'),
       new sfCommandOption('ignore-descendants', null, sfCommandOption::PARAMETER_NONE, "Don't index resource's descendants (applies to --slug option only)."),
       new sfCommandOption('exclude-types', null, sfCommandOption::PARAMETER_OPTIONAL, 'Exclude document type(s) (command-separated) from indexing'),
       new sfCommandOption('show-types', null, sfCommandOption::PARAMETER_NONE, 'Show available document type(s), that can be excluded, before indexing'),
-      new sfCommandOption('update', null, sfCommandOption::PARAMETER_NONE, "Don't delete existing records before indexing.")));
+      new sfCommandOption('update', null, sfCommandOption::PARAMETER_NONE, "Don't delete existing records before indexing.")]);
 
     $this->namespace = 'search';
     $this->name = 'populate';
@@ -99,7 +99,7 @@ EOF;
     // For information objects, allow optional skipping of descendants
     if ($resource instanceof QubitInformationObject)
     {
-      $options = array('updateDescendants' => !$options['ignore-descendants']);
+      $options = ['updateDescendants' => !$options['ignore-descendants']];
       QubitSearch::getInstance()->update($resource, $options);
     }
     else

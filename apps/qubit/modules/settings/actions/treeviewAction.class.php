@@ -20,7 +20,7 @@
 class SettingsTreeviewAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'type',
       'showBrowseHierarchyPage',
       'allowFullWidthTreeviewCollapse',
@@ -28,7 +28,7 @@ class SettingsTreeviewAction extends DefaultEditAction
       'showIdentifier',
       'showLevelOfDescription',
       'showDates',
-      'fullItemsPerPage');
+      'fullItemsPerPage'];
 
   public function execute($request)
   {
@@ -46,7 +46,7 @@ class SettingsTreeviewAction extends DefaultEditAction
 
         $this->getUser()->setFlash('notice', $this->i18n->__('Treeview settings saved.'));
 
-        $this->redirect(array('module' => 'settings', 'action' => 'treeview'));
+        $this->redirect(['module' => 'settings', 'action' => 'treeview']);
       }
     }
   }
@@ -63,9 +63,9 @@ class SettingsTreeviewAction extends DefaultEditAction
       case 'type':
         $this->typeSetting = QubitSetting::getByName('treeview_type');
         $default = 'sidebar';
-        $options = array(
+        $options = [
           'sidebar' => $this->i18n->__('Sidebar'),
-          'fullWidth' => $this->i18n->__('Full width'));
+          'fullWidth' => $this->i18n->__('Full width')];
 
         $this->addSettingRadioButtonsField($this->typeSetting, $name, $default, $options);
 
@@ -74,9 +74,9 @@ class SettingsTreeviewAction extends DefaultEditAction
       case 'showBrowseHierarchyPage':
         $this->showBrowseHierarchyPageSetting = QubitSetting::getByName('treeview_show_browse_hierarchy_page');
         $default = 'no';
-        $options = array(
+        $options = [
           'no' => $this->i18n->__('No'),
-          'yes' => $this->i18n->__('Yes'));
+          'yes' => $this->i18n->__('Yes')];
 
         $this->addSettingRadioButtonsField($this->showBrowseHierarchyPageSetting, $name, $default, $options);
 
@@ -85,9 +85,9 @@ class SettingsTreeviewAction extends DefaultEditAction
       case 'allowFullWidthTreeviewCollapse':
         $this->allowFullWidthTreeviewCollapse = QubitSetting::getByName('treeview_allow_full_width_collapse');
         $default = 'no';
-        $options = array(
+        $options = [
           'no' => $this->i18n->__('No'),
-          'yes' => $this->i18n->__('Yes'));
+          'yes' => $this->i18n->__('Yes')];
 
         $this->addSettingRadioButtonsField($this->allowFullWidthTreeviewCollapse, $name, $default, $options);
 
@@ -96,10 +96,10 @@ class SettingsTreeviewAction extends DefaultEditAction
       case 'ioSort':
         $this->ioSortSetting = QubitSetting::getByName('sort_treeview_informationobject');
         $default = 'none';
-        $options = array(
+        $options = [
           'none' => $this->i18n->__('Manual'),
           'title' => $this->i18n->__('Title'),
-          'identifierTitle' => $this->i18n->__('Identifier - Title'));
+          'identifierTitle' => $this->i18n->__('Identifier - Title')];
 
         $this->addSettingRadioButtonsField($this->ioSortSetting, $name, $default, $options);
 
@@ -108,10 +108,10 @@ class SettingsTreeviewAction extends DefaultEditAction
       case 'showIdentifier':
         $this->showIdentifierSetting = QubitSetting::getByName('treeview_show_identifier');
         $default = 'no';
-        $options = array(
+        $options = [
           'no' => $this->i18n->__('No'),
           'identifier' => $this->i18n->__('Identifier'),
-          'referenceCode' => $this->i18n->__('Inherit reference code'));
+          'referenceCode' => $this->i18n->__('Inherit reference code')];
 
         $this->addSettingRadioButtonsField($this->showIdentifierSetting, $name, $default, $options);
 
@@ -120,9 +120,9 @@ class SettingsTreeviewAction extends DefaultEditAction
       case 'showLevelOfDescription':
         $this->showLevelOfDescriptionSetting = QubitSetting::getByName('treeview_show_level_of_description');
         $default = 'yes';
-        $options = array(
+        $options = [
           'no' => $this->i18n->__('No'),
-          'yes' => $this->i18n->__('Yes'));
+          'yes' => $this->i18n->__('Yes')];
 
         $this->addSettingRadioButtonsField($this->showLevelOfDescriptionSetting, $name, $default, $options);
 
@@ -131,9 +131,9 @@ class SettingsTreeviewAction extends DefaultEditAction
       case 'showDates':
         $this->showDatesSetting = QubitSetting::getByName('treeview_show_dates');
         $default = 'no';
-        $options = array(
+        $options = [
           'no' => $this->i18n->__('No'),
-          'yes' => $this->i18n->__('Yes'));
+          'yes' => $this->i18n->__('Yes')];
 
         $this->addSettingRadioButtonsField($this->showDatesSetting, $name, $default, $options);
 
@@ -145,15 +145,15 @@ class SettingsTreeviewAction extends DefaultEditAction
         $default = 50;
         if (isset($this->fullItemsPerPageSetting))
         {
-          $default = $this->fullItemsPerPageSetting->getValue(array('sourceCulture' => true));
+          $default = $this->fullItemsPerPageSetting->getValue(['sourceCulture' => true]);
         }
         $this->form->setDefault($name, $default);
 
         $this->form->setValidator($name, new sfValidatorInteger(
-          array(
+          [
             'min' => 10,
             'max' => sfConfig::get('app_treeview_items_per_page_max', 10000)
-          )
+          ]
         ));
         $this->form->setWidget($name, new sfWidgetFormInput());
 
@@ -212,12 +212,12 @@ class SettingsTreeviewAction extends DefaultEditAction
   {
     if (isset($setting))
     {
-      $default = $setting->getValue(array('sourceCulture' => true));
+      $default = $setting->getValue(['sourceCulture' => true]);
     }
 
     $this->form->setDefault($fieldName, $default);
-    $this->form->setValidator($fieldName, new sfValidatorString(array('required' => false)));
-    $this->form->setWidget($fieldName, new sfWidgetFormSelectRadio(array('choices' => $options), array('class' => 'radio')));
+    $this->form->setValidator($fieldName, new sfValidatorString(['required' => false]));
+    $this->form->setWidget($fieldName, new sfWidgetFormSelectRadio(['choices' => $options], ['class' => 'radio']));
   }
 
   private function createOrUpdateSetting($setting, $name, $value)
@@ -229,7 +229,7 @@ class SettingsTreeviewAction extends DefaultEditAction
       $setting->sourceCulture = 'en';
     }
 
-    $setting->setValue($value, array('culture' => 'en'));
+    $setting->setValue($value, ['culture' => 'en']);
     $setting->save();
   }
 }

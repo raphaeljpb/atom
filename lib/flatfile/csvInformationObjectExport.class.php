@@ -32,23 +32,23 @@ class csvInformationObjectExport extends QubitFlatfileExport
   protected $titleNoteMap;
 
   // Taxonomy cache properties
-  protected $commonNoteTypeIds       = array();
-  protected $radNoteTypeIds          = array();
-  protected $titleNoteTypeIds        = array();
-  protected $levelOfDescriptionTerms = array();
-  protected $levelOfDetailTerms      = array();
-  protected $descriptionStatusTerms  = array();
-  protected $eventTypeTerms          = array();
-  protected $physicalObjectTypes     = array();
+  protected $commonNoteTypeIds       = [];
+  protected $radNoteTypeIds          = [];
+  protected $titleNoteTypeIds        = [];
+  protected $levelOfDescriptionTerms = [];
+  protected $levelOfDetailTerms      = [];
+  protected $descriptionStatusTerms  = [];
+  protected $eventTypeTerms          = [];
+  protected $physicalObjectTypes     = [];
 
-  protected $options = array();
+  protected $options = [];
 
   /*
    * Store export parameters for use.
    *
    * @return void
    */
-  public function setOptions($options = array())
+  public function setOptions($options = [])
   {
     $this->options = $options;
   }
@@ -83,7 +83,7 @@ class csvInformationObjectExport extends QubitFlatfileExport
     }
 
     // Set repository column and resposible institution identifier
-    $repository = $this->resource->getRepository(array('inherit' => true));
+    $repository = $this->resource->getRepository(['inherit' => true]);
     $this->setColumn('repository', $repository->authorizedFormOfName);
 
     // Set other groups of columns
@@ -169,7 +169,7 @@ class csvInformationObjectExport extends QubitFlatfileExport
 
     if (count($relations))
     {
-      $materials = array();
+      $materials = [];
 
       foreach ($relations as $relation)
       {
@@ -189,8 +189,8 @@ class csvInformationObjectExport extends QubitFlatfileExport
   {
     $properties = $this->resource->getProperties(null, 'alternativeIdentifiers');
 
-    $alternativeIdentifiers      = array();
-    $alternativeIdentifierLabels = array();
+    $alternativeIdentifiers      = [];
+    $alternativeIdentifierLabels = [];
 
     foreach ($properties as $property)
     {
@@ -211,9 +211,9 @@ class csvInformationObjectExport extends QubitFlatfileExport
   {
     $physicalObjects = $this->resource->getPhysicalObjects();
 
-    $physicalObjectNames     = array();
-    $physicalObjectLocations = array();
-    $physicalObjectTypes     = array();
+    $physicalObjectNames     = [];
+    $physicalObjectLocations = [];
+    $physicalObjectTypes     = [];
 
     foreach ($physicalObjects as $physicalObject)
     {
@@ -234,9 +234,9 @@ class csvInformationObjectExport extends QubitFlatfileExport
    */
   protected function setAccessionNumberColumn()
   {
-    $relations = QubitRelation::getRelationsBySubjectId($this->resource->id, array('typeId' => QubitTerm::ACCESSION_ID));
+    $relations = QubitRelation::getRelationsBySubjectId($this->resource->id, ['typeId' => QubitTerm::ACCESSION_ID]);
 
-    $accessionNumbers = array();
+    $accessionNumbers = [];
 
     foreach ($relations as $item)
     {
@@ -253,14 +253,14 @@ class csvInformationObjectExport extends QubitFlatfileExport
    */
   protected function setEventColumns()
   {
-    $types          = array();
-    $dates          = array();
-    $startDates     = array();
-    $endDates       = array();
-    $descriptions   = array();
-    $actors         = array();
-    $actorHistories = array();
-    $places         = array();
+    $types          = [];
+    $dates          = [];
+    $startDates     = [];
+    $endDates       = [];
+    $descriptions   = [];
+    $actors         = [];
+    $actorHistories = [];
+    $places         = [];
 
     $events = $this->resource->getEventsRelatedByobjectId();
 
@@ -303,8 +303,8 @@ class csvInformationObjectExport extends QubitFlatfileExport
         continue;
       }
 
-      $noteContent = array();
-      foreach ($this->resource->getNotesByType(array('noteTypeId' => $typeId)) as $note)
+      $noteContent = [];
+      foreach ($this->resource->getNotesByType(['noteTypeId' => $typeId]) as $note)
       {
         $noteContent[] = $note->content;
       }
@@ -325,8 +325,8 @@ class csvInformationObjectExport extends QubitFlatfileExport
   {
     $accessPoints = $this->resource->getNameAccessPoints();
 
-    $data          = array();
-    $data['names'] = array();
+    $data          = [];
+    $data['names'] = [];
 
     foreach ($accessPoints as $accessPoint)
     {
@@ -349,8 +349,8 @@ class csvInformationObjectExport extends QubitFlatfileExport
 
     $accessPoints = $this->resource->getPlaceAccessPoints();
 
-    $data          = array();
-    $data['names'] = array();
+    $data          = [];
+    $data['names'] = [];
 
     foreach ($accessPoints as $accessPoint)
     {
@@ -373,8 +373,8 @@ class csvInformationObjectExport extends QubitFlatfileExport
 
     $accessPoints = $this->resource->getSubjectAccessPoints();
 
-    $data = array();
-    $data['names'] = array();
+    $data = [];
+    $data['names'] = [];
 
     foreach ($accessPoints as $accessPoint)
     {
@@ -396,8 +396,8 @@ class csvInformationObjectExport extends QubitFlatfileExport
   {
     $accessPoints = $this->resource->getGenreAccessPoints();
 
-    $data          = array();
-    $data['names'] = array();
+    $data          = [];
+    $data['names'] = [];
 
     foreach ($accessPoints as $accessPoint)
     {

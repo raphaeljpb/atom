@@ -28,7 +28,7 @@
 class sfIsdiahPluginEditAction extends RepositoryEditAction
 {
   // Arrays not allowed in class constants
-  public static $NAMES = array(
+  public static $NAMES = [
       'identifier',
       'authorizedFormOfName',
       'parallelName',
@@ -59,7 +59,7 @@ class sfIsdiahPluginEditAction extends RepositoryEditAction
       'descSources',
       'maintenanceNotes',
       'geographicSubregion',
-      'thematicArea');
+      'thematicArea'];
 
   protected function earlyExecute()
   {
@@ -75,7 +75,7 @@ class sfIsdiahPluginEditAction extends RepositoryEditAction
         $title = $this->context->i18n->__('Untitled');
       }
 
-      $title = $this->context->i18n->__('Edit %1%', array('%1%' => $title));
+      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");

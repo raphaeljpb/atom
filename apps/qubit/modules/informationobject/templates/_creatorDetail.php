@@ -1,4 +1,4 @@
-<?php $actorsShown = array(); ?>
+<?php $actorsShown = []; ?>
 <?php foreach ($ancestor->getCreators() as $item): ?>
   <?php if (!isset($actorsShown[$item->id])): ?>
     <div class="field">
@@ -7,15 +7,15 @@
 
         <div class="creator">
           <?php if (0 < count($resource->getCreators())): ?>
-            <?php echo link_to(render_title($item), array($item)) ?>
+            <?php echo link_to(render_title($item), [$item]) ?>
           <?php else: ?>
-            <?php echo link_to(render_title($item), array($item), array('title' => __('Inherited from %1%', array('%1%' => $ancestor)))) ?>
+            <?php echo link_to(render_title($item), [$item], ['title' => __('Inherited from %1%', ['%1%' => $ancestor])]) ?>
           <?php endif; ?>
         </div>
 
         <?php if (isset($item->datesOfExistence)): ?>
           <div class="datesOfExistence">
-            (<?php echo render_value_inline($item->getDatesOfExistence(array('cultureFallback' => true))) ?>)
+            (<?php echo render_value_inline($item->getDatesOfExistence(['cultureFallback' => true])) ?>)
           </div>
         <?php endif; ?>
 
@@ -28,7 +28,7 @@
             <?php endif; ?>
             <h3><?php echo $history_kind; ?></h3>
             <div class="history">
-              <?php echo render_value($item->getHistory(array('cultureFallback' => true))) ?>
+              <?php echo render_value($item->getHistory(['cultureFallback' => true])) ?>
             </div>
           </div>
         <?php endif; ?>

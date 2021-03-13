@@ -7,7 +7,7 @@
 <?php slot('before-content') ?>
   <div class="nav">
     <div class="search">
-      <form action="<?php echo url_for(array('module' => 'donor', 'action' => 'list')) ?>">
+      <form action="<?php echo url_for(['module' => 'donor', 'action' => 'list']) ?>">
         <input name="subquery" value="<?php echo $sf_request->subquery ?>"/>
         <input class="form-submit" type="submit" value="<?php echo __('Search donor') ?>"/>
       </form>
@@ -28,7 +28,7 @@
       <?php foreach ($donors as $item): ?>
         <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?>">
           <td>
-            <?php echo link_to(render_title($item), array($item, 'module' => 'donor')) ?>
+            <?php echo link_to(render_title($item), [$item, 'module' => 'donor']) ?>
           </td>
         </tr>
       <?php endforeach; ?>
@@ -38,5 +38,5 @@
 <?php end_slot() ?>
 
 <?php slot('after-content') ?>
-  <?php echo get_partial('default/pager', array('pager' => $pager)) ?>
+  <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 <?php end_slot() ?>

@@ -6,7 +6,7 @@
   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
   xmlns:dc="http://purl.org/dc/elements/1.1/">
 
-  <skos:ConceptScheme rdf:about="<?php echo url_for(array($taxonomy, 'module' => 'taxonomy'), true) ?>">
+  <skos:ConceptScheme rdf:about="<?php echo url_for([$taxonomy, 'module' => 'taxonomy'], true) ?>">
 
     <?php foreach ($taxonomy->taxonomyI18ns as $i18n): ?>
       <?php if (isset($i18n->name)): ?>
@@ -15,14 +15,14 @@
     <?php endforeach; // i18ns?>
 
     <?php foreach($topLevelTerms as $term): ?>
-      <skos:hasTopConcept rdf:resource="<?php echo url_for(array($term, 'module' => 'term'), true) ?>"/>
+      <skos:hasTopConcept rdf:resource="<?php echo url_for([$term, 'module' => 'term'], true) ?>"/>
     <?php endforeach; // topLevelTerms?>
 
   </skos:ConceptScheme>
 
   <?php foreach ($terms as $term): ?>
 
-    <skos:Concept rdf:about="<?php echo url_for(array($term, 'module' => 'term'), true) ?>">
+    <skos:Concept rdf:about="<?php echo url_for([$term, 'module' => 'term'], true) ?>">
 
       <?php foreach ($term->termI18ns as $i18n): ?>
         <?php if (null != $i18n->name): ?>
@@ -40,9 +40,9 @@
         <?php endforeach; ?>
       <?php endif; ?>
 
-      <skos:inScheme rdf:resource="<?php echo url_for(array($taxonomy, 'module' => 'taxonomy'), true) ?>"/>
+      <skos:inScheme rdf:resource="<?php echo url_for([$taxonomy, 'module' => 'taxonomy'], true) ?>"/>
 
-      <?php if (0 < count($scopeNotes = $term->getNotesByType(array('noteTypeId' => QubitTerm::SCOPE_NOTE_ID)))): ?>
+      <?php if (0 < count($scopeNotes = $term->getNotesByType(['noteTypeId' => QubitTerm::SCOPE_NOTE_ID]))): ?>
         <?php foreach ($scopeNotes as $scopeNote): ?>
           <?php foreach ($scopeNote->noteI18ns as $i18n): ?>
             <?php if (isset($i18n->content)): ?>
@@ -52,7 +52,7 @@
         <?php endforeach; // scopeNotes?>
       <?php endif; ?>
 
-      <?php if (0 < count($sourceNotes = $term->getNotesByType(array('noteTypeId' => QubitTerm::SOURCE_NOTE_ID)))): ?>
+      <?php if (0 < count($sourceNotes = $term->getNotesByType(['noteTypeId' => QubitTerm::SOURCE_NOTE_ID]))): ?>
         <?php foreach ($sourceNotes as $sourceNote): ?>
           <?php foreach ($sourceNote->noteI18ns as $i18n): ?>
             <?php if (isset($i18n->content)): ?>
@@ -64,17 +64,17 @@
 
       <?php if (QubitTerm::ROOT_ID != $term->parentId): ?>
         <?php if (!(isset($selectedTerm) && $selectedTerm->id == $term->id)): ?>
-          <skos:broader rdf:resource="<?php echo url_for(array($term->parent, 'module' => 'term'), true) ?>"/>
+          <skos:broader rdf:resource="<?php echo url_for([$term->parent, 'module' => 'term'], true) ?>"/>
         <?php endif; ?>
       <?php endif; ?>
 
       <?php foreach ($term->getChildren() as $child): ?>
-        <skos:narrower rdf:resource="<?php echo url_for(array($child, 'module' => 'term'), true) ?>"/>
+        <skos:narrower rdf:resource="<?php echo url_for([$child, 'module' => 'term'], true) ?>"/>
       <?php endforeach; // children?>
 
-      <?php if (0 < count($relations = QubitRelation::getBySubjectOrObjectId($term->id, array('typeId' => QubitTerm::TERM_RELATION_ASSOCIATIVE_ID)))): ?>
+      <?php if (0 < count($relations = QubitRelation::getBySubjectOrObjectId($term->id, ['typeId' => QubitTerm::TERM_RELATION_ASSOCIATIVE_ID]))): ?>
         <?php foreach($relations as $relation): ?>
-          <skos:related rdf:resource="<?php echo url_for(array($relation->getOpposedObject($term->id), 'module' => 'term'), true) ?>"/>
+          <skos:related rdf:resource="<?php echo url_for([$relation->getOpposedObject($term->id), 'module' => 'term'], true) ?>"/>
         <?php endforeach; ?>
       <?php endif; ?>
 

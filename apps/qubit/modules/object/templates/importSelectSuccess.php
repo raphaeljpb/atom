@@ -16,9 +16,9 @@
   <?php echo $form->renderGlobalErrors() ?>
 
   <?php if (isset($resource)): ?>
-    <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'object', 'action' => 'importSelect')), array('enctype' => 'multipart/form-data')) ?>
+    <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'object', 'action' => 'importSelect']), ['enctype' => 'multipart/form-data']) ?>
   <?php else: ?>
-    <?php echo $form->renderFormTag(url_for(array('module' => 'object', 'action' => 'importSelect')), array('enctype' => 'multipart/form-data')) ?>
+    <?php echo $form->renderFormTag(url_for(['module' => 'object', 'action' => 'importSelect']), ['enctype' => 'multipart/form-data']) ?>
   <?php endif; ?>
 
     <?php echo $form->renderHiddenFields() ?>
@@ -55,7 +55,7 @@
               <option value="dc"><?php echo __('DC') ?></option>
             </select>
 
-            <p class="alert alert-info text-center"><?php echo __('If you are importing a SKOS file to a taxonomy other than subjects, please go to the %1%', array('%1%' => link_to(__('SKOS import page'), array('module' => 'sfSkosPlugin', 'action' => 'import')))) ?></p>
+            <p class="alert alert-info text-center"><?php echo __('If you are importing a SKOS file to a taxonomy other than subjects, please go to the %1%', ['%1%' => link_to(__('SKOS import page'), ['module' => 'sfSkosPlugin', 'action' => 'import'])]) ?></p>
           </div>
         <?php endif; ?>
 
@@ -106,8 +106,8 @@
                       <?php echo $form->collection
                         ->label(__('Top-level description'))
                         ->renderLabel() ?>
-                      <?php echo $form->collection->render(array('class' => 'form-autocomplete')) ?>
-                      <input class="list" type="hidden" value="<?php echo url_for(array('module' => 'informationobject', 'action' => 'autocomplete', 'parent' => QubitInformationObject::ROOT_ID, 'filterDrafts' => true)) ?>"/>
+                      <?php echo $form->collection->render(['class' => 'form-autocomplete']) ?>
+                      <input class="list" type="hidden" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'autocomplete', 'parent' => QubitInformationObject::ROOT_ID, 'filterDrafts' => true]) ?>"/>
                     </div>
                   </div>
                 </div>

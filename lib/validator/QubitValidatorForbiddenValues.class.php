@@ -25,7 +25,7 @@ class QubitValidatorForbiddenValues extends sfValidatorBase
    *
    * @see sfValidatorBase
    */
-  protected function configure($options = array(), $messages = array())
+  protected function configure($options = [], $messages = [])
   {
     $this->addRequiredOption('forbidden_values');
     $this->addMessage('forbidden', sfContext::getInstance()->i18n->__('Value %value% is forbidden'));
@@ -40,7 +40,7 @@ class QubitValidatorForbiddenValues extends sfValidatorBase
 
     if (in_array($value, $forbiddenValues))
     {
-      throw new sfValidatorError($this, 'forbidden', array('value' => $value));
+      throw new sfValidatorError($this, 'forbidden', ['value' => $value]);
     }
 
     return $value;
