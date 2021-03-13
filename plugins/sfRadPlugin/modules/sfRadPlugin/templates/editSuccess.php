@@ -11,11 +11,11 @@
 
   <?php echo get_component('informationobject', 'descriptionHeader', ['resource' => $resource, 'title' => (string) $rad]) ?>
 
-  <?php if (isset($sf_request->source)): ?>
+  <?php if (isset($sf_request->source)) { ?>
     <div class="messages status">
       <?php echo __('This is a duplicate of record %1%', ['%1%' => $sourceInformationObjectLabel]) ?>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
@@ -23,11 +23,11 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+  <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'informationobject', 'action' => 'edit']), ['id' => 'editForm']) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'informationobject', 'action' => 'add']), ['id' => 'editForm']) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -188,15 +188,15 @@
 
         <legend><?php echo __('Archival description area') ?></legend>
 
-        <?php foreach ($resource->getCreators() as $item): ?>
+        <?php foreach ($resource->getCreators() as $item) { ?>
           <div class="field">
 
             <h3>
-              <?php if (null !== ($entityType = $item->entityType) && QubitTerm::CORPORATE_BODY_ID == $entityType->id): ?>
+              <?php if (null !== ($entityType = $item->entityType) && QubitTerm::CORPORATE_BODY_ID == $entityType->id) { ?>
                 <?php echo __('Administrative history') ?>
-              <?php else: ?>
+              <?php } else { ?>
                 <?php echo __('Biographical sketch') ?>
-              <?php endif; ?>
+              <?php } ?>
             </h3>
 
             <div>
@@ -205,7 +205,7 @@
             </div>
 
           </div>
-        <?php endforeach; ?>
+        <?php } ?>
 
         <?php echo render_field($form->archivalHistory
           ->help(__('"Give the history of the custody of the unit being described, i.e., the successive transfers of ownership and custody or control of the material, along with the dates thereof, insofar as it can be ascertained." (RAD 1.7C)'))
@@ -273,9 +273,9 @@
             ->label(__('Related materials'))
             ->renderLabel() ?>
           <?php echo $form->relatedMaterialDescriptions->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitInformationObject::getRoot(), 'create')): ?>
+          <?php if (QubitAcl::check(QubitInformationObject::getRoot(), 'create')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'add']) ?> #title"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'autocomplete']) ?>"/>
           <?php echo $form->relatedMaterialDescriptions
             ->help(__('To create a relationship between this description and another description held in AtoM, begin typing the name of the related description and select it from the autocomplete drop-down menu when it appears below. Multiple relationships can be created.'))
@@ -309,9 +309,9 @@
             ->label(__('Subject access points'))
             ->renderLabel() ?>
           <?php echo $form->subjectAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?>"/>
           <?php echo $form->subjectAccessPoints
             ->help(__('Search for an existing term in the Subjects taxonomy by typing the first few characters of the term. Alternatively, type a new term to create and link to a new subject term.'))
@@ -323,9 +323,9 @@
             ->label(__('Place access points'))
             ->renderLabel() ?>
           <?php echo $form->placeAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?>"/>
           <?php echo $form->placeAccessPoints
             ->help(__('Search for an existing term in the Places taxonomy by typing the first few characters of the term name. Alternatively, type a new term to create and link to a new place term.'))
@@ -337,9 +337,9 @@
             ->label(__('Genre access points'))
             ->renderLabel() ?>
           <?php echo $form->genreAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::GENRE_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::GENRE_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::GENRE_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::GENRE_ID), 'module' => 'taxonomy'])]) ?>"/>
           <?php echo $form->genreAccessPoints
             ->help(__('Search for an existing term in the Genre taxonomy by typing the first few characters of the term name. Alternatively, type a new term to create and link to a new genre term.'))
@@ -351,9 +351,9 @@
             ->label(__('Name access points (subjects)'))
             ->renderLabel() ?>
           <?php echo $form->nameAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')): ?>
+          <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'actor', 'action' => 'add']) ?> #authorizedFormOfName"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete', 'showOnlyActors' => 'true']) ?>"/>
           <?php echo $form->nameAccessPoints
             ->help(__('"Choose provenance, author and other non-subject access points from the archival description, as appropriate. All access points must be apparent from the archival description to which they relate." (RAD 21.0B) The values in this field are drawn from the Authorized form of name field in authority records. Search for an existing name by typing the first few characters of the name. Alternatively, type a new name to create and link to a new authority record.'))

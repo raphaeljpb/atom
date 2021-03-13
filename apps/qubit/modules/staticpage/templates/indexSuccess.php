@@ -1,11 +1,11 @@
 <?php $menu = get_component('menu', 'staticPagesMenu') ?>
 <?php $layout = 'layout_1col' ?>
-<?php if (!empty($menu)): ?>
+<?php if (!empty($menu)) { ?>
   <?php $layout = 'layout_2col' ?>
   <?php slot('sidebar') ?>
     <?php echo $menu ?>
   <?php end_slot() ?>
-<?php endif; ?>
+<?php } ?>
 <?php decorate_with($layout) ?>
 
 <?php slot('title') ?>
@@ -20,15 +20,15 @@
 
 </div>
 
-<?php if (QubitAcl::check($resource, 'update')): ?>
+<?php if (QubitAcl::check($resource, 'update')) { ?>
   <?php slot('after-content') ?>
       <section class="actions">
         <ul>
           <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'staticpage', 'action' => 'edit'], ['class' => 'c-btn c-btn-submit', 'title' => __('Edit this page')]) ?></li>
-          <?php if (QubitAcl::check($resource, 'delete')): ?>
+          <?php if (QubitAcl::check($resource, 'delete')) { ?>
             <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'staticpage', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete']) ?></li>
-          <?php endif; ?>
+          <?php } ?>
         </ul>
       </section>
   <?php end_slot() ?>
-<?php endif; ?>
+<?php } ?>

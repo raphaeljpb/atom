@@ -65,7 +65,7 @@
 
         <p><?php echo __('Original slug') ?>: <em><?php echo $resource->slug ?></em></p>
 
-        <?php if (count($resource->digitalObjectsRelatedByobjectId) > 0): ?>
+        <?php if (count($resource->digitalObjectsRelatedByobjectId) > 0) { ?>
 
           <div class="rename-form-field-toggle"><input id="rename_enable_filename" type="checkbox" /> <?php echo __('Update filename') ?></div>
           <br />
@@ -76,7 +76,7 @@
 
           <p><?php echo __('Original filename') ?>: <em><?php echo $resource->digitalObjectsRelatedByobjectId[0]->name ?></em></p>
 
-        <?php endif; ?>
+        <?php } ?>
 
       </fieldset>
     </div>

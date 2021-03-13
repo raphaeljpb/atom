@@ -1,4 +1,4 @@
-<?php if ($showLogin): ?>
+<?php if ($showLogin) { ?>
 
   <div id="user-menu">
     <button class="top-item top-dropdown" data-toggle="dropdown" data-target="#"
@@ -37,7 +37,7 @@
     </div>
   </div>
 
-<?php elseif($sf_user->isAuthenticated()): ?>
+<?php } elseif ($sf_user->isAuthenticated()){ ?>
 
   <div id="user-menu">
 
@@ -73,4 +73,4 @@
 
   </div>
 
-<?php endif; ?>
+<?php } ?>

@@ -19,11 +19,11 @@
 
       <legend><?php echo __('Edit permissions') ?></legend>
 
-      <?php foreach ($repositories as $key => $item): ?>
+      <?php foreach ($repositories as $key => $item) { ?>
         <div class="form-item">
           <?php echo get_component('aclGroup', 'aclTable', ['object' => QubitRepository::getById($key), 'permissions' => $item, 'actions' => $basicActions]) ?>
         </div>
-      <?php endforeach; ?>
+      <?php } ?>
 
       <div class="form-item">
         <label for="addRepositoryLink"><?php echo __('Add permissions by %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_repository'))]) ?></label>

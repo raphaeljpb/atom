@@ -2,15 +2,15 @@
 
 <?php echo get_component('user', 'aclMenu') ?>
 
-<?php if (!$resource->active): ?>
+<?php if (!$resource->active) { ?>
   <div class="messages error">
     <ul>
-      <?php if (!$resource->active): ?>
+      <?php if (!$resource->active) { ?>
         <li><?php echo __('This user is inactive') ?></li>
-      <?php endif; ?>
+      <?php } ?>
     </ul>
   </div>
-<?php endif; ?>
+<?php } ?>
 
 <section id="content">
 
@@ -22,72 +22,72 @@
 
     <?php echo render_show(__('Email'), $resource->email) ?>
 
-    <?php if (!$sf_user->isAdministrator()): ?>
+    <?php if (!$sf_user->isAdministrator()) { ?>
       <div class="field">
         <h3><?php echo __('Password') ?></h3>
         <div><?php echo link_to(__('Reset password'), [$resource, 'module' => 'user', 'action' => 'passwordEdit']) ?></div>
       </div>
-    <?php endif; ?>
+    <?php } ?>
 
-    <?php if (0 < count($groups = $resource->getAclGroups())): ?>
+    <?php if (0 < count($groups = $resource->getAclGroups())) { ?>
       <div class="field">
         <h3><?php echo __('User groups') ?></h3>
         <div>
           <ul>
-            <?php foreach ($groups as $item): ?>
-              <?php if (100 <= $item->id): ?>
+            <?php foreach ($groups as $item) { ?>
+              <?php if (100 <= $item->id) { ?>
                 <li><?php echo $item->__toString() ?></li>
-              <?php else: ?>
+              <?php } else { ?>
                 <li><span class="note2"><?php echo $item->__toString() ?></li>
-              <?php endif; ?>
-            <?php endforeach; ?>
+              <?php } ?>
+            <?php } ?>
           </ul>
         </div>
       </div>
-    <?php endif; ?>
+    <?php } ?>
 
-    <?php if (sfConfig::get('app_multi_repository')): ?>
-      <?php if (0 < count($repositories = $resource->getRepositories())): ?>
+    <?php if (sfConfig::get('app_multi_repository')) { ?>
+      <?php if (0 < count($repositories = $resource->getRepositories())) { ?>
         <div class="field">
           <h3><?php echo __('Repository affiliation') ?></h3>
           <div>
             <ul>
-              <?php foreach ($repositories as $item): ?>
+              <?php foreach ($repositories as $item) { ?>
                 <li><?php echo render_title($item) ?></li>
-              <?php endforeach; ?>
+              <?php } ?>
             </ul>
           </div>
         </div>
-      <?php endif; ?>
-    <?php endif; ?>
+      <?php } ?>
+    <?php } ?>
 
-    <?php if ($sf_context->getConfiguration()->isPluginEnabled('arRestApiPlugin')): ?>
+    <?php if ($sf_context->getConfiguration()->isPluginEnabled('arRestApiPlugin')) { ?>
       <div class="field">
         <h3><?php echo __('REST API key') ?></h3>
         <div>
-          <?php if (isset($restApiKey)): ?>
+          <?php if (isset($restApiKey)) { ?>
             <code><?php echo $restApiKey ?></code>
-          <?php else: ?>
+          <?php } else { ?>
             <?php echo __('Not generated yet.') ?>
-          <?php endif; ?>
+          <?php } ?>
         </div>
       </div>
-    <?php endif; ?>
+    <?php } ?>
 
-    <?php if ($sf_context->getConfiguration()->isPluginEnabled('arOaiPlugin')): ?>
+    <?php if ($sf_context->getConfiguration()->isPluginEnabled('arOaiPlugin')) { ?>
       <div class="field">
         <h3><?php echo __('OAI-PMH API key') ?></h3>
         <div>
-          <?php if (isset($oaiApiKey)): ?>
+          <?php if (isset($oaiApiKey)) { ?>
             <code><?php echo $oaiApiKey ?></code>
-          <?php else: ?>
+          <?php } else { ?>
             <?php echo __('Not generated yet.') ?>
-          <?php endif; ?>
+          <?php } ?>
         </div>
       </div>
-    <?php endif; ?>
+    <?php } ?>
 
-    <?php if (sfConfig::get('app_audit_log_enabled', false)): ?>
+    <?php if (sfConfig::get('app_audit_log_enabled', false)) { ?>
       <div id="editing-history-wrapper">
         <fieldset class="collapsible collapsed hidden" id="editingHistory">
           <legend>
@@ -120,7 +120,7 @@
 
         </fieldset>
       </div>
-    <?php endif; ?>
+    <?php } ?>
 
   </section>
 </section>

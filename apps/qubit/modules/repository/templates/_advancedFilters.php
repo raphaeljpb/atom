@@ -1,8 +1,8 @@
 <form method="get">
 
-  <?php foreach ($hiddenFields as $name => $value): ?>
+  <?php foreach ($hiddenFields as $name => $value) { ?>
     <input type="hidden" name="<?php echo $name ?>" value="<?php echo $value ?>"/>
-  <?php endforeach; ?>
+  <?php } ?>
 
   <div class="advanced-repository-filters-content">
 
@@ -24,22 +24,22 @@
       <div class="span4">
         <select name="thematicAreas">
           <option selected="selected"></option>
-          <?php foreach ($thematicAreas as $r): ?>
+          <?php foreach ($thematicAreas as $r) { ?>
             <option value="<?php echo $r->getId() ?>">
               <?php echo get_search_i18n($r->getData(), 'name', ['cultureFallback' => true]) ?>
             </option>
-          <?php endforeach; ?>
+          <?php } ?>
         </select>
       </div>
 
       <div class="span4">
         <select name="types">
           <option selected="selected"></option>
-          <?php foreach ($repositoryTypes as $r): ?>
+          <?php foreach ($repositoryTypes as $r) { ?>
             <option value="<?php echo $r->getId() ?>">
               <?php echo get_search_i18n($r->getData(), 'name', ['cultureFallback' => true]) ?>
             </option>
-          <?php endforeach; ?>
+          <?php } ?>
         </select>
       </div>
 
@@ -47,14 +47,14 @@
         <select name="regions">
           <option selected="selected"></option>
           <?php $regions = [] ?>
-          <?php foreach ($repositories as $r): ?>
+          <?php foreach ($repositories as $r) { ?>
             <?php $region = get_search_i18n($r->getData(), 'region', ['allowEmpty' => true, 'culture' => $sf_user->getCulture(), 'cultureFallback' => false]) ?>
 
-            <?php if ($region && !in_array($region, $regions)): ?>
+            <?php if ($region && !in_array($region, $regions)) { ?>
               <?php $regions[] = $region ?>
               <option value="<?php echo $region ?>"><?php echo $region ?></option>
-            <?php endif; ?>
-          <?php endforeach; ?>
+            <?php } ?>
+          <?php } ?>
         </select>
       </div>
     </div>

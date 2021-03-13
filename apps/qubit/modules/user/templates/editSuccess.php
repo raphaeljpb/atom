@@ -9,11 +9,11 @@
 
   <?php echo $form->renderGlobalErrors(); ?>
 
-  <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+  <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'user', 'action' => 'edit']), ['id' => 'editForm']) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'user', 'action' => 'add']), ['id' => 'editForm']) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -51,15 +51,15 @@ EOF
 
         <div class="form-item password-parent">
 
-          <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+          <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
             <?php echo $form->password
               ->label(__('Change password'))
               ->renderLabel() ?>
-          <?php else: ?>
+          <?php } else { ?>
             <?php echo $form->password
               ->label(__('Password'))
               ->renderLabel() ?>
-          <?php endif; ?>
+          <?php } ?>
 
           <?php echo $form->password->render(['class' => 'password-field']) ?>
 
@@ -72,11 +72,11 @@ EOF
           <?php echo $form->confirmPassword->render(['class' => 'password-confirm']) ?>
         </div>
 
-        <?php if ($sf_user->user != $resource): ?>
+        <?php if ($sf_user->user != $resource) { ?>
           <?php echo $form->active
             ->label(__('Active'))
             ->renderRow() ?>
-        <?php endif; ?>
+        <?php } ?>
 
       </fieldset> <!-- /#basicInfo -->
 
@@ -92,17 +92,17 @@ EOF
           ->label(__('Allowed languages for translation'))
           ->renderRow(['class' => 'form-autocomplete']) ?>
 
-        <?php if ($restEnabled): ?>
+        <?php if ($restEnabled) { ?>
           <?php echo $form->restApiKey
             ->label(__('REST API access key'.((isset($restApiKey)) ? ': <code>'.$restApiKey.'</code>' : '')))
             ->renderRow() ?>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if ($oaiEnabled): ?>
+        <?php if ($oaiEnabled) { ?>
           <?php echo $form->oaiApiKey
             ->label(__('OAI-PMH API access key'.((isset($oaiApiKey)) ? ': <code>'.$oaiApiKey.'</code>' : '')))
             ->renderRow() ?>
-        <?php endif; ?>
+        <?php } ?>
 
       </fieldset> <!-- /#groupsAndPermissions -->
 
@@ -110,13 +110,13 @@ EOF
 
     <section class="actions">
       <ul>
-        <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+        <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
           <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'user'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
-        <?php else: ?>
+        <?php } else { ?>
           <li><?php echo link_to(__('Cancel'), ['module' => 'user', 'action' => 'list'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create') ?>"/></li>
-        <?php endif; ?>
+        <?php } ?>
       </ul>
     </section>
 

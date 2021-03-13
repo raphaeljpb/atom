@@ -8,16 +8,16 @@
 
   <h1><?php echo render_title($resource) ?></h1>
 
-  <?php if (isset($errorSchema)): ?>
+  <?php if (isset($errorSchema)) { ?>
     <div class="messages error">
       <ul>
-        <?php foreach ($errorSchema as $error): ?>
+        <?php foreach ($errorSchema as $error) { ?>
           <?php $error = sfOutputEscaper::unescape($error) ?>
           <li><?php echo $error->getMessage() ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
   <section class="breadcrumb">
     <ul>
@@ -32,7 +32,7 @@
 
 <?php slot('context-menu') ?>
 
-  <?php if ($sf_context->getConfiguration()->isPluginEnabled('sfEacPlugin')): ?>
+  <?php if ($sf_context->getConfiguration()->isPluginEnabled('sfEacPlugin')) { ?>
 
     <section id="action-icons">
       <ul>
@@ -56,13 +56,13 @@
     <?php echo get_partial('object/subjectAccessPoints', ['resource' => $resource, 'sidebar' => true]) ?>
     <?php echo get_partial('object/placeAccessPoints', ['resource' => $resource, 'sidebar' => true]) ?>
 
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
-<?php if (0 < count($resource->digitalObjectsRelatedByobjectId)): ?>
+<?php if (0 < count($resource->digitalObjectsRelatedByobjectId)) { ?>
   <?php echo get_component('digitalobject', 'show', ['link' => $digitalObjectLink, 'resource' => $resource->digitalObjectsRelatedByobjectId[0], 'usageType' => QubitTerm::REFERENCE_ID]) ?>
-<?php endif; ?>
+<?php } ?>
 
 <section id="identityArea">
 
@@ -76,9 +76,9 @@
     <h3><?php echo __('Parallel form(s) of name') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item): ?>
+        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item) { ?>
           <li><?php echo render_value_inline($item->__toString()) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -87,9 +87,9 @@
     <h3><?php echo __('Standardized form(s) of name according to other rules') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::STANDARDIZED_FORM_OF_NAME_ID]) as $item): ?>
+        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::STANDARDIZED_FORM_OF_NAME_ID]) as $item) { ?>
           <li><?php echo render_value_inline($item->__toString()) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -98,9 +98,9 @@
     <h3><?php echo __('Other form(s) of name') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item): ?>
+        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item) { ?>
           <li><?php echo render_value_inline($item->__toString()) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -135,27 +135,27 @@
 
   <?php echo link_to_if(QubitAcl::check($resource, 'update'), '<h2>'.__('Relationships area').'</h2>', [$resource, 'module' => 'actor', 'action' => 'edit'], ['anchor' => 'relationshipsArea', 'title' => __('Edit relationships area')]) ?>
 
-  <?php foreach ($resource->getActorRelations() as $item): ?>
+  <?php foreach ($resource->getActorRelations() as $item) { ?>
     <?php $relatedEntity = $item->getOpposedObject($resource->id) ?>
     <div class="field">
       <h3><?php echo __('Related entity') ?></h3>
       <div>
 
-        <?php echo link_to(render_title($relatedEntity), [$relatedEntity, 'module' => ('QubitRepository' == $relatedEntity->className) ? 'repository' : 'actor']) ?><?php if (isset($relatedEntity->datesOfExistence)): ?> <span class="note2">(<?php echo render_value_inline($relatedEntity->getDatesOfExistence(['cultureFallback' => true])) ?>)</span><?php endif; ?>
+        <?php echo link_to(render_title($relatedEntity), [$relatedEntity, 'module' => ('QubitRepository' == $relatedEntity->className) ? 'repository' : 'actor']) ?><?php if (isset($relatedEntity->datesOfExistence)) { ?> <span class="note2">(<?php echo render_value_inline($relatedEntity->getDatesOfExistence(['cultureFallback' => true])) ?>)</span><?php } ?>
 
         <?php echo render_show(__('Identifier of related entity'), render_value_inline($relatedEntity->descriptionIdentifier)) ?>
 
-        <?php if ($item->type->parentId == QubitTerm::ROOT_ID): ?>
+        <?php if ($item->type->parentId == QubitTerm::ROOT_ID) { ?>
           <?php echo render_show(__('Category of relationship'), render_value_inline($item->type)) ?>
-        <?php else: ?>
+        <?php } else { ?>
           <?php echo render_show(__('Category of relationship'), render_value_inline($item->type->parent)) ?>
 
-          <?php if ($resource->id != $item->objectId): ?>
+          <?php if ($resource->id != $item->objectId) { ?>
             <?php echo render_show(__('Type of relationship'), link_to(render_title($relatedEntity), [$relatedEntity, 'module' => ('QubitRepository' == $relatedEntity->className) ? 'repository' : 'actor']).' '.render_value($item->type).' '.render_value($resource->getAuthorizedFormOfName(['cultureFallback' => true]))) ?>
-          <?php elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($item->type->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]))): ?>
+          <?php } elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($item->type->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]))){ ?>
             <?php echo render_show(__('Type of relationship'), link_to(render_title($relatedEntity), [$relatedEntity, 'module' => ('QubitRepository' == $relatedEntity->className) ? 'repository' : 'actor']).' '.render_value($converseTerms[0]->getOpposedObject($item->type)).' '.render_value($resource->getAuthorizedFormOfName(['cultureFallback' => true]))) ?>
-          <?php endif; ?>
-        <?php endif; ?>
+          <?php } ?>
+        <?php } ?>
 
         <?php echo render_show(__('Dates of relationship'), render_value_inline(Qubit::renderDateStartEnd($item->date, $item->startDate, $item->endDate))) ?>
 
@@ -163,11 +163,11 @@
 
       </div>
     </div>
-  <?php endforeach; ?>
+  <?php } ?>
 
-  <?php foreach ($functions as $item): ?>
+  <?php foreach ($functions as $item) { ?>
     <?php echo render_show(__('Related function'), link_to(render_title($item), [$item, 'module' => 'function'])) ?>
-  <?php endforeach; ?>
+  <?php } ?>
 
 </section> <!-- /section#relationshipsArea -->
 
@@ -186,15 +186,15 @@
   <div class="field">
     <h3><?php echo __('Occupations') ?></h3>
     <div>
-      <?php foreach ($resource->getOccupations() as $item): ?>
+      <?php foreach ($resource->getOccupations() as $item) { ?>
         <div>
           <?php echo link_to(render_title($item->term), [$item->term, 'module' => 'term']) ?>
           <?php $note = $item->getNotesByType(['noteTypeId' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID])->offsetGet(0) ?>
-          <?php if (isset($note)): ?>
+          <?php if (isset($note)) { ?>
             <?php echo render_show(__('Note'), render_value($note->getContent(['cultureFallback' => true]))) ?>
-          <?php endif; ?>
+          <?php } ?>
         </div>
-      <?php endforeach; ?>
+      <?php } ?>
     </div>
   </div>
 
@@ -206,9 +206,9 @@
 
   <?php echo render_show(__('Authority record identifier'), $resource->descriptionIdentifier) ?>
 
-  <?php if (null !== $repository = $resource->getMaintainingRepository()): ?>
+  <?php if (null !== $repository = $resource->getMaintainingRepository()) { ?>
     <?php echo render_show(__('Maintained by'), link_to(render_title($repository), [$repository, 'module' => 'repository'])) ?>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo render_show(__('Institution identifier'), render_value($resource->getInstitutionResponsibleIdentifier(['cultureFallback' => true]))) ?>
 
@@ -224,9 +224,9 @@
     <h3><?php echo __('Language(s)') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->language as $code): ?>
+        <?php foreach ($resource->language as $code) { ?>
           <li><?php echo format_language($code) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -235,9 +235,9 @@
     <h3><?php echo __('Script(s)') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->script as $code): ?>
+        <?php foreach ($resource->script as $code) { ?>
           <li><?php echo format_script($code) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -248,13 +248,13 @@
 
 </section> <!-- /section#controlArea -->
 
-<?php if (0 < count($resource->digitalObjectsRelatedByobjectId)): ?>
+<?php if (0 < count($resource->digitalObjectsRelatedByobjectId)) { ?>
 
   <div class="digitalObjectMetadata">
     <?php echo get_component('digitalobject', 'metadata', ['resource' => $resource->digitalObjectsRelatedByobjectId[0], 'object' => $resource]) ?>
   </div>
 
-<?php endif; ?>
+<?php } ?>
 
 <?php slot('after-content') ?>
 
@@ -262,19 +262,19 @@
 
     <ul>
 
-        <?php if (QubitAcl::check($resource, 'update') || (QubitAcl::check($resource, 'translate'))): ?>
+        <?php if (QubitAcl::check($resource, 'update') || (QubitAcl::check($resource, 'translate'))) { ?>
           <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'actor', 'action' => 'edit'], ['class' => 'c-btn c-btn-submit', 'title' => __('Edit')]) ?></li>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if (QubitAcl::check($resource, 'delete')): ?>
+        <?php if (QubitAcl::check($resource, 'delete')) { ?>
           <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'actor', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete', 'title' => __('Delete')]) ?></li>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if (QubitAcl::check($resource, 'create')): ?>
+        <?php if (QubitAcl::check($resource, 'create')) { ?>
           <li><?php echo link_to(__('Add new'), ['module' => 'actor', 'action' => 'add'], ['class' => 'c-btn', 'title' => __('Add new')]) ?></li>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if (QubitAcl::check($resource, 'update') || sfContext::getInstance()->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)): ?>
+        <?php if (QubitAcl::check($resource, 'update') || sfContext::getInstance()->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)) { ?>
         <li class="divider"></li>
 
         <li>
@@ -285,15 +285,15 @@
             </a>
 
             <ul class="dropdown-menu">
-              <?php if (0 < count($resource->digitalObjectsRelatedByobjectId) && QubitDigitalObject::isUploadAllowed()): ?>
+              <?php if (0 < count($resource->digitalObjectsRelatedByobjectId) && QubitDigitalObject::isUploadAllowed()) { ?>
                 <li><?php echo link_to(__('Edit %1%', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]), [$resource->digitalObjectsRelatedByobjectId[0], 'module' => 'digitalobject', 'action' => 'edit']) ?></li>
-              <?php elseif (QubitDigitalObject::isUploadAllowed()): ?>
+              <?php } elseif (QubitDigitalObject::isUploadAllowed()){ ?>
                 <li><?php echo link_to(__('Link %1%', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]), [$resource, 'module' => 'object', 'action' => 'addDigitalObject']) ?></li>
-              <?php endif; // has digital object?>
+              <?php } // has digital object?>
             </ul>
           </div>
         </li>
-        <?php endif; // user has update permission?>
+        <?php } // user has update permission?>
     </ul>
 
   </section>

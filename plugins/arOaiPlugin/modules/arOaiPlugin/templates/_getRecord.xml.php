@@ -1,6 +1,6 @@
-<?php if ($errorCode): ?>
+<?php if ($errorCode) { ?>
   <error code="<?php echo $errorCode ?>"><?php echo $errorMsg ?></error>
-<?php else: ?>
+<?php } else { ?>
   <GetRecord>
     <record>
       <header>
@@ -9,15 +9,15 @@
         <setSpec><?php echo $record->getCollectionRoot()->getOaiIdentifier()?></setSpec>
       </header>
       <metadata>
-        <?php if ($metadataPrefix == 'oai_dc' && !arOaiPluginComponent::checkDisplayCachedMetadata($record, $metadataPrefix)): ?>
+        <?php if ($metadataPrefix == 'oai_dc' && !arOaiPluginComponent::checkDisplayCachedMetadata($record, $metadataPrefix)) { ?>
           <?php echo get_component('sfDcPlugin', 'dc', ['resource' => $record]) ?>
-        <?php else: ?>
+        <?php } else { ?>
           <?php arOaiPluginComponent::includeCachedMetadata($record, $metadataPrefix) ?>
-        <?php endif; ?>
+        <?php } ?>
       </metadata>
-      <?php if (count($record->digitalObjectsRelatedByobjectId)): ?>
+      <?php if (count($record->digitalObjectsRelatedByobjectId)) { ?>
         <?php include '_about.xml.php'?>
-      <?php endif; ?>
+      <?php } ?>
     </record>
   </GetRecord>
-<?php endif; ?>
+<?php } ?>

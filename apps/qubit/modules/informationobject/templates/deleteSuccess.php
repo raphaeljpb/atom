@@ -14,27 +14,27 @@
 
     <div id="content">
 
-      <?php if (0 < $count): ?>
+      <?php if (0 < $count) { ?>
         <h2><?php echo __('It has %1% descendants that will also be deleted:', ['%1%' => $count]) ?></h2>
         <div class="delete-list">
 
           <ul>
-            <?php foreach ($resource->descendants as $index => $item): ?>
+            <?php foreach ($resource->descendants as $index => $item) { ?>
               <li><?php echo link_to(render_title($item), [$item, 'module' => 'informationobject']) ?></li>
               <?php if ($index + 1 == $previewSize) break; ?>
-            <?php endforeach; ?>
+            <?php } ?>
           </ul>
 
-          <?php if ($previewIsLimited): ?>
+          <?php if ($previewIsLimited) { ?>
             <hr />
             <p>
               <?php echo __('Only %1% descriptions were shown.', ['%1%' => $previewSize]) ?>
               <?php echo link_to(__('View the full list of descendants.'), ['module' => 'informationobject', 'action' => 'browse', 'collection' => $resource->id, 'topLod' => false]) ?>
             </p>
-          <?php endif; ?>
+          <?php } ?>
 
         </div>
-      <?php endif; ?>
+      <?php } ?>
 
     </div>
 

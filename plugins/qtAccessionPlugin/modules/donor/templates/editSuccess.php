@@ -11,11 +11,11 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+  <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'donor', 'action' => 'edit']), ['id' => 'editForm']) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'donor', 'action' => 'add']), ['id' => 'editForm']) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -42,13 +42,13 @@
 
     <section class="actions">
       <ul class="clearfix links">
-        <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+        <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
           <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'donor'], ['title' => __('Cancel'), 'class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
-        <?php else: ?>
+        <?php } else { ?>
           <li><?php echo link_to(__('Cancel'), ['module' => 'donor', 'action' => 'list'], ['title' => __('Cancel'), 'class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create') ?>"/></li>
-        <?php endif; ?>
+        <?php } ?>
       </ul>
     </section>
 

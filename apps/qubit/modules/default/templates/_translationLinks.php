@@ -4,10 +4,10 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu">
-    <?php foreach ($translations as $code => $value): ?>
+    <?php foreach ($translations as $code => $value) { ?>
       <li>
         <?php echo link_to($value['language'].' &raquo; '.$value['name'], [$resource, 'module' => $module, 'sf_culture' => $code]) ?>
       </li>
-    <?php endforeach; ?>
+    <?php } ?>
   </ul>
 </div>

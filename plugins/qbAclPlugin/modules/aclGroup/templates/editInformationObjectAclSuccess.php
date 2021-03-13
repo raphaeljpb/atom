@@ -24,13 +24,13 @@
 
       <legend><?php echo __('Permissions by %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject'))]) ?></legend>
 
-      <?php if (0 < count($informationObjects)): ?>
-        <?php foreach ($informationObjects as $informationObjectId => $permissions): ?>
+      <?php if (0 < count($informationObjects)) { ?>
+        <?php foreach ($informationObjects as $informationObjectId => $permissions) { ?>
           <div class="form-item">
             <?php echo get_component('aclGroup', 'aclTable', ['object' => QubitInformationObject::getById($informationObjectId), 'permissions' => $permissions, 'actions' => $basicActions]) ?>
           </div>
-        <?php endforeach; ?>
-      <?php endif; ?>
+        <?php } ?>
+      <?php } ?>
 
       <?php
 
@@ -92,13 +92,13 @@ EOL
 
       <legend><?php echo __('Permissions by %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_repository'))]) ?></legend>
 
-      <?php if (0 < count($repositories)): ?>
-        <?php foreach ($repositories as $repository => $permissions): ?>
+      <?php if (0 < count($repositories)) { ?>
+        <?php foreach ($repositories as $repository => $permissions) { ?>
           <div class="form-item">
             <?php echo get_component('aclGroup', 'aclTable', ['object' => QubitRepository::getBySlug($repository), 'permissions' => $permissions, 'actions' => $basicActions]) ?>
           </div>
-        <?php endforeach; ?>
-      <?php endif; ?>
+        <?php } ?>
+      <?php } ?>
 
 <?php echo javascript_tag(<<<EOL
 Drupal.behaviors.dialog2 = {

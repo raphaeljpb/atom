@@ -22,37 +22,37 @@
 
       <fieldset class="collapsible">
 
-        <?php if (count($events)): ?>
+        <?php if (count($events)) { ?>
           <legend class="collapse-processed"><?php echo __('Update an existing date range') ?></legend>
 
           <div class="fieldset-wrapper">
 
             <p><?php echo __('Select a date range to overwrite:') ?></p>
 
-            <?php foreach ($events as $eventId => $eventName): ?>
+            <?php foreach ($events as $eventId => $eventName) { ?>
               <p><input type="radio" name="eventIdOrTypeId" value="<?php echo $eventId ?>"><?php echo $eventName ?></p>
-            <?php endforeach; ?>
+            <?php } ?>
 
             <div class="alert alert-notice">
               <?php echo __('Updating an existing date range will permanently overwrite the current dates.') ?>
             </div>
 
           </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if (count($descendantEventTypes)): ?>
+        <?php if (count($descendantEventTypes)) { ?>
           <legend class="collapse-processed"><?php echo __('or, create a new date range') ?></legend>
 
           <div class="fieldset-wrapper">
 
             <p><?php echo __('Select the new date type:') ?></p>
 
-            <?php foreach ($descendantEventTypes as $eventTypeId => $eventTypeName): ?>
+            <?php foreach ($descendantEventTypes as $eventTypeId => $eventTypeName) { ?>
               <p><input type="radio" name="eventIdOrTypeId" value="<?php echo $eventTypeId ?>"><?php echo $eventTypeName ?></p>
-            <?php endforeach; ?>
+            <?php } ?>
 
           </div>
-        <?php endif; ?>
+        <?php } ?>
 
       </fieldset>
 

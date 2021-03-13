@@ -26,13 +26,13 @@
 
         <legend><?php echo __('Upload finding aid') ?></legend>
 
-        <?php if (isset($errorMessage)): ?>
+        <?php if (isset($errorMessage)) { ?>
           <div class="messages error">
             <ul>
               <li><?php echo $errorMessage ?></li>
             </ul>
           </div>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo $form->file->label(__('%1% file', ['%1%' => strtoupper($format)]))->renderRow() ?>
 

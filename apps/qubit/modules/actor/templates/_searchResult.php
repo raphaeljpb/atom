@@ -1,26 +1,26 @@
 <?php use_helper('Text') ?>
 
-<?php if (!empty($doc['hasDigitalObject'])): ?>
+<?php if (!empty($doc['hasDigitalObject'])) { ?>
   <article class="search-result has-preview">
-<?php else: ?>
+<?php } else { ?>
   <article class="search-result">
-<?php endif; ?>
+<?php } ?>
 
-  <?php if (!empty($doc['hasDigitalObject'])): ?>
+  <?php if (!empty($doc['hasDigitalObject'])) { ?>
     <div class="search-result-preview">
       <a href="<?php echo url_for(['module' => 'actor', 'slug' => $doc['slug']]) ?>">
         <div class="preview-container">
-          <?php if (isset($doc['digitalObject']['thumbnailPath'])): ?>
+          <?php if (isset($doc['digitalObject']['thumbnailPath'])) { ?>
             <?php echo image_tag($doc['digitalObject']['thumbnailPath'],
               ['alt' => isset($doc['digitalObject']['digitalObjectAltText']) ? $doc['digitalObject']['digitalObjectAltText'] : truncate_text(strip_markdown(get_search_i18n($doc, 'authorizedFormOfName', ['allowEmpty' => false, 'culture' => $culture])), 100)]) ?>
-          <?php else: ?>
+          <?php } else { ?>
             <?php echo image_tag(QubitDigitalObject::getGenericIconPathByMediaTypeId($doc['digitalObject']['mediaTypeId']),
               ['alt' => isset($doc['digitalObject']['digitalObjectAltText']) ? $doc['digitalObject']['digitalObjectAltText'] : truncate_text(strip_markdown(get_search_i18n($doc, 'authorizedFormOfName', ['allowEmpty' => false, 'culture' => $culture])), 100)]) ?>
-          <?php endif; ?>
+          <?php } ?>
         </div>
       </a>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
   <div class="search-result-description">
 
@@ -30,23 +30,23 @@
 
     <ul class="result-details">
 
-      <?php if (!empty($doc['descriptionIdentifier'])): ?>
+      <?php if (!empty($doc['descriptionIdentifier'])) { ?>
         <li class="reference-code"><?php echo $doc['descriptionIdentifier'] ?></li>
-      <?php endif; ?>
+      <?php } ?>
 
-      <?php if (!empty($doc['entityTypeId']) && null !== $term = QubitTerm::getById($doc['entityTypeId'])): ?>
+      <?php if (!empty($doc['entityTypeId']) && null !== $term = QubitTerm::getById($doc['entityTypeId'])) { ?>
         <li><?php echo render_value_inline($term) ?></li>
-      <?php endif; ?>
+      <?php } ?>
 
-      <?php if (strlen($dates = get_search_i18n($doc, 'datesOfExistence', ['culture' => $culture])) > 0): ?>
+      <?php if (strlen($dates = get_search_i18n($doc, 'datesOfExistence', ['culture' => $culture])) > 0) { ?>
         <li><?php echo render_value_inline($dates) ?></li>
-      <?php endif; ?>
+      <?php } ?>
 
     </ul>
 
-    <?php if (null !== $history = get_search_i18n($doc, 'history', ['culture' => $culture])): ?>
+    <?php if (null !== $history = get_search_i18n($doc, 'history', ['culture' => $culture])) { ?>
       <div class="history"><?php echo render_value($history) ?></div>
-    <?php endif; ?>
+    <?php } ?>
   </div>
 
 </article>

@@ -1,26 +1,26 @@
 <?php use_helper('Text') ?>
 
-<?php if (QubitTerm::REFERENCE_ID == $usageType): ?>
+<?php if (QubitTerm::REFERENCE_ID == $usageType) { ?>
 
-  <?php if ($showMediaPlayer): ?>
+  <?php if ($showMediaPlayer) { ?>
     <audio class="mediaelement-player" src="<?php echo public_path($representation->getFullPath()) ?>"></audio>
-  <?php else: ?>
+  <?php } else { ?>
     <div style="text-align: center">
       <?php echo image_tag($representation->getFullPath(), ['style' => 'border: #999 1px solid', 'alt' => '']) ?>
     </div>
-  <?php endif;?>
+  <?php }?>
 
-  <?php if (isset($link) && QubitAcl::check($resource->object, 'readMaster')): ?>
+  <?php if (isset($link) && QubitAcl::check($resource->object, 'readMaster')) { ?>
     <?php echo link_to(__('Download audio'), $link, ['class' => 'download']) ?>
-  <?php endif; ?>
+  <?php } ?>
 
-<?php elseif (QubitTerm::THUMBNAIL_ID == $usageType && isset($link)): ?>
+<?php } elseif (QubitTerm::THUMBNAIL_ID == $usageType && isset($link)){ ?>
 
-  <?php if ($iconOnly): ?>
+  <?php if ($iconOnly) { ?>
 
     <?php echo link_to(image_tag('play', ['alt' => __($resource->getDigitalObjectAltText() ?: 'Open original %1%', ['%1%' => sfConfig::get('app_ui_label_digitalobject')])]), $link) ?>
 
-  <?php else: ?>
+  <?php } else { ?>
 
     <div class="resource">
 
@@ -34,9 +34,9 @@
 
     </div>
 
-  <?php endif; ?>
+  <?php } ?>
 
-<?php else: ?>
+<?php } else { ?>
 
   <div class="resource">
 
@@ -44,4 +44,4 @@
 
   </div>
 
-<?php endif; ?>
+<?php } ?>

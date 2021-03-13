@@ -9,9 +9,9 @@
   <div class="messages error">
     <div>
       <strong><?php echo $reason ?></strong>
-      <?php if (!empty($error)): ?>
+      <?php if (!empty($error)) { ?>
         <pre><?php echo $error ?></pre>
-      <?php endif; ?>
+      <?php } ?>
     </div>
   </div>
 

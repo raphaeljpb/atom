@@ -2,9 +2,9 @@
     <repositoryName><?php echo esc_specialchars($title) ?></repositoryName>
     <baseURL><?php echo $baseUrl ?></baseURL>
     <protocolVersion><?php echo $protocolVersion ?></protocolVersion>
-    <?php foreach ($adminEmails as $email): ?>
+    <?php foreach ($adminEmails as $email) { ?>
       <adminEmail><?php echo trim($email) ?></adminEmail>
-    <?php endforeach; ?>
+    <?php } ?>
     <earliestDatestamp><?php echo $earliestDatestamp ?></earliestDatestamp>
     <deletedRecord><?php echo $deletedRecord ?></deletedRecord>
     <granularity><?php echo $granularity ?></granularity>

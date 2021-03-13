@@ -14,11 +14,11 @@
 
     <div class="top-dropdown-body">
       <ul>
-        <?php foreach ($quickLinks as $child): ?>
-          <?php if ('login' != $child->getName() && 'logout' != $child->getName() && 'myProfile' != $child->getName()): ?>
-            <li<?php if ($child->isSelected()): ?> class="active"<?php endif; ?>><?php echo link_to($child->getLabel(['cultureFallback' => true]), $child->getPath(['getUrl' => true, 'resolveAlias' => true])) ?></li>
-          <?php endif; ?>
-        <?php endforeach; ?>
+        <?php foreach ($quickLinks as $child) { ?>
+          <?php if ('login' != $child->getName() && 'logout' != $child->getName() && 'myProfile' != $child->getName()) { ?>
+            <li<?php if ($child->isSelected()) { ?> class="active"<?php } ?>><?php echo link_to($child->getLabel(['cultureFallback' => true]), $child->getPath(['getUrl' => true, 'resolveAlias' => true])) ?></li>
+          <?php } ?>
+        <?php } ?>
       </ul>
     </div>
 

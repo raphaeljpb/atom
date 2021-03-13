@@ -16,7 +16,7 @@
         </th>
       </tr>
     </thead><tbody>
-      <?php foreach ($taxonomies as $item): ?>
+      <?php foreach ($taxonomies as $item) { ?>
         <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?>">
           <td>
             <?php echo link_to(render_title($item), [$item, 'module' => 'taxonomy']) ?>
@@ -24,7 +24,7 @@
             <?php echo render_value_inline($item->getNote(['cultureFallback' => true])) ?>
           </td>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 

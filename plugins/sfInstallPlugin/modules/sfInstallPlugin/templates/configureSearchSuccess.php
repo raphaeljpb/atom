@@ -1,18 +1,18 @@
 <h2>Search configuration</h2>
 
-<?php if (count($errors) > 0): ?>
+<?php if (count($errors) > 0) { ?>
 
   <h3>The following errors must be resolved before you can continue the installation process:</h3>
 
   <div class="messages error">
     <ul>
-      <?php foreach ($errors as $item): ?>
+      <?php foreach ($errors as $item) { ?>
         <li><?php echo $item ?></li>
-      <?php endforeach; ?>
+      <?php } ?>
     </ul>
   </div>
 
-<?php endif; ?>
+<?php } ?>
 
 <?php slot('before-content') ?>
   <?php echo $form->renderGlobalErrors() ?>

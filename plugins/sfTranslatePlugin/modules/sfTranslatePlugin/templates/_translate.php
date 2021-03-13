@@ -19,9 +19,9 @@
 
   <div id="l10n-client-string-select">
     <ul class="string-list">
-      <?php foreach ($sf_data->getRaw('messages') as $source => $target): ?>
+      <?php foreach ($sf_data->getRaw('messages') as $source => $target) { ?>
         <li><?php echo truncate_text(empty($target) ? $source : $target) ?></li>
-      <?php endforeach; ?>
+      <?php } ?>
     </ul>
   </div>
   <div id="l10n-client-string-editor">

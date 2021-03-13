@@ -17,7 +17,7 @@
 
 <?php slot('content') ?>
 
-  <?php if (isset($error)): ?>
+  <?php if (isset($error)) { ?>
 
     <div class="search-results">
       <ul>
@@ -25,7 +25,7 @@
       </ul>
     </div>
 
-  <?php else: ?>
+  <?php } else { ?>
 
     <table class="table sticky-enabled">
       <thead>
@@ -35,22 +35,22 @@
           </th>
         </tr>
       </thead><tbody>
-        <?php foreach ($rightsHolders as $item): ?>
+        <?php foreach ($rightsHolders as $item) { ?>
           <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?>">
             <td>
               <?php echo link_to(render_title($item), [$item, 'module' => 'rightsholder']) ?>
             </td>
           </tr>
-        <?php endforeach; ?>
+        <?php } ?>
       </tbody>
     </table>
 
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
-<?php if (!isset($error)): ?>
+<?php if (!isset($error)) { ?>
   <?php slot('after-content') ?>
     <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
   <?php end_slot() ?>
-<?php endif; ?>
+<?php } ?>

@@ -28,9 +28,9 @@
 
         <?php echo $form->publicationStatus->label(__('Publication status'))->renderRow() ?>
 
-        <?php if ($resource->rgt - $resource->lft > 1): ?>
+        <?php if ($resource->rgt - $resource->lft > 1) { ?>
           <?php echo $form->updateDescendants->label(__('Update descendants'))->renderRow() ?>
-        <?php endif; ?>
+        <?php } ?>
 
       </fieldset>
 

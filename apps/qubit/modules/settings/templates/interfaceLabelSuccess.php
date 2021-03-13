@@ -30,20 +30,20 @@
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($uiLabelForm->getSettings() as $setting): ?>
+          <?php foreach ($uiLabelForm->getSettings() as $setting) { ?>
             <tr>
               <td>
-                <?php if ($sf_user->getCulture() != $setting->getSourceCulture() && !strlen($setting->getValue())): ?>
+                <?php if ($sf_user->getCulture() != $setting->getSourceCulture() && !strlen($setting->getValue())) { ?>
                   <div class="default-translation"><?php echo $setting->getName() ?></div>
-                <?php else: ?>
+                <?php } else { ?>
                   <?php echo $setting->getName() ?>
-                <?php endif; ?>
+                <?php } ?>
               </td>
               <td>
                 <?php echo $uiLabelForm[$setting->getName()] ?>
               </td>
             </tr>
-          <?php endforeach; ?>
+          <?php } ?>
         </tbody>
       </table>
 

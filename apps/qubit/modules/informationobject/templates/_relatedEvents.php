@@ -16,13 +16,13 @@
       </th>
     </tr>
   </thead><tbody>
-    <?php foreach ($resource->eventsRelatedByobjectId as $item): ?>
+    <?php foreach ($resource->eventsRelatedByobjectId as $item) { ?>
       <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for([$item, 'module' => 'event']) ?>">
         <td>
           <div>
-            <?php if (isset($item->actor)): ?>
+            <?php if (isset($item->actor)) { ?>
               <?php echo render_title($item->actor) ?>
-            <?php endif; ?>
+            <?php } ?>
           </div>
         </td><td>
           <div>
@@ -30,9 +30,9 @@
           </div>
         </td><td>
           <div>
-            <?php if (null !== $relation = QubitObjectTermRelation::getOneByObjectId($item->id)): ?>
+            <?php if (null !== $relation = QubitObjectTermRelation::getOneByObjectId($item->id)) { ?>
               <?php echo render_value_inline($relation->term) ?>
-            <?php endif; ?>
+            <?php } ?>
           </div>
         </td><td>
           <div>
@@ -42,6 +42,6 @@
           <input class="multiDelete" name="deleteEvents[]" type="checkbox" value="<?php echo url_for([$item, 'module' => 'event']) ?>"/>
         </td>
       </tr>
-    <?php endforeach; ?>
+    <?php } ?>
   </tbody>
 </table>

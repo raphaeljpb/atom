@@ -25,14 +25,14 @@
         </th>
       </tr>
     </thead><tbody>
-      <?php foreach ($isdf->relatedFunction as $item): ?>
+      <?php foreach ($isdf->relatedFunction as $item) { ?>
         <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for([$item, 'module' => 'relation']) ?>">
           <td>
-            <?php if ($resource->id == $item->objectId): ?>
+            <?php if ($resource->id == $item->objectId) { ?>
               <?php echo render_title($item->subject) ?>
-            <?php else: ?>
+            <?php } else { ?>
               <?php echo render_title($item->object) ?>
-            <?php endif; ?>
+            <?php } ?>
           </td><td>
             <?php echo render_value_inline($item->type) ?>
           </td><td>
@@ -43,7 +43,7 @@
             <input class="multiDelete" name="deleteRelations[]" type="checkbox" value="<?php echo url_for([$item, 'module' => 'relation']) ?>"/>
           </td>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 

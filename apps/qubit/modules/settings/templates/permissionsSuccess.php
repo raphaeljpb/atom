@@ -79,7 +79,7 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($permissionsForm['permissions'] as $k => $sf): ?>
+            <?php foreach ($permissionsForm['permissions'] as $k => $sf) { ?>
               <tr>
                 <td class="premis-permissions-basis-value">
                   <span><?php echo $basis[$k] ?></span>
@@ -112,7 +112,7 @@
                   </div>
                 </td>
               </tr>
-            <?php endforeach; ?>
+            <?php } ?>
           </tbody>
         </table>
 
@@ -130,13 +130,13 @@
 
         <div class="tabbable tabs-left">
           <ul class="nav nav-tabs">
-            <?php foreach ($basis as $basisSlug => $basisName): ?>
+            <?php foreach ($basis as $basisSlug => $basisName) { ?>
               <li><a href="<?php echo "#tab{$basisSlug}" ?>" data-toggle="tab"><?php echo $basisName ?></a></li>
-            <?php endforeach; ?>
+            <?php } ?>
           </ul>
           <div class="tab-content">
             <?php $settings = $permissionsAccessStatementsForm->getSettings() ?>
-            <?php foreach ($basis as $basisSlug => $basisName): ?>
+            <?php foreach ($basis as $basisSlug => $basisName) { ?>
               <div class="tab-pane" id="<?php echo "tab{$basisSlug}" ?>">
                 <?php $name = "{$basisSlug}_disallow" ?>
                 <?php $field = $permissionsAccessStatementsForm[$name] ?>
@@ -146,7 +146,7 @@
                 <?php $field = $permissionsAccessStatementsForm[$name] ?>
                 <?php echo render_field($field->label(__('Conditional statement')), $settings[$name], ['name' => 'value', 'class' => 'resizable']) ?>
               </div>
-            <?php endforeach; ?>
+            <?php } ?>
           </div>
         </div>
 

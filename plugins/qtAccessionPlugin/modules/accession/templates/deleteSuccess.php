@@ -14,27 +14,27 @@
 
     <div id="content">
 
-      <?php if (0 < count($resource->deaccessions)): ?>
+      <?php if (0 < count($resource->deaccessions)) { ?>
         <h2><?php echo __('It has %1% deaccessions that will also be deleted:', ['%1%' => count($resource->deaccessions)]) ?></h2>
         <div class="delete-list">
           <ul>
-            <?php foreach ($resource->deaccessions as $item): ?>
+            <?php foreach ($resource->deaccessions as $item) { ?>
               <li><?php echo link_to(render_title($item), [$item, 'module' => 'deaccession']) ?></li>
-            <?php endforeach; ?>
+            <?php } ?>
           </ul>
         </div>
-      <?php endif; ?>
+      <?php } ?>
 
-      <?php if (0 < count($accruals)): ?>
+      <?php if (0 < count($accruals)) { ?>
         <h2><?php echo __('It has %1% accruals. They will not be deleted.', ['%1%' => count($accruals)]) ?></h2>
         <div class="delete-list">
           <ul>
-            <?php foreach ($accruals as $item): ?>
+            <?php foreach ($accruals as $item) { ?>
               <li><?php echo link_to(render_title($item), [$item, 'module' => 'accession']) ?></li>
-            <?php endforeach; ?>
+            <?php } ?>
           </ul>
         </div>
-      <?php endif; ?>
+      <?php } ?>
 
     </div>
 

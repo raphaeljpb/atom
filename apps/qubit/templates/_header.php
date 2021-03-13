@@ -2,23 +2,23 @@
 
 <?php echo get_component('default', 'privacyMessage') ?>
 
-<?php if ($sf_user->isAdministrator() && (string) QubitSetting::getByName('siteBaseUrl') === ''): ?>
+<?php if ($sf_user->isAdministrator() && (string) QubitSetting::getByName('siteBaseUrl') === '') { ?>
   <div class="site-warning">
     <?php echo link_to(__('Please configure your site base URL'), 'settings/siteInformation', ['rel' => 'home', 'title' => __('Home')]) ?>
   </div>
-<?php endif; ?>
+<?php } ?>
 
 <header id="top-bar">
 
-  <?php if (sfConfig::get('app_toggleLogo')): ?>
+  <?php if (sfConfig::get('app_toggleLogo')) { ?>
     <?php echo link_to(image_tag('logo', ['alt' => 'AtoM']), '@homepage', ['id' => 'logo', 'rel' => 'home']) ?>
-  <?php endif; ?>
+  <?php } ?>
 
-  <?php if (sfConfig::get('app_toggleTitle')): ?>
+  <?php if (sfConfig::get('app_toggleTitle')) { ?>
     <h1 id="site-name">
       <?php echo link_to('<span>'.esc_specialchars(sfConfig::get('app_siteTitle')).'</span>', '@homepage', ['rel' => 'home', 'title' => __('Home')]) ?>
     </h1>
-  <?php endif; ?>
+  <?php } ?>
 
   <nav>
 
@@ -26,9 +26,9 @@
 
     <?php echo get_component('menu', 'quickLinksMenu') ?>
 
-    <?php if (sfConfig::get('app_toggleLanguageMenu')): ?>
+    <?php if (sfConfig::get('app_toggleLanguageMenu')) { ?>
       <?php echo get_component('menu', 'changeLanguageMenu') ?>
-    <?php endif; ?>
+    <?php } ?>
 
     <?php echo get_component('menu', 'clipboardMenu') ?>
 
@@ -48,7 +48,7 @@
 
 </header>
 
-<?php if (sfConfig::get('app_toggleDescription')): ?>
+<?php if (sfConfig::get('app_toggleDescription')) { ?>
   <div id="site-slogan">
     <div class="container">
       <div class="row">
@@ -58,4 +58,4 @@
       </div>
     </div>
   </div>
-<?php endif; ?>
+<?php } ?>

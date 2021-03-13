@@ -38,34 +38,34 @@
         <th>
           <?php echo __('Name') ?>
         </th>
-        <?php if ('alphabetic' == $sf_request->sort): ?>
+        <?php if ('alphabetic' == $sf_request->sort) { ?>
           <th>
             <?php echo __('Type') ?>
           </th>
-        <?php else: ?>
+        <?php } else { ?>
           <th>
             <?php echo __('Updated') ?>
           </th>
-        <?php endif; ?>
+        <?php } ?>
       </tr>
     </thead><tbody>
 
-      <?php foreach ($pager->getResults() as $item): ?>
+      <?php foreach ($pager->getResults() as $item) { ?>
         <tr>
           <td>
             <?php echo link_to(render_title($item), [$item, 'module' => 'function']) ?>
           </td>
-          <?php if ('alphabetic' == $sf_request->sort): ?>
+          <?php if ('alphabetic' == $sf_request->sort) { ?>
             <td>
               <?php echo $item->type ?>
             </td>
-          <?php else: ?>
+          <?php } else { ?>
             <td>
               <?php echo format_date($item->updatedAt, 'f') ?>
             </td>
-          <?php endif; ?>
+          <?php } ?>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
 
     </tbody>
   </table>
@@ -75,12 +75,12 @@
 
   <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 
-  <?php if ($sf_user->hasCredential(['contributor', 'editor', 'administrator'], false)): ?>
+  <?php if ($sf_user->hasCredential(['contributor', 'editor', 'administrator'], false)) { ?>
     <section class="actions">
       <ul>
         <li><?php echo link_to(__('Add new'), ['module' => 'function', 'action' => 'add'], ['class' => 'c-btn']) ?></li>
       </ul>
     </section>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>

@@ -1,8 +1,8 @@
-<?php if (isset($pager) && $pager->getNbResults() || sfConfig::get('app_enable_institutional_scoping')): ?>
+<?php if (isset($pager) && $pager->getNbResults() || sfConfig::get('app_enable_institutional_scoping')) { ?>
   <?php decorate_with('layout_2col') ?>
-<?php else: ?>
+<?php } else { ?>
   <?php decorate_with('layout_1col') ?>
-<?php endif; ?>
+<?php } ?>
 
 <?php use_helper('Date') ?>
 
@@ -12,17 +12,17 @@
   <div class="multiline-header">
     <?php echo image_tag('/images/icons-large/icon-archival.png', ['alt' => '']) ?>
     <h1 aria-describedby="results-label">
-      <?php if (isset($pager) && $pager->getNbResults()): ?>
+      <?php if (isset($pager) && $pager->getNbResults()) { ?>
         <?php echo __('Showing %1% results', ['%1%' => $pager->getNbResults()]) ?>
-      <?php else: ?>
+      <?php } else { ?>
         <?php echo __('No results found') ?>
-      <?php endif; ?>
+      <?php } ?>
     </h1>
     <span class="sub" id="results-label"><?php echo sfConfig::get('app_ui_label_informationobject') ?></span>
   </div>
 <?php end_slot() ?>
 
-<?php if (isset($pager) && $pager->getNbResults() || sfConfig::get('app_enable_institutional_scoping')): ?>
+<?php if (isset($pager) && $pager->getNbResults() || sfConfig::get('app_enable_institutional_scoping')) { ?>
 
   <?php slot('sidebar') ?>
 
@@ -37,9 +37,9 @@
 
       <div class="content">
 
-        <?php if ($sf_user->getAttribute('search-realm') && sfConfig::get('app_enable_institutional_scoping')): ?>
+        <?php if ($sf_user->getAttribute('search-realm') && sfConfig::get('app_enable_institutional_scoping')) { ?>
           <?php include_component('repository', 'holdingsInstitution', ['resource' => QubitRepository::getById($sf_user->getAttribute('search-realm'))]) ?>
-        <?php endif; ?>
+        <?php } ?>
 
         <h2><?php echo sfConfig::get('app_ui_label_facetstitle') ?></h2>
 
@@ -57,14 +57,14 @@
           'aggs' => $aggs,
           'filters' => $search->filters]) ?>
 
-        <?php if (sfConfig::get('app_multi_repository')): ?>
+        <?php if (sfConfig::get('app_multi_repository')) { ?>
           <?php echo get_partial('search/aggregation', [
             'id' => '#facet-repository',
             'label' => sfConfig::get('app_ui_label_repository'),
             'name' => 'repos',
             'aggs' => $aggs,
             'filters' => $search->filters]) ?>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo get_partial('search/aggregation', [
           'id' => '#facet-names',
@@ -121,20 +121,20 @@
 
   <?php end_slot() ?>
 
-<?php endif; ?>
+<?php } ?>
 
 <?php slot('before-content') ?>
 
   <section class="header-options">
 
-    <?php if ($topLod): ?>
+    <?php if ($topLod) { ?>
       <span class="search-filter">
         <?php echo __('Only top-level descriptions') ?>
         <?php $params = $sf_data->getRaw('sf_request')->getGetParameters() ?>
         <?php $params['topLod'] = 0 ?>
         <a href="<?php echo url_for(['module' => 'informationobject', 'action' => 'browse'] + $params) ?>" class="remove-filter"><i class="fa fa-times"></i></a>
       </span>
-    <?php endif; ?>
+    <?php } ?>
 
     <?php echo get_partial('search/filterTags', ['filterTags' => $filterTags]) ?>
 
@@ -153,24 +153,24 @@
     'rangeType' => $rangeType,
     'hiddenFields' => $hiddenFields]) ?>
 
-  <?php if (isset($pager) && $pager->getNbResults()): ?>
+  <?php if (isset($pager) && $pager->getNbResults()) { ?>
 
     <section class="browse-options">
       <?php echo get_partial('default/printPreviewButton') ?>
 
-      <?php if (sfConfig::get('app_treeview_show_browse_hierarchy_page', 'no') === 'yes'): ?>
+      <?php if (sfConfig::get('app_treeview_show_browse_hierarchy_page', 'no') === 'yes') { ?>
         <a href="<?php echo url_for(['module' => 'browse', 'action' => 'hierarchy']) ?>">
           <i class="fa fa-sitemap"></i>
           Hierarchy
         </a>
-      <?php endif; ?>
+      <?php } ?>
 
-      <?php if ($sf_user->isAuthenticated()): ?>
+      <?php if ($sf_user->isAuthenticated()) { ?>
         <a href="<?php echo url_for(array_merge($sf_data->getRaw('sf_request')->getParameterHolder()->getAll(), ['module' => 'informationobject', 'action' => 'exportCsv'])) ?>">
           <i class="fa fa-upload"></i>
           <?php echo __('Export CSV') ?>
         </a>
-      <?php endif; ?>
+      <?php } ?>
 
       <span>
         <?php echo get_partial('default/viewPicker', ['view' => $view, 'cardView' => $cardView,
@@ -191,7 +191,7 @@
     </section>
 
     <div id="content" class="browse-content">
-      <?php if (!isset($sf_request->onlyMedia) && isset($aggs['digitalobjects']) && 0 < $aggs['digitalobjects']['doc_count']): ?>
+      <?php if (!isset($sf_request->onlyMedia) && isset($aggs['digitalobjects']) && 0 < $aggs['digitalobjects']['doc_count']) { ?>
         <div class="search-result media-summary">
           <p>
             <?php echo __('%1% results with digital objects', [
@@ -204,21 +204,21 @@
             </a>
           </p>
         </div>
-      <?php endif; ?>
+      <?php } ?>
 
-      <?php if ($view === $tableView): ?>
+      <?php if ($view === $tableView) { ?>
         <?php echo get_partial('informationobject/tableViewResults', ['pager' => $pager, 'selectedCulture' => $selectedCulture]) ?>
-      <?php elseif ($view === $cardView): ?>
+      <?php } elseif ($view === $cardView){ ?>
         <?php echo get_partial('informationobject/cardViewResults', ['pager' => $pager, 'selectedCulture' => $selectedCulture]) ?>
-      <?php endif; ?>
+      <?php } ?>
     </div>
 
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
-<?php if (isset($pager)): ?>
+<?php if (isset($pager)) { ?>
   <?php slot('after-content') ?>
     <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
   <?php end_slot() ?>
-<?php endif; ?>
+<?php } ?>

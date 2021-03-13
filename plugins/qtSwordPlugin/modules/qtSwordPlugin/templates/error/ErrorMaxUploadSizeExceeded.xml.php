@@ -3,9 +3,9 @@
              xmlns="http://www.w3.org/2005/Atom"
              xmlns:sword="http://purl.org/net/sword/">
 
-  <?php if (isset($summary)): ?>
+  <?php if (isset($summary)) { ?>
     <summary type="text"><?php echo $summary ?></summary>
-  <?php endif; ?>
+  <?php } ?>
 
   <title type="text">ERROR</title>
 

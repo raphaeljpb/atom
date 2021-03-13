@@ -1,12 +1,12 @@
 <div class="sidebar-lowering settings-menu">
   <table class="table table-bordered table-hover table-condensed">
     <tbody>
-      <?php foreach ($nodes as $node): ?>
-        <?php if ($node['active']): ?>
+      <?php foreach ($nodes as $node) { ?>
+        <?php if ($node['active']) { ?>
           <tr class="info">
-        <?php else: ?>
+        <?php } else { ?>
           <tr>
-        <?php endif; ?>
+        <?php } ?>
           <td>
             <?php echo link_to($node['label'], [
               'module' => $node['module'] ?? 'settings',
@@ -14,7 +14,7 @@
             ]) ?>
           </td>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 </div>

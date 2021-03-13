@@ -22,9 +22,9 @@
         </td><td>
           <select name="updateChildLevels[0][levelOfDescription]" id="updateChildLevels_0_levelOfDescription">
             <option value="">&nbsp;</option>
-            <?php foreach (QubitTerm::getLevelsOfDescription() as $item): ?>
+            <?php foreach (QubitTerm::getLevelsOfDescription() as $item) { ?>
               <option value="<?php echo $item->id ?>"><?php echo $item->__toString() ?></option>
-            <?php endforeach; ?>
+            <?php } ?>
           </select>
         </td><td>
           <input type="text" id="updateChildLevels_0_title" name="updateChildLevels[0][title]"/>
@@ -44,10 +44,10 @@
 
   </table>
 
-  <?php if (isset($help)): ?>
+  <?php if (isset($help)) { ?>
     <div class="description">
       <?php echo $sf_data->getRaw('help') ?>
     </div>
-  <?php endif ?>
+  <?php } ?>
 
 </div>

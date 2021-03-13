@@ -1,6 +1,6 @@
-<?php foreach ([$adminMenu, $importMenu, $manageMenu, $addMenu] as $menu): ?>
+<?php foreach ([$adminMenu, $importMenu, $manageMenu, $addMenu] as $menu) { ?>
 
-  <?php if ($menu && ($menu->getName() == 'add' || $menu->getName() == 'manage') || $sf_user->isAdministrator()): ?>
+  <?php if ($menu && ($menu->getName() == 'add' || $menu->getName() == 'manage') || $sf_user->isAdministrator()) { ?>
 
     <div id="<?php echo $menu->getName() ?>-menu" data-toggle="tooltip" data-title="<?php echo $menu->getLabel(['cultureFallback' => true]) ?>">
 
@@ -28,6 +28,6 @@
 
     </div>
 
-  <?php endif; ?>
+  <?php } ?>
 
-<?php endforeach; ?>
+<?php } ?>

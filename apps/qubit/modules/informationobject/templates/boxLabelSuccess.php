@@ -37,7 +37,7 @@
         </th>
       </tr>
     </thead><tbody>
-      <?php $row = 1; foreach ($results as $item): ?>
+      <?php $row = 1; foreach ($results as $item) { ?>
         <tr>
           <td>
             <?php echo $row++ ?>
@@ -48,16 +48,16 @@
           </td><td>
             <?php echo render_value_inline($item['title']) ?>
           </td><td>
-            <?php if ($item['creationDates']): ?>
+            <?php if ($item['creationDates']) { ?>
               <ul>
-                <?php foreach (explode('|', $item['creationDates']) as $creationDate): ?>
+                <?php foreach (explode('|', $item['creationDates']) as $creationDate) { ?>
                   <li><?php echo render_value_inline($creationDate) ?></li>
-                <?php endforeach; ?>
+                <?php } ?>
               </ul>
-            <?php endif; ?>
+            <?php } ?>
           </td>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 

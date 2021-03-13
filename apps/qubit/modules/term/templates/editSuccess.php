@@ -8,11 +8,11 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+  <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'term', 'action' => 'edit'])) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'term', 'action' => 'add'])) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -29,11 +29,11 @@
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'taxonomy', 'action' => 'autocomplete']) ?>"/>
         </div>
 
-        <?php if (QubitTerm::isProtected($resource->id)): ?>
+        <?php if (QubitTerm::isProtected($resource->id)) { ?>
           <?php echo $form->name->renderRow(['class' => 'readOnly', 'disabled' => 'disabled']) ?>
-        <?php else: ?>
+        <?php } else { ?>
           <?php echo render_field($form->name, $resource) ?>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo $form->useFor
           ->label(__('Use for'))
@@ -102,19 +102,19 @@
 
     <section class="actions">
       <ul>
-        <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+        <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
           <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'term'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
-        <?php else: ?>
-          <?php if (isset($resource->taxonomy)): ?>
+        <?php } else { ?>
+          <?php if (isset($resource->taxonomy)) { ?>
             <li><?php echo link_to(__('Cancel'), [$resource->taxonomy, 'module' => 'taxonomy'], ['class' => 'c-btn']) ?></li>
-          <?php elseif (isset($sf_request->taxonomy)): ?>
+          <?php } elseif (isset($sf_request->taxonomy)){ ?>
             <li><?php echo link_to(__('Cancel'), !empty($parent) ? $parent : $sf_request->taxonomy, ['class' => 'c-btn']) ?></li>
-          <?php else: ?>
+          <?php } else { ?>
             <li><?php echo link_to(__('Cancel'), ['module' => 'taxonomy', 'action' => 'list'], ['class' => 'c-btn']) ?></li>
-          <?php endif; ?>
+          <?php } ?>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create') ?>"/></li>
-        <?php endif; ?>
+        <?php } ?>
       </ul>
     </section>
 

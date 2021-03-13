@@ -20,9 +20,9 @@
   <h3><?php echo __('Related resources') ?></h3>
   <div>
     <ul>
-      <?php foreach (QubitRelation::getRelatedObjectsBySubjectId('QubitInformationObject', $resource->id, ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]) as $item): ?>
+      <?php foreach (QubitRelation::getRelatedObjectsBySubjectId('QubitInformationObject', $resource->id, ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]) as $item) { ?>
         <li><?php echo link_to(render_title($item), [$item, 'module' => 'informationobject']) ?></li>
-      <?php endforeach; ?>
+      <?php } ?>
     </ul>
   </div>
 </div>
@@ -31,9 +31,9 @@
   <h3><?php echo __('Related accessions') ?></h3>
   <div>
     <ul>
-      <?php foreach (QubitRelation::getRelatedObjectsBySubjectId('QubitAccession', $resource->id, ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]) as $item): ?>
+      <?php foreach (QubitRelation::getRelatedObjectsBySubjectId('QubitAccession', $resource->id, ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]) as $item) { ?>
         <li><?php echo link_to(render_title($item), [$item, 'module' => 'accession']) ?></li>
-      <?php endforeach; ?>
+      <?php } ?>
     </ul>
   </div>
 </div>

@@ -18,7 +18,7 @@
         </th>
       </tr>
     </thead><tbody>
-      <?php foreach ($relatedDonorRecord as $item): ?>
+      <?php foreach ($relatedDonorRecord as $item) { ?>
         <tr class="<?php echo 0 == @@++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for([$item, 'module' => 'accession', 'action' => 'relatedDonor']) ?>">
           <td>
             <?php echo render_title($item->object) ?>
@@ -26,7 +26,7 @@
             <input class="multiDelete" name="deleteRelations[]" type="checkbox" value="<?php echo url_for([$item, 'module' => 'relation']) ?>"/>
           </td>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 

@@ -11,11 +11,11 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+  <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'physicalobject', 'action' => 'edit'])) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'physicalobject', 'action' => 'add'])) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -37,13 +37,13 @@
 
     <section class="actions">
       <ul>
-        <?php if (null !== $next = $form->getValue('next')): ?>
+        <?php if (null !== $next = $form->getValue('next')) { ?>
           <li><?php echo link_to(__('Cancel'), $next, ['class' => 'c-btn']) ?></li>
-        <?php elseif (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+        <?php } elseif (isset($sf_request->getAttribute('sf_route')->resource)){ ?>
           <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'physicalobject'], ['class' => 'c-btn']) ?></li>
-        <?php else: ?>
+        <?php } else { ?>
           <li><?php echo link_to(__('Cancel'), ['module' => 'physicalobject', 'action' => 'browse'], ['class' => 'c-btn']) ?></li>
-        <?php endif; ?>
+        <?php } ?>
         <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
       </ul>
     </section>

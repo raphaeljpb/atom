@@ -11,11 +11,11 @@
 
   <?php echo get_component('informationobject', 'descriptionHeader', ['resource' => $resource, 'title' => (string) $mods]) ?>
 
-  <?php if (isset($sf_request->source)): ?>
+  <?php if (isset($sf_request->source)) { ?>
     <div class="messages status">
       <?php echo __('This is a duplicate of record %1%', ['%1%' => $sourceInformationObjectLabel]) ?>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
@@ -23,11 +23,11 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+  <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'informationobject', 'action' => 'edit']), ['id' => 'editForm']) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'informationobject', 'action' => 'add']), ['id' => 'editForm']) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -116,9 +116,9 @@
           <?php echo $form->subjectAccessPoints
             ->help(__('A term or phrase representing the primary topic(s) on which a work is focused. Search for an existing term in the Subjects taxonomy by typing the first few characters of the term name. Alternatively, type a new name to create and link to a new subject term.'))
             ->renderHelp() ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?>"/>
         </div>
 
@@ -127,9 +127,9 @@
             ->label(__('Places'))
             ->renderLabel() ?>
           <?php echo $form->placeAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?>"/>
           <?php echo $form->placeAccessPoints
             ->help(__('Search for an existing term in the Places taxonomy by typing the first few characters of the term name. Alternatively, type a new term to create and link to a new place term.'))
@@ -141,9 +141,9 @@
             ->label(__('Names'))
             ->renderLabel() ?>
           <?php echo $form->nameAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')): ?>
+          <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'actor', 'action' => 'add']) ?> #authorizedFormOfName"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete', 'showOnlyActors' => 'true']) ?>"/>
           <?php echo $form->nameAccessPoints
             ->help(__('"Choose provenance, author and other non-subject access points from the archival description, as appropriate. All access points must be apparent from the archival description to which they relate." (RAD 21.0B) The values in this field are drawn from the Authorized form of name field in authority records. Search for an existing name by typing the first few characters of the name. Alternatively, type a new name to create and link to a new authority record.'))

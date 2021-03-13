@@ -1,25 +1,25 @@
 <?php decorate_with('layout_1col.php') ?>
 
 <?php slot('title') ?>
-  <?php if (isset($resource)): ?>
+  <?php if (isset($resource)) { ?>
     <h1 class="multiline">
       <?php echo $title ?>
       <span class="sub"><?php echo render_title($resource) ?></span>
     </h1>
-  <?php else: ?>
+  <?php } else { ?>
     <h1><?php echo $title ?></h1>
-  <?php endif; ?>
+  <?php } ?>
 <?php end_slot() ?>
 
 <?php slot('content') ?>
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($resource)): ?>
+  <?php if (isset($resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'object', 'action' => 'importSelect']), ['enctype' => 'multipart/form-data']) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'object', 'action' => 'importSelect']), ['enctype' => 'multipart/form-data']) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -31,7 +31,7 @@
 
         <input type="hidden" name="importType" value="<?php echo esc_entities($type) ?>"/>
 
-        <?php if ('csv' == $type): ?>
+        <?php if ('csv' == $type) { ?>
           <div class="form-item">
             <label><?php echo __('Type') ?></label>
             <select name="objectType">
@@ -43,9 +43,9 @@
               <option value="repository"><?php echo sfConfig::get('app_ui_label_repository', __('Repository')) ?></option>
             </select>
           </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if ('csv' != $type): ?>
+        <?php if ('csv' != $type) { ?>
           <div class="form-item">
             <label><?php echo __('Type') ?></label>
             <select name="objectType">
@@ -57,12 +57,12 @@
 
             <p class="alert alert-info text-center"><?php echo __('If you are importing a SKOS file to a taxonomy other than subjects, please go to the %1%', ['%1%' => link_to(__('SKOS import page'), ['module' => 'sfSkosPlugin', 'action' => 'import'])]) ?></p>
           </div>
-        <?php endif; ?>
+        <?php } ?>
 
 
         <div id="updateBlock">
 
-          <?php if ('csv' == $type): ?>
+          <?php if ('csv' == $type) { ?>
             <div class="form-item">
               <label><?php echo __('Update behaviours') ?></label>
               <select name="updateType">
@@ -71,9 +71,9 @@
                 <option value="delete-and-replace"><?php echo __('Delete matches and replace with imported records') ?></option>
               </select>
             </div>
-          <?php endif; ?>
+          <?php } ?>
 
-          <?php if ('csv' != $type): ?>
+          <?php if ('csv' != $type) { ?>
             <div class="form-item">
               <label><?php echo __('Update behaviours') ?></label>
               <select name="updateType">
@@ -81,7 +81,7 @@
                 <option value="delete-and-replace"><?php echo __('Delete matches and replace with imports') ?></option>
               </select>
             </div>
-          <?php endif; ?>
+          <?php } ?>
 
           <div class="form-item">
 
@@ -132,7 +132,7 @@
           </label>
         </div>
 
-        <?php if ('csv' == $type && sfConfig::get('app_csv_transform_script_name')): ?>
+        <?php if ('csv' == $type && sfConfig::get('app_csv_transform_script_name')) { ?>
           <div class="form-item">
             <label>
               <input name="doCsvTransform" type="checkbox"/>
@@ -142,7 +142,7 @@
               </div>
             </label>
           </div>
-        <?php endif; ?>
+        <?php } ?>
       </fieldset>
 
       <fieldset class="collapsible">

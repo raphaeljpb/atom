@@ -1,6 +1,6 @@
 <div class="sidebar-lowering">
 
-  <?php foreach ($lists as $list): ?>
+  <?php foreach ($lists as $list) { ?>
 
     <section class="sidebar-paginated-list list-menu"
       data-total-pages="<?php echo $list['pager']->getLastPage() ?>"
@@ -19,16 +19,16 @@
       </div>
 
       <ul>
-        <?php foreach ($list['pager']->getResults() as $hit): ?>
+        <?php foreach ($list['pager']->getResults() as $hit) { ?>
           <?php $doc = $hit->getData() ?>
           <li><?php echo link_to(render_value_inline(get_search_i18n($doc, 'title', ['allowEmpty' => false])), ['module' => 'informationobject', 'slug' => $doc['slug']]) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
 
       <?php echo get_partial('default/sidebarPager', ['pager' => $list['pager']]) ?>
 
     </section>
 
-  <?php endforeach; ?>
+  <?php } ?>
 
 </div>

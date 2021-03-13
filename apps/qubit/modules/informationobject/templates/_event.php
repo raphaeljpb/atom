@@ -87,9 +87,9 @@ content
       ->renderLabel() ?>
     <?php echo $form->actor->render(['class' => 'form-autocomplete']) ?>
 
-    <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')): ?>
+    <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')) { ?>
       <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'actor', 'action' => 'add']) ?> #authorizedFormOfName"/>
-    <?php endif; ?>
+    <?php } ?>
 
     <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete']) ?>"/>
     <?php echo $form->actor->renderHelp() ?>
@@ -105,9 +105,9 @@ content
     <?php echo $form->place->renderLabel() ?>
     <?php echo $form->place->render(['class' => 'form-autocomplete']) ?>
 
-    <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')): ?>
+    <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')) { ?>
       <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-    <?php endif; ?>
+    <?php } ?>
 
     <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?>"/>
     <?php echo $form->place->renderHelp() ?>

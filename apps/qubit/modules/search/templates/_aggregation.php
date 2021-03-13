@@ -11,15 +11,15 @@
 
       <?php $filters = sfOutputEscaper::unescape($filters) ?>
 
-      <?php if ($name !== 'languages'): ?>
+      <?php if ($name !== 'languages') { ?>
         <li <?php if (!isset($filters[$name])) echo 'class="active"' ?>>
           <?php echo link_to(__('All'),
             [$name => null,'page' => null] +
             $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(), ['title' => __('All')]) ?>
         </li>
-      <?php endif; ?>
+      <?php } ?>
 
-      <?php foreach ($aggs[$name] as $bucket): ?>
+      <?php foreach ($aggs[$name] as $bucket) { ?>
         <?php $active = ((isset($filters[$name]) && $filters[$name] == $bucket['key']) ||
           (!isset($filters[$name]) && $bucket['key'] == 'unique_language')) ?>
 
@@ -29,7 +29,7 @@
             $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(), ['title' => __(strip_markdown($bucket['display']))]) ?>
           <span class="facet-count" aria-hidden="true"><?php echo $bucket['doc_count'] ?></span>
         </li>
-      <?php endforeach; ?>
+      <?php } ?>
 
     </ul>
   </div>

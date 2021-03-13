@@ -14,16 +14,16 @@
 
     <div id="content">
 
-      <?php if (0 < count($informationObjects)): ?>
+      <?php if (0 < count($informationObjects)) { ?>
         <h2><?php echo __('Click Confirm to delete this physical storage from the system. This will also remove the physical storage location from the following records:') ?></h2>
         <div class="delete-list">
           <ul>
-            <?php foreach ($informationObjects as $item): ?>
+            <?php foreach ($informationObjects as $item) { ?>
               <li><?php echo link_to(render_title($item), [$item, 'module' => 'informationobject']) ?></li>
-            <?php endforeach; ?>
+            <?php } ?>
           </ul>
         </div>
-      <?php endif; ?>
+      <?php } ?>
 
     </div>
 

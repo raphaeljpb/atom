@@ -1,8 +1,8 @@
 <footer>
 
-  <?php if (QubitAcl::check('userInterface', 'translate')): ?>
+  <?php if (QubitAcl::check('userInterface', 'translate')) { ?>
     <?php echo get_component('sfTranslatePlugin', 'translate') ?>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo get_component_slot('footer') ?>
 
@@ -13,7 +13,7 @@
 </footer>
 
 <?php $gaKey = sfConfig::get('app_google_analytics_api_key', '') ?>
-<?php if (!empty($gaKey)): ?>
+<?php if (!empty($gaKey)) { ?>
   <script>
     window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
     ga('create', '<?php echo $gaKey ?>', 'auto');
@@ -21,4 +21,4 @@
     ga('send', 'pageview');
   </script>
   <script async src='https://www.google-analytics.com/analytics.js'></script>
-<?php endif; ?>
+<?php } ?>

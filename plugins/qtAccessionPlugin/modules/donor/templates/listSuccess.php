@@ -25,13 +25,13 @@
         </th>
       </tr>
     </thead><tbody>
-      <?php foreach ($donors as $item): ?>
+      <?php foreach ($donors as $item) { ?>
         <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?>">
           <td>
             <?php echo link_to(render_title($item), [$item, 'module' => 'donor']) ?>
           </td>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 

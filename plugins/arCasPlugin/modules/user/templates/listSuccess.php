@@ -11,8 +11,8 @@
 </section>
 
 <ul class="nav nav-pills">
-  <li<?php if ('onlyInactive' != $sf_request->filter): ?> class="active"<?php endif; ?>><?php echo link_to(__('Show active only'), ['filter' => 'onlyActive'] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
-  <li<?php if ('onlyInactive' == $sf_request->filter): ?> class="active"<?php endif; ?>><?php echo link_to(__('Show inactive only'), ['filter' => 'onlyInactive'] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
+  <li<?php if ('onlyInactive' != $sf_request->filter) { ?> class="active"<?php } ?>><?php echo link_to(__('Show active only'), ['filter' => 'onlyActive'] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
+  <li<?php if ('onlyInactive' == $sf_request->filter) { ?> class="active"<?php } ?>><?php echo link_to(__('Show inactive only'), ['filter' => 'onlyInactive'] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
 </ul>
 
 <table class="table table-bordered sticky-enabled">
@@ -27,27 +27,27 @@
       </th>
     </tr>
   </thead><tbody>
-    <?php foreach ($users as $item): ?>
+    <?php foreach ($users as $item) { ?>
       <tr>
         <td>
           <?php echo link_to($item->username, [$item, 'module' => 'user']) ?>
-          <?php if (!$item->active): ?>
+          <?php if (!$item->active) { ?>
             (<?php echo __('inactive') ?>)
-          <?php endif; ?>
-          <?php if ($sf_user->user === $item): ?>
+          <?php } ?>
+          <?php if ($sf_user->user === $item) { ?>
             (<?php echo __('you') ?>)
-          <?php endif; ?>
+          <?php } ?>
         </td><td>
           <?php echo $item->email ?>
         </td><td>
           <ul>
-            <?php foreach ($item->getAclGroups() as $group): ?>
+            <?php foreach ($item->getAclGroups() as $group) { ?>
               <li><?php echo render_title($group) ?></li>
-            <?php endforeach; ?>
+            <?php } ?>
           </ul>
         </td>
       </tr>
-    <?php endforeach; ?>
+    <?php } ?>
   </tbody>
 </table>
 

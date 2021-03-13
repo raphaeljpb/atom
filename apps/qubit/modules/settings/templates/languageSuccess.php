@@ -36,7 +36,7 @@
           </tr>
         </thead>
           <tbody>
-          <?php foreach ($i18nLanguages as $setting): ?>
+          <?php foreach ($i18nLanguages as $setting) { ?>
             <tr>
               <td>
                 <?php echo $setting->getName() ?>
@@ -45,12 +45,12 @@
                 <?php echo format_language($setting->getName()) ?>
               </td>
               <td>
-                <?php if ($setting->deleteable): ?>
+                <?php if ($setting->deleteable) { ?>
                   <?php echo link_to(image_tag('delete', ['alt' => __('Delete')]), [$setting, 'module' => 'settings', 'action' => 'delete']) ?>
-                <?php endif; ?>
+                <?php } ?>
               </td>
             </tr>
-          <?php endforeach; ?>
+          <?php } ?>
           <tr>
             <td colspan="3">
               <?php echo $form->languageCode->renderRow() ?>

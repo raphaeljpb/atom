@@ -9,16 +9,16 @@
 
   <h1><?php echo render_title($resource) ?></h1>
 
-  <?php if (isset($errorSchema)): ?>
+  <?php if (isset($errorSchema)) { ?>
     <div class="messages error">
       <ul>
-        <?php foreach ($errorSchema as $error): ?>
+        <?php foreach ($errorSchema as $error) { ?>
           <?php $error = sfOutputEscaper::unescape($error) ?>
           <li><?php echo $error->getMessage() ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
   <section class="breadcrumb">
     <ul>
@@ -27,21 +27,21 @@
     </ul>
   </section>
 
-  <?php if ($resource->existsBanner()): ?>
+  <?php if ($resource->existsBanner()) { ?>
     <div class="row" id="repository-banner">
       <div class="span7">
         <?php echo image_tag($resource->getBannerPath(), ['alt' => '']) ?>
       </div>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
-  <?php if ($sf_data->getRaw('htmlSnippet')): ?>
+  <?php if ($sf_data->getRaw('htmlSnippet')) { ?>
     <div class="row" id="repository-html-snippet">
       <div class="span7">
         <?php echo render_value_html($sf_data->getRaw('htmlSnippet')) ?>
       </div>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo get_component('default', 'translationLinks', ['resource' => $resource]) ?>
 
@@ -55,30 +55,30 @@
   </ul>
   <?php echo get_component('clipboard', 'button', ['slug' => $resource->slug, 'wide' => true, 'type' => 'repository']) ?>
 
-  <?php if (isset($primaryContact)): ?>
+  <?php if (isset($primaryContact)) { ?>
     <section id="primary-contact">
       <h4><?php echo __('Primary contact') ?></h4>
       <?php echo render_value($sf_data->getRaw('primaryContact')->getContactInformationString(['simple' => true])) ?>
       <div class="context-actions">
-        <?php if (null !== $website = $primaryContact->getWebsite()): ?>
-          <?php if (null === parse_url($website, PHP_URL_SCHEME)): ?>
+        <?php if (null !== $website = $primaryContact->getWebsite()) { ?>
+          <?php if (null === parse_url($website, PHP_URL_SCHEME)) { ?>
             <?php $website = 'http://'.$website // Ensure scheme prefix for absolute url?>
-          <?php endif; ?>
+          <?php } ?>
 
           <a class="btn btn-small" href="<?php echo esc_entities($website) ?>"><?php echo __('Website') ?></a>
-        <?php endif; ?>
-        <?php if (null !== $email = $primaryContact->email): ?>
+        <?php } ?>
+        <?php if (null !== $email = $primaryContact->email) { ?>
           <a class="btn btn-small" href="mailto:<?php echo esc_entities($email) ?>"><?php echo __('Email') ?></a>
-        <?php endif; ?>
+        <?php } ?>
       </div>
     </section>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
-<?php if (isset($latitude) && isset($longitude) && $mapApiKey = sfConfig::get('app_google_maps_api_key')): ?>
+<?php if (isset($latitude) && isset($longitude) && $mapApiKey = sfConfig::get('app_google_maps_api_key')) { ?>
   <div id="front-map" class="simple-map" data-key="<?php echo $mapApiKey ?>" data-latitude="<?php echo $latitude ?>" data-longitude="<?php echo $longitude ?>"></div>
-<?php endif; ?>
+<?php } ?>
 
 <section id="identifyArea">
 
@@ -92,9 +92,9 @@
     <h3><?php echo __('Parallel form(s) of name') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item): ?>
+        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item) { ?>
           <li><?php echo render_value_inline($item->__toString()) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -103,9 +103,9 @@
     <h3><?php echo __('Other form(s) of name') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item): ?>
+        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item) { ?>
           <li><?php echo render_value_inline($item->__toString()) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -114,9 +114,9 @@
     <h3><?php echo __('Type') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->getTermRelations(QubitTaxonomy::REPOSITORY_TYPE_ID) as $item): ?>
+        <?php foreach ($resource->getTermRelations(QubitTaxonomy::REPOSITORY_TYPE_ID) as $item) { ?>
           <li><?php echo render_value_inline($item->term->__toString()) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -127,9 +127,9 @@
 
   <?php echo link_to_if(SecurityPrivileges::editCredentials($sf_user, 'repository'), '<h2>'.__('Contact area').'</h2>', [$resource, 'module' => 'repository', 'action' => 'edit'], ['anchor' => 'contactArea', 'title' => __('Edit contact area')]) ?>
 
-  <?php foreach ($resource->contactInformations as $contactItem): ?>
+  <?php foreach ($resource->contactInformations as $contactItem) { ?>
     <?php echo get_partial('contactinformation/contactInformation', ['contactInformation' => $contactItem]) ?>
-  <?php endforeach; ?>
+  <?php } ?>
 
 </section>
 
@@ -199,9 +199,9 @@
     <h3><?php echo __('Language(s)') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->language as $code): ?>
+        <?php foreach ($resource->language as $code) { ?>
           <li><?php echo format_language($code) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -210,9 +210,9 @@
     <h3><?php echo __('Script(s)') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->script as $code): ?>
+        <?php foreach ($resource->script as $code) { ?>
           <li><?php echo format_script($code) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -230,44 +230,44 @@
     <h3><?php echo __('Access Points') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->getTermRelations(QubitTaxonomy::THEMATIC_AREA_ID) as $item): ?>
+        <?php foreach ($resource->getTermRelations(QubitTaxonomy::THEMATIC_AREA_ID) as $item) { ?>
           <li><?php echo __(render_value_inline($item->term)) ?> (Thematic area)</li>
-        <?php endforeach; ?>
-        <?php foreach ($resource->getTermRelations(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID) as $item): ?>
+        <?php } ?>
+        <?php foreach ($resource->getTermRelations(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID) as $item) { ?>
           <li><?php echo __(render_value_inline($item->term)) ?> (Geographic subregion)</li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
 </section>
 
-<?php if (QubitAcl::check($resource, ['update', 'delete', 'create'])): ?>
+<?php if (QubitAcl::check($resource, ['update', 'delete', 'create'])) { ?>
 
   <?php slot('after-content') ?>
 
     <section class="actions">
       <ul>
-        <?php if (QubitAcl::check($resource, 'update')): ?>
+        <?php if (QubitAcl::check($resource, 'update')) { ?>
           <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'repository', 'action' => 'edit'], ['class' => 'c-btn', 'title' => __('Edit')]) ?></li>
-        <?php endif; ?>
-        <?php if (QubitAcl::check($resource, 'delete')): ?>
+        <?php } ?>
+        <?php if (QubitAcl::check($resource, 'delete')) { ?>
           <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'repository', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete', 'title' => __('Delete')]) ?></li>
-        <?php endif; ?>
-        <?php if (QubitAcl::check($resource, 'create')): ?>
+        <?php } ?>
+        <?php if (QubitAcl::check($resource, 'create')) { ?>
           <li><?php echo link_to(__('Add new'), ['module' => 'repository', 'action' => 'add'], ['class' => 'c-btn', 'title' => __('Add new')]) ?></li>
-        <?php endif; ?>
-        <?php if (QubitAcl::check(QubitInformationObject, 'create')): ?>
+        <?php } ?>
+        <?php if (QubitAcl::check(QubitInformationObject, 'create')) { ?>
           <li><?php echo link_to(__('Add description'), ['module' => 'informationobject', 'action' => 'add', 'repository' => $resource->id], ['class' => 'c-btn', 'title' => __('Add description')]) ?></li>
-        <?php endif; ?>
+        <?php } ?>
         <li class="divider"></li>
-        <?php if (QubitAcl::check($resource, 'update')): ?>
+        <?php if (QubitAcl::check($resource, 'update')) { ?>
           <li><?php echo link_to(__('Edit theme'), [$resource, 'module' => 'repository', 'action' => 'editTheme'], ['class' => 'c-btn', 'title' => 'Edit theme']) ?></li>
-        <?php endif; ?>
+        <?php } ?>
       </ul>
     </section>
 
   <?php end_slot() ?>
 
-<?php endif; ?>
+<?php } ?>
 
 <?php echo get_component('object', 'gaInstitutionsDimension', ['resource' => $resource]) ?>

@@ -1,8 +1,8 @@
 <div class="sidebar-lowering-sort">
 
-  <?php if (!$showTreeview): ?>
+  <?php if (!$showTreeview) { ?>
     <?php echo get_component('term', 'treeView', ['browser' => false]) ?>
-  <?php else: ?>
+  <?php } else { ?>
 
     <?php echo get_component('term', 'treeView', ['browser' => false, 'tabs' => true, 'pager' => $listPager]) ?>
 
@@ -24,46 +24,46 @@
           'aggs' => $aggs,
           'filters' => $search->filters]) ?>
 
-        <?php if (QubitTaxonomy::PLACE_ID != $resource->taxonomyId): ?>
+        <?php if (QubitTaxonomy::PLACE_ID != $resource->taxonomyId) { ?>
           <?php echo get_partial('search/aggregation', [
             'id' => '#facet-places',
             'label' => sfConfig::get('app_ui_label_place'),
             'name' => 'places',
             'aggs' => $aggs,
             'filters' => $search->filters]) ?>
-          <?php endif; ?>
+          <?php } ?>
 
-        <?php if (QubitTaxonomy::SUBJECT_ID != $resource->taxonomyId): ?>
+        <?php if (QubitTaxonomy::SUBJECT_ID != $resource->taxonomyId) { ?>
           <?php echo get_partial('search/aggregation', [
             'id' => '#facet-subjects',
             'label' => sfConfig::get('app_ui_label_subject'),
             'name' => 'subjects',
             'aggs' => $aggs,
             'filters' => $search->filters]) ?>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if (QubitTaxonomy::GENRE_ID != $resource->taxonomyId): ?>
+        <?php if (QubitTaxonomy::GENRE_ID != $resource->taxonomyId) { ?>
           <?php echo get_partial('search/aggregation', [
             'id' => '#facet-genres',
             'label' => sfConfig::get('app_ui_label_genre'),
             'name' => 'genres',
             'aggs' => $aggs,
             'filters' => $search->filters]) ?>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if (QubitTaxonomy::ACTOR_OCCUPATION_ID != $resource->taxonomyId): ?>
+        <?php if (QubitTaxonomy::ACTOR_OCCUPATION_ID != $resource->taxonomyId) { ?>
           <?php echo get_partial('search/aggregation', [
             'id' => '#facet-occupations',
             'label' => __('Occupation'),
             'name' => 'occupations',
             'aggs' => $aggs,
             'filters' => $search->filters]) ?>
-        <?php endif; ?>
+        <?php } ?>
 
       </div>
 
     </section>
 
-  <?php endif; ?>
+  <?php } ?>
 
 </div>

@@ -2,14 +2,14 @@
 
 <?php slot('title') ?>
   <h1 class="multiline">
-    <?php if (isset($sf_request->id)): ?>
+    <?php if (isset($sf_request->id)) { ?>
       <?php echo __('Edit menu') ?>
-    <?php else: ?>
+    <?php } else { ?>
       <?php echo __('Add new menu') ?>
-    <?php endif; ?>
-    <?php if (isset($sf_request->id)): ?>
+    <?php } ?>
+    <?php if (isset($sf_request->id)) { ?>
       <span class="sub"><?php echo $menu->getName(['sourceCulture' => true]) ?></h1>
-    <?php endif; ?>
+    <?php } ?>
   </h1>
 <?php end_slot() ?>
 
@@ -17,11 +17,11 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($sf_request->id)): ?>
+  <?php if (isset($sf_request->id)) { ?>
     <?php echo $form->renderFormTag(url_for([$menu, 'module' => 'menu', 'action' => 'edit'])) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'menu', 'action' => 'add'])) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -33,14 +33,14 @@
           <?php echo __('Main area') ?>
         </legend>
 
-        <?php if (!$menu->isProtected()): ?>
+        <?php if (!$menu->isProtected()) { ?>
           <div class="form-item">
             <?php echo $form->name
               ->help(__('Provide an internal menu name.  This is not visible to users.'))
               ->label(__('Name'))
               ->renderRow() ?>
           </div>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo render_field($form['label']
           ->help(__('Provide a menu label for users.  For menu items that are not visible (i.e. are organizational only) this should be left blank.'))
@@ -66,9 +66,9 @@
     <section class="actions">
       <ul>
         <li><?php echo link_to(__('Cancel'), ['module' => 'menu', 'action' => 'list'], ['class' => 'c-btn']) ?></li>
-        <?php if (!$menu->isProtected() && isset($menu->id)): ?>
+        <?php if (!$menu->isProtected() && isset($menu->id)) { ?>
           <li><?php echo link_to(__('Delete'), [$menu, 'module' => 'menu', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete']) ?></li>
-        <?php endif; ?>
+        <?php } ?>
         <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
       </ul>
     </section>

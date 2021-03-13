@@ -9,19 +9,19 @@
 
 <?php slot('content') ?>
 
-  <?php if (isset($accession)): ?>
+  <?php if (isset($accession)) { ?>
     <div class="messages status">
       <?php echo __('You are creating an accrual to accession %1%', ['%1%' => $accession]) ?>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+  <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'accession', 'action' => 'edit']), ['id' => 'editForm']) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'accession', 'action' => 'add']), ['id' => 'editForm']) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -89,9 +89,9 @@
           <?php echo $form->creators
             ->help(__('The name of the creator of the accession or the name of the department that created the accession.'))
             ->renderHelp() ?>
-          <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')): ?>
+          <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'actor', 'action' => 'add']) ?> #authorizedFormOfName"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete', 'showOnlyActors' => 'true']) ?>"/>
         </div>
 
@@ -140,9 +140,9 @@
             ->label(sfConfig::get('app_ui_label_informationobject'))
             ->renderLabel() ?>
           <?php echo $form->informationObjects->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')): ?>
+          <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'add']) ?> #title"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'autocomplete']) ?>"/>
         </div>
 
@@ -152,13 +152,13 @@
 
     <section class="actions">
       <ul>
-        <?php if (isset($resource->id)): ?>
+        <?php if (isset($resource->id)) { ?>
           <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'accession'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
-        <?php else: ?>
+        <?php } else { ?>
           <li><?php echo link_to(__('Cancel'), ['module' => 'accession', 'action' => 'browse'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create') ?>"/></li>
-        <?php endif; ?>
+        <?php } ?>
       </ul>
     </section>
 

@@ -9,11 +9,11 @@
 
       <div id="content">
 
-        <?php if ('user' != $sf_request->module || 'login' != $sf_request->action): ?>
+        <?php if ('user' != $sf_request->module || 'login' != $sf_request->action) { ?>
           <h1><?php echo __('Please log in to access that page') ?></h1>
-        <?php else: ?>
+        <?php } else { ?>
           <h1><?php echo __('Log in') ?></h1>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo $form->renderGlobalErrors() ?>
 

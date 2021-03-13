@@ -26,16 +26,16 @@
 
         <legend><?php echo __('%1% derivatives settings', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]) ?></legend>
 
-        <?php if ($pdfinfoAvailable): ?>
+        <?php if ($pdfinfoAvailable) { ?>
           <?php echo $form->digital_object_derivatives_pdf_page_number
             ->label(__('PDF page number for image derivative'))
             ->help(__('If the page number does not exist, the derivative will be generated from the previous closest one.'))
             ->renderRow() ?>
-        <?php else: ?>
+        <?php } else { ?>
           <div class="messages error">
             <?php echo __('The pdfinfo tool is required to use this functionality. Please contact your system administrator.') ?>
           </div>
-        <?php endif; ?><br />
+        <?php } ?><br />
 
         <?php echo $form->reference_image_maxwidth
           ->label(__('Maximum length on longest edge (pixels)'))
@@ -46,13 +46,13 @@
 
     </div>
 
-    <?php if ($pdfinfoAvailable): ?>
+    <?php if ($pdfinfoAvailable) { ?>
       <section class="actions">
         <ul>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
         </ul>
       </section>
-    <?php endif; ?>
+    <?php } ?>
 
   </form>
 

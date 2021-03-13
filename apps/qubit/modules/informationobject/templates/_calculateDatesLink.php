@@ -1,4 +1,4 @@
-<?php if (QubitAcl::check($resource, 'update')): ?>
+<?php if (QubitAcl::check($resource, 'update')) { ?>
   <li class="separator"><h4><?php echo __('Tasks') ?></h4></li>
 
   <li>
@@ -10,4 +10,4 @@
   <li>
     <?php echo __('Last run:') ?> <?php echo $lastRun ?>
   </li>
-<?php endif; ?>
+<?php } ?>

@@ -9,23 +9,23 @@
 
 <?php slot('context-menu') ?>
 
-  <?php if (check_field_visibility('app_element_visibility_physical_storage')): ?>
+  <?php if (check_field_visibility('app_element_visibility_physical_storage')) { ?>
     <?php echo get_component('physicalobject', 'contextMenu', ['resource' => $resource]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
 <?php slot('before-content') ?>
 
-  <?php if (isset($errorSchema)): ?>
+  <?php if (isset($errorSchema)) { ?>
     <div class="messages error">
       <ul>
-        <?php foreach ($errorSchema as $error): ?>
+        <?php foreach ($errorSchema as $error) { ?>
           <li><?php echo $error ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo get_component('default', 'translationLinks', ['resource' => $resource]) ?>
 
@@ -45,15 +45,15 @@
 
   <?php echo link_to_if(QubitAcl::check($resource, 'update'), '<h2>'.__('Donor/Transferring body area').'</h2>', [$resource, 'module' => 'accession', 'action' => 'edit'], ['anchor' => 'donorArea', 'title' => __('Edit donor/transferring body area')]) ?>
 
-  <?php foreach (QubitRelation::getRelationsBySubjectId($resource->id, ['typeId' => QubitTerm::DONOR_ID]) as $item): ?>
+  <?php foreach (QubitRelation::getRelationsBySubjectId($resource->id, ['typeId' => QubitTerm::DONOR_ID]) as $item) { ?>
 
     <?php echo render_show(__('Related donor'), link_to(esc_specialchars(render_title($item->object)), [$item->object, 'module' => 'donor'])) ?>
 
-    <?php foreach ($item->object->contactInformations as $contactItem): ?>
+    <?php foreach ($item->object->contactInformations as $contactItem) { ?>
       <?php echo get_partial('contactinformation/contactInformation', ['contactInformation' => $contactItem]) ?>
-    <?php endforeach; ?>
+    <?php } ?>
 
-  <?php endforeach; ?>
+  <?php } ?>
 
 </div> <!-- /.section#donorArea -->
 
@@ -72,12 +72,12 @@
    <div>
      <ul>
        <?php $actorsShown = []; ?>
-       <?php foreach (QubitRelation::getRelationsByObjectId($resource->id, ['typeId' => QubitTerm::CREATION_ID]) as $item): ?>
-         <?php if (!isset($actorsShown[$item->subject->id])): ?>
+       <?php foreach (QubitRelation::getRelationsByObjectId($resource->id, ['typeId' => QubitTerm::CREATION_ID]) as $item) { ?>
+         <?php if (!isset($actorsShown[$item->subject->id])) { ?>
            <li><?php echo link_to(render_title($item->subject), [$item->subject, 'module' => 'actor']) ?></li>
-         <?php endif; ?>
+         <?php } ?>
          <?php $actorsShown[$item->subject->id] = true; ?>
-       <?php endforeach; ?>
+       <?php } ?>
      </ul>
    </div>
   </div>
@@ -86,11 +86,11 @@
     <h3><?php echo __('Date(s)') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->getDates() as $item): ?>
+        <?php foreach ($resource->getDates() as $item) { ?>
           <li>
             <?php echo render_value_inline(Qubit::renderDateStartEnd($item->getDate(['cultureFallback' => true]), $item->startDate, $item->endDate)) ?> (<?php echo $item->getType(['cultureFallback' => true]) ?>)
           </li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -99,15 +99,15 @@
     <h3><?php echo __('Event(s)') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->accessionEvents as $event): ?>
+        <?php foreach ($resource->accessionEvents as $event) { ?>
           <li>
             <?php echo $event->getDate() ?> (<?php echo $event->type->getName(['cultureFallback' => true]) ?>): <?php echo $event->getAgent(['cultureFallback' => true]) ?>
             <?php $note = $event->getNote() ?>
-            <?php if ($note !== null && !empty($noteText = $note->getContent(['cultureFallback' => true]))): ?>
+            <?php if ($note !== null && !empty($noteText = $note->getContent(['cultureFallback' => true]))) { ?>
               <p><?php echo $noteText ?></p>
-            <?php endif; ?>
+            <?php } ?>
           </li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -132,9 +132,9 @@
     <h3><?php echo __('Accruals') ?></h3>
     <div>
       <ul>
-        <?php foreach (QubitRelation::getRelationsByObjectId($resource->id, ['typeId' => QubitTerm::ACCRUAL_ID]) as $item): ?>
+        <?php foreach (QubitRelation::getRelationsByObjectId($resource->id, ['typeId' => QubitTerm::ACCRUAL_ID]) as $item) { ?>
           <li><?php echo link_to(render_title($item->subject), [$item->subject, 'module' => 'accession']) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -143,10 +143,10 @@
     <h3><?php echo __('Accrual to') ?></h3>
     <div>
       <ul>
-        <?php foreach (QubitRelation::getRelationsBySubjectId($resource->id, ['typeId' => QubitTerm::ACCRUAL_ID]) as $item): ?>
+        <?php foreach (QubitRelation::getRelationsBySubjectId($resource->id, ['typeId' => QubitTerm::ACCRUAL_ID]) as $item) { ?>
           <li><?php echo link_to(render_title($item->object), [$item->object, 'module' => 'accession']) ?></li>
           <?php $accrued = true ?>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -165,7 +165,7 @@
 
   <h2><?php echo __('%1% area', ['%1%' => sfConfig::get('app_ui_label_informationobject')]) ?></h2>
 
-  <?php foreach (QubitRelation::getRelationsByObjectId($resource->id, ['typeId' => QubitTerm::ACCESSION_ID]) as $item): ?>
+  <?php foreach (QubitRelation::getRelationsByObjectId($resource->id, ['typeId' => QubitTerm::ACCESSION_ID]) as $item) { ?>
 
     <div class="field">
       <h3><?php echo sfConfig::get('app_ui_label_informationobject') ?></h3>
@@ -174,7 +174,7 @@
       </div>
     </div>
 
-  <?php endforeach; ?>
+  <?php } ?>
 
 </div> <!-- /.section#deaccessionArea -->
 
@@ -182,7 +182,7 @@
 
   <h2><?php echo __('Deaccession area') ?></h2>
 
-  <?php foreach ($resource->deaccessions as $item): ?>
+  <?php foreach ($resource->deaccessions as $item) { ?>
 
     <div class="field">
       <h3><?php echo __('Deaccession') ?></h3>
@@ -191,7 +191,7 @@
       </div>
     </div>
 
-  <?php endforeach; ?>
+  <?php } ?>
 
 </div> <!-- /.section#deaccessionArea -->
 
@@ -199,19 +199,19 @@
   <section class="actions">
     <ul>
 
-      <?php if (QubitAcl::check($resource, 'update') || (QubitAcl::check($resource, 'translate'))): ?>
+      <?php if (QubitAcl::check($resource, 'update') || (QubitAcl::check($resource, 'translate'))) { ?>
         <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'accession', 'action' => 'edit'], ['class' => 'c-btn']) ?></li>
-      <?php endif; ?>
+      <?php } ?>
 
-      <?php if (QubitAcl::check($resource, 'delete')): ?>
+      <?php if (QubitAcl::check($resource, 'delete')) { ?>
         <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'accession', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete']) ?></li>
-      <?php endif; ?>
+      <?php } ?>
 
       <li><?php echo link_to(__('Deaccession'), ['module' => 'deaccession', 'action' => 'add', 'accession' => $resource->id], ['class' => 'c-btn']) ?></li>
 
-      <?php if (!isset($accrued)): ?>
+      <?php if (!isset($accrued)) { ?>
         <li><?php echo link_to(__('Add accrual'), ['module' => 'accession', 'action' => 'add', 'accession' => url_for([$resource, 'module' => 'accession'])], ['class' => 'c-btn']) ?></li>
-      <?php endif; ?>
+      <?php } ?>
 
       <li><?php echo link_to(__('Create %1%', ['%1%' => sfConfig::get('app_ui_label_informationobject')]), [$resource, 'module' => 'accession', 'action' => 'addInformationObject'], ['class' => 'c-btn']) ?></li>
       <li>

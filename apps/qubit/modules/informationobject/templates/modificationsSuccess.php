@@ -24,7 +24,7 @@
       </th>
     </tr>
   </thead><tbody>
-    <?php foreach ($modifications as $modification): ?>
+    <?php foreach ($modifications as $modification) { ?>
       <tr>
         <td>
           <?php echo format_date($modification->createdAt, 'f') ?>
@@ -36,7 +36,7 @@
           <?php echo link_to_if($sf_user->isAdministrator() && $modification->userId, $modification->userName, [QubitUser::getById($modification->userId), 'module' => 'user']); ?>
         </td>
       </tr>
-    <?php endforeach; ?>
+    <?php } ?>
   <tbody>
 </table>
 

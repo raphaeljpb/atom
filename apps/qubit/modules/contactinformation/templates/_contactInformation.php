@@ -1,18 +1,18 @@
 <section class="vcard">
 
-  <?php if (!empty($contactInformation->contactPerson)): ?>
+  <?php if (!empty($contactInformation->contactPerson)) { ?>
     <div class="field">
       <h3>&nbsp;</h3>
       <div class="agent">
         <?php echo render_value_inline($contactInformation->contactPerson) ?>
-        <?php if ($contactInformation->primaryContact): ?>
+        <?php if ($contactInformation->primaryContact) { ?>
           <span class="primary-contact">
             <?php echo __('Primary contact') ?>
           </span>
-        <?php endif; ?>
+        <?php } ?>
       </div>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
   <div class="field">
     <h3><?php echo __('Type') ?></h3>

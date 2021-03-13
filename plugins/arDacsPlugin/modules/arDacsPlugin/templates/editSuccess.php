@@ -11,11 +11,11 @@
 
   <h1><?php echo render_title($dacs) ?></h1>
 
-  <?php if (isset($sf_request->source)): ?>
+  <?php if (isset($sf_request->source)) { ?>
     <div class="messages status">
       <?php echo __('This is a duplicate of record %1%', ['%1%' => $sourceInformationObjectLabel]) ?>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
@@ -23,11 +23,11 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+  <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'informationobject', 'action' => 'edit']), ['id' => 'editForm']) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'informationobject', 'action' => 'add']), ['id' => 'editForm']) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -181,9 +181,9 @@
             ->label(__('Related descriptions'))
             ->renderLabel() ?>
           <?php echo $form->relatedMaterialDescriptions->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitInformationObject::getRoot(), 'create')): ?>
+          <?php if (QubitAcl::check(QubitInformationObject::getRoot(), 'create')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'add']) ?> #title"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'autocomplete']) ?>"/>
           <?php echo $form->relatedMaterialDescriptions
             ->help(__('To create a relationship between this description and another description held in AtoM, begin typing the name of the related description and select it from the autocomplete drop-down menu when it appears below. Multiple relationships can be created.'))
@@ -231,9 +231,9 @@
             ->label(__('Subject access points'))
             ->renderLabel() ?>
           <?php echo $form->subjectAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?>"/>
         </div>
 
@@ -242,9 +242,9 @@
             ->label(__('Place access points'))
             ->renderLabel() ?>
           <?php echo $form->placeAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?>"/>
         </div>
 
@@ -253,9 +253,9 @@
             ->label(__('Genre access points'))
             ->renderLabel() ?>
           <?php echo $form->genreAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')): ?>
+          <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::GENRE_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::GENRE_ID), 'module' => 'taxonomy'])]) ?>"/>
         </div>
 
@@ -264,9 +264,9 @@
             ->label(__('Name access points (subjects)'))
             ->renderLabel() ?>
           <?php echo $form->nameAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')): ?>
+          <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'actor', 'action' => 'add']) ?> #authorizedFormOfName"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete', 'showOnlyActors' => 'true']) ?>"/>
         </div>
 

@@ -1,20 +1,20 @@
 <section class="actions">
   <ul>
 
-      <?php if (QubitAcl::check($resource, 'update') || (QubitAcl::check($resource, 'translate'))): ?>
+      <?php if (QubitAcl::check($resource, 'update') || (QubitAcl::check($resource, 'translate'))) { ?>
         <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'informationobject', 'action' => 'edit'], ['class' => 'c-btn c-btn-submit']) ?></li>
-      <?php endif; ?>
+      <?php } ?>
 
-      <?php if (QubitAcl::check($resource, 'delete')): ?>
+      <?php if (QubitAcl::check($resource, 'delete')) { ?>
         <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'informationobject', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete']) ?></li>
-      <?php endif; ?>
+      <?php } ?>
 
-      <?php if (QubitAcl::check($resource, 'create')): ?>
+      <?php if (QubitAcl::check($resource, 'create')) { ?>
         <li><?php echo link_to(__('Add new'), ['module' => 'informationobject', 'action' => 'add', 'parent' => $resource->slug], ['class' => 'c-btn']) ?></li>
         <li><?php echo link_to(__('Duplicate'), ['module' => 'informationobject', 'action' => 'copy', 'source' => $resource->id], ['class' => 'c-btn']) ?></li>
-      <?php endif; ?>
+      <?php } ?>
 
-      <?php if (QubitAcl::check($resource, 'update') || sfContext::getInstance()->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)): ?>
+      <?php if (QubitAcl::check($resource, 'update') || sfContext::getInstance()->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)) { ?>
 
         <li><?php echo link_to(__('Move'), [$resource, 'module' => 'default', 'action' => 'move'], ['class' => 'c-btn']) ?></li>
 
@@ -30,9 +30,9 @@
 
               <li><?php echo link_to(__('Rename'), [$resource, 'module' => 'informationobject', 'action' => 'rename']) ?></li>
 
-              <?php if (QubitAcl::check($resource, 'publish')): ?>
+              <?php if (QubitAcl::check($resource, 'publish')) { ?>
                 <li><?php echo link_to(__('Update publication status'), [$resource, 'module' => 'informationobject', 'action' => 'updatePublicationStatus']) ?></li>
-              <?php endif; ?>
+              <?php } ?>
 
               <li class="divider"></li>
 
@@ -40,33 +40,33 @@
 
               <li class="divider"></li>
 
-              <?php if (0 < count($resource->digitalObjectsRelatedByobjectId) && QubitDigitalObject::isUploadAllowed()): ?>
+              <?php if (0 < count($resource->digitalObjectsRelatedByobjectId) && QubitDigitalObject::isUploadAllowed()) { ?>
                 <li><?php echo link_to(__('Edit %1%', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]), [$resource->digitalObjectsRelatedByobjectId[0], 'module' => 'digitalobject', 'action' => 'edit']) ?></li>
-              <?php elseif (QubitDigitalObject::isUploadAllowed()): ?>
+              <?php } elseif (QubitDigitalObject::isUploadAllowed()){ ?>
                 <li><?php echo link_to(__('Link %1%', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]), [$resource, 'module' => 'object', 'action' => 'addDigitalObject']) ?></li>
-              <?php endif; // has digital object?>
+              <?php } // has digital object?>
 
-              <?php if ((null === $resource->repository || 0 != $resource->repository->uploadLimit) && QubitDigitalObject::isUploadAllowed()): ?>
+              <?php if ((null === $resource->repository || 0 != $resource->repository->uploadLimit) && QubitDigitalObject::isUploadAllowed()) { ?>
                 <li><?php echo link_to(__('Import digital objects'), [$resource, 'module' => 'informationobject', 'action' => 'multiFileUpload']) ?></li>
-              <?php endif; // upload quota is non-zero?>
+              <?php } // upload quota is non-zero?>
 
               <li class="divider"></li>
 
               <li><?php echo link_to(__('Create new rights'), [$resource,  'sf_route' => 'slug/default', 'module' => 'right', 'action' => 'edit']) ?></li>
-              <?php if ($resource->hasChildren()): ?>
+              <?php if ($resource->hasChildren()) { ?>
                 <li><?php echo link_to(__('Manage rights inheritance'), [$resource,  'sf_route' => 'slug/default', 'module' => 'right', 'action' => 'manage']) ?></li>
-              <?php endif; ?>
+              <?php } ?>
 
-              <?php if (sfConfig::get('app_audit_log_enabled', false)): ?>
+              <?php if (sfConfig::get('app_audit_log_enabled', false)) { ?>
                 <li class="divider"></li>
 
                 <li><?php echo link_to(__('View modification history'), [$resource, 'module' => 'informationobject', 'action' => 'modifications']) ?></li>
-              <?php endif; ?>
+              <?php } ?>
             </ul>
           </div>
         </li>
 
-      <?php endif; // user has update permission?>
+      <?php } // user has update permission?>
 
   </ul>
 </section>

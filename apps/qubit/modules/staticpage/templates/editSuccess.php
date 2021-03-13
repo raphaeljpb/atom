@@ -11,11 +11,11 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+  <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'staticpage', 'action' => 'edit'])) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'staticpage', 'action' => 'add'])) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -27,11 +27,11 @@
 
         <?php echo render_field($form->title, $resource) ?>
 
-        <?php if ($resource->isProtected()): ?>
+        <?php if ($resource->isProtected()) { ?>
           <?php echo $form->slug->renderRow(['class' => 'readOnly', 'disabled' => 'disabled']) ?>
-        <?php else: ?>
+        <?php } else { ?>
           <?php echo $form->slug->renderRow() ?>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo render_field($form->content, $resource, ['class' => 'resizable']) ?>
 
@@ -41,13 +41,13 @@
 
     <section class="actions">
       <ul>
-        <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+        <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
           <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'staticpage'], ['title' => __('Cancel'), 'class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
-        <?php else: ?>
+        <?php } else { ?>
           <li><?php echo link_to(__('Cancel'), ['module' => 'staticpage', 'action' => 'list'], ['title' => __('Cancel'), 'class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create') ?>"/></li>
-        <?php endif; ?>
+        <?php } ?>
       </ul>
     </section>
 

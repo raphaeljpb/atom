@@ -10,19 +10,19 @@
       </th>
     </tr>
   </thead><tbody>
-    <?php foreach ($pager->getResults() as $item): ?>
+    <?php foreach ($pager->getResults() as $item) { ?>
       <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?>">
         <td>
-          <?php if ($item->isProtected()): ?>
+          <?php if ($item->isProtected()) { ?>
             <?php echo link_to($item->getName(['cultureFallback' => true]), [$item, 'module' => 'aclGroup'], ['class' => 'readOnly']) ?>
-          <?php else: ?>
+          <?php } else { ?>
             <?php echo link_to($item->getName(['cultureFallback' => true]), [$item, 'module' => 'aclGroup']) ?>
-          <?php endif; ?>
+          <?php } ?>
         </td><td>
           <?php echo count($item->aclUserGroups) ?>
         </td>
       </tr>
-    <?php endforeach; ?>
+    <?php } ?>
   </tbody>
 </table>
 

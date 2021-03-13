@@ -14,7 +14,7 @@
       </th>
     </tr>
   </thead><tbody>
-    <?php foreach ($physicalObjects as $item): ?>
+    <?php foreach ($physicalObjects as $item) { ?>
       <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?>">
         <td>
           <?php echo link_to(render_title($item), [$item, 'module' => 'physicalobject']) ?>
@@ -24,7 +24,7 @@
           <?php echo render_value($item->type) ?>
         </td>
       </tr>
-    <?php endforeach; ?>
+    <?php } ?>
   <tbody>
 </table>
 

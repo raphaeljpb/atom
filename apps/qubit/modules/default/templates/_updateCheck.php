@@ -2,7 +2,7 @@
 
   <?php $notificationMessage = __('A %1%release %2%%3% upgrade is available.', ['%1%' => '<a href="https://www.accesstomemory.org/download/%1%/" target="_blank">', '%2%' => '%1%', '%3%' => '</a>']) ?>
 
-  <?php if ($sf_request->getCookie('has_js')): ?>
+  <?php if ($sf_request->getCookie('has_js')) { ?>
 
     <?php $data = json_encode($sf_data->getRaw('updateCheckData')) ?>
 
@@ -19,10 +19,10 @@ Qubit.updateCheck.cookiePath = '$cookiePath';
 EOF
 ) ?>
 
-  <?php else: ?>
+  <?php } else { ?>
 
     <div id="update-check"><span><?php echo __($notificationMessage, ['%1%' => $lastVersion]) ?></span></div>
 
-  <?php endif; ?>
+  <?php } ?>
 
 </div>

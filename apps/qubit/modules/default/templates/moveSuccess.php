@@ -10,14 +10,14 @@
     <div class="inline-search span6">
       <form action="<?php echo url_for([$resource, 'module' => 'default', 'action' => 'move']) ?>">
         <div class="input-append">
-          <?php if (isset($sf_request->query)): ?>
+          <?php if (isset($sf_request->query)) { ?>
             <input type="text" name="query" value="<?php echo $sf_request->query ?>" />
             <a class="btn" href="<?php echo url_for([$resource, 'module' => 'default', 'action' => 'move']) ?>">
               <i class="fa fa-times"></i>
             </a>
-          <?php else: ?>
+          <?php } else { ?>
             <input type="text" name="query" placeholder="<?php echo __('Search title or identifier') ?>" />
-          <?php endif; ?>
+          <?php } ?>
           <div class="btn-group">
             <button class="btn" type="submit">
               <i class="fa fa-search"></i>
@@ -30,15 +30,15 @@
 
   <section class="breadcrumb">
     <ul>
-      <?php foreach ($parent->ancestors as $item): ?>
-        <?php if (isset($item->parent)): ?>
+      <?php foreach ($parent->ancestors as $item) { ?>
+        <?php if (isset($item->parent)) { ?>
           <li><?php echo link_to(render_title($item), [$resource, 'module' => 'default', 'action' => 'move', 'parent' => $item->slug]) ?></li>
-        <?php endif; ?>
-      <?php endforeach; ?>
+        <?php } ?>
+      <?php } ?>
 
-      <?php if (isset($parent->parent)): ?>
+      <?php if (isset($parent->parent)) { ?>
         <li class="active"><span><?php echo render_title($parent) ?></span></li>
-      <?php endif; ?>
+      <?php } ?>
     </ul>
   </section>
 
@@ -46,7 +46,7 @@
 
 <?php slot('content') ?>
 
-  <?php if (count($results)): ?>
+  <?php if (count($results)) { ?>
     <table class="table table-bordered sticky-enabled">
       <thead>
         <tr>
@@ -54,7 +54,7 @@
           <th><?php echo __('Title') ?></th>
         </tr>
       </thead><tbody>
-        <?php foreach ($results as $item): ?>
+        <?php foreach ($results as $item) { ?>
           <tr>
             <td width="15%">
               <?php echo render_value_inline($item->identifier) ?>
@@ -63,10 +63,10 @@
               <?php echo link_to_if($resource->lft > $item->lft || $resource->rgt < $item->rgt, render_title($item), [$resource, 'module' => 'default', 'action' => 'move', 'parent' => $item->slug]) ?>
             </td>
           </tr>
-        <?php endforeach; ?>
+        <?php } ?>
       </tbody>
     </table>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 

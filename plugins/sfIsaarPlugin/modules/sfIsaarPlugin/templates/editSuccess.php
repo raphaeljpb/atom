@@ -12,11 +12,11 @@
 
   <?php echo $form->renderGlobalErrors(); ?>
 
-  <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+  <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'actor', 'action' => 'edit']), ['id' => 'editForm']) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'actor', 'action' => 'add']), ['id' => 'editForm']) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -110,9 +110,9 @@
             ->label(__('Subject access points'))
             ->renderLabel() ?>
           <?php echo $form->subjectAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?>"/>
         </div>
 
@@ -121,9 +121,9 @@
             ->label(__('Place access points'))
             ->renderLabel() ?>
           <?php echo $form->placeAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?>"/>
         </div>
 
@@ -171,14 +171,14 @@
           ->help(__('"Record the date the authority record was created and the dates of any revisions to the record." (ISAAR 5.4.6)'))
           ->label(__('Dates of creation, revision and deletion')), $resource, ['class' => 'resizable']) ?>
 
-        <?php if (isset($resource->updatedAt)): ?>
+        <?php if (isset($resource->updatedAt)) { ?>
           <div class="field">
             <h3><?php echo __('Last updated') ?></h3>
             <div>
               <?php echo format_date($resource->updatedAt, 'f') ?>
             </div>
           </div>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo $form->language
           ->help(__('Select the language(s) of the authority record from the drop-down menu; enter the first few letters to narrow the choices. (ISAAR 5.4.7)'))
@@ -202,18 +202,18 @@
 
     <section class="actions">
       <ul>
-        <?php if (0 < strlen($next = $form->next->getValue())): ?>
+        <?php if (0 < strlen($next = $form->next->getValue())) { ?>
           <li><?php echo link_to(__('Cancel'), $next, ['title' => __('Cancel'), 'class' => 'c-btn']) ?>
-        <?php elseif (isset($sf_request->id)): ?>
+        <?php } elseif (isset($sf_request->id)){ ?>
           <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'actor'], ['title' => __('Cancel'), 'class' => 'c-btn']) ?></li>
-        <?php else: ?>
+        <?php } else { ?>
           <li><?php echo link_to(__('Cancel'), ['module' => 'actor', 'action' => 'browse'], ['title' => __('Cancel'), 'class' => 'c-btn']) ?></li>
-        <?php endif; ?>
-        <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+        <?php } ?>
+        <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
-        <?php else: ?>
+        <?php } else { ?>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create') ?>"/></li>
-        <?php endif; ?>
+        <?php } ?>
       </ul>
     </section>
 

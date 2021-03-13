@@ -15,10 +15,10 @@
   </div>
 
   <ul>
-    <?php foreach ($list['pager']->getResults() as $hit): ?>
+    <?php foreach ($list['pager']->getResults() as $hit) { ?>
       <?php $doc = $hit->getData() ?>
       <li><?php echo link_to(render_value_inline(get_search_i18n($doc, 'authorizedFormOfName', ['allowEmpty' => false])), ['module' => 'actor', 'slug' => $doc['slug']]) ?></li>
-    <?php endforeach; ?>
+    <?php } ?>
   </ul>
 
   <?php echo get_partial('default/sidebarPager', ['pager' => $list['pager']]) ?>

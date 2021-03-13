@@ -7,7 +7,7 @@
   </h1>
 <?php end_slot() ?>
 
-<?php if (QubitDigitalObject::reachedAppUploadLimit()): ?>
+<?php if (QubitDigitalObject::reachedAppUploadLimit()) { ?>
 
   <?php slot('content') ?>
 
@@ -26,7 +26,7 @@
 
   <?php end_slot() ?>
 
-<?php else: ?>
+<?php } else { ?>
 
   <?php slot('content') ?>
 
@@ -42,11 +42,11 @@
 
           <legend><?php echo __('Upload a %1%', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]) ?></legend>
 
-          <?php if (null == $repository || -1 == $repository->uploadLimit || floatval($repository->getDiskUsage() / pow(10, 9)) < floatval($repository->uploadLimit)): ?>
+          <?php if (null == $repository || -1 == $repository->uploadLimit || floatval($repository->getDiskUsage() / pow(10, 9)) < floatval($repository->uploadLimit)) { ?>
 
             <?php echo $form->file->renderRow() ?>
 
-          <?php elseif (0 == $repository->uploadLimit): ?>
+          <?php } elseif (0 == $repository->uploadLimit){ ?>
 
             <div class="messages warning">
               <?php echo __('Uploads for <a href="%1%">%2%</a> are disabled', [
@@ -54,7 +54,7 @@
                 '%2%' => $repository->__toString()]) ?>
             </div>
 
-          <?php else: ?>
+          <?php } else { ?>
 
             <div class="messages warning">
               <?php echo __('The upload limit of %1% GB for <a href="%2%">%3%</a> has been reached', [
@@ -63,7 +63,7 @@
                 '%3%' => $repository->__toString()]) ?>
             </div>
 
-          <?php endif; // Test upload limit?>
+          <?php } // Test upload limit?>
 
         </fieldset>
 
@@ -88,4 +88,4 @@
 
   <?php end_slot() ?>
 
-<?php endif; ?>
+<?php } ?>

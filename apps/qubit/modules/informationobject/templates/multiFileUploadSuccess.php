@@ -22,7 +22,7 @@
     </section>
   </noscript>
 
-  <?php if (QubitDigitalObject::reachedAppUploadLimit()): ?>
+  <?php if (QubitDigitalObject::reachedAppUploadLimit()) { ?>
 
     <div id="upload_limit_reached">
       <div class="messages warning">
@@ -36,7 +36,7 @@
       </section>
     </div>
 
-  <?php else: ?>
+  <?php } else { ?>
 
     <?php echo $form->renderGlobalErrors() ?>
 
@@ -90,7 +90,7 @@
 
     </form>
 
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 

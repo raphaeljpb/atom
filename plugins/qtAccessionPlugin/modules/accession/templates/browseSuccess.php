@@ -36,14 +36,14 @@
         <th>
           <?php echo __('Acquisition date') ?>
         </th>
-        <?php if ('lastUpdated' == $sf_request->sort): ?>
+        <?php if ('lastUpdated' == $sf_request->sort) { ?>
           <th>
             <?php echo __('Updated') ?>
           </th>
-        <?php endif; ?>
+        <?php } ?>
       </tr>
     </thead><tbody>
-      <?php foreach ($pager->getResults() as $hit): ?>
+      <?php foreach ($pager->getResults() as $hit) { ?>
         <?php $doc = $hit->getData() ?>
         <tr>
           <td width="20%">
@@ -55,13 +55,13 @@
           <td width="20%">
             <?php echo format_date($doc['date'], 'i') ?>
           </td>
-          <?php if ('lastUpdated' == $sf_request->sort): ?>
+          <?php if ('lastUpdated' == $sf_request->sort) { ?>
             <td width="20%">
               <?php echo format_date($doc['updatedAt'], 'f') ?>
             </td>
-          <?php endif; ?>
+          <?php } ?>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 

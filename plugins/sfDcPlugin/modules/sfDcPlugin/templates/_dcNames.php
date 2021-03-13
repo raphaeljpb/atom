@@ -13,9 +13,9 @@
       </tr>
     </thead><tbody>
 
-      <?php $i = 0; foreach ($resource->getActorEvents() as $item): ?>
+      <?php $i = 0; foreach ($resource->getActorEvents() as $item) { ?>
 
-        <?php if (isset($item->actor)): ?>
+        <?php if (isset($item->actor)) { ?>
 
           <?php $form->getWidgetSchema()->setNameFormat("editNames[$i][%s]") ?>
 
@@ -33,8 +33,8 @@
           </tr>
 
           <?php $i++ ?>
-        <?php endif; ?>
-      <?php endforeach; ?>
+        <?php } ?>
+      <?php } ?>
 
       <?php $form->getWidgetSchema()->setNameFormat("editNames[$i][%s]") ?>
 
@@ -43,9 +43,9 @@
           <div class="animateNicely">
             <?php echo $form->actor->render(['class' => 'form-autocomplete']) ?>
 
-            <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')): ?>
+            <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')) { ?>
               <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'actor', 'action' => 'add']) ?> #authorizedFormOfName"/>
-            <?php endif; ?>
+            <?php } ?>
 
             <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete']) ?>"/>
           </div>

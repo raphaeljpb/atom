@@ -15,30 +15,30 @@
   <?php echo $form->renderHiddenFields() ?>
 <?php end_slot() ?>
 
-<?php if (count($existingReports)): ?>
+<?php if (count($existingReports)) { ?>
   <fieldset class="single">
     <div class="fieldset-wrapper">
       <?php echo __('Existing reports:') ?>
       <ul class="job-report-list">
-        <?php foreach ($existingReports as $report): ?>
+        <?php foreach ($existingReports as $report) { ?>
           <li>
             <?php echo link_to($report['type'].' ('.$report['format'].')', $report['path']) ?>
           </li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </fieldset>
-<?php endif; ?>
+<?php } ?>
 
 <fieldset class="single">
 
   <div class="fieldset-wrapper">
 
-  <?php if ($reportsAvailable): ?>
+  <?php if ($reportsAvailable) { ?>
     <?php echo render_field($form->report->label(__('Select new report to generate:')), $resource) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo __('There are no relevant reports for this item') ?>
-  <?php endif; ?>
+  <?php } ?>
 
   </div>
 

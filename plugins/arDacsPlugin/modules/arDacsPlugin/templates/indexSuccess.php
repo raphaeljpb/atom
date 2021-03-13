@@ -8,20 +8,20 @@
 
   <h1><?php echo render_title($dacs) ?></h1>
 
-  <?php if (isset($errorSchema)): ?>
+  <?php if (isset($errorSchema)) { ?>
     <div class="messages error">
       <ul>
-        <?php foreach ($errorSchema as $error): ?>
+        <?php foreach ($errorSchema as $error) { ?>
           <?php $error = sfOutputEscaper::unescape($error) ?>
           <li><?php echo $error->getMessage() ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
-  <?php if (QubitInformationObject::ROOT_ID != $resource->parentId): ?>
+  <?php if (QubitInformationObject::ROOT_ID != $resource->parentId) { ?>
     <?php echo include_partial('default/breadcrumb', ['resource' => $resource, 'objects' => $resource->getAncestors()->andSelf()->orderBy('lft')]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo get_component('default', 'translationLinks', ['resource' => $resource]) ?>
 
@@ -39,9 +39,9 @@
 
   <?php echo get_partial('object/placeAccessPoints', ['resource' => $resource, 'sidebar' => true]) ?>
 
-  <?php if (check_field_visibility('app_element_visibility_physical_storage')): ?>
+  <?php if (check_field_visibility('app_element_visibility_physical_storage')) { ?>
     <?php echo get_component('physicalobject', 'contextMenu', ['resource' => $resource]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
@@ -51,15 +51,15 @@
 
 <?php end_slot() ?>
 
-<?php if (0 < count($resource->digitalObjectsRelatedByobjectId)): ?>
+<?php if (0 < count($resource->digitalObjectsRelatedByobjectId)) { ?>
   <?php echo get_component('digitalobject', 'show', ['link' => $digitalObjectLink, 'resource' => $resource->digitalObjectsRelatedByobjectId[0], 'usageType' => QubitTerm::REFERENCE_ID]) ?>
-<?php endif; ?>
+<?php } ?>
 
 <section id="identityArea">
 
-  <?php if (check_field_visibility('app_element_visibility_dacs_identity_area')): ?>
+  <?php if (check_field_visibility('app_element_visibility_dacs_identity_area')) { ?>
     <?php echo link_to_if(SecurityPrivileges::editCredentials($sf_user, 'informationObject'), '<h2>'.__('Identity elements').'</h2>', [$resource, 'module' => 'informationobject', 'action' => 'edit'], ['anchor' => 'identityArea', 'title' => __('Edit identity elements')]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo render_show(__('Reference code'), $dacs->referenceCode) ?>
 
@@ -73,11 +73,11 @@
     <h3><?php echo __('Date(s)') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->getDates() as $item): ?>
+        <?php foreach ($resource->getDates() as $item) { ?>
           <li>
             <?php echo render_value_inline(Qubit::renderDateStartEnd($item->getDate(['cultureFallback' => true]), $item->startDate, $item->endDate)) ?> (<?php echo $item->getType(['cultureFallback' => true]) ?>)
           </li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -88,22 +88,22 @@
     'resource' => $resource,
     'creatorHistoryLabels' => $creatorHistoryLabels]) ?>
 
-  <?php foreach ($functionRelations as $item): ?>
+  <?php foreach ($functionRelations as $item) { ?>
     <div class="field">
       <h3><?php echo __('Related function')?></h3>
       <div>
         <?php echo link_to(render_title($item->subject->getLabel()), [$item->subject, 'module' => 'function']) ?>
       </div>
     </div>
-  <?php endforeach; ?>
+  <?php } ?>
 
 </section> <!-- /section#identityArea -->
 
 <section id="contentAndStructureArea">
 
-  <?php if (check_field_visibility('app_element_visibility_dacs_content_area')): ?>
+  <?php if (check_field_visibility('app_element_visibility_dacs_content_area')) { ?>
     <?php echo link_to_if(SecurityPrivileges::editCredentials($sf_user, 'informationObject'), '<h2>'.__('Content and structure elements').'</h2>', [$resource, 'module' => 'informationobject', 'action' => 'edit'], ['anchor' => 'contentAndStructureArea', 'title' => __('Edit context and structure elements')]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo render_show(__('Scope and content'), render_value($resource->getScopeAndContent(['cultureFallback' => true]))) ?>
 
@@ -113,15 +113,15 @@
 
 <section id="conditionsOfAccessAndUseArea">
 
-  <?php if (check_field_visibility('app_element_visibility_dacs_conditions_of_access_area')): ?>
+  <?php if (check_field_visibility('app_element_visibility_dacs_conditions_of_access_area')) { ?>
     <?php echo link_to_if(SecurityPrivileges::editCredentials($sf_user, 'informationObject'), '<h2>'.__('Conditions of access and use elements').'</h2>', [$resource, 'module' => 'informationobject', 'action' => 'edit'], ['anchor' => 'conditionsOfAccessAndUseArea', 'title' => __('Edit conditions of access and use elements')]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo render_show(__('Conditions governing access'), render_value($resource->getAccessConditions(['cultureFallback' => true]))) ?>
 
-  <?php if (check_field_visibility('app_element_visibility_dacs_physical_access')): ?>
+  <?php if (check_field_visibility('app_element_visibility_dacs_physical_access')) { ?>
     <?php echo render_show(__('Physical access'), render_value($resource->getPhysicalCharacteristics(['cultureFallback' => true]))) ?>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo render_show(__('Technical access'), render_value($dacs->__get('technicalAccess', ['cultureFallback' => true]))) ?>
 
@@ -131,9 +131,9 @@
     <h3><?php echo __('Languages of the material') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->language as $code): ?>
+        <?php foreach ($resource->language as $code) { ?>
           <li><?php echo format_language($code) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -142,9 +142,9 @@
     <h3><?php echo __('Scripts of the material') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->script as $code): ?>
+        <?php foreach ($resource->script as $code) { ?>
           <li><?php echo format_script($code) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -159,19 +159,19 @@
 
 <section id="acquisitionAndAppraisalArea">
 
-  <?php if (check_field_visibility('app_element_visibility_dacs_acquisition_area')): ?>
+  <?php if (check_field_visibility('app_element_visibility_dacs_acquisition_area')) { ?>
     <?php echo link_to_if(SecurityPrivileges::editCredentials($sf_user, 'informationObject'), '<h2>'.__('Acquisition and appraisal elements').'</h2>', [$resource, 'module' => 'informationobject', 'action' => 'edit'], ['anchor' => 'acquisitionAndAppraisalArea', 'title' => __('Edit acquisition and appraisal elements')]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo render_show(__('Custodial history'), render_value($resource->getArchivalHistory(['cultureFallback' => true]))) ?>
 
-  <?php if (check_field_visibility('app_element_visibility_isad_immediate_source')): ?>
+  <?php if (check_field_visibility('app_element_visibility_isad_immediate_source')) { ?>
     <?php echo render_show(__('Immediate source of acquisition'), render_value($resource->getAcquisition(['cultureFallback' => true]))) ?>
-  <?php endif; ?>
+  <?php } ?>
 
-  <?php if (check_field_visibility('app_element_visibility_isad_appraisal_destruction')): ?>
+  <?php if (check_field_visibility('app_element_visibility_isad_appraisal_destruction')) { ?>
     <?php echo render_show(__('Appraisal, destruction and scheduling information'), render_value($resource->getAppraisal(['cultureFallback' => true]))) ?>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo render_show(__('Accruals'), render_value($resource->getAccruals(['cultureFallback' => true]))) ?>
 
@@ -179,9 +179,9 @@
 
 <section id="alliedMaterialsArea">
 
-  <?php if (check_field_visibility('app_element_visibility_dacs_materials_area')): ?>
+  <?php if (check_field_visibility('app_element_visibility_dacs_materials_area')) { ?>
     <?php echo link_to_if(SecurityPrivileges::editCredentials($sf_user, 'informationObject'), '<h2>'.__('Related materials elements').'</h2>', [$resource, 'module' => 'informationobject', 'action' => 'edit'], ['anchor' => 'alliedMaterialsArea', 'title' => __('Edit related materials elements')]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo render_show(__('Existence and location of originals'), render_value($resource->getLocationOfOriginals(['cultureFallback' => true]))) ?>
 
@@ -191,36 +191,36 @@
 
   <?php echo get_partial('informationobject/relatedMaterialDescriptions', ['resource' => $resource, 'template' => 'isad']) ?>
 
-  <?php foreach ($resource->getNotesByType(['noteTypeId' => QubitTerm::PUBLICATION_NOTE_ID]) as $item): ?>
+  <?php foreach ($resource->getNotesByType(['noteTypeId' => QubitTerm::PUBLICATION_NOTE_ID]) as $item) { ?>
     <?php echo render_show(__('Publication notes'), render_value($item->getContent(['cultureFallback' => true]))) ?>
-  <?php endforeach; ?>
+  <?php } ?>
 
 </section> <!-- /section#alliedMaterialsArea -->
 
 <section id="notesArea">
 
-  <?php if (check_field_visibility('app_element_visibility_dacs_notes_area')): ?>
+  <?php if (check_field_visibility('app_element_visibility_dacs_notes_area')) { ?>
     <?php echo link_to_if(SecurityPrivileges::editCredentials($sf_user, 'informationObject'), '<h2>'.__('Notes element').'</h2>', [$resource, 'module' => 'informationobject', 'action' => 'edit'], ['anchor' => 'notesArea', 'title' => __('Edit notes element')]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
-  <?php if (check_field_visibility('app_element_visibility_isad_notes')): ?>
+  <?php if (check_field_visibility('app_element_visibility_isad_notes')) { ?>
 
-    <?php foreach ($resource->getNotesByType(['noteTypeId' => QubitTerm::GENERAL_NOTE_ID]) as $item): ?>
+    <?php foreach ($resource->getNotesByType(['noteTypeId' => QubitTerm::GENERAL_NOTE_ID]) as $item) { ?>
       <?php echo render_show(__('General note'), render_value($item->getContent(['cultureFallback' => true]))) ?>
-    <?php endforeach; ?>
+    <?php } ?>
 
     <div class="field">
       <h3><?php echo __('Specialized notes') ?></h3>
       <div>
         <ul>
-          <?php foreach ($resource->getNotesByTaxonomy(['taxonomyId' => QubitTaxonomy::DACS_NOTE_ID]) as $item): ?>
+          <?php foreach ($resource->getNotesByTaxonomy(['taxonomyId' => QubitTaxonomy::DACS_NOTE_ID]) as $item) { ?>
             <li><?php echo render_value_inline($item->type) ?>: <?php echo render_value_inline($item->getContent(['cultureFallback' => true])) ?></li>
-          <?php endforeach; ?>
+          <?php } ?>
         </ul>
       </div>
     </div>
 
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo get_partial('informationobject/alternativeIdentifiersIndex', ['resource' => $resource]) ?>
 
@@ -228,33 +228,33 @@
 
 <section id="descriptionControlArea">
 
-  <?php if (check_field_visibility('app_element_visibility_dacs_control_area')): ?>
+  <?php if (check_field_visibility('app_element_visibility_dacs_control_area')) { ?>
     <?php echo link_to_if(SecurityPrivileges::editCredentials($sf_user, 'informationObject'), '<h2>'.__('Description control element').'</h2>', [$resource, 'module' => 'informationobject', 'action' => 'edit'], ['anchor' => 'descriptionControlArea', 'title' => __('Edit description control element')]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
-  <?php if (check_field_visibility('app_element_visibility_isad_control_rules_conventions')): ?>
+  <?php if (check_field_visibility('app_element_visibility_isad_control_rules_conventions')) { ?>
     <?php echo render_show(__('Rules or conventions'), render_value($resource->getRules(['cultureFallback' => true]))) ?>
-  <?php endif; ?>
+  <?php } ?>
 
-  <?php if (check_field_visibility('app_element_visibility_isad_control_sources')): ?>
+  <?php if (check_field_visibility('app_element_visibility_isad_control_sources')) { ?>
     <?php echo render_show(__('Sources used'), render_value($resource->getSources(['cultureFallback' => true]))) ?>
-  <?php endif; ?>
+  <?php } ?>
 
   <!-- TODO: Make $archivistsNotesComponent to include ISAD 3.7.3 Date(s) of description as the first note and editable -->
 
-  <?php if (check_field_visibility('app_element_visibility_isad_control_archivists_notes')): ?>
-    <?php foreach ($resource->getNotesByType(['noteTypeId' => QubitTerm::ARCHIVIST_NOTE_ID]) as $item): ?>
+  <?php if (check_field_visibility('app_element_visibility_isad_control_archivists_notes')) { ?>
+    <?php foreach ($resource->getNotesByType(['noteTypeId' => QubitTerm::ARCHIVIST_NOTE_ID]) as $item) { ?>
       <?php echo render_show(__('Archivist\'s note'), render_value($item->getContent(['cultureFallback' => true]))) ?>
-    <?php endforeach; ?>
-  <?php endif; ?>
+    <?php } ?>
+  <?php } ?>
 
 </section> <!-- /section#descriptionControlArea -->
 
 <section id="accessPointsArea">
 
-  <?php if (check_field_visibility('app_element_visibility_dacs_access_points_area')): ?>
+  <?php if (check_field_visibility('app_element_visibility_dacs_access_points_area')) { ?>
     <?php echo link_to_if(SecurityPrivileges::editCredentials($sf_user, 'informationObject'), '<h2>'.__('Access points').'</h2>', [$resource, 'module' => 'informationobject', 'action' => 'edit'], ['anchor' => 'accessPointsArea', 'title' => __('Edit access points')]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo get_partial('object/subjectAccessPoints', ['resource' => $resource]) ?>
 
@@ -266,27 +266,27 @@
 
 </section> <!-- /section#accessPointsArea -->
 
-<?php if ($sf_user->isAuthenticated()): ?>
+<?php if ($sf_user->isAuthenticated()) { ?>
 
   <div class="section" id="rightsArea">
 
-    <?php if (QubitAcl::check($resource, 'update')): ?>
+    <?php if (QubitAcl::check($resource, 'update')) { ?>
       <h2><?php echo __('Rights area') ?> </h2>
-    <?php endif; ?>
+    <?php } ?>
 
     <?php echo get_component('right', 'relatedRights', ['resource' => $resource]) ?>
 
   </div> <!-- /section#rightsArea -->
 
-<?php endif; ?>
+<?php } ?>
 
-<?php if (0 < count($resource->digitalObjectsRelatedByobjectId)): ?>
+<?php if (0 < count($resource->digitalObjectsRelatedByobjectId)) { ?>
 
   <?php echo get_component('digitalobject', 'metadata', ['resource' => $resource->digitalObjectsRelatedByobjectId[0], 'object' => $resource]) ?>
 
   <?php echo get_partial('digitalobject/rights', ['resource' => $resource->digitalObjectsRelatedByobjectId[0]]) ?>
 
-<?php endif; ?>
+<?php } ?>
 
 <section id="accessionArea">
 

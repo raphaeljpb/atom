@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $sf_user->getCulture() ?>"<?php if ('rtl' == sfCultureInfo::getInstance($sf_user->getCulture())->direction): ?> dir="rtl"<?php endif; ?>>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $sf_user->getCulture() ?>"<?php if ('rtl' == sfCultureInfo::getInstance($sf_user->getCulture())->direction) { ?> dir="rtl"<?php } ?>>
   <head>
     <?php include_http_metas() ?>
     <?php include_metas() ?>
@@ -22,11 +22,11 @@
 
           <?php include_slot('before-content') ?>
 
-          <?php if (!include_slot('content')): ?>
+          <?php if (!include_slot('content')) { ?>
             <div id="content">
               <?php echo $sf_content ?>
             </div>
-          <?php endif; ?>
+          <?php } ?>
 
           <?php include_slot('after-content') ?>
 

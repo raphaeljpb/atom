@@ -22,7 +22,7 @@
         </th>
       </tr>
     </thead><tbody>
-      <?php foreach ($resource->contactInformations as $item): ?>
+      <?php foreach ($resource->contactInformations as $item) { ?>
         <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for([$item, 'module' => 'contactinformation']) ?>">
           <td>
             <?php echo render_title($item->contactPerson) ?>
@@ -32,7 +32,7 @@
             <input class="multiDelete" name="deleteContactInformations[]" type="checkbox" value="<?php echo $item->id ?>"/>
           </td>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 

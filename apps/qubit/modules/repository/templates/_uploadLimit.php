@@ -5,30 +5,30 @@
 
   <div>
 
-    <?php if ('sfIsdiahPlugin' != $sf_context->getModuleName()): ?>
+    <?php if ('sfIsdiahPlugin' != $sf_context->getModuleName()) { ?>
       <?php echo __('for %repo%', ['%repo%' => link_to($resource->__toString(), [$resource, 'module' => 'repository'])]) ?>
-    <?php endif; ?>
+    <?php } ?>
 
-    <?php if ('limited' == $quotaType): ?>
+    <?php if ('limited' == $quotaType) { ?>
       <div class="usageBar">
         <div style="width: <?php echo $usageBarPixels ?>px; background-color: <?php echo $usageBarColor ?>;"></div>
       </div>
       <?php echo __('%du% of %limit% <abbr title="1 GB = 1 000 000 000 bytes">GB</abbr> (%percent%%)', ['%du%' => $sf_data->getRaw('diskUsage'), '%limit%' => $sf_data->getRaw('uploadLimit'), '%percent%' => $sf_data->getRaw('diskUsagePercent')]) ?>
-    <?php elseif ('disabled' == $quotaType): ?>
+    <?php } elseif ('disabled' == $quotaType){ ?>
       <?php echo __('Upload is disabled') ?>
-    <?php elseif ('unlimited' == $quotaType): ?>
+    <?php } elseif ('unlimited' == $quotaType){ ?>
       <?php echo __('%du% <abbr title="1 GB = 1 000 000 000 bytes">GB</abbr> of <em>Unlimited</em>&nbsp;', ['%du%' => $sf_data->getRaw('diskUsage')]) ?>
-    <?php endif; ?>
+    <?php } ?>
 
-    <?php if ($sf_user->isAdministrator()): ?>
+    <?php if ($sf_user->isAdministrator()) { ?>
       (<a href="#" id="editUlLink"><?php echo __('Edit') ?></a>)
-    <?php endif; ?>
+    <?php } ?>
 
   </div>
 
 </section>
 
-<?php if ($sf_user->isAdministrator() && !$noedit): ?>
+<?php if ($sf_user->isAdministrator() && !$noedit) { ?>
 
 <!-- Edit upload limit -->
 <!-- Note: YUI dialog hides this entire div -->
@@ -154,4 +154,4 @@ Drupal.behaviors.uploadLimitDialog = {
 
 //]]>
 </script>
-<?php endif; // Edit dialog for admins only?>
+<?php } // Edit dialog for admins only?>

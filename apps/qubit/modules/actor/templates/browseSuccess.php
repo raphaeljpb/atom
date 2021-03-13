@@ -1,8 +1,8 @@
-<?php if (isset($pager) && $pager->getNbResults()): ?>
+<?php if (isset($pager) && $pager->getNbResults()) { ?>
   <?php decorate_with('layout_2col') ?>
-<?php else: ?>
+<?php } else { ?>
   <?php decorate_with('layout_1col') ?>
-<?php endif; ?>
+<?php } ?>
 
 <?php use_helper('Date') ?>
 
@@ -10,17 +10,17 @@
   <div class="multiline-header">
     <?php echo image_tag('/images/icons-large/icon-people.png', ['alt' => '']) ?>
     <h1 aria-describedby="results-label">
-      <?php if (isset($pager) && $pager->getNbResults()): ?>
+      <?php if (isset($pager) && $pager->getNbResults()) { ?>
         <?php echo __('Showing %1% results', ['%1%' => $pager->getNbResults()]) ?>
-      <?php else: ?>
+      <?php } else { ?>
         <?php echo __('No results found') ?>
-      <?php endif; ?>
+      <?php } ?>
     </h1>
     <span class="sub" id="results-label"><?php echo sfConfig::get('app_ui_label_actor') ?></span>
   </div>
 <?php end_slot() ?>
 
-<?php if (isset($pager) && $pager->getNbResults()): ?>
+<?php if (isset($pager) && $pager->getNbResults()) { ?>
 
   <?php slot('sidebar') ?>
 
@@ -91,7 +91,7 @@
     </section>
   <?php end_slot() ?>
 
-<?php endif; ?>
+<?php } ?>
 
 <?php slot('before-content') ?>
 
@@ -122,7 +122,7 @@
     ]
   ) ?>
 
-  <?php if (isset($pager) && $pager->getNbResults()): ?>
+  <?php if (isset($pager) && $pager->getNbResults()) { ?>
     <section class="browse-options">
 
       <div class="pickers">
@@ -138,13 +138,13 @@
 
     <div id="content" class="browse-content">
 
-      <?php foreach ($pager->getResults() as $hit): ?>
+      <?php foreach ($pager->getResults() as $hit) { ?>
         <?php $doc = $hit->getData() ?>
         <?php echo include_partial('actor/searchResult', ['doc' => $doc, 'pager' => $pager, 'culture' => $selectedCulture, 'clipboardType' => 'actor']) ?>
-      <?php endforeach; ?>
+      <?php } ?>
 
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 

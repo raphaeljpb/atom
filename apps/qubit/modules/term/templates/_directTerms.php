@@ -1,4 +1,4 @@
-<?php if (!isset($sf_request->onlyDirect) && isset($aggs['direct']) && 0 < $aggs['direct']['doc_count']): ?>
+<?php if (!isset($sf_request->onlyDirect) && isset($aggs['direct']) && 0 < $aggs['direct']['doc_count']) { ?>
   <div class="search-result media-summary">
     <p>
       <?php echo __('%1% results directly related', [
@@ -11,4 +11,4 @@
       </a>
     </p>
   </div>
-<?php endif; ?>
+<?php } ?>

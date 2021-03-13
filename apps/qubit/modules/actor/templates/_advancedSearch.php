@@ -6,17 +6,17 @@
 
     <?php echo $form->renderFormTag(url_for(['module' => 'actor', 'action' => 'browse']), ['name' => 'advanced-search-form', 'method' => 'get']) ?>
 
-      <?php foreach ($hiddenFields as $name => $value): ?>
+      <?php foreach ($hiddenFields as $name => $value) { ?>
         <input type="hidden" name="<?php echo $name ?>" value="<?php echo $value ?>"/>
-      <?php endforeach; ?>
+      <?php } ?>
 
       <p><?php echo __('Find results with:') ?></p>
 
       <div class="criteria">
 
-        <?php if (isset($criteria)): ?>
+        <?php if (isset($criteria)) { ?>
 
-          <?php foreach ($criteria as $key => $item): ?>
+          <?php foreach ($criteria as $key => $item) { ?>
 
             <div class="criterion">
 
@@ -32,18 +32,18 @@
 
               <select class="field" name="sf<?php echo $key ?>">
                 <option value=""<?php echo $item['field'] == '' ? ' selected="selected"' : '' ?>><?php echo __('Any field') ?></option>
-                <?php foreach($fieldOptions as $name => $label): ?>
+                <?php foreach($fieldOptions as $name => $label) { ?>
                   <option value="<?php echo $name; ?>"<?php echo $item['field'] == $name ? ' selected="selected"' : '' ?>><?php echo $label ?></option>
-                <?php endforeach; ?>
+                <?php } ?>
               </select>
 
               <a href="#" class="delete-criterion"><i class="fa fa-times"></i></a>
 
             </div>
 
-          <?php endforeach; ?>
+          <?php } ?>
 
-        <?php endif; ?>
+        <?php } ?>
 
         <?php $count = isset($key) ? $key++ : 0 ?>
 
@@ -61,9 +61,9 @@
 
           <select class="field" name="sf<?php echo $count ?>">
             <option value=""><?php echo __('Any field') ?></option>
-            <?php foreach ($fieldOptions as $name => $label): ?>
+            <?php foreach ($fieldOptions as $name => $label) { ?>
               <option value="<?php echo $name; ?>"><?php echo $label ?></option>
-            <?php endforeach; ?>
+            <?php } ?>
           </select>
 
           <a href="#" class="delete-criterion"><i class="fa fa-times"></i></a>
@@ -86,7 +86,7 @@
       </div>
       <p><?php echo __('Limit results to:') ?></p>
 
-      <?php if (sfConfig::get('app_multi_repository')): ?>
+      <?php if (sfConfig::get('app_multi_repository')) { ?>
         <div class="criteria">
 
           <div class="filter-row">
@@ -98,7 +98,7 @@
           </div>
 
         </div>
-      <?php endif; ?>
+      <?php } ?>
 
       <p><?php echo __('Filter results by:') ?></p>
 

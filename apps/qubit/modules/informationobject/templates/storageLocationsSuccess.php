@@ -35,7 +35,7 @@
         </th>
       </tr>
     </thead><tbody>
-      <?php $row = 1; foreach ($results as $item): ?>
+      <?php $row = 1; foreach ($results as $item) { ?>
         <tr>
           <td>
             <?php echo $row++ ?>
@@ -47,7 +47,7 @@
             <?php echo render_value_inline($item->getType(['cultureFallback' => true])) ?>
           </td>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 

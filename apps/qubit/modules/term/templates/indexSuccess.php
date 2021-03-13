@@ -20,9 +20,9 @@
 
   <?php echo get_partial('term/errors', ['errorSchema' => $errorSchema]) ?>
 
-  <?php if (QubitTerm::ROOT_ID != $resource->parentId): ?>
+  <?php if (QubitTerm::ROOT_ID != $resource->parentId) { ?>
     <?php echo include_partial('default/breadcrumb', ['resource' => $resource, 'objects' => $resource->getAncestors()->andSelf()->orderBy('lft')]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
@@ -35,9 +35,9 @@
   <div class="sidebar">
     <?php echo get_partial('term/format', ['resource' => $resource]) ?>
 
-    <?php if ($addBrowseElements): ?>
+    <?php if ($addBrowseElements) { ?>
       <?php echo get_partial('term/rightContextMenu', ['resource' => $resource, 'results' => $pager->getNbResults()]) ?>
-    <?php endif; ?>
+    <?php } ?>
   </div>
 
 <?php end_slot() ?>
@@ -50,11 +50,11 @@
 
   <?php echo get_partial('term/actions', ['resource' => $resource]) ?>
 
-  <?php if ($addBrowseElements): ?>
+  <?php if ($addBrowseElements) { ?>
     <h1><?php echo __('%1% %2% results for %3%', ['%1%' => $pager->getNbResults(), '%2%' => sfConfig::get('app_ui_label_informationobject'), '%3%' => render_title($resource)]) ?></h1>
 
     <section class="header-options">
-      <?php if (isset($sf_request->onlyDirect)): ?>
+      <?php if (isset($sf_request->onlyDirect)) { ?>
         <span class="search-filter">
           <?php echo __('Only results directly related') ?>
           <?php $params = $sf_data->getRaw('sf_request')->getGetParameters() ?>
@@ -62,7 +62,7 @@
           <?php unset($params['page']) ?>
           <a href="<?php echo url_for([$resource, 'module' => 'term'] + $params) ?>" class="remove-filter"><i class="fa fa-times"></i></a>
         </span>
-      <?php endif; ?>
+      <?php } ?>
 
       <div class="pickers">
         <?php echo get_partial('default/sortPickers', [
@@ -83,12 +83,12 @@
       <?php echo get_partial('search/searchResults', ['pager' => $pager, 'culture' => $culture]) ?>
 
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
-<?php if ($addBrowseElements): ?>
+<?php if ($addBrowseElements) { ?>
   <?php slot('after-content') ?>
     <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
   <?php end_slot() ?>
-<?php endif; ?>
+<?php } ?>

@@ -16,11 +16,11 @@
 
       <legend><?php echo __('Permissions for all %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_actor'))]) ?></legend>
 
-      <?php foreach ($actors as $key => $item): ?>
+      <?php foreach ($actors as $key => $item) { ?>
         <div class="form-item">
           <?php echo get_component('aclGroup', 'aclTable', ['object' => QubitActor::getById($key), 'permissions' => $item, 'actions' => $basicActions]) ?>
         </div>
-      <?php endforeach; ?>
+      <?php } ?>
 
       <div class="form-item">
         <label for="addActorLink"><?php echo __('Add permissions by %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_actor'))]) ?></label>

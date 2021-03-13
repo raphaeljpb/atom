@@ -18,10 +18,10 @@
     ['sort' => $next] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(),
     ['title' => __('Sort'), 'class' => 'sortable']) ?>
 
-  <?php if ($up === $sf_request->sort): ?>
+  <?php if ($up === $sf_request->sort) { ?>
     <?php echo image_tag('up.gif', ['alt' => __('Sort ascending')]) ?>
-  <?php elseif ($down === $sf_request->sort): ?>
+  <?php } elseif ($down === $sf_request->sort){ ?>
     <?php echo image_tag('down.gif', ['alt' => __('Sort descending')]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
 </th>

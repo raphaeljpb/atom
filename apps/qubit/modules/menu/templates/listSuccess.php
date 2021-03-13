@@ -19,35 +19,35 @@
         </th>
       </tr>
     </thead><tbody>
-      <?php foreach ($menuTree as $item): ?>
+      <?php foreach ($menuTree as $item) { ?>
         <tr>
-          <td<?php if (QubitMenu::ROOT_ID == $item['parentId']): ?> style="font-weight: bold"<?php endif; ?>>
+          <td<?php if (QubitMenu::ROOT_ID == $item['parentId']) { ?> style="font-weight: bold"<?php } ?>>
 
             <?php echo str_repeat('&nbsp;&nbsp;', ($item['depth'] - 1)) ?>
 
-            <?php if (isset($item['prev'])): ?>
+            <?php if (isset($item['prev'])) { ?>
               <?php echo link_to(image_tag('up.gif', ['alt' => __('Move up')]), ['module' => 'menu', 'action' => 'list', 'move' => $item['id'], 'before' => $item['prev']], ['title' => __('Move item up in list')]) ?>
-            <?php else: ?>
+            <?php } else { ?>
               &nbsp;&nbsp;
-            <?php endif; ?>
+            <?php } ?>
 
-            <?php if (isset($item['next'])): ?>
+            <?php if (isset($item['next'])) { ?>
               <?php echo link_to(image_tag('down.gif', ['alt' => __('Move down')]), ['module' => 'menu', 'action' => 'list', 'move' => $item['id'], 'after' => $item['next']], ['title' => __('Move item down in list')]) ?>
-            <?php else: ?>
+            <?php } else { ?>
               &nbsp;&nbsp;
-            <?php endif; ?>
+            <?php } ?>
 
-            <?php if ($item['protected']): ?>
+            <?php if ($item['protected']) { ?>
               <?php echo link_to($item['name'], [QubitMenu::getById($item['id']), 'module' => 'menu', 'action' => 'edit'], ['class' => 'readOnly', 'title' => __('Edit menu')]) ?>
-            <?php else: ?>
+            <?php } else { ?>
               <?php echo link_to($item['name'], [QubitMenu::getById($item['id']), 'module' => 'menu', 'action' => 'edit'], ['title' => __('Edit menu')]) ?>
-            <?php endif; ?>
+            <?php } ?>
 
           </td><td>
             <?php echo $item['label'] ?>
           </td>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 

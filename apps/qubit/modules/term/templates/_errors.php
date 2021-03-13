@@ -1,9 +1,9 @@
-<?php if (isset($errorSchema)): ?>
+<?php if (isset($errorSchema)) { ?>
   <div class="messages error">
     <ul>
-      <?php foreach ($errorSchema as $error): ?>
+      <?php foreach ($errorSchema as $error) { ?>
         <li><?php echo $error ?></li>
-      <?php endforeach; ?>
+      <?php } ?>
     </ul>
   </div>
-<?php endif; ?>
+<?php } ?>

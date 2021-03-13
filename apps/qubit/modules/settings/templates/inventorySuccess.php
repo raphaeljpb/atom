@@ -26,11 +26,11 @@
 
         <legend><?php echo __('Inventory settings') ?></legend>
 
-        <?php if (!empty($unknownValueDetected)): ?>
+        <?php if (!empty($unknownValueDetected)) { ?>
           <div class="messages error">
             <?php echo __('Unknown value detected.') ?><br />
           </div>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo $form->levels
           ->label(__('Levels of description'))

@@ -18,12 +18,12 @@
         </th>
       </tr>
     </thead><tbody>
-      <?php foreach ($sf_data->getRaw('plugins') as $name => $plugin): ?>
+      <?php foreach ($sf_data->getRaw('plugins') as $name => $plugin) { ?>
         <tr>
           <td>
-            <?php if (file_exists($plugin->getRootDir().'/images/image.png')): ?>
+            <?php if (file_exists($plugin->getRootDir().'/images/image.png')) { ?>
               <a href="#" class="plugin-screenshot"><?php echo image_tag('/plugins/'.$name.'/images/image', ['alt' => $name]) ?></a>
-            <?php endif; ?>
+            <?php } ?>
             <p class="plugin-name"><?php echo $name ?></p>
             <div class="plugin-description">
               <?php echo $plugin::$summary ?>
@@ -31,10 +31,10 @@
           </td><td>
             <?php echo $plugin::$version ?>
           </td><td align="center">
-            <input<?php if ($form->isBound() && in_array($name, $form->getValue('enabled')) || !$form->isBound() && in_array($name, $form->getDefault('enabled'))): ?> checked="checked"<?php endif; ?> name="enabled[]" type="radio" value="<?php echo $name ?>"
+            <input<?php if ($form->isBound() && in_array($name, $form->getValue('enabled')) || !$form->isBound() && in_array($name, $form->getDefault('enabled'))) { ?> checked="checked"<?php } ?> name="enabled[]" type="radio" value="<?php echo $name ?>"
           </td>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 

@@ -6,11 +6,11 @@
                            $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(),
                            ['title' => __('Sort'), 'class' => 'sortable']) ?>
 
-        <?php if ('nameUp' == $sf_request->sort): ?>
+        <?php if ('nameUp' == $sf_request->sort) { ?>
           <?php echo image_tag('up.gif', ['alt' => __('Sort ascending')]) ?>
-        <?php elseif ('nameDown' == $sf_request->sort): ?>
+        <?php } elseif ('nameDown' == $sf_request->sort){ ?>
           <?php echo image_tag('down.gif', ['alt' => __('Sort descending')]) ?>
-        <?php endif; ?>
+        <?php } ?>
       </th>
 
       <th class="sortable" style="width: 20%">
@@ -18,11 +18,11 @@
                            $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(),
                            ['title' => __('Sort'), 'class' => 'sortable']) ?>
 
-        <?php if ('regionUp' == $sf_request->sort): ?>
+        <?php if ('regionUp' == $sf_request->sort) { ?>
           <?php echo image_tag('up.gif', ['alt' => __('Sort ascending')]) ?>
-        <?php elseif ('regionDown' == $sf_request->sort): ?>
+        <?php } elseif ('regionDown' == $sf_request->sort){ ?>
           <?php echo image_tag('down.gif', ['alt' => __('Sort descending')]) ?>
-        <?php endif; ?>
+        <?php } ?>
       </th>
 
       <th class="sortable" style="width: 20%">
@@ -30,11 +30,11 @@
                            $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(),
                            ['title' => __('Sort'), 'class' => 'sortable']) ?>
 
-        <?php if ('localityUp' == $sf_request->sort): ?>
+        <?php if ('localityUp' == $sf_request->sort) { ?>
           <?php echo image_tag('up.gif', ['alt' => __('Sort ascending')]) ?>
-        <?php elseif ('localityDown' == $sf_request->sort): ?>
+        <?php } elseif ('localityDown' == $sf_request->sort){ ?>
           <?php echo image_tag('down.gif', ['alt' => __('Sort descending')]) ?>
-        <?php endif; ?>
+        <?php } ?>
       </th>
 
       <th style="width: 17%">
@@ -46,13 +46,13 @@
     </tr>
   </thead>
 
-  <?php foreach ($pager->getResults() as $hit): ?>
+  <?php foreach ($pager->getResults() as $hit) { ?>
     <?php $doc = $hit->getData() ?>
     <tr>
       <td>
-        <?php if (isset($doc['logoPath'])): ?>
+        <?php if (isset($doc['logoPath'])) { ?>
           <?php echo image_tag($doc['logoPath'], ['height' => '10%', 'width' => '10%', 'alt' => '']) ?>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo link_to(render_title(get_search_i18n($doc, 'authorizedFormOfName', ['allowEmpty' => false,
                            'culture' => $selectedCulture])), ['module' => 'repository', 'slug' => $doc['slug']]) ?>
@@ -66,16 +66,16 @@
       </td>
 
       <td>
-        <?php if (isset($doc['thematicAreas'])): ?>
-          <?php foreach ($doc['thematicAreas'] as $areaTerm): ?>
+        <?php if (isset($doc['thematicAreas'])) { ?>
+          <?php foreach ($doc['thematicAreas'] as $areaTerm) { ?>
             <li><?php echo render_value_inline(QubitTerm::getById($areaTerm)) ?></li>
-          <?php endforeach; ?>
-        <?php endif; ?>
+          <?php } ?>
+        <?php } ?>
       </td>
 
       <td>
         <?php echo get_component('clipboard', 'button', ['slug' => $doc['slug'], 'wide' => false, 'repositoryOrDigitalObjBrowse' => true, 'type' => 'repository']) ?>
       </td>
     </tr>
-  <?php endforeach; ?>
+  <?php } ?>
 </table>

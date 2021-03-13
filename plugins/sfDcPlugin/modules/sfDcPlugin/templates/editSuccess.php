@@ -11,11 +11,11 @@
 
   <?php echo get_component('informationobject', 'descriptionHeader', ['resource' => $resource, 'title' => (string) $dc, 'hideLevelOfDescription' => true]) ?>
 
-  <?php if (isset($sf_request->source)): ?>
+  <?php if (isset($sf_request->source)) { ?>
     <div class="messages status">
       <?php echo __('This is a duplicate of record %1%', ['%1%' => $sourceInformationObjectLabel]) ?>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
@@ -23,11 +23,11 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+  <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'informationobject', 'action' => 'edit']), ['id' => 'editForm']) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'informationobject', 'action' => 'add']), ['id' => 'editForm']) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -63,9 +63,9 @@
             ->label(__('Subject'))
             ->renderLabel() ?>
           <?php echo $form->subjectAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]) ?>"/>
           <?php echo $form->subjectAccessPoints
             ->help(__('The topic of the resource. Search for an existing term in the Subject taxonomy by typing the first few characters of the term name. Alternatively, type a new name to create and link to a new subject term.'))
@@ -146,9 +146,9 @@
             ->label(__('Coverage (spatial)'))
             ->renderLabel() ?>
           <?php echo $form->placeAccessPoints->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?>"/>
           <?php echo $form->placeAccessPoints
             ->help(__('<p>The name of a place or geographic area which is a topic of the resource or relevant to its jurisdiction.</p><p>Search for an existing term in the Place taxonomy by typing the first few characters of the place name. Alternatively, type a new name to create and link to a new place.</p><p>Please note: if you entered a place of creation, publication or contribution that will be output automatically, so don’t repeat that place name here.</p>'))

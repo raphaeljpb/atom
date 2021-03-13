@@ -17,7 +17,7 @@
 
     <div id="content">
 
-      <?php if (0 < count($relations)): ?>
+      <?php if (0 < count($relations)) { ?>
         <table style="width: 98%;">
           <thead>
             <tr>
@@ -27,7 +27,7 @@
               </th>
             </tr>
           </thead><tbody>
-            <?php foreach ($relations as $item): ?>
+            <?php foreach ($relations as $item) { ?>
               <tr class="related_obj_<?php echo $item->id ?>">
                 <td style="width: 90%"><div class="animateNicely">
                   <?php echo $item->subject->getLabel() ?>
@@ -37,10 +37,10 @@
                   <input class="multiDelete" name="delete_relations[]" type="checkbox" value="<?php echo url_for([$item, 'module' => 'relation']) ?>"/>
                 </div></td>
               </tr>
-            <?php endforeach; ?>
+            <?php } ?>
           </tbody>
         </table>
-      <?php endif; ?>
+      <?php } ?>
 
       <fieldset class="collapsible">
 

@@ -25,7 +25,7 @@
       </th>
     </tr>
   </thead><tbody>
-    <?php foreach ($informationObjects as $item): ?>
+    <?php foreach ($informationObjects as $item) { ?>
       <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?>">
         <td>
           <?php $isad = new sfIsadPlugin($item); echo render_value_inline($isad->referenceCode) ?>
@@ -33,28 +33,28 @@
           <?php echo render_title($item) ?>
         </td><td>
           <ul>
-            <?php foreach ($item->getDates() as $date): ?>
+            <?php foreach ($item->getDates() as $date) { ?>
               <li>
                 <?php echo render_value_inline(Qubit::renderDateStartEnd($date->getDate(['cultureFallback' => true]), $date->startDate, $date->endDate)) ?> (<?php echo $date->getType(['cultureFallback' => true]) ?>)
-                <?php if (isset($date->actor)): ?>
+                <?php if (isset($date->actor)) { ?>
                   <?php echo render_title($date->actor) ?>
-                <?php endif; ?>
+                <?php } ?>
               </li>
-            <?php endforeach; ?>
+            <?php } ?>
           </ul>
         </td><td>
-          <?php if ($item->getCollectionRoot()->id != $item->id): ?>
+          <?php if ($item->getCollectionRoot()->id != $item->id) { ?>
             <?php echo render_title($item->getCollectionRoot()) ?>
-          <?php endif; ?>
+          <?php } ?>
         </td><td>
-        <?php if (null != ($accessConditions = $item->getAccessConditions(['cultureFallback' => true]))): ?>
+        <?php if (null != ($accessConditions = $item->getAccessConditions(['cultureFallback' => true]))) { ?>
           <?php echo render_value_inline($accessConditions) ?>
-        <?php else: ?>
+        <?php } else { ?>
           <?php echo __('None') ?>
-        <?php endif; ?>
+        <?php } ?>
         </td>
       </tr>
-    <?php endforeach; ?>
+    <?php } ?>
   </tbody>
 </table>
 

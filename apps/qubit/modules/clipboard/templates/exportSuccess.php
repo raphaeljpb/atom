@@ -1,14 +1,14 @@
 <?php decorate_with('layout_1col.php') ?>
 
 <?php slot('title') ?>
-  <?php if (isset($resource)): ?>
+  <?php if (isset($resource)) { ?>
     <h1 class="multiline">
       <?php echo $title ?>
       <span class="sub"><?php echo render_title($resource) ?></span>
     </h1>
-  <?php else: ?>
+  <?php } else { ?>
     <h1><?php echo $title ?></h1>
-  <?php endif; ?>
+  <?php } ?>
 <?php end_slot() ?>
 
 <?php slot('content') ?>
@@ -29,21 +29,21 @@
             ->renderRow() ?>
           <?php echo $form->format
             ->renderRow() ?>
-          <?php if ($showOptions): ?>
+          <?php if ($showOptions) { ?>
           <div class="panel panel-default" id="exportOptions">
             <div class="panel-body">
-              <?php if (!empty($helpMessages)): ?>
+              <?php if (!empty($helpMessages)) { ?>
                 <div class="generic-help-box">
                   <a href="#" class="generic-help-icon" aria-expanded="false"><i class="fa fa-question-circle pull-right"></i></a>
                 </div>
-              <?php endif; ?>
-              <?php if (isset($form->includeDescendants)): ?>
+              <?php } ?>
+              <?php if (isset($form->includeDescendants)) { ?>
                 <?php echo $form->includeDescendants->renderRow()?>
-              <?php endif; ?>
-              <?php if (isset($form->includeAllLevels)): ?>
+              <?php } ?>
+              <?php if (isset($form->includeAllLevels)) { ?>
                 <?php echo $form->includeAllLevels->renderRow()?>
-              <?php endif; ?>
-              <?php if (isset($form->levels)): ?>
+              <?php } ?>
+              <?php if (isset($form->levels)) { ?>
                 <div id="exportLevels">
                   <?php echo $form->levels->renderLabel() ?>
                   <?php echo $form->levels->render() ?>
@@ -51,23 +51,23 @@
                   <?php echo $form->levels->renderHelp() ?>
                   </div>
                 </div>
-              <?php endif; ?>
-              <?php if (isset($form->includeDigitalObjects)): ?>
+              <?php } ?>
+              <?php if (isset($form->includeDigitalObjects)) { ?>
                 <?php echo $form->includeDigitalObjects->renderRow()?>
-              <?php endif; ?>
-              <?php if (isset($form->includeDrafts)): ?>
+              <?php } ?>
+              <?php if (isset($form->includeDrafts)) { ?>
                 <?php echo $form->includeDrafts->renderRow()?>
-              <?php endif; ?>
-              <?php if (!empty($helpMessages)): ?>
+              <?php } ?>
+              <?php if (!empty($helpMessages)) { ?>
                 <div class="alert alert-info generic-help animateNicely">
-                  <?php foreach ($sf_data->getRaw('helpMessages') as $helpMessage): ?>
+                  <?php foreach ($sf_data->getRaw('helpMessages') as $helpMessage) { ?>
                   <p><?php echo $helpMessage ?></p>
-                  <?php endforeach; ?>
+                  <?php } ?>
                 </div>
-              <?php endif; ?>
+              <?php } ?>
             </div>
           </div>
-          <?php endif; ?>
+          <?php } ?>
           
         </fieldset>
       </div>

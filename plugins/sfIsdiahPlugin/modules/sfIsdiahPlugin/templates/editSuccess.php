@@ -12,11 +12,11 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+  <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
     <?php echo $form->renderFormTag(url_for([$resource, 'module' => 'repository', 'action' => 'edit'])) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'repository', 'action' => 'add'])) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -52,9 +52,9 @@
           ->render(['class' => 'form-autocomplete']) ?>
 
         <?php $repoTypeTaxonomyId = QubitTaxonomy::REPOSITORY_TYPE_ID ?>
-        <?php if (QubitAcl::check(QubitTaxonomy::getById($repoTypeTaxonomyId), 'createTerm')): ?>
+        <?php if (QubitAcl::check(QubitTaxonomy::getById($repoTypeTaxonomyId), 'createTerm')) { ?>
           <input class="add" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById($repoTypeTaxonomyId), 'module' => 'taxonomy'])]) ?> #name"/>
-        <?php endif; ?>
+        <?php } ?>
 
       </fieldset>
 
@@ -165,14 +165,14 @@
           ->help(__('"Record the date the description was created and the dates of any revisions to the description." (ISDIAH 5.6.6)'))
           ->label(__('Dates of creation, revision and deletion')), $resource, ['class' => 'resizable']) ?>
 
-        <?php if (isset($resource->updatedAt)): ?>
+        <?php if (isset($resource->updatedAt)) { ?>
           <div class="field">
             <h3><?php echo __('Last updated') ?></h3>
             <div>
               <?php echo format_date($resource->updatedAt, 'f') ?>
             </div>
           </div>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo $form->language
           ->help(__('Select the language(s) of this record from the drop-down menu; enter the first few letters to narrow the choices. (ISDIAH 5.6.7)'))
@@ -200,9 +200,9 @@
             ->label(__('Thematic area'))
             ->renderLabel() ?>
           <?php echo $form->thematicArea->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::THEMATIC_AREA_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::THEMATIC_AREA_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::THEMATIC_AREA_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::THEMATIC_AREA_ID), 'module' => 'taxonomy'])]) ?>"/>
           <?php echo $form->thematicArea
             ->help(__("Search for an existing term in the Thematic Areas taxonomy by typing the first few characters of the term name. This should be used to identify major collecting areas."))
@@ -214,9 +214,9 @@
             ->label(__('Geographic subregion'))
             ->renderLabel() ?>
           <?php echo $form->geographicSubregion->render(['class' => 'form-autocomplete']) ?>
-          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID), 'createTerm')): ?>
+          <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-          <?php endif; ?>
+          <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID), 'module' => 'taxonomy'])]) ?>"/>
           <?php echo $form->geographicSubregion
             ->help(__("Search for an existing term in the Geographic Subregion taxonomy by typing the first few characters of the term name."))
@@ -229,13 +229,13 @@
 
     <section class="actions">
       <ul>
-        <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+        <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
           <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'repository'], ['class' => 'c-btn', 'title' => __('Cancel')]) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
-        <?php else: ?>
+        <?php } else { ?>
           <li><?php echo link_to(__('Cancel'), ['module' => 'repository', 'action' => 'browse'], ['class' => 'c-btn', 'title' => __('Cancel')]) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create') ?>"/></li>
-        <?php endif; ?>
+        <?php } ?>
       </ul>
     </section>
 

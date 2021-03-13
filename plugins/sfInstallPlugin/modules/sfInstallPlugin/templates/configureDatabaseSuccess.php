@@ -1,18 +1,18 @@
 <h2>Database configuration</h2>
 
-<?php if (count($database) > 0): ?>
+<?php if (count($database) > 0) { ?>
 
   <h3>The following errors must be resolved before you can continue the installation process:</h3>
 
   <div class="messages error">
     <ul>
-      <?php foreach ($database as $e): ?>
+      <?php foreach ($database as $e) { ?>
         <li><?php echo $e->getMessage() ?></li>
-      <?php endforeach; ?>
+      <?php } ?>
     </ul>
   </div>
 
-<?php endif; ?>
+<?php } ?>
 
 <?php slot('before-content') ?>
   <?php echo $form->renderGlobalErrors() ?>

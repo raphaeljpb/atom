@@ -5,21 +5,21 @@
   <div class="content">
     <ul>
 
-      <?php foreach ($physicalObjects as $item): ?>
+      <?php foreach ($physicalObjects as $item) { ?>
         <li>
 
-          <?php if (isset($item->type)): ?>
+          <?php if (isset($item->type)) { ?>
             <?php echo render_value_inline($item->type) ?>:
-          <?php endif; ?>
+          <?php } ?>
 
           <?php echo link_to_if(QubitAcl::check($resource, 'update'), render_title($item), [$item, 'module' => 'physicalobject']) ?>
 
-          <?php if (isset($item->location) && $sf_user->isAuthenticated()): ?>
+          <?php if (isset($item->location) && $sf_user->isAuthenticated()) { ?>
             - <?php echo render_value_inline($item->getLocation(['cultureFallback' => 'true'])) ?>
-          <?php endif; ?>
+          <?php } ?>
 
         </li>
-      <?php endforeach; ?>
+      <?php } ?>
 
     </ul>
   </div>

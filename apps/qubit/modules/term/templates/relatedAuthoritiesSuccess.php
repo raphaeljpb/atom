@@ -20,10 +20,10 @@
 
   <?php echo get_partial('term/errors', ['errorSchema' => $errorSchema]) ?>
 
-  <?php if (QubitTerm::ROOT_ID != $resource->parentId): ?>
+  <?php if (QubitTerm::ROOT_ID != $resource->parentId) { ?>
     <?php echo include_partial('default/breadcrumb',
                  ['resource' => $resource, 'objects' => $resource->getAncestors()->andSelf()->orderBy('lft')]) ?>
-  <?php endif; ?>
+  <?php } ?>
 
 <?php end_slot() ?>
 
@@ -54,7 +54,7 @@
 
   <section class="header-options">
 
-    <?php if (isset($sf_request->onlyDirect)): ?>
+    <?php if (isset($sf_request->onlyDirect)) { ?>
       <span class="search-filter">
         <?php echo __('Only results directly related') ?>
         <?php $params = $sf_data->getRaw('sf_request')->getGetParameters() ?>
@@ -62,7 +62,7 @@
         <?php unset($params['page']) ?>
         <a href="<?php echo url_for([$resource, 'module' => 'term'] + $params) ?>" class="remove-filter"><i class="fa fa-times"></i></a>
       </span>
-    <?php endif; ?>
+    <?php } ?>
 
     <div class="pickers">
       <?php echo get_partial('default/sortPickers',
@@ -81,20 +81,20 @@
       'resource' => $resource,
       'aggs' => $aggs]) ?>
 
-    <?php if ($pager->getNbResults()): ?>
+    <?php if ($pager->getNbResults()) { ?>
 
-      <?php foreach ($pager->getResults() as $hit): ?>
+      <?php foreach ($pager->getResults() as $hit) { ?>
         <?php $doc = $hit->getData() ?>
         <?php echo include_partial('actor/searchResult', ['doc' => $doc, 'pager' => $pager, 'culture' => $selectedCulture, 'clipboardType' => 'actor']) ?>
-      <?php endforeach; ?>
+      <?php } ?>
 
-    <?php else: ?>
+    <?php } else { ?>
 
       <div>
         <h2><?php echo __('We couldn\'t find any results matching your search.') ?></h2>
       </div>
 
-    <?php endif; ?>
+    <?php } ?>
 
   </div>
 

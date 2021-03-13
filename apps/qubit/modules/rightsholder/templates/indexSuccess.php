@@ -9,15 +9,15 @@
 
 <?php slot('before-content') ?>
 
-  <?php if (isset($errorSchema)): ?>
+  <?php if (isset($errorSchema)) { ?>
     <div class="messages error">
       <ul>
-        <?php foreach ($errorSchema as $error): ?>
+        <?php foreach ($errorSchema as $error) { ?>
           <li><?php echo $error ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo get_component('default', 'translationLinks', ['resource' => $resource]) ?>
 
@@ -29,24 +29,24 @@
 
   <h2><?php echo __('Contact area') ?></h2>
 
-  <?php foreach ($resource->contactInformations as $contactItem): ?>
+  <?php foreach ($resource->contactInformations as $contactItem) { ?>
     <?php echo get_partial('contactinformation/contactInformation', ['contactInformation' => $contactItem]) ?>
-  <?php endforeach; ?>
+  <?php } ?>
 
 </div> <!-- /.section#contactArea -->
 
 <?php slot('after-content') ?>
   <section class="actions">
     <ul>
-      <?php if (QubitAcl::check($resource, 'update')): ?>
+      <?php if (QubitAcl::check($resource, 'update')) { ?>
         <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'rightsholder', 'action' => 'edit'], ['title' => __('Edit'), 'class' => 'c-btn']) ?></li>
-      <?php endif; ?>
-      <?php if (QubitAcl::check($resource, 'delete')): ?>
+      <?php } ?>
+      <?php if (QubitAcl::check($resource, 'delete')) { ?>
         <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'rightsholder', 'action' => 'delete'], ['title' => __('Delete'), 'class' => 'c-btn c-btn-delete']) ?></li>
-      <?php endif; ?>
-      <?php if (QubitAcl::check($resource, 'create')): ?>
+      <?php } ?>
+      <?php if (QubitAcl::check($resource, 'create')) { ?>
         <li><?php echo link_to(__('Add new'), ['module' => 'rightsholder', 'action' => 'add'], ['title' => __('Add new'), 'class' => 'c-btn']) ?></li>
-      <?php endif; ?>
+      <?php } ?>
     </ul>
   </section>
 <?php end_slot() ?>

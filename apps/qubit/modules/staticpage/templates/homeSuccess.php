@@ -12,11 +12,11 @@
     <h2><?php echo __('Browse by') ?></h2>
     <ul>
       <?php $browseMenu = QubitMenu::getById(QubitMenu::BROWSE_ID) ?>
-      <?php if ($browseMenu->hasChildren()): ?>
-        <?php foreach ($browseMenu->getChildren() as $item): ?>
+      <?php if ($browseMenu->hasChildren()) { ?>
+        <?php foreach ($browseMenu->getChildren() as $item) { ?>
           <li><a href="<?php echo url_for($item->getPath(['getUrl' => true, 'resolveAlias' => true])) ?>"><?php echo esc_specialchars($item->getLabel(['cultureFallback' => true])) ?></a></li>
-        <?php endforeach; ?>
-      <?php endif; ?>
+        <?php } ?>
+      <?php } ?>
     </ul>
   </section>
 
@@ -28,7 +28,7 @@
   <?php echo render_value_html($sf_data->getRaw('content')) ?>
 </div>
 
-<?php if (QubitAcl::check($resource, 'update')): ?>
+<?php if (QubitAcl::check($resource, 'update')) { ?>
   <?php slot('after-content') ?>
     <section class="actions">
       <ul>
@@ -36,4 +36,4 @@
       </ul>
     </section>
   <?php end_slot() ?>
-<?php endif; ?>
+<?php } ?>

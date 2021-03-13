@@ -18,12 +18,12 @@
         </th>
       </tr>
     </thead><tbody>
-      <?php foreach ($sf_data->getRaw('plugins') as $name => $plugin): ?>
+      <?php foreach ($sf_data->getRaw('plugins') as $name => $plugin) { ?>
         <tr>
           <td>
-            <?php if (file_exists($plugin->getRootDir().'/images/image.png')): ?>
+            <?php if (file_exists($plugin->getRootDir().'/images/image.png')) { ?>
               <?php echo image_tag('/plugins/'.$name.'/images/image', ['alt' => $name]) ?>
-            <?php endif; ?>
+            <?php } ?>
             <p class="plugin-name"><?php echo $name ?></p>
             <div class="plugin-description">
               <?php echo $plugin::$summary ?>
@@ -33,21 +33,21 @@
           </td><td align="center">
             <input
               <?php if ($form->isBound() && in_array($name, $form->getValue('enabled'))
-                          || !$form->isBound() && in_array($name, $form->getDefault('enabled'))): ?>
+                          || !$form->isBound() && in_array($name, $form->getDefault('enabled'))) { ?>
                 checked="checked"
-              <?php endif; ?>
+              <?php } ?>
               <?php if ($name == 'sfIsdiahPlugin'
                         || $name == 'sfIsaarPlugin'
                         || ($name == 'sfIsadPlugin' && $defaultTemplate == 'isad')
                         || ($name == 'sfRadPlugin' && $defaultTemplate == 'rad')
                         || ($name == 'sfDcPlugin' && $defaultTemplate == 'dc')
-                        || ($name == 'sfModsPlugin' && $defaultTemplate == 'mods')): ?>
+                        || ($name == 'sfModsPlugin' && $defaultTemplate == 'mods')) { ?>
                 disabled="disabled"
-              <?php endif; ?>
+              <?php } ?>
               name="enabled[]" type="checkbox" value="<?php echo $name ?>"
           </td>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 

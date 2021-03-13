@@ -2,11 +2,11 @@
 
 <?php slot('title') ?>
 
-  <?php if (isset($preview)): ?>
+  <?php if (isset($preview)) { ?>
     <div class="copyright-statement-preview alert alert-info">
       <?php echo __('Copyright statement preview') ?>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
   <h1><?php echo render_title($resource) ?></h1>
 
@@ -25,12 +25,12 @@
     <input type="hidden" name="token" value="<?php echo $accessToken ?>"/>
     <section class="actions">
       <ul>
-        <?php if (isset($preview)): ?>
+        <?php if (isset($preview)) { ?>
           <li><button class="c-btn c-btn-submit" type="submit" disabled="disabled"><?php echo __('Agree') ?></button></li>
           <li><a class="c-btn" href="javascript:window.close();"><?php echo __('Close') ?></a>
-        <?php else: ?>
+        <?php } else { ?>
           <li><button class="c-btn c-btn-submit" type="submit"><?php echo __('Agree') ?></button></li>
-        <?php endif; ?>
+        <?php } ?>
       </ul>
     </section>
   </form>

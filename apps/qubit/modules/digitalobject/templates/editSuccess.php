@@ -4,11 +4,11 @@
   <h1 class="multiline">
     <?php echo __('Edit %1%', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]) ?>
 
-    <?php if ($resource->object instanceof QubitInformationObject): ?>
+    <?php if ($resource->object instanceof QubitInformationObject) { ?>
       <span class="sub"><?php echo render_title(QubitInformationObject::getStandardsBasedInstance($object)) ?></span>
-    <?php elseif ($resource->object instanceof QubitActor): ?>
+    <?php } elseif ($resource->object instanceof QubitActor){ ?>
       <span class="sub"><?php echo render_title($object) ?></span>
-    <?php endif; ?>
+    <?php } ?>
   </h1>
 <?php end_slot() ?>
 
@@ -22,11 +22,11 @@
 
     <section id="content">
 
-      <?php if (isset($resource)): ?>
+      <?php if (isset($resource)) { ?>
         <div class="form-item">
           <?php echo get_component('digitalobject', 'show', ['resource' => $resource, 'usageType' => QubitTerm::REFERENCE_ID]) ?>
         </div>
-      <?php endif; ?>
+      <?php } ?>
 
       <fieldset class="collapsible">
 
@@ -40,11 +40,11 @@
 
         <?php echo $form->digitalObjectAltText->label(__('Alt text'))->renderRow() ?>
 
-        <?php if ($showCompoundObjectToggle): ?>
+        <?php if ($showCompoundObjectToggle) { ?>
           <?php echo $form->displayAsCompound
             ->label(__('View children as a compound %1%?', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]))
             ->renderRow() ?>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo $form->latitude->label('Latitude')->renderRow(); ?>
 
@@ -52,41 +52,41 @@
 
       </fieldset>
 
-      <?php foreach ($representations as $usageId => $representation): ?>
+      <?php foreach ($representations as $usageId => $representation) { ?>
 
         <fieldset class="collapsible">
 
           <legend><?php echo __('%1% representation', ['%1%' => QubitTerm::getById($usageId)]) ?></legend>
 
-          <?php if (isset($representation)): ?>
+          <?php if (isset($representation)) { ?>
 
             <?php echo get_component('digitalobject', 'editRepresentation', ['resource' => $resource, 'representation' => $representation]) ?>
 
-          <?php else: ?>
+          <?php } else { ?>
 
             <?php echo $form["repFile_$usageId"]
               ->label(__('Select a %1% to upload', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]))
               ->renderRow() ?>
 
-            <?php if ($resource->canThumbnail()): ?>
+            <?php if ($resource->canThumbnail()) { ?>
               <?php echo $form["generateDerivative_$usageId"]
                 ->label('Or auto-generate a new representation from master image')
                 ->renderRow() ?>
-            <?php endif; ?>
+            <?php } ?>
 
-          <?php endif; ?>
+          <?php } ?>
 
         </fieldset>
 
-      <?php endforeach; ?>
+      <?php } ?>
 
     </section>
 
     <section class="actions">
       <ul>
-        <?php if (isset($sf_request->getAttribute('sf_route')->resource)): ?>
+        <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
           <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'digitalobject', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete']) ?></li>
-        <?php endif; ?>
+        <?php } ?>
         <li><?php echo link_to(__('Cancel'), [$object, 'module' => $sf_request->module], ['class' => 'c-btn']) ?></li>
         <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
       </ul>

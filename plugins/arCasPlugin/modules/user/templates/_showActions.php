@@ -2,17 +2,17 @@
 
   <ul>
 
-    <?php if (QubitAcl::check($resource, 'update')): ?>
+    <?php if (QubitAcl::check($resource, 'update')) { ?>
       <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'user', 'action' => str_replace('index', 'edit', $sf_context->getActionName())], ['class' => 'c-btn']) ?></li>
-    <?php endif; ?>
+    <?php } ?>
 
-    <?php if ($sf_user->user != $resource && 0 == count($resource->notes) && QubitAcl::check($resource, 'delete')): ?>
+    <?php if ($sf_user->user != $resource && 0 == count($resource->notes) && QubitAcl::check($resource, 'delete')) { ?>
       <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'user', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete']) ?></li>
-    <?php endif; ?>
+    <?php } ?>
     
-    <?php if (QubitAcl::check($resource, 'list')): ?>
+    <?php if (QubitAcl::check($resource, 'list')) { ?>
       <li><?php echo link_to(__('Return to user list'), ['module' => 'user', 'action' => 'list'], ['class' => 'c-btn']) ?></li>
-    <?php endif; ?>
+    <?php } ?>
 
   </ul>
 

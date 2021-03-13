@@ -2,8 +2,8 @@
 
 <div>
   <ul class="nav nav-tabs" id="job-tabs">
-    <li<?php if ('all' === $filter): ?> class="active"<?php endif; ?>><?php echo link_to(__('All jobs'), ['filter' => 'all'] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
-    <li<?php if ('active' === $filter): ?> class="active"<?php endif; ?>><?php echo link_to(__('Active jobs'), ['filter' => 'active'] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
+    <li<?php if ('all' === $filter) { ?> class="active"<?php } ?>><?php echo link_to(__('All jobs'), ['filter' => 'all'] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
+    <li<?php if ('active' === $filter) { ?> class="active"<?php } ?>><?php echo link_to(__('Active jobs'), ['filter' => 'active'] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?></li>
   </ul>
 </div>
 
@@ -24,7 +24,7 @@
 
     <?php $jobs = $pager->getResults() ?>
 
-    <?php foreach ($jobs as $job): ?>
+    <?php foreach ($jobs as $job) { ?>
       <tr>
         <!-- Creation date -->
         <td><?php echo $job->getCreationDateString() ?></td>
@@ -37,32 +37,32 @@
 
         <!-- Job status -->
         <td>
-          <?php if ($job->statusId == QubitTerm::JOB_STATUS_COMPLETED_ID): ?>
+          <?php if ($job->statusId == QubitTerm::JOB_STATUS_COMPLETED_ID) { ?>
             <i class="fa fa-check-square" id="job-check-color"></i>
-          <?php elseif ($job->statusId == QubitTerm::JOB_STATUS_ERROR_ID): ?>
+          <?php } elseif ($job->statusId == QubitTerm::JOB_STATUS_ERROR_ID){ ?>
             <i class="fa fa-exclamation-triangle" id="job-warning-color"></i>
-          <?php elseif ($job->statusId == QubitTerm::JOB_STATUS_IN_PROGRESS_ID): ?>
+          <?php } elseif ($job->statusId == QubitTerm::JOB_STATUS_IN_PROGRESS_ID){ ?>
             <i class="fa fa-cogs" id="job-cogs-color"></i>
-          <?php endif; ?>
+          <?php } ?>
 
           <?php echo $job->getStatusString() ?>
 
-          <?php if ($job->getObjectModule() && $job->getObjectSlug()): ?>
+          <?php if ($job->getObjectModule() && $job->getObjectSlug()) { ?>
             <a href="<?php echo url_for(['module' => $job->getObjectModule(),
                     'slug' => $job->getObjectSlug()]) ?>" class="fa fa-share"></a>
 
-          <?php endif; ?>
+          <?php } ?>
         </td>
 
         <!-- Job notes -->
         <td>
-          <?php foreach ($job->getNotes() as $note): ?>
+          <?php foreach ($job->getNotes() as $note) { ?>
             <p><?php echo $note->__toString() ?></p>
-          <?php endforeach; ?>
-          <?php if (isset($job->downloadPath)): ?>
+          <?php } ?>
+          <?php if (isset($job->downloadPath)) { ?>
             <?php echo link_to(__('Download'), public_path($job->downloadPath), ['class' => 'job-link']) ?>
             (<?php echo hr_filesize(filesize($job->downloadPath)) ?>)
-          <?php endif; ?>
+          <?php } ?>
 
           <?php echo link_to(__('Full report'), ['module' => 'jobs', 'action' => 'report', 'id' => $job->id],
             ['class' => 'job-link']) ?>
@@ -73,26 +73,26 @@
           <?php echo esc_entities(QubitJob::getUserString($job)) ?>
         </td>
       </tr>
-    <?php endforeach; ?>
+    <?php } ?>
   </table>
 </div>
 
 <?php echo get_partial('default/pager', ['pager' => $pager]) ?>
 
 <!-- User tips -->
-<?php if ($this->context->user->isAdministrator() && $jobs->count()): ?>
+<?php if ($this->context->user->isAdministrator() && $jobs->count()) { ?>
   <div class="messages" id="job-info-box">
     <i class="fa fa-info-circle" id="job-info-box-icon"></i>&nbsp;<?php echo __('You may only clear jobs belonging to you.') ?>
   </div>
-<?php endif; ?>
+<?php } ?>
 
-<?php if (!$jobs->count()): ?>
+<?php if (!$jobs->count()) { ?>
   <div class="messages error" id="job-error-box">
     <ul>
       <li><?php echo __('There are no jobs to report on.') ?></li>
     </ul>
   </div>
-<?php endif; ?>
+<?php } ?>
 
 <!-- Action buttons -->
 <section class="actions">
@@ -106,7 +106,7 @@
         'autoRefresh' => !$autoRefresh] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(),
         ['class' => $autoRefreshIcons]) ?>
     </li>
-    <?php if ($jobs->count()): ?>
+    <?php if ($jobs->count()) { ?>
       <li>
         <?php echo link_to(__('Export history CSV'), ['module' => 'jobs', 'action' => 'export'],
           ['class' => 'c-btn']) ?>
@@ -115,15 +115,15 @@
         <?php echo link_to(__('Clear inactive jobs'), ['module' => 'jobs', 'action' => 'delete'],
           ['class' => 'c-btn c-btn-delete']) ?>
       </li>
-    <?php endif; ?>
+    <?php } ?>
   </ul>
 </section>
 
 <!-- Refresh after specified interval if auto-refresh enabled -->
-<?php if ($autoRefresh): ?>
+<?php if ($autoRefresh) { ?>
   <script>
     setTimeout(function() {
       window.location.reload(1);
     }, <?php echo $refreshInterval ?>);
   </script>
-<?php endif; ?>
+<?php } ?>

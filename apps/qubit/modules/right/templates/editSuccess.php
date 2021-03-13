@@ -53,9 +53,9 @@
           <div class="form-item form-item-statuteCitation">
             <?php echo $form->statuteCitation->renderLabel() ?>
             <?php echo $form->statuteCitation->render(['class' => 'form-autocomplete']) ?>
-            <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::RIGHTS_STATUTES_ID), 'createTerm')): ?>
+            <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::RIGHTS_STATUTES_ID), 'createTerm')) { ?>
               <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::RIGHTS_STATUTES_ID), 'module' => 'taxonomy'])]) ?> #name"/>
-            <?php endif; ?>
+            <?php } ?>
             <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::RIGHTS_STATUTES_ID), 'module' => 'taxonomy'])]) ?>"/>
             <?php echo $form->statuteCitation
               ->help(__('An identifying designation for the statute. Use standard citation form when applicable, e.g. bibliographic citation.'))
@@ -112,7 +112,7 @@
       <fieldset class="collapsible grantedRights">
         <legend><?php echo __('Act / Granted rights') ?></legend>
 
-        <?php foreach ($form['grantedRights'] as $i => $gr): ?>
+        <?php foreach ($form['grantedRights'] as $i => $gr) { ?>
           <?php $collapsed = ($i + 1 < sizeof($form['grantedRights']) ? ' collapsed' : '') ?>
           <fieldset class="collapsible<?php echo $collapsed ?>">
             <?php
@@ -146,7 +146,7 @@
             <a class="c-btn c-btn-delete c-btn-right-align"><?php echo __('Delete') ?></a><div style="clear:both;"></div>
           </fieldset>
 
-        <?php endforeach; ?>
+        <?php } ?>
 
         <fieldset class="collapsible" id="blank">
           <legend><?php echo __('Blank item') ?></legend>

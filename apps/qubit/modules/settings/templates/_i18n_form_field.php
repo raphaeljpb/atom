@@ -1,14 +1,14 @@
-<?php if (!empty($label)): ?>
+<?php if (!empty($label)) { ?>
   <?php echo $form->$name
     ->renderLabel($label) ?>
-<?php endif; ?>
+<?php } ?>
 
-<?php if (strlen($error = $form->$name->renderError())): ?>
+<?php if (strlen($error = $form->$name->renderError())) { ?>
   <?php echo $error ?>
-<?php endif; ?>
+<?php } ?>
 
-<?php if ($sourceCultureHelper = $settings[$name]->getSourceCultureHelper($sf_context->user->getCulture())): ?>
+<?php if ($sourceCultureHelper = $settings[$name]->getSourceCultureHelper($sf_context->user->getCulture())) { ?>
   <div class="default-translation"><?php echo $sourceCultureHelper ?></div>
-<?php endif; ?>
+<?php } ?>
 
 <?php echo $form->$name->render() ?>

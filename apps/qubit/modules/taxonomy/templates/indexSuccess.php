@@ -12,9 +12,9 @@
 
 <?php slot('title') ?>
   <div class="multiline-header">
-    <?php if (isset($icon)): ?>
+    <?php if (isset($icon)) { ?>
       <?php echo image_tag('/images/icons-large/icon-'.$icon.'.png', ['alt' => '']) ?>
-    <?php endif; ?>
+    <?php } ?>
     <h1 aria-describedby="results-label"><?php echo __('Showing %1% results', ['%1%' => $pager->getNbResults()]) ?></h1>
     <span class="sub" id="results-label"><?php echo render_title($resource) ?></span>
   </div>
@@ -56,59 +56,59 @@
         </th><th>
           <?php echo __('Scope note') ?>
         </th>
-        <?php if ($addIoCountColumn): ?>
+        <?php if ($addIoCountColumn) { ?>
           <th><?php echo __('%1 count', ['%1' => sfConfig::get('app_ui_label_informationobject')]) ?></th>
-        <?php endif; ?>
-        <?php if ($addActorCountColumn): ?>
+        <?php } ?>
+        <?php if ($addActorCountColumn) { ?>
           <th><?php echo __('%1 count', ['%1' => sfConfig::get('app_ui_label_actor')]) ?></th>
-        <?php endif; ?>
+        <?php } ?>
       </tr>
     </thead><tbody>
-      <?php foreach ($pager->getResults() as $hit): ?>
+      <?php foreach ($pager->getResults() as $hit) { ?>
         <?php $doc = $hit->getData() ?>
         <tr>
           <td>
-            <?php if ($doc['isProtected']): ?>
+            <?php if ($doc['isProtected']) { ?>
               <?php echo link_to(render_title(get_search_i18n($doc, 'name', ['allowEmpty' => false])), ['module' => 'term', 'slug' => $doc['slug']], ['class' => 'readOnly']) ?>
-            <?php else: ?>
+            <?php } else { ?>
               <?php echo link_to(render_title(get_search_i18n($doc, 'name', ['allowEmpty' => false])), ['module' => 'term', 'slug' => $doc['slug']]) ?>
-            <?php endif; ?>
+            <?php } ?>
 
-            <?php if (0 < $doc['numberOfDescendants']): ?>
+            <?php if (0 < $doc['numberOfDescendants']) { ?>
               <span class="note2">(<?php echo $doc['numberOfDescendants'] ?>)</span>
-            <?php endif; ?>
+            <?php } ?>
 
-            <?php if (isset($doc['useFor']) && count($doc['useFor']) > 0): ?>
+            <?php if (isset($doc['useFor']) && count($doc['useFor']) > 0) { ?>
               <p>
                 <?php $labels = [] ?>
                 <?php echo __('Use for: ') ?>
 
-                <?php foreach ($doc['useFor'] as $label): ?>
+                <?php foreach ($doc['useFor'] as $label) { ?>
                   <?php $labels[] = render_value_inline(get_search_i18n($label, 'name', ['allowEmpty' => false])) ?>
-                <?php endforeach; ?>
+                <?php } ?>
 
                 <?php echo implode(', ', $labels) ?>
               </p>
-            <?php endif; ?>
+            <?php } ?>
 
           </td><td>
-            <?php if (isset($doc['scopeNotes']) && count($doc['scopeNotes']) > 0): ?>
+            <?php if (isset($doc['scopeNotes']) && count($doc['scopeNotes']) > 0) { ?>
               <ul>
-                <?php foreach ($doc['scopeNotes'] as $note): ?>
+                <?php foreach ($doc['scopeNotes'] as $note) { ?>
                   <li><?php echo render_value_inline(get_search_i18n($note, 'content')) ?></li>
-                <?php endforeach; ?>
+                <?php } ?>
               </ul>
-            <?php endif; ?>
+            <?php } ?>
 
           </td>
-          <?php if ($addIoCountColumn): ?>
+          <?php if ($addIoCountColumn) { ?>
             <td><?php echo QubitTerm::countRelatedInformationObjects($hit->getId()) ?></td>
-          <?php endif; ?>
-          <?php if ($addActorCountColumn): ?>
+          <?php } ?>
+          <?php if ($addActorCountColumn) { ?>
             <td><?php echo TermNavigateRelatedComponent::getEsDocsRelatedToTermCount('QubitActor', $hit->getId()) ?></td>
-          <?php endif; ?>
+          <?php } ?>
         </tr>
-      <?php endforeach; ?>
+      <?php } ?>
     </tbody>
   </table>
 
@@ -120,9 +120,9 @@
 
   <section class="actions">
     <ul>
-      <?php if (QubitAcl::check($resource, 'createTerm')): ?>
+      <?php if (QubitAcl::check($resource, 'createTerm')) { ?>
         <li><?php echo link_to(__('Add new'), ['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([$resource, 'module' => 'taxonomy'])], ['class' => 'c-btn']) ?></li>
-      <?php endif; ?>
+      <?php } ?>
     </ul>
   </section>
 

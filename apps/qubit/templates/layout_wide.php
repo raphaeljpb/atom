@@ -8,11 +8,11 @@
     <link rel="shortcut icon" href="<?php echo public_path('favicon.ico') ?>"/>
     <?php include_stylesheets() ?>
     <?php include_component_slot('css') ?>
-    <?php if ($sf_context->getConfiguration()->isDebug()): ?>
+    <?php if ($sf_context->getConfiguration()->isDebug()) { ?>
       <script type="text/javascript" charset="utf-8">
         less = { env: 'development', optimize: 0, relativeUrls: true };
       </script>
-    <?php endif; ?>
+    <?php } ?>
     <?php include_javascripts() ?>
   </head>
   <body class="yui-skin-sam <?php echo $sf_context->getModuleName() ?> <?php echo $sf_context->getActionName() ?>">
@@ -27,11 +27,11 @@
 
       <?php echo get_partial('alerts') ?>
 
-      <?php if (!include_slot('content')): ?>
+      <?php if (!include_slot('content')) { ?>
         <div class="container-fluid">
           <?php echo $sf_content ?>
         </div>
-      <?php endif; ?>
+      <?php } ?>
 
       <?php include_slot('after-content') ?>
 

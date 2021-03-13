@@ -18,7 +18,7 @@
 
     <div id="content">
 
-    <?php if ($resource->rgt - $resource->lft == 1): ?>
+    <?php if ($resource->rgt - $resource->lft == 1) { ?>
       <legend class="collapse-processed"><?php echo __('No children found') ?></legend>
 
       <div class="alert alert-warning">
@@ -28,13 +28,13 @@
               )
         ?>
       </div>
-    <?php elseif (0 == count($descendantEventTypes)): ?>
+    <?php } elseif (0 == count($descendantEventTypes)){ ?>
       <legend class="collapse-processed"><?php echo __('No lower level dates found') ?></legend>
 
       <div class="alert alert-warning">
         <?php echo __('Cannot calculate accumulated dates because no lower level dates exist') ?>
       </div>
-    <?php endif; // no $descendantEventTypes?>
+    <?php } // no $descendantEventTypes?>
 
     </div>
 

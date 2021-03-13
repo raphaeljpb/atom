@@ -14,11 +14,11 @@
 
     <div class="top-dropdown-body">
       <ul>
-        <?php foreach ($langCodes as $value): ?>
-          <li<?php if ($sf_user->getCulture() == $value): ?> class="active"<?php endif; ?>>
+        <?php foreach ($langCodes as $value) { ?>
+          <li<?php if ($sf_user->getCulture() == $value) { ?> class="active"<?php } ?>>
             <?php echo link_to(format_language($value, $value), ['sf_culture' => $value] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
           </li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
 

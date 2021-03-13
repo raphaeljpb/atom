@@ -9,15 +9,15 @@
 
 <?php slot('before-content') ?>
 
-  <?php if (isset($errorSchema)): ?>
+  <?php if (isset($errorSchema)) { ?>
     <div class="messages error">
       <ul>
-        <?php foreach ($errorSchema as $error): ?>
+        <?php foreach ($errorSchema as $error) { ?>
           <li><?php echo $error ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo get_component('default', 'translationLinks', ['resource' => $resource]) ?>
 
@@ -45,12 +45,12 @@
 <?php slot('after-content') ?>
   <section class="actions">
     <ul>
-      <?php if (QubitAcl::check($resource, 'update') || (QubitAcl::check($resource, 'translate'))): ?>
+      <?php if (QubitAcl::check($resource, 'update') || (QubitAcl::check($resource, 'translate'))) { ?>
         <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'deaccession', 'action' => 'edit'], ['class' => 'c-btn']) ?></li>
-      <?php endif; ?>
-      <?php if (QubitAcl::check($resource, 'delete')): ?>
+      <?php } ?>
+      <?php if (QubitAcl::check($resource, 'delete')) { ?>
         <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'deaccession', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete']) ?></li>
-      <?php endif; ?>
+      <?php } ?>
     </ul>
   </section>
 <?php end_slot() ?>

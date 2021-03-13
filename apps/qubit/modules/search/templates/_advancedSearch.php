@@ -6,17 +6,17 @@
 
     <?php echo $form->renderFormTag(url_for(['module' => 'informationobject', 'action' => 'browse']), ['name' => 'advanced-search-form', 'method' => 'get']) ?>
 
-      <?php foreach ($hiddenFields as $name => $value): ?>
+      <?php foreach ($hiddenFields as $name => $value) { ?>
         <input type="hidden" name="<?php echo $name ?>" value="<?php echo $value ?>"/>
-      <?php endforeach; ?>
+      <?php } ?>
 
       <p><?php echo __('Find results with:') ?></p>
 
       <div class="criteria">
 
-        <?php if (isset($criteria)): ?>
+        <?php if (isset($criteria)) { ?>
 
-          <?php foreach ($criteria as $key => $item): ?>
+          <?php foreach ($criteria as $key => $item) { ?>
 
             <div class="criterion">
 
@@ -35,9 +35,9 @@
                 <option value="title"<?php echo $item['field'] == 'title' ? ' selected="selected"' : '' ?>><?php echo __('Title') ?></option>
                 <?php if (($template == 'rad' && check_field_visibility('app_element_visibility_rad_archival_history'))
                   || ($template == 'isad' && check_field_visibility('app_element_visibility_isad_archival_history'))
-                  || ($template != 'isad' && $template != 'rad')): ?>
+                  || ($template != 'isad' && $template != 'rad')) { ?>
                   <option value="archivalHistory"<?php echo $item['field'] == 'archivalHistory' ? ' selected="selected"' : '' ?>><?php echo __('Archival history') ?></option>
-                <?php endif; ?>
+                <?php } ?>
                 <option value="scopeAndContent"<?php echo $item['field'] == 'scopeAndContent' ? ' selected="selected"' : '' ?>><?php echo __('Scope and content') ?></option>
                 <option value="extentAndMedium"<?php echo $item['field'] == 'extentAndMedium' ? ' selected="selected"' : '' ?>><?php echo __('Extent and medium') ?></option>
                 <option value="subject"<?php echo $item['field'] == 'subject' ? ' selected="selected"' : '' ?>><?php echo __('Subject access points') ?></option>
@@ -56,9 +56,9 @@
 
             </div>
 
-          <?php endforeach; ?>
+          <?php } ?>
 
-        <?php endif; ?>
+        <?php } ?>
 
         <?php $count = isset($key) ? $key++ : 0 ?>
 
@@ -79,9 +79,9 @@
             <option value="title"><?php echo __('Title') ?></option>
             <?php if (($template == 'rad' && check_field_visibility('app_element_visibility_rad_archival_history'))
               || ($template == 'isad' && check_field_visibility('app_element_visibility_isad_archival_history'))
-              || ($template != 'isad' && $template != 'rad')): ?>
+              || ($template != 'isad' && $template != 'rad')) { ?>
               <option value="archivalHistory"><?php echo __('Archival history') ?></option>
-            <?php endif; ?>
+            <?php } ?>
             <option value="scopeAndContent"><?php echo __('Scope and content') ?></option>
             <option value="extentAndMedium"><?php echo __('Extent and medium') ?></option>
             <option value="subject"><?php echo __('Subject access points') ?></option>
@@ -119,7 +119,7 @@
 
       <div class="criteria">
 
-        <?php if (sfConfig::get('app_multi_repository')): ?>
+        <?php if (sfConfig::get('app_multi_repository')) { ?>
           <div class="filter-row">
             <div class="filter">
               <?php echo $form->repos
@@ -127,7 +127,7 @@
                 ->renderRow() ?>
             </div>
           </div>
-        <?php endif; ?>
+        <?php } ?>
 
         <div class="filter-row">
           <div class="filter">
@@ -170,27 +170,27 @@
         <?php $showCopyright = sfConfig::get('app_toggleCopyrightFilter') ?>
         <?php $showMaterial = sfConfig::get('app_toggleMaterialFilter') ?>
 
-        <?php if ($showCopyright || $showMaterial): ?>
+        <?php if ($showCopyright || $showMaterial) { ?>
           <div class="filter-row">
 
-            <?php if ($showCopyright): ?>
+            <?php if ($showCopyright) { ?>
               <div class="filter<?php echo $showMaterial ? '-left' : '' ?>">
                 <?php echo $form->copyrightStatus
                   ->label(__('Copyright status'))
                   ->renderRow() ?>
               </div>
-            <?php endif; ?>
+            <?php } ?>
 
-            <?php if ($showMaterial): ?>
+            <?php if ($showMaterial) { ?>
               <div class="filter<?php echo $showCopyright ? '-right' : '' ?>">
                 <?php echo $form->materialType
                   ->label(__('General material designation'))
                   ->renderRow() ?>
               </div>
-            <?php endif; ?>
+            <?php } ?>
 
           </div>
-        <?php endif; ?>
+        <?php } ?>
 
         <div class="filter-row">
 

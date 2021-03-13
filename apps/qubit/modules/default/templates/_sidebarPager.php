@@ -1,4 +1,4 @@
-<?php if ($pager->haveToPaginate()): ?>
+<?php if ($pager->haveToPaginate()) { ?>
 
   <section>
 
@@ -21,4 +21,4 @@
 
   </section>
 
-<?php endif; ?>
+<?php } ?>

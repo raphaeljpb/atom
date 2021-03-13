@@ -1,8 +1,8 @@
-<?php if (in_array('sfSkosPlugin', $sf_data->getRaw('sf_context')->getConfiguration()->getPlugins())): ?>
+<?php if (in_array('sfSkosPlugin', $sf_data->getRaw('sf_context')->getConfiguration()->getPlugins())) { ?>
   <section id="action-icons">
     <ul>
 
-      <?php if (QubitAcl::check($resource, 'create')): ?>
+      <?php if (QubitAcl::check($resource, 'create')) { ?>
         <li class="separator"><h4><?php echo __('Import') ?></h4></li>
         <li>
           <a href="<?php echo url_for([$resource, 'module' => 'sfSkosPlugin', 'action' => 'import']) ?>">
@@ -10,7 +10,7 @@
             <?php echo __('SKOS') ?>
           </a>
         </li>
-      <?php endif; ?>
+      <?php } ?>
 
       <li class="separator"><h4><?php echo __('Export') ?></h4></li>
       <li>
@@ -22,4 +22,4 @@
 
     </ul>
   </section>
-<?php endif; ?>
+<?php } ?>

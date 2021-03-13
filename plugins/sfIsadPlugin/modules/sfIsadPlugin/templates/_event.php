@@ -19,7 +19,7 @@
       </tr>
     </thead><tbody>
 
-      <?php $i = 0; foreach ($resource->getDates() as $item): ?>
+      <?php $i = 0; foreach ($resource->getDates() as $item) { ?>
 
         <?php $form->getWidgetSchema()->setNameFormat("editEvents[$i][%s]"); $i++ ?>
 
@@ -44,7 +44,7 @@
           </td>
         </tr>
 
-      <?php endforeach; ?>
+      <?php } ?>
 
       <?php $form->getWidgetSchema()->setNameFormat("editEvents[$i][%s]"); $i++ ?>
 
@@ -70,10 +70,10 @@
     </tbody>
   </table>
 
-  <?php if (isset($help)): ?>
+  <?php if (isset($help)) { ?>
     <div class="description">
       <?php echo $help ?>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
 </div>

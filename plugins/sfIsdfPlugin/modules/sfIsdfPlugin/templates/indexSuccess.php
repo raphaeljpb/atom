@@ -9,16 +9,16 @@
 
 <?php slot("before-content") ?>
 
-  <?php if (isset($errorSchema)): ?>
+  <?php if (isset($errorSchema)) { ?>
     <div class="messages error">
       <ul>
-        <?php foreach ($errorSchema as $error): ?>
+        <?php foreach ($errorSchema as $error) { ?>
           <?php $error = sfOutputEscaper::unescape($error) ?>
           <li><?php echo $error->getMessage() ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
-  <?php endif; ?>
+  <?php } ?>
 
   <?php echo get_component('default', 'translationLinks', ['resource' => $resource]) ?>
 
@@ -36,9 +36,9 @@
     <h3><?php echo __('Parallel form(s) of name') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item): ?>
+        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item) { ?>
           <li><?php echo render_value_inline($item) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -47,9 +47,9 @@
     <h3><?php echo __('Other form(s) of name') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item): ?>
+        <?php foreach ($resource->getOtherNames(['typeId' => QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item) { ?>
           <li><?php echo render_value_inline($item) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -76,7 +76,7 @@
 
   <?php echo link_to_if(QubitAcl::check($resource, 'update'), '<h2>'.__('Relationships area').'</h2>', [$resource, 'module' => 'function', 'action' => 'edit'], ['anchor' => 'relationshipsArea', 'title' => __('Edit relationships area')]) ?>
 
-  <?php foreach ($isdf->relatedFunction as $item): ?>
+  <?php foreach ($isdf->relatedFunction as $item) { ?>
     <div class="field">
       <h3><?php echo __('Related function') ?></h3>
       <div>
@@ -95,9 +95,9 @@
 
       </div>
     </div>
-  <?php endforeach; ?>
+  <?php } ?>
 
-  <?php foreach ($isdf->relatedAuthorityRecord as $item): ?>
+  <?php foreach ($isdf->relatedAuthorityRecord as $item) { ?>
     <div class="field">
       <h3><?php echo __('Related authority record') ?></h3>
       <div>
@@ -106,18 +106,18 @@
 
         <?php echo render_show(__('Identifier'), render_value($item->object->descriptionIdentifier)) ?>
 
-        <?php if (null !== $item->description): ?>
+        <?php if (null !== $item->description) { ?>
           <?php echo render_show(__('Nature of relationship'), render_value($item->description)) ?>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo render_show(__('Dates of the relationship'), render_value_inline(Qubit::renderDateStartEnd($item->date, $item->startDate, $item->endDate))) ?>
 
       </div>
     </div>
-  <?php endforeach; ?>
+  <?php } ?>
 
   <!-- Related archival material -->
-  <?php foreach ($isdf->relatedResource as $item): ?>
+  <?php foreach ($isdf->relatedResource as $item) { ?>
     <div class="field">
       <h3><?php echo __('Related resource') ?></h3>
       <div>
@@ -126,15 +126,15 @@
 
         <?php $isad = new sfIsadPlugin($item->object); echo render_show(__('Identifier'), render_value($isad->referenceCode)) ?>
 
-        <?php if (null !== $item->description): ?>
+        <?php if (null !== $item->description) { ?>
           <?php echo render_show(__('Nature of relationship'), render_value($item->description)) ?>
-        <?php endif; ?>
+        <?php } ?>
 
         <?php echo render_show(__('Dates of the relationship'), render_value_inline(Qubit::renderDateStartEnd($item->date, $item->startDate, $item->endDate))) ?>
 
       </div>
     </div>
-  <?php endforeach; ?>
+  <?php } ?>
 
 </div> <!-- /.section#relationshipsArea -->
 
@@ -158,9 +158,9 @@
     <h3><?php echo __('Language(s)') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->language as $code): ?>
+        <?php foreach ($resource->language as $code) { ?>
           <li><?php echo format_language($code) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -169,9 +169,9 @@
     <h3><?php echo __('Script(s)') ?></h3>
     <div>
       <ul>
-        <?php foreach ($resource->script as $code): ?>
+        <?php foreach ($resource->script as $code) { ?>
           <li><?php echo format_script($code) ?></li>
-        <?php endforeach; ?>
+        <?php } ?>
       </ul>
     </div>
   </div>
@@ -183,19 +183,19 @@
 </div> <!-- /.section#controlArea -->
 
 <?php slot("after-content") ?>
-  <?php if (QubitAcl::check($resource, 'update') || QubitAcl::check($resource, 'delete') || QubitAcl::check($resource, 'create')): ?>
+  <?php if (QubitAcl::check($resource, 'update') || QubitAcl::check($resource, 'delete') || QubitAcl::check($resource, 'create')) { ?>
     <section class="actions">
       <ul>
-        <?php if (QubitAcl::check($resource, 'update')): ?>
+        <?php if (QubitAcl::check($resource, 'update')) { ?>
           <li><?php echo link_to(__('Edit'), [$resource, 'module' => 'function', 'action' => 'edit'], ['title' => __('Edit'), 'class' => 'c-btn']) ?></li>
-        <?php endif; ?>
-        <?php if (QubitAcl::check($resource, 'delete')): ?>
+        <?php } ?>
+        <?php if (QubitAcl::check($resource, 'delete')) { ?>
           <li><?php echo link_to(__('Delete'), [$resource, 'module' => 'function', 'action' => 'delete'], ['class' => 'c-btn c-btn-delete', 'title' => __('Delete')]) ?></li>
-        <?php endif; ?>
-        <?php if (QubitAcl::check($resource, 'create')): ?>
+        <?php } ?>
+        <?php if (QubitAcl::check($resource, 'create')) { ?>
           <li><?php echo link_to(__('Add new'), ['module' => 'function', 'action' => 'add'], ['title' => __('Add new'), 'class' => 'c-btn']) ?></li>
-        <?php endif; ?>
+        <?php } ?>
       </ul>
     </section>
-  <?php endif; ?>
+  <?php } ?>
 <?php end_slot() ?>

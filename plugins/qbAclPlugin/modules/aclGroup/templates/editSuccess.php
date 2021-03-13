@@ -8,11 +8,11 @@
 
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php if (isset($sf_request->id)): ?>
+  <?php if (isset($sf_request->id)) { ?>
     <?php echo $form->renderFormTag(url_for([$group, 'module' => 'aclGroup', 'action' => 'edit']), ['id' => 'editForm']) ?>
-  <?php else: ?>
+  <?php } else { ?>
     <?php echo $form->renderFormTag(url_for(['module' => 'aclGroup', 'action' => 'add']), ['id' => 'editForm']) ?>
-  <?php endif; ?>
+  <?php } ?>
 
     <?php echo $form->renderHiddenFields() ?>
 
@@ -34,13 +34,13 @@
 
     <section class="actions">
       <ul>
-        <?php if (isset($sf_request->id)): ?>
+        <?php if (isset($sf_request->id)) { ?>
           <li><?php echo link_to(__('Cancel'), [$group, 'module' => 'aclGroup'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
-        <?php else: ?>
+        <?php } else { ?>
           <li><?php echo link_to(__('Cancel'), ['module' => 'aclGroup', 'action' => 'list'], ['class' => 'c-btn']) ?></li>
           <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create') ?>"/></li>
-        <?php endif; ?>
+        <?php } ?>
       </ul>
     </section>
 

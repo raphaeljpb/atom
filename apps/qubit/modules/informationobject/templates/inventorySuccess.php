@@ -17,11 +17,11 @@
       </div>
     </div>
 
-    <?php if (QubitInformationObject::ROOT_ID != $resource->parentId): ?>
+    <?php if (QubitInformationObject::ROOT_ID != $resource->parentId) { ?>
       <?php echo include_partial('default/breadcrumb', ['resource' => $resource, 'objects' => $resource->getAncestors()->andSelf()->orderBy('lft')]) ?>
-    <?php endif; ?>
+    <?php } ?>
 
-    <?php if ($pager->getNbResults()): ?>
+    <?php if ($pager->getNbResults()) { ?>
 
       <table class="table table-bordered table-striped">
         <tr>
@@ -36,7 +36,7 @@
           <th width="8%"><?php echo sfConfig::get('app_ui_label_digitalobject') ?></th>
           <th></th>
         </tr>
-        <?php foreach ($pager->getResults() as $hit): ?>
+        <?php foreach ($pager->getResults() as $hit) { ?>
           <?php $doc = $hit->getData() ?>
           <tr>
             <td>
@@ -45,36 +45,36 @@
             <td><?php echo link_to(render_value_inline(get_search_i18n($doc, 'title')), ['module' => 'informationobject', 'slug' => $doc['slug']]) ?></td>
             <td>
               <?php $level = QubitTerm::getById($doc['levelOfDescriptionId']) ?>
-              <?php if ($level !== null): ?>
+              <?php if ($level !== null) { ?>
                 <?php echo $level->getName() ?>
-              <?php endif; ?>
+              <?php } ?>
             </td>
             <td>
               <?php echo render_value_inline(render_search_result_date($doc['dates'])) ?>
             </td>
             <td>
-              <?php if ($doc['hasDigitalObject']): ?>
-                <?php if (null !== $io = QubitInformationObject::getById($hit->getId())): ?>
-                  <?php if (null !== $link = $io->getDigitalObjectUrl()): ?>
+              <?php if ($doc['hasDigitalObject']) { ?>
+                <?php if (null !== $io = QubitInformationObject::getById($hit->getId())) { ?>
+                  <?php if (null !== $link = $io->getDigitalObjectUrl()) { ?>
                     <?php echo link_to(__('View'), $link) ?>
-                  <?php endif; ?>
-                <?php endif; ?>
-              <?php endif; ?>
+                  <?php } ?>
+                <?php } ?>
+              <?php } ?>
             </td>
             <td>
               <?php echo get_component('clipboard', 'button', ['slug' => $doc['slug'], 'wide' => true, 'type' => 'informationObject']) ?>
             </td>
           </tr>
-        <?php endforeach; ?>
+        <?php } ?>
       </table>
 
-    <?php else: ?>
+    <?php } else { ?>
 
       <div>
         <h2><?php echo __('We couldn\'t find any results matching your search.') ?></h2>
       </div>
 
-    <?php endif; ?>
+    <?php } ?>
 
     <section>
       <?php echo get_partial('default/pager', ['pager' => $pager]) ?>

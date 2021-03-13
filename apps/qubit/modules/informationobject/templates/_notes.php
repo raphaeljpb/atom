@@ -4,22 +4,22 @@
 
     <thead>
       <tr>
-        <?php if ($hiddenType): ?>
+        <?php if ($hiddenType) { ?>
           <th style="width: 100%">
             <?php echo $tableName ?>
           </th>
-        <?php else: ?>
+        <?php } else { ?>
           <th style="width: 65%">
             <?php echo $tableName ?>
           </th>
           <th style="width: 30%">
             <?php echo __('Note type') ?>
           </th>
-        <?php endif; ?>
+        <?php } ?>
       </tr>
     </thead><tbody>
 
-      <?php $i = 0; foreach ($notes as $item): ?>
+      <?php $i = 0; foreach ($notes as $item) { ?>
 
         <?php $form->getWidgetSchema()->setNameFormat($arrayName."[$i][%s]") ?>
 
@@ -27,44 +27,44 @@
           <td>
             <div class="animateNicely">
               <input type="hidden" name="<?php echo $arrayName ?>[<?php echo $i ?>][id]" value="<?php echo $item->id ?>"/>
-              <?php if ($hiddenType): ?>
+              <?php if ($hiddenType) { ?>
                 <input type="hidden" name="<?php echo $arrayName ?>[<?php echo $i ?>][type]" value="<?php echo $hiddenTypeId ?>"/>
-              <?php endif; ?>
+              <?php } ?>
               <?php $form->setDefault('content', $item->getContent()); ?>
               <?php echo render_field($form->content, $item, ['onlyInput' => true, 'class' => 'resizable']) ?>
             </div>
           </td>
-          <?php if (!$hiddenType): ?>
+          <?php if (!$hiddenType) { ?>
             <td>
               <div class="animateNicely">
                 <?php echo $form->getWidgetSchema()->renderField('type', $item->typeId) ?>
               </div>
             </td>
-          <?php endif; ?>
+          <?php } ?>
         </tr>
 
         <?php $i++ ?>
-      <?php endforeach; ?>
+      <?php } ?>
 
       <?php $form->getWidgetSchema()->setNameFormat($arrayName."[$i][%s]") ?>
 
       <tr class="<?php echo 0 == $i % 2 ? 'even' : 'odd' ?>">
         <td>
           <div class="animateNicely">
-            <?php if ($hiddenType): ?>
+            <?php if ($hiddenType) { ?>
               <input type="hidden" name="<?php echo $arrayName ?>[<?php echo $i ?>][type]" value="<?php echo $hiddenTypeId ?>"/>
-            <?php endif; ?>
+            <?php } ?>
             <?php $form->setDefault('content', ''); ?>
             <?php echo $form->content->render(['class' => 'resizable']) ?>
           </div>
         </td>
-        <?php if (!$hiddenType): ?>
+        <?php if (!$hiddenType) { ?>
           <td>
             <div class="animateNicely">
               <?php echo $form->type ?>
             </div>
           </td>
-        <?php endif; ?>
+        <?php } ?>
       </tr>
 
     </tbody>

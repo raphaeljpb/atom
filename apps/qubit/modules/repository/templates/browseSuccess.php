@@ -108,11 +108,11 @@
 <?php end_slot() ?>
 
 <?php slot('content') ?>
-  <?php if ($view === $tableView): ?>
+  <?php if ($view === $tableView) { ?>
     <?php echo get_partial('repository/browseTableView', ['pager' => $pager, 'selectedCulture' => $selectedCulture]) ?>
-  <?php elseif ($view === $cardView): ?>
+  <?php } elseif ($view === $cardView){ ?>
     <?php echo get_partial('repository/browseCardView', ['pager' => $pager, 'selectedCulture' => $selectedCulture]) ?>
-  <?php endif; ?>
+  <?php } ?>
 <?php end_slot() ?>
 
 <?php slot('after-content') ?>
