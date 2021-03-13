@@ -120,7 +120,7 @@ function _readDir($dirPath, &$filePaths)
         break;
 
       default:
-        /* @todo */
+        // @todo
         echo "ERROR\n";
     }
   }

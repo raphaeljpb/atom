@@ -5,9 +5,7 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
   protected $csvData;
   protected $ormClasses;
 
-  /**************************************************************************
-   * Fixtures
-   **************************************************************************/
+  // Fixtures
 
   public function setUp(): void
   {
@@ -23,9 +21,7 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
     ];
   }
 
-  /**************************************************************************
-   * Data providers
-   **************************************************************************/
+  // Data providers
 
   public function fetchHoldingsRowsProvider()
   {
@@ -91,9 +87,7 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
     ];
   }
 
-  /**************************************************************************
-   * Tests
-   **************************************************************************/
+  // Tests
 
   public function testSetOptionsThrowsTypeError()
   {

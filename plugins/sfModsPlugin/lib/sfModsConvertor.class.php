@@ -27,9 +27,7 @@ class sfModsConvertor extends QubitSaxParser
   protected $materialTypes = [];
   protected $digitalObjects = [];
 
-  /*
-   * Import helpers
-   */
+  // Import helpers
 
   public function getResource()
   {

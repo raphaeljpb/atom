@@ -68,9 +68,9 @@ class PhysicalObjectCsvImporter
     'updateSearchIndex' => false,
   ];
 
-  #
-  # Public methods
-  #
+  //
+  // Public methods
+  //
 
   public function __construct(sfContext $context = null, $dbcon = null,
     $options = [])
@@ -624,9 +624,9 @@ EOQ;
     return $matches;
   }
 
-  #
-  # Protected methods
-  #
+  //
+  // Protected methods
+  //
 
   protected function insertPhysicalObject($csvdata)
   {

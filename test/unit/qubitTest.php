@@ -46,12 +46,10 @@ sfContext::getInstance()->request->pathInfoPrefix = null;
 $t->is(Qubit::pathInfo('/aaa/bbb/ccc/ddd'), '/aaa/bbb/ccc/ddd',
   '"::pathInfo()" without prefix');
 
-/*
- * Qubit::renderDate
- */
+// Qubit::renderDate
 
 $tests = [
-  # GIVEN - EXPECTED
+  // GIVEN - EXPECTED
   ['1992-00-00', '1992'],
   ['1992-12-00', '1992-12'],
   ['1992-08-00', '1992-08'],

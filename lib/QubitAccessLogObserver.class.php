@@ -22,9 +22,7 @@
  */
 class QubitAccessLogObserver
 {
-  /*
-   * access_log.view event listener
-   */
+  // access_log.view event listener
   public static function view(sfEvent $event)
   {
     $object = $event['object'];

@@ -24,10 +24,10 @@ class QubitSslRequirementFilter extends sfFilter
     $context = $this->getContext();
     $request = $context->getRequest();
 
-    # Pass if:
-    # - Debug mode is enabled
-    # - Client is already using HTTPS
-    # - Setting require_ssl_admin is not enabled
+    // Pass if:
+    // - Debug mode is enabled
+    // - Client is already using HTTPS
+    // - Setting require_ssl_admin is not enabled
     if ($context->getConfiguration()->isDebug() ||
         $request->isSecure() ||
         !sfConfig::get('app_require_ssl_admin'))

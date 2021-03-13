@@ -59,25 +59,25 @@ $CONFIG = [
   'php.date.timezone' => getenv_default('ATOM_PHP_DATE_TIMEZONE', 'America/Vancouver')
 ];
 
-#
-# /apps/qubit/config/settings.yml
-#
+//
+// /apps/qubit/config/settings.yml
+//
 
 if (!file_exists(_ATOM_DIR.'/apps/qubit/config/settings.yml'))
 {
   copy(_ATOM_DIR.'/apps/qubit/config/settings.yml.tmpl', _ATOM_DIR.'/apps/qubit/config/settings.yml');
 }
 
-#
-# /config/propel.ini
-#
+//
+// /config/propel.ini
+//
 
 @unlink(_ATOM_DIR.'/config/propel.ini');
 touch(_ATOM_DIR.'/config/propel.ini');
 
-#
-# /apps/qubit/config/gearman.yml
-#
+//
+// /apps/qubit/config/gearman.yml
+//
 
 $gearman_yml = <<<EOT
 all:
@@ -88,9 +88,9 @@ EOT;
 @unlink(_ATOM_DIR.'/apps/qubit/config/gearman.yml');
 file_put_contents(_ATOM_DIR.'/apps/qubit/config/gearman.yml', $gearman_yml);
 
-#
-# /apps/qubit/config/app.yml
-#
+//
+// /apps/qubit/config/app.yml
+//
 
 if (!file_exists(_ATOM_DIR.'/apps/qubit/config/app.yml'))
 {
@@ -113,9 +113,9 @@ EOT;
   file_put_contents(_ATOM_DIR.'/apps/qubit/config/app.yml', $app_yml);
 }
 
-#
-# /apps/qubit/config/factories.yml
-#
+//
+// /apps/qubit/config/factories.yml
+//
 
 if (!file_exists(_ATOM_DIR.'/apps/qubit/config/factories.yml'))
 {
@@ -158,9 +158,9 @@ EOT;
   file_put_contents(_ATOM_DIR.'/apps/qubit/config/factories.yml', $factories_yml);
 }
 
-#
-# /config/search.yml
-#
+//
+// /config/search.yml
+//
 
 $parts = get_host_and_port($CONFIG['atom.elasticsearch_host'], 9200);
 $search_yml = <<<EOT
@@ -174,9 +174,9 @@ EOT;
 @unlink(_ATOM_DIR.'/config/search.yml');
 file_put_contents(_ATOM_DIR.'/config/search.yml', $search_yml);
 
-#
-# /config/config.php
-#
+//
+// /config/config.php
+//
 
 $mysql_config = [
   'all' => [
@@ -223,9 +223,9 @@ $config_php = "<?php\n\nreturn ".var_export($mysql_config, 1).";\n\n?>\n";
 @unlink(_ATOM_DIR.'/config/config.php');
 file_put_contents(_ATOM_DIR.'/config/config.php', $config_php);
 
-#
-# php ini
-#
+//
+// php ini
+//
 
 $php_ini = <<<EOT
 [PHP]
@@ -266,9 +266,9 @@ EOT;
 @unlink(_ETC_DIR.'/php/php.ini');
 file_put_contents(_ETC_DIR.'/php/php.ini', $php_ini);
 
-#
-# fpm ini
-#
+//
+// fpm ini
+//
 
 $fpm_ini = <<<EOT
 [global]

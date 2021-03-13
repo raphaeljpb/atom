@@ -688,9 +688,7 @@ class QubitActor extends BaseActor
     return $relation;
   }
 
-  /****************
-   Import methods
-  *****************/
+  // Import methods
 
   /**
    * Wrapper for QubitDigitalObject::importFromUri() method.

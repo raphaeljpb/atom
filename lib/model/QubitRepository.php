@@ -346,9 +346,7 @@ class QubitRepository extends BaseRepository
     return $size;
   }
 
-  /**************
-  Import methods
-  ***************/
+  // Import methods
 
   public function setTypeByName($name)
   {

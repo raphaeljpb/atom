@@ -236,9 +236,7 @@ class arElasticSearchPluginUtil
     return $queryString;
   }
 
-  /*
-   * Gets all premis data related to an information object
-   */
+  // Gets all premis data related to an information object
   public static function getPremisData($ioId, $conn)
   {
     $premisData = [];

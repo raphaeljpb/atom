@@ -52,7 +52,7 @@ class DigitalObjectViewAction extends sfAction
     {
       $this->resource = $this->resource->object;
 
-      $this->accessToken = bin2hex(random_bytes(32)); # URL friendly
+      $this->accessToken = bin2hex(random_bytes(32)); // URL friendly
       $this->context->user->setAttribute("token-$this->digitalObjectId", $this->accessToken, 'symfony/user/sfUser/copyrightStatementTmpAccess');
 
       $this->response->addMeta('robots', 'noindex,nofollow');

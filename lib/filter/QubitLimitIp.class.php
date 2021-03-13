@@ -26,11 +26,11 @@ class QubitLimitIpFilter extends sfFilter
 
     $this->limit = explode(';', sfConfig::get('app_limit_admin_ip'));
 
-    # Pass if:
-    # - Debug mode is on
-    # - Setting "limit_admin_ip" is not set
-    # - The filter is forwarding to admin/secure (isFirstCall)
-    # - Route is user/logout
+    // Pass if:
+    // - Debug mode is on
+    // - Setting "limit_admin_ip" is not set
+    // - The filter is forwarding to admin/secure (isFirstCall)
+    // - Route is user/logout
     if ($this->context->getConfiguration()->isDebug() ||
         !$this->limit ||
         !$this->isFirstCall() ||
@@ -41,7 +41,7 @@ class QubitLimitIpFilter extends sfFilter
       return;
     }
 
-    # Forward to admin/secure if not allowed (only applies if user is authenticated)
+    // Forward to admin/secure if not allowed (only applies if user is authenticated)
     if ($this->context->user->isAuthenticated() && !$this->isAllowed())
     {
       $this->context->getController()->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));

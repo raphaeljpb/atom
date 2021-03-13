@@ -28,7 +28,7 @@ class arOaiPluginConfiguration extends sfPluginConfiguration
     $enabledModules[] = 'arOaiPlugin';
     sfConfig::set('sf_enabled_modules', $enabledModules);
 
-    /* Custom OAI set definitions */
+    // Custom OAI set definitions
     QubitOai::addOaiSet(new QubitOaiTopLevelSet());
   }
 }

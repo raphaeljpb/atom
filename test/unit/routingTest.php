@@ -194,9 +194,9 @@ $t->is($routing->getCurrentRouteName(), 'default');
 $t->is($info['module'], 'foo');
 $t->is($info['action'], 'bar');
 
-##
-# QubitMetadataResource
-#
+//#
+// QubitMetadataResource
+//
 
 $ioTemplates = ['dc' => 'sfDcPlugin', 'isad' => 'sfIsadPlugin', 'mods' => 'sfModsPlugin', 'rad' => 'sfRadPlugin', 'dacs' => 'arDacsPlugin'];
 

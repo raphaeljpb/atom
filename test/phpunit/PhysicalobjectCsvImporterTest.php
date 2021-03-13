@@ -11,9 +11,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
   protected $vfs;               // virtual filesystem
   protected $vdbcon;            // virtual database connection
 
-  /**************************************************************************
-   * Fixtures
-   **************************************************************************/
+  // Fixtures
 
   public function setUp(): void
   {
@@ -74,9 +72,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
       explode(',', $this->csvHeader), str_getcsv($this->csvData[$row]));
   }
 
-  /**************************************************************************
-   * Data providers
-   **************************************************************************/
+  // Data providers
 
   public function setOptionsProvider()
   {
@@ -214,9 +210,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
     ];
   }
 
-  /**************************************************************************
-   * Tests
-   **************************************************************************/
+  // Tests
 
   public function testConstructorWithNoContextPassed()
   {
@@ -630,9 +624,9 @@ EOM;
     );
   }
 
-  #
-  # Protected method tests
-  #
+  //
+  // Protected method tests
+  //
 
   public function testTypeIdLookupTableSetAndGet()
   {

@@ -115,7 +115,7 @@ abstract class arElasticSearchModelBase
     return $i18ns;
   }
 
-  # abstract public function update($object);
+  // abstract public function update($object);
   public static function update($object)
   {
     return true;

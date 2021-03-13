@@ -17,9 +17,7 @@
  * along with Access to Memory (AtoM).  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- * Notice that his is also used in XHR context (see treeview search)
- */
+// Notice that his is also used in XHR context (see treeview search)
 class SearchIndexAction extends DefaultBrowseAction
 {
   public const INDEX_TYPE = 'QubitInformationObject';

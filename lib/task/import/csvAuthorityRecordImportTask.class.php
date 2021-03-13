@@ -74,7 +74,7 @@ EOF;
       // How many rows should import until we display an import status update?
       'rowsUntilProgressDisplay' => $options['rows-until-update'],
 
-      /* Where to log errors to */
+      // Where to log errors to
       'errorLog' => $options['error-log'],
 
       // The status array is a place to put data that should be accessible

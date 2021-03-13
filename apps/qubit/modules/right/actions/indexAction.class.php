@@ -51,9 +51,7 @@ class RightIndexAction extends sfAction
       $value['basis'] = $this->context->routing->generate(null, [$this->resource->basis, 'module' => 'term']);
     }
 
-    /*
-     * Basis: copyright.
-     */
+    // Basis: copyright.
     if (isset($this->resource->copyrightStatus))
     {
       $value['copyrightStatus'] = $this->context->routing->generate(null, [$this->resource->copyrightStatus, 'module' => 'term']);
@@ -74,9 +72,7 @@ class RightIndexAction extends sfAction
       $value['copyrightNote'] = $this->resource->copyrightNote;
     }
 
-    /*
-     * Basis: license.
-     */
+    // Basis: license.
     if (isset($this->resource->licenseIdentifier))
     {
       $value['licenseIdentifier'] = $this->resource->licenseIdentifier;
@@ -92,9 +88,7 @@ class RightIndexAction extends sfAction
       $value['licenseNote'] = $this->resource->licenseNote;
     }
 
-    /*
-     * Basis: statute.
-     */
+    // Basis: statute.
     if (isset($this->resource->statuteJurisdiction))
     {
       $value['statuteJurisdiction'] = $this->resource->statuteJurisdiction;

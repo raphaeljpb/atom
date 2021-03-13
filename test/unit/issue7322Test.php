@@ -36,7 +36,7 @@ $actor1 = uniqid('Actor ');
 $io = new QubitInformationObject();
 $io->parentId = QubitInformationObject::ROOT_ID;
 $io->title = $title1;
-# $io->setActorByName($actor1, array('event_type_id' => QubitTerm::PUBLICATION_ID));
+// $io->setActorByName($actor1, array('event_type_id' => QubitTerm::PUBLICATION_ID));
 $io->save();
 $id = $io->id;
 $t->diag('The id is '.$id.'');

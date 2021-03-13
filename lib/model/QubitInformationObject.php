@@ -711,9 +711,7 @@ class QubitInformationObject extends BaseInformationObject
     return QubitInformationObjectXmlCache::resourceExportFilePath($this, 'dc', $contentsOnly);
   }
 
-  /**************************
-     Nested Set (Hierarchy)
-  ***************************/
+  // Nested Set (Hierarchy)
 
   /**
    * Get direct descendants of current object.
@@ -869,7 +867,7 @@ class QubitInformationObject extends BaseInformationObject
     return $descendants;
   }
 
-  /* True if this information object or any descendant uses a LOD of $level. */
+  // True if this information object or any descendant uses a LOD of $level.
   public function containsLevelOfDescription($level, $culture = 'en')
   {
     $sql = "
@@ -885,9 +883,7 @@ class QubitInformationObject extends BaseInformationObject
     return count($rows) == 1;
   }
 
-  /***********************
-   Actor/Event relations
-  ************************/
+  // Actor/Event relations
 
   public function getActors($options = [])
   {
@@ -1027,9 +1023,7 @@ class QubitInformationObject extends BaseInformationObject
     return QubitEvent::getOne($criteria);
   }
 
-  /********************
-     Term relations
-  *********************/
+  // Term relations
 
   /**
    * Add a many-to-many Term relation to this information object.
@@ -1127,9 +1121,7 @@ class QubitInformationObject extends BaseInformationObject
     return QubitObjectTermRelation::get($criteria);
   }
 
-  /**************
-    Properties
-  ***************/
+  // Properties
 
   /**
    * Add a property related to this information object.
@@ -1220,9 +1212,7 @@ class QubitInformationObject extends BaseInformationObject
     return $this;
   }
 
-  /*****************************************
-        Generate Strings for Search Index
-  ******************************************/
+  // Generate Strings for Search Index
 
   public function getCreatorsNameString($options = [])
   {
@@ -1336,9 +1326,7 @@ class QubitInformationObject extends BaseInformationObject
     return $nameAccessPointString;
   }
 
-  /****************
-   Import methods
-  *****************/
+  // Import methods
 
   /**
    * Wrapper for QubitDigitalObject::importFromUri() method.
@@ -2350,9 +2338,7 @@ class QubitInformationObject extends BaseInformationObject
     $this->notes[] = $newNote;
   }
 
-  /**************
-  OAI methods
-  ***************/
+  // OAI methods
 
   /**
    * Get Record by Oai identifier.
@@ -2402,9 +2388,7 @@ class QubitInformationObject extends BaseInformationObject
     return $this->getPropertyByName('source_oai_identifier');
   }
 
-  /*****************************************************
-   Search Index methods
-  *****************************************************/
+  // Search Index methods
 
   public static function getByCulture($culture, $options = [])
   {
@@ -2457,9 +2441,7 @@ class QubitInformationObject extends BaseInformationObject
     }
   }
 
-  /*****************************************************
-   Publication Status
-  *****************************************************/
+  // Publication Status
   public function getPublicationStatus()
   {
     return $this->getStatus($options = ['typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID]);
@@ -2470,9 +2452,7 @@ class QubitInformationObject extends BaseInformationObject
     return $this->setStatus($options = ['statusId' => $value, 'typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID]);
   }
 
-  /*****************************************************
-   TreeView
-  *****************************************************/
+  // TreeView
 
   public function getTreeViewChildren(array $options = [], &$childrenRemaining = null)
   {

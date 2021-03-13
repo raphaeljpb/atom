@@ -303,9 +303,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     return $sth->execute([':id' => $this->id]);
   }
 
-  /********************
-        Status
-  *********************/
+  // Status
 
   public function setStatus($options = [])
   {
@@ -495,9 +493,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     return $digitalObject->mediaTypeId == QubitTerm::TEXT_ID;
   }
 
-  /********************
-       Other names
-  *********************/
+  // Other names
 
   public function getOtherNames($options = [])
   {
@@ -512,18 +508,14 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     return QubitOtherName::get($criteria);
   }
 
-  /********************
-       Rights
-  *********************/
+  // Rights
 
   public function getRights($options = [])
   {
     return QubitRelation::getRelationsBySubjectId($this->id, ['typeId' => QubitTerm::RIGHT_ID]);
   }
 
-  /********************
-       Properties
-  *********************/
+  // Properties
 
   /**
    * Get first matching related property by name (optionally scope).
@@ -544,9 +536,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     return $property;
   }
 
-  /********************
-    Physical Objects
-  *********************/
+  // Physical Objects
 
   /**
    * Add a relation from this object to a physical object. Check to make

@@ -245,9 +245,7 @@ class QubitMetsParser
     return count($this->getFilesFromOriginalFileGrp());
   }
 
-  /*
-   * AIP functions
-   */
+  // AIP functions
 
   public function getAipSizeOnDisk()
   {
@@ -276,9 +274,7 @@ class QubitMetsParser
     }
   }
 
-  /*
-   * Information object functions
-   */
+  // Information object functions
 
   public function processDmdSec($xml, $informationObject)
   {

@@ -47,7 +47,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * http://gallery.menalto.com
    */
   public static $qubitMimeTypes = [
-      /* This data was lifted from Apache's mime.types listing. */
+      // This data was lifted from Apache's mime.types listing.
       '123' => 'application/vnd.lotus-1-2-3',
       '3dml' => 'text/vnd.in3d.3dml',
       '3ds' => 'image/x-3ds',
@@ -1026,7 +1026,7 @@ class QubitDigitalObject extends BaseDigitalObject
       'zirz' => 'application/vnd.zul',
       'zmm' => 'application/vnd.handheld-entertainment+xml',
 
-      /* JPEG 2000: From RFC 3745: http://www.faqs.org/rfcs/rfc3745.html */
+      // JPEG 2000: From RFC 3745: http://www.faqs.org/rfcs/rfc3745.html
       'jp2' => 'image/jp2',
       'jpg2' => 'image/jp2',
       'jpf' => 'image/jpx',
@@ -1036,7 +1036,7 @@ class QubitDigitalObject extends BaseDigitalObject
       'jpm' => 'image/jpm',
       'jpgm' => 'image/jpgm',
 
-      /* Other */
+      // Other
       'pcd' => 'image/x-photo-cd',
       'jpgcmyk' => 'image/jpeg-cmyk',
       'tifcmyk' => 'image/tiff-cmyk',
