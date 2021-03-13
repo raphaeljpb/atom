@@ -38,10 +38,10 @@
                 </div>
               <?php } ?>
               <?php if (isset($form->includeDescendants)) { ?>
-                <?php echo $form->includeDescendants->renderRow();?>
+                <?php echo $form->includeDescendants->renderRow(); ?>
               <?php } ?>
               <?php if (isset($form->includeAllLevels)) { ?>
-                <?php echo $form->includeAllLevels->renderRow();?>
+                <?php echo $form->includeAllLevels->renderRow(); ?>
               <?php } ?>
               <?php if (isset($form->levels)) { ?>
                 <div id="exportLevels">
@@ -53,10 +53,10 @@
                 </div>
               <?php } ?>
               <?php if (isset($form->includeDigitalObjects)) { ?>
-                <?php echo $form->includeDigitalObjects->renderRow();?>
+                <?php echo $form->includeDigitalObjects->renderRow(); ?>
               <?php } ?>
               <?php if (isset($form->includeDrafts)) { ?>
-                <?php echo $form->includeDrafts->renderRow();?>
+                <?php echo $form->includeDrafts->renderRow(); ?>
               <?php } ?>
               <?php if (!empty($helpMessages)) { ?>
                 <div class="alert alert-info generic-help animateNicely">

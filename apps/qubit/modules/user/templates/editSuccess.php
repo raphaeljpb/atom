@@ -82,7 +82,7 @@ EOF
 
       <fieldset class="collapsible" id="groupsAndPermissions">
 
-        <legend><?php echo __('Access control');?></legend>
+        <legend><?php echo __('Access control'); ?></legend>
 
         <?php echo $form->groups
           ->label(__('User groups'))

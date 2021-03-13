@@ -27,8 +27,8 @@
       <table class="table sticky-enabled">
         <thead>
           <tr>
-            <th><?php echo __('Name');?></th>
-            <th><?php echo __('Value');?></th>
+            <th><?php echo __('Name'); ?></th>
+            <th><?php echo __('Value'); ?></th>
           </tr>
         </thead>
 

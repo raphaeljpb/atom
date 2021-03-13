@@ -18,8 +18,8 @@
       <table class="table sticky-enabled">
         <thead>
           <tr>
-            <th><?php echo __('Object');?></th>
-            <th><?php echo __('Title');?></th>
+            <th><?php echo __('Object'); ?></th>
+            <th><?php echo __('Title'); ?></th>
           </tr>
         </thead>
         <tbody>

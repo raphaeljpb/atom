@@ -70,7 +70,7 @@
             <option value="not"><?php echo __('not'); ?></option>
           </select>
 
-          <input class="query" type="text" placeholder="<?php echo __('Search'); ?>" name="sq<?php echo $count;?>"/>
+          <input class="query" type="text" placeholder="<?php echo __('Search'); ?>" name="sq<?php echo $count; ?>"/>
 
           <span><?php echo __('in'); ?></span>
 

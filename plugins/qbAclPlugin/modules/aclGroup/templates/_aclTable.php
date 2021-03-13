@@ -18,7 +18,7 @@
             <?php if (isset($permissions[$key])) { ?>
               <li><input type="radio" name="acl[<?php echo $permissions[$key]->id; ?>]" value="<?php echo QubitAcl::GRANT; ?>"<?php echo (1 == $permissions[$key]->grantDeny) ? ' checked="checked"' : ''; ?>><?php echo __('Grant'); ?></li>
               <li><input type="radio" name="acl[<?php echo $permissions[$key]->id; ?>]" value="<?php echo QubitAcl::DENY; ?>"<?php echo (0 == $permissions[$key]->grantDeny) ? ' checked="checked"' : ''; ?>><?php echo __('Deny'); ?></li>
-              <li><input type="radio" name="acl[<?php echo $permissions[$key]->id; ?>]" value="<?php echo QubitAcl::INHERIT;?>"><?php echo __('Inherit'); ?></li>
+              <li><input type="radio" name="acl[<?php echo $permissions[$key]->id; ?>]" value="<?php echo QubitAcl::INHERIT; ?>"><?php echo __('Inherit'); ?></li>
             <?php } else { ?>
               <li><input type="radio" name="acl[<?php echo $key.'_'.url_for([$object, 'module' => $module]); ?>]" value="<?php echo QubitAcl::GRANT; ?>"><?php echo __('Grant'); ?></li>
               <li><input type="radio" name="acl[<?php echo $key.'_'.url_for([$object, 'module' => $module]); ?>]" value="<?php echo QubitAcl::DENY; ?>"><?php echo __('Deny'); ?></li>

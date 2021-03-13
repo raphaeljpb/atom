@@ -64,7 +64,7 @@
         <?php if (is_array($langsOfDesc)) { ?>
           <?php foreach ($langsOfDesc as $langcode) { ?>
             <?php if ($langcode != $exportLanguage) { ?>
-              <language langcode="<?php echo strtolower($iso639convertor->getID2($langcode));?>"><?php echo format_language($langcode); ?></language>
+              <language langcode="<?php echo strtolower($iso639convertor->getID2($langcode)); ?>"><?php echo format_language($langcode); ?></language>
             <?php } ?>
           <?php } ?>
         <?php } ?>
@@ -285,7 +285,7 @@
     <accessrestrict encodinganalog="<?php echo $ead->getMetadataParameter('accessrestrict'); ?>"><p><?php echo escape_dc(esc_specialchars($value)); ?></p></accessrestrict>
   <?php } ?>
   <?php if (0 < strlen($value = $resource->getReproductionConditions(['cultureFallback' => true]))) { ?>
-    <userestrict encodinganalog="<?php echo $ead->getMetadataParameter('userestrict'); ?>"><p><?php echo escape_dc(esc_specialchars($value));  ?></p></userestrict>
+    <userestrict encodinganalog="<?php echo $ead->getMetadataParameter('userestrict'); ?>"><p><?php echo escape_dc(esc_specialchars($value)); ?></p></userestrict>
   <?php } ?>
   <?php if (0 < strlen($value = $resource->getFindingAids(['cultureFallback' => true]))) { ?>
     <otherfindaid encodinganalog="<?php echo $ead->getMetadataParameter('otherfindaid'); ?>"><p><?php echo escape_dc(esc_specialchars($value)); ?></p></otherfindaid>
@@ -436,7 +436,7 @@
       <?php } ?>
 
       <?php if (0 < strlen($value = $descendant->getReproductionConditions(['cultureFallback' => true]))) { ?>
-        <userestrict encodinganalog="<?php echo $ead->getMetadataParameter('userestrict'); ?>"><p><?php echo escape_dc(esc_specialchars($value));  ?></p></userestrict>
+        <userestrict encodinganalog="<?php echo $ead->getMetadataParameter('userestrict'); ?>"><p><?php echo escape_dc(esc_specialchars($value)); ?></p></userestrict>
       <?php } ?>
 
       <?php if (0 < strlen($value = $descendant->getFindingAids(['cultureFallback' => true]))) { ?>

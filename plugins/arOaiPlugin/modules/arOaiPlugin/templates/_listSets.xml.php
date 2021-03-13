@@ -6,6 +6,6 @@
         </set>
     <?php } ?>
     <?php if ($remaining > 0) { ?>
-      <resumptionToken><?php echo $resumptionToken;?></resumptionToken>
+      <resumptionToken><?php echo $resumptionToken; ?></resumptionToken>
     <?php }?>
   </ListSets>

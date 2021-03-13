@@ -98,7 +98,7 @@
   <div class="relatedFunctions">
     <?php foreach ($functionRelations as $item) { ?>
       <div class="field">
-        <h3><?php echo __('Related function');?></h3>
+        <h3><?php echo __('Related function'); ?></h3>
         <div>
           <?php echo link_to(render_title($item->subject->getLabel()), [$item->subject, 'module' => 'function']); ?>
         </div>

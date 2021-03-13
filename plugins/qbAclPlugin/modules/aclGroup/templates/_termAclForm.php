@@ -33,7 +33,7 @@
                     <?php if (isset($rootPermissions[$key])) { ?>
                       <li><input type="radio" name="acl[<?php echo $rootPermissions[$key]->id; ?>]" value="<?php echo QubitAcl::GRANT; ?>"<?php echo (1 == $rootPermissions[$key]->grantDeny) ? ' checked="checked"' : ''; ?>><?php echo __('Grant'); ?></li>
                       <li><input type="radio" name="acl[<?php echo $rootPermissions[$key]->id; ?>]" value="<?php echo QubitAcl::DENY; ?>"<?php echo (0 == $rootPermissions[$key]->grantDeny) ? ' checked="checked"' : ''; ?>><?php echo __('Deny'); ?></li>
-                      <li><input type="radio" name="acl[<?php echo $rootPermissions[$key]->id; ?>]" value="<?php echo QubitAcl::INHERIT;?>"><?php echo __('Inherit'); ?></li>
+                      <li><input type="radio" name="acl[<?php echo $rootPermissions[$key]->id; ?>]" value="<?php echo QubitAcl::INHERIT; ?>"><?php echo __('Inherit'); ?></li>
                     <?php } else { ?>
                       <?php $rootTermUrl = url_for([QubitTerm::getById(QubitTerm::ROOT_ID), 'module' => 'term']); ?>
                       <li><input type="radio" name="acl[<?php echo $key; ?>_<?php echo $rootTermUrl; ?>]" value="<?php echo QubitAcl::GRANT; ?>"><?php echo __('Grant'); ?></li>
@@ -76,7 +76,7 @@
                         <?php if (isset($item[$action])) { ?>
                           <li><input type="radio" name="acl[<?php echo $item[$action]->id; ?>]" value="<?php echo QubitAcl::GRANT; ?>"<?php echo (1 == $item[$action]->grantDeny) ? ' checked="checked"' : ''; ?>><?php echo __('Grant'); ?></li>
                           <li><input type="radio" name="acl[<?php echo $item[$action]->id; ?>]" value="<?php echo QubitAcl::DENY; ?>"<?php echo (0 == $item[$action]->grantDeny) ? ' checked="checked"' : ''; ?>><?php echo __('Deny'); ?></li>
-                          <li><input type="radio" name="acl[<?php echo $item[$action]->id; ?>]" value="<?php echo QubitAcl::INHERIT;?>"><?php echo __('Inherit'); ?></li>
+                          <li><input type="radio" name="acl[<?php echo $item[$action]->id; ?>]" value="<?php echo QubitAcl::INHERIT; ?>"><?php echo __('Inherit'); ?></li>
                         <?php } else { ?>
                           <?php $rootTermUrl = url_for([QubitTerm::getById(QubitTerm::ROOT_ID), 'module' => 'term']); ?>
                           <li><input type="radio" name="acl[<?php echo $action.'_'.$rootTermUrl; ?>]" value="<?php echo QubitAcl::GRANT; ?>"><?php echo __('Grant'); ?></li>

@@ -23,8 +23,8 @@
       <table class="table sticky-enabled">
         <thead>
           <tr>
-            <th width="30%"><?php echo __('Name');?></th>
-            <th><?php echo __('Value');?></th>
+            <th width="30%"><?php echo __('Name'); ?></th>
+            <th><?php echo __('Value'); ?></th>
           </tr>
         </thead>
         <tbody>
