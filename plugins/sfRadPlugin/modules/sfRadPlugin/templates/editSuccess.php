@@ -413,6 +413,6 @@
 
     </div>
 
-  <?php echo get_partial('informationobject/editActions', ['resource' => ($parent !== null ? $parent : $resource)]); ?>
+  <?php echo get_partial('informationobject/editActions', ['resource' => (null !== $parent ? $parent : $resource)]); ?>
 
 <?php end_slot(); ?>

@@ -22,7 +22,7 @@ class InformationObjectFindingAidLinkComponent extends sfComponent
   public function execute($request)
   {
     // Get finding aid path and status from top-level
-    if ($this->resource->parentId != QubitInformationObject::ROOT_ID)
+    if (QubitInformationObject::ROOT_ID != $this->resource->parentId)
     {
       $this->resource = $this->resource->getCollectionRoot();
     }

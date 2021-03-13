@@ -75,7 +75,7 @@ class AccessionBrowseAction extends sfAction
 
     // Default sort direction
     $sortDir = 'asc';
-    if ($request->sort == 'lastUpdated')
+    if ('lastUpdated' == $request->sort)
     {
       $sortDir = 'desc';
     }

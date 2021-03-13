@@ -40,7 +40,7 @@ class ApiInformationObjectsReadAction extends QubitApiAction
 
     $ioData = [];
 
-    if ($this->resource->parent->id != QubitInformationObject::ROOT_ID)
+    if (QubitInformationObject::ROOT_ID != $this->resource->parent->id)
     {
       $this->addItemToArray($ioData, 'parent', $this->resource->parent->slug);
     }

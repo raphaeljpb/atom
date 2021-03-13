@@ -50,7 +50,7 @@ class FunctionBrowseAction extends sfAction
 
     // Default sort direction
     $sortDir = 'asc';
-    if ($request->sort == 'lastUpdated')
+    if ('lastUpdated' == $request->sort)
     {
       $sortDir = 'desc';
     }
@@ -63,7 +63,7 @@ class FunctionBrowseAction extends sfAction
 
     // Determine sorting function based on sort direction
     $sortFunction = 'addAscendingOrderByColumn';
-    if ($request->sortDir == 'desc')
+    if ('desc' == $request->sortDir)
     {
       $sortFunction = 'addDescendingOrderByColumn';
     }

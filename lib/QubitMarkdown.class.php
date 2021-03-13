@@ -74,7 +74,7 @@ class QubitMarkdown
   {
     $content = $this->getUnescapedString($content);
 
-    if (!$this->enabled || strlen($content) == 0)
+    if (!$this->enabled || 0 == strlen($content))
     {
       return $content;
     }
@@ -115,7 +115,7 @@ class QubitMarkdown
   {
     $content = $this->getUnescapedString($content);
 
-    if (!$this->enabled || strlen($content) == 0)
+    if (!$this->enabled || 0 == strlen($content))
     {
       return $content;
     }

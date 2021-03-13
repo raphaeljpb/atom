@@ -352,7 +352,7 @@ class arExportJob extends arBaseJob
    */
   protected function logExportProgress()
   {
-    if ($this->itemsExported % self::LOG_INTERVAL == 0)
+    if (0 == $this->itemsExported % self::LOG_INTERVAL)
     {
       $this->info($this->i18n->__(
         'Exported %1 items...', ['%1' => $this->itemsExported])

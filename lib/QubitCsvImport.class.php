@@ -99,10 +99,10 @@ class QubitCsvImport
     }
 
     // Figure out whether indexing flag should be added to command.
-    $commandIndexFlag = ($taskClassName != 'csv:event-import' && $this->indexDuringImport) ? '--index' : '';
+    $commandIndexFlag = ('csv:event-import' != $taskClassName && $this->indexDuringImport) ? '--index' : '';
 
     // Figure out whether user option should be added to command
-    $commandUser = ($taskClassName == 'csv:import') ? sprintf('--user-id="%s"', sfContext::getInstance()->getUser()->getUserId()) : '';
+    $commandUser = ('csv:import' == $taskClassName) ? sprintf('--user-id="%s"', sfContext::getInstance()->getUser()->getUserId()) : '';
 
     if ('' !== $this->updateType)
     {
@@ -115,7 +115,7 @@ class QubitCsvImport
 
         case 'match-and-update':
         case 'delete-and-replace':
-          $commandUpdate = ($this->updateType == 'match-and-update') ? '--update="match-and-update"' : '--update="delete-and-replace"';
+          $commandUpdate = ('match-and-update' == $this->updateType) ? '--update="match-and-update"' : '--update="delete-and-replace"';
           $commandSkipUnmatched = ($this->skipUnmatched) ? '--skip-unmatched' : '';
           $commandLimit = ('' !== $this->limit) ? "--limit=\"$this->limit\"" : '';
 
@@ -250,7 +250,7 @@ class QubitCsvImport
    */
   public function hasErrors()
   {
-    return $this->errors != null;
+    return null != $this->errors;
   }
 
   /**

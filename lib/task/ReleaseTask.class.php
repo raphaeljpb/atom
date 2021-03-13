@@ -107,7 +107,7 @@ class ReleaseTask extends sfBaseTask
       // slash, while globs like foo/... must be matched against paths without
       // a leading slash.  Consequently, prefix all globs with slash, if
       // necessary, and always match against paths with a leading slash.
-      if (strncmp($glob = $patternNode->getAttribute('name'), '/', 1) != 0)
+      if (0 != strncmp($glob = $patternNode->getAttribute('name'), '/', 1))
       {
         $glob = '/'.$glob;
       }
@@ -122,7 +122,7 @@ class ReleaseTask extends sfBaseTask
     $finder = new sfFinder();
     foreach ($finder->in(sfConfig::get('sf_root_dir')) as $path)
     {
-      if (strncmp($path, sfConfig::get('sf_root_dir'), $len = strlen(sfConfig::get('sf_root_dir'))) == 0)
+      if (0 == strncmp($path, sfConfig::get('sf_root_dir'), $len = strlen(sfConfig::get('sf_root_dir'))))
       {
         $path = substr($path, $len);
       }

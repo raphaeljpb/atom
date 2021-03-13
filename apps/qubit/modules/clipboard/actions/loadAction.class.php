@@ -83,7 +83,7 @@ class ClipboardLoadAction extends DefaultEditAction
       }
     }
 
-    if ($this->mode == 'replace')
+    if ('replace' == $this->mode)
     {
       $actionDescription = $this->context->i18n->__('added');
     }

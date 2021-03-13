@@ -253,7 +253,7 @@ abstract class csvImportBaseTask extends arBaseTask
         $physicalObjectTypeId = self::arraySearchCaseInsensitive($type, $self->status['physicalObjectTypes'][$self->columnValue('culture')]);
 
         // Create new physical object type if not found
-        if ($physicalObjectTypeId === false)
+        if (false === $physicalObjectTypeId)
         {
           echo "\nTerm $type not found in physical object type taxonomy, creating it...\n";
 
@@ -325,7 +325,7 @@ abstract class csvImportBaseTask extends arBaseTask
         // those columns will try to be related with the other 2.2 date columns.
         // This could create duplicates in CSV files mixing 2.1 and 2.2 date columns,
         // to avoid that, all values are removed after they are added to event data.
-        if ($version == '2.1'
+        if ('2.1' == $version
           && !isset($import->rowStatusVars[$propertyColumns['date']][$index])
           && !isset($import->rowStatusVars[$propertyColumns['startDate']][$index])
           && !isset($import->rowStatusVars[$propertyColumns['endDate']][$index])
@@ -341,7 +341,7 @@ abstract class csvImportBaseTask extends arBaseTask
         {
           // Ignore 'NULL' values
           if (isset($import->rowStatusVars[$column][$index])
-           && $import->rowStatusVars[$column][$index] != 'NULL')
+           && 'NULL' != $import->rowStatusVars[$column][$index])
           {
             $eventData[$property] = $import->rowStatusVars[$column][$index];
 

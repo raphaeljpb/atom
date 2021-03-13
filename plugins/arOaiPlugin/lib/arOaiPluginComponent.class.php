@@ -103,7 +103,7 @@ abstract class arOaiPluginComponent extends sfComponent
       'limit' => QubitSetting::getByName('resumption_token_limit')->__toString(), ];
 
     // Get set if one has been named
-    if ($this->set != '')
+    if ('' != $this->set)
     {
       $presetOptions['set'] = QubitOai::getMatchingOaiSet($this->set);
     }

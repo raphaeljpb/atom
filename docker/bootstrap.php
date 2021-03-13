@@ -33,7 +33,7 @@ function get_host_and_port($value, $default_port)
 {
   $parts = explode(':', $value);
 
-  if (count($parts) == 1)
+  if (1 == count($parts))
   {
     $parts[1] = $default_port;
   }

@@ -1,4 +1,4 @@
-<?php if ($className === 'QubitInformationObject') { ?>
+<?php if ('QubitInformationObject' === $className) { ?>
 
   <?php foreach ($resource->getRights() as $right) { ?>
 
@@ -10,7 +10,7 @@
 
   <?php } ?>
 
-<?php } elseif ($className === 'QubitAccession'){ ?>
+<?php } elseif ('QubitAccession' === $className){ ?>
 
   <?php foreach ($ancestor->getRights() as $item) { ?>
 

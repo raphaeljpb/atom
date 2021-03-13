@@ -157,7 +157,7 @@ class sfModsConvertor extends QubitSaxParser
   // </note type="originalLocation | otherFormats | numbering | language | gmd">
   protected function noteTag()
   {
-    if ($this->path() != 'mods') return;
+    if ('mods' != $this->path()) return;
 
     switch ($this->attr('type'))
     {
@@ -318,14 +318,14 @@ class sfModsConvertor extends QubitSaxParser
   // <relatedItem type="host">
   protected function relatedItemTag()
   {
-    if ($this->attr('type') == 'host')
+    if ('host' == $this->attr('type'))
     {
       // Lookup parent using identifier
       $criteria = new Criteria();
       $criteria->add(QubitInformationObject::IDENTIFIER, $this->attr('ID'));
       $resource = QubitInformationObject::getOne($criteria);
 
-      if ($resource !== null)
+      if (null !== $resource)
       {
         $this->resource->parentId = $resource->id;
       }
@@ -486,7 +486,7 @@ class sfModsConvertor extends QubitSaxParser
       $event->objectId = $this->resource->id;
 
       // Normalize create role name
-      $name['role'] = ($name['role'] == 'Creator') ? 'Creation' : $name['role'];
+      $name['role'] = ('Creator' == $name['role']) ? 'Creation' : $name['role'];
 
       $eventTypeTerm = QubitFlatfileImport::createOrFetchTerm(QubitTaxonomy::EVENT_TYPE_ID, $name['role']);
       $event->typeId = $eventTypeTerm->id;

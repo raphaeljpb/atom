@@ -125,7 +125,7 @@ class sfSkosPluginImportAction extends DefaultEditAction
 
     // Setup custom form validator
     $this->form->getValidatorSchema()->setPostValidator(new sfValidatorCallback(['callback' => function ($validator, $values) {
-      if ($this->parent->id != QubitTerm::ROOT_ID && $this->parent->taxonomyId != $this->taxonomy->id)
+      if (QubitTerm::ROOT_ID != $this->parent->id && $this->parent->taxonomyId != $this->taxonomy->id)
       {
         throw new sfValidatorError($validator, $this->context->i18n->__('The current term does not belong to the taxonomy chosen.'));
       }

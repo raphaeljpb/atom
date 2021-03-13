@@ -76,7 +76,7 @@ class JobsDeleteAction extends sfAction
   {
     foreach ($jobs as $job)
     {
-      if ($job->statusId != QubitTerm::JOB_STATUS_IN_PROGRESS_ID)
+      if (QubitTerm::JOB_STATUS_IN_PROGRESS_ID != $job->statusId)
       {
         $job->delete();
       }

@@ -151,7 +151,7 @@ class QubitMigrate104 extends QubitMigrate
     // enabled language settings
     foreach ($this->data['QubitSetting'] as $key => $setting)
     {
-      if ($setting['scope'] == 'i18n_languages')
+      if ('i18n_languages' == $setting['scope'])
       {
         $this->data['QubitSetting'][$key]['value'] = ['en' => $setting['name']];
       }
@@ -179,7 +179,7 @@ class QubitMigrate104 extends QubitMigrate
     // Update version number
     foreach ($this->data['QubitStaticPage'] as $key => $page)
     {
-      if ($page['permalink'] == 'homepage' || $page['permalink'] == 'about')
+      if ('homepage' == $page['permalink'] || 'about' == $page['permalink'])
       {
         array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x)
         {

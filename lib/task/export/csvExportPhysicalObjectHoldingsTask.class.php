@@ -88,7 +88,7 @@ EOF;
 
     if (!empty($type = strtolower($options['holding-type'])))
     {
-      $reportOptions['holdingType'] = ($type == 'none')
+      $reportOptions['holdingType'] = ('none' == $type)
         ? $type
         : QubitPhysicalObjectCsvHoldingsReport::$defaultTypeMap[$options['holding-type']];
     }

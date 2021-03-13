@@ -97,7 +97,7 @@ EOF;
     $user = QubitUser::getOne($criteria);
 
     // User account exists?
-    if ($user !== null)
+    if (null !== $user)
     {
       if (isset($arguments['password']))
       {

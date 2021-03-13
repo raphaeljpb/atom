@@ -266,7 +266,7 @@ class sfModsPlugin implements ArrayAccess
   protected function baseUrl()
   {
     $baseUrl = QubitSetting::getByName('siteBaseUrl');
-    $baseUrl = ($baseUrl == null) ? 'http://'.gethostname() : $baseUrl;
+    $baseUrl = (null == $baseUrl) ? 'http://'.gethostname() : $baseUrl;
 
     return $baseUrl;
   }

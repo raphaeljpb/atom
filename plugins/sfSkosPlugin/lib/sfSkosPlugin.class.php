@@ -81,11 +81,11 @@ class sfSkosPlugin
     $this->logger->info($this->i18n->__('Taxonomy: %1%', ['%1%' => $this->taxonomy->getName(['cultureFallback' => true])]));
     $this->logger->info($this->i18n->__('Term ID: %1%', ['%1%' => $this->parent - id]));
 
-    if ($scheme === 'file')
+    if ('file' === $scheme)
     {
       $this->graph->parseFile($resource);
     }
-    elseif ($scheme === 'data')
+    elseif ('data' === $scheme)
     {
       $this->graph->parse(file_get_contents($resource));
     }

@@ -51,7 +51,7 @@ class deleteUserTask extends arBaseTask
       $criteria->add(QubitAclUserGroup::GROUP_ID, QubitAclGroup::ADMINISTRATOR_ID);
       $adminCount = count(QubitAclUserGroup::get($criteria));
 
-      if ($adminCount == 1)
+      if (1 == $adminCount)
       {
         throw new Exception('This is the only administrator: deletion aborted.');
       }

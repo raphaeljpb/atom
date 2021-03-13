@@ -70,7 +70,7 @@ class UserEditActorAclAction extends DefaultEditAction
       foreach ($permissions as $item)
       {
         // In this context permissions for all objects (null) and root actor object are equivalent
-        if ($item->objectId === null)
+        if (null === $item->objectId)
         {
           $this->actors[QubitActor::ROOT_ID][$item->action] = $item;
         }
@@ -111,7 +111,7 @@ class UserEditActorAclAction extends DefaultEditAction
       // Otherwise, update an existing permission
       elseif (null !== $aclPermission = QubitAclPermission::getById($key))
       {
-        if ($value == QubitAcl::INHERIT)
+        if (QubitAcl::INHERIT == $value)
         {
           $aclPermission->delete();
         }

@@ -117,7 +117,7 @@ class arElasticSearchPluginQuery
       $query = new \Elastica\Query\Term([$aggs[$param]['field'] => $value]);
 
       // Collection agg must select all descendants and itself
-      if ($param == 'collection')
+      if ('collection' == $param)
       {
         $collection = QubitInformationObject::getById($value);
 
@@ -166,7 +166,7 @@ class arElasticSearchPluginQuery
     }
 
     // Default to show only top level descriptions
-    if ($archivalStandard != 'isaar' && (!isset($params['topLod']) || filter_var($params['topLod'], FILTER_VALIDATE_BOOLEAN)))
+    if ('isaar' != $archivalStandard && (!isset($params['topLod']) || filter_var($params['topLod'], FILTER_VALIDATE_BOOLEAN)))
     {
       $this->queryBool->addMust(new \Elastica\Query\Term(['parentId' => QubitInformationObject::ROOT_ID]));
     }
@@ -314,8 +314,8 @@ class arElasticSearchPluginQuery
         ProjectConfiguration::getActive()->loadHelpers(['Asset', 'Qubit']);
 
         // Check archival history visibility
-        if (($archivalStandard == 'rad' && !check_field_visibility('app_element_visibility_rad_archival_history'))
-          || ($archivalStandard == 'isad' && !check_field_visibility('app_element_visibility_isad_archival_history')))
+        if (('rad' == $archivalStandard && !check_field_visibility('app_element_visibility_rad_archival_history'))
+          || ('isad' == $archivalStandard && !check_field_visibility('app_element_visibility_isad_archival_history')))
         {
           return;
         }
@@ -391,7 +391,7 @@ class arElasticSearchPluginQuery
 
       case '_all':
       default:
-        $documentType = ($archivalStandard == 'isaar') ? 'actor' : 'informationObject';
+        $documentType = ('isaar' == $archivalStandard) ? 'actor' : 'informationObject';
         $fields = arElasticSearchPluginUtil::getAllFields($documentType);
 
         break;
@@ -541,7 +541,7 @@ class arElasticSearchPluginQuery
     {
       $range['gte'] = $params['startDate'];
 
-      if ($type == 'inclusive')
+      if ('inclusive' == $type)
       {
         // Start date before range and end date missing
         $queryBool = new \Elastica\Query\BoolQuery();
@@ -558,7 +558,7 @@ class arElasticSearchPluginQuery
     {
       $range['lte'] = $params['endDate'];
 
-      if ($type == 'inclusive')
+      if ('inclusive' == $type)
       {
         // End date after range and start date missing
         $queryBool = new \Elastica\Query\BoolQuery();
@@ -571,7 +571,7 @@ class arElasticSearchPluginQuery
       }
     }
 
-    if (!empty($params['startDate']) && !empty($params['endDate']) && $type == 'inclusive')
+    if (!empty($params['startDate']) && !empty($params['endDate']) && 'inclusive' == $type)
     {
       // Start date before range and end date after range
       $queryBool = new \Elastica\Query\BoolQuery();
@@ -581,7 +581,7 @@ class arElasticSearchPluginQuery
       $query->addShould($queryBool);
     }
 
-    if ($type == 'inclusive')
+    if ('inclusive' == $type)
     {
       // Any event date inside the range
       $query->addShould(new \Elastica\Query\Range('dates.startDate', $range));

@@ -146,7 +146,7 @@ class QubitMigrate103 extends QubitMigrate
     }
 
     // If there are no QubitEvent objects left, remove the section
-    if ($this->data['QubitEvent'] == [])
+    if ([] == $this->data['QubitEvent'])
     {
       unset($this->data['QubitEvent']);
     }
@@ -184,7 +184,7 @@ class QubitMigrate103 extends QubitMigrate
     // Update version number
     foreach ($this->data['QubitStaticPage'] as $key => $page)
     {
-      if ($page['permalink'] == 'homepage' || $page['permalink'] == 'about')
+      if ('homepage' == $page['permalink'] || 'about' == $page['permalink'])
       {
         array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x)
         {

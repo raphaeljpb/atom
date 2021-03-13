@@ -194,13 +194,13 @@
   <?php if ($ead->getControlAccessFields($resource, $materialTypes, $genres, $subjects, $names, $places, $placeEvents)) { ?>
     <controlaccess>
       <?php foreach ($resource->getActorEvents() as $event) { ?>
-        <?php if ($event->getType()->getRole() != 'Creator') { ?>
+        <?php if ('Creator' != $event->getType()->getRole()) { ?>
 
-        <?php if ($event->getActor()->getEntityTypeId() == QubitTerm::PERSON_ID) { ?>
+        <?php if (QubitTerm::PERSON_ID == $event->getActor()->getEntityTypeId()) { ?>
           <persname role="<?php echo $event->getType()->getRole(); ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('name'.$event->getType()->getRole()))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } elseif (0 < strlen($encoding = $ead->getMetadataParameter('nameDefault'))){ ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?> id="atom_<?php echo $event->id; ?>_actor"><?php echo escape_dc(esc_specialchars(render_title($event->getActor()))); ?></persname>
-        <?php } elseif ($event->getActor()->getEntityTypeId() == QubitTerm::FAMILY_ID){ ?>
+        <?php } elseif (QubitTerm::FAMILY_ID == $event->getActor()->getEntityTypeId()){ ?>
           <famname role="<?php echo $event->getType()->getRole(); ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('name'.$event->getType()->getRole()))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } elseif (0 < strlen($encoding = $ead->getMetadataParameter('nameDefault'))){ ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?> id="atom_<?php echo $event->id; ?>_actor"><?php echo escape_dc(esc_specialchars(render_title($event->getActor()))); ?></famname>
-        <?php } elseif ($event->getActor()->getEntityTypeId() == QubitTerm::CORPORATE_BODY_ID){ ?>
+        <?php } elseif (QubitTerm::CORPORATE_BODY_ID == $event->getActor()->getEntityTypeId()){ ?>
           <corpname role="<?php echo $event->getType()->getRole(); ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('name'.$event->getType()->getRole()))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } elseif (0 < strlen($encoding = $ead->getMetadataParameter('nameDefault'))){ ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?> id="atom_<?php echo $event->id; ?>_actor"><?php echo escape_dc(esc_specialchars(render_title($event->getActor()))); ?></corpname>
         <?php } else { ?>
           <name role="<?php echo $event->getType()->getRole(); ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('name'.$event->getType()->getRole()))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } elseif (0 < strlen($encoding = $ead->getMetadataParameter('nameDefault'))){ ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?> id="atom_<?php echo $event->id; ?>_actor"><?php echo escape_dc(esc_specialchars(render_title($event->getActor()))); ?></name>
@@ -209,14 +209,14 @@
         <?php } ?>
       <?php } ?>
       <?php foreach ($names as $name) { ?>
-        <?php if (get_class($name->getObject()) === 'QubitTerm') { ?>
+        <?php if ('QubitTerm' === get_class($name->getObject())) { ?>
           <name role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())); ?></name>
         <?php } else { ?>
-          <?php if ($name->getObject()->getEntityTypeId() == QubitTerm::PERSON_ID) { ?>
+          <?php if (QubitTerm::PERSON_ID == $name->getObject()->getEntityTypeId()) { ?>
             <persname role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())); ?></persname>
-          <?php } elseif ($name->getObject()->getEntityTypeId() == QubitTerm::FAMILY_ID){ ?>
+          <?php } elseif (QubitTerm::FAMILY_ID == $name->getObject()->getEntityTypeId()){ ?>
             <famname role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())); ?></famname>
-          <?php } elseif ($name->getObject()->getEntityTypeId() == QubitTerm::CORPORATE_BODY_ID){ ?>
+          <?php } elseif (QubitTerm::CORPORATE_BODY_ID == $name->getObject()->getEntityTypeId()){ ?>
             <corpname role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())); ?></corpname>
           <?php } else { ?>
             <name role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())); ?></name>
@@ -338,13 +338,13 @@
         <controlaccess>
 
           <?php foreach ($descendant->getActorEvents() as $event) { ?>
-            <?php if ($event->getType()->getRole() != 'Creator') { ?>
+            <?php if ('Creator' != $event->getType()->getRole()) { ?>
 
-              <?php if ($event->getActor()->getEntityTypeId() == QubitTerm::PERSON_ID) { ?>
+              <?php if (QubitTerm::PERSON_ID == $event->getActor()->getEntityTypeId()) { ?>
                 <persname role="<?php echo $event->getType()->getRole(); ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('name'.$event->getType()->getRole()))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } elseif (0 < strlen($encoding = $ead->getMetadataParameter('nameDefault'))){ ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?> id="atom_<?php echo $event->id; ?>_actor"><?php echo escape_dc(esc_specialchars(render_title($event->getActor(['cultureFallback' => true])))); ?> </persname>
-              <?php } elseif ($event->getActor()->getEntityTypeId() == QubitTerm::FAMILY_ID){ ?>
+              <?php } elseif (QubitTerm::FAMILY_ID == $event->getActor()->getEntityTypeId()){ ?>
                 <famname role="<?php echo $event->getType()->getRole(); ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('name'.$event->getType()->getRole()))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } elseif (0 < strlen($encoding = $ead->getMetadataParameter('nameDefault'))){ ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?> id="atom_<?php echo $event->id; ?>_actor"><?php echo escape_dc(esc_specialchars(render_title($event->getActor(['cultureFallback' => true])))); ?> </famname>
-              <?php } elseif ($event->getActor()->getEntityTypeId() == QubitTerm::CORPORATE_BODY_ID){ ?>
+              <?php } elseif (QubitTerm::CORPORATE_BODY_ID == $event->getActor()->getEntityTypeId()){ ?>
                 <corpname role="<?php echo $event->getType()->getRole(); ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('name'.$event->getType()->getRole()))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } elseif (0 < strlen($encoding = $ead->getMetadataParameter('nameDefault'))){ ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?> id="atom_<?php echo $event->id; ?>_actor"><?php echo escape_dc(esc_specialchars(render_title($event->getActor(['cultureFallback' => true])))); ?> </corpname>
               <?php } else { ?>
                 <name role="<?php echo $event->getType()->getRole(); ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter('name'.$event->getType()->getRole()))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } elseif (0 < strlen($encoding = $ead->getMetadataParameter('nameDefault'))){ ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?> id="atom_<?php echo $event->id; ?>_actor"><?php echo escape_dc(esc_specialchars(render_title($event->getActor(['cultureFallback' => true])))); ?> </name>
@@ -354,11 +354,11 @@
           <?php } ?>
 
           <?php foreach ($names as $name) { ?>
-            <?php if ($name->getObject()->getEntityTypeId() == QubitTerm::PERSON_ID) { ?>
+            <?php if (QubitTerm::PERSON_ID == $name->getObject()->getEntityTypeId()) { ?>
               <persname role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())); ?></persname>
-            <?php } elseif ($name->getObject()->getEntityTypeId() == QubitTerm::FAMILY_ID){ ?>
+            <?php } elseif (QubitTerm::FAMILY_ID == $name->getObject()->getEntityTypeId()){ ?>
               <famname role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())); ?></famname>
-            <?php } elseif ($name->getObject()->getEntityTypeId() == QubitTerm::CORPORATE_BODY_ID){ ?>
+            <?php } elseif (QubitTerm::CORPORATE_BODY_ID == $name->getObject()->getEntityTypeId()){ ?>
               <corpname role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())); ?></corpname>
             <?php } else { ?>
               <name role="subject"><?php echo escape_dc(esc_specialchars((string) $name->getObject())); ?></name>

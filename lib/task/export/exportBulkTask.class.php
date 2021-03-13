@@ -62,7 +62,7 @@ class exportBulkTask extends exportBulkBaseTask
 
       // Don't export draft descriptions with public option
       if (isset($options['public']) && $options['public']
-        && $resource->getPublicationStatus()->statusId == QubitTerm::PUBLICATION_STATUS_DRAFT_ID)
+        && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $resource->getPublicationStatus()->statusId)
       {
         continue;
       }
@@ -82,7 +82,7 @@ class exportBulkTask extends exportBulkBaseTask
         throw new sfException('Invalid XML generated for object '.$row['id'].'.');
       }
 
-      if (isset($options['single-slug']) && $options['format'] == 'ead')
+      if (isset($options['single-slug']) && 'ead' == $options['format'])
       {
         if (is_dir($arguments['path']))
         {
@@ -106,7 +106,7 @@ class exportBulkTask extends exportBulkBaseTask
 
       $this->indicateProgress($options['items-until-update']);
 
-      if ($itemsExported++ % 1000 == 0)
+      if (0 == $itemsExported++ % 1000)
       {
         Qubit::clearClassCaches();
       }

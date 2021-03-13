@@ -373,7 +373,7 @@ EOF;
             if (!empty($self->rowStatusVars['donorCountry']))
             {
               $countryCode = QubitFlatfileImport::normalizeCountryAsCountryCode($self->rowStatusVars['donorCountry']);
-              if ($countryCode === null)
+              if (null === $countryCode)
               {
                 echo sprintf("Could not find country or country code matching '%s'\n", $self->rowStatusVars['donorCountry']);
               }
@@ -448,7 +448,7 @@ EOF;
         $data = trim($data);
         $resourceTypeId = self::arraySearchCaseInsensitive($data, $self->status['resourceTypes'][$self->columnValue('culture')]);
 
-        if ($resourceTypeId === false)
+        if (false === $resourceTypeId)
         {
           echo "\nTerm $data not found in resource type taxonomy, creating it...\n";
           $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID, $data, $self->columnValue('culture'));
@@ -472,7 +472,7 @@ EOF;
         $data = trim($data);
         $acquisitionTypeId = self::arraySearchCaseInsensitive($data, $self->status['acquisitionTypes'][$self->columnValue('culture')]);
 
-        if ($acquisitionTypeId === false)
+        if (false === $acquisitionTypeId)
         {
           echo "\nTerm $data not found in acquisition type taxonomy, creating it...\n";
           $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID, $data, $self->columnValue('culture'));

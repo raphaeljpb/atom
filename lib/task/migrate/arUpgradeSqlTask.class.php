@@ -435,7 +435,7 @@ EOF;
   private function getPluginSettings()
   {
     $this->pluginsSetting = QubitSetting::getByNameAndScope('plugins', null);
-    if ($this->pluginsSetting === null)
+    if (null === $this->pluginsSetting)
     {
       throw new sfException('Could not get plugin settings from the database.');
     }
@@ -570,7 +570,7 @@ EOF;
     {
       $className = $name.'Configuration';
 
-      if (strpos($path, sfConfig::get('sf_plugins_dir')) === 0 &&
+      if (0 === strpos($path, sfConfig::get('sf_plugins_dir')) &&
           is_readable($classPath = $path.'/config/'.$className.'.class.php'))
       {
         if ($themePluginsOnly)

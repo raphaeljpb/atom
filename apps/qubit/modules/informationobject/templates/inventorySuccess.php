@@ -45,7 +45,7 @@
             <td><?php echo link_to(render_value_inline(get_search_i18n($doc, 'title')), ['module' => 'informationobject', 'slug' => $doc['slug']]); ?></td>
             <td>
               <?php $level = QubitTerm::getById($doc['levelOfDescriptionId']); ?>
-              <?php if ($level !== null) { ?>
+              <?php if (null !== $level) { ?>
                 <?php echo $level->getName(); ?>
               <?php } ?>
             </td>

@@ -66,7 +66,7 @@ class arElasticSearchPluginUtil
 
     $dateParts = explode('-', $date);
 
-    if (count($dateParts) !== 3)
+    if (3 !== count($dateParts))
     {
       throw new sfException("Invalid date string given: {$date}. Must be in format YYYY-MM-DD");
     }
@@ -75,17 +75,17 @@ class arElasticSearchPluginUtil
 
     // Invalid year. Return null now since cal_days_in_month will fail
     // with year 0000. See #8796
-    if ((int) $year === 0)
+    if (0 === (int) $year)
     {
       return null;
     }
 
-    if ((int) $month === 0)
+    if (0 === (int) $month)
     {
       $month = $endDate ? '12' : '01';
     }
 
-    if ((int) $day === 0)
+    if (0 === (int) $day)
     {
       $day = $endDate ? cal_days_in_month(CAL_GREGORIAN, $month, $year) : '01';
     }
@@ -114,7 +114,7 @@ class arElasticSearchPluginUtil
 
     $i18nIncludeInAll = null;
 
-    if ($indexType === 'informationObject')
+    if ('informationObject' === $indexType)
     {
       $i18nIncludeInAll = $mappings[$indexType]['_attributes']['i18nIncludeInAll'];
     }
@@ -135,7 +135,7 @@ class arElasticSearchPluginUtil
     }
 
     // Check information object hidden fields for unauthenticated users
-    if ($indexType == 'informationObject' && !sfContext::getInstance()->user->isAuthenticated())
+    if ('informationObject' == $indexType && !sfContext::getInstance()->user->isAuthenticated())
     {
       // Remove hidden fields from ES mapping fields (use array_values() because array_diff() adds keys)
       $allFields = array_values(array_diff($allFields, self::getHiddenFields()));
@@ -196,7 +196,7 @@ class arElasticSearchPluginUtil
 
     foreach ($fields as $field => $boost)
     {
-      if (strpos($field, '%s') !== false)
+      if (false !== strpos($field, '%s'))
       {
         foreach ($cultures as $culture)
         {
@@ -400,7 +400,7 @@ class arElasticSearchPluginUtil
     foreach ($specialChars as $char)
     {
       // Ignore empty chars and \
-      if (empty($char) || $char == '\\')
+      if (empty($char) || '\\' == $char)
       {
         continue;
       }
@@ -468,13 +468,13 @@ class arElasticSearchPluginUtil
       foreach ($object['properties'] as $propertyName => $propertyProperties)
       {
         // Get i18n fields, they're always included in _all
-        if ($propertyName == 'i18n')
+        if ('i18n' == $propertyName)
         {
           // Get the fields from a single culture and format them with
           // 'i18n.%s.' to set the required cultures at query time.
           foreach ($propertyProperties['properties'] as $culture => $cultureProperties)
           {
-            if ($culture == 'languages')
+            if ('languages' == $culture)
             {
               continue;
             }
@@ -489,7 +489,7 @@ class arElasticSearchPluginUtil
           }
         }
         // Get nested objects fields
-        elseif (isset($propertyProperties['type']) && $propertyProperties['type'] == 'object')
+        elseif (isset($propertyProperties['type']) && 'object' == $propertyProperties['type'])
         {
           $nestedFields = self::getAllObjectStringFields(
             $rootIndexType,
@@ -516,8 +516,8 @@ class arElasticSearchPluginUtil
         elseif ((!isset($propertyProperties['include_in_all'])
           || $propertyProperties['include_in_all'])
           && (isset($propertyProperties['type'])
-          && ($propertyProperties['type'] == 'text'
-          || $propertyProperties['type'] == 'keyword')))
+          && ('text' == $propertyProperties['type']
+          || 'keyword' == $propertyProperties['type'])))
         {
           self::handleNonI18nStringFields($rootIndexType, $fields, $prefix, $propertyName, $foreignType);
         }
@@ -609,7 +609,7 @@ class arElasticSearchPluginUtil
     foreach (QubitSetting::getByScope('element_visibility') as $setting)
     {
       if (!(bool) $setting->getValue(['sourceCulture' => true]) && isset($relations[$setting->name])
-        && $relations[$setting->name] != '')
+        && '' != $relations[$setting->name])
       {
         $hiddenFields[] = $relations[$setting->name];
       }

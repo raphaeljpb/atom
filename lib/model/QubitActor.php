@@ -172,7 +172,7 @@ class QubitActor extends BaseActor
       {
         // Otherwise, do not update in QubitEvent,
         // but save ids to update asynchronously
-        if (isset($event->typeId) && $event->typeId == QubitTerm::CREATION_ID)
+        if (isset($event->typeId) && QubitTerm::CREATION_ID == $event->typeId)
         {
           $creationIoIds[] = $event->objectId;
         }
@@ -498,7 +498,7 @@ class QubitActor extends BaseActor
     $criteria = new Criteria();
     $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->id);
 
-    if ($taxonomyId != 'all')
+    if ('all' != $taxonomyId)
     {
       $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTERM::ID);
       $criteria->add(QubitTerm::TAXONOMY_ID, $taxonomyId);

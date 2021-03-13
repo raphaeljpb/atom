@@ -44,12 +44,12 @@ class QubitInformationObjectXmlCache
   public function export($resource, $format = null)
   {
     // Only cache top-level information object's EAD XML
-    if ($resource->parentId == QubitInformationObject::ROOT_ID && $format !== 'dc')
+    if (QubitInformationObject::ROOT_ID == $resource->parentId && 'dc' !== $format)
     {
       $this->cacheXmlFormat($resource, 'ead');
     }
 
-    if ($format !== 'ead')
+    if ('ead' !== $format)
     {
       $this->cacheXmlFormat($resource, 'dc');
     }
@@ -192,7 +192,7 @@ class QubitInformationObjectXmlCache
     copy($filePath, $cacheResource->getFilePath($format));
 
     // Copy XML with declaration/doctype removed to downloads subdirectory
-    $skipLines = ($format == 'ead') ? 2 : 1; // For EAD doctype line stripped in addition to XML declaration
+    $skipLines = ('ead' == $format) ? 2 : 1; // For EAD doctype line stripped in addition to XML declaration
     $this->rewriteFileSkippingLines($filePath, $cacheResource->getFilePath($format, true), $skipLines);
   }
 
@@ -220,7 +220,7 @@ class QubitInformationObjectXmlCache
 
     $next = fgets($sfp);
 
-    while ($next !== false)
+    while (false !== $next)
     {
       $line = $next;
       fwrite($dfp, $line);

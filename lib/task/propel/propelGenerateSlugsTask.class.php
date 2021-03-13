@@ -91,7 +91,7 @@ class propelGenerateSlugsTask extends arBaseTask
           $sql .= ' AND object_id != '.$class::ROOT_ID;
         }
 
-        if ($class == 'QubitStaticPage')
+        if ('QubitStaticPage' == $class)
         {
           $sql .= " AND slug NOT IN ('home','about')";
         }

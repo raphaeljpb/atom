@@ -145,7 +145,7 @@ class QubitTaxonomy extends BaseTaxonomy
     $criteria->add(QubitTerm::TAXONOMY_ID, $taxonomyId);
 
     // Only include top-level terms if option is set
-    if (isset($options['level']) && $options['level'] == 'top')
+    if (isset($options['level']) && 'top' == $options['level'])
     {
       $criteria->add(QubitTerm::PARENT_ID, QubitTerm::ROOT_ID);
     }
@@ -200,7 +200,7 @@ SQL;
   {
     $terms = $this->getTermsAsArray($connection);
 
-    if (!is_array($terms) || count($terms) == 0)
+    if (!is_array($terms) || 0 == count($terms))
     {
       return;
     }

@@ -139,13 +139,13 @@ class sfImageMagickAdapter
     $this->magickCommands['identify'] = isset($options['identify']) ? escapeshellcmd($options['identify']) : 'identify';
 
     exec($this->magickCommands['convert'], $stdout);
-    if (strpos($stdout[0], 'ImageMagick') === false)
+    if (false === strpos($stdout[0], 'ImageMagick'))
     {
       throw new Exception(sprintf('ImageMagick convert command not found'));
     }
 
     exec($this->magickCommands['identify'], $stdout);
-    if (strpos($stdout[0], 'ImageMagick') === false)
+    if (false === strpos($stdout[0], 'ImageMagick'))
     {
       throw new Exception(sprintf('ImageMagick identify command not found'));
     }
@@ -183,7 +183,7 @@ class sfImageMagickAdapter
       $this->sourceMime = $this->getMimeType($image);
       $extract = $this->getExtract($image);
       exec($this->magickCommands['identify'].' '.escapeshellarg($image).$extract, $stdout, $retval);
-      if ($retval === 1)
+      if (1 === $retval)
       {
         throw new Exception('Image could not be identified.');
       }
@@ -359,7 +359,7 @@ class sfImageMagickAdapter
       $command .= '!';
     }
 
-    if ($this->quality && $targetMime == 'image/jpeg')
+    if ($this->quality && 'image/jpeg' == $targetMime)
     {
       $command .= ' -quality '.$this->quality.'% ';
     }
@@ -412,7 +412,7 @@ class sfImageMagickAdapter
   {
     exec('pdfinfo '.escapeshellarg($filename), $stdout, $retval);
 
-    if ($retval === 1)
+    if (1 === $retval)
     {
       throw new Exception('PDF could not be analyzed.');
     }
@@ -420,7 +420,7 @@ class sfImageMagickAdapter
     // Parse page number from output
     foreach ($stdout as $line)
     {
-      if (preg_match('/Pages:\s*(\d+)/i', $line, $matches) === 1)
+      if (1 === preg_match('/Pages:\s*(\d+)/i', $line, $matches))
       {
         return intval($matches[1]);
       }
@@ -444,7 +444,7 @@ class sfImageMagickAdapter
 
     $command = $this->magickCommands['identify'].' -format %n '.escapeshellarg($image);
     exec($command, $stdout, $retval);
-    if ($retval === 1)
+    if (1 === $retval)
     {
       throw new Exception('Image could not be identified.');
     }

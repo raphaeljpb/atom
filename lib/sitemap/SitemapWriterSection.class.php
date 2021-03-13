@@ -111,7 +111,7 @@ class SitemapWriterSection
 
   public function add(AbstractSitemapUrl $item)
   {
-    if (self::BUFFER_LIMIT > 0 && $this->bufferSize === self::BUFFER_LIMIT)
+    if (self::BUFFER_LIMIT > 0 && self::BUFFER_LIMIT === $this->bufferSize)
     {
       $this->flush();
     }
@@ -123,7 +123,7 @@ class SitemapWriterSection
 
   public function isFull()
   {
-    return $this->size === self::MAX_ITEMS_SITEMAP;
+    return self::MAX_ITEMS_SITEMAP === $this->size;
   }
 
   public function getLocation()
@@ -135,7 +135,7 @@ class SitemapWriterSection
 
   public function flush()
   {
-    if ($this->bufferSize === 0)
+    if (0 === $this->bufferSize)
     {
       return;
     }

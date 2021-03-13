@@ -136,7 +136,7 @@ class QubitUser extends BaseUser
     $error = null;
 
     // anonymous is not a real user
-    if ($username == 'anonymous')
+    if ('anonymous' == $username)
     {
       $error = 'invalid username';
 
@@ -148,7 +148,7 @@ class QubitUser extends BaseUser
     $user = QubitUser::getOne($criteria);
 
     // user account exists?
-    if ($user !== null)
+    if (null !== $user)
     {
       // Stop if user is not active
       if (!$user->active)

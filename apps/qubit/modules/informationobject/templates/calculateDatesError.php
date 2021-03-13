@@ -18,7 +18,7 @@
 
     <div id="content">
 
-    <?php if ($resource->rgt - $resource->lft == 1) { ?>
+    <?php if (1 == $resource->rgt - $resource->lft) { ?>
       <legend class="collapse-processed"><?php echo __('No children found'); ?></legend>
 
       <div class="alert alert-warning">

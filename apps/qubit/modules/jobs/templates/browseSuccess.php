@@ -37,11 +37,11 @@
 
         <!-- Job status -->
         <td>
-          <?php if ($job->statusId == QubitTerm::JOB_STATUS_COMPLETED_ID) { ?>
+          <?php if (QubitTerm::JOB_STATUS_COMPLETED_ID == $job->statusId) { ?>
             <i class="fa fa-check-square" id="job-check-color"></i>
-          <?php } elseif ($job->statusId == QubitTerm::JOB_STATUS_ERROR_ID){ ?>
+          <?php } elseif (QubitTerm::JOB_STATUS_ERROR_ID == $job->statusId){ ?>
             <i class="fa fa-exclamation-triangle" id="job-warning-color"></i>
-          <?php } elseif ($job->statusId == QubitTerm::JOB_STATUS_IN_PROGRESS_ID){ ?>
+          <?php } elseif (QubitTerm::JOB_STATUS_IN_PROGRESS_ID == $job->statusId){ ?>
             <i class="fa fa-cogs" id="job-cogs-color"></i>
           <?php } ?>
 

@@ -95,7 +95,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
     $this->batchMode = true === $this->config['batch_mode'];
     $this->batchSize = $this->config['batch_size'];
 
-    if (isset($options['initialize']) && $options['initialize'] === false)
+    if (isset($options['initialize']) && false === $options['initialize'])
     {
       return;
     }

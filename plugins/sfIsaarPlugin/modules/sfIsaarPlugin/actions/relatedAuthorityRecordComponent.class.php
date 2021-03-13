@@ -61,7 +61,7 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ACTOR_RELATION_TYPE_ID) as $item)
         {
-          if ($item->parentId == QubitTerm::ROOT_ID)
+          if (QubitTerm::ROOT_ID == $item->parentId)
           {
             $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
           }

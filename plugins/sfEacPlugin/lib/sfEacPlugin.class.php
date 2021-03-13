@@ -705,7 +705,7 @@ return;
         $item->save();
       }
 
-      if ($node->getAttribute('resourceRelationType') == 'subjectOf')
+      if ('subjectOf' == $node->getAttribute('resourceRelationType'))
       {
          $this->itemsSubjectOf[] = $item;
       }
@@ -906,23 +906,23 @@ return;
         $type = QubitTerm::getById($value);
         $typeName = $type->getName(['culture' => 'en']);
 
-        if ($typeName == 'is the superior of' || $typeName == 'controls' || $typeName == 'is the owner of')
+        if ('is the superior of' == $typeName || 'controls' == $typeName || 'is the owner of' == $typeName)
         {
           return 'hierarchical-parent';
         }
-        elseif ($typeName == 'is the subordinate of' || $typeName == 'is controlled by' || $typeName == 'is owned by')
+        elseif ('is the subordinate of' == $typeName || 'is controlled by' == $typeName || 'is owned by' == $typeName)
         {
           return 'hierarchical-child';
         }
-        elseif ($typeName == 'is the predecessor of')
+        elseif ('is the predecessor of' == $typeName)
         {
           return 'temporal-earlier';
         }
-        elseif ($typeName == 'is the successor of')
+        elseif ('is the successor of' == $typeName)
         {
           return 'temporal-later';
         }
-        elseif ($type->parentId != QubitTerm::ROOT_ID)
+        elseif (QubitTerm::ROOT_ID != $type->parentId)
         {
           return self::toCpfRelationType($type->parentId);
         }

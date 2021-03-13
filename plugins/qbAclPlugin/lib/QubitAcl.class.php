@@ -516,7 +516,7 @@ class QubitAcl
               {
                 // Add id directly to the allows and bans arrays
                 // self::isAllowed gives unexpected results if there are more than one taxonomy rule
-                if ($permission->grantDeny == 1)
+                if (1 == $permission->grantDeny)
                 {
                   $allows[] = $taxonomy->id;
                 }
@@ -529,7 +529,7 @@ class QubitAcl
             else
             {
               // Grant or deny all if the permission hasn't taxonomy's constants
-              return $permission->grantDeny == 1;
+              return 1 == $permission->grantDeny;
             }
 
             break;

@@ -59,7 +59,7 @@ class DigitalObjectShowComponent extends sfComponent
 
     // Check PREMIS granted rights, and show an access warning if they prevent
     // access
-    if ($this->usageType == QubitTerm::REFERENCE_ID)
+    if (QubitTerm::REFERENCE_ID == $this->usageType)
     {
       $this->accessWarning = $this->getAccessWarning();
     }

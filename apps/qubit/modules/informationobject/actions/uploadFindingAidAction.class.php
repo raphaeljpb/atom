@@ -47,7 +47,7 @@ class InformationObjectUploadFindingAidAction extends sfAction
 
     // sfValidatorFile gets 'text/rtf' as the mime type of RTF files
     // but the accept attribute works better with only 'application/rtf'
-    if ($this->format == 'rtf')
+    if ('rtf' == $this->format)
     {
       $mimeTypes[] = 'text/rtf';
     }

@@ -174,7 +174,7 @@ EOF;
 
     if ($updateMode)
     {
-      if ($updateMode == 'delete-and-replace')
+      if ('delete-and-replace' == $updateMode)
       {
         // Handle delete-and-replace updating by deleting all existing relations between source
         // and target then adding new relation
@@ -209,7 +209,7 @@ EOF;
 
     $relation = $this->addRelation($sourceActorId, $targetActorId, $relationTypeId);
 
-    if ($updateMode == 'delete-and-replace')
+    if ('delete-and-replace' == $updateMode)
     {
       $this->newlyAdded[] = $relation->id;
     }

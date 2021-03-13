@@ -266,12 +266,12 @@ class QubitMigrate
       {
         foreach ($class['columns'] as $columnKey => $column)
         {
-          if ($columnKey == 'id')
+          if ('id' == $columnKey)
           {
             continue;
           }
 
-          if ($column['type'] != 'integer')
+          if ('integer' != $column['type'])
           {
             continue;
           }
@@ -808,7 +808,7 @@ class QubitMigrate
       }
 
       // Update/delete rows with foreign keys pointing to non existing rows
-      if (strtoupper(trim($foreignKey['onDelete'])) == 'ON DELETE SET NULL')
+      if ('ON DELETE SET NULL' == strtoupper(trim($foreignKey['onDelete'])))
       {
         $sql = "UPDATE {$foreignKey['table']} tb1
                 LEFT JOIN {$foreignKey['refTable']} tb2

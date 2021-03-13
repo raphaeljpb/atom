@@ -29,7 +29,7 @@ class arOaiPluginListIdentifiersComponent extends arOaiPluginComponent
     $this->setUpdateParametersFromRequest($request);
 
     // Restrict to top-level descriptions for EAD given children get nested
-    if ($request->metadataPrefix == 'oai_ead')
+    if ('oai_ead' == $request->metadataPrefix)
     {
       $options['topLevel'] = true;
     }

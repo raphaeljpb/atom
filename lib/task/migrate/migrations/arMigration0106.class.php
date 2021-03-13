@@ -88,7 +88,7 @@ class arMigration0106
         $objectTerm->taxonomyId = QubitTaxonomy::ACTOR_RELATION_TYPE_ID;
         $objectTerm->save();
 
-        if ($converseTermName == 'itself')
+        if ('itself' == $converseTermName)
         {
           $subjectTerm = $objectTerm;
         }

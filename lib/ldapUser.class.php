@@ -42,7 +42,7 @@ class ldapUser extends myUser implements Zend_Acl_Role_Interface
     }
 
     // Anonymous is not a real user
-    if ($username == 'anonymous')
+    if ('anonymous' == $username)
     {
       return false;
     }

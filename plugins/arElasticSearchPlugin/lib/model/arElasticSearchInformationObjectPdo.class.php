@@ -366,7 +366,7 @@ class arElasticSearchInformationObjectPdo
     // Add actors in related, non-creation events
     foreach ($this->events as $event)
     {
-      if (isset($event->actor_id) && $event->type_id != QubitTerm::CREATION_ID)
+      if (isset($event->actor_id) && QubitTerm::CREATION_ID != $event->type_id)
       {
         $actor = new stdClass();
         $actor->id = $event->actor_id;
@@ -607,7 +607,7 @@ class arElasticSearchInformationObjectPdo
 
     // Make sure that media_type_id gets a value in case that one was not
     // assigned, which seems to be a possibility when using the offline usage.
-    if (null === $this->media_type_id && $this->usage_id == QubitTerm::OFFLINE_ID)
+    if (null === $this->media_type_id && QubitTerm::OFFLINE_ID == $this->usage_id)
     {
       $this->media_type_id = QubitTerm::OTHER_ID;
     }

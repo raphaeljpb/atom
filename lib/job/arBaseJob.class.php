@@ -259,7 +259,7 @@ class arBaseJob extends Net_Gearman_Job_Common
     $runningJobs = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
     // Edge case where the QubitJobs are cleared while this one is waiting
-    if (count($runningJobs) == 0)
+    if (0 == count($runningJobs))
     {
       throw new Net_Gearman_Job_Exception('There is not a running QubitJob in the database associated this job.');
     }

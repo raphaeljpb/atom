@@ -60,7 +60,7 @@ class arGenerateReportJob extends arBaseJob
     {
       case 'itemList':
       case 'fileList':
-        $results = $this->getFileOrItemListResults($this->params['reportType'] == 'itemList' ? 'item' : 'file');
+        $results = $this->getFileOrItemListResults('itemList' == $this->params['reportType'] ? 'item' : 'file');
 
         if ('csv' === $this->params['reportFormat'])
         {
@@ -333,7 +333,7 @@ class arGenerateReportJob extends arBaseJob
       // Display hierarchy leading up to the top level of description before report results for items / files
       foreach ($items[0]['resource']->getAncestors()->orderBy('lft') as $ancestor)
       {
-        if ($ancestor->id != QubitInformationObject::ROOT_ID)
+        if (QubitInformationObject::ROOT_ID != $ancestor->id)
         {
           fputcsv($fh, [$ancestor->getTitle(['cultureFallback' => true])]);
         }

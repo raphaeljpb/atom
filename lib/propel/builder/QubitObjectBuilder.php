@@ -46,7 +46,7 @@ class QubitObjectBuilder extends PHP5ObjectBuilder
 
     foreach ($table->getColumns() as $column)
     {
-      if ($column->getName() == 'class_name')
+      if ('class_name' == $column->getName())
       {
         $this->classNameColumn = $column;
       }
@@ -66,7 +66,7 @@ class QubitObjectBuilder extends PHP5ObjectBuilder
         $this->nestedSetRightColumn = $column;
       }
 
-      if ($column->getName() == 'source_culture')
+      if ('source_culture' == $column->getName())
       {
         $this->sourceCultureColumn = $column;
       }
@@ -97,12 +97,12 @@ class QubitObjectBuilder extends PHP5ObjectBuilder
 
       if (!$this->getPlatform()->supportsNativeDeleteTrigger() || $this->getBuildProperty('emulateForeignKeyConstraints'))
       {
-        if ($refFk->getOnDelete() == ForeignKey::CASCADE)
+        if (ForeignKey::CASCADE == $refFk->getOnDelete())
         {
           $this->emulateOnDeleteCascade = true;
         }
 
-        if ($refFk->getOnDelete() == ForeignKey::SETNULL)
+        if (ForeignKey::SETNULL == $refFk->getOnDelete())
         {
           $this->emulateOnDeleteSetNull = true;
         }
@@ -268,7 +268,7 @@ script;
       $this->addI18nMethods($script);
     }
 
-    if (isset($this->selfFk) && $this->selfFk->getLocalColumns()[0] == 'parent_id')
+    if (isset($this->selfFk) && 'parent_id' == $this->selfFk->getLocalColumns()[0])
     {
       $this->addGetAncestorsAndSelfForAcl($script);
     }

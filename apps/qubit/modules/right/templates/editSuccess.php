@@ -117,7 +117,7 @@
           <fieldset class="collapsible<?php echo $collapsed; ?>">
             <?php
               // build a title
-              if ($gr['act']->getValue() && $gr['restriction']->getValue() !== null)
+              if ($gr['act']->getValue() && null !== $gr['restriction']->getValue())
               {
                 $act = $this->context->routing->parse(Qubit::pathInfo($gr['act']->getValue()));
                 $act = $act['_sf_route']->resource;

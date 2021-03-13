@@ -64,7 +64,7 @@ class InformationObjectSlugPreviewAction extends sfAction
 
       $slug = QubitSlug::getOne($criteria);
     }
-    while (($slug != null) && ($slug->objectId != $resourceId));
+    while ((null != $slug) && ($slug->objectId != $resourceId));
 
     return $slugText;
   }

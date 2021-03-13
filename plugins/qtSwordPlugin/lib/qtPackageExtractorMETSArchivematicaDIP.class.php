@@ -379,7 +379,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
 
     $files = $this->metsParser->getFilesFromOriginalFileGrp();
 
-    if (false === $files || count($files) === 0)
+    if (false === $files || 0 === count($files))
     {
       sfContext::getInstance()->getLogger()->err(
         'METSArchivematicaDIP - No files found in original fileGrp'
@@ -586,7 +586,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
 
       // If this element has no child file pointer <fptr> elements, then it is
       // directory node and we should recursively add it's children
-      if (count($div->xpath('m:fptr')) == 0)
+      if (0 == count($div->xpath('m:fptr')))
       {
         $io = $this->getDirectoryFromStuctMapDiv($div, $parent);
 
@@ -651,7 +651,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   {
     // Special case where <div @label> is "objects" - don't create a new IO but
     // set the $parent LOD to <div @type> and attach child <div>s to $parent
-    if (isset($element['LABEL']) && (string) $element['LABEL'] == 'objects')
+    if (isset($element['LABEL']) && 'objects' == (string) $element['LABEL'])
     {
       $parent->levelOfDescriptionId =
         $this->mappings['lodMapping'][(string) $element['TYPE']];

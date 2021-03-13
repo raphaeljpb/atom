@@ -90,7 +90,7 @@ class sfThumbnail
         try
         {
           $b->get($image);
-          if ($b->getResponseCode() != 200) {
+          if (200 != $b->getResponseCode()) {
             throw new Exception(sprintf('%s returned error code %s', $image, $b->getResponseCode()));
           }
           file_put_contents($this->tempFile, $b->getResponseText());

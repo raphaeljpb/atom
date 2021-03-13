@@ -134,7 +134,7 @@ class DefaultBrowseAction extends sfAction
       }
 
       // Pass if the aggregation is empty
-      if (!isset($agg['buckets']) || count($agg['buckets']) == 0)
+      if (!isset($agg['buckets']) || 0 == count($agg['buckets']))
       {
         continue;
       }
@@ -142,7 +142,7 @@ class DefaultBrowseAction extends sfAction
       $this->aggs[$name] = $this->populateAgg($name, $agg['buckets']);
 
       // Get unique descriptions count for languages aggregation
-      if ($name == 'languages')
+      if ('languages' == $name)
       {
         // If the query is being filtered by language we need to execute
         // the same query again without language clause to get the count

@@ -145,7 +145,7 @@ class sfGDAdapter
 
   public function save($thumbnail, $thumbDest, $targetMime = null)
   {
-    if ($targetMime !== null)
+    if (null !== $targetMime)
     {
       $creator = $this->imgCreators[$targetMime];
     }
@@ -154,7 +154,7 @@ class sfGDAdapter
       $creator = $this->imgCreators[$thumbnail->getMime()];
     }
 
-    if ($creator == 'imagejpeg')
+    if ('imagejpeg' == $creator)
     {
       imagejpeg($this->thumb, $thumbDest, $this->quality);
     }
@@ -166,7 +166,7 @@ class sfGDAdapter
 
   public function toString($thumbnail, $targetMime = null)
   {
-    if ($targetMime !== null)
+    if (null !== $targetMime)
     {
       $creator = $this->imgCreators[$targetMime];
     }

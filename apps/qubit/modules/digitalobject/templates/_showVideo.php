@@ -1,6 +1,6 @@
 <?php use_helper('Text'); ?>
 
-<?php if ($usageType == QubitTerm::MASTER_ID) { ?>
+<?php if (QubitTerm::MASTER_ID == $usageType) { ?>
 
   <?php if (isset($link)) { ?>
     <?php echo image_tag($representation->getFullPath(), ['alt' => __($resource->getDigitalObjectAltText() ?: 'Original %1% not accessible', ['%1%' => sfConfig::get('app_ui_label_digitalobject')])]); ?>
@@ -8,7 +8,7 @@
     <?php echo link_to(image_tag($representation->getFullPath(), ['alt' => __($resource->getDigitalObjectAltText() ?: 'Open original %1%', ['%1%' => sfConfig::get('app_ui_label_digitalobject')])]), $link); ?>
   <?php } ?>
 
-<?php } elseif ($usageType == QubitTerm::REFERENCE_ID){ ?>
+<?php } elseif (QubitTerm::REFERENCE_ID == $usageType){ ?>
 
   <?php if ($showMediaPlayer) { ?>
     <video preload="metadata" class="mediaelement-player" src="<?php echo public_path($representation->getFullPath()); ?>"></video>

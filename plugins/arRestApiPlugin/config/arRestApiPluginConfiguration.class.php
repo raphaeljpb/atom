@@ -115,7 +115,7 @@ class arRestApiPluginConfiguration extends sfPluginConfiguration
     $defaults = $requirements = [];
 
     // Allow routes to only apply to specific HTTP methods
-    if ($method != '*')
+    if ('*' != $method)
     {
       $requirements['sf_method'] = explode(',', $method);
     }

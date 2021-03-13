@@ -138,7 +138,7 @@ class UserEditInformationObjectAclAction extends DefaultEditAction
       // Otherwise, update an existing permission
       elseif (null !== $aclPermission = QubitAclPermission::getById($key))
       {
-        if ($value == QubitAcl::INHERIT)
+        if (QubitAcl::INHERIT == $value)
         {
           $aclPermission->delete();
         }

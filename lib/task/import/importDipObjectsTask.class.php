@@ -384,7 +384,7 @@ EOF;
   {
     $criteria = new Criteria();
 
-    if ($this->uniqueValueColumnName == 'identifier')
+    if ('identifier' == $this->uniqueValueColumnName)
     {
       $criteria->add(QubitInformationObject::IDENTIFIER, $uniqueValue);
 

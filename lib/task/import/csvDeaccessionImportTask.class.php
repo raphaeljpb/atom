@@ -160,7 +160,7 @@ EOF;
       // Import logic to save accession
       'saveLogic' => function (&$self)
       {
-        if (get_class($self->object) == 'QubitDeaccession' && isset($self->object) && is_object($self->object))
+        if ('QubitDeaccession' == get_class($self->object) && isset($self->object) && is_object($self->object))
         {
           $self->object->save();
         }

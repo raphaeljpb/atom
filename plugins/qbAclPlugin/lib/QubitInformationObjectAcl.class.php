@@ -122,7 +122,7 @@ class QubitInformationObjectAcl extends QubitAcl
   )
   {
     // All users are authorized to read text (PDF) masters
-    if ($action == 'readMaster' && $resource->hasTextDigitalObject())
+    if ('readMaster' == $action && $resource->hasTextDigitalObject())
     {
       return true;
     }

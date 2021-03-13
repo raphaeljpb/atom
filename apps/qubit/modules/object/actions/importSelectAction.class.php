@@ -198,7 +198,7 @@ class ObjectImportSelectAction extends DefaultEditAction
     }
 
     // Redirect user if they are attempting to upload an invalid CSV file
-    if ($importType == 'csv' && !$this->checkForValidCsvFile($request, $file['tmp_name']))
+    if ('csv' == $importType && !$this->checkForValidCsvFile($request, $file['tmp_name']))
     {
       $errorMessage = $this->context->i18n->__('Not a CSV file (or CSV columns not recognized).');
       $this->context->user->setFlash('error', $errorMessage);
@@ -211,10 +211,10 @@ class ObjectImportSelectAction extends DefaultEditAction
       $this->redirect($importSelectRoute);
     }
 
-    $options = ['index' => ($request->getParameter('noIndex') == 'on') ? false : true,
-                     'doCsvTransform' => ($request->getParameter('doCsvTransform') == 'on') ? true : false,
-                     'skip-unmatched' => ($request->getParameter('skipUnmatched') == 'on') ? true : false,
-                     'skip-matched' => ($request->getParameter('skipMatched') == 'on') ? true : false,
+    $options = ['index' => ('on' == $request->getParameter('noIndex')) ? false : true,
+                     'doCsvTransform' => ('on' == $request->getParameter('doCsvTransform')) ? true : false,
+                     'skip-unmatched' => ('on' == $request->getParameter('skipUnmatched')) ? true : false,
+                     'skip-matched' => ('on' == $request->getParameter('skipMatched')) ? true : false,
                      'parentId' => (isset($this->getRoute()->resource) ? $this->getRoute()->resource->id : null),
                      'objectType' => $request->getParameter('objectType'),
                      // Choose import type based on importType parameter

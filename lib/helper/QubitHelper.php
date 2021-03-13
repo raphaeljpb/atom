@@ -19,7 +19,7 @@
 
 function format_script($script_iso, $culture = null)
 {
-  $c = sfCultureInfo::getInstance($culture === null ? sfContext::getInstance()->user->getCulture() : $culture);
+  $c = sfCultureInfo::getInstance(null === $culture ? sfContext::getInstance()->user->getCulture() : $culture);
   $scripts = $c->getScripts();
 
   if (!isset($scripts[$script_iso]))
@@ -320,7 +320,7 @@ function render_treeview_node($item, array $classes = [], array $options = [])
 
 function is_using_cli()
 {
-  return php_sapi_name() === 'cli';
+  return 'cli' === php_sapi_name();
 }
 
 function check_field_visibility($fieldName, $options = [])

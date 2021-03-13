@@ -67,7 +67,7 @@ class sfFopenAdapter
 
     restore_error_handler();
 
-    if ($this->adapterErrorMessage == true)
+    if (true == $this->adapterErrorMessage)
     {
       $msg = $this->adapterErrorMessage;
       $this->adapterErrorMessage = null;

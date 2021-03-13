@@ -318,7 +318,7 @@ class ActorBrowseAction extends DefaultBrowseAction
         foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::ACTOR_RELATION_TYPE_ID) as $item)
         {
           // Omit category terms
-          if ($item->parentId != QubitTerm::ROOT_ID)
+          if (QubitTerm::ROOT_ID != $item->parentId)
           {
             $choices[$item->id] = $item->__toString();
           }
@@ -544,7 +544,7 @@ class ActorBrowseAction extends DefaultBrowseAction
     {
       $params = $this->context->routing->parse(Qubit::pathInfo($slug));
 
-      return get_class($params['_sf_route']->resource) == 'QubitActor' ? $params['_sf_route']->resource : null;
+      return 'QubitActor' == get_class($params['_sf_route']->resource) ? $params['_sf_route']->resource : null;
     }
   }
 
@@ -577,7 +577,7 @@ class ActorBrowseAction extends DefaultBrowseAction
     // Look for converse term as well if one exists
     $converseTerm = $relationTerm->getConverseActorRelationTerm();
 
-    if ($converseTerm !== null && $typeId != $converseTerm->id)
+    if (null !== $converseTerm && $typeId != $converseTerm->id)
     {
       $queryField = new \Elastica\Query\Term();
       $queryField->setTerm('actorRelations.typeId', $converseTerm->id);

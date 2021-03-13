@@ -228,10 +228,10 @@ EOF;
             // Don't overwrite/add blank fields
             if (!empty($self->rowStatusVars[$field]))
             {
-              if ($field == 'country')
+              if ('country' == $field)
               {
                 $countryCode = QubitFlatfileImport::normalizeCountryAsCountryCode($self->rowStatusVars[$field]);
-                if ($countryCode === null)
+                if (null === $countryCode)
                 {
                   echo sprintf("Could not find country or country code matching '%s'\n", $self->rowStatusVars[$field]);
                 }

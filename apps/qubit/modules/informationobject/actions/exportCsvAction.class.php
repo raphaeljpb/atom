@@ -69,7 +69,7 @@ class InformationObjectExportCsvAction extends sfAction
     }
 
     // If referer URL is valid, redirect to it... otherwise, redirect to the information objects browse page)
-    if (filter_var($request->getHttpHeader('referer'), FILTER_VALIDATE_URL) === true)
+    if (true === filter_var($request->getHttpHeader('referer'), FILTER_VALIDATE_URL))
     {
       $this->redirect($request->getHttpHeader('referer'));
     }

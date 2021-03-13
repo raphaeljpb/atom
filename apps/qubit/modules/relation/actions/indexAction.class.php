@@ -55,8 +55,8 @@ class RelationIndexAction extends sfAction
 
     if (isset($this->resource->type))
     {
-      if ($this->resource->type->taxonomyId == QubitTaxonomy::ACTOR_RELATION_TYPE_ID &&
-        $this->resource->type->parentId != QubitTerm::ROOT_ID)
+      if (QubitTaxonomy::ACTOR_RELATION_TYPE_ID == $this->resource->type->taxonomyId &&
+        QubitTerm::ROOT_ID != $this->resource->type->parentId)
       {
         $value['type'] = $this->context->routing->generate(null, [$this->resource->type->parent, 'module' => 'term']);
         $value['subType'] = $this->context->routing->generate(null, [$this->resource->type, 'module' => 'term']);

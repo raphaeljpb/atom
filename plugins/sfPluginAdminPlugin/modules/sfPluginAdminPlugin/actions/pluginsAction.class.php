@@ -93,12 +93,12 @@ class sfPluginAdminPluginPluginsAction extends sfAction
           elseif (false !== $key = array_search($item, $settings))
           {
             // Don't disable default plugins
-            if (!($item == 'sfIsdiahPlugin'
-                || $item == 'sfIsaarPlugin'
-                || ($item == 'sfIsadPlugin' && $this->defaultTemplate == 'isad')
-                || ($item == 'sfRadPlugin' && $this->defaultTemplate == 'rad')
-                || ($item == 'sfDcPlugin' && $this->defaultTemplate == 'dc')
-                || ($item == 'sfModsPlugin' && $this->defaultTemplate == 'mods')))
+            if (!('sfIsdiahPlugin' == $item
+                || 'sfIsaarPlugin' == $item
+                || ('sfIsadPlugin' == $item && 'isad' == $this->defaultTemplate)
+                || ('sfRadPlugin' == $item && 'rad' == $this->defaultTemplate)
+                || ('sfDcPlugin' == $item && 'dc' == $this->defaultTemplate)
+                || ('sfModsPlugin' == $item && 'mods' == $this->defaultTemplate)))
             {
               unset($settings[$key]);
             }

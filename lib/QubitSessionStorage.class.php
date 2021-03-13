@@ -52,7 +52,7 @@ class QubitSessionStorage extends sfSessionStorage
     // In GET requests that perform login, the previous session needs to be destroyed before
     // calling session_regenerate_id(true) to fix this problem
     if (!self::$sessionIdRegenerated && $destroy && self::$sessionStarted
-      && sfContext::getInstance()->request->getMethod() == 'GET')
+      && 'GET' == sfContext::getInstance()->request->getMethod())
     {
       session_destroy();
     }

@@ -1,6 +1,6 @@
 <?php
   // If $resource is not a repository, just show the repository logo
-  if ($class !== 'QubitRepository') {
+  if ('QubitRepository' !== $class) {
 ?>
   <?php include_component('repository', 'logo'); ?>
 <?php } else { ?>

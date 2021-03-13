@@ -59,7 +59,7 @@ class ClipboardExportAction extends DefaultEditAction
     // Currently 'switch' to process the inbound parameter, validate and set
     // default - could be if/then if preferred
     $this->formatType = trim(strtolower($request->getParameter('format')));
-    if ($this->formatType != 'xml' || $this->objectType == 'repository')
+    if ('xml' != $this->formatType || 'repository' == $this->objectType)
     {
       $this->formatType = 'csv';
     }
@@ -390,7 +390,7 @@ class ClipboardExportAction extends DefaultEditAction
         }
 
         $size = count($this->levelChoices);
-        if ($size === 0)
+        if (0 === $size)
         {
           $size = 4;
         }

@@ -64,7 +64,7 @@ class QubitGrantedRight extends BaseGrantedRight
 
     // TODO: Make 'readThumb' 'readThumbnail' across all the code to make it consistent
     // between the PREMIS action settings and regular db ACL settings
-    if ($action === 'readThumbnail')
+    if ('readThumbnail' === $action)
     {
       $action = 'readThumb';
     }
@@ -107,7 +107,7 @@ class QubitGrantedRight extends BaseGrantedRight
     $premisAccessRight = QubitSetting::getByName('premisAccessRight');
     $act = QubitTaxonomy::getBySlug($premisAccessRight->getValue(['sourceCulture' => true]));
 
-    if ($act === null)
+    if (null === $act)
     {
       throw new sfException("Invalid Act specified for PREMIS rights: $premisAccessRight");
     }
@@ -200,7 +200,7 @@ class QubitGrantedRight extends BaseGrantedRight
       QubitAclGroup::ANONYMOUS_ID,
     ];
 
-    if ($id == QubitInformationObject::ROOT_ID)
+    if (QubitInformationObject::ROOT_ID == $id)
     {
       throw new sfException('Cannot call checkPremisRightsAgainstGroups with ROOT_ID');
     }
@@ -253,7 +253,7 @@ class QubitGrantedRight extends BaseGrantedRight
         if (($key = array_search(QubitAclGroup::ANONYMOUS_ID, $groupIds)) !== false)
         {
           unset($groupIds[$key]);
-          if ($denyReason !== null)
+          if (null !== $denyReason)
           {
             $denyReason = self::getAccessWarning($basisSlug, $restriction);
           }
@@ -268,7 +268,7 @@ class QubitGrantedRight extends BaseGrantedRight
 
   private static function getAccessWarning($basisSlug, $restriction)
   {
-    if ($restriction === 'conditional')
+    if ('conditional' === $restriction)
     {
       $setting = QubitSetting::getByNameAndScope("{$basisSlug}_conditional", 'access_statement');
     }
@@ -277,7 +277,7 @@ class QubitGrantedRight extends BaseGrantedRight
       $setting = QubitSetting::getByNameAndScope("{$basisSlug}_disallow", 'access_statement');
     }
 
-    if ($setting === null)
+    if (null === $setting)
     {
       return false;
     }

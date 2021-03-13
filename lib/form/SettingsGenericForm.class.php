@@ -71,6 +71,6 @@ class SettingsGenericForm extends sfForm
 
   public function areFieldsRequired()
   {
-    return !(isset($this->options['fieldsRequired']) && $this->options['fieldsRequired'] === false);
+    return !(isset($this->options['fieldsRequired']) && false === $this->options['fieldsRequired']);
   }
 }

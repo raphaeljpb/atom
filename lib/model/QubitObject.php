@@ -309,7 +309,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   {
     $status = $this->getStatus(['typeId' => $options['typeId']]);
     // only create a new status object if type is not already set
-    if ($status === null)
+    if (null === $status)
     {
       $status = new QubitStatus();
       $status->setTypeId($options['typeId']);
@@ -490,7 +490,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
       return false;
     }
 
-    return $digitalObject->mediaTypeId == QubitTerm::TEXT_ID;
+    return QubitTerm::TEXT_ID == $digitalObject->mediaTypeId;
   }
 
   // Other names
@@ -550,7 +550,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   {
     // Verify that $physicalObject is really a Physical Object and
     // Don't add an identical object -> physical object relationship
-    if (get_class($physicalObject) == 'QubitPhysicalObject' && $this->getPhysicalObject($physicalObject->id) === null)
+    if ('QubitPhysicalObject' == get_class($physicalObject) && null === $this->getPhysicalObject($physicalObject->id))
     {
       $relation = new QubitRelation();
       $relation->setSubject($physicalObject);

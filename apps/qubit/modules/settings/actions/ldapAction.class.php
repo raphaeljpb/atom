@@ -71,7 +71,7 @@ class SettingsLdapAction extends DefaultEditAction
         $this->form->setDefault($name, $default);
 
         // Set validator and widget
-        $validator = ($name == 'ldapPort') ? new sfValidatorInteger(['min' => 1, 'max' => 65535]) : new sfValidatorPass();
+        $validator = ('ldapPort' == $name) ? new sfValidatorInteger(['min' => 1, 'max' => 65535]) : new sfValidatorPass();
         $this->form->setValidator($name, $validator);
         $this->form->setWidget($name, new sfWidgetFormInput());
 

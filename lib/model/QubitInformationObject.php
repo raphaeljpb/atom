@@ -204,7 +204,7 @@ class QubitInformationObject extends BaseInformationObject
     parent::save($connection);
 
     // Log creation/modification
-    if ($this->id != QubitInformationObject::ROOT_ID && sfConfig::get('app_audit_log_enabled', false))
+    if (QubitInformationObject::ROOT_ID != $this->id && sfConfig::get('app_audit_log_enabled', false))
     {
       $log = new QubitAuditLog();
       $log->objectId = $this->id;
@@ -279,7 +279,7 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // Force a publication status
-    if ($this->id != QubitInformationObject::ROOT_ID && !$hasPubStatus)
+    if (QubitInformationObject::ROOT_ID != $this->id && !$hasPubStatus)
     {
       $status = new QubitStatus();
       $status->objectId = $this->id;
@@ -590,7 +590,7 @@ class QubitInformationObject extends BaseInformationObject
     // Find out which repository we'd inherit if any.
     foreach ($this->getAncestors() as $ancestor)
     {
-      if ($ancestor->id == QubitInformationObject::ROOT_ID)
+      if (QubitInformationObject::ROOT_ID == $ancestor->id)
       {
         continue;
       }
@@ -618,7 +618,7 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // Create EAD XML exports if the description and/or top-level parent is published... otherwise delete any that may exist
-    if ($this->getCollectionRoot()->getPublicationStatus()->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)
+    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->getCollectionRoot()->getPublicationStatus()->statusId)
     {
       // Export top-level parent as EAD
       $params = [
@@ -634,7 +634,7 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // Create DC XML exports if the description's published... otherwise delete any that may exist
-    if ($this->getPublicationStatus()->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)
+    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->getPublicationStatus()->statusId)
     {
       // Export as DC
       $params = [
@@ -657,7 +657,7 @@ class QubitInformationObject extends BaseInformationObject
    */
   public function urlForEadExport()
   {
-    if ($this->getPublicationStatus()->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID && file_exists($this->pathToEadExport()))
+    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->getPublicationStatus()->statusId && file_exists($this->pathToEadExport()))
     {
       return sfConfig::get('app_siteBaseUrl').'/'.$this->pathToEadExport();
     }
@@ -688,7 +688,7 @@ class QubitInformationObject extends BaseInformationObject
    */
   public function urlForDcExport()
   {
-    if ($this->getPublicationStatus()->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID && file_exists($this->pathToDcExport()))
+    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->getPublicationStatus()->statusId && file_exists($this->pathToDcExport()))
     {
       return sfConfig::get('app_siteBaseUrl').'/'.$this->pathToDcExport();
     }
@@ -879,7 +879,7 @@ class QubitInformationObject extends BaseInformationObject
 
     $rows = QubitPdo::fetchAll($sql, [$this->lft, $this->rgt, $culture, $level]);
 
-    return count($rows) == 1;
+    return 1 == count($rows);
   }
 
   // Actor/Event relations
@@ -1035,7 +1035,7 @@ class QubitInformationObject extends BaseInformationObject
   public function addTermRelation($termId, $options = [])
   {
     // Don't add a term relation to this information object that already exists.
-    if ($this->getTermRelation($termId) === null)
+    if (null === $this->getTermRelation($termId))
     {
       $newTermRelation = new QubitObjectTermRelation();
       $newTermRelation->setTermId($termId);
@@ -1051,7 +1051,7 @@ class QubitInformationObject extends BaseInformationObject
     $criteria = new Criteria();
     $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->id);
 
-    if ($taxonomyId != 'all')
+    if ('all' != $taxonomyId)
     {
       $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
       $criteria->add(QubitTerm::TAXONOMY_ID, $taxonomyId);
@@ -1430,7 +1430,7 @@ class QubitInformationObject extends BaseInformationObject
   public function setRepositoryByName($name)
   {
     // ignore if repository URL instead of name is being passed
-    if (strtolower(substr($name, 0, 4)) !== 'http')
+    if ('http' !== strtolower(substr($name, 0, 4)))
     {
       // see if Repository record already exists, if so link to it
       $criteria = new Criteria();
@@ -1438,7 +1438,7 @@ class QubitInformationObject extends BaseInformationObject
       $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, $name);
       if ($actor = QubitActor::getOne($criteria))
       {
-        if ($actor->getClassName() == 'QubitRepository')
+        if ('QubitRepository' == $actor->getClassName())
         {
           $this->setRepositoryId($actor->id);
         }
@@ -1802,11 +1802,11 @@ class QubitInformationObject extends BaseInformationObject
     $noteContent = '';
     foreach ($langmaterialNode->childNodes as $child)
     {
-      if ($child->nodeType == XML_TEXT_NODE)
+      if (XML_TEXT_NODE == $child->nodeType)
       {
         $noteContent .= trim($child->textContent);
       }
-      elseif ($child->nodeName == 'lb')
+      elseif ('lb' == $child->nodeName)
       {
         $noteContent .= "\n";
       }
@@ -1893,7 +1893,7 @@ class QubitInformationObject extends BaseInformationObject
     $creators = [];
     foreach ($this->eventsRelatedByobjectId as $existingEvent)
     {
-      if ($existingEvent->typeId == QubitTerm::CREATION_ID && isset($existingEvent->actor))
+      if (QubitTerm::CREATION_ID == $existingEvent->typeId && isset($existingEvent->actor))
       {
         $creators[] = $existingEvent->actor;
       }
@@ -1960,7 +1960,7 @@ class QubitInformationObject extends BaseInformationObject
   public function setLevelOfDescriptionByName($name)
   {
     // Normalize name of "Record group" level of description (for EAD imports)
-    if ($name == 'recordgrp')
+    if ('recordgrp' == $name)
     {
       // See if Level of Description term already exists, if so link to it
       $criteria = new Criteria();
@@ -1976,7 +1976,7 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // Don't proceed with empty $name, or if 'otherlevel' value is passed
-    if (0 < strlen($name) && $name !== 'otherlevel')
+    if (0 < strlen($name) && 'otherlevel' !== $name)
     {
       // See if Level of Description term already exists, if so link to it
       $criteria = new Criteria();
@@ -2637,7 +2637,7 @@ class QubitInformationObject extends BaseInformationObject
       $criteria->setLimit($limit);
       $rows = QubitInformationObject::get($criteria);
 
-      if ($siblingsRemaining !== null)
+      if (null !== $siblingsRemaining)
       {
         $siblingsRemaining = $rowsCount - $limit + 1;
       }
@@ -2829,7 +2829,7 @@ class QubitInformationObject extends BaseInformationObject
 
     // Ascend the hierarchy to build the inherited identifier manually,
     // as this method may be called before saving and getAncestors() can work.
-    while ($item && $item->id != QubitInformationObject::ROOT_ID)
+    while ($item && QubitInformationObject::ROOT_ID != $item->id)
     {
       if (isset($item->identifier))
       {
@@ -2964,7 +2964,7 @@ class QubitInformationObject extends BaseInformationObject
   {
     // We could also maybe use $this->$varmagic here but
     // I figure just a simple if/else was more readable.
-    if ($relatedBy === 'object')
+    if ('object' === $relatedBy)
     {
       $relations = $this->relationsRelatedByobjectId;
     }
@@ -3087,7 +3087,7 @@ class QubitInformationObject extends BaseInformationObject
             $fieldValue = $nameNode->nodeValue;
           }
 
-          if ($fieldValue != '')
+          if ('' != $fieldValue)
           {
             $name = $fieldValue;
             $typeId = $fieldTypeId;
@@ -3147,7 +3147,7 @@ class QubitInformationObject extends BaseInformationObject
    */
   private function getNormalizedDate($date)
   {
-    if (strpos($date, '-') !== false)
+    if (false !== strpos($date, '-'))
     {
       return $date; // Already in YYYY-MM-DD format (hopefully)
     }
@@ -3167,10 +3167,10 @@ class QubitInformationObject extends BaseInformationObject
       // no break
       case strlen($date) >= 6: $month = (int) substr($date, 4, 2);
       // no break
-      case strlen($date) == 8: $day = (int) substr($date, 6, 2);
+      case 8 == strlen($date): $day = (int) substr($date, 6, 2);
     }
 
-    if ($year === 0)
+    if (0 === $year)
     {
       return null; // Garbage date
     }
@@ -3218,7 +3218,7 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // Blank string or null returned, attempt to fall back to slug based on title
-    if ($slugBasis != QubitSlug::SLUG_BASIS_TITLE && !$stringToSlugify)
+    if (QubitSlug::SLUG_BASIS_TITLE != $slugBasis && !$stringToSlugify)
     {
       $stringToSlugify = $this->getTitle(['sourceCulture' => true]);
     }

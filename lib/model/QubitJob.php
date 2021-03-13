@@ -67,7 +67,7 @@ class QubitJob extends BaseJob
    */
   public function setStatusError($errorNote = null)
   {
-    if ($errorNote !== null)
+    if (null !== $errorNote)
     {
       $this->addNoteText($errorNote);
     }
@@ -311,7 +311,7 @@ class QubitJob extends BaseJob
     $job->statusId = QubitTerm::JOB_STATUS_IN_PROGRESS_ID;
 
     $sfUser = sfContext::getInstance()->user;
-    if ($sfUser !== null && $sfUser->isAuthenticated())
+    if (null !== $sfUser && $sfUser->isAuthenticated())
     {
       $job->userId = $sfUser->getUserID();
     }

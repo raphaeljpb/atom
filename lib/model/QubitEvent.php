@@ -47,7 +47,7 @@ class QubitEvent extends BaseEvent
     {
       // Update IO descendants in creation events
       $options = [];
-      if ($this->typeId == QubitTerm::CREATION_ID)
+      if (QubitTerm::CREATION_ID == $this->typeId)
       {
         $options['updateDescendants'] = true;
       }
@@ -79,7 +79,7 @@ class QubitEvent extends BaseEvent
     {
       // Update IO descendants in creation events
       $options = [];
-      if ($this->typeId == QubitTerm::CREATION_ID)
+      if (QubitTerm::CREATION_ID == $this->typeId)
       {
         $options['updateDescendants'] = true;
       }

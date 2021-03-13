@@ -98,7 +98,7 @@ class arRepositoryCsvExportJob extends arExportJob
       $writer->exportResource($resource);
 
       // Log progress every 1000 rows
-      if ($itemsExported && ($itemsExported % 1000 == 0))
+      if ($itemsExported && (0 == $itemsExported % 1000))
       {
         $this->info($this->i18n->__('%1 items exported.', ['%1' => $itemsExported]));
       }

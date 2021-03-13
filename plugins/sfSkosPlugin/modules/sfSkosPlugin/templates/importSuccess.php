@@ -1,7 +1,7 @@
 <?php decorate_with('layout_1col.php'); ?>
 
 <?php slot('title'); ?>
-  <?php if (isset($resource) && $resource->getClass() == 'QubitTerm') { ?>
+  <?php if (isset($resource) && 'QubitTerm' == $resource->getClass()) { ?>
     <div class="multiline-header">
       <h1><?php echo __('SKOS import'); ?></h1>
       <span class="sub"><?php echo render_title($parent); ?></span>

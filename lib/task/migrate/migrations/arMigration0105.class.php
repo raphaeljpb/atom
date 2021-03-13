@@ -78,7 +78,7 @@ class arMigration0105
         $term->culture = 'en';
         $term->save();
 
-        if ($converseTermName == 'itself')
+        if ('itself' == $converseTermName)
         {
           $term->converseTermId = $term->id;
         }

@@ -86,7 +86,7 @@ sql;
     $premisAccessRight = QubitSetting::getByName('premisAccessRight');
     $premisAccessRightValues = QubitSetting::getByName('premisAccessRightValues');
 
-    if ($premisAccessRight === null)
+    if (null === $premisAccessRight)
     {
       $s = new QubitSetting();
       $s->setName('premisAccessRight');
@@ -94,7 +94,7 @@ sql;
       $s->save();
     }
 
-    if ($premisAccessRightValues === null)
+    if (null === $premisAccessRightValues)
     {
       $s = new QubitSetting();
       $s->setName('premisAccessRightValues');
@@ -106,7 +106,7 @@ sql;
     $disallowWarning = QubitSetting::getByName('access_disallow_warning');
     $conditionalWarning = QubitSetting::getByName('access_conditional_warning');
 
-    if ($disallowWarning === null)
+    if (null === $disallowWarning)
     {
       $s = new QubitSetting();
       $s->setScope('ui_label');
@@ -115,7 +115,7 @@ sql;
       $s->save();
     }
 
-    if ($conditionalWarning === null)
+    if (null === $conditionalWarning)
     {
       $s = new QubitSetting();
       $s->setScope('ui_label');
@@ -136,13 +136,13 @@ sql;
     ';
 
     $permissionCount = QubitPdo::fetchColumn($sqlCount, [QubitAclGroup::ANONYMOUS_ID]);
-    if ($permissionCount == 0)
+    if (0 == $permissionCount)
     {
       QubitPdo::prepareAndExecute($sqlInsert, [QubitAclGroup::ANONYMOUS_ID, QubitInformationObject::ROOT_ID]);
     }
 
     $permissionCount = QubitPdo::fetchColumn($sqlCount, [QubitAclGroup::AUTHENTICATED_ID]);
-    if ($permissionCount == 0)
+    if (0 == $permissionCount)
     {
       QubitPdo::prepareAndExecute($sqlInsert, [QubitAclGroup::AUTHENTICATED_ID, QubitInformationObject::ROOT_ID]);
     }

@@ -103,7 +103,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
           break;
         }
         $event = false;
-        if ($this->request->getMethod() === 'PUT')
+        if ('PUT' === $this->request->getMethod())
         {
           foreach ($this->io->getActorEvents() as $item)
           {
@@ -123,7 +123,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
           $value->actor_id = $actor->id;
         }
 
-        if ($event !== false)
+        if (false !== $event)
         {
           $event->typeId = $value->type_id;
           $event->actorId = $value->actor_id;
@@ -151,7 +151,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
           break;
         }
         $event = false;
-        if ($this->request->getMethod() === 'PUT')
+        if ('PUT' === $this->request->getMethod())
         {
           foreach ($this->io->getDates() as $item)
           {
@@ -161,7 +161,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
           }
         }
 
-        if ($event !== false)
+        if (false !== $event)
         {
           $event->startDate = $value->start_date;
           $event->endDate = $value->end_date;
@@ -192,7 +192,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
           break;
         }
         $note = false;
-        if ($this->request->getMethod() === 'PUT')
+        if ('PUT' === $this->request->getMethod())
         {
           foreach ($this->io->getNotes() as $item)
           {
@@ -208,7 +208,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
           $noteTypeId = array_search($value->type, $combinedNoteTypeData);
         }
 
-        if ($note !== false)
+        if (false !== $note)
         {
           $note->setContent($value->content);
 
@@ -251,7 +251,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
 
           break;
         }
-        if ($relation !== false)
+        if (false !== $relation)
         {
           $relation->termId = $value->id;
           $relation->save();

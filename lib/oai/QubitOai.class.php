@@ -94,7 +94,7 @@ class QubitOai
     $parametersKeys = array_diff(array_keys($parameters), $verb);
     foreach ($parametersKeys as $key)
     {
-      if ($parameters[$key] == null)
+      if (null == $parameters[$key])
       {
         return true;
       }
@@ -114,7 +114,7 @@ class QubitOai
   {
     // Ex. 2003-01-02T01:30:30Z or 2003-01-02
     $parts = explode('-', $date);
-    if (count($parts) != 3)
+    if (3 != count($parts))
     {
       return false;
     }
@@ -166,7 +166,7 @@ class QubitOai
    */
   public static function getDate($date = '')
   {
-    if ($date == '')
+    if ('' == $date)
     {
       return gmdate('Y-m-d\TH:i:s\Z');
     }
@@ -361,7 +361,7 @@ class QubitOai
     $oaiSimpleRes = $oaiSimple->xpath('//c:ListRecords/c:resumptionToken');
 
     $oaiSimpleRes = $oaiSimple->ListRecords->resumptionToken;
-    if ($oaiSimpleRes == '')
+    if ('' == $oaiSimpleRes)
     {
       return false;
     }
@@ -423,7 +423,7 @@ class QubitOai
 
       $doc->namespaces[$pre] = $uri;
 
-      if ($pre == '')
+      if ('' == $pre)
       {
         $pre = 'noname';
       }

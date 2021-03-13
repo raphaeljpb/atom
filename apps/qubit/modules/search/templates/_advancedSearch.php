@@ -21,9 +21,9 @@
             <div class="criterion">
 
               <select class="boolean" name="so<?php echo $key; ?>">
-                <option value="and"<?php echo $item['operator'] == 'and' ? ' selected="selected"' : ''; ?>><?php echo __('and'); ?></option>
-                <option value="or"<?php echo $item['operator'] == 'or' ? ' selected="selected"' : ''; ?>><?php echo __('or'); ?></option>
-                <option value="not"<?php echo $item['operator'] == 'not' ? ' selected="selected"' : ''; ?>><?php echo __('not'); ?></option>
+                <option value="and"<?php echo 'and' == $item['operator'] ? ' selected="selected"' : ''; ?>><?php echo __('and'); ?></option>
+                <option value="or"<?php echo 'or' == $item['operator'] ? ' selected="selected"' : ''; ?>><?php echo __('or'); ?></option>
+                <option value="not"<?php echo 'not' == $item['operator'] ? ' selected="selected"' : ''; ?>><?php echo __('not'); ?></option>
               </select>
 
               <input class="query" type="text" placeholder="<?php echo __('Search'); ?>" name="sq<?php echo $key; ?>" value="<?php echo $item['query']; ?>"/>
@@ -31,25 +31,25 @@
               <span><?php echo __('in'); ?></span>
 
               <select class="field" name="sf<?php echo $key; ?>">
-                <option value=""<?php echo $item['field'] == '' ? ' selected="selected"' : ''; ?>><?php echo __('Any field'); ?></option>
-                <option value="title"<?php echo $item['field'] == 'title' ? ' selected="selected"' : ''; ?>><?php echo __('Title'); ?></option>
-                <?php if (($template == 'rad' && check_field_visibility('app_element_visibility_rad_archival_history'))
-                  || ($template == 'isad' && check_field_visibility('app_element_visibility_isad_archival_history'))
-                  || ($template != 'isad' && $template != 'rad')) { ?>
-                  <option value="archivalHistory"<?php echo $item['field'] == 'archivalHistory' ? ' selected="selected"' : ''; ?>><?php echo __('Archival history'); ?></option>
+                <option value=""<?php echo '' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Any field'); ?></option>
+                <option value="title"<?php echo 'title' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Title'); ?></option>
+                <?php if (('rad' == $template && check_field_visibility('app_element_visibility_rad_archival_history'))
+                  || ('isad' == $template && check_field_visibility('app_element_visibility_isad_archival_history'))
+                  || ('isad' != $template && 'rad' != $template)) { ?>
+                  <option value="archivalHistory"<?php echo 'archivalHistory' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Archival history'); ?></option>
                 <?php } ?>
-                <option value="scopeAndContent"<?php echo $item['field'] == 'scopeAndContent' ? ' selected="selected"' : ''; ?>><?php echo __('Scope and content'); ?></option>
-                <option value="extentAndMedium"<?php echo $item['field'] == 'extentAndMedium' ? ' selected="selected"' : ''; ?>><?php echo __('Extent and medium'); ?></option>
-                <option value="subject"<?php echo $item['field'] == 'subject' ? ' selected="selected"' : ''; ?>><?php echo __('Subject access points'); ?></option>
-                <option value="name"<?php echo $item['field'] == 'name' ? ' selected="selected"' : ''; ?>><?php echo __('Name access points'); ?></option>
-                <option value="place"<?php echo $item['field'] == 'place' ? ' selected="selected"' : ''; ?>><?php echo __('Place access points'); ?></option>
-                <option value="genre"<?php echo $item['field'] == 'genre' ? ' selected="selected"' : ''; ?>><?php echo __('Genre access points'); ?></option>
-                <option value="identifier"<?php echo $item['field'] == 'identifier' ? ' selected="selected"' : ''; ?>><?php echo __('Identifier'); ?></option>
-                <option value="referenceCode"<?php echo $item['field'] == 'referenceCode' ? ' selected="selected"' : ''; ?>><?php echo __('Reference code'); ?></option>
-                <option value="digitalObjectTranscript"<?php echo $item['field'] == 'digitalObjectTranscript' ? ' selected="selected"' : ''; ?>><?php echo __('Digital object text'); ?></option>
-                <option value="findingAidTranscript"<?php echo $item['field'] == 'findingAidTranscript' ? ' selected="selected"' : ''; ?>><?php echo __('Finding aid text'); ?></option>
-                <option value="creator"<?php echo $item['field'] == 'creator' ? ' selected="selected"' : ''; ?>><?php echo __('Creator'); ?></option>
-                <option value="allExceptFindingAidTranscript"<?php echo $item['field'] == 'allExceptFindingAidTranscript' ? ' selected="selected"' : ''; ?>><?php echo __('Any field except finding aid text'); ?></option>
+                <option value="scopeAndContent"<?php echo 'scopeAndContent' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Scope and content'); ?></option>
+                <option value="extentAndMedium"<?php echo 'extentAndMedium' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Extent and medium'); ?></option>
+                <option value="subject"<?php echo 'subject' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Subject access points'); ?></option>
+                <option value="name"<?php echo 'name' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Name access points'); ?></option>
+                <option value="place"<?php echo 'place' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Place access points'); ?></option>
+                <option value="genre"<?php echo 'genre' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Genre access points'); ?></option>
+                <option value="identifier"<?php echo 'identifier' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Identifier'); ?></option>
+                <option value="referenceCode"<?php echo 'referenceCode' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Reference code'); ?></option>
+                <option value="digitalObjectTranscript"<?php echo 'digitalObjectTranscript' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Digital object text'); ?></option>
+                <option value="findingAidTranscript"<?php echo 'findingAidTranscript' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Finding aid text'); ?></option>
+                <option value="creator"<?php echo 'creator' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Creator'); ?></option>
+                <option value="allExceptFindingAidTranscript"<?php echo 'allExceptFindingAidTranscript' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Any field except finding aid text'); ?></option>
               </select>
 
               <a href="#" class="delete-criterion"><i class="fa fa-times"></i></a>
@@ -77,9 +77,9 @@
           <select class="field" name="sf<?php echo $count; ?>">
             <option value=""><?php echo __('Any field'); ?></option>
             <option value="title"><?php echo __('Title'); ?></option>
-            <?php if (($template == 'rad' && check_field_visibility('app_element_visibility_rad_archival_history'))
-              || ($template == 'isad' && check_field_visibility('app_element_visibility_isad_archival_history'))
-              || ($template != 'isad' && $template != 'rad')) { ?>
+            <?php if (('rad' == $template && check_field_visibility('app_element_visibility_rad_archival_history'))
+              || ('isad' == $template && check_field_visibility('app_element_visibility_isad_archival_history'))
+              || ('isad' != $template && 'rad' != $template)) { ?>
               <option value="archivalHistory"><?php echo __('Archival history'); ?></option>
             <?php } ?>
             <option value="scopeAndContent"><?php echo __('Scope and content'); ?></option>
@@ -229,11 +229,11 @@
 
           <div class="date-type">
             <label>
-              <input type="radio" name="rangeType" value="inclusive" <?php echo $rangeType == 'inclusive' ? 'checked' : ''; ?>>
+              <input type="radio" name="rangeType" value="inclusive" <?php echo 'inclusive' == $rangeType ? 'checked' : ''; ?>>
               <?php echo __('Overlapping'); ?>
             </label>
             <label>
-              <input type="radio" name="rangeType" value="exact" <?php echo $rangeType == 'exact' ? 'checked' : ''; ?>>
+              <input type="radio" name="rangeType" value="exact" <?php echo 'exact' == $rangeType ? 'checked' : ''; ?>>
               <?php echo __('Exact'); ?>
             </label>
           </div>

@@ -288,7 +288,7 @@ class QubitRepository extends BaseRepository
 
   public static function addCountryCodeCriteria($criteria, $countryCode)
   {
-    if ($countryCode !== null)
+    if (null !== $countryCode)
     {
       $criteria->addJoin(QubitRepository::ID, QubitContactInformation::ACTOR_ID);
       $criteria->add(QubitContactInformation::PRIMARY_CONTACT, true);

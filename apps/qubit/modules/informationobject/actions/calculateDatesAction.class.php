@@ -36,7 +36,7 @@ class InformationObjectCalculateDatesAction extends sfAction
 
     // Return error page if attempting to calculate dates for a description that
     // has no descendants
-    if ($this->resource->rgt - $this->resource->lft == 1)
+    if (1 == $this->resource->rgt - $this->resource->lft)
     {
       return sfView::ERROR;
     }
@@ -136,7 +136,7 @@ class InformationObjectCalculateDatesAction extends sfAction
 
         if (null !== $object = QubitObject::getOne($criteria))
         {
-          if ($object->className == 'QubitEvent')
+          if ('QubitEvent' == $object->className)
           {
             $this->eventId = $object->id;
           }

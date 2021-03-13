@@ -32,7 +32,7 @@ class StaticPageIndexAction extends sfAction
 
     $this->content = $this->getPurifiedStaticPageContent();
 
-    if (sfConfig::get('app_enable_institutional_scoping') && $this->resource->slug == 'home')
+    if (sfConfig::get('app_enable_institutional_scoping') && 'home' == $this->resource->slug)
     {
       // Remove the search-realm attribute
       $this->context->user->removeAttribute('search-realm');

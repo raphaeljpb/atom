@@ -28,7 +28,7 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($this->request->getMethod() == 'POST')
+    if ('POST' == $this->request->getMethod())
     {
       $this->form->bind($request->getPostParameters());
 

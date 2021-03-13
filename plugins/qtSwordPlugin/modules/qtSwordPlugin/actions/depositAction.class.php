@@ -109,7 +109,7 @@ class qtSwordPluginDepositAction extends sfAction
   {
     $this->response->setStatusCode($code);
 
-    if ($template !== null)
+    if (null !== $template)
     {
       $this->request->setRequestFormat('xml');
 

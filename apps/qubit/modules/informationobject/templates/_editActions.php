@@ -1,6 +1,6 @@
 <section class="actions">
   <ul>
-    <?php if ($resource->id != QubitInformationObject::ROOT_ID) { ?>
+    <?php if (QubitInformationObject::ROOT_ID != $resource->id) { ?>
       <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'informationobject'], ['class' => 'c-btn']); ?></li>
       <?php if (isset($sf_request->parent)) { ?>
         <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Create'); ?>"/></li>

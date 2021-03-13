@@ -36,7 +36,7 @@ class arMigration0124
    */
   public function up($configuration)
   {
-    if (QubitSetting::getByName('default_repository_browse_view') === null)
+    if (null === QubitSetting::getByName('default_repository_browse_view'))
     {
       $setting = new QubitSetting();
       $setting->setName('default_repository_browse_view');

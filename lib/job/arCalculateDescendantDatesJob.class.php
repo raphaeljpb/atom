@@ -118,6 +118,6 @@ class arCalculateDescendantDatesJob extends arBaseJob
 
   private function describeDate($date)
   {
-    return ($date !== null) ? $date : $this->i18n->__('[open ended]');
+    return (null !== $date) ? $date : $this->i18n->__('[open ended]');
   }
 }

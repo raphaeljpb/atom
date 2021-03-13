@@ -937,7 +937,7 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
   $match = null;
   foreach ($terms as $item)
   {
-    if ($item->getName(['culture' => 'es']) == 'Bar ESPAÑOL')
+    if ('Bar ESPAÑOL' == $item->getName(['culture' => 'es']))
     {
       $match = $item;
 

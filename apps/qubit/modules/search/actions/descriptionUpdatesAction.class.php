@@ -82,14 +82,14 @@ class SearchDescriptionUpdatesAction extends sfAction
     $criteria->addJoin(QubitAuditLog::OBJECT_ID, QubitInformationObject::ID);
 
     // Add publication status filtering, if specified
-    if ($this->form->getValue('publicationStatus') != 'all')
+    if ('all' != $this->form->getValue('publicationStatus'))
     {
       $criteria->addJoin(QubitAuditLog::OBJECT_ID, QubitStatus::OBJECT_ID);
       $criteria->add(QubitStatus::STATUS_ID, $this->form->getValue('publicationStatus'));
     }
 
     // Add user action type filtering, if specified
-    if ($this->form->getValue('dateOf') != 'both')
+    if ('both' != $this->form->getValue('dateOf'))
     {
       switch($this->form->getValue('dateOf'))
       {

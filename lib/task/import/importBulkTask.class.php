@@ -215,7 +215,7 @@ EOF;
 
         while (isset($dircont[$i]))
         {
-          if ($dircont[$i] !== '.' && $dircont[$i] !== '..' && !preg_match('/^\..*/', $dircont[$i]))
+          if ('.' !== $dircont[$i] && '..' !== $dircont[$i] && !preg_match('/^\..*/', $dircont[$i]))
           {
             $current_file = "{$thisdir}/{$dircont[$i]}";
 

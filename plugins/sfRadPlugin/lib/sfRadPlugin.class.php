@@ -117,7 +117,7 @@ class sfRadPlugin implements ArrayAccess
 
       case 'languageNotes':
         $note = $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
-        $missingNote = count($note) === 0;
+        $missingNote = 0 === count($note);
 
         if (0 == strlen($value))
         {

@@ -1,6 +1,6 @@
 <div class="field">
 
-  <?php if ($template == 'rad') { ?>
+  <?php if ('rad' == $template) { ?>
     <h3><?php echo __('Related materials'); ?></h3>
   <?php } else { ?>
     <h3><?php echo __('Related descriptions'); ?></h3>

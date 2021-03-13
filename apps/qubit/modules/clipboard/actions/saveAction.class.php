@@ -105,7 +105,7 @@ class ClipboardSaveAction extends sfAction
           ]
         );
 
-        if ($count == 1)
+        if (1 == $count)
         {
           $validatedSlugs[$type][] = $slug;
         }

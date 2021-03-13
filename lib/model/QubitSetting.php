@@ -89,7 +89,7 @@ class QubitSetting extends BaseSetting
       if ($qubitSetting->scope)
       {
         // Collect enabled languages into a single setting
-        if ($qubitSetting->scope == 'i18n_languages')
+        if ('i18n_languages' == $qubitSetting->scope)
         {
           $i18nLanguages[] = $qubitSetting->value_source;
 
@@ -221,7 +221,7 @@ class QubitSetting extends BaseSetting
 
     // If setting doesn't already exist, create a new one if
     // $options['createNew'] is true
-    if (null === ($setting = QubitSetting::getOne($criteria)) && $options['createNew'] === true)
+    if (null === ($setting = QubitSetting::getOne($criteria)) && true === $options['createNew'])
     {
       $setting = new QubitSetting();
       $setting->setName($name);
@@ -262,14 +262,14 @@ class QubitSetting extends BaseSetting
 
     // Default "editable" to true, unless forced to false
     $setting->setEditable(1);
-    if (isset($options['editable']) && $options['editable'] == false)
+    if (isset($options['editable']) && false == $options['editable'])
     {
       $setting->setEditable(0);
     }
 
     // Default "deleteable" to true, unless forced to false
     $setting->setDeleteable(1);
-    if (isset($options['deleteable']) && $options['deleteable'] == false)
+    if (isset($options['deleteable']) && false == $options['deleteable'])
     {
       $setting->setDeleteable(0);
     }

@@ -111,7 +111,7 @@
 
                 <?php echo link_to(render_title(get_search_i18n($doc, 'title', ['allowEmpty' => false])), ['slug' => $doc['slug'], 'module' => 'informationobject']); ?>
                 <?php $status = (isset($doc['publicationStatusId'])) ? QubitTerm::getById($doc['publicationStatusId']) : null; ?>
-                <?php if (isset($status) && $status->id == QubitTerm::PUBLICATION_STATUS_DRAFT_ID) { ?><span class="note2"><?php echo ' ('.render_value_inline($status).')'; ?></span><?php } ?>
+                <?php if (isset($status) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $status->id) { ?><span class="note2"><?php echo ' ('.render_value_inline($status).')'; ?></span><?php } ?>
 
               <?php } elseif ('QubitActor' == $className){ ?>
 

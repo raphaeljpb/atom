@@ -52,7 +52,7 @@ class SettingsPageElementsAction extends sfAction
     foreach ($this::$NAMES as $name)
     {
       // Disable checkbox to show digital object maps if it's not currently enabled and no Google Maps API key is defined
-      if ($name == 'toggleDigitalObjectMap' && empty($toggleDigitalObjectMapSetting->value) && empty($googleMapsApiKeySetting->value))
+      if ('toggleDigitalObjectMap' == $name && empty($toggleDigitalObjectMapSetting->value) && empty($googleMapsApiKeySetting->value))
       {
         $this->form->setWidget($name, new sfWidgetFormInputCheckbox([], ['class' => 'disabled', 'disabled' => true]));
       }

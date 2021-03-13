@@ -157,7 +157,7 @@ EOF;
       $params = [':newId' => $selected_id, ':oldId' => $id];
       QubitPdo::modify($sql, $params);
 
-      if ($this->taxonomyId == QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID)
+      if (QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID == $this->taxonomyId)
       {
         $this->log('Changing level of descriptions from term '.$id.' to '.$selected_id.'.');
 

@@ -40,7 +40,7 @@ class sfWebBrowser
       {
         $adapterClass = 'sfCurlAdapter';
       }
-      elseif (ini_get('allow_url_fopen') == 1)
+      elseif (1 == ini_get('allow_url_fopen'))
       {
         $adapterClass = 'sfFopenAdapter';
       }
@@ -201,7 +201,7 @@ class sfWebBrowser
       // relative link
       $uri = $this->urlInfo['scheme'].'://'.$this->urlInfo['host'].':'.$this->urlInfo['port'].'/'.$uri;
     }
-    elseif ($urlInfo['scheme'] != 'http' && $urlInfo['scheme'] != 'https')
+    elseif ('http' != $urlInfo['scheme'] && 'https' != $urlInfo['scheme'])
     {
       throw new Exception('sfWebBrowser handles only http and https requests');
     }
@@ -300,7 +300,7 @@ class sfWebBrowser
       $elementName = $element->getAttribute('name');
       $nodeName = $element->nodeName;
       $value = null;
-      if ($nodeName == 'input' && ($element->getAttribute('type') == 'checkbox' || $element->getAttribute('type') == 'radio'))
+      if ('input' == $nodeName && ('checkbox' == $element->getAttribute('type') || 'radio' == $element->getAttribute('type')))
       {
         if ($element->getAttribute('checked'))
         {
@@ -308,16 +308,16 @@ class sfWebBrowser
         }
       }
       elseif (
-        $nodeName == 'input'
+        'input' == $nodeName
         &&
-        (($element->getAttribute('type') != 'submit' && $element->getAttribute('type') != 'button') || $element->getAttribute('value') == $name)
+        (('submit' != $element->getAttribute('type') && 'button' != $element->getAttribute('type')) || $element->getAttribute('value') == $name)
         &&
-        ($element->getAttribute('type') != 'image' || $element->getAttribute('alt') == $name)
+        ('image' != $element->getAttribute('type') || $element->getAttribute('alt') == $name)
       )
       {
         $value = $element->getAttribute('value');
       }
-      elseif ($nodeName == 'textarea')
+      elseif ('textarea' == $nodeName)
       {
         $value = '';
         foreach ($element->childNodes as $el)
@@ -325,7 +325,7 @@ class sfWebBrowser
           $value .= $dom->saveXML($el);
         }
       }
-      elseif ($nodeName == 'select')
+      elseif ('select' == $nodeName)
       {
         if ($multiple = $element->hasAttribute('multiple'))
         {
@@ -658,7 +658,7 @@ class sfWebBrowser
     }
 
     // Throw an exception if response is not valid XML
-    if (get_class($this->responseXml) != 'SimpleXMLElement')
+    if ('SimpleXMLElement' != get_class($this->responseXml))
     {
       $msg = sprintf("Response is not a valid XML string : \n%s", $this->getResponseText());
 

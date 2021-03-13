@@ -1,12 +1,12 @@
 <ul id="treeview-menu" class="nav nav-tabs">
-  <?php if ($treeviewType == 'sidebar') { ?>
+  <?php if ('sidebar' == $treeviewType) { ?>
     <li class="active">
       <a href="#treeview" data-toggle="#treeview">
         <?php echo __('Holdings'); ?>
       </a>
     </li>
   <?php } ?>
-  <li <?php echo ($treeviewType != 'sidebar') ? 'class="active"' : ''; ?>>
+  <li <?php echo ('sidebar' != $treeviewType) ? 'class="active"' : ''; ?>>
     <a href="#treeview-search" data-toggle="#treeview-search">
       <?php echo __('Quick search'); ?>
     </a>
@@ -15,7 +15,7 @@
 
 <div id="treeview" data-current-id="<?php echo $resource->id; ?>" data-sortable="<?php echo empty($sortable) ? 'false' : 'true'; ?>">
 
-  <?php if ($treeviewType == 'sidebar') { ?>
+  <?php if ('sidebar' == $treeviewType) { ?>
 
     <ul class="unstyled">
 
@@ -118,7 +118,7 @@
 
 </div>
 
-<div id="treeview-search" <?php echo ($treeviewType != 'sidebar') ? 'class="force-show"' : ''; ?>>
+<div id="treeview-search" <?php echo ('sidebar' != $treeviewType) ? 'class="force-show"' : ''; ?>>
 
   <form method="get" action="<?php echo url_for(['module' => 'search', 'action' => 'index', 'collection' => $resource->getCollectionRoot()->id]); ?>" data-not-found="<?php echo __('No results found.'); ?>">
     <div class="search-box">

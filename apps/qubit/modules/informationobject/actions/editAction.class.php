@@ -96,7 +96,7 @@ class InformationObjectEditAction extends DefaultEditAction
         // Use current pub. status if the user can publish
         $this->publicationStatusId = $publicationStatus->statusId;
       }
-      elseif (isset($publicationStatus) && $publicationStatus->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)
+      elseif (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $publicationStatus->statusId)
       {
         // Take note to show a warning if the user can't publish but the current pub. status
         // is published while editing, as it will change the pub. status to draft
@@ -651,7 +651,7 @@ class InformationObjectEditAction extends DefaultEditAction
     {
       foreach ($deleteNotes as $noteId => $doDelete)
       {
-        if ($doDelete == 'delete' && !is_null($deleteNote = QubitNote::getById($noteId)))
+        if ('delete' == $doDelete && !is_null($deleteNote = QubitNote::getById($noteId)))
         {
           $deleteNote->delete();
         }

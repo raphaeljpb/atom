@@ -46,7 +46,7 @@ class csvActorExport extends QubitFlatfileExport
     parent::exportResource($resource);
 
     // Export relations
-    $filenamePrepend = ($this->standard !== null) ? $this->standard.'_' : '';
+    $filenamePrepend = (null !== $this->standard) ? $this->standard.'_' : '';
     $filename = sprintf('%s/%s%s_%s.csv', $this->path, $filenamePrepend,
                         str_pad($this->fileIndex, 10, '0', STR_PAD_LEFT), 'relations');
 

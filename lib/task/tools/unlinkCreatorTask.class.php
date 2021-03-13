@@ -146,7 +146,7 @@ EOF;
       }
 
       // Nothing to do if this is the top level record or if no creators on this IO.
-      if ($io->parentId == QubitInformationObject::ROOT_ID || 0 == count($creatorIds))
+      if (QubitInformationObject::ROOT_ID == $io->parentId || 0 == count($creatorIds))
       {
         continue;
       }
@@ -162,7 +162,7 @@ EOF;
       foreach ($io->ancestors->andSelf()->orderBy('rgt') as $ancestor)
       {
         // if this ancestor is the root IO or self, skip it.
-        if ($ancestor->id == QubitInformationObject::ROOT_ID || $ancestor->id == $io->id)
+        if (QubitInformationObject::ROOT_ID == $ancestor->id || $ancestor->id == $io->id)
         {
           continue;
         }

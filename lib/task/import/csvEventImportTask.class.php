@@ -108,7 +108,7 @@ EOF;
             $self->status['subjectIdColumn']
           );
 
-          $whereClause = ($self->status['sourceName'] && $self->status['objectTable'] == 'keymap')
+          $whereClause = ($self->status['sourceName'] && 'keymap' == $self->status['objectTable'])
             ? 'source_name = "'.$self->status['sourceName'].'"'
             : false;
 

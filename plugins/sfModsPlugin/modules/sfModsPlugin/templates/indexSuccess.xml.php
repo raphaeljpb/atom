@@ -38,12 +38,12 @@
         <place><placeTerm><?php echo $item->getPlace(); ?></placeTerm></place>
 
         <?php $dateTagName = $mods->getDateTagNameForEventType($item->typeId); ?>
-        <<?php echo $dateTagName; ?><?php if ($dateTagName == 'dateOther') { ?> type="Broadcasting"<?php } ?>><?php echo $item->getDate(['cultureFallback' => true]); ?></<?php echo $dateTagName; ?>>
+        <<?php echo $dateTagName; ?><?php if ('dateOther' == $dateTagName) { ?> type="Broadcasting"<?php } ?>><?php echo $item->getDate(['cultureFallback' => true]); ?></<?php echo $dateTagName; ?>>
         <?php if (!empty($item->startDate)) { ?>
-          <<?php echo $dateTagName; ?><?php if ($dateTagName == 'dateOther') { ?> type="Broadcasting"<?php } ?> point="start"><?php echo $item->startDate; ?></<?php echo $dateTagName; ?>>
+          <<?php echo $dateTagName; ?><?php if ('dateOther' == $dateTagName) { ?> type="Broadcasting"<?php } ?> point="start"><?php echo $item->startDate; ?></<?php echo $dateTagName; ?>>
         <?php } ?>
         <?php if (!empty($item->endDate)) { ?>
-          <<?php echo $dateTagName; ?><?php if ($dateTagName == 'dateOther') { ?> type="Broadcasting"<?php } ?> point="end"><?php echo $item->endDate; ?></<?php echo $dateTagName; ?>>
+          <<?php echo $dateTagName; ?><?php if ('dateOther' == $dateTagName) { ?> type="Broadcasting"<?php } ?> point="end"><?php echo $item->endDate; ?></<?php echo $dateTagName; ?>>
         <?php } ?>
 
       <?php } ?>
@@ -144,11 +144,11 @@
   <?php foreach ($resource->relationsRelatedBysubjectId as $item) { ?>
     <?php if (isset($item->type) && QubitTerm::NAME_ACCESS_POINT_ID == $item->type->id) { ?>
       <subject>
-        <?php if ($item->object->entityTypeId == QubitTerm::PERSON_ID) { ?>
+        <?php if (QubitTerm::PERSON_ID == $item->object->entityTypeId) { ?>
           <name type="personal"><?php echo escape_dc(esc_specialchars($item->object)); ?></name>
-        <?php } elseif ($item->object->entityTypeId == QubitTerm::FAMILY_ID){ ?>
+        <?php } elseif (QubitTerm::FAMILY_ID == $item->object->entityTypeId){ ?>
           <name type="family"><?php echo escape_dc(esc_specialchars($item->object)); ?></name>
-        <?php } elseif ($item->object->entityTypeId == QubitTerm::CORPORATE_BODY_ID){ ?>
+        <?php } elseif (QubitTerm::CORPORATE_BODY_ID == $item->object->entityTypeId){ ?>
           <name type="corporate"><?php echo escape_dc(esc_specialchars($item->object)); ?></name>
         <?php } else { ?>
           <name><?php echo escape_dc(esc_specialchars($item->object)); ?></name>

@@ -60,7 +60,7 @@ class SearchFilterTagComponent extends sfComponent
       }
 
       // Check using params specified in filter tag configuration
-      if (empty($this->options['operator']) || strtolower($this->options['operator']) == 'and')
+      if (empty($this->options['operator']) || 'and' == strtolower($this->options['operator']))
       {
         // All specified params must be set for filter tag to show
         return count($this->options['params']) == $setCount;

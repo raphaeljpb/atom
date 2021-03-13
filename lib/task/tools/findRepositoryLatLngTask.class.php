@@ -127,7 +127,7 @@ EOF;
 
   protected function wordLimiter($str, $limit = 100, $end_char = '...')
   {
-    if (trim($str) == '')
+    if ('' == trim($str))
     {
       return $str;
     }

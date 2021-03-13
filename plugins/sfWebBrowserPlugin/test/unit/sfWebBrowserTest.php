@@ -377,7 +377,7 @@ foreach ($adapter_list as $adapter)
   // Cookies
 
   $t->diag('Cookies');
-  if ($adapter == 'sfCurlAdapter')
+  if ('sfCurlAdapter' == $adapter)
   {
     $b = new sfWebBrowser([], $adapter, [
       'cookies' => true,
@@ -401,7 +401,7 @@ foreach ($adapter_list as $adapter)
   // File Uploads
 
   $t->diag('File uploads');
-  if ($adapter == 'sfCurlAdapter')
+  if ('sfCurlAdapter' == $adapter)
   {
     $b->post($dump_headers_url, [
       'test_file' => realpath(__FILE__),

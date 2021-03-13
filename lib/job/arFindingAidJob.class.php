@@ -217,7 +217,7 @@ class arFindingAidJob extends arBaseJob
     $output = [];
     exec($cmd, $output, $exitCode);
 
-    if ($exitCode != 0)
+    if (0 != $exitCode)
     {
       $this->error($this->i18n->__('Converting the EAD FO to PDF has failed.'));
       $this->logCmdOutput($output, 'ERROR(FOP)');
@@ -301,7 +301,7 @@ class arFindingAidJob extends arBaseJob
       $command = sprintf('pdftotext %s - 2> /dev/null', $path);
       exec($command, $output, $status);
 
-      if ($status != 0)
+      if (0 != $status)
       {
         $message = $this->i18n->__('Obtaining the text has failed.');
         $this->job->addNoteText($message);
@@ -421,7 +421,7 @@ class arFindingAidJob extends arBaseJob
         'xmlns="urn:isbn:1-931666-22-9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">', $xmlString, 1);
 
     // TODO: Use new base url functionality in AtoM instead of doing this kludge
-    if ($url !== null)
+    if (null !== $url)
     {
       // Since we call the EAD generation from inside Symfony and not as part as a web request,
       // the url was returning symfony://weirdurlhere. We can get around this by passing the referring url into

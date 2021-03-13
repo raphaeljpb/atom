@@ -83,7 +83,7 @@ class SitemapInformationObjectUrl extends AbstractSitemapUrl
     }
 
     // We don't recognize the level of description but we know that it's a collection root
-    if (!empty($this->parent_id) && $this->parent_id == QubitInformationObject::ROOT_ID)
+    if (!empty($this->parent_id) && QubitInformationObject::ROOT_ID == $this->parent_id)
     {
       return '0.9';
     }

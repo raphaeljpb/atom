@@ -36,7 +36,7 @@ class ClipboardExportCheckAction extends sfAction
     foreach ($tokens as $token)
     {
       // Validate token
-      if (!ctype_xdigit($token) || strlen($token) != 32)
+      if (!ctype_xdigit($token) || 32 != strlen($token))
       {
         $missingTokens[] = $token;
 
@@ -63,7 +63,7 @@ class ClipboardExportCheckAction extends sfAction
       );
 
       // Add download path if applicable
-      if (isset($job->downloadPath) && $job->statusId == QubitTerm::JOB_STATUS_COMPLETED_ID)
+      if (isset($job->downloadPath) && QubitTerm::JOB_STATUS_COMPLETED_ID == $job->statusId)
       {
         $message .= $this->context->i18n->__(' %1%Download%2% (%3% b)',
           [
@@ -88,7 +88,7 @@ class ClipboardExportCheckAction extends sfAction
 
       // If job is complete, allow it to be deleted by the user
       $deleteUrl = $this->context->controller->genUrl('jobs/delete?token='.$token);
-      $deleteUrl = $job->statusId == QubitTerm::JOB_STATUS_COMPLETED_ID ? $deleteUrl : null;
+      $deleteUrl = QubitTerm::JOB_STATUS_COMPLETED_ID == $job->statusId ? $deleteUrl : null;
 
       // Add to response data
       $alerts[] = ['type' => $type, 'message' => $message, 'deleteUrl' => $deleteUrl];

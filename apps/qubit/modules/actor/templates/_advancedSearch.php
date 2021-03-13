@@ -21,9 +21,9 @@
             <div class="criterion">
 
               <select class="boolean" name="so<?php echo $key; ?>">
-                <option value="and"<?php echo $item['operator'] == 'and' ? ' selected="selected"' : ''; ?>><?php echo __('and'); ?></option>
-                <option value="or"<?php echo $item['operator'] == 'or' ? ' selected="selected"' : ''; ?>><?php echo __('or'); ?></option>
-                <option value="not"<?php echo $item['operator'] == 'not' ? ' selected="selected"' : ''; ?>><?php echo __('not'); ?></option>
+                <option value="and"<?php echo 'and' == $item['operator'] ? ' selected="selected"' : ''; ?>><?php echo __('and'); ?></option>
+                <option value="or"<?php echo 'or' == $item['operator'] ? ' selected="selected"' : ''; ?>><?php echo __('or'); ?></option>
+                <option value="not"<?php echo 'not' == $item['operator'] ? ' selected="selected"' : ''; ?>><?php echo __('not'); ?></option>
               </select>
 
               <input class="query" type="text" placeholder="<?php echo __('Search'); ?>" name="sq<?php echo $key; ?>" value="<?php echo $item['query']; ?>"/>
@@ -31,7 +31,7 @@
               <span><?php echo __('in'); ?></span>
 
               <select class="field" name="sf<?php echo $key; ?>">
-                <option value=""<?php echo $item['field'] == '' ? ' selected="selected"' : ''; ?>><?php echo __('Any field'); ?></option>
+                <option value=""<?php echo '' == $item['field'] ? ' selected="selected"' : ''; ?>><?php echo __('Any field'); ?></option>
                 <?php foreach ($fieldOptions as $name => $label) { ?>
                   <option value="<?php echo $name; ?>"<?php echo $item['field'] == $name ? ' selected="selected"' : ''; ?>><?php echo $label; ?></option>
                 <?php } ?>

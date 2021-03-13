@@ -38,7 +38,7 @@ class i18nDiffTask extends sfBaseTask
   {
     $output = '';
 
-    if (strtolower($options['file']) != 'stdout')
+    if ('stdout' != strtolower($options['file']))
     {
       $this->logSection('i18n', sprintf('Diff i18n strings for the "%s" application', $arguments['application']));
     }
@@ -54,7 +54,7 @@ class i18nDiffTask extends sfBaseTask
     $extract = new sfI18nApplicationExtract($this->i18n, $arguments['culture']);
     $extract->extract();
 
-    if (strtolower($options['file']) != 'stdout')
+    if ('stdout' != strtolower($options['file']))
     {
       $this->logSection('i18n', sprintf('found "%d" new i18n strings', count($extract->getNewMessages())));
       $this->logSection('i18n', sprintf('found "%d" old i18n strings', count($extract->getOldMessages())));
@@ -96,11 +96,11 @@ class i18nDiffTask extends sfBaseTask
     }
 
     // Output file
-    if (strtolower($options['file']) != 'stdout')
+    if ('stdout' != strtolower($options['file']))
     {
       echo "\n".$options['file'];
       // Remove '=' if using -f="file.csv" notation
-      $filename = (substr($options['file'], 0, 1) == '=') ? substr($options['file'], 1) : $options['file'];
+      $filename = ('=' == substr($options['file'], 0, 1)) ? substr($options['file'], 1) : $options['file'];
       file_put_contents($filename, $output);
     }
     else

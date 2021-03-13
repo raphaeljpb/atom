@@ -75,7 +75,7 @@ class csvInformationObjectExport extends QubitFlatfileExport
     parent::modifyRowBeforeExport();
 
     // Keep parent columns blank if description has no parent
-    if ($this->resource->parentId != QubitInformationObject::ROOT_ID)
+    if (QubitInformationObject::ROOT_ID != $this->resource->parentId)
     {
       $this->setColumn('parentId', $this->resource->parentId);
     }
@@ -296,7 +296,7 @@ class csvInformationObjectExport extends QubitFlatfileExport
       $typeId = array_search($typeName, $typeIds);
 
       // If note type doesn't exist, skip
-      if ($typeId === false)
+      if (false === $typeId)
       {
         continue;
       }

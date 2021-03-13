@@ -137,7 +137,7 @@ class sfEadPlugin
     $this->version = 'Access to Memory (AtoM) '.qubitConfiguration::VERSION;
 
     $this->siteBaseUrl = QubitSetting::getByName('siteBaseUrl');
-    $this->siteBaseUrl = ($this->siteBaseUrl == null) ? '' : $this->siteBaseUrl;
+    $this->siteBaseUrl = (null == $this->siteBaseUrl) ? '' : $this->siteBaseUrl;
   }
 
   public function __get($name)
@@ -152,7 +152,7 @@ class sfEadPlugin
     $notes = $subject->getTerm()->getSourceNotes();
     foreach ($notes as $note)
     {
-      if ($note != '')
+      if ('' != $note)
       {
         $hasNonBlankNotes = true;
       }
@@ -439,7 +439,7 @@ class sfEadPlugin
     $hasNonCreationActorEvents = false;
     foreach ($io->getActorEvents() as $event)
     {
-      if ($event->getType()->getRole() != 'Creator')
+      if ('Creator' != $event->getType()->getRole())
       {
         $hasNonCreationActorEvents = true;
 

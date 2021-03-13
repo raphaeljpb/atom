@@ -61,7 +61,7 @@ class DigitalObjectImageflowComponent extends sfComponent
 
     foreach (QubitDigitalObject::get($criteria) as $item)
     {
-      if ($item->usageId == QubitTerm::OFFLINE_ID)
+      if (QubitTerm::OFFLINE_ID == $item->usageId)
       {
         $thumbnail = QubitDigitalObject::getGenericRepresentation(
           $item->mimeType, QubitTerm::THUMBNAIL_ID

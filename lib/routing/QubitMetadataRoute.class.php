@@ -171,7 +171,7 @@ class QubitMetadataRoute extends QubitRoute
           break;
 
         case $this->resource instanceof QubitTerm:
-          $parameters['module'] = isset($parameters['template']) && $parameters['template'] == 'skos' ? 'sfSkosPlugin' : 'term';
+          $parameters['module'] = isset($parameters['template']) && 'skos' == $parameters['template'] ? 'sfSkosPlugin' : 'term';
 
           break;
 

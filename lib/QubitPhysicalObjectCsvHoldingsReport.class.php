@@ -55,7 +55,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     // Set options to defaults if unset and default is set
     foreach ($this->options as $name => $default)
     {
-      if ($default !== null)
+      if (null !== $default)
       {
         $options[$name] = (isset($options[$name])) ? $options[$name] : $default;
       }
@@ -143,7 +143,7 @@ class QubitPhysicalObjectCsvHoldingsReport
 
   public function setHoldingType(string $value)
   {
-    $value = (strtolower($value) == 'none') ? 'none' : $value;
+    $value = ('none' == strtolower($value)) ? 'none' : $value;
 
     if (!in_array($value, $this->allowedHoldingTypes()))
     {
@@ -225,7 +225,7 @@ class QubitPhysicalObjectCsvHoldingsReport
       $row = $this->addEmptyHoldingColumnsToRow($row);
       $writer->insertOne($row);
     }
-    elseif ($this->getHoldingType() != 'none')
+    elseif ('none' != $this->getHoldingType())
     {
       $this->writePhysicalObjectAndHoldings($writer, $row, $holdingsData);
     }

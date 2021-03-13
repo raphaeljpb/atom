@@ -55,7 +55,7 @@ class arRestApiPluginUtils
        * able to stop using this hack.
        *
        */
-      if (substr($date, -1) === 'Z')
+      if ('Z' === substr($date, -1))
       {
         $e = new DateTime();
         $date = substr($date, 0, -1).$e->format('O');

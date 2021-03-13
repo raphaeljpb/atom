@@ -13,7 +13,7 @@
       <?php if (isset($showActorEvents) || isset($sidebar)) { ?>
         <?php $actorsShown = []; ?>
         <?php foreach ($resource->getActorEvents() as $item) { ?>
-          <?php if (isset($sidebar) || $item->type->id != QubitTerm::CREATION_ID) { ?>
+          <?php if (isset($sidebar) || QubitTerm::CREATION_ID != $item->type->id) { ?>
             <?php if (isset($item->actor) && !isset($actorsShown[$item->actor->id])) { ?>
               <li><?php echo link_to(render_title($item->actor), [$item->actor]); ?> <span class="note2">(<?php echo render_value_inline($item->type->getRole()); ?>)</span></li>
               <?php $actorsShown[$item->actor->id] = true; ?>

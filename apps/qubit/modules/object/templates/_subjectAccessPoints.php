@@ -17,7 +17,7 @@
             <?php if (1 < $key) { ?>
               &raquo;
             <?php } ?>
-            <?php if ($resource->getClass() == 'QubitActor') { ?>
+            <?php if ('QubitActor' == $resource->getClass()) { ?>
               <?php echo link_to(render_title($subject), [$subject, 'module' => 'term', 'action' => 'relatedAuthorities']); ?>
             <?php } else { ?>
               <?php echo link_to(render_title($subject), [$subject, 'module' => 'term']); ?>

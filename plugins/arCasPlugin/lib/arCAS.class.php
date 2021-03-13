@@ -61,7 +61,7 @@ class arCAS
 
     // Validate the server SSL certificate according to configuration.
     $certPath = sfConfig::get('app_cas_server_cert', false);
-    if (!strpos($certPath, '/') === 0)
+    if (0 === !strpos($certPath, '/'))
     {
       $certPath = sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.$certPath;
     }
@@ -69,7 +69,7 @@ class arCAS
     {
       phpCAS::setCasServerCACert($certPath);
     }
-    elseif ($certPath === false)
+    elseif (false === $certPath)
     {
       phpCAS::setNoCasServerValidation();
     }

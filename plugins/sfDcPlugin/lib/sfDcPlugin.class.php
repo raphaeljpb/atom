@@ -62,7 +62,7 @@ class sfDcPlugin implements ArrayAccess
 
         foreach ($this->resource->ancestors->andSelf()->orderBy('rgt') as $ancestor)
         {
-          if ($ancestor->id == QubitInformationObject::ROOT_ID)
+          if (QubitInformationObject::ROOT_ID == $ancestor->id)
           {
             break;
           }

@@ -26,7 +26,7 @@ class QubitStaticPage extends BaseStaticPage
 
   public function isProtected()
   {
-    return $this->slug == 'home';
+    return 'home' == $this->slug;
   }
 
   protected function insert($connection = null)

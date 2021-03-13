@@ -29,7 +29,7 @@ class QubitCsvTransform extends QubitFlatfileImport
   {
     if (
       !isset($options['skipOptionsAndEnvironmentCheck'])
-      || $options['skipOptionsAndEnvironmentCheck'] == false
+      || false == $options['skipOptionsAndEnvironmentCheck']
     )
     {
       $this->checkTaskOptionsAndEnvironment($options['options']);
@@ -199,7 +199,7 @@ class QubitCsvTransform extends QubitFlatfileImport
 
     foreach (['MYSQL_HOST', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DB'] as $var)
     {
-      if (getenv($var) === false)
+      if (false === getenv($var))
       {
         throw new sfException('You must set the '.$var.' environmental variable.');
       }

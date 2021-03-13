@@ -1227,7 +1227,7 @@ class QubitDigitalObject extends BaseDigitalObject
       $child->delete();
     }
 
-    if ($this->usageId !== QubitTerm::OFFLINE_ID)
+    if (QubitTerm::OFFLINE_ID !== $this->usageId)
     {
       // Delete digital asset
       if (file_exists($this->getAbsolutePath()))
@@ -1732,7 +1732,7 @@ class QubitDigitalObject extends BaseDigitalObject
       throw new sfException('Couldn\'t find related object for digital object');
     }
 
-    if ($this->usageId == QubitTerm::MASTER_ID || $this->derivativesGeneratedFromExternalMaster($this->parent->usageId))
+    if (QubitTerm::MASTER_ID == $this->usageId || $this->derivativesGeneratedFromExternalMaster($this->parent->usageId))
     {
       $id = (string) $object->id;
 
@@ -1927,16 +1927,16 @@ class QubitDigitalObject extends BaseDigitalObject
         // Scale images and create derivatives
         if ($this->canThumbnail())
         {
-          if ($this->derivativesGeneratedFromExternalMaster($usageId) || $usageId == QubitTerm::MASTER_ID)
+          if ($this->derivativesGeneratedFromExternalMaster($usageId) || QubitTerm::MASTER_ID == $usageId)
           {
             $this->createReferenceImage($connection);
             $this->createThumbnail($connection);
           }
-          elseif ($usageId == QubitTerm::REFERENCE_ID)
+          elseif (QubitTerm::REFERENCE_ID == $usageId)
           {
             $this->createReferenceImage($connection);
           }
-          elseif ($usageId == QubitTerm::THUMBNAIL_ID)
+          elseif (QubitTerm::THUMBNAIL_ID == $usageId)
           {
             $this->createThumbnail($connection);
           }
@@ -1947,7 +1947,7 @@ class QubitDigitalObject extends BaseDigitalObject
       case QubitTerm::TEXT_ID:
         if ($this->canThumbnail())
         {
-          if ($this->derivativesGeneratedFromExternalMaster($usageId) || $usageId == QubitTerm::MASTER_ID)
+          if ($this->derivativesGeneratedFromExternalMaster($usageId) || QubitTerm::MASTER_ID == $usageId)
           {
             // Thumbnail PDFs (may add other formats in future)
             $this->createReferenceImage($connection);
@@ -1956,11 +1956,11 @@ class QubitDigitalObject extends BaseDigitalObject
             // Extract text
             $this->extractText($connection);
           }
-          elseif ($usageId == QubitTerm::REFERENCE_ID)
+          elseif (QubitTerm::REFERENCE_ID == $usageId)
           {
             $this->createReferenceImage($connection);
           }
-          elseif ($usageId == QubitTerm::THUMBNAIL_ID)
+          elseif (QubitTerm::THUMBNAIL_ID == $usageId)
           {
             $this->createThumbnail($connection);
           }
@@ -1969,12 +1969,12 @@ class QubitDigitalObject extends BaseDigitalObject
         break;
 
       case QubitTerm::VIDEO_ID:
-        if ($this->derivativesGeneratedFromExternalMaster($usageId) || $usageId == QubitTerm::MASTER_ID)
+        if ($this->derivativesGeneratedFromExternalMaster($usageId) || QubitTerm::MASTER_ID == $usageId)
         {
           $this->createVideoDerivative(QubitTerm::REFERENCE_ID, $connection);
           $this->createVideoDerivative(QubitTerm::THUMBNAIL_ID, $connection);
         }
-        elseif ($usageId == QubitTerm::REFERENCE_ID || $usageId == QubitTerm::THUMBNAIL_ID)
+        elseif (QubitTerm::REFERENCE_ID == $usageId || QubitTerm::THUMBNAIL_ID == $usageId)
         {
           $this->createVideoDerivative($usageId, $connection);
         }
@@ -2020,7 +2020,7 @@ class QubitDigitalObject extends BaseDigitalObject
       $extension = pathinfo($filename, PATHINFO_EXTENSION);
 
       // If processing a PDF, attempt to use pdfinfo as it's faster
-      if (strtolower($extension) == 'pdf' && sfImageMagickAdapter::pdfinfoToolAvailable())
+      if ('pdf' == strtolower($extension) && sfImageMagickAdapter::pdfinfoToolAvailable())
       {
         $pages = sfImageMagickAdapter::getPdfinfoPageCount($filename);
       }
@@ -2031,7 +2031,7 @@ class QubitDigitalObject extends BaseDigitalObject
         $pages = count($output);
       }
 
-      if ($status == 0)
+      if (0 == $status)
       {
         // Add "number of pages" property
         $pageCount = new QubitProperty();
@@ -2104,7 +2104,7 @@ class QubitDigitalObject extends BaseDigitalObject
       $command .= ' '.$filenameMinusExtension.'_%02d.'.self::THUMB_EXTENSION;
       exec($command, $output, $status);
 
-      if ($status == 1)
+      if (1 == $status)
       {
         throw new sfException('Encountered error'.(is_array($output) && count($output) > 0 ? ': '.implode('\n'.$output) : ' ').' while running convert (ImageMagick).');
       }
@@ -2240,7 +2240,7 @@ class QubitDigitalObject extends BaseDigitalObject
   {
     foreach ($settings as $index => $value)
     {
-      if ($value == 0)
+      if (0 == $value)
       {
         unset($settings[$index]);
       }
@@ -2384,12 +2384,12 @@ class QubitDigitalObject extends BaseDigitalObject
    */
   public function resizeByUsageId($usageId)
   {
-    if ($usageId == QubitTerm::REFERENCE_ID)
+    if (QubitTerm::REFERENCE_ID == $usageId)
     {
       $maxwidth = (sfConfig::get('app_reference_image_maxwidth')) ? sfConfig::get('app_reference_image_maxwidth') : 480;
       $maxheight = null;
     }
-    elseif ($usageId == QubitTerm::THUMBNAIL_ID)
+    elseif (QubitTerm::THUMBNAIL_ID == $usageId)
     {
       $maxwidth = 100;
       $maxheight = 100;
@@ -2467,14 +2467,14 @@ class QubitDigitalObject extends BaseDigitalObject
     }
 
     // Check that this file can be thumbnailed, or return false
-    if (self::canThumbnailMimeType($mimeType) == false)
+    if (false == self::canThumbnailMimeType($mimeType))
     {
       return false;
     }
 
     $page = 1;
     // I avoid sfConfig as it's not always available (CLI context)
-    if ($mimeType === 'application/pdf' &&
+    if ('application/pdf' === $mimeType &&
       null !== $setting = QubitSetting::getByName('digital_object_derivatives_pdf_page_number'))
     {
       if (0 !== $p = intval($setting->getValue(['sourceCulture' => true])))
@@ -2579,13 +2579,13 @@ class QubitDigitalObject extends BaseDigitalObject
     $canThumbnail = false;
 
     // For Images, we can create thumbs with either GD or ImageMagick
-    if (substr($mimeType, 0, 5) == 'image' && strlen($adapter))
+    if ('image' == substr($mimeType, 0, 5) && strlen($adapter))
     {
       $canThumbnail = true;
     }
 
     // For PDFs we can only create thumbs with ImageMagick
-    elseif ($mimeType == 'application/pdf' && $adapter == 'sfImageMagickAdapter')
+    elseif ('application/pdf' == $mimeType && 'sfImageMagickAdapter' == $adapter)
     {
       $canThumbnail = true;
     }
@@ -2603,7 +2603,7 @@ class QubitDigitalObject extends BaseDigitalObject
   public static function isImageFile($filename)
   {
     $mimeType = self::deriveMimeType($filename);
-    if (strtolower(substr($mimeType, 0, 5)) == 'image')
+    if ('image' == strtolower(substr($mimeType, 0, 5)))
     {
       return true;
     }
@@ -2616,7 +2616,7 @@ class QubitDigitalObject extends BaseDigitalObject
   public static function isAudioFile($filename)
   {
     $mimeType = self::deriveMimeType($filename);
-    if (strtolower(substr($mimeType, 0, 5)) == 'audio')
+    if ('audio' == strtolower(substr($mimeType, 0, 5)))
     {
       return true;
     }
@@ -2900,7 +2900,7 @@ class QubitDigitalObject extends BaseDigitalObject
   public static function isVideoFile($filename)
   {
     $mimeType = self::deriveMimeType($filename);
-    if (strtolower(substr($mimeType, 0, 5)) == 'video')
+    if ('video' == strtolower(substr($mimeType, 0, 5)))
     {
       return true;
     }
@@ -3500,7 +3500,7 @@ class QubitDigitalObject extends BaseDigitalObject
       catch (Exception $e)
       {
         // If request times out
-        if ($e->getCode() === CURLE_OPERATION_TIMEDOUT)
+        if (CURLE_OPERATION_TIMEDOUT === $e->getCode())
         {
           // Try again, up to $retries
           continue;

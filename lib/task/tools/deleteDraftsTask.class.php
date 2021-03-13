@@ -77,7 +77,7 @@ EOF;
           $this->log('Warning: got error while deleting: '.$e->getMessage());
         }
 
-        if (++$n % 10 == 0)
+        if (0 == ++$n % 10)
         {
           echo '.';
           fflush(STDOUT);

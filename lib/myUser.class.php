@@ -142,7 +142,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
   {
     $authenticated = false;
     // anonymous is not a real user
-    if ($username == 'anonymous')
+    if ('anonymous' == $username)
     {
       return false;
     }
@@ -150,7 +150,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
     $user = QubitUser::checkCredentials($username, $password, $error);
 
     // user account exists?
-    if ($user !== null)
+    if (null !== $user)
     {
       $authenticated = true;
       $this->signIn($user);

@@ -30,7 +30,7 @@ class InformationObjectRenameAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($this->request->getMethod() == 'POST')
+    if ('POST' == $this->request->getMethod())
     {
       // Internationalization needed for flash messages
       ProjectConfiguration::getActive()->loadHelpers('I18N');
@@ -73,7 +73,7 @@ class InformationObjectRenameAction extends DefaultEditAction
   {
     if (in_array($name, InformationObjectRenameAction::$NAMES))
     {
-      if ($name == 'filename')
+      if ('filename' == $name)
       {
         $this->form->setDefault($name, $this->resource->digitalObjectsRelatedByobjectId[0]->name);
       }

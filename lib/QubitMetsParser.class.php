@@ -74,7 +74,7 @@ class QubitMetsParser
     $mappings = $lodMapping = $dmdMapping = $uuidMapping = [];
 
     // LOD mapping (only for hierarchical DIP upload over logical structMap)
-    if ($structMap['TYPE'] == 'logical')
+    if ('logical' == $structMap['TYPE'])
     {
       $this->registerNamespaces($structMap, ['m' => 'mets']);
 
@@ -156,7 +156,7 @@ class QubitMetsParser
   public function getMainDmdSec()
   {
     $structMap = $this->document->xpath('//m:structMap[@TYPE="physical"]');
-    if (count($structMap) == 0)
+    if (0 == count($structMap))
     {
       return;
     }
@@ -164,7 +164,7 @@ class QubitMetsParser
     $structMap = $structMap[0];
     $this->registerNamespaces($structMap, ['m' => 'mets']);
     $divs = $structMap->xpath('m:div/m:div');
-    if (count($divs) == 0 || !isset($divs[0]['DMDID']))
+    if (0 == count($divs) || !isset($divs[0]['DMDID']))
     {
       return;
     }
@@ -183,7 +183,7 @@ class QubitMetsParser
     foreach (explode(' ', $dmdId) as $id)
     {
       $dmdSecs = $this->document->xpath('//m:dmdSec[@ID="'.$id.'"]');
-      if (count($dmdSecs) == 0)
+      if (0 == count($dmdSecs))
       {
         continue;
       }
@@ -419,7 +419,7 @@ class QubitMetsParser
         $dates = explode('|', $date);
 
         // If date is a range, set start and end dates
-        if (count($dates) == 2)
+        if (2 == count($dates))
         {
           // Parse each component date
           $event->startDate = Qubit::parseDate($dates[0]);
@@ -1268,7 +1268,7 @@ class QubitMetsParser
       }
 
       // Add event dateTime to IO's dateIngested field if it's the ingestion event
-      if (isset($event['type']) && isset($event['dateTime']) && $event['type'] == 'ingestion')
+      if (isset($event['type']) && isset($event['dateTime']) && 'ingestion' == $event['type'])
       {
         $this->resource->premisObjects[0]->dateIngested = $event['dateTime'];
       }
@@ -1276,7 +1276,7 @@ class QubitMetsParser
       if (!empty($event))
       {
         // Format identification event is stored apart
-        if (isset($event['type']) && $event['type'] == 'format identification')
+        if (isset($event['type']) && 'format identification' == $event['type'])
         {
           QubitProperty::addUnique($this->resource->id, 'formatIdentificationEvent', serialize($event), ['scope' => 'premisData', 'indexOnSave' => false]);
         }
@@ -1347,7 +1347,7 @@ class QubitMetsParser
         return arElasticSearchPluginUtil::convertDate((string) $results[0]);
 
       case 'boolean':
-        return strtolower((string) $results[0]) == 'yes' ? true : false;
+        return 'yes' == strtolower((string) $results[0]) ? true : false;
 
       case 'integer':
         return (int) $results[0];
@@ -1375,7 +1375,7 @@ class QubitMetsParser
       case 'firstStringWithTwoPoints':
         foreach ($results as $item)
         {
-          if (strrpos((string) $item, ':') !== false)
+          if (false !== strrpos((string) $item, ':'))
           {
             return (string) $item;
           }

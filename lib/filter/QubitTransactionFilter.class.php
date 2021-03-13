@@ -48,7 +48,7 @@ class QubitTransactionFilter extends sfFilter
       $conn->rollBack();
 
       // If there was a transaction deadlock error (MySQL error code 1213)
-      if (isset($conn) && $e->errorInfo[1] == 1213)
+      if (isset($conn) && 1213 == $e->errorInfo[1])
       {
         // Retry the current action (returns false when out of retries)
         if (!$this->retry())

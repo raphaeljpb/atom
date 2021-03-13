@@ -89,7 +89,7 @@ class SettingsInventoryAction extends DefaultEditAction
         }
 
         $size = count($choices);
-        if ($size === 0)
+        if (0 === $size)
         {
           $size = 4;
         }

@@ -44,7 +44,7 @@ class InformationObjectIndexAction extends sfAction
 
     $this->dispatcher->notify(new sfEvent($this, 'access_log.view', ['object' => $this->resource]));
 
-    if (sfConfig::get('app_treeview_type__source', 'sidebar') == 'fullWidth')
+    if ('fullWidth' == sfConfig::get('app_treeview_type__source', 'sidebar'))
     {
       $this->getResponse()->addStylesheet('fullWidthTreeView', 'last');
       $this->getResponse()->addStylesheet('/vendor/jstree/themes/default/style.min.css', 'last');

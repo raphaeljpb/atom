@@ -378,7 +378,7 @@ EOF;
 
           foreach ($self->rowStatusVars as $columnName => $value)
           {
-            if (!empty($value) && array_search($columnName, $allowedColumns) === false)
+            if (!empty($value) && false === array_search($columnName, $allowedColumns))
             {
               array_push($ignoredColumns, $columnName);
             }
@@ -408,7 +408,7 @@ EOF;
           $levelOfDetail = trim($self->rowStatusVars['levelOfDetail']);
 
           $levelOfDetailTermId = self::arraySearchCaseInsensitive($levelOfDetail, $self->status['levelOfDetailTypes'][$self->columnValue('culture')]);
-          if ($levelOfDetailTermId === false)
+          if (false === $levelOfDetailTermId)
           {
             echo "\nTerm $levelOfDetail not found in description details level taxonomy, creating it...\n";
 
@@ -744,7 +744,7 @@ EOF;
                 $rightsHolderId = $rightsHolder->id;
 
                 $rightsHolderName = trim(strtolower($rightsHolderName));
-                if ($rightsHolderName == 'city of vancouver' || strpos($rightsHolderName, 'city of vancouver') === 0)
+                if ('city of vancouver' == $rightsHolderName || 0 === strpos($rightsHolderName, 'city of vancouver'))
                 {
                   $restriction = 1;
                 }
@@ -913,7 +913,7 @@ EOF;
           $value = trim($value);
           $materialTypeId = self::arraySearchCaseInsensitive($value, $self->status['materialTypes'][$self->columnValue('culture')]);
 
-          if ($materialTypeId !== false)
+          if (false !== $materialTypeId)
           {
             $self->rowStatusVars['radGeneralMaterialDesignation'][] = $materialTypeId;
           }
@@ -1086,7 +1086,7 @@ EOF;
     catch (PDOException $e)
     {
       // Repeat on transaction deadlock (MySQL error code 1213)
-      if ($e->errorInfo[1] == 1213 && $retryCount < 3)
+      if (1213 == $e->errorInfo[1] && $retryCount < 3)
       {
         $this->updateIosNestedSet(++$retryCount);
       }

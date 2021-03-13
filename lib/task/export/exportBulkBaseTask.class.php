@@ -99,7 +99,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
 
     include $template;
     $output = ob_get_contents();
-    if ($format == 'dc')
+    if ('dc' == $format)
     {
       // Hack to get around issue with get_component helper run from worker (qubitConfiguration->getControllerDirs returns wrong dirs)
       $output = '<?xml version="1.0" encoding="'.sfConfig::get('sf_charset', 'UTF-8')."\" ?>\n".$output;
@@ -152,7 +152,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
       else
       {
         // Fetch top-level descriptions if EAD (EAD data nests children) or if only exporting top-level
-        $whereClause = ($options['format'] == 'ead' || $options['current-level-only'])
+        $whereClause = ('ead' == $options['format'] || $options['current-level-only'])
           ? 'parent_id = '
           : 'i.id != ';
         $whereClause .= QubitInformationObject::ROOT_ID;
@@ -168,7 +168,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
     $query .= ' ORDER BY i.lft';
 
     // EAD data nests children, so if exporting specific slug we just need top-level item
-    if ($options['format'] == 'ead' && isset($options['single-slug']))
+    if ('ead' == $options['format'] && isset($options['single-slug']))
     {
       $query .= ' LIMIT 1';
     }

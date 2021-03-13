@@ -197,7 +197,7 @@ class QubitAclSearch
       $query->addShould(new \Elastica\Query\Term(['publicationStatusId' => QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID]));
 
       // Does this ever happen in AtoM?
-      if ($globalRule['access'] == QubitAcl::GRANT)
+      if (QubitAcl::GRANT == $globalRule['access'])
       {
         $queryBool->addMustNot($query);
       }

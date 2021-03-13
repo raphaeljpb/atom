@@ -78,7 +78,7 @@ class MenuEditAction extends sfAction
         $this->menu->save();
 
         // Remove cache
-        if ($this->context->getViewCacheManager() !== null)
+        if (null !== $this->context->getViewCacheManager())
         {
           $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
           $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
@@ -110,7 +110,7 @@ class MenuEditAction extends sfAction
 
       case 'path':
         $this->form->setDefault($name, $this->menu[$name]);
-        $pathRequired = ($this->menu->parentId == QubitMenu::ROOT_ID) ? false : true;
+        $pathRequired = (QubitMenu::ROOT_ID == $this->menu->parentId) ? false : true;
         $this->form->setValidator($name, new sfValidatorString(['required' => $pathRequired]));
         $this->form->setWidget($name, new sfWidgetFormInput());
 
@@ -167,7 +167,7 @@ class MenuEditAction extends sfAction
 
       default:
         // Don't allow locked menus to be renamed
-        if ($name == 'name' && $this->menu->isProtected())
+        if ('name' == $name && $this->menu->isProtected())
         {
           break;
         }

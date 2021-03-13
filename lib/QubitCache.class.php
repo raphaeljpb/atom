@@ -42,7 +42,7 @@ class QubitCache
         $options['lifetime'] = (float) $setting;
       }
 
-      if ($cacheClass === 'sfMemcacheCache')
+      if ('sfMemcacheCache' === $cacheClass)
       {
         if (null !== $setting = sfConfig::get('app_cache_engine_param_servers'))
         {

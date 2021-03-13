@@ -36,12 +36,12 @@
                           || !$form->isBound() && in_array($name, $form->getDefault('enabled'))) { ?>
                 checked="checked"
               <?php } ?>
-              <?php if ($name == 'sfIsdiahPlugin'
-                        || $name == 'sfIsaarPlugin'
-                        || ($name == 'sfIsadPlugin' && $defaultTemplate == 'isad')
-                        || ($name == 'sfRadPlugin' && $defaultTemplate == 'rad')
-                        || ($name == 'sfDcPlugin' && $defaultTemplate == 'dc')
-                        || ($name == 'sfModsPlugin' && $defaultTemplate == 'mods')) { ?>
+              <?php if ('sfIsdiahPlugin' == $name
+                        || 'sfIsaarPlugin' == $name
+                        || ('sfIsadPlugin' == $name && 'isad' == $defaultTemplate)
+                        || ('sfRadPlugin' == $name && 'rad' == $defaultTemplate)
+                        || ('sfDcPlugin' == $name && 'dc' == $defaultTemplate)
+                        || ('sfModsPlugin' == $name && 'mods' == $defaultTemplate)) { ?>
                 disabled="disabled"
               <?php } ?>
               name="enabled[]" type="checkbox" value="<?php echo $name; ?>"

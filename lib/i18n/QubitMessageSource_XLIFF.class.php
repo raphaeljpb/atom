@@ -52,7 +52,7 @@ class QubitMessageSource_XLIFF extends sfMessageSource_XLIFF
       list($variant, $filename) = $this->createMessageTemplate($catalogue);
     }
 
-    if (is_writable($filename) == false)
+    if (false == is_writable($filename))
     {
       throw new sfException(sprintf('Unable to save to file %s, file must be writable.', $filename));
     }

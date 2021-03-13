@@ -145,7 +145,7 @@
 
         <?php echo render_show(__('Identifier of related entity'), render_value_inline($relatedEntity->descriptionIdentifier)); ?>
 
-        <?php if ($item->type->parentId == QubitTerm::ROOT_ID) { ?>
+        <?php if (QubitTerm::ROOT_ID == $item->type->parentId) { ?>
           <?php echo render_show(__('Category of relationship'), render_value_inline($item->type)); ?>
         <?php } else { ?>
           <?php echo render_show(__('Category of relationship'), render_value_inline($item->type->parent)); ?>

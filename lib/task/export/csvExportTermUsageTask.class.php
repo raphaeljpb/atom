@@ -111,7 +111,7 @@ class csvExportTermUsageTask extends exportBulkBaseTask
   {
     if (file_exists($exportPath))
     {
-      if (strtolower(readline('The export file already exists. Do you want to replace it? [y/n*] ')) != 'y')
+      if ('y' != strtolower(readline('The export file already exists. Do you want to replace it? [y/n*] ')))
       {
         throw new sfException('Export file already exists: aborting.');
       }

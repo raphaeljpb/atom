@@ -24,7 +24,7 @@ class InformationObjectTreeViewComponent extends sfComponent
     $this->resource = $request->getAttribute('sf_route')->resource;
 
     $this->treeviewType = sfConfig::get('app_treeview_type__source', 'sidebar');
-    if ($this->treeviewType != 'sidebar')
+    if ('sidebar' != $this->treeviewType)
     {
       $this->collapsible = sfConfig::get('app_treeview_allow_full_width_collapse');
       $this->itemsPerPage = sfConfig::get('app_treeview_full_items_per_page', 50);

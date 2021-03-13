@@ -134,9 +134,9 @@ class qtPackageExtractorBase
 
       foreach ($objects as $object)
       {
-        if ($object != '.' && $object != '..')
+        if ('.' != $object && '..' != $object)
         {
-          if (filetype($directory.'/'.$object) == 'dir')
+          if ('dir' == filetype($directory.'/'.$object))
           {
             $rrmdir($directory.'/'.$object);
           }
@@ -202,7 +202,7 @@ class qtPackageExtractorBase
     {
       while (false !== ($file = readdir($handle)))
       {
-        if ($file != '.' && $file != '..')
+        if ('.' != $file && '..' != $file)
         {
           if (is_dir($dir.DIRECTORY_SEPARATOR.$file))
           {

@@ -76,7 +76,7 @@ class JobsExportAction extends DefaultBrowseAction
 
       // Get user name
       $name = 'None';
-      if ($job->userId != null)
+      if (null != $job->userId)
       {
         $user = QubitUser::getById($job->userId);
       }

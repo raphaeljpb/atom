@@ -99,7 +99,7 @@ $t->todo('loadFile() throws an exception when an invalid file is loaded');
   checkResult($t, 200, 200, 'image/gif');
 
   // imagemagick-specific tests
-  if ($adapter == 'sfImageMagickAdapter')
+  if ('sfImageMagickAdapter' == $adapter)
   {
     $t = new my_lime_test($tests_imagemagick, new lime_output_color());
 
@@ -111,7 +111,7 @@ $t->todo('loadFile() throws an exception when an invalid file is loaded');
   }
 
   // gd specific tests (imagemagick does not currently support loadData())
-  if ($adapter == 'sfGDAdapter')
+  if ('sfGDAdapter' == $adapter)
   {
     $t->diag('creates image from string');
     $thmb = new sfThumbnail(200, 200, false, true, 75, $adapter, []);

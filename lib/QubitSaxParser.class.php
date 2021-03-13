@@ -421,7 +421,7 @@ class QubitSaxParser
    */
   protected function pathIncludes($subPath)
   {
-    return strpos($this->path(), $subPath) !== false;
+    return false !== strpos($this->path(), $subPath);
   }
 
   /*
@@ -490,16 +490,16 @@ class QubitSaxParser
    */
   protected function methodIsHandler($method)
   {
-    if ($method == 'startTagHandler' || $method == 'endTagHandler')
+    if ('startTagHandler' == $method || 'endTagHandler' == $method)
     {
       return true;
     }
 
-    if (substr($method, -strlen('TagInit')) === 'TagInit')
+    if ('TagInit' === substr($method, -strlen('TagInit')))
     {
       return true;
     }
-    elseif (substr($method, -strlen('Tag')) === 'Tag')
+    elseif ('Tag' === substr($method, -strlen('Tag')))
     {
       return true;
     }

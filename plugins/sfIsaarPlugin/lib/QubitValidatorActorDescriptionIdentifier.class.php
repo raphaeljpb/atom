@@ -25,7 +25,7 @@ class QubitValidatorActorDescriptionIdentifier extends sfValidatorBase
     $criteria->add(QubitActor::DESCRIPTION_IDENTIFIER, $identifier);
 
     // If actor isn't new, exclude it in check to see if the identifier's already been used
-    if ($byResource !== null && isset($byResource->id))
+    if (null !== $byResource && isset($byResource->id))
     {
       $criteria->add(QubitActor::ID, $byResource->id, Criteria::NOT_EQUAL);
     }

@@ -32,7 +32,7 @@ class SettingsDeleteAction extends sfAction
     }
     // TODO: else populate an error?
 
-    if ($this->context->getViewCacheManager() !== null)
+    if (null !== $this->context->getViewCacheManager())
     {
       $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
       $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');

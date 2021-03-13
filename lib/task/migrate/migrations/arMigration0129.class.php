@@ -47,7 +47,7 @@ class arMigration0129
       $criteria->add(QubitTermI18n::NAME, $note);
       $criteria->add(QubitTermI18n::CULTURE, 'en');
 
-      if (QubitTerm::getOne($criteria) == null)
+      if (null == QubitTerm::getOne($criteria))
       {
         $term = new QubitTerm();
         $term->name = $note;

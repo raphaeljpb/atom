@@ -60,7 +60,7 @@ class DigitalObjectShowDownloadComponent extends sfComponent
         QubitTerm::IMAGE_ID != $this->resource->mediaTypeId
         || QubitTerm::REFERENCE_ID == $this->usageType
       )
-      && $this->resource->usageId != QubitTerm::OFFLINE_ID
+      && QubitTerm::OFFLINE_ID != $this->resource->usageId
       && QubitAcl::check($this->resource->object, 'readMaster'))
     {
       $this->link = $this->resource->getPublicPath();

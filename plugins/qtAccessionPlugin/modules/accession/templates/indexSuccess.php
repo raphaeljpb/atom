@@ -103,7 +103,7 @@
           <li>
             <?php echo $event->getDate(); ?> (<?php echo $event->type->getName(['cultureFallback' => true]); ?>): <?php echo $event->getAgent(['cultureFallback' => true]); ?>
             <?php $note = $event->getNote(); ?>
-            <?php if ($note !== null && !empty($noteText = $note->getContent(['cultureFallback' => true]))) { ?>
+            <?php if (null !== $note && !empty($noteText = $note->getContent(['cultureFallback' => true]))) { ?>
               <p><?php echo $noteText; ?></p>
             <?php } ?>
           </li>

@@ -62,7 +62,7 @@ class QubitFlatfileExport
     $this->path = $destinationPath;
     $this->standard = $standard;
 
-    if ($rowsPerFile !== false)
+    if (false !== $rowsPerFile)
     {
       $this->rowsPerFile = $rowsPerFile;
     }
@@ -110,19 +110,19 @@ class QubitFlatfileExport
     $this->propertyMap = isset($config['property']) ? $config['property'] : [];
 
     // If column names/order aren't specified, derive them
-    if ($this->columnNames === null)
+    if (null === $this->columnNames)
     {
       // Add standard columns
-      $this->columnNames = ($this->standardColumns !== null) ? $this->standardColumns : [];
+      $this->columnNames = (null !== $this->standardColumns) ? $this->standardColumns : [];
 
       // Add from column map
-      if ($this->columnMap !== null)
+      if (null !== $this->columnMap)
       {
         $this->columnNames = array_merge($this->columnNames, array_values($this->columnMap));
       }
 
       // Add from property map
-      if ($this->propertyMap !== null)
+      if (null !== $this->propertyMap)
       {
         $this->columnNames = array_merge($this->columnNames, array_values($this->propertyMap));
       }
@@ -162,7 +162,7 @@ class QubitFlatfileExport
 
     $config = sfYaml::load(realpath($configFilePath));
 
-    if (gettype($config) != 'array')
+    if ('array' != gettype($config))
     {
       throw new sfException('Missing/malformed resource '.$roleDescription.' config: '.$configFilePath);
     }
@@ -282,7 +282,7 @@ class QubitFlatfileExport
 
       // Generate filename
       // Pad fileIndex with zeros so filenames can be sorted in creation order for imports
-      $filenamePrepend = ($this->standard !== null) ? $this->standard.'_' : '';
+      $filenamePrepend = (null !== $this->standard) ? $this->standard.'_' : '';
       $filename = sprintf('%s%s.csv', $filenamePrepend, str_pad($this->fileIndex, 10, '0', STR_PAD_LEFT));
       $filePath = $this->path.'/'.$filename;
     }
@@ -330,7 +330,7 @@ class QubitFlatfileExport
       $value = $this->row[$index];
 
       // If row value hasn't been set to anything, attempt to get resource property
-      if ($value === null)
+      if (null === $value)
       {
         if (in_array($column, $this->standardColumns))
         {

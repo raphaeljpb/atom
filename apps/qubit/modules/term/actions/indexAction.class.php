@@ -111,7 +111,7 @@ class TermIndexAction extends DefaultBrowseAction
     }
 
     // Add browse elements for places and subjects and genres
-    $this->addBrowseElements = ($this->resource->taxonomyId == QubitTaxonomy::PLACE_ID || $this->resource->taxonomyId == QubitTaxonomy::SUBJECT_ID || $this->resource->taxonomyId == QubitTaxonomy::GENRE_ID);
+    $this->addBrowseElements = (QubitTaxonomy::PLACE_ID == $this->resource->taxonomyId || QubitTaxonomy::SUBJECT_ID == $this->resource->taxonomyId || QubitTaxonomy::GENRE_ID == $this->resource->taxonomyId);
     if ($this->addBrowseElements)
     {
       // Return special response in JSON for XHR requests

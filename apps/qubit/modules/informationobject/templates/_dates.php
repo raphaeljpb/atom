@@ -8,7 +8,7 @@
         <li>
           <div class="date">
             <span property="dc:date" start="<?php echo $item->startDate; ?>" end="<?php echo $item->endDate; ?>"><?php echo render_value_inline(Qubit::renderDateStartEnd($item->getDate(['cultureFallback' => true]), $item->startDate, $item->endDate)); ?></span>
-            <?php if (sfConfig::get('app_default_template_informationobject') !== 'dc') { ?>
+            <?php if ('dc' !== sfConfig::get('app_default_template_informationobject')) { ?>
               <span class="date-type">(<?php echo render_value_inline($item->type->__toString()); ?>)</span>
             <?php } ?>
             <dl>

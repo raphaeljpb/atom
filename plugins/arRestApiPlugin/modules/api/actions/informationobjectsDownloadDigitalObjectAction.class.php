@@ -43,7 +43,7 @@ class ApiInformationObjectsDownloadDigitalObjectAction extends QubitApiAction
     $publicationStatusId = $this->resource->getPublicationStatus()->statusId;
 
     if (
-      $publicationStatusId != QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID
+      QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID != $publicationStatusId
       && !QubitAcl::check($this->resource, 'viewDraft')
     )
     {
@@ -61,7 +61,7 @@ class ApiInformationObjectsDownloadDigitalObjectAction extends QubitApiAction
     }
 
     // Get path (filepath or URI) to digital object
-    if ($this->do->usageId == QubitTerm::EXTERNAL_URI_ID)
+    if (QubitTerm::EXTERNAL_URI_ID == $this->do->usageId)
     {
       $this->path = $this->do->getPath();
     }

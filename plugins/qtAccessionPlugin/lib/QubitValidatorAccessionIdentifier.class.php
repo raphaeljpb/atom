@@ -25,7 +25,7 @@ class QubitValidatorAccessionIdentifier extends sfValidatorBase
     $criteria->add(QubitAccession::IDENTIFIER, $identifier);
 
     // If accession isn't new, make sure no accession other than it is using proposed identifier
-    if ($byResource !== null && isset($byResource->id))
+    if (null !== $byResource && isset($byResource->id))
     {
       $criteria->add(QubitAccession::ID, $byResource->id, Criteria::NOT_EQUAL);
     }

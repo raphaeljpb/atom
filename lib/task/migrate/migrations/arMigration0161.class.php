@@ -42,7 +42,7 @@ class arMigration0161
 SHOW INDEX FROM information_object WHERE Column_name = 'rgt';
 sql;
 
-    if (count(QubitPdo::fetchAll($sql)) == 0)
+    if (0 == count(QubitPdo::fetchAll($sql)))
     {
       $sql = <<<sql
 CREATE INDEX rgt ON information_object(rgt);
@@ -57,7 +57,7 @@ sql;
 SHOW INDEX FROM digital_object WHERE Column_name = 'path';
 sql;
 
-    if (count(QubitPdo::fetchAll($sql)) == 0)
+    if (0 == count(QubitPdo::fetchAll($sql)))
     {
       $sql = <<<sql
 CREATE INDEX path ON digital_object (path);

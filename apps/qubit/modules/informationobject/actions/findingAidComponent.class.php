@@ -22,7 +22,7 @@ class InformationObjectFindingAidComponent extends sfComponent
   public function execute($request)
   {
     // Get finding aid data from top-level
-    if ($this->resource->parentId != QubitInformationObject::ROOT_ID)
+    if (QubitInformationObject::ROOT_ID != $this->resource->parentId)
     {
       $this->resource = $this->resource->getCollectionRoot();
     }
@@ -77,7 +77,7 @@ class InformationObjectFindingAidComponent extends sfComponent
     $i18n = $this->context->i18n;
 
     // If there is a job in progress, show only status
-    if ($lastJobStatus == QubitTerm::JOB_STATUS_IN_PROGRESS_ID)
+    if (QubitTerm::JOB_STATUS_IN_PROGRESS_ID == $lastJobStatus)
     {
       $this->showStatus = true;
       $this->status = $i18n->__('In progress');
@@ -86,7 +86,7 @@ class InformationObjectFindingAidComponent extends sfComponent
     }
 
     // If the last job failed, show error status and allowed actions
-    if ($lastJobStatus == QubitTerm::JOB_STATUS_ERROR_ID)
+    if (QubitTerm::JOB_STATUS_ERROR_ID == $lastJobStatus)
     {
       $this->showStatus = true;
       $this->showActions();
@@ -96,7 +96,7 @@ class InformationObjectFindingAidComponent extends sfComponent
     }
 
     // If the last job completed, get finding aid status property
-    if ($lastJobStatus == QubitTerm::JOB_STATUS_COMPLETED_ID)
+    if (QubitTerm::JOB_STATUS_COMPLETED_ID == $lastJobStatus)
     {
       $findingAidStatus = $this->resource->getFindingAidStatus();
 
@@ -171,7 +171,7 @@ class InformationObjectFindingAidComponent extends sfComponent
     // Generate is allowed for published descriptions and for drafts
     // if the public finding aid setting is set to false
     $setting = QubitSetting::getByName('publicFindingAid');
-    if ($this->resource->getPublicationStatus()->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID
+    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->resource->getPublicationStatus()->statusId
       || (isset($setting) && !$setting->getValue(['sourceCulture' => true])))
     {
       $this->showGenerate = true;

@@ -184,7 +184,7 @@ EOF;
 
     $finalIndex = array_search($targetVersion, $this->validReleases);
 
-    if ($initialIndex !== false && $finalIndex !== false && $initialIndex < $finalIndex)
+    if (false !== $initialIndex && false !== $finalIndex && $initialIndex < $finalIndex)
     {
       for ($i = $initialIndex; $i < $finalIndex; ++$i)
       {
@@ -270,7 +270,7 @@ EOF;
     $currentVersion = null;
     foreach ($this->data['QubitSetting'] as $setting)
     {
-      if ($setting['name'] == 'version')
+      if ('version' == $setting['name'])
       {
         if (preg_match('/^\d+$/', $setting['value']['en'], $matches))
         {

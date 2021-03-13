@@ -71,7 +71,7 @@ class csvExportInformationObjectsTask extends exportBulkBaseTask
 
       // Don't export draft descriptions with public option
       if (isset($options['public']) && $options['public']
-        && $resource->getPublicationStatus()->statusId == QubitTerm::PUBLICATION_STATUS_DRAFT_ID)
+        && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $resource->getPublicationStatus()->statusId)
       {
         continue;
       }

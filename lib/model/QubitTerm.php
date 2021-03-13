@@ -237,7 +237,7 @@ class QubitTerm extends BaseTerm
   public function save($connection = null)
   {
     // Add root term as parent if no parent is set and it's not the root term
-    if ($this->id != QubitTerm::ROOT_ID && !isset($this->parent))
+    if (QubitTerm::ROOT_ID != $this->id && !isset($this->parent))
     {
       $this->parentId = QubitTerm::ROOT_ID;
     }
@@ -746,7 +746,7 @@ class QubitTerm extends BaseTerm
 
       // Display note content instead of term name - used mainly for displaying
       // event type actor vs. action (e.g. "creator" vs. "creation")
-      if (isset($options['displayNote']) && $options['displayNote'] == true)
+      if (isset($options['displayNote']) && true == $options['displayNote'])
       {
         if (count($notes = $term->getNotesByType(QubitTerm::DISPLAY_NOTE_ID)))
         {

@@ -98,7 +98,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
     // Optionally reverse sort order
     if (isset($request->reverse) && !empty($request->reverse))
     {
-      $order = ($order == 'asc') ? 'desc' : 'asc';
+      $order = ('asc' == $order) ? 'desc' : 'asc';
     }
 
     $this->search->query->setSort([$field => $order]);
@@ -171,7 +171,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
         $dates = [];
         foreach ($doc['dates'] as $event)
         {
-          if (isset($event['typeId']) && $event['typeId'] == QubitTerm::CREATION_ID)
+          if (isset($event['typeId']) && QubitTerm::CREATION_ID == $event['typeId'])
           {
             $date = get_search_i18n($event, 'date');
             if (!empty($date))

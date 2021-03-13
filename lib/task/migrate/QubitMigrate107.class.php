@@ -907,7 +907,7 @@ class QubitMigrate107 extends QubitMigrate
     // Update version number
     foreach ($this->data['QubitStaticPage'] as $key => $page)
     {
-      if ($page['permalink'] == 'homepage' || $page['permalink'] == 'about')
+      if ('homepage' == $page['permalink'] || 'about' == $page['permalink'])
       {
         array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x)
         {

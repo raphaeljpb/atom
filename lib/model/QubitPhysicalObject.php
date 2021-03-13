@@ -361,7 +361,7 @@ SQL;
 
     foreach ($updateCols as $name)
     {
-      if (!empty($data[$name]) && $data[$name] != $this->$name)
+      if (!empty($data[$name]) && $this->$name != $data[$name])
       {
         $doUpdate = true;
         $newvals[$name] = $data[$name];

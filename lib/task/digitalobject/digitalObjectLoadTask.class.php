@@ -138,17 +138,17 @@ class digitalObjectLoadTask extends sfBaseTask
 
     // Set up prepared query based on identifier type
     $sql = 'SELECT io.id, do.id FROM '.QubitInformationObject::TABLE_NAME.' io ';
-    if ($idType == 'slug')
+    if ('slug' == $idType)
     {
       $sql .= 'JOIN '.QubitSlug::TABLE_NAME.' slug ON slug.object_id = io.id ';
     }
     $sql .= 'LEFT JOIN '.QubitDigitalObject::TABLE_NAME.' do ON io.id = do.object_id';
 
-    if ($idType == 'id')
+    if ('id' == $idType)
     {
       $sql .= ' WHERE io.id = ?';
     }
-    elseif ($idType == 'identifier')
+    elseif ('identifier' == $idType)
     {
       $sql .= ' WHERE io.identifier = ?';
     }
@@ -182,7 +182,7 @@ class digitalObjectLoadTask extends sfBaseTask
       {
         $digitalObjectName = !is_array($item) ? $item : end($item);
 
-        if ($results[1] !== null)
+        if (null !== $results[1])
         {
           if (file_exists($path = self::getPath($digitalObjectName, $options)))
           {
@@ -209,7 +209,7 @@ class digitalObjectLoadTask extends sfBaseTask
       elseif (!is_array($item) && !$options['attach-only'])
       {
         // Skip if this information object already has a digital object attached
-        if ($results[1] !== null)
+        if (null !== $results[1])
         {
           $this->log(sprintf("Information object $idType: %s already has a digital object. Skipping.", $key));
           ++$this->skippedCount;

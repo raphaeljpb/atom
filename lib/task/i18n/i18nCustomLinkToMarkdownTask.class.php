@@ -71,11 +71,11 @@ EOF;
       {
         if (!empty($matches[1]))
         {
-          return "[$matches[1]](".($matches[2] == 'www.' ? 'http://www.' : $matches[2]).trim($matches[3]).')';
+          return "[$matches[1]](".('www.' == $matches[2] ? 'http://www.' : $matches[2]).trim($matches[3]).')';
         }
         else
         {
-          return "[$matches[2]".trim($matches[3]).']('.($matches[2] == 'www.' ? 'http://www.' : $matches[2]).trim($matches[3]).')';
+          return "[$matches[2]".trim($matches[3]).']('.('www.' == $matches[2] ? 'http://www.' : $matches[2]).trim($matches[3]).')';
         }
       }, $row[$column]);
 

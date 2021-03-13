@@ -105,7 +105,7 @@ class DefaultTranslationLinksComponent extends sfComponent
     }
 
     // Return nothing if the resource only has the current culture
-    if (count($i18ns) == 1 && $i18ns[0]->culture == $currentCulture)
+    if (1 == count($i18ns) && $i18ns[0]->culture == $currentCulture)
     {
       return sfView::NONE;
     }

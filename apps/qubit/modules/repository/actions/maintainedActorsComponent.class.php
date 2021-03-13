@@ -30,7 +30,7 @@ class RepositoryMaintainedActorsComponent extends sfComponent
     $limit = sfConfig::get('app_hits_per_page', 10);
 
     $resultSet = RepositoryMaintainedActorsAction::getActors($this->resource->id, $page, $limit);
-    if ($resultSet->getTotalHits() == 0)
+    if (0 == $resultSet->getTotalHits())
     {
       return sfView::NONE;
     }

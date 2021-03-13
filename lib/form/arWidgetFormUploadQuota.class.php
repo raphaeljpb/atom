@@ -23,11 +23,11 @@ class arWidgetFormUploadQuota extends sfWidgetFormInput
   {
     $uploadLimit = (int) sfConfig::get('app_upload_limit');
 
-    if ($uploadLimit === 0)
+    if (0 === $uploadLimit)
     {
       return '<label>'.__('%1% upload is disabled', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]).'</label>';
     }
-    elseif ($uploadLimit === -1)
+    elseif (-1 === $uploadLimit)
     {
       return '<label>'.__('Unlimited').'</label>';
     }

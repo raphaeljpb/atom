@@ -349,7 +349,7 @@ EOF;
                 $relation->object = $self->object;
                 $relation->save();
 
-                if (!empty($occupationNotes[$i]) && $occupationNotes[$i] !== 'NULL')
+                if (!empty($occupationNotes[$i]) && 'NULL' !== $occupationNotes[$i])
                 {
                   $note = new QubitNote();
                   $note->typeId = QubitTerm::ACTOR_OCCUPATION_NOTE_ID;

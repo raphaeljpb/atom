@@ -174,32 +174,32 @@ class QubitMenu extends BaseMenu
 
     // Yucky Hack: Don't display "static" menu as selected when displaying
     // an action from staticpage module (See FIXME below)
-    if ($currentModule == 'staticpage' && in_array($currentAction, ['edit', 'index', 'list', 'static']))
+    if ('staticpage' == $currentModule && in_array($currentAction, ['edit', 'index', 'list', 'static']))
     {
       return false;
     }
     // Yucky Hack, Part Deux: Don't display any active menu options when
     // displaying search results
-    if ($currentModule == 'search' && $currentAction == 'search')
+    if ('search' == $currentModule && 'search' == $currentAction)
     {
       return false;
     }
     // 'Hacks 3: Return of the Hack' Select the 'archival description' button
     // when uploading digital object
-    if ($currentModule == 'digitalobject' && $currentAction == 'edit')
+    if ('digitalobject' == $currentModule && 'edit' == $currentAction)
     {
-      return $this->getPath() == 'informationobject/list';
+      return 'informationobject/list' == $this->getPath();
     }
     // And even more hacks
     elseif (in_array($currentModule, ['sfIsadPlugin', 'sfRadPlugin', 'sfDcPlugin', 'sfModsPlugin', 'arDacsPlugin']))
     {
-      return $this->getPath() == 'informationobject/list';
+      return 'informationobject/list' == $this->getPath();
     }
 
     // son of hack
     if (in_array($currentModule, ['term', 'taxonomy']))
     {
-      return $this->getPath() == 'taxonomy/list';
+      return 'taxonomy/list' == $this->getPath();
     }
 
     // If passed $url matches the url for this menu AND is not the base url
@@ -362,7 +362,7 @@ class QubitMenu extends BaseMenu
 
       // Limit depth of descendants to $maxDepth
       $depth = count($ancestors);
-      if ($maxDepth == 0 || $depth <= $maxDepth)
+      if (0 == $maxDepth || $depth <= $maxDepth)
       {
         $menuTree[] = [
           'id' => $menu->id,

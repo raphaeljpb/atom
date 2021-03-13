@@ -72,7 +72,7 @@ class DigitalObjectViewAction extends sfAction
   {
     // Only if the user is reading the master digital object, and the resource
     // has a PREMIS conditional copyright restriction
-    if ($action != 'readMaster' || !$this->resource->hasConditionalCopyright())
+    if ('readMaster' != $action || !$this->resource->hasConditionalCopyright())
     {
       return false;
     }

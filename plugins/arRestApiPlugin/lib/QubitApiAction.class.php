@@ -65,12 +65,12 @@ class QubitApiAction extends sfAction
 
   public function renderData($data)
   {
-    if ($data === 'CSV' || $data === 'DigitalObject')
+    if ('CSV' === $data || 'DigitalObject' === $data)
     {
       return sfView::NONE;
     }
 
-    if ($data === sfView::NONE)
+    if (sfView::NONE === $data)
     {
       $this->response->setHeaderOnly(true);
 

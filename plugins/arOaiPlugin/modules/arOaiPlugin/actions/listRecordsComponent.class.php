@@ -30,12 +30,12 @@ class arOaiPluginListRecordsComponent extends arOaiPluginComponent
 
     $this->setUpdateParametersFromRequest($request);
 
-    $options = ($request->metadataPrefix == 'oai_ead') ? ['topLevel' => true, 'limit' => 1] : [];
+    $options = ('oai_ead' == $request->metadataPrefix) ? ['topLevel' => true, 'limit' => 1] : [];
     $this->getUpdates($options);
 
     // If metadata requested is EAD and results were found, determine if any are missing corresponding cache files
     $this->identifiersWithMissingCacheFiles = [];
-    if ($request->metadataPrefix == 'oai_ead' && count($this->publishedRecords))
+    if ('oai_ead' == $request->metadataPrefix && count($this->publishedRecords))
     {
       foreach ($this->publishedRecords as $resource)
       {

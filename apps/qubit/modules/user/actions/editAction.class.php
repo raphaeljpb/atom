@@ -78,7 +78,7 @@ class UserEditAction extends DefaultEditAction
           $permission->save();
         }
 
-        if ($this->context->getViewCacheManager() !== null)
+        if (null !== $this->context->getViewCacheManager())
         {
           // We just need to remove the cache for this user but sf_cache_key
           // contents also the culture code, it worth the try? I don't think so
@@ -277,7 +277,7 @@ class UserEditAction extends DefaultEditAction
         }
 
         // Expose whether or not API is enabled
-        if ($name == 'oaiApiKey')
+        if ('oaiApiKey' == $name)
         {
           $this->oaiEnabled = $this->context->getConfiguration()->isPluginEnabled('arOaiPlugin');
         }

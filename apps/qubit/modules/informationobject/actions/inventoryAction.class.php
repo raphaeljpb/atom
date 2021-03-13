@@ -91,7 +91,7 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
 
   private static function getLevels()
   {
-    if (self::$levels !== null)
+    if (null !== self::$levels)
     {
       return self::$levels;
     }

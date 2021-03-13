@@ -60,7 +60,7 @@ class TermNavigateRelatedComponent extends sfComponent
     $search->query->setQuery($search->queryBool->addMust($query));
 
     // Filter out drafts if querying descriptions
-    if ($relatedModelClass == 'QubitInformationObject')
+    if ('QubitInformationObject' == $relatedModelClass)
     {
       QubitAclSearch::filterDrafts($search->queryBool);
     }

@@ -158,7 +158,7 @@
     <section class="browse-options">
       <?php echo get_partial('default/printPreviewButton'); ?>
 
-      <?php if (sfConfig::get('app_treeview_show_browse_hierarchy_page', 'no') === 'yes') { ?>
+      <?php if ('yes' === sfConfig::get('app_treeview_show_browse_hierarchy_page', 'no')) { ?>
         <a href="<?php echo url_for(['module' => 'browse', 'action' => 'hierarchy']); ?>">
           <i class="fa fa-sitemap"></i>
           Hierarchy

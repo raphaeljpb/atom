@@ -299,7 +299,7 @@ class DefaultFullTreeViewAction extends sfAction
     }
 
     // Set root item's parent to hash symbol for jstree compatibility
-    if ($data['parentId'] == QubitInformationObject::ROOT_ID)
+    if (QubitInformationObject::ROOT_ID == $data['parentId'])
     {
       $node['icon'] = 'fa fa-archive';
     }

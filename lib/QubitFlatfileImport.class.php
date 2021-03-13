@@ -112,7 +112,7 @@ class QubitFlatfileImport
         // if allowing all properties, inspect object to see if property is legitimate
         // otherwise use array of allowed properties
         $settingAllowed = (
-          ($allowedProperties === true && property_exists(get_class($object), $option))
+          (true === $allowedProperties && property_exists(get_class($object), $option))
           || (is_array($allowedProperties) && in_array($option, $allowedProperties))
         );
         if ($settingAllowed)
@@ -225,7 +225,7 @@ class QubitFlatfileImport
 
     if (is_numeric($columnIndex))
     {
-      if ($value === false)
+      if (false === $value)
       {
         return trim($this->status['row'][$columnIndex]);
       }
@@ -390,7 +390,7 @@ class QubitFlatfileImport
     $this->status['skippedRows'] = $skipRows;
     $this->columnNames = fgetcsv($fh, 60000);
 
-    if ($this->columnNames === false)
+    if (false === $this->columnNames)
     {
       throw new sfException('Could not read initial row. File could be empty.');
     }
@@ -1052,7 +1052,7 @@ class QubitFlatfileImport
   {
     // Get actor or create a new one (don't match untitled actors).
     // If the actor exists the data is not overwritten
-    if ($name == '' || null === $actor = QubitActor::getByAuthorizedFormOfName($name))
+    if ('' == $name || null === $actor = QubitActor::getByAuthorizedFormOfName($name))
     {
       $actor = QubitFlatfileImport::createActor($name, $options);
     }
@@ -1375,7 +1375,7 @@ class QubitFlatfileImport
    */
   public function createOrFetchTermAndAddRelation($taxonomyId, $names, $culture = null)
   {
-    $culture = ($culture !== null) ? $culture : $this->columnValue('culture');
+    $culture = (null !== $culture) ? $culture : $this->columnValue('culture');
 
     $termArray = $this->createOrFetchTerm($taxonomyId, $names, $culture);
 
@@ -1503,7 +1503,7 @@ class QubitFlatfileImport
   public function createKeymapEntry($sourceName, $sourceId, $object = null)
   {
     // Default to imported object
-    if ($object == null)
+    if (null == $object)
     {
       $object = $this->object;
     }
@@ -1557,7 +1557,7 @@ class QubitFlatfileImport
    */
   public function translateNameToTermId($description, $value, $valueToTermNameMap, $terms)
   {
-    if (isset($valueToTermNameMap[$value]) || count($valueToTermNameMap) == 0)
+    if (isset($valueToTermNameMap[$value]) || 0 == count($valueToTermNameMap))
     {
       $termName = (count($valueToTermNameMap)) ? $valueToTermNameMap[$value] : $value;
 
@@ -1920,7 +1920,7 @@ class QubitFlatfileImport
   {
     // Filter out empty strings
     $result = array_filter($row, function ($columnValue) {
-      return is_string($columnValue) && trim($columnValue) != '';
+      return is_string($columnValue) && '' != trim($columnValue);
     });
 
     return count($result) > 0;
@@ -2280,7 +2280,7 @@ class QubitFlatfileImport
     if ($this->isUpdating() && $result)
     {
       // Limited to the actors maintained by a determined repository
-      if ($this->className === 'QubitActor' && $this->limitToId)
+      if ('QubitActor' === $this->className && $this->limitToId)
       {
         $query = 'SELECT id FROM relation WHERE subject_id = ? AND object_id = ?;';
         $statement = QubitFlatfileImport::sqlQuery($query, [$this->limitToId, $result->id]);

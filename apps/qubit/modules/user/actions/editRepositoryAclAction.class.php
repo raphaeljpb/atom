@@ -70,7 +70,7 @@ class UserEditRepositoryAclAction extends DefaultEditAction
       foreach ($permissions as $item)
       {
         // In this context permissions for all objects (null) and root repository object are equivalent
-        if ($item->objectId === null)
+        if (null === $item->objectId)
         {
           $this->repositories[QubitRepository::ROOT_ID][$item->action] = $item;
         }
@@ -111,7 +111,7 @@ class UserEditRepositoryAclAction extends DefaultEditAction
       // Otherwise, update an existing permission
       elseif (null !== $aclPermission = QubitAclPermission::getById($key))
       {
-        if ($value == QubitAcl::INHERIT)
+        if (QubitAcl::INHERIT == $value)
         {
           $aclPermission->delete();
         }

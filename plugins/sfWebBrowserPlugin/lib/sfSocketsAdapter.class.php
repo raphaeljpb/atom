@@ -61,7 +61,7 @@ class sfSocketsAdapter
     $request .= $request_headers;
     $request .= "Connection: Close\r\n";
 
-    if ($method == 'PUT' && is_array($parameters) && array_key_exists('file', $parameters))
+    if ('PUT' == $method && is_array($parameters) && array_key_exists('file', $parameters))
     {
       $fp = fopen($parameters['file'], 'rb');
       $sent = 0;
@@ -82,7 +82,7 @@ class sfSocketsAdapter
       }
       fclose($fp);
     }
-    elseif ($method == 'POST' || $method == 'PUT')
+    elseif ('POST' == $method || 'PUT' == $method)
     {
       $body = is_array($parameters) ? http_build_query($parameters, '', '&') : $parameters;
       $request .= 'Content-Length: '.strlen($body)."\r\n";
@@ -113,7 +113,7 @@ class sfSocketsAdapter
     for ($i = 0; $i < count($response_lines); ++$i)
     {
       // grab body
-      if ($start_body == true)
+      if (true == $start_body)
       {
         // ignore chunked encoding size
         if (!preg_match('@^[0-9A-Fa-f]+\s*$@', $response_lines[$i]))
@@ -123,7 +123,7 @@ class sfSocketsAdapter
       }
 
       // body starts after first blank line
-      elseif ($start_body == false && $response_lines[$i] == '')
+      elseif (false == $start_body && '' == $response_lines[$i])
       {
         $start_body = true;
       }

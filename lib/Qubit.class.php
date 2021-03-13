@@ -172,7 +172,7 @@ class Qubit
         $i = 0;
         while (isset($dircont[$i]))
         {
-          if ($dircont[$i] !== '.' && $dircont[$i] !== '..'
+          if ('.' !== $dircont[$i] && '..' !== $dircont[$i]
             // ignore system/hidden files
             && !preg_match('/^\..*/', $dircont[$i]))
           {
@@ -244,13 +244,13 @@ class Qubit
   {
     $date = substr($date, 0, 19).'Z';
 
-    if (preg_match('/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z$/', $date, $parts) == true)
+    if (true == preg_match('/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z$/', $date, $parts))
     {
       $time = gmmktime($parts[4], $parts[5], $parts[6], $parts[2], $parts[3], $parts[1]);
 
       $input_time = strtotime($date);
 
-      if ($input_time === false)
+      if (false === $input_time)
       {
         return false;
       }
@@ -315,7 +315,7 @@ class Qubit
   {
     foreach (get_declared_classes() as $c)
     {
-      if (strpos($c, 'Qubit') === 0 && method_exists($c, 'clearCache'))
+      if (0 === strpos($c, 'Qubit') && method_exists($c, 'clearCache'))
       {
         $c::clearCache();
       }

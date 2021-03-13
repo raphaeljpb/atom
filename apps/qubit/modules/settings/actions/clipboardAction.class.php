@@ -66,7 +66,7 @@ class SettingsClipboardAction extends SettingsEditAction
       case 'clipboard_send_enabled':
       case 'clipboard_send_http_method':
       case 'clipboard_export_digitalobjects_enabled':
-        if ($name == 'clipboard_send_enabled' || $name == 'clipboard_export_digitalobjects_enabled')
+        if ('clipboard_send_enabled' == $name || 'clipboard_export_digitalobjects_enabled' == $name)
         {
           $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
         }
