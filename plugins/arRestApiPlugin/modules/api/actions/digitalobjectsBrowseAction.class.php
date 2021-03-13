@@ -34,7 +34,7 @@ class ApiDigitalObjectsBrowseAction extends QubitApiAction
   protected function getResults($request)
   {
     $criteria = new Criteria;
-    $criteria->add(QubitDigitalObject::PARENT_ID, NULL);
+    $criteria->add(QubitDigitalObject::PARENT_ID, null);
     $criteria->addAscendingOrderByColumn(QubitDigitalObject::ID);
 
     // Page results

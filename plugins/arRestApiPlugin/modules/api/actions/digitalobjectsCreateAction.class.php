@@ -22,7 +22,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
   protected function post($request, $payload)
   {
     $this->do = new QubitDigitalObject;
-    $this->do->parentId = NULL;
+    $this->do->parentId = null;
 
     foreach ($payload as $field => $value)
     {

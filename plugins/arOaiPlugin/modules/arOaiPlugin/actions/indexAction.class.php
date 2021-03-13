@@ -201,9 +201,9 @@ class arOaiPluginIndexAction extends sfAction
     }
 
     $resumptionTokenJson = base64_decode($request->resumptionToken);
-    $resumptionToken = $resumptionTokenJson ? json_decode($resumptionTokenJson) : False;
+    $resumptionToken = $resumptionTokenJson ? json_decode($resumptionTokenJson) : false;
 
-    if ($resumptionToken === False)
+    if ($resumptionToken === false)
     {
       $this->sendResumptionTokenError($request);
     }
