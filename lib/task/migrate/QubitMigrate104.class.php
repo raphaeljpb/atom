@@ -251,7 +251,7 @@ class QubitMigrate104 extends QubitMigrate
       'parent_id' => 'QubitMenu_mainmenu_addedit',
       'source_culture' => 'en',
       'name' => 'information object',
-      'label' => ['en' => 'information object', 'fr' => 'objet d\'information' , 'it' => 'oggetto informativo', 'nl' => 'information object', 'pt' => 'objeto informacional', 'sl' => 'informacijski objekt'],
+      'label' => ['en' => 'information object', 'fr' => 'objet d\'information', 'it' => 'oggetto informativo', 'nl' => 'information object', 'pt' => 'objeto informacional', 'sl' => 'informacijski objekt'],
       'path' => 'informationobject/list'
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_addedit_actor'] = [
