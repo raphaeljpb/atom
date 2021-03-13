@@ -1,7 +1,6 @@
 <?php
 
-/*
- */
+
 
 class sfDrupalWidgetFormSchemaFormatter extends sfWidgetFormSchemaFormatter
 {
