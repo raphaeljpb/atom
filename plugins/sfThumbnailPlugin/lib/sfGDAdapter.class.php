@@ -207,5 +207,4 @@ class sfGDAdapter
   {
     return $this->sourceMime;
   }
-
 }

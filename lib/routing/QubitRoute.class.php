@@ -105,6 +105,7 @@ class QubitRoute extends sfRoute
 
     return $url;
   }
+
   protected function filterParams($params)
   {
     // Fill in missing parameters with attributes of $params[0]

@@ -40,6 +40,7 @@ class csvExportPhysicalObjectHoldingsTask extends arBaseTask
 
     $this->log('Done.');
   }
+
   /**
    * @see sfTask
    */

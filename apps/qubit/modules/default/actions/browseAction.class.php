@@ -113,6 +113,7 @@ class DefaultBrowseAction extends sfAction
       $this->selectedCulture = $this->context->user->getCulture();
     }
   }
+
   protected function populateAggs($resultSet)
   {
     $this->aggs = [];

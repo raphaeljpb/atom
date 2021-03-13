@@ -61,6 +61,7 @@ class resetPasswordTask extends sfBaseTask
     // Done!
     return $password;
   }
+
   protected function configure()
   {
     $this->addArguments([

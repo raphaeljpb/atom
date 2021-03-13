@@ -498,6 +498,7 @@ abstract class csvImportBaseTask extends arBaseTask
 
     return $result['terms'];
   }
+
   /**
    * @see sfTask
    */

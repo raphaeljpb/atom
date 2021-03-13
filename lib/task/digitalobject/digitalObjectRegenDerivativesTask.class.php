@@ -82,6 +82,7 @@ class digitalObjectRegenDerivativesTask extends arBaseTask
     QubitDigitalObject::clearCache();
     QubitInformationObject::clearCache();
   }
+
   protected function configure()
   {
     // Validate "type" options

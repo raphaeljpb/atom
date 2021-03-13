@@ -1386,5 +1386,4 @@ class QubitMetsParser
         }
     }
   }
-
 }

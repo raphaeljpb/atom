@@ -141,6 +141,7 @@ class ObjectAddDigitalObjectAction extends sfAction
 
     $this->resource->digitalObjectsRelatedByobjectId[] = $digitalObject;
   }
+
   protected function addFields($request)
   {
     // Single upload

@@ -366,5 +366,4 @@ class DigitalObjectMetadataComponent extends sfComponent
       return date('Y-m-d\TH:i:s\Z', $timestamp);
     }
   }
-
 }

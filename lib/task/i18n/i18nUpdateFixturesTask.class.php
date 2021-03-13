@@ -37,6 +37,7 @@ class I18nUpdateFixturesTask extends sfBaseTask
 
     $this->updateFixtures($translations);
   }
+
   /**
    * @see sfTask
    */

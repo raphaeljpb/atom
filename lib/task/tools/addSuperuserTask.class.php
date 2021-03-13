@@ -95,6 +95,7 @@ class addSuperuserTask extends sfBaseTask
     $group->groupId = QubitAclGroup::ADMIN_ID;
     $group->save();
   }
+
   /**
    * @see sfTask
    */

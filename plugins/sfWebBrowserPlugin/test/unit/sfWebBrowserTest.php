@@ -51,11 +51,13 @@ $cookies_file = $cookies_dir.'/cookies.txt';
 class myTestWebBrowser extends sfWebBrowser
 {
   protected $requestMethod;
+
   public function call($uri, $method = 'GET', $parameters = [], $headers = [], $changeStack = true)
   {
     parent::call($uri, $method, $parameters, $headers, $changeStack);
     $this->requestMethod = $this->stack[$this->stackPosition]['method'];
   }
+
   public function getRequestMethod()
   {
     return $this->requestMethod;

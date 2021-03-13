@@ -35,6 +35,7 @@ class QubitValidatorMenuName extends sfValidatorBase
 
     return $nameIsValid;
   }
+
   protected function configure($options = [], $messages = [])
   {
     parent::configure($options, $messages);

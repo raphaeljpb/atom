@@ -85,6 +85,7 @@ class i18nRectifyTask extends sfBaseTask
       $messageSource->save();
     }
   }
+
   /**
    * @see sfTask
    */

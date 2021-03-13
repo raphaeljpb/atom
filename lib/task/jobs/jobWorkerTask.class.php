@@ -37,6 +37,7 @@ class jobWorkerTask extends arBaseTask
   {
     parent::log(date('Y-m-d H:i:s > ').$message);
   }
+
   protected function configure()
   {
     $this->addOptions([

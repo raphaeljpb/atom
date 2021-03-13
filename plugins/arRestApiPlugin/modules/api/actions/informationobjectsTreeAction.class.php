@@ -44,6 +44,7 @@ class ApiInformationObjectsTreeAction extends QubitApiAction
 
     return $results;
   }
+
   protected function get($request)
   {
     // Get parent slug so we can determine its ID

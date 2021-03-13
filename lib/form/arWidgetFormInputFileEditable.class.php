@@ -43,6 +43,7 @@ class arWidgetFormInputFileEditable extends sfWidgetFormInputFile
       return $this->getFileAsTag($attributes).$input;
     }
   }
+
   protected function configure($options = [], $attributes = [])
   {
     parent::configure($options, $attributes);

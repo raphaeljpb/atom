@@ -1525,7 +1525,6 @@ class QubitDigitalObject extends BaseDigitalObject
     }
   }
 
-
   /**
    * Get absolute path to asset
    *
@@ -2071,6 +2070,7 @@ class QubitDigitalObject extends BaseDigitalObject
       return (int) $pageCount->getValue();
     }
   }
+
   // TODO: add $options for filter
   public function getPage($index)
   {
@@ -2943,7 +2943,6 @@ class QubitDigitalObject extends BaseDigitalObject
 
     return file_get_contents($tmpFilePath);
   }
-
 
   /*
    * -----------------------------------------------------------------------

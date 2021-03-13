@@ -86,6 +86,7 @@ class atomPluginsTask extends sfBaseTask
 
     }
   }
+
   protected function configure()
   {
     $this->addArguments([

@@ -196,6 +196,7 @@ class propelGenerateSlugsTask extends arBaseTask
 
     $this->logSection('propel', 'Done!');
   }
+
   /**
    * @see sfTask
    */

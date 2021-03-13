@@ -858,5 +858,4 @@ class sfWebBrowser
         return '-'.strtoupper($matches[1]);
       }, strtr(ucfirst($name), '_', '-'));
   }
-
 }

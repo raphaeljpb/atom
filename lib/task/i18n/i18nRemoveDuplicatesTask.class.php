@@ -102,6 +102,7 @@ class I18nRemoveDuplicatesTask extends sfBaseTask
       $doc->save($filename);
     }
   }
+
   /**
    * @see sfTask
    */
@@ -121,5 +122,4 @@ class I18nRemoveDuplicatesTask extends sfBaseTask
 FIXME
 EOF;
   }
-
 }

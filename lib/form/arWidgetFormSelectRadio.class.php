@@ -32,6 +32,7 @@ class arWidgetFormSelectRadio extends sfWidgetFormSelectRadio
 
     return !$rows ? '' : $this->renderContentTag('div', implode($this->getOption('separator'), $rows), ['class' => $this->getOption('class')]);
   }
+
   protected function configure($options = [], $attributes = [])
   {
     parent::configure($options, $attributes);

@@ -126,6 +126,7 @@ class purgeTask extends sfBaseTask
 
     $this->logSection('propel', 'Purge complete!');
   }
+
   /**
    * @see sfTask
    */

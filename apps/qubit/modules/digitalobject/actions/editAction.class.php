@@ -170,6 +170,7 @@ class DigitalObjectEditAction extends sfAction
       $geoProperty->save();
     }
   }
+
   protected function addFormFields()
   {
     // Media type field

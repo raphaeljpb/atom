@@ -44,6 +44,7 @@ class i18nConsolidateTask extends sfBaseTask
     $extract->extract();
     $extract->save();
   }
+
   /**
    * @see sfTask
    */

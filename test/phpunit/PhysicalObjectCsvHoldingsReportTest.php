@@ -24,7 +24,6 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
     ];
   }
 
-
   /**************************************************************************
    * Data providers
    **************************************************************************/
@@ -92,7 +91,6 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
       [$holdingsData]
     ];
   }
-
 
   /**************************************************************************
    * Tests

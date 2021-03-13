@@ -147,5 +147,4 @@ class sfSocketsAdapter
 
     return $browser;
   }
-
 }

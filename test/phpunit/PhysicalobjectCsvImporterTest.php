@@ -75,7 +75,6 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
       explode(',', $this->csvHeader), str_getcsv($this->csvData[$row]));
   }
 
-
   /**************************************************************************
    * Data providers
    **************************************************************************/
@@ -215,7 +214,6 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
       [$inputs[3], $expectedResults[3]],
     ];
   }
-
 
   /**************************************************************************
    * Tests

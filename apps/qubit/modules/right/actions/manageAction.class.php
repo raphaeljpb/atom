@@ -50,6 +50,7 @@ class RightManageAction extends sfAction
       }
     }
   }
+
   protected function earlyExecute()
   {
     $this->resource = $this->getRoute()->resource;

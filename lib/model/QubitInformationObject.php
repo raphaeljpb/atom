@@ -892,7 +892,6 @@ class QubitInformationObject extends BaseInformationObject
     return count($rows) == 1;
   }
 
-
   /***********************
    Actor/Event relations
   ************************/
@@ -2373,7 +2372,6 @@ class QubitInformationObject extends BaseInformationObject
    * @param
    * @return String containing OAI-compliant Identifier
    */
-
   public function getOaiIdentifier()
   {
     $domain = sfContext::getInstance()->request->getHost();
@@ -2388,7 +2386,6 @@ class QubitInformationObject extends BaseInformationObject
    * @param
    * @return String set the OAI Identifier returned from the source repository as part of an OAI response
    */
-
   public function setSourceOaiIdentifier($value)
   {
     $this->addProperty('source_oai_identifier', $value, $options = ['scope' => 'oai', 'sourceCulture' => true]);

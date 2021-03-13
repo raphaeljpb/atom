@@ -39,6 +39,7 @@ class AclGroupEditDefaultAclAction extends sfAction
       $this->addField($name);
     }
   }
+
   protected function addField($name)
   {
     $this->form->setValidator($name, new sfValidatorString());

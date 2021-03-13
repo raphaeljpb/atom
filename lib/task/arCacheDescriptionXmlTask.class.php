@@ -31,6 +31,7 @@ class arCacheDescriptionXmlTask extends arBaseTask
     parent::execute($arguments, $options);
     $this->exportAll($options);
   }
+
   protected function configure()
   {
     $this->addOptions([

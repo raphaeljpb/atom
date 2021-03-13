@@ -32,6 +32,7 @@ class QubitValidatorAccessionIdentifier extends sfValidatorBase
 
     return (0 == count(QubitAccession::get($criteria)));
   }
+
   protected function configure($options = [], $messages = [])
   {
     parent::configure($options, $messages);

@@ -36,6 +36,7 @@ class QubitGenerator extends sfPropelAdminGenerator
 
     return parent::getColumnEditTag($column, $params);
   }
+
   protected function setScaffoldingClassName($className)
   {
     $this->singularName = strtolower(substr($className, 0, 1)).substr($className, 1);

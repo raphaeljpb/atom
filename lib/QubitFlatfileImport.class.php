@@ -86,7 +86,6 @@ class QubitFlatfileImport
     $this->status['updated'] = 0;
   }
 
-
   /*
    *
    *  General helper methods
@@ -626,7 +625,6 @@ class QubitFlatfileImport
     return $output;
   }
 
-
   /*
    *
    *  Column handlers
@@ -712,7 +710,6 @@ class QubitFlatfileImport
       $this->rowStatusVars[$column] = array_map('trim', explode($delimiter, $value));
     }
   }
-
 
   /*
    *

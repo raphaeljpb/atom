@@ -124,6 +124,7 @@ class digitalObjectDeleteTask extends arBaseTask
 
     $this->logSection('digital-object', sprintf('%d digital objects deleted (%.2fs elapsed)', $nDeleted, $t->elapsed()));
   }
+
   /**
    * @see sfTask
    */

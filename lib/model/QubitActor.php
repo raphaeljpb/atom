@@ -690,6 +690,7 @@ class QubitActor extends BaseActor
   /****************
    Import methods
   *****************/
+
   /**
    * Wrapper for QubitDigitalObject::importFromUri() method
    *

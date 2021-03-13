@@ -161,7 +161,6 @@ class SettingsTreeviewAction extends DefaultEditAction
     }
   }
 
-
   protected function processField($field)
   {
     switch ($field->getName())

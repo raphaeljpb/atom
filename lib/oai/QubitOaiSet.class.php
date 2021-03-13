@@ -34,7 +34,6 @@ interface QubitOaiSet
    *
    * @return boolean true if $record is contained in this OAI set.
    */
-
   public function contains($record);
 
   /**
@@ -42,7 +41,6 @@ interface QubitOaiSet
    *
    * @return string An OAI set specification
    */
-
   public function setSpec();
 
   /**
@@ -50,7 +48,6 @@ interface QubitOaiSet
    *
    * @return string A display name
    */
-
   public function getName();
 
   /**
@@ -59,6 +56,5 @@ interface QubitOaiSet
    * @param Criteria $criteria The search criteria to be modified
    *
    */
-
   public function apply($criteria);
 }

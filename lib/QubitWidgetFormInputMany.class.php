@@ -78,6 +78,7 @@ EOF;
 
     return $null.$inputStr.$new;
   }
+
   /**
    * @param array $options     An array of options
    * @param array $attributes  An array of default HTML attributes

@@ -40,7 +40,6 @@ class RightEditAction extends sfAction
       'statuteDeterminationDate',
       'statuteNote'];
 
-
   public function execute($request)
   {
     $this->earlyExecute();

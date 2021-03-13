@@ -49,6 +49,7 @@ class RepositoryEditAction extends DefaultEditAction
 
     QubitDescription::addAssets($this->response);
   }
+
   protected function earlyExecute()
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);

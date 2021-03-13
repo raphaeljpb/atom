@@ -260,5 +260,4 @@ class arFileImportJob extends arBaseJob
 
     return $options;
   }
-
 }

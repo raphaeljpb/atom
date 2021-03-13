@@ -25,7 +25,6 @@ class InformationObjectRenameAction extends DefaultEditAction
       'slug',
       'filename'];
 
-
   // Allow modification of title, slug, and digital object filename
   public function execute($request)
   {

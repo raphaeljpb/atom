@@ -87,6 +87,7 @@ class RelationEditComponent extends sfComponent
       $this->addField($name);
     }
   }
+
   protected function addField($name)
   {
     switch ($name)

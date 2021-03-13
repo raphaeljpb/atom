@@ -46,6 +46,7 @@ class arSearchDocumentTask extends arBaseTask
       throw new sfException('Slug not found');
     }
   }
+
   /**
    * @see sfTask
    */

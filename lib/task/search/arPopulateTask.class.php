@@ -54,6 +54,7 @@ class arSearchPopulateTask extends sfBaseTask
       QubitSearch::getInstance()->populate($populateOptions);
     }
   }
+
   protected function configure()
   {
     $this->addOptions([

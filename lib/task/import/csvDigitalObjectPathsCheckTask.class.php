@@ -46,6 +46,7 @@ class csvDigitalObjectPathsCheckTask extends arBaseTask
 
     $this->printImageUsageInfo($arguments['path-to-images'], $arguments['path-to-csv-file'], $csvFilePathColumnName);
   }
+
   protected function configure()
   {
     $this->addArguments([

@@ -32,6 +32,7 @@ class QubitValidatorActorDescriptionIdentifier extends sfValidatorBase
 
     return count(QubitActor::get($criteria)) > 0;
   }
+
   protected function configure($options = [], $messages = [])
   {
     parent::configure($options, $messages);

@@ -58,6 +58,7 @@ class promoteUserToAdminTask extends sfBaseTask
 
     $this->logSection('info', 'The user '.$user->username.' is now an administrator.');
   }
+
   /**
    * @see sfTask
    */

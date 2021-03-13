@@ -52,6 +52,7 @@ class arSearchStatusTask extends arBaseTask
       $this->log(sprintf(' - %s: %d/%d', $docTypeDescription, $docTypeIndexedCount, $docTypeAvailableCount));
     }
   }
+
   protected function configure()
   {
     $this->addOptions([

@@ -108,6 +108,7 @@ class QubitFunctionObject extends BaseFunctionObject
 
     return call_user_func_array([$this, 'BaseFunctionObject::__set'], $args);
   }
+
   public function save($connection = null)
   {
     parent::save($connection);

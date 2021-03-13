@@ -63,6 +63,7 @@ class csvPhysicalobjectImportTask extends arBaseTask
 
     $this->log($importer->reportTimes());
   }
+
   /**
    * @see sfBaseTask
    */

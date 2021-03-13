@@ -42,6 +42,7 @@ class arWidgetFormUploadQuota extends sfWidgetFormInput
       '%1%' => hr_filesize($size),
       '%2%' => $uploadLimit.' GB']).'</label>';
   }
+
   protected function configure($options = [], $attributes = [])
   {
     parent::configure($options, $attributes);

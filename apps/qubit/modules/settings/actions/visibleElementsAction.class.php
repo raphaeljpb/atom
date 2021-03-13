@@ -54,6 +54,7 @@ class SettingsVisibleElementsAction extends sfAction
       $this->redirect('settings/visibleElements');
     }
   }
+
   protected function addField(QubitSetting $setting)
   {
     $name = $setting->name;

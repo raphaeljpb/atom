@@ -69,6 +69,7 @@ class InformationObjectIndexAction extends sfAction
 
     $this->digitalObjectLink = $this->resource->getDigitalObjectUrl();
   }
+
   protected function addField($validatorSchema, $name)
   {
     switch ($name)

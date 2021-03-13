@@ -49,6 +49,7 @@ class DefaultEditAction extends sfAction
       $this->addField($name);
     }
   }
+
   protected function addField($name)
   {
     switch ($name)

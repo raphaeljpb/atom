@@ -69,6 +69,7 @@ class deleteUserTask extends arBaseTask
     $user->delete();
     $this->logSection('delete-user', 'Deleted user "'. $arguments['username'] .'".');
   }
+
   protected function configure()
   {
     $this->addArguments([
