@@ -2691,7 +2691,7 @@ class QubitInformationObject extends BaseInformationObject
    *
    * @return integer InfoObj id
    */
-  public static function getByTitleIdentifierAndRepo ($identifier, $title, $repoName)
+  public static function getByTitleIdentifierAndRepo($identifier, $title, $repoName)
   {
     if (null !== $identifier && null !== $title)
     {
