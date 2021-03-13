@@ -65,8 +65,7 @@ class arOaiPluginIndexAction extends sfAction
       {
         return QubitAcl::forwardUnauthorized(true);
       }
-      else
-      {
+
         $criteria = new Criteria();
         $criteria->add(QubitProperty::NAME, 'oaiApiKey');
         $criteria->add(QubitPropertyI18n::VALUE, $requestOaiApiKey);
@@ -79,7 +78,6 @@ class arOaiPluginIndexAction extends sfAction
         // Authenticate user so ACL checks can be applies in XML template# get user ID from property?
         $user = QubitUser::getById($oaiApiKeyProperty->objectId);
         $this->context->user->signIn($user);
-      }
     }
 
     $request->setRequestFormat('xml');

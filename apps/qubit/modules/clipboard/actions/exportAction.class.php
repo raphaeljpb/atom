@@ -516,23 +516,17 @@ class ClipboardExportAction extends DefaultEditAction
         {
           return 'arInformationObjectCsvExportJob';
         }
-        else
-        {
-          return 'arInformationObjectXmlExportJob';
-        }
 
-        // no break
+          return 'arInformationObjectXmlExportJob';
+
       case 'actor':
         if ('csv' == $this->formatType)
         {
           return 'arActorCsvExportJob';
         }
-        else
-        {
-          return 'arActorXmlExportJob';
-        }
 
-        // no break
+          return 'arActorXmlExportJob';
+
       case 'repository':
         return 'arRepositoryCsvExportJob';
 

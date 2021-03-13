@@ -40,10 +40,8 @@ class InformationObjectFindingAidComponent extends sfComponent
 
         return;
       }
-      else
-      {
+
         return sfView::NONE;
-      }
     }
 
     $lastJobStatus = arFindingAidJob::getStatus($this->resource->id);

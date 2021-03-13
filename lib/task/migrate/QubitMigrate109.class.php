@@ -660,10 +660,8 @@ class QubitMigrate109 extends QubitMigrate
           {
             break;
           }
-          else
-          {
+
             array_unshift($keys, $parentKey);
-          }
         }
 
         // Duplicate ancestor's publication status

@@ -41,9 +41,9 @@ $parentKeyLogic = function (&$self) {
     !trim($self->columnValue('PARENT'))
   ) {
     return $self->columnValue('title');
-  } else {
-    return false;
   }
+
+    return false;
 };
 
 $rowParentKeyLookupLogic = function (&$self) {

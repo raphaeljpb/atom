@@ -461,15 +461,12 @@ class arElasticSearchPluginQuery
 
           return $queryBool;
         }
-        else
-        {
+
           $query = new \Elastica\Query\Term();
           $query->setTerm('copyrightStatusId', $value);
 
           return $query;
-        }
 
-        // no break
       case 'onlyMedia':
         $query = new \Elastica\Query\Term();
         $query->setTerm('hasDigitalObject', filter_var($value, FILTER_VALIDATE_BOOLEAN));

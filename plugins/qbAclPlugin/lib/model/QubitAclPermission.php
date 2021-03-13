@@ -182,10 +182,8 @@ class QubitAclPermission extends BaseAclPermission
             {
               return false;
             }
-            else
-            {
+
               continue;
-            }
           }
 
           $conditional = str_replace('%p['.$key.']', '\''.$parameters[$key].'\'', $conditional);

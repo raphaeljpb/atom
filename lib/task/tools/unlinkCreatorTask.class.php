@@ -190,15 +190,13 @@ EOF;
           // If there are creators on the ancestors but they don't match:
           //   -- stop looking cause it does not matter what is above this node
           //   -- do not delete any creators because they do not match current ancestor.
-          else
-          {
+
             break;
-          }
         }
         // If there are creators on the ancestors but they don't match:
         //   -- stop looking cause it does not matter what is above this node
         //   -- do not delete any creators because they do not match current ancestor.
-        elseif (0 < count($ancestorCreators))
+        if (0 < count($ancestorCreators))
         {
           break;
         }

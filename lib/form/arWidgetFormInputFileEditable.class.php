@@ -38,10 +38,8 @@ class arWidgetFormInputFileEditable extends sfWidgetFormInputFile
 
       return $this->getFileAsTag($attributes).$delete.$deleteLabel.'<br \>'.$input;
     }
-    else
-    {
+
       return $this->getFileAsTag($attributes).$input;
-    }
   }
 
   protected function configure($options = [], $attributes = [])
@@ -64,9 +62,7 @@ class arWidgetFormInputFileEditable extends sfWidgetFormInputFile
     {
       return false !== $this->getOption('file_src') ? $this->renderTag('img', array_merge(['src' => $this->getOption('file_src')], $attributes)) : '';
     }
-    else
-    {
+
       return $this->getOption('file_src');
-    }
   }
 }

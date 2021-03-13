@@ -65,17 +65,13 @@ class SearchFilterTagComponent extends sfComponent
         // All specified params must be set for filter tag to show
         return count($this->options['params']) == $setCount;
       }
-      else
-      {
+
         // Any specified param can be set for filter tag to show
         return $setCount > 0;
-      }
     }
-    else
-    {
+
       // Check using param based on filter tag name
       return isset($this->getParams[$this->name]);
-    }
   }
 
   private function unsetParams()

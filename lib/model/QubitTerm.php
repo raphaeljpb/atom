@@ -316,10 +316,8 @@ class QubitTerm extends BaseTerm
     {
       return $notes[0]->getContent($options = ['cultureFallback' => true]);
     }
-    else
-    {
+
       return $this->getName();
-    }
   }
 
   public static function getCollectionTypes($options = [])

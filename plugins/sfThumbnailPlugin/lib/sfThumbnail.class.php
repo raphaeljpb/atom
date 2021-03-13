@@ -96,9 +96,8 @@ class sfThumbnail
           file_put_contents($this->tempFile, $b->getResponseText());
           if (!filesize($this->tempFile)) {
             throw new Exception('downloaded file is empty');
-          } else {
-            $image = $this->tempFile;
           }
+            $image = $this->tempFile;
         }
         catch (Exception $e)
         {

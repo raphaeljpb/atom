@@ -559,11 +559,9 @@ class sfInstall
         // Successful response (e.g. 200, 201, etc.)
         return $browser->getResponseText();
       }
-      else
-      {
+
         // Error response (e.g. 404, 500, etc.)
         return false;
-      }
     }
     catch (Exception $e)
     {

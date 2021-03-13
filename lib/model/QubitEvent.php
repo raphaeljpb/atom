@@ -100,10 +100,8 @@ class QubitEvent extends BaseEvent
     {
       return $relation[0]->getTerm();
     }
-    else
-    {
+
       return null;
-    }
   }
 
   protected function insert($connection = null)

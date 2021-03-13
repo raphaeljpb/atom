@@ -196,8 +196,7 @@ EOF;
         return $this->renderText(json_encode($response));
       }
       // Not XHR requests
-      else
-      {
+
         switch ($this->resource->taxonomyId)
         {
           case QubitTaxonomy::PLACE_ID:
@@ -281,7 +280,6 @@ EOF;
 
         // Load list terms
         $this->loadListTerms($request);
-      }
     }
   }
 

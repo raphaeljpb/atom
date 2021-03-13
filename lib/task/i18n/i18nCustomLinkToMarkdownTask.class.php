@@ -73,10 +73,8 @@ EOF;
         {
           return "[{$matches[1]}](".('www.' == $matches[2] ? 'http://www.' : $matches[2]).trim($matches[3]).')';
         }
-        else
-        {
+
           return "[{$matches[2]}".trim($matches[3]).']('.('www.' == $matches[2] ? 'http://www.' : $matches[2]).trim($matches[3]).')';
-        }
       }, $row[$column]);
 
       // Save changed values

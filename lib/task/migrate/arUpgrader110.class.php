@@ -574,10 +574,8 @@ class arUpgrader110
               {
                 continue;
               }
-              else
-              {
+
                 $repoName = $repository->slug;
-              }
             }
 
             $repoName = $repository->slug;

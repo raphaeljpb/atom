@@ -531,10 +531,8 @@ class QubitInformationObject extends BaseInformationObject
     {
       return $this->getRepository()->getCountry();
     }
-    else
-    {
+
       return null;
-    }
   }
 
   /**
@@ -661,10 +659,8 @@ class QubitInformationObject extends BaseInformationObject
     {
       return sfConfig::get('app_siteBaseUrl').'/'.$this->pathToEadExport();
     }
-    else
-    {
+
       return sfContext::getInstance()->routing->generate(null, [$this, 'module' => 'sfEadPlugin', 'sf_format' => 'xml']);
-    }
   }
 
   /**
@@ -692,10 +688,8 @@ class QubitInformationObject extends BaseInformationObject
     {
       return sfConfig::get('app_siteBaseUrl').'/'.$this->pathToDcExport();
     }
-    else
-    {
+
       return sfContext::getInstance()->routing->generate(null, [$this, 'module' => 'sfDcPlugin', 'sf_format' => 'xml']);
-    }
   }
 
   /**
@@ -1231,10 +1225,8 @@ class QubitInformationObject extends BaseInformationObject
 
       return $creatorNameString;
     }
-    else
-    {
+
       return null;
-    }
   }
 
   public function getCreatorsHistoryString($options = [])
@@ -1251,10 +1243,8 @@ class QubitInformationObject extends BaseInformationObject
 
       return $creatorHistoryString;
     }
-    else
-    {
+
       return null;
-    }
   }
 
   public function getDatesString($options = [])
@@ -1271,10 +1261,8 @@ class QubitInformationObject extends BaseInformationObject
 
       return $datesString;
     }
-    else
-    {
+
       return null;
-    }
   }
 
   public function getAccessPointsString($typeId, $options = [])

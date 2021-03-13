@@ -180,11 +180,9 @@ class QubitCsvImport
 
       throw new sfException($output);
     }
-    else
-    {
+
       // Warnings
       $this->errors = $output;
-    }
 
     return $this;
   }

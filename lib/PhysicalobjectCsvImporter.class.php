@@ -599,10 +599,8 @@ EOQ;
 
       return [$matches->current()];
     }
-    else
-    {
+
       return $this->handleMultipleMatches($data['name'], $matches);
-    }
   }
 
   public function handleMultipleMatches($name, $matches)

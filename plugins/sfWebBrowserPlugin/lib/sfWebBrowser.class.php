@@ -373,10 +373,8 @@ class sfWebBrowser
     {
       return $this->post($url, $arguments);
     }
-    else
-    {
+
       return $this->get($url, $arguments);
-    }
   }
 
   /**

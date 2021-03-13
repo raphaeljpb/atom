@@ -137,10 +137,8 @@ class QubitAcl
         {
           return true;
         }
-        else
-        {
+
           continue;
-        }
       }
 
       // OR condition, first "true" result returns
@@ -226,8 +224,7 @@ class QubitAcl
       }
 
       // Add repository access if there is no pre-existing rule for that repo
-      else
-      {
+
         $preExistingRule = false;
         foreach ($repositoryAccess as $rule)
         {
@@ -243,7 +240,6 @@ class QubitAcl
         {
           $repositoryAccess[] = ['id' => $repository->id, 'access' => $access];
         }
-      }
     }
 
     return $repositoryAccess;

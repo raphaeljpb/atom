@@ -138,10 +138,8 @@ class QubitMenu extends BaseMenu
     {
       return true;
     }
-    else
-    {
+
       return false;
-    }
   }
 
   /**
@@ -481,10 +479,8 @@ class QubitMenu extends BaseMenu
       {
         return '<ul class="'.$options['ulClass'].'">'.implode($li).'</ul>';
       }
-      else
-      {
+
         return '<ul class="clearfix links">'.implode($li).'</ul>';
-      }
     }
 
     return implode($li);

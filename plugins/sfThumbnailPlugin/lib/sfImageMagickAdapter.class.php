@@ -187,15 +187,13 @@ class sfImageMagickAdapter
       {
         throw new Exception('Image could not be identified.');
       }
-      else
-      {
+
         // get image data via identify
         list($img, $type, $dimen) = explode(' ', $stdout[0]);
         list($width, $height) = explode('x', $dimen);
 
         $this->sourceWidth = $width;
         $this->sourceHeight = $height;
-      }
     }
     else
     {

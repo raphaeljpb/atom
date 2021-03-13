@@ -1232,13 +1232,11 @@ class QubitXmlImport
 
         return false;
       }
-      else
-      {
+
         $this->errors[] = $this->i18n->__('Deleting and replacing record: %title%', ['%title%' => $title]);
         call_user_func([$matchResource, $deleteFunctionName]);
 
         return true;
-      }
     }
 
     // Match not found when not updating and skipping matches

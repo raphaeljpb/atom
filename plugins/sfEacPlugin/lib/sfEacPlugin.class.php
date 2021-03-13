@@ -961,8 +961,7 @@ return;
 
           return $term->id;
         }
-        else
-        {
+
           $term = new QubitTerm();
           $term->taxonomyId = QubitTaxonomy::EVENT_TYPE_ID;
           $term->parentId = QubitTerm::ROOT_ID;
@@ -970,9 +969,7 @@ return;
           $term->save();
 
           return $term->id;
-        }
 
-        // no break
       case 'subjectOf':
         return;
     }

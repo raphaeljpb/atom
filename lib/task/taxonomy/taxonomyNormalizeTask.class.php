@@ -96,10 +96,8 @@ EOF;
     {
       return $object->id;
     }
-    else
-    {
+
       return false;
-    }
   }
 
   protected function populateTaxonomyNameUsage(&$names, $culture)

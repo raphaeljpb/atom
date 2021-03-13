@@ -257,10 +257,8 @@ class Qubit
 
       return $input_time == $time;
     }
-    else
-    {
+
       return false;
-    }
   }
 
   /**

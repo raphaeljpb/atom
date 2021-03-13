@@ -52,8 +52,7 @@ class RepositoryAutocompleteAction extends sfAction
       {
         return sfView::NONE;
       }
-      else
-      {
+
         while ($repo = array_shift($repositoryAccess))
         {
           if ('*' != $repo['id'])
@@ -75,7 +74,6 @@ class RepositoryAutocompleteAction extends sfAction
             }
           }
         }
-      }
     }
 
     $this->repositories = QubitRepository::get($criteria);

@@ -685,10 +685,8 @@ class QubitMigrate110 extends QubitMigrate
           {
             continue;
           }
-          else
-          {
+
             $repo['slug'] = $slug;
-          }
         }
 
         $repoName = $repo['slug'];

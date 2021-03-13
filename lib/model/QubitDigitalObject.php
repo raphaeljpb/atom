@@ -1488,12 +1488,10 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       return $this->getPath().$this->getName();
     }
-    else
-    {
+
       // For remote resources 'path' contains the complete URL and concatenating
       // 'name' is not desirable
       return $this->getPath();
-    }
   }
 
   /**
@@ -1508,10 +1506,8 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       return $this->getPath();
     }
-    else
-    {
+
       return public_path($this->getFullPath(), true);
-    }
   }
 
   /**
@@ -1659,10 +1655,8 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       return $this;
     }
-    else
-    {
+
       return $this->getChildByUsageId($usageId);
-    }
   }
 
   /**
@@ -1753,15 +1747,13 @@ class QubitDigitalObject extends BaseDigitalObject
 
       return '/'.QubitSetting::getByName('upload_dir')->__toString().'/r/'.$repoDir.'/'.$checksum[0].'/'.$checksum[1].'/'.$checksum[2].'/'.$checksum;
     }
-    else
-    {
+
       if (!isset($this->parent))
       {
         throw new sfException('Got an orphaned derivative.');
       }
 
       return rtrim($this->parent->getPath(), '/');
-    }
   }
 
   /**
@@ -2251,10 +2243,8 @@ class QubitDigitalObject extends BaseDigitalObject
       // Unlimited
       return -1;
     }
-    else
-    {
+
       return min($settings);
-    }
   }
 
   /*
@@ -2607,10 +2597,8 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       return true;
     }
-    else
-    {
+
       return false;
-    }
   }
 
   public static function isAudioFile($filename)
@@ -2620,10 +2608,8 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       return true;
     }
-    else
-    {
+
       return false;
-    }
   }
 
   /*
@@ -2904,10 +2890,8 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       return true;
     }
-    else
-    {
+
       return false;
-    }
   }
 
   /**
