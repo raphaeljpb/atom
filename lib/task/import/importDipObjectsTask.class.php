@@ -423,13 +423,13 @@ EOF;
   {
     $filename = basename($filepath);
 
-    $query = "SELECT id FROM digital_object WHERE name=?";
+    $query = 'SELECT id FROM digital_object WHERE name=?';
 
     $statement = QubitFlatfileImport::sqlQuery($query, [$filename]);
 
     if (!$statement->fetchColumn())
     {
-      $this->log("Missing ".$filename);
+      $this->log('Missing '.$filename);
     }
   }
 
@@ -562,7 +562,7 @@ EOF;
     }
 
     // If UUIDs found, inform user and return first UUID found
-    $this->logSection('dip-import', 'UUID found: '.$matches[0][0]." in ".$subject);
+    $this->logSection('dip-import', 'UUID found: '.$matches[0][0].' in '.$subject);
 
     return $matches[0][0];
   }

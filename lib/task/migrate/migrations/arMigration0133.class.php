@@ -34,7 +34,7 @@ class arMigration0133
   public function up($configuration)
   {
     // Drop columns
-    $sql = "ALTER TABLE `digital_object` DROP COLUMN `lft`, DROP COLUMN `rgt`";
+    $sql = 'ALTER TABLE `digital_object` DROP COLUMN `lft`, DROP COLUMN `rgt`';
     QubitPdo::modify($sql);
 
     return true;

@@ -76,7 +76,7 @@ class addSuperuserTask extends sfBaseTask
     $password = ($options['password']) ? $options['password'] : '';
     if (!$password)
     {
-      $password = trim(readline("Admin password: "));
+      $password = trim(readline('Admin password: '));
     }
 
     // Create user

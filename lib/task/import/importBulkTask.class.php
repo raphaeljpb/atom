@@ -50,7 +50,7 @@ class importBulkTask extends arBaseTask
         'skip-unmatched',
         null,
         sfCommandOption::PARAMETER_NONE,
-        "When importing records with --update, skip creating new records if no existing records match."
+        'When importing records with --update, skip creating new records if no existing records match.'
       ),
       new sfCommandOption(
         'limit',
@@ -97,7 +97,7 @@ EOF;
     }
 
     // TODO: Add some colour
-    $this->log("Importing ".count($files)." files from ".$arguments['folder']." (indexing is ".($options['index'] ? "ENABLED" : "DISABLED").") ...\n");
+    $this->log('Importing '.count($files).' files from '.$arguments['folder'].' (indexing is '.($options['index'] ? 'ENABLED' : 'DISABLED').") ...\n");
 
     $count = 0;
     $total = count($files);
@@ -169,7 +169,7 @@ EOF;
 
       if ($options['verbose'])
       {
-        $this->log(basename($file)." imported (".round($split, 2)." s) (".$count."/".$total.")");
+        $this->log(basename($file).' imported ('.round($split, 2).' s) ('.$count.'/'.$total.')');
       }
     }
 
@@ -197,7 +197,7 @@ EOF;
       QubitSearch::getInstance()->optimize();
     }
 
-    $this->log("\nImported ".$count." XML/CSV files in ".$timer->elapsed()." s. ".memory_get_peak_usage()." bytes used.");
+    $this->log("\nImported ".$count.' XML/CSV files in '.$timer->elapsed().' s. '.memory_get_peak_usage().' bytes used.');
   }
 
   protected function dir_tree($dir)

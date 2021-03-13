@@ -292,10 +292,10 @@ class arElasticSearchActorPdo
         else
         {
           // Look up converse term, if any
-          $sql = "SELECT IF(object_id=?, subject_id, object_id) AS converse_id
+          $sql = 'SELECT IF(object_id=?, subject_id, object_id) AS converse_id
                     FROM relation
                     WHERE (object_id=? or subject_id=?)
-                    AND type_id=?";
+                    AND type_id=?';
 
           $result = QubitPdo::fetchColumn($sql, [$typeId, $typeId, $typeId, QubitTerm::CONVERSE_TERM_ID]);
 
@@ -318,11 +318,11 @@ class arElasticSearchActorPdo
 
   public static function serializeObjectRelations($actorId)
   {
-    $sql = "SELECT r.object_id AS objectId, r.subject_id AS subjectId, r.type_id AS typeId
-             FROM ".QubitRelation::TABLE_NAME." r
-             INNER JOIN ".QubitTerm::TABLE_NAME." t ON r.type_id=t.id
-             WHERE t.taxonomy_id=".QubitTaxonomy::ACTOR_RELATION_TYPE_ID."
-             AND object_id=? OR r.subject_id=?";
+    $sql = 'SELECT r.object_id AS objectId, r.subject_id AS subjectId, r.type_id AS typeId
+             FROM '.QubitRelation::TABLE_NAME.' r
+             INNER JOIN '.QubitTerm::TABLE_NAME.' t ON r.type_id=t.id
+             WHERE t.taxonomy_id='.QubitTaxonomy::ACTOR_RELATION_TYPE_ID.'
+             AND object_id=? OR r.subject_id=?';
 
     return QubitPdo::fetchAll($sql, [$actorId, $actorId], ['fetchMode' => PDO::FETCH_ASSOC]);
   }

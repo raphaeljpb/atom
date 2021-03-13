@@ -89,8 +89,8 @@ sql;
     }
 
     // Add physical transfer accession event type if it doesn't exist
-    $sql = "SELECT * FROM ".QubitTerm::TABLE_NAME." t
-              INNER JOIN ".QubitTermI18n::TABLE_NAME." ti
+    $sql = 'SELECT * FROM '.QubitTerm::TABLE_NAME.' t
+              INNER JOIN '.QubitTermI18n::TABLE_NAME." ti
               WHERE ti.name='Physical transfer'
               AND t.taxonomy_id=?
               AND ti.culture='en'
@@ -110,8 +110,8 @@ sql;
     }
 
     // Add accession event note type term if it doesn't exist
-    $sql = "SELECT * FROM ".QubitTerm::TABLE_NAME." t
-              INNER JOIN ".QubitTermI18n::TABLE_NAME." ti
+    $sql = 'SELECT * FROM '.QubitTerm::TABLE_NAME.' t
+              INNER JOIN '.QubitTermI18n::TABLE_NAME." ti
               WHERE ti.name='Accession event note'
               AND t.taxonomy_id=?
               AND ti.culture='en'

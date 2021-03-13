@@ -40,7 +40,7 @@ class QubitI18N
         continue;
       }
 
-      $translations[$fileInfo->getBasename()] = "";
+      $translations[$fileInfo->getBasename()] = '';
     }
 
     $configuration = sfContext::getInstance()->getConfiguration();

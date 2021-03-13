@@ -205,7 +205,7 @@
           <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::THEMATIC_AREA_ID), 'module' => 'taxonomy'])]); ?>"/>
           <?php echo $form->thematicArea
-            ->help(__("Search for an existing term in the Thematic Areas taxonomy by typing the first few characters of the term name. This should be used to identify major collecting areas."))
+            ->help(__('Search for an existing term in the Thematic Areas taxonomy by typing the first few characters of the term name. This should be used to identify major collecting areas.'))
             ->renderHelp(); ?>
         </div>
 
@@ -219,7 +219,7 @@
           <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID), 'module' => 'taxonomy'])]); ?>"/>
           <?php echo $form->geographicSubregion
-            ->help(__("Search for an existing term in the Geographic Subregion taxonomy by typing the first few characters of the term name."))
+            ->help(__('Search for an existing term in the Geographic Subregion taxonomy by typing the first few characters of the term name.'))
             ->renderHelp(); ?>
         </div>
 

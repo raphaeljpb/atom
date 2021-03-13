@@ -508,14 +508,14 @@ return;
     $languages = [];
     foreach ($fd->find('eac:control/eac:languageDeclaration/eac:language') as $node)
     {
-      $languages[] = $this->from6392($node->attributes->getNamedItem("languageCode")->textContent);
+      $languages[] = $this->from6392($node->attributes->getNamedItem('languageCode')->textContent);
     }
     $this->resource->language = $languages;
 
     $scripts = [];
     foreach ($fd->find('eac:control/eac:languageDeclaration/eac:script') as $node)
     {
-      $scripts[] = $this->from6392($node->attributes->getNamedItem("scriptCode")->textContent);
+      $scripts[] = $this->from6392($node->attributes->getNamedItem('scriptCode')->textContent);
     }
     $this->resource->script = $scripts;
 
@@ -705,7 +705,7 @@ return;
         $item->save();
       }
 
-      if ($node->getAttribute('resourceRelationType') == "subjectOf")
+      if ($node->getAttribute('resourceRelationType') == 'subjectOf')
       {
          $this->itemsSubjectOf[] = $item;
       }

@@ -199,10 +199,10 @@ EOF;
       'completeLogic' => function (&$self)
       {
         echo "Import complete.\n";
-        echo "Good subjects: ".$self->status['goodSubjects']."\n";
-        echo "Bad subjects:  ".$self->status['badSubjects']."\n";
-        echo "Good objects:  ".$self->status['goodObjects']."\n";
-        echo "Bad objects:   ".$self->status['badObjects']."\n";
+        echo 'Good subjects: '.$self->status['goodSubjects']."\n";
+        echo 'Bad subjects:  '.$self->status['badSubjects']."\n";
+        echo 'Good objects:  '.$self->status['goodObjects']."\n";
+        echo 'Bad objects:   '.$self->status['badObjects']."\n";
       }
     ]);
 
@@ -227,7 +227,7 @@ function getNameIdArrayFromTable(&$self, $tableName, $keyColumn, $idColumn, $whe
 {
   $names = [];
 
-  $query = "SELECT ".$keyColumn.", ".$idColumn." FROM ".$tableName;
+  $query = 'SELECT '.$keyColumn.', '.$idColumn.' FROM '.$tableName;
 
   $query .= ($whereClause) ? ' WHERE '.$whereClause : '';
 

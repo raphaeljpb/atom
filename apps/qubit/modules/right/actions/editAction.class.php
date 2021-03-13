@@ -210,7 +210,7 @@ class RightEditAction extends sfAction
           // if one was found, but user
           // has requested it be deleted
           // then lets delete it.
-          if (null !== $grantedRight && "true" === $data['delete'])
+          if (null !== $grantedRight && 'true' === $data['delete'])
           {
             $grantedRight->delete();
 
@@ -310,7 +310,7 @@ class RightEditAction extends sfAction
     $right = new QubitRights();
     $dt = new DateTime();
     $right->startDate = $dt->format('Y-m-d');
-    $right->restriction = "0";
+    $right->restriction = '0';
 
     return $right;
   }

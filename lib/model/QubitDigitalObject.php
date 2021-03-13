@@ -3490,7 +3490,7 @@ class QubitDigitalObject extends BaseDigitalObject
   private function downloadExternalObject($uri, $options = [])
   {
     // Initialize web browser
-    $timeout = sfConfig::get("app_download_timeout");
+    $timeout = sfConfig::get('app_download_timeout');
     $browser = new sfWebBrowser([], 'sfCurlAdapter', ['Timeout' => $timeout]);
 
     // Set retries from optional argument

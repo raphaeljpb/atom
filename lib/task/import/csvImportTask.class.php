@@ -387,7 +387,7 @@ EOF;
           // Show warning about ignored columns
           if (count($ignoredColumns))
           {
-            $errorMessage = "Ignoring values in column(s) incompatible with translation rows: ";
+            $errorMessage = 'Ignoring values in column(s) incompatible with translation rows: ';
             $errorMessage .= implode(' ', $ignoredColumns);
             echo $self->logError($errorMessage);
           }
@@ -606,7 +606,7 @@ EOF;
                     $termId = $result->id;
 
                     // Check if a scope note already exists for this term
-                    $query = "SELECT n.id FROM note n INNER JOIN note_i18n i ON n.id=i.id WHERE n.object_id=? AND n.type_id=?";
+                    $query = 'SELECT n.id FROM note n INNER JOIN note_i18n i ON n.id=i.id WHERE n.object_id=? AND n.type_id=?';
 
                     $statement = QubitFlatfileImport::sqlQuery(
                       $query,
@@ -705,7 +705,7 @@ EOF;
               $accessionId = $accessionMapEntry->target_id;
             }
 
-            echo "\nAssociating accession # ".$accessionNumber." with ".$self->object->title."\n";
+            echo "\nAssociating accession # ".$accessionNumber.' with '.$self->object->title."\n";
 
             // Add relationship between information object and accession
             $self->createRelation($self->object->id, $accessionId, QubitTerm::ACCESSION_ID);
@@ -728,7 +728,7 @@ EOF;
           switch (strtolower($self->rowStatusVars['copyrightStatus']))
           {
             case 'under copyright':
-              print "Adding rights for ".$self->object->title."...\n";
+              print 'Adding rights for '.$self->object->title."...\n";
               $rightsHolderId = false;
               $rightsHolderNames = explode('|', $self->rowStatusVars['copyrightHolder']);
 
@@ -893,7 +893,7 @@ EOF;
     // Convert content with | characters to a bulleted list
     $import->contentFilterLogic = function ($text)
     {
-      return (substr_count($text, '|')) ? '* '.str_replace("|", "\n* ", $text) : $text;
+      return (substr_count($text, '|')) ? '* '.str_replace('|', "\n* ", $text) : $text;
     };
 
     $import->addColumnHandler('levelOfDescription', function ($self, $data)
@@ -975,7 +975,7 @@ EOF;
         'index',
         null,
         sfCommandOption::PARAMETER_NONE,
-        "Index for search during import."
+        'Index for search during import.'
       ),
       new sfCommandOption(
         'update',
@@ -993,13 +993,13 @@ EOF;
         'skip-unmatched',
         null,
         sfCommandOption::PARAMETER_NONE,
-        "When importing records with --update, skip creating new records if no existing records match."
+        'When importing records with --update, skip creating new records if no existing records match.'
       ),
       new sfCommandOption(
         'skip-derivatives',
         null,
         sfCommandOption::PARAMETER_NONE,
-        "Skip creation of digital object derivatives."
+        'Skip creation of digital object derivatives.'
       ),
       new sfCommandOption(
         'limit',

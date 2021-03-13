@@ -22,13 +22,13 @@ class resetPasswordTask extends sfBaseTask
   public function generatePassword($length = 8)
   {
     // Start with a blank password
-    $password = "";
+    $password = '';
 
     // Define possible characters - any character in this string can be
     // picked for use in the password, so if you want to put vowels back in
     // or add special characters such as exclamation marks, this is where
     // you should do it
-    $possible = "2346789bcdfghjkmnpqrtvwxyzBCDFGHJKLMNPQRTVWXYZ";
+    $possible = '2346789bcdfghjkmnpqrtvwxyzBCDFGHJKLMNPQRTVWXYZ';
 
     // We refer to the length of $possible a few times, so let's grab it now
     $maxlength = strlen($possible);

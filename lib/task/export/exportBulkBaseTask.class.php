@@ -153,16 +153,16 @@ abstract class exportBulkBaseTask extends sfBaseTask
       {
         // Fetch top-level descriptions if EAD (EAD data nests children) or if only exporting top-level
         $whereClause = ($options['format'] == 'ead' || $options['current-level-only'])
-          ? "parent_id = "
-          : "i.id != ";
+          ? 'parent_id = '
+          : 'i.id != ';
         $whereClause .= QubitInformationObject::ROOT_ID;
       }
     }
 
     // Assemble full query
-    $query = "SELECT * FROM information_object i
+    $query = 'SELECT * FROM information_object i
       INNER JOIN information_object_i18n i18n ON i.id=i18n.id
-      WHERE ".$whereClause;
+      WHERE '.$whereClause;
 
     // Order by place in hierarchy so parents are exported before children
     $query .= ' ORDER BY i.lft';

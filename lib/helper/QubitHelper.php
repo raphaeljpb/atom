@@ -164,7 +164,7 @@ function render_value_html($value)
 function add_paragraphs_and_linebreaks($value)
 {
   // Add paragraphs
-  $value = preg_replace('/(?:\r?\n){2,}/', "</p><p>", $value, -1, $count);
+  $value = preg_replace('/(?:\r?\n){2,}/', '</p><p>', $value, -1, $count);
   if (0 < $count)
   {
     $value = "<p>$value</p>";
@@ -290,7 +290,7 @@ function render_treeview_node($item, array $classes = [], array $options = [])
       $title = '';
       if ($item->identifier)
       {
-        $title = $item->identifier."&nbsp;-&nbsp;";
+        $title = $item->identifier.'&nbsp;-&nbsp;';
       }
       $title .= render_title($item);
 

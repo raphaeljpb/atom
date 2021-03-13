@@ -50,12 +50,12 @@ class QubitInformationObject
 
   public static function getTitle($options)
   {
-    return "Information Object";
+    return 'Information Object';
   }
 
   public static function getIdentifier()
   {
-    return "IDENTIFIER";
+    return 'IDENTIFIER';
   }
 
   public static function getLevelOfDescription()
@@ -67,6 +67,6 @@ class QubitInformationObject
 
   public static function getSlug()
   {
-    return "information-object";
+    return 'information-object';
   }
 }

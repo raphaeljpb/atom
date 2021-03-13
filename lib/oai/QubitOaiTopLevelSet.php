@@ -31,11 +31,11 @@ class QubitOaiTopLevelSet implements QubitOaiSet
   }
 
   public function setSpec() {
-    return "oai:virtual:top-level-records";
+    return 'oai:virtual:top-level-records';
   }
 
   public function getName() {
-    return "Top-level collection record set";
+    return 'Top-level collection record set';
   }
 
   public function apply($criteria) {

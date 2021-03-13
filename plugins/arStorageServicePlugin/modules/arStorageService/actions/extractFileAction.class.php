@@ -111,7 +111,7 @@ class arStorageServiceExtractFileAction extends sfAction
     }
 
     $url = sprintf('%s/%s/%s/extract_file/?relative_path_to_file=%s-%s/data/%s',
-      trim($baseUrl, "/"),
+      trim($baseUrl, '/'),
       arStorageServiceUtils::STORAGE_SERVICE_PACKAGE_PATH,
       $aipUUID,
       $aipFileName,

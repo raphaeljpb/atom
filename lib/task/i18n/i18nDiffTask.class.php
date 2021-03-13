@@ -36,7 +36,7 @@ class i18nDiffTask extends sfBaseTask
    */
   public function execute($arguments = [], $options = [])
   {
-    $output = "";
+    $output = '';
 
     if (strtolower($options['file']) != 'stdout')
     {

@@ -39,7 +39,7 @@ class arMigration0175
   public function up($configuration)
   {
     // Rename password hash column
-    $sql = "ALTER TABLE `user` CHANGE COLUMN `sha1_password` `password_hash` VARCHAR(255) DEFAULT NULL";
+    $sql = 'ALTER TABLE `user` CHANGE COLUMN `sha1_password` `password_hash` VARCHAR(255) DEFAULT NULL';
     QubitPdo::modify($sql);
 
     // Cycle through each user and re-hash stored SHA-1 hash (and salt)

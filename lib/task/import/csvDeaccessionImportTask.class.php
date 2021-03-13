@@ -95,7 +95,7 @@ EOF;
 
         // Look up Qubit ID of pre-created accession
         $accessionQueryStatement = $self->sqlQuery(
-          "SELECT id FROM accession WHERE identifier=?",
+          'SELECT id FROM accession WHERE identifier=?',
           $params = [$accessionIdentifier]
         );
 
@@ -108,7 +108,7 @@ EOF;
         }
         else
         {
-          $error = "Skipping. Match not found for accession number: ".$accessionIdentifier;
+          $error = 'Skipping. Match not found for accession number: '.$accessionIdentifier;
           echo $self->logError($error);
         }
       },
@@ -124,15 +124,15 @@ EOF;
         {
           // Try and find existing Deaccession
           $deaccessionQueryStatement = $self->sqlQuery(
-            "SELECT deaccession.id FROM deaccession".
-            " JOIN deaccession_i18n ON deaccession_i18n.id = deaccession.id".
-            " WHERE deaccession.identifier=?".
-            " AND deaccession.date=?".
-            " AND deaccession.scope_id=?".
-            " AND deaccession_i18n.description=?".
-            " AND deaccession_i18n.extent=?".
-            " AND deaccession_i18n.reason=?".
-            " AND deaccession.source_culture=?",
+            'SELECT deaccession.id FROM deaccession'.
+            ' JOIN deaccession_i18n ON deaccession_i18n.id = deaccession.id'.
+            ' WHERE deaccession.identifier=?'.
+            ' AND deaccession.date=?'.
+            ' AND deaccession.scope_id=?'.
+            ' AND deaccession_i18n.description=?'.
+            ' AND deaccession_i18n.extent=?'.
+            ' AND deaccession_i18n.reason=?'.
+            ' AND deaccession.source_culture=?',
             $params = [$self->object->identifier,
               $self->object->date,
               $self->object->scopeId,
@@ -152,7 +152,7 @@ EOF;
         if (!$createDeaccession)
         {
           $self->object = null;
-          $error = "Skipping duplicate deaccession: ".$self->rowStatusVars['accessionNumber'];
+          $error = 'Skipping duplicate deaccession: '.$self->rowStatusVars['accessionNumber'];
           echo $self->logError($error);
         }
       },

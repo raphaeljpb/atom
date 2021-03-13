@@ -39,15 +39,15 @@ class arMigration0152
   public function up($configuration)
   {
     // Change job column so NULL is allowed
-    $sql = "ALTER TABLE `job` MODIFY `status_id` INT(11)";
+    $sql = 'ALTER TABLE `job` MODIFY `status_id` INT(11)';
     QubitPdo::modify($sql);
 
     // Add constraint so status_id must be associated with a term ID
-    $sql = "ALTER TABLE `job` ADD CONSTRAINT `job_FK_4` FOREIGN KEY (`status_id`) REFERENCES `term` (`id`) ON DELETE SET NULL;";
+    $sql = 'ALTER TABLE `job` ADD CONSTRAINT `job_FK_4` FOREIGN KEY (`status_id`) REFERENCES `term` (`id`) ON DELETE SET NULL;';
     QubitPdo::modify($sql);
 
     // Add index to status_id
-    $sql = "CREATE INDEX `job_FI_4` ON `job` (`status_id`)";
+    $sql = 'CREATE INDEX `job_FI_4` ON `job` (`status_id`)';
     QubitPdo::modify($sql);
 
     return true;

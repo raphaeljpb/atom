@@ -141,7 +141,7 @@ class QubitCsvTransformFactory
 
             if ($ignore)
             {
-              echo "Ignoring row ".$self->status['rows']."...\n";
+              echo 'Ignoring row '.$self->status['rows']."...\n";
 
               return;
             }
@@ -163,7 +163,7 @@ class QubitCsvTransformFactory
               else
               {
                 // ...otherwise if the parent key didn't exist, note that it's bad
-                echo "Bad parent found: ".$keyOfRowParent." (row ".($self->getStatus('rows') + 1).")\n";
+                echo 'Bad parent found: '.$keyOfRowParent.' (row '.($self->getStatus('rows') + 1).")\n";
                 ++$self->status['badParents'];
               }
             }
@@ -200,8 +200,8 @@ class QubitCsvTransformFactory
             $self->writeMySQLRowsToCsvFilePath($self->status['finalOutputFile']);
 
             echo "Step 2 complete.\n";
-            echo "Bad parents found: ".$self->status['badParents'].".\n";
-            echo "Bad level of description found: ".$self->status['badLevelOfDescription'].".\n";
+            echo 'Bad parents found: '.$self->status['badParents'].".\n";
+            echo 'Bad level of description found: '.$self->status['badLevelOfDescription'].".\n";
           }
         ]);
 

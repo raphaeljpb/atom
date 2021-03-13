@@ -971,15 +971,15 @@ class QubitXmlImport
               $conservationNoteTypeId = array_search('Conservation', $termData['radNoteTypes']['en']);
 
               $pubSeriesNoteTypeId = array_search("Publisher's series", $termData['radNoteTypes']['en']);
-              $rightsNoteTypeId = array_search("Rights", $termData['radNoteTypes']['en']);
-              $materialNoteTypeId = array_search("Accompanying material", $termData['radNoteTypes']['en']);
-              $generalNoteTypeId = array_search("General note", $termData['noteTypes']['en']);
+              $rightsNoteTypeId = array_search('Rights', $termData['radNoteTypes']['en']);
+              $materialNoteTypeId = array_search('Accompanying material', $termData['radNoteTypes']['en']);
+              $generalNoteTypeId = array_search('General note', $termData['noteTypes']['en']);
 
               $dacsAlphaNumericaDesignationsNoteTypeId = array_search('Alphanumeric designations', $termData['dacsSpecializedNotesTypes']['en']);
-              $dacsCitationNoteTypeId = array_search("Citation", $termData['dacsSpecializedNotesTypes']['en']);
-              $dacsConservationNoteTypeId = array_search("Conservation", $termData['dacsSpecializedNotesTypes']['en']);
-              $dacsProcessingInformationNoteTypeId = array_search("Processing information", $termData['dacsSpecializedNotesTypes']['en']);
-              $dacsVariantTitleInformationNoteTypeId = array_search("Variant title information", $termData['dacsSpecializedNotesTypes']['en']);
+              $dacsCitationNoteTypeId = array_search('Citation', $termData['dacsSpecializedNotesTypes']['en']);
+              $dacsConservationNoteTypeId = array_search('Conservation', $termData['dacsSpecializedNotesTypes']['en']);
+              $dacsProcessingInformationNoteTypeId = array_search('Processing information', $termData['dacsSpecializedNotesTypes']['en']);
+              $dacsVariantTitleInformationNoteTypeId = array_search('Variant title information', $termData['dacsSpecializedNotesTypes']['en']);
 
               // Invoke the object and method defined in the schema map
               $result = call_user_func_array([ & $currentObject, $methodMap['Method']], $parameters);
@@ -1327,9 +1327,9 @@ class QubitXmlImport
       return false;
     }
 
-    $query = "SELECT object.id, object.class_name
+    $query = 'SELECT object.id, object.class_name
               FROM object JOIN slug ON slug.object_id = object.id
-              WHERE slug.slug = ?";
+              WHERE slug.slug = ?';
 
     return QubitPdo::fetchOne($query, [$this->options['limit']]);
   }

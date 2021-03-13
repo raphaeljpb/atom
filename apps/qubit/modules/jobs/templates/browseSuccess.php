@@ -101,7 +101,7 @@
       <a class="c-btn" onClick="window.location.reload()"><i class="fa fa-refresh"></i>&nbsp;<?php echo __('Refresh'); ?></a>
     </li>
     <li>
-      <?php $autoRefreshIcons = sprintf("c-btn fa %s", $autoRefresh ? 'fa-check-circle-o' : 'fa-circle-o'); ?>
+      <?php $autoRefreshIcons = sprintf('c-btn fa %s', $autoRefresh ? 'fa-check-circle-o' : 'fa-circle-o'); ?>
       <?php echo link_to(__(' Auto refresh'), ['module' => 'jobs', 'action' => 'browse',
         'autoRefresh' => !$autoRefresh] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(),
         ['class' => $autoRefreshIcons]); ?>

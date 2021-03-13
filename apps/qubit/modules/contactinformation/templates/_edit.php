@@ -27,7 +27,7 @@
           <td>
             <?php echo render_title($item->contactPerson); ?>
           </td><td>
-            <input type="checkbox"<?php echo $item->primaryContact ? " checked=\"checked\"" : ""; ?> disabled="disabled" />
+            <input type="checkbox"<?php echo $item->primaryContact ? ' checked="checked"' : ''; ?> disabled="disabled" />
           </td><td style="text-align: center">
             <input class="multiDelete" name="deleteContactInformations[]" type="checkbox" value="<?php echo $item->id; ?>"/>
           </td>

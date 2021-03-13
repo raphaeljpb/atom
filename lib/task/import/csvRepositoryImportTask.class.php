@@ -293,7 +293,7 @@ EOF;
         'index',
         null,
         sfCommandOption::PARAMETER_NONE,
-        "Index for search during import."
+        'Index for search during import.'
       ),
       new sfCommandOption(
         'update',
@@ -311,13 +311,13 @@ EOF;
         'skip-unmatched',
         null,
         sfCommandOption::PARAMETER_NONE,
-        "When importing records with --update, skip creating new records if no existing records match."
+        'When importing records with --update, skip creating new records if no existing records match.'
       ),
       new sfCommandOption(
         'upload-limit',
         null,
         sfCommandOption::PARAMETER_OPTIONAL,
-        "Set the upload limit for repositories getting imported (default: disable uploads)")
+        'Set the upload limit for repositories getting imported (default: disable uploads)')
       ]
     );
   }

@@ -102,12 +102,12 @@ class sfThumbnail
         }
         catch (Exception $e)
         {
-          throw new Exception("Source image is a URL but it cannot be used because ".$e->getMessage());
+          throw new Exception('Source image is a URL but it cannot be used because '.$e->getMessage());
         }
       }
       else
       {
-        throw new Exception("Source image is a URL but sfWebBrowserPlugin is not installed");
+        throw new Exception('Source image is a URL but sfWebBrowserPlugin is not installed');
       }
     }
     else

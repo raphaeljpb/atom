@@ -180,10 +180,10 @@ EOF;
 
   private function sqlForPhysicalObjectsBySourceCulture()
   {
-    return "SELECT p.id, p.type_id, pi.name, pi.location
+    return 'SELECT p.id, p.type_id, pi.name, pi.location
       FROM physical_object p
       INNER JOIN physical_object_i18n pi
-      ON p.id=pi.id AND p.source_culture=pi.culture";
+      ON p.id=pi.id AND p.source_culture=pi.culture';
   }
 
   private function checkAllPhysicalObjectsByNameOnlyAndNormalizeRelations($dryRun)

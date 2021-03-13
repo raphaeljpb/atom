@@ -105,7 +105,7 @@ EOF;
     $worker->attachCallback(
       function ($handle, $job, $e)
       {
-        $this->log("Job failed: ".$e->getMessage());
+        $this->log('Job failed: '.$e->getMessage());
       },
       Net_Gearman_Worker::JOB_FAIL);
 

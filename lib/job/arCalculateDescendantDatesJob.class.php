@@ -73,7 +73,7 @@ class arCalculateDescendantDatesJob extends arBaseJob
     //
     // Note: if NULL is present as a start or end date then it'll be considered
     //       the minimum or maximum respectively (for open-ended date ranges)
-    $sql = "SELECT
+    $sql = 'SELECT
       COUNT(*) AS found,
       IF (MAX(e.start_date IS NULL), NULL, MIN(e.start_date)) AS min,
       IF (MAX(e.end_date IS NULL), NULL, MAX(e.end_date)) as max
@@ -84,7 +84,7 @@ class arCalculateDescendantDatesJob extends arBaseJob
         i.lft > :lft
         AND i.lft < :rgt
         AND e.type_id=:eventType
-        AND (e.start_date IS NOT NULL OR e.end_date IS NOT NULL)";
+        AND (e.start_date IS NOT NULL OR e.end_date IS NOT NULL)';
 
     $params = [
       ':lft' => $io->lft,

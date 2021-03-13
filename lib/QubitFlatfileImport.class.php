@@ -416,7 +416,7 @@ class QubitFlatfileImport
     // disabling search indexing improves import speed
     $this->searchIndexingDisabled ? QubitSearch::disable() : QubitSearch::enable();
 
-    if ($skipRows) print "Skipped ".$skipRows." rows...\n";
+    if ($skipRows) print 'Skipped '.$skipRows." rows...\n";
 
     $timerStarted = false;
 
@@ -615,8 +615,8 @@ class QubitFlatfileImport
       $elapsedMinutes = round($elapsed / 60, 2);
       $averageTime = round($elapsed / $rowsProcessed, 2);
 
-      $output .= "\n".$rowsProcessed." rows processed in ".$elapsedMinutes
-      ." minutes (".$averageTime." second/row average, ".$memoryUsageMB." MB used).\n";
+      $output .= "\n".$rowsProcessed.' rows processed in '.$elapsedMinutes
+      .' minutes ('.$averageTime.' second/row average, '.$memoryUsageMB." MB used).\n";
     }
 
     return $output;
@@ -757,7 +757,7 @@ class QubitFlatfileImport
     // I18n row handler
     if ($this->columnValue('culture') != $this->object->sourceCulture)
     {
-      $query = "SELECT id FROM note WHERE object_id = ? AND type_id = ?;";
+      $query = 'SELECT id FROM note WHERE object_id = ? AND type_id = ?;';
 
       $statement = self::sqlQuery($query, [$this->object->id, $typeId]);
 
@@ -944,9 +944,9 @@ class QubitFlatfileImport
    */
   public function createOrFetchPhysicalObject($name, $location, $typeId)
   {
-    $query = "SELECT p.id FROM physical_object p
+    $query = 'SELECT p.id FROM physical_object p
       INNER JOIN physical_object_i18n pi ON p.id=pi.id
-      WHERE pi.name=? AND pi.location=? AND p.type_id=?";
+      WHERE pi.name=? AND pi.location=? AND p.type_id=?';
 
     $statement = QubitFlatfileImport::sqlQuery($query, [$name, $location, $typeId]);
     $result = $statement->fetch(PDO::FETCH_OBJ);
@@ -1137,7 +1137,7 @@ class QubitFlatfileImport
    */
   public function createOrFetchContactInformation($actorId, $options)
   {
-    $query = "SELECT id FROM contact_information WHERE actor_id=?";
+    $query = 'SELECT id FROM contact_information WHERE actor_id=?';
 
     $statement = QubitFlatfileImport::sqlQuery($query, [$actorId]);
     $result = $statement->fetch(PDO::FETCH_OBJ);
@@ -1396,9 +1396,9 @@ class QubitFlatfileImport
    */
   public static function getTaxonomyTerms($taxonomyId)
   {
-    $query = "SELECT t.id, ti.culture, ti.name FROM term t
+    $query = 'SELECT t.id, ti.culture, ti.name FROM term t
       LEFT JOIN term_i18n ti ON t.id=ti.id
-      WHERE taxonomy_id=?";
+      WHERE taxonomy_id=?';
 
     $statement = QubitFlatfileImport::sqlQuery($query, [$taxonomyId]);
 
@@ -1532,9 +1532,9 @@ class QubitFlatfileImport
    */
   public static function fetchKeymapEntryBySourceAndTargetName($sourceId, $sourceName, $targetName)
   {
-    $query = "SELECT target_id, id FROM keymap
+    $query = 'SELECT target_id, id FROM keymap
       WHERE source_id=? AND source_name=? AND target_name=?
-      ORDER BY id DESC";
+      ORDER BY id DESC';
 
     $statement = QubitFlatfileImport::sqlQuery(
       $query,
@@ -1580,7 +1580,7 @@ class QubitFlatfileImport
 
   public static function getIdCorrespondingToSlug($slug)
   {
-    $query = "SELECT object_id FROM slug WHERE slug=?";
+    $query = 'SELECT object_id FROM slug WHERE slug=?';
 
     $statement = QubitFlatfileImport::sqlQuery($query, [$slug]);
 
@@ -2242,11 +2242,11 @@ class QubitFlatfileImport
     }
 
     // Check existing repo/actor by auth. form of name
-    $query = "SELECT object.id
+    $query = 'SELECT object.id
       FROM object JOIN actor_i18n i18n
       ON object.id = i18n.id
       WHERE i18n.authorized_form_of_name = ?
-      AND object.class_name = ?;";
+      AND object.class_name = ?;';
 
     $statement = QubitFlatfileImport::sqlQuery($query, [$this->columnValue('authorizedFormOfName'), $this->className]);
     $result = $statement->fetch(PDO::FETCH_OBJ);
@@ -2282,7 +2282,7 @@ class QubitFlatfileImport
       // Limited to the actors maintained by a determined repository
       if ($this->className === 'QubitActor' && $this->limitToId)
       {
-        $query = "SELECT id FROM relation WHERE subject_id = ? AND object_id = ?;";
+        $query = 'SELECT id FROM relation WHERE subject_id = ? AND object_id = ?;';
         $statement = QubitFlatfileImport::sqlQuery($query, [$this->limitToId, $result->id]);
 
         if (false === $statement->fetch(PDO::FETCH_OBJ))
@@ -2343,11 +2343,11 @@ class QubitFlatfileImport
   {
     $existingNotes = [];
 
-    $query = "SELECT n.id, i.content FROM note n
+    $query = 'SELECT n.id, i.content FROM note n
       INNER JOIN note_i18n i ON n.id=i.id
       WHERE n.object_id=?
       AND n.type_id=?
-      AND i.culture=?";
+      AND i.culture=?';
 
     $statement = self::sqlQuery($query, [$objectId, $typeId,  $culture]);
 

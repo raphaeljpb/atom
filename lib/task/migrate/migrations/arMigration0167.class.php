@@ -34,11 +34,11 @@ class arMigration0167
   public function up($configuration)
   {
     // Change digital object table's byte_size column to BIGINT
-    $sql = "ALTER TABLE `digital_object` CHANGE `byte_size` `byte_size` BIGINT";
+    $sql = 'ALTER TABLE `digital_object` CHANGE `byte_size` `byte_size` BIGINT';
     QubitPdo::modify($sql);
 
     // Change premis_object table's size column to BIGINT
-    $sql = "ALTER TABLE `premis_object` CHANGE `size` `size` BIGINT";
+    $sql = 'ALTER TABLE `premis_object` CHANGE `size` `size` BIGINT';
     QubitPdo::modify($sql);
 
     return true;

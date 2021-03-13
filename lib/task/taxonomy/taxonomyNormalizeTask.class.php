@@ -81,7 +81,7 @@ EOF;
     $this->normalizeTaxonomy($names, $affectedObjects);
     $this->reindexAffectedObjects($affectedObjects);
 
-    $this->log("Affected objects have been reindexed.");
+    $this->log('Affected objects have been reindexed.');
   }
 
   protected function getTaxonomyIdByName($name, $culture)
@@ -104,10 +104,10 @@ EOF;
 
   protected function populateTaxonomyNameUsage(&$names, $culture)
   {
-    $sql = "SELECT t.id, i.name FROM term t
+    $sql = 'SELECT t.id, i.name FROM term t
       INNER JOIN term_i18n i ON t.id=i.id
       WHERE t.taxonomy_id=:id AND i.culture=:culture
-      ORDER BY t.id";
+      ORDER BY t.id';
 
     $params = [':id' => $this->taxonomyId, ':culture' => $culture];
 
@@ -144,28 +144,28 @@ EOF;
     // Cycle through usage and change to point to selected term
     foreach ($usage as $id)
     {
-      $sql = "select object_id from object_term_relation where term_id=?";
+      $sql = 'select object_id from object_term_relation where term_id=?';
       $statement = QubitFlatfileImport::sqlQuery($sql, [$id]);
       while ($object = $statement->fetch(PDO::FETCH_OBJ))
       {
         $affectedObjects[] = $object->object_id;
       }
 
-      $this->log("Changing object term relations from term ".$id." to ".$selected_id.".");
+      $this->log('Changing object term relations from term '.$id.' to '.$selected_id.'.');
 
-      $sql = "UPDATE object_term_relation SET term_id=:newId WHERE term_id=:oldId";
+      $sql = 'UPDATE object_term_relation SET term_id=:newId WHERE term_id=:oldId';
       $params = [':newId' => $selected_id, ':oldId' => $id];
       QubitPdo::modify($sql, $params);
 
       if ($this->taxonomyId == QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID)
       {
-        $this->log("Changing level of descriptions from term ".$id." to ".$selected_id.".");
+        $this->log('Changing level of descriptions from term '.$id.' to '.$selected_id.'.');
 
-        $sql = "UPDATE information_object SET level_of_description_id=:newId WHERE level_of_description_id=:oldId";
+        $sql = 'UPDATE information_object SET level_of_description_id=:newId WHERE level_of_description_id=:oldId';
         QubitPdo::modify($sql, $params);
       }
 
-      $this->log("Deleting term ID ".$id.".");
+      $this->log('Deleting term ID '.$id.'.');
 
       // Delete taxonomy term
       $term = QubitTerm::getById($id);

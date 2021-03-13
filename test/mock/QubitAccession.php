@@ -49,16 +49,16 @@ class QubitAccession
 
   public static function getTitle($options)
   {
-    return "Accession";
+    return 'Accession';
   }
 
   public static function getIdentifier()
   {
-    return "IDENTIFIER";
+    return 'IDENTIFIER';
   }
 
   public function getSlug()
   {
-    return "accession";
+    return 'accession';
   }
 }

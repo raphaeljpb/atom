@@ -50,8 +50,8 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
     {
       // Return 400 response with error message
       $message = $this->context->i18n->__(
-        "Pagination limit reached. To avoid using vast amounts of memory,".
-        " AtoM limits pagination to %1% records. Please, narrow down your results.",
+        'Pagination limit reached. To avoid using vast amounts of memory,'.
+        ' AtoM limits pagination to %1% records. Please, narrow down your results.',
         ['%1%' => $maxResultWindow]
       );
 

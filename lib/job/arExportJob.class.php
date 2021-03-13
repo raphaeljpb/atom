@@ -338,7 +338,7 @@ class arExportJob extends arBaseJob
     $pathinfo = pathinfo($filename);
 
     return sprintf(
-      "%s_%s.%s",
+      '%s_%s.%s',
       $pathinfo['filename'],
       $this->filenames[$filename]++,
       $pathinfo['extension']

@@ -136,6 +136,6 @@ class InformationObjectMultiFileUploadAction extends sfAction
       }
     }
 
-    $this->redirect([$this->resource, 'module' => 'informationobject', 'action' => 'multiFileUpdate', 'items' => implode(",", $informationObjectSlugList)]);
+    $this->redirect([$this->resource, 'module' => 'informationobject', 'action' => 'multiFileUpdate', 'items' => implode(',', $informationObjectSlugList)]);
   }
 }

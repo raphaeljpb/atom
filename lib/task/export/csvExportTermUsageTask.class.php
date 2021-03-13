@@ -51,7 +51,7 @@ class csvExportTermUsageTask extends exportBulkBaseTask
     }
     else
     {
-      $this->log("No term usages found to export.");
+      $this->log('No term usages found to export.');
     }
   }
 

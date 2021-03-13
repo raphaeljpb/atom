@@ -40,7 +40,7 @@ class InformationObjectMultiFileUpdateAction extends sfAction
 
     if (isset($request->items))
     {
-      if (false === $this->items = explode(",", $request->items))
+      if (false === $this->items = explode(',', $request->items))
       {
         $this->forward404();
       }

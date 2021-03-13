@@ -40,6 +40,6 @@ class SitemapActorUrl extends AbstractSitemapUrl
 {
   protected function getPriority()
   {
-    return "0.5";
+    return '0.5';
   }
 }

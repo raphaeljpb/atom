@@ -92,7 +92,7 @@ class arStorageServiceDownloadAction extends sfAction
     }
 
     $url = sprintf('%s/%s/%s/download/',
-      trim($baseUrl, "/"),
+      trim($baseUrl, '/'),
       arStorageServiceUtils::STORAGE_SERVICE_PACKAGE_PATH,
       $aipUUID
     );

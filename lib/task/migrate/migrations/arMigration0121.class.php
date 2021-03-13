@@ -34,18 +34,18 @@ class arMigration0121
   public function up($configuration)
   {
     // Remove existing constraint and index
-    $sql = "ALTER TABLE `event` DROP FOREIGN KEY `event_FK_3`";
+    $sql = 'ALTER TABLE `event` DROP FOREIGN KEY `event_FK_3`';
     QubitPdo::modify($sql);
 
-    $sql = "DROP INDEX `event_FI_3` ON `event`";
+    $sql = 'DROP INDEX `event_FI_3` ON `event`';
     QubitPdo::modify($sql);
 
     // Rename column
-    $sql = "ALTER TABLE `event` CHANGE `information_object_id` `object_id` INT(11) DEFAULT NULL";
+    $sql = 'ALTER TABLE `event` CHANGE `information_object_id` `object_id` INT(11) DEFAULT NULL';
     QubitPdo::modify($sql);
 
     // Add new index
-    $sql = "CREATE INDEX `event_FI_3` ON `event`(`object_id`)";
+    $sql = 'CREATE INDEX `event_FI_3` ON `event`(`object_id`)';
     QubitPdo::modify($sql);
 
     // Add new constraint

@@ -218,7 +218,7 @@ EOF;
     //   has not changed since the last one, its not analyzed again).
     // - Determines index cardinality, used for join optimizations.
     // - Removes the table from the definition cache.
-    foreach (QubitPdo::fetchAll("SHOW TABLES;", [], ['fetchMode' => PDO::FETCH_COLUMN]) as $table)
+    foreach (QubitPdo::fetchAll('SHOW TABLES;', [], ['fetchMode' => PDO::FETCH_COLUMN]) as $table)
     {
       QubitPdo::modify(sprintf('ANALYZE TABLE `%s`;', $table));
     }

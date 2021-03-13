@@ -68,7 +68,7 @@ class digitalObjectLoadTask extends sfBaseTask
 
     $this->disableNestedSetUpdating = ($options['skip-nested-set-build']) ? true : false;
 
-    $operation = $options['replace'] ? "Replace" : "Load";
+    $operation = $options['replace'] ? 'Replace' : 'Load';
     $this->logSection('digital-object', sprintf('%s digital objects from %s...', $operation, $arguments['filename']));
 
     // Get header (first) row
@@ -342,16 +342,16 @@ EOF;
     }
 
     $remainingImportCount = $this->totalObjCount - $this->skippedCount - $importedCount;
-    $operation = $options['replace'] ? "Replacing with" : "Loading";
+    $operation = $options['replace'] ? 'Replacing with' : 'Loading';
     $message = sprintf("%s '%s' (%d of %d remaining", $operation, $filename, $this->curObjNum, $remainingImportCount);
 
     if (isset($options['limit']))
     {
-      $message .= sprintf(": limited to %d imports", $options['limit']);
+      $message .= sprintf(': limited to %d imports', $options['limit']);
     }
-    $message .= ")";
+    $message .= ')';
 
-    $this->log(sprintf("(%s) %s", strftime("%h %d, %r"), $message));
+    $this->log(sprintf('(%s) %s', strftime('%h %d, %r'), $message));
 
     // Create digital object
     $do = new QubitDigitalObject();

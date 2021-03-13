@@ -60,7 +60,7 @@ class ActorMoveDescriptionRelationsTask extends arBaseTask
         'skip-index',
         null,
         sfCommandOption::PARAMETER_NONE,
-        "Skip Elasticsearch indexing"
+        'Skip Elasticsearch indexing'
       ),
     ]);
 

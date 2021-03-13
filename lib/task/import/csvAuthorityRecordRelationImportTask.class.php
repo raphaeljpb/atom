@@ -226,11 +226,11 @@ EOF;
    */
   private function getRelationByType($sourceActorId, $targetActorId, $relationTypeId)
   {
-    $sql = "SELECT id FROM relation
+    $sql = 'SELECT id FROM relation
       WHERE subject_id = :subject_id
       AND object_id = :object_id
       AND type_id = :type_id
-      LIMIT 1";
+      LIMIT 1';
 
     $params = [
       ':subject_id' => $sourceActorId,
@@ -262,9 +262,9 @@ EOF;
    */
   private function getRelations($sourceActorId, $targetActorId)
   {
-    $sql = "SELECT id FROM relation
+    $sql = 'SELECT id FROM relation
       WHERE subject_id = :subject_id
-      AND object_id = :object_id";
+      AND object_id = :object_id';
 
     $results = QubitPdo::fetchAll($sql,
       [':subject_id' => $sourceActorId, ':object_id' => $targetActorId],

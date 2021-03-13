@@ -49,7 +49,7 @@ class arMigration0159
       $setting->save();
     }
 
-    $sql = "ALTER TABLE `slug` MODIFY `slug` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin";
+    $sql = 'ALTER TABLE `slug` MODIFY `slug` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin';
     QubitPdo::modify($sql);
 
     return true;

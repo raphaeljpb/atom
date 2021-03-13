@@ -196,7 +196,7 @@ abstract class i18nTransformBaseTask extends arBaseTask
     foreach ($columnValues as $column => $value)
     {
       $query .= (count($values)) ? ', ' : '';
-      $query .= $column."=?";
+      $query .= $column.'=?';
 
       $values[] = $value;
     }

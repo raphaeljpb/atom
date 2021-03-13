@@ -101,7 +101,7 @@ class QubitUser extends BaseUser
     if (empty($passwordHash))
     {
       $errorMessage = sprintf(
-        "Password hashing using the %s algorithm was unsuccessful.",
+        'Password hashing using the %s algorithm was unsuccessful.',
         $hashAlgoConstant
       );
 

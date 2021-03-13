@@ -141,13 +141,13 @@ class sfImageMagickAdapter
     exec($this->magickCommands['convert'], $stdout);
     if (strpos($stdout[0], 'ImageMagick') === false)
     {
-      throw new Exception(sprintf("ImageMagick convert command not found"));
+      throw new Exception(sprintf('ImageMagick convert command not found'));
     }
 
     exec($this->magickCommands['identify'], $stdout);
     if (strpos($stdout[0], 'ImageMagick') === false)
     {
-      throw new Exception(sprintf("ImageMagick identify command not found"));
+      throw new Exception(sprintf('ImageMagick identify command not found'));
     }
 
     $this->maxWidth = $maxWidth;
@@ -245,7 +245,7 @@ class sfImageMagickAdapter
 
     switch (@$this->options['method'])
     {
-      case "shave_all":
+      case 'shave_all':
         $proportion['source'] = $width / $height;
         $proportion['thumb'] = $thumbnail->getThumbWidth() / $thumbnail->getThumbHeight();
 
@@ -265,11 +265,11 @@ class sfImageMagickAdapter
           }
         }
 
-        $command = sprintf(" -shave %dx%d", $x, $y);
+        $command = sprintf(' -shave %dx%d', $x, $y);
 
         break;
 
-      case "shave_bottom":
+      case 'shave_bottom':
         if ($width > $height)
         {
           $x = ceil(($width - $height) / 2);
@@ -296,7 +296,7 @@ class sfImageMagickAdapter
         else
         {
           $command = sprintf(
-            " -crop %dx%d+%d+%d %s %s && %s",
+            ' -crop %dx%d+%d+%d %s %s && %s',
             $width, $height,
             $x, $y,
             escapeshellarg($this->image), escapeshellarg($thumbDest),
@@ -331,7 +331,7 @@ class sfImageMagickAdapter
         else
         {
           $command = sprintf(
-            " -crop %dx%d+%d+%d %s %s && %s",
+            ' -crop %dx%d+%d+%d %s %s && %s',
             $width, $height,
             $x, $y,
             escapeshellarg($this->image), escapeshellarg($thumbDest),

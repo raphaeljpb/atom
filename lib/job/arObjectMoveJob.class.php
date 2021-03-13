@@ -75,7 +75,7 @@ class arObjectMoveJob extends arBaseJob
       $this->info($this->i18n->__('Moving object between siblings'));
 
       // Check current positions to avoid mismatch
-      $sql = "SELECT id FROM information_object WHERE parent_id = :parentId ORDER BY lft;";
+      $sql = 'SELECT id FROM information_object WHERE parent_id = :parentId ORDER BY lft;';
       $params = [':parentId' => $object->parentId];
       $children = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 

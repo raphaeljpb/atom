@@ -343,7 +343,7 @@ class sfInstall
 
     // Quick check of connectivity, I should put this somewhere else :)
     $curl = curl_init();
-    curl_setopt($curl, CURLOPT_URL, sprintf("http://%s", $config['server']['host']));
+    curl_setopt($curl, CURLOPT_URL, sprintf('http://%s', $config['server']['host']));
     curl_setopt($curl, CURLOPT_PORT, $config['server']['port']);
     curl_setopt($curl, CURLOPT_HEADER, false);
     ob_start();
@@ -364,7 +364,7 @@ class sfInstall
 
     if (200 !== $curlHttpCode)
     {
-      $errors[] = "Elasticsearch error: ".$curlHttpCode;
+      $errors[] = 'Elasticsearch error: '.$curlHttpCode;
     }
 
     if (0 < count($errors))
@@ -541,7 +541,7 @@ class sfInstall
   {
     // Propel version is unable to set column collation from schema.yml.
     // Keep PAD SPACE collation `utf8mb4_bin` (instead of new `utf8mb4_0900_bin`).
-    $sql = "ALTER TABLE `slug` MODIFY `slug` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL";
+    $sql = 'ALTER TABLE `slug` MODIFY `slug` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL';
     QubitPdo::modify($sql);
   }
 

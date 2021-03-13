@@ -155,7 +155,7 @@ EOF;
     $sql = 'UPDATE '.$classname::TABLE_NAME;
     $sql .= ' SET lft = '.$node['lft'];
     $sql .= ', rgt = '.$node['rgt'];
-    $sql .= ' WHERE id = '.$node['id'].";";
+    $sql .= ' WHERE id = '.$node['id'].';';
 
     $this->conn->exec($sql);
 

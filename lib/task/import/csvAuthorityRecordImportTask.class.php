@@ -400,7 +400,7 @@ EOF;
         'index',
         null,
         sfCommandOption::PARAMETER_NONE,
-        "Index for search during import."
+        'Index for search during import.'
       ),
       new sfCommandOption(
         'update',
@@ -418,13 +418,13 @@ EOF;
         'skip-unmatched',
         null,
         sfCommandOption::PARAMETER_NONE,
-        "When importing records with --update, skip creating new records if no existing records match."
+        'When importing records with --update, skip creating new records if no existing records match.'
       ),
       new sfCommandOption(
         'skip-derivatives',
         null,
         sfCommandOption::PARAMETER_NONE,
-        "Skip creation of digital object derivatives."
+        'Skip creation of digital object derivatives.'
       ),
       new sfCommandOption(
         'keep-digital-objects',

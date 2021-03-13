@@ -169,7 +169,7 @@ EOF;
 
         // Look up Qubit ID of pre-created accession
         $statement = $self->sqlQuery(
-          "SELECT id FROM accession WHERE identifier=?",
+          'SELECT id FROM accession WHERE identifier=?',
           $params = [$accessionNumber]
         );
 
@@ -394,7 +394,7 @@ EOF;
           if (isset($self->rowStatusVars['qubitParentSlug'])
             && $self->rowStatusVars['qubitParentSlug'])
           {
-            $query = "SELECT object_id FROM slug WHERE slug=?";
+            $query = 'SELECT object_id FROM slug WHERE slug=?';
             $statement = QubitFlatfileImport::sqlQuery($query, [$self->rowStatusVars['qubitParentSlug']]);
             $result = $statement->fetch(PDO::FETCH_OBJ);
             if ($result)
@@ -534,13 +534,13 @@ EOF;
         'index',
         null,
         sfCommandOption::PARAMETER_NONE,
-        "Index for search during import."
+        'Index for search during import.'
       ),
       new sfCommandOption(
         'assign-id',
         null,
         sfCommandOption::PARAMETER_NONE,
-        "Assign identifier, based on mask and counter, if no accession number specified in row."
+        'Assign identifier, based on mask and counter, if no accession number specified in row.'
       )
     ]);
   }

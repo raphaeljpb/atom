@@ -59,20 +59,20 @@ EOF;
     foreach ($jobs as $job)
     {
       echo "$job->name\n";
-      echo " Status: ".$job->getStatusString()."\n";
-      echo " Started: ".$job->getCreationDateString()."\n";
-      echo " Completed: ".$job->getCompletionDateString()."\n";
-      echo " User: ".QubitJob::getUserString($job)."\n";
+      echo ' Status: '.$job->getStatusString()."\n";
+      echo ' Started: '.$job->getCreationDateString()."\n";
+      echo ' Completed: '.$job->getCompletionDateString()."\n";
+      echo ' User: '.QubitJob::getUserString($job)."\n";
 
       // Add notes (indented for readability)
       if (count($notes = $job->getNotes()) > 0)
       {
-        $notesLabel = " Notes: ";
+        $notesLabel = ' Notes: ';
 
         foreach ($notes as $note)
         {
           echo $notesLabel.$note."\n";
-          $notesLabel = "        ";
+          $notesLabel = '        ';
         }
       }
 

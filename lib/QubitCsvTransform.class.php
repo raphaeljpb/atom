@@ -101,12 +101,12 @@ class QubitCsvTransform extends QubitFlatfileImport
 
     $this->link = $link;
 
-    $sql = "CREATE TABLE IF NOT EXISTS import_descriptions (
+    $sql = 'CREATE TABLE IF NOT EXISTS import_descriptions (
       id INT NOT NULL AUTO_INCREMENT,
       sortorder INT,
       data LONGTEXT,
       PRIMARY KEY (id)
-    )";
+    )';
     if (false === mysqli_query($link, $sql))
     {
       throw new sfException('MySQL create table failed.');
@@ -151,12 +151,12 @@ class QubitCsvTransform extends QubitFlatfileImport
 
     if (!$fhOut) throw new sfException('Error writing to '.$startFile.'.');
 
-    echo "Writing to ".$startFile."...\n";
+    echo 'Writing to '.$startFile."...\n";
 
     fputcsv($fhOut, $this->columnNames); // write headers
 
     // cycle through DB, sorted by sort, and write CSV file
-    $sql = "SELECT data FROM import_descriptions ORDER BY sortorder";
+    $sql = 'SELECT data FROM import_descriptions ORDER BY sortorder';
 
     $result = mysqli_query($this->link, $sql);
 
@@ -171,7 +171,7 @@ class QubitCsvTransform extends QubitFlatfileImport
         $chunkFilePath = $this->numberedFilePathVariation($filepath, $chunk);
         $fhOut = fopen($chunkFilePath, 'w');
 
-        echo "Writing to ".$chunkFilePath."...\n";
+        echo 'Writing to '.$chunkFilePath."...\n";
 
         fputcsv($fhOut, $this->columnNames); // write headers
       }

@@ -88,7 +88,7 @@ class propelGenerateSlugsTask extends arBaseTask
 
         if (defined("$class::ROOT_ID"))
         {
-          $sql .= " AND object_id != ".$class::ROOT_ID;
+          $sql .= ' AND object_id != '.$class::ROOT_ID;
         }
 
         if ($class == 'QubitStaticPage')
@@ -101,7 +101,7 @@ class propelGenerateSlugsTask extends arBaseTask
     }
 
     // Create hash of slugs already in database
-    $sql = "SELECT slug FROM slug ORDER BY slug";
+    $sql = 'SELECT slug FROM slug ORDER BY slug';
     foreach ($conn->query($sql, PDO::FETCH_NUM) as $row)
     {
       $this->slugs[$row[0]] = true;
@@ -171,13 +171,13 @@ class propelGenerateSlugsTask extends arBaseTask
       for ($i = 0; $i < count($newRows); $i += $inc)
       {
         $values = [];
-        $sql = "INSERT INTO slug (object_id, slug) VALUES ";
+        $sql = 'INSERT INTO slug (object_id, slug) VALUES ';
 
         $last = min($i + $inc, count($newRows));
         for ($j = $i; $j < $last; ++$j)
         {
           // Use PDO param/value binding - ensures special chars are escaped on DB insert.
-          $sql .= "(?, ?), ";
+          $sql .= '(?, ?), ';
           array_push($values, $newRows[$j][0], $newRows[$j][1]);
         }
 

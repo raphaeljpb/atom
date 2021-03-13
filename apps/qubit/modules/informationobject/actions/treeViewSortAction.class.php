@@ -54,13 +54,13 @@ class InformationObjectTreeViewSortAction extends sfAction
     {
       case 'moveAfter':
         $this->resource->moveToNextSiblingOf($target);
-        echo "after";
+        echo 'after';
 
         break;
 
       case 'moveBefore':
         $this->resource->moveToPrevSiblingOf($target);
-        echo "before";
+        echo 'before';
 
         break;
     }

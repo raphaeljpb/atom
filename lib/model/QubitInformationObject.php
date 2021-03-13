@@ -870,13 +870,13 @@ class QubitInformationObject extends BaseInformationObject
   // True if this information object or any descendant uses a LOD of $level.
   public function containsLevelOfDescription($level, $culture = 'en')
   {
-    $sql = "
+    $sql = '
       SELECT 1 FROM information_object
       INNER JOIN term_i18n on term_i18n.id = information_object.level_of_description_id
       WHERE information_object.lft > ? and information_object.lft < ?
       AND term_i18n.culture = ? AND term_i18n.name = ?
       LIMIT 1
-    ";
+    ';
 
     $rows = QubitPdo::fetchAll($sql, [$this->lft, $this->rgt, $culture, $level]);
 
@@ -1694,7 +1694,7 @@ class QubitInformationObject extends BaseInformationObject
     $langCodeConvertor = new fbISO639_Map();
 
     // get language nodes
-    if (0 < count($langNodeList = QubitXmlImport::queryDomNode($langusageNode, "/xml/langusage/language/@langcode")))
+    if (0 < count($langNodeList = QubitXmlImport::queryDomNode($langusageNode, '/xml/langusage/language/@langcode')))
     {
       // set first language as source culture
       if ($langCode = $langCodeConvertor->getID1($langNodeList->item(0)->nodeValue, false))
@@ -1721,7 +1721,7 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // get script nodes
-    $scriptNodeList = QubitXmlImport::queryDomNode($langusageNode, "/xml/langusage/language/@scriptcode");
+    $scriptNodeList = QubitXmlImport::queryDomNode($langusageNode, '/xml/langusage/language/@scriptcode');
 
     // get scripts (s) of description
     foreach($scriptNodeList as $scriptNode)
@@ -1756,7 +1756,7 @@ class QubitInformationObject extends BaseInformationObject
   public function importLangmaterialEadData($langmaterialNode)
   {
     // get language and script nodes
-    $langNodeList = QubitXmlImport::queryDomNode($langmaterialNode, "/xml/langmaterial/language");
+    $langNodeList = QubitXmlImport::queryDomNode($langmaterialNode, '/xml/langmaterial/language');
 
     $langCodeConvertor = new fbISO639_Map();
 
@@ -2542,7 +2542,7 @@ class QubitInformationObject extends BaseInformationObject
         case 'identifierTitle':
           $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitInformationObject');
 
-          $concatCurrent = $current->__get('identifier') ? str_pad($current->__get('identifier'), 12, '0', STR_PAD_RIGHT) : " ";
+          $concatCurrent = $current->__get('identifier') ? str_pad($current->__get('identifier'), 12, '0', STR_PAD_RIGHT) : ' ';
           $concatCurrent .= $current->getTitle(['sourceCulture' => true]);
           $concatCurrent .= str_pad($current->lft, 12, '0', STR_PAD_LEFT);
           $concatCurrent = Propel::getConnection()->quote($concatCurrent);
@@ -2916,9 +2916,9 @@ class QubitInformationObject extends BaseInformationObject
 
   protected function getDefaultDateValue($date)
   {
-    $dateArray = explode("-", $date);
+    $dateArray = explode('-', $date);
 
-    $defaultDateValue = str_pad($dateArray[0], 4, "0", STR_PAD_LEFT);
+    $defaultDateValue = str_pad($dateArray[0], 4, '0', STR_PAD_LEFT);
 
     if (isset($dateArray[1]))
     {
@@ -3082,7 +3082,7 @@ class QubitInformationObject extends BaseInformationObject
         foreach ($possibleNameFields as $fieldName => $fieldTypeId)
         {
           $fieldValue = '';
-          $nameNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/eventgrp/event/origination/".$fieldName);
+          $nameNodeList = QubitXmlImport::queryDomNode($chronitemNode, '/xml/chronitem/eventgrp/event/origination/'.$fieldName);
           foreach ($nameNodeList as $nameNode)
           {
             $fieldValue = $nameNode->nodeValue;

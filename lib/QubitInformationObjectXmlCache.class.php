@@ -71,7 +71,7 @@ class QubitInformationObjectXmlCache
 
     // Get not-root and published information objects (sorted by ID so optional
     // skip/limit will be consistent)
-    $sql = "SELECT i.id FROM ".QubitInformationObject::TABLE_NAME." i \r
+    $sql = 'SELECT i.id FROM '.QubitInformationObject::TABLE_NAME." i \r
       INNER JOIN status s ON i.id=s.object_id \r
       WHERE i.id != :root_id \r
       AND s.status_id=:status_id AND s.type_id=:type_id \r

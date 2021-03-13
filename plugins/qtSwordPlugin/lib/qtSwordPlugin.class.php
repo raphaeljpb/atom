@@ -24,7 +24,7 @@ class qtSwordPlugin
     $filename = tempnam('/tmp', 'php_qubit_');
 
     $file = fopen($filename, 'w');
-    $source = fopen("php://input", 'r');
+    $source = fopen('php://input', 'r');
 
     while ($kb = fread($source, 1024))
     {

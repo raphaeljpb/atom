@@ -48,7 +48,7 @@ EOF;
 
     if ($runningJobCount > 0)
     {
-      echo "WARNING: AtoM reports there are jobs currently running. It is *highly* recommended you make sure ".
+      echo 'WARNING: AtoM reports there are jobs currently running. It is *highly* recommended you make sure '.
             "there aren't any jobs actually running.\n\n";
     }
 

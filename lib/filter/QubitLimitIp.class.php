@@ -56,7 +56,7 @@ class QubitLimitIpFilter extends sfFilter
   {
     $pathInfo = $this->request->getPathInfoArray();
 
-    return $pathInfo["REMOTE_ADDR"];
+    return $pathInfo['REMOTE_ADDR'];
   }
 
   protected function isAllowed()

@@ -156,7 +156,7 @@ EOF;
   {
     $toDelete = [];
 
-    $sql = "SELECT id FROM physical_object";
+    $sql = 'SELECT id FROM physical_object';
 
     foreach (QubitPdo::fetchAll($sql) as $physicalObject)
     {

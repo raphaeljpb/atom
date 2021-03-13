@@ -23,6 +23,6 @@ class QubitTerm
 {
   public static function getName($options)
   {
-    return "Term";
+    return 'Term';
   }
 }

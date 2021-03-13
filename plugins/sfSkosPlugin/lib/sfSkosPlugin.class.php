@@ -145,7 +145,7 @@ class sfSkosPlugin
     // Report error with unsupported languages
     if (0 < count($this->unsupportedLanguages))
     {
-      $this->errors[] = $this->i18n->__('The following languages are used in the dataset imported but not supported by AtoM: %1%', ['%1%' => implode(",", array_keys($this->unsupportedLanguages))]);
+      $this->errors[] = $this->i18n->__('The following languages are used in the dataset imported but not supported by AtoM: %1%', ['%1%' => implode(',', array_keys($this->unsupportedLanguages))]);
     }
 
     // Re-index parent term so numberOfDescendants reflects the changes

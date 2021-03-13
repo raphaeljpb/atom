@@ -7,7 +7,7 @@
   </h1>
 <?php end_slot(); ?>
 
-<?php slot("before-content"); ?>
+<?php slot('before-content'); ?>
 
   <?php if (isset($errorSchema)) { ?>
     <div class="messages error">
@@ -182,7 +182,7 @@
 
 </div> <!-- /.section#controlArea -->
 
-<?php slot("after-content"); ?>
+<?php slot('after-content'); ?>
   <?php if (QubitAcl::check($resource, 'update') || QubitAcl::check($resource, 'delete') || QubitAcl::check($resource, 'create')) { ?>
     <section class="actions">
       <ul>

@@ -82,7 +82,7 @@ class arMigration0136
   protected function getSettingI18nValues($name, $scope)
   {
     $values = [];
-    $sql = "SELECT `setting_i18n`.`value`, `setting_i18n`.`culture` FROM `setting` LEFT JOIN `setting_i18n` ON (`setting`.`id` = `setting_i18n`.`id`) WHERE `setting`.`name` = ? AND `setting`.`scope` = ?;";
+    $sql = 'SELECT `setting_i18n`.`value`, `setting_i18n`.`culture` FROM `setting` LEFT JOIN `setting_i18n` ON (`setting`.`id` = `setting_i18n`.`id`) WHERE `setting`.`name` = ? AND `setting`.`scope` = ?;';
     foreach (QubitPdo::fetchAll($sql, [$name, $scope]) as $item)
     {
       if (empty($item->value))

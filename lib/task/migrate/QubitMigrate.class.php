@@ -496,7 +496,7 @@ class QubitMigrate
     }
     elseif (isset($options['first']))
     {
-      $sql .= " FIRST";
+      $sql .= ' FIRST';
     }
 
     $queries[] = $sql;
@@ -513,7 +513,7 @@ class QubitMigrate
     // Foreign key
     if (isset($options['fk']))
     {
-      $sql = sprintf("ALTER TABLE %s ADD FOREIGN KEY (%s) REFERENCES %s (%s)",
+      $sql = sprintf('ALTER TABLE %s ADD FOREIGN KEY (%s) REFERENCES %s (%s)',
         $table,
         $column,
         $options['fk']['referenceTable'],
@@ -808,7 +808,7 @@ class QubitMigrate
       }
 
       // Update/delete rows with foreign keys pointing to non existing rows
-      if (strtoupper(trim($foreignKey['onDelete'])) == "ON DELETE SET NULL")
+      if (strtoupper(trim($foreignKey['onDelete'])) == 'ON DELETE SET NULL')
       {
         $sql = "UPDATE {$foreignKey['table']} tb1
                 LEFT JOIN {$foreignKey['refTable']} tb2

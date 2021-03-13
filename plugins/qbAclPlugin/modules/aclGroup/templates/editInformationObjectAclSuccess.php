@@ -55,8 +55,8 @@
           $tableTemplate .= '<li><input type="radio" name="acl['.$action.'_{objectId}]" value="'.QubitAcl::DENY.'"/>'.__('Deny').'</li>';
           $tableTemplate .= '<li><input type="radio" name="acl['.$action.'_{objectId}]" value="'.QubitAcl::INHERIT.'" checked/>'.__('Inherit').'</li>';
           $tableTemplate .= '</ul></td>';
-          $tableTemplate .= "</tr>";
-          $tableTemplate .= "</div>";
+          $tableTemplate .= '</tr>';
+          $tableTemplate .= '</div>';
         }
 
         $tableTemplate .= '</tbody>';

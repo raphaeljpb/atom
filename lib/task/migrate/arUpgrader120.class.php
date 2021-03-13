@@ -144,10 +144,10 @@ class arUpgrader120
           // Update acl_permission values
           if ($slug)
           {
-            $sql = sprintf("UPDATE %s SET
+            $sql = sprintf('UPDATE %s SET
                 conditional = ?,
                 constants = ?
-              WHERE id = ?;", QubitAclPermission::TABLE_NAME);
+              WHERE id = ?;', QubitAclPermission::TABLE_NAME);
 
             QubitPdo::modify($sql, [
               "%p[$name] == %k[$name]",

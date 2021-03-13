@@ -84,16 +84,16 @@ class arStorageServiceUtils
     switch ($status)
     {
       case '400':
-        return new QubitApiBadRequestException("Storage service bad request");
+        return new QubitApiBadRequestException('Storage service bad request');
 
       case '404':
-        return new QubitApi404Exception("Storage service resource not found");
+        return new QubitApi404Exception('Storage service resource not found');
 
       case '401':
-        return new QubitApiNotAuthorizedException("Storage service resource not authorized");
+        return new QubitApiNotAuthorizedException('Storage service resource not authorized');
 
       case '403':
-        return new QubitApiForbiddenException("Storage service resource forbidden");
+        return new QubitApiForbiddenException('Storage service resource forbidden');
 
       default:
         return new Exception(sprintf('Storage service error %s', (string) $status));

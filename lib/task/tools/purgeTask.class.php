@@ -94,7 +94,7 @@ class purgeTask extends sfBaseTask
     $siteTitle = (isset($options['title'])) ? $options['title'] : '';
     if (!$siteTitle)
     {
-      $siteTitle = readline("Site title [Qubit]: ");
+      $siteTitle = readline('Site title [Qubit]: ');
       $siteTitle = (!empty($siteTitle)) ? $siteTitle : 'Qubit';
     }
 
@@ -102,7 +102,7 @@ class purgeTask extends sfBaseTask
     $siteDescription = (isset($options['description'])) ? $options['description'] : '';
     if (!$siteDescription)
     {
-      $siteDescription = readline("Site description [Test site]: ");
+      $siteDescription = readline('Site description [Test site]: ');
       $siteDescription = (!empty($siteDescription)) ? $siteDescription : 'Test site';
     }
 
@@ -110,7 +110,7 @@ class purgeTask extends sfBaseTask
     $siteBaseUrl = (isset($options['url'])) ? $options['url'] : '';
     if (!$siteBaseUrl)
     {
-      $siteBaseUrl = readline("Site base URL [http://127.0.0.1]: ");
+      $siteBaseUrl = readline('Site base URL [http://127.0.0.1]: ');
       $siteBaseUrl = (!empty($siteBaseUrl)) ? $siteBaseUrl : 'http://127.0.0.1';
     }
 

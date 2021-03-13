@@ -82,14 +82,14 @@ class InformationObjectCalculateDatesAction extends sfAction
   {
     $eventTypes = [];
 
-    $sql = "SELECT
+    $sql = 'SELECT
       DISTINCT e.type_id
       FROM
         information_object i
         INNER JOIN event e ON i.id=e.object_id
       WHERE
         i.lft > :lft
-        AND i.lft < :rgt";
+        AND i.lft < :rgt';
 
     $params = [
       ':lft' => $resource->lft,

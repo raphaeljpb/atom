@@ -558,9 +558,9 @@ class arUpgrader110
           mkdir(sfConfig::get('sf_upload_dir').'/r', 0775);
         }
 
-        $sql = "SELECT id, information_object_id
+        $sql = 'SELECT id, information_object_id
                 FROM digital_object
-                WHERE information_object_id IS NOT NULL";
+                WHERE information_object_id IS NOT NULL';
 
         foreach (QubitPdo::fetchAll($sql) as $item)
         {
@@ -759,12 +759,12 @@ class arUpgrader110
     // Add ON DELETE CASCADE in slug.object_id
     $connection = Propel::getConnection();
     $connection->exec('SET FOREIGN_KEY_CHECKS = 0');
-    $sql = "ALTER TABLE `slug`
+    $sql = 'ALTER TABLE `slug`
               DROP FOREIGN KEY `slug_FK_1`,
               ADD FOREIGN KEY (`object_id`)
                 REFERENCES  `object` (`id`)
                 ON DELETE CASCADE
-                ON UPDATE RESTRICT;";
+                ON UPDATE RESTRICT;';
     $connection->exec($sql);
     $connection->exec('SET FOREIGN_KEY_CHECKS = 1');
 

@@ -138,11 +138,11 @@ class qtPackageExtractorBase
         {
           if (filetype($directory.'/'.$object) == 'dir')
           {
-            $rrmdir($directory."/".$object);
+            $rrmdir($directory.'/'.$object);
           }
           else
           {
-            unlink($directory."/".$object);
+            unlink($directory.'/'.$object);
           }
         }
       }
@@ -202,7 +202,7 @@ class qtPackageExtractorBase
     {
       while (false !== ($file = readdir($handle)))
       {
-        if ($file != "." && $file != "..")
+        if ($file != '.' && $file != '..')
         {
           if (is_dir($dir.DIRECTORY_SEPARATOR.$file))
           {

@@ -35,7 +35,7 @@ abstract class arElasticSearchModelBase
 
     $this->search = QubitSearch::getInstance();
 
-    $this->log(" - Loading ".get_class($this)."...");
+    $this->log(' - Loading '.get_class($this).'...');
   }
 
   public function getCount()

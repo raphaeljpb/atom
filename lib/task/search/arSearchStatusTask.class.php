@@ -29,15 +29,15 @@ class arSearchStatusTask extends arBaseTask
     // Displaying Elasticsearch server configuration
     $config = arElasticSearchPluginConfiguration::$config;
 
-    $this->log("Elasticsearch server information:");
-    $this->log(sprintf(" - Version: %s", QubitSearch::getInstance()->client->getVersion()));
-    $this->log(sprintf(" - Host: %s", $config['server']['host']));
-    $this->log(sprintf(" - Port: %s", $config['server']['port']));
-    $this->log(sprintf(" - Index name: %s", $config['index']['name']));
+    $this->log('Elasticsearch server information:');
+    $this->log(sprintf(' - Version: %s', QubitSearch::getInstance()->client->getVersion()));
+    $this->log(sprintf(' - Host: %s', $config['server']['host']));
+    $this->log(sprintf(' - Port: %s', $config['server']['port']));
+    $this->log(sprintf(' - Index name: %s', $config['index']['name']));
     $this->log(null);
 
     // Display how many objects are indexed versus how many are available
-    $this->log("Document indexing status:");
+    $this->log('Document indexing status:');
 
     foreach ($this->availableDocumentTypes() as $docType)
     {

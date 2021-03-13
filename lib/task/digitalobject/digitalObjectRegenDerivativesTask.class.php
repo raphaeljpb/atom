@@ -24,12 +24,12 @@ class digitalObjectRegenDerivativesTask extends arBaseTask
     // Determine usage ID from type flag
     switch($options['type'])
     {
-      case "reference":
+      case 'reference':
         $usageId = QubitTerm::REFERENCE_ID;
 
         break;
 
-      case "thumbnail":
+      case 'thumbnail':
         $usageId = QubitTerm::THUMBNAIL_ID;
 
         break;
@@ -175,7 +175,7 @@ EOF;
 
       if (false === $row)
       {
-        throw new sfException("Invalid slug");
+        throw new sfException('Invalid slug');
       }
 
       array_push($whereClauses, sprintf('io.lft >= %d AND io.lft <= %d', $row->lft, $row->rgt));
@@ -257,7 +257,7 @@ EOF;
       {
         if ($do->name != $options['skip-to'] && $skip)
         {
-          $this->logSection('digital object', "Skipping ".$do->name);
+          $this->logSection('digital object', 'Skipping '.$do->name);
 
           continue;
         }

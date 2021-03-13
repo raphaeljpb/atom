@@ -75,7 +75,7 @@ class arCAS
     }
     else
     {
-      throw new Exception("Invalid SSL certificate settings. Please review the app_cas_server_cert parameter in plugin app.yml.");
+      throw new Exception('Invalid SSL certificate settings. Please review the app_cas_server_cert parameter in plugin app.yml.');
     }
 
     self::$phpCASIsInitialized = true;

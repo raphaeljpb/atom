@@ -93,7 +93,7 @@ class digitalObjectDeleteTask extends arBaseTask
 
       case 'QubitRepository':
         // Get all linked top level information object recs.
-        $sql = "SELECT id, lft, rgt FROM ".QubitInformationObject::TABLE_NAME." WHERE repository_id=:repository_id";
+        $sql = 'SELECT id, lft, rgt FROM '.QubitInformationObject::TABLE_NAME.' WHERE repository_id=:repository_id';
         $params = [':repository_id' => $repository->id];
         $relatedInformationObjects = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
@@ -115,7 +115,7 @@ class digitalObjectDeleteTask extends arBaseTask
         $this->logSection('digital-object', sprintf('(%d of %d) %s: %s',
           $success ? ++$nDeleted : $nDeleted,
           count($objectIds),
-          $success ? "deleting digital object for" : "nothing to delete",
+          $success ? 'deleting digital object for' : 'nothing to delete',
           $object->getTitle(['cultureFallback' => true]))
         );
       }
@@ -155,11 +155,11 @@ EOF;
 
   private function getIoDescendantIds($lft, $rgt)
   {
-    $sql = "SELECT io.id
-              FROM ".QubitInformationObject::TABLE_NAME." io
+    $sql = 'SELECT io.id
+              FROM '.QubitInformationObject::TABLE_NAME.' io
               WHERE io.lft >= :lft
               AND io.rgt <= :rgt
-              ORDER BY io.lft ASC";
+              ORDER BY io.lft ASC';
 
     $params = [':lft' => $lft, ':rgt' => $rgt];
 

@@ -46,8 +46,8 @@ class arMigration0179
     }
 
     // Add default accession alternative identifier type term if it doesn't exist
-    $sql = "SELECT * FROM ".QubitTerm::TABLE_NAME." t
-              INNER JOIN ".QubitTermI18n::TABLE_NAME." ti
+    $sql = 'SELECT * FROM '.QubitTerm::TABLE_NAME.' t
+              INNER JOIN '.QubitTermI18n::TABLE_NAME." ti
               WHERE ti.name='Accession alternative identifier'
               AND t.taxonomy_id=?
               AND ti.culture='en'

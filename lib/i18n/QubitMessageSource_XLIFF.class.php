@@ -54,7 +54,7 @@ class QubitMessageSource_XLIFF extends sfMessageSource_XLIFF
 
     if (is_writable($filename) == false)
     {
-      throw new sfException(sprintf("Unable to save to file %s, file must be writable.", $filename));
+      throw new sfException(sprintf('Unable to save to file %s, file must be writable.', $filename));
     }
 
     // Create new DOM

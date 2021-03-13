@@ -153,7 +153,7 @@ EOF;
 
     echo "\nAnalysis complete.";
 
-    echo "\n\n".$rowCount." rows, ".count($import->columnNames)." columns.";
+    echo "\n\n".$rowCount.' rows, '.count($import->columnNames).' columns.';
 
     if (count($import->columnNames != count($nonEmptyColumns)))
     {
@@ -169,7 +169,7 @@ EOF;
           ++$emptyCount;
         }
       }
-      echo ($emptyCount) ? '' : "[None]";
+      echo ($emptyCount) ? '' : '[None]';
     }
 
     if (count($multiValueColumns))
@@ -192,7 +192,7 @@ EOF;
       echo "--------------\n\n";
       foreach($sampleColumnValues as $column => $values)
       {
-        echo '  '.$column.":";
+        echo '  '.$column.':';
         if (count($values))
         {
           $shownCount = 0;

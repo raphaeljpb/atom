@@ -213,12 +213,12 @@ foreach($adapter_list as $adapter)
   $b = new sfWebBrowser($headers, $adapter);
   $t->like(
     $b->get($dump_headers_url)->getResponseText(),
-    "/fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3/",
+    '/fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3/',
     'sfWebBrowser constructor accepts default request headers as first parameter');
   $headers = ['Accept-language' => 'en-gb;q=0.8,en-us;q=0.5,en;q=0.3'];
   $t->like(
     $b->get($dump_headers_url, [], $headers)->getResponseText(),
-    "/en-gb;q=0.8,en-us;q=0.5,en;q=0.3/",
+    '/en-gb;q=0.8,en-us;q=0.5,en;q=0.3/',
     'Default request headers are overriden by request specific headers');
 
   // Request headers support
@@ -230,13 +230,13 @@ foreach($adapter_list as $adapter)
     'Accept' => 'text/xml'];
   $t->like(
     $b->get($dump_headers_url, [], $headers)->getResponseText(),
-    "/fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3/",
+    '/fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3/',
     'get() can pass request headers with the third argument');
   $t->like(
     $b->post($dump_headers_url, [], $headers)->getResponseText(),
-    "/fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3/",
+    '/fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3/',
     'post() can pass request headers with the third argument');
-  $msg = "get() can pass request headers not common that are defined uppercase in RFC 2616";
+  $msg = 'get() can pass request headers not common that are defined uppercase in RFC 2616';
 
   try
   {
@@ -274,12 +274,12 @@ foreach($adapter_list as $adapter)
   $headers = ['Accept-Encoding' => 'gzip'];
   $t->like(
     $b->get($dump_headers_url, [], $headers)->getResponseText(),
-    "/gzip/",
+    '/gzip/',
     'getResponseText() can decode gzip encoded response body');
   $headers = ['Accept-Encoding' => 'deflate'];
   $t->like(
     $b->get($dump_headers_url, [], $headers)->getResponseText(),
-    "/deflate/",
+    '/deflate/',
     'getResponseText() can decode deflate encoded response body');
 
   $encodings = [];
