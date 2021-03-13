@@ -74,7 +74,7 @@ foreach ($tests as $item)
   $index = 0;
   foreach ($uniquer as $unique)
   {
-    $index += 1;
+    ++$index;
   }
   $t->is($index, count($item['expected']));
 
