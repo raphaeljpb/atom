@@ -339,6 +339,7 @@ class QubitXmlImport
           catch (Exception $e)
           {
             $this->errors[] = $this->i18n->__('EAD "langmaterial" is set to').': "'.$isocode.'". '.$this->i18n->__('This language is currently not supported.');
+
             continue;
           }
 
@@ -362,6 +363,7 @@ class QubitXmlImport
       if (empty($mapping['Object']) || !class_exists('Qubit'.$mapping['Object']))
       {
         $this->errors[] = $this->i18n->__('Non-existent class defined in import mapping: "%class%"', ['%class%' => 'Qubit'.$mapping['Object']]);
+
         continue;
       }
 
@@ -402,6 +404,7 @@ class QubitXmlImport
     $doc->loadXML('<xml></xml>');
     $doc->documentElement->appendChild($doc->importNode($node, true));
     $xpath = new DOMXPath($doc);
+
     return $xpath->query($xpathQuery);
   }
 
@@ -775,6 +778,7 @@ class QubitXmlImport
       if (empty($methodMap['Method']) || !is_callable([$currentObject, $methodMap['Method']]))
       {
         $this->errors[] = $this->i18n->__('Non-existent method defined in import mapping: "%method%"', ['%method%' => $methodMap['Method']]);
+
         continue;
       }
 
@@ -1205,6 +1209,7 @@ class QubitXmlImport
       default:
         // Create new record for not supported resources
         $this->errors[] = $this->i18n->__('Pre-save logic not supported for %class_name%', ['%class_name%' => get_class($resource)]);
+
         return true;
     }
 
@@ -1212,6 +1217,7 @@ class QubitXmlImport
     if (!$this->options['update'] && !$this->options['skip-matched'])
     {
       $this->errors[] = $this->i18n->__('Creating a new record: %title%', ['%title%' => $title]);
+
       return true;
     }
 
@@ -1219,6 +1225,7 @@ class QubitXmlImport
     if (isset($matchResource) && !$this->options['update'] && $this->options['skip-matched'])
     {
       $this->errors[] = $this->i18n->__('Found duplicated record for %title%, skipping', ['%title%' => $title]);
+
       return false;
     }
 
@@ -1226,6 +1233,7 @@ class QubitXmlImport
     if (!isset($matchResource) && $this->options['update'] && $this->options['skip-unmatched'])
     {
       $this->errors[] = $this->i18n->__('No match found for %title%, skipping', ['%title%' => $title]);
+
       return false;
     }
 
@@ -1235,18 +1243,21 @@ class QubitXmlImport
       if (!call_user_func([$this, $passesLimitFunctionName], $matchResource))
       {
         $this->errors[] = $this->i18n->__('Match found for %title% outside the limit, skipping', ['%title%' => $title]);
+
         return false;
       }
       else
       {
         $this->errors[] = $this->i18n->__('Deleting and replacing record: %title%', ['%title%' => $title]);
         call_user_func([$matchResource, $deleteFunctionName]);
+
         return true;
       }
     }
 
     // Match not found when not updating and skipping matches
     $this->errors[] = $this->i18n->__('Creating a new record: %title%', ['%title%' => $title]);
+
     return true;
   }
 
@@ -1271,10 +1282,12 @@ class QubitXmlImport
     {
       case 'QubitRepository':
         $repo = $io->getRepository(['inherit' => true]);
+
         return isset($repo) && $repo->id == $limit->id;
 
       case 'QubitInformationObject':
         $collectionRoot = $io->getCollectionRoot();
+
         return isset($collectionRoot) && $collectionRoot->id == $limit->id;
 
       default:
@@ -1302,6 +1315,7 @@ class QubitXmlImport
     {
       case 'QubitRepository':
         $repo = $actor->getMaintainingRepository();
+
         return isset($repo) && $repo->id == $limit->id;
 
       default:

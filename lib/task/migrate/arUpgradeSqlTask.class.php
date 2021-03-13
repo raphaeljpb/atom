@@ -494,6 +494,7 @@ EOF;
       {
         // Valid theme configured + present in plugins/
         $themeMissing = false;
+
         break;
       }
     }
@@ -548,6 +549,7 @@ EOF;
       if ($choice >= 1 && $choice <= count($themes))
       {
         $themeNames = array_keys($themes);
+
         return $themeNames[$choice - 1];
       }
     }

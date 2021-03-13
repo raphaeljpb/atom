@@ -45,6 +45,7 @@ class QubitInformationObjectXmlCacheResource
     exportBulkBaseTask::includeXmlExportClassesAndHelpers();
     $options = ($format == 'ead') ? ['public' => true] : [];
     $rawXml = exportBulkBaseTask::captureResourceExportTemplateOutput($this->resource, $format, $options);
+
     return Qubit::tidyXml($rawXml);
   }
 
@@ -66,6 +67,7 @@ class QubitInformationObjectXmlCacheResource
     $filename .= '.'. strtolower($format) .'.xml';
 
     $exportsPath = 'downloads' . DIRECTORY_SEPARATOR . 'exports';
+
     return $exportsPath . DIRECTORY_SEPARATOR . strtolower($format) . DIRECTORY_SEPARATOR . $filename;
   }
 

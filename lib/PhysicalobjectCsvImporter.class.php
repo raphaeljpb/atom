@@ -879,6 +879,7 @@ EOQ;
       $msg = <<<EOL
 Couldn't find physical object type "$name" for culture "$culture"
 EOL;
+
       throw new UnexpectedValueException($msg);
     }
 

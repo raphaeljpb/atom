@@ -102,32 +102,39 @@ class ActorBrowseAction extends DefaultBrowseAction
       case 'institutionResponsibleIdentifier':
       case 'sources':
         $esFields = arElasticSearchPluginUtil::getI18nFieldNames(sprintf('i18n.%%s.%s', $field));
+
         break;
 
       case 'parallelNames':
       case 'otherNames':
       case 'occupations':
         $esFields = arElasticSearchPluginUtil::getI18nFieldNames(sprintf('%s.i18n.%%s.name', $field));
+
         break;
 
       case 'subject':
         $esFields = arElasticSearchPluginUtil::getI18nFieldNames('subjects.i18n.%s.name');
+
         break;
 
       case 'place':
         $esFields = arElasticSearchPluginUtil::getI18nFieldNames('places.i18n.%s.name');
+
         break;
 
       case 'occupationNotes':
         $esFields = arElasticSearchPluginUtil::getI18nFieldNames('occupations.i18n.%s.content');
+
         break;
 
       case 'maintenanceNotes':
         $esFields = arElasticSearchPluginUtil::getI18nFieldNames('maintenanceNotes.i18n.%s.content');
+
         break;
 
       case 'descriptionIdentifier':
         $esFields = ['descriptionIdentifier'];
+
         break;
     }
 

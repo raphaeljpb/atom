@@ -132,6 +132,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
     // Load first mapping.yml file found
     $esMapping = new arElasticSearchMapping();
     $esMapping->loadYAML(array_shift($files));
+
     return $esMapping;
   }
 
@@ -547,6 +548,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
     if (!version_compare($version, self::MIN_VERSION, '>='))
     {
       $message = sprintf('The version of Elasticsearch that you are running is out of date (%s), and no longer compatible with this version of AtoM. Please upgrade to version %s or newer.', $version, self::MIN_VERSION);
+
       throw new \Elastica\Exception\ClientException($message);
     }
 

@@ -792,6 +792,7 @@ EOF;
 
                 $self->createRightAndRelation($rightAndRelation);
               }
+
               break;
 
             case 'unknown':
@@ -818,6 +819,7 @@ EOF;
               }
 
               $self->createRightAndRelation($rightAndRelation);
+
               break;
 
             case 'public domain':
@@ -841,12 +843,14 @@ EOF;
               }
 
               $self->createRightAndRelation($rightAndRelation);
+
               break;
 
             default:
               throw new sfException('Copyright status "'
                 . $self->rowStatusVars['copyrightStatus']
                 .'" not handled: adjust script or import data');
+
               break;
           }
         }

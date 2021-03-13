@@ -45,6 +45,7 @@ class TaxonomyIndexAction extends sfAction
     if (in_array($this->resource->id, QubitTaxonomy::$lockedTaxonomies))
     {
       $this->getResponse()->setStatusCode(403);
+
       return sfView::NONE;
     }
 
@@ -67,6 +68,7 @@ class TaxonomyIndexAction extends sfAction
        && !$this->context->user->hasGroup($allowedGroups))
     {
       $this->getResponse()->setStatusCode(403);
+
       return sfView::HEADER_ONLY;
     }
 

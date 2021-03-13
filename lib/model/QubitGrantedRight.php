@@ -224,14 +224,17 @@ class QubitGrantedRight extends BaseGrantedRight
       {
         case QubitGrantedRight::DENY_RIGHT:
           $restriction = 'disallow';
+
           break;
 
         case QubitGrantedRight::GRANT_RIGHT:
           $restriction = 'allow';
+
           break;
 
         case QubitGrantedRight::CONDITIONAL_RIGHT:
           $restriction = 'conditional';
+
           break;
 
         default:

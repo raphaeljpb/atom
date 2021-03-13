@@ -36,6 +36,7 @@ class QubitOaiRepository extends BaseOaiRepository
     $criteria = new Criteria();
     $criteria->add(QubitOaiRepository::URI, $URI, Criteria::LIKE);
     $criteria->addAscendingOrderByColumn(QubitOaiRepository::NAME);
+
     return self::get($criteria);
   }
 }

@@ -44,10 +44,12 @@ class RepositoryUploadLimitComponent extends sfComponent
     {
       case -1:
         $this->quotaType = 'unlimited';
+
         break;
 
       case 0:
         $this->quotaType = 'disabled';
+
         break;
 
       default:

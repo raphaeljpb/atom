@@ -167,14 +167,17 @@ class ReleaseTask extends sfBaseTask
       {
         case '*':
           $pattern .= '[^/]*';
+
           break;
 
         case '//':
           $pattern .= '/(?:.*/)?';
+
           break;
 
         case '?':
           $pattern .= '[^/]';
+
           break;
 
         default:

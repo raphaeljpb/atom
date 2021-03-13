@@ -186,6 +186,7 @@ EOF;
           if (0 == count($diff))
           {
             $deleteCreators = true;
+
             break;
           }
           // If there are creators on the ancestors but they don't match:

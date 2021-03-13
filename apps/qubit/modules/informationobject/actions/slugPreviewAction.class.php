@@ -30,6 +30,7 @@ class InformationObjectSlugPreviewAction extends sfAction
       || !QubitAcl::check($this->resource, 'read'))
     {
       $this->response->setStatusCode(401);
+
       return sfView::NONE;
     }
 

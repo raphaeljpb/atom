@@ -307,6 +307,7 @@ class QubitMetsParser
 
         case 'creator':
           $creation['actorName'] = $value;
+
           break;
 
         case 'provenance':
@@ -1153,6 +1154,7 @@ class QubitMetsParser
       {
         // Add track by type
         $type = $track->xpath('@type');
+
         switch ($type[0])
         {
           case 'General':
@@ -1339,6 +1341,7 @@ class QubitMetsParser
     {
       case 'lastPartOfPath':
         $parts = explode('/', (string)$results[0]);
+
         return end($parts);
 
       case 'string':

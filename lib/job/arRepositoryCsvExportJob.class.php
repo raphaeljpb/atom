@@ -95,6 +95,7 @@ class arRepositoryCsvExportJob extends arExportJob
       if (null === $resource = QubitRepository::getById($id))
       {
         $this->error($this->i18n->__('Cannot fetch repository, id: %1', ['%1' => $id]));
+
         return -1;
       }
 

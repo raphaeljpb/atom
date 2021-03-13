@@ -226,10 +226,12 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
             case 'QubitTaxonomy':
             case 'QubitTerm':
               $values = $item['name'];
+
               break;
 
             case 'QubitMenu':
               $values = $item['label'];
+
               break;
 
             case 'QubitSetting':

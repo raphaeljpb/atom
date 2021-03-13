@@ -384,6 +384,7 @@ class AccessionEditAction extends DefaultEditAction
       case 'identifier':
         $value = $this->form->getValue($field->getName());
         $this->resource['identifier'] = $value;
+
         break;
 
       case 'informationObjects':

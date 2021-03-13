@@ -53,6 +53,7 @@ EOF;
         if (false === $options['overwrite'])
         {
           $this->logSection('latlng', sprintf('Skipping entry (%s, %s)', $item->latitude, $item->longitude));
+
           continue;
         }
       }

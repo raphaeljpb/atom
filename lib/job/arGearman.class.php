@@ -65,6 +65,7 @@ class arGearman
   public static function getServer()
   {
     $r = self::getServers();
+
     return array_pop($r);
   }
 

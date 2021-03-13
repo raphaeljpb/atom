@@ -140,6 +140,7 @@ class TermEditAction extends DefaultEditAction
       case 'sourceNote':
         $criteria = new Criteria();
         $criteria->add(QubitNote::OBJECT_ID, $this->resource->id);
+
         switch ($name)
         {
           case 'scopeNote':
@@ -331,6 +332,7 @@ class TermEditAction extends DefaultEditAction
 
           $note = new QubitNote();
           $note->content = $item;
+
           switch ($field->getName())
           {
             case 'scopeNote':

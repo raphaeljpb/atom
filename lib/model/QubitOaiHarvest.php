@@ -37,6 +37,7 @@ class QubitOaiHarvest extends BaseOaiHarvest
     $criteria->add(QubitOaiHarvest::OAI_REPOSITORY_ID, $id);
     $criteria->addDescendingOrderByColumn(QubitOaiHarvest::LAST_HARVEST);
     $harvests = self::get($criteria);
+
     return $harvests[0];
   }
 }

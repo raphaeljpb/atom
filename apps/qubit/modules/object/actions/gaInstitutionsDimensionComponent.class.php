@@ -32,18 +32,22 @@ class ObjectGaInstitutionsDimensionComponent extends sfComponent
     {
       case 'QubitInformationObject':
         $this->repository = $this->resource->getRepository(['inherit' => true]);
+
         break;
 
       case 'QubitActor':
         $this->repository = $this->resource->getMaintainingRepository();
+
         break;
 
       case 'QubitRepository':
         $this->repository = $this->resource;
+
         break;
 
       default:
         $this->repository = null;
+
         break;
     }
 

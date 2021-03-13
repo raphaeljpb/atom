@@ -108,16 +108,19 @@ class DigitalObjectViewAction extends sfAction
       case QubitTerm::MASTER_ID:
         $action = 'readMaster';
         $obj = $this->resource->object;
+
         break;
 
       case QubitTerm::REFERENCE_ID:
         $action = 'readReference';
         $obj = $this->resource->parent->object;
+
         break;
 
       case QubitTerm::THUMBNAIL_ID:
         $action = 'readThumbnail';
         $obj = $this->resource->parent->object;
+
         break;
 
       default:

@@ -512,16 +512,19 @@ class QubitMigrate109 extends QubitMigrate
         case 'informationobject':
           $className = 'QubitInformationObject';
           $standard = $standards['isad'];
+
           break;
 
         case 'actor':
           $className = 'QubitActor';
           $standard = $standards['isaar'];
+
           break;
 
         case 'repository':
           $className = 'QubitRepository';
           $standard = $standards['isdiah'];
+
           break;
 
         default:
@@ -857,6 +860,7 @@ class QubitMigrate109 extends QubitMigrate
         {
           $newTermArray[$key] = $term;
           unset($qubitTermArray[$key]);
+
           break;
         }
       }

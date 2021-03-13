@@ -497,15 +497,22 @@ class QubitMigrate107 extends QubitMigrate
         {
           case 'administrator':
             $groupId = '<?php echo QubitAclGroup::ADMINISTRATOR_ID."\n" ?>';
+
             break;
+
           case 'editor':
             $groupId = '<?php echo QubitAclGroup::EDITOR_ID."\n" ?>';
+
             break;
+
           case 'contributor':
             $groupId = '<?php echo QubitAclGroup::CONTRIBUTOR_ID."\n" ?>';
+
             break;
+
           case 'translator':
             $groupId = '<?php echo QubitAclGroup::TRANSLATOR_ID."\n" ?>';
+
             break;
         }
       }
@@ -1136,6 +1143,7 @@ class QubitMigrate107 extends QubitMigrate
         {
           $newTermArray[$key] = $item;
           unset($qubitTermArray[$key]);
+
           break;
         }
       }

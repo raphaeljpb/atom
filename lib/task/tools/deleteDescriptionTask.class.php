@@ -34,6 +34,7 @@ class deleteDescriptionTask extends arBaseTask
     if (!$this->confirmDeletion($options['no-confirmation']))
     {
       $this->logSection('delete-description', sprintf('[%s] Task aborted.', strftime('%r')));
+
       return;
     }
 
@@ -42,9 +43,12 @@ class deleteDescriptionTask extends arBaseTask
     {
       case 'QubitRepository':
         $this->deleteDescriptionsFromRepository();
+
         break;
+
       case 'QubitInformationObject':
         $this->deleteDescriptions($this->resource);
+
         break;
     }
 
@@ -96,11 +100,14 @@ EOF;
       case 'QubitRepository':
         $confirmWarning = sprintf('WARNING: You are about to delete all the records under the repository "%s".',
                                   $this->resource->getAuthorizedFormOfName(['cultureFallback' => true]));
+
         break;
+
       case 'QubitInformationObject':
         $confirmWarning = sprintf('WARNING: You are about to delete the record "%s" and %d descendant records.',
                                   $this->resource->getTitle(['cultureFallback' => true]),
                                   ($this->resource->rgt - $this->resource->lft - 1) / 2);
+
         break;
     }
 

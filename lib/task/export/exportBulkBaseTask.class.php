@@ -67,20 +67,24 @@ abstract class exportBulkBaseTask extends sfBaseTask
       case 'ead':
         $eadLevels = ['class', 'collection', 'file', 'fonds', 'item', 'otherlevel', 'recordgrp', 'series', 'subfonds', 'subgrp', 'subseries'];
         $ead = new sfEadPlugin($resource);
+
         break;
 
       case 'mods':
         $mods = new sfModsPlugin($resource);
+
         break;
 
       case 'eac':
         $eac = new sfEacPlugin($resource);
+
         break;
 
       case 'dc':
         $dc = new sfDcPlugin($resource);
         // Hack to get around issue with get_component helper run from worker (qubitConfiguration->getControllerDirs returns wrong dirs)
         $template = 'plugins/sfDcPlugin/modules/sfDcPlugin/templates/_dc.xml.php';
+
         break;
 
       default:
@@ -94,6 +98,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
     $sourceLanguage = $resource->getSourceCulture();
 
     ob_start();
+
     include($template);
     $output = ob_get_contents();
     if ($format == 'dc')
@@ -227,6 +232,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
   protected function getDatabaseConnection()
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
+
     return $databaseManager->getDatabase('propel')->getConnection();
   }
 

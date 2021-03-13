@@ -85,12 +85,15 @@ class i18nDiffTask extends sfBaseTask
         {
           $output .= '"'.implode('","', array_map('addslashes', $row))."\"\n";
         }
+
         break;
+
       case 'tab':
         foreach ($rows as $row)
         {
           $output .= implode("\t", $row)."\n";
         }
+
         break;
     }
 

@@ -105,10 +105,12 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
         {
           $this->do->objectId = $slug->objectId;
         }
+
         break;
 
       case 'uri':
         $this->do->importFromURI($value);
+
         break;
 
       case 'information_object_id':
@@ -118,6 +120,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
         $io->save();
 
         $this->do->objectId = $io->id;
+
         break;
 
       case 'media_type':
@@ -132,6 +135,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
             $this->do->mediaType = $typeTerm;
           }
         }
+
         break;
 
       case 'usage':
@@ -141,6 +145,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
         $criteria->add(QubitTermI18n::NAME, $value);
         $typeTerm = QubitTerm::getOne($criteria);
         $this->do->usage = $typeTerm;
+
         break;
     }
   }

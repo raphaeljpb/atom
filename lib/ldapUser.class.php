@@ -124,6 +124,7 @@ class ldapUser extends myUser implements Zend_Acl_Role_Interface
       ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
 
       $this->ldapConnection = $connection;
+
       return $connection;
     }
   }
@@ -138,6 +139,7 @@ class ldapUser extends myUser implements Zend_Acl_Role_Interface
 
       // The @ suppresses a warning if the auth fails
       $this->ldapBound = @ldap_bind($conn, $dn, $password);
+
       return $this->ldapBound;
     }
   }

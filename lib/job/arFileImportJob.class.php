@@ -80,6 +80,7 @@ class arFileImportJob extends arBaseJob
           // This was to prevent errors if csv file does not have the correct extension. See
           // modules/object/actions/importAction.class.php.  This default case should never be called.
           $this->error($this->i18n->__('Unable to import selected file: unknown format %1%.', ['%1%' => $parameters['importType']]));
+
           return false;
 
           break;
@@ -88,6 +89,7 @@ class arFileImportJob extends arBaseJob
     catch (sfException $e)
     {
       $this->error($e->getMessage());
+
       return false;
     }
 
@@ -136,37 +138,52 @@ class arFileImportJob extends arBaseJob
         case 'doCsvTransform':
           $this->info($this->i18n->__('Applying transformation to CSV file.'));
           $importer->doCsvTransform = $parameters['doCsvTransform'];
+
           break;
+
         case 'index':
           if ('event' != $parameters['objectType'])
           {
             $this->info($this->i18n->__('Indexing imported records.'));
             $importer->indexDuringImport = $parameters['index'];
           }
+
           break;
+
         case 'skip-unmatched':
           $this->info($this->i18n->__('Skipping unmatched records.'));
           $importer->skipUnmatched = $parameters['skip-unmatched'];
+
           break;
+
         case 'skip-matched':
           $this->info($this->i18n->__('Skipping matched records.'));
           $importer->skipMatched = $parameters['skip-matched'];
+
           break;
+
         case 'update':
           $this->info($this->i18n->__('Update type: %1', ['%1' => $parameters['update']]));
           $importer->updateType = $parameters['update'];
+
           break;
+
         case 'repositorySlug':
           $this->info($this->i18n->__('Repository: %1', ['%1' => $parameters['repositorySlug']]));
           $importer->limit = $parameters['repositorySlug'];
+
           break;
+
         case 'collectionSlug':
           // collectionSlug, if specified, should take precedence over repositorySlug.
           $this->info($this->i18n->__('Collection: %1', ['%1' => $parameters['collectionSlug']]));
           $importer->limit = $parameters['collectionSlug'];
+
           break;
+
         case 'parentId':
           $importer->setParent($parameters['parentId']);
+
           break;
       }
     }
@@ -198,35 +215,49 @@ class arFileImportJob extends arBaseJob
         case 'index':
           $this->info($this->i18n->__('Indexing imported records.'));
           $options['index'] = $parameters['index'];
+
           break;
+
         case 'skip-unmatched':
           $this->info($this->i18n->__('Skipping unmatched records.'));
           $options['skip-unmatched'] = $parameters['skip-unmatched'];
+
           break;
+
         case 'skip-matched':
           $this->info($this->i18n->__('Skipping matched records.'));
           $options['skip-matched'] = $parameters['skip-matched'];
+
           break;
+
         case 'update':
           $this->info($this->i18n->__('Update type: %1', ['%1' => $parameters['update']]));
           if ('import-as-new' != $parameters['update'])
           {
             $options['update'] = $parameters['update'];
           }
+
           break;
+
         case 'repositorySlug':
           $this->info($this->i18n->__('Repository: %1', ['%1' => $parameters['repositorySlug']]));
           $options['limit'] = $parameters['repositorySlug'];
+
           break;
+
         case 'collectionSlug':
           $this->info($this->i18n->__('Collection: %1', ['%1' => $parameters['collectionSlug']]));
           $options['limit'] = $parameters['collectionSlug'];
+
           break;
+
         case 'parentId':
           $importer->setParent($parameters['parentId']);
+
           break;
       }
     }
+
     return $options;
   }
 

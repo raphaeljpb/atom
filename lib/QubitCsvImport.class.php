@@ -113,6 +113,7 @@ class QubitCsvImport
       {
         case 'import-as-new':
           $commandSkipMatched = ($this->skipMatched) ? '--skip-matched' : '';
+
           break;
 
         case 'match-and-update':
@@ -120,10 +121,12 @@ class QubitCsvImport
           $commandUpdate = ($this->updateType == 'match-and-update') ? '--update="match-and-update"' : '--update="delete-and-replace"';
           $commandSkipUnmatched = ($this->skipUnmatched) ? '--skip-unmatched' : '';
           $commandLimit = ('' !== $this->limit) ? "--limit=\"$this->limit\"" : '';
+
           break;
 
         default:
           throw new sfException($this->i18n->__('Unknown update type specified: %1', ['%1' => $updateType]));
+
           break;
       }
     }

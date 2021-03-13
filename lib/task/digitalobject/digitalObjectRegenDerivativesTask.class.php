@@ -26,10 +26,12 @@ class digitalObjectRegenDerivativesTask extends arBaseTask
     {
       case "reference":
         $usageId = QubitTerm::REFERENCE_ID;
+
         break;
 
       case "thumbnail":
         $usageId = QubitTerm::THUMBNAIL_ID;
+
         break;
 
       default:
@@ -255,6 +257,7 @@ EOF;
         if ($do->name != $options['skip-to'] && $skip)
         {
           $this->logSection('digital object', "Skipping ".$do->name);
+
           continue;
         }
         else

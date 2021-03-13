@@ -50,6 +50,7 @@ class arRepositoryThemeCropValidatedFile extends sfValidatedFile
 
     // Figure out necessary dimensions from the filename
     $pathInfo = pathinfo($this->savedName);
+
     switch ($pathInfo['filename'])
     {
       case 'logo':

@@ -74,12 +74,14 @@ class QubitAccession extends BaseAccession
   public static function maskEnabled()
   {
     $setting = QubitSetting::getByName('accession_mask_enabled');
+
     return (null === $setting || boolval($setting->getValue(['sourceCulture' => true])));
   }
 
   public static function nextAccessionNumber()
   {
     $setting = QubitSetting::getByName('accession_counter');
+
     return $setting->getValue(['sourceCulture' => true]) + 1;
   }
 
@@ -94,6 +96,7 @@ class QubitAccession extends BaseAccession
   public static function nextAvailableIdentifier()
   {
     $con = Propel::getConnection();
+
     try
     {
       $con->beginTransaction();
@@ -206,6 +209,7 @@ class QubitAccession extends BaseAccession
     if (!empty($this->identifier) && self::maskEnabled())
     {
       $con = Propel::getConnection();
+
       try
       {
         $con->beginTransaction();
@@ -215,6 +219,7 @@ class QubitAccession extends BaseAccession
       catch (PropelException $e)
       {
         $con->rollback();
+
         throw $e;
       }
     }

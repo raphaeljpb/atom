@@ -225,6 +225,7 @@ class QubitMigrate103 extends QubitMigrate
             $defaultTemplateIndex = $i;
           }
           unset($this->data['QubitSetting'][$key]);
+
           break;
       }
 
@@ -758,6 +759,7 @@ class QubitMigrate103 extends QubitMigrate
           if ($newRow['lft'] > $row['lft'])
           {
             QubitMigrate::array_insert($newList, $i, [$key => $row]);
+
             break;
           }
           $i++;
@@ -830,6 +832,7 @@ class QubitMigrate103 extends QubitMigrate
         {
           $newTermArray[$key] = $term;
           unset($qubitTermArray[$key]);
+
           break;
         }
       }

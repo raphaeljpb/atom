@@ -100,26 +100,32 @@ class RepositoryBrowseAction extends DefaultBrowseAction
     {
       case 'nameUp':
         $this->search->query->setSort([$i18n.'authorizedFormOfName.alphasort' => 'asc']);
+
         break;
 
       case 'nameDown':
         $this->search->query->setSort([$i18n.'authorizedFormOfName.alphasort' => 'desc']);
+
         break;
 
       case 'regionUp':
         $this->search->query->setSort([$i18n.'region.untouched' => 'asc']);
+
         break;
 
       case 'regionDown':
         $this->search->query->setSort([$i18n.'region.untouched' => 'desc']);
+
         break;
 
       case 'localityUp':
         $this->search->query->setSort([$i18n.'city.untouched' => 'asc']);
+
         break;
 
       case 'localityDown':
         $this->search->query->setSort([$i18n.'city.untouched' => 'desc']);
+
         break;
 
       case 'identifier':
@@ -128,6 +134,7 @@ class RepositoryBrowseAction extends DefaultBrowseAction
         // no break
       case 'alphabetic':
         $this->search->query->addSort([$i18n.'authorizedFormOfName.alphasort' => $request->sortDir]);
+
         break;
 
       case 'lastUpdated':

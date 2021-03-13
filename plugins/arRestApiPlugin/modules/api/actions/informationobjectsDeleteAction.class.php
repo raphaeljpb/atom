@@ -40,6 +40,7 @@ class ApiInformationObjectsDeleteAction extends QubitApiAction
       if (null !== ($io = QubitInformationObject::getOne($criteria)))
       {
         $io->delete();
+
         return sfView::NONE;
       }
     }

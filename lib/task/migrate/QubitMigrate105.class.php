@@ -330,6 +330,7 @@ class QubitMigrate105 extends QubitMigrate
         {
           $newTermArray[$key] = $term;
           unset($qubitTermArray[$key]);
+
           break;
         }
       }

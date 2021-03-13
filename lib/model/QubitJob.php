@@ -128,10 +128,13 @@ class QubitJob extends BaseJob
     {
       case QubitTerm::JOB_STATUS_COMPLETED_ID:
         return $i18n->__('Completed');
+
       case QubitTerm::JOB_STATUS_IN_PROGRESS_ID:
         return $i18n->__('Running');
+
       case QubitTerm::JOB_STATUS_ERROR_ID:
         return $i18n->__('Error');
+
       default:
         return $unknown;
     }
@@ -362,6 +365,7 @@ class QubitJob extends BaseJob
   {
     // Deliberately avoiding spaces, tabs, etc by using md5 hashing, see #9648.
     $key = sfConfig::get('sf_root_dir').sfConfig::get('app_workers_key', '');
+
     return md5($key).'-';
   }
 
@@ -375,6 +379,7 @@ class QubitJob extends BaseJob
     if (isset($job->userId))
     {
       $user = QubitUser::getById($job->userId);
+
       return $user ? $user->__toString() : 'Deleted user';
     }
 
@@ -388,6 +393,7 @@ class QubitJob extends BaseJob
   private function formatDate($date)
   {
     $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $date);
+
     return $dateTime ? $dateTime->format('Y-m-d h:i A') : 'N/A';
   }
 

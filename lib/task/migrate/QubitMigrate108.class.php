@@ -593,6 +593,7 @@ class QubitMigrate108 extends QubitMigrate
       if (null != $userMenuKey)
       {
         $nextKey = $key;
+
         break;
       }
       elseif (isset($row['name']) && 'users' == $row['name'])
@@ -970,6 +971,7 @@ class QubitMigrate108 extends QubitMigrate
       if ('<?php echo QubitTaxonomy::ROOT_ID."\n" ?>' == $row['id'])
       {
         $rootKey = $key;
+
         continue; // Don't assign parent
       }
 
@@ -1385,26 +1387,32 @@ class QubitMigrate108 extends QubitMigrate
       {
         case 'information object':
           $name = 'addInformationObject';
+
           break;
 
         case 'actor':
           $name = 'addActor';
+
           break;
 
         case 'repository':
           $name = 'addRepository';
+
           break;
 
         case 'term':
           $name = 'addTerm';
+
           break;
 
         case 'functions':
           $name = 'addFunction';
+
           break;
 
         case 'log in':
           $name = 'login';
+
           break;
 
         default:
@@ -1475,26 +1483,32 @@ class QubitMigrate108 extends QubitMigrate
       {
         case 'information object':
           $label = 'Information objects';
+
           break;
 
         case 'person/organization':
           $label = 'Persons/organizations';
+
           break;
 
         case 'repository':
           $label = 'Repositories';
+
           break;
 
         case 'term':
           $label = 'Terms';
+
           break;
 
         case 'xml':
           $label = 'XML';
+
           break;
 
         case 'oai':
           $label = 'OAI';
+
           break;
 
         default:
@@ -1638,6 +1652,7 @@ class QubitMigrate108 extends QubitMigrate
         {
           $newTermArray[$key] = $term;
           unset($qubitTermArray[$key]);
+
           break;
         }
       }

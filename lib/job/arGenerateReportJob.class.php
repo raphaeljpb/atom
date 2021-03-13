@@ -56,6 +56,7 @@ class arGenerateReportJob extends arBaseJob
     {
       $this->error($this->i18n->__('Error: Could not find an information object with id: %1',
                                    ['%1' => $this->params['objectId']]));
+
       return false;
     }
 
@@ -108,6 +109,7 @@ class arGenerateReportJob extends arBaseJob
 
       default:
         $this->error($this->i18n->__('Invalid report type: %1', ['%1' => $this->params['reportType']]));
+
         return false;
     }
 
@@ -262,6 +264,7 @@ class arGenerateReportJob extends arBaseJob
     if (!count($results))
     {
       $this->info($this->i18n->__('No results found for box label report.'));
+
       return;
     }
 
@@ -290,6 +293,7 @@ class arGenerateReportJob extends arBaseJob
     if (!count($results))
     {
       $this->info($this->i18n->__('No results found for storage locations report.'));
+
       return;
     }
 
@@ -318,6 +322,7 @@ class arGenerateReportJob extends arBaseJob
     if (!count($results))
     {
       $this->info($this->i18n->__('No results found for item or list report.'));
+
       return;
     }
 
@@ -373,6 +378,7 @@ class arGenerateReportJob extends arBaseJob
     if (!count($results))
     {
       $this->info($this->i18n->__('No results found for '.$this->params['reportTypeLabel'].' report.'));
+
       return;
     }
 
@@ -393,6 +399,7 @@ class arGenerateReportJob extends arBaseJob
     }
 
     ob_start();
+
     include $this->templatePaths[$this->params['reportType']];
     $output = ob_get_clean();
 

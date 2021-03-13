@@ -32,6 +32,7 @@ class QubitRoute extends sfRoute
     {
       $entities = ['%2A', '%3A', '%40', '%3D', '%2C'];
       $replacements = ['*', ':', '@', '=', ','];
+
       return str_replace($entities, $replacements, urlencode($string));
     }
 
@@ -160,17 +161,23 @@ class QubitRoute extends sfRoute
             $url[] = QubitRoute::urlencode3986($parameters[$token[3]]);
             $optional = false;
           }
+
           break;
+
         case 'text':
           $url[] = $token[2];
           $optional = false;
+
           break;
+
         case 'separator':
           if (false === $optional || $first)
           {
             $url[] = $token[2];
           }
+
           break;
+
         default:
           // Handle custom tokens.
           if ($segment = call_user_func_array([$this, 'generateFor'.ucfirst(array_shift($token))], array_merge([$optional, $parameters], $token)))
@@ -178,6 +185,7 @@ class QubitRoute extends sfRoute
             $url[] = $segment;
             $optional = false;
           }
+
           break;
       }
 

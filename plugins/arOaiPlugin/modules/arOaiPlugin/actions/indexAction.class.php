@@ -49,6 +49,7 @@ class arOaiPluginIndexAction extends sfAction
     sfConfig::set('sf_escaping_strategy', false);
 
     $appRoot = sfConfig::get('sf_root_dir');
+
     include($appRoot .'/vendor/symfony/lib/helper/EscapingHelper.php');
 
     // If authentication is enabled, check API key in HTTP header
@@ -167,22 +168,34 @@ class arOaiPluginIndexAction extends sfAction
       {
         case 'Identify':
           $this->verb = 'identify';
+
           break;
+
         case 'ListMetadataFormats':
           $this->verb = 'listMetadataFormats';
+
           break;
+
         case 'ListSets':
           $this->verb = 'listSets';
+
           break;
+
         case 'ListRecords':
           $this->verb = 'listRecords';
+
           break;
+
         case 'ListIdentifiers':
           $this->verb = 'listIdentifiers';
+
           break;
+
         case 'GetRecord':
           $this->verb = 'getRecord';
+
           break;
+
         default:
           $this->verb = 'badVerb';
       }

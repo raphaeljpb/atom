@@ -161,6 +161,7 @@ class ActorEditAction extends DefaultEditAction
           $criteria = new Criteria();
           $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->resource->id);
           $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
+
           switch ($name)
           {
             case 'subjectAccessPoints':

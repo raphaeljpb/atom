@@ -228,6 +228,7 @@ class sfImageMagickAdapter
   {
     // Use fileinfo to figure out file mimetype.
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
+
     return finfo_file($finfo, $file);
   }
 
@@ -242,6 +243,7 @@ class sfImageMagickAdapter
     $width = $this->sourceWidth;
     $height = $this->sourceHeight;
     $x = $y = 0;
+
     switch (@$this->options['method'])
     {
       case "shave_all":
@@ -265,6 +267,7 @@ class sfImageMagickAdapter
         }
 
         $command = sprintf(" -shave %dx%d", $x, $y);
+
         break;
 
       case "shave_bottom":
@@ -305,6 +308,7 @@ class sfImageMagickAdapter
         }
 
         break;
+
       case 'custom':
         $coords = $this->options['coords'];
         if (empty($coords)) break;
@@ -338,6 +342,7 @@ class sfImageMagickAdapter
 
           $this->image = $thumbDest;
         }
+
           break;
     } // end switch
 

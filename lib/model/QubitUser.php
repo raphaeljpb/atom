@@ -209,6 +209,7 @@ class QubitUser extends BaseUser
         if (in_array(intval($userGroup->groupId), $checkGroups))
         {
           $hasGroup = true;
+
           break;
         }
       }

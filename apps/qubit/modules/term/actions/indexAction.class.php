@@ -67,6 +67,7 @@ class TermIndexAction extends DefaultBrowseAction
     if (in_array($this->resource->taxonomyId, QubitTaxonomy::$lockedTaxonomies))
     {
       $this->getResponse()->setStatusCode(403);
+
       return sfView::NONE;
     }
 
@@ -240,15 +241,18 @@ EOF;
         {
           case 'referenceCode':
             $this->search->query->setSort(['referenceCode.untouched' => $request->sortDir]);
+
             break;
 
           case 'alphabetic':
             $field = sprintf('i18n.%s.title.alphasort', $this->culture);
             $this->search->query->setSort([$field => $request->sortDir]);
+
             break;
 
           case 'date':
             $this->search->query->setSort(['startDateSort' => $request->sortDir]);
+
             break;
 
           case 'lastUpdated':

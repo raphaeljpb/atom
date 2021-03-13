@@ -25,6 +25,7 @@ class AccessionCheckIdentifierAvailableAction extends sfAction
     if (!QubitAcl::check($this->resource, 'create') && !QubitAcl::check($this->resource, 'update'))
     {
       $this->getResponse()->setStatusCode(401);
+
       return sfView::NONE;
     }
 
@@ -51,6 +52,7 @@ class AccessionCheckIdentifierAvailableAction extends sfAction
       if (null === $resource)
       {
         $this->getResponse()->setStatusCode(400);
+
         return false;
       }
     }
@@ -65,6 +67,7 @@ class AccessionCheckIdentifierAvailableAction extends sfAction
     try
     {
       $validator->clean($identifier);
+
       return true;
     }
     catch (sfValidatorError $e)

@@ -69,6 +69,7 @@ class sitemapTask extends sfBaseTask
         if (!$result)
         {
           $this->log('Quitting');
+
           return;
         }
       }

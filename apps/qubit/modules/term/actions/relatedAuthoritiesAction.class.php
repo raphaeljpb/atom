@@ -58,6 +58,7 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
     if (in_array($this->resource->taxonomyId, QubitTaxonomy::$lockedTaxonomies))
     {
       $this->getResponse()->setStatusCode(403);
+
       return sfView::NONE;
     }
 

@@ -94,15 +94,22 @@ class QubitMigrate104 extends QubitMigrate
       {
         case 'administrator':
           $this->data['QubitRole'][$key]['id'] = '<?php echo QubitRole::ADMINISTRATOR_ID."\n" ?>';
+
           break;
+
         case 'editor':
           $this->data['QubitRole'][$key]['id'] = '<?php echo QubitRole::EDITOR_ID."\n" ?>';
+
           break;
+
         case 'contributor':
           $this->data['QubitRole'][$key]['id'] = '<?php echo QubitRole::CONTRIBUTOR_ID."\n" ?>';
+
           break;
+
         case 'translator':
           $this->data['QubitRole'][$key]['id'] = '<?php echo QubitRole::TRANSLATOR_ID."\n" ?>';
+
           break;
       }
     }
@@ -467,6 +474,7 @@ class QubitMigrate104 extends QubitMigrate
           if ($newRow['lft'] > $row['lft'])
           {
             QubitMigrate::array_insert($newList, $i, [$key => $row]);
+
             break;
           }
           $i++;
@@ -542,6 +550,7 @@ class QubitMigrate104 extends QubitMigrate
         {
           $newTermArray[$key] = $term;
           unset($qubitTermArray[$key]);
+
           break;
         }
       }

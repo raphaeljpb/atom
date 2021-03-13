@@ -92,6 +92,7 @@
   $topLevelDid = true;
 
   include('indexSuccessBodyDidElement.xml.php');
+
   include('indexSuccessBodyBioghistElement.xml.php');
 
   $topLevelDid = false;
@@ -316,6 +317,7 @@
         $events = $$resourceVar->getActorEvents(['eventTypeId' => QubitTerm::CREATION_ID]);
 
         include('indexSuccessBodyDidElement.xml.php');
+
         include('indexSuccessBodyBioghistElement.xml.php');
       ?>
 

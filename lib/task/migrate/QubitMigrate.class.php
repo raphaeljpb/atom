@@ -190,6 +190,7 @@ class QubitMigrate
           if ($newRow['lft'] > $row['lft'])
           {
             self::array_insert($newList, $i, [$key => $row]);
+
             break;
           }
           $i++;
@@ -973,6 +974,7 @@ class QubitMigrate
         {
           $pivotLft = $originalData[$key]['lft'];
         }
+
         break;
       }
       $i++;

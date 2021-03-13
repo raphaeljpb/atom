@@ -609,6 +609,7 @@ class QubitInformationObject extends BaseInformationObject
       if (isset($ancestor->repositoryId))
       {
         $inheritedRepoId = $ancestor->repositoryId;
+
         break;
       }
     }
@@ -741,11 +742,15 @@ class QubitInformationObject extends BaseInformationObject
         $c = QubitCultureFallback::addFallbackCriteria($c, 'QubitInformationObject');
         $c->addAscendingOrderByColumn('identifier');
         $c->addAscendingOrderByColumn('title');
+
         break;
+
       case 'title':
         $c = QubitCultureFallback::addFallbackCriteria($c, 'QubitInformationObject');
         $c->addAscendingOrderByColumn('title');
+
         break;
+
       case 'none':
       case 'lft':
       default:
@@ -1359,6 +1364,7 @@ class QubitInformationObject extends BaseInformationObject
           if (QubitTerm::STATUS_TYPE_PUBLICATION_ID == $status->typeId)
           {
             $pubStatus = $status->statusId;
+
             break;
           }
         }
@@ -1378,6 +1384,7 @@ class QubitInformationObject extends BaseInformationObject
         catch (sfException $e)
         {
           $errors[] = sfContext::getInstance()->i18n->__('Encountered error fetching external resource: '.$uri);
+
           continue;
         }
 
@@ -1892,6 +1899,7 @@ class QubitInformationObject extends BaseInformationObject
     if ($chronNodeList->length)
     {
       $this->parseChronlist($chronNodeList);
+
       return;
     }
 
@@ -1956,6 +1964,7 @@ class QubitInformationObject extends BaseInformationObject
         {
           $actor->setHistory($history);
           $actor->save();
+
           break;
         }
       }
@@ -2355,6 +2364,7 @@ class QubitInformationObject extends BaseInformationObject
   {
     $criteria = new Criteria();
     $criteria->add(QubitInformationObject::OAI_LOCAL_IDENTIFIER, $oai_local_identifier);
+
     return QubitInformationObject::get($criteria)->offsetGet(0, ['defaultValue' => null]);
   }
 
@@ -2904,6 +2914,7 @@ class QubitInformationObject extends BaseInformationObject
   {
     $counter = self::getIdentifierCounter();
     $counterValue = $counter->getValue(['sourceCulture' => true]);
+
     return Qubit::generateIdentifierFromCounterAndMask($counterValue, sfConfig::get('app_identifier_mask', ''));
   }
 
@@ -3205,18 +3216,22 @@ class QubitInformationObject extends BaseInformationObject
     {
       case QubitSlug::SLUG_BASIS_REFERENCE_CODE:
         $stringToSlugify = $this->getInheritedReferenceCode();
+
         break;
 
       case QubitSlug::SLUG_BASIS_TITLE:
         $stringToSlugify = $this->getTitle(['sourceCulture' => true]);
+
         break;
 
       case QubitSlug::SLUG_BASIS_REFERENCE_CODE_NO_COUNTRY_REPO:
         $stringToSlugify = $this->getInheritedReferenceCode(false);
+
         break;
 
       case QubitSlug::SLUG_BASIS_IDENTIFIER:
         $stringToSlugify = $this->identifier;
+
         break;
 
       default:

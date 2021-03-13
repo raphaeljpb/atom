@@ -480,10 +480,12 @@ class QubitMigrate110 extends QubitMigrate
         {
           case '<?php echo QubitTerm::RELATION_NOTE_DATE_ID."\n" ?>':
             $colname = 'date';
+
             break;
 
           case '<?php echo QubitTerm::RELATION_NOTE_DESCRIPTION_ID."\n" ?>':
             $colname = 'description';
+
             break;
 
           default:
@@ -1078,6 +1080,7 @@ class QubitMigrate110 extends QubitMigrate
         {
           $newTermArray[$key] = $term;
           unset($qubitTermArray[$key]);
+
           break;
         }
       }

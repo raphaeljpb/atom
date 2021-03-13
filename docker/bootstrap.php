@@ -24,6 +24,7 @@ function getenv_or_fail($name)
   if (false === $value)
   {
     echo "Environment variable ${name} is not defined!";
+
     exit(1);
   }
 

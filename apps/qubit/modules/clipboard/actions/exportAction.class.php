@@ -37,6 +37,7 @@ class ClipboardExportAction extends DefaultEditAction
     // Currently 'switch' to process the inbound parameter, validate and set
     // default - could be if/then if preferred
     $this->objectType = trim(strtolower($request->getParameter('type')));
+
     switch ($this->objectType)
     {
       case 'actor':
@@ -489,6 +490,7 @@ class ClipboardExportAction extends DefaultEditAction
   protected function processField($field)
   {
     $name = $field->getName();
+
     switch ($name)
     {
       case 'levels':

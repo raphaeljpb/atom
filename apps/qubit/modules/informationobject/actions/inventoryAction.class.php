@@ -131,6 +131,7 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
     $queryBool->addMust($q2);
 
     $i18n = sprintf('i18n.%s.', sfContext::getInstance()->getUser()->getCulture());
+
     switch ($sort)
     {
       case 'identifierDown':

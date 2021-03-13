@@ -83,6 +83,7 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
     if (!array_key_exists($attributeKey, $attributes))
     {
       sfContext::getInstance()->getLogger()->err('Key not found in CAS attributes');
+
       return;
     }
 
@@ -91,6 +92,7 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
     if (null === $attributeToCheck)
     {
       sfContext::getInstance()->getLogger()->err('CAS attribute used for setting AtoM group membership is null');
+
       return;
     }
 

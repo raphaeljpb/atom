@@ -59,6 +59,7 @@ EOF;
     if (!$options['no-confirmation'] && !$this->askConfirmation([$question], 'QUESTION_LARGE', false))
     {
       $this->logSection('jobs:clear', 'Aborting.');
+
       return 1;
     }
 

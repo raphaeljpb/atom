@@ -31,6 +31,7 @@ class sfIsaarPluginActorEventsAction extends sfAction
     {
       $this->response->setStatusCode(400);
       $errorMessage = sfContext::getInstance()->i18n->__('Slug must be provided');
+
       return $this->renderText(json_encode(['error' => $errorMessage]));
     }
 
@@ -48,6 +49,7 @@ class sfIsaarPluginActorEventsAction extends sfAction
     $data['data'] = $this->assembleEventData($criteria);
 
     $this->getResponse()->setHttpHeader('Content-type', 'application/json');
+
     return $this->renderText(json_encode($data));
   }
 

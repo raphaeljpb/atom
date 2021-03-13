@@ -5,14 +5,23 @@ if(!isset($sf_symfony_lib_dir))
 {
   $sf_symfony_lib_dir = $configuration->getSymfonyLibDir();
 }
+
 require_once(dirname(__FILE__).'/../../lib/sfWebBrowser.class.php');
+
 require_once(dirname(__FILE__).'/../../lib/sfFopenAdapter.class.php');
+
 require_once(dirname(__FILE__).'/../../lib/sfCurlAdapter.class.php');
+
 require_once(dirname(__FILE__).'/../../lib/sfSocketsAdapter.class.php');
+
 require_once($sf_symfony_lib_dir.'/exception/sfException.class.php');
+
 require_once(dirname(__FILE__).'/../../lib/sfWebBrowserInvalidResponseException.class.php');
+
 require_once($sf_symfony_lib_dir.'/config/sfConfig.class.php');
+
 require_once($sf_symfony_lib_dir.'/util/sfDomCssSelector.class.php');
+
 require_once($sf_symfony_lib_dir.'/util/sfToolkit.class.php');
 
 // Configuration
@@ -91,6 +100,7 @@ foreach($adapter_list as $adapter)
 
   $t->diag('Exceptions');
   $b = new sfWebBrowser([], $adapter);
+
   try
   {
     $b->get('htp://askeet');
@@ -164,6 +174,7 @@ foreach($adapter_list as $adapter)
   $b->get('http://rss.cnn.com/rss/cnn_topstories.rss');
   $t->isa_ok($b->getResponseXml(), 'SimpleXMLElement', 'getResponseXml() returns the response as a SimpleXML Element');
   $b->get('http://www.w3.org/StyleSheets/home.css');
+
   try
   {
     $b->getResponseXml();
@@ -254,6 +265,7 @@ foreach($adapter_list as $adapter)
     "/fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3/",
     'post() can pass request headers with the third argument');
   $msg = "get() can pass request headers not common that are defined uppercase in RFC 2616";
+
   try
   {
     $t->like(
@@ -268,6 +280,7 @@ foreach($adapter_list as $adapter)
 
   $msg = 'get() can pass request headers not common that are IE7 dependent: see http://www.w3.org/2006/http-header, now: ';
   $field = '';
+
   try
   {
     $headers = ['UA-CPU' => 'x86', 'UA-OS' => 'MacOS', 'UA-Color' => 'color16', 'UA-Pixels' => '240x320'];
@@ -351,6 +364,7 @@ foreach($adapter_list as $adapter)
   /********************/
 
   $t->diag('Error management');
+
   try
   {
     $b->get('http://nonexistent');
@@ -370,6 +384,7 @@ foreach($adapter_list as $adapter)
 
   $t->diag('Browser restart');
   $b->restart();
+
   try
   {
     $b->reload();

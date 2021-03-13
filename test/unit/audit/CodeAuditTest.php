@@ -111,10 +111,12 @@ function _readDir($dirPath, &$filePaths)
     {
       case 'dir':
         _readDir($dirPath.'/'.$match[1], $filePaths);
+
         break;
 
       case 'file':
         $filePaths[] = $dirPath.'/'.$match[1];
+
         break;
 
       default:
@@ -132,6 +134,7 @@ function checkPreamble($filePath)
   if (preg_match($preambleExceptions, $filePath))
   {
     $t->skip("$filePath preamble skipped");
+
     return;
   }
 

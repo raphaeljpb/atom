@@ -142,6 +142,7 @@ abstract class csvImportBaseTask extends arBaseTask
     if (!is_readable($path))
     {
       $this->log("Cannot read digital object path. Skipping creation of digital object ($path)");
+
       return;
     }
 
@@ -580,6 +581,7 @@ abstract class csvImportBaseTask extends arBaseTask
     {
       $msg = sprintf('Parameter "%s" is not valid for --update option. ', $options['update']);
       $msg .= sprintf('Valid options are: %s', implode(', ', $validParams));
+
       throw new sfException($msg);
     }
   }
@@ -597,6 +599,7 @@ abstract class csvImportBaseTask extends arBaseTask
     {
       if ($name == $option->getName()) return true;
     }
+
     return false;
   }
 }

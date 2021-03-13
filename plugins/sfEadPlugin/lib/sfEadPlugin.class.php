@@ -444,6 +444,7 @@ class sfEadPlugin
       if ($event->getType()->getRole() != 'Creator')
       {
         $hasNonCreationActorEvents = true;
+
         break;
       }
     }
@@ -457,6 +458,7 @@ class sfEadPlugin
     // Create formated publication date
     // todo: use 'published at' date, see issue#902
     $date = strtotime($this->resource->getCreatedAt());
+
     return date('Y', $date).'-'.date('m', $date).'-'.date('d', $date);
   }
 }

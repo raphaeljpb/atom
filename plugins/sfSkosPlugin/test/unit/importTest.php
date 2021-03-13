@@ -942,6 +942,7 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
     if ($item->getName(['culture' => 'es']) == 'Bar ESPAÑOL')
     {
       $match = $item;
+
       break;
     }
   }

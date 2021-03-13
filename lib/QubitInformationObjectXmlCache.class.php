@@ -122,6 +122,7 @@ class QubitInformationObjectXmlCache
   public static function resourceExportFilePath($resource, $format, $contentsOnly = false)
   {
     $cacheResource = new QubitInformationObjectXmlCacheResource($resource);
+
     return $cacheResource->getFilePath($format, $contentsOnly);
   }
 

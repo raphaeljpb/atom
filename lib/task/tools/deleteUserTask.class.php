@@ -34,6 +34,7 @@ class deleteUserTask extends arBaseTask
     if (!$options['force'] && !$this->getConfirmation($arguments['username']))
     {
       $this->logSection('delete-user', 'Aborted.');
+
       return;
     }
 

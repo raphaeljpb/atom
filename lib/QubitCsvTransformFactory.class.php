@@ -144,6 +144,7 @@ class QubitCsvTransformFactory
             if ($ignore)
             {
               print "Ignoring row ". $self->status['rows'] ."...\n";
+
               return;
             }
 

@@ -62,6 +62,7 @@ class arPhysicalObjectCsvHoldingsReportJob extends arExportJob
     if (!empty($errors))
     {
       $this->error($this->i18n->__('Failed to create ZIP file.') . ' : ' . implode(' : ', $errors));
+
       return false;
     }
 

@@ -96,6 +96,7 @@ class DefaultEditAction extends sfAction
       case 'standardizedName':
         $criteria = new Criteria();
         $criteria = $this->resource->addOtherNamesCriteria($criteria);
+
         switch ($name)
         {
           case 'otherName':

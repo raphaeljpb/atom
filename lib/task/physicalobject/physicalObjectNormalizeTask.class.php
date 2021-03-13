@@ -52,6 +52,7 @@ EOF;
       if (!$confirmation)
       {
         $this->log('Aborted.');
+
         exit();
       }
     }
@@ -161,12 +162,14 @@ EOF;
   private function getPhysicalObjectCount()
   {
     $sql = 'SELECT count(*) FROM physical_object';
+
     return QubitPdo::fetchColumn($sql);
   }
 
   private function getPhysicalObjectRelationCount()
   {
     $sql = 'SELECT count(*) FROM relation WHERE type_id=?';
+
     return QubitPdo::fetchColumn($sql, [QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
   }
 

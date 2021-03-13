@@ -1429,6 +1429,7 @@ class QubitDigitalObject extends BaseDigitalObject
       return false;
     }
     $this->saveAndAttachFileContent($filename, $contents);
+
     return $contents;
   }
 
@@ -1583,26 +1584,38 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       case 'audio':
         $mediaTypeId = QubitTerm::AUDIO_ID;
+
         break;
+
       case 'image':
         $mediaTypeId = QubitTerm::IMAGE_ID;
+
         break;
+
       case 'text':
         $mediaTypeId = QubitTerm::TEXT_ID;
+
         break;
+
       case 'video':
         $mediaTypeId = QubitTerm::VIDEO_ID;
+
         break;
+
       case 'application':
         switch ($mimePieces[1])
         {
           case 'pdf':
             $mediaTypeId = QubitTerm::TEXT_ID;
+
             break;
+
           default:
             $mediaTypeId = QubitTerm::OTHER_ID;
         }
+
         break;
+
       default:
         $mediaTypeId = QubitTerm::OTHER_ID;
     }
@@ -1779,7 +1792,9 @@ class QubitDigitalObject extends BaseDigitalObject
       case QubitTerm::REFERENCE_ID:
       case QubitTerm::MASTER_ID:
         $genericIconList = QubitDigitalObject::$qubitGenericReference;
+
         break;
+
       default:
         $genericIconList = QubitDigitalObject::$qubitGenericThumbs;
     }
@@ -1799,6 +1814,7 @@ class QubitDigitalObject extends BaseDigitalObject
       if (($mimeParts[0] == $pattern[0] || '*' == $pattern[0]) && ($mimeParts[1] == $pattern[1] || '*' == $pattern[1]))
       {
         $matchedMimeType = $mimePattern;
+
         break;
       }
     }
@@ -1826,22 +1842,27 @@ class QubitDigitalObject extends BaseDigitalObject
   public static function getGenericIconPathByMediaTypeId($mimeTypeId)
   {
     $mediaTypeFilename = 'blank.png';
+
     switch ($mimeTypeId)
     {
       case QubitTerm::AUDIO_ID:
         $mediaTypeFilename = 'audio.png';
+
         break;
 
       case QubitTerm::IMAGE_ID:
         $mediaTypeFilename = 'image.png';
+
         break;
 
       case QubitTerm::TEXT_ID:
         $mediaTypeFilename = 'text.png';
+
         break;
 
       case QubitTerm::VIDEO_ID:
         $mediaTypeFilename = 'video.png';
+
         break;
     }
 
@@ -1891,6 +1912,7 @@ class QubitDigitalObject extends BaseDigitalObject
       if (array_key_exists($ext, $mimeTypeList))
       {
         $mimeType = $mimeTypeList[$ext];
+
         break;
       }
     }
@@ -2351,6 +2373,7 @@ class QubitDigitalObject extends BaseDigitalObject
     if ($this->isImage())
     {
       $filename = $this->getAbsolutePath();
+
       return QubitDigitalObject::resizeImage($filename, $maxwidth, $maxheight);
     }
 
@@ -2404,11 +2427,15 @@ class QubitDigitalObject extends BaseDigitalObject
           $maxwidth = 480;
         }
         $maxheight = $maxwidth;
+
         break;
+
       case QubitTerm::THUMBNAIL_ID:
         $maxwidth = 270;
         $maxheight = 1024;
+
         break;
+
       case QubitTerm::COMPOUND_ID:
         if (!$maxwidth = sfConfig::get('app_reference_image_maxwidth'))
         {
@@ -2416,6 +2443,7 @@ class QubitDigitalObject extends BaseDigitalObject
         }
         $maxheight = $maxwidth; // Full maxwidth dimensions (480 default)
         $maxwidth = floor($maxwidth / 2) - 10; // 1/2 size - gutter (230 default)
+
         break;
     }
 
@@ -2716,7 +2744,9 @@ class QubitDigitalObject extends BaseDigitalObject
         $derivativeName = $originalNameNoExtension.'_'.$usageId.'.mp4';
         $derivativeFullPath = sfConfig::get('sf_web_dir').$this->getPath().$derivativeName;
         self::convertVideoToMp4($originalFullPath, $derivativeFullPath);
+
         break;
+
       case QubitTerm::THUMBNAIL_ID:
       default:
         $extension = '.'.self::THUMB_EXTENSION;
@@ -2750,7 +2780,9 @@ class QubitDigitalObject extends BaseDigitalObject
         $derivativeName = $originalNameNoExtension.'_'.$usageId.'.mp4';
         $derivativeFullPath = sfConfig::get('sf_web_dir').$this->getPath().$derivativeName;
         self::convertVideoToMp4($originalFullPath, $derivativeFullPath);
+
         break;
+
       case QubitTerm::THUMBNAIL_ID:
       default:
         $extension = '.'.self::THUMB_EXTENSION;
@@ -3406,6 +3438,7 @@ class QubitDigitalObject extends BaseDigitalObject
   {
     $val = trim($val);
     $last = strtolower(substr($val, -1));
+
     switch($last) {
       // The 'G' modifier is available since PHP 5.1.0
       case 'g':

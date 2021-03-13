@@ -52,14 +52,17 @@ class RepositoryEditUploadLimitAction extends sfAction
     {
       case 'disabled':
         $this->resource->uploadLimit = 0;
+
         break;
 
       case 'unlimited':
         $this->resource->uploadLimit = -1;
+
         break;
 
       case 'limited':
         $this->resource->uploadLimit = $uploadLimit['value'];
+
         break;
     }
 

@@ -597,6 +597,7 @@ class arElasticSearchInformationObjectPdo
       if (isset($item->copyright_status_id))
       {
         $statusId = $item->copyright_status_id;
+
         break;
       }
     }

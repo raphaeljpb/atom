@@ -93,14 +93,17 @@ class qtIsaarCsv extends sfIsaarPlugin
           {
             $this->resource->entityTypeId = self::$entityTypeLookup[$value];
           }
+
           break;
 
         case 'maintenanceNotes':
           $this->isaar->maintenanceNotes = $value;
+
           break;
 
         case 'uniqueId':
           $this->sourceId = $value;
+
           break;
 
         default:

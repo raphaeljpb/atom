@@ -711,6 +711,7 @@ class QubitActor extends BaseActor
           if (QubitTerm::STATUS_TYPE_PUBLICATION_ID == $status->typeId)
           {
             $pubStatus = $status->statusId;
+
             break;
           }
         }
@@ -730,6 +731,7 @@ class QubitActor extends BaseActor
         catch (sfException $e)
         {
           $errors[] = sfContext::getInstance()->i18n->__('Encountered error fetching external resource: '.$uri);
+
           continue;
         }
 

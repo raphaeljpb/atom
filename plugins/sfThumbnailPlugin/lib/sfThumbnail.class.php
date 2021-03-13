@@ -86,6 +86,7 @@ class sfThumbnail
         $this->tempFile = tempnam('/tmp', 'sfThumbnailPlugin');
 
         $b = new sfWebBrowser();
+
         try
         {
           $b->get($image);

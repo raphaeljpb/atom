@@ -121,6 +121,7 @@ class QubitSaxParser
       if (!xml_parse($this->sax, $data, feof($fp)))
       {
         $success = false;
+
         break;
       }
     }
@@ -374,6 +375,7 @@ class QubitSaxParser
   protected function attr($attrName)
   {
     $current = end($this->attrStack);
+
     return $current[$attrName];
   }
 

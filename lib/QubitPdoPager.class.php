@@ -49,6 +49,7 @@ class QubitPdoPager extends sfPager
   {
     $page = ($this->page < 1) ? 1 : $this->page;
     $offset = ($page - 1) * $this->getMaxPerPage();
+
     return sprintf('%s LIMIT %s, %s', $this->sql, $offset, $this->getMaxPerPage());
   }
 

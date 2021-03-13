@@ -72,6 +72,7 @@ EOF;
   {
     $types = array_keys(QubitSearch::getInstance()->loadMappings()->asArray());
     sort($types);
+
     return $types;
   }
 

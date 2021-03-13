@@ -324,6 +324,7 @@ EOF;
     {
       $path = $options['path'].$path;
     }
+
     return $path;
   }
 
@@ -338,6 +339,7 @@ EOF;
     if (!file_exists($path))
     {
       $this->log("Couldn't read file '$path'");
+
       return;
     }
 

@@ -289,6 +289,7 @@ class InformationObjectEditAction extends DefaultEditAction
         $criteria = new Criteria();
         $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->resource->id);
         $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
+
         switch ($name)
         {
           case 'genreAccessPoints':
@@ -325,6 +326,7 @@ class InformationObjectEditAction extends DefaultEditAction
         $criteria->add(QubitRelation::SUBJECT_ID, $this->resource->id);
 
         $value = $choices = [];
+
         switch ($name)
         {
           case 'nameAccessPoints':

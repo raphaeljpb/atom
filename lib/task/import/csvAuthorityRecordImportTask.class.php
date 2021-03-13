@@ -192,6 +192,7 @@ EOF;
             if (sfConfig::get('app_prevent_duplicate_actor_identifiers', false))
             {
               $error .= sfContext::getInstance()->i18n->__(' Import aborted.');
+
               throw new sfException($error);
             }
             else

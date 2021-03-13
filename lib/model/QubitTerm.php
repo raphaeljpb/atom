@@ -707,6 +707,7 @@ class QubitTerm extends BaseTerm
   public static function getPhysicalObjectContainerTypes()
   {
     $containerTerm = QubitTerm::getById(QubitTerm::CONTAINER_ID);
+
     return $containerTerm->getDescendants();
   }
 

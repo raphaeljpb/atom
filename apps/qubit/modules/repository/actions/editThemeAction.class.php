@@ -146,6 +146,7 @@ class RepositoryEditThemeAction extends sfAction
           'edit_mode' => true,
           'is_image' => true,
           'with_delete' => $this->existsBanner]));
+
         break;
 
       case 'banner_delete':

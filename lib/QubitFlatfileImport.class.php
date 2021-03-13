@@ -146,6 +146,7 @@ class QubitFlatfileImport
         case 'delete-and-replace':
           // Delete any matching records, and re-import them (attach to existing entities if possible).
           $this->deleteAndReplace = true;
+
           break;
 
         case 'match-and-update':
@@ -154,6 +155,7 @@ class QubitFlatfileImport
           $this->matchAndUpdate = true;
           // keepDigitalObjects only makes sense with match-and-update
           $this->keepDigitalObjects = $options['keep-digital-objects'];
+
           break;
 
         default:
@@ -430,6 +432,7 @@ class QubitFlatfileImport
         if (!$this->rowContainsData($item))
         {
           $this->status['rows']++;
+
           continue;
         }
 
@@ -734,6 +737,7 @@ class QubitFlatfileImport
       $statement->bindValue($index + 1, $params[$index]);
     }
     $statement->execute();
+
     return $statement;
   }
 
@@ -1232,6 +1236,7 @@ class QubitFlatfileImport
     {
       return $terms[0];
     }
+
     return $terms;
   }
 
@@ -1276,6 +1281,7 @@ class QubitFlatfileImport
     }
 
     $object->save();
+
     return $object;
   }
 
@@ -1291,6 +1297,7 @@ class QubitFlatfileImport
     $repo = new QubitRepository();
     $repo->authorizedFormOfName = $name;
     $repo->save();
+
     return $repo;
   }
 
@@ -1317,6 +1324,7 @@ class QubitFlatfileImport
     $relation->typeId = $typeId;
     $relation->indexOnSave = false;
     $relation->save();
+
     return $relation;
   }
 
@@ -1381,6 +1389,7 @@ class QubitFlatfileImport
     {
       self::createObjectTermRelation($this->object->id, $term->id);
     }
+
     return $termArray;
   }
 
@@ -1561,6 +1570,7 @@ class QubitFlatfileImport
       if (in_array($termName, $terms))
       {
         $termId = array_search($termName, $terms);
+
         return $termId;
       }
       else
@@ -2135,10 +2145,12 @@ class QubitFlatfileImport
                       $this->columnExists('identifier') ? trim($this->columnValue('identifier')) : '');
 
       print $this->logError($msg);
+
       return true;
     }
 
     $this->object = new $this->className();
+
     return false;
   }
 
@@ -2350,6 +2362,7 @@ class QubitFlatfileImport
     {
       $existingNotes[] = $row->content;
     }
+
     return $existingNotes;
   }
 
@@ -2376,6 +2389,7 @@ class QubitFlatfileImport
     // If we do not match the note, add it to the list to match against the next note.
     // This is to prevent performing another DB lookup to re-grab all the notes.
     $existingNotes[] = $content;
+
     return false;
   }
 

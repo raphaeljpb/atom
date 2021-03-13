@@ -95,6 +95,7 @@ class propelBuildNestedSetTask extends sfBaseTask
       catch (PDOException $e)
       {
         $this->conn->rollback();
+
         throw new sfException($e);
       }
 

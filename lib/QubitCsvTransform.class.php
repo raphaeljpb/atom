@@ -139,6 +139,7 @@ class QubitCsvTransform extends QubitFlatfileImport
     $parts = pathinfo($filename);
     $base = $parts['filename'];
     $path = $parts['dirname'];
+
     return $path .'/'. $base .'_'. $number .'.'. $parts['extension'];
   }
 

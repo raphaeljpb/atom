@@ -90,6 +90,7 @@ class importDipObjectsTask extends arBaseTask
     if (is_numeric($columnIndex = array_search($column, $this->columnNames)))
     {
       $this->columnIndexes[$column] = $columnIndex;
+
       return $row[$columnIndex];
     }
 

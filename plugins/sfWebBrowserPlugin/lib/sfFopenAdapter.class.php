@@ -71,6 +71,7 @@ class sfFopenAdapter
     {
       $msg = $this->adapterErrorMessage;
       $this->adapterErrorMessage = null;
+
       throw new Exception($msg);
     }
 

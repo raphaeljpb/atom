@@ -38,26 +38,31 @@ class arStorageServiceExtractFileAction extends sfAction
     catch (QubitApi404Exception $e)
     {
       $this->response->setStatusCode(404, $e->getMessage());
+
       throw $e;
     }
     catch (QubitApiNotAuthorizedException $e)
     {
       $this->response->setStatusCode(401, $e->getMessage());
+
       throw $e;
     }
     catch (QubitApiForbiddenException $e)
     {
       $this->response->setStatusCode(403, $e->getMessage());
+
       throw $e;
     }
     catch (QubitApiBadRequestException $e)
     {
       $this->response->setStatusCode(400, $e->getMessage());
+
       throw $e;
     }
     catch (Exception $e)
     {
       $this->response->setStatusCode(500, $e->getMessage());
+
       throw $e;
     }
 
@@ -120,6 +125,7 @@ class arStorageServiceExtractFileAction extends sfAction
     {
       sfContext::getInstance()->getLogger()->err(sprintf('Storage Service extract file returned status: %s; %s', $status, $url));
       $ex = arStorageServiceUtils::getStorageServiceException($status);
+
       throw $ex;
     }
 

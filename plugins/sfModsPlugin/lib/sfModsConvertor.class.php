@@ -121,6 +121,7 @@ class sfModsConvertor extends QubitSaxParser
     {
       case 'local':
         $this->resource->identifier = $this->data();
+
         break;
 
       case 'uri':
@@ -129,6 +130,7 @@ class sfModsConvertor extends QubitSaxParser
           $this->data(),
           ['scope' => 'alternativeIdentifiers']
         );
+
         break;
 
       case 'pid':
@@ -137,6 +139,7 @@ class sfModsConvertor extends QubitSaxParser
           $this->data(),
           ['scope' => 'alternativeIdentifiers']
         );
+
         break;
     }
   }
@@ -162,26 +165,32 @@ class sfModsConvertor extends QubitSaxParser
     {
       case 'originalLocation':
         $this->resource->locationOfOriginals = $this->data();
+
         break;
 
       case 'otherFormats':
         $this->resource->locationOfCopies = $this->data();
+
         break;
 
       case 'numbering':
         $this->addRadNote('Alpha-numeric designations', $this->data());
+
         break;
 
       case 'language':
         $this->addNote('Language note', $this->data());
+
         break;
 
       case 'gmd':
         $this->arrayPushIfValueNotEmpty($this->materialTypes, $this->data());
+
         break;
 
       case 'genNote':
         $this->addRadNote('General note', $this->data());
+
         break;
 
       default:
@@ -208,6 +217,7 @@ class sfModsConvertor extends QubitSaxParser
     {
       case 'restriction on access':
         $this->resource->accessConditions = $this->data();
+
         break;
 
       default:
@@ -395,10 +405,12 @@ class sfModsConvertor extends QubitSaxParser
     {
       case 'start':
         $this->originDateStart = $this->data();
+
         break;
 
       case 'end':
         $this->originDateEnd = $this->data();
+
         break;
 
       default:

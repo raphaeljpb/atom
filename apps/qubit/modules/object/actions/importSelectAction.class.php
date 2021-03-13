@@ -55,14 +55,17 @@ class ObjectImportSelectAction extends DefaultEditAction
       {
         case 'csv':
           $this->title = $this->context->i18n->__('Import CSV');
+
           break;
 
         case 'xml':
           $this->title = $this->context->i18n->__('Import XML');
+
           break;
 
         default:
           $this->redirect(['module' => 'object', 'action' => 'importSelect', 'type' => 'xml']);
+
           break;
       }
     }

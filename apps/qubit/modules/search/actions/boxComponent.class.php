@@ -26,6 +26,7 @@ class SearchBoxComponent extends sfComponent
     {
       $this->repository = null;
       $this->altRepository = null;
+
       return;
     }
 

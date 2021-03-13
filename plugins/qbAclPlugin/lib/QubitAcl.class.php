@@ -222,6 +222,7 @@ class QubitAcl
       if (null === ($repository = $permission->getRepository()))
       {
         $repositoryAccess[] = ['id' => '*', 'access' => $access];
+
         break;
       }
 
@@ -234,6 +235,7 @@ class QubitAcl
           if ($repository->id == $rule['id'])
           {
             $preExistingRule = true;
+
             break;
           }
         }

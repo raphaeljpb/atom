@@ -112,6 +112,7 @@ class sfWebBrowser
     {
       $uri .= ((false !== strpos($uri, '?')) ? '&' : '?') . http_build_query($parameters, '', '&');
     }
+
     return $this->call($uri, 'GET', [], $headers);
   }
 
@@ -121,6 +122,7 @@ class sfWebBrowser
     {
       $uri .= ((false !== strpos($uri, '?')) ? '&' : '?') . http_build_query($parameters, '', '&');
     }
+
     return $this->call($uri, 'HEAD', [], $headers);
   }
 
@@ -414,6 +416,7 @@ class sfWebBrowser
     }
 
     --$this->stackPosition;
+
     return $this->call($this->stack[$this->stackPosition]['uri'],
                        $this->stack[$this->stackPosition]['method'],
                        $this->stack[$this->stackPosition]['parameters'],
@@ -434,6 +437,7 @@ class sfWebBrowser
     }
 
     ++$this->stackPosition;
+
     return $this->call($this->stack[$this->stackPosition]['uri'],
                        $this->stack[$this->stackPosition]['method'],
                        $this->stack[$this->stackPosition]['parameters'],
@@ -568,11 +572,13 @@ class sfWebBrowser
         // Handle gzip encoding
         case 'gzip':
             $text = $this->decodeGzip($text);
+
             break;
 
         // Handle deflate encoding
         case 'deflate':
             $text = $this->decodeDeflate($text);
+
             break;
 
         default:
@@ -655,6 +661,7 @@ class sfWebBrowser
     if (get_class($this->responseXml) != 'SimpleXMLElement')
     {
       $msg = sprintf("Response is not a valid XML string : \n%s", $this->getResponseText());
+
       throw new sfWebBrowserInvalidResponseException($msg);
     }
 
@@ -691,6 +698,7 @@ class sfWebBrowser
   public function getResponseHeader($key)
   {
     $normalized_key = $this->normalizeHeaderName($key);
+
     return (isset($this->responseHeaders[$normalized_key])) ? $this->responseHeaders[$normalized_key] : '';
   }
 
@@ -827,6 +835,7 @@ class sfWebBrowser
       if (!preg_match('/([a-z]*)(-[a-z]*)*/i', $name))
       {
         $msg = sprintf('Invalid header "%s"', $name);
+
         throw new Exception($msg);
       }
       $fixed_headers[$this->normalizeHeaderName($name)] = trim($value);

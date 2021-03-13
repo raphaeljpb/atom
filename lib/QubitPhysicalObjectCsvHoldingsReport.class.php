@@ -131,6 +131,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     if (!is_bool($value))
     {
       $message = sfContext::getInstance()->i18n->__('Suppress empty must be set to a boolean value.');
+
       throw new UnexpectedValueException($message);
     }
 

@@ -197,8 +197,10 @@ class sfModsPlugin implements ArrayAccess
     {
       case QubitTerm::CREATION_ID:
         return 'dateCreated';
+
       case QubitTerm::PUBLICATION_ID:
         return 'dateIssued';
+
       default:
         return 'dateOther';
     }

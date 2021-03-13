@@ -70,6 +70,7 @@ class eacExportTask extends exportBulkBaseTask
       if (!file_exists($filePath))
       {
         $rawXml = $this->captureResourceExportTemplateOutput($resource, 'eac');
+
         try
         {
           $xml = Qubit::tidyXml($rawXml);

@@ -388,10 +388,12 @@ class Qubit
     if (!move_uploaded_file($file['tmp_name'], $tmpFilePath))
     {
       $errorMessage = sfContext::getInstance()->i18n->__('Unable to complete file import. File %1% could not be moved to %2%', ['%1%' => $file['name'], '%2%' => $tmpDir]);
+
       throw new sfException($errorMessage);
     }
 
     $file['tmp_name'] = $tmpFilePath;
+
     return $file;
   }
 

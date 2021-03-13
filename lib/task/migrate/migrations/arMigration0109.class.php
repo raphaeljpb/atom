@@ -93,6 +93,7 @@ class arMigration0109
       }
       $term->save();
     }
+
     return true;
   }
 }
