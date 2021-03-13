@@ -128,7 +128,7 @@ class QubitMetsParser
     foreach ($this->document->xpath('//m:fileSec/m:fileGrp[@USE="original"]/m:file') as $file)
     {
       // Get premis:objectIdentifiers in amd section for each file
-      if (isset($file['ADMID']) && isset($file['ID'])
+      if (isset($file['ADMID'], $file['ID'])
        && false !== $identifiers = $this->document->xpath('//m:amdSec[@ID="'.(string) $file['ADMID'].'"]//p:objectIdentifier'))
       {
         // Find UUID type
@@ -1268,7 +1268,7 @@ class QubitMetsParser
       }
 
       // Add event dateTime to IO's dateIngested field if it's the ingestion event
-      if (isset($event['type']) && isset($event['dateTime']) && 'ingestion' == $event['type'])
+      if (isset($event['type'], $event['dateTime']) && 'ingestion' == $event['type'])
       {
         $this->resource->premisObjects[0]->dateIngested = $event['dateTime'];
       }

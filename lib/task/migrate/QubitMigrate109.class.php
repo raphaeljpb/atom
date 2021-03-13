@@ -519,7 +519,7 @@ class QubitMigrate109 extends QubitMigrate
           break;
       }
 
-      if (isset($row['value']['en']) && isset($standards[$row['value']['en']]))
+      if (isset($row['value']['en'], $standards[$row['value']['en']]))
       {
         $standard = $standards[$row['value']['en']];
       }

@@ -242,7 +242,7 @@ EOF;
           $key = strtolower($matches[1]);
         }
 
-        if (isset($key) && isset($filenames[$key]))
+        if (isset($key, $filenames[$key]))
         {
           $filepath = str_replace($filename, $filenames[$key], $filepath);
         }

@@ -626,7 +626,7 @@ return;
       if ($node->hasAttributeNS('http://www.w3.org/1999/xlink', 'href') && 0 < $count)
       {
         $params = sfContext::getInstance()->routing->parse($url);
-        if (isset($params['_sf_route']) && isset($params['_sf_route']->resource))
+        if (isset($params['_sf_route'], $params['_sf_route']->resource))
         {
           $item = $params['_sf_route']->resource;
         }
@@ -688,7 +688,7 @@ return;
       if ($node->hasAttributeNS('http://www.w3.org/1999/xlink', 'href') && 0 < $count)
       {
         $params = sfContext::getInstance()->routing->parse($url);
-        if (isset($params['_sf_route']) && isset($params['_sf_route']->resource))
+        if (isset($params['_sf_route'], $params['_sf_route']->resource))
         {
           $item = $params['_sf_route']->resource;
         }
@@ -750,7 +750,7 @@ return;
       if ($node->hasAttributeNS('http://www.w3.org/1999/xlink', 'href') && 0 < $count)
       {
         $params = sfContext::getInstance()->routing->parse($url);
-        if (isset($params['_sf_route']) && isset($params['_sf_route']->resource))
+        if (isset($params['_sf_route'], $params['_sf_route']->resource))
         {
           $item = $params['_sf_route']->resource;
         }

@@ -1736,8 +1736,7 @@ class QubitFlatfileImport
         $self->rowStatusVars[$self->columnNames[$index]] = $value;
       }
       elseif (
-        isset($self->columnNames[$index])
-        && isset($self->arrayColumns[($self->columnNames[$index])])
+        isset($self->columnNames[$index], $self->arrayColumns[($self->columnNames[$index])])
       )
       {
         $self->arrayColumnHandler($columnName, $self->arrayColumns[$columnName], $value);
@@ -1762,14 +1761,14 @@ class QubitFlatfileImport
       $value = trim($value);
 
       // if column maps to an attribute, set the attribute
-      if (isset($self->columnMap) && isset($self->columnMap[$columnName]))
+      if (isset($self->columnMap, $self->columnMap[$columnName]))
       {
         $self->mappedColumnHandler($self->columnMap[$columnName], $value);
       }
       // if column maps to a property, set the property
       elseif (
-        isset($self->propertyMap)
-        && isset($self->propertyMap[$columnName])
+        isset($self->propertyMap, $self->propertyMap[$columnName])
+
         && $value
       )
       {
@@ -1783,8 +1782,7 @@ class QubitFlatfileImport
         }
       }
       elseif (
-        isset($self->columnNames[$index])
-        && isset($self->handlers[($self->columnNames[$index])])
+        isset($self->columnNames[$index], $self->handlers[($self->columnNames[$index])])
       )
       {
         // otherwise, if column is data and a handler for it is set, use it
@@ -1821,13 +1819,13 @@ class QubitFlatfileImport
       $value = trim($value);
 
       // Create/relate terms from array of term names.
-      if (isset($self->termRelations) && isset($self->termRelations[$columnName]) && $value)
+      if (isset($self->termRelations, $self->termRelations[$columnName]) && $value)
       {
         $self->createOrFetchTermAndAddRelation($self->termRelations[$columnName], explode('|', $value));
       }
 
       // Create/update notes
-      if (isset($self->noteMap) && isset($self->noteMap[$columnName]) && $value)
+      if (isset($self->noteMap, $self->noteMap[$columnName]) && $value)
       {
         // otherwise, if maps to a note, create it
         $transformationLogic = (isset($self->noteMap[$columnName]['transformationLogic']))
@@ -1841,13 +1839,13 @@ class QubitFlatfileImport
       }
 
       // Add language properties
-      if (isset($self->languageMap) && isset($self->languageMap[$columnName]) && $value)
+      if (isset($self->languageMap, $self->languageMap[$columnName]) && $value)
       {
         $self->storeLanguageSerializedProperty($self->languageMap[$columnName], explode('|', $value));
       }
 
       // Add script properties
-      if (isset($self->scriptMap) && isset($self->scriptMap[$columnName]) && $value)
+      if (isset($self->scriptMap, $self->scriptMap[$columnName]) && $value)
       {
         $self->storeScriptSerializedProperty($self->scriptMap[$columnName], explode('|', $value));
       }

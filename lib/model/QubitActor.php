@@ -259,7 +259,7 @@ class QubitActor extends BaseActor
 
     foreach ($this->events as $item)
     {
-      if (isset($item->object) && isset($item->type))
+      if (isset($item->object, $item->type))
       {
         unset($item->actor);
 

@@ -8,7 +8,7 @@
       <div class="dropdown-selected">
         <?php $options = $sf_data->getRaw('options'); ?>
         <?php $param = $sf_data->getRaw('param'); ?>
-        <?php if (isset($sf_request->$param) && isset($options[$sf_request->$param])) { ?>
+        <?php if (isset($sf_request->$param, $options[$sf_request->$param])) { ?>
           <span><?php echo $options[$sf_request->$param]; ?></span>
           <?php unset($options[$sf_request->$param]); ?>
         <?php } else { ?>

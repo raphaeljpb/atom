@@ -673,7 +673,7 @@ class InformationObjectEditAction extends DefaultEditAction
     {
       $displayStandardId = $dsId;
     }
-    elseif (isset($this->resource->id) && isset($this->resource->displayStandardId))
+    elseif (isset($this->resource->id, $this->resource->displayStandardId))
     {
       $displayStandardId = $this->resource->displayStandardId;
     }

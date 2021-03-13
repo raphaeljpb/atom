@@ -114,7 +114,7 @@ class InformationObjectEventComponent extends EventEditComponent
           break;
         }
 
-        if (isset($termId) && isset($relation))
+        if (isset($termId, $relation))
         {
           $relation->termId = $termId;
           $relation->save();

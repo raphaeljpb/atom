@@ -92,7 +92,7 @@ class arElasticSearchPluginQuery
 
     // Filter languages only if the languages aggregation
     // is being used and languages is set in the request
-    if (isset($aggs['languages']) && isset($params['languages']))
+    if (isset($aggs['languages'], $params['languages']))
     {
       $this->filters['languages'] = $params['languages'];
       $term = new \Elastica\Query\Term([$aggs['languages']['field'] => $params['languages']]);

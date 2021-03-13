@@ -1630,8 +1630,8 @@ class QubitInformationObject extends BaseInformationObject
     }
     // In EAD import, the term relation is not always created at this point;
     // it might be created afterwards.
-    elseif (isset($options['relation_type_id']) &&
-      isset($options['createRelation']) &&
+    elseif (isset($options['relation_type_id'], $options['createRelation'])
+       &&
       false !== $options['createRelation'])
     {
       // Only add actor as name access point if they are not already linked to

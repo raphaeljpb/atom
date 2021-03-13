@@ -70,7 +70,7 @@ class arObjectMoveJob extends arBaseJob
     }
 
     // Move between siblings if requested
-    if (isset($parameters['oldPosition']) && isset($parameters['newPosition']))
+    if (isset($parameters['oldPosition'], $parameters['newPosition']))
     {
       $this->info($this->i18n->__('Moving object between siblings'));
 

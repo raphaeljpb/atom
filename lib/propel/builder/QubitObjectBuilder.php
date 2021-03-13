@@ -218,7 +218,7 @@ script;
       $this->addUpdateMethods($script);
     }
 
-    if (isset($this->nestedSetLeftColumn) && isset($this->nestedSetRightColumn))
+    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
       $this->addAddOrderByPreorder($script);
       $this->addAddRootsCriteria($script);
@@ -273,7 +273,7 @@ script;
       $this->addGetAncestorsAndSelfForAcl($script);
     }
 
-    if (isset($this->nestedSetLeftColumn) && isset($this->nestedSetRightColumn))
+    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
       $this->addHasChildren($script);
       $this->addAddAncestorsCriteria($script);
@@ -863,7 +863,7 @@ script;
 script;
     }
 
-    if (isset($this->nestedSetLeftColumn) && isset($this->nestedSetRightColumn))
+    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
       $script .= <<<script
 
@@ -910,7 +910,7 @@ script;
 
 script;
 
-    if (!isset($this->inheritanceFk) || 0 < count($this->refFks) || $this->getTable()->getAttribute('isI18n') || isset($this->nestedSetLeftColumn) && isset($this->nestedSetRightColumn))
+    if (!isset($this->inheritanceFk) || 0 < count($this->refFks) || $this->getTable()->getAttribute('isI18n') || isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
       $script .= <<<script
     \$options = array();
@@ -1018,7 +1018,7 @@ script;
 script;
     }
 
-    if (isset($this->nestedSetLeftColumn) && isset($this->nestedSetRightColumn))
+    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
       $script .= <<<script
 
@@ -1497,7 +1497,7 @@ script;
   {
 script;
 
-    if (isset($this->nestedSetLeftColumn) && isset($this->nestedSetRightColumn))
+    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
       $script .= <<<script
 
@@ -1591,7 +1591,7 @@ script;
 script;
 
     // TODO Only update nested set if the self foreign key has changed
-    if (isset($this->nestedSetLeftColumn) && isset($this->nestedSetRightColumn))
+    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
       $script .= <<<script
 
@@ -1714,7 +1714,7 @@ script;
 
 script;
 
-    if (isset($this->nestedSetLeftColumn) && isset($this->nestedSetRightColumn))
+    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
       $script .= <<<script
 

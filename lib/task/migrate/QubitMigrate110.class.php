@@ -488,7 +488,7 @@ class QubitMigrate110 extends QubitMigrate
         }
 
         // Replace relation note with relation_i18n row
-        if (isset($this->data['QubitRelation'][$item['object_id']]) && isset($item['content']))
+        if (isset($this->data['QubitRelation'][$item['object_id']], $item['content']))
         {
           $this->data['QubitRelation'][$item['object_id']]['source_culture'] = $item['source_culture'];
           $this->data['QubitRelation'][$item['object_id']][$colname] = $item['content'];

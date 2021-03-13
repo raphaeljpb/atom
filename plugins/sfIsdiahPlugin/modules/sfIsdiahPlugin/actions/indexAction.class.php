@@ -95,7 +95,7 @@ class sfIsdiahPluginIndexAction extends RepositoryIndexAction
 
     if (null !== $contact = $this->resource->getPrimaryContact())
     {
-      if (isset($contact->latitude) && isset($contact->longitude))
+      if (isset($contact->latitude, $contact->longitude))
       {
         $this->latitude = $contact->latitude;
         $this->longitude = $contact->longitude;
