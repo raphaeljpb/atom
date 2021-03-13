@@ -331,7 +331,6 @@ class QubitOai
     $dom->loadXML($xml);
 
     return true;
-
     if ($dom->schemaValidate($xml))
     {
       return true;

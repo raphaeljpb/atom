@@ -606,7 +606,6 @@ class QubitFlatfileImport
     if (!isset($this->rowsUntilProgressDisplay)
       || !$this->rowsUntilProgressDisplay
     ) return $output;
-
     // row count isn't incremented until after this is displayed, so add one to reflect reality
     $rowsProcessed = $this->getStatus('rows') - $this->getStatus('skippedRows');
     $memoryUsageMB = round(memory_get_usage() / (1024 * 1024), 2);

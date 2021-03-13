@@ -70,7 +70,6 @@ class PhysicalObjectCsvImporter
     'updateSearchIndex' => false,
   ];
 
-
   #
   # Public methods
   #
@@ -209,7 +208,6 @@ class PhysicalObjectCsvImporter
         $this->setProgressFrequency($value);
 
         break;
-
       // boolean options
       case 'debug':
       case 'insertNew':

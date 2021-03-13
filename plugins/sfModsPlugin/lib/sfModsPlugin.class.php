@@ -59,15 +59,12 @@ class sfModsPlugin implements ArrayAccess
     switch ($name)
     {
       case 'identifier':
-
         return $this->resource->referenceCode;
 
       case 'baseurl':
-
         return $this->baseUrl();
 
       case 'uri':
-
         return $this->baseUrl().'/index.php/'.$this->resource->slug;
 
       case 'name':
@@ -83,15 +80,12 @@ class sfModsPlugin implements ArrayAccess
         return $name;
 
       case 'sourceCulture':
-
         return $this->resource->sourceCulture;
 
       case 'typeOfResource':
-
         return $this->resource->getTermRelations(QubitTaxonomy::MODS_RESOURCE_TYPE_ID);
 
       case 'typeOfResourceForXml':
-
         $typeOfResources = [];
 
         // Map to translate RAD GMD terms to MODS resource types
@@ -129,7 +123,6 @@ class sfModsPlugin implements ArrayAccess
         return array_unique($typeOfResources);
 
       case 'genres':
-
         $genres = [];
 
         foreach ($this->resource->getTermRelations(QubitTaxonomy::GENRE_ID) as $relation)
@@ -140,27 +133,21 @@ class sfModsPlugin implements ArrayAccess
         return $genres;
 
       case 'languageNotes':
-
         return $this->getNoteTexts(QubitTerm::LANGUAGE_NOTE_ID);
 
       case 'alphanumericNotes':
-
         return $this->getMatchingRadNotesByName('Alpha-numeric designations');
 
       case 'generalNotes':
-
         return $this->getNoteTexts(QubitTerm::GENERAL_NOTE_ID);
 
       case 'radGeneralNotes':
-
         return $this->getMatchingRadNotesByName('General note');
 
       case 'hasRightsAccess':
-
         return $this->determineIfResourceHasRightsAct('Display');
 
       case 'hasRightsReplicate':
-
         return $this->determineIfResourceHasRightsAct('Replicate');
     }
   }

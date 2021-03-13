@@ -41,7 +41,6 @@ class arMigration0095
     // Disable this upgrade step since we can now automatically
     // remove missing plugins and set new themes, see #4557
     return true;
-
     // Retrieve QubitSetting object
     $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, 'plugins');

@@ -41,7 +41,6 @@ class QubitRepository extends BaseRepository
     {
       case 'backgroundColor':
       case 'htmlSnippet':
-
         if (!isset($this->values[$name]))
         {
           $criteria = new Criteria();
@@ -62,7 +61,6 @@ class QubitRepository extends BaseRepository
         break;
 
       default:
-
         return call_user_func_array([$this, 'BaseRepository::__get'], $args);
     }
   }
@@ -81,7 +79,6 @@ class QubitRepository extends BaseRepository
     {
       case 'backgroundColor':
       case 'htmlSnippet':
-
         if (!isset($this->values[$name]))
         {
           $criteria = new Criteria();
@@ -105,7 +102,6 @@ class QubitRepository extends BaseRepository
         return $this;
 
       default:
-
         return call_user_func_array([$this, 'BaseRepository::__set'], $args);
     }
   }

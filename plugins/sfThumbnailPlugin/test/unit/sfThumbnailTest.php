@@ -53,7 +53,6 @@ $t->diag('initialization', $adapter);
 
 foreach ($adapters as $adapter)
 {
-
 $t->todo('loadFile() throws an exception when an invalid file is loaded');
 // todo: remove annoying error that results when uncommenting below code
 //  try
@@ -151,5 +150,4 @@ function checkResult($t, $width, $height, $mime)
   $t->is($res_mime, $mime, 'thumbnail has correct mime type');
 
   unlink($result);
-
 }

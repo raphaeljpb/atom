@@ -83,7 +83,6 @@ class atomPluginsTask extends sfBaseTask
 
       default:
         throw new sfException('Missing action');
-
     }
   }
 

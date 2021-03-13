@@ -129,7 +129,6 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
 
         // no break
       default:
-
         return parent::addField($name);
     }
   }

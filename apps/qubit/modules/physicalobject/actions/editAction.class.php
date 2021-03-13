@@ -96,7 +96,6 @@ class PhysicalObjectEditAction extends DefaultEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -114,7 +113,6 @@ class PhysicalObjectEditAction extends DefaultEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

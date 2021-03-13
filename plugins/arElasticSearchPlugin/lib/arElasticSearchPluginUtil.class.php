@@ -572,7 +572,6 @@ class arElasticSearchPluginUtil
       switch ($template)
       {
         case 'isad':
-
           $relations = [
             'isad_archival_history' => 'i18n.%s.archivalHistory',
             'isad_immediate_source' => 'i18n.%s.acquisition',
@@ -593,7 +592,6 @@ class arElasticSearchPluginUtil
           break;
 
         case 'rad':
-
           $relations = [
             'rad_archival_history' => 'i18n.%s.archivalHistory',
             'rad_physical_condition' => 'i18n.%s.physicalCharacteristics',
@@ -611,7 +609,6 @@ class arElasticSearchPluginUtil
             'rad_control_sources' => 'i18n.%s.sources'];
 
           break;
-
         // TODO: Other templates (dacs, dc, isaar, etc)
       }
     }

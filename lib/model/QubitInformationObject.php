@@ -81,7 +81,6 @@ class QubitInformationObject extends BaseInformationObject
       case 'preservationCopyFileName':
       case 'preservationCopyFileSize':
       case 'preservationCopyNormalizedAt':
-
         if (!isset($this->values[$name]))
         {
           $criteria = new Criteria();
@@ -105,7 +104,6 @@ class QubitInformationObject extends BaseInformationObject
       case 'languageOfDescription':
       case 'script':
       case 'scriptOfDescription':
-
         if (!isset($this->values[$name]))
         {
           $criteria = new Criteria();
@@ -126,18 +124,15 @@ class QubitInformationObject extends BaseInformationObject
         return [];
 
       case 'referenceCode':
-
         if (sfConfig::get('app_inherit_code_informationobject'))
         {
           return $this->getInheritedReferenceCode();
         }
 
         return $this->identifier;
-
       // It may happen that the sourceStandard column is undefined, in that case
       // look up for the value in higher levels
       case 'sourceStandard':
-
         foreach ($this->ancestors->andSelf()->orderBy('rgt') as $item)
         {
           if (isset($item->sourceStandard))
@@ -155,7 +150,6 @@ class QubitInformationObject extends BaseInformationObject
         break;
 
       default:
-
         return call_user_func_array([$this, 'BaseInformationObject::__get'], $args);
     }
   }
@@ -176,7 +170,6 @@ class QubitInformationObject extends BaseInformationObject
       case 'languageOfDescription':
       case 'script':
       case 'scriptOfDescription':
-
         if (!isset($this->values[$name]))
         {
           $criteria = new Criteria();
@@ -200,7 +193,6 @@ class QubitInformationObject extends BaseInformationObject
         return $this;
 
       default:
-
         return call_user_func_array([$this, 'BaseInformationObject::__set'], $args);
     }
   }
@@ -643,7 +635,6 @@ class QubitInformationObject extends BaseInformationObject
       unlink($this->pathToEadExport());
       unlink($this->pathToEadExport(true));
     }
-
 
     // Create DC XML exports if the description's published... otherwise delete any that may exist
     if ($this->getPublicationStatus()->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)
@@ -2554,7 +2545,6 @@ class QubitInformationObject extends BaseInformationObject
       switch ($sort)
       {
         case 'identifierTitle':
-
           $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitInformationObject');
 
           $concatCurrent = $current->__get('identifier') ? str_pad($current->__get('identifier'), 12, '0', STR_PAD_RIGHT) : " ";
@@ -2594,7 +2584,6 @@ class QubitInformationObject extends BaseInformationObject
           break;
 
         case 'title':
-
           $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitInformationObject');
 
           $concatCurrent = $current->getTitle(['sourceCulture' => true]);
@@ -2625,7 +2614,6 @@ class QubitInformationObject extends BaseInformationObject
           break;
 
         default:
-
           if ('next' == $position)
           {
             $criteria->add(QubitInformationObject::LFT, $current->lft, Criteria::GREATER_THAN);
@@ -2690,7 +2678,6 @@ class QubitInformationObject extends BaseInformationObject
       {
         case 'identifierTitle':
         case 'title':
-
           // Look for the last sibling
           if (!isset($conditionLimit))
           {
@@ -2735,7 +2722,6 @@ class QubitInformationObject extends BaseInformationObject
           break;
 
         default:
-
           if ('next' == $position)
           {
             if (1 == $this->parent->rgt - $last->rgt)

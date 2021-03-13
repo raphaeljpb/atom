@@ -63,7 +63,6 @@ class InformationObjectEventComponent extends EventEditComponent
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -133,7 +132,6 @@ class InformationObjectEventComponent extends EventEditComponent
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

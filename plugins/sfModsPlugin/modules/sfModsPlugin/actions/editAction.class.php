@@ -97,7 +97,6 @@ class sfModsPluginEditAction extends InformationObjectEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -138,7 +137,6 @@ class sfModsPluginEditAction extends InformationObjectEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

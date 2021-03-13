@@ -568,13 +568,11 @@ class sfWebBrowser
 
     // Decode any content-encoding (gzip or deflate) if needed
     switch (strtolower($this->getResponseHeader('content-encoding'))) {
-
         // Handle gzip encoding
         case 'gzip':
             $text = $this->decodeGzip($text);
 
             break;
-
         // Handle deflate encoding
         case 'deflate':
             $text = $this->decodeDeflate($text);

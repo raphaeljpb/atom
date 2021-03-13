@@ -26,7 +26,6 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     switch ($name)
     {
       case 'slug':
-
         if (!array_key_exists('slug', $this->values))
         {
           $connection = Propel::getConnection(QubitObject::DATABASE_NAME);
@@ -43,7 +42,6 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
         return isset($this->values['slug']);
 
       default:
-
         return call_user_func_array([$this, 'BaseObject::__isset'], $args);
     }
   }
@@ -55,7 +53,6 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     switch ($name)
     {
       case 'slug':
-
         if (!array_key_exists('slug', $this->values))
         {
           $connection = Propel::getConnection(QubitObject::DATABASE_NAME);
@@ -72,7 +69,6 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
         return $this->values['slug'];
 
       default:
-
         return call_user_func_array([$this, 'BaseObject::__get'], $args);
     }
   }
@@ -89,7 +85,6 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
         return $this;
 
       default:
-
         return call_user_func_array([$this, 'BaseObject::__set'], $args);
     }
   }

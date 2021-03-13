@@ -104,7 +104,6 @@ class RightsHolderEditAction extends DefaultEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }

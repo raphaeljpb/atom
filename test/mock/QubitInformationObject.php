@@ -39,7 +39,6 @@ class QubitInformationObject
 
   public static function getBySlug($slug)
   {
-
     if (array_key_exists($slug, self::$slugToIdMap))
     {
       $obj = new self();

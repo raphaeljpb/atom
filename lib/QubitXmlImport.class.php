@@ -197,7 +197,6 @@ class QubitXmlImport
     switch ($importSchema)
     {
       case 'ead':
-
         // just validate EAD import for now until we can get StrictXMLParsing working for all schemas in the self::LoadXML function. Having problems right now loading schemas.
         $importDOM->validate();
 
@@ -210,7 +209,6 @@ class QubitXmlImport
         break;
 
       case 'dc':
-
         // XSD validation for DC
         $schema = sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'xsd'.DIRECTORY_SEPARATOR;
         if ($usedDescriptor == 'oai_dc:dc')
@@ -236,7 +234,6 @@ class QubitXmlImport
         break;
 
       case 'skos':
-
         $criteria = new Criteria();
         $criteria->add(QubitSetting::NAME, 'plugins');
         $setting = QubitSetting::getOne($criteria);

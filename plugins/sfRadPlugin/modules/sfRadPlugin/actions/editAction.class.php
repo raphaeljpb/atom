@@ -195,7 +195,6 @@ class sfRadPluginEditAction extends InformationObjectEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -256,7 +255,6 @@ class sfRadPluginEditAction extends InformationObjectEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

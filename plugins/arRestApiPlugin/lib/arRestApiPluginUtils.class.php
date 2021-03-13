@@ -84,6 +84,5 @@ class arRestApiPluginUtils
     }
 
     return json_encode($data, $options);
-
   }
 }

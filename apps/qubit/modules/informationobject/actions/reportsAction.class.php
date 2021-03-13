@@ -63,7 +63,6 @@ class InformationObjectReportsAction extends sfAction
     switch ($name)
     {
       case 'report':
-
         // Hide if DC or MODS since they don't use such levels of description
         if (!in_array($this->resource->sourceStandard, ['Dublin Core Simple version 1.1', 'MODS version 3.3']))
         {

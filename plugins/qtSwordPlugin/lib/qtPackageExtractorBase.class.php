@@ -96,7 +96,6 @@ class qtPackageExtractorBase
       {
         case 'application/xml':
         case 'text/xml':
-
           break;
 
         case 'application/zip':
@@ -115,9 +114,7 @@ class qtPackageExtractorBase
           break;
 
         default:
-
           throw new Exception('Content type not supported.');
-
       }
     }
   }
@@ -171,23 +168,18 @@ class qtPackageExtractorBase
         // The file is available in the local filesystem where this code is being executed
         // Absolute paths are not accepted, this loader is restricted to a given directory
         case 'file':
-
           $pathinfo = pathinfo($this->location);
           $name = $pathinfo['basename']; // It could be a file or a directory
 
           $this->filename = sfConfig::get('app_sword_deposit_dir', '/tmp').DIRECTORY_SEPARATOR.$name;
 
           break;
-
         // Other locations that we could support in the future
         case 'http':
         case 'https':
         case 'ftp':
-
         default:
-
           throw new Exception("The $matches[1] protocol is not supported yet.");
-
       }
 
       // Ultimate check to make sure the file/directory exists

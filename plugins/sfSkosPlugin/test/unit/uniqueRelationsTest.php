@@ -24,9 +24,7 @@ $t = new lime_test(6, new lime_output_color());
 $t->diag('Initializing configuration.');
 $configuration = ProjectConfiguration::getApplicationConfiguration('qubit', 'test', true);
 
-
 $tests = [
-
   [
     'relations' => [
       [1, 2],
@@ -54,7 +52,6 @@ $tests = [
       [3, 3]
     ]
   ]
-
 ];
 
 foreach ($tests as $item)
@@ -83,8 +80,6 @@ foreach ($tests as $item)
 
   unset($uniquer);
 }
-
-
 
 // Test if sfSkosUniqueRelations is working with the UNESCO Thesaurus
 exit(0);  // DISABLED! You can download the data from: http://vocabularies.unesco.org/exports/thesaurus/latest/unesco-thesaurus.rdf

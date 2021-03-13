@@ -100,7 +100,6 @@ class sfIsaarPluginEditAction extends ActorEditAction
         break;
 
       case 'descriptionIdentifier':
-
         if (sfConfig::get('app_prevent_duplicate_actor_identifiers', false))
         {
           $this->form->setDefault($name, $this->resource[$name]);
@@ -116,7 +115,6 @@ class sfIsaarPluginEditAction extends ActorEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -131,7 +129,6 @@ class sfIsaarPluginEditAction extends ActorEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

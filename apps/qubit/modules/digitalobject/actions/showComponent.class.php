@@ -120,7 +120,6 @@ class DigitalObjectShowComponent extends sfComponent
     switch ($this->resource->mediaTypeId)
     {
       case QubitTerm::IMAGE_ID:
-
         if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceof QubitInformationObject)
         {
           $this->showComponent = 'showCompound';
@@ -147,7 +146,6 @@ class DigitalObjectShowComponent extends sfComponent
         break;
 
       case QubitTerm::TEXT_ID:
-
         if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceof QubitInformationObject)
         {
           $this->showComponent = 'showCompound';

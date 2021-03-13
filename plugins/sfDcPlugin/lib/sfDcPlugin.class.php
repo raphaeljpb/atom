@@ -77,7 +77,6 @@ class sfDcPlugin implements ArrayAccess
         return $creators;
 
       case '_event':
-
         // Because simple Dublin Core cannot qualify the <date/> or <coverage/>
         // elements, we only return a limited set of events: just those that
         // are related to creation/origination
@@ -148,11 +147,9 @@ class sfDcPlugin implements ArrayAccess
         return $format;
 
       case 'identifier':
-
         return $this->resource->referenceCode;
 
       case 'sourceCulture':
-
         return $this->resource->sourceCulture;
 
       case 'subject':

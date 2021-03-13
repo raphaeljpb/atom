@@ -538,7 +538,6 @@ class QubitMigrate
     }
     catch (Exception $e)
     {
-
       $connection->rollback();
 
       throw $e;
@@ -568,7 +567,6 @@ class QubitMigrate
         {
           // Indexes
           case 'KEY':
-
             // Build array with DROP INDEX commands
             if ('(`'.$column.'`),' == $line[2])
             {
@@ -580,10 +578,8 @@ class QubitMigrate
             }
 
             break;
-
           // Foreign keys
           case 'CONSTRAINT':
-
             // Build array with DROP FOREIGN KEY commands
             if ('FOREIGN' == $line[2] && '(`'.$column.'`)' == $line[4])
             {

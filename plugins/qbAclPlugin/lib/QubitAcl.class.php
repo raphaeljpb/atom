@@ -850,7 +850,6 @@ class QubitAcl
                      $user->hasGroup(QubitAclGroup::EDITOR_ID));
 
         break;
-
       // Administrator only
       case 'QubitUser':
       case 'QubitMenu':
@@ -860,7 +859,6 @@ class QubitAcl
         $hasAccess = $user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID);
 
         break;
-
       // Class specific ACL rules
       case 'QubitActor':
         $hasAccess = QubitActorAcl::isAllowed(
@@ -875,7 +873,6 @@ class QubitAcl
         );
 
         break;
-
       // Rely on ACL for authorization
       // TODO Switch *all* authorization to ACL
       default:

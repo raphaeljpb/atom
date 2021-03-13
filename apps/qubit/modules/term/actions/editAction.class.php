@@ -290,7 +290,6 @@ class TermEditAction extends DefaultEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -357,7 +356,6 @@ class TermEditAction extends DefaultEditAction
         break;
 
       case 'name':
-
         if (!QubitTerm::isProtected($this->resource->id)
             && $this->resource->name != $this->form->getValue('name'))
         {
@@ -384,7 +382,6 @@ class TermEditAction extends DefaultEditAction
         break;
 
       case 'narrowTerms':
-
         foreach ($this->form->getValue('narrowTerms') as $item)
         {
           if (1 > strlen($item = trim($item)))
@@ -548,7 +545,6 @@ class TermEditAction extends DefaultEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

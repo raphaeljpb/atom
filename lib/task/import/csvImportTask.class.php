@@ -823,7 +823,6 @@ EOF;
               break;
 
             case 'public domain':
-
               $rightAndRelation = [
                 'restriction' => 1,
                 'basisId' => QubitTerm::RIGHT_BASIS_COPYRIGHT_ID,

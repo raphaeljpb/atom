@@ -104,7 +104,6 @@ class StaticPageEditAction extends DefaultEditAction
 
         // no break
       default:
-
         return parent::addField($name);
     }
   }
@@ -114,7 +113,6 @@ class StaticPageEditAction extends DefaultEditAction
     switch ($field->getName())
     {
       case 'slug':
-
         if (!$this->resource->isProtected())
         {
           $this->resource->slug = $this->form->getValue('slug');
@@ -123,7 +121,6 @@ class StaticPageEditAction extends DefaultEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

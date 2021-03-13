@@ -33,364 +33,282 @@ class QubitTerm extends BaseTerm
     ROOT_ID = 110;
   public const
 
-
     // Event type taxonomy
     CREATION_ID = 111;
   public const
 
-
     CUSTODY_ID = 113;
   public const
-
 
     PUBLICATION_ID = 114;
   public const
 
-
     CONTRIBUTION_ID = 115;
   public const
-
 
     COLLECTION_ID = 117;
   public const
 
-
     ACCUMULATION_ID = 118;
   public const
-
 
     // Note type taxonomy
     TITLE_NOTE_ID = 119;
   public const
 
-
     PUBLICATION_NOTE_ID = 120;
   public const
-
 
     SOURCE_NOTE_ID = 121;
   public const
 
-
     SCOPE_NOTE_ID = 122;
   public const
-
 
     DISPLAY_NOTE_ID = 123;
   public const
 
-
     ARCHIVIST_NOTE_ID = 124;
   public const
-
 
     GENERAL_NOTE_ID = 125;
   public const
 
-
     OTHER_DESCRIPTIVE_DATA_ID = 126;
   public const
 
-
     MAINTENANCE_NOTE_ID = 127;
   public const
-
 
     // Collection type taxonomy
     ARCHIVAL_MATERIAL_ID = 128;
   public const
 
-
     PUBLISHED_MATERIAL_ID = 129;
   public const
 
-
     ARTEFACT_MATERIAL_ID = 130;
   public const
-
 
     // Actor type taxonomy
     CORPORATE_BODY_ID = 131;
   public const
 
-
     PERSON_ID = 132;
   public const
 
-
     FAMILY_ID = 133;
   public const
-
 
     // Other name type taxonomy
     FAMILY_NAME_FIRST_NAME_ID = 134;
   public const
 
-
     // Media type taxonomy
     AUDIO_ID = 135;
   public const
 
-
     IMAGE_ID = 136;
   public const
-
 
     TEXT_ID = 137;
   public const
 
-
     VIDEO_ID = 138;
   public const
 
-
     OTHER_ID = 139;
   public const
-
 
     // Digital object usage taxonomy
     MASTER_ID = 140;
   public const
 
-
     REFERENCE_ID = 141;
   public const
-
 
     THUMBNAIL_ID = 142;
   public const
 
-
     COMPOUND_ID = 143;
   public const
-
 
     // Physical object type taxonomy
     LOCATION_ID = 144;
   public const
 
-
     CONTAINER_ID = 145;
   public const
 
-
     ARTEFACT_ID = 146;
   public const
-
 
     // Relation type taxonomy
     HAS_PHYSICAL_OBJECT_ID = 147;
   public const
 
-
     // Actor name type taxonomy
     PARALLEL_FORM_OF_NAME_ID = 148;
   public const
 
-
     OTHER_FORM_OF_NAME_ID = 149;
   public const
-
 
     // Actor relation type taxonomy
     HIERARCHICAL_RELATION_ID = 150;
   public const
 
-
     TEMPORAL_RELATION_ID = 151;
   public const
-
 
     FAMILY_RELATION_ID = 152;
   public const
 
-
     ASSOCIATIVE_RELATION_ID = 153;
   public const
-
 
     // Actor relation note taxonomy
     RELATION_NOTE_DESCRIPTION_ID = 154;
   public const
 
-
     RELATION_NOTE_DATE_ID = 155;
   public const
-
 
     // Term relation taxonomy
     ALTERNATIVE_LABEL_ID = 156;
   public const
 
-
     TERM_RELATION_ASSOCIATIVE_ID = 157;
   public const
-
 
     // Status type taxonomy
     STATUS_TYPE_PUBLICATION_ID = 158;
   public const
 
-
     // Publication status taxonomy
     PUBLICATION_STATUS_DRAFT_ID = 159;
   public const
 
-
     PUBLICATION_STATUS_PUBLISHED_ID = 160;
   public const
-
 
     // Name access point
     NAME_ACCESS_POINT_ID = 161;
   public const
 
-
     // Function relation type taxonomy
     ISDF_HIERARCHICAL_RELATION_ID = 162;
   public const
 
-
     ISDF_TEMPORAL_RELATION_ID = 163;
   public const
 
-
     ISDF_ASSOCIATIVE_RELATION_ID = 164;
   public const
-
 
     // ISAAR standardized form name
     STANDARDIZED_FORM_OF_NAME_ID = 165;
   public const
 
-
     // Digital object usage taxonomy (addition)
     EXTERNAL_URI_ID = 166;
   public const
-
 
     // Relation types
     ACCESSION_ID = 167;
   public const
 
-
     RIGHT_ID = 168;
   public const
 
-
     DONOR_ID = 169;
   public const
-
 
     // Rights basis
     RIGHT_BASIS_COPYRIGHT_ID = 170;
   public const
 
-
     RIGHT_BASIS_LICENSE_ID = 171;
   public const
-
 
     RIGHT_BASIS_STATUTE_ID = 172;
   public const
 
-
     RIGHT_BASIS_POLICY_ID = 173;
   public const
-
 
     // Language note
     LANGUAGE_NOTE_ID = 174;
   public const
 
-
     // Accrual relation type
     ACCRUAL_ID = 175;
   public const
-
 
     // Relation type
     RELATED_MATERIAL_DESCRIPTIONS_ID = 176;
   public const
 
-
     // Converse term relation
     CONVERSE_TERM_ID = 177;
   public const
-
 
     // AIP relation
     AIP_RELATION_ID = 178;
   public const
 
-
     // AIP types
     ARTWORK_COMPONENT_ID = 179;
   public const
 
-
     ARTWORK_MATERIAL_ID = 180;
   public const
-
 
     SUPPORTING_DOCUMENTATION_ID = 181;
   public const
 
-
     SUPPORTING_TECHNOLOGY_ID = 182;
   public const
-
 
     // Job statuses
     JOB_STATUS_IN_PROGRESS_ID = 183;
   public const
 
-
     JOB_STATUS_COMPLETED_ID = 184;
   public const
 
-
     JOB_STATUS_ERROR_ID = 185;
   public const
-
 
     // Digital object usage taxonomy (addition)
     OFFLINE_ID = 186;
   public const
 
-
     // Relation type taxonomy
     MAINTAINING_REPOSITORY_RELATION_ID = 187;
   public const
 
-
     ACTOR_OCCUPATION_NOTE_ID = 188;
   public const
-
 
     // User action taxonomy
     USER_ACTION_CREATION_ID = 189;
   public const
 
-
     USER_ACTION_MODIFICATION_ID = 190;
   public const
-
 
     // Digital object usage taxonomy (addition)
     EXTERNAL_FILE_ID = 191;
   public const
 
-
     // Accession alternative identifier taxonomy
     ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID = 192;
   public const
 
-
     // Accession event type: physical transfer
     ACCESSION_EVENT_PHYSICAL_TRANSFER_ID = 193;
   public const
-
 
     // Accession event note
     ACCESSION_EVENT_NOTE_ID = 194;
@@ -1091,7 +1009,6 @@ class QubitTerm extends BaseTerm
     switch ($position)
     {
       case 'previous':
-
         $criteria->add('name', '
           COALESCE(
             (CASE
@@ -1108,7 +1025,6 @@ class QubitTerm extends BaseTerm
 
       case 'next':
       default:
-
         $criteria->add('name', '
           COALESCE(
             (CASE

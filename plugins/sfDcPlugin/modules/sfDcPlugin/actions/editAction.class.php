@@ -100,7 +100,6 @@ class sfDcPluginEditAction extends InformationObjectEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -141,7 +140,6 @@ class sfDcPluginEditAction extends InformationObjectEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

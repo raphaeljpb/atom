@@ -194,7 +194,6 @@ class csvActorExport extends QubitFlatfileExport
    */
   private function setPlaceAccessPoints()
   {
-
     $accessPoints = $this->resource->getPlaceAccessPoints();
 
     $data = [];
@@ -218,7 +217,6 @@ class csvActorExport extends QubitFlatfileExport
    */
   private function setSubjectAccessPoints()
   {
-
     $accessPoints = $this->resource->getSubjectAccessPoints();
 
     $data = [];

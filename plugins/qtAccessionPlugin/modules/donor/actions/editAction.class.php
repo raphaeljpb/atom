@@ -104,7 +104,6 @@ class DonorEditAction extends DefaultEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }

@@ -109,7 +109,6 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
       {
         $this->errorSchema = $e;
       }
-
     }
   }
 }

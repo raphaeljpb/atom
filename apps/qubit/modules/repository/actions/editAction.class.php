@@ -240,7 +240,6 @@ class RepositoryEditAction extends DefaultEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -356,7 +355,6 @@ class RepositoryEditAction extends DefaultEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

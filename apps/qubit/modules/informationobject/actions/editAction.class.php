@@ -369,7 +369,6 @@ class InformationObjectEditAction extends DefaultEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -504,7 +503,6 @@ class InformationObjectEditAction extends DefaultEditAction
         break;
 
       case 'displayStandard':
-
         // Use null when the user wants to inherit the global setting
         if (null === $displayStandardId = $this->form->getValue('displayStandard'))
         {
@@ -543,7 +541,6 @@ class InformationObjectEditAction extends DefaultEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

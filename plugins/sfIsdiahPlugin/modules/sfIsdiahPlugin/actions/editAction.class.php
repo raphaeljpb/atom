@@ -96,7 +96,6 @@ class sfIsdiahPluginEditAction extends RepositoryEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -111,7 +110,6 @@ class sfIsdiahPluginEditAction extends RepositoryEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

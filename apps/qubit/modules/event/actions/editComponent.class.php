@@ -151,7 +151,6 @@ class EventEditComponent extends sfComponent
         break;
 
       case 'type':
-
         // Event types, Dublin Core is restricted
         $eventTypes = QubitTaxonomy::getTermsById(QubitTaxonomy::EVENT_TYPE_ID);
         if ('sfDcPlugin' == $this->request->module)

@@ -59,7 +59,6 @@ class QubitActor extends BaseActor
     {
       case 'language':
       case 'script':
-
         if (!isset($this->values[$name]))
         {
           $criteria = new Criteria();
@@ -97,7 +96,6 @@ class QubitActor extends BaseActor
     {
       case 'language':
       case 'script':
-
         if (!isset($this->values[$name]))
         {
           $criteria = new Criteria();

@@ -73,7 +73,6 @@ class AclGroupEditDefaultAclAction extends sfAction
           switch ($resource->className)
           {
             case 'QubitRepository':
-
               // Coming from editInformationObjectAcl class, add permissions to the
               // repository information objects
               if (false !== strrpos($this->request->getReferer(), 'editInformationObjectAcl'))

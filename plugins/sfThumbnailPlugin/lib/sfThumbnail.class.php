@@ -118,7 +118,6 @@ class sfThumbnail
       }
     }
 
-
     $this->adapter->loadFile($this, $image);
   }
 

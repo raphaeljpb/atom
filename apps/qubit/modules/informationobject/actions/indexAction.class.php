@@ -111,7 +111,6 @@ class InformationObjectIndexAction extends sfAction
 
                 // no break
               case 'Fonds':
-
                 // Collection may not be a descendant of fonds
                 $forbiddenValues[] = 'Fonds';
                 $forbiddenValues[] = 'Collection';
@@ -119,7 +118,6 @@ class InformationObjectIndexAction extends sfAction
                 break;
 
               case 'Collection':
-
                 // Neither fonds nor subfonds may be descendants of collection
                 $forbiddenValues[] = 'Subfonds';
                 $forbiddenValues[] = 'Fonds';

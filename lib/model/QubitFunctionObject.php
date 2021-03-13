@@ -44,7 +44,6 @@ class QubitFunctionObject extends BaseFunctionObject
     {
       case 'language':
       case 'script':
-
         if (!isset($this->values[$name]))
         {
           $criteria = new Criteria();
@@ -82,7 +81,6 @@ class QubitFunctionObject extends BaseFunctionObject
     {
       case 'language':
       case 'script':
-
         if (!isset($this->values[$name]))
         {
           $criteria = new Criteria();

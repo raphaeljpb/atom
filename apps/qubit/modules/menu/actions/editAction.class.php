@@ -126,7 +126,6 @@ class MenuEditAction extends sfAction
         break;
 
       case 'parentId':
-
         // Get menuTree array with menu depths
         $menuTree = QubitMenu::getTreeById(QubitMenu::ROOT_ID);
 
@@ -161,7 +160,6 @@ class MenuEditAction extends sfAction
     switch ($name = $field->getName())
     {
       case 'parentId':
-
         if (null == $this->menu['parentId'] = $this->form->getValue('parentId'))
         {
           $this->menu['parentId'] = QubitMenu::ROOT_ID;

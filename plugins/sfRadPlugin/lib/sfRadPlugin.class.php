@@ -80,21 +80,16 @@ class sfRadPlugin implements ArrayAccess
       case 'statementOfScaleCartographic':
       case 'titleStatementOfResponsibility':
       case 'titleProperOfPublishersSeries':
-
         return $this->property($name)->__get('value', $options);
 
       case 'referenceCode':
-
         return $this->resource->referenceCode;
 
       case 'sourceCulture':
-
         return $this->resource->sourceCulture;
 
       case 'languageNotes':
-
         return $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
-
     }
   }
 
@@ -117,13 +112,11 @@ class sfRadPlugin implements ArrayAccess
       case 'statementOfScaleCartographic':
       case 'titleProperOfPublishersSeries':
       case 'titleStatementOfResponsibility':
-
         $this->property($name)->value = $value;
 
         return $this;
 
       case 'languageNotes':
-
         $note = $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
         $missingNote = count($note) === 0;
 

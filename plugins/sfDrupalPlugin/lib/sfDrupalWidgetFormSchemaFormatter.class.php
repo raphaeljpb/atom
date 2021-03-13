@@ -1,7 +1,5 @@
 <?php
 
-
-
 class sfDrupalWidgetFormSchemaFormatter extends sfWidgetFormSchemaFormatter
 {
   // Heredocs cannot be used to initialize class members,

@@ -115,7 +115,6 @@ class sfIsadPluginEventComponent extends InformationObjectEventComponent
     switch ($name)
     {
       case 'type':
-
         if ('arDacsPlugin' == $this->request->module)
         {
           $eventTypes = arDacsPlugin::eventTypes();
@@ -142,7 +141,6 @@ class sfIsadPluginEventComponent extends InformationObjectEventComponent
         break;
 
       default:
-
         return parent::addField($name);
     }
   }

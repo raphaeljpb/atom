@@ -152,7 +152,6 @@ class arElasticSearchPlugin extends QubitSearchEngine
     }
     catch (Exception $e)
     {
-
     }
 
     $this->initialize();

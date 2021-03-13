@@ -146,7 +146,6 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
           case 'Collection':
           case 'Subseries':
           case 'Subfonds':
-
             $validatorSchema->scopeAndContent = new sfValidatorString([
               'required' => true], [
               'required' => $this->context->i18n->__('Scope and content - This is a mandatory element.')]);
@@ -155,7 +154,6 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
             break;
 
           case 'Item':
-
             // No publication events?
             $isPublication = false;
             foreach ($this->resource->eventsRelatedByobjectId as $item)

@@ -172,7 +172,6 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
           'endDateSort' => 'desc']);
 
         break;
-
       // Avoid sorting when we are just counting records
       case null:
         break;

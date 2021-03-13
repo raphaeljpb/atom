@@ -60,15 +60,12 @@ class sfIsadPlugin implements ArrayAccess
     switch ($name)
     {
       case 'languageNotes':
-
         return $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
 
       case 'referenceCode':
-
         return $this->resource->referenceCode;
 
       case 'sourceCulture':
-
         return $this->resource->sourceCulture;
     }
   }
@@ -78,7 +75,6 @@ class sfIsadPlugin implements ArrayAccess
     switch ($name)
     {
       case 'languageNotes':
-
         $note = $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
         $missingNote = count($note) === 0;
 

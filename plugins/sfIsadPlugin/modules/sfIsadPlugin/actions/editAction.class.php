@@ -138,7 +138,6 @@ class sfIsadPluginEditAction extends InformationObjectEditAction
         break;
 
       case 'languageNotes':
-
         $this->form->setDefault('languageNotes', $this->isad['languageNotes']);
         $this->form->setValidator('languageNotes', new sfValidatorString());
         $this->form->setWidget('languageNotes', new sfWidgetFormTextarea());
@@ -146,7 +145,6 @@ class sfIsadPluginEditAction extends InformationObjectEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -201,13 +199,11 @@ class sfIsadPluginEditAction extends InformationObjectEditAction
         break;
 
       case 'languageNotes':
-
         $this->isad['languageNotes'] = $this->form->getValue('languageNotes');
 
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

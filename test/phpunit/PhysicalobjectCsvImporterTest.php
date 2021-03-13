@@ -11,7 +11,6 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
   protected $vfs;               // virtual filesystem
   protected $vdbcon;            // virtual database connection
 
-
   /**************************************************************************
    * Fixtures
    **************************************************************************/

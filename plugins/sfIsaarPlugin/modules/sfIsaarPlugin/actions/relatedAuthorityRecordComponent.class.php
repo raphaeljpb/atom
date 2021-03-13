@@ -78,7 +78,6 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -88,7 +87,6 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
     switch ($field->getName())
     {
       case 'resource':
-
         // Update the object of the relation, unless the current resource is
         // the object
         if ($this->resource->id != $this->relation->objectId)
@@ -134,7 +132,6 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

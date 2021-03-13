@@ -23,7 +23,6 @@ class sfEacPlugin implements ArrayAccess
 
   // Arrays not allowed in class constants
   protected static $from6392 = [
-
       // :r !curl http://loc.gov/standards/iso639-2/ISO-639-2_utf-8.txt
       // 2>/dev/null | sed -n "s/\([^|]\+\)|[^|]*|\([^|]\+\)|\([^|]*\).*/'\1'
       // => '\2', \/\/ \3/p"
@@ -224,23 +223,18 @@ class sfEacPlugin implements ArrayAccess
     switch ($name)
     {
       case 'biogHist':
-
         return self::toDiscursiveSet($this->resource->history);
 
       case 'entityType':
-
         switch ($this->resource->entityTypeId)
         {
           case QubitTerm::CORPORATE_BODY_ID:
-
             return 'corporateBody';
 
           case QubitTerm::FAMILY_ID:
-
             return 'family';
 
           case QubitTerm::PERSON_ID:
-
             return 'person';
         }
 
@@ -257,7 +251,6 @@ class sfEacPlugin implements ArrayAccess
         return;
 
       case 'generalContext':
-
         return self::toDiscursiveSet($this->resource->generalContext);
 
       case 'maintenanceHistory':
@@ -287,29 +280,23 @@ class sfEacPlugin implements ArrayAccess
 return;
 
       case 'maintenanceStatus':
-
         switch (strtolower($this->resource->descriptionStatus))
         {
           case 'draft':
-
             return 'new';
 
           case 'revised':
-
             return 'revised';
 
           case 'final':
-
             return 'deleted';
 
           default:
-
             return 'new';
         }
 
         // no break
       case 'publicationStatus':
-
         return 'approved';
 
       case 'resourceRelation':
@@ -331,7 +318,6 @@ return;
         return QubitRelation::get($criteria);
 
       case 'structureOrGenealogy':
-
         return self::toDiscursiveSet($this->resource->internalStructures);
 
       case 'subjectOf':
@@ -353,7 +339,6 @@ return;
         return $this;
 
       case 'entityType':
-
         switch ($value)
         {
           case 'corporateBody':
@@ -375,7 +360,6 @@ return;
         return $this;
 
       case 'existDates':
-
         // TODO <date/>, <dateRange/>, <dateSet/>, <descriptiveNote/>
         $this->resource->datesOfExistence = trim($value->text());
 
@@ -387,7 +371,6 @@ return;
         return $this;
 
       case 'maintenanceHistory':
-
         // TODO <maintenanceEvent/>, <agent/>, <agentType/>
 
         $criteria = new Criteria();
@@ -411,7 +394,6 @@ return;
         return $this;
 
       case 'maintenanceStatus':
-
         $descriptionStatusMap = [];
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DESCRIPTION_STATUS_ID) as $item)
         {
@@ -438,7 +420,6 @@ return;
         return $this;
 
       case 'publicationStatus':
-
         // TODO
         return $this;
 
@@ -448,7 +429,6 @@ return;
         return $this;
 
       case 'descriptionDetail':
-
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID) as $item)
         {
           if($item == trim($value))
@@ -886,27 +866,22 @@ return;
     switch ($value)
     {
       case 'associative':
-
         return QubitTerm::ASSOCIATIVE_RELATION_ID;
 
       case 'family':
-
         return QubitTerm::FAMILY_RELATION_ID;
 
       case 'hierarchical':
       case 'hierarchical-child':
       case 'hierarchical-parent':
-
         return QubitTerm::HIERARCHICAL_RELATION_ID;
 
       case 'identity':
-
         return;
 
       case 'temporal':
       case 'temporal-earlier':
       case 'temporal-later':
-
         return QubitTerm::TEMPORAL_RELATION_ID;
     }
   }
@@ -916,19 +891,15 @@ return;
     switch ($value)
     {
       case QubitTerm::ASSOCIATIVE_RELATION_ID:
-
         return 'associative';
 
       case QubitTerm::FAMILY_RELATION_ID:
-
         return 'family';
 
       case QubitTerm::HIERARCHICAL_RELATION_ID:
-
         return 'hierarchical';
 
       case QubitTerm::TEMPORAL_RELATION_ID:
-
         return 'temporal';
 
       default:
@@ -963,11 +934,9 @@ return;
     switch ($resourceRelationType)
     {
       case 'creatorOf':
-
         return QubitTerm::CREATION_ID;
 
       case 'other':
-
         if (!isset($this->eventTypes))
         {
           $this->eventTypes = QubitTaxonomy::getTermsById(QubitTaxonomy::EVENT_TYPE_ID);
@@ -1004,7 +973,6 @@ return;
 
         // no break
       case 'subjectOf':
-
         return;
     }
   }
@@ -1014,11 +982,9 @@ return;
     switch ($type->id)
     {
       case QubitTerm::CREATION_ID:
-
         return 'resourceRelationType="creatorOf"';
 
       default:
-
         return 'resourceRelationType="other" xlink:role="'.$type.'"';
     }
   }

@@ -52,7 +52,6 @@ EOF;
 
     foreach($filenames as $filename)
     {
-
       if (false === $fh = fopen($filename, 'rb'))
       {
         throw new sfException('You must specify a valid filename');

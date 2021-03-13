@@ -311,7 +311,6 @@ class sfImageMagickAdapter
       case 'custom':
         $coords = $this->options['coords'];
         if (empty($coords)) break;
-
         $x = $coords['x1'];
         $y = $coords['y1'];
         $width = $coords['x2'] - $coords['x1'];

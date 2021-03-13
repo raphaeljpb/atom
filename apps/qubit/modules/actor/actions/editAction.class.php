@@ -189,7 +189,6 @@ class ActorEditAction extends DefaultEditAction
           break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -283,7 +282,6 @@ class ActorEditAction extends DefaultEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

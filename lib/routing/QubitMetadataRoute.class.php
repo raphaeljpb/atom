@@ -196,7 +196,6 @@ class QubitMetadataRoute extends QubitRoute
           break;
 
         default:
-
           return false;
       }
     }
@@ -222,7 +221,6 @@ class QubitMetadataRoute extends QubitRoute
           $parameters['module'] = self::$DEFAULT_MODULES[$module];
 
           break;
-
       }
     }
 

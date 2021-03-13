@@ -43,7 +43,6 @@ class sfIsdfPlugin implements ArrayAccess
     switch ($name)
     {
       case '_maintenanceNote':
-
         if (!isset($this->maintenanceNote))
         {
           $criteria = new Criteria();
@@ -66,11 +65,9 @@ class sfIsdfPlugin implements ArrayAccess
         return $this->maintenanceNote;
 
       case 'maintenanceNotes':
-
         return $this->_maintenanceNote->__get('content', $options);
 
       case 'relatedAuthorityRecord':
-
         if (!isset($this->relatedAuthorityRecord))
         {
           $criteria = new Criteria();
@@ -83,7 +80,6 @@ class sfIsdfPlugin implements ArrayAccess
         return $this->relatedAuthorityRecord;
 
       case 'relatedFunction':
-
         if (!isset($this->relatedFunction))
         {
           $criteria = new Criteria();
@@ -101,7 +97,6 @@ class sfIsdfPlugin implements ArrayAccess
         return $this->relatedFunction;
 
       case 'relatedResource':
-
         if (!isset($this->relatedResource))
         {
           $criteria = new Criteria();
@@ -114,7 +109,6 @@ class sfIsdfPlugin implements ArrayAccess
         return $this->relatedResource;
 
       case 'sourceCulture':
-
         return $this->resource->sourceCulture;
     }
   }

@@ -108,7 +108,6 @@ class UserPasswordEditAction extends DefaultEditAction
         break;
 
       case 'password':
-
         if (0 < strlen(trim($this->form->getValue('password'))))
         {
           $this->resource->setPassword($this->form->getValue('password'));

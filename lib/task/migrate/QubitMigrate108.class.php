@@ -55,7 +55,6 @@ class QubitMigrate108 extends QubitMigrate
 
         // no break
       case 3:
-
         // Enable new plugins
         $plugins = ['sfDcPlugin', 'sfEadPlugin', 'sfIsadPlugin', 'sfModsPlugin', 'sfRadPlugin'];
 
@@ -94,7 +93,6 @@ class QubitMigrate108 extends QubitMigrate
 
         // no break
       case 6:
-
         // Enable classic theme
         $plugins = ['sfClassicPlugin'];
 

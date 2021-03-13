@@ -48,7 +48,6 @@ class sfIsaarPluginEventComponent extends EventEditComponent
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -71,7 +70,6 @@ class sfIsaarPluginEventComponent extends EventEditComponent
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

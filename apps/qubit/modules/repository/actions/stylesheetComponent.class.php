@@ -41,7 +41,6 @@ class RepositoryStylesheetComponent extends sfComponent
         break;
 
       default:
-
         return sfView::NONE;
     }
 

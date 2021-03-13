@@ -112,7 +112,6 @@ class QubitMigrate109 extends QubitMigrate
 
         // no break
       case 54:
-
         // Replace "permalink" property with "slug"
         foreach ($this->data['QubitStaticPage'] as $key => $value)
         {
@@ -130,7 +129,6 @@ class QubitMigrate109 extends QubitMigrate
 
         // no break
       case 55:
-
         // Update "home" and "about" links
         foreach ($this->data['QubitMenu'] as $key => $value)
         {
@@ -150,7 +148,6 @@ class QubitMigrate109 extends QubitMigrate
 
         // no break
       case 56:
-
         foreach ($this->data['QubitMenu'] as $key => $value)
         {
           if (isset($value['path']))
@@ -161,7 +158,6 @@ class QubitMigrate109 extends QubitMigrate
 
         // no break
       case 57:
-
         // Update tab links in user module
         foreach ($this->data['QubitMenu'] as $key => $value)
         {
@@ -191,7 +187,6 @@ class QubitMigrate109 extends QubitMigrate
 
         // no break
       case 58:
-
         if (isset($this->data['QubitEvent']))
         {
           foreach ($this->data['QubitEvent'] as $key => $value)
@@ -207,7 +202,6 @@ class QubitMigrate109 extends QubitMigrate
 
         // no break
       case 59:
-
         if (isset($this->data['QubitEvent']))
         {
           foreach ($this->data['QubitEvent'] as $key => $value)
@@ -242,7 +236,6 @@ class QubitMigrate109 extends QubitMigrate
 
         // no break
       case 60:
-
         if (isset($ths->data['QubitEvent']))
         {
           foreach ($this->data['QubitEvent'] as $key => $value)

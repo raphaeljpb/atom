@@ -62,7 +62,6 @@ class QubitCsvTransformFactory
     $tempCsvFile = sys_get_temp_dir().'/'.$this->machineName.'_stage1.csv';
 
     return new QubitCsvTransform([
-
       'options' => $this->cliOptions,
 
       'status' => [
@@ -115,7 +114,6 @@ class QubitCsvTransformFactory
         if (!$fhIn) throw new sfException('Error reading '.$self->status['tempFile'].'.');
 
         $stage2 = new QubitCsvTransform([
-
           'skipOptionsAndEnvironmentCheck' => true,
 
           'status' => [

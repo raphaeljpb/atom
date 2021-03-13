@@ -202,7 +202,6 @@ class UserEditAction extends DefaultEditAction
           $this->form->setDefault('active', true);
         }
 
-
         $this->form->setValidator('active', new sfValidatorBoolean());
         $this->form->setWidget('active', new sfWidgetFormInputCheckbox());
 
@@ -296,7 +295,6 @@ class UserEditAction extends DefaultEditAction
     switch ($name = $field->getName())
     {
       case 'password':
-
         if (0 < strlen(trim($this->form->getValue('password'))))
         {
           $this->resource->setPassword($this->form->getValue('password'));

@@ -1,7 +1,5 @@
 <?php
 
-
-
 class sfIsaarPlugin implements ArrayAccess
 {
   protected $resource;
@@ -25,7 +23,6 @@ class sfIsaarPlugin implements ArrayAccess
     switch ($name)
     {
       case '_maintenanceNote':
-
         if (!isset($this->maintenanceNote))
         {
           $criteria = new Criteria();
@@ -48,11 +45,9 @@ class sfIsaarPlugin implements ArrayAccess
         return $this->maintenanceNote;
 
       case 'maintenanceNotes':
-
         return $this->_maintenanceNote->__get('content', $options);
 
       case 'sourceCulture':
-
         return $this->resource->sourceCulture;
     }
   }

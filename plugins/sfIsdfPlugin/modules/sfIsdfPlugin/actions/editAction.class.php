@@ -132,7 +132,6 @@ class sfIsdfPluginEditAction extends FunctionEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -165,7 +164,6 @@ class sfIsdfPluginEditAction extends FunctionEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

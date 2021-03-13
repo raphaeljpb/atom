@@ -66,7 +66,6 @@ EOF;
 
       if (!$resource)
         continue;
-
       foreach ($resource->descendants->andSelf()->orderBy('rgt') as $item)
       {
         try

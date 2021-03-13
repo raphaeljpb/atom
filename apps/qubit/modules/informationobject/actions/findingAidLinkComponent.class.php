@@ -49,7 +49,6 @@ class InformationObjectFindingAidLinkComponent extends sfComponent
         $this->label = $i18n->__('Uploaded finding aid');
 
         break;
-
       // It should never get here if we don't add more finding aid statuses
       default:
         $this->label = $i18n->__('Finding aid');

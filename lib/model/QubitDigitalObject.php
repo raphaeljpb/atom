@@ -32,11 +32,9 @@ class QubitDigitalObject extends BaseDigitalObject
     GENERIC_ICON_DIR = 'generic-icons';
   public const
 
-
     // Mime-type for thumbnails (including reference image)
     THUMB_MIME_TYPE = 'image/jpeg';
   public const
-
 
     THUMB_EXTENSION = 'jpg';
 
@@ -51,7 +49,6 @@ class QubitDigitalObject extends BaseDigitalObject
    * http://gallery.menalto.com
    */
   public static $qubitMimeTypes = [
-
       /* This data was lifted from Apache's mime.types listing. */
       '123' => 'application/vnd.lotus-1-2-3',
       '3dml' => 'text/vnd.in3d.3dml',
@@ -1101,7 +1098,6 @@ class QubitDigitalObject extends BaseDigitalObject
     switch ($name)
     {
       case 'thumbnail':
-
         if (!isset($this->values['thumbnail']))
         {
           $criteria = new Criteria();
@@ -1114,7 +1110,6 @@ class QubitDigitalObject extends BaseDigitalObject
         return $this->values['thumbnail'];
 
       case 'reference':
-
         if (!isset($this->values['reference']))
         {
           $criteria = new Criteria();

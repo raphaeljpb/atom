@@ -96,7 +96,6 @@ class i18nRectifyTask extends sfBaseTask
     ]);
 
     $this->addOptions([
-
       // http://trac.symfony-project.org/ticket/8352
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', true),
     ]);

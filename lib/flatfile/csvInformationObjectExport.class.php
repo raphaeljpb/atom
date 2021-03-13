@@ -346,7 +346,6 @@ class csvInformationObjectExport extends QubitFlatfileExport
    */
   protected function getPlaceAccessPoints()
   {
-
     $accessPoints = $this->resource->getPlaceAccessPoints();
 
     $data = [];
@@ -370,7 +369,6 @@ class csvInformationObjectExport extends QubitFlatfileExport
    */
   protected function getSubjectAccessPoints()
   {
-
     $accessPoints = $this->resource->getSubjectAccessPoints();
 
     $data = [];

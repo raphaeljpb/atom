@@ -48,7 +48,6 @@ class SettingsDigitalObjectDerivativesAction extends SettingsEditAction
         break;
 
       case 'reference_image_maxwidth':
-
         $this->form->setValidator($name, new sfValidatorInteger(
           ['min' => self::$refImageMaxWidthMin, 'max' => self::$refImageMaxWidthMax],
           ['min' => $this->i18n->__('This value must be at least %min% pixels'), 'max' => $this->i18n->__('This value can not be greater than %max% pixels')]

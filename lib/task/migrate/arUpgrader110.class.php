@@ -431,7 +431,6 @@ class arUpgrader110
         }
 
         break;
-
       // Migrate relation notes for date and description to relation_i18n table
       case 63:
         $sql = sprintf('SELECT id FROM note WHERE note.type_id IN (%s, %s)',
@@ -472,7 +471,6 @@ class arUpgrader110
         }
 
         break;
-
       // Prior to r9340 all checksums were md5 and the algorithm was not
       // recorded, update checksum_type column
       case 64:
@@ -482,7 +480,6 @@ class arUpgrader110
         QubitPdo::modify($sql);
 
         break;
-
       // Add importCsv menu node, see also r9373
       case 65:
         $node = new QubitMenu();
@@ -493,7 +490,6 @@ class arUpgrader110
         $node->save();
 
         break;
-
       // Add global replace menu node
       case 66:
         $node = new QubitMenu();
@@ -504,7 +500,6 @@ class arUpgrader110
         $node->save();
 
         break;
-
       // Add setting for repository upload quota
       case 67:
         $setting = new QubitSetting();
@@ -514,7 +509,6 @@ class arUpgrader110
         $setting->save();
 
         break;
-
       // Add separator character setting
       case 68:
         $setting = new QubitSetting();
@@ -524,7 +518,6 @@ class arUpgrader110
         $setting->save();
 
         break;
-
       // Add themes menu and update plugins menu path
       case 69:
         $node = new QubitMenu();
@@ -561,7 +554,6 @@ class arUpgrader110
         $node->save();
 
         break;
-
       // Move digital objects to repository specific paths like r9503
       case 70:
         if (!file_exists(sfConfig::get('sf_upload_dir').'/r'))
@@ -661,14 +653,12 @@ class arUpgrader110
         }
 
         break;
-
       // Add default value for repository.upload_limit column
       case 71:
         $sql = 'UPDATE '.QubitRepository::TABLE_NAME.' SET upload_limit = -1';
         QubitPdo::modify($sql);
 
         break;
-
       // Add physical object menu
       case 72:
         $node = new QubitMenu();
@@ -700,7 +690,6 @@ class arUpgrader110
         }
 
         break;
-
       // Migrate to sfCaribou theme to users that are currently using sfClassic
       case 73:
         if (null !== $setting = QubitSetting::getByName('plugins'))
@@ -725,7 +714,6 @@ class arUpgrader110
         }
 
         break;
-
       // Ensure all information objects get an explicit publication status
       case 74:
         $sql = '
@@ -761,10 +749,8 @@ class arUpgrader110
         }
 
         break;
-
       // Return false if no upgrade available
       default:
-
         return false;
     }
 

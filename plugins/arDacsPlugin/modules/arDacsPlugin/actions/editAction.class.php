@@ -138,7 +138,6 @@ class arDacsPluginEditAction extends InformationObjectEditAction
         break;
 
       default:
-
         return parent::addField($name);
     }
   }
@@ -188,7 +187,6 @@ class arDacsPluginEditAction extends InformationObjectEditAction
         break;
 
       default:
-
         return parent::processField($field);
     }
   }

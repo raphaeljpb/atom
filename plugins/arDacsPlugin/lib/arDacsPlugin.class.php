@@ -35,13 +35,11 @@ class arDacsPlugin extends sfIsadPlugin
     switch ($name)
     {
       case 'technicalAccess':
-
         return $this->property('technicalAccess')->__get('value', $options);
 
         break;
 
       default:
-
         return parent::__get($name);
     }
   }
@@ -51,13 +49,11 @@ class arDacsPlugin extends sfIsadPlugin
     switch ($name)
     {
       case 'technicalAccess':
-
         $this->property('technicalAccess')->value = $value;
 
         return $this;
 
       default:
-
         parent::__set($name, $value);
 
         return $this;
