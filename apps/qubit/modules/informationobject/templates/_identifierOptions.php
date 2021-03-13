@@ -1,11 +1,11 @@
 <div class="section">
-  <?php if (empty($hideAltIdButton)) { // Some templates don't have alternative identifiers ?>
+  <?php if (empty($hideAltIdButton)) { ?>
     <a href="#" class="identifier-action" id="alternative-identifiers">
       <?php echo __('Add alternative identifier(s)'); ?>
     </a>
   <?php } ?>
 
-  <?php if (empty($hideGenerateButton)) { // Some AtoM data types don't support ID generation ?>
+  <?php if (empty($hideGenerateButton)) { ?>
     <a href="#" class="identifier-action" id="generate-identifier"
       data-generate-identifier-url="<?php echo url_for(['module' => 'informationobject', 'action' => 'generateIdentifier']); ?>">
       <?php echo __('Generate identifier'); ?>

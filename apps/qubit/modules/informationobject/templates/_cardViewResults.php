@@ -23,13 +23,13 @@
             ['alt' => isset($doc['digitalObject']['digitalObjectAltText']) ? $doc['digitalObject']['digitalObjectAltText'] : truncate_text(strip_markdown($title), 100)]),
             ['module' => 'informationobject', 'slug' => $doc['slug']]); ?>
 
-        <?php } elseif (isset($doc['digitalObject']) && !empty($doc['digitalObject']['mediaTypeId'])){ // Show generic icon since no thumbnail present ?>
+        <?php } elseif (isset($doc['digitalObject']) && !empty($doc['digitalObject']['mediaTypeId'])){ ?>
 
           <?php echo link_to(image_tag(QubitDigitalObject::getGenericIconPathByMediaTypeId($doc['digitalObject']['mediaTypeId']),
             ['alt' => isset($doc['digitalObject']['digitalObjectAltText']) ? $doc['digitalObject']['digitalObjectAltText'] : truncate_text(strip_markdown($title), 100)]),
             ['module' => 'informationobject', 'slug' => $doc['slug']]); ?>
 
-        <?php } else { // No digital object, just display description title ?>
+        <?php } else { ?>
 
           <h5><?php echo render_title($title); ?></h5>
 

@@ -34,7 +34,7 @@
       <div class="alert alert-warning">
         <?php echo __('Cannot calculate accumulated dates because no lower level dates exist'); ?>
       </div>
-    <?php } // no $descendantEventTypes ?>
+    <?php } ?>
 
     </div>
 

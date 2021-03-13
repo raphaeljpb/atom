@@ -89,7 +89,7 @@
 
   <?php foreach ($$resourceVar->getDates() as $date) { ?>
     <unitdate <?php if (null !== $date->getActor() || null !== $date->getPlace()) { ?> <?php echo 'id="atom_'.$date->id.'_event"'; ?> <?php } ?> <?php if (QubitTerm::CREATION_ID != $date->typeId) { ?><?php if ($type = $date->getType()->__toString()) { ?><?php echo 'datechar="'.strtolower($type).'" '; ?><?php } ?><?php } else { ?><?php $type = null; ?><?php } ?><?php if ($startdate = $date->getStartDate()) { ?><?php echo 'normal="'; ?><?php echo Qubit::renderDate($startdate); ?><?php if (0 < strlen($enddate = $date->getEndDate())) { ?><?php echo '/'; ?><?php echo Qubit::renderDate($enddate); ?><?php } ?><?php echo '"'; ?><?php } ?> <?php if (0 < strlen($encoding = $ead->getMetadataParameter('unitdate'.strtolower($type)))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } elseif (0 < strlen($encoding = $ead->getMetadataParameter('unitdateDefault'))){ ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?>><?php echo escape_dc(esc_specialchars(Qubit::renderDateStartEnd($date->getDate(['cultureFallback' => true]), $date->startDate, $date->endDate))); ?></unitdate>
-  <?php } // dates ?>
+  <?php } ?>
 
   <?php if (0 < strlen($value = $$resourceVar->getExtentAndMedium(['cultureFallback' => true]))) { ?>
     <physdesc <?php if (0 < strlen($encoding = $ead->getMetadataParameter('extent'))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?>>

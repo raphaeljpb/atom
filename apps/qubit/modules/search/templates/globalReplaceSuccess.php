@@ -26,9 +26,3 @@
   </div>
 
 <?php } ?>
-
-<?php if (isset($pager) && !isset($form->confirm)) { ?>
-
-  <?php // echo get_partial('search/searchResults', array('pager' => $pager, 'timer' => $timer, 'culture' => $sf_user->getCulture())) ?>
-
-<?php } ?>

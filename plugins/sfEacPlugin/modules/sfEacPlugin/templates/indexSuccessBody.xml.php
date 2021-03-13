@@ -167,8 +167,6 @@
           </mandate>
         <?php } ?>
 
-        <?php // The following $eac->* properties are magic and will always be set: ?>
-
         <?php if ($eac->structureOrGenealogy) { ?>
           <structureOrGenealogy><?php echo $eac->structureOrGenealogy; ?></structureOrGenealogy>
         <?php } ?>

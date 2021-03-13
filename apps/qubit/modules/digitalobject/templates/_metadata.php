@@ -57,7 +57,7 @@
               <?php include_partial(
                 'arStorageService/aipDownload', ['resource' => $resource]
               ); ?>
-            <?php } else { // arStorageService is disabled ?>
+            <?php } else { ?>
               <?php echo render_show(
                 __('File UUID'),
                 render_value($resource->object->objectUUID),
@@ -68,7 +68,7 @@
                 render_value($resource->object->aipUUID),
                 ['fieldLabel' => 'aipUUID']
               ); ?>
-            <?php } // arStorageService is disabled ?>
+            <?php } ?>
           <?php } ?>
 
         </div>
