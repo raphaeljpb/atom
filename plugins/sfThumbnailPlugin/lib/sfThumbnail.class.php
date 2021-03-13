@@ -127,8 +127,7 @@ class sfThumbnail
    * @param string the image string (must be a format accepted by imagecreatefromstring())
    * @param string mime type of the image
    *
-   * @return boolean True if the image was properly loaded
-   * @access public
+   * @return boolean   True if the image was properly loaded
    * @throws Exception If image mime type is not supported
    */
   public function loadData($image, $mime)
@@ -143,7 +142,6 @@ class sfThumbnail
    * @param string the image thumbnail file destination (with absolute path)
    * @param string The mime-type of the thumbnail (possible values are 'image/jpeg', 'image/png', and 'image/gif')
    *
-   * @access public
    * @return void
    */
   public function save($thumbDest, $targetMime = null)
@@ -158,7 +156,6 @@ class sfThumbnail
    *
    * @param string The mime-type of the thumbnail (possible values are adapter dependent)
    *
-   * @access public
    * @return string
    */
   public function toString($targetMime = null)
