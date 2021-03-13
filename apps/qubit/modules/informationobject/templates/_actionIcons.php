@@ -26,7 +26,7 @@
     <?php endif; ?>
 
     <li>
-      <?php if (isset($resource) && sfConfig::get('app_enable_institutional_scoping') && $sf_user->hasAttribute('search-realm') ): ?>
+      <?php if (isset($resource) && sfConfig::get('app_enable_institutional_scoping') && $sf_user->hasAttribute('search-realm')): ?>
         <a href="<?php echo url_for(array(
           'module' => 'informationobject',
           'action' => 'browse',
