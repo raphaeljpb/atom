@@ -148,7 +148,7 @@ class QubitAccession extends BaseAccession
   }
 
   /**
-   * Get related actors 
+   * Get related actors
    */
   public function getActors($options = array())
   {

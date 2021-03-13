@@ -246,7 +246,7 @@ class arElasticSearchPluginUtil
    *
    * @param string $indexType  Which index type we're setting the field boost values for.
    * @param array $fields  The fields we're setting the boost values on.
-   * 
+   *
    * @return array  Key/value array with fieldname/boost.
    */
   private static function setBoostValues($indexType, $fields)

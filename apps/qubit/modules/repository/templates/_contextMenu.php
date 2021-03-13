@@ -14,6 +14,6 @@
     <?php include_component('repository', 'uploadLimit', array('resource' => $resource)) ?>
     <?php include_component('repository', 'holdings', array('resource' => $resource)) ?>
     <?php include_component('repository', 'holdingsList', array('resource' => $resource)) ?>
-  <?php endif; // sfConfig::get('app_enable_institutional_scoping') ?>
+  <?php endif; // sfConfig::get('app_enable_institutional_scoping')?>
 
-<?php endif; // $class !== 'QubitRepository' ?>
+<?php endif; // $class !== 'QubitRepository'?>

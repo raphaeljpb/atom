@@ -301,7 +301,7 @@
     <?php $nestedRgt = array() ?>
     <?php foreach ($resource->getDescendantsForExport($options) as $descendant): ?>
 
-      <?php // Close previous <c> tags when we pass the end of the child list ?>
+      <?php // Close previous <c> tags when we pass the end of the child list?>
       <?php $rgt = $descendant->rgt ?>
       <?php while (count($nestedRgt) > 0 && $rgt > $nestedRgt[count($nestedRgt) - 1]): ?>
         <?php array_pop($nestedRgt); ?>
@@ -465,7 +465,7 @@
 
     <?php endforeach; ?>
 
-    <?php // Make sure all <c> tags are closed ?>
+    <?php // Make sure all <c> tags are closed?>
     <?php while (count($nestedRgt) > 0): ?>
       <?php array_pop($nestedRgt); ?>
       </c>

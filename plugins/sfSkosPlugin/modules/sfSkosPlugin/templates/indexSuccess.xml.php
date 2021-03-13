@@ -12,7 +12,7 @@
       <?php if (isset($i18n->name)): ?>
         <dc:title xml:lang="<?php echo $i18n->culture ?>"><?php echo $i18n->name ?></dc:title>
       <?php endif; ?>
-    <?php endforeach; // i18ns ?>
+    <?php endforeach; // i18ns?>
 
     <?php foreach($topLevelTerms as $term): ?>
       <skos:hasTopConcept rdf:resource="<?php echo url_for(array($term, 'module' => 'term'), true) ?>"/>
@@ -48,8 +48,8 @@
             <?php if (isset($i18n->content)): ?>
               <skos:scopeNote xml:lang="<?php echo $i18n->culture ?>"><?php echo $i18n->content ?></skos:scopeNote>
             <?php endif; ?>
-          <?php endforeach; // i18ns ?>
-        <?php endforeach; // scopeNotes ?>
+          <?php endforeach; // i18ns?>
+        <?php endforeach; // scopeNotes?>
       <?php endif; ?>
 
       <?php if (0 < count($sourceNotes = $term->getNotesByType(array('noteTypeId' => QubitTerm::SOURCE_NOTE_ID)))): ?>
@@ -58,8 +58,8 @@
             <?php if (isset($i18n->content)): ?>
               <skos:note xml:lang="<?php echo $i18n->culture ?>"><?php echo $i18n->content ?></skos:note>
             <?php endif; ?>
-          <?php endforeach; // i18ns ?>
-        <?php endforeach; // sourceNotes ?>
+          <?php endforeach; // i18ns?>
+        <?php endforeach; // sourceNotes?>
       <?php endif; ?>
 
       <?php if (QubitTerm::ROOT_ID != $term->parentId): ?>
@@ -70,7 +70,7 @@
 
       <?php foreach ($term->getChildren() as $child): ?>
         <skos:narrower rdf:resource="<?php echo url_for(array($child, 'module' => 'term'), true) ?>"/>
-      <?php endforeach; // children ?>
+      <?php endforeach; // children?>
 
       <?php if (0 < count($relations = QubitRelation::getBySubjectOrObjectId($term->id, array('typeId' => QubitTerm::TERM_RELATION_ASSOCIATIVE_ID)))): ?>
         <?php foreach($relations as $relation): ?>

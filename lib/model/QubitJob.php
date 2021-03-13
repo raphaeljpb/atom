@@ -210,7 +210,7 @@ class QubitJob extends BaseJob
 
   /**
    * Generate a unique token property to associate unauthenticated users with jobs.
-   * 
+   *
    * @throws  sfException  If a unique token can't be generated.
    * @return  QubitProperty  Generated user token property.
    */
@@ -253,8 +253,8 @@ class QubitJob extends BaseJob
   }
 
   /**
-   * Get the QubitJob associated with a given user token, if any. 
-   * 
+   * Get the QubitJob associated with a given user token, if any.
+   *
    * @param  string  $token  The user token.
    * @return  mixed  QubitJob associated with the token or null.
    */

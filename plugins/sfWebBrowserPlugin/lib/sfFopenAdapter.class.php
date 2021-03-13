@@ -4,7 +4,7 @@
  * This file is part of the sfWebBrowserPlugin package.
  * (c) 2004-2006 Francois Zaninotto <francois.zaninotto@symfony-project.com>
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com> for the click-related functions
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -80,7 +80,7 @@ class sfFopenAdapter
   
   /**
    * Handles PHP runtime error.
-   * 
+   *
    * This handler is used to catch any warnigns sent by fopen($url) and reformat them to something
    * usable.
    *

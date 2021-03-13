@@ -154,4 +154,4 @@ Drupal.behaviors.uploadLimitDialog = {
 
 //]]>
 </script>
-<?php endif; // Edit dialog for admins only ?>
+<?php endif; // Edit dialog for admins only?>

@@ -63,7 +63,7 @@
                 '%3%' => $repository->__toString())) ?>
             </div>
 
-          <?php endif; // Test upload limit ?>
+          <?php endif; // Test upload limit?>
 
         </fieldset>
 

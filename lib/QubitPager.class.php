@@ -87,7 +87,7 @@ class QubitPager extends sfPropelPager
    * Columns need to be selected using the criteria
    *
    * Example: $criteria->addSelectColumn(QubitInformationObject::ID);
-   * 
+   *
    */
   public function getRows(Criteria $criteria)
   {
