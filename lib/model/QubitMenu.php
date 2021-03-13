@@ -210,10 +210,10 @@ class QubitMenu extends BaseMenu
       $isSelected = true;
     }
 
-    /***
+    /*
      * FIXME Implement a better way to determine if a menu is selected than
      * the "current module = menu module" paradigm
-     ***/
+     */
 
     // if 'module/action' is returned from getPath, then test if module matches
     // current module

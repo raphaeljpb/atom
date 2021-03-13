@@ -46,8 +46,7 @@ $cookies_file = $cookies_dir.'/cookies.txt';
 
 /**
  * stub class.
- *
- **/
+ */
 class myTestWebBrowser extends sfWebBrowser
 {
   protected $requestMethod;
