@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @internal
+ */
 class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
 {
   protected $csvData;

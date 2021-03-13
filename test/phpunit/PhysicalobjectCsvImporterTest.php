@@ -2,6 +2,9 @@
 
 use org\bovigo\vfs\vfsStream;
 
+/**
+ * @internal
+ */
 class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
 {
   protected $csvHeader;
