@@ -449,7 +449,6 @@ class arElasticSearchPluginUtil
    *
    * This function will be called recursively on foreign types and nested fields.
    *
-   *
    * @param string $rootIndexType The current, top level index type we're adding fields to, e.g. "informationObject".
    *
    *                               Note that since we recursively call getAllObjectStringFields to get foreign type

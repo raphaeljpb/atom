@@ -154,7 +154,6 @@ class sfThumbnail
    * Returns the thumbnail as a string
    * If no target mime type is specified, the thumbnail is created with the same mime type as the source file.
    *
-   *
    * @param string The mime-type of the thumbnail (possible values are adapter dependent)
    *
    * @return string
