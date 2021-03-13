@@ -87,7 +87,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     }
   }
 
-  public function getOption(String $name)
+  public function getOption(string $name)
   {
     switch ($name)
     {
@@ -102,7 +102,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     }
   }
 
-  public function setOption(String $name, $value)
+  public function setOption(string $name, $value)
   {
     switch ($name)
     {
@@ -143,7 +143,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     return $this->holdingType;
   }
 
-  public function setHoldingType(String $value)
+  public function setHoldingType(string $value)
   {
     $value = (strtolower($value) == 'none') ? 'none' : $value;
 
@@ -175,14 +175,14 @@ class QubitPhysicalObjectCsvHoldingsReport
     return array_merge(array_values($this->typeMap), ['none']);
   }
 
-  public function write(String $filepath)
+  public function write(string $filepath)
   {
     $writer = \League\Csv\Writer::createFromPath($filepath, 'w+');
     $writer->insertOne(self::$headerRow);
     $this->export($writer);
   }
 
-  public function export(Object $writer)
+  public function export(object $writer)
   {
     $sql = "SELECT p.id \r
               FROM ".$this->ormClasses['physicalobject']::TABLE_NAME." p \r
@@ -200,13 +200,13 @@ class QubitPhysicalObjectCsvHoldingsReport
     }
   }
 
-  public function exportPhysicalObjectAndHoldings(Object $writer, Object $physObject)
+  public function exportPhysicalObjectAndHoldings(object $writer, object $physObject)
   {
     $holdingsData = $this->fetchHoldings($physObject->id);
     $this->writeRowIfNecessary($writer, $physObject, $holdingsData);
   }
 
-  public function writeRowIfNecessary(Object $writer, Object $physObject, array $holdingsData)
+  public function writeRowIfNecessary(object $writer, object $physObject, array $holdingsData)
   {
     // Start row with physical object-related column values
     $row = [
@@ -243,7 +243,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     return $row;
   }
 
-  public function fetchHoldings(String $physicalObjectId)
+  public function fetchHoldings(string $physicalObjectId)
   {
     // Fetch physical object's holdings
     $sql = "SELECT r.object_id, o.class_name \r
@@ -281,7 +281,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     return $holdingsData;
   }
 
-  public function writePhysicalObjectAndHoldings(Object $writer, array $row, array $holdingsData)
+  public function writePhysicalObjectAndHoldings(object $writer, array $row, array $holdingsData)
   {
     // If a specific holding type is selected remove data for other types
     foreach ($holdingsData['types'] as $className => $typeData)

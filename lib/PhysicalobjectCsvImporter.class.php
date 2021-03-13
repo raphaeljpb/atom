@@ -191,7 +191,7 @@ class PhysicalObjectCsvImporter
     return $this->options;
   }
 
-  public function setOption(String $name, $value)
+  public function setOption(string $name, $value)
   {
     switch ($name)
     {
@@ -227,7 +227,7 @@ class PhysicalObjectCsvImporter
     }
   }
 
-  public function getOption(String $name)
+  public function getOption(string $name)
   {
     if (isset($this->options[$name]))
     {
@@ -261,7 +261,7 @@ class PhysicalObjectCsvImporter
     return $this->offset;
   }
 
-  public function setHeader(String $str = null)
+  public function setHeader(string $str = null)
   {
     if (null === $str)
     {
@@ -843,7 +843,7 @@ EOQ;
     return $ids;
   }
 
-  protected function processMultiValueColumn(String $str)
+  protected function processMultiValueColumn(string $str)
   {
     if ('' === trim($str))
     {
