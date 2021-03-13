@@ -43,7 +43,7 @@ class arRestApiPluginConfiguration extends sfPluginConfiguration
       'module' => 'api',
       'action' => 'index']);
 
-    /**
+    /*
      * Taxonomies and terms.
      */
     $this->addRoute('GET', '/api/taxonomies/:id', [
@@ -51,7 +51,7 @@ class arRestApiPluginConfiguration extends sfPluginConfiguration
       'action' => 'taxonomiesBrowse',
       'params' => ['id' => self::REGEX_ID]]);
 
-    /**
+    /*
      * Information objects.
      */
     $this->addRoute('GET', '/api/informationobjects', [
@@ -87,7 +87,7 @@ class arRestApiPluginConfiguration extends sfPluginConfiguration
       'module' => 'api',
       'action' => 'informationobjectsCreate']);
 
-    /**
+    /*
      * Digital objects.
      */
     $this->addRoute('GET', '/api/digitalobjects', [

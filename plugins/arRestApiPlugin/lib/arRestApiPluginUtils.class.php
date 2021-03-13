@@ -43,7 +43,7 @@ class arRestApiPluginUtils
     {
       $dt = new DateTime();
 
-      /**
+      /*
        * [ TEMPORARY HACK ].
        *
        * ElasticSearch uses UTC but we are storing local times.
