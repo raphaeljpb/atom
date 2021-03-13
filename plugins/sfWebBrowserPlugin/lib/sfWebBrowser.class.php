@@ -52,9 +52,9 @@ class sfWebBrowser
     $this->defaultHeaders = $this->fixHeaders($defaultHeaders);
     $this->adapter = new $adapterClass($adapterOptions);
   }
-    
+
   // Browser methods
-  
+
   /**
    * Restarts the browser
    *
@@ -69,7 +69,7 @@ class sfWebBrowser
     $this->stackPosition  = -1;
     $this->urlInfo        = array();
     $this->initializeResponse();
-    
+
     return $this;
   }
 
@@ -83,7 +83,7 @@ class sfWebBrowser
   public function setUserAgent($agent)
   {
     $this->defaultHeaders['User-Agent'] = $agent;
-    
+
     return $this;
   }
 
@@ -137,7 +137,7 @@ class sfWebBrowser
   {
     return $this->call($uri, 'POST', $parameters, $headers);
   }
-  
+
   /**
    * Submits a PUT request.
    *
@@ -239,7 +239,7 @@ class sfWebBrowser
 
     return $this;
   }
-  
+
   /**
    * Looks for a link or a button in the response and submits the related request
    *
@@ -274,7 +274,7 @@ class sfWebBrowser
         }
       }
     }
-    
+
     // image link, the name being the alt attribute value
     if ($link = $xpath->query(sprintf('//a/img[@alt="%s"]/ancestor::a', $name))->item(0))
     {
@@ -426,7 +426,7 @@ class sfWebBrowser
       'headers'    => $headers
     );
     $this->stackPosition = count($this->stack) - 1;
-    
+
     return $this;
   }
 
@@ -488,7 +488,7 @@ class sfWebBrowser
                        $this->stack[$this->stackPosition]['headers'],
                        false);
   }
-  
+
   /**
    * Transforms an associative array of header names => header values to its HTTP equivalent.
    *
@@ -502,10 +502,10 @@ class sfWebBrowser
     {
       $prepared_headers[] = sprintf("%s: %s\r\n", ucfirst($name), $value);
     }
-    
+
     return implode('', $prepared_headers);
   }
-  
+
   // Response methods
 
   /**
@@ -540,12 +540,12 @@ class sfWebBrowser
         $header_array[$this->normalizeHeaderName($arr[0])] = trim($arr[1]);
       }
     }
-    
+
     $this->responseHeaders = $header_array;
-    
+
     return $this;
   }
-  
+
   /**
    * Set the response code
    *
@@ -564,7 +564,7 @@ class sfWebBrowser
     {
       $this->responseCode = '';
     }
-    
+
     return $this;
   }
 
@@ -578,7 +578,7 @@ class sfWebBrowser
   public function setResponseText($res)
   {
     $this->responseText = $res;
-    
+
     return $this;
   }
 
@@ -622,7 +622,7 @@ class sfWebBrowser
 
     return isset($matches[1]) ? $matches[1] : '';
   }
-  
+
   /**
    * Get a DOMDocument version of the response
    *
@@ -679,14 +679,14 @@ class sfWebBrowser
         $this->responseXml = @simplexml_load_string($this->getResponseText());
       }
     }
-    
+
     // Throw an exception if response is not valid XML
     if (get_class($this->responseXml) != 'SimpleXMLElement')
     {
       $msg = sprintf("Response is not a valid XML string : \n%s", $this->getResponseText());
       throw new sfWebBrowserInvalidResponseException($msg);
     }
-    
+
     return $this->responseXml;
   }
 
@@ -722,7 +722,7 @@ class sfWebBrowser
     $normalized_key = $this->normalizeHeaderName($key);
     return (isset($this->responseHeaders[$normalized_key])) ? $this->responseHeaders[$normalized_key] : '';
   }
-  
+
   /**
    * Decodes gzip-encoded content ("content-encoding: gzip" response header).
    *
@@ -744,7 +744,7 @@ class sfWebBrowser
   {
     return gzuncompress($deflate_text);
   }
-  
+
   /**
    * Get the response code
    *
@@ -754,7 +754,7 @@ class sfWebBrowser
   {
     return $this->responseCode;
   }
-  
+
   /**
    * Returns the response message (the 'Not Found' part in  'HTTP/1.1 404 Not Found')
    *
@@ -764,7 +764,7 @@ class sfWebBrowser
   {
     return $this->responseMessage;
   }
-  
+
   /**
    * Sets response message.
    *
@@ -774,17 +774,17 @@ class sfWebBrowser
   {
     $this->responseMessage = $msg;
   }
-  
+
   public function getUrlInfo()
   {
     return $this->urlInfo;
   }
-  
+
   public function getDefaultRequestHeaders()
   {
     return $this->defaultHeaders;
   }
-  
+
   /**
    * Adds default headers to the supplied headers array.
    *
@@ -807,12 +807,12 @@ class sfWebBrowser
     {
       $encodings[] = 'deflate';
     }
-    
+
     $headers['Accept-Encoding'] = implode(',', array_unique($encodings));
-    
+
     return $headers;
   }
-  
+
   /**
    * Validates supplied headers and turns all names to lowercase.
    *
@@ -834,7 +834,7 @@ class sfWebBrowser
 
     return $fixed_headers;
   }
-  
+
   /**
    * Retrieves a normalized Header.
    *

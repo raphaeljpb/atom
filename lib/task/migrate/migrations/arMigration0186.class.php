@@ -56,7 +56,7 @@ class arMigration0186
         $menu->save();
       }
     }
-  
+
     return true;
   }
 }

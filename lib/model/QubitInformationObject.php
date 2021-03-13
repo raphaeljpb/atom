@@ -338,11 +338,11 @@ class QubitInformationObject extends BaseInformationObject
         $statement = $connection->prepare($sql);
         $statement->execute();
         $maxLft = $statement->fetchColumn();
-  
+
         $sql  = 'UPDATE '.QubitInformationObject::TABLE_NAME;
         $sql .= ' SET '.QubitInformationObject::LFT.' = '.($maxLft + 1);
         $sql .= ' WHERE '.QubitInformationObject::ID.' = '.$this->id;
-          
+
         $connection->exec($sql);
 
         $connection->commit();
