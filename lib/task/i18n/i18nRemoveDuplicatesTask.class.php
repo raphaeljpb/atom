@@ -71,8 +71,8 @@ class I18nRemoveDuplicatesTask extends sfBaseTask
         {
           // If original target string is null, but *this* node has a valid
           // translation
-          if (0 == strlen($sourceStrings[$source->nodeValue]->nodeValue) &&
-            0 < strlen($target->nodeValue))
+          if (0 == strlen($sourceStrings[$source->nodeValue]->nodeValue)
+            && 0 < strlen($target->nodeValue))
           {
             // Copy this translated string to the trans-unit node we are keeping
             $sourceStrings[$source->nodeValue]->nodeValue = $target->nodeValue;

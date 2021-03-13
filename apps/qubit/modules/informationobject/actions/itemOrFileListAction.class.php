@@ -115,8 +115,8 @@ class InformationObjectItemOrFileListAction extends sfAction
   {
     $reportType = (false === strpos(strtolower($this->type), 'item')) ? 'fileList' : 'itemList';
 
-    if (is_array($this->form->includeThumbnails->getValue()) &&
-        '1' === array_pop($this->form->includeThumbnails->getValue()))
+    if (is_array($this->form->includeThumbnails->getValue())
+        && '1' === array_pop($this->form->includeThumbnails->getValue()))
     {
       $includeThumbnails = true;
     }

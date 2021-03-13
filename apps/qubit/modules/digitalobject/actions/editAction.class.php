@@ -40,8 +40,8 @@ class DigitalObjectEditAction extends sfAction
     $this->object = $this->resource->object;
 
     // Check user authorization
-    if (!QubitAcl::check($this->object, 'update') &&
-      !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID))
+    if (!QubitAcl::check($this->object, 'update')
+      && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID))
     {
       QubitAcl::forwardUnauthorized();
     }

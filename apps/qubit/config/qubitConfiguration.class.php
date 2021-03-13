@@ -143,8 +143,8 @@ class qubitConfiguration extends sfApplicationConfiguration
     // The settings.yml file requires an intermediate '.settings' key for
     // some reason :-/
     if (
-      'config/settings.yml' == $configFile &&
-      isset($config[$env]['.settings'][$varname]))
+      'config/settings.yml' == $configFile
+      && isset($config[$env]['.settings'][$varname]))
     {
       return $config[$env]['.settings'][$varname];
     }

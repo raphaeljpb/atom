@@ -287,8 +287,8 @@ class QubitPhysicalObject extends BasePhysicalObject
     {
       $relationId = array_search($infobjId, $existingRelations);
 
-      if (false === $relationId ||
-        null === $relation = QubitRelation::getById($relationId))
+      if (false === $relationId
+        || null === $relation = QubitRelation::getById($relationId))
       {
         continue;
       }

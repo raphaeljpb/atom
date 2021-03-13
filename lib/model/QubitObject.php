@@ -410,8 +410,8 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
       return $path;
     }
 
-    if (!QubitAcl::check($this, 'readMaster') && null !== $do->reference &&
-        QubitAcl::check($this, 'readReference'))
+    if (!QubitAcl::check($this, 'readMaster') && null !== $do->reference
+        && QubitAcl::check($this, 'readReference'))
     {
       $path = $do->reference->getFullPath();
     }

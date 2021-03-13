@@ -117,8 +117,8 @@ class InformationObjectReportsAction extends sfAction
 
         if (file_exists($path))
         {
-          if (!sfContext::getInstance()->user->isAuthenticated() &&
-              in_array($type, ['storageLocations', 'boxLabel']))
+          if (!sfContext::getInstance()->user->isAuthenticated()
+              && in_array($type, ['storageLocations', 'boxLabel']))
           {
             continue;
           }

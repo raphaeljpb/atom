@@ -20,8 +20,8 @@
       <?php } ?>
 
       <?php foreach ($aggs[$name] as $bucket) { ?>
-        <?php $active = ((isset($filters[$name]) && $filters[$name] == $bucket['key']) ||
-          (!isset($filters[$name]) && 'unique_language' == $bucket['key'])); ?>
+        <?php $active = ((isset($filters[$name]) && $filters[$name] == $bucket['key'])
+          || (!isset($filters[$name]) && 'unique_language' == $bucket['key'])); ?>
 
         <li <?php if ($active) echo 'class="active"'; ?>>
           <?php echo link_to(__(strip_markdown($bucket['display'])).'<span>, '.$bucket['doc_count'].' '.__('results').'</span>',

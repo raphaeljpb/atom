@@ -24,10 +24,10 @@ class QubitAclPermission extends BaseAclPermission
     $user = QubitUser::getById($userId);
 
     if (
-      ($userId == $this->userId || $user->hasGroup($this->groupId)) &&
-      $objectId == $this->objectId &&
-      $actionId == $this->actionId &&
-      $this->evaluateConditional($parameters))
+      ($userId == $this->userId || $user->hasGroup($this->groupId))
+      && $objectId == $this->objectId
+      && $actionId == $this->actionId
+      && $this->evaluateConditional($parameters))
     {
       return $this->grantDeny;
     }

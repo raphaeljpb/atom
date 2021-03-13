@@ -113,9 +113,9 @@ class ClipboardSaveAction extends sfAction
     }
 
     if (
-      !empty($validatedSlugs['informationObject']) ||
-      !empty($validatedSlugs['actor']) ||
-      !empty($validatedSlugs['repository'])
+      !empty($validatedSlugs['informationObject'])
+      || !empty($validatedSlugs['actor'])
+      || !empty($validatedSlugs['repository'])
     )
     {
       return $validatedSlugs;

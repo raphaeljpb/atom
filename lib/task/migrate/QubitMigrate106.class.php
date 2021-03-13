@@ -442,8 +442,8 @@ class QubitMigrate106 extends QubitMigrate
     }
 
     // Delete author terms
-    if (($authoringTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Authoring'])) &&
-      ($eventTypeTaxonomyKey == $this->data['QubitTerm'][$authoringTermKey]['taxonomy_id']))
+    if (($authoringTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Authoring']))
+      && ($eventTypeTaxonomyKey == $this->data['QubitTerm'][$authoringTermKey]['taxonomy_id']))
     {
       unset($this->data['QubitTerm'][$authoringTermKey]);
 
@@ -461,8 +461,8 @@ class QubitMigrate106 extends QubitMigrate
     }
 
     // Delete editing terms
-    if (($editingTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Editing'])) &&
-      $eventTypeTaxonomyKey == $this->data['QubitTerm'][$editingTermKey]['taxonomy_id'])
+    if (($editingTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Editing']))
+      && $eventTypeTaxonomyKey == $this->data['QubitTerm'][$editingTermKey]['taxonomy_id'])
     {
       unset($this->data['QubitTerm'][$editingTermKey]);
 
@@ -480,8 +480,8 @@ class QubitMigrate106 extends QubitMigrate
     }
 
     // Delete translation terms
-    if (($translationTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Translation'])) &&
-      $eventTypeTaxonomyKey == $this->data['QubitTerm'][$translationTermKey]['taxonomy_id'])
+    if (($translationTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Translation']))
+      && $eventTypeTaxonomyKey == $this->data['QubitTerm'][$translationTermKey]['taxonomy_id'])
     {
       unset($this->data['QubitTerm'][$translationTermKey]);
 
@@ -499,8 +499,8 @@ class QubitMigrate106 extends QubitMigrate
     }
 
     // Delete compilation terms
-    if (($compilationTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Compilation'])) &&
-      $eventTypeTaxonomyKey == $this->data['QubitTerm'][$compilationTermKey]['taxonomy_id'])
+    if (($compilationTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Compilation']))
+      && $eventTypeTaxonomyKey == $this->data['QubitTerm'][$compilationTermKey]['taxonomy_id'])
     {
       unset($this->data['QubitTerm'][$compilationTermKey]);
 

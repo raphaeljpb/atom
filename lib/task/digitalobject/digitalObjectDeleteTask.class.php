@@ -73,13 +73,13 @@ class digitalObjectDeleteTask extends arBaseTask
       throw new sfException('Invalid slug with object type "'.$row['class_name'].'" entered.');
     }
 
-    if ('QubitInformationObject' == $row['class_name'] &&
-      null === $informationObject = QubitInformationObject::getById($row['object_id']))
+    if ('QubitInformationObject' == $row['class_name']
+      && null === $informationObject = QubitInformationObject::getById($row['object_id']))
     {
       throw new sfException('Failed to fetch information object with the slug given.');
     }
-    if ('QubitRepository' == $row['class_name'] &&
-      null === $repository = QubitRepository::getById($row['object_id']))
+    if ('QubitRepository' == $row['class_name']
+      && null === $repository = QubitRepository::getById($row['object_id']))
     {
       throw new sfException('Failed to fetch repository with the slug given.');
     }

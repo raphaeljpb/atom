@@ -246,9 +246,9 @@ class QubitGrantedRight extends BaseGrantedRight
       // Remove unauthenticated user access and finish loop,
       // as one "denied" permission overules any "grants" we'll see.
       $basisSlug = $right->rights->basis->slug;
-      if (empty($premisPerms[$basisSlug]) ||
-          empty($premisPerms[$basisSlug]["{$restriction}_{$usage}"]) ||
-          !$premisPerms[$basisSlug]["{$restriction}_{$usage}"])
+      if (empty($premisPerms[$basisSlug])
+          || empty($premisPerms[$basisSlug]["{$restriction}_{$usage}"])
+          || !$premisPerms[$basisSlug]["{$restriction}_{$usage}"])
       {
         if (($key = array_search(QubitAclGroup::ANONYMOUS_ID, $groupIds)) !== false)
         {

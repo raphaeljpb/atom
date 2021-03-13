@@ -90,10 +90,8 @@ EOF;
 
     if (
       $options['roundtrip']
-      &&
-      !$options['no-confirmation']
-      &&
-      !$this->askConfirmation([
+      && !$options['no-confirmation']
+      && !$this->askConfirmation([
         'WARNING: In round trip mode legacy IDs will be treated as internal IDs.',
         'Please back-up your database manually before you proceed.',
         '',
@@ -426,8 +424,8 @@ EOF;
         }
 
         // Add alternative identifiers
-        if (array_key_exists('alternativeIdentifiers', $self->rowStatusVars) &&
-            array_key_exists('alternativeIdentifierLabels', $self->rowStatusVars))
+        if (array_key_exists('alternativeIdentifiers', $self->rowStatusVars)
+            && array_key_exists('alternativeIdentifierLabels', $self->rowStatusVars))
         {
           self::setAlternativeIdentifiers(
             $self->object,
@@ -667,8 +665,8 @@ EOF;
         }
 
         // Add accessions
-        if (isset($self->rowStatusVars['accessionNumber']) &&
-            count($self->rowStatusVars['accessionNumber']))
+        if (isset($self->rowStatusVars['accessionNumber'])
+            && count($self->rowStatusVars['accessionNumber']))
         {
           foreach ($self->rowStatusVars['accessionNumber'] as $accessionNumber)
           {

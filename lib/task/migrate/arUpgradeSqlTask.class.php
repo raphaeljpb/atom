@@ -119,8 +119,7 @@ EOF;
     // Confirmation
     if (
       !$options['no-confirmation']
-      &&
-      !$this->askConfirmation([
+      && !$this->askConfirmation([
         'WARNING: Your database has not been backed up!',
         'Please back-up your database manually before you proceed.',
         'If this task fails you may lose your data.',
@@ -570,8 +569,8 @@ EOF;
     {
       $className = $name.'Configuration';
 
-      if (0 === strpos($path, sfConfig::get('sf_plugins_dir')) &&
-          is_readable($classPath = $path.'/config/'.$className.'.class.php'))
+      if (0 === strpos($path, sfConfig::get('sf_plugins_dir'))
+          && is_readable($classPath = $path.'/config/'.$className.'.class.php'))
       {
         if ($themePluginsOnly)
         {

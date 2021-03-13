@@ -206,8 +206,8 @@
       </description>
     <?php } ?>
 
-    <?php if (count($resource->getActorRelations()) || count($eac->subjectOf) || count($eac->resourceRelation) ||
-              count($eac->functionRelation)) { ?>
+    <?php if (count($resource->getActorRelations()) || count($eac->subjectOf) || count($eac->resourceRelation)
+              || count($eac->functionRelation)) { ?>
 
       <relations>
         <?php foreach ($resource->getActorRelations() as $item) { ?>

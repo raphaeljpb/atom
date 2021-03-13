@@ -1150,8 +1150,8 @@ class QubitDigitalObject extends BaseDigitalObject
     // Create child objects (derivatives)
     if (0 < count($this->assets) && $this->createDerivatives)
     {
-      if (sfConfig::get('app_explode_multipage_files') && $this->getPageCount() > 1 &&
-        $this->getObject() instanceof QubitInformationObject)
+      if (sfConfig::get('app_explode_multipage_files') && $this->getPageCount() > 1
+        && $this->getObject() instanceof QubitInformationObject)
       {
         // If DO is a compound object and attached to informationObject, then
         // create child objects and set to display as compound object (with pager)
@@ -2464,8 +2464,8 @@ class QubitDigitalObject extends BaseDigitalObject
 
     $page = 1;
     // I avoid sfConfig as it's not always available (CLI context)
-    if ('application/pdf' === $mimeType &&
-      null !== $setting = QubitSetting::getByName('digital_object_derivatives_pdf_page_number'))
+    if ('application/pdf' === $mimeType
+      && null !== $setting = QubitSetting::getByName('digital_object_derivatives_pdf_page_number'))
     {
       if (0 !== $p = intval($setting->getValue(['sourceCulture' => true])))
       {

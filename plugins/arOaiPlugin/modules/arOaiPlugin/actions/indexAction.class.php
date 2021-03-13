@@ -147,10 +147,10 @@ class arOaiPluginIndexAction extends sfAction
         );
 
         if (
-          !isset($resource) ||
-          !isset($resource->parent) ||
-          QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID != $resource->getPublicationStatus()->statusId ||
-          !QubitAcl::check($resource, 'read')
+          !isset($resource)
+          || !isset($resource->parent)
+          || QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID != $resource->getPublicationStatus()->statusId
+          || !QubitAcl::check($resource, 'read')
         )
         {
           $request->setParameter('errorCode', 'idDoesNotExist');

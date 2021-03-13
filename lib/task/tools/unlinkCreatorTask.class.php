@@ -224,10 +224,10 @@ EOF;
         unset($event->actor);
         $event->save();
         // Delete the event record too if there aren't any dates/times on it.
-        if (null == $event->getPlace()->name && null == $event->date &&
-            null == $event->name && null == $event->description &&
-            null == $event->startDate && null == $event->endDate &&
-            null == $event->startTime && null == $event->endTime)
+        if (null == $event->getPlace()->name && null == $event->date
+            && null == $event->name && null == $event->description
+            && null == $event->startDate && null == $event->endDate
+            && null == $event->startTime && null == $event->endTime)
         {
           $event->delete();
         }

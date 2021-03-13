@@ -730,8 +730,8 @@ class QubitXmlImport
       // save the object after it's fully-populated
       $currentObject->save();
       // if this is the root Info Object, save the EadUrl in the keymap table for matching.
-      if ($currentObject instanceof QubitInformationObject && 'ead' == $importSchema &&
-        $this->rootObject === $currentObject)
+      if ($currentObject instanceof QubitInformationObject && 'ead' == $importSchema
+        && $this->rootObject === $currentObject)
       {
         $this->saveEadUrl($currentObject);
       }

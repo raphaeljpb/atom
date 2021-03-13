@@ -1619,8 +1619,7 @@ class QubitInformationObject extends BaseInformationObject
     // In EAD import, the term relation is not always created at this point;
     // it might be created afterwards.
     elseif (isset($options['relation_type_id'], $options['createRelation'])
-       &&
-      false !== $options['createRelation'])
+      && false !== $options['createRelation'])
     {
       // Only add actor as name access point if they are not already linked to
       // an event (i.e. they are not already a "creator", "accumulator", etc.)
@@ -1899,8 +1898,8 @@ class QubitInformationObject extends BaseInformationObject
       //   - Create new 'Untitled' actor with bioghist value as history and new event
       // 4. If the actor in the current position has history and it's equal to the bioghist value:
       //   - Do nothing
-      if (!isset($creators[$key]) ||
-        (isset($creators[$key]->history) && $creators[$key]->history !== $history))
+      if (!isset($creators[$key])
+        || (isset($creators[$key]->history) && $creators[$key]->history !== $history))
       {
         $actor = new QubitActor();
         $actor->parentId = QubitActor::ROOT_ID;
@@ -2967,8 +2966,8 @@ class QubitInformationObject extends BaseInformationObject
       {
         foreach ($relation->{$relatedBy}->actorI18ns as $actorI18n)
         {
-          if (isset($actorI18n->authorizedFormOfName) &&
-            $name == $actorI18n->authorizedFormOfName)
+          if (isset($actorI18n->authorizedFormOfName)
+            && $name == $actorI18n->authorizedFormOfName)
           {
             return $relation->{$relatedBy};
           }
@@ -2995,8 +2994,8 @@ class QubitInformationObject extends BaseInformationObject
       {
         foreach ($event->actor->actorI18ns as $actorI18n)
         {
-          if (isset($actorI18n->authorizedFormOfName) &&
-            $name == $actorI18n->authorizedFormOfName)
+          if (isset($actorI18n->authorizedFormOfName)
+            && $name == $actorI18n->authorizedFormOfName)
           {
             return $event->actor;
           }

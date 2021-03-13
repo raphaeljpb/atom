@@ -844,8 +844,8 @@ class QubitMigrate110 extends QubitMigrate
       }
 
       // Don't do anything if this node already has a publication status
-      if ($this->findRowKeyForColumnValue($this->data['QubitStatus'], 'object_id', $key) ||
-        $this->findRowKeyForColumnValue($this->data['QubitStatus'], 'object_id', $item['id']))
+      if ($this->findRowKeyForColumnValue($this->data['QubitStatus'], 'object_id', $key)
+        || $this->findRowKeyForColumnValue($this->data['QubitStatus'], 'object_id', $item['id']))
       {
         continue;
       }

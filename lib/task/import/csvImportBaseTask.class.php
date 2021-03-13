@@ -203,8 +203,8 @@ abstract class csvImportBaseTask extends arBaseTask
   public static function importPhysicalObjects($self)
   {
     // Add physical objects
-    if (isset($self->rowStatusVars['physicalObjectName']) &&
-        $self->rowStatusVars['physicalObjectName'])
+    if (isset($self->rowStatusVars['physicalObjectName'])
+        && $self->rowStatusVars['physicalObjectName'])
     {
       $names = explode('|', $self->rowStatusVars['physicalObjectName']);
       $locations = explode('|', $self->rowStatusVars['physicalObjectLocation']);
@@ -381,8 +381,8 @@ abstract class csvImportBaseTask extends arBaseTask
 
       // If in update mode, check if the import event data matches an existing
       // event
-      if ($import->matchAndUpdate &&
-        null !== $event = self::matchExistingEvent($import->object->id, $eventTypeId, $eventData['actorName']))
+      if ($import->matchAndUpdate
+        && null !== $event = self::matchExistingEvent($import->object->id, $eventTypeId, $eventData['actorName']))
       {
         $eventData['eventId'] = $event->id;
       }

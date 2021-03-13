@@ -1012,8 +1012,8 @@ class QubitFlatfileImport
     }
 
     // Importing to an IO without repository or in a repo not maintaining an actor match
-    if (!isset($this->object->repository) ||
-      null === $actor = QubitActor::getByAuthorizedFormOfName($name, ['repositoryId' => $this->object->repository->id]))
+    if (!isset($this->object->repository)
+      || null === $actor = QubitActor::getByAuthorizedFormOfName($name, ['repositoryId' => $this->object->repository->id]))
     {
       // Create a new one with the new history
       return $this->createActor($name, $options);

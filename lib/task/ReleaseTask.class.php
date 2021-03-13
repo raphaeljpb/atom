@@ -32,8 +32,7 @@ class ReleaseTask extends sfBaseTask
     // Confirmation
     if (
       !$options['no-confirmation']
-      &&
-      !$this->askConfirmation([
+      && !$this->askConfirmation([
         'WARNING: Your changes in your local index and your working tree will',
         'be lost, including ignored files. Are you sure you want to proceed? (y/N)',
       ], 'QUESTION_LARGE', false)

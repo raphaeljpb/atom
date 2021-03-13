@@ -48,20 +48,20 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
   {
     parent::processForm();
 
-    if (isset($this->contactInformation->city) ||
-        isset($this->contactInformation->contactPerson) ||
-        isset($this->contactInformation->email) ||
-        isset($this->contactInformation->postalCode) ||
-        isset($this->contactInformation->region) ||
-        isset($this->contactInformation->streetAddress) ||
-        isset($this->contactInformation->telephone) ||
-        isset($this->contactInformation->countryCode) ||
-        isset($this->contactInformation->contactType) ||
-        isset($this->contactInformation->latitude) ||
-        isset($this->contactInformation->longitude) ||
-        isset($this->contactInformation->note) ||
-        isset($this->contactInformation->fax) ||
-        isset($this->contactInformation->website))
+    if (isset($this->contactInformation->city)
+        || isset($this->contactInformation->contactPerson)
+        || isset($this->contactInformation->email)
+        || isset($this->contactInformation->postalCode)
+        || isset($this->contactInformation->region)
+        || isset($this->contactInformation->streetAddress)
+        || isset($this->contactInformation->telephone)
+        || isset($this->contactInformation->countryCode)
+        || isset($this->contactInformation->contactType)
+        || isset($this->contactInformation->latitude)
+        || isset($this->contactInformation->longitude)
+        || isset($this->contactInformation->note)
+        || isset($this->contactInformation->fax)
+        || isset($this->contactInformation->website))
     {
       $this->contactInformation->actor = $this->relation->object;
       $this->contactInformation->save();

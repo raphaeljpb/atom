@@ -447,8 +447,8 @@ class sfEadPlugin
       }
     }
 
-    return count($materialTypes) || count($genres) || count($subjects) ||
-           count($names) || count($places) || $hasNonCreationActorEvents;
+    return count($materialTypes) || count($genres) || count($subjects)
+           || count($names) || count($places) || $hasNonCreationActorEvents;
   }
 
   public function getPublicationDate()

@@ -12,8 +12,8 @@
       <a href="<?php echo url_for(['module' => 'informationobject', 'slug' => $doc['slug']]); ?>">
         <div class="preview-container">
           <?php if (
-              isset($doc['digitalObject']['thumbnailPath']) &&
-              QubitAcl::check(QubitInformationObject::getById($hit->getId()), 'readThumbnail')
+              isset($doc['digitalObject']['thumbnailPath'])
+              && QubitAcl::check(QubitInformationObject::getById($hit->getId()), 'readThumbnail')
             ) {
           ?>
             <?php echo image_tag($doc['digitalObject']['thumbnailPath'],

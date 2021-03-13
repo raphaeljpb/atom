@@ -28,18 +28,18 @@ class QubitSslRequirementFilter extends sfFilter
     // - Debug mode is enabled
     // - Client is already using HTTPS
     // - Setting require_ssl_admin is not enabled
-    if ($context->getConfiguration()->isDebug() ||
-        $request->isSecure() ||
-        !sfConfig::get('app_require_ssl_admin'))
+    if ($context->getConfiguration()->isDebug()
+        || $request->isSecure()
+        || !sfConfig::get('app_require_ssl_admin'))
     {
       $filterChain->execute();
 
       return;
     }
 
-    if ($context->user->isAuthenticated() ||
-        ('user' == $request->getParameter('module') &&
-          'login' == $request->getParameter('action')))
+    if ($context->user->isAuthenticated()
+        || ('user' == $request->getParameter('module')
+          && 'login' == $request->getParameter('action')))
     {
       $secure_url = str_replace('http', 'https', $request->getUri());
 

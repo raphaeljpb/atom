@@ -592,9 +592,9 @@ class QubitMigrate108 extends QubitMigrate
       if (isset($row['name']) && 'users' == $row['name'])
       {
         // Find the 'users' menu that is a child of the admin menu
-        if (strpos($row['parent_id'], 'QubitMenu::ADMIN_ID') ||
-          isset($this->data['QubitMenu'][$row['parent_id']]) &&
-          strpos($this->data['QubitMenu'][$row['parent_id']]['id'], 'QubitMenu::ADMIN_ID'))
+        if (strpos($row['parent_id'], 'QubitMenu::ADMIN_ID')
+          || isset($this->data['QubitMenu'][$row['parent_id']])
+          && strpos($this->data['QubitMenu'][$row['parent_id']]['id'], 'QubitMenu::ADMIN_ID'))
         {
           $userMenuKey = $key;
 
@@ -1001,8 +1001,8 @@ class QubitMigrate108 extends QubitMigrate
       }
 
       if (
-        '<?php echo QubitAclGroup::ADMINISTRATOR_ID."\n" ?>' == $group_id ||
-        '<?php echo QubitAclGroup::ADMIN_ID."\n" ?>' == $group_id
+        '<?php echo QubitAclGroup::ADMINISTRATOR_ID."\n" ?>' == $group_id
+        || '<?php echo QubitAclGroup::ADMIN_ID."\n" ?>' == $group_id
       )
       {
         unset($this->data['QubitAclPermission'][$key]);

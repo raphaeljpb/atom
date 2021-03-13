@@ -309,10 +309,8 @@ class sfWebBrowser
       }
       elseif (
         'input' == $nodeName
-        &&
-        (('submit' != $element->getAttribute('type') && 'button' != $element->getAttribute('type')) || $element->getAttribute('value') == $name)
-        &&
-        ('image' != $element->getAttribute('type') || $element->getAttribute('alt') == $name)
+        && (('submit' != $element->getAttribute('type') && 'button' != $element->getAttribute('type')) || $element->getAttribute('value') == $name)
+        && ('image' != $element->getAttribute('type') || $element->getAttribute('alt') == $name)
       )
       {
         $value = $element->getAttribute('value');

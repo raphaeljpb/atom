@@ -31,10 +31,10 @@ class QubitLimitIpFilter extends sfFilter
     // - Setting "limit_admin_ip" is not set
     // - The filter is forwarding to admin/secure (isFirstCall)
     // - Route is user/logout
-    if ($this->context->getConfiguration()->isDebug() ||
-        !$this->limit ||
-        !$this->isFirstCall() ||
-        ('user' == $this->request->getParameter('module') && 'logout' == $this->request->getParameter('action')))
+    if ($this->context->getConfiguration()->isDebug()
+        || !$this->limit
+        || !$this->isFirstCall()
+        || ('user' == $this->request->getParameter('module') && 'logout' == $this->request->getParameter('action')))
     {
       $filterChain->execute();
 
@@ -88,8 +88,8 @@ class QubitLimitIpFilter extends sfFilter
 
         $addressLong = ip2long($address);
 
-        if (ip2long($limit[0]) <= $addressLong &&
-            ip2long($limit[1]) >= $addressLong)
+        if (ip2long($limit[0]) <= $addressLong
+            && ip2long($limit[1]) >= $addressLong)
         {
           return true;
         }

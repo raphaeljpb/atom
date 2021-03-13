@@ -845,8 +845,8 @@ class QubitAcl
       case 'QubitDonor':
       case 'QubitFunctionObject':
       case 'QubitRightsHolder':
-        $hasAccess = $user->isAuthenticated() && ($user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID) ||
-                     $user->hasGroup(QubitAclGroup::EDITOR_ID));
+        $hasAccess = $user->isAuthenticated() && ($user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID)
+                     || $user->hasGroup(QubitAclGroup::EDITOR_ID));
 
         break;
       // Administrator only
