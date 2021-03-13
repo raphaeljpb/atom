@@ -1192,8 +1192,8 @@ class QubitFlatfileImport
    * Must all be from same taxonomy.
    *
    * @param integer $taxonomyId term taxonomy
-   * @param mixed   $names      Can be passed as single term name string
-   *                            or array of term names.
+   * @param mixed   $names      can be passed as single term name string
+   *                            or array of term names
    * @param string  $culture    culture code (defaulting to English)
    *
    * @return mixed created terms or fetched objects containing term data. Depending
@@ -1352,10 +1352,10 @@ class QubitFlatfileImport
   /**
    * Check whether or not an object-term relation already exists for this info object.
    *
-   * @param integer $objectId Information object we're relating to.
-   * @param integer $termId   The term or actor we're relating to.
+   * @param integer $objectId information object we're relating to
+   * @param integer $termId   the term or actor we're relating to
    *
-   * @return bool True if this relation already exists, false otherwise.
+   * @return bool true if this relation already exists, false otherwise
    */
   public static function objectTermRelationExists($objectId, $termId)
   {
@@ -1974,8 +1974,8 @@ class QubitFlatfileImport
    *
    * @param  string $dbDate  First date in the comparison. This is the date fetched from the db with potential
    *                         '-00-00' in it.
-   * @param  string $csvDate Second date for comparison.
-   * @return bool   True if date strings are equal, false otherwise.
+   * @param  string $csvDate second date for comparison
+   * @return bool   true if date strings are equal, false otherwise
    */
   private function dateStringsEqual($dbDate, $csvDate)
   {
@@ -2014,7 +2014,7 @@ class QubitFlatfileImport
   /**
    * Handle various update options when importing information objects.
    *
-   * @return bool Whether to skip row processing for this description.
+   * @return bool whether to skip row processing for this description
    */
   private function handleInformationObjectRow()
   {
@@ -2098,7 +2098,7 @@ class QubitFlatfileImport
   /**
    * Return a string indicating what action the import process is going to take for this row.
    *
-   * @return string The action description string.
+   * @return string the action description string
    */
   private function getActionDescription()
   {
@@ -2232,7 +2232,7 @@ class QubitFlatfileImport
   /**
    * Handle various update options when importing repositories and actors.
    *
-   * @return bool Whether to skip row processing for this record.
+   * @return bool whether to skip row processing for this record
    */
   private function handleRepositoryAndActorRow()
   {
@@ -2336,11 +2336,11 @@ class QubitFlatfileImport
    * This function is used to build a list to match against existing to prevent
    * creating duplicate notes when updating descriptions.
    *
-   * @param int    $objectId Object id for object that the note belongs to.
-   * @param int    $typeId   Note type id indicating note type.
-   * @param string $culture  Note culture to check against.
+   * @param int    $objectId object id for object that the note belongs to
+   * @param int    $typeId   note type id indicating note type
+   * @param string $culture  note culture to check against
    *
-   * @return bool Array of all note content.
+   * @return bool array of all note content
    */
   private function getExistingNotes($objectId, $typeId, $culture)
   {
@@ -2368,9 +2368,9 @@ class QubitFlatfileImport
    * This function is to prevent creating duplicate notes when updating descriptions.
    *
    * @param array  $existingNotes Notes already found in the database for this
-   * @param string $content       Note content to check against.
+   * @param string $content       note content to check against
    *
-   * @return bool True if the same note exists, false otherwise.
+   * @return bool true if the same note exists, false otherwise
    */
   private function checkNoteExists(&$existingNotes, $content)
   {
@@ -2440,10 +2440,10 @@ class QubitFlatfileImport
   /**
    * Check whether or not a term / phys obj relation already exists for this info object.
    *
-   * @param integer $subjectId The term, actor or phys object we're relating to.
-   * @param integer $objectId  Information object we're relating to.
+   * @param integer $subjectId the term, actor or phys object we're relating to
+   * @param integer $objectId  information object we're relating to
    *
-   * @return bool True if this relation already exists, false otherwise.
+   * @return bool true if this relation already exists, false otherwise
    */
   private function relationExists($subjectId, $objectId)
   {

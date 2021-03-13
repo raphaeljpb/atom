@@ -598,7 +598,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
    * Delete this resource and its descendants from bottom to top, updating the
    * nested set values only at the end and doing it within a transaction.
    *
-   * @return int Number of resources deleted.
+   * @return int number of resources deleted
    */
   public function deleteFullHierarchy()
   {

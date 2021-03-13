@@ -85,8 +85,8 @@ EOF;
   /**
    * Allow the user to bail out if they aren't sure they want to delete targeted descriptions.
    *
-   * @param $noConfirmation  Whether or not to bypass the confirmation warning (true = bypass).
-   * @return bool True if we want to proceed with the task, false if we want to abort.
+   * @param $noConfirmation  whether or not to bypass the confirmation warning (true = bypass)
+   * @return bool true if we want to proceed with the task, false if we want to abort
    */
   private function confirmDeletion($noConfirmation)
   {
@@ -123,7 +123,7 @@ EOF;
   /**
    * Get AtoM resource specified by resource type and slug.
    *
-   * @param string $slug String indicating the resource's slug.
+   * @param string $slug string indicating the resource's slug
    */
   private function fetchResource($slug)
   {
@@ -141,7 +141,7 @@ EOF;
   /**
    * Delete specified description & its descendants from AtoM.
    *
-   * @param $root  A top level QubitInformationObject which will be deleted along with its descendants.
+   * @param $root  a top level QubitInformationObject which will be deleted along with its descendants
    */
   private function deleteDescriptions($root)
   {

@@ -57,8 +57,8 @@ class arElasticSearchPluginUtil
    * @param  string  date  The date string
    * @param  bool  endDate  If this is set to true, use 12-31 instead
    *
-   * @return mixed A string indicating the normalized date in YYYY-MM-DD format,
-   *               otherwise null indicating an invalid date string was given.
+   * @return mixed a string indicating the normalized date in YYYY-MM-DD format,
+   *               otherwise null indicating an invalid date string was given
    */
   public static function normalizeDateWithoutMonthOrDay($date, $endDate = false)
   {
@@ -188,10 +188,10 @@ class arElasticSearchPluginUtil
   /**
    * Generate a boolean query with a should clause for each field.
    *
-   * @param string $query  Unescaped search term.
-   * @param string $fields Key/value array with fieldname/boost.
+   * @param string $query  unescaped search term
+   * @param string $fields key/value array with fieldname/boost
    *
-   * @return \Elastica\Query\BoolQuery The generated boolean query.
+   * @return \Elastica\Query\BoolQuery the generated boolean query
    */
   public static function generateBoolQueryString($query, $fields)
   {
@@ -224,12 +224,12 @@ class arElasticSearchPluginUtil
   /**
    * Generate a query string query.
    *
-   * @param string $query    Escaped search term.
-   * @param string $field    Full fieldname (including culture if needed).
+   * @param string $query    escaped search term
+   * @param string $field    full fieldname (including culture if needed)
    * @param float  $boost    Boost for the query. Default: 1.
    * @param string $operator Query operator (AND/OR). Default: AND.
    *
-   * @return \Elastica\Query\QueryString The generated query string query.
+   * @return \Elastica\Query\QueryString the generated query string query
    */
   public static function generateQueryString($query, $field, $boost = 1, $operator = 'AND')
   {
@@ -461,7 +461,7 @@ class arElasticSearchPluginUtil
    *                               fields, this value may not be the "current" index being parsed, e.g. when adding
    *                               creators.name actor fields inside informationObject.
    *
-   * @param array  $object      An array containing the current object mappings.
+   * @param array  $object      an array containing the current object mappings
    * @param string $prefix      The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
    * @param bool   $foreignType Whether or not this field in question is being parsed for a foreign type,
    *                            e.g. inside informationObject.creators
@@ -560,7 +560,7 @@ class arElasticSearchPluginUtil
   /**
    * Retrieve a list of fields that are set to hidden in the visible elements settings.
    *
-   * @return array An array specifying which fields are to be hidden from anonymous users.
+   * @return array an array specifying which fields are to be hidden from anonymous users
    */
   private static function getHiddenFields()
   {
@@ -631,10 +631,10 @@ class arElasticSearchPluginUtil
   /**
    * Based on indexType, set the boost values for each field.
    *
-   * @param string $indexType Which index type we're setting the field boost values for.
-   * @param array  $fields    The fields we're setting the boost values on.
+   * @param string $indexType which index type we're setting the field boost values for
+   * @param array  $fields    the fields we're setting the boost values on
    *
-   * @return array Key/value array with fieldname/boost.
+   * @return array key/value array with fieldname/boost
    */
   private static function setBoostValues($indexType, $fields)
   {
@@ -678,7 +678,7 @@ class arElasticSearchPluginUtil
    * @param string $fieldName        The current field name, e.g. "name" in "creators.name"
    * @param array  $i18nIncludeInAll A list of i18n fields to be allowed when searching _all
    *
-   * @return bool True if we should include this field in the _all search, false otherwise.
+   * @return bool true if we should include this field in the _all search, false otherwise
    */
   private static function checkI18nIncludeInAll($prefix, $fieldName, $i18nIncludeInAll)
   {
@@ -702,7 +702,7 @@ class arElasticSearchPluginUtil
    *                               fields, this value may not be the "current" index being parsed, e.g. when adding
    *                               creators.name actor fields inside informationObject.
    *
-   * @param array  &$fields     A reference to our list of fields we're searching over with our _all query.
+   * @param array  &$fields     A reference to our list of fields we're searching over with our _all query
    * @param string $prefix      The current prefix for the field name, e.g. "creators." for "creators.name"
    * @param string $fieldName   The current field name, e.g. "name" in "creators.name"
    * @param bool   $foreignType Whether or not this field in question is being parsed for a foreign type,
@@ -744,7 +744,7 @@ class arElasticSearchPluginUtil
    *                               fields, this value may not be the "current" index being parsed, e.g. when adding
    *                               creators.name actor fields inside informationObject.
    *
-   * @param array  &$fields      A reference to our list of fields we're searching over with our _all query.
+   * @param array  &$fields      A reference to our list of fields we're searching over with our _all query
    * @param string $prefix       The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
    * @param string $propertyName The current property name, e.g. "slug" in "informationObject.slug"
    * @param bool   $foreignType  Whether or not this field in question is being parsed for a foreign type,

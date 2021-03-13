@@ -577,8 +577,8 @@ class QubitInformationObject extends BaseInformationObject
    * @param int $repositoryId The repository to check again. If this is
    *                          null, this function will return false.
    *
-   * @return bool Whether or not this information object would inherit
-   *              a repository with the same id as $repositoryId.
+   * @return bool whether or not this information object would inherit
+   *              a repository with the same id as $repositoryId
    */
   public function canInheritRepository($repositoryId)
   {
@@ -828,7 +828,7 @@ class QubitInformationObject extends BaseInformationObject
    * Returns descendants order by lft checking their visivility.
    * The childs of a non visible descendant will not be added even if they are visible
    *
-   * @return array of QubitInformationObject objects.
+   * @return array of QubitInformationObject objects
    */
   public function getDescendantsForExport($options = [])
   {
@@ -995,7 +995,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Get an array of name access points related to this InformationObject.
    *
-   * @return array of related QubitEvent objects.
+   * @return array of related QubitEvent objects
    */
   public function getNameAccessPoints()
   {
@@ -1529,9 +1529,9 @@ class QubitInformationObject extends BaseInformationObject
    * 3. Actors that have the same name
    *
    * @param $name  The name of the actor
-   * @param $options  An array of options filling in the new event or name access point info.
+   * @param $options  an array of options filling in the new event or name access point info
    *
-   * @return QubitActor The new or existing actor just added to the event/name access point list.
+   * @return QubitActor the new or existing actor just added to the event/name access point list
    */
   public function setActorByName($name, $options)
   {
@@ -2816,8 +2816,8 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Return this information object's full, inherited reference code.
    *
-   * @param bool $includeRepoAndCountry Whether to include the repository identifier and country
-   *                                    code.
+   * @param bool $includeRepoAndCountry whether to include the repository identifier and country
+   *                                    code
    *
    * @return string
    */
@@ -2876,7 +2876,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Get current identifier counter for identifier mask from database.
    *
-   * @return QubitSetting The identifier counter setting (use ->value to get value).
+   * @return QubitSetting the identifier counter setting (use ->value to get value)
    */
   public static function getIdentifierCounter()
   {
@@ -2891,7 +2891,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Generate identifier based on identifier mask and current counter.
    *
-   * @return string The generated identifier.
+   * @return string the generated identifier
    */
   public static function generateIdentiferFromMask()
   {
@@ -3027,7 +3027,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Parse chronlist tags from within a bioghist tag.
    *
-   * @param DOMNodeList $chronlistNodeList A node list containing the chronlist tag and its children.
+   * @param DOMNodeList $chronlistNodeList a node list containing the chronlist tag and its children
    */
   private function parseChronlist($chronlistNodeList)
   {

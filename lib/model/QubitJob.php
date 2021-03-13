@@ -98,7 +98,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get a string representing the job creation date.
-   * @return string The job's creation date in a human readable string.
+   * @return string the job's creation date in a human readable string
    */
   public function getCreationDateString()
   {
@@ -107,7 +107,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get a string representing the job completion date.
-   * @return string The job's creation date in a human readable string.
+   * @return string the job's creation date in a human readable string
    */
   public function getCompletionDateString()
   {
@@ -116,7 +116,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get a string representing the job status.
-   * @return string The job's status in a human readable string.
+   * @return string the job's status in a human readable string
    */
   public function getStatusString()
   {
@@ -143,8 +143,8 @@ class QubitJob extends BaseJob
    * Get the module type for this job's corresponding object.
    * e.g., informationobject, actor, etc.
    *
-   * @return mixed A string indicating the module type of the object for this job,
-   *               or else null.
+   * @return mixed a string indicating the module type of the object for this job,
+   *               or else null
    */
   public function getObjectModule()
   {
@@ -202,8 +202,8 @@ class QubitJob extends BaseJob
   /**
    * Generate a unique token property to associate unauthenticated users with jobs.
    *
-   * @throws sfException   If a unique token can't be generated.
-   * @return QubitProperty Generated user token property.
+   * @throws sfException   if a unique token can't be generated
+   * @return QubitProperty generated user token property
    */
   public function generateUserTokenProperty()
   {
@@ -246,8 +246,8 @@ class QubitJob extends BaseJob
   /**
    * Get the QubitJob associated with a given user token, if any.
    *
-   * @param  string $token The user token.
-   * @return mixed  QubitJob associated with the token or null.
+   * @param  string $token the user token
+   * @return mixed  qubitJob associated with the token or null
    */
   public static function getByUserTokenProperty($token)
   {
@@ -266,7 +266,7 @@ class QubitJob extends BaseJob
 
   /**
    * Add a basic note to this job
-   * @param sfBasicSecurityUser $user the currently logged in user.
+   * @param sfBasicSecurityUser $user the currently logged in user
    */
   public static function getJobsByUser($user)
   {
@@ -387,7 +387,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get a string representing a date.
-   * @return string The job's creation date in a human readable string.
+   * @return string the job's creation date in a human readable string
    */
   private function formatDate($date)
   {

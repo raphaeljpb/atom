@@ -108,7 +108,7 @@ class ClipboardViewAction extends DefaultBrowseAction
   /**
    * Set which field to sort by for current ES query.
    *
-   * @param sfRequest $request Current request object.
+   * @param sfRequest $request current request object
    */
   private function setESSort($request)
   {

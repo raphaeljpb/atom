@@ -121,7 +121,7 @@ class arGenerateReportJob extends arBaseJob
   /**
    * Get a report's filename based on slug, report type and format.
    *
-   * @return string The report filename.
+   * @return string the report filename
    */
   public static function getFilename($resource, $format, $type)
   {
@@ -256,7 +256,7 @@ class arGenerateReportJob extends arBaseJob
   /**
    * Write box label report to CSV.
    *
-   * @param array results  A list of box label results for the report.
+   * @param array results  A list of box label results for the report
    */
   private function writeBoxLabelCsv($results)
   {
@@ -285,7 +285,7 @@ class arGenerateReportJob extends arBaseJob
   /**
    * Write storage location report to CSV.
    *
-   * @param array results  A list of results for the report.
+   * @param array results  A list of results for the report
    */
   private function writeStorageLocationsCsv($results)
   {
@@ -314,7 +314,7 @@ class arGenerateReportJob extends arBaseJob
   /**
    * Write file or item list report to CSV.
    *
-   * @param array results  A list of results for the report.
+   * @param array results  A list of results for the report
    */
   private function writeItemOrListCsv($results)
   {
@@ -370,7 +370,7 @@ class arGenerateReportJob extends arBaseJob
    * Write a report to an html document. This is a general purpose function that will capture
    * the output of html report templates based on report type.
    *
-   * @param array results  A list of results for the report.
+   * @param array results  A list of results for the report
    */
   private function writeHtml($results)
   {
@@ -426,7 +426,7 @@ class arGenerateReportJob extends arBaseJob
   /**
    * Get first creation date given specified resource.
    *
-   * @return QubitEvent specifying first creation date encountered, null otherwise.
+   * @return QubitEvent specifying first creation date encountered, null otherwise
    */
   private function getCreationDates($resource)
   {

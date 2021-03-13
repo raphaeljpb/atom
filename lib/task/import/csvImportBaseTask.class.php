@@ -30,7 +30,7 @@ abstract class csvImportBaseTask extends arBaseTask
    * If updating, delete existing digital object if updating, a path or UI has
    * been specified, and not keeping digial objects.
    *
-   * @param QubitFlatfileImport $self A reference to our flat file importer.
+   * @param QubitFlatfileImport $self a reference to our flat file importer
    */
   public function deleteDigitalObjectIfUpdatingAndNotKeeping($self)
   {
@@ -76,7 +76,7 @@ abstract class csvImportBaseTask extends arBaseTask
    *
    * If both a URI and path are provided, the former is preferred.
    *
-   * @param QubitFlatfileImport $self A reference to our flat file importer.
+   * @param QubitFlatfileImport $self a reference to our flat file importer
    */
   public function importDigitalObject($self)
   {
@@ -133,8 +133,8 @@ abstract class csvImportBaseTask extends arBaseTask
   /**
    * Create new digital object from a path and link it to a resource.
    *
-   * @param QubitFlatfileImport $self A reference to our flat file importer ($self->object refers to
-   *                                  the resource we're currently importing).
+   * @param QubitFlatfileImport $self a reference to our flat file importer ($self->object refers to
+   *                                  the resource we're currently importing)
    * @param string              $path Asset file path
    */
   public function addDigitalObjectFromPath($self, $path)
@@ -567,7 +567,7 @@ abstract class csvImportBaseTask extends arBaseTask
   /**
    * Validate --update option values, throw an exception if invalid value specified.
    *
-   * @param array $options CLI options passed in during import.
+   * @param array $options CLI options passed in during import
    */
   protected function validateUpdateOptions($options)
   {

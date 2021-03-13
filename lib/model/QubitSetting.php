@@ -68,7 +68,7 @@ class QubitSetting extends BaseSetting
    * Get all values from QubitSetting table, in appropriate culture, in
    * sfConfig array format.
    *
-   * @return array name/value pairs formatted for addition to sfConfig array.
+   * @return array name/value pairs formatted for addition to sfConfig array
    */
   public static function getSettingsArray()
   {
@@ -146,7 +146,7 @@ class QubitSetting extends BaseSetting
    * Get all system settings that are "non-global" (scope <> NULL) and not
    * "site information" settings
    *
-   * @return QubitQuery collection of QubitSetting objects.
+   * @return QubitQuery collection of QubitSetting objects
    */
   public static function getLocalSettings()
   {
@@ -180,7 +180,7 @@ class QubitSetting extends BaseSetting
   /**
    * Get a setting by it's name
    *
-   * @return QubitSetting object.
+   * @return QubitSetting object
    */
   public static function getByName($name)
   {
@@ -193,7 +193,7 @@ class QubitSetting extends BaseSetting
   /**
    * Get a setting by it's name & scope
    *
-   * @return QubitSetting object.
+   * @return QubitSetting object
    */
   public static function getByNameAndScope($name, $scope)
   {
@@ -207,7 +207,7 @@ class QubitSetting extends BaseSetting
   /**
    * Find a setting, and save a new value to it
    *
-   * @return QubitSetting object.
+   * @return QubitSetting object
    */
   public static function findAndSave($name, $value, $options)
   {

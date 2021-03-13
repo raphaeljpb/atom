@@ -67,9 +67,9 @@ class QubitMarkdown
    * paragraphs, but this can be changed with the `inline` option, to use
    * Parsedown `line` method.
    *
-   * @param  mixed  $content Object/String to parse.
-   * @param  array  $options Set of options (safe mode and inline).
-   * @return string Parsed content.
+   * @param  mixed  $content object/String to parse
+   * @param  array  $options set of options (safe mode and inline)
+   * @return string parsed content
    */
   public function parse($content, $options = [])
   {
@@ -108,8 +108,8 @@ class QubitMarkdown
    * HTML using Parsedown `text` method and then removes all tags with PHP
    * `strip_tags` function.
    *
-   * @param  mixed  $content Object/String to parse.
-   * @return string Stripped content.
+   * @param  mixed  $content object/String to parse
+   * @return string stripped content
    */
   public function strip($content)
   {
@@ -175,8 +175,8 @@ class QubitMarkdown
    * We normally reach this function from the templates and, with the
    * escaping strategy enabled by default, the content will be escaped.
    *
-   * @param  mixed  $content Object/String to normalize.
-   * @return string String value of content or empty string.
+   * @param  mixed  $content object/String to normalize
+   * @return string string value of content or empty string
    */
   protected function getUnescapedString($content)
   {

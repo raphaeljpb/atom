@@ -683,7 +683,7 @@ class QubitXmlImport
   /**
    * Populate EAD information objects.
    *
-   * @return bool True if we want to continue populating objects, false if we want to end the import.
+   * @return bool true if we want to continue populating objects, false if we want to end the import
    */
   private function populateObject(&$domNode, &$importDOM, &$mapping, &$currentObject, $importSchema)
   {

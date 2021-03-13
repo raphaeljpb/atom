@@ -134,8 +134,8 @@ class QubitGrantedRight extends BaseGrantedRight
   /**
    * Gets the string related to a restriction.
    *
-   * @param int  restrictionId  The restriction number.
-   * @return string The string representing the restriction.
+   * @param int  restrictionId  The restriction number
+   * @return string the string representing the restriction
    */
   public static function getRestrictionString($restrictionId)
   {
@@ -179,13 +179,13 @@ class QubitGrantedRight extends BaseGrantedRight
    * on an information object, & return which groups are allowed to perform
    * a specified action.
    *
-   * @param  int  id  The ID of the information object to check permissions against.
+   * @param  int  id  The ID of the information object to check permissions against
    * @param  string  action  The action to check against, e.g. 'readReference'
    * @param  string  denyReason  An optional parameter for the function to pass out
    *                 which rule was responsible for any denial (e.g. 'conditional')
    *
-   * @return array An array of groupIds that are allowed to perform $action on
-   *               the specified information object.
+   * @return array an array of groupIds that are allowed to perform $action on
+   *               the specified information object
    */
   private static function checkPremisRightsAgainstGroups($id, $action, &$denyReason = null)
   {

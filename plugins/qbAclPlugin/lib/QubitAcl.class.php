@@ -886,10 +886,10 @@ class QubitAcl
    * Get a Criteria query either including allowed object ids, or filter out denied object ids.
    *
    * @param Criteria $criteria      The Criteria object passed to getFilterCriterion
-   * @param string   $rootClass     The class name of the resource being checked on.
-   * @param array    $resourceCache A cache of objects so we don't need to call getById() frequently.
-   * @param array    $resourceIds   An array of object ids which we are either allowed / denied to view.
-   * @param boolean  $allow         Which type of access the ids in the array represent, allow access (true) or deny (false).
+   * @param string   $rootClass     the class name of the resource being checked on
+   * @param array    $resourceCache a cache of objects so we don't need to call getById() frequently
+   * @param array    $resourceIds   an array of object ids which we are either allowed / denied to view
+   * @param boolean  $allow         which type of access the ids in the array represent, allow access (true) or deny (false)
    *
    * @return Criterion
    */
