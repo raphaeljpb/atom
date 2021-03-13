@@ -2,6 +2,7 @@
 
 /**
  * @internal
+ * @coversNothing
  */
 class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
 {
