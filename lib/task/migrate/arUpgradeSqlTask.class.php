@@ -154,10 +154,10 @@ EOF;
     else
     {
       foreach (sfFinder::type('file')
-                ->maxdepth(0)
-                ->sort_by_name()
-                ->name('arUpgrader*.class.php')
-                ->in(sfConfig::get('sf_lib_dir').'/task/migrate') as $filename)
+        ->maxdepth(0)
+        ->sort_by_name()
+        ->name('arUpgrader*.class.php')
+        ->in(sfConfig::get('sf_lib_dir').'/task/migrate') as $filename)
       {
         $className = preg_replace('/.*(arUpgrader\d+).*/', '$1', $filename);
         $class = new $className();

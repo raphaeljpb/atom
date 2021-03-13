@@ -28,9 +28,9 @@
 
         <?php if ($pdfinfoAvailable) { ?>
           <?php echo $form->digital_object_derivatives_pdf_page_number
-            ->label(__('PDF page number for image derivative'))
-            ->help(__('If the page number does not exist, the derivative will be generated from the previous closest one.'))
-            ->renderRow(); ?>
+          ->label(__('PDF page number for image derivative'))
+          ->help(__('If the page number does not exist, the derivative will be generated from the previous closest one.'))
+          ->renderRow(); ?>
         <?php } else { ?>
           <div class="messages error">
             <?php echo __('The pdfinfo tool is required to use this functionality. Please contact your system administrator.'); ?>

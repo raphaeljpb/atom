@@ -53,12 +53,12 @@ EOF
 
           <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
             <?php echo $form->password
-              ->label(__('Change password'))
-              ->renderLabel(); ?>
+            ->label(__('Change password'))
+            ->renderLabel(); ?>
           <?php } else { ?>
             <?php echo $form->password
-              ->label(__('Password'))
-              ->renderLabel(); ?>
+            ->label(__('Password'))
+            ->renderLabel(); ?>
           <?php } ?>
 
           <?php echo $form->password->render(['class' => 'password-field']); ?>
@@ -74,8 +74,8 @@ EOF
 
         <?php if ($sf_user->user != $resource) { ?>
           <?php echo $form->active
-            ->label(__('Active'))
-            ->renderRow(); ?>
+          ->label(__('Active'))
+          ->renderRow(); ?>
         <?php } ?>
 
       </fieldset> <!-- /#basicInfo -->
@@ -94,14 +94,14 @@ EOF
 
         <?php if ($restEnabled) { ?>
           <?php echo $form->restApiKey
-            ->label(__('REST API access key'.((isset($restApiKey)) ? ': <code>'.$restApiKey.'</code>' : '')))
-            ->renderRow(); ?>
+          ->label(__('REST API access key'.((isset($restApiKey)) ? ': <code>'.$restApiKey.'</code>' : '')))
+          ->renderRow(); ?>
         <?php } ?>
 
         <?php if ($oaiEnabled) { ?>
           <?php echo $form->oaiApiKey
-            ->label(__('OAI-PMH API access key'.((isset($oaiApiKey)) ? ': <code>'.$oaiApiKey.'</code>' : '')))
-            ->renderRow(); ?>
+          ->label(__('OAI-PMH API access key'.((isset($oaiApiKey)) ? ': <code>'.$oaiApiKey.'</code>' : '')))
+          ->renderRow(); ?>
         <?php } ?>
 
       </fieldset> <!-- /#groupsAndPermissions -->

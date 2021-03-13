@@ -18,8 +18,8 @@ $browser
   ->post(';user/login', ['email' => 'test@example.com', 'password' => 'test1234'])
 
   ->with('request')->begin()
-    ->isParameter('module', 'user')
-    ->isParameter('action', 'login')
+  ->isParameter('module', 'user')
+  ->isParameter('action', 'login')
   ->end();
 
 $browser->test()->ok($browser->getUser()->isAuthenticated(),
@@ -34,15 +34,15 @@ $browser
   ->get('/')
 
   ->with('request')->begin()
-    ->isParameter('module', 'staticpage')
-    ->isParameter('action', 'static')
+  ->isParameter('module', 'staticpage')
+  ->isParameter('action', 'static')
   ->end()
 
   ->click('Log out')
 
   ->with('request')->begin()
-    ->isParameter('module', 'user')
-    ->isParameter('action', 'logout')
+  ->isParameter('module', 'user')
+  ->isParameter('action', 'logout')
   ->end();
 
 $browser->test()->ok(!$browser->getUser()->isAuthenticated(),
@@ -56,8 +56,8 @@ $browser
   ->post(';user/login', ['email' => 'test@example.com', 'password' => 'wrongpass'])
 
   ->with('request')->begin()
-    ->isParameter('module', 'user')
-    ->isParameter('action', 'login')
+  ->isParameter('module', 'user')
+  ->isParameter('action', 'login')
   ->end();
 
 $browser->test()->ok(!$browser->getUser()->isAuthenticated(),
@@ -74,8 +74,8 @@ $browser
   ->post(';user/login', ['email' => 'test@example.com', 'password' => 'test1234', 'next' => 'http://localhost/example'])
 
   ->with('request')->begin()
-    ->isParameter('module', 'user')
-    ->isParameter('action', 'login')
+  ->isParameter('module', 'user')
+  ->isParameter('action', 'login')
   ->end();
 
 $browser->test()->ok($browser->getUser()->isAuthenticated(),
@@ -92,8 +92,8 @@ $browser
   ->post(';user/login', ['email' => 'test@example.com', 'password' => 'test1234', 'next' => ''])
 
   ->with('request')->begin()
-    ->isParameter('module', 'user')
-    ->isParameter('action', 'login')
+  ->isParameter('module', 'user')
+  ->isParameter('action', 'login')
   ->end();
 
 $browser->test()->ok($browser->getUser()->isAuthenticated(),

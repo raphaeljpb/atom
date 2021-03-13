@@ -11,23 +11,23 @@ $browser
   ->get(';create/isaar')
 
   ->with('request')->begin()
-    ->isParameter('module', 'actor')
-    ->isParameter('action', 'editIsaar')
+  ->isParameter('module', 'actor')
+  ->isParameter('action', 'editIsaar')
   ->end()
 
   ->click('Create')
 
   ->with('request')->begin()
-    ->isParameter('module', 'actor')
-    ->isParameter('action', 'editIsaar')
+  ->isParameter('module', 'actor')
+  ->isParameter('action', 'editIsaar')
   ->end()
 
   ->isRedirected()
   ->followRedirect()
 
   ->with('request')->begin()
-    ->isParameter('module', 'actor')
-    ->isParameter('action', 'indexIsaar')
+  ->isParameter('module', 'actor')
+  ->isParameter('action', 'indexIsaar')
   ->end();
 
 $object = QubitObject::getById($browser->getRequest()->id);

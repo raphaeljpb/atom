@@ -45,7 +45,7 @@
                 <?php } ?>
 
                 <?php echo $digitalObjectTitleForm[$io->id]
-                    ->label(__('Title')); ?>
+                  ->label(__('Title')); ?>
                 <?php echo __($io->digitalObjectsRelatedByobjectId[0]->name); ?>
                 <?php echo render_show(__('Level of description'), render_value_inline($io->levelOfDescription)); ?>
               </td>

@@ -13,10 +13,10 @@ $browser
   ->get(QubitActor::ROOT_ID.';actor/delete')
 
   ->with('request')->begin()
-    ->isParameter('module', 'actor')
-    ->isParameter('action', 'delete')
+  ->isParameter('module', 'actor')
+  ->isParameter('action', 'delete')
   ->end()
 
   ->with('response')->begin()
-    ->isStatusCode(404)
+  ->isStatusCode(404)
   ->end();

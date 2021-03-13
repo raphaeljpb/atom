@@ -37,15 +37,15 @@ $browser
   ->post(';object/import')
 
   ->with('request')->begin()
-    ->isParameter('module', 'object')
-    ->isParameter('action', 'import')
+  ->isParameter('module', 'object')
+  ->isParameter('action', 'import')
   ->end()
 
   ->click('View Information object')
 
   ->with('request')->begin()
-    ->isParameter('module', 'sfIsadPlugin')
-    ->isParameter('action', 'index')
+  ->isParameter('module', 'sfIsadPlugin')
+  ->isParameter('action', 'index')
   ->end();
 
 $object = QubitObject::getById($browser->getRequest()->id);

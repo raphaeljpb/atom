@@ -178,8 +178,8 @@ EOF;
               && QubitValidatorActorDescriptionIdentifier::identifierUsedByAnotherActor($identifier, $self->object))
           {
             $error = sfContext::getInstance()
-                       ->i18n
-                       ->__(
+              ->i18n
+              ->__(
                          '%1% identifier "%2%" not unique.',
                          [
                            '%1%' => sfConfig::get('app_ui_label_actor'),

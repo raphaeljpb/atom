@@ -134,7 +134,7 @@
             <?php echo $gr['id']->render(); ?>
             <?php echo $gr['delete']->render(); ?>
             <?php echo $gr['act']
-               ->renderRow(null, null, __('The action which is permitted or restricted.')); ?>
+              ->renderRow(null, null, __('The action which is permitted or restricted.')); ?>
             <?php echo $gr['restriction']
               ->renderRow(null, null, __('A condition or limitation on the act.')); ?>
             <?php echo $gr['startDate']

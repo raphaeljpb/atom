@@ -11,20 +11,20 @@ $browser
   ->post(';create/isad', ['title' => 'Example fonds'])
 
   ->with('request')->begin()
-    ->isParameter('module', 'sfIsadPlugin')
-    ->isParameter('action', 'edit')
+  ->isParameter('module', 'sfIsadPlugin')
+  ->isParameter('action', 'edit')
   ->end()
 
   ->isRedirected()
   ->followRedirect()
 
   ->with('request')->begin()
-    ->isParameter('module', 'sfIsadPlugin')
-    ->isParameter('action', 'index')
+  ->isParameter('module', 'sfIsadPlugin')
+  ->isParameter('action', 'index')
   ->end()
 
   ->with('response')->begin()
-    ->checkElement('body', '/Example fonds/')
+  ->checkElement('body', '/Example fonds/')
   ->end();
 
 $object = QubitObject::getById($browser->getRequest()->id);

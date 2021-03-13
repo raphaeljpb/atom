@@ -12,10 +12,10 @@ $browser
   ->get(QubitInformationObject::ROOT_ID.';informationobject/delete')
 
   ->with('request')->begin()
-    ->isParameter('module', 'informationobject')
-    ->isParameter('action', 'delete')
+  ->isParameter('module', 'informationobject')
+  ->isParameter('action', 'delete')
   ->end()
 
   ->with('response')->begin()
-    ->isStatusCode(404)
+  ->isStatusCode(404)
   ->end();

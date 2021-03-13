@@ -48,7 +48,7 @@
                   '%1%' => sfConfig::get('app_ui_label_repository'),
                 ]
               ))
-              ->help(__(
+            ->help(__(
                 'When enabled, an &quot;Upload limit&quot; meter is displayed'
                 .' for authenticated users on the %1% view page, and'
                 .' administrators can limit the disk space each %1% is allowed'

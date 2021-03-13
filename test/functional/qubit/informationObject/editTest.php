@@ -12,10 +12,10 @@ $browser
   ->get(QubitInformationObject::ROOT_ID.';edit/isad')
 
   ->with('request')->begin()
-    ->isParameter('module', 'sfIsadPlugin')
-    ->isParameter('action', 'edit')
+  ->isParameter('module', 'sfIsadPlugin')
+  ->isParameter('action', 'edit')
   ->end()
 
   ->with('response')->begin()
-    ->isStatusCode(404)
+  ->isStatusCode(404)
   ->end();

@@ -1,6 +1,6 @@
 <?php if (!empty($label)) { ?>
   <?php echo $form->{$name}
-    ->renderLabel($label); ?>
+  ->renderLabel($label); ?>
 <?php } ?>
 
 <?php if (strlen($error = $form->{$name}->renderError())) { ?>

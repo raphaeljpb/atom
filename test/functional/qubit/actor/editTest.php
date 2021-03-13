@@ -13,10 +13,10 @@ $browser
   ->get(QubitActor::ROOT_ID.';edit/isaar')
 
   ->with('request')->begin()
-    ->isParameter('module', 'actor')
-    ->isParameter('action', 'editIsaar')
+  ->isParameter('module', 'actor')
+  ->isParameter('action', 'editIsaar')
   ->end()
 
   ->with('response')->begin()
-    ->isStatusCode(404)
+  ->isStatusCode(404)
   ->end();
