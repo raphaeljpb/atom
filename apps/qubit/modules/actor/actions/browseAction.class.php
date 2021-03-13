@@ -32,53 +32,61 @@ class ActorBrowseAction extends DefaultBrowseAction
 
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'repository',
-      'hasDigitalObject',
-      'entityType',
-      'emptyField',
-      'relatedType',
-      'relatedAuthority'
-    ];
+    'repository',
+    'hasDigitalObject',
+    'entityType',
+    'emptyField',
+    'relatedType',
+    'relatedAuthority'
+  ];
   public static $FILTERTAGS = [
-      'hasDigitalObject' => [],
-      'repository' => ['model' => 'QubitRepository'],
-      'entityType' => ['model' => 'QubitTerm'],
-      'relatedType' => ['model' => 'QubitTerm'],
-      'occupation' => ['model' => 'QubitTerm'],
-      'place' => ['model' => 'QubitTerm'],
-      'subject' => ['model' => 'QubitTerm'],
-      'mediatypes' => ['model' => 'QubitTerm'],
-      'emptyField' => []
-    ];
+    'hasDigitalObject' => [],
+    'repository' => ['model' => 'QubitRepository'],
+    'entityType' => ['model' => 'QubitTerm'],
+    'relatedType' => ['model' => 'QubitTerm'],
+    'occupation' => ['model' => 'QubitTerm'],
+    'place' => ['model' => 'QubitTerm'],
+    'subject' => ['model' => 'QubitTerm'],
+    'mediatypes' => ['model' => 'QubitTerm'],
+    'emptyField' => []
+  ];
   public static $AGGS = [
-      'languages' =>
-        ['type' => 'term',
-              'field' => 'i18n.languages',
-              'size' => 10],
-      'mediatypes' =>
-        ['type' => 'term',
-              'field' => 'digitalObject.mediaTypeId',
-              'size' => 10],
-      'entityType' =>
-        ['type' => 'term',
-              'field' => 'entityTypeId',
-              'size' => 10],
-      'repository' =>
-        ['type' => 'term',
-              'field' => 'maintainingRepositoryId',
-              'size' => 10],
-      'occupation' =>
-        ['type' => 'term',
-              'field' => 'occupations.id',
-              'size' => 10],
-      'place' =>
-        ['type' => 'term',
-              'field' => 'places.id',
-              'size' => 10],
-      'subject' =>
-        ['type' => 'term',
-              'field' => 'subjects.id',
-              'size' => 10]];
+    'languages' => [
+      'type' => 'term',
+      'field' => 'i18n.languages',
+      'size' => 10
+    ],
+    'mediatypes' => [
+      'type' => 'term',
+      'field' => 'digitalObject.mediaTypeId',
+      'size' => 10
+    ],
+    'entityType' => [
+      'type' => 'term',
+      'field' => 'entityTypeId',
+      'size' => 10
+    ],
+    'repository' => [
+      'type' => 'term',
+      'field' => 'maintainingRepositoryId',
+      'size' => 10
+    ],
+    'occupation' => [
+      'type' => 'term',
+      'field' => 'occupations.id',
+      'size' => 10
+    ],
+    'place' => [
+      'type' => 'term',
+      'field' => 'places.id',
+      'size' => 10
+    ],
+    'subject' => [
+      'type' => 'term',
+      'field' => 'subjects.id',
+      'size' => 10
+    ]
+  ];
 
   /**
    * Return ElasticSearch field(s) for a given "friendly" field name

@@ -24,26 +24,32 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
   // Arrays not allowed in class constants
   public static $FILTERTAGS = [];
   public static $AGGS = [
-      'languages' =>
-        ['type' => 'term',
-              'field' => 'i18n.languages',
-              'size' => 10],
-      'occupations' =>
-        ['type' => 'term',
-              'field' => 'occupations.id',
-              'size' => 10],
-      'places' =>
-        ['type' => 'term',
-              'field' => 'places.id',
-              'size' => 10],
-      'subjects' =>
-        ['type' => 'term',
-              'field' => 'subjects.id',
-              'size' => 10],
-      'direct' =>
-        ['type' => 'filter',
-              'field' => '',
-              'populate' => false]];
+    'languages' => [
+      'type' => 'term',
+      'field' => 'i18n.languages',
+      'size' => 10
+    ],
+    'occupations' => [
+      'type' => 'term',
+      'field' => 'occupations.id',
+      'size' => 10
+    ],
+    'places' => [
+      'type' => 'term',
+      'field' => 'places.id',
+      'size' => 10
+    ],
+    'subjects' => [
+      'type' => 'term',
+      'field' => 'subjects.id',
+      'size' => 10
+    ],
+    'direct' => [
+      'type' => 'filter',
+      'field' => '',
+      'populate' => false
+    ]
+  ];
 
   public function execute($request)
   {

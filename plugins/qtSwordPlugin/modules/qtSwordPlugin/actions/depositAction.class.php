@@ -102,9 +102,7 @@ class qtSwordPluginDepositAction extends sfAction
 
     // Job accepted!
     return $this->generateResponse(202, 'deposit',
-      ['headers' =>
-        ['Location' =>
-          $this->context->routing->generate(null, [$this->informationObject, 'module' => 'informationobject'])]]);
+      ['headers' => ['Location' => $this->context->routing->generate(null, [$this->informationObject, 'module' => 'informationobject'])]]);
   }
 
   protected function generateResponse($code, $template = null, array $options = [])

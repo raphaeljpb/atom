@@ -1,13 +1,10 @@
 <?php
 
 return [
-  'all' =>
-  [
-    'propel' =>
-    [
+  'all' => [
+    'propel' => [
       'class' => 'sfPropelDatabase',
-      'param' =>
-      [
+      'param' => [
         'encoding' => 'utf8mb4',
         'persistent' => true,
         'pooling' => true,
@@ -17,37 +14,27 @@ return [
       ],
     ],
   ],
-  'dev' =>
-  [
-    'propel' =>
-    [
-      'param' =>
-      [
+  'dev' => [
+    'propel' => [
+      'param' => [
         'classname' => 'DebugPDO',
-        'debug' =>
-        [
+        'debug' => [
           'realmemoryusage' => true,
-          'details' =>
-          [
-            'time' =>
-            [
+          'details' => [
+            'time' => [
               'enabled' => true,
             ],
-            'slow' =>
-            [
+            'slow' => [
               'enabled' => true,
               'threshold' => 0.1,
             ],
-            'mem' =>
-            [
+            'mem' => [
               'enabled' => true,
             ],
-            'mempeak' =>
-            [
+            'mempeak' => [
               'enabled' => true,
             ],
-            'memdelta' =>
-            [
+            'memdelta' => [
               'enabled' => true,
             ],
           ],
@@ -55,12 +42,9 @@ return [
       ],
     ],
   ],
-  'test' =>
-  [
-    'propel' =>
-    [
-      'param' =>
-      [
+  'test' => [
+    'propel' => [
+      'param' => [
         'classname' => 'DebugPDO',
       ],
     ],

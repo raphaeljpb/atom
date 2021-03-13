@@ -29,80 +29,92 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'copyrightStatus',
-      'onlyMedia',
-      'levels',
-      'materialType',
-      'repos',
-      'collection',
-      'startDate',
-      'endDate',
-      'topLod',
-      'rangeType',
-      'findingAidStatus'
-    ];
+    'copyrightStatus',
+    'onlyMedia',
+    'levels',
+    'materialType',
+    'repos',
+    'collection',
+    'startDate',
+    'endDate',
+    'topLod',
+    'rangeType',
+    'findingAidStatus'
+  ];
   public static $FILTERTAGS = [
-      'repos' => ['model' => 'QubitRepository'],
-      'collection' => ['model' => 'QubitInformationObject'],
-      'creators' => ['model' => 'QubitActor'],
-      'names' => ['model' => 'QubitActor'],
-      'places' => ['model' => 'QubitTerm'],
-      'levels' => ['model' => 'QubitTerm'],
-      'subjects' => ['model' => 'QubitTerm'],
-      'mediatypes' => ['model' => 'QubitTerm'],
-      'copyrightStatus' => ['model' => 'QubitTerm'],
-      'materialType' => ['model' => 'QubitTerm'],
-      'onlyMedia' => [],
-      'languages' => [],
-      'dateRange' => ['params' => ['startDate', 'endDate'], 'operator' => 'or'],
-      'findingAidStatus' => [],
-      'ancestor' => ['model' => 'QubitInformationObject']
-    ];
+    'repos' => ['model' => 'QubitRepository'],
+    'collection' => ['model' => 'QubitInformationObject'],
+    'creators' => ['model' => 'QubitActor'],
+    'names' => ['model' => 'QubitActor'],
+    'places' => ['model' => 'QubitTerm'],
+    'levels' => ['model' => 'QubitTerm'],
+    'subjects' => ['model' => 'QubitTerm'],
+    'mediatypes' => ['model' => 'QubitTerm'],
+    'copyrightStatus' => ['model' => 'QubitTerm'],
+    'materialType' => ['model' => 'QubitTerm'],
+    'onlyMedia' => [],
+    'languages' => [],
+    'dateRange' => ['params' => ['startDate', 'endDate'], 'operator' => 'or'],
+    'findingAidStatus' => [],
+    'ancestor' => ['model' => 'QubitInformationObject']
+  ];
   public static $AGGS = [
-      'languages' =>
-        ['type' => 'term',
-              'field' => 'i18n.languages',
-              'size' => 10],
-      'levels' =>
-        ['type' => 'term',
-              'field' => 'levelOfDescriptionId',
-              'size' => 10],
-      'mediatypes' =>
-        ['type' => 'term',
-              'field' => 'digitalObject.mediaTypeId',
-              'size' => 10],
-      'digitalobjects' =>
-        ['type' => 'filter',
-              'field' => ['hasDigitalObject' => true],
-              'populate' => false],
-      'repos' =>
-        ['type' => 'term',
-              'field' => 'repository.id',
-              'size' => 10],
-      'places' =>
-        ['type' => 'term',
-              'field' => 'places.id',
-              'size' => 10],
-      'subjects' =>
-        ['type' => 'term',
-              'field' => 'subjects.id',
-              'size' => 10],
-      'genres' =>
-        ['type' => 'term',
-              'field' => 'genres.id',
-              'size' => 10],
-      'creators' =>
-        ['type' => 'term',
-              'field' => 'creators.id',
-              'size' => 10],
-      'names' =>
-        ['type' => 'term',
-              'field' => 'names.id',
-              'size' => 10],
-      'collection' =>
-        ['type' => 'term',
-              'field' => 'partOf.id',
-              'size' => 10]];
+    'languages' => [
+      'type' => 'term',
+      'field' => 'i18n.languages',
+      'size' => 10
+    ],
+    'levels' => [
+      'type' => 'term',
+      'field' => 'levelOfDescriptionId',
+      'size' => 10
+    ],
+    'mediatypes' => [
+      'type' => 'term',
+      'field' => 'digitalObject.mediaTypeId',
+      'size' => 10
+    ],
+    'digitalobjects' => [
+      'type' => 'filter',
+      'field' => ['hasDigitalObject' => true],
+      'populate' => false
+    ],
+    'repos' => [
+      'type' => 'term',
+      'field' => 'repository.id',
+      'size' => 10
+    ],
+    'places' => [
+      'type' => 'term',
+      'field' => 'places.id',
+      'size' => 10
+    ],
+    'subjects' => [
+      'type' => 'term',
+      'field' => 'subjects.id',
+      'size' => 10
+    ],
+    'genres' => [
+      'type' => 'term',
+      'field' => 'genres.id',
+      'size' => 10
+    ],
+    'creators' => [
+      'type' => 'term',
+      'field' => 'creators.id',
+      'size' => 10
+    ],
+    'names' => [
+      'type' => 'term',
+      'field' => 'names.id',
+      'size' => 10
+    ],
+    'collection' => [
+      'type' => 'term',
+      'field' => 'partOf.id',
+      'size' => 10
+    ]
+  ];
 
   public function execute($request)
   {
