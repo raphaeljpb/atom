@@ -24,7 +24,7 @@ class arElasticSearchMapping
    *
    * @return array
    */
-  protected $nestedTypes = null;
+  protected $nestedTypes;
 
   /**
    * Associative array that maps iso639-1 language codes to the different

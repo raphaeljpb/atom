@@ -19,7 +19,7 @@
 
 abstract class arElasticSearchModelBase
 {
-  protected $timer = null;
+  protected $timer;
   protected $count = 0;
 
   protected static $conn;

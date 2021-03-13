@@ -32,7 +32,7 @@ class sfThumbnail
   /**
    * Temporary file if the source is not local.
    */
-  protected $tempFile = null;
+  protected $tempFile;
 
   /**
    * Thumbnail constructor.

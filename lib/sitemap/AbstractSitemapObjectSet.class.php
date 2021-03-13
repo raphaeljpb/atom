@@ -45,7 +45,7 @@ abstract class AbstractSitemapObjectSet implements Countable, Iterator
   /**
    * Current object in the collection.
    */
-  private $item = null;
+  private $item;
 
   public function __construct()
   {

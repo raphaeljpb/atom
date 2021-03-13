@@ -20,15 +20,15 @@
 class sfSkosPlugin
 {
   // Internal EasyRdf_Graph.
-    protected $graph = null;
+    protected $graph;
   // Notify user after this number of concepts added.
     protected $notifyAfter = 100;
   // Total amount of concepts added.
     protected $total = 0;
   // QubitTaxonomy that we're using in the import.
-    protected $taxonomy = null;
+    protected $taxonomy;
   // QubitTerm main ancestors, it could be just the root.
-    protected $parent = null;
+    protected $parent;
   // List of languages which have been seen during the import but are not
     // available in AtoM. For reporting purposes.
     protected $unsupportedLanguages = [];

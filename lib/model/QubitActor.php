@@ -29,7 +29,7 @@ class QubitActor extends BaseActor
   // Flag for updating search index on save
     public $indexOnSave = true;
 
-  protected $SubjectHitCount = null;
+  protected $SubjectHitCount;
 
   public function __toString()
   {

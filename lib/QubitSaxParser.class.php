@@ -54,8 +54,8 @@
  */
 class QubitSaxParser
 {
-  protected $sax = null;
-  protected $error = null;
+  protected $sax;
+  protected $error;
 
   // Ancestor tag data stack
   protected $ancestors = [];

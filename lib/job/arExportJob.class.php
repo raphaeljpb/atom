@@ -28,7 +28,7 @@ class arExportJob extends arBaseJob
   public const LOG_INTERVAL = 100;
 
   // Child class should set this if creating user downloads
-  protected $downloadFileExtension = null;
+  protected $downloadFileExtension;
 
   protected $filenames = [];
   protected $itemsExported = 0;

@@ -146,9 +146,9 @@ class QubitTerm extends BaseTerm
     ACCESSION_EVENT_NOTE_ID = 194;
   public $disableNestedSetUpdating = false;
 
-  protected $CountryHitCount = null;
-  protected $LanguageHitCount = null;
-  protected $SubjectHitCount = null;
+  protected $CountryHitCount;
+  protected $LanguageHitCount;
+  protected $SubjectHitCount;
 
   public function __toString()
   {

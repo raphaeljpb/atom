@@ -19,7 +19,7 @@
 
 class ReflectionCode
 {
-  protected $code = null;
+  protected $code;
 
   public function __construct($code)
   {

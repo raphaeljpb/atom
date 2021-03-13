@@ -39,7 +39,7 @@ class arBaseJob extends Net_Gearman_Job_Common
   protected $avoidParallelExecutionJobs = ['arObjectMoveJob', 'arFileImportJob'];
   protected $waitForRetryTime = 10;
   protected $maxRetries = 10;
-  protected $dispatcher = null;
+  protected $dispatcher;
   /*
    * Required parameters:
    *

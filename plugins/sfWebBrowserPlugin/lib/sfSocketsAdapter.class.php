@@ -20,8 +20,8 @@
 class sfSocketsAdapter
 {
   protected $options = [];
-  protected $adapterErrorMessage = null;
-  protected $browser = null;
+  protected $adapterErrorMessage;
+  protected $browser;
 
   public function __construct($options = [])
   {

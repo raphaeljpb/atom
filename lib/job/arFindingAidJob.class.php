@@ -30,7 +30,7 @@ class arFindingAidJob extends arBaseJob
    */
   protected $extraRequiredParameters = ['objectId'];
 
-  private $resource = null;
+  private $resource;
 
   public function runJob($parameters)
   {

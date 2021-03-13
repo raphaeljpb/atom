@@ -34,21 +34,21 @@ class arElasticSearchPlugin extends QubitSearchEngine
    *
    * @var mixed defaults to null
    */
-  public $client = null;
+  public $client;
 
   /**
    * Elastic_Index object.
    *
    * @var mixed defaults to null
    */
-  public $index = null;
+  public $index;
 
   /**
    * Mappings configuration, mapping.yml.
    *
    * @var mixed defaults to null
    */
-  protected $mappings = null;
+  protected $mappings;
 
   /**
    * If false, this plugin will perform a trial run with no changes made.

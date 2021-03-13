@@ -31,7 +31,7 @@ class arGenerateReportJob extends arBaseJob
    */
   protected $extraRequiredParameters = ['objectId', 'reportType', 'reportTypeLabel', 'reportFormat'];
 
-  private $resource = null;
+  private $resource;
 
   private $templatePaths = [
     'itemList' => self::itemOrFileTemplatePath,

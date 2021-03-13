@@ -28,7 +28,7 @@ class QubitFlatfileExport
   public $standardColumns = [];       // flatfile columns that are object properties
   public $columnMap = [];       // flatfile columns that map to object properties
   public $propertyMap = [];       // flatfile columns that map to Qubit properties
-  public $user = null;          // user doing the export
+  public $user;          // user doing the export
   protected $configurationLoaded = false;  // has the configuuration been loaded?
 
   protected $resource;                     // current resource being exported

@@ -26,12 +26,12 @@
  */
 class QubitXmlImport
 {
-  protected $errors = null;
-  protected $rootObject = null;
-  protected $parent = null;
+  protected $errors;
+  protected $rootObject;
+  protected $parent;
   protected $events = [];
-  protected $eadUrl = null;
-  protected $sourceName = null;
+  protected $eadUrl;
+  protected $sourceName;
   protected $options = [];
 
   public function import($xmlFile, $options = [], $xmlOrigFileName = null)

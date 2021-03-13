@@ -24,7 +24,7 @@
  */
 class unlinkCreatorTask extends sfBaseTask
 {
-  protected $actor = null;
+  protected $actor;
 
   protected function configure()
   {

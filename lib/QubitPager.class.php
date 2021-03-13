@@ -26,7 +26,7 @@
 class QubitPager extends sfPropelPager
 {
   // Override sfPager::$nbResults = 0
-    protected $nbResults = null;
+    protected $nbResults;
 
   /**
    * BasePeer::doCount() returns PDOStatement.

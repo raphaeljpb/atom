@@ -30,9 +30,9 @@ class QubitCsvImport
   public $skipMatched = false;
   public $updateType = '';
   public $limit = '';
-  protected $errors = null;
-  protected $rootObject = null;
-  protected $parent = null;
+  protected $errors;
+  protected $rootObject;
+  protected $parent;
 
   public function import($csvFile, $type = null, $csvOrigFileName = null)
   {

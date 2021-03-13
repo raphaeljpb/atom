@@ -19,7 +19,7 @@
 
 class QubitSearchPager extends sfPager
 {
-  protected $nbResults = null;
+  protected $nbResults;
   protected $resultSet;
 
   public function __construct(Elastica\ResultSet $resultSet)

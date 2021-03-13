@@ -26,9 +26,9 @@ class sfWebBrowser
   protected $responseCode = '';
   protected $responseMessage = '';
   protected $responseText = '';
-  protected $responseDom = null;
-  protected $responseDomCssSelector = null;
-  protected $responseXml = null;
+  protected $responseDom;
+  protected $responseDomCssSelector;
+  protected $responseXml;
   protected $fields = [];
   protected $urlInfo = [];
 
