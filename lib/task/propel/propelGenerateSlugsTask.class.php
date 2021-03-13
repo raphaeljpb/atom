@@ -254,7 +254,8 @@ EOF;
   /**
    * Get string to slugify for an information object, based on the slug basis setting.
    *
-   * @param  array  $row data pulled from the database about the information object
+   * @param array $row data pulled from the database about the information object
+   *
    * @return string the string to use to slugify
    */
   private function getInformationObjectStringToSlugify($row)
@@ -284,8 +285,7 @@ EOF;
   /**
    * Get an information object string from ES to use as the basis for generating a slug.
    *
-   * @param int $id the id for the information object we're looking up
-   *
+   * @param int    $id       the id for the information object we're looking up
    * @param string $property Depending on the slug basis, this is the property that contains the string we want.
    *                         e.g., referenceCode, identifier, etc.
    *

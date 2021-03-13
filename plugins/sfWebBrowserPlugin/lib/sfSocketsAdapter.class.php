@@ -14,6 +14,7 @@
  *
  * @author     Francois Zaninotto <francois.zaninotto@symfony-project.com>
  * @author     Benjamin Meynell <bmeynell@colorado.edu>
+ *
  * @version    0.9
  */
 class sfSocketsAdapter

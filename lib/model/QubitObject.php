@@ -529,8 +529,9 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
    * Get first matching related property by name (optionally scope).
    * Return an empty QubitProperty object if a matching one doesn't exist.
    *
-   * @param  string        $name
-   * @param  array         $options
+   * @param string $name
+   * @param array  $options
+   *
    * @return QubitProperty
    */
   public function getPropertyByName($name, $options = [])
@@ -551,8 +552,9 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
    * Add a relation from this object to a physical object. Check to make
    * sure the relationship is unique.
    *
-   * @param  QubitPhysicalObject $physicalObject Subject of relationship
-   * @return QubitObject         this object
+   * @param QubitPhysicalObject $physicalObject Subject of relationship
+   *
+   * @return QubitObject this object
    */
   public function addPhysicalObject($physicalObject)
   {
@@ -573,7 +575,8 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   /**
    * Get a specific physical object related to this object
    *
-   * @param  int   $physicalObjectId the id of the related physical object
+   * @param int $physicalObjectId the id of the related physical object
+   *
    * @return mixed the QubitRelation object on success, null if no match found
    */
   public function getPhysicalObject($physicalObjectId)

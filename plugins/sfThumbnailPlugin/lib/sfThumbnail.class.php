@@ -70,7 +70,8 @@ class sfThumbnail
    *
    * @param string filename (with absolute path) of the image to load. If the filename is a http(s) URL, then an attempt to download the file will be made.
    *
-   * @return bool      True if the image was properly loaded
+   * @return bool True if the image was properly loaded
+   *
    * @throws Exception If the image cannot be loaded, or if its mime type is not supported
    */
   public function loadFile($image)
@@ -126,7 +127,8 @@ class sfThumbnail
    * @param string the image string (must be a format accepted by imagecreatefromstring())
    * @param string mime type of the image
    *
-   * @return bool      True if the image was properly loaded
+   * @return bool True if the image was properly loaded
+   *
    * @throws Exception If image mime type is not supported
    */
   public function loadData($image, $mime)

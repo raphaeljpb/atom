@@ -1258,9 +1258,10 @@ class QubitFlatfileImport
   /**
    * Create a Qubit physical object
    *
-   * @param  string              $name     name of physical object
-   * @param  string              $location location of physical object
-   * @param  int                 $typeId   physical object type ID
+   * @param string $name     name of physical object
+   * @param string $location location of physical object
+   * @param int    $typeId   physical object type ID
+   *
    * @return QubitPhysicalObject created physical object
    */
   public function createPhysicalObject($name, $location, $typeId)
@@ -1861,8 +1862,7 @@ class QubitFlatfileImport
   /**
    * Execute logic, defined by a closure, on each column of a row
    *
-   * @param array $row array of column data
-   *
+   * @param array   $row   array of column data
    * @param closure $logic logic that should be performed on the column value
    *
    * @return void
@@ -1970,10 +1970,11 @@ class QubitFlatfileImport
    * Compare two date strings. This function has some custom logic to account for MySQL adding
    * '-00-00' to dates that only indicate year, but not month / day.
    *
-   * @param  string $dbDate  First date in the comparison. This is the date fetched from the db with potential
-   *                         '-00-00' in it.
-   * @param  string $csvDate second date for comparison
-   * @return bool   true if date strings are equal, false otherwise
+   * @param string $dbDate  First date in the comparison. This is the date fetched from the db with potential
+   *                        '-00-00' in it.
+   * @param string $csvDate second date for comparison
+   *
+   * @return bool true if date strings are equal, false otherwise
    */
   private function dateStringsEqual($dbDate, $csvDate)
   {

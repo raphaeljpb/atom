@@ -203,6 +203,7 @@ class QubitAcl
    *
    * @param $repositoryAccess input access array
    * @param $permissions QubitQuery permission list
+   *
    * @return array output access array
    */
   public static function addRepositoryAccess($repositoryAccess, $permissions)
@@ -253,6 +254,7 @@ class QubitAcl
    *
    * @param $action integer Access privilige being requested
    * @param $options array optional parameters
+   *
    * @return array
    */
   public static function getRepositoryAccess($action, $options = [])
@@ -364,6 +366,7 @@ class QubitAcl
    * Copied from sfBasicSecurityFilter
    *
    * @see lib/vendor/symfony/lib/filter/sfBasicSecurityFilter.class.php
+   *
    * @throws sfStopException
    */
   public static function forwardToSecureAction()
@@ -379,6 +382,7 @@ class QubitAcl
    * Copied from sfBasicSecurityFilter
    *
    * @see lib/vendor/symfony/lib/filter/sfBasicSecurityFilter.class.php
+   *
    * @throws sfStopException
    */
   public static function forwardToLoginAction()
@@ -472,8 +476,9 @@ class QubitAcl
   /**
    * Get a new criterion to filter a SQL query by ACL rules
    *
-   * @param  Criteria  $criteria
-   * @param  mixed     $root     - root object for list
+   * @param Criteria $criteria
+   * @param mixed    $root     - root object for list
+   *
    * @return Criterion
    */
   public static function getFilterCriterion($criteria, $root, $action)

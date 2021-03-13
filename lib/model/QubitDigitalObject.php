@@ -1276,6 +1276,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * @param mixed parent object (digital object or object)
    * @param QubitAsset asset to represent
    * @param array options array of optional paramaters
+   *
    * @return QubitDigitalObject
    */
   public function writeToFileSystem($asset, $options = [])
@@ -1430,8 +1431,9 @@ class QubitDigitalObject extends BaseDigitalObject
    * Populate a digital object from a base64-encoded character stream.
    * This is for, eg. importing encoded digital objects from XML
    *
-   * @param  string $encodedString base64-encoded string
-   * @return bool   success or failure
+   * @param string $encodedString base64-encoded string
+   *
+   * @return bool success or failure
    */
   public function importFromBase64($encodedString, $filename, $options = [])
   {
@@ -1652,7 +1654,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * Get a representation for the given $usageId.  Currently only searches
    * direct children of current digital object.
    *
-   * @param  int   $usageId
+   * @param int $usageId
+   *
    * @return mixed DigitalObject on success
    *
    * @todo look for matching usage id up and down object tree?
@@ -1771,7 +1774,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Get path to the appropriate generic icon for $mimeType
    *
-   * @param  string $mimeType
+   * @param string $mimeType
+   *
    * @return string
    */
   public static function getGenericIconPath($mimeType, $usageType)
@@ -1828,7 +1832,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * Get path to the appropriate generic icon for specified
    * media type id. This method is similar to getGenericIconPath().
    *
-   * @param  int    $mimeTypeId
+   * @param int $mimeTypeId
+   *
    * @return string
    */
   public static function getGenericIconPathByMediaTypeId($mimeTypeId)
@@ -1864,7 +1869,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Get a generic representation for the current digital object.
    *
-   * @param  string             $mimeType
+   * @param string $mimeType
+   *
    * @return QubitDigitalObject
    */
   public static function getGenericRepresentation($mimeType, $usageType)
@@ -1883,6 +1889,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * lie, but this should be "good enough" for the majority of cases.
    *
    * @param string   name of the file
+   *
    * @return string mime-type of file (or "unknown" if no match)
    */
   public static function deriveMimeType($filename)
@@ -1915,7 +1922,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create various representations for this digital object
    *
-   * @param  int                $usageId intended use of asset
+   * @param int $usageId intended use of asset
+   *
    * @return QubitDigitalObject this object
    */
   public function createRepresentations($usageId, $connection = null)
@@ -2313,7 +2321,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create an derivative of an image (a smaller image ;)
    *
-   * @param  int                $usageId usage type id
+   * @param int $usageId usage type id
+   *
    * @return QubitDigitalObject derivative object
    */
   public function createImageDerivative($usageId, $connection = null)
@@ -2376,7 +2385,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Resize current digital object according to a specific usage type
    *
-   * @param  int  $usageId
+   * @param int $usageId
+   *
    * @return bool success or failure
    */
   public function resizeByUsageId($usageId)
@@ -2402,7 +2412,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Allow multiple ways of getting the max dimensions for image by usage
    *
-   * @param  int   $usageId the usage type
+   * @param int $usageId the usage type
+   *
    * @return array $maxwidth, $maxheight
    *
    * @todo Add THUMBNAIL_MAX_DIMENSION to Qubit Settings
@@ -2550,6 +2561,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Wrapper for canThumbnailMimeType() for use on instantiated objects
    *
    * @return bool
+   *
    * @see canThumbnailMimeType
    */
   public function canThumbnail()
@@ -2561,6 +2573,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Test if current digital object can be thumbnailed
    *
    * @param string    The current thumbnailing adapter
+   *
    * @return bool true if thumbnail is possible
    */
   public static function canThumbnailMimeType($mimeType)
@@ -2590,7 +2603,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Return true if derived mimeType is "image/*"
    *
-   * @param  string $filename
+   * @param string $filename
+   *
    * @return bool
    */
   public static function isImageFile($filename)
@@ -2722,7 +2736,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create video derivatives (either flv movie or thumbnail)
    *
-   * @param  int                $usageId usage type id
+   * @param int $usageId usage type id
+   *
    * @return QubitDigitalObject derivative object
    */
   public function createVideoDerivative($usageId, $connection = null)
@@ -2885,7 +2900,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Return true if derived mimeType is "video/*"
    *
-   * @param  string $filename
+   * @param string $filename
+   *
    * @return bool
    */
   public static function isVideoFile($filename)
@@ -2954,6 +2970,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Test if text extraction is possible
    *
    * @param string mime-type
+   *
    * @return bool true if extraction is supported
    */
   public static function canExtractText($mimeType)
@@ -3073,7 +3090,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Generate a checksum from the file specified
    *
-   * @param  string $filename name of file
+   * @param string $filename name of file
+   *
    * @return string checksum
    */
   public function generateChecksumFromFile($filename)
@@ -3100,7 +3118,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Setter for "displayAsCompound" property
    *
-   * @param  string             $value new value for property
+   * @param string $value new value for property
+   *
    * @return QubitDigitalObject this object
    */
   public function setDisplayAsCompoundObject($value)
@@ -3140,7 +3159,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Setter for "digitalObjectAltText" property
    *
-   * @param  string             $value new value for property
+   * @param string $value new value for property
+   *
    * @return QubitDigitalObject this object
    */
   public function setDigitalObjectAltText($value)
@@ -3410,7 +3430,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Remove undesirable characters from a filename
    *
-   * @param  string $filename incoming file name
+   * @param string $filename incoming file name
+   *
    * @return string sanitized filename
    */
   protected static function sanitizeFilename($filename)
@@ -3423,8 +3444,9 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * Taken from http://ca2.php.net/manual/en/function.ini-get.php
    *
-   * @param  string $value A string denoting byte size by multiple (e.g. 2M)
-   * @return int    size in bytes
+   * @param string $value A string denoting byte size by multiple (e.g. 2M)
+   *
+   * @return int size in bytes
    */
   protected static function returnBytes($val)
   {
@@ -3531,6 +3553,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Get filename from URI path
    *
    * @param string URI
+   *
    * @return mixed null if error, string otherwise
    */
   private function getFilenameFromUri($uri)

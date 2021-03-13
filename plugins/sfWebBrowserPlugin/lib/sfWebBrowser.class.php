@@ -14,6 +14,7 @@
  *
  * @author     Francois Zaninotto <francois.zaninotto@symfony-project.com>
  * @author     Tristan Rivoallan <tristan@rivoallan.net>
+ *
  * @version    0.9
  */
 class sfWebBrowser
@@ -466,7 +467,8 @@ class sfWebBrowser
   /**
    * Transforms an associative array of header names => header values to its HTTP equivalent.
    *
-   * @param  array  $headers
+   * @param array $headers
+   *
    * @return string
    */
   public function prepareHeaders($headers = [])
@@ -640,7 +642,8 @@ class sfWebBrowser
   /**
    * Get a SimpleXML version of the response
    *
-   * @return SimpleXMLElement                     The reponse contents
+   * @return SimpleXMLElement The reponse contents
+   *
    * @throws sfWebBrowserInvalidResponseException when response is not in a valid format
    */
   public function getResponseXML()
@@ -742,7 +745,8 @@ class sfWebBrowser
   /**
    * Adds default headers to the supplied headers array.
    *
-   * @param  array $headers
+   * @param array $headers
+   *
    * @return array
    */
   public function initializeRequestHeaders($headers = [])
@@ -799,7 +803,8 @@ class sfWebBrowser
   /**
    * Decodes gzip-encoded content ("content-encoding: gzip" response header).
    *
-   * @param  stream $gzip_text
+   * @param stream $gzip_text
+   *
    * @return string
    */
   protected function decodeGzip($gzip_text)
@@ -810,7 +815,8 @@ class sfWebBrowser
   /**
    * Decodes deflate-encoded content ("content-encoding: deflate" response header).
    *
-   * @param  stream $deflate_text
+   * @param stream $deflate_text
+   *
    * @return string
    */
   protected function decodeDeflate($deflate_text)
@@ -821,7 +827,8 @@ class sfWebBrowser
   /**
    * Validates supplied headers and turns all names to lowercase.
    *
-   * @param  array $headers
+   * @param array $headers
+   *
    * @return array
    */
   protected function fixHeaders($headers)

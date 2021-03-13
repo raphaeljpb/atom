@@ -62,6 +62,7 @@ class QubitMigrate
    *
    * @param string classname name of Qubit class (e.g. QubitInformationObject)
    * @param string keyOrId row key or 'id' column value
+   *
    * @return array the found row, or NULL for no match
    */
   public function getRowByKeyOrId($classname, $keyOrId)
@@ -92,10 +93,11 @@ class QubitMigrate
    * Loop through row searching for $searchColumn value = $searchValue.
    * Return row key for first matched object.
    *
-   * @param  string $searchRow    row array to search
-   * @param  string $searchColumn Name of column to check for $searchValue
-   * @param  mixed  $searchValue  Value to find - can be string or array
-   * @return array  row key
+   * @param string $searchRow    row array to search
+   * @param string $searchColumn Name of column to check for $searchValue
+   * @param mixed  $searchValue  Value to find - can be string or array
+   *
+   * @return array row key
    */
   public static function findRowKeyForColumnValue($searchRow, $searchColumn, $searchValue)
   {
@@ -125,6 +127,7 @@ class QubitMigrate
    * Splice two associative arrays.
    *
    * From http://ca3.php.net/manual/en/function.array-splice.php
+   *
    * @author weikard at gmx dot de (15-Sep-2005 08:53)
    *
    * @param array $array        Primary array
@@ -140,9 +143,10 @@ class QubitMigrate
   /**
    * Get the index for a given key of an associative array
    *
-   * @param  array  $arr     array to search
-   * @param  string $findKey key to search for
-   * @return mixed  integer on success, false (bool) if key does not exist
+   * @param array  $arr     array to search
+   * @param string $findKey key to search for
+   *
+   * @return mixed integer on success, false (bool) if key does not exist
    */
   public static function getArrayKeyIndex($arr, $findKey)
   {
@@ -204,6 +208,7 @@ class QubitMigrate
    *
    * @param $objectList array full dataset
    * @param $deleteObjectKey string key of array object to delete
+   *
    * @return void
    */
   public static function cascadeDelete($objectList, $deleteObjectKey)
@@ -859,9 +864,10 @@ class QubitMigrate
   /**
    * Wrapper for findRowKeyForColumnValue() method.
    *
-   * @param  string $className
-   * @param  string $searchColumn
-   * @param  string $searchKey
+   * @param string $className
+   * @param string $searchColumn
+   * @param string $searchKey
+   *
    * @return string key for matched row
    */
   protected function getRowKey($className, $searchColumn, $searchKey)
@@ -876,7 +882,8 @@ class QubitMigrate
    * Convienience method for grabbing a QubitTerm row key based on the value of
    * the 'id' column
    *
-   * @param  string $searchKey
+   * @param string $searchKey
+   *
    * @return string key for matched row
    */
   protected function getTermKey($searchKey)

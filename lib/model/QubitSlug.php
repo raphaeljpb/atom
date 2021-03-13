@@ -63,10 +63,9 @@ class QubitSlug extends BaseSlug
   /**
    * Slugify a specified string
    *
-   * @param string $slug The string we want to slugify
-   *
-   * @param bool $dropArticles Whether or not to drop English articles from the slug.
-   *                           We can disable this when we generate slugs by identifier.
+   * @param string $slug         The string we want to slugify
+   * @param bool   $dropArticles Whether or not to drop English articles from the slug.
+   *                             We can disable this when we generate slugs by identifier.
    */
   public static function slugify($slug, $creationType = null)
   {

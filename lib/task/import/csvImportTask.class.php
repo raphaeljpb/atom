@@ -1038,9 +1038,10 @@ EOF;
   /**
    * Return default parent id based on various CLI options.
    *
-   * @param  string $sourceName The source name of this file
-   * @param  array  $options    CLI options
-   * @return mixed  The default parent id
+   * @param string $sourceName The source name of this file
+   * @param array  $options    CLI options
+   *
+   * @return mixed The default parent id
    */
   private function getDefaultParentId($sourceName, $options)
   {

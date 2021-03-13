@@ -29,7 +29,8 @@ class QubitAip extends BaseAip
   /**
    * Additional save functionality (e.g. update search index)
    *
-   * @param  mixed    $connection a database connection object
+   * @param mixed $connection a database connection object
+   *
    * @return QubitAip self-reference
    */
   public function save($connection = null)

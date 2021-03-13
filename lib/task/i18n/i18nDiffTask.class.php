@@ -112,8 +112,9 @@ class i18nDiffTask extends sfBaseTask
   /**
    * Loads old translations currently saved in the message sources.
    *
-   * @param  sfI18nApplicationExtract $extract
-   * @return array                    of source and target translations
+   * @param sfI18nApplicationExtract $extract
+   *
+   * @return array of source and target translations
    */
   public function getOldTranslations($extract)
   {

@@ -81,7 +81,8 @@ class QubitProperty extends BaseProperty
    * Get source culture text for "value" column for this property to aid in
    * translation on the front-end.
    *
-   * @param  string $sfUserCulture current culture selected by user
+   * @param string $sfUserCulture current culture selected by user
+   *
    * @return string source culture value
    */
   public function getSourceTextForTranslation($sfUserCulture)
@@ -97,9 +98,10 @@ class QubitProperty extends BaseProperty
   /**
    * Get a unique property associated with object identified by $objectId
    *
-   * @param  int           $objectId foreign key to related object
-   * @param  string        $name     name of property
-   * @param  array         $options  optional parameter array
+   * @param int    $objectId foreign key to related object
+   * @param string $name     name of property
+   * @param array  $options  optional parameter array
+   *
    * @return QubitProperty matching property (if any)
    */
   public static function getOneByObjectIdAndName($objectId, $name, $options = [])
@@ -120,10 +122,11 @@ class QubitProperty extends BaseProperty
    * Add property after verifying that there isn't already one with an identical
    * object_id, name, and (optionally) scope.
    *
-   * @param  int           $objectId related object foreign key
-   * @param  string        $name     name of property
-   * @param  string        $value    value to set for property
-   * @param  array         $options  optional parameters
+   * @param int    $objectId related object foreign key
+   * @param string $name     name of property
+   * @param string $value    value to set for property
+   * @param array  $options  optional parameters
+   *
    * @return QubitProperty this property object
    */
   public static function addUnique($objectId, $name, $value, $options = [])
@@ -157,11 +160,12 @@ class QubitProperty extends BaseProperty
   /**
    * Determine if a property matching passed values already exists.
    *
-   * @param  int    $objectId foreign key to QubitObject::ID
-   * @param  string $name     name of property
-   * @param  string $value    value of property
-   * @param  string $options  array of optional parameters
-   * @return bool   true if QubitProperty exists
+   * @param int    $objectId foreign key to QubitObject::ID
+   * @param string $name     name of property
+   * @param string $value    value of property
+   * @param string $options  array of optional parameters
+   *
+   * @return bool true if QubitProperty exists
    */
   public static function isExistent($objectId, $name, $value, $options = [])
   {

@@ -96,6 +96,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get a string representing the job creation date.
+   *
    * @return string the job's creation date in a human readable string
    */
   public function getCreationDateString()
@@ -105,6 +106,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get a string representing the job completion date.
+   *
    * @return string the job's creation date in a human readable string
    */
   public function getCompletionDateString()
@@ -114,6 +116,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get a string representing the job status.
+   *
    * @return string the job's status in a human readable string
    */
   public function getStatusString()
@@ -167,6 +170,7 @@ class QubitJob extends BaseJob
 
   /**
    * Add a basic note to this job. This function creates/saves a new note.
+   *
    * @param string $contents The text for the note
    */
   public function addNoteText($contents)
@@ -187,6 +191,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get the notes attached to this job
+   *
    * @return QubitQuery An query of the notes for this job
    */
   public function getNotes()
@@ -200,7 +205,8 @@ class QubitJob extends BaseJob
   /**
    * Generate a unique token property to associate unauthenticated users with jobs.
    *
-   * @throws sfException   if a unique token can't be generated
+   * @throws sfException if a unique token can't be generated
+   *
    * @return QubitProperty generated user token property
    */
   public function generateUserTokenProperty()
@@ -244,8 +250,9 @@ class QubitJob extends BaseJob
   /**
    * Get the QubitJob associated with a given user token, if any.
    *
-   * @param  string $token the user token
-   * @return mixed  qubitJob associated with the token or null
+   * @param string $token the user token
+   *
+   * @return mixed qubitJob associated with the token or null
    */
   public static function getByUserTokenProperty($token)
   {
@@ -264,6 +271,7 @@ class QubitJob extends BaseJob
 
   /**
    * Add a basic note to this job
+   *
    * @param sfBasicSecurityUser $user the currently logged in user
    */
   public static function getJobsByUser($user)
@@ -277,11 +285,10 @@ class QubitJob extends BaseJob
   /**
    * Run a job via gearman
    *
-   * @param string $jobName The name of the ability the worker will execute
-   *
-   * @param array $jobParams Whatever parameters need to be passed to the worker.
-   *                         You can set 'name' to specify the job name, otherwise the class name is used.
-   *                         You can set 'description' to summarize what the job is doing.
+   * @param string $jobName   The name of the ability the worker will execute
+   * @param array  $jobParams Whatever parameters need to be passed to the worker.
+   *                          You can set 'name' to specify the job name, otherwise the class name is used.
+   *                          You can set 'description' to summarize what the job is doing.
    *
    * @return QubitJob The job that was just created for the running job
    */
@@ -385,6 +392,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get a string representing a date.
+   *
    * @return string the job's creation date in a human readable string
    */
   private function formatDate($date)

@@ -33,9 +33,10 @@ class QubitOai
   /**
    * Check that all supplied keys are valid for the provided request
    *
-   * @param  array $keys             submited request's keys
-   * @param  array $requestValidKeys valid keys
-   * @return bool  are the attributes valid or not
+   * @param array $keys             submited request's keys
+   * @param array $requestValidKeys valid keys
+   *
+   * @return bool are the attributes valid or not
    */
   public static function checkBadArgument($keys, $requestValidKeys, $mandatoryKeys)
   {
@@ -64,6 +65,7 @@ class QubitOai
    * Check that metadata format is valid
    *
    * @param string    metadata format
+   *
    * @return bool is the metadata format valid or not
    */
   public static function checkValidMetadataFormat($metadataFormat)
@@ -82,8 +84,9 @@ class QubitOai
   /**
    * Check if there are null values in the parameters
    *
-   * @param  array $parameters query's parameters
-   * @return bool  true if there are null values
+   * @param array $parameters query's parameters
+   *
+   * @return bool true if there are null values
    */
   public function hasNullParameter($parameters)
   {
@@ -103,8 +106,9 @@ class QubitOai
   /**
    * Validates date format
    *
-   * @param  array $date submited date
-   * @return bool  true if the date is valid
+   * @param array $date submited date
+   *
+   * @return bool true if the date is valid
    */
   public static function isValidDate($date)
   {
@@ -139,8 +143,9 @@ class QubitOai
   /**
    * Validates OaiKey
    *
-   * @param  string $key the oai key
-   * @return bool   true if the key is valid
+   * @param string $key the oai key
+   *
+   * @return bool true if the key is valid
    */
   public static function isValidOaiKey($key)
   {
@@ -155,7 +160,8 @@ class QubitOai
   /**
    * Returns formated date
    *
-   * @param  string $date optional date value
+   * @param string $date optional date value
+   *
    * @return string a formated date
    */
   public static function getDate($date = '')
@@ -251,7 +257,8 @@ class QubitOai
   /**
    * Returns the OAI set matching $setSpec
    *
-   * @param  string              $setSpec, the setSpec of an OAI set
+   * @param string $setSpec, the setSpec of an OAI set
+   *
    * @return QubitOaiSet/boolean the OAI set matched (or false if none matched)
    */
   public static function getMatchingOaiSet($setSpec)
@@ -307,8 +314,9 @@ class QubitOai
   /**
    * Give back the Oai Identifier unique key given a full OAI_Identifier
    *
-   * @param  array $oai_identifier the full oai identifier
-   * @return int   the oai identifier key
+   * @param array $oai_identifier the full oai identifier
+   *
+   * @return int the oai identifier key
    */
   public static function getOaiIdNumber($identifier)
   {
@@ -320,8 +328,9 @@ class QubitOai
   /**
    * Validate that an xml extract is valid
    *
-   * @param  string $xml, an xml string to validate
-   * @return bool   true if valid
+   * @param string $xml, an xml string to validate
+   *
+   * @return bool true if valid
    */
   public static function validate($xml)
   {
@@ -340,7 +349,8 @@ class QubitOai
   /**
    * Extracts a resumption token from a response
    *
-   * @param  string $oaiResponse, an xml string from which to extract the resumption token
+   * @param string $oaiResponse, an xml string from which to extract the resumption token
+   *
    * @return string the resumption token, or false if it does not exist
    */
   public static function getResumptionToken($oaiResponse)

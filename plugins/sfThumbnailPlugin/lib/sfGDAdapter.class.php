@@ -10,6 +10,7 @@
 
 /**
  * sfGDAdapter provides a mechanism for creating thumbnail images.
+ *
  * @see http://www.php.net/gd
  *
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>

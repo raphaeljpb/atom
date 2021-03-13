@@ -59,7 +59,8 @@ class QubitObjectTermRelation extends BaseObjectTermRelation
   /**
    * Get first ObjectTermRelation with given $objectId
    *
-   * @param  int                     $objectId foreign key to object
+   * @param int $objectId foreign key to object
+   *
    * @return QubitObjectTermRelation object
    */
   public static function getOneByObjectId($objectId)

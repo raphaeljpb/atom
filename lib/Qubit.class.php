@@ -270,8 +270,9 @@ class Qubit
    * Based on function by Kioob at:
    * http://www.php.net/manual/en/function.gzwrite.php#34955
    *
-   * @param  string $source Path to file that should be compressed
-   * @param  int    $level  GZIP compression level (default: 9)
+   * @param string $source Path to file that should be compressed
+   * @param int    $level  GZIP compression level (default: 9)
+   *
    * @return string New filename (with .gz appended) if success, or false if operation fails
    */
   public static function gzipFile($source, $level = 9)

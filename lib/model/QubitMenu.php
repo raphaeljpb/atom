@@ -70,7 +70,8 @@ class QubitMenu extends BaseMenu
    *  option 'resolveAlias' - resolve aliases into full path
    *  option 'getUrl' - resolve path to internal or external URL
    *
-   * @param  array  $options Optional parameters
+   * @param array $options Optional parameters
+   *
    * @return string Path or url for menu
    */
   public function getPath($options = [])
@@ -166,9 +167,10 @@ class QubitMenu extends BaseMenu
   /**
    * Find menu by name
    *
-   * @param  string $topMenuName name of top ancestor
-   * @param  array  $options     optional parameters
-   * @return array  of menu columns, with an additional 'depth' column
+   * @param string $topMenuName name of top ancestor
+   * @param array  $options     optional parameters
+   *
+   * @return array of menu columns, with an additional 'depth' column
    */
   public static function getByName($menuName, $options = [])
   {
@@ -282,6 +284,7 @@ class QubitMenu extends BaseMenu
    * Move this menu before $referenceMenu
    *
    * @param int reference menu id
+   *
    * @return QubitMenu $this object
    */
   public function moveBeforeById($referenceMenuId)
@@ -298,6 +301,7 @@ class QubitMenu extends BaseMenu
    * Move this menu after $referenceMenu
    *
    * @param int reference menu id
+   *
    * @return QubitMenu $this object
    */
   public function moveAfterById($referenceMenuId)
@@ -313,9 +317,10 @@ class QubitMenu extends BaseMenu
   /**
    * Find top menu by id, then get all descendents with relative depth
    *
-   * @param  string $topMenuName name of top ancestor
-   * @param  array  $options     optional parameters
-   * @return array  of menu columns, with an additional 'depth' column
+   * @param string $topMenuName name of top ancestor
+   * @param array  $options     optional parameters
+   *
+   * @return array of menu columns, with an additional 'depth' column
    */
   public static function getTreeById($id, $options = [])
   {
@@ -333,9 +338,10 @@ class QubitMenu extends BaseMenu
    * the array includes a 'depth' column (relative to the root of the tree) to
    * aid in formatting the tree for display.
    *
-   * @param  QubitMenu $topMenu top ancestor
-   * @param  array     $options optional parameters
-   * @return array     of menu columns, with an additional 'depth' column
+   * @param QubitMenu $topMenu top ancestor
+   * @param array     $options optional parameters
+   *
+   * @return array of menu columns, with an additional 'depth' column
    */
   public static function getTree(QubitMenu $topMenu, $options = [])
   {
@@ -399,10 +405,11 @@ class QubitMenu extends BaseMenu
    * separation; unfortunately, this was by far the cleanest method I could devise
    * for accurately representing a menu heirarchy as a nested XHTML list.
    *
-   * @param  QubitMenu $parent  parent menu object for hierarchy branch
-   * @param  int       $depth   current (relative) depth from top of tree (for styling)
-   * @param  array     $options optional parameters
-   * @return string    an indented, nested XHTML list
+   * @param QubitMenu $parent  parent menu object for hierarchy branch
+   * @param int       $depth   current (relative) depth from top of tree (for styling)
+   * @param array     $options optional parameters
+   *
+   * @return string an indented, nested XHTML list
    */
   public static function displayHierarchyAsList($parent, $depth = 0, $options = [])
   {

@@ -596,7 +596,8 @@ class QubitTerm extends BaseTerm
   /**
    * Return a list of all Physical Object terms
    *
-   * @param  array      $options option array to pass to Qubit Query object
+   * @param array $options option array to pass to Qubit Query object
+   *
    * @return QubitQuery array of Physical Object QubitTerm objects
    */
   public static function getPhysicalObjectTypes($options = [])
@@ -607,7 +608,8 @@ class QubitTerm extends BaseTerm
   /**
    * Return a list of all Relation Type terms
    *
-   * @param  array      $options option array to pass to Qubit Query object
+   * @param array $options option array to pass to Qubit Query object
+   *
    * @return QubitQuery object
    */
   public static function getRelationTypes($options = [])
@@ -851,6 +853,7 @@ class QubitTerm extends BaseTerm
    * Get a count of related information objects
    *
    * @param int  ID of term
+   *
    * @return int count of related information objects
    */
   public static function countRelatedInformationObjects($id)
@@ -872,8 +875,9 @@ class QubitTerm extends BaseTerm
    * Get a basic key['id']/value['name'] array for use as options in form
    * select lists
    *
-   * @param  int   $taxonomyId parent taxonomy id
-   * @param  array $options    optional paramters
+   * @param int   $taxonomyId parent taxonomy id
+   * @param array $options    optional paramters
+   *
    * @return array select box options
    */
   public static function getOptionsForSelectList($taxonomyId, $options = [])
@@ -925,7 +929,8 @@ class QubitTerm extends BaseTerm
   /**
    * Get the direct descendents of the current term
    *
-   * @param  array      $options optional paramters
+   * @param array $options optional paramters
+   *
    * @return QubitQuery collection of QubitTerm objects
    */
   public function getChildren($options = [])

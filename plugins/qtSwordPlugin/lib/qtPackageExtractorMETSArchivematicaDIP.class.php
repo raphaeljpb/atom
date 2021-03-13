@@ -348,7 +348,6 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    *
    * @param QubitInformationObject $io         the object to which the data is attached
    * @param string                 $objectUUID the METS object UUID
-   *
    * @param QubitInformationObject the passed object with added amdSec data
    */
   protected function addPremisData($io, $objectUUID)

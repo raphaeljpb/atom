@@ -10,6 +10,7 @@
 
 /**
  * sfImageMagickAdapter provides a mechanism for creating thumbnail images.
+ *
  * @see http://www.imagemagick.org
  *
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>

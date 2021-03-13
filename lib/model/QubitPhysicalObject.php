@@ -102,7 +102,8 @@ class QubitPhysicalObject extends BasePhysicalObject
   /**
    * Get related information object via QubitRelation relationship
    *
-   * @param  array      $options list of options to pass to QubitQuery
+   * @param array $options list of options to pass to QubitQuery
+   *
    * @return QubitQuery collection of Information Objects
    */
   public function getInformationObjects($options = [])
@@ -121,6 +122,7 @@ class QubitPhysicalObject extends BasePhysicalObject
    * @param name  The name of the physical object
    * @param location  The location of the physical object
    * @param typeId  The type id of the physical object (Box, etc.)
+   *
    * @return QubitQuery collection of Physical Objects
    */
   public static function getPhysicalObjectsByNameAndLocation($name, $location, $typeId)
@@ -183,6 +185,7 @@ class QubitPhysicalObject extends BasePhysicalObject
    * @param location  The location of the physical object
    * @param typeId  The type id of the physical object (Box, etc.)
    * @param collectionId  The collection id to check inside for the physical object
+   *
    * @return A physical object if found matching, otherwise null
    */
   public static function checkPhysicalObjectExistsInCollection($name, $location, $typeId, $collectionId)

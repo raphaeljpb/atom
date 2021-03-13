@@ -86,6 +86,7 @@ EOF;
    * Allow the user to bail out if they aren't sure they want to delete targeted descriptions.
    *
    * @param $noConfirmation  whether or not to bypass the confirmation warning (true = bypass)
+   *
    * @return bool true if we want to proceed with the task, false if we want to abort
    */
   private function confirmDeletion($noConfirmation)

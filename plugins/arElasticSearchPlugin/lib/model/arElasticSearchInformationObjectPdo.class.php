@@ -247,7 +247,8 @@ class arElasticSearchInformationObjectPdo
   /**
    * Get full reference code, with optional country code and repository prefixes as well.
    *
-   * @param  bool   $includeRepoAndCountry Whether or not to prepend country code and repository identifier
+   * @param bool $includeRepoAndCountry Whether or not to prepend country code and repository identifier
+   *
    * @return string The full reference code
    */
   public function getReferenceCode($includeRepoAndCountry = true)

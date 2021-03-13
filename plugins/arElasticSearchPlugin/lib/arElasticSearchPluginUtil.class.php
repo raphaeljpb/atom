@@ -148,9 +148,8 @@ class arElasticSearchPluginUtil
   /**
    * Expands i18n field names into various specified cultures.
    *
-   * @param array $fields Which fields to expand. For example, 'i18n.%s.title' will expand to 'i18n.en.title',
-   *                      'i18n.fr.title', 'i18n.es.title', etc.
-   *
+   * @param array $fields   Which fields to expand. For example, 'i18n.%s.title' will expand to 'i18n.en.title',
+   *                        'i18n.fr.title', 'i18n.es.title', etc.
    * @param array $cultures An array specifying which cultures to expand to. If not specified, we look up which
    *                        cultures are active in AtoM and go off that.
    *
@@ -458,13 +457,11 @@ class arElasticSearchPluginUtil
    *                               Note that since we recursively call getAllObjectStringFields to get foreign type
    *                               fields, this value may not be the "current" index being parsed, e.g. when adding
    *                               creators.name actor fields inside informationObject.
-   *
-   * @param array  $object      an array containing the current object mappings
-   * @param string $prefix      The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
-   * @param bool   $foreignType Whether or not this field in question is being parsed for a foreign type,
-   *                            e.g. inside informationObject.creators
-   *
-   * @param array $i18nIncludeInAll A list of i18n fields to be allowed when searching _all
+   * @param array  $object           an array containing the current object mappings
+   * @param string $prefix           The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
+   * @param bool   $foreignType      Whether or not this field in question is being parsed for a foreign type,
+   *                                 e.g. inside informationObject.creators
+   * @param array  $i18nIncludeInAll A list of i18n fields to be allowed when searching _all
    */
   protected static function getAllObjectStringFields($rootIndexType, $object, $prefix, $foreignType = false,
                                                      $i18nIncludeInAll = null)
@@ -699,14 +696,12 @@ class arElasticSearchPluginUtil
    *                               Note that since we recursively call getAllObjectStringFields to get foreign type
    *                               fields, this value may not be the "current" index being parsed, e.g. when adding
    *                               creators.name actor fields inside informationObject.
-   *
-   * @param array  &$fields     A reference to our list of fields we're searching over with our _all query
-   * @param string $prefix      The current prefix for the field name, e.g. "creators." for "creators.name"
-   * @param string $fieldName   The current field name, e.g. "name" in "creators.name"
-   * @param bool   $foreignType Whether or not this field in question is being parsed for a foreign type,
-   *                            e.g. inside informationObject.creators
-   *
-   * @param array $i18nIncludeInAll A list of i18n fields to be allowed when searching _all
+   * @param array  &$fields          A reference to our list of fields we're searching over with our _all query
+   * @param string $prefix           The current prefix for the field name, e.g. "creators." for "creators.name"
+   * @param string $fieldName        The current field name, e.g. "name" in "creators.name"
+   * @param bool   $foreignType      Whether or not this field in question is being parsed for a foreign type,
+   *                                 e.g. inside informationObject.creators
+   * @param array  $i18nIncludeInAll A list of i18n fields to be allowed when searching _all
    *
    *
    */
@@ -741,7 +736,6 @@ class arElasticSearchPluginUtil
    *                               Note that since we recursively call getAllObjectStringFields to get foreign type
    *                               fields, this value may not be the "current" index being parsed, e.g. when adding
    *                               creators.name actor fields inside informationObject.
-   *
    * @param array  &$fields      A reference to our list of fields we're searching over with our _all query
    * @param string $prefix       The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
    * @param string $propertyName The current property name, e.g. "slug" in "informationObject.slug"

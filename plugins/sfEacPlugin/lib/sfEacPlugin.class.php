@@ -1063,6 +1063,7 @@ str;
    * (isset($a) && $a) || (isset($b) && $b) || ...).
    *
    * @param $resource  The actor we're getting information from
+   *
    * @return bool True if there are one or more description elements, false otherwise
    */
   public function hasDescriptionElements($resource)

@@ -542,7 +542,8 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Wrapper for getRepository method to allow inheriting repo from ancestors
    *
-   * @param  array           $options optional parameters
+   * @param array $options optional parameters
+   *
    * @return QubitRepository repository object
    */
   public function getRepository(array $options = [])
@@ -672,6 +673,7 @@ class QubitInformationObject extends BaseInformationObject
    * Return file path to EAD XML, regardless of whether it's available.
    *
    * @param
+   *
    * @return string file path of EAD XML
    */
   public function pathToEadExport($contentsOnly = false)
@@ -683,6 +685,7 @@ class QubitInformationObject extends BaseInformationObject
    * Return URL to DC XML or, if unpublished, action to generate XML.
    *
    * @param
+   *
    * @return string URL
    */
   public function urlForDcExport()
@@ -701,6 +704,7 @@ class QubitInformationObject extends BaseInformationObject
    * Return file path to DC XML, regardless of whether it's available.
    *
    * @param
+   *
    * @return string file path of DC XML
    */
   public function pathToDcExport($contentsOnly = false)
@@ -715,7 +719,8 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Get direct descendants of current object.
    *
-   * @param  array      $options optional parameters
+   * @param array $options optional parameters
+   *
    * @return QubitQuery collection of children
    */
   public function getChildren($options = [])
@@ -1007,8 +1012,9 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Get name access point by $actorId and $eventTypeId (should be unique)
    *
-   * @param  int        $actorId     foreign key to QubitActor::ID
-   * @param  int        $eventTypeId foreign key to QubitTerm (even type taxonomy)
+   * @param int $actorId     foreign key to QubitActor::ID
+   * @param int $eventTypeId foreign key to QubitTerm (even type taxonomy)
+   *
    * @return QubitEvent object or NULL if no matching relation found
    */
   public function getNameAccessPoint($actorId, $eventTypeId)
@@ -1029,8 +1035,9 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Add a many-to-many Term relation to this information object.
    *
-   * @param  int                    $termId       primary key of QubitTerm
-   * @param  string                 $relationNote descriptive string (optional)
+   * @param int    $termId       primary key of QubitTerm
+   * @param string $relationNote descriptive string (optional)
+   *
    * @return QubitInformationObject $this
    */
   public function addTermRelation($termId, $options = [])
@@ -1128,9 +1135,10 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Add a property related to this information object
    *
-   * @param  string                 $name    Name of property
-   * @param  string                 $value   Value of property
-   * @param  string                 $options array of optional parameters
+   * @param string $name    Name of property
+   * @param string $value   Value of property
+   * @param string $options array of optional parameters
+   *
    * @return QubitInformationObject this information object
    */
   public function addProperty($name, $value, $options = [])
@@ -1160,8 +1168,9 @@ class QubitInformationObject extends BaseInformationObject
    * Return all properties related to this information object,
    * with option of filtering by name and/or scope
    *
-   * @param  string     $name  filter results by name (optional)
-   * @param  string     $scope filter results by scope (optional)
+   * @param string $name  filter results by name (optional)
+   * @param string $scope filter results by scope (optional)
+   *
    * @return QubitQuery list of QubitProperty objects matching criteria
    */
   public function getProperties($name = null, $scope = null)
@@ -1184,9 +1193,10 @@ class QubitInformationObject extends BaseInformationObject
    * Save a related property and create a new property if a matching one doesn't
    * already exist.
    *
-   * @param  string                 $name    name of property
-   * @param  string                 $value   new value to set
-   * @param  array                  $options array of options
+   * @param string $name    name of property
+   * @param string $value   new value to set
+   * @param array  $options array of options
+   *
    * @return QubitInformationObject
    */
   public function saveProperty($name, $value, $options = [])
@@ -1334,7 +1344,8 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Wrapper for QubitDigitalObject::importFromUri() method
    *
-   * @param  array                  $uris URIs of remote files
+   * @param array $uris URIs of remote files
+   *
    * @return QubitInformationObject $this
    *
    * @TODO allow for different usage types
@@ -1414,8 +1425,9 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Wrapper for QubitDigitalObject::importFromBase64() method
    *
-   * @param  string                 $encodedString base-64 encoded data
-   * @param  string                 $filename      name of destination file
+   * @param string $encodedString base-64 encoded data
+   * @param string $filename      name of destination file
+   *
    * @return QubitInformationObject $this
    *
    * @TODO allow for different usage types
@@ -2345,7 +2357,9 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Get Record by Oai identifier
-   * @param  int        $identifier, the oai_identifier
+   *
+   * @param int $identifier, the oai_identifier
+   *
    * @return QubitQuery collection of QubitInformationObjects
    */
   public static function getRecordByOaiID($oai_local_identifier)
@@ -2358,7 +2372,9 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Get Oai identifier
+   *
    * @param
+   *
    * @return String containing OAI-compliant Identifier
    */
   public function getOaiIdentifier()
@@ -2372,7 +2388,9 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Set source Oai identifier
+   *
    * @param
+   *
    * @return String set the OAI Identifier returned from the source repository as part of an OAI response
    */
   public function setSourceOaiIdentifier($value)
@@ -2962,6 +2980,7 @@ class QubitInformationObject extends BaseInformationObject
    *
    * @param $name  The actor name
    * @param $relatedBy  The relation type, either 'object' or 'subject'
+   *
    * @return QubitActor matching the specified parameters, null otherwise
    */
   private function getActorByNameAndRelation($name, $relatedBy = 'object')
@@ -3000,6 +3019,7 @@ class QubitInformationObject extends BaseInformationObject
    * who is also part of an event related to this information object.
    *
    * @param $name  The actor name
+   *
    * @return QubitActor matching the specified parameters, null otherwise
    */
   private function getActorByNameAndEvent($name)
@@ -3145,6 +3165,7 @@ class QubitInformationObject extends BaseInformationObject
    * Returns a date string YYYY-MM-DD when given a date from an EAD <unitdate> @normal attribute
    *
    * @param $date  A date string from an EAD file, e.g. 19601103
+   *
    * @return Will return a MySQL friendly YYYY-MM-DD date string (uses '-0' if missing a field)
    */
   private function getNormalizedDate($date)

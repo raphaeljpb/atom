@@ -314,8 +314,9 @@ class QubitActor extends BaseActor
   /**
    * Return an options_for_select array
    *
-   * @param  mixed $default current selected value for select list
-   * @param  array $options optional parameters
+   * @param mixed $default current selected value for select list
+   * @param array $options optional parameters
+   *
    * @return array options_for_select compatible array
    */
   public static function getOptionsForSelectList($default, $options = [])
@@ -338,7 +339,8 @@ class QubitActor extends BaseActor
    * Append criteria to get only Actor objects that are NOT
    * a users or repository.
    *
-   * @param  Criteria $criteria current search criteria
+   * @param Criteria $criteria current search criteria
+   *
    * @return Criteria modified criteria object
    */
   public static function addGetOnlyActorsCriteria($criteria)
@@ -389,9 +391,10 @@ class QubitActor extends BaseActor
   /**
    * Add a related property to this actor.
    *
-   * @param  string     $name    name of property
-   * @param  string     $value   value of property
-   * @param  string     $options array of optional parameters
+   * @param string $name    name of property
+   * @param string $value   value of property
+   * @param string $options array of optional parameters
+   *
    * @return QubitActor this object
    */
   public function addProperty($name, $value, $options = [])
@@ -487,7 +490,8 @@ class QubitActor extends BaseActor
   /**
    * Get many-to-many links to QubitTerm objects
    *
-   * @param  mixed      $taxonomyId Limit results by taxonomy type
+   * @param mixed $taxonomyId Limit results by taxonomy type
+   *
    * @return QubitQuery collection of QubitObjectTermRelation objects
    */
   public function getTermRelations($taxonomyId = 'all')
@@ -534,8 +538,9 @@ class QubitActor extends BaseActor
    * Search for an actor by the AUTHORIZED_FORM_OF_NAME i18n column. Optionally
    * limit search to a specific culture, history or maintaining repository
    *
-   * @param  string     $name    search string
-   * @param  array      $options optional parameters
+   * @param string $name    search string
+   * @param array  $options optional parameters
+   *
    * @return QubitActor found actor
    */
   public static function getByAuthorizedFormOfName($name, $options = [])
@@ -690,7 +695,8 @@ class QubitActor extends BaseActor
   /**
    * Wrapper for QubitDigitalObject::importFromUri() method
    *
-   * @param  array      $uris URIs of remote files
+   * @param array $uris URIs of remote files
+   *
    * @return QubitActor $this
    *
    * @TODO allow for different usage types
@@ -765,8 +771,9 @@ class QubitActor extends BaseActor
   /**
    * Wrapper for QubitDigitalObject::importFromBase64() method
    *
-   * @param  string     $encodedString base-64 encoded data
-   * @param  string     $filename      name of destination file
+   * @param string $encodedString base-64 encoded data
+   * @param string $filename      name of destination file
+   *
    * @return QubitActor $this
    *
    * @TODO allow for different usage types

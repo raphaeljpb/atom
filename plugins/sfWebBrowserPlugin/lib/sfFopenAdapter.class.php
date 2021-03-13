@@ -13,6 +13,7 @@
  * sfWebBrowser provides a basic HTTP client.
  *
  * @author     Francois Zaninotto <francois.zaninotto@symfony-project.com>
+ *
  * @version    0.9
  */
 class sfFopenAdapter
