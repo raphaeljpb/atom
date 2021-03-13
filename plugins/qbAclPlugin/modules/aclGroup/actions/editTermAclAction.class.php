@@ -55,8 +55,7 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
 
     // List of actions without create or translate
     $this->basicActions = QubitAcl::$ACTIONS;
-    unset($this->basicActions['read']);
-    unset($this->basicActions['translate']);
+    unset($this->basicActions['read'], $this->basicActions['translate']);
 
     if ($request->isMethod('post'))
     {

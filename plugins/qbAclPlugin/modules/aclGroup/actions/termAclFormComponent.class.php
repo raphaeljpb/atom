@@ -23,8 +23,7 @@ class AclGroupTermAclFormComponent extends sfComponent
   {
     // List of actions without read or translate
     $this->termActions = QubitAcl::$ACTIONS;
-    unset($this->termActions['read']);
-    unset($this->termActions['translate']);
+    unset($this->termActions['read'], $this->termActions['translate']);
 
     // Build separate list of permissions by taxonomy and by object
     $this->taxonomyPermissions = [];

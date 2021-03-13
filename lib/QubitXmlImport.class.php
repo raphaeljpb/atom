@@ -281,8 +281,7 @@ class QubitXmlImport
           $xsltProc->importStyleSheet($xslDOM);
 
           $importDOM->loadXML($xsltProc->transformToXML($importDOM));
-          unset($xslDOM);
-          unset($xsltProc);
+          unset($xslDOM, $xsltProc);
         }
         else
         {

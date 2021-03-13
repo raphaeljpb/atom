@@ -356,8 +356,7 @@ class QubitMigrate109 extends QubitMigrate
       ];
 
       $this->data['QubitOtherName'][rand()] = $otherName;
-      unset($this->data['QubitRelation'][$key]);
-      unset($this->data['QubitTerm'][$row['object_id']]);
+      unset($this->data['QubitRelation'][$key], $this->data['QubitTerm'][$row['object_id']]);
     }
 
     return $this;
