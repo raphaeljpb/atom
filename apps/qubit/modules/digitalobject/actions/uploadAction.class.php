@@ -38,7 +38,7 @@ class DigitalObjectUploadAction extends sfAction
     // Check user authorization
     if (!QubitAcl::check($this->object, 'update'))
     {
-      throw new sfException;
+      throw new sfException();
     }
 
     // Check if uploads are allowed

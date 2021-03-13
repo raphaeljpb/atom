@@ -44,7 +44,7 @@ class ReleaseTask extends sfBaseTask
       return 1;
     }
 
-    $doc = new DOMDocument;
+    $doc = new DOMDocument();
     $doc->load(sfConfig::get('sf_config_dir').'/package.xml');
 
     $xpath = new DOMXPath($doc);
@@ -119,7 +119,7 @@ class ReleaseTask extends sfBaseTask
     }
 
     // FIXME: Switch back to SvnFinder when it supports externals
-    $finder = new sfFinder;
+    $finder = new sfFinder();
     foreach ($finder->in(sfConfig::get('sf_root_dir')) as $path)
     {
       if (strncmp($path, sfConfig::get('sf_root_dir'), $len = strlen(sfConfig::get('sf_root_dir'))) == 0)

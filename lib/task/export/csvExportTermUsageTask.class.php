@@ -79,7 +79,7 @@ class csvExportTermUsageTask extends exportBulkBaseTask
   {
     if (ctype_digit($options['taxonomy-id']))
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitTaxonomy::ID, $options['taxonomy-id']);
 
       if (null === QubitTaxonomy::getOne($criteria))
@@ -93,7 +93,7 @@ class csvExportTermUsageTask extends exportBulkBaseTask
     {
       $culture = (isset($options['taxonomy-name-culture'])) ? $options['taxonomy-name-culture'] : 'en';
 
-      $criteria = new Criteria;
+      $criteria = new Criteria();
 
       $criteria->add(QubitTaxonomyI18n::NAME, $options['taxonomy-name']);
       $criteria->add(QubitTaxonomyI18n::CULTURE, $culture);

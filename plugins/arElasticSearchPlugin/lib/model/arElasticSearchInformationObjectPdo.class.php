@@ -371,7 +371,7 @@ class arElasticSearchInformationObjectPdo
       {
         if (!isset($events[$item['id']]))
         {
-          $event = new stdClass;
+          $event = new stdClass();
           $event->id = $item['id'];
           $event->start_date = $item['start_date'];
           $event->end_date = $item['end_date'];
@@ -465,7 +465,7 @@ class arElasticSearchInformationObjectPdo
     {
       if (isset($event->actor_id) && $event->type_id != QubitTerm::CREATION_ID)
       {
-        $actor = new stdClass;
+        $actor = new stdClass();
         $actor->id = $event->actor_id;
         $names[$actor->id] = $actor;
       }
@@ -502,7 +502,7 @@ class arElasticSearchInformationObjectPdo
       return;
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::PARENT_ID, $this->__get('digital_object_id'));
     $criteria->add(QubitDigitalObject::USAGE_ID, QubitTerm::THUMBNAIL_ID);
 
@@ -519,7 +519,7 @@ class arElasticSearchInformationObjectPdo
       return;
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::PARENT_ID, $this->__get('digital_object_id'));
 
     if (null !== $do = QubitDigitalObject::getOne($criteria))

@@ -44,7 +44,7 @@ class QubitRepository extends BaseRepository
 
         if (!isset($this->values[$name]))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
@@ -84,7 +84,7 @@ class QubitRepository extends BaseRepository
 
         if (!isset($this->values[$name]))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
@@ -94,7 +94,7 @@ class QubitRepository extends BaseRepository
           }
           else
           {
-            $this->values[$name] = new QubitProperty;
+            $this->values[$name] = new QubitProperty();
             $this->values[$name]->name = $name;
             $this->propertys[] = $this->values[$name];
           }
@@ -247,7 +247,7 @@ class QubitRepository extends BaseRepository
    */
   public function setRepositoryNote($userId, $note, $noteTypeId)
   {
-    $newNote = new QubitNote;
+    $newNote = new QubitNote();
     $newNote->setObjectId($this->id);
     $newNote->setScope('QubitRepository');
     $newNote->setUserId($userId);
@@ -263,7 +263,7 @@ class QubitRepository extends BaseRepository
    */
   public function getRepositoryNotes()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitNote::TYPE_ID, QubitTerm::ID);
     $criteria->add(QubitNote::OBJECT_ID, $this->id);
     $criteria->add(QubitNote::SCOPE, 'QubitRepository');
@@ -411,14 +411,14 @@ class QubitRepository extends BaseRepository
   public function setTypeByName($name)
   {
     // See if type term already exists
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::REPOSITORY_TYPE_ID);
     $criteria->add(QubitTermI18n::NAME, $name);
 
     if (null === $term = QubitTerm::getOne($criteria))
     {
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->setTaxonomyId(QubitTaxonomy::REPOSITORY_TYPE_ID);
       $term->setName($name);
       $term->setRoot();
@@ -434,7 +434,7 @@ class QubitRepository extends BaseRepository
       }
     }
 
-    $relation = new QubitObjectTermRelation;
+    $relation = new QubitObjectTermRelation();
     $relation->term = $term;
 
     $this->objectTermRelationsRelatedByobjectId[] = $relation;
@@ -443,14 +443,14 @@ class QubitRepository extends BaseRepository
   public function setThematicAreaByName($name)
   {
     // see if type term already exists
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::THEMATIC_AREA_ID);
     $criteria->add(QubitTermI18n::NAME, $name);
 
     if (null === $term = QubitTerm::getOne($criteria))
     {
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->setTaxonomyId(QubitTaxonomy::THEMATIC_AREA_ID);
       $term->setName($name);
       $term->setRoot();
@@ -466,7 +466,7 @@ class QubitRepository extends BaseRepository
       }
     }
 
-    $relation = new QubitObjectTermRelation;
+    $relation = new QubitObjectTermRelation();
     $relation->term = $term;
 
     $this->objectTermRelationsRelatedByobjectId[] = $relation;
@@ -475,14 +475,14 @@ class QubitRepository extends BaseRepository
   public function setGeographicSubregionByName($name)
   {
     // see if type term already exists
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID);
     $criteria->add(QubitTermI18n::NAME, $name);
 
     if (null === $term = QubitTerm::getOne($criteria))
     {
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->setTaxonomyId(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID);
       $term->setName($name);
       $term->setRoot();
@@ -498,7 +498,7 @@ class QubitRepository extends BaseRepository
       }
     }
 
-    $relation = new QubitObjectTermRelation;
+    $relation = new QubitObjectTermRelation();
     $relation->term = $term;
 
     $this->objectTermRelationsRelatedByobjectId[] = $relation;

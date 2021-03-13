@@ -145,7 +145,7 @@ class csvActorExport extends QubitFlatfileExport
 
   private function setMaintenanceNote()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitNote::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitNote::TYPE_ID, QubitTerm::MAINTENANCE_NOTE_ID);
 

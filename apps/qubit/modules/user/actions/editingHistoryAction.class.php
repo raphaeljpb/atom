@@ -25,7 +25,7 @@ class UserEditingHistoryAction extends sfAction
     $this->abortInvalidRequests();
 
     // Criteria to fetch user actions
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitAuditLog::USER_ID, $this->resource->id);
     $criteria->addDescendingOrderByColumn('created_at');
 

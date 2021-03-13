@@ -21,7 +21,7 @@ class AclGroupDeleteAction extends sfAction
 {
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     $this->group = QubitAclGroup::getById($request->id);
 

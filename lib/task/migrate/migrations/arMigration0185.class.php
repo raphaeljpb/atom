@@ -80,7 +80,7 @@ sql;
     if (null == QubitTaxonomy::getById(QubitTaxonomy::ACCESSION_EVENT_TYPE_ID))
     {
       QubitMigrate::bumpTaxonomy(QubitTaxonomy::ACCESSION_EVENT_TYPE_ID, $configuration);
-      $taxonomy = new QubitTaxonomy;
+      $taxonomy = new QubitTaxonomy();
       $taxonomy->id = QubitTaxonomy::ACCESSION_EVENT_TYPE_ID;
       $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
       $taxonomy->sourceCulture = 'en';
@@ -100,7 +100,7 @@ sql;
     {
       // Add physical transfer accession event type term
       QubitMigrate::bumpTerm(QubitTerm::ACCESSION_EVENT_PHYSICAL_TRANSFER_ID, $configuration);
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->id = QubitTerm::ACCESSION_EVENT_PHYSICAL_TRANSFER_ID;
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::ACCESSION_EVENT_TYPE_ID;
@@ -121,7 +121,7 @@ sql;
     {
       // Add accession event note type term
       QubitMigrate::bumpTerm(QubitTerm::ACCESSION_EVENT_NOTE_ID, $configuration);
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->id = QubitTerm::ACCESSION_EVENT_NOTE_ID;
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::NOTE_TYPE_ID;

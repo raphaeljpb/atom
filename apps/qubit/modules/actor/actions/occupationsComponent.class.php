@@ -22,12 +22,12 @@ class ActorOccupationsComponent extends sfComponent
   public function execute($request)
   {
     // Create form. The note field has to be named content to allow translations
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-    $this->form->setValidator('occupation', new sfValidatorString);
-    $this->form->setValidator('content', new sfValidatorString);
+    $this->form->setValidator('occupation', new sfValidatorString());
+    $this->form->setValidator('content', new sfValidatorString());
     $this->form->setWidget('occupation', new sfWidgetFormSelect(array('choices' => array())));
-    $this->form->setWidget('content', new sfWidgetFormTextarea);
+    $this->form->setWidget('content', new sfWidgetFormTextarea());
 
     $this->occupations = $this->resource->getOccupations();
     $this->occupationsTaxonomy = QubitTaxonomy::getById(QubitTaxonomy::ACTOR_OCCUPATION_ID);
@@ -58,7 +58,7 @@ class ActorOccupationsComponent extends sfComponent
 
         if (is_null($relation))
         {
-          $relation = new QubitObjectTermRelation;
+          $relation = new QubitObjectTermRelation();
           $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
         }
 
@@ -68,7 +68,7 @@ class ActorOccupationsComponent extends sfComponent
         // Attach note to new relations if populated
         if (!isset($item['id']) && strlen($item['content']) > 0)
         {
-          $relation->notes[] = $note = new QubitNote;
+          $relation->notes[] = $note = new QubitNote();
           $note->typeId = QubitTerm::ACTOR_OCCUPATION_NOTE_ID;
           $note->content = $item['content'];
         }
@@ -85,7 +85,7 @@ class ActorOccupationsComponent extends sfComponent
           if (!isset($note) && strlen($item['content']) > 0)
           {
             // Add new note
-            $relation->notes[] = $note = new QubitNote;
+            $relation->notes[] = $note = new QubitNote();
             $note->typeId = QubitTerm::ACTOR_OCCUPATION_NOTE_ID;
             $note->content = $item['note'];
           }

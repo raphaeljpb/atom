@@ -40,7 +40,7 @@ class arMigration0124
   {
     if (QubitSetting::getByName('default_repository_browse_view') === null)
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->setName('default_repository_browse_view');
       $setting->setSourceCulture('en');
       $setting->setValue('card');

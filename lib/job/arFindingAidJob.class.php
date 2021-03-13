@@ -158,13 +158,13 @@ class arFindingAidJob extends arBaseJob
     }
 
     // Update or create 'findingAidStatus' property
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitProperty::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitProperty::NAME, 'findingAidStatus');
 
     if (null === $property = QubitProperty::getOne($criteria))
     {
-      $property = new QubitProperty;
+      $property = new QubitProperty();
       $property->objectId = $this->resource->id;
       $property->name = 'findingAidStatus';
     }
@@ -194,13 +194,13 @@ class arFindingAidJob extends arBaseJob
     $this->info($this->i18n->__('Uploading finding aid (%1)...', array('%1' => $this->resource->slug)));
 
     // Update or create 'findingAidStatus' property
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitProperty::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitProperty::NAME, 'findingAidStatus');
 
     if (null === $property = QubitProperty::getOne($criteria))
     {
-      $property = new QubitProperty;
+      $property = new QubitProperty();
       $property->objectId = $this->resource->id;
       $property->name = 'findingAidStatus';
     }
@@ -248,14 +248,14 @@ class arFindingAidJob extends arBaseJob
         $text = mb_strcut($text, 0, 65535);
 
         // Update or create 'findingAidTranscript' property
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitProperty::OBJECT_ID, $this->resource->id);
         $criteria->add(QubitProperty::NAME, 'findingAidTranscript');
         $criteria->add(QubitProperty::SCOPE, 'Text extracted from finding aid PDF file text layer using pdftotext');
 
         if (null === $property = QubitProperty::getOne($criteria))
         {
-          $property = new QubitProperty;
+          $property = new QubitProperty();
           $property->objectId = $this->resource->id;
           $property->name = 'findingAidTranscript';
           $property->scope = 'Text extracted from finding aid PDF file text layer using pdftotext';
@@ -291,7 +291,7 @@ class arFindingAidJob extends arBaseJob
     }
 
     // Delete 'findingAidTranscript' property if it exists
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitProperty::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitProperty::NAME, 'findingAidTranscript');
     $criteria->add(QubitProperty::SCOPE, 'Text extracted from finding aid PDF file text layer using pdftotext');
@@ -305,7 +305,7 @@ class arFindingAidJob extends arBaseJob
     }
 
     // Delete 'findingAidStatus' property if it exists
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitProperty::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitProperty::NAME, 'findingAidStatus');
 

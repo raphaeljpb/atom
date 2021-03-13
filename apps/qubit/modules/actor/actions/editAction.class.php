@@ -32,7 +32,7 @@ class ActorEditAction extends DefaultEditAction
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    $this->resource = new QubitActor;
+    $this->resource = new QubitActor();
 
     // Make root actor the parent of new actors
     $this->resource->parentId = QubitActor::ROOT_ID;
@@ -55,8 +55,8 @@ class ActorEditAction extends DefaultEditAction
 
       // Add optimistic lock
       $this->form->setDefault('serialNumber', $this->resource->serialNumber);
-      $this->form->setValidator('serialNumber', new sfValidatorInteger);
-      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden);
+      $this->form->setValidator('serialNumber', new sfValidatorInteger());
+      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
     }
     else
     {
@@ -68,8 +68,8 @@ class ActorEditAction extends DefaultEditAction
     }
 
     $this->form->setDefault('next', $this->request->getReferer());
-    $this->form->setValidator('next', new sfValidatorString);
-    $this->form->setWidget('next', new sfWidgetFormInputHidden);
+    $this->form->setValidator('next', new sfValidatorString());
+    $this->form->setWidget('next', new sfWidgetFormInputHidden());
   }
 
   protected function addField($name)
@@ -78,7 +78,7 @@ class ActorEditAction extends DefaultEditAction
     {
       case 'entityType':
         $this->form->setDefault('entityType', $this->context->routing->generate(null, array($this->resource->entityType, 'module' => 'term')));
-        $this->form->setValidator('entityType', new sfValidatorString);
+        $this->form->setValidator('entityType', new sfValidatorString());
 
         $choices = array();
         $choices[null] = null;
@@ -97,8 +97,8 @@ class ActorEditAction extends DefaultEditAction
       case 'descriptionIdentifier':
       case 'institutionResponsibleIdentifier':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
@@ -113,8 +113,8 @@ class ActorEditAction extends DefaultEditAction
       case 'rules':
       case 'sources':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormTextarea);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormTextarea());
 
         break;
 
@@ -127,14 +127,14 @@ class ActorEditAction extends DefaultEditAction
           $this->form->setDefault('maintainingRepository', $repoRoute);
         }
 
-        $this->form->setValidator('maintainingRepository', new sfValidatorString);
+        $this->form->setValidator('maintainingRepository', new sfValidatorString());
         $this->form->setWidget('maintainingRepository', new sfWidgetFormSelect(array('choices' => $choices)));
 
         break;
 
         case 'subjectAccessPoints':
         case 'placeAccessPoints':
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->resource->id);
           $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
           switch ($name)
@@ -157,7 +157,7 @@ class ActorEditAction extends DefaultEditAction
           }
 
           $this->form->setDefault($name, $value);
-          $this->form->setValidator($name, new sfValidatorPass);
+          $this->form->setValidator($name, new sfValidatorPass());
           $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
 
           break;
@@ -182,7 +182,7 @@ class ActorEditAction extends DefaultEditAction
         // Avoid duplicates (used in autocomplete.js)
         if (filter_var($this->request->getPostParameter('linkExisting'), FILTER_VALIDATE_BOOLEAN))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->addJoin(QubitObject::ID, QubitActorI18n::ID);
           $criteria->add(QubitObject::CLASS_NAME, get_class($this->request));
           $criteria->add(QubitActorI18n::CULTURE, $this->context->user->getCulture());
@@ -248,7 +248,7 @@ class ActorEditAction extends DefaultEditAction
 
         foreach ($filtered as $item)
         {
-          $relation = new QubitObjectTermRelation;
+          $relation = new QubitObjectTermRelation();
           $relation->term = $item;
 
           $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;

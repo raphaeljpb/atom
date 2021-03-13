@@ -32,7 +32,7 @@ class PhysicalObjectBrowseAction extends sfAction
       $this->context->user->removeAttribute('search-realm');
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     // Do source culture fallback
     $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitPhysicalObject');

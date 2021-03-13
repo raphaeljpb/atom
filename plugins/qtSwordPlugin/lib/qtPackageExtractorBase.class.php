@@ -83,7 +83,7 @@ class qtPackageExtractorBase
       // MD5 checksum expected
       if (isset($this->checksumMd5) && md5(file_get_contents($this->filename)) != $this->checksumMd5)
       {
-        throw new qtPackageExtractorChecksumException;
+        throw new qtPackageExtractorChecksumException();
       }
     }
 

@@ -31,7 +31,7 @@ class SettingsTemplateAction extends sfAction
 {
   public function execute($request)
   {
-    $this->defaultTemplateForm = new SettingsDefaultTemplateForm;
+    $this->defaultTemplateForm = new SettingsDefaultTemplateForm();
 
     // Handle POST data (form submit)
     if ($request->isMethod('post'))

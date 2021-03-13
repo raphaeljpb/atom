@@ -37,7 +37,7 @@ class sfSkosPlugin
 
   public function __construct($taxonomyId, $options = array())
   {
-    $this->logger = isset($options['logger']) ? $options['logger'] : new sfNoLogger(new sfEventDispatcher);
+    $this->logger = isset($options['logger']) ? $options['logger'] : new sfNoLogger(new sfEventDispatcher());
     $this->i18n = sfContext::getInstance()->i18n;
 
     if (null === $this->taxonomy = QubitTaxonomy::getById($taxonomyId))
@@ -54,7 +54,7 @@ class sfSkosPlugin
       throw new sfSkosPluginException($this->i18n->__('Term with ID %1% could not be found', array('%1%' => $options['parentId'])));
     }
 
-    $this->graph = new EasyRdf_Graph;
+    $this->graph = new EasyRdf_Graph();
 
     $this->languages = sfConfig::get('app_i18n_languages');
   }
@@ -140,7 +140,7 @@ class sfSkosPlugin
     }
 
     // Build list of relationships using sfSkosUniqueRelations
-    $relations = new sfSkosUniqueRelations;
+    $relations = new sfSkosUniqueRelations();
     foreach ($this->graph->allOfType('skos:Concept') as $c)
     {
       foreach ($c->allResources('skos:related') as $r)
@@ -151,7 +151,7 @@ class sfSkosPlugin
 
     foreach ($relations as $item)
     {
-      $relation = new QubitRelation;
+      $relation = new QubitRelation();
       $relation->typeId = QubitTerm::TERM_RELATION_ASSOCIATIVE_ID;
       $relation->subjectId = $item[0];
       $relation->objectId = $item[1];
@@ -175,7 +175,7 @@ class sfSkosPlugin
 
   protected function addConcept(EasyRdf_Resource $concept, $parentId)
   {
-    $term = new QubitTerm;
+    $term = new QubitTerm();
     $term->parentId = $parentId;
     $term->taxonomyId = $this->taxonomy->id;
 
@@ -240,7 +240,7 @@ class sfSkosPlugin
         continue;
       }
 
-      $otherName = new QubitOtherName;
+      $otherName = new QubitOtherName();
       $otherName->typeId = QubitTerm::ALTERNATIVE_LABEL_ID;
       $otherName->sourceCulture = $item->getLang();
       $otherName->setName($item->getValue(), array('culture' => $lang));
@@ -264,7 +264,7 @@ class sfSkosPlugin
         continue;
       }
 
-      $note = new QubitNote;
+      $note = new QubitNote();
       $note->typeId = QubitTerm::SCOPE_NOTE_ID;
       $note->sourceCulture = $item->getLang();
       $note->setContent($item->getValue(), array('culture' => $lang));
@@ -275,7 +275,7 @@ class sfSkosPlugin
 
   protected function setUriSourceNote(QubitTerm $term, EasyRdf_Resource $concept)
   {
-    $note = new QubitNote;
+    $note = new QubitNote();
     $note->typeId = QubitTerm::SOURCE_NOTE_ID;
     $note->content = $concept->getUri();
 

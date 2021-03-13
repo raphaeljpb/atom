@@ -51,14 +51,14 @@ class arUpgrader110
       // terms and settings
       case 62:
         // Add accession mask user setting
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = 'accession_mask';
         $setting->value = '%Y-%m-%d/#i';
         $setting->culture = 'en';
         $setting->save();
 
         // Add accession counter setting
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = 'accession_counter';
         $setting->value = '0';
         $setting->culture = 'en';
@@ -72,7 +72,7 @@ class arUpgrader110
         }
 
         // Create accession menu node
-        $node = new QubitMenu;
+        $node = new QubitMenu();
         $node->parentId = QubitMenu::ADD_EDIT_ID;
         $node->name = 'addAccessionRecord';
         $node->path = 'accession/add';
@@ -84,7 +84,7 @@ class arUpgrader110
           'pl' => 'Nabytki',
           'sl' => 'Zapisi o prevzemu') as $key => $value)
         {
-          $nodeI18n = new QubitMenuI18n;
+          $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label= $value;
 
@@ -101,7 +101,7 @@ class arUpgrader110
 
         // Create manage menu node
         QubitMigrate::bumpMenu(QubitMenu::MANAGE_ID, $configuration);
-        $node = new QubitMenu;
+        $node = new QubitMenu();
         $node->id = QubitMenu::MANAGE_ID;
         $node->parentId = QubitMenu::MAIN_MENU_ID;
         $node->name = 'manage';
@@ -115,7 +115,7 @@ class arUpgrader110
           'pl' => 'Zarządzanie',
           'sl' => 'Upravljaj') as $key => $value)
         {
-          $nodeI18n = new QubitMenuI18n;
+          $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label= $value;
 
@@ -138,7 +138,7 @@ class arUpgrader110
         }
 
         // Create manage accession menu node
-        $node = new QubitMenu;
+        $node = new QubitMenu();
         $node->parentId = QubitMenu::MANAGE_ID;
         $node->name = 'accessions';
         $node->path = 'accession/browse';
@@ -151,7 +151,7 @@ class arUpgrader110
           'pl' => 'Nabytki',
           'sl' => 'Zapisi o prevzemu') as $key => $value)
         {
-          $nodeI18n = new QubitMenuI18n;
+          $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label= $value;
 
@@ -167,7 +167,7 @@ class arUpgrader110
         }
 
         // Create manage donor menu node
-        $node = new QubitMenu;
+        $node = new QubitMenu();
         $node->parentId = QubitMenu::MANAGE_ID;
         $node->name = 'donors';
         $node->path = 'donor/browse';
@@ -181,7 +181,7 @@ class arUpgrader110
           'pl' => 'Przekazujący (materiały archiwalne)',
           'sl' => 'Donatorji') as $key => $value)
         {
-          $nodeI18n = new QubitMenuI18n;
+          $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label= $value;
 
@@ -197,7 +197,7 @@ class arUpgrader110
         }
 
         // Create manage rightsholder menu node
-        $node = new QubitMenu;
+        $node = new QubitMenu();
         $node->parentId = QubitMenu::MANAGE_ID;
         $node->name = 'rightsholders';
         $node->path = 'rightsholder/browse';
@@ -211,7 +211,7 @@ class arUpgrader110
           'pl' => 'Posiadacze praw',
           'sl' => 'Imetniki pravic') as $key => $value)
         {
-          $nodeI18n = new QubitMenuI18n;
+          $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label= $value;
 
@@ -228,7 +228,7 @@ class arUpgrader110
 
         // New type of relation: accession
         QubitMigrate::bumpTerm(QubitTerm::ACCESSION_ID, $configuration);
-        $term = new QubitTerm;
+        $term = new QubitTerm();
         $term->id = QubitTerm::ACCESSION_ID;
         $term->parentId = QubitTerm::ROOT_ID;
         $term->taxonomyId = QubitTaxonomy::RELATION_TYPE_ID;
@@ -238,7 +238,7 @@ class arUpgrader110
 
         // New type of relation: right
         QubitMigrate::bumpTerm(QubitTerm::RIGHT_ID, $configuration);
-        $term = new QubitTerm;
+        $term = new QubitTerm();
         $term->id = QubitTerm::RIGHT_ID;
         $term->parentId = QubitTerm::ROOT_ID;
         $term->taxonomyId = QubitTaxonomy::RELATION_TYPE_ID;
@@ -248,7 +248,7 @@ class arUpgrader110
 
         // New type of relation: donor
         QubitMigrate::bumpTerm(QubitTerm::DONOR_ID, $configuration);
-        $term = new QubitTerm;
+        $term = new QubitTerm();
         $term->id = QubitTerm::DONOR_ID;
         $term->parentId = QubitTerm::ROOT_ID;
         $term->taxonomyId = QubitTaxonomy::RELATION_TYPE_ID;
@@ -258,7 +258,7 @@ class arUpgrader110
 
         // Accession resource type taxonomy and its terms
         QubitMigrate::bumpTaxonomy(QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID, $configuration);
-        $taxonomy = new QubitTaxonomy;
+        $taxonomy = new QubitTaxonomy();
         $taxonomy->id = QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID;
         $taxonomy->name = 'Accession resource type';
         $taxonomy->culture = 'en';
@@ -269,7 +269,7 @@ class arUpgrader110
           'Private transfer',
           'Acquisition type') as $item)
         {
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID;
           $term->name = $item;
@@ -279,7 +279,7 @@ class arUpgrader110
 
         // Accession acquisition type taxonomy and its terms
         QubitMigrate::bumpTaxonomy(QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID, $configuration);
-        $taxonomy = new QubitTaxonomy;
+        $taxonomy = new QubitTaxonomy();
         $taxonomy->id = QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID;
         $taxonomy->name = 'Accession acquisition type';
         $taxonomy->culture = 'en';
@@ -291,7 +291,7 @@ class arUpgrader110
           'Purchase',
           'Transfer') as $item)
         {
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID;
           $term->name = $item;
@@ -301,7 +301,7 @@ class arUpgrader110
 
         // Processing priority taxonomy and terms
         QubitMigrate::bumpTaxonomy(QubitTaxonomy::ACCESSION_PROCESSING_PRIORITY_ID, $configuration);
-        $taxonomy = new QubitTaxonomy;
+        $taxonomy = new QubitTaxonomy();
         $taxonomy->id = QubitTaxonomy::ACCESSION_PROCESSING_PRIORITY_ID;
         $taxonomy->name = 'Processing priority';
         $taxonomy->culture = 'en';
@@ -312,7 +312,7 @@ class arUpgrader110
           'Medium',
           'Low') as $item)
         {
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::ACCESSION_PROCESSING_PRIORITY_ID;
           $term->name = $item;
@@ -322,7 +322,7 @@ class arUpgrader110
 
         // Processing status taxonomy and terms
         QubitMigrate::bumpTaxonomy(QubitTaxonomy::ACCESSION_PROCESSING_STATUS_ID, $configuration);
-        $taxonomy = new QubitTaxonomy;
+        $taxonomy = new QubitTaxonomy();
         $taxonomy->id = QubitTaxonomy::ACCESSION_PROCESSING_STATUS_ID;
         $taxonomy->name = 'Processing status';
         $taxonomy->culture = 'en';
@@ -333,7 +333,7 @@ class arUpgrader110
           'Incomplete',
           'In-Progress') as $item)
         {
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::ACCESSION_PROCESSING_STATUS_ID;
           $term->name = $item;
@@ -343,7 +343,7 @@ class arUpgrader110
 
         // Deaccession scope taxonomy and terms
         QubitMigrate::bumpTaxonomy(QubitTaxonomy::DEACCESSION_SCOPE_ID, $configuration);
-        $taxonomy = new QubitTaxonomy;
+        $taxonomy = new QubitTaxonomy();
         $taxonomy->id = QubitTaxonomy::DEACCESSION_SCOPE_ID;
         $taxonomy->name = 'Deaccession scope';
         $taxonomy->culture = 'en';
@@ -353,7 +353,7 @@ class arUpgrader110
           'Whole',
           'Part') as $item)
         {
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::DEACCESSION_SCOPE_ID;
           $term->name = $item;
@@ -363,7 +363,7 @@ class arUpgrader110
 
         // Right act taxonomy and terms
         QubitMigrate::bumpTaxonomy(QubitTaxonomy::RIGHT_ACT_ID, $configuration);
-        $taxonomy = new QubitTaxonomy;
+        $taxonomy = new QubitTaxonomy();
         $taxonomy->id = QubitTaxonomy::RIGHT_ACT_ID;
         $taxonomy->name = 'Rights act';
         $taxonomy->culture = 'en';
@@ -378,7 +378,7 @@ class arUpgrader110
           'Modify',
           'Replicate') as $item)
         {
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::RIGHT_ACT_ID;
           $term->name = $item;
@@ -388,7 +388,7 @@ class arUpgrader110
 
         // Right basis taxonomy and terms
         QubitMigrate::bumpTaxonomy(QubitTaxonomy::RIGHT_BASIS_ID, $configuration);
-        $taxonomy = new QubitTaxonomy;
+        $taxonomy = new QubitTaxonomy();
         $taxonomy->id = QubitTaxonomy::RIGHT_BASIS_ID;
         $taxonomy->name = 'Rights basis';
         $taxonomy->culture = 'en';
@@ -401,7 +401,7 @@ class arUpgrader110
           'Policy',
           'Donor') as $item)
         {
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::RIGHT_BASIS_ID;
           $term->name = $item;
@@ -411,7 +411,7 @@ class arUpgrader110
 
         // Copyright status taxonomy and terms
         QubitMigrate::bumpTaxonomy(QubitTaxonomy::COPYRIGHT_STATUS_ID, $configuration);
-        $taxonomy = new QubitTaxonomy;
+        $taxonomy = new QubitTaxonomy();
         $taxonomy->id = QubitTaxonomy::COPYRIGHT_STATUS_ID;
         $taxonomy->name = 'Copyright status';
         $taxonomy->culture = 'en';
@@ -422,7 +422,7 @@ class arUpgrader110
           'Public domain',
           'Unknown') as $item)
         {
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::COPYRIGHT_STATUS_ID;
           $term->name = $item;
@@ -485,7 +485,7 @@ class arUpgrader110
 
       // Add importCsv menu node, see also r9373
       case 65:
-        $node = new QubitMenu;
+        $node = new QubitMenu();
         $node->parentId = QubitMenu::IMPORT_ID;
         $node->name = 'importCsv';
         $node->path = 'object/importSelect?type=csv';
@@ -496,7 +496,7 @@ class arUpgrader110
 
       // Add global replace menu node
       case 66:
-        $node = new QubitMenu;
+        $node = new QubitMenu();
         $node->parentId = QubitMenu::ADMIN_ID;
         $node->name = 'globalReplace';
         $node->path = 'search/globalReplace';
@@ -507,7 +507,7 @@ class arUpgrader110
 
       // Add setting for repository upload quota
       case 67:
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = 'repository_quota';
         $setting->value = '-1';
         $setting->culture = 'en';
@@ -517,7 +517,7 @@ class arUpgrader110
 
       // Add separator character setting
       case 68:
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = 'separator_character';
         $setting->value = '-';
         $setting->culture = 'en';
@@ -527,7 +527,7 @@ class arUpgrader110
 
       // Add themes menu and update plugins menu path
       case 69:
-        $node = new QubitMenu;
+        $node = new QubitMenu();
         $node->parentId = QubitMenu::ADMIN_ID;
         $node->name = 'themes';
         $node->path = 'sfPluginAdminPlugin/themes';
@@ -540,7 +540,7 @@ class arUpgrader110
           'pl' => 'Motywy',
           'sl' => 'Teme') as $key => $value)
         {
-          $nodeI18n = new QubitMenuI18n;
+          $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label= $value;
 
@@ -601,7 +601,7 @@ class arUpgrader110
           }
 
           // Update digital object and derivatives paths
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $c1 = $criteria->getNewCriterion(QubitDigitalObject::PARENT_ID, $item->id);
           $c2 = $criteria->getNewCriterion(QubitDigitalObject::ID, $item->id);
           $c1->addOr($c2);
@@ -671,7 +671,7 @@ class arUpgrader110
 
       // Add physical object menu
       case 72:
-        $node = new QubitMenu;
+        $node = new QubitMenu();
         $node->parentId = QubitMenu::MANAGE_ID;
         $node->name = 'browsePhysicalObjects';
         $node->path = 'physicalobject/browse';
@@ -684,7 +684,7 @@ class arUpgrader110
           'pl' => 'Składowanie w ujęciu fizycznym',
           'sl' => 'Fizična hramba') as $key => $value)
         {
-          $nodeI18n = new QubitMenuI18n;
+          $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label= $value;
 

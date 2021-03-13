@@ -57,7 +57,7 @@ class AccessionCheckIdentifierAvailableAction extends sfAction
     else
     {
       // Create new accession so validator can be run
-      $resource = new QubitAccession;
+      $resource = new QubitAccession();
     }
 
     $validator = new QubitValidatorAccessionIdentifier(array('required' => true, 'resource' => $resource));

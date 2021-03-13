@@ -106,7 +106,7 @@ class QubitProperty extends BaseProperty
    */
   public static function getOneByObjectIdAndName($objectId, $name, $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitProperty::OBJECT_ID, $objectId);
     $criteria->add(QubitProperty::NAME, $name);
 
@@ -133,7 +133,7 @@ class QubitProperty extends BaseProperty
     // Only add if an existing property does not exist
     if (!QubitProperty::isExistent($objectId, $name, $value, $options))
     {
-      $property = new QubitProperty;
+      $property = new QubitProperty();
       $property->setObjectId($objectId);
       $property->setName($name);
       $property->setValue($value, $options);
@@ -169,7 +169,7 @@ class QubitProperty extends BaseProperty
   {
     $propertyExists = false;
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitProperty::ID, QubitPropertyI18n::ID);
     $criteria->add(QubitProperty::OBJECT_ID, $objectId);
     $criteria->add(QubitProperty::NAME, $name);

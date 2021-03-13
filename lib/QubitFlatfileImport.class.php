@@ -285,7 +285,7 @@ class QubitFlatfileImport
    */
   protected function startTimer()
   {
-    $this->timer = new QubitTimer;
+    $this->timer = new QubitTimer();
     $this->timer->start();
   }
 
@@ -671,7 +671,7 @@ class QubitFlatfileImport
     QubitEvent::clearCache();
 
     // Get related events
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitEvent::OBJECT_ID, $this->object->id);
 
     // Compare fields of the event in question with each associated event
@@ -748,7 +748,7 @@ class QubitFlatfileImport
         return $this->handleRepositoryAndActorRow();
 
       default:
-        $this->object = new $this->className;
+        $this->object = new $this->className();
     }
 
     return false;
@@ -828,12 +828,12 @@ class QubitFlatfileImport
       // Allow translations to be imported
       if (!empty($this->status['lastLegacyId']) && $this->columnValue('legacyId') == $this->status['lastLegacyId'])
       {
-        $this->object = new QubitInformationObjectI18n;
+        $this->object = new QubitInformationObjectI18n();
         $this->object->id = $this->status['lastId'];
       }
       else
       {
-        $this->object = new QubitInformationObject;
+        $this->object = new QubitInformationObject();
       }
 
       return false;
@@ -928,7 +928,7 @@ class QubitFlatfileImport
     QubitPdo::prepareAndExecute('UPDATE information_object SET parent_id=null WHERE parent_id=?',
                                 array($this->object->id));
     $this->object->delete();
-    $this->object = new QubitInformationObject;
+    $this->object = new QubitInformationObject();
     $this->object->slug = $oldSlug; // Retain previous record's slug
   }
 
@@ -947,7 +947,7 @@ class QubitFlatfileImport
       return true;
     }
 
-    $this->object = new $this->className;
+    $this->object = new $this->className();
     return false;
   }
 
@@ -1040,7 +1040,7 @@ class QubitFlatfileImport
     // Not updating and not skipping matches: create a new record without checking
     if (!$this->isUpdating() && !$this->skipMatched)
     {
-      $this->object = new $this->className;
+      $this->object = new $this->className();
 
       return false;
     }
@@ -1126,7 +1126,7 @@ class QubitFlatfileImport
     // - Not updating, skipping matches and match not found
     // - Updating, not skipping unmatched and match not found
     // - Updating with delete and replace after match deletion
-    $this->object = new $this->className;
+    $this->object = new $this->className();
 
     return false;
   }
@@ -1529,7 +1529,7 @@ class QubitFlatfileImport
     }
     else
     {
-      $note = new QubitNote;
+      $note = new QubitNote();
       $note->objectId = $this->object->id;
       $note->typeId = $typeId;
     }
@@ -1623,7 +1623,7 @@ class QubitFlatfileImport
     else
     {
       // Create new event
-      $event = new QubitEvent;
+      $event = new QubitEvent();
       $event->objectId = $this->object->id;
       $event->typeId = $typeId;
     }
@@ -1850,7 +1850,7 @@ class QubitFlatfileImport
 
     if (!$result)
     {
-      $rightsHolder = new QubitRightsHolder;
+      $rightsHolder = new QubitRightsHolder();
       $rightsHolder->authorizedFormOfName = $name;
       $rightsHolder->save();
     }
@@ -1883,7 +1883,7 @@ class QubitFlatfileImport
 
     if (!$result)
     {
-      $donor = new QubitDonor;
+      $donor = new QubitDonor();
       $donor->authorizedFormOfName = $name;
       $donor->save();
     }
@@ -1931,7 +1931,7 @@ class QubitFlatfileImport
    */
   public function createContactInformation($actorId, $options)
   {
-    $info = new QubitContactInformation;
+    $info = new QubitContactInformation();
     $info->actorId = $actorId;
 
     $allowedProperties = array(
@@ -2031,7 +2031,7 @@ class QubitFlatfileImport
    */
   public static function createTerm($taxonomyId, $name, $culture = 'en')
   {
-    $term = new QubitTerm;
+    $term = new QubitTerm();
     $term->name = $name;
     $term->taxonomyId = $taxonomyId;
     $term->parentId = QubitTerm::ROOT_ID;
@@ -2051,7 +2051,7 @@ class QubitFlatfileImport
    */
   public function createPhysicalObject($name, $location, $typeId)
   {
-    $object = new QubitPhysicalObject;
+    $object = new QubitPhysicalObject();
     $object->name = $name;
     $object->typeId = $typeId;
 
@@ -2073,7 +2073,7 @@ class QubitFlatfileImport
    */
   public static function createRepository($name)
   {
-    $repo = new QubitRepository;
+    $repo = new QubitRepository();
     $repo->authorizedFormOfName = $name;
     $repo->save();
     return $repo;
@@ -2089,7 +2089,7 @@ class QubitFlatfileImport
    */
   private static function createActor($name, $options = array())
   {
-    $actor = new QubitActor;
+    $actor = new QubitActor();
     $actor->parentId = QubitActor::ROOT_ID;
     $actor->authorizedFormOfName = $name;
 
@@ -2125,7 +2125,7 @@ class QubitFlatfileImport
       return;
     }
 
-    $relation = new QubitRelation;
+    $relation = new QubitRelation();
     $relation->subjectId = $subjectId;
     $relation->objectId  = $objectId;
     $relation->typeId    = $typeId;
@@ -2150,7 +2150,7 @@ class QubitFlatfileImport
       return;
     }
 
-    $relation = new QubitObjectTermRelation;
+    $relation = new QubitObjectTermRelation();
     $relation->termId = $termId;
     $relation->objectId = $objectId;
     $relation->indexOnSave = false;
@@ -2169,7 +2169,7 @@ class QubitFlatfileImport
    */
   private function relationExists($subjectId, $objectId)
   {
-    $c = new Criteria;
+    $c = new Criteria();
     $c->add(QubitRelation::OBJECT_ID, $objectId);
     $c->add(QubitRelation::SUBJECT_ID, $subjectId);
 
@@ -2186,7 +2186,7 @@ class QubitFlatfileImport
    */
   public static function objectTermRelationExists($objectId, $termId)
   {
-    $c = new Criteria;
+    $c = new Criteria();
     $c->add(QubitObjectTermRelation::OBJECT_ID, $objectId);
     $c->add(QubitObjectTermRelation::TERM_ID, $termId);
 
@@ -2270,7 +2270,7 @@ class QubitFlatfileImport
   public function createRightAndRelation($options)
   {
     // add right
-    $right = new QubitRights;
+    $right = new QubitRights();
 
     $allowedProperties = array(
       'rightsHolderId',
@@ -2344,7 +2344,7 @@ class QubitFlatfileImport
       $values[$valueIndex] = $vocabulary[$vocabularyIndex];
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitProperty::OBJECT_ID, $this->object->id);
     $criteria->add(QubitProperty::NAME, $propertyName);
 
@@ -2353,7 +2353,7 @@ class QubitFlatfileImport
     {
       // Create property manually rather than using addProperty model methods
       // as they are implemented inconsistently
-      $property = new QubitProperty;
+      $property = new QubitProperty();
       $property->objectId = $this->object->id;
       $property->name = $propertyName;
     }
@@ -2383,7 +2383,7 @@ class QubitFlatfileImport
     // Determine target name using object class
     $targetName = sfInflector::underscore(str_replace('Qubit', '', get_class($object)));
 
-    $keymap = new QubitKeymap;
+    $keymap = new QubitKeymap();
     $keymap->sourceName = $sourceName;
     $keymap->sourceId   = $sourceId;
     $keymap->targetId   = $object->id;

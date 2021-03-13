@@ -146,7 +146,7 @@ class arGenerateReportJob extends arBaseJob
    */
   private function getStorageLocationsResults()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     $criteria->setDistinct();
     $criteria->add(QubitInformationObject::LFT, $this->resource->lft, Criteria::GREATER_EQUAL);
@@ -165,7 +165,7 @@ class arGenerateReportJob extends arBaseJob
   {
     $sortBy = isset($this->params['sortBy']) ? $this->params['sortBy'] : 'referenceCode';
 
-    $c2 = new Criteria;
+    $c2 = new Criteria();
     $c2->addJoin(QubitTerm::ID, QubitTermI18n::ID, Criteria::INNER_JOIN);
     $c2->add(QubitTermI18n::NAME, $levelOfDescription);
     $c2->add(QubitTermI18n::CULTURE, 'en');
@@ -176,7 +176,7 @@ class arGenerateReportJob extends arBaseJob
       throw new sfException("Can't find '$levelOfDescription' level of description in term table");
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitInformationObject::LFT, $this->resource->lft, Criteria::GREATER_EQUAL);
     $criteria->add(QubitInformationObject::RGT, $this->resource->rgt, Criteria::LESS_EQUAL);
     $criteria->addAscendingOrderByColumn(QubitInformationObject::LFT);

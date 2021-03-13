@@ -136,8 +136,8 @@ class sfRadPluginEditAction extends InformationObjectEditAction
       case 'alternateTitle':
       case 'edition':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
@@ -157,20 +157,20 @@ class sfRadPluginEditAction extends InformationObjectEditAction
       case 'titleStatementOfResponsibility':
       case 'titleProperOfPublishersSeries':
         $this->form->setDefault($name, $this->rad[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'languageNotes':
         $this->form->setDefault($name, $this->rad[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormTextarea);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormTextarea());
 
         break;
 
       case 'type':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
         QubitObjectTermRelation::addJoinTermCriteria($criteria);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MATERIAL_TYPE_ID);
@@ -182,7 +182,7 @@ class sfRadPluginEditAction extends InformationObjectEditAction
         }
 
         $this->form->setDefault('type', $value);
-        $this->form->setValidator('type', new sfValidatorPass);
+        $this->form->setValidator('type', new sfValidatorPass());
 
         $choices = array();
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::MATERIAL_TYPE_ID) as $item)
@@ -247,7 +247,7 @@ class sfRadPluginEditAction extends InformationObjectEditAction
 
         foreach ($filtered as $item)
         {
-          $relation = new QubitObjectTermRelation;
+          $relation = new QubitObjectTermRelation();
           $relation->term = $item;
 
           $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;

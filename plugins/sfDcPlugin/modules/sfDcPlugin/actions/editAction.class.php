@@ -76,7 +76,7 @@ class sfDcPluginEditAction extends InformationObjectEditAction
     switch ($name)
     {
       case 'type':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
         QubitObjectTermRelation::addJoinTermCriteria($criteria);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::DC_TYPE_ID);
@@ -88,7 +88,7 @@ class sfDcPluginEditAction extends InformationObjectEditAction
         }
 
         $this->form->setDefault('type', $value);
-        $this->form->setValidator('type', new sfValidatorPass);
+        $this->form->setValidator('type', new sfValidatorPass());
 
         $choices = array();
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DC_TYPE_ID) as $item)
@@ -133,7 +133,7 @@ class sfDcPluginEditAction extends InformationObjectEditAction
 
         foreach ($filtered as $item)
         {
-          $relation = new QubitObjectTermRelation;
+          $relation = new QubitObjectTermRelation();
           $relation->term = $item;
 
           $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;

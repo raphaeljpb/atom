@@ -40,8 +40,8 @@ class RepositoryEditThemeAction extends sfAction
 
       case 'htmlSnippet':
         $this->form->setDefault('htmlSnippet', $this->resource->htmlSnippet);
-        $this->form->setValidator('htmlSnippet', new sfValidatorString);
-        $this->form->setWidget('htmlSnippet', new sfWidgetFormTextarea);
+        $this->form->setValidator('htmlSnippet', new sfValidatorString());
+        $this->form->setWidget('htmlSnippet', new sfWidgetFormTextarea());
 
         break;
 
@@ -71,8 +71,8 @@ class RepositoryEditThemeAction extends sfAction
       case 'banner_delete':
         if ($this->existsBanner)
         {
-          $this->form->setValidator('banner_delete', new sfValidatorBoolean);
-          $this->form->setWidget('banner_delete', new sfWidgetFormInputCheckbox);
+          $this->form->setValidator('banner_delete', new sfValidatorBoolean());
+          $this->form->setWidget('banner_delete', new sfWidgetFormInputCheckbox());
         }
 
         break;
@@ -104,8 +104,8 @@ class RepositoryEditThemeAction extends sfAction
       case 'logo_delete':
         if ($this->existsLogo)
         {
-          $this->form->setValidator($name, new sfValidatorBoolean);
-          $this->form->setWidget($name, new sfWidgetFormInputCheckbox);
+          $this->form->setValidator($name, new sfValidatorBoolean());
+          $this->form->setWidget($name, new sfWidgetFormInputCheckbox());
         }
 
         break;
@@ -154,7 +154,7 @@ class RepositoryEditThemeAction extends sfAction
     $this->existsLogo = $this->resource->existsLogo();
     $this->existsBanner = $this->resource->existsBanner();
 
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     foreach ($this::$NAMES as $name)
     {

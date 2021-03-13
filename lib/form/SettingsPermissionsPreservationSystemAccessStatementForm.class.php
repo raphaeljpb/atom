@@ -39,7 +39,7 @@ class SettingsPermissionsPreservationSystemAccessStatementForm extends sfForm
     $this->setDefault('preservationSystemAccessStatementEnabled', $default);
 
     $this->setWidget('preservationSystemAccessStatement', new sfWidgetFormTextArea(array(), array('rows' => 4)));
-    $this->setValidator('preservationSystemAccessStatement', new sfValidatorString);
+    $this->setValidator('preservationSystemAccessStatement', new sfValidatorString());
     if (null !== $setting = QubitSetting::getByName('digitalobject_preservation_system_access_statement'))
     {
       $this->setDefault('preservationSystemAccessStatement', $setting->getValue());

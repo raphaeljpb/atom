@@ -66,20 +66,20 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
     switch ($name)
     {
       case 'containers':
-        $this->form->setValidator('containers', new sfValidatorPass);
+        $this->form->setValidator('containers', new sfValidatorPass());
         $this->form->setWidget('containers', new sfWidgetFormSelect(array('choices' => array(), 'multiple' => true)));
 
         break;
 
       case 'location':
       case 'name':
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'type':
-        $this->form->setValidator('type', new sfValidatorString);
+        $this->form->setValidator('type', new sfValidatorString());
         $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => QubitTerm::getIndentedChildTree(QubitTerm::CONTAINER_ID, '&nbsp;', array('returnObjectInstances' => true)))));
 
         break;
@@ -100,7 +100,7 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
 
     if (null !== $this->form->getValue('name') || null !== $this->form->getValue('location'))
     {
-      $physicalObject = new QubitPhysicalObject;
+      $physicalObject = new QubitPhysicalObject();
       $physicalObject->name = $this->form->getValue('name');
       $physicalObject->location = $this->form->getValue('location');
 

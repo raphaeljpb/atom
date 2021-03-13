@@ -26,7 +26,7 @@ class QubitContactInformation extends BaseContactInformation
 
   public function makePrimaryContact()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitContactInformation::ACTOR_ID, $this->actorId);
     $contacts = self::get($criteria);
 

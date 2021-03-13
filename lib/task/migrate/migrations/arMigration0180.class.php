@@ -40,7 +40,7 @@ class arMigration0180
   {
     if (null === QubitSetting::getByName('authority_record_relationships'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name = 'authority_record_relationships';
       $setting->scope = 'ui_label';
       $setting->editable = 1;

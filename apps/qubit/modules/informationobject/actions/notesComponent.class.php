@@ -21,7 +21,7 @@ class InformationObjectNotesComponent extends sfComponent
 {
   public function execute($request, $options = array())
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     $this->addField('content');
@@ -158,8 +158,8 @@ class InformationObjectNotesComponent extends sfComponent
     switch ($name)
     {
       case 'content':
-        $this->form->setValidator('content', new sfValidatorString);
-        $this->form->setWidget('content', new sfWidgetFormTextarea);
+        $this->form->setValidator('content', new sfValidatorString());
+        $this->form->setWidget('content', new sfWidgetFormTextarea());
 
         break;
 
@@ -170,7 +170,7 @@ class InformationObjectNotesComponent extends sfComponent
           $choices[$value] = htmlentities($label, ENT_QUOTES, sfConfig::get('sf_charset'));
         }
 
-        $this->form->setValidator('type', new sfValidatorString);
+        $this->form->setValidator('type', new sfValidatorString());
         $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
 
         break;
@@ -210,7 +210,7 @@ class InformationObjectNotesComponent extends sfComponent
       {
         if (is_null($this->note))
         {
-          $this->resource->notes[] =  $this->note = new QubitNote;
+          $this->resource->notes[] =  $this->note = new QubitNote();
         }
 
         if (isset($item['type']))

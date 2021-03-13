@@ -238,7 +238,7 @@ class sfModsPlugin implements ArrayAccess
 
   public function getIdForRightsActTerm($termName)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::RIGHT_ACT_ID);
     $criteria->add(QubitTerm::SOURCE_CULTURE, 'en');
     $criteria->addJoin(QubitTermI18n::ID, QubitTerm::ID);
@@ -254,7 +254,7 @@ class sfModsPlugin implements ArrayAccess
 
   public function determineIfResourceHasRightsAct($actName)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitInformationObject::ID, $this->resource->id);
     $criteria->addJoin(QubitRelation::SUBJECT_ID, QubitInformationObject::ID);
     $criteria->addJoin(QubitGrantedRight::RIGHTS_ID, QubitRelation::OBJECT_ID);

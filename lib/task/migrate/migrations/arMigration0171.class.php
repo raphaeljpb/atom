@@ -35,7 +35,7 @@ class arMigration0171
   {
     // Create new term for external file digital object usage
     QubitMigrate::bumpTerm(QubitTerm::EXTERNAL_FILE_ID, $configuration);
-    $term = new QubitTerm;
+    $term = new QubitTerm();
     $term->id = QubitTerm::EXTERNAL_FILE_ID;
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::DIGITAL_OBJECT_USAGE_ID;

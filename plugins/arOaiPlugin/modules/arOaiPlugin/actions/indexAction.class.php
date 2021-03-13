@@ -68,7 +68,7 @@ class arOaiPluginIndexAction extends sfAction
       }
       else
       {
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitProperty::NAME, 'oaiApiKey');
         $criteria->add(QubitPropertyI18n::VALUE, $requestOaiApiKey);
 

@@ -272,7 +272,7 @@ EOF;
 
               if (!empty($identifier) || !empty($identifierNotes[$index]))
               {
-                $otherName = new QubitOtherName;
+                $otherName = new QubitOtherName();
                 $otherName->object = $self->object;
                 $otherName->name = $identifier;
 
@@ -283,7 +283,7 @@ EOF;
                   // Create new accession identifier type term, if necessary
                   if (empty($typeId = self::arraySearchCaseInsensitive($typeName, $self->status['alternativeIdentifierTypes'][$self->columnValue('culture')])))
                   {
-                    $term = new QubitTerm;
+                    $term = new QubitTerm();
                     $term->parentId = QubitTerm::ROOT_ID;
                     $term->taxonomyId = QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID;
                     $term->setName($typeName, array('culture' => $self->columnValue('culture')));
@@ -335,7 +335,7 @@ EOF;
                 // Create new accession event type term, if necessary
                 if (empty($typeId = self::arraySearchCaseInsensitive($eventType, $self->status['accessionEventTypes'][$self->columnValue('culture')])))
                 {
-                  $term = new QubitTerm;
+                  $term = new QubitTerm();
                   $term->parentId = QubitTerm::ROOT_ID;
                   $term->taxonomyId = QubitTaxonomy::ACCESSION_EVENT_TYPE_ID;
                   $term->setName($eventType, array('culture' => $self->columnValue('culture')));
@@ -350,7 +350,7 @@ EOF;
                 $eventAgent = (empty($eventAgents[$index])) ? null : $eventAgents[$index];
                 $eventNoteText = (empty($eventNotes[$index])) ? null : $eventNotes[$index];
 
-                $event = new QubitAccessionEvent;
+                $event = new QubitAccessionEvent();
                 $event->accessionId = $self->object->id;
                 $event->typeId = $typeId;
                 $event->date = $eventDate;
@@ -360,7 +360,7 @@ EOF;
                 // Add accession event notes
                 if (!empty($eventNoteText))
                 {
-                  $note = new QubitNote;
+                  $note = new QubitNote();
                   $note->objectId = $event->id;
                   $note->typeId = QubitTerm::ACCESSION_EVENT_NOTE_ID;
                   $note->setContent($eventNoteText, array('culture' => $self->columnValue('culture')));

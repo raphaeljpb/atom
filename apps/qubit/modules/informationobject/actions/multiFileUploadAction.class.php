@@ -21,7 +21,7 @@ class InformationObjectMultiFileUploadAction extends sfAction
 {
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     $this->resource = $this->getRoute()->resource;
 
@@ -54,11 +54,11 @@ class InformationObjectMultiFileUploadAction extends sfAction
     // Build form
     $this->form->setValidator('files', new QubitValidatorCountable(array('required' => true)));
 
-    $this->form->setValidator('title', new sfValidatorString);
-    $this->form->setWidget('title', new sfWidgetFormInput);
+    $this->form->setValidator('title', new sfValidatorString());
+    $this->form->setWidget('title', new sfWidgetFormInput());
     $this->form->setDefault('title', 'image %dd%');
 
-    $this->form->setValidator('levelOfDescription', new sfValidatorString);
+    $this->form->setValidator('levelOfDescription', new sfValidatorString());
 
     $choices = array();
     $choices[null] = null;
@@ -97,7 +97,7 @@ class InformationObjectMultiFileUploadAction extends sfAction
       $i++;
 
       // Create an information object for this digital object
-      $informationObject = new QubitInformationObject;
+      $informationObject = new QubitInformationObject();
       $informationObject->parentId = $this->resource->id;
 
       if (0 < strlen($title = $file['infoObjectTitle']))
@@ -119,7 +119,7 @@ class InformationObjectMultiFileUploadAction extends sfAction
       if (file_exists("$tmpPath/$file[tmpName]"))
       {
         // Upload asset and create digital object
-        $digitalObject = new QubitDigitalObject;
+        $digitalObject = new QubitDigitalObject();
         $digitalObject->object = $informationObject;
         $digitalObject->usageId = QubitTerm::MASTER_ID;
         $digitalObject->assets[] = new QubitAsset($file['name'], file_get_contents("$tmpPath/$file[tmpName]"));

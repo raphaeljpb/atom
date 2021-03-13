@@ -31,7 +31,7 @@ class SettingsGlobalAction extends sfAction
 {
   public function execute($request)
   {
-    $this->globalForm = new SettingsGlobalForm;
+    $this->globalForm = new SettingsGlobalForm();
 
     // Handle POST data (form submit)
     if ($request->isMethod('post'))
@@ -229,7 +229,7 @@ class SettingsGlobalAction extends sfAction
     {
       if (null === $setting = QubitSetting::getByName('audit_log_enabled'))
       {
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name = 'audit_log_enabled';
       }
 
@@ -281,7 +281,7 @@ class SettingsGlobalAction extends sfAction
     {
       if (null === $setting = QubitSetting::getByName('draft_notification_enabled'))
       {
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name = 'draft_notification_enabled';
       }
 
@@ -305,7 +305,7 @@ class SettingsGlobalAction extends sfAction
 
     if (null === $setting = QubitSetting::getByName('google_maps_api_key'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name = 'google_maps_api_key';
     }
 
@@ -328,7 +328,7 @@ class SettingsGlobalAction extends sfAction
 
     if (null === $setting = QubitSetting::getByName('cache_xml_on_save'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name = 'cache_xml_on_save';
     }
 

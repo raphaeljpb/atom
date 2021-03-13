@@ -30,7 +30,7 @@ class FunctionEditAction extends DefaultEditAction
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    $this->resource = new QubitFunctionObject;
+    $this->resource = new QubitFunctionObject();
     if (isset($this->getRoute()->resource))
     {
       $this->resource = $this->getRoute()->resource;
@@ -43,8 +43,8 @@ class FunctionEditAction extends DefaultEditAction
 
       // Add optimistic lock
       $this->form->setDefault('serialNumber', $this->resource->serialNumber);
-      $this->form->setValidator('serialNumber', new sfValidatorInteger);
-      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden);
+      $this->form->setValidator('serialNumber', new sfValidatorInteger());
+      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
     }
     else
     {

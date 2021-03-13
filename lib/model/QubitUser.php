@@ -143,7 +143,7 @@ class QubitUser extends BaseUser
       return null;
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitUser::EMAIL, $username);
     $user = QubitUser::getOne($criteria);
 
@@ -199,7 +199,7 @@ class QubitUser extends BaseUser
       return true;
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitAclUserGroup::USER_ID, $this->id);
 
     if (0 < count($userGroups = QubitAclUserGroup::get($criteria)))
@@ -237,7 +237,7 @@ class QubitUser extends BaseUser
 
   public function getNotes()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitNote::USER_ID, $this->id);
 
     return QubitNote::get($criteria);
@@ -267,7 +267,7 @@ class QubitUser extends BaseUser
     }
 
     // Get access control permissions
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
     $c1 = $criteria->getNewCriterion(QubitAclPermission::USER_ID, $this->id);
 

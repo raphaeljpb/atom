@@ -39,7 +39,7 @@ class QubitValidatorAccessionIdentifier extends sfValidatorBase
 
   public static function identifierCanBeUsed($identifier, $byResource = null)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitAccession::IDENTIFIER, $identifier);
 
     // If accession isn't new, make sure no accession other than it is using proposed identifier

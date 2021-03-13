@@ -113,7 +113,7 @@ class sfIsadPluginEditAction extends InformationObjectEditAction
     switch ($name)
     {
       case 'creators':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitEvent::OBJECT_ID, $this->resource->id);
         $criteria->add(QubitEvent::ACTOR_ID, null, Criteria::ISNOTNULL);
         $criteria->add(QubitEvent::TYPE_ID, QubitTerm::CREATION_ID);
@@ -125,23 +125,23 @@ class sfIsadPluginEditAction extends InformationObjectEditAction
         }
 
         $this->form->setDefault('creators', $value);
-        $this->form->setValidator('creators', new sfValidatorPass);
+        $this->form->setValidator('creators', new sfValidatorPass());
         $this->form->setWidget('creators', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
 
         break;
 
       case 'appraisal':
         $this->form->setDefault('appraisal', $this->resource['appraisal']);
-        $this->form->setValidator('appraisal', new sfValidatorString);
-        $this->form->setWidget('appraisal', new sfWidgetFormTextarea);
+        $this->form->setValidator('appraisal', new sfValidatorString());
+        $this->form->setWidget('appraisal', new sfWidgetFormTextarea());
 
         break;
 
       case 'languageNotes':
 
         $this->form->setDefault('languageNotes', $this->isad['languageNotes']);
-        $this->form->setValidator('languageNotes', new sfValidatorString);
-        $this->form->setWidget('languageNotes', new sfWidgetFormTextarea);
+        $this->form->setValidator('languageNotes', new sfValidatorString());
+        $this->form->setWidget('languageNotes', new sfWidgetFormTextarea());
 
         break;
 
@@ -191,7 +191,7 @@ class sfIsadPluginEditAction extends InformationObjectEditAction
 
         foreach ($filtered as $item)
         {
-          $event = new QubitEvent;
+          $event = new QubitEvent();
           $event->actor = $item;
           $event->typeId = QubitTerm::CREATION_ID;
 

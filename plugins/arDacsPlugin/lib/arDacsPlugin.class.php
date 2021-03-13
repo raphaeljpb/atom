@@ -68,7 +68,7 @@ class arDacsPlugin extends sfIsadPlugin
   {
     if (!isset($this->property[$name]))
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $this->resource->addPropertysCriteria($criteria);
       $criteria->add(QubitProperty::NAME, $name);
 
@@ -78,7 +78,7 @@ class arDacsPlugin extends sfIsadPlugin
       }
       else
       {
-        $this->property[$name] = new QubitProperty;
+        $this->property[$name] = new QubitProperty();
         $this->property[$name]->name = $name;
 
         $this->resource->propertys[] = $this->property[$name];
@@ -94,7 +94,7 @@ class arDacsPlugin extends sfIsadPlugin
       QubitTerm::getById(QubitTerm::CREATION_ID),
       QubitTerm::getById(QubitTerm::PUBLICATION_ID));
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
     $criteria->add(QubitTermI18n::NAME, array('Broadcasting', 'Record-keeping activity'), Criteria::IN);
     $criteria->add(QubitTermI18n::CULTURE, 'en');

@@ -109,7 +109,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     switch ($name)
     {
       case 'copyrightStatus':
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
 
         $choices = array();
         $choices[null] = null;
@@ -118,7 +118,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
           $choices[$item->id] = $item->__toString();
         }
 
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
 
         break;
@@ -136,7 +136,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         break;
 
       case 'levels':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
 
         // Do source culture fallback
@@ -156,7 +156,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         break;
 
       case 'materialType':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MATERIAL_TYPE_ID);
 
         // Do source culture fallback
@@ -177,7 +177,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
       case 'repos':
         // Get list of repositories
-        $criteria = new Criteria;
+        $criteria = new Criteria();
 
         // Do source culture fallback
         $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');
@@ -211,7 +211,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         break;
 
       case 'collection':
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
 
         $choices = array();
         if (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection'])
@@ -230,7 +230,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
       case 'startDate':
       case 'endDate':
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $this->form->setWidget($name, new sfWidgetFormInput(array(), array('placeholder' => 'YYYY-MM-DD')));
         $this->form->setValidator($name, new sfValidatorDate(array(
           'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
@@ -260,7 +260,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     {
       case 'repos':
         $ids = array_column($buckets, 'key');
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitRepository::ID, $ids, Criteria::IN);
 
         foreach (QubitRepository::get($criteria) as $item)
@@ -276,7 +276,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
       case 'subjects':
       case 'genres':
         $ids = array_column($buckets, 'key');
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
 
         foreach (QubitTerm::get($criteria) as $item)
@@ -289,7 +289,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
       case 'creators':
       case 'names':
         $ids = array_column($buckets, 'key');
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitActor::ID, $ids, Criteria::IN);
 
         foreach (QubitActor::get($criteria) as $item)
@@ -301,7 +301,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
       case 'collection':
         $ids = array_column($buckets, 'key');
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitInformationObject::ID, $ids, Criteria::IN);
 
         foreach (QubitInformationObject::get($criteria) as $item)

@@ -76,7 +76,7 @@ class arXmlExportSingleFileJob extends arBaseJob
       // Print warnings/notices here too, as they are often important.
       $errLevel = error_reporting(E_ALL);
 
-      $cache = new QubitInformationObjectXmlCache;
+      $cache = new QubitInformationObjectXmlCache();
       $cache->export($resource);
 
       error_reporting($errLevel);

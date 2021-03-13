@@ -30,7 +30,7 @@ class DigitalObjectEditAction extends sfAction
   {
     // Media type field
     $choices = array();
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MEDIA_TYPE_ID);
     foreach (QubitTerm::get($criteria) as $item)
     {
@@ -61,14 +61,14 @@ class DigitalObjectEditAction extends sfAction
 
     if ($this->showCompoundObjectToggle)
     {
-      $this->form->setValidator('displayAsCompound', new sfValidatorBoolean);
+      $this->form->setValidator('displayAsCompound', new sfValidatorBoolean());
       $this->form->setWidget('displayAsCompound', new sfWidgetFormSelectRadio(
         array('choices' => array(
           '1' => $this->context->i18n->__('Yes'),
           '0' => $this->context->i18n->__('No')))));
 
       // Set "displayAsCompound" value from QubitProperty
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitProperty::OBJECT_ID, $this->resource->id);
       $criteria->add(QubitProperty::NAME, 'displayAsCompound');
 
@@ -78,8 +78,8 @@ class DigitalObjectEditAction extends sfAction
       }
     }
 
-    $this->form->setValidator('digitalObjectAltText', new sfValidatorString);
-    $this->form->setWidget('digitalObjectAltText', new sfWidgetFormTextarea);
+    $this->form->setValidator('digitalObjectAltText', new sfValidatorString());
+    $this->form->setWidget('digitalObjectAltText', new sfWidgetFormTextarea());
     if (null !== $this->digitalObjectAltText = $this->resource->getDigitalObjectAltText())
     {
       $this->form->setDefault('digitalObjectAltText', $this->digitalObjectAltText);
@@ -97,8 +97,8 @@ class DigitalObjectEditAction extends sfAction
         $repName = "repFile_$usageId";
         $derName = "generateDerivative_$usageId";
 
-        $this->form->setValidator($repName, new sfValidatorFile);
-        $this->form->setWidget($repName, new sfWidgetFormInputFile);
+        $this->form->setValidator($repName, new sfValidatorFile());
+        $this->form->setWidget($repName, new sfWidgetFormInputFile());
 
         if (-1 < $maxUploadSize)
         {
@@ -110,7 +110,7 @@ class DigitalObjectEditAction extends sfAction
         }
 
         // Add "auto-generate" checkbox
-        $this->form->setValidator($derName, new sfValidatorBoolean);
+        $this->form->setValidator($derName, new sfValidatorBoolean());
         $this->form->setWidget($derName, new sfWidgetFormInputCheckbox(array(), array('value' => 1)));
       }
     }
@@ -118,8 +118,8 @@ class DigitalObjectEditAction extends sfAction
     // Add latitude and longitude fields
     foreach (array('latitude', 'longitude') as $geoPropertyField)
     {
-      $this->form->setValidator($geoPropertyField, new sfValidatorNumber);
-      $this->form->setWidget($geoPropertyField, new sfWidgetFormInput);
+      $this->form->setValidator($geoPropertyField, new sfValidatorNumber());
+      $this->form->setWidget($geoPropertyField, new sfWidgetFormInput());
 
       $fieldProperty = $this->resource->getPropertyByName($geoPropertyField);
       if (isset($fieldProperty->value))
@@ -131,7 +131,7 @@ class DigitalObjectEditAction extends sfAction
 
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     $this->resource = $this->getRoute()->resource;
@@ -232,7 +232,7 @@ class DigitalObjectEditAction extends sfAction
         @unlink($tmpFile);
       }
 
-      $representation = new QubitDigitalObject;
+      $representation = new QubitDigitalObject();
       $representation->usageId = $usageId;
       $representation->assets[] = new QubitAsset($uploadFile->getOriginalName(), $content);
       $representation->parentId = $this->resource->id;
@@ -262,7 +262,7 @@ class DigitalObjectEditAction extends sfAction
       // Intialize property if new
       if (empty($geoProperty->objectId))
       {
-        $geoProperty = new QubitProperty;
+        $geoProperty = new QubitProperty();
         $geoProperty->objectId = $this->resource->id;
         $geoProperty->editable = true;
         $geoProperty->name = $geoPropertyField;

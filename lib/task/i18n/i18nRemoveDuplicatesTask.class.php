@@ -72,7 +72,7 @@ EOF;
     $modified = false;
 
     // create a new dom, import the existing xml
-    $doc = new DOMDocument;
+    $doc = new DOMDocument();
     $doc->formatOutput = true;
     $doc->preserveWhiteSpace = false;
     $doc->load($filename);

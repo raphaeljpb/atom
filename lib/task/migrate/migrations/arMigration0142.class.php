@@ -35,7 +35,7 @@ class arMigration0142
   {
     // Create new term for protected controlled vocabulary (digital object usages)
     QubitMigrate::bumpTerm(QubitTerm::OFFLINE_ID, $configuration);
-    $term = new QubitTerm;
+    $term = new QubitTerm();
     $term->id = QubitTerm::OFFLINE_ID;
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::DIGITAL_OBJECT_USAGE_ID;

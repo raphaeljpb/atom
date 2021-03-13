@@ -31,7 +31,7 @@ class UserListAction extends sfAction
       $request->filter = 'onlyActive';
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     if (isset($request->subquery))
     {

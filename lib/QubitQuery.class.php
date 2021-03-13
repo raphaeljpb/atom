@@ -34,7 +34,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   public static function create(array $options = array())
   {
-    $query = new QubitQuery;
+    $query = new QubitQuery();
     $query->options = $options;
 
     return $query;
@@ -42,7 +42,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   public static function createFromCriteria(Criteria $criteria, $className, array $options = array())
   {
-    $query = new QubitQuery;
+    $query = new QubitQuery();
     $query->criteria = $criteria;
     $query->className = $className;
     $query->options = $options;
@@ -361,7 +361,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   public function orderBy($name)
   {
-    $query = new QubitQuery;
+    $query = new QubitQuery();
     $query->parent = $this;
     $query->orderByName = $name;
 
@@ -387,7 +387,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   public function andSelf()
   {
-    $query = new QubitQuery;
+    $query = new QubitQuery();
     $query->parent = $this;
 
     // Set andSelf and remove 'self' option
@@ -400,7 +400,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   public function indexBy($name)
   {
-    $query = new QubitQuery;
+    $query = new QubitQuery();
     $query->parent = $this;
     $query->indexByName = $name;
 

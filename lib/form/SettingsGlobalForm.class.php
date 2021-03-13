@@ -38,8 +38,8 @@ class SettingsGlobalForm extends sfForm
     $this->setWidgets(array(
       'version' => new sfWidgetFormInput(array(), array('class' => 'disabled', 'disabled' => true)),
       'check_for_updates' => new sfWidgetFormSelectRadio(array('choices' => array(1 => 'yes', 0 => 'no')), array('class' => 'radio')),
-      'hits_per_page' => new sfWidgetFormInput,
-      'escape_queries' => new sfWidgetFormInput,
+      'hits_per_page' => new sfWidgetFormInput(),
+      'escape_queries' => new sfWidgetFormInput(),
       'sort_browser_user' => new sfWidgetFormSelectRadio(array('choices' => array('alphabetic' => $this->i18n->__('title/name'), 'lastUpdated' => $this->i18n->__('date modified'), 'identifier' => $this->i18n->__('identifier'), 'referenceCode' => $this->i18n->__('reference code'))), array('class' => 'radio')),
       'sort_browser_anonymous' => new sfWidgetFormSelectRadio(array('choices' => array('alphabetic' => $this->i18n->__('title/name'), 'lastUpdated' => $this->i18n->__('date modified'), 'identifier' => $this->i18n->__('identifier'), 'referenceCode' => $this->i18n->__('reference code'))), array('class' => 'radio')),
       'default_repository_browse_view' => new sfWidgetFormSelectRadio(array('choices' => array('card' => $this->i18n->__('card'), 'table' => $this->i18n->__('table'))), array('class' => 'radio')),
@@ -52,8 +52,8 @@ class SettingsGlobalForm extends sfForm
       'permissive_slug_creation' => new sfWidgetFormSelectRadio(array('choices' => array(QubitSlug::SLUG_PERMISSIVE => 'yes', QubitSlug::SLUG_RESTRICTIVE => 'no')), array('class' => 'radio')),
       'defaultPubStatus' => new sfWidgetFormSelectRadio(array('choices' => array(QubitTerm::PUBLICATION_STATUS_DRAFT_ID => $this->i18n->__('Draft'), QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID => $this->i18n->__('Published'))), array('class' => 'radio')),
       'draft_notification_enabled' => new sfWidgetFormSelectRadio(array('choices' => array(1 => 'yes', 0 => 'no')), array('class' => 'radio')),
-      'sword_deposit_dir' => new sfWidgetFormInput,
-      'google_maps_api_key' => new sfWidgetFormInput,
+      'sword_deposit_dir' => new sfWidgetFormInput(),
+      'google_maps_api_key' => new sfWidgetFormInput(),
       'generate_reports_as_pub_user' => new sfWidgetFormSelectRadio(array('choices' => array(1 => 'yes', 0 => 'no')), array('class' => 'radio')),
       'cache_xml_on_save' => new sfWidgetFormSelectRadio(array('choices' => array(1 => 'yes', 0 => 'no')), array('class' => 'radio')),
     ));

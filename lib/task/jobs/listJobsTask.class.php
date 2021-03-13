@@ -59,7 +59,7 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     if ($options['completed'])
     {
       $criteria->add(QubitJob::STATUS_ID, QubitTerm::JOB_STATUS_COMPLETED_ID);

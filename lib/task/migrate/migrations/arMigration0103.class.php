@@ -39,7 +39,7 @@ class arMigration0103
   public function up($configuration)
   {
     QubitMigrate::bumpTerm(QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID, $configuration);
-    $term = new QubitTerm;
+    $term = new QubitTerm();
     $term->id = QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID;
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::RELATION_TYPE_ID;

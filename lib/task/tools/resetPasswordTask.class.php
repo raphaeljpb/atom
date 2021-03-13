@@ -47,7 +47,7 @@ EOF;
     $conn = $databaseManager->getDatabase('propel')->getConnection();
     sfContext::createInstance($this->configuration);
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $c1 = $criteria->getNewCriterion(QubitUser::USERNAME, $arguments['username']);
     $c2 = $criteria->getNewCriterion(QubitUser::EMAIL, $arguments['username']);
     $criteria->add($c1->addOr($c2));

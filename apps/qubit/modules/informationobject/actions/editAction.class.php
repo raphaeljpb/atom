@@ -31,7 +31,7 @@ class InformationObjectEditAction extends DefaultEditAction
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    $this->resource = new QubitInformationObject;
+    $this->resource = new QubitInformationObject();
 
     // Publication status defaults to draft
     $this->publicationStatusId = QubitTerm::PUBLICATION_STATUS_DRAFT_ID;
@@ -56,8 +56,8 @@ class InformationObjectEditAction extends DefaultEditAction
 
       // Add optimistic lock
       $this->form->setDefault('serialNumber', $this->resource->serialNumber);
-      $this->form->setValidator('serialNumber', new sfValidatorInteger);
-      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden);
+      $this->form->setValidator('serialNumber', new sfValidatorInteger());
+      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
 
       $publicationStatus = $this->resource->getStatus(array('typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID));
       if (QubitAcl::check($this->resource, 'publish') && !isset($publicationStatus))
@@ -104,13 +104,13 @@ class InformationObjectEditAction extends DefaultEditAction
 
       // Inherit parent level
       $this->form->setDefault('parent', $this->context->routing->generate(null, array($this->resource->parent, 'module' => 'informationobject')));
-      $this->form->setValidator('parent', new sfValidatorString);
-      $this->form->setWidget('parent', new sfWidgetFormInputHidden);
+      $this->form->setValidator('parent', new sfValidatorString());
+      $this->form->setWidget('parent', new sfWidgetFormInputHidden());
 
       // Add id of the information object source
       $this->form->setDefault('sourceId', $this->request->source);
-      $this->form->setValidator('sourceId', new sfValidatorInteger);
-      $this->form->setWidget('sourceId', new sfWidgetFormInputHidden);
+      $this->form->setValidator('sourceId', new sfValidatorInteger());
+      $this->form->setWidget('sourceId', new sfWidgetFormInputHidden());
 
       // Use app. default pub. status if the user can publish
       if (QubitAcl::check($this->resource, 'publish'))
@@ -122,8 +122,8 @@ class InformationObjectEditAction extends DefaultEditAction
     // Create
     else
     {
-      $this->form->setValidator('parent', new sfValidatorString);
-      $this->form->setWidget('parent', new sfWidgetFormInputHidden);
+      $this->form->setValidator('parent', new sfValidatorString());
+      $this->form->setWidget('parent', new sfWidgetFormInputHidden());
 
       $params = $this->request->getParameters();
       if (isset($params['parent']))
@@ -168,7 +168,7 @@ class InformationObjectEditAction extends DefaultEditAction
     {
       case 'levelOfDescription':
         $this->form->setDefault('levelOfDescription', $this->context->routing->generate(null, array($this->resource->levelOfDescription, 'module' => 'term')));
-        $this->form->setValidator('levelOfDescription', new sfValidatorString);
+        $this->form->setValidator('levelOfDescription', new sfValidatorString());
 
         $choices = array();
         $choices[null] = null;
@@ -183,7 +183,7 @@ class InformationObjectEditAction extends DefaultEditAction
 
       case 'displayStandard':
           $this->form->setDefault('displayStandard', $this->resource->displayStandardId);
-          $this->form->setValidator('displayStandard', new sfValidatorString);
+          $this->form->setValidator('displayStandard', new sfValidatorString());
 
           $choices = array();
           $choices[null] = null;
@@ -197,14 +197,14 @@ class InformationObjectEditAction extends DefaultEditAction
         break;
 
       case 'displayStandardUpdateDescendants':
-        $this->form->setValidator('displayStandardUpdateDescendants', new sfValidatorBoolean);
-        $this->form->setWidget('displayStandardUpdateDescendants', new sfWidgetFormInputCheckbox);
+        $this->form->setValidator('displayStandardUpdateDescendants', new sfValidatorBoolean());
+        $this->form->setWidget('displayStandardUpdateDescendants', new sfWidgetFormInputCheckbox());
 
         break;
 
       case 'repository':
         $this->form->setDefault('repository', $this->context->routing->generate(null, array($this->resource->repository, 'module' => 'repository')));
-        $this->form->setValidator('repository', new sfValidatorString);
+        $this->form->setValidator('repository', new sfValidatorString());
 
         $choices = array();
         if (isset($this->resource->repository))
@@ -242,8 +242,8 @@ class InformationObjectEditAction extends DefaultEditAction
       case 'scopeAndContent':
       case 'sources':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormTextarea);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormTextarea());
 
         break;
 
@@ -252,15 +252,15 @@ class InformationObjectEditAction extends DefaultEditAction
       case 'institutionResponsibleIdentifier':
       case 'title':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'genreAccessPoints':
       case 'subjectAccessPoints':
       case 'placeAccessPoints':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->resource->id);
         $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
         switch ($name)
@@ -288,14 +288,14 @@ class InformationObjectEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault($name, $value);
-        $this->form->setValidator($name, new sfValidatorPass);
+        $this->form->setValidator($name, new sfValidatorPass());
         $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
 
         break;
 
       case 'nameAccessPoints':
       case 'relatedMaterialDescriptions':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitRelation::SUBJECT_ID, $this->resource->id);
 
         $value = $choices = array();
@@ -320,7 +320,7 @@ class InformationObjectEditAction extends DefaultEditAction
             }
 
             // Add also relations where it's the object
-            $criteria = new Criteria;
+            $criteria = new Criteria();
             $criteria->add(QubitRelation::OBJECT_ID, $this->resource->id);
             $criteria->add(QubitRelation::TYPE_ID, QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID);
 
@@ -334,7 +334,7 @@ class InformationObjectEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault($name, $value);
-        $this->form->setValidator($name, new sfValidatorPass);
+        $this->form->setValidator($name, new sfValidatorPass());
         $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
 
         break;
@@ -353,7 +353,7 @@ class InformationObjectEditAction extends DefaultEditAction
         // Avoid duplicates (used in autocomplete.js)
         if (filter_var($this->request->getPostParameter('linkExisting'), FILTER_VALIDATE_BOOLEAN))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->addJoin(QubitInformationObject::ID, QubitInformationObjectI18n::ID);
           $criteria->add(QubitInformationObjectI18n::CULTURE, $this->context->user->getCulture());
           $criteria->add(QubitInformationObjectI18n::TITLE, $this->form->getValue('title'));
@@ -407,7 +407,7 @@ class InformationObjectEditAction extends DefaultEditAction
 
         foreach ($filtered as $item)
         {
-          $relation = new QubitObjectTermRelation;
+          $relation = new QubitObjectTermRelation();
           $relation->term = $item;
 
           $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
@@ -440,7 +440,7 @@ class InformationObjectEditAction extends DefaultEditAction
 
         foreach ($filtered as $item)
         {
-          $relation = new QubitRelation;
+          $relation = new QubitRelation();
           $relation->object = $item;
 
           switch ($field->getName())
@@ -492,7 +492,7 @@ class InformationObjectEditAction extends DefaultEditAction
           break;
         }
 
-        $selectCriteria = new Criteria;
+        $selectCriteria = new Criteria();
         if (true === $this->form->getValue('displayStandardUpdateDescendants'))
         {
           $selectCriteria->add(QubitInformationObject::LFT, $this->resource->lft, Criteria::GREATER_EQUAL);
@@ -503,7 +503,7 @@ class InformationObjectEditAction extends DefaultEditAction
           $selectCriteria->add(QubitInformationObject::ID, $this->resource->id);
         }
 
-        $updateCriteria = new Criteria;
+        $updateCriteria = new Criteria();
         $updateCriteria->add(QubitInformationObject::DISPLAY_STANDARD_ID, $displayStandardId);
 
         BasePeer::doUpdate(
@@ -541,7 +541,7 @@ class InformationObjectEditAction extends DefaultEditAction
 
         $newRights = $sourceRights->copy();
 
-        $relation = new QubitRelation;
+        $relation = new QubitRelation();
         $relation->object = $newRights;
         $relation->typeId = QubitTerm::RIGHT_ID;
 
@@ -554,7 +554,7 @@ class InformationObjectEditAction extends DefaultEditAction
         {
           if (false === array_search($this->context->routing->generate(null, array($sourceEvent, 'module' => 'event')), (array)$this->request->deleteEvents))
           {
-            $event = new QubitEvent;
+            $event = new QubitEvent();
             $event->actorId = $sourceEvent->actorId;
             $event->typeId = $sourceEvent->typeId;
             $event->startDate = $sourceEvent->startDate;
@@ -573,7 +573,7 @@ class InformationObjectEditAction extends DefaultEditAction
                 continue;
               }
 
-              $eventI18n = new QubitEventI18n;
+              $eventI18n = new QubitEventI18n();
               $eventI18n->name = $sourceEventI18n->name;
               $eventI18n->description = $sourceEventI18n->description;
               $eventI18n->date = $sourceEventI18n->date;
@@ -585,7 +585,7 @@ class InformationObjectEditAction extends DefaultEditAction
             // Place
             if (null !== $place = QubitObjectTermRelation::getOneByObjectId($sourceEvent->id))
             {
-              $termRelation = new QubitObjectTermRelation;
+              $termRelation = new QubitObjectTermRelation();
               $termRelation->term = $place->term;
 
               $event->objectTermRelationsRelatedByobjectId[] = $termRelation;
@@ -652,7 +652,7 @@ class InformationObjectEditAction extends DefaultEditAction
   {
     foreach ($sourceIo->getProperties(null, 'alternativeIdentifiers') as $sourceAltId)
     {
-      $altId = new QubitProperty;
+      $altId = new QubitProperty();
       $altId->scope = 'alternativeIdentifiers';
       $altId->name = $sourceAltId->name;
       $altId->sourceCulture = $sourceAltId->sourceCulture;
@@ -674,7 +674,7 @@ class InformationObjectEditAction extends DefaultEditAction
     {
       if (!isset($this->request->delete_notes[$sourceNote->id]))
       {
-        $note = new QubitNote;
+        $note = new QubitNote();
         $note->content = $sourceNote->content;
         $note->typeId = $sourceNote->type->id;
         $note->userId = $this->context->user->getAttribute('user_id');
@@ -744,7 +744,7 @@ class InformationObjectEditAction extends DefaultEditAction
 
     foreach ($updateChildLevels as $item)
     {
-      $childLevel = new QubitInformationObject;
+      $childLevel = new QubitInformationObject();
       $childLevel->identifier = $item['identifier'];
       $childLevel->title = $item['title'];
       $childLevel->setPublicationStatus($childrenPublicationStatusId);
@@ -761,7 +761,7 @@ class InformationObjectEditAction extends DefaultEditAction
 
       if (0 < strlen($item['date']))
       {
-        $creationEvent = new QubitEvent;
+        $creationEvent = new QubitEvent();
         $creationEvent->typeId = QubitTerm::CREATION_ID;
         $creationEvent->date = $item['date'];
 

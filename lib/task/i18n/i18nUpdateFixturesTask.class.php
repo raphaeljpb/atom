@@ -122,7 +122,7 @@ EOF;
     foreach ($files as $file)
     {
       $modified = false;
-      $yaml = new sfYaml;
+      $yaml = new sfYaml();
       $fixtures = $yaml->load($file);
 
       // Descend through fixtures hierarchy

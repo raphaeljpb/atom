@@ -22,7 +22,7 @@ class AccessionEventsComponent extends sfComponent
   public function execute($request)
   {
     // Cache accession event types (used in each event's type select form field)
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::ACCESSION_EVENT_TYPE_ID);
 
     $this->eventTypes = [];
@@ -32,7 +32,7 @@ class AccessionEventsComponent extends sfComponent
     }
 
     // Define form used to add/edit events
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     $this->addField('eventType');
@@ -64,27 +64,27 @@ class AccessionEventsComponent extends sfComponent
     switch ($name)
     {
     case 'eventType':
-        $this->form->setValidator($name, new sfValidatorInteger);
+        $this->form->setValidator($name, new sfValidatorInteger());
         $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $this->eventTypes]));
 
         break;
 
       case 'date':
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $widget = new sfWidgetFormInput(['label' => false]);
         $this->form->setWidget($name, $widget);
 
         break;
 
       case 'agent':
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $widget = new sfWidgetFormInput(['label' => false]);
         $this->form->setWidget($name, $widget);
 
         break;
 
       case 'note':
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $widget = new sfWidgetFormTextarea(['label' => false]);
         $widget->setAttribute('placeholder', $this->context->i18n->__('Notes'));
         $this->form->setWidget($name, $widget);
@@ -116,7 +116,7 @@ class AccessionEventsComponent extends sfComponent
         }
         else
         {
-          $event = new QubitAccessionEvent;
+          $event = new QubitAccessionEvent();
         }
 
         $event->accessionId = $this->resource->id;
@@ -128,7 +128,7 @@ class AccessionEventsComponent extends sfComponent
         // Store note
         if (null === $note = $event->getNote())
         {
-          $note = new QubitNote;
+          $note = new QubitNote();
           $note->objectId = $this->resource->id;
           $note->typeId = QubitTerm::ACCESSION_EVENT_NOTE_ID;
         }

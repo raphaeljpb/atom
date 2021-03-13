@@ -73,7 +73,7 @@ sql;
     // Add menu items
     if (null !== $parentMenu = QubitMenu::getByName('clipboard'))
     {
-      $menu = new QubitMenu;
+      $menu = new QubitMenu();
       $menu->parentId = $parentMenu->id;
       $menu->sourceCulture = 'en';
       $menu->name = 'loadClipboard';
@@ -84,7 +84,7 @@ sql;
 
     if (null !== $parentMenu = QubitMenu::getByName('clipboard'))
     {
-      $menu = new QubitMenu;
+      $menu = new QubitMenu();
       $menu->parentId = $parentMenu->id;
       $menu->sourceCulture = 'en';
       $menu->name = 'saveClipboard';

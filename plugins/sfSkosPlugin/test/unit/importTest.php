@@ -19,7 +19,7 @@
 
 require_once dirname(__FILE__).'/../../../../test/bootstrap/unit.php';
 
-$t = new lime_test(17, new lime_output_color);
+$t = new lime_test(17, new lime_output_color());
 
 $t->diag('Initializing configuration.');
 $configuration = ProjectConfiguration::getApplicationConfiguration('qubit', 'test', true);
@@ -867,7 +867,7 @@ function withTransaction($callback)
 withTransaction(function ($conn) use ($t, $vocabCSS2)
 {
   // Make sure that Russian is not defined as a supported language
-  $criteria = new Criteria;
+  $criteria = new Criteria();
   $criteria->add(QubitSetting::NAME, 'ru');
   $criteria->add(QubitSetting::SCOPE, 'i18n_languages');
   if (null !== $term = QubitTerm::getOne($criteria))
@@ -875,7 +875,7 @@ withTransaction(function ($conn) use ($t, $vocabCSS2)
     $term->delete();
   }
 
-  $term = new QubitTerm;
+  $term = new QubitTerm();
   $term->parentId = QubitTerm::ROOT_ID;
   $term->taxonomyId = QubitTaxonomy::SUBJECT_ID;
   $term->save();
@@ -898,7 +898,7 @@ withTransaction(function ($conn) use ($t, $vocabCSS2)
     count($importer->getGraph()->allOfType('skos:Concept')),
     'Graph concept count and database descendants match');
 
-  $criteria = new Criteria;
+  $criteria = new Criteria();
   $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::SUBJECT_ID);
   $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
   $criteria->add(QubitTermI18n::NAME, 'user agent (UA)');
@@ -917,7 +917,7 @@ withTransaction(function ($conn) use ($t, $vocabCSS2)
 withTransaction(function ($conn) use ($t, $vocabSimple)
 {
   // Count existing subjects that are children of the root term
-  $criteria = new Criteria;
+  $criteria = new Criteria();
   $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::SUBJECT_ID);
   $criteria->add(QubitTerm::PARENT_ID, QubitTerm::ROOT_ID);
   $termCount1 = count(QubitTerm::get($criteria));
@@ -952,7 +952,7 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
 withTransaction(function ($conn) use ($t, $vocabSimple)
 {
   // Create subject parent term
-  $parent = new QubitTerm;
+  $parent = new QubitTerm();
   $parent->parentId = QubitTerm::ROOT_ID;
   $parent->taxonomyId = QubitTaxonomy::SUBJECT_ID;
   $parent->sourceCulture = 'eu'; // Basque!

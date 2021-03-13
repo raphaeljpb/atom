@@ -190,7 +190,7 @@ class QubitGrantedRight extends BaseGrantedRight
    */
   public static function getByObjectIdAndAct($id, $actId = null)
   {
-    $c = new Criteria;
+    $c = new Criteria();
 
     $c->add(QubitInformationObject::ID, $id);
     $c->addJoin(QubitRelation::SUBJECT_ID, QubitInformationObject::ID);

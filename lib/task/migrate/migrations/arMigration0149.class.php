@@ -40,7 +40,7 @@ class arMigration0149
   {
     if (null === QubitSetting::getByName('enable_institutional_scoping'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name = 'enable_institutional_scoping';
       $setting->value = 0;
       $setting->editable = 1;
@@ -50,7 +50,7 @@ class arMigration0149
 
     if (null === QubitSetting::getByName('globalSearch'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name  = 'globalSearch';
       $setting->scope = 'ui_label';
       $setting->editable = 1;
@@ -62,7 +62,7 @@ class arMigration0149
 
     if (null === QubitSetting::getByName('institutionSearchHoldings'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name  = 'institutionSearchHoldings';
       $setting->scope = 'ui_label';
       $setting->editable = 1;
@@ -74,7 +74,7 @@ class arMigration0149
 
     if (null === QubitMenu::getByName('browseInstitution'))
     {
-      $browseInstMenu = new QubitMenu;
+      $browseInstMenu = new QubitMenu();
       $browseInstMenu->parentId = QubitMenu::ROOT_ID;
       $browseInstMenu->name = 'browseInstitution';
       $browseInstMenu->label = 'Browse our collection';
@@ -83,7 +83,7 @@ class arMigration0149
 
       if (null === QubitMenu::getByName('browseInformationObjectsInstitution'))
       {
-        $menu = new QubitMenu;
+        $menu = new QubitMenu();
         $menu->parentId = $browseInstMenu->id;
         $menu->name = 'browseInformationObjectsInstitution';
         $menu->path = 'informationobject/browse?repos=%currentRealm%';

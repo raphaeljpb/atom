@@ -38,7 +38,7 @@ class AccessionIndexAction extends sfAction
 
     if (QubitAcl::check($this->resource, 'update'))
     {
-      $validatorSchema = new sfValidatorSchema;
+      $validatorSchema = new sfValidatorSchema();
       $values = array();
 
       $validatorSchema->date = new sfValidatorString(array(

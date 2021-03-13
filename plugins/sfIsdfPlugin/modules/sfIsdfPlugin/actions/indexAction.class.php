@@ -34,7 +34,7 @@ class sfIsdfPluginIndexAction extends FunctionIndexAction
 
     if (QubitAcl::check($this->resource, 'update'))
     {
-      $validatorSchema = new sfValidatorSchema;
+      $validatorSchema = new sfValidatorSchema();
       $values = array();
 
       $validatorSchema->type = new sfValidatorString(array(

@@ -73,7 +73,7 @@ class arMigration0105
     {
       foreach ($terms as $termName => $converseTermName)
       {
-        $term = new QubitTerm;
+        $term = new QubitTerm();
         $term->parentId = $parentId;
         $term->taxonomyId = QubitTaxonomy::ACTOR_RELATION_TYPE_ID;
         $term->name = $termName;
@@ -86,7 +86,7 @@ class arMigration0105
         }
         else
         {
-          $converseTerm = new QubitTerm;
+          $converseTerm = new QubitTerm();
           $converseTerm->parentId = $parentId;
           $converseTerm->taxonomyId = QubitTaxonomy::ACTOR_RELATION_TYPE_ID;
           $converseTerm->name = $converseTermName;

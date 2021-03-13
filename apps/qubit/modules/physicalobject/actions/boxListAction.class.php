@@ -28,7 +28,7 @@ class PhysicalObjectBoxListAction extends sfAction
 
     $this->resource = $this->getRoute()->resource;
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::SUBJECT_ID, $this->resource->id);
     $criteria->add(QubitRelation::TYPE_ID, QubitTerm::HAS_PHYSICAL_OBJECT_ID);
     $criteria->addJoin(QubitRelation::OBJECT_ID, QubitInformationObject::ID);

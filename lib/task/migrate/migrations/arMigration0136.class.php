@@ -43,7 +43,7 @@ class arMigration0136
     // translations are also migrated.
     foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name = "{$item->slug}_disallow";
       $setting->scope = 'access_statement';
       foreach ($accessDisallowWarningI18nValues as $langCode => $value)
@@ -52,7 +52,7 @@ class arMigration0136
       }
       $setting->save();
 
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name = "{$item->slug}_conditional";
       $setting->scope = 'access_statement';
       foreach ($accessConditionalWarningI18nValues as $langCode => $value)

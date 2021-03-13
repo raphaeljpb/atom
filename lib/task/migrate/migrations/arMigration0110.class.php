@@ -35,7 +35,7 @@ class arMigration0110
   {
     // Add the "DACS Note" taxonomy
     QubitMigrate::bumpTaxonomy(QubitTaxonomy::DACS_NOTE_ID, $configuration);
-    $taxonomy = new QubitTaxonomy;
+    $taxonomy = new QubitTaxonomy();
     $taxonomy->id = QubitTaxonomy::DACS_NOTE_ID;
     $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
     $taxonomy->name = 'DACS Note';
@@ -51,7 +51,7 @@ class arMigration0110
       array('en' => 'Variant title information'),
       array('en' => 'Processing information')) as $termNames)
     {
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::DACS_NOTE_ID;
       $term->sourceCulture = 'en';
@@ -64,7 +64,7 @@ class arMigration0110
     }
 
     // Add "Record-keeping activity" event type
-    $term = new QubitTerm;
+    $term = new QubitTerm();
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::EVENT_TYPE_ID;
     $term->sourceCulture = 'en';

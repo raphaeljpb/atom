@@ -98,7 +98,7 @@ class QubitRights extends BaseRights
 
   public function copy()
   {
-    $newRights = new QubitRights;
+    $newRights = new QubitRights();
     $newRights->startDate = $this->startDate;
     $newRights->endDate = $this->endDate;
     $newRights->basis = $this->basis;
@@ -129,7 +129,7 @@ class QubitRights extends BaseRights
         continue;
       }
 
-      $rightsI18n = new QubitRightsI18n;
+      $rightsI18n = new QubitRightsI18n();
       $rightsI18n->rightsNote = $sourceRightsI18n->rightsNote;
       $rightsI18n->copyrightNote = $sourceRightsI18n->copyrightNote;
       $rightsI18n->identifierValue = $sourceRightsI18n->identifierValue;
@@ -147,7 +147,7 @@ class QubitRights extends BaseRights
     // Copy granted rights
     foreach ($this->grantedRights as $sourceGrantedRight)
     {
-      $newGrantedRight = new QubitGrantedRight;
+      $newGrantedRight = new QubitGrantedRight();
       $newGrantedRight->act = $sourceGrantedRight->act;
       $newGrantedRight->restriction = $sourceGrantedRight->restriction;
       $newGrantedRight->startDate = $sourceGrantedRight->startDate;

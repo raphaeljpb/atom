@@ -21,29 +21,29 @@ class sfInstallPluginConfigureSiteAction extends sfAction
 {
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     $this->form->setValidator('confirmPassword', new sfValidatorString(array('required' => true)));
-    $this->form->setWidget('confirmPassword', new sfWidgetFormInputPassword);
+    $this->form->setWidget('confirmPassword', new sfWidgetFormInputPassword());
 
     $this->form->setValidator('email', new sfValidatorEmail(array('required' => true)));
-    $this->form->setWidget('email', new sfWidgetFormInput);
+    $this->form->setWidget('email', new sfWidgetFormInput());
 
     $this->form->setValidator('password', new sfValidatorString(array('required' => true)));
-    $this->form->setWidget('password', new sfWidgetFormInputPassword);
+    $this->form->setWidget('password', new sfWidgetFormInputPassword());
 
-    $this->form->setValidator('siteDescription', new sfValidatorString);
-    $this->form->setWidget('siteDescription', new sfWidgetFormInput);
+    $this->form->setValidator('siteDescription', new sfValidatorString());
+    $this->form->setWidget('siteDescription', new sfWidgetFormInput());
 
     $this->form->setValidator('siteTitle', new sfValidatorString(array('required' => true)));
-    $this->form->setWidget('siteTitle', new sfWidgetFormInput);
+    $this->form->setWidget('siteTitle', new sfWidgetFormInput());
 
     $this->form->setValidator('siteBaseUrl', new QubitValidatorUrl(array('required' => true)));
-    $this->form->setWidget('siteBaseUrl', new sfWidgetFormInput);
+    $this->form->setWidget('siteBaseUrl', new sfWidgetFormInput());
     $this->form->setDefault('siteBaseUrl', 'http://'. $_SERVER['HTTP_HOST']);
 
     $this->form->setValidator('username', new sfValidatorString(array('required' => true)));
-    $this->form->setWidget('username', new sfWidgetFormInput);
+    $this->form->setWidget('username', new sfWidgetFormInput());
 
     $this->form->getValidatorSchema()->setPostValidator(new sfValidatorSchemaCompare('password', '==', 'confirmPassword'));
 
@@ -53,28 +53,28 @@ class sfInstallPluginConfigureSiteAction extends sfAction
 
       if ($this->form->isValid())
       {
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name = 'siteTitle';
         $setting->value = $this->form->getValue('siteTitle');
         $setting->save();
 
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name = 'siteBaseUrl';
         $setting->value = $this->form->getValue('siteBaseUrl');
         $setting->save();
 
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name = 'siteDescription';
         $setting->value = $this->form->getValue('siteDescription');
         $setting->save();
 
-        $user = new QubitUser;
+        $user = new QubitUser();
         $user->username = $this->form->getValue('username');
         $user->email = $this->form->getValue('email');
         $user->setPassword($this->form->getValue('password'));
         $user->save();
 
-        $aclUserGroup = new QubitAclUserGroup;
+        $aclUserGroup = new QubitAclUserGroup();
         $aclUserGroup->userId = $user->id;
         $aclUserGroup->groupId = QubitAclGroup::ADMINISTRATOR_ID;
         $aclUserGroup->save();

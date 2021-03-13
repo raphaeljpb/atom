@@ -76,8 +76,8 @@ class RepositoryHoldingsAction extends sfAction
    */
   public static function getHoldings($id, $page, $limit)
   {
-    $queryBool = new \Elastica\Query\BoolQuery;
-    $queryBool->addShould(new \Elastica\Query\MatchAll);
+    $queryBool = new \Elastica\Query\BoolQuery();
+    $queryBool->addShould(new \Elastica\Query\MatchAll());
     $queryBool->addMust(new \Elastica\Query\Term(array('parentId' => QubitInformationObject::ROOT_ID)));
     $queryBool->addMust(new \Elastica\Query\Term(array('repository.id' => $id)));
 

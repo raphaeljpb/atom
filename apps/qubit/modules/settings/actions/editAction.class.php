@@ -31,7 +31,7 @@ class SettingsEditAction extends DefaultEditAction
     // Load setting for each field name
     foreach ($this::$NAMES as $name)
     {
-      $this->settings[$name] = (null !== $$name = QubitSetting::getByName($name)) ? $$name : new QubitSetting;
+      $this->settings[$name] = (null !== $$name = QubitSetting::getByName($name)) ? $$name : new QubitSetting();
     }
   }
 

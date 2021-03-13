@@ -41,7 +41,7 @@ class arUpgrader120
     {
       // Add setting for job_scheduling
       case 75:
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = 'use_job_scheduler';
         $setting->value = '0';
         $setting->culture = 'en';
@@ -52,7 +52,7 @@ class arUpgrader120
 
       // Add SWORD deposit directory setting
       case 76:
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = 'sword_deposit_dir';
         $setting->value = '/tmp';
         $setting->culture = 'en';
@@ -63,19 +63,19 @@ class arUpgrader120
 
       // Add security settings
       case 77:
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = 'require_ssl_admin';
         $setting->value = '0';
         $setting->culture = 'en';
         $setting->save();
 
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = 'require_strong_passwords';
         $setting->value = '0';
         $setting->culture = 'en';
         $setting->save();
 
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = 'limit_admin_ip';
         $setting->value = '0';
         $setting->culture = 'en';
@@ -85,13 +85,13 @@ class arUpgrader120
 
       // Add browse sort settings
       case 78:
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = 'sort_browser_user';
         $setting->value = 'lastUpdated';
         $setting->culture = 'en';
         $setting->save();
 
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = 'sort_browser_anonymous';
         $setting->value = 'alphabetic';
         $setting->culture = 'en';
@@ -103,7 +103,7 @@ class arUpgrader120
       case 79:
 
         QubitMigrate::bumpTerm(QubitTerm::LANGUAGE_NOTE_ID, $configuration);
-        $term = new QubitTerm;
+        $term = new QubitTerm();
         $term->id = QubitTerm::LANGUAGE_NOTE_ID;
         $term->parentId = QubitTerm::ROOT_ID;
         $term->taxonomyId = QubitTaxonomy::NOTE_TYPE_ID;
@@ -262,7 +262,7 @@ class arUpgrader120
       // Add accrual constant to term table
       case 84:
         QubitMigrate::bumpTerm(QubitTerm::ACCRUAL_ID, $configuration);
-        $term = new QubitTerm;
+        $term = new QubitTerm();
         $term->id = QubitTerm::ACCRUAL_ID;
         $term->parentId = QubitTerm::ROOT_ID;
         $term->taxonomyId = QubitTaxonomy::RELATION_TYPE_ID;
@@ -286,7 +286,7 @@ class arUpgrader120
       case 86:
         // Type of relation: right
         // Check first wether it exists
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::RELATION_TYPE_ID);
         $criteria->add(QubitTermI18n::CULTURE, 'en');
@@ -294,7 +294,7 @@ class arUpgrader120
 
         if (null === QubitTerm::getOne($criteria))
         {
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->id = QubitTerm::RIGHT_ID;
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::RELATION_TYPE_ID;
@@ -305,7 +305,7 @@ class arUpgrader120
 
         // Type of relation: donor
         // Check first wether it exists
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::RELATION_TYPE_ID);
         $criteria->add(QubitTermI18n::CULTURE, 'en');
@@ -313,7 +313,7 @@ class arUpgrader120
 
         if (null === QubitTerm::getOne($criteria))
         {
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->id = QubitTerm::DONOR_ID;
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::RELATION_TYPE_ID;
@@ -379,7 +379,7 @@ class arUpgrader120
         // Add visibility settings
         foreach ($elements as $item)
         {
-          $setting = new QubitSetting;
+          $setting = new QubitSetting();
           $setting->name  = $item;
           $setting->scope = 'element_visibility';
           $setting->value = 1;
@@ -388,7 +388,7 @@ class arUpgrader120
         }
 
         // Add "Visible elements" menu
-        $node = new QubitMenu;
+        $node = new QubitMenu();
         $node->parentId = QubitMenu::ADMIN_ID;
         $node->name = 'visibleElements';
         $node->path = 'settings/visibleElements';

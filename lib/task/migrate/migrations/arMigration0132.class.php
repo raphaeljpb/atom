@@ -38,7 +38,7 @@ class arMigration0132
    */
   public function up($configuration)
   {
-    $setting = new QubitSetting;
+    $setting = new QubitSetting();
     $setting->name = 'slug_basis_informationobject';
     $setting->value = QubitSlug::SLUG_BASIS_TITLE;
     $setting->culture = 'en';

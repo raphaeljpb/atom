@@ -189,7 +189,7 @@ class QubitTaxonomy extends BaseTaxonomy
 
   public static function getEditableTaxonomies()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria = self::addEditableTaxonomyCriteria($criteria);
 
     // Add criteria to sort by name with culture fallback
@@ -202,7 +202,7 @@ class QubitTaxonomy extends BaseTaxonomy
 
   public static function getTaxonomyTerms($taxonomyId, $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::TAXONOMY_ID, $taxonomyId);
 
     // Only include top-level terms if option is set

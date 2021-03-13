@@ -358,7 +358,7 @@ EOF;
           {
             // Create new information objects, to maintain one-to-one
             // relationship with digital objects
-            $childInformationObject = new QubitInformationObject;
+            $childInformationObject = new QubitInformationObject();
             $childInformationObject->parent = $informationObject;
             $childInformationObject->title = basename($filepath);
 
@@ -383,7 +383,7 @@ EOF;
    */
   protected function getInformationObjectUsingUniqueId($uniqueValue)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     if ($this->uniqueValueColumnName == 'identifier')
     {
@@ -463,7 +463,7 @@ EOF;
     // Create digital object
     $this->log("Importing '$filepath'");
 
-    $do = new QubitDigitalObject;
+    $do = new QubitDigitalObject();
     $do->usageId = QubitTerm::MASTER_ID;
     $do->assets[] = new QubitAsset($filepath);
 

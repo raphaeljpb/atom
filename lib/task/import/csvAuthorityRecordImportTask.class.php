@@ -411,7 +411,7 @@ EOF;
 
                 if (!empty($occupationNotes[$i]) && $occupationNotes[$i] !== 'NULL')
                 {
-                  $note = new QubitNote;
+                  $note = new QubitNote();
                   $note->typeId = QubitTerm::ACTOR_OCCUPATION_NOTE_ID;
                   $note->content = $occupationNotes[$i];
                   $note->object = $relation;

@@ -42,7 +42,7 @@ class DigitalObjectImageflowComponent extends sfComponent
     }
 
     // Add thumbs
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitInformationObject::ID, QubitDigitalObject::OBJECT_ID);
 
     $criteria->add(

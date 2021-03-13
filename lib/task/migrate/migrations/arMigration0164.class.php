@@ -40,7 +40,7 @@ class arMigration0164
   {
     if (null === QubitSetting::getByName('global_login_button'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->setName('global_login_button');
       $setting->setScope('element_visibility');
       $setting->setValue('1');

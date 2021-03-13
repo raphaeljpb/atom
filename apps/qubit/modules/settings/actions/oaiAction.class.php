@@ -38,7 +38,7 @@ class SettingsOaiAction extends sfAction
       $this->redirect('settings/global');
     }
 
-    $this->oaiRepositoryForm = new SettingsOaiRepositoryForm;
+    $this->oaiRepositoryForm = new SettingsOaiRepositoryForm();
 
     // Handle POST data (form submit)
     if ($request->isMethod('post'))

@@ -73,7 +73,7 @@ EOF;
     parent::execute($arguments, $options);
 
     // Overall timing
-    $timer = new QubitTimer;
+    $timer = new QubitTimer();
 
     if (empty($arguments['folder']) || !file_exists($arguments['folder']))
     {
@@ -115,13 +115,13 @@ EOF;
       // Choose import type based on file extension, eg. csv, xml
       if ('csv' == pathinfo($file, PATHINFO_EXTENSION))
       {
-        $importer = new QubitCsvImport;
+        $importer = new QubitCsvImport();
         $importer->indexDuringImport = $options['index'];
         $importer->import($file, $options);
       }
       elseif ('xml' == pathinfo($file, PATHINFO_EXTENSION))
       {
-        $importer = new QubitXmlImport;
+        $importer = new QubitXmlImport();
         $importer->includeClassesAndHelpers();
         $options['strictXmlParsing'] = false;
         $importer->import($file, $options);

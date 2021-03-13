@@ -124,6 +124,6 @@ class RepositoryUploadLimitComponent extends sfComponent
     // field needed for CRSF protection. Ideally, the entire form would use
     // sfForm to render and validate but its submission is made with an Ajax
     // request validated in the editUploadLimitAction.
-    $this->form = new sfForm;
+    $this->form = new sfForm();
   }
 }

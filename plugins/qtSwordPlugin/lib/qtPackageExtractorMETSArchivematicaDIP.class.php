@@ -151,7 +151,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     }
 
     // Create AIP
-    $this->aip = new QubitAip;
+    $this->aip = new QubitAip();
     $this->aip->uuid = $aipUUID;
     $this->aip->filename = $this->extractAipNameFromFileName($this->filename);
     $this->aip->digitalObjectCount = $this->metsParser->getOriginalFileCount();
@@ -312,7 +312,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   {
     if (!empty($path) && is_readable($path))
     {
-      $digitalObject = new QubitDigitalObject;
+      $digitalObject = new QubitDigitalObject();
       $digitalObject->assets[] = new QubitAsset($path);
       $digitalObject->usageId = QubitTerm::MASTER_ID;
 
@@ -331,7 +331,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    */
   protected function addAipRelation($io, $aip)
   {
-    $relation = new QubitRelation;
+    $relation = new QubitRelation();
     $relation->subject = $aip;
     $relation->typeId = QubitTerm::AIP_RELATION_ID;
 
@@ -421,7 +421,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
         'METSArchivematicaDIP - Main dmdSec found!'
       );
 
-      $parent = new QubitInformationObject;
+      $parent = new QubitInformationObject();
       $parent->setLevelOfDescriptionByName('file');
       $parent->parentId = $this->resource->id;
       $parent = $this->metsParser->processDmdSec($dmdSec, $parent);
@@ -541,7 +541,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     $objectUUID = $this->mappings['uuidMapping'][$fileId];
 
     // Create child object
-    $io = new QubitInformationObject;
+    $io = new QubitInformationObject();
 
     // Set initial properties
     $io->setPublicationStatus($this->publicationStatus);
@@ -614,7 +614,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    */
   protected function createInformationObjectFromStructMapDiv($div, $parent)
   {
-    $io = new QubitInformationObject;
+    $io = new QubitInformationObject();
     $io->parentId = $parent->id;
     $io->setPublicationStatus($this->publicationStatus);
 

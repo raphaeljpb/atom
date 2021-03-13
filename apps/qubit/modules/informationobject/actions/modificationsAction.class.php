@@ -25,7 +25,7 @@ class InformationObjectModificationsAction extends sfAction
     $this->abortInvalidRequests();
 
     // Criteria to fetch user actions
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitAuditLog::OBJECT_ID, $this->resource->id);
     $criteria->addDescendingOrderByColumn(QubitAuditLog::CREATED_AT);
 

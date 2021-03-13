@@ -62,7 +62,7 @@ class arMigration0107
     // Add visibility settings
     foreach ($elements as $item)
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name  = $item;
       $setting->scope = 'element_visibility';
       $setting->value = 1;

@@ -34,7 +34,7 @@ class arMigration0145
   public function up($configuration)
   {
     QubitMigrate::bumpTerm(QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID, $configuration);
-    $term = new QubitTerm;
+    $term = new QubitTerm();
     $term->id = QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID;
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::RELATION_TYPE_ID;

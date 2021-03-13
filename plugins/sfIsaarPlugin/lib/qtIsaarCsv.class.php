@@ -117,7 +117,7 @@ class qtIsaarCsv extends sfIsaarPlugin
     $this->resource->save($connection);
 
     // Add to keymap table
-    $keymap = new QubitKeymap;
+    $keymap = new QubitKeymap();
     $keymap->sourceName = self::$keymapSource;
     $keymap->sourceId = $this->sourceId;
     $keymap->targetName = self::$keymapTarget;

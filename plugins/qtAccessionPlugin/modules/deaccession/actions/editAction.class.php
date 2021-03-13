@@ -32,7 +32,7 @@ class DeaccessionEditAction extends DefaultEditAction
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    $this->resource = new QubitDeaccession;
+    $this->resource = new QubitDeaccession();
 
     if (isset($this->getRoute()->resource))
     {
@@ -47,8 +47,8 @@ class DeaccessionEditAction extends DefaultEditAction
     else
     {
       $this->form->setDefault('accessionId', $this->request->accession);
-      $this->form->setValidator('accessionId', new sfValidatorInteger);
-      $this->form->setWidget('accessionId', new sfWidgetFormInputHidden);
+      $this->form->setValidator('accessionId', new sfValidatorInteger());
+      $this->form->setWidget('accessionId', new sfWidgetFormInputHidden());
 
       $this->resource->accessionId = $this->request->accession;
 
@@ -79,7 +79,7 @@ class DeaccessionEditAction extends DefaultEditAction
     {
       case 'scope':
         $this->form->setDefault('scope', $this->context->routing->generate(null, array($this->resource->scope, 'module' => 'term')));
-        $this->form->setValidator('scope', new sfValidatorString);
+        $this->form->setValidator('scope', new sfValidatorString());
 
         $choices = array();
         $choices[null] = null;
@@ -96,8 +96,8 @@ class DeaccessionEditAction extends DefaultEditAction
       case 'extent':
       case 'reason':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormTextarea);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormTextarea());
 
         break;
 
@@ -106,11 +106,11 @@ class DeaccessionEditAction extends DefaultEditAction
 
         if (!isset($this->resource->id))
         {
-          $dt = new DateTime;
+          $dt = new DateTime();
           $this->form->setDefault('date', $dt->format('Y-m-d'));
         }
 
-        $this->form->setWidget('date', new sfWidgetFormInput);
+        $this->form->setWidget('date', new sfWidgetFormInput());
         $this->form->setValidator('date', new sfValidatorDate(array(
           'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
           'date_format_error' => 'YYYY-MM-DD')));
@@ -119,8 +119,8 @@ class DeaccessionEditAction extends DefaultEditAction
 
       case 'identifier':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 

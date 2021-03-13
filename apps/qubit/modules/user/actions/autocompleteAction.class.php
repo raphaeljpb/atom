@@ -33,7 +33,7 @@ class UserAutocompleteAction extends sfAction
       $request->limit = sfConfig::get('app_hits_per_page', 10);
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     if (isset($request->query))
     {

@@ -42,7 +42,7 @@ class sfDcPluginIndexAction extends InformationObjectIndexAction
 
     if (QubitAcl::check($this->resource, 'update'))
     {
-      $validatorSchema = new sfValidatorSchema;
+      $validatorSchema = new sfValidatorSchema();
       $values = array();
 
       $validatorSchema->identifier = new sfValidatorString(array(

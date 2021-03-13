@@ -91,8 +91,8 @@ class sfIsdiahPluginEditAction extends RepositoryEditAction
     {
       case 'maintenanceNotes':
         $this->form->setDefault('maintenanceNotes', $this->isdiah->maintenanceNotes);
-        $this->form->setValidator('maintenanceNotes', new sfValidatorString);
-        $this->form->setWidget('maintenanceNotes', new sfWidgetFormTextarea);
+        $this->form->setValidator('maintenanceNotes', new sfValidatorString());
+        $this->form->setWidget('maintenanceNotes', new sfWidgetFormTextarea());
 
         break;
 

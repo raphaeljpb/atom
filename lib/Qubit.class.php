@@ -326,7 +326,7 @@ class Qubit
    */
   public static function tidyXml($xml)
   {
-    $dom = new DOMDocument;
+    $dom = new DOMDocument();
     $dom->preserveWhiteSpace = false;
     $dom->formatOutput = true;
     $dom->loadXML($xml);

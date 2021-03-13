@@ -53,7 +53,7 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
       case 'places':
       case 'subjects':
         $ids = array_column($buckets, 'key');
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
 
         foreach (QubitTerm::get($criteria) as $item)

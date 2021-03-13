@@ -61,7 +61,7 @@ EOF;
     }
 
     // Attempt to find user, exiting if the user doesn't exist
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitUser::USERNAME, $arguments['username']);
     if (null === $user = QubitUser::getOne($criteria))
     {
@@ -72,7 +72,7 @@ EOF;
     // If user is an administrator, abort if the user is the only administrator
     if ($user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID))
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitAclUserGroup::GROUP_ID, QubitAclGroup::ADMINISTRATOR_ID);
       $adminCount = count(QubitAclUserGroup::get($criteria));
 

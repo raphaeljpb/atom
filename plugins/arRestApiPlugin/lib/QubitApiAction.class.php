@@ -23,7 +23,7 @@ class QubitApiAction extends sfAction
   {
     if (!$this->authenticateUser())
     {
-      throw new QubitApiNotAuthorizedException;
+      throw new QubitApiNotAuthorizedException();
     }
 
     return $this->process($request);
@@ -49,7 +49,7 @@ class QubitApiAction extends sfAction
     // X_REST_API_KEY is and old name still checked for backward compatibility. Last attempt!
     if (null !== $key = Qubit::getHttpHeader(array('REST-API-Key', 'HTTP_X_REST_API_KEY')))
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitProperty::NAME, 'restApiKey');
       $criteria->add(QubitPropertyI18n::VALUE, $key);
       if (null === $restApiKeyProperty = QubitProperty::getOne($criteria))

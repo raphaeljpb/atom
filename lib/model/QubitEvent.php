@@ -98,7 +98,7 @@ class QubitEvent extends BaseEvent
 
   public function getPlace(array $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->id);
     $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::PLACE_ID);

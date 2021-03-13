@@ -54,7 +54,7 @@ class QubitFunctionObject extends BaseFunctionObject
 
         if (!isset($this->values[$name]))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
@@ -92,7 +92,7 @@ class QubitFunctionObject extends BaseFunctionObject
 
         if (!isset($this->values[$name]))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
@@ -102,7 +102,7 @@ class QubitFunctionObject extends BaseFunctionObject
           }
           else
           {
-            $this->values[$name] = new QubitProperty;
+            $this->values[$name] = new QubitProperty();
             $this->values[$name]->name = $name;
             $this->propertys[] = $this->values[$name];
           }

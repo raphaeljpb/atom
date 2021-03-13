@@ -38,7 +38,7 @@ class QubitMeta extends sfFilter
         $context->getRequest()->setParameter('exception', $e);
         $context->getController()->forward('search', 'error');
 
-        throw new sfStopException;
+        throw new sfStopException();
       }
 
       throw $e;

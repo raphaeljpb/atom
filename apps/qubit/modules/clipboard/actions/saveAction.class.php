@@ -67,7 +67,7 @@ class ClipboardSaveAction extends sfAction
     {
       $password = $this->generatePassword();
 
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitClipboardSave::PASSWORD, $password);
 
       $result = QubitClipboardSave::getOne($criteria);
@@ -140,7 +140,7 @@ class ClipboardSaveAction extends sfAction
   private function saveClipboard($validatedSlugs, $password)
   {
     // Create save clipboard using password
-    $save = new QubitClipboardSave;
+    $save = new QubitClipboardSave();
     $save->userId = $this->context->user->getUserID();
     $save->password = $password;
     $save->save();
@@ -150,7 +150,7 @@ class ClipboardSaveAction extends sfAction
     {
       foreach($slugs as $slug)
       {
-        $item = new QubitClipboardSaveItem;
+        $item = new QubitClipboardSaveItem();
         $item->saveId = $save->id;
         $item->itemClassName = 'Qubit'.ucfirst($type);
         $item->slug = $slug;

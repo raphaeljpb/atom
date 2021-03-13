@@ -34,7 +34,7 @@ class digitalObjectExtractTextTask extends sfBaseTask
 
   protected function execute($arguments = array(), $options = array())
   {
-    $timer = new QubitTimer;
+    $timer = new QubitTimer();
 
     sfContext::createInstance($this->configuration);
     $databaseManager = new sfDatabaseManager($this->configuration);

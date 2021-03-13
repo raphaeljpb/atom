@@ -89,7 +89,7 @@ class SitemapWriter
 
     $this->loadConfiguration();
 
-    $this->writer = new XMLWriter;
+    $this->writer = new XMLWriter();
     $this->writer->openUri($this->file);
     $this->writer->setIndent($this->indent);
     $this->writer->startDocument('1.0', 'UTF-8');

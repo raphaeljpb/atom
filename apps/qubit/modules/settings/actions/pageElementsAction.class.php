@@ -43,7 +43,7 @@ class SettingsPageElementsAction extends sfAction
   public function execute($request)
   {
     $settings = array();
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     // Take note if a Google Maps API key has been set
     $googleMapsApiKeySetting = QubitSetting::getByName('google_maps_api_key');
@@ -61,10 +61,10 @@ class SettingsPageElementsAction extends sfAction
       }
       else
       {
-        $this->form->setWidget($name, new sfWidgetFormInputCheckbox);
+        $this->form->setWidget($name, new sfWidgetFormInputCheckbox());
       }
 
-      $this->form->setValidator($name, new sfValidatorBoolean);
+      $this->form->setValidator($name, new sfValidatorBoolean());
 
       if (null !== $settings[$name] = QubitSetting::getByName($name))
       {
@@ -84,7 +84,7 @@ class SettingsPageElementsAction extends sfAction
       {
         if (null === $settings[$name])
         {
-          $settings[$name] = new QubitSetting;
+          $settings[$name] = new QubitSetting();
           $settings[$name]->name = $name;
         }
 

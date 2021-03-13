@@ -27,7 +27,7 @@ class DonorEditAction extends DefaultEditAction
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    $this->resource = new QubitDonor;
+    $this->resource = new QubitDonor();
 
     if (isset($this->getRoute()->resource))
     {
@@ -41,8 +41,8 @@ class DonorEditAction extends DefaultEditAction
 
       // Add optimistic lock
       $this->form->setDefault('serialNumber', $this->resource->serialNumber);
-      $this->form->setValidator('serialNumber', new sfValidatorInteger);
-      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden);
+      $this->form->setValidator('serialNumber', new sfValidatorInteger());
+      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
     }
     else
     {
@@ -77,8 +77,8 @@ class DonorEditAction extends DefaultEditAction
     {
       case 'authorizedFormOfName':
         $this->form->setDefault('authorizedFormOfName', $this->resource->authorizedFormOfName);
-        $this->form->setValidator('authorizedFormOfName', new sfValidatorString);
-        $this->form->setWidget('authorizedFormOfName', new sfWidgetFormInput);
+        $this->form->setValidator('authorizedFormOfName', new sfValidatorString());
+        $this->form->setWidget('authorizedFormOfName', new sfWidgetFormInput());
 
         break;
 

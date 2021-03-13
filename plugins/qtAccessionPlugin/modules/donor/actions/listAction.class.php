@@ -31,7 +31,7 @@ class DonorListAction extends sfAction
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addDescendingOrderByColumn(QubitObject::UPDATED_AT);
 
     if (isset($request->subquery))

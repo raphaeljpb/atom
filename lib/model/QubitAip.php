@@ -55,7 +55,7 @@ class QubitAip extends BaseAip
    */
   public static function getByUuid($uuid)
   {
-    $c = new Criteria;
+    $c = new Criteria();
     $c->add(self::UUID, $uuid);
 
     return self::getOne($c);

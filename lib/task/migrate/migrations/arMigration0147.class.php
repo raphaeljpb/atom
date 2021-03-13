@@ -40,7 +40,7 @@ class arMigration0147
   {
     if (null === QubitSetting::getByName('generate_reports_as_pub_user'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->setName('generate_reports_as_pub_user');
       $setting->setValue(1);
       $setting->save();

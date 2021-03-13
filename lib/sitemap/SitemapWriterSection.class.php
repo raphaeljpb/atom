@@ -94,7 +94,7 @@ class SitemapWriterSection
     // __destructor() doesn't get called on fatal errors
     register_shutdown_function(array($this, 'end'));
 
-    $this->writer = new XMLWriter;
+    $this->writer = new XMLWriter();
     $this->writer->openUri($this->file);
     $this->writer->setIndent($this->indent);
     $this->writer->startDocument('1.0', 'UTF-8');
@@ -104,7 +104,7 @@ class SitemapWriterSection
     $this->writer->writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 
     // Create in-memory intermediate XML writer to avoid continuous disk access
-    $this->buffer = new XMLWriter;
+    $this->buffer = new XMLWriter();
     $this->buffer->openMemory();
     $this->buffer->setIndent($this->indent);
   }

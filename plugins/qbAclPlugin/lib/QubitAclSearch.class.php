@@ -50,9 +50,9 @@ class QubitAclSearch
       {
         if ('*' == $repo['id'])
         {
-          $queryBool = new \Elastica\Query\BoolQuery;
+          $queryBool = new \Elastica\Query\BoolQuery();
 
-          $query = new \Elastica\Query\Term;
+          $query = new \Elastica\Query\Term();
           $query->setTerm('repositoryId', $repo['id']);
           
           if (QubitAcl::DENY == $repo['access'])
@@ -127,7 +127,7 @@ class QubitAclSearch
 
       if (0 < count($ids))
       {
-        $queryIds = new \Elastica\Query\Ids;
+        $queryIds = new \Elastica\Query\Ids();
         $queryIds->setIds($ids);
 
         $query->setPostFilter($queryIds);
@@ -148,10 +148,10 @@ class QubitAclSearch
 
       if (0 < count($ids))
       {
-        $queryIds = new \Elastica\Query\Ids;
+        $queryIds = new \Elastica\Query\Ids();
         $queryIds->setIds($ids);
 
-        $queryBool = new \Elastica\Query\BoolQuery;
+        $queryBool = new \Elastica\Query\BoolQuery();
         $queryBool->addMustNot($ids);
 
         $query->setPostFilter($queryIds);
@@ -188,7 +188,7 @@ class QubitAclSearch
       // preceeding rules will be "ALLOW" rules)
       $globalRule = array_pop($repositoryViewDrafts);
 
-      $query = new \Elastica\Query\BoolQuery;
+      $query = new \Elastica\Query\BoolQuery();
 
       while ($repo = array_shift($repositoryViewDrafts))
       {

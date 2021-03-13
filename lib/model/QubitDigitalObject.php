@@ -1104,7 +1104,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
         if (!isset($this->values['thumbnail']))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->add(QubitDigitalObject::PARENT_ID, $this->__get('id'));
           $criteria->add(QubitDigitalObject::USAGE_ID, QubitTerm::THUMBNAIL_ID);
 
@@ -1117,7 +1117,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
         if (!isset($this->values['reference']))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->add(QubitDigitalObject::PARENT_ID, $this->__get('id'));
           $criteria->add(QubitDigitalObject::USAGE_ID, QubitTerm::REFERENCE_ID);
 
@@ -1234,7 +1234,7 @@ class QubitDigitalObject extends BaseDigitalObject
    */
   public function delete($connection = null)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::PARENT_ID, $this->id);
 
     $children = QubitDigitalObject::get($criteria);
@@ -1257,7 +1257,7 @@ class QubitDigitalObject extends BaseDigitalObject
       {
         // Check, before deleting file, to make sure it's not also used by
         // another digital object
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitDigitalObject::PATH, $this->path);
         $criteria->add(QubitDigitalObject::NAME, $this->name);
 
@@ -1606,7 +1606,7 @@ class QubitDigitalObject extends BaseDigitalObject
    */
   public static function getCount($mediaTypeId, $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::PARENT_ID, null, Criteria::ISNULL);
 
     $criteria->add(QubitDigitalObject::MEDIA_TYPE_ID, $mediaTypeId);
@@ -1763,7 +1763,7 @@ class QubitDigitalObject extends BaseDigitalObject
    */
   public function getChildByUsageId($usageId)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::PARENT_ID, $this->id);
     $criteria->add(QubitDigitalObject::USAGE_ID, $usageId);
 
@@ -1780,7 +1780,7 @@ class QubitDigitalObject extends BaseDigitalObject
    */
   public static function getByPathFile($path, $name)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::PATH, $path);
     $criteria->add(QubitDigitalObject::NAME, $name);
 
@@ -2002,7 +2002,7 @@ class QubitDigitalObject extends BaseDigitalObject
    */
   public static function getGenericRepresentation($mimeType, $usageType)
   {
-    $representation = new QubitDigitalObject;
+    $representation = new QubitDigitalObject();
     $genericIconPath = QubitDigitalObject::getGenericIconPath($mimeType, $usageType);
 
     $representation->setPath(dirname($genericIconPath).'/');
@@ -2165,7 +2165,7 @@ class QubitDigitalObject extends BaseDigitalObject
       if ($status == 0)
       {
         // Add "number of pages" property
-        $pageCount = new QubitProperty;
+        $pageCount = new QubitProperty();
         $pageCount->setObjectId($this->id);
         $pageCount->setName('page_count');
         $pageCount->setScope('digital_object');
@@ -2198,7 +2198,7 @@ class QubitDigitalObject extends BaseDigitalObject
   // TODO: add $options for filter
   public function getPage($index)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitInformationObject::PARENT_ID, $this->object->id);
     $criteria->addJoin(QubitInformationObject::ID, QubitDigitalObject::OBJECT_ID);
     $criteria->setLimit(1);
@@ -2274,14 +2274,14 @@ class QubitDigitalObject extends BaseDigitalObject
     foreach ($pages as $i => $filepath)
     {
       // Create a new information object
-      $newInfoObject = new QubitInformationObject;
+      $newInfoObject = new QubitInformationObject();
       $newInfoObject->parentId = $this->getObject()->id;
       $newInfoObject->setTitle($this->getObject()->getTitle().' ('.($i + 1).')');
       $newInfoObject->setPublicationStatus(sfConfig::get('app_defaultPubStatus', QubitTerm::PUBLICATION_STATUS_DRAFT_ID));
       $newInfoObject->save($connection);
 
       // Create and link a new digital object
-      $newDigiObject = new QubitDigitalObject;
+      $newDigiObject = new QubitDigitalObject();
       $newDigiObject->parentId = $this->id;
       $newDigiObject->setObjectId($newInfoObject->id);
       $newDigiObject->save($connection);
@@ -2498,7 +2498,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
     if (0 < strlen($resizedImage))
     {
-      $derivative = new QubitDigitalObject;
+      $derivative = new QubitDigitalObject();
       $derivative->parentId = $this->id;
       $derivative->usageId = $usageId;
       $derivative->createDerivatives = false;
@@ -2798,7 +2798,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
       if (file_exists($derivativeFullPath) && 0 < ($byteSize = filesize($derivativeFullPath)))
       {
-        $derivative = new QubitDigitalObject;
+        $derivative = new QubitDigitalObject();
         $derivative->parentId = $this->id;
         $derivative->usageId = $usageId;
         $derivative->assets[] = new QubitAsset($derivativeName, file_get_contents($derivativeFullPath));
@@ -2820,7 +2820,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
       if (file_exists($derivativeFullPath) && 0 < ($byteSize = filesize($derivativeFullPath)))
       {
-        $derivative = new QubitDigitalObject;
+        $derivative = new QubitDigitalObject();
         $derivative->setPath($this->getPath());
         $derivative->setName($derivativeName);
         $derivative->parentId = $this->id;
@@ -2901,7 +2901,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
     if (file_exists($derivativeFullPath) && 0 < ($byteSize = filesize($derivativeFullPath)))
     {
-      $derivative = new QubitDigitalObject;
+      $derivative = new QubitDigitalObject();
       $derivative->setPath($this->getPath());
       $derivative->setName($derivativeName);
       $derivative->parentId = $this->id;
@@ -2935,7 +2935,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
     if (file_exists($derivativeFullPath) && 0 < ($byteSize = filesize($derivativeFullPath)))
     {
-      $derivative = new QubitDigitalObject;
+      $derivative = new QubitDigitalObject();
       $derivative->setPath($this->getPath());
       $derivative->setName($derivativeName);
       $derivative->parentId = $this->id;
@@ -3173,14 +3173,14 @@ class QubitDigitalObject extends BaseDigitalObject
       $text = mb_strcut($text, 0, 65535);
 
       // Update or create 'transcript' property
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitProperty::OBJECT_ID, $this->id);
       $criteria->add(QubitProperty::NAME, 'transcript');
       $criteria->add(QubitProperty::SCOPE, 'Text extracted from source PDF file\'s text layer using pdftotext');
 
       if (null === $property = QubitProperty::getOne($criteria))
       {
-        $property = new QubitProperty;
+        $property = new QubitProperty();
         $property->objectId = $this->id;
         $property->name = 'transcript';
         $property->scope = 'Text extracted from source PDF file\'s text layer using pdftotext';
@@ -3254,14 +3254,14 @@ class QubitDigitalObject extends BaseDigitalObject
    */
   public function setDisplayAsCompoundObject($value)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitProperty::OBJECT_ID, $this->id);
     $criteria->add(QubitProperty::NAME, 'displayAsCompound');
 
     $displayAsCompoundProp = QubitProperty::getOne($criteria);
     if (is_null($displayAsCompoundProp))
     {
-      $displayAsCompoundProp = new QubitProperty;
+      $displayAsCompoundProp = new QubitProperty();
       $displayAsCompoundProp->setObjectId($this->id);
       $displayAsCompoundProp->setName('displayAsCompound');
     }
@@ -3294,14 +3294,14 @@ class QubitDigitalObject extends BaseDigitalObject
    */
   public function setDigitalObjectAltText($value)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitProperty::OBJECT_ID, $this->id);
     $criteria->add(QubitProperty::NAME, 'digitalObjectAltText');
 
     $digitalObjectAltText = QubitProperty::getOne($criteria);
     if (is_null($digitalObjectAltText))
     {
-      $digitalObjectAltText = new QubitProperty;
+      $digitalObjectAltText = new QubitProperty();
       $digitalObjectAltText->setObjectId($this->id);
       $digitalObjectAltText->setName('digitalObjectAltText');
     }
@@ -3355,7 +3355,7 @@ class QubitDigitalObject extends BaseDigitalObject
     }
 
     // Return false if this object has no children with digital objects
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitInformationObject::ID, QubitDigitalObject::OBJECT_ID);
     $criteria->add(QubitInformationObject::PARENT_ID, $this->objectId);
     if (0 === count(QubitDigitalObject::get($criteria)))

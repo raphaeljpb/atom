@@ -55,7 +55,7 @@ class TermNavigateRelatedComponent extends sfComponent
     $esFields = !empty($options['direct']) ? self::$TAXONOMY_ES_DIRECT_FIELDS : self::$TAXONOMY_ES_FIELDS;
 
     // Search for related resources using appropriate field
-    $query = new \Elastica\Query\Term;
+    $query = new \Elastica\Query\Term();
     $query->setTerm($esFields[$term->taxonomyId], $term->id);
     $search->query->setQuery($search->queryBool->addMust($query));
 

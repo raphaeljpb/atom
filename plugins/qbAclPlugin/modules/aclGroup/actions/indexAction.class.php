@@ -27,7 +27,7 @@ class AclGroupIndexAction extends sfAction
       $this->forward404();
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitAclPermission::GROUP_ID, $this->group->id);
     $criteria->add(QubitAclPermission::ACTION, 'translate');
     $criteria->add(QubitAclPermission::GRANT_DENY, 1);

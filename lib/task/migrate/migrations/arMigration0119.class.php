@@ -38,7 +38,7 @@ class arMigration0119
    */
   public function up($configuration)
   {
-    $setting = new QubitSetting;
+    $setting = new QubitSetting();
     $setting->setName('findingAidModel');
     $setting->setSourceCulture('en');
     $setting->setValue('inventory-summary', array('culture' => 'en'));
@@ -46,7 +46,7 @@ class arMigration0119
     $setting->setDeleteable(0);
     $setting->save();
 
-    $setting = new QubitSetting;
+    $setting = new QubitSetting();
     $setting->setName('publicFindingAid');
     $setting->setValue(1);
     $setting->setEditable(1);

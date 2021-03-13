@@ -51,7 +51,7 @@ class QubitMarkdown
   {
     if (!isset(self::$instance))
     {
-      self::$instance = new QubitMarkdown;
+      self::$instance = new QubitMarkdown();
     }
 
     return self::$instance;

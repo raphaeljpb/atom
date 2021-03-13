@@ -107,7 +107,7 @@ class QubitRelation extends BaseRelation
    */
   public static function getRelationsByObjectId($id, $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::OBJECT_ID, $id);
 
     if (isset($options['typeId']))
@@ -128,7 +128,7 @@ class QubitRelation extends BaseRelation
    */
   public static function getRelationsBySubjectId($id, $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::SUBJECT_ID, $id);
 
     if (isset($options['typeId']))
@@ -148,7 +148,7 @@ class QubitRelation extends BaseRelation
    */
   public static function getBySubjectOrObjectId($id, $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     $criterion1 = $criteria->getNewCriterion(QubitRelation::OBJECT_ID, $id);
     $criterion2 = $criteria->getNewCriterion(QubitRelation::SUBJECT_ID, $id);
@@ -177,7 +177,7 @@ class QubitRelation extends BaseRelation
    */
   public static function getRelatedSubjectsByObjectId($className, $objectId, $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::OBJECT_ID, $objectId);
     $criteria->addJoin(QubitRelation::SUBJECT_ID, QubitObject::ID);
     $criteria->add(QubitObject::CLASS_NAME, $className);
@@ -200,7 +200,7 @@ class QubitRelation extends BaseRelation
    */
   public static function getRelatedObjectsBySubjectId($className, $subjectId, $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::SUBJECT_ID, $subjectId);
     $criteria->addJoin(QubitRelation::OBJECT_ID, QubitObject::ID);
     $criteria->add(QubitObject::CLASS_NAME, $className);

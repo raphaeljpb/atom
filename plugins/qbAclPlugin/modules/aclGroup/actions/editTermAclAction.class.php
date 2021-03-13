@@ -42,7 +42,7 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
         }
 
         $this->form->setDefault($name, null);
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
 
         break;
@@ -57,7 +57,7 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
     if (null != $this->resource->id)
     {
       // Get term permissions for this group
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
       $criteria->add(QubitAclPermission::GROUP_ID, $this->resource->id);
       $c1 = $criteria->getNewCriterion(QubitAclPermission::OBJECT_ID, null, Criteria::ISNULL);

@@ -716,7 +716,7 @@ EOF;
                     if (!$result)
                     {
                       // Add scope note if it doesn't exist
-                      $note = new QubitNote;
+                      $note = new QubitNote();
                       $note->objectId = $termId;
                       $note->typeId = QubitTerm::SCOPE_NOTE_ID;
                       $note->content = $self->content($scope);
@@ -780,7 +780,7 @@ EOF;
             // If no entry found, create accession and entry
             if (!$accessionMapEntry)
             {
-              $criteria = new Criteria;
+              $criteria = new Criteria();
               $criteria->add(QubitAccession::IDENTIFIER, $accessionNumber);
 
               if (null === $accession = QubitAccession::getone($criteria))
@@ -788,7 +788,7 @@ EOF;
                 print "\nCreating accession # ". $accessionNumber ."\n";
 
                 // Create new accession
-                $accession = new QubitAccession;
+                $accession = new QubitAccession();
                 $accession->identifier = $accessionNumber;
                 $accession->save();
 

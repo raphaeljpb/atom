@@ -38,7 +38,7 @@ class arMigration0120
    */
   public function up($configuration)
   {
-    $setting = new QubitSetting;
+    $setting = new QubitSetting();
     $setting->setName('oai_admin_emails');
     $setting->setScope('oai');
     $setting->setSourceCulture('en');

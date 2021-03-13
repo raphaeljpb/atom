@@ -47,7 +47,7 @@ class arStorageServiceSettingsSettingsAction extends SettingsEditAction
       case 'storage_service_username':
       case 'storage_service_api_key':
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 

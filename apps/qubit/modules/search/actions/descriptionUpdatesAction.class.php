@@ -48,20 +48,20 @@ class SearchDescriptionUpdatesAction extends sfAction
           'QubitTerm' => sfConfig::get('app_ui_label_term'),
           'QubitFunctionObject' => sfConfig::get('app_ui_label_function'));
 
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
 
         break;
 
       case 'startDate':
         $this->form->setValidator($name, new sfValidatorDate(array(), array('invalid' => $this->context->i18n->__('Invalid start date'))));
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'endDate':
         $this->form->setValidator($name, new sfValidatorDate(array(), array('invalid' => $this->context->i18n->__('Invalid end date'))));
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
@@ -91,7 +91,7 @@ class SearchDescriptionUpdatesAction extends sfAction
 
       case 'repository':
         // Get list of repositories
-        $criteria = new Criteria;
+        $criteria = new Criteria();
 
         // Do source culture fallback
         $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');
@@ -125,7 +125,7 @@ class SearchDescriptionUpdatesAction extends sfAction
         break;
 
       case 'user':
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => array()), array('class' => 'form-autocomplete')));
 
         break;
@@ -176,7 +176,7 @@ class SearchDescriptionUpdatesAction extends sfAction
   public function doAuditLogSearch()
   {
     // Criteria to fetch user actions
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitAuditLog::OBJECT_ID, QubitInformationObject::ID);
 
     // Add publication status filtering, if specified
@@ -242,7 +242,7 @@ class SearchDescriptionUpdatesAction extends sfAction
       return $this->doAuditLogSearch();
     }
 
-    $queryBool = new \Elastica\Query\BoolQuery;
+    $queryBool = new \Elastica\Query\BoolQuery();
 
     if ('QubitInformationObject' == $this->className)
     {
@@ -322,15 +322,15 @@ class SearchDescriptionUpdatesAction extends sfAction
 
       default:
         // Subquery for finding created at dates within range
-        $createdAtQueryBool = new \Elastica\Query\BoolQuery;
+        $createdAtQueryBool = new \Elastica\Query\BoolQuery();
         $this->addDateRangeQueryClause($createdAtQueryBool, 'createdAt', $this->form->getValue('startDate'), $this->form->getValue('endDate'));
 
         // Subquery for finding updated at dates within range
-        $updatedAtQueryBool = new \Elastica\Query\BoolQuery;
+        $updatedAtQueryBool = new \Elastica\Query\BoolQuery();
         $this->addDateRangeQueryClause($updatedAtQueryBool, 'updatedAt', $this->form->getValue('startDate'), $this->form->getValue('endDate'));
 
         // Combined subquery
-        $bothDatesQueryBool = new \Elastica\Query\BoolQuery;
+        $bothDatesQueryBool = new \Elastica\Query\BoolQuery();
         $bothDatesQueryBool->addShould($createdAtQueryBool);
         $bothDatesQueryBool->addShould($updatedAtQueryBool);
 

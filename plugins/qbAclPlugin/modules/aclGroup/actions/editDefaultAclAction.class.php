@@ -21,7 +21,7 @@ class AclGroupEditDefaultAclAction extends sfAction
 {
   protected function addField($name)
   {
-    $this->form->setValidator($name, new sfValidatorString);
+    $this->form->setValidator($name, new sfValidatorString());
     $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => array())));
   }
 
@@ -45,7 +45,7 @@ class AclGroupEditDefaultAclAction extends sfAction
 
         if (QubitAcl::INHERIT != $value && isset($this->basicActions[$action]))
         {
-          $aclPermission = new QubitAclPermission;
+          $aclPermission = new QubitAclPermission();
           $aclPermission->action = $action;
           $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
 
@@ -103,7 +103,7 @@ class AclGroupEditDefaultAclAction extends sfAction
 
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     if (isset($this->request->id))

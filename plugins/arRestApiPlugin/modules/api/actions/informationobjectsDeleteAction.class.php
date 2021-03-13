@@ -22,7 +22,7 @@ class ApiInformationObjectsDeleteAction extends QubitApiAction
   protected function delete($request)
   {
     // Get slug so we can determine information object's ID
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitSlug::SLUG, $request->slug);
 
     $slug = QubitSlug::getOne($criteria);
@@ -31,10 +31,10 @@ class ApiInformationObjectsDeleteAction extends QubitApiAction
     {
       if (QubitInformationObject::ROOT_ID === (int)$slug->objectId)
       {
-        throw new QubitApiForbiddenException;
+        throw new QubitApiForbiddenException();
       }
 
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitInformationObject::ID, $slug->objectId);
 
       if (null !== ($io = QubitInformationObject::getOne($criteria)))

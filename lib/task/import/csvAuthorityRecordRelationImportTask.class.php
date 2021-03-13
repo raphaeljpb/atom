@@ -284,7 +284,7 @@ EOF;
    */
   private function addRelation($sourceActorId, $targetActorId, $relationTypeId)
   {
-    $relation = new QubitRelation;
+    $relation = new QubitRelation();
     $this->setRelationFields($relation, $sourceActorId, $targetActorId, $relationTypeId);
     $relation->save();
 

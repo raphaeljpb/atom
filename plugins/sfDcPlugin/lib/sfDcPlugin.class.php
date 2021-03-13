@@ -171,7 +171,7 @@ class sfDcPlugin implements ArrayAccess
         }
 
         // Add name access points
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria = $this->resource->addrelationsRelatedBysubjectIdCriteria($criteria);
         $criteria->add(QubitRelation::TYPE_ID, QubitTerm::NAME_ACCESS_POINT_ID);
 

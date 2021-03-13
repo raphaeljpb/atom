@@ -263,13 +263,13 @@ EOF;
         if ($addContactInfo)
         {
           // Try to get existing contact information
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->add(QubitContactInformation::ACTOR_ID, $self->object->id);
           $contactInfo = QubitContactInformation::getOne($criteria);
 
           if (!isset($contactInfo))
           {
-            $contactInfo = new QubitContactInformation;
+            $contactInfo = new QubitContactInformation();
             $contactInfo->actorId = $self->object->id;
           }
 

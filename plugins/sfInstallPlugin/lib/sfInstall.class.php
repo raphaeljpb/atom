@@ -177,7 +177,7 @@ class sfInstall
   protected static function get($url)
   {
     $request = sfContext::getInstance()->request;
-    $browser = new sfWebBrowser;
+    $browser = new sfWebBrowser();
 
     try
     {
@@ -315,7 +315,7 @@ class sfInstall
     $database = array();
     $configFile = sfConfig::get('sf_config_dir').'/config.php';
 
-    $configHandler = new sfInstallDatabaseConfigHandler;
+    $configHandler = new sfInstallDatabaseConfigHandler();
 
     sfInstallDatabaseConfigHandler::$options = $options;
     file_put_contents($configFile, $configHandler->execute(ProjectConfiguration::getActive()->getConfigPaths('config/databases.yml')));
@@ -427,7 +427,7 @@ class sfInstall
     $options[] = 'no-confirmation';
 
     $dispatcher = sfContext::getInstance()->getEventDispatcher();
-    $formatter = new sfAnsiColorFormatter;
+    $formatter = new sfAnsiColorFormatter();
 
     chdir(sfConfig::get('sf_root_dir'));
 
@@ -441,21 +441,21 @@ class sfInstall
   {
     QubitSearch::disable();
 
-    $object = new QubitInformationObject;
+    $object = new QubitInformationObject();
     $object->id = QubitInformationObject::ROOT_ID;
     $object->save();
 
-    $object = new QubitActor;
+    $object = new QubitActor();
     $object->id = QubitActor::ROOT_ID;
     $object->indexOnSave = false;
     $object->save();
 
-    $object = new QubitRepository;
+    $object = new QubitRepository();
     $object->id = QubitRepository::ROOT_ID;
     $object->indexOnSave = false;
     $object->save();
 
-    $object = new QubitSetting;
+    $object = new QubitSetting();
     $object->name = 'plugins';
     $object->value = serialize(array(
       'sfDcPlugin',
@@ -473,7 +473,7 @@ class sfInstall
     $object->save();
 
     $dispatcher = sfContext::getInstance()->getEventDispatcher();
-    $formatter = new sfAnsiColorFormatter;
+    $formatter = new sfAnsiColorFormatter();
 
     chdir(sfConfig::get('sf_root_dir'));
 
@@ -495,7 +495,7 @@ class sfInstall
         'disallow_thumb'        => 0
       );
     }
-    $setting = new QubitSetting;
+    $setting = new QubitSetting();
     $setting->name = 'premisAccessRightValues';
     $setting->sourceCulture = sfConfig::get('sf_default_culture');
     $setting->setValue(serialize($premisAccessRightValues), array('sourceCulture' => true));
@@ -505,7 +505,7 @@ class sfInstall
     $accessConditionalWarning = sfContext::getInstance()->i18n->__('This record has not yet been reviewed for personal or confidential information. Please contact the Reference Archivist to request access and initiate an access review.');
     foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name = "{$item->slug}_disallow";
       $setting->scope = 'access_statement';
       $setting->setValue($accessDisallowWarning, array('culture' => 'en'));
@@ -517,7 +517,7 @@ class sfInstall
 
       $setting->save();
 
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name = "{$item->slug}_conditional";
       $setting->scope = 'access_statement';
       $setting->setValue($accessConditionalWarning, array('culture' => 'en'));

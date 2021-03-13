@@ -74,7 +74,7 @@ sql;
 
     // Create new term for the AIP relation type
     QubitMigrate::bumpTerm(QubitTerm::AIP_RELATION_ID, $configuration);
-    $term = new QubitTerm;
+    $term = new QubitTerm();
     $term->id = QubitTerm::AIP_RELATION_ID;
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::RELATION_TYPE_ID;
@@ -84,7 +84,7 @@ sql;
 
     // Add "AIP types" taxonomy
     QubitMigrate::bumpTaxonomy(QubitTaxonomy::AIP_TYPE_ID, $configuration);
-    $taxonomy = new QubitTaxonomy;
+    $taxonomy = new QubitTaxonomy();
     $taxonomy->id = QubitTaxonomy::AIP_TYPE_ID;
     $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
     $taxonomy->name = 'AIP types';
@@ -99,7 +99,7 @@ sql;
       QubitTerm::SUPPORTING_TECHNOLOGY_ID => 'Supporting technology') as $id => $value)
     {
       QubitMigrate::bumpTerm($id, $configuration);
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->id = $id;
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::AIP_TYPE_ID;

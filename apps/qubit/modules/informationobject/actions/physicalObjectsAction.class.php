@@ -40,7 +40,7 @@ class InformationObjectPhysicalObjectsAction extends sfAction
       QubitAcl::forwardUnauthorized();
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitRelation::TYPE_ID, QubitTerm::HAS_PHYSICAL_OBJECT_ID);
     $criteria->addJoin(QubitRelation::SUBJECT_ID, QubitPhysicalObject::ID);

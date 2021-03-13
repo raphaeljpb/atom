@@ -59,7 +59,7 @@ class JobsDeleteAction extends sfAction
       // Handle bulk deletion of CLI-created job, if user is an administrator
       if ($this->context->user->isAdministrator())
       {
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitJob::USER_ID, null, Criteria::ISNULL);
 
         $jobs = QubitJob::get($criteria);

@@ -73,7 +73,7 @@ class RepositoryMaintainedActorsAction extends sfAction
 
   public static function getActors($repositoryId, $page, $limit)
   {
-    $query = new \Elastica\Query;
+    $query = new \Elastica\Query();
     $queryTerm = new \Elastica\Query\Term(array('maintainingRepositoryId' => $repositoryId));
     $query->setQuery($queryTerm);
 

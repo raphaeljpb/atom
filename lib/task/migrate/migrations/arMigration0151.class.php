@@ -40,7 +40,7 @@ class arMigration0151
   {
       if (null === QubitMenu::getByName('browseDigitalObjectsInstitution'))
       {
-        $menu = new QubitMenu;
+        $menu = new QubitMenu();
         $menu->parentId = QubitMenu::getByName('browseInstitution')->id;
         $menu->name = 'browseDigitalObjectsInstitution';
         $menu->path = 'informationobject/browse?repos=%currentRealm%&view=card&onlyMedia=1&topLod=0';

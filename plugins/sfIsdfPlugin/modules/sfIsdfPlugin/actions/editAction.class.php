@@ -88,7 +88,7 @@ class sfIsdfPluginEditAction extends FunctionEditAction
     {
       case 'type':
         $this->form->setDefault('type', $this->context->routing->generate(null, array($this->resource->type, 'module' => 'term')));
-        $this->form->setValidator('type', new sfValidatorString);
+        $this->form->setValidator('type', new sfValidatorString());
 
         $choices = array();
         $choices[null] = null;
@@ -103,8 +103,8 @@ class sfIsdfPluginEditAction extends FunctionEditAction
 
       case 'maintenanceNotes':
         $this->form->setDefault('maintenanceNotes', $this->isdf->maintenanceNotes);
-        $this->form->setValidator('maintenanceNotes', new sfValidatorString);
-        $this->form->setWidget('maintenanceNotes', new sfWidgetFormTextarea);
+        $this->form->setValidator('maintenanceNotes', new sfValidatorString());
+        $this->form->setWidget('maintenanceNotes', new sfWidgetFormTextarea());
 
         break;
 
@@ -114,8 +114,8 @@ class sfIsdfPluginEditAction extends FunctionEditAction
       case 'descriptionIdentifier':
       case 'institutionIdentifier':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
@@ -126,8 +126,8 @@ class sfIsdfPluginEditAction extends FunctionEditAction
       case 'revisionHistory':
       case 'sources':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormTextarea);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormTextarea());
 
         break;
 

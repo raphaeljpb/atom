@@ -42,7 +42,7 @@ class sfIsaarPluginEventComponent extends EventEditComponent
         $term = QubitTerm::getById(QubitTerm::ARCHIVAL_MATERIAL_ID);
 
         $this->form->setDefault('resourceType', $this->context->routing->generate(null, array($term, 'module' => 'term')));
-        $this->form->setValidator('resourceType', new sfValidatorString);
+        $this->form->setValidator('resourceType', new sfValidatorString());
         $this->form->setWidget('resourceType', new sfWidgetFormSelect(array('choices' => array($this->context->routing->generate(null, array($term, 'module' => 'term')) => $term))));
 
         break;

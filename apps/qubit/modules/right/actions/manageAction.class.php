@@ -38,7 +38,7 @@ class RightManageAction extends sfAction
 
   protected function formSetup()
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', false);
 
     $this->form->setWidget('all_or_digital_only', new sfWidgetFormChoice(array(

@@ -30,7 +30,7 @@ class QubitInformationObjectXmlCache
 
   public function __construct($options = array())
   {
-    $this->logger = isset($options['logger']) ? $options['logger'] : new sfNoLogger(new sfEventDispatcher);
+    $this->logger = isset($options['logger']) ? $options['logger'] : new sfNoLogger(new sfEventDispatcher());
     $this->i18n = sfContext::getInstance()->i18n;
     $this->createExportDestinationDirs();
   }

@@ -21,7 +21,7 @@ class TaxonomyAutocompleteAction extends sfAction
 {
   public function execute($request)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria = QubitTaxonomy::addEditableTaxonomyCriteria($criteria);
     $criteria->addJoin(QubitTaxonomy::ID, QubitTaxonomyI18n::ID);
     $criteria->add(QubitTaxonomyI18n::CULTURE, $this->context->user->getCulture());

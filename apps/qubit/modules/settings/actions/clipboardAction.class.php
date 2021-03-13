@@ -59,7 +59,7 @@ class SettingsClipboardAction extends SettingsEditAction
       case 'clipboard_send_button_text':
       case 'clipboard_send_message_html':
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 

@@ -37,7 +37,7 @@ class arMigration0179
     if (null == QubitTaxonomy::getById(QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID))
     {
       QubitMigrate::bumpTaxonomy(QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID, $configuration);
-      $taxonomy = new QubitTaxonomy;
+      $taxonomy = new QubitTaxonomy();
       $taxonomy->id = QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID;
       $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
       $taxonomy->sourceCulture = 'en';
@@ -56,7 +56,7 @@ class arMigration0179
     if (null == QubitPdo::fetchOne($sql, array(QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID, QubitTerm::ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID)))
     {
       QubitMigrate::bumpTerm(QubitTerm::ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID, $configuration);
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->id = QubitTerm::ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID;
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID;

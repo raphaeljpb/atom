@@ -56,7 +56,7 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
           $this->form->setDefault('publicationStatus', sfConfig::get('app_defaultPubStatus'));
         }
 
-        $this->form->setValidator('publicationStatus', new sfValidatorString);
+        $this->form->setValidator('publicationStatus', new sfValidatorString());
 
         $choices = array();
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::PUBLICATION_STATUS_ID) as $item)
@@ -69,8 +69,8 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
         break;
 
       case 'updateDescendants':
-        $this->form->setValidator('updateDescendants', new sfValidatorBoolean);
-        $this->form->setWidget('updateDescendants', new sfWidgetFormInputCheckbox);
+        $this->form->setValidator('updateDescendants', new sfValidatorBoolean());
+        $this->form->setWidget('updateDescendants', new sfWidgetFormInputCheckbox());
 
         break;
     }

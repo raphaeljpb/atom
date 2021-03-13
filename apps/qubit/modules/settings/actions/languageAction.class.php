@@ -31,7 +31,7 @@ class SettingsLanguageAction extends sfAction
 {
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->setValidator('languageCode', new sfValidatorI18nChoiceLanguage(array('required' => true)));
     $this->form->setWidget('languageCode', new sfWidgetFormI18nChoiceLanguage(array('add_empty' => true, 'culture' => $this->context->user->getCulture())));
 
@@ -55,7 +55,7 @@ class SettingsLanguageAction extends sfAction
 
         QubitCache::getInstance()->removePattern('settings:i18n:*');
 
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name = $request->languageCode;
         $setting->scope = 'i18n_languages';
         $setting->value = $request->languageCode;

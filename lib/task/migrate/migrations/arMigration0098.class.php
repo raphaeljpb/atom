@@ -81,7 +81,7 @@ class arMigration0098
     // Add menu nodes for repository permissions
     if (null !== $parentNode = QubitMenu::getByName('groups'))
     {
-      $menu = new QubitMenu;
+      $menu = new QubitMenu();
       $menu->parentId = $parentNode->id;
       $menu->name = 'groupRepositoryAcl';
       $menu->path = 'aclGroup/indexRepositoryAcl?id=%currentId%';
@@ -96,7 +96,7 @@ class arMigration0098
 
     if (null !== $parentNode = QubitMenu::getByName('users'))
     {
-      $menu = new QubitMenu;
+      $menu = new QubitMenu();
       $menu->parentId = $parentNode->id;
       $menu->name = 'userRepositoryAcl';
       $menu->path = 'user/indexRepositoryAcl?slug=%currentSlug%';

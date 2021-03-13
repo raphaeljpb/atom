@@ -35,7 +35,7 @@ class arMigration0125
   {
     if (null === QubitMenu::getByName('staticPagesMenu'))
     {
-      $node = new QubitMenu;
+      $node = new QubitMenu();
       $node->parentId = QubitMenu::ROOT_ID;
       $node->name = 'staticPagesMenu';
       $node->label = 'Static pages';

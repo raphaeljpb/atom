@@ -54,7 +54,7 @@ EOF;
   {
     parent::execute($arguments, $options);
 
-    $timer = new QubitTimer;
+    $timer = new QubitTimer();
     $skip = true;
 
     $databaseManager = new sfDatabaseManager($this->configuration);
@@ -254,7 +254,7 @@ EOF;
     }
 
     // Delete existing derivatives
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::PARENT_ID, $digitalObject->id);
 
     // Delete only ref or thumnail derivative if "type" flag set

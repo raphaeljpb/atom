@@ -38,7 +38,7 @@ class arMigration0122
    */
   public function up($configuration)
   {
-    $setting = new QubitSetting;
+    $setting = new QubitSetting();
     $setting->setName('oai_additional_sets_enabled');
     $setting->setSourceCulture('en');
     $setting->setValue(0);

@@ -39,7 +39,7 @@ class qtSwordPluginServicedocumentAction extends sfAction
     {
       $this->title = sfConfig::get('app_siteTitle');
 
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitInformationObject::PARENT_ID, QubitInformationObject::ROOT_ID, Criteria::IN);
 
       $criteria = QubitAcl::addFilterDraftsCriteria($criteria);

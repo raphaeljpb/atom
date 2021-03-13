@@ -171,7 +171,7 @@ class QubitJob extends BaseJob
    */
   public function addNoteText($contents)
   {
-    $note = new QubitNote;
+    $note = new QubitNote();
     $note->content = $contents;
 
     if (!isset($this->id))
@@ -191,7 +191,7 @@ class QubitJob extends BaseJob
    */
   public function getNotes()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitNote::OBJECT_ID, $this->id);
 
     return QubitNote::get($criteria);
@@ -242,7 +242,7 @@ class QubitJob extends BaseJob
       throw new sfException('Could not generate user token for the job.');
     }
 
-    $property = new QubitProperty;
+    $property = new QubitProperty();
     $property->setObjectId($this->id);
     $property->setName('userToken');
     $property->setValue($token);
@@ -278,7 +278,7 @@ class QubitJob extends BaseJob
    */
   public static function getJobsByUser($user)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitJob::USER_ID, $user->getUserID());
 
     return QubitJob::get($criteria);
@@ -302,7 +302,7 @@ class QubitJob extends BaseJob
       throw new Net_Gearman_Exception("No Gearman worker available that can handle the job $jobName.");
     }
 
-    $job = new QubitJob;
+    $job = new QubitJob();
 
     // You can specify 'name' => 'whatever' to make the name human friendly.
     // Default is we just use the job class name.

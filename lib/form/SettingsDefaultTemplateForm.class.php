@@ -86,9 +86,9 @@ class SettingsDefaultTemplateForm extends sfForm
     // $this->widgetSchema->setHelps();
 
     // Validators
-    $this->validatorSchema['informationobject'] = new sfValidatorString;
-    $this->validatorSchema['actor'] = new sfValidatorString;
-    $this->validatorSchema['repository'] = new sfValidatorString;
+    $this->validatorSchema['informationobject'] = new sfValidatorString();
+    $this->validatorSchema['actor'] = new sfValidatorString();
+    $this->validatorSchema['repository'] = new sfValidatorString();
 
     // Set decorator
     $decorator = new QubitWidgetFormSchemaFormatterList($this->widgetSchema);

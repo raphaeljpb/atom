@@ -162,7 +162,7 @@ EOF;
                 ->in(sfConfig::get('sf_lib_dir').'/task/migrate') as $filename)
       {
         $className = preg_replace('/.*(arUpgrader\d+).*/', '$1', $filename);
-        $class = new $className;
+        $class = new $className();
 
         if ($class::INIT_VERSION > $version)
         {
@@ -232,7 +232,7 @@ EOF;
     }
 
     // Do standard cache clear
-    $cacheClear = new sfCacheClearTask(sfContext::getInstance()->getEventDispatcher(), new sfAnsiColorFormatter);
+    $cacheClear = new sfCacheClearTask(sfContext::getInstance()->getEventDispatcher(), new sfAnsiColorFormatter());
     $cacheClear->run();
 
     // If not running specific migrations individually, store the milestone in
@@ -272,7 +272,7 @@ EOF;
 
         $this->logSection('upgrade-sql', sprintf('Running migration %d', $number));
 
-        $class = new $className;
+        $class = new $className();
 
         try
         {
@@ -348,7 +348,7 @@ EOF;
     {
       // Initialize migration class
       $className = preg_replace('/.*(arMigration\d+).*/', '$1', $filename);
-      $class = new $className;
+      $class = new $className();
 
       // This upgrade should have been applied already
       if ($class::VERSION <= $version)

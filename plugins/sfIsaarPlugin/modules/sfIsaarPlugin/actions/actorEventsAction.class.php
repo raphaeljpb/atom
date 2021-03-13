@@ -36,7 +36,7 @@ class sfIsaarPluginActorEventsAction extends sfAction
 
     $actor = QubitActor::getBySlug($request->slug);
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitEvent::ACTOR_ID, $actor->id);
 
     $data = array();

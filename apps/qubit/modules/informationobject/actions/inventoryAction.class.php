@@ -102,19 +102,19 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
 
   private static function getResults($resource, $limit = 10, $page = 1, $sort = null)
   {
-    $query = new \Elastica\Query;
+    $query = new \Elastica\Query();
     $query->setSize($limit);
     if (!empty($page))
     {
       $query->setFrom(($page - 1) * $limit);
     }
 
-    $queryBool = new \Elastica\Query\BoolQuery;
+    $queryBool = new \Elastica\Query\BoolQuery();
 
-    $q1 = new \Elastica\Query\Term;
+    $q1 = new \Elastica\Query\Term();
     $q1->setTerm('ancestors', $resource->id);
     $queryBool->addMust($q1);
-    $q2 = new \Elastica\Query\Terms;
+    $q2 = new \Elastica\Query\Terms();
     $q2->setTerms('levelOfDescriptionId', self::getLevels());
     $queryBool->addMust($q2);
 

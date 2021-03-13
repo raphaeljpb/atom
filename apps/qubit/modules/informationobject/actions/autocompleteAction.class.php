@@ -43,11 +43,11 @@ class InformationObjectAutocompleteAction extends sfAction
       'identifier.untouched' => 'asc',
       'i18n.'.$culture.'.title.alphasort' => 'asc'));
 
-    $this->queryBool = new \Elastica\Query\BoolQuery;
+    $this->queryBool = new \Elastica\Query\BoolQuery();
 
     if (1 === preg_match('/^[\s\t\r\n]*$/', $request->query))
     {
-      $this->queryBool->addMust(new \Elastica\Query\MatchAll);
+      $this->queryBool->addMust(new \Elastica\Query\MatchAll());
     }
     else
     {
@@ -77,7 +77,7 @@ class InformationObjectAutocompleteAction extends sfAction
     // Filter results by parent
     if (!empty($request->parent) && ctype_digit($request->parent))
     {
-      $queryTerm = new \Elastica\Query\Term;
+      $queryTerm = new \Elastica\Query\Term();
       $queryTerm->setTerm('parentId', $request->parent);
 
       $this->queryBool->addMust($queryTerm);
@@ -86,7 +86,7 @@ class InformationObjectAutocompleteAction extends sfAction
     // Filter results by repository
     if (!empty($request->repository) && ctype_digit($request->repository))
     {
-      $queryTerm = new \Elastica\Query\Term;
+      $queryTerm = new \Elastica\Query\Term();
       $queryTerm->setTerm('repository.id', $request->repository);
 
       $this->queryBool->addMust($queryTerm);

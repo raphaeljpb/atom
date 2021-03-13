@@ -84,14 +84,14 @@ class SettingsUploadsAction extends SettingsEditAction
           ['required' => true, 'min' => -1],
           ['min' => $this->i18n->__('Minimum value is "%min%"')]
         ));
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'upload_quota':
         // No validator, because the global quota is set via config file
         // and can't be changed in the UI
-        $this->form->setWidget($name, new arWidgetFormUploadQuota);
+        $this->form->setWidget($name, new arWidgetFormUploadQuota());
 
         break;
     }

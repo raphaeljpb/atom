@@ -342,7 +342,7 @@ class QubitOai
    */
   public static function validate($xml)
   {
-    $dom = new DOMDocument;
+    $dom = new DOMDocument();
     $dom->loadXML($xml);
 
     return true;
@@ -363,7 +363,7 @@ class QubitOai
    */
   public static function getResumptionToken($oaiResponse)
   {
-    $oaiXML = new DOMDocument;
+    $oaiXML = new DOMDocument();
     $oaiSimple = simplexml_load_string($oaiResponse);
     $oaiSimple->registerXPathNamespace('c', 'http://www.openarchives.org/OAI/2.0/');
     $oaiSimpleRes = $oaiSimple->xpath('//c:ListRecords/c:resumptionToken');

@@ -64,7 +64,7 @@ class QubitObjectTermRelation extends BaseObjectTermRelation
    */
   public static function getOneByObjectId($objectId)
   {
-    $c = new Criteria;
+    $c = new Criteria();
     $c->add(QubitObjectTermRelation::OBJECT_ID, $objectId);
 
     return QubitObjectTermRelation::getOne($c);

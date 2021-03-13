@@ -31,15 +31,15 @@ class AclGroupEditAction extends sfAction
     {
       case 'name':
         $this->form->setDefault($name, $this->group[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'description':
         $this->form->setDefault($name, $this->group[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormTextarea);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormTextarea());
 
         break;
 
@@ -47,7 +47,7 @@ class AclGroupEditAction extends sfAction
         $choices = array(1 => 'Yes', 0 => 'No');
 
         // Check for grant permission
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitAclPermission::GROUP_ID, $this->group->id);
         $criteria->add(QubitAclPermission::ACTION, 'translate');
         $criteria->add(QubitAclPermission::GRANT_DENY, 1);
@@ -69,7 +69,7 @@ class AclGroupEditAction extends sfAction
 
   public function execute($request)
   {
-    $this->group = new QubitAclGroup;
+    $this->group = new QubitAclGroup();
 
     if (isset($this->request->id))
     {
@@ -81,7 +81,7 @@ class AclGroupEditAction extends sfAction
       }
     }
 
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     foreach ($this::$NAMES as $name)
@@ -128,7 +128,7 @@ class AclGroupEditAction extends sfAction
     switch ($name = $field->getName())
     {
       case 'translate':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitAclPermission::GROUP_ID, $this->group->id);
         $criteria->add(QubitAclPermission::ACTION, 'translate');
 
@@ -138,7 +138,7 @@ class AclGroupEditAction extends sfAction
         {
           if (null === $translatePermission)
           {
-            $translatePermission = new QubitAclPermission;
+            $translatePermission = new QubitAclPermission();
             $translatePermission->action  = 'translate';
             $translatePermission->grantDeny = 1;
           }

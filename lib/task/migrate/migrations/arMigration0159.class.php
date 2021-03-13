@@ -40,7 +40,7 @@ class arMigration0159
   {
     if (null === QubitSetting::getByName('permissive_slug_creation'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name = 'permissive_slug_creation';
       $setting->value = QubitSlug::SLUG_RESTRICTIVE;
       $setting->editable = 1;

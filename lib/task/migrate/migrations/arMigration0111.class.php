@@ -63,7 +63,7 @@ sql;
     $jobs = QubitMenu::getByName('jobs');
     if ($jobs === null)
     {
-      $node = new QubitMenu;
+      $node = new QubitMenu();
       $node->parentId = QubitMenu::MANAGE_ID;
       $node->name = 'jobs';
       $node->path = 'jobs/browse';

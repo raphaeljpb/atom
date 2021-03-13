@@ -33,7 +33,7 @@ class PhysicalObjectEditAction extends DefaultEditAction
 
   protected function earlyExecute()
   {
-    $this->resource = new QubitPhysicalObject;
+    $this->resource = new QubitPhysicalObject();
     if (isset($this->getRoute()->resource))
     {
       $this->resource = $this->getRoute()->resource;
@@ -60,14 +60,14 @@ class PhysicalObjectEditAction extends DefaultEditAction
       case 'location':
       case 'name':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'type':
         $this->form->setDefault('type', $this->context->routing->generate(null, array($this->resource->type, 'module' => 'term')));
-        $this->form->setValidator('type', new sfValidatorString);
+        $this->form->setValidator('type', new sfValidatorString());
         $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => QubitTerm::getIndentedChildTree(QubitTerm::CONTAINER_ID, '&nbsp;', array('returnObjectInstances' => true)))));
 
         break;

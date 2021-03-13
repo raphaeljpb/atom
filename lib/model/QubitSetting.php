@@ -150,7 +150,7 @@ class QubitSetting extends BaseSetting
    */
   public static function getLocalSettings()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitSetting::SCOPE, null, Criteria::ISNOTNULL);
     $criteria->add(QubitSetting::SCOPE, 'site_information', Criteria::NOT_EQUAL);
 
@@ -164,7 +164,7 @@ class QubitSetting extends BaseSetting
    */
   public static function getByScope($scope = null)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     if (null !== $scope)
     {
       $criteria->add(QubitSetting::SCOPE, $scope);
@@ -184,7 +184,7 @@ class QubitSetting extends BaseSetting
    */
   public static function getByName($name)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, $name);
 
     return QubitSetting::getOne($criteria);
@@ -197,7 +197,7 @@ class QubitSetting extends BaseSetting
    */
   public static function getByNameAndScope($name, $scope)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, $name);
     $criteria->add(QubitSetting::SCOPE, $scope);
 
@@ -212,7 +212,7 @@ class QubitSetting extends BaseSetting
   public static function findAndSave($name, $value, $options)
   {
     // Search for existing setting by name (optionally, scope)
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, $name);
 
     if (isset($options['scope']))
@@ -224,7 +224,7 @@ class QubitSetting extends BaseSetting
     // $options['createNew'] is true
     if (null === ($setting = QubitSetting::getOne($criteria)) && $options['createNew'] === true)
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->setName($name);
 
       if (isset($options['scope']))
@@ -252,7 +252,7 @@ class QubitSetting extends BaseSetting
    */
   public static function createNewSetting($name, $value, $options = array())
   {
-    $setting = new QubitSetting;
+    $setting = new QubitSetting();
     $setting->setName($name);
     $setting->setValue($value);
 

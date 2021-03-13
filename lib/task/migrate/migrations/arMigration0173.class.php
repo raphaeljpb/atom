@@ -55,7 +55,7 @@ class arMigration0173
     {
       if (null === QubitSetting::getByName($settingName))
       {
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
 
         $setting->setName($settingName);
         $setting->setScope('element_visibility');

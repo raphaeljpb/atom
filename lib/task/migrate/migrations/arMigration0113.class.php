@@ -91,7 +91,7 @@ sql;
 
     if ($premisAccessRight === null)
     {
-      $s = new QubitSetting;
+      $s = new QubitSetting();
       $s->setName('premisAccessRight');
       $s->setValue('disseminate');
       $s->save();
@@ -99,7 +99,7 @@ sql;
 
     if ($premisAccessRightValues === null)
     {
-      $s = new QubitSetting;
+      $s = new QubitSetting();
       $s->setName('premisAccessRightValues');
       $s->setValue('a:9:{s:12:"allow_master";s:1:"1";s:15:"allow_reference";s:1:"1";s:11:"allow_thumb";s:1:"1";s:18:"conditional_master";s:1:"0";s:21:"conditional_reference";s:1:"1";s:17:"conditional_thumb";s:1:"1";s:15:"disallow_master";s:1:"0";s:18:"disallow_reference";s:1:"0";s:14:"disallow_thumb";s:1:"0";}');
       $s->save();
@@ -111,7 +111,7 @@ sql;
 
     if ($disallowWarning === null)
     {
-      $s = new QubitSetting;
+      $s = new QubitSetting();
       $s->setScope('ui_label');
       $s->setName('access_disallow_warning');
       $s->setValue('Access to this record is restricted because it contains personal or confidential information. Please contact the Reference Archivist for more information on accessing this record.');
@@ -120,7 +120,7 @@ sql;
 
     if ($conditionalWarning === null)
     {
-      $s = new QubitSetting;
+      $s = new QubitSetting();
       $s->setScope('ui_label');
       $s->setName('access_conditional_warning');
       $s->setValue('This record has not yet been reviewed for personal or confidential information. Please contact the Reference Archivist to request access and initiate an access review.');

@@ -30,7 +30,7 @@ class TermAutocompleteAction extends sfAction
     $params = $this->context->routing->parse(Qubit::pathInfo($request->getReferer()));
     if ('term' == $params['module'])
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
 
       // Exclude the calling object and it's descendants from the list (prevent
       // circular inheritance)

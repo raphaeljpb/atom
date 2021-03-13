@@ -38,7 +38,7 @@ class arMigration0138
     {
       if (null === QubitSetting::getByName($name))
       {
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name = $name;
         $setting->value = 1;
         $setting->culture = 'en';

@@ -320,7 +320,7 @@ return;
         return 'approved';
 
       case 'resourceRelation':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->addAlias('obj', QubitObject::TABLE_NAME);
         $criteria->addJoin(QubitEvent::OBJECT_ID, 'obj.id');
         $criteria->add(QubitEvent::ACTOR_ID, $this->resource->id);
@@ -329,7 +329,7 @@ return;
         return QubitEvent::get($criteria);
 
       case 'functionRelation':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->addAlias('subj', QubitObject::TABLE_NAME);
         $criteria->addJoin(QubitRelation::SUBJECT_ID, 'subj.id');
         $criteria->add(QubitRelation::OBJECT_ID, $this->resource->id);
@@ -342,7 +342,7 @@ return;
         return self::toDiscursiveSet($this->resource->internalStructures);
 
       case 'subjectOf':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitRelation::OBJECT_ID, $this->resource->id);
         $criteria->add(QubitRelation::TYPE_ID, QubitTerm::NAME_ACCESS_POINT_ID);
 
@@ -404,7 +404,7 @@ return;
 
         // TODO <maintenanceEvent/>, <agent/>, <agentType/>
 
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitNote::OBJECT_ID, $this->resource->id);
         $criteria->add(QubitNote::TYPE_ID, QubitTerm::MAINTENANCE_NOTE_ID);
 
@@ -414,7 +414,7 @@ return;
         }
         else
         {
-          $item = new QubitNote;
+          $item = new QubitNote();
           $item->typeId = QubitTerm::MAINTENANCE_NOTE_ID;
 
           $this->resource->notes[] = $item;
@@ -569,7 +569,7 @@ return;
 
     foreach ($fd->find('eac:cpfDescription/eac:identity/eac:nameEntry[not(eac:authorizedForm) and not(@localType="standardized")]') as $node)
     {
-      $item = new QubitOtherName;
+      $item = new QubitOtherName();
       $item->name = $fd->spawn()->add($node)->find('eac:part')->text();
       $item->typeId = QubitTerm::OTHER_FORM_OF_NAME_ID;
 
@@ -578,7 +578,7 @@ return;
 
     foreach ($fd->find('eac:cpfDescription/eac:identity/eac:nameEntryParallel') as $node)
     {
-      $item = new QubitOtherName;
+      $item = new QubitOtherName();
       $item->typeId = QubitTerm::PARALLEL_FORM_OF_NAME_ID;
 
       foreach ($fd->spawn()->add($node)->find('eac:nameEntry[@xml:lang]') as $node2)
@@ -591,7 +591,7 @@ return;
 
     foreach ($fd->find('eac:cpfDescription/eac:identity/eac:nameEntry[@localType="standardized"]') as $node)
     {
-      $item = new QubitOtherName;
+      $item = new QubitOtherName();
       $item->name = $fd->spawn()->add($node)->find('eac:part')->text();
       $item->typeId = QubitTerm::STANDARDIZED_FORM_OF_NAME_ID;
 
@@ -655,14 +655,14 @@ return;
       // Otherwise, create the new resource
       if (!isset($item))
       {
-        $item = new QubitActor;
+        $item = new QubitActor();
         $item->authorizedFormOfName = $fd->spawn()->add($node)->find('eac:relationEntry')->text();
 
         // TODO Cascade save through QubitEvent
         $item->save();
       }
 
-      $relation = new QubitRelation;
+      $relation = new QubitRelation();
       $relation->object = $item;
       $relation->typeId = self::fromCpfRelationType($node->getAttribute('cpfRelationType'));
 
@@ -680,7 +680,7 @@ return;
           $date[$key] = Qubit::renderDate($value[0]).' - '.Qubit::renderDate($value[1]);
         }
 
-        $note = new QubitNote;
+        $note = new QubitNote();
         $note->typeId = QubitTerm::RELATION_NOTE_DATE_ID;
         $note->scope = 'QubitRelation';
         $note->content = implode(', ', $date);
@@ -717,7 +717,7 @@ return;
       // Otherwise, create the new resource
       if (!isset($item))
       {
-        $item = new QubitInformationObject;
+        $item = new QubitInformationObject();
         $item->parentId = QubitInformationObject::ROOT_ID;
         $item->title = $fd->spawn()->add($node)->find('eac:relationEntry')->text();
 
@@ -731,7 +731,7 @@ return;
       }
       else
       {
-        $event = new QubitEvent;
+        $event = new QubitEvent();
         $event->object = $item;
         $event->typeId = self::fromResourceRelationType($node->getAttribute('resourceRelationType'), $node->getAttribute('xlink:role'));
 
@@ -779,14 +779,14 @@ return;
       // Otherwise, create the new resource
       if (!isset($item))
       {
-        $item = new QubitFunctionObject;
+        $item = new QubitFunctionObject();
         $item->authorizedFormOfName = $fd->spawn()->add($node)->find('eac:relationEntry')->text();
 
         // TODO Cascade save through QubitEvent
         $item->save();
       }
 
-      $relation = new QubitRelation;
+      $relation = new QubitRelation();
       $relation->subject = $item;
 
       // TODO Set $relation->type by mapping to controlled vocabulary
@@ -809,7 +809,7 @@ return;
 
         if (!empty($noteContent))
         {
-          $note = new QubitNote;
+          $note = new QubitNote();
           $note->typeId = QubitTerm::ACTOR_OCCUPATION_NOTE_ID;
           $note->content = $noteContent;
 
@@ -1015,7 +1015,7 @@ return;
             }
           }
 
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->taxonomyId = QubitTaxonomy::EVENT_TYPE_ID;
           $term->parentId = QubitTerm::ROOT_ID;
           $term->name = $xlinkRole;
@@ -1025,7 +1025,7 @@ return;
         }
         else
         {
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->taxonomyId = QubitTaxonomy::EVENT_TYPE_ID;
           $term->parentId = QubitTerm::ROOT_ID;
           $term->name = $resourceRelationType;

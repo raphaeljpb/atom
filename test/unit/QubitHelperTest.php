@@ -21,7 +21,7 @@ require_once dirname(__FILE__).'/../bootstrap/unit.php';
 
 require_once(dirname(__FILE__).'/../../lib/helper/QubitHelper.php');
 
-$t = new lime_test(19, new lime_output_color);
+$t = new lime_test(19, new lime_output_color());
 
 /**
  * qubit_auto_link_text()

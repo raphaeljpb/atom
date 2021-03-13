@@ -141,7 +141,7 @@ class sfRadPlugin implements ArrayAccess
 
         if ($missingNote)
         {
-          $note = new QubitNote;
+          $note = new QubitNote();
           $note->typeId = QubitTerm::LANGUAGE_NOTE_ID;
           $note->userId = sfContext::getInstance()->user->getAttribute('user_id');
 
@@ -158,7 +158,7 @@ class sfRadPlugin implements ArrayAccess
   {
     if (!isset($this->property[$name]))
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $this->resource->addPropertysCriteria($criteria);
       $criteria->add(QubitProperty::NAME, $name);
 
@@ -168,7 +168,7 @@ class sfRadPlugin implements ArrayAccess
       }
       else
       {
-        $this->property[$name] = new QubitProperty;
+        $this->property[$name] = new QubitProperty();
         $this->property[$name]->name = $name;
 
         $this->resource->propertys[] = $this->property[$name];

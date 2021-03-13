@@ -27,7 +27,7 @@ class DefaultMoveAction extends sfAction
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     $this->resource = $this->getRoute()->resource;
 
@@ -45,7 +45,7 @@ class DefaultMoveAction extends sfAction
 
     // Parent form field
     $this->form->setValidator('parent', new sfValidatorString(array('required' => true)));
-    $this->form->setWidget('parent', new sfWidgetFormInputHidden);
+    $this->form->setWidget('parent', new sfWidgetFormInputHidden());
 
     // Get parent from GET parameters
     if (isset($request->parent))
@@ -135,7 +135,7 @@ class DefaultMoveAction extends sfAction
     $this->query->setSize($limit);
     $this->query->setFrom(($page - 1) * $limit);
 
-    $this->queryBool = new \Elastica\Query\BoolQuery;
+    $this->queryBool = new \Elastica\Query\BoolQuery();
 
     if (isset($request->query))
     {
@@ -149,7 +149,7 @@ class DefaultMoveAction extends sfAction
     }
     else
     {
-      $query = new \Elastica\Query\Term;
+      $query = new \Elastica\Query\Term();
       $query->setTerm('parentId', $this->parent->id);
       $this->queryBool->addMust($query);
     }
@@ -179,7 +179,7 @@ class DefaultMoveAction extends sfAction
       $slugs[] = $data['slug'];
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitObject::ID, QubitSlug::OBJECT_ID);
     $criteria->add(QubitSlug::SLUG, $slugs, Criteria::IN);
 

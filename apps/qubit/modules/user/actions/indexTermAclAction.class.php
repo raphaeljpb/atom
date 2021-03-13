@@ -56,7 +56,7 @@ class UserIndexTermAclAction extends sfAction
     $this->tableCols = count($this->roles) + 3;
 
     // Get access control permissions
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
     $c1 = $criteria->getNewCriterion(QubitAclPermission::USER_ID, $this->resource->id);
 

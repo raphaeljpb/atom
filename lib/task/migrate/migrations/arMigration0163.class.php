@@ -33,7 +33,7 @@ class arMigration0163
 
   public function up($configuration)
   {
-    $task = new i18nCustomLinkToMarkdownTask(new sfEventDispatcher, new sfFormatter);
+    $task = new i18nCustomLinkToMarkdownTask(new sfEventDispatcher(), new sfFormatter());
     $task->execute();
 
     return true;

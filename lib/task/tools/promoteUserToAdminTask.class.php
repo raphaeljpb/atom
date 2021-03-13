@@ -58,7 +58,7 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitUser::USERNAME, $arguments['username']);
     if (null === $user = QubitUser::getOne($criteria))
     {

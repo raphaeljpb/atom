@@ -94,8 +94,8 @@ class sfIsaarPluginEditAction extends ActorEditAction
     {
       case 'maintenanceNotes':
         $this->form->setDefault('maintenanceNotes', $this->isaar->maintenanceNotes);
-        $this->form->setValidator('maintenanceNotes', new sfValidatorString);
-        $this->form->setWidget('maintenanceNotes', new sfWidgetFormTextarea);
+        $this->form->setValidator('maintenanceNotes', new sfValidatorString());
+        $this->form->setWidget('maintenanceNotes', new sfWidgetFormTextarea());
 
         break;
 
@@ -106,7 +106,7 @@ class sfIsaarPluginEditAction extends ActorEditAction
           $this->form->setDefault($name, $this->resource[$name]);
           $identifierValidator = new QubitValidatorActorDescriptionIdentifier(array('resource' => $this->resource));
           $this->form->setValidator($name, $identifierValidator);
-          $this->form->setWidget($name, new sfWidgetFormInput);
+          $this->form->setWidget($name, new sfWidgetFormInput());
         }
         else
         {

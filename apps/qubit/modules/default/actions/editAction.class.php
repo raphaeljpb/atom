@@ -25,7 +25,7 @@ class DefaultEditAction extends sfAction
     {
       case 'descriptionDetail':
         $this->form->setDefault('descriptionDetail', $this->context->routing->generate(null, array($this->resource->descriptionDetail, 'module' => 'term')));
-        $this->form->setValidator('descriptionDetail', new sfValidatorString);
+        $this->form->setValidator('descriptionDetail', new sfValidatorString());
 
         $choices = array();
         $choices[null] = null;
@@ -40,7 +40,7 @@ class DefaultEditAction extends sfAction
 
       case 'descriptionStatus':
         $this->form->setDefault('descriptionStatus', $this->context->routing->generate(null, array($this->resource->descriptionStatus, 'module' => 'term')));
-        $this->form->setValidator('descriptionStatus', new sfValidatorString);
+        $this->form->setValidator('descriptionStatus', new sfValidatorString());
 
         $choices = array();
         $choices[null] = null;
@@ -64,7 +64,7 @@ class DefaultEditAction extends sfAction
       case 'otherName':
       case 'parallelName':
       case 'standardizedName':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria = $this->resource->addOtherNamesCriteria($criteria);
         switch ($name)
         {
@@ -91,7 +91,7 @@ class DefaultEditAction extends sfAction
         }
 
         $this->form->setDefault($name, $value);
-        $this->form->setValidator($name, new sfValidatorPass);
+        $this->form->setValidator($name, new sfValidatorPass());
         $this->form->setWidget($name, new QubitWidgetFormInputMany(array('defaults' => $defaults)));
 
         break;
@@ -151,7 +151,7 @@ class DefaultEditAction extends sfAction
             continue;
           }
 
-          $otherName = new QubitOtherName;
+          $otherName = new QubitOtherName();
           $otherName->name = $item;
 
           switch ($field->getName())
@@ -196,7 +196,7 @@ class DefaultEditAction extends sfAction
       $this->forward404();
     }
 
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     // Call early execute logic, if defined by a child class
     if (method_exists($this, 'earlyExecute'))
@@ -209,8 +209,8 @@ class DefaultEditAction extends sfAction
     if (isset($this->request->linkExisting))
     {
       $this->form->setDefault('linkExisting', $this->request->linkExisting);
-      $this->form->setValidator('linkExisting', new sfValidatorBoolean);
-      $this->form->setWidget('linkExisting', new sfWidgetFormInputHidden);
+      $this->form->setValidator('linkExisting', new sfValidatorBoolean());
+      $this->form->setWidget('linkExisting', new sfWidgetFormInputHidden());
     }
 
     foreach ($this::$NAMES as $name)

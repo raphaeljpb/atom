@@ -309,7 +309,7 @@ EOF;
   {
     // Create new information objects, to maintain one-to-one
     // relationship with digital objects
-    $informationObject = new QubitInformationObject;
+    $informationObject = new QubitInformationObject();
     $informationObject->parent = QubitInformationObject::getById($informationObjectId);
     $informationObject->title = basename($item);
     $informationObject->disableNestedSetUpdating = $this->disableNestedSetUpdating;
@@ -354,7 +354,7 @@ EOF;
     $this->log(sprintf("(%s) %s", strftime("%h %d, %r"), $message));
 
     // Create digital object
-    $do = new QubitDigitalObject;
+    $do = new QubitDigitalObject();
     $do->objectId = $objectId;
 
     if ($options['link-source'])

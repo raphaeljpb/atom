@@ -30,13 +30,13 @@ class ClipboardLoadAction extends DefaultEditAction
     {
       case 'password':
         $this->form->setValidator('password', new sfValidatorString(array('required' => true)));
-        $this->form->setWidget('password', new sfWidgetFormInput);
+        $this->form->setWidget('password', new sfWidgetFormInput());
 
         break;
 
       case 'mode':
         $this->form->setDefault('mode', 'merge');
-        $this->form->setValidator('mode', new sfValidatorString);
+        $this->form->setValidator('mode', new sfValidatorString());
         $choices = array(
           'merge' => $this->context->i18n->__('Merge saved clipboard with existing clipboard results'),
           'replace' => $this->context->i18n->__('Replace existing clipboard results with saved clipboard')
@@ -86,7 +86,7 @@ class ClipboardLoadAction extends DefaultEditAction
 
     $this->processForm();
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitClipboardSave::PASSWORD, $this->password);
     $save = QubitClipboardSave::getOne($criteria);
 
@@ -98,7 +98,7 @@ class ClipboardLoadAction extends DefaultEditAction
       return $this->renderText(json_encode(array('error' => $message)));
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitClipboardSaveItem::SAVE_ID, $save->id);
     $items = QubitClipboardSaveItem::get($criteria);
 

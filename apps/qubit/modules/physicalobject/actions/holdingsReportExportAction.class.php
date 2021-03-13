@@ -21,7 +21,7 @@ class PhysicalObjectHoldingsReportExportAction extends sfAction
 {
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     if ($request->isMethod('post'))

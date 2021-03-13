@@ -37,7 +37,7 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
     $username = phpCAS::getUser();
 
     // Load user using username or, if one doesn't exist, create it.
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitUser::USERNAME, $username);
     if (null === $user = QubitUser::getOne($criteria))
     {
@@ -94,7 +94,7 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
     // Delete existing AclUserGroups for this user. This allows us to reset
     // group membership on each login so that users will only belong to groups
     // that are appropriately configured in app_cas_user_groups.
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitAclUserGroup::USER_ID, $user->id);
     foreach (QubitAclUserGroup::get($criteria) as $item)
     {

@@ -39,7 +39,7 @@ class SettingsPermissionsCopyrightStatementForm extends sfForm
     $this->setDefault('copyrightStatementEnabled', $default);
 
     $this->setWidget('copyrightStatement', new sfWidgetFormTextArea(array(), array('rows' => 4)));
-    $this->setValidator('copyrightStatement', new sfValidatorString);
+    $this->setValidator('copyrightStatement', new sfValidatorString());
     if (null !== $setting = QubitSetting::getByName('digitalobject_copyright_statement'))
     {
       $this->setDefault('copyrightStatement', $setting->getValue());

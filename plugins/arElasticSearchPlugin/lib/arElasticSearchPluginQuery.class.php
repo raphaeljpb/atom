@@ -38,7 +38,7 @@ class arElasticSearchPluginQuery
     $this->query->setSize($limit);
     $this->query->setFrom($skip);
 
-    $this->queryBool = new \Elastica\Query\BoolQuery;
+    $this->queryBool = new \Elastica\Query\BoolQuery();
   }
 
   /**
@@ -121,10 +121,10 @@ class arElasticSearchPluginQuery
       {
         $collection = QubitInformationObject::getById($value);
 
-        $querySelf = new \Elastica\Query\Match;
+        $querySelf = new \Elastica\Query\Match();
         $querySelf->setFieldQuery('slug', $collection->slug);
 
-        $queryBool = new \Elastica\Query\BoolQuery;
+        $queryBool = new \Elastica\Query\BoolQuery();
         $queryBool->addShould($query);
         $queryBool->addShould($querySelf);
 
@@ -176,7 +176,7 @@ class arElasticSearchPluginQuery
     if (isset($params['actorId']) && ctype_digit($params['actorId'])
       && isset($params['eventTypeId']) && ctype_digit($params['eventTypeId']))
     {
-      $queryBool = new \Elastica\Query\BoolQuery;
+      $queryBool = new \Elastica\Query\BoolQuery();
       $queryBool->addMust(new \Elastica\Query\Term(array('dates.actorId' => $params['actorId'])));
       $queryBool->addMust(new \Elastica\Query\Term(array('dates.typeId' => $params['eventTypeId'])));
 
@@ -218,7 +218,7 @@ class arElasticSearchPluginQuery
   protected function parseQuery($params, $archivalStandard)
   {
     $this->criteria = array();
-    $queryBool = new \Elastica\Query\BoolQuery;
+    $queryBool = new \Elastica\Query\BoolQuery();
     $count = 0;
 
     while (isset($params['sq' . $count]))
@@ -387,11 +387,11 @@ class arElasticSearchPluginQuery
         case 'or':
           // Build boolean query with all the previous queries
           // and the new one as 'shoulds'
-          $queryOr = new \Elastica\Query\BoolQuery;
+          $queryOr = new \Elastica\Query\BoolQuery();
           $queryOr->addShould($queryBool);
           $queryOr->addShould($queryField);
 
-          $queryBool = new \Elastica\Query\BoolQuery;
+          $queryBool = new \Elastica\Query\BoolQuery();
           $queryBool->addMust($queryOr);
 
           break;
@@ -410,7 +410,7 @@ class arElasticSearchPluginQuery
     {
       case 'copyrightStatus':
         // Get unknown copyright status term
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::COPYRIGHT_STATUS_ID);
         $criteria->add(QubitTermI18n::NAME, 'Unknown');
@@ -423,14 +423,14 @@ class arElasticSearchPluginQuery
         {
           // Query for documents without copyright status
           $exists = new \Elastica\Query\Exists('copyrightStatusId');
-          $queryBoolMissing = new \Elastica\Query\BoolQuery;
+          $queryBoolMissing = new \Elastica\Query\BoolQuery();
           $queryBoolMissing->addMustNot($exists);
 
           // Query for unknown copyright status
-          $query = new \Elastica\Query\Term;
+          $query = new \Elastica\Query\Term();
           $query->setTerm('copyrightStatusId', $value);
 
-          $queryBool = new \Elastica\Query\BoolQuery;
+          $queryBool = new \Elastica\Query\BoolQuery();
           $queryBool->addShould($query);
           $queryBool->addShould($queryBoolMissing);
 
@@ -438,7 +438,7 @@ class arElasticSearchPluginQuery
         }
         else
         {
-          $query = new \Elastica\Query\Term;
+          $query = new \Elastica\Query\Term();
           $query->setTerm('copyrightStatusId', $value);
 
           return $query;
@@ -446,13 +446,13 @@ class arElasticSearchPluginQuery
 
         // no break
       case 'onlyMedia':
-        $query = new \Elastica\Query\Term;
+        $query = new \Elastica\Query\Term();
         $query->setTerm('hasDigitalObject', filter_var($value, FILTER_VALIDATE_BOOLEAN));
 
         return $query;
 
       case 'materialType':
-        $query = new \Elastica\Query\Term;
+        $query = new \Elastica\Query\Term();
         $query->setTerm('materialTypeId', $value);
 
         return $query;
@@ -467,19 +467,19 @@ class arElasticSearchPluginQuery
 
           case 'no':
             $exists = new \Elastica\Query\Exists('findingAid.status');
-            $query = new \Elastica\Query\BoolQuery;
+            $query = new \Elastica\Query\BoolQuery();
             $query->addMustNot($exists);
 
             return $query;
 
           case 'generated':
-            $query = new \Elastica\Query\Term;
+            $query = new \Elastica\Query\Term();
             $query->setTerm('findingAid.status', arFindingAidJob::GENERATED_STATUS);
 
             return $query;
 
           case 'uploaded':
-            $query = new \Elastica\Query\Term;
+            $query = new \Elastica\Query\Term();
             $query->setTerm('findingAid.status', arFindingAidJob::UPLOADED_STATUS);
 
             return $query;
@@ -509,7 +509,7 @@ class arElasticSearchPluginQuery
       $type = 'inclusive';
     }
 
-    $query = new \Elastica\Query\BoolQuery;
+    $query = new \Elastica\Query\BoolQuery();
     $range = array();
 
     if (!empty($params['startDate']))
@@ -519,7 +519,7 @@ class arElasticSearchPluginQuery
       if ($type == 'inclusive')
       {
         // Start date before range and end date missing
-        $queryBool = new \Elastica\Query\BoolQuery;
+        $queryBool = new \Elastica\Query\BoolQuery();
         $start = new \Elastica\Query\Range('dates.startDate', array('lt' => $params['startDate']));
         $exists = new \Elastica\Query\Exists('dates.endDate');
         $queryBool->addMust($start);
@@ -536,7 +536,7 @@ class arElasticSearchPluginQuery
       if ($type == 'inclusive')
       {
         // End date after range and start date missing
-        $queryBool = new \Elastica\Query\BoolQuery;
+        $queryBool = new \Elastica\Query\BoolQuery();
         $end = new \Elastica\Query\Range('dates.endDate', array('gt' => $params['endDate']));
         $exists = new \Elastica\Query\Exists('dates.startDate');
         $queryBool->addMust($end);
@@ -549,7 +549,7 @@ class arElasticSearchPluginQuery
     if (!empty($params['startDate']) && !empty($params['endDate']) && $type == 'inclusive')
     {
       // Start date before range and end date after range
-      $queryBool = new \Elastica\Query\BoolQuery;
+      $queryBool = new \Elastica\Query\BoolQuery();
       $queryBool->addMust(new \Elastica\Query\Range('dates.startDate', array('lt' => $params['startDate'])));
       $queryBool->addMust(new \Elastica\Query\Range('dates.endDate', array('gt' => $params['endDate'])));
 
@@ -590,7 +590,7 @@ class arElasticSearchPluginQuery
   {
     if (!$allowEmpty && 1 > count($this->queryBool->getParams()))
     {
-      $this->queryBool->addMust(new \Elastica\Query\MatchAll);
+      $this->queryBool->addMust(new \Elastica\Query\MatchAll());
     }
 
     if ($filterDrafts)

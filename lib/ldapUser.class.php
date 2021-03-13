@@ -55,14 +55,14 @@ class ldapUser extends myUser implements Zend_Acl_Role_Interface
       $authenticated = parent::authenticate($username, $password);
 
       // Load user
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitUser::EMAIL, $username);
       $user = QubitUser::getOne($criteria);
     }
     else
     {
       // Load user using username or, if one doesn't exist, create it
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitUser::USERNAME, $username);
       if (null === $user = QubitUser::getOne($criteria))
       {

@@ -21,7 +21,7 @@ class AccessionDeleteAction extends sfAction
 {
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     $this->resource = $this->getRoute()->resource;
 
@@ -32,7 +32,7 @@ class AccessionDeleteAction extends sfAction
     }
 
     // Accruals
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::TYPE_ID, QubitTerm::ACCRUAL_ID);
     $criteria->add(QubitRelation::OBJECT_ID, $this->resource->id);
     $criteria->addJoin(QubitRelation::SUBJECT_ID, QubitAccession::ID);

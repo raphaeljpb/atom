@@ -38,7 +38,7 @@ class DonorIndexAction extends sfAction
 
     if (QubitAcl::check($this->resource, 'update'))
     {
-      $validatorSchema = new sfValidatorSchema;
+      $validatorSchema = new sfValidatorSchema();
       $values = array();
 
       $validatorSchema->authorizedFormOfName = new sfValidatorString(array(

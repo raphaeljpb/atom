@@ -21,7 +21,7 @@ class arElasticSearchRepository extends arElasticSearchModelBase
 {
   public function load()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRepository::ID, QubitRepository::ROOT_ID, Criteria::NOT_EQUAL);
     $repositories = QubitRepository::get($criteria);
 

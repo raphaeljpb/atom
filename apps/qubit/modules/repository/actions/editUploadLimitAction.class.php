@@ -24,7 +24,7 @@ class RepositoryEditUploadLimitAction extends sfAction
     // Create a new form for CSRF validation of Ajax request.
     // The $request->checkCSRFProtection() method complains
     // about not finding the BaseForm class.
-    $form = new sfForm;
+    $form = new sfForm();
 
     if ($form->isCSRFProtected())
     {

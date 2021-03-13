@@ -45,7 +45,7 @@ class QubitValidatorMenuName extends sfValidatorBase
       return true;
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitMenu::NAME, $name);
 
     // Name is valid if it isn't yet used or if it's used by the menu item being edited

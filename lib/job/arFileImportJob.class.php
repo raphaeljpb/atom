@@ -51,7 +51,7 @@ class arFileImportJob extends arBaseJob
       switch ($parameters['importType'])
       {
         case 'csv':
-          $importer = new QubitCsvImport;
+          $importer = new QubitCsvImport();
 
           $this->setCsvImportParams($importer, $parameters);
 
@@ -60,7 +60,7 @@ class arFileImportJob extends arBaseJob
           break;
 
         case 'xml':
-          $importer = new QubitXmlImport;
+          $importer = new QubitXmlImport();
 
           $options = $this->setXmlImportParams($importer, $parameters);
 

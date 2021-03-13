@@ -49,7 +49,7 @@ class arMigration0100
     }
 
     // Add the "dacs" template to its taxonomy
-    $term = new QubitTerm;
+    $term = new QubitTerm();
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID;
     $term->code = 'dacs';

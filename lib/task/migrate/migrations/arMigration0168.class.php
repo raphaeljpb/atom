@@ -34,7 +34,7 @@ class arMigration0168
   public function up($configuration)
   {
     // Check if term actually exists before adding
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
     $criteria->add(QubitTermI18n::NAME, 'Record group');
@@ -43,7 +43,7 @@ class arMigration0168
     if (null === QubitTerm::get($criteria))
     {
       // Create new term for record group level of description
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID;
       $term->name = 'Record group';

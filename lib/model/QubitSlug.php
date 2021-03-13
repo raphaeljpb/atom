@@ -139,7 +139,7 @@ class QubitSlug extends BaseSlug
 
   public static function getByObjectId($id, array $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitSlug::OBJECT_ID, $id);
 
     if (1 == count($query = self::get($criteria, $options)))

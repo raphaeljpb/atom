@@ -44,7 +44,7 @@ class arMigration0139
 
     if (null === QubitSetting::getByName('default_archival_description_browse_view'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->setName('default_archival_description_browse_view');
       $setting->setSourceCulture('en');
       $setting->setValue('table');

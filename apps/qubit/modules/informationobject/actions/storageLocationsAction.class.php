@@ -34,7 +34,7 @@ class InformationObjectStorageLocationsAction extends sfAction
       QubitAcl::forwardUnauthorized();
     }
 
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     $choices = array('html' => 'HTML', 'csv' => 'CSV');
     $name = 'format';

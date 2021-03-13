@@ -21,7 +21,7 @@ class QubitAccessionEvent extends BaseAccessionEvent
 {
   public function getNote()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     $criteria->add(QubitNote::TYPE_ID, QubitTerm::ACCESSION_EVENT_NOTE_ID);
     $criteria->add(QubitNote::OBJECT_ID, $this->id);

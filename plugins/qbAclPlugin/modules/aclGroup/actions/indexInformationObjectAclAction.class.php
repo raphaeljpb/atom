@@ -37,7 +37,7 @@ class AclGroupIndexInformationObjectAclAction extends sfAction
     $this->tableCols = count($this->groups) + 3;
 
     // Get access control permissions
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
 
     // Add group criteria

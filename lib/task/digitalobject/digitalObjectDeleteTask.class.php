@@ -65,7 +65,7 @@ EOF;
 
     parent::execute($arguments, $options);
 
-    $t = new QubitTimer;
+    $t = new QubitTimer();
 
     // Remind user they are in dry run mode
     if ($options['dry-run'])

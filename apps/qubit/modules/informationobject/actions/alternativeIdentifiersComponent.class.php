@@ -21,7 +21,7 @@ class InformationObjectAlternativeIdentifiersComponent extends sfComponent
 {
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     $this->addField('label');
@@ -32,8 +32,8 @@ class InformationObjectAlternativeIdentifiersComponent extends sfComponent
 
   protected function addField($name)
   {
-    $this->form->setValidator($name, new sfValidatorString);
-    $this->form->setWidget($name, new sfWidgetFormInput);
+    $this->form->setValidator($name, new sfValidatorString());
+    $this->form->setWidget($name, new sfWidgetFormInput());
   }
 
   public function processForm()
@@ -61,7 +61,7 @@ class InformationObjectAlternativeIdentifiersComponent extends sfComponent
 
         if (is_null($property))
         {
-          $this->resource->propertys[] =  $property = new QubitProperty;
+          $this->resource->propertys[] =  $property = new QubitProperty();
           $property->scope = 'alternativeIdentifiers';
         }
 

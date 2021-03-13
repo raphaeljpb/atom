@@ -31,7 +31,7 @@ class UserEditAction extends DefaultEditAction
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    $this->resource = new QubitUser;
+    $this->resource = new QubitUser();
     if (isset($this->getRoute()->resource))
     {
       $this->resource = $this->getRoute()->resource;
@@ -71,14 +71,14 @@ class UserEditAction extends DefaultEditAction
         }
 
 
-        $this->form->setValidator('active', new sfValidatorBoolean);
-        $this->form->setWidget('active', new sfWidgetFormInputCheckbox);
+        $this->form->setValidator('active', new sfValidatorBoolean());
+        $this->form->setWidget('active', new sfWidgetFormInputCheckbox());
 
         break;
 
       case 'groups':
         $values = array();
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitAclUserGroup::USER_ID, $this->resource->id);
         foreach (QubitAclUserGroup::get($criteria) as $item)
         {
@@ -86,7 +86,7 @@ class UserEditAction extends DefaultEditAction
         }
 
         $choices = array();
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitAclGroup::ID, 99, Criteria::GREATER_THAN);
         foreach (QubitAclGroup::get($criteria) as $item)
         {
@@ -94,7 +94,7 @@ class UserEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault('groups', $values);
-        $this->form->setValidator('groups', new sfValidatorPass);
+        $this->form->setValidator('groups', new sfValidatorPass());
         $this->form->setWidget('groups', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
 
         break;
@@ -110,7 +110,7 @@ class UserEditAction extends DefaultEditAction
         }
 
         // Find existing translate permissions
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitAclPermission::USER_ID, $this->resource->id);
         $criteria->add(QubitAclPermission::ACTION, 'translate');
 
@@ -121,7 +121,7 @@ class UserEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault('translate', $defaults);
-        $this->form->setValidator('translate', new sfValidatorPass);
+        $this->form->setValidator('translate', new sfValidatorPass());
         $this->form->setWidget('translate', new sfWidgetFormSelect(array('choices'  => $choices, 'multiple' => true)));
 
         break;
@@ -199,7 +199,7 @@ class UserEditAction extends DefaultEditAction
 
         foreach ($newGroupIds as $item)
         {
-          $userGroup = new QubitAclUserGroup;
+          $userGroup = new QubitAclUserGroup();
           $userGroup->groupId = $item;
 
           $this->resource->aclUserGroups[] = $userGroup;
@@ -218,7 +218,7 @@ class UserEditAction extends DefaultEditAction
             // Create user OAI-PMH key property if it doesn't exist
             if (null === $apiKey)
             {
-              $apiKey = new QubitProperty;
+              $apiKey = new QubitProperty();
               $apiKey->name = sfInflector::camelize($name);
             }
 
@@ -275,14 +275,14 @@ class UserEditAction extends DefaultEditAction
         // Allowed languages for translation must be saved after the user is created
         $languages = $this->form->getValue('translate');
 
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitAclPermission::USER_ID, $this->resource->id);
         $criteria->addAnd(QubitAclPermission::USER_ID, null, Criteria::ISNOTNULL);
         $criteria->add(QubitAclPermission::ACTION, 'translate');
 
         if (null === $permission = QubitAclPermission::getOne($criteria))
         {
-          $permission = new QubitAclPermission;
+          $permission = new QubitAclPermission();
           $permission->userId = $this->resource->id;
           $permission->action = 'translate';
           $permission->grantDeny = 1;

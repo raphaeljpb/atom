@@ -42,7 +42,7 @@ class UserEditAction extends DefaultEditAction
     $this->form->getValidatorSchema()->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'exists'))));
 
-    $this->resource = new QubitUser;
+    $this->resource = new QubitUser();
     if (isset($this->getRoute()->resource))
     {
       $this->resource = $this->getRoute()->resource;
@@ -74,14 +74,14 @@ class UserEditAction extends DefaultEditAction
       case 'username':
         $this->form->setDefault('username', $this->resource->username);
         $this->form->setValidator('username', new sfValidatorString(array('required' => true)));
-        $this->form->setWidget('username', new sfWidgetFormInput);
+        $this->form->setWidget('username', new sfWidgetFormInput());
 
         break;
 
       case 'email':
         $this->form->setDefault('email', $this->resource->email);
         $this->form->setValidator('email', new sfValidatorEmail(array('required' => true)));
-        $this->form->setWidget('email', new sfWidgetFormInput);
+        $this->form->setWidget('email', new sfWidgetFormInput());
 
         break;
 
@@ -101,14 +101,14 @@ class UserEditAction extends DefaultEditAction
           $this->form->setValidator('password', new sfValidatorString(array('required' => !isset($this->getRoute()->resource))));
         }
 
-        $this->form->setWidget('password', new sfWidgetFormInputPassword);
+        $this->form->setWidget('password', new sfWidgetFormInputPassword());
 
         // no break
       case 'confirmPassword':
         $this->form->setDefault('confirmPassword', null);
         // Required field only if a new user is being created
         $this->form->setValidator('confirmPassword', new sfValidatorString(array('required' => !isset($this->getRoute()->resource))));
-        $this->form->setWidget('confirmPassword', new sfWidgetFormInputPassword);
+        $this->form->setWidget('confirmPassword', new sfWidgetFormInputPassword());
 
         break;
 
@@ -123,14 +123,14 @@ class UserEditAction extends DefaultEditAction
         }
 
 
-        $this->form->setValidator('active', new sfValidatorBoolean);
-        $this->form->setWidget('active', new sfWidgetFormInputCheckbox);
+        $this->form->setValidator('active', new sfValidatorBoolean());
+        $this->form->setWidget('active', new sfWidgetFormInputCheckbox());
 
         break;
 
       case 'groups':
         $values = array();
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitAclUserGroup::USER_ID, $this->resource->id);
         foreach (QubitAclUserGroup::get($criteria) as $item)
         {
@@ -138,7 +138,7 @@ class UserEditAction extends DefaultEditAction
         }
 
         $choices = array();
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitAclGroup::ID, 99, Criteria::GREATER_THAN);
         foreach (QubitAclGroup::get($criteria) as $item)
         {
@@ -146,7 +146,7 @@ class UserEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault('groups', $values);
-        $this->form->setValidator('groups', new sfValidatorPass);
+        $this->form->setValidator('groups', new sfValidatorPass());
         $this->form->setWidget('groups', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
 
         break;
@@ -162,7 +162,7 @@ class UserEditAction extends DefaultEditAction
         }
 
         // Find existing translate permissions
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitAclPermission::USER_ID, $this->resource->id);
         $criteria->add(QubitAclPermission::ACTION, 'translate');
 
@@ -173,7 +173,7 @@ class UserEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault('translate', $defaults);
-        $this->form->setValidator('translate', new sfValidatorPass);
+        $this->form->setValidator('translate', new sfValidatorPass());
         $this->form->setWidget('translate', new sfWidgetFormSelect(array('choices'  => $choices, 'multiple' => true)));
 
         break;
@@ -272,7 +272,7 @@ class UserEditAction extends DefaultEditAction
 
         foreach ($newGroupIds as $item)
         {
-          $userGroup = new QubitAclUserGroup;
+          $userGroup = new QubitAclUserGroup();
           $userGroup->groupId = $item;
 
           $this->resource->aclUserGroups[] = $userGroup;
@@ -291,7 +291,7 @@ class UserEditAction extends DefaultEditAction
             // Create user OAI-PMH key property if it doesn't exist
             if (null === $apiKey)
             {
-              $apiKey = new QubitProperty;
+              $apiKey = new QubitProperty();
               $apiKey->name = sfInflector::camelize($name);
             }
 
@@ -348,14 +348,14 @@ class UserEditAction extends DefaultEditAction
         // Allowed languages for translation must be saved after the user is created
         $languages = $this->form->getValue('translate');
 
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitAclPermission::USER_ID, $this->resource->id);
         $criteria->addAnd(QubitAclPermission::USER_ID, null, Criteria::ISNOTNULL);
         $criteria->add(QubitAclPermission::ACTION, 'translate');
 
         if (null === $permission = QubitAclPermission::getOne($criteria))
         {
-          $permission = new QubitAclPermission;
+          $permission = new QubitAclPermission();
           $permission->userId = $this->resource->id;
           $permission->action = 'translate';
           $permission->grantDeny = 1;
@@ -387,7 +387,7 @@ class UserEditAction extends DefaultEditAction
 
   public function exists($validator, $values)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     if (isset($this->resource->id))
     {

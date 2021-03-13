@@ -88,7 +88,7 @@ EOF;
     }
 
     // load yml dumpfile into an array ($this->data)
-    $yamlParser = new sfYamlParser;
+    $yamlParser = new sfYamlParser();
     $this->data = $yamlParser->parse(file_get_contents($arguments['datafile']));
 
     // Determine current version of the application (according to settings)
@@ -235,7 +235,7 @@ EOF;
     if (null == $this->version)
     {
       // Set version to value in data/fixtures/settings.yml
-      $parser = new sfYamlParser;
+      $parser = new sfYamlParser();
       $data = $parser->parse(file_get_contents(sfConfig::get('sf_data_dir').'/fixtures/settings.yml'));
       $this->version = $data['QubitSetting']['version']['value'];
     }

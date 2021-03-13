@@ -83,7 +83,7 @@ class arInheritRightsJob extends arBaseJob
         $newRights = $rights->copy();
 
         // Create a relation record associating the new right to the descendant
-        $newRelation = new QubitRelation;
+        $newRelation = new QubitRelation();
         $newRelation->objectId  = $newRights->getId();
         $newRelation->typeId    = QubitTerm::RIGHT_ID;
         $newRelation->subjectId = $descendant->getId();

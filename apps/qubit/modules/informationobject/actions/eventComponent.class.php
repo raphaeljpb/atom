@@ -41,7 +41,7 @@ class InformationObjectEventComponent extends EventEditComponent
     switch ($name)
     {
       case 'actor':
-        $this->form->setValidator('actor', new sfValidatorString);
+        $this->form->setValidator('actor', new sfValidatorString());
         $this->form->setWidget('actor', new sfWidgetFormSelect(array('choices' => array())));
 
         $this->form->getWidgetSchema()->actor->setHelp($this->context->i18n->__('Use the actor name field to link an authority record to this description. Search for an existing name in the authority records by typing the first few characters of the name. Alternatively, type a new name to create and link to a new authority record.'));
@@ -49,13 +49,13 @@ class InformationObjectEventComponent extends EventEditComponent
         break;
 
       case 'description':
-        $this->form->setValidator('description', new sfValidatorString);
-        $this->form->setWidget('description', new sfWidgetFormInput);
+        $this->form->setValidator('description', new sfValidatorString());
+        $this->form->setWidget('description', new sfWidgetFormInput());
 
         break;
 
       case 'place':
-        $this->form->setValidator('place', new sfValidatorString);
+        $this->form->setValidator('place', new sfValidatorString());
         $this->form->setWidget('place', new sfWidgetFormSelect(array('choices' => array())));
 
         $this->form->getWidgetSchema()->place->setHelp($this->context->i18n->__('Search for an existing term in the places taxonomy by typing the first few characters of the term name. Alternatively, type a new term to create and link to a new place term.'));
@@ -125,7 +125,7 @@ class InformationObjectEventComponent extends EventEditComponent
           break;
         }
 
-        $relation = new QubitObjectTermRelation;
+        $relation = new QubitObjectTermRelation();
         $relation->termId = $termId;
 
         $this->event->objectTermRelationsRelatedByobjectId[] = $relation;

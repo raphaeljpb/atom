@@ -37,7 +37,7 @@ class ActorIndexAction extends sfAction
 
     $this->dispatcher->notify(new sfEvent($this, 'access_log.view', array('object' => $this->resource)));
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::OBJECT_ID, $this->resource->id);
     $criteria->addJoin(QubitRelation::SUBJECT_ID, QubitFunctionObject::ID);
 

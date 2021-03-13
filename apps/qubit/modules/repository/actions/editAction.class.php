@@ -32,7 +32,7 @@ class RepositoryEditAction extends DefaultEditAction
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    $this->resource = new QubitRepository;
+    $this->resource = new QubitRepository();
 
     // Make root repository the parent of new repositories
     $this->resource->parentId = QubitRepository::ROOT_ID;
@@ -55,8 +55,8 @@ class RepositoryEditAction extends DefaultEditAction
 
       // Add optimistic lock
       $this->form->setDefault('serialNumber', $this->resource->serialNumber);
-      $this->form->setValidator('serialNumber', new sfValidatorInteger);
-      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden);
+      $this->form->setValidator('serialNumber', new sfValidatorInteger());
+      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
     }
     else
     {
@@ -77,7 +77,7 @@ class RepositoryEditAction extends DefaultEditAction
     switch ($name)
     {
       case 'type':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria = $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
         $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::REPOSITORY_TYPE_ID);
@@ -89,7 +89,7 @@ class RepositoryEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault('type', $value);
-        $this->form->setValidator('type', new sfValidatorPass);
+        $this->form->setValidator('type', new sfValidatorPass());
 
         $choices = array();
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::REPOSITORY_TYPE_ID) as $item)
@@ -102,7 +102,7 @@ class RepositoryEditAction extends DefaultEditAction
         break;
 
       case 'thematicArea':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria = $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
         $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::THEMATIC_AREA_ID);
@@ -114,7 +114,7 @@ class RepositoryEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault('thematicArea', $value);
-        $this->form->setValidator('thematicArea', new sfValidatorPass);
+        $this->form->setValidator('thematicArea', new sfValidatorPass());
 
         $choices = array();
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::THEMATIC_AREA_ID) as $item)
@@ -129,7 +129,7 @@ class RepositoryEditAction extends DefaultEditAction
         break;
 
       case 'geographicSubregion':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria = $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
         $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID);
@@ -141,7 +141,7 @@ class RepositoryEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault('geographicSubregion', $value);
-        $this->form->setValidator('geographicSubregion', new sfValidatorPass);
+        $this->form->setValidator('geographicSubregion', new sfValidatorPass());
 
         $choices = array();
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID) as $item)
@@ -158,7 +158,7 @@ class RepositoryEditAction extends DefaultEditAction
       case 'descDetail':
       case 'descStatus':
         $this->form->setDefault($name, $this->context->routing->generate(null, array($this->resource[$name], 'module' => 'term')));
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
 
         switch ($name)
         {
@@ -189,8 +189,8 @@ class RepositoryEditAction extends DefaultEditAction
       case 'descIdentifier':
       case 'descInstitutionIdentifier':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
@@ -212,8 +212,8 @@ class RepositoryEditAction extends DefaultEditAction
       case 'descRevisionHistory':
       case 'descSources':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormTextarea);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormTextarea());
 
         break;
 
@@ -250,7 +250,7 @@ class RepositoryEditAction extends DefaultEditAction
 
         foreach ($filtered as $item)
         {
-          $relation = new QubitObjectTermRelation;
+          $relation = new QubitObjectTermRelation();
           $relation->term = $item;
 
           $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
@@ -281,7 +281,7 @@ class RepositoryEditAction extends DefaultEditAction
 
         foreach ($filtered as $item)
         {
-          $relation = new QubitObjectTermRelation;
+          $relation = new QubitObjectTermRelation();
           $relation->term = $item;
 
           $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
@@ -312,7 +312,7 @@ class RepositoryEditAction extends DefaultEditAction
 
         foreach ($filtered as $item)
         {
-          $relation = new QubitObjectTermRelation;
+          $relation = new QubitObjectTermRelation();
           $relation->term = $item;
 
           $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;

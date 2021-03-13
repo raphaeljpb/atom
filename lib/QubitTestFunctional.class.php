@@ -36,7 +36,7 @@ class QubitTestFunctional extends sfTestFunctional
 {
   public function disableSecurity()
   {
-    QubitAcl::getInstance()->acl = new StubAcl;
+    QubitAcl::getInstance()->acl = new StubAcl();
 
     // PHP 5.3 only, but this will soon be a minimum requirement?
     $this->browser->addListener('controller.change_action', function (sfEvent $event)

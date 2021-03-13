@@ -39,7 +39,7 @@ class arMigration0102
   public function up($configuration)
   {
     // Create setting
-    $setting = new QubitSetting;
+    $setting = new QubitSetting();
     $setting->name  = 'facetstitle';
     $setting->scope = 'ui_label';
     $setting->editable = 1;

@@ -32,7 +32,7 @@ class UserPasswordEditAction extends DefaultEditAction
       array(),
       array('invalid' => $this->context->i18n->__('Your password confirmation did not match your password.'))));
 
-    $this->resource = new QubitUser;
+    $this->resource = new QubitUser();
     if (isset($this->getRoute()->resource))
     {
       $this->resource = $this->getRoute()->resource;
@@ -68,13 +68,13 @@ class UserPasswordEditAction extends DefaultEditAction
           $this->form->setValidator('password', new sfValidatorString(array('required' => !isset($this->getRoute()->resource))));
         }
 
-        $this->form->setWidget('password', new sfWidgetFormInputPassword);
+        $this->form->setWidget('password', new sfWidgetFormInputPassword());
 
         // no break
       case 'confirmPassword':
         $this->form->setDefault('confirmPassword', null);
-        $this->form->setValidator('confirmPassword', new sfValidatorString);
-        $this->form->setWidget('confirmPassword', new sfWidgetFormInputPassword);
+        $this->form->setValidator('confirmPassword', new sfValidatorString());
+        $this->form->setWidget('confirmPassword', new sfWidgetFormInputPassword());
 
         break;
     }

@@ -29,8 +29,8 @@ class SettingsPermissionsAccessStatementsForm extends sfForm
     {
       foreach (array("{$item->slug}_disallow", "{$item->slug}_conditional") as $name)
       {
-        $this->setWidget($name, new sfWidgetFormTextarea);
-        $this->setValidator($name, new sfValidatorString);
+        $this->setWidget($name, new sfWidgetFormTextarea());
+        $this->setValidator($name, new sfValidatorString());
 
         $setting = $this->settings[$name] = $this->getSetting($name);
         if (null !== $setting)

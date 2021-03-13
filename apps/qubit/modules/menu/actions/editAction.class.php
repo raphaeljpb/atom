@@ -46,7 +46,7 @@ class MenuEditAction extends sfAction
 
         $this->form->setDefault($name, $this->menu[$name]);
         $this->form->setValidator($name, new QubitValidatorMenuName(array('required' => true, 'resource' => $this->menu)));
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
@@ -54,14 +54,14 @@ class MenuEditAction extends sfAction
         $this->form->setDefault($name, $this->menu[$name]);
         $pathRequired = ($this->menu->parentId == QubitMenu::ROOT_ID) ? false : true;
         $this->form->setValidator($name, new sfValidatorString(array('required' => $pathRequired)));
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'label':
         $this->form->setDefault($name, $this->menu[$name]);
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
@@ -89,8 +89,8 @@ class MenuEditAction extends sfAction
 
       case 'description':
         $this->form->setDefault($name, $this->menu[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormTextarea);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormTextarea());
 
         break;
     }
@@ -135,10 +135,10 @@ class MenuEditAction extends sfAction
 
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    $this->menu = new QubitMenu;
+    $this->menu = new QubitMenu();
 
     if (isset($request->id))
     {

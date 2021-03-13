@@ -120,7 +120,7 @@ EOF;
    */
   private function fetchResource($slug)
   {
-    $c = new Criteria;
+    $c = new Criteria();
     $c->addJoin(constant("{$this->resourceType}::ID"), QubitSlug::OBJECT_ID);
     $c->add(QubitSlug::SLUG, $slug);
 

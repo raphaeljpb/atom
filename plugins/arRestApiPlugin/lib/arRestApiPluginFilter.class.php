@@ -38,7 +38,7 @@ class arRestApiPluginFilter extends sfFilter
     }
     catch (Exception $e)
     {
-      $this->setErrorResponse(new QubitApiUnknownException);
+      $this->setErrorResponse(new QubitApiUnknownException());
     }
   }
 

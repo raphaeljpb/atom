@@ -71,7 +71,7 @@ class QubitMetadataRoute extends QubitRoute
     // hit the database to see whether the resource exists or not.
     if (isset($parameters['slug']))
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitSlug::SLUG, $parameters['slug']);
       $criteria->addJoin(QubitSlug::OBJECT_ID, QubitObject::ID);
 

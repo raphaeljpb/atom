@@ -45,7 +45,7 @@ class AclGroupIndexActorAclAction extends sfAction
     $this->tableCols = count($this->roles) + 3;
 
     // Get permissions for this group and parents
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitAclPermission::GROUP_ID, $this->roles, Criteria::IN);
 
     // Add actor criteria

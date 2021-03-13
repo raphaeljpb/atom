@@ -294,7 +294,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
 
   public static function getBySlug($slug)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitSlug::SLUG, $slug);
     $criteria->addJoin(QubitSlug::OBJECT_ID, QubitObject::ID);
 
@@ -338,7 +338,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     // only create a new status object if type is not already set
     if ($status === null)
     {
-      $status = new QubitStatus;
+      $status = new QubitStatus();
       $status->setTypeId($options['typeId']);
     }
     $status->setStatusId($options['statusId']);
@@ -349,7 +349,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
 
   public function getStatus($options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitStatus::OBJECT_ID, $this->id);
     $criteria->add(QubitStatus::TYPE_ID, $options['typeId']);
 
@@ -358,7 +358,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
 
   public function getNotesByType(array $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitNote::TYPE_ID, QubitTerm::ID);
     $criteria->add(QubitNote::OBJECT_ID, $this->id);
     if (isset($options['noteTypeId']))
@@ -381,7 +381,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
 
   public function getNotesByTaxonomy(array $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitNote::TYPE_ID, QubitTerm::ID);
     $criteria->add(QubitNote::OBJECT_ID, $this->id);
     if (isset($options['taxonomyId']))
@@ -526,7 +526,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
 
   public function getOtherNames($options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitOtherName::OBJECT_ID, $this->id);
 
     if (isset($options['typeId']))
@@ -562,7 +562,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   {
     if (null === $property = QubitProperty::getOneByObjectIdAndName($this->id, $name, $options))
     {
-      $property = new QubitProperty;
+      $property = new QubitProperty();
     }
 
     return $property;
@@ -585,7 +585,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     // Don't add an identical object -> physical object relationship
     if (get_class($physicalObject) == 'QubitPhysicalObject' && $this->getPhysicalObject($physicalObject->id) === null)
     {
-      $relation = new QubitRelation;
+      $relation = new QubitRelation();
       $relation->setSubject($physicalObject);
       $relation->setTypeId(QubitTerm::HAS_PHYSICAL_OBJECT_ID);
 
@@ -603,7 +603,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
    */
   public function getPhysicalObject($physicalObjectId)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::OBJECT_ID, $this->id);
     $criteria->add(QubitRelation::SUBJECT_ID, $physicalObjectId);
 

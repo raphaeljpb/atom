@@ -47,7 +47,7 @@ class arMigration0174
     {
       if (null === QubitSetting::getByName($settingName))
       {
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = $settingName;
         $setting->scope = 'ui_label';
         $setting->editable = 1;

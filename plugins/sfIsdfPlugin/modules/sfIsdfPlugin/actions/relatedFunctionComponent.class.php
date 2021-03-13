@@ -33,7 +33,7 @@ class sfIsdfPluginRelatedFunctionComponent extends RelationEditComponent
     switch ($name)
     {
       case 'type':
-        $this->form->setValidator('type', new sfValidatorString);
+        $this->form->setValidator('type', new sfValidatorString());
 
         $choices = array();
         $choices[null] = null;

@@ -294,7 +294,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
 
     $importer = new PhysicalObjectCsvImporter($this->context, $this->vdbcon);
     $importer->setOptions(1);
-    $importer->setOptions(new stdClass);
+    $importer->setOptions(new stdClass());
   }
 
   public function testSetAndGetPhysicalObjectTypeTaxonomy()
@@ -533,7 +533,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
 
   public function testMatchExistingRecordsWithMultipleMatchesGetFirstMatch()
   {
-    $mock = new $this->ormClasses['physicalObject'];
+    $mock = new $this->ormClasses['physicalObject']();
     $mock->id       = 222222;
     $mock->name     = 'DJ002';
     $mock->typeId   = 2;

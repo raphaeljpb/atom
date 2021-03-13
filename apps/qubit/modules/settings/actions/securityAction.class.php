@@ -52,7 +52,7 @@ class SettingsSecurityAction extends SettingsEditAction
     switch ($name)
     {
       case 'limit_admin_ip':
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
         $this->form->setValidator($name, new sfValidatorString(array('required' => false)));
         $labelText = $this->i18n->__('Limit administrator functionality to one or more IP addresses, separated by semicolons.');
         $this->form->getWidgetSchema()->$name->setLabel($labelText);

@@ -21,7 +21,7 @@ class MenuDeleteAction extends sfAction
 {
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     $this->resource = QubitMenu::getById($request->id);
 

@@ -63,7 +63,7 @@ class QubitCsvTransform extends QubitFlatfileImport
     $this->status['headersWritten']  = false;
 
     // Load levels of description from database
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
     $criteria->add(QubitTermI18n::CULTURE, 'en');
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);

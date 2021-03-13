@@ -45,7 +45,7 @@ class arMigration0188
     // Criteria for getting all the QubitProperty objects with format metadata
     $propertyName = 'format';
     $propertyScope = 'premisData';
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitProperty::NAME, $propertyName);
     $criteria->add(QubitProperty::SCOPE, $propertyScope);
 

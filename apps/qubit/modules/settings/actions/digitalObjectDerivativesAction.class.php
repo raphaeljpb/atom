@@ -43,7 +43,7 @@ class SettingsDigitalObjectDerivativesAction extends SettingsEditAction
     {
       case 'digital_object_derivatives_pdf_page_number':
         $this->form->setValidator($name, new sfValidatorInteger(array('min' => 1)));
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
@@ -53,7 +53,7 @@ class SettingsDigitalObjectDerivativesAction extends SettingsEditAction
           array('min' => self::$refImageMaxWidthMin, 'max' => self::$refImageMaxWidthMax),
           array('min' => $this->i18n->__('This value must be at least %min% pixels'), 'max' => $this->i18n->__('This value can not be greater than %max% pixels'))
         ));
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
     }

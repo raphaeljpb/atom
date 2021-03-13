@@ -26,20 +26,20 @@ class MenuUserMenuComponent extends sfComponent
       return sfView::NONE;
     }
 
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
-    $this->form->setValidator('next', new sfValidatorString);
-    $this->form->setWidget('next', new sfWidgetFormInputHidden);
+    $this->form->setValidator('next', new sfValidatorString());
+    $this->form->setWidget('next', new sfWidgetFormInputHidden());
     $this->form->setDefault('next', $request->getUri());
 
     $this->form->setValidator('email', new sfValidatorEmail(array('required' => true), array(
       'required' => $this->context->i18n->__('You must enter your email address'),
       'invalid' => $this->context->i18n->__('This isn\'t a valid email address'))));
-    $this->form->setWidget('email', new sfWidgetFormInput);
+    $this->form->setWidget('email', new sfWidgetFormInput());
 
     $this->form->setValidator('password', new sfValidatorString(array('required' => true), array(
       'required' => $this->context->i18n->__('You must enter your password'))));
-    $this->form->setWidget('password', new sfWidgetFormInputPassword);
+    $this->form->setWidget('password', new sfWidgetFormInputPassword());
 
     $this->showLogin = false;
     if ($this->context->user->isAuthenticated())

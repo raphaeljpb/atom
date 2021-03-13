@@ -57,7 +57,7 @@ EOF;
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
     // Retrieve QubitSetting object
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, 'plugins');
     if (null === $setting = QubitSetting::getOne($criteria))
     {

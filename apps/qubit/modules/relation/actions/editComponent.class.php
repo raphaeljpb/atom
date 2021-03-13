@@ -24,16 +24,16 @@ class RelationEditComponent extends sfComponent
     switch ($name)
     {
       case 'date':
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         $this->form->getWidgetSchema()->date->setHelp($this->context->i18n->__('"Record, when relevant, the start and the end date of the relationship." (ISDF 6.3) Enter the date as you would like it to appear in the show page for the function, using qualifiers and/or typographical symbols to express uncertainty if desired.'));
 
         break;
 
       case 'endDate':
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         $this->form->getWidgetSchema()->endDate->setHelp($this->context->i18n->__('Enter the end year. Do not use any qualifiers or typographical symbols to express uncertainty. If the start and end years are the same, enter data only in the "Date" field and leave the "End date" blank.'));
         $this->form->getWidgetSchema()->endDate->setLabel($this->context->i18n->__('End'));
@@ -41,8 +41,8 @@ class RelationEditComponent extends sfComponent
         break;
 
       case 'startDate':
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         $this->form->getWidgetSchema()->startDate->setHelp($this->context->i18n->__('Enter the start year. Do not use any qualifiers or typographical symbols to express uncertainty.'));
         $this->form->getWidgetSchema()->startDate->setLabel($this->context->i18n->__('Start'));
@@ -50,8 +50,8 @@ class RelationEditComponent extends sfComponent
         break;
 
       case 'description':
-        $this->form->setValidator('description', new sfValidatorString);
-        $this->form->setWidget('description', new sfWidgetFormTextarea);
+        $this->form->setValidator('description', new sfValidatorString());
+        $this->form->setWidget('description', new sfWidgetFormTextarea());
 
         $this->form->getWidgetSchema()->description->setHelp($this->context->i18n->__('Describe the nature of the relationship between the function and the related resource. (ISDF 6.2)'));
 
@@ -137,7 +137,7 @@ class RelationEditComponent extends sfComponent
         }
         else
         {
-          $this->resource->relationsRelatedBysubjectId[] = $this->relation = new QubitRelation;
+          $this->resource->relationsRelatedBysubjectId[] = $this->relation = new QubitRelation();
         }
 
         foreach ($this->form as $field)
@@ -159,7 +159,7 @@ class RelationEditComponent extends sfComponent
 
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     foreach ($this::$NAMES as $name)

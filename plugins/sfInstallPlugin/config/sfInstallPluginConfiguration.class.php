@@ -36,7 +36,7 @@ class sfInstallPluginConfiguration extends sfPluginConfiguration
       return;
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitAclGroupI18n::NAME, $credential);
     $criteria->addJoin(QubitAclGroupI18n::ID, QubitAclGroup::ID);
     $criteria->addJoin(QubitAclGroup::ID, QubitAclUserGroup::GROUP_ID);
@@ -89,7 +89,7 @@ class sfInstallPluginConfiguration extends sfPluginConfiguration
 
     $event->getSubject()->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
 
-    throw new sfStopException;
+    throw new sfStopException();
   }
 
   public function routingLoadConfiguration(sfEvent $event)

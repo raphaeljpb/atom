@@ -30,7 +30,7 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
 
     if (QubitInformationObject::ROOT_ID === (int)$this->io->id)
     {
-      throw new QubitApiForbiddenException;
+      throw new QubitApiForbiddenException();
     }
 
     foreach ($payload as $field => $value)
@@ -107,7 +107,7 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
         // The user passed a name but not the ID so I'll create
         if (isset($value->authorized_form_of_name) && !isset($value->actor_id))
         {
-          $actor = new QubitActor;
+          $actor = new QubitActor();
           $actor->authorizedFormOfName = $value->authorized_form_of_name;
           $actor->save();
 
@@ -122,7 +122,7 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
         }
         else
         {
-          $event = new QubitEvent;
+          $event = new QubitEvent();
           $event->typeId = $value->type_id;
           $event->actorId = $value->actor_id;
 
@@ -161,7 +161,7 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
         }
         else
         {
-          $event = new QubitEvent;
+          $event = new QubitEvent();
           $event->startDate = $value->start_date;
           $event->endDate = $value->end_date;
           $event->date = $value->date;
@@ -218,7 +218,7 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
         }
         else
         {
-          $note = new QubitNote;
+          $note = new QubitNote();
 
           $note->setScope('QubitInformationObject');
           $note->setContent($value->content);
@@ -255,7 +255,7 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
         }
         else
         {
-          $relation = new QubitObjectTermRelation;
+          $relation = new QubitObjectTermRelation();
           $relation->termId = $value->id;
 
           $this->io->objectTermRelationsRelatedByobjectId[] = $relation;
@@ -264,7 +264,7 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
         break;
 
       case 'level_of_description':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
         $criteria->add(QubitTermI18n::NAME, $value, Criteria::LIKE);

@@ -34,12 +34,12 @@ class QubitPhysicalObject
 
   public static function getByName($name, $options = array())
   {
-    $results = new \ArrayIterator;
+    $results = new \ArrayIterator();
 
     switch ($name)
     {
       case 'DJ001':
-        $object = new self;
+        $object = new self();
         $object->id       = 111111;
         $object->name     = 'DJ001';
         $object->typeId   = 1;
@@ -52,7 +52,7 @@ class QubitPhysicalObject
 
       case 'DJ002':
         // Simulate a match on two existing records with the same name
-        $object = new self;
+        $object = new self();
         $object->id       = 222222;
         $object->name     = 'DJ002';
         $object->typeId   = 2;
@@ -61,7 +61,7 @@ class QubitPhysicalObject
 
         $results->append($object);
 
-        $object = new self;
+        $object = new self();
         $object->id       = 333333;
         $object->name     = 'DJ002';
         $object->typeId   = 1;
@@ -78,7 +78,7 @@ class QubitPhysicalObject
           && 'begin' == $options['partialMatch']
         ) {
           // Simulate partial match on start of name
-          $object = new self;
+          $object = new self();
           $object->id       = 444444;
           $object->name     = 'DJ003 folders 1-6';
           $object->typeId   = 1;
@@ -87,7 +87,7 @@ class QubitPhysicalObject
 
           $results->append($object);
 
-          $object = new self;
+          $object = new self();
           $object->id       = 555555;
           $object->name     = 'DJ003 folders 7-12';
           $object->typeId   = 1;

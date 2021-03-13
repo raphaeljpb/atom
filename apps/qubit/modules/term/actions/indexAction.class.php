@@ -52,7 +52,7 @@ class TermIndexAction extends DefaultBrowseAction
       case 'subjects':
       case 'genres':
         $ids = array_column($buckets, 'key');
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
 
         foreach (QubitTerm::get($criteria) as $item)
@@ -71,7 +71,7 @@ class TermIndexAction extends DefaultBrowseAction
 
   public function checkForRepeatedNames($validator, $value)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::ID, $this->resource->id, Criteria::NOT_EQUAL);
     $criteria->add(QubitTerm::TAXONOMY_ID, $this->resource->taxonomyId);
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
@@ -112,7 +112,7 @@ class TermIndexAction extends DefaultBrowseAction
 
     if (QubitAcl::check($this->resource, 'update'))
     {
-      $validatorSchema = new sfValidatorSchema;
+      $validatorSchema = new sfValidatorSchema();
       $values = array();
 
       $validatorSchema->name = new sfValidatorCallback(array('callback' => array($this, 'checkForRepeatedNames')));
@@ -345,7 +345,7 @@ EOF;
       $listQuery->setFrom(($request->listPage - 1) * $request->listLimit);
     }
 
-    $listQueryBool = new \Elastica\Query\BoolQuery;
+    $listQueryBool = new \Elastica\Query\BoolQuery();
     $listQueryBool->addMust(new \Elastica\Query\Term(array('taxonomyId' => $this->resource->taxonomyId)));
 
     $listQuery->setQuery($listQueryBool);

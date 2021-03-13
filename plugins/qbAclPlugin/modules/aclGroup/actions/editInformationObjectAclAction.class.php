@@ -36,7 +36,7 @@ class AclGroupEditInformationObjectAclAction extends AclGroupEditDefaultAclActio
     if (null != $this->resource->id)
     {
       // Get info object permissions for this resource
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
       $criteria->add(QubitAclPermission::GROUP_ID, $this->resource->id);
       $c1 = $criteria->getNewCriterion(QubitAclPermission::OBJECT_ID, null, Criteria::ISNULL);

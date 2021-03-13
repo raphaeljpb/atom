@@ -58,7 +58,7 @@ class RightsHolderBrowseAction extends sfAction
       $sortFunction = 'addDescendingOrderByColumn';
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     // Do source culture fallback
     $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');

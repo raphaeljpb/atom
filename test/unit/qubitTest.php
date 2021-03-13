@@ -32,9 +32,9 @@ class sfWebRequestStub
 }
 
 $configuration = ProjectConfiguration::getApplicationConfiguration('qubit', 'test', true);
-sfContext::createInstance($configuration)->request = new sfWebRequestStub;
+sfContext::createInstance($configuration)->request = new sfWebRequestStub();
 
-$t = new lime_test(19, new lime_output_color);
+$t = new lime_test(19, new lime_output_color());
 
 sfContext::getInstance()->request->pathInfoPrefix = '/aaa/bbb';
 

@@ -205,7 +205,7 @@ abstract class csvImportBaseTask extends arBaseTask
    */
   public function addDigitalObjectFromURI($self, $uri)
   {
-    $do = new QubitDigitalObject;
+    $do = new QubitDigitalObject();
     $do->object = $self->object;
     $do->indexOnSave = false;
 
@@ -248,7 +248,7 @@ abstract class csvImportBaseTask extends arBaseTask
       return;
     }
 
-    $do = new QubitDigitalObject;
+    $do = new QubitDigitalObject();
     $do->usageId = QubitTerm::MASTER_ID;
     $do->object = $self->object;
     $do->indexOnSave = false;
@@ -290,7 +290,7 @@ abstract class csvImportBaseTask extends arBaseTask
         foreach($aliases as $alias)
         {
           // Add other name
-          $otherName = new QubitOtherName;
+          $otherName = new QubitOtherName();
           $otherName->objectId = $self->object->id;
           $otherName->name     = $alias;
           $otherName->typeId   = $typeId;
@@ -501,7 +501,7 @@ abstract class csvImportBaseTask extends arBaseTask
   public static function matchExistingEvent($objectId, $typeId, $actorName)
   {
     // Check for a matching event to update
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitEvent::TYPE_ID, $typeId);
     $criteria->add(QubitEvent::OBJECT_ID, $objectId);
 

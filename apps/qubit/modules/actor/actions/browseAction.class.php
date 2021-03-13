@@ -86,7 +86,7 @@ class ActorBrowseAction extends DefaultBrowseAction
     {
       case 'repository':
         // Get list of repositories
-        $criteria = new Criteria;
+        $criteria = new Criteria();
 
         // Do source culture fallback
         $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');
@@ -208,7 +208,7 @@ class ActorBrowseAction extends DefaultBrowseAction
           $defaultChoices = array($request->$name => $this->relatedAuthority->getAuthorizedFormOfName(array('cultureFallback' => true)));
         }
 
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $defaultChoices)));
 
         break;
@@ -225,7 +225,7 @@ class ActorBrowseAction extends DefaultBrowseAction
       case 'place':
       case 'subject':
         $ids = array_column($buckets, 'key');
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
 
         foreach (QubitTerm::get($criteria) as $item)
@@ -237,7 +237,7 @@ class ActorBrowseAction extends DefaultBrowseAction
 
       case 'repository':
         $ids = array_column($buckets, 'key');
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitActor::ID, $ids, Criteria::IN);
 
         foreach (QubitActor::get($criteria) as $item)
@@ -359,7 +359,7 @@ class ActorBrowseAction extends DefaultBrowseAction
     // Filter by whether or not an actor has a digital object attached
     if (isset($this->request->hasDigitalObject))
     {
-      $queryField = new \Elastica\Query\Term;
+      $queryField = new \Elastica\Query\Term();
       $queryField->setTerm('hasDigitalObject', $this->request->hasDigitalObject);
       $this->search->queryBool->addMust($queryField);
     }
@@ -369,7 +369,7 @@ class ActorBrowseAction extends DefaultBrowseAction
     {
       // Include actors that relate to the specified actor and have a relation
       // of the specified type
-      $queryBool = new \Elastica\Query\BoolQuery;
+      $queryBool = new \Elastica\Query\BoolQuery();
 
       $queryBool->addMust($this->actorRelationsQueryForActor($this->relatedAuthority->id));
       $queryBool->addMust($this->actorRelationsQueryForType($this->request->relatedType));
@@ -382,7 +382,7 @@ class ActorBrowseAction extends DefaultBrowseAction
     elseif (!empty($this->relatedAuthority))
     {
       // Include actors that relate to the specified actor
-      $queryBool = new \Elastica\Query\BoolQuery;
+      $queryBool = new \Elastica\Query\BoolQuery();
 
       $queryBool->addMust($this->actorRelationsQueryForActor($this->relatedAuthority->id));
 
@@ -394,7 +394,7 @@ class ActorBrowseAction extends DefaultBrowseAction
     elseif (!empty($this->request->relatedType))
     {
       // Include actors with a direct relation of a specified type
-      $queryField = new \Elastica\Query\Term;
+      $queryField = new \Elastica\Query\Term();
       $queryField->setTerm('actorDirectRelationTypes', $request->relatedType);
 
       $this->search->queryBool->addMust($queryField);
@@ -417,13 +417,13 @@ class ActorBrowseAction extends DefaultBrowseAction
   private function actorRelationsQueryForActor($actorId)
   {
     // Result relations must have either a related object or subject ID
-    $queryRelatedBool = new \Elastica\Query\BoolQuery;
+    $queryRelatedBool = new \Elastica\Query\BoolQuery();
 
-    $queryField = new \Elastica\Query\Term;
+    $queryField = new \Elastica\Query\Term();
     $queryField->setTerm('actorRelations.objectId', $actorId);
     $queryRelatedBool->addShould($queryField);
 
-    $queryField = new \Elastica\Query\Term;
+    $queryField = new \Elastica\Query\Term();
     $queryField->setTerm('actorRelations.subjectId', $actorId);
     $queryRelatedBool->addShould($queryField);
 
@@ -432,9 +432,9 @@ class ActorBrowseAction extends DefaultBrowseAction
 
   private function actorRelationsQueryForType($typeId)
   {
-    $queryTypeBool = new \Elastica\Query\BoolQuery;
+    $queryTypeBool = new \Elastica\Query\BoolQuery();
 
-    $queryField = new \Elastica\Query\Term;
+    $queryField = new \Elastica\Query\Term();
     $queryField->setTerm('actorRelations.typeId', $typeId);
     $queryTypeBool->addShould($queryField);
 
@@ -445,7 +445,7 @@ class ActorBrowseAction extends DefaultBrowseAction
 
     if ($converseTerm !== null && $typeId != $converseTerm->id)
     {
-      $queryField = new \Elastica\Query\Term;
+      $queryField = new \Elastica\Query\Term();
       $queryField->setTerm('actorRelations.typeId', $converseTerm->id);
       $queryTypeBool->addShould($queryField);
     }
@@ -465,9 +465,9 @@ class ActorBrowseAction extends DefaultBrowseAction
   private function actorExcludeQuery($actorId)
   {
     // Omit the actor that the others are related to
-    $queryBool = new \Elastica\Query\BoolQuery;
+    $queryBool = new \Elastica\Query\BoolQuery();
 
-    $queryField = new \Elastica\Query\Term;
+    $queryField = new \Elastica\Query\Term();
     $queryField->setTerm('_id', $actorId);
     $queryBool->addMustNot($queryField);
 

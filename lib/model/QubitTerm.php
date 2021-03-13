@@ -541,7 +541,7 @@ class QubitTerm extends BaseTerm
     }
 
     // Delete relations
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $cton1 = $criteria->getNewCriterion(QubitRelation::OBJECT_ID, $this->id);
     $cton2 = $criteria->getNewCriterion(QubitRelation::SUBJECT_ID, $this->id);
     $cton1->addOr($cton2);
@@ -556,7 +556,7 @@ class QubitTerm extends BaseTerm
     }
 
     // Delete relation to objects
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitObjectTermRelation::TERM_ID, $this->id);
 
     if (0 < count($otRelations = QubitObjectTermRelation::get($criteria)))
@@ -969,7 +969,7 @@ class QubitTerm extends BaseTerm
    */
   public static function countRelatedInformationObjects($id)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::ID, $id);
 
     $criteria->addJoin(QubitTerm::ID, QubitObject::ID);
@@ -992,7 +992,7 @@ class QubitTerm extends BaseTerm
    */
   public static function getOptionsForSelectList($taxonomyId, $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::TAXONOMY_ID, $taxonomyId);
 
     // Exclude specified term
@@ -1044,7 +1044,7 @@ class QubitTerm extends BaseTerm
    */
   public function getChildren($options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::PARENT_ID, $this->id);
 
     $sortBy = (isset($options['sortBy'])) ? $options['sortBy'] : 'lft';
@@ -1072,7 +1072,7 @@ class QubitTerm extends BaseTerm
     }
 
     // Get first child
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::PARENT_ID, $this->id);
     $criteria->add(QubitTerm::TAXONOMY_ID, $this->taxonomyId);
     $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitTerm');
@@ -1114,7 +1114,7 @@ class QubitTerm extends BaseTerm
       $position = $options['position'];
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::PARENT_ID, $this->parentId);
     $criteria->add(QubitTerm::TAXONOMY_ID, $this->taxonomyId);
 
@@ -1171,8 +1171,8 @@ class QubitTerm extends BaseTerm
    */
   public static function getEsTermsByTaxonomyId($taxonomyId, $limit = 10)
   {
-    $queryBool = new \Elastica\Query\BoolQuery;
-    $queryTerm = new \Elastica\Query\Term;
+    $queryBool = new \Elastica\Query\BoolQuery();
+    $queryTerm = new \Elastica\Query\Term();
 
     $queryTerm->setTerm('taxonomyId', $taxonomyId);
     $queryBool->addMust($queryTerm);

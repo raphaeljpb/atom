@@ -31,10 +31,10 @@ class SettingsPermissionsAction extends sfAction
 {
   public function execute($request)
   {
-    $this->permissionsForm = new SettingsPermissionsForm;
-    $this->permissionsAccessStatementsForm = new SettingsPermissionsAccessStatementsForm;
-    $this->permissionsCopyrightStatementForm = new SettingsPermissionsCopyrightStatementForm;
-    $this->permissionsPreservationSystemAccessStatementForm = new SettingsPermissionsPreservationSystemAccessStatementForm;
+    $this->permissionsForm = new SettingsPermissionsForm();
+    $this->permissionsAccessStatementsForm = new SettingsPermissionsAccessStatementsForm();
+    $this->permissionsCopyrightStatementForm = new SettingsPermissionsCopyrightStatementForm();
+    $this->permissionsPreservationSystemAccessStatementForm = new SettingsPermissionsPreservationSystemAccessStatementForm();
 
     $this->basis = array();
     foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
@@ -60,7 +60,7 @@ class SettingsPermissionsAction extends sfAction
         $this->setTemplate('viewCopyrightStatement', 'digitalobject');
 
         $this->preview = true;
-        $this->resource = new QubitInformationObject;
+        $this->resource = new QubitInformationObject();
 
         $this->permissionsCopyrightStatementForm->bind($request->getPostParameters());
         $statement = $this->permissionsCopyrightStatementForm->getValue('copyrightStatement');
@@ -106,7 +106,7 @@ class SettingsPermissionsAction extends sfAction
         $setting = QubitSetting::getByNameAndScope($key, 'access_statement');
         if (null === $setting)
         {
-          $setting = new QubitSetting;
+          $setting = new QubitSetting();
           $setting->name = $key;
           $setting->scope = 'access_statement';
         }
@@ -129,7 +129,7 @@ class SettingsPermissionsAction extends sfAction
       $setting = QubitSetting::getByName('digitalobject_copyright_statement_enabled');
       if (null === $setting)
       {
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name = 'digitalobject_copyright_statement_enabled';
         $setting->sourceCulture = sfConfig::get('sf_default_culture');
       }
@@ -144,7 +144,7 @@ class SettingsPermissionsAction extends sfAction
         $setting = QubitSetting::getByName('digitalobject_copyright_statement');
         if (null === $setting)
         {
-          $setting = new QubitSetting;
+          $setting = new QubitSetting();
           $setting->name = 'digitalobject_copyright_statement';
         }
         $setting->setValue($statement);
@@ -155,7 +155,7 @@ class SettingsPermissionsAction extends sfAction
       $setting = QubitSetting::getByName('digitalobject_preservation_system_access_statement_enabled');
       if (null === $setting)
       {
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name = 'digitalobject_preservation_system_access_statement_enabled';
         $setting->sourceCulture = sfConfig::get('sf_default_culture');
       }
@@ -177,7 +177,7 @@ class SettingsPermissionsAction extends sfAction
         $setting = QubitSetting::getByName('digitalobject_preservation_system_access_statement');
         if (null === $setting)
         {
-          $setting = new QubitSetting;
+          $setting = new QubitSetting();
           $setting->name = 'digitalobject_preservation_system_access_statement';
         }
         $setting->setValue($statement);

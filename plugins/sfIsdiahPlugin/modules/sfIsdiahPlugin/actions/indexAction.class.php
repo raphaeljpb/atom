@@ -51,7 +51,7 @@ class sfIsdiahPluginIndexAction extends RepositoryIndexAction
 
     if (QubitAcl::check($this->resource, 'update'))
     {
-      $validatorSchema = new sfValidatorSchema;
+      $validatorSchema = new sfValidatorSchema();
       $values = array();
 
       $validatorSchema->authorizedFormOfName = new sfValidatorString(array(
@@ -65,7 +65,7 @@ class sfIsdiahPluginIndexAction extends RepositoryIndexAction
       $values['identifier'] = $this->resource->identifier;
 
       $validatorSchema->primaryContact = new sfValidatorAnd(array(
-        new QubitValidatorCountable,
+        new QubitValidatorCountable(),
         new sfValidatorOr(array(
           new sfValidatorSchema(array('city' => new sfValidatorString(array('required' => true))), array('allow_extra_fields' => true)),
           new sfValidatorSchema(array('countryCode' => new sfValidatorString(array('required' => true))), array('allow_extra_fields' => true)),

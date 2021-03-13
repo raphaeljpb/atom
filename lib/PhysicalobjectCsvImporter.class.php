@@ -367,7 +367,7 @@ EOM;
     $this->validateFileName($filename);
 
     $this->reader = $this->readCsvFile($filename);
-    $stmt = (new \League\Csv\Statement)->offset($this->offset);
+    $stmt = (new \League\Csv\Statement())->offset($this->offset);
     $records = $this->getRecords($stmt);
 
     $this->rowsTotal = count($records);
@@ -563,7 +563,7 @@ EOM;
     }
 
     // Create a new db object, if no match is found
-    $physobj = new $this->ormClasses['physicalObject'];
+    $physobj = new $this->ormClasses['physicalObject']();
 
     $physobj->name        = $csvdata['name'];
     $physobj->typeId      = $csvdata['typeId'];
@@ -922,7 +922,7 @@ EOL;
   {
     if (!isset($this->timers[$name]))
     {
-      $this->timers[$name] = new QubitTimer;
+      $this->timers[$name] = new QubitTimer();
     }
     else
     {

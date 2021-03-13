@@ -52,9 +52,9 @@ class SettingsLdapAction extends DefaultEditAction
         $this->form->setDefault($name, $default);
 
         // Set validator and widget
-        $validator = ($name == 'ldapPort') ? new sfValidatorInteger(array('min' => 1, 'max' => 65535)) : new sfValidatorPass;
+        $validator = ($name == 'ldapPort') ? new sfValidatorInteger(array('min' => 1, 'max' => 65535)) : new sfValidatorPass();
         $this->form->setValidator($name, $validator);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
     }
@@ -70,7 +70,7 @@ class SettingsLdapAction extends DefaultEditAction
       case 'ldapBindAttribute':
         if (null === $this->{$name})
         {
-          $this->{$name} = new QubitSetting;
+          $this->{$name} = new QubitSetting();
           $this->{$name}->name = $name;
           $this->{$name}->scope = 'ldap';
         }

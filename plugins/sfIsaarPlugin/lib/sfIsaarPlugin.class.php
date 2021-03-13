@@ -36,7 +36,7 @@ class sfIsaarPlugin implements ArrayAccess
 
         if (!isset($this->maintenanceNote))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->add(QubitNote::OBJECT_ID, $this->resource->id);
           $criteria->add(QubitNote::TYPE_ID, QubitTerm::MAINTENANCE_NOTE_ID);
 
@@ -46,7 +46,7 @@ class sfIsaarPlugin implements ArrayAccess
           }
           else
           {
-            $this->maintenanceNote = new QubitNote;
+            $this->maintenanceNote = new QubitNote();
             $this->maintenanceNote->typeId = QubitTerm::MAINTENANCE_NOTE_ID;
 
             $this->resource->notes[] = $this->maintenanceNote;

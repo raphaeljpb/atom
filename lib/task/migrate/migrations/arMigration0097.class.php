@@ -38,7 +38,7 @@ class arMigration0097
    */
   public function up($configuration)
   {
-    $term = new QubitTerm;
+    $term = new QubitTerm();
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID;
     $term->name = 'Part';

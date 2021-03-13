@@ -35,7 +35,7 @@ class arMigration0131
   {
     if (null === QubitSetting::getByName('stripExtensions'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name = 'stripExtensions';
       $setting->value = 0;
       $setting->culture = 'en';

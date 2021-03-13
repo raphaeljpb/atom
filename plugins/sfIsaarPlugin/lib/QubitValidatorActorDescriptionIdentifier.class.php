@@ -43,7 +43,7 @@ class QubitValidatorActorDescriptionIdentifier extends sfValidatorBase
 
   public static function identifierUsedByAnotherActor($identifier, $byResource)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitActor::DESCRIPTION_IDENTIFIER, $identifier);
 
     // If actor isn't new, exclude it in check to see if the identifier's already been used

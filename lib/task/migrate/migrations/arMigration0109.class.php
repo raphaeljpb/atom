@@ -40,7 +40,7 @@ class arMigration0109
   {
     // Add the "Thematic Areas" taxonomy
     QubitMigrate::bumpTaxonomy(QubitTaxonomy::THEMATIC_AREA_ID, $configuration);
-    $taxonomy = new QubitTaxonomy;
+    $taxonomy = new QubitTaxonomy();
     $taxonomy->id = QubitTaxonomy::THEMATIC_AREA_ID;
     $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
     $taxonomy->name = 'Thematic Area';
@@ -50,7 +50,7 @@ class arMigration0109
 
     // Add the "Geographic Subregions" taxonomy
     QubitMigrate::bumpTaxonomy(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID, $configuration);
-    $taxonomy = new QubitTaxonomy;
+    $taxonomy = new QubitTaxonomy();
     $taxonomy->id = QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID;
     $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
     $taxonomy->name = 'Geographic Subregion';
@@ -84,7 +84,7 @@ class arMigration0109
       array('en' => 'Transportation',                       'fr' => 'Transport'),
       array('en' => 'Travel and Exploration',               'fr' => 'Voyages et exploration')) as $termNames)
     {
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::THEMATIC_AREA_ID;
       $term->sourceCulture = 'en';

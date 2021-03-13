@@ -40,7 +40,7 @@ class arMigration0148
   {
     if (null === QubitMenu::getByName('importSkos'))
     {
-      $node = new QubitMenu;
+      $node = new QubitMenu();
       $node->parentId = QubitMenu::IMPORT_ID;
       $node->name = 'importSkos';
       $node->label = 'SKOS';

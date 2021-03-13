@@ -19,7 +19,7 @@
 
 require_once dirname(__FILE__).'/../../../../test/bootstrap/unit.php';
 
-$t = new lime_test(6, new lime_output_color);
+$t = new lime_test(6, new lime_output_color());
 
 $t->diag('Initializing configuration.');
 $configuration = ProjectConfiguration::getApplicationConfiguration('qubit', 'test', true);
@@ -60,7 +60,7 @@ $tests = array(
 foreach ($tests as $item)
 {
   // Build
-  $uniquer = new sfSkosUniqueRelations;
+  $uniquer = new sfSkosUniqueRelations();
   foreach ($item['relations'] as $rel)
   {
     $uniquer->insert($rel[0], $rel[1]);
@@ -89,11 +89,11 @@ foreach ($tests as $item)
 // Test if sfSkosUniqueRelations is working with the UNESCO Thesaurus
 die(0);  // DISABLED! You can download the data from: http://vocabularies.unesco.org/exports/thesaurus/latest/unesco-thesaurus.rdf
 $unescoThesaurus = realpath(dirname(__FILE__)).'/data/unesco-thesaurus.rdf';
-$graph = new EasyRdf_Graph;
+$graph = new EasyRdf_Graph();
 $graph->parseFile($unescoThesaurus);
 
 // Populate relationships
-$relations = new sfSkosUniqueRelations;
+$relations = new sfSkosUniqueRelations();
 $prefix = 'http://vocabularies.unesco.org/thesaurus/concept';
 $prefixLen = strlen($prefix);
 foreach ($graph->allOfType('skos:Concept') as $x)

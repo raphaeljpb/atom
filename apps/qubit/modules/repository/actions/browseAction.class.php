@@ -62,7 +62,7 @@ class RepositoryBrowseAction extends DefaultBrowseAction
       case 'geographicSubregions':
       case 'thematicAreas':
         $ids = array_column($buckets, 'key');
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
 
         foreach (QubitTerm::get($criteria) as $item)
@@ -199,7 +199,7 @@ class RepositoryBrowseAction extends DefaultBrowseAction
     $this->thematicAreas = QubitTerm::getEsTermsByTaxonomyId(QubitTaxonomy::THEMATIC_AREA_ID, $limit);
     $this->repositoryTypes = QubitTerm::getEsTermsByTaxonomyId(QubitTaxonomy::REPOSITORY_TYPE_ID, $limit);
 
-    $query = new \Elastica\Query(new \Elastica\Query\MatchAll);
+    $query = new \Elastica\Query(new \Elastica\Query\MatchAll());
     $query->setSize($limit);
 
     $this->repositories = QubitSearch::getInstance()->index->getType('QubitRepository')->search($query);

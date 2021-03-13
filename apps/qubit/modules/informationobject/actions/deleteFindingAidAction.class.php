@@ -35,7 +35,7 @@ class InformationObjectDeleteFindingAidAction extends sfAction
       QubitAcl::forwardUnauthorized();
     }
 
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->path = arFindingAidJob::getFindingAidPathForDownload($this->resource->id);
     $parts = explode(DIRECTORY_SEPARATOR, $this->path);
     $this->filename = array_pop($parts);

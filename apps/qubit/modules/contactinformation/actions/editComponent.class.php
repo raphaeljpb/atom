@@ -42,35 +42,35 @@ class ContactInformationEditComponent extends sfComponent
     switch ($name)
     {
       case 'countryCode':
-        $this->form->setValidator('countryCode', new sfValidatorI18nChoiceCountry);
+        $this->form->setValidator('countryCode', new sfValidatorI18nChoiceCountry());
         $this->form->setWidget('countryCode', new sfWidgetFormI18nChoiceCountry(array('add_empty' => true, 'culture' => $this->context->user->getCulture())));
 
         break;
 
       case 'primaryContact':
         $this->form->setDefault('primaryContact', false);
-        $this->form->setValidator('primaryContact', new sfValidatorBoolean);
-        $this->form->setWidget('primaryContact', new sfWidgetFormInputCheckbox);
+        $this->form->setValidator('primaryContact', new sfValidatorBoolean());
+        $this->form->setWidget('primaryContact', new sfWidgetFormInputCheckbox());
 
         break;
 
       case 'latitude':
       case 'longitude':
-        $this->form->setValidator($name, new sfValidatorNumber);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorNumber());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'streetAddress':
       case 'note':
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $this->form->setWidget($name, new sfWidgetFormTextArea(array(), array('rows' => 2)));
 
         break;
 
       default:
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
     }
@@ -122,7 +122,7 @@ class ContactInformationEditComponent extends sfComponent
         }
         else
         {
-          $this->resource->contactInformations[] = $this->contactInformation = new QubitContactInformation;
+          $this->resource->contactInformations[] = $this->contactInformation = new QubitContactInformation();
         }
 
         foreach ($this->form as $field)
@@ -161,7 +161,7 @@ class ContactInformationEditComponent extends sfComponent
 
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
     $this->form->getWidgetSchema()->setNameFormat('editContactInformation[%s]');
 

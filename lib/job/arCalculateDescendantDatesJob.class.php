@@ -53,7 +53,7 @@ class arCalculateDescendantDatesJob extends arBaseJob
     // Create or load target event
     if (empty($parameters['eventId']))
     {
-      $event = new QubitEvent;
+      $event = new QubitEvent();
       $event->objectId = $parameters['objectId'];
       $event->typeId = $parameters['eventTypeId'];
     }

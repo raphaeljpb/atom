@@ -29,7 +29,7 @@ class Browser extends sfBrowser
   }
 }
 
-$browser = new QubitTestFunctional(new Browser);
+$browser = new QubitTestFunctional(new Browser());
 $browser->disableSecurity();
 
 $browser

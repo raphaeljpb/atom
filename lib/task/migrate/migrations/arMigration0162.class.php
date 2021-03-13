@@ -34,7 +34,7 @@ class arMigration0162
   public function up($configuration)
   {
     QubitMigrate::bumpTaxonomy(QubitTaxonomy::USER_ACTION_ID, $configuration);
-    $taxonomy = new QubitTaxonomy;
+    $taxonomy = new QubitTaxonomy();
     $taxonomy->id = QubitTaxonomy::USER_ACTION_ID;
     $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
     $taxonomy->sourceCulture = 'en';
@@ -49,7 +49,7 @@ class arMigration0162
     foreach ($terms as $id => $name)
     {
       QubitMigrate::bumpTerm($id, $configuration);
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->id = $id;
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::USER_ACTION_ID;

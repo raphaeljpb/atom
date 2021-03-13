@@ -69,7 +69,7 @@ class QubitAclPermission extends BaseAclPermission
   {
     if (null !== $repository = $this->getConstants(array('name' => 'repository')))
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitSlug::SLUG, $repository);
       $criteria->addJoin(QubitSlug::OBJECT_ID, QubitObject::ID);
 

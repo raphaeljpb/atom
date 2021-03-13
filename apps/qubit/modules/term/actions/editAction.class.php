@@ -47,7 +47,7 @@ class TermEditAction extends DefaultEditAction
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    $this->resource = new QubitTerm;
+    $this->resource = new QubitTerm();
     $title = $this->context->i18n->__('Add new term');
 
     if (isset($this->getRoute()->resource))
@@ -72,8 +72,8 @@ class TermEditAction extends DefaultEditAction
 
       // Add optimistic lock
       $this->form->setDefault('serialNumber', $this->resource->serialNumber);
-      $this->form->setValidator('serialNumber', new sfValidatorInteger);
-      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden);
+      $this->form->setValidator('serialNumber', new sfValidatorInteger());
+      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
 
       if (1 > strlen($title = $this->resource->__toString()))
       {
@@ -112,15 +112,15 @@ class TermEditAction extends DefaultEditAction
     {
       case 'code':
         $this->form->setDefault('code', $this->resource->code);
-        $this->form->setValidator('code', new sfValidatorString);
-        $this->form->setWidget('code', new sfWidgetFormInput);
+        $this->form->setValidator('code', new sfValidatorString());
+        $this->form->setWidget('code', new sfWidgetFormInput());
 
         break;
 
       case 'displayNote':
       case 'scopeNote':
       case 'sourceNote':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitNote::OBJECT_ID, $this->resource->id);
         switch ($name)
         {
@@ -147,7 +147,7 @@ class TermEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault($name, $value);
-        $this->form->setValidator($name, new sfValidatorPass);
+        $this->form->setValidator($name, new sfValidatorPass());
         $this->form->setWidget($name, new QubitWidgetFormInputMany(array('defaults' => $defaults, 'fieldname' => 'content')));
 
         break;
@@ -155,19 +155,19 @@ class TermEditAction extends DefaultEditAction
       case 'name':
         $this->form->setDefault('name', $this->resource->name);
         $this->form->setValidator('name', new sfValidatorString(array('required' => true), array('required' => $this->context->i18n->__('This is a mandatory element.'))));
-        $this->form->setWidget('name', new sfWidgetFormInput);
+        $this->form->setWidget('name', new sfWidgetFormInput());
 
         break;
 
       case 'narrowTerms':
-        $this->form->setValidator('narrowTerms', new sfValidatorPass);
+        $this->form->setValidator('narrowTerms', new sfValidatorPass());
         $this->form->setWidget('narrowTerms', new QubitWidgetFormInputMany(array('defaults' => array())));
 
         break;
 
       case 'parent':
         $this->form->setDefault('parent', $this->context->routing->generate(null, array($this->resource->parent, 'module' => 'term')));
-        $this->form->setValidator('parent', new sfValidatorString);
+        $this->form->setValidator('parent', new sfValidatorString());
 
         $choices = array();
         if (isset($this->resource->parent))
@@ -189,7 +189,7 @@ class TermEditAction extends DefaultEditAction
         break;
 
       case 'converseTerm':
-        $this->form->setValidator('converseTerm', new sfValidatorString);
+        $this->form->setValidator('converseTerm', new sfValidatorString());
 
         $choices = array();
         if (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($this->resource->id, array('typeId' => QubitTerm::CONVERSE_TERM_ID))))
@@ -215,7 +215,7 @@ class TermEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault('relatedTerms', $value);
-        $this->form->setValidator('relatedTerms', new sfValidatorPass);
+        $this->form->setValidator('relatedTerms', new sfValidatorPass());
         $this->form->setWidget('relatedTerms', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
 
         break;
@@ -243,7 +243,7 @@ class TermEditAction extends DefaultEditAction
         break;
 
       case 'useFor':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitOtherName::OBJECT_ID, $this->resource->id);
         $criteria->add(QubitOtherName::TYPE_ID, QubitTerm::ALTERNATIVE_LABEL_ID);
 
@@ -254,14 +254,14 @@ class TermEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault('useFor', $value);
-        $this->form->setValidator('useFor', new sfValidatorPass);
+        $this->form->setValidator('useFor', new sfValidatorPass());
         $this->form->setWidget('useFor', new QubitWidgetFormInputMany(array('defaults' => $defaults)));
 
         break;
 
       case 'selfReciprocal':
-        $this->form->setValidator('selfReciprocal', new sfValidatorBoolean);
-        $this->form->setWidget('selfReciprocal', new sfWidgetFormInputCheckbox);
+        $this->form->setValidator('selfReciprocal', new sfValidatorBoolean());
+        $this->form->setWidget('selfReciprocal', new sfWidgetFormInputCheckbox());
 
         if (isset($this->converseTerm) && $this->converseTerm->id == $this->resource->id)
         {
@@ -311,7 +311,7 @@ class TermEditAction extends DefaultEditAction
             continue;
           }
 
-          $note = new QubitNote;
+          $note = new QubitNote();
           $note->content = $item;
           switch ($field->getName())
           {
@@ -344,7 +344,7 @@ class TermEditAction extends DefaultEditAction
           // Avoid duplicates (used in autocomplete.js)
           if (filter_var($this->request->getPostParameter('linkExisting'), FILTER_VALIDATE_BOOLEAN))
           {
-            $criteria = new Criteria;
+            $criteria = new Criteria();
             $criteria->add(QubitTerm::TAXONOMY_ID, $this->resource->taxonomyId);
             $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
             $criteria->add(QubitTermI18n::CULTURE, $this->context->user->getCulture());
@@ -373,7 +373,7 @@ class TermEditAction extends DefaultEditAction
           }
 
           // Test to make sure term doesn't already exist
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->add(QubitTerm::TAXONOMY_ID, $this->resource->taxonomyId);
           $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
           $criteria->add(QubitTermI18n::CULTURE, $this->context->user->getCulture());
@@ -384,7 +384,7 @@ class TermEditAction extends DefaultEditAction
           }
 
           // Add term as child
-          $term = new QubitTerm;
+          $term = new QubitTerm();
           $term->name = $item;
           $term->taxonomyId = $this->resource->taxonomyId;
 
@@ -419,7 +419,7 @@ class TermEditAction extends DefaultEditAction
           $this->resource->save();
 
           // Set self-reciprocal relation
-          $relation = new QubitRelation;
+          $relation = new QubitRelation();
           $relation->typeId = QubitTerm::CONVERSE_TERM_ID;
           $relation->object = $this->resource;
 
@@ -428,7 +428,7 @@ class TermEditAction extends DefaultEditAction
         elseif (isset($value) && $value != '')
         {
           // Create new converse relation
-          $relation = new QubitRelation;
+          $relation = new QubitRelation();
           $relation->typeId = QubitTerm::CONVERSE_TERM_ID;
 
           // Get converse term, update parent and taxonomy (when it's created on the fly)
@@ -486,7 +486,7 @@ class TermEditAction extends DefaultEditAction
 
         foreach ($filtered as $item)
         {
-          $relation = new QubitRelation;
+          $relation = new QubitRelation();
           $relation->object = $item;
           $relation->typeId = QubitTerm::TERM_RELATION_ASSOCIATIVE_ID;
 
@@ -518,7 +518,7 @@ class TermEditAction extends DefaultEditAction
             continue;
           }
 
-          $otherName = new QubitOtherName;
+          $otherName = new QubitOtherName();
           $otherName->name = $item;
           $otherName->typeId = QubitTerm::ALTERNATIVE_LABEL_ID;
 

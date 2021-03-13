@@ -55,7 +55,7 @@ class SettingsIdentifierAction extends DefaultEditAction
         // Set default, validator, and widget
         $this->form->setDefault($name, $default);
         $this->form->setValidator($name, new sfValidatorString(array('required' => true)));
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
@@ -102,7 +102,7 @@ class SettingsIdentifierAction extends DefaultEditAction
       case 'prevent_duplicate_actor_identifiers':
         if (null === $this->$name)
         {
-          $this->$name = new QubitSetting;
+          $this->$name = new QubitSetting();
           $this->$name->name = $name;
         }
         $this->$name->setValue($field->getValue(), array('sourceCulture' => true));

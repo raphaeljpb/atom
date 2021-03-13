@@ -35,7 +35,7 @@ class arMigration0137
   {
     if (null === QubitMenu::getByName('clipboard'))
     {
-      $clipboardMenu = new QubitMenu;
+      $clipboardMenu = new QubitMenu();
       $clipboardMenu->parentId = QubitMenu::ROOT_ID;
       $clipboardMenu->name = 'clipboard';
       $clipboardMenu->label = 'Clipboard';
@@ -44,7 +44,7 @@ class arMigration0137
 
       if (null === QubitMenu::getByName('clearClipboard'))
       {
-        $menu = new QubitMenu;
+        $menu = new QubitMenu();
         $menu->parentId = $clipboardMenu->id;
         $menu->name = 'clearClipboard';
         $menu->path = 'user/clipboardClear';
@@ -55,7 +55,7 @@ class arMigration0137
 
       if (null === QubitMenu::getByName('goToClipboard'))
       {
-        $menu = new QubitMenu;
+        $menu = new QubitMenu();
         $menu->parentId = $clipboardMenu->id;
         $menu->name = 'goToClipboard';
         $menu->path = 'user/clipboard';

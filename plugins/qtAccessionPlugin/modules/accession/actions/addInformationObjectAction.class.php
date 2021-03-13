@@ -21,7 +21,7 @@ class AccessionAddInformationObjectAction extends sfAction
 {
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     $this->resource = $this->getRoute()->resource;
 
@@ -31,7 +31,7 @@ class AccessionAddInformationObjectAction extends sfAction
     }
 
     // Create new information object
-    $informationObject = new QubitInformationObject;
+    $informationObject = new QubitInformationObject();
     $informationObject->setRoot();
 
     // Populate fields
@@ -48,7 +48,7 @@ class AccessionAddInformationObjectAction extends sfAction
 
       $newRights = $sourceRights->copy();
 
-      $relation = new QubitRelation;
+      $relation = new QubitRelation();
       $relation->object = $newRights;
       $relation->typeId = QubitTerm::RIGHT_ID;
 
@@ -58,7 +58,7 @@ class AccessionAddInformationObjectAction extends sfAction
     // Populate creators (from QubitRelation to QubitEvent)
     foreach (QubitRelation::getRelationsByObjectId($this->resource->id, array('typeId' => QubitTerm::CREATION_ID)) as $item)
     {
-      $event = new QubitEvent;
+      $event = new QubitEvent();
       $event->actor = $item->subject;
       $event->typeId = QubitTerm::CREATION_ID;
 
@@ -68,7 +68,7 @@ class AccessionAddInformationObjectAction extends sfAction
     // Populate dates
     foreach ($this->resource->getDates() as $accessionEvent)
     {
-      $event = new QubitEvent;
+      $event = new QubitEvent();
       $event->date = $accessionEvent->date;
       $event->startDate = $accessionEvent->startDate;
       $event->endDate = $accessionEvent->endDate;
@@ -78,7 +78,7 @@ class AccessionAddInformationObjectAction extends sfAction
     }
 
     // Relationship between the information object and accession record
-    $relation = new QubitRelation;
+    $relation = new QubitRelation();
     $relation->object = $this->resource;
     $relation->typeId = QubitTerm::ACCESSION_ID;
 

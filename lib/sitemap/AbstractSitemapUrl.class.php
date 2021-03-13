@@ -21,7 +21,7 @@ abstract class AbstractSitemapUrl
 {
   public function __construct()
   {
-    $this->writer = new XMLWriter;
+    $this->writer = new XMLWriter();
     $this->writer->openMemory();
 
     $this->dateFormatter = new sfDateFormat('en');

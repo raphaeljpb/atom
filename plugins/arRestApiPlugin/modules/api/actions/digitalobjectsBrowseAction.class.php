@@ -33,7 +33,7 @@ class ApiDigitalObjectsBrowseAction extends QubitApiAction
 
   protected function getResults($request)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::PARENT_ID, null);
     $criteria->addAscendingOrderByColumn(QubitDigitalObject::ID);
 
@@ -59,7 +59,7 @@ class ApiDigitalObjectsBrowseAction extends QubitApiAction
       // Look up media type
       if (null !== $do->mediaTypeId)
       {
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->addJoin(QubitTerm::ID, $do->mediaTypeId);
 
         if (null !== ($typeTerm = QubitTerm::getOne($criteria))) { $fields['media_type'] = $typeTerm->name; }
@@ -73,7 +73,7 @@ class ApiDigitalObjectsBrowseAction extends QubitApiAction
 
       foreach ($propertyFields as $propertyName => $apiFieldLabel)
       {
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitProperty::NAME, $propertyName);
         $criteria->add(QubitProperty::OBJECT_ID, $do->objectId);
 

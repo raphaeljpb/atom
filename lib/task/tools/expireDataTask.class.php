@@ -187,7 +187,7 @@ EOF;
   private function clipboardExpireData($options)
   {
     // Assemble criteria
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     if (isset($options['older-than']))
     {
@@ -209,7 +209,7 @@ EOF;
   private function jobExpireData($options)
   {
     // Assemble criteria
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     if (isset($options['older-than']))
     {

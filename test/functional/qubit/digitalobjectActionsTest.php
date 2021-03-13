@@ -2,9 +2,9 @@
 
 include dirname(__FILE__).'/../../bootstrap/functional.php';
 
-$browser = new sfTestFunctional(new sfBrowser);
+$browser = new sfTestFunctional(new sfBrowser());
 
-$informationObject = new QubitInformationObject;
+$informationObject = new QubitInformationObject();
 $informationObject->save();
 
 $browser

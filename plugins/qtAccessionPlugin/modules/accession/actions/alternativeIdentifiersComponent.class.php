@@ -22,7 +22,7 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
   public function execute($request)
   {
     // Cache alternative identifier types (used in each identifier's type select form field)
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID);
 
     $this->identifierTypes = [];
@@ -32,7 +32,7 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
     }
 
     // Define form used to add/edit identifiers
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     $this->addField('identifierType');
@@ -60,19 +60,19 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
     switch ($name)
     {
     case 'identifierType':
-        $this->form->setValidator($name, new sfValidatorInteger);
+        $this->form->setValidator($name, new sfValidatorInteger());
         $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $this->identifierTypes]));
 
         break;
 
       case 'identifier':
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'note':
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $widget = new sfWidgetFormTextarea(['label' => false]);
         $widget->setAttribute('placeholder', $this->context->i18n->__('Notes'));
         $this->form->setWidget($name, $widget);
@@ -103,7 +103,7 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
         }
         else
         {
-          $otherName = new QubitOtherName;
+          $otherName = new QubitOtherName();
         }
 
         $otherName->object = $this->resource;

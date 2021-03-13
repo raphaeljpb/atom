@@ -19,7 +19,7 @@
 
 require_once dirname(__FILE__).'/../bootstrap/unit.php';
 
-$t = new lime_test(124, new lime_output_color);
+$t = new lime_test(124, new lime_output_color());
 
 $t->diag('Initializing configuration.');
 $configuration = ProjectConfiguration::getApplicationConfiguration('qubit', 'test', true);
@@ -36,40 +36,40 @@ $routing->initialize(sfContext::getInstance()->getEventDispatcher(), $routing->g
 
 $t->diag('Creeate QubitInformationObject "peanut-12345"');
 if (null !== $io = QubitObject::getBySlug('peanut-12345')) $io->delete();
-$io = new QubitInformationObject;
+$io = new QubitInformationObject();
 $io->parentId = QubitInformationObject::ROOT_ID;
 $io->slug = 'peanut-12345'; $io->save();
 
 $t->diag('Create QubitActor "actor-12345"');
 if (null !== $actor = QubitObject::getBySlug('actor-12345')) $actor->delete();
-$actor = new QubitActor;
+$actor = new QubitActor();
 $actor->parentId = QubitActor::ROOT_ID;
 $actor->slug = 'actor-12345';
 $actor->save();
 
 $t->diag('Create QubitRepository "repository-12345"');
 if (null !== $repository = QubitObject::getBySlug('repository-12345')) $repository->delete();
-$repository = new QubitRepository;
+$repository = new QubitRepository();
 $repository->parentId = QubitRepository::ROOT_ID;
 $repository->slug = 'repository-12345';
 $repository->save();
 
 $t->diag('Create QubitFunctionObject "function-12345"');
 if (null !== $function = QubitObject::getBySlug('function-12345')) $function->delete();
-$function = new QubitFunctionObject;
+$function = new QubitFunctionObject();
 $function->slug = 'function-12345';
 $function->save();
 
 $t->diag('Create QubitTaxonomy "taxonomy-12345"');
 if (null !== $taxonomy = QubitObject::getBySlug('taxonomy-12345')) $taxonomy->delete();
-$taxonomy = new QubitTaxonomy;
+$taxonomy = new QubitTaxonomy();
 $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
 $taxonomy->slug = 'taxonomy-12345';
 $taxonomy->name = 'Taxonomy 12345';
 $taxonomy->save();
 
 $t->diag('Create QubitContactInformation');
-$contactInformation = new QubitContactInformation; $contactInformation->actor = $actor; $contactInformation->save();
+$contactInformation = new QubitContactInformation(); $contactInformation->actor = $actor; $contactInformation->save();
 
 // Test generation of routes
 $t->diag('Test suite intended to check behaviour of ->generate()');

@@ -38,7 +38,7 @@ class DeaccessionIndexAction extends sfAction
 
     if (QubitAcl::check($this->resource, 'update'))
     {
-      $validatorSchema = new sfValidatorSchema;
+      $validatorSchema = new sfValidatorSchema();
       $values = array();
 
       $validatorSchema->identifier = new sfValidatorString(array(

@@ -41,7 +41,7 @@ class sfEadPluginIndexAction extends InformationObjectIndexAction
     $this->sourceLanguage = $this->resource->getSourceCulture();
 
     // Instantiate Object to use in Converting ISO 639-1 language codes to 639-2
-    $this->iso639convertor = new fbISO639_Map;
+    $this->iso639convertor = new fbISO639_Map();
 
     // Set array with valid EAD level values (see ead.dtd line 2220)
     $this->eadLevels = array('class', 'collection', 'file', 'fonds', 'item', 'otherlevel', 'recordgrp', 'series', 'subfonds', 'subgrp', 'subseries');

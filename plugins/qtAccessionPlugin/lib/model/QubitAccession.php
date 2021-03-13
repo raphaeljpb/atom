@@ -91,7 +91,7 @@ class QubitAccession extends BaseAccession
       return false;
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::TYPE_ID, QubitTerm::ACCRUAL_ID);
     $criteria->add(QubitRelation::SUBJECT_ID, $this->id);
 
@@ -152,7 +152,7 @@ class QubitAccession extends BaseAccession
    */
   public function getActors($options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitActor::ID, QubitEvent::ACTOR_ID);
     $criteria->add(QubitEvent::OBJECT_ID, $this->id);
 
@@ -185,7 +185,7 @@ class QubitAccession extends BaseAccession
    */
   public function getDates(array $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitEvent::OBJECT_ID, $this->id);
 
     $criteria->addMultipleJoin(array(
@@ -214,7 +214,7 @@ class QubitAccession extends BaseAccession
   {
     $otherNames = [];
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitOtherName::OBJECT_ID, $this->id);
     $criteria->addJoin(QubitOtherName::TYPE_ID, QubitTerm::ID);
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID);

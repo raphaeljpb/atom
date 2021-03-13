@@ -349,7 +349,7 @@ class QubitMetsParser
           {
             if (strtolower($value) == strtolower($item->__toString()))
             {
-              $relation = new QubitObjectTermRelation;
+              $relation = new QubitObjectTermRelation();
               $relation->term = $item;
 
               $informationObject->objectTermRelationsRelatedByobjectId[] = $relation;
@@ -396,14 +396,14 @@ class QubitMetsParser
 
     if (count($creation) > 0)
     {
-      $event = new QubitEvent;
+      $event = new QubitEvent();
       $event->typeId = QubitTerm::CREATION_ID;
 
       if ($creation['actorName'])
       {
         if (null === $actor = QubitActor::getByAuthorizedFormOfName($creation['actorName']))
         {
-          $actor = new QubitActor;
+          $actor = new QubitActor();
           $actor->parentId = QubitActor::ROOT_ID;
           $actor->setAuthorizedFormOfName($creation['actorName']);
           $actor->save();
@@ -472,7 +472,7 @@ class QubitMetsParser
 
   private function loadPremisObjectData()
   {
-    $premisObject = new QubitPremisObject;
+    $premisObject = new QubitPremisObject();
 
     $fields = array(
       'filename' => array(

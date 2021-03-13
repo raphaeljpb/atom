@@ -96,7 +96,7 @@ class sfIsadPlugin implements ArrayAccess
 
         if ($missingNote)
         {
-          $note = new QubitNote;
+          $note = new QubitNote();
           $note->typeId = QubitTerm::LANGUAGE_NOTE_ID;
           $note->userId = sfContext::getInstance()->user->getAttribute('user_id');
 

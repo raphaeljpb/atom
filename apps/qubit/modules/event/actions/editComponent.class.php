@@ -24,16 +24,16 @@ class EventEditComponent extends sfComponent
     switch ($name)
     {
       case 'date':
-        $this->form->setValidator('date', new sfValidatorString);
-        $this->form->setWidget('date', new sfWidgetFormInput);
+        $this->form->setValidator('date', new sfValidatorString());
+        $this->form->setWidget('date', new sfWidgetFormInput());
 
         $this->form->getWidgetSchema()->date->setHelp($this->context->i18n->__('Enter free-text information, including qualifiers or typographical symbols to express uncertainty, to change the way the date displays. If this field is not used, the default will be the start and end years only.'));
 
         break;
 
       case 'endDate':
-        $this->form->setValidator('endDate', new sfValidatorString);
-        $this->form->setWidget('endDate', new sfWidgetFormInput);
+        $this->form->setValidator('endDate', new sfValidatorString());
+        $this->form->setWidget('endDate', new sfWidgetFormInput());
 
         $this->form->getWidgetSchema()->endDate->setHelp($this->context->i18n->__('Enter the end year. Do not use any qualifiers or typographical symbols to express uncertainty. Acceptable date formats: YYYYMMDD, YYYY-MM-DD, YYYY-MM, YYYY.'));
         $this->form->getWidgetSchema()->endDate->setLabel($this->context->i18n->__('End'));
@@ -41,8 +41,8 @@ class EventEditComponent extends sfComponent
         break;
 
       case 'startDate':
-        $this->form->setValidator('startDate', new sfValidatorString);
-        $this->form->setWidget('startDate', new sfWidgetFormInput);
+        $this->form->setValidator('startDate', new sfValidatorString());
+        $this->form->setWidget('startDate', new sfWidgetFormInput());
 
         $this->form->getWidgetSchema()->startDate->setHelp($this->context->i18n->__('Enter the start year. Do not use any qualifiers or typographical symbols to express uncertainty. Acceptable date formats: YYYYMMDD, YYYY-MM-DD, YYYY-MM, YYYY.'));
         $this->form->getWidgetSchema()->startDate->setLabel($this->context->i18n->__('Start'));
@@ -70,7 +70,7 @@ class EventEditComponent extends sfComponent
           $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
         }
 
-        $this->form->setValidator('type', new sfValidatorString);
+        $this->form->setValidator('type', new sfValidatorString());
         $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
 
         break;
@@ -161,11 +161,11 @@ class EventEditComponent extends sfComponent
         }
         elseif ($this->resource instanceof QubitActor)
         {
-          $this->resource->events[] = $this->event = new QubitEvent;
+          $this->resource->events[] = $this->event = new QubitEvent();
         }
         else
         {
-          $this->resource->eventsRelatedByobjectId[] = $this->event = new QubitEvent;
+          $this->resource->eventsRelatedByobjectId[] = $this->event = new QubitEvent();
         }
 
         foreach ($this->form as $field)
@@ -206,7 +206,7 @@ class EventEditComponent extends sfComponent
 
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
     $this->form->getWidgetSchema()->setNameFormat('editEvent[%s]');
 

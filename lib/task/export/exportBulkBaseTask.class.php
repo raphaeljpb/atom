@@ -144,7 +144,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
         throw Exception('Unknown format.');
     }
 
-    $iso639convertor = new fbISO639_Map;
+    $iso639convertor = new fbISO639_Map();
 
     // Determine language(s) used in the export
     $exportLanguage = sfContext::getInstance()->user->getCulture();

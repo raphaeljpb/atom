@@ -68,7 +68,7 @@ class SettingsPermissionsForm extends sfForm
     $premisAccessRightValues = unserialize($premisAccessRightValues->getValue(array('sourceCulture' => true)));
     $defaults = QubitSetting::$premisAccessRightValueDefaults;
 
-    $form = new sfForm;
+    $form = new sfForm();
     $form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     // Each basis has its own set of permissions (allow_master,
@@ -76,13 +76,13 @@ class SettingsPermissionsForm extends sfForm
     // each basis and indexed by its slug.
     foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
     {
-      $formBasis = new sfForm;
+      $formBasis = new sfForm();
       $formBasis->getValidatorSchema()->setOption('allow_extra_fields', true);
 
       // Permissions are represented with sfWidgetFormInputCheckbox
       foreach ($defaults as $key => $value)
       {
-        $formBasis->setWidget($key, new sfWidgetFormInputCheckbox);
+        $formBasis->setWidget($key, new sfWidgetFormInputCheckbox());
         $formBasis->setValidator($key, new sfValidatorBoolean(array('empty_value' => false)));
 
         // The default value is obtained from the existing QubitSetting

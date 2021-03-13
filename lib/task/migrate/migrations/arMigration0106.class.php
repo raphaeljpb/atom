@@ -43,7 +43,7 @@ class arMigration0106
 
     // Create new term for the converse relations type
     QubitMigrate::bumpTerm(QubitTerm::CONVERSE_TERM_ID, $configuration);
-    $term = new QubitTerm;
+    $term = new QubitTerm();
     $term->id = QubitTerm::CONVERSE_TERM_ID;
     $term->parentId = QubitTerm::ROOT_ID;
     $term->taxonomyId = QubitTaxonomy::TERM_RELATION_TYPE_ID;
@@ -74,13 +74,13 @@ class arMigration0106
       foreach ($terms as $termName => $converseTermName)
       {
         // Obtain/create object term
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
         $criteria->add(QubitTermI18n::NAME, $termName);
 
         if (null === $objectTerm = QubitTerm::getOne($criteria))
         {
-          $objectTerm = new QubitTerm;
+          $objectTerm = new QubitTerm();
           $objectTerm->name = $termName;
           $objectTerm->culture = 'en';
         }
@@ -97,13 +97,13 @@ class arMigration0106
         else
         {
           // Obtain/create subject term
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
           $criteria->add(QubitTermI18n::NAME, $converseTermName);
 
           if (null === $subjectTerm = QubitTerm::getOne($criteria))
           {
-            $subjectTerm = new QubitTerm;
+            $subjectTerm = new QubitTerm();
             $subjectTerm->name = $converseTermName;
             $subjectTerm->culture = 'en';
           }
@@ -115,7 +115,7 @@ class arMigration0106
         }
 
         // Create relation
-        $relation = new QubitRelation;
+        $relation = new QubitRelation();
         $relation->object = $objectTerm;
         $relation->subject = $subjectTerm;
         $relation->typeId = QubitTerm::CONVERSE_TERM_ID;

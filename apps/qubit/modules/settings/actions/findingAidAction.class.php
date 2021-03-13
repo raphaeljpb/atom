@@ -28,7 +28,7 @@ class SettingsFindingAidAction extends sfAction
 {
   public function execute($request)
   {
-    $this->findingAidForm = new SettingsFindingAidForm;
+    $this->findingAidForm = new SettingsFindingAidForm();
 
     // Handle POST data (form submit)
     if ($request->isMethod('post'))

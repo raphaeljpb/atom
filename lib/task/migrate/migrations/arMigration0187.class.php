@@ -76,7 +76,7 @@ class arMigration0187
     {
       if (null === $setting = QubitSetting::getByNameAndScope($settingName, $SCOPE))
       {
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name  = $settingName;
         $setting->setValue($VALUE, array('sourceCulture' => true));
         $setting->scope = $SCOPE;

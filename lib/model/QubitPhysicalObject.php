@@ -107,7 +107,7 @@ class QubitPhysicalObject extends BasePhysicalObject
    */
   public function getInformationObjects($options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitPhysicalObject::ID, QubitRelation::SUBJECT_ID);
     $criteria->addJoin(QubitRelation::OBJECT_ID, QubitInformationObject::ID);
     $criteria->add(QubitPhysicalObject::ID, $this->id);
@@ -125,7 +125,7 @@ class QubitPhysicalObject extends BasePhysicalObject
    */
   public static function getPhysicalObjectsByNameAndLocation($name, $location, $typeId)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitPhysicalObject::ID, QubitPhysicalObjectI18n::ID);
 
     if ($typeId)
@@ -153,7 +153,7 @@ class QubitPhysicalObject extends BasePhysicalObject
    */
   public static function getByName($name, $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     $criteria->addJoin(QubitPhysicalObject::ID, QubitPhysicalObjectI18n::ID);
 
@@ -237,7 +237,7 @@ class QubitPhysicalObject extends BasePhysicalObject
 
     foreach ($newInfobjIds as $infobjId)
     {
-      $relation = new QubitRelation;
+      $relation = new QubitRelation();
       $relation->subjectId = $this->id;
       $relation->objectId  = $infobjId;
       $relation->typeId    = QubitTerm::HAS_PHYSICAL_OBJECT_ID;

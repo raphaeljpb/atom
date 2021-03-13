@@ -295,8 +295,8 @@ EOF;
    */
   private function getSlugStringFromES($id, $property)
   {
-    $query = new \Elastica\Query;
-    $queryBool = new \Elastica\Query\BoolQuery;
+    $query = new \Elastica\Query();
+    $queryBool = new \Elastica\Query\BoolQuery();
 
     $queryBool->addMust(new \Elastica\Query\Term(array('_id' => $id)));
     $query->setQuery($queryBool);

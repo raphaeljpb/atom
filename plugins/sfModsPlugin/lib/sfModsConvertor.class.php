@@ -285,7 +285,7 @@ class sfModsConvertor extends QubitSaxParser
     if ($this->attr('type') == 'host')
     {
       // Lookup parent using identifier
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitInformationObject::IDENTIFIER, $this->attr('ID'));
       $resource = QubitInformationObject::getOne($criteria);
 
@@ -349,7 +349,7 @@ class sfModsConvertor extends QubitSaxParser
     {
       if (!empty($noteSpec['content']))
       {
-        $note = new QubitNote;
+        $note = new QubitNote();
         $note->objectId = $this->resource->id;
         $note->typeId = $noteSpec['typeId'];
         $note->content = $noteSpec['content'];
@@ -519,7 +519,7 @@ class sfModsConvertor extends QubitSaxParser
     foreach ($digitalObjects as $digitalObject)
     {
       // Import digital object
-      $do = new QubitDigitalObject;
+      $do = new QubitDigitalObject();
       $do->informationObjectId = $this->resource->id;
       $do->usageId = QubitTerm::MASTER_ID;
       $do->assets[] = new QubitAsset(

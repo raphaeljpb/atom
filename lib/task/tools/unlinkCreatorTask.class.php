@@ -76,7 +76,7 @@ EOF;
     // Get actor records from slug if supplied.
     if ($options['creator-slug'])
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->addJoin(QubitActor::ID, QubitSlug::OBJECT_ID);
       $criteria->add(QubitSlug::SLUG, $options['creator-slug']);
       $this->actor = QubitActor::getOne($criteria);
@@ -89,7 +89,7 @@ EOF;
     // Get IO from slug if supplied.
     if ($options['description-slug'])
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->addJoin(QubitInformationObject::ID, QubitSlug::OBJECT_ID);
       $criteria->add(QubitSlug::SLUG, $options['description-slug']);
       $io = QubitInformationObject::getOne($criteria);
@@ -106,7 +106,7 @@ EOF;
     }
 
     // Get affected io records via event table.
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitInformationObject::ID, QubitEvent::OBJECT_ID);
     $criteria->addJoin(QubitActor::ID, QubitEvent::ACTOR_ID);
     $criteria->addGroupByColumn(QubitInformationObject::ID);

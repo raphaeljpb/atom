@@ -118,11 +118,11 @@ EOF;
     // Write XML
     $writer = new SitemapWriter($options['output-directory'], $options['base-url'], $options['indent'], !$options['no-compress']);
     $this->log('Indexing information objects');
-    $writer->addSet(new SitemapInformationObjectSet);
+    $writer->addSet(new SitemapInformationObjectSet());
     $this->log('Indexing actors');
-    $writer->addSet(new SitemapActorSet);
+    $writer->addSet(new SitemapActorSet());
     $this->log('Indexing static pages');
-    $writer->addSet(new SitemapStaticPageSet);
+    $writer->addSet(new SitemapStaticPageSet());
     $writer->end();
 
     // Sitemap submission
@@ -130,7 +130,7 @@ EOF;
     {
       $location = $options['base-url'].'/sitemap.xml';
 
-      $client = new sfWebBrowser;
+      $client = new sfWebBrowser();
       foreach (self::$urls as $sName => $sUrl)
       {
         $url = sprintf($sUrl, $location);

@@ -36,7 +36,7 @@ class ApiInformationObjectsDownloadDigitalObjectAction extends QubitApiAction
     // Check user authorization
     if (!QubitAcl::check($this->resource, 'readMaster'))
     {
-      throw new QubitApiNotAuthorizedException;
+      throw new QubitApiNotAuthorizedException();
     }
 
     // Check, if I.O. isn't published, that user is authorized to access drafts
@@ -47,12 +47,12 @@ class ApiInformationObjectsDownloadDigitalObjectAction extends QubitApiAction
       && !QubitAcl::check($this->resource, 'viewDraft')
     )
     {
-      throw new QubitApiNotAuthorizedException;
+      throw new QubitApiNotAuthorizedException();
     }
 
     // Check that a master or external digital object exists
     $digitalObjectTypes = array(QubitTerm::MASTER_ID, QubitTerm::EXTERNAL_URI_ID);
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitDigitalObject::USAGE_ID, $digitalObjectTypes, Criteria::IN);
     if (null === $this->do = QubitDigitalObject::getOne($criteria))

@@ -49,34 +49,34 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
     switch ($name)
     {
       case 'authorizedFormOfName':
-        $this->form->setValidator('authorizedFormOfName', new sfValidatorString);
+        $this->form->setValidator('authorizedFormOfName', new sfValidatorString());
         $this->form->setWidget('authorizedFormOfName', new sfWidgetFormSelect(array('choices' => array())));
 
         break;
 
       case 'type':
         $this->form->setDefault('type', $this->context->routing->generate(null, array(QubitTerm::getById(QubitTerm::DONOR_ID), 'module' => 'term')));
-        $this->form->setValidator('type', new sfValidatorString);
-        $this->form->setWidget('type', new sfWidgetFormInputHidden);
+        $this->form->setValidator('type', new sfValidatorString());
+        $this->form->setWidget('type', new sfWidgetFormInputHidden());
 
         break;
 
       case 'latitude':
       case 'longitude':
-        $this->form->setValidator($name, new sfValidatorNumber);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorNumber());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
       case 'streetAddress':
       case 'note':
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $this->form->setWidget($name, new sfWidgetFormTextArea(array(), array('rows' => 2)));
 
         break;
 
       case 'countryCode':
-        $this->form->setValidator('countryCode', new sfValidatorI18nChoiceCountry);
+        $this->form->setValidator('countryCode', new sfValidatorI18nChoiceCountry());
         $this->form->setWidget('countryCode', new sfWidgetFormI18nChoiceCountry(array('add_empty' => true, 'culture' => $this->context->user->getCulture())));
 
         break;
@@ -90,8 +90,8 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
       case 'contactType':
       case 'fax':
       case 'website':
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         // no break
       default:
@@ -116,7 +116,7 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
 
           if (null === $this->contactInformation = $this->relation->object->getPrimaryContact())
           {
-            $this->contactInformation = new QubitContactInformation;
+            $this->contactInformation = new QubitContactInformation();
           }
         }
 

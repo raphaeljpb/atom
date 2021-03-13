@@ -41,7 +41,7 @@ class arRestApiPluginUtils
     }
     else
     {
-      $dt = new DateTime;
+      $dt = new DateTime();
 
       /**
        * [ TEMPORARY HACK ]

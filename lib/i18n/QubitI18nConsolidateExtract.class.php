@@ -204,7 +204,7 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
     $translations = array();
     foreach ($files as $file)
     {
-      $yaml = new sfYaml;
+      $yaml = new sfYaml();
       $fixtures = $yaml->load($file);
 
       if (null == $fixtures)

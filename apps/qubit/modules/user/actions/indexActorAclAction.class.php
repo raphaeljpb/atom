@@ -56,7 +56,7 @@ class UserIndexActorAclAction extends sfAction
     $this->tableCols = count($this->userGroups) + 3;
 
     // Get access control permissions for actors
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
     $c1 = $criteria->getNewCriterion(QubitAclPermission::USER_ID, $this->resource->id);
     if (1 == count($this->userGroups))

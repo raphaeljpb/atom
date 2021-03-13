@@ -72,7 +72,7 @@ class DefaultUpdateCheckComponent extends sfComponent
       {
         try
         {
-          $browser = new sfWebBrowser;
+          $browser = new sfWebBrowser();
           $this->lastVersion = $browser->post($this->updateCheckUrl, $this->updateCheckData)->getResponseText();
         }
         catch (Exception $e)

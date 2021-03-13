@@ -61,7 +61,7 @@ class QubitActor extends BaseActor
 
         if (!isset($this->values[$name]))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
@@ -99,7 +99,7 @@ class QubitActor extends BaseActor
 
         if (!isset($this->values[$name]))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
@@ -109,7 +109,7 @@ class QubitActor extends BaseActor
           }
           else
           {
-            $this->values[$name] = new QubitProperty;
+            $this->values[$name] = new QubitProperty();
             $this->values[$name]->name = $name;
             $this->propertys[] = $this->values[$name];
           }
@@ -333,7 +333,7 @@ class QubitActor extends BaseActor
   {
     //returns all Actor objects except those that are
     //also an instance of the User class
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitObject::CLASS_NAME, 'QubitActor');
 
     // sort by name
@@ -393,7 +393,7 @@ class QubitActor extends BaseActor
   {
     if (is_null($criteria))
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
     }
 
     $criteria = QubitActor::addGetOnlyActorsCriteria($criteria);
@@ -437,7 +437,7 @@ class QubitActor extends BaseActor
 
   public function getProperties($name = null, $scope = null)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitProperty::OBJECT_ID, $this->id);
     if ($name)
     {
@@ -453,7 +453,7 @@ class QubitActor extends BaseActor
 
   public function getActorNotes()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitNote::TYPE_ID, QubitTerm::ID);
     $criteria->add(QubitNote::OBJECT_ID, $this->id);
     $criteria->add(QubitNote::SCOPE, 'QubitActor');
@@ -463,7 +463,7 @@ class QubitActor extends BaseActor
 
   public function getContactInformation()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitContactInformation::ACTOR_ID, $this->id);
     $criteria->addDescendingOrderByColumn(QubitContactInformation::PRIMARY_CONTACT);
     $contactInformation = QubitContactInformation::get($criteria);
@@ -473,7 +473,7 @@ class QubitActor extends BaseActor
 
   public function getPrimaryContact()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitContactInformation::ACTOR_ID, $this->id);
     $criteria->add(QubitContactInformation::PRIMARY_CONTACT, true);
     $primaryContact = QubitContactInformation::getOne($criteria);
@@ -484,7 +484,7 @@ class QubitActor extends BaseActor
     }
     else
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitContactInformation::ACTOR_ID, $this->id);
 
       return QubitContactInformation::getOne($criteria);
@@ -511,7 +511,7 @@ class QubitActor extends BaseActor
    */
   public function setTermRelation($termId, $relationNote = null)
   {
-    $newTermRelation = new QubitObjectTermRelation;
+    $newTermRelation = new QubitObjectTermRelation();
     $newTermRelation->setTermId($termId);
 
     //TODO: move to QubitNote
@@ -528,7 +528,7 @@ class QubitActor extends BaseActor
    */
   public function getTermRelations($taxonomyId = 'all')
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->id);
 
     if ($taxonomyId != 'all')
@@ -554,7 +554,7 @@ class QubitActor extends BaseActor
    */
   public function getActorRelations()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitRelation::TYPE_ID, QubitTerm::ID);
     $criteria->add($criteria->getNewCriterion(QubitRelation::OBJECT_ID, $this->id)
       ->addOr($criteria->getNewCriterion(QubitRelation::SUBJECT_ID, $this->id))
@@ -617,7 +617,7 @@ class QubitActor extends BaseActor
 
   public function getResourceRelations()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitInformationObject::ID, QubitEvent::OBJECT_ID);
     $criteria->addGroupByColumn(QubitInformationObject::ID);
     $criteria->add(QubitEvent::ACTOR_ID, $this->id);
@@ -627,7 +627,7 @@ class QubitActor extends BaseActor
 
   public function getMaintainingRepository()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::OBJECT_ID, $this->id);
     $criteria->add(QubitRelation::TYPE_ID, QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID);
 
@@ -639,7 +639,7 @@ class QubitActor extends BaseActor
 
   public function setOrDeleteMaintainingRepository($repository = null)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::OBJECT_ID, $this->id);
     $criteria->add(QubitRelation::TYPE_ID, QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID);
     $relation = QubitRelation::getOne($criteria);
@@ -656,7 +656,7 @@ class QubitActor extends BaseActor
 
     if (!isset($relation))
     {
-      $relation = new QubitRelation;
+      $relation = new QubitRelation();
       $relation->typeId = QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID;
       $relation->subjectId = $repository->id;
       $this->relationsRelatedByobjectId[] = $relation;
@@ -670,7 +670,7 @@ class QubitActor extends BaseActor
 
   public function getOccupations()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $this->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
     QubitObjectTermRelation::addJoinTermCriteria($criteria);
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::ACTOR_OCCUPATION_ID);
@@ -685,7 +685,7 @@ class QubitActor extends BaseActor
 
   public function getPlaceAccessPoints()
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->id);
     $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
@@ -696,7 +696,7 @@ class QubitActor extends BaseActor
 
   public static function setTermRelationByName($name, $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
     $criteria->add(QubitTerm::TAXONOMY_ID, $options['taxonomyId']);
     $criteria->add(QubitTermI18n::NAME, $name);
@@ -713,7 +713,7 @@ class QubitActor extends BaseActor
       $term = QubitFlatfileImport::createTerm($options['taxonomyId'], $name, $culture);
     }
 
-    $relation = new QubitObjectTermRelation;
+    $relation = new QubitObjectTermRelation();
     $relation->term = $term;
 
     return $relation;
@@ -750,9 +750,9 @@ class QubitActor extends BaseActor
 
       foreach ($uris as $uri)
       {
-        $actor = new QubitActor;
+        $actor = new QubitActor();
 
-        $digitalObject = new QubitDigitalObject;
+        $digitalObject = new QubitDigitalObject();
         $digitalObject->usageId = QubitTerm::MASTER_ID;
 
         try
@@ -773,7 +773,7 @@ class QubitActor extends BaseActor
     }
     else
     {
-      $digitalObject = new QubitDigitalObject;
+      $digitalObject = new QubitDigitalObject();
       $digitalObject->usageId = QubitTerm::MASTER_ID;
 
       if (is_array($uris))
@@ -806,7 +806,7 @@ class QubitActor extends BaseActor
    */
   public function importDigitalObjectFromBase64($encodedString, $filename)
   {
-    $digitalObject = new QubitDigitalObject;
+    $digitalObject = new QubitDigitalObject();
     $digitalObject->usageId = QubitTerm::MASTER_ID;
     $digitalObject->importFromBase64($encodedString, $filename);
 

@@ -26,7 +26,7 @@ class aclGroupListAction extends sfAction
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitAclGroup::ID, QubitAclGroup::ROOT_ID, Criteria::NOT_EQUAL);
     $criteria->addAscendingOrderByColumn('name');
 

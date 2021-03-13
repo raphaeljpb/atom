@@ -192,7 +192,7 @@ EOF;
               $self->status['eventTypes'][$typeId] = $type;
             }
 
-            $event = new QubitEvent;
+            $event = new QubitEvent();
             $event->objectId = $objectId;
             $event->typeId              = $typeId;
             $event->actorId             = $subjectId;

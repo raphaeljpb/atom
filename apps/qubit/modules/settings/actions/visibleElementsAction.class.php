@@ -32,8 +32,8 @@ class SettingsVisibleElementsAction extends sfAction
     $name = $setting->name;
 
     $this->form->setDefault($name, (bool) $setting->getValue(array('sourceCulture' => true)));
-    $this->form->setValidator($name, new sfValidatorBoolean);
-    $this->form->setWidget($name, new sfWidgetFormInputCheckbox);
+    $this->form->setValidator($name, new sfValidatorBoolean());
+    $this->form->setWidget($name, new sfWidgetFormInputCheckbox());
   }
 
   protected function processForm()
@@ -58,7 +58,7 @@ class SettingsVisibleElementsAction extends sfAction
     // Create if it does not exist
     if (null === $setting = QubitSetting::getByNameAndScope($name, 'element_visibility'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name  = $name;
       $setting->scope = 'element_visibility';
       $setting->culture = 'en';
@@ -74,7 +74,7 @@ class SettingsVisibleElementsAction extends sfAction
 
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     foreach (QubitSetting::getByScope('element_visibility') as $item)
     {

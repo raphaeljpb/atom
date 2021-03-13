@@ -28,7 +28,7 @@ class SettingsInventoryAction extends DefaultEditAction
     $this->settingLevels = QubitSetting::getByName('inventory_levels');
     if (null === $this->settingLevels)
     {
-      $this->settingLevels = new QubitSetting;
+      $this->settingLevels = new QubitSetting();
       $this->settingLevels->name = 'inventory_levels';
     }
   }
@@ -53,7 +53,7 @@ class SettingsInventoryAction extends DefaultEditAction
           $this->form->setDefault('levels', $value);
         }
 
-        $this->form->setValidator('levels', new sfValidatorPass);
+        $this->form->setValidator('levels', new sfValidatorPass());
 
         $choices = array();
         foreach (QubitTerm::getLevelsOfDescription() as $item)

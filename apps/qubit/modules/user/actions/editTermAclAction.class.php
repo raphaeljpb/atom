@@ -39,7 +39,7 @@ class UserEditTermAclAction extends DefaultEditAction
     if (isset($this->resource->id))
     {
       // Get info object permissions for this group
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
       $criteria->add(QubitAclPermission::USER_ID, $this->resource->id);
       $c1 = $criteria->getNewCriterion(QubitAclPermission::OBJECT_ID, null, Criteria::ISNULL);
@@ -71,7 +71,7 @@ class UserEditTermAclAction extends DefaultEditAction
         }
 
         $this->form->setDefault('taxonomy', null);
-        $this->form->setValidator('taxonomy', new sfValidatorString);
+        $this->form->setValidator('taxonomy', new sfValidatorString());
         $this->form->setWidget('taxonomy', new sfWidgetFormSelect(array('choices' => $choices)));
 
         break;
@@ -91,7 +91,7 @@ class UserEditTermAclAction extends DefaultEditAction
 
         if (QubitAcl::INHERIT != $value && isset(QubitAcl::$ACTIONS[$action]))
         {
-          $aclPermission = new QubitAclPermission;
+          $aclPermission = new QubitAclPermission();
           $aclPermission->action = $action;
           $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
 

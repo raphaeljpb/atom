@@ -31,24 +31,24 @@ class ObjectAddDigitalObjectAction extends sfAction
     // Single upload
     if (0 < count($request->getFiles()))
     {
-      $this->form->setValidator('file', new sfValidatorFile);
+      $this->form->setValidator('file', new sfValidatorFile());
     }
 
-    $this->form->setWidget('file', new sfWidgetFormInputFile);
+    $this->form->setWidget('file', new sfWidgetFormInputFile());
 
     // URL
     if (isset($request->url) && 'http://' != $request->url)
     {
-      $this->form->setValidator('url', new QubitValidatorUrl);
+      $this->form->setValidator('url', new QubitValidatorUrl());
     }
 
     $this->form->setDefault('url', 'http://');
-    $this->form->setWidget('url', new sfWidgetFormInput);
+    $this->form->setWidget('url', new sfWidgetFormInput());
   }
 
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     $this->resource = $this->getRoute()->resource;
@@ -136,7 +136,7 @@ class ObjectAddDigitalObjectAction extends sfAction
    */
   public function processForm()
   {
-    $digitalObject = new QubitDigitalObject;
+    $digitalObject = new QubitDigitalObject();
 
     if (null !== $this->form->getValue('file'))
     {

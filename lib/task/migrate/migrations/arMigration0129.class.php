@@ -42,7 +42,7 @@ class arMigration0129
     // Create RAD note types if they don't already exist
     foreach($newRadNotes as $note)
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitTerm::PARENT_ID, QubitTerm::ROOT_ID);
       $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::RAD_NOTE_ID);
       $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
@@ -51,7 +51,7 @@ class arMigration0129
 
       if (QubitTerm::getOne($criteria) == null)
       {
-        $term = new QubitTerm;
+        $term = new QubitTerm();
         $term->name = $note;
         $term->culture = 'en';
         $term->parentId = QubitTerm::ROOT_ID;

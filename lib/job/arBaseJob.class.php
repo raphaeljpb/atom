@@ -227,7 +227,7 @@ class arBaseJob extends Net_Gearman_Job_Common
     $now = new DateTime('now');
     $oldDate = date_sub($now, date_interval_create_from_date_string('2 days'));
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitJob::CREATED_AT, $oldDate, Criteria::LESS_THAN);
     $criteria->add(QubitJob::USER_ID, null, Criteria::ISNULL);
 

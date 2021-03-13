@@ -134,7 +134,7 @@ class SettingsTreeviewAction extends DefaultEditAction
             'max' => sfConfig::get('app_treeview_items_per_page_max', 10000)
           )
         ));
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
     }
@@ -203,7 +203,7 @@ class SettingsTreeviewAction extends DefaultEditAction
   {
     if (!isset($setting))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->name = $name;
       $setting->sourceCulture = 'en';
     }

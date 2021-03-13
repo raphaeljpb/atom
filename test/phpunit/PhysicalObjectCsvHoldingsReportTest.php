@@ -103,7 +103,7 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
     $this->expectException(TypeError::class);
     $report = new QubitPhysicalObjectCsvHoldingsReport();
     $report->setOptions(1);
-    $report->setOptions(new stdClass);
+    $report->setOptions(new stdClass());
   }
 
   public function testSetValidOptions()

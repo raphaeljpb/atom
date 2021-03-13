@@ -29,7 +29,7 @@ class TermTreeViewComponent extends sfComponent
 
     if ($this->resource instanceof QubitTaxonomy)
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitTerm::TAXONOMY_ID, $this->resource->id);
       $criteria->add(QubitTerm::PARENT_ID, QubitTerm::ROOT_ID);
       $criteria->addAscendingOrderByColumn('name');

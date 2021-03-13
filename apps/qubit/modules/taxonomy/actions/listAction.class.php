@@ -26,7 +26,7 @@ class TaxonomyListAction extends sfAction
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     // Show only editable taxonomies
     $criteria = QubitTaxonomy::addEditableTaxonomyCriteria($criteria);

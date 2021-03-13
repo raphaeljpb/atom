@@ -48,7 +48,7 @@ class SettingsPrivacyNotificationAction extends SettingsEditAction
 
       case 'privacy_notification':
         $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
     }

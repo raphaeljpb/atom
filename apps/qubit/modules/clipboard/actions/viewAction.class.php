@@ -43,7 +43,7 @@ class ClipboardViewAction extends DefaultBrowseAction
 
     if (empty($slugs))
     {
-      $resultSet = new \Elastica\ResultSet(new Elastica\Response(null), new Elastica\Query, array());
+      $resultSet = new \Elastica\ResultSet(new Elastica\Response(null), new Elastica\Query(), array());
     }
     else
     {

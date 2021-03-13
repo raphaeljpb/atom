@@ -138,7 +138,7 @@ class arElasticSearchActorPdo
       return;
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::PARENT_ID, $this->__get('digital_object_id'));
     $criteria->add(QubitDigitalObject::USAGE_ID, QubitTerm::THUMBNAIL_ID);
 
@@ -155,7 +155,7 @@ class arElasticSearchActorPdo
       return;
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::PARENT_ID, $this->__get('digital_object_id'));
 
     if (null !== $do = QubitDigitalObject::getOne($criteria))

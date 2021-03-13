@@ -169,9 +169,9 @@ class TaxonomyIndexAction extends sfAction
     $this->query->setSize($request->limit);
     $this->query->setFrom(($request->page - 1) * $request->limit);
 
-    $this->queryBool = new \Elastica\Query\BoolQuery;
+    $this->queryBool = new \Elastica\Query\BoolQuery();
 
-    $query = new \Elastica\Query\Term;
+    $query = new \Elastica\Query\Term();
     $query->setTerm('taxonomyId', $this->resource->id);
     $this->queryBool->addMust($query);
 

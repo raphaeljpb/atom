@@ -21,7 +21,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
 {
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->defaultTemplate = sfConfig::get('app_default_template_informationobject');
 
     if (!$this->context->user->isAdministrator())
@@ -29,7 +29,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
       QubitAcl::forwardUnauthorized();
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, 'plugins');
     if (1 == count($query = QubitSetting::get($criteria)))
     {
@@ -76,7 +76,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
       {
         if (1 != count($query))
         {
-          $setting = new QubitSetting;
+          $setting = new QubitSetting();
           $setting->name = 'plugins';
         }
 
@@ -133,7 +133,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
 
     if (is_dir($webDir))
     {
-      $filesystem = new sfFilesystem;
+      $filesystem = new sfFilesystem();
       $filesystem->relativeSymlink($webDir, sfConfig::get('sf_web_dir').'/'.$name, true);
     }
   }

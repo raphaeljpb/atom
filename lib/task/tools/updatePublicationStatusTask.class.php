@@ -48,7 +48,7 @@ EOF;
   {
     parent::execute($arguments, $options);
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitSlug::SLUG, $arguments['slug']);
     $criteria->addJoin(QubitSlug::OBJECT_ID, QubitObject::ID);
 
@@ -100,7 +100,7 @@ EOF;
     }
     else
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitInformationObject::REPOSITORY_ID, $resource->id);
 
       foreach(QubitInformationObject::get($criteria) as $item)
@@ -126,7 +126,7 @@ EOF;
       {
         if (null === $descendantPubStatus = $descendant->getPublicationStatus())
         {
-          $descendantPubStatus = new QubitStatus;
+          $descendantPubStatus = new QubitStatus();
           $descendantPubStatus->typeId = QubitTerm::STATUS_TYPE_PUBLICATION_ID;
           $descendantPubStatus->objectId = $descendant->id;
         }

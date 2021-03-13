@@ -2,7 +2,7 @@
 
 include dirname(__FILE__).'/../../bootstrap/functional.php';
 
-$browser = new sfTestFunctional(new sfBrowser);
+$browser = new sfTestFunctional(new sfBrowser());
 
 // Based in the search scenario described by Glenn Dingwall
 // See https://projects.artefactual.com/issues/4654
@@ -46,11 +46,11 @@ $cases = array(
 foreach ($cases as $item)
 {
   $title = $item[0];
-  $informationObject = new QubitInformationObject;
+  $informationObject = new QubitInformationObject();
   $informationObject->title = $title;
   $informationObject->parentId = QubitInformationObject::ROOT_ID;
   $informationObject->setPublicationStatus(QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID);
-  $event = new QubitEvent;
+  $event = new QubitEvent();
   $event->typeId = QubitTerm::CREATION_ID;
   $event->startDate = $item[1];
   $event->endDate = $item[2];

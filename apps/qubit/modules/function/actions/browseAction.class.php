@@ -70,7 +70,7 @@ class FunctionBrowseAction extends sfAction
       $sortFunction = 'addDescendingOrderByColumn';
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     if (isset($request->subquery))
     {

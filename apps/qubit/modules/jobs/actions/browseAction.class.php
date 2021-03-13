@@ -54,7 +54,7 @@ class JobsBrowseAction extends DefaultBrowseAction
       $this->filter = 'all';
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     // Filter out the history of other users' jobs if not an administrator.
     if (!$this->user->isAdministrator())

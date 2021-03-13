@@ -72,7 +72,7 @@ class QubitHtmlPurifier
   {
     if (!isset(self::$instance))
     {
-      self::$instance = new QubitHtmlPurifier;
+      self::$instance = new QubitHtmlPurifier();
     }
 
     return self::$instance;

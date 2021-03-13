@@ -53,7 +53,7 @@ class SettingsMarkdownAction extends DefaultEditAction
       case 'enabled':
         if (null === $this->settingEnabled)
         {
-          $this->settingEnabled = new QubitSetting;
+          $this->settingEnabled = new QubitSetting();
           $this->settingEnabled->name = 'markdown_enabled';
           $this->settingEnabled->sourceCulture = 'en';
         }

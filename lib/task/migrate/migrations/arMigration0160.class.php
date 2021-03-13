@@ -39,7 +39,7 @@ class arMigration0160
   public function up($configuration)
   {
     // Update path of places menu item
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitMenu::NAME, 'browsePlaces');
 
     $menu = QubitMenu::getOne($criteria);
@@ -51,7 +51,7 @@ class arMigration0160
     }
 
     // Update path of subjects menu item
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitMenu::NAME, 'browseSubjects');
 
     $menu = QubitMenu::getOne($criteria);

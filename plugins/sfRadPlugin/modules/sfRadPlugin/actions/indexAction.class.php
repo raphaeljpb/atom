@@ -50,7 +50,7 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
 
     if (QubitAcl::check($this->resource, 'update'))
     {
-      $validatorSchema = new sfValidatorSchema;
+      $validatorSchema = new sfValidatorSchema();
       $values = array();
 
       $validatorSchema->dates = new QubitValidatorCountable(array(

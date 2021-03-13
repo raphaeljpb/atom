@@ -56,21 +56,21 @@ class SettingsSiteInformationAction extends SettingsEditAction
     switch ($name)
     {
       case 'siteTitle':
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
         $this->form->setValidator($name, new sfValidatorString(array('required' => false)));
         $this->form->getWidgetSchema()->$name->setLabel($this->i18n->__('Site title'));
 
         break;
 
       case 'siteDescription':
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
         $this->form->setValidator($name, new sfValidatorString(array('required' => false)));
         $this->form->getWidgetSchema()->$name->setLabel($this->i18n->__('Site description'));
 
         break;
 
       case 'siteBaseUrl':
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setWidget($name, new sfWidgetFormInput());
         $this->form->setValidator($name, new sfValidatorString(array('required' => false)));
         $this->form->getWidgetSchema()->$name->setLabel(
           $this->i18n->__('Site base URL (used in MODS and EAD exports)'));

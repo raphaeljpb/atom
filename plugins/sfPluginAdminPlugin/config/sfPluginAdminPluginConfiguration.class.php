@@ -36,7 +36,7 @@ class sfPluginAdminPluginConfiguration extends sfPluginConfiguration
 
     new sfDatabaseManager($this->configuration);
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, 'plugins');
 
     try

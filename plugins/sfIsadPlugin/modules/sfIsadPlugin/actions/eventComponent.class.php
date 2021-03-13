@@ -52,7 +52,7 @@ class sfIsadPluginEventComponent extends InformationObjectEventComponent
           $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
         }
 
-        $this->form->setValidator('type', new sfValidatorString);
+        $this->form->setValidator('type', new sfValidatorString());
         $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
 
         break;
@@ -99,7 +99,7 @@ class sfIsadPluginEventComponent extends InformationObjectEventComponent
         }
         else
         {
-          $this->resource->eventsRelatedByobjectId[] = $this->event = new QubitEvent;
+          $this->resource->eventsRelatedByobjectId[] = $this->event = new QubitEvent();
         }
 
         foreach ($this->form as $field)

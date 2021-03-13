@@ -26,7 +26,7 @@ class StaticPageListAction extends sfAction
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
 
     // Page results
     $this->pager = new QubitPager('QubitStaticPage');

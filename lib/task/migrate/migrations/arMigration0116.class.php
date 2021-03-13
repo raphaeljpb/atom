@@ -40,7 +40,7 @@ class arMigration0116
 
     foreach ($termNames as $oldName => $newName)
     {
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
       $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MODS_RESOURCE_TYPE_ID);
       $criteria->add(QubitTermI18n::CULTURE, 'en');
@@ -53,7 +53,7 @@ class arMigration0116
       }
     }
 
-    $setting = new QubitSetting;
+    $setting = new QubitSetting();
     $setting->setName('publicFindingAid');
     $setting->setValue(1);
     $setting->setEditable(1);

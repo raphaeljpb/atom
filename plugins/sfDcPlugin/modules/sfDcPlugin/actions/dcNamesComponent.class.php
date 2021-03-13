@@ -54,7 +54,7 @@ class sfDcPluginDcNamesComponent extends InformationObjectEventComponent
         }
         if (is_null($this->event))
         {
-          $this->resource->eventsRelatedByobjectId[] = $this->event = new QubitEvent;
+          $this->resource->eventsRelatedByobjectId[] = $this->event = new QubitEvent();
         }
 
         $dontDeleteIds[] = $this->event->id;

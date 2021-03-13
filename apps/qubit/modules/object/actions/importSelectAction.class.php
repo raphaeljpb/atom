@@ -33,8 +33,8 @@ class ObjectImportSelectAction extends DefaultEditAction
       $this->resource = $this->getRoute()->resource;
 
       $this->form->setDefault('parent', $this->context->routing->generate(null, array($this->resource)));
-      $this->form->setValidator('parent', new sfValidatorString);
-      $this->form->setWidget('parent', new sfWidgetFormInputHidden);
+      $this->form->setValidator('parent', new sfValidatorString());
+      $this->form->setWidget('parent', new sfWidgetFormInputHidden());
     }
   }
 
@@ -44,7 +44,7 @@ class ObjectImportSelectAction extends DefaultEditAction
     {
       case 'repos':
         // Get list of repositories
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         // Do source culture fallback
         $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');
         // Ignore root repository
@@ -73,7 +73,7 @@ class ObjectImportSelectAction extends DefaultEditAction
         break;
 
       case 'collection':
-        $this->form->setValidator($name, new sfValidatorString);
+        $this->form->setValidator($name, new sfValidatorString());
         $choices = array();
 
         if (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection'])

@@ -40,7 +40,7 @@ class arMigration0114
   public function up($configuration)
   {
     // Add setting for enabling OAI API key authentication
-    $setting = new QubitSetting;
+    $setting = new QubitSetting();
     $setting->name = 'oai_authentication_enabled';
     $setting->scope = 'oai';
     $setting->editable = 1;

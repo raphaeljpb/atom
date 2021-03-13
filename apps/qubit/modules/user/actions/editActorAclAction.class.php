@@ -38,7 +38,7 @@ class UserEditActorAclAction extends DefaultEditAction
     $this->actors = array(QubitActor::ROOT_ID => null);
 
     // Get actor permissions for this group
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
     $criteria->add(QubitAclPermission::USER_ID, $this->resource->id);
     $c1 = $criteria->getNewCriterion(QubitAclPermission::OBJECT_ID, null, Criteria::ISNULL);
@@ -80,7 +80,7 @@ class UserEditActorAclAction extends DefaultEditAction
 
         if (QubitAcl::INHERIT != $value && isset(QubitAcl::$ACTIONS[$action]))
         {
-          $aclPermission = new QubitAclPermission;
+          $aclPermission = new QubitAclPermission();
           $aclPermission->action = $action;
           $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
           $aclPermission->object = $resource;

@@ -64,7 +64,7 @@ class SitemapInformationObjectUrl extends AbstractSitemapUrl
         continue;
       }
 
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
       $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
       $criteria->add(QubitTermI18n::NAME, $level);

@@ -46,7 +46,7 @@ class InformationObjectCalculateDatesAction extends sfAction
         $this->eventIdOrTypeId = $field->getValue();
 
         // Determine whether ID belongs to an event or a type (term)
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitObject::ID, $this->eventIdOrTypeId);
 
         if (null !== $object = QubitObject::getOne($criteria))
@@ -75,7 +75,7 @@ class InformationObjectCalculateDatesAction extends sfAction
 
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->resource = $this->getRoute()->resource;
     $this->i18n = $this->context->i18n;
 
@@ -189,7 +189,7 @@ class InformationObjectCalculateDatesAction extends sfAction
 
     $events = array();
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitEvent::OBJECT_ID, $resource->id);
 
     // Assemble array of descriptions for any events containing date information

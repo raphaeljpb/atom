@@ -45,7 +45,7 @@ class InformationObjectItemOrFileListAction extends sfAction
       $this->forward404();
     }
 
-    $this->form = new sfForm;
+    $this->form = new sfForm();
 
     foreach ($this::$NAMES as $name)
     {

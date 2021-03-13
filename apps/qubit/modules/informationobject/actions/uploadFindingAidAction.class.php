@@ -53,7 +53,7 @@ class InformationObjectUploadFindingAidAction extends sfAction
     }
 
     // Create form for file upload
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->setWidget('file', new sfWidgetFormInputFile(array(), array('accept' => $accept)));
     $this->form->setValidator('file', new sfValidatorFile(array('required' => true, 'mime_types' => $mimeTypes)));
 

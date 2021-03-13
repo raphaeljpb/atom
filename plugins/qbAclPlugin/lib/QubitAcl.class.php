@@ -60,7 +60,7 @@ class QubitAcl
       $this->_user = $user;
     }
 
-    $this->acl = new Zend_Acl;
+    $this->acl = new Zend_Acl();
     $this->buildUserRoleList($this->_user);
   }
 
@@ -411,7 +411,7 @@ class QubitAcl
     }
 
     // Add all permissions related to the current roles and resources
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $c1 = $criteria->getNewCriterion(QubitAclPermission::GROUP_ID, $this->_roles, Criteria::IN);
     if ($this->_user->isAuthenticated())
     {
@@ -541,7 +541,7 @@ class QubitAcl
       $userId = sfContext::getInstance()->user->getUserID();
 
       // Test user permissions
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitAclPermission::USER_ID, $userId);
 
       // "Null" action == all actions
@@ -574,7 +574,7 @@ class QubitAcl
         $userGroupIds[] = $group->id;
       }
 
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitAclPermission::GROUP_ID, $userGroupIds, Criteria::IN);
       $c1 = $criteria->getNewCriterion(QubitAclPermission::ACTION, $action);
       $c2 = $criteria->getNewCriterion(QubitAclPermission::ACTION, null, Criteria::ISNULL);
@@ -688,7 +688,7 @@ class QubitAcl
     }
 
     // Find relevant rules
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $c1 = $criteria->getNewCriterion(QubitAclPermission::ACTION, $action);
     $c2 = $criteria->getNewCriterion(QubitAclPermission::ACTION, null, Criteria::ISNULL);
     $c1->addOr($c2);
@@ -778,7 +778,7 @@ class QubitAcl
           case 'createTerm':
             if (null !== $slug = $permission->getConstants(array('name' => 'taxonomy')))
             {
-              $criteria2 = new Criteria;
+              $criteria2 = new Criteria();
               $criteria2->add(QubitSlug::SLUG, $slug);
               $criteria2->addJoin(QubitSlug::OBJECT_ID, QubitTaxonomy::ID);
 

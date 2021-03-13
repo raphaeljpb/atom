@@ -54,7 +54,7 @@ class InformationObjectSlugPreviewAction extends sfAction
     {
       $slugText = QubitSlug::slugify($text);
 
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->add(QubitSlug::SLUG, $slugText);
 
       // Padded text if slugified text slug is used by another resource

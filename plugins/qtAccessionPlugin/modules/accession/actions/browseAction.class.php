@@ -88,15 +88,15 @@ class AccessionBrowseAction extends sfAction
 
     $culture = $this->context->user->getCulture();
 
-    $this->query = new \Elastica\Query;
+    $this->query = new \Elastica\Query();
     $this->query->setSize($request->limit);
     $this->query->setFrom(($request->page - 1) * $request->limit);
 
-    $this->queryBool = new \Elastica\Query\BoolQuery;
+    $this->queryBool = new \Elastica\Query\BoolQuery();
 
     if (1 === preg_match('/^[\s\t\r\n]*$/', $request->subquery))
     {
-      $this->queryBool->addMust(new \Elastica\Query\MatchAll);
+      $this->queryBool->addMust(new \Elastica\Query\MatchAll());
     }
     else
     {

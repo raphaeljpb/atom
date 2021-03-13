@@ -53,7 +53,7 @@ class sfIsdfPlugin implements ArrayAccess
 
         if (!isset($this->maintenanceNote))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->add(QubitNote::OBJECT_ID, $this->resource->id);
           $criteria->add(QubitNote::TYPE_ID, QubitTerm::MAINTENANCE_NOTE_ID);
 
@@ -63,7 +63,7 @@ class sfIsdfPlugin implements ArrayAccess
           }
           else
           {
-            $this->maintenanceNote = new QubitNote;
+            $this->maintenanceNote = new QubitNote();
             $this->maintenanceNote->typeId = QubitTerm::MAINTENANCE_NOTE_ID;
 
             $this->resource->notes[] = $this->maintenanceNote;
@@ -80,7 +80,7 @@ class sfIsdfPlugin implements ArrayAccess
 
         if (!isset($this->relatedAuthorityRecord))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->add(QubitRelation::SUBJECT_ID, $this->resource->id);
           $criteria->addJoin(QubitRelation::OBJECT_ID, QubitActor::ID);
 
@@ -93,7 +93,7 @@ class sfIsdfPlugin implements ArrayAccess
 
         if (!isset($this->relatedFunction))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->add($criteria->getNewCriterion(QubitRelation::OBJECT_ID, $this->resource->id)
             ->addOr($criteria->getNewCriterion(QubitRelation::SUBJECT_ID, $this->resource->id)));
           $criteria->addAlias('ro', QubitFunctionObject::TABLE_NAME);
@@ -111,7 +111,7 @@ class sfIsdfPlugin implements ArrayAccess
 
         if (!isset($this->relatedResource))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->add(QubitRelation::SUBJECT_ID, $this->resource->id);
           $criteria->addJoin(QubitRelation::OBJECT_ID, QubitInformationObject::ID);
 

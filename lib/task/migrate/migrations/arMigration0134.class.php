@@ -35,7 +35,7 @@ class arMigration0134
   {
     // Create taxonomy PREMIS Rights Statutes
     QubitMigrate::bumpTaxonomy(QubitTaxonomy::RIGHTS_STATUTES_ID, $configuration);
-    $taxonomy = new QubitTaxonomy;
+    $taxonomy = new QubitTaxonomy();
     $taxonomy->id = QubitTaxonomy::RIGHTS_STATUTES_ID;
     $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
     $taxonomy->name = 'PREMIS Rights Statutes';
@@ -121,7 +121,7 @@ class arMigration0134
       while ($row = $stmt1->fetch())
       {
         // Create new term
-        $term = new QubitTerm;
+        $term = new QubitTerm();
         $term->parentId = QubitTerm::ROOT_ID;
         $term->taxonomyId = QubitTaxonomy::RIGHTS_STATUTES_ID;
         $term->setName($row['statute_citation'], array('culture' => $defaultCulture));

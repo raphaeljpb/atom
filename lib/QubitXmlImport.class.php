@@ -117,7 +117,7 @@ class QubitXmlImport
 
     if ('eac-cpf' == $importDOM->documentElement->tagName)
     {
-      $this->rootObject = new QubitActor;
+      $this->rootObject = new QubitActor();
       $this->rootObject->parentId = QubitActor::ROOT_ID;
 
       $eac = new sfEacPlugin($this->rootObject);
@@ -134,7 +134,7 @@ class QubitXmlImport
       {
         foreach ($eac->itemsSubjectOf as $item)
         {
-          $relation = new QubitRelation;
+          $relation = new QubitRelation();
           $relation->object = $this->rootObject;
           $relation->typeId = QubitTerm::NAME_ACCESS_POINT_ID;
 
@@ -237,7 +237,7 @@ class QubitXmlImport
 
       case 'skos':
 
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitSetting::NAME, 'plugins');
         $setting = QubitSetting::getOne($criteria);
         if (null === $setting || !in_array('sfSkosPlugin', unserialize($setting->getValue(array('sourceCulture' => true)))))
@@ -277,11 +277,11 @@ class QubitXmlImport
         if (file_exists($importXSL))
         {
           // instantiate an XSLT parser
-          $xslDOM = new DOMDocument;
+          $xslDOM = new DOMDocument();
           $xslDOM->load($importXSL);
 
           // Configure the transformer
-          $xsltProc = new XSLTProcessor;
+          $xsltProc = new XSLTProcessor();
           $xsltProc->registerPHPFunctions();
           $xsltProc->importStyleSheet($xslDOM);
 
@@ -318,7 +318,7 @@ class QubitXmlImport
       {
         $sf_user = sfContext::getInstance()->user;
         $currentCulture = $sf_user->getCulture();
-        $langCodeConvertor = new fbISO639_Map;
+        $langCodeConvertor = new fbISO639_Map();
         foreach ($langusage as $language)
         {
           $isocode = trim(preg_replace('/[\n\r\s]+/', ' ', $language->nodeValue));
@@ -372,7 +372,7 @@ class QubitXmlImport
       {
         // create a new object
         $class = 'Qubit'.$mapping['Object'];
-        $currentObject = new $class;
+        $currentObject = new $class();
 
         // set the rootObject to use for initial display in successful import
         if (!$this->rootObject)
@@ -401,7 +401,7 @@ class QubitXmlImport
     // if a parent path is specified, try to parent the node
     if (empty($mapping['Parent']))
     {
-      $parentNodes = new DOMNodeList;
+      $parentNodes = new DOMNodeList();
     }
     else
     {
@@ -508,7 +508,7 @@ class QubitXmlImport
           // hack: some multi-value elements (e.g. 'languages') need to get passed as one array instead of individual nodes values
           case 'languages':
           case 'language':
-            $langCodeConvertor = new fbISO639_Map;
+            $langCodeConvertor = new fbISO639_Map();
             $isID3 = ($importSchhema == 'dc') ? true : false;
 
             $value = array();
@@ -1090,7 +1090,7 @@ class QubitXmlImport
 
       if ($place)
       {
-        $otr = new QubitObjectTermRelation;
+        $otr = new QubitObjectTermRelation();
         $otr->termId = $place->id;
         $otr->indexOnSave = false;
 
@@ -1153,7 +1153,7 @@ class QubitXmlImport
         // Matching on keymap will only make sense for the top level record.
         if (!isset($matchResource) && $this->eadUrl && $this->rootObject === $resource)
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->add(QubitKeymap::SOURCE_ID, $this->eadUrl);
           $criteria->add(QubitKeymap::SOURCE_NAME, $this->sourceName);
           $criteria->add(QubitKeymap::TARGET_NAME, 'information_object');
@@ -1320,7 +1320,7 @@ class QubitXmlImport
   {
     if ($this->eadUrl)
     {
-      $keymap = new QubitKeymap;
+      $keymap = new QubitKeymap();
       $keymap->sourceId = $this->eadUrl;
       $keymap->sourceName = $this->sourceName;
       $keymap->targetId = $currentObject->id;

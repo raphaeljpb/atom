@@ -21,7 +21,7 @@ class sfDcPluginDcComponent extends sfComponent
 {
   public function execute($request)
   {
-    $this->iso639convertor = new fbISO639_Map;
+    $this->iso639convertor = new fbISO639_Map();
 
     $this->dc = new sfDcPlugin($this->resource);
   }

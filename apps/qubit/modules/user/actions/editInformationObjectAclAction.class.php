@@ -42,7 +42,7 @@ class UserEditInformationObjectAclAction extends DefaultEditAction
     if (isset($this->resource->id))
     {
       // Get info object permissions for this group
-      $criteria = new Criteria;
+      $criteria = new Criteria();
       $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
       $criteria->add(QubitAclPermission::USER_ID, $this->resource->id);
       $c1 = $criteria->getNewCriterion(QubitAclPermission::OBJECT_ID, null, Criteria::ISNULL);
@@ -91,7 +91,7 @@ class UserEditInformationObjectAclAction extends DefaultEditAction
 
         if (QubitAcl::INHERIT != $value && isset(QubitInformationObjectAcl::$ACTIONS[$action]))
         {
-          $aclPermission = new QubitAclPermission;
+          $aclPermission = new QubitAclPermission();
           $aclPermission->action = $action;
           $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
 

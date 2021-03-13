@@ -518,7 +518,7 @@ class arElasticSearchPluginUtil
   public static function generateBoolQueryString($query, $fields)
   {
     $cultures = sfConfig::get('app_i18n_languages');
-    $boolQuery = new \Elastica\Query\BoolQuery;
+    $boolQuery = new \Elastica\Query\BoolQuery();
     $query = self::escapeTerm($query);
 
     foreach ($fields as $field => $boost)

@@ -52,7 +52,7 @@ $preamble = preg_replace('/\*\/.*$/s', '*/', file_get_contents(__FILE__));
 _readDir(SF_ROOT_DIR, $filePaths);
 
 global $t;
-$t = new lime_test(2 * count($filePaths), new lime_output_color);
+$t = new lime_test(2 * count($filePaths), new lime_output_color());
 
 foreach ($filePaths as $filePath)
 {

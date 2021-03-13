@@ -39,7 +39,7 @@ class arMigration0123
   public function up($configuration)
   {
     // Find RAD General note term (it doesn't have a fixed id)
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::RAD_NOTE_ID);
     $criteria->add(QubitTermI18n::CULTURE, 'en');

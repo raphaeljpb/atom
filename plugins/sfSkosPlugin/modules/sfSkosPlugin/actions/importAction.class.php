@@ -29,8 +29,8 @@ class sfSkosPluginImportAction extends DefaultEditAction
     switch ($name)
     {
       case 'file':
-        $this->form->setWidget('file', new sfWidgetFormInputFile);
-        $this->form->setValidator('file', new sfValidatorFile);
+        $this->form->setWidget('file', new sfWidgetFormInputFile());
+        $this->form->setValidator('file', new sfValidatorFile());
 
         break;
 
@@ -41,7 +41,7 @@ class sfSkosPluginImportAction extends DefaultEditAction
         if (isset($this->resource))
         {
           $this->form->setDefault('taxonomy', $id);
-          $this->form->setWidget('taxonomy', new sfWidgetFormInputHidden);
+          $this->form->setWidget('taxonomy', new sfWidgetFormInputHidden());
         }
         else
         {
@@ -53,7 +53,7 @@ class sfSkosPluginImportAction extends DefaultEditAction
         break;
 
       case 'url':
-        $this->form->setValidator('url', new QubitValidatorUrl);
+        $this->form->setValidator('url', new QubitValidatorUrl());
         $this->form->setWidget('url', new sfWidgetFormInput(array(), array('placeholder' => 'https://')));
 
         break;

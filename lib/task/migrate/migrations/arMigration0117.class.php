@@ -34,7 +34,7 @@ class arMigration0117
   public function up($configuration)
   {
     // Add genre search label setting
-    $setting = new QubitSetting;
+    $setting = new QubitSetting();
     $setting->name  = 'genre';
     $setting->scope = 'ui_label';
     $setting->editable = 1;
@@ -45,7 +45,7 @@ class arMigration0117
 
     // Add the genre taxonomy
     QubitMigrate::bumpTaxonomy(QubitTaxonomy::GENRE_ID, $configuration);
-    $taxonomy = new QubitTaxonomy;
+    $taxonomy = new QubitTaxonomy();
     $taxonomy->id = QubitTaxonomy::GENRE_ID;
     $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
     $taxonomy->name = 'Genre';
@@ -100,7 +100,7 @@ class arMigration0117
       array('en' => 'Timetables'),
       array('en' => 'Transcriptions')) as $termNames)
     {
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::GENRE_ID;
       $term->sourceCulture = 'en';

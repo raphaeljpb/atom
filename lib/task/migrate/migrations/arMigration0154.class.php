@@ -50,7 +50,7 @@ class arMigration0154
 
       if (null === QubitSetting::getByName($name))
       {
-        $setting = new QubitSetting;
+        $setting = new QubitSetting();
         $setting->name = $name;
         $setting->value = $val;
         $setting->editable = 1;

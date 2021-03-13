@@ -82,10 +82,10 @@ class SearchAutocompleteAction extends sfAction
         ->setSize(3)
         ->setSource($item['fields']);
 
-      $queryBool = new \Elastica\Query\BoolQuery;
+      $queryBool = new \Elastica\Query\BoolQuery();
 
       // Match in autocomplete
-      $queryText = new \Elastica\Query\Match;
+      $queryText = new \Elastica\Query\Match();
       $queryText->setFieldQuery($item['field'].'.autocomplete', $this->queryString);
       $queryBool->addMust($queryText);
 

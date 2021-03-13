@@ -317,7 +317,7 @@ class arElasticSearchMapping
       return;
     }
 
-    $map = new $className;
+    $map = new $className();
 
     $fields = array();
     foreach ($map->getColumns() as $column)

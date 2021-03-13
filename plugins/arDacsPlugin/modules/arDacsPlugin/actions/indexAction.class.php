@@ -33,7 +33,7 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
     $this->response->setTitle("$title - {$this->response->getTitle()}");
 
     // Function relations
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitRelation::OBJECT_ID, $this->resource->id);
     $criteria->addJoin(QubitRelation::SUBJECT_ID, QubitFunctionObject::ID);
 
@@ -49,7 +49,7 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
 
     if (QubitAcl::check($this->resource, 'update'))
     {
-      $validatorSchema = new sfValidatorSchema;
+      $validatorSchema = new sfValidatorSchema();
       $values = array();
 
       $validatorSchema->identifier = new sfValidatorString(array(

@@ -21,7 +21,7 @@ class UserLoginAction extends sfAction
 {
   public function execute($request)
   {
-    $this->form = new sfForm;
+    $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     // Redirect to @homepage if the user is already authenticated
@@ -39,8 +39,8 @@ class UserLoginAction extends sfAction
       $this->form->setDefault('next', $request->getReferer());
     }
 
-    $this->form->setValidator('next', new sfValidatorString);
-    $this->form->setWidget('next', new sfWidgetFormInputHidden);
+    $this->form->setValidator('next', new sfValidatorString());
+    $this->form->setWidget('next', new sfWidgetFormInputHidden());
 
     // Use string validation if LDAP authentication's used as email not used to log in
     if ($this->context->user instanceof ldapUser)
@@ -55,11 +55,11 @@ class UserLoginAction extends sfAction
         'invalid' => $this->context->i18n->__('This isn\'t a valid email address'))));
     }
 
-    $this->form->setWidget('email', new sfWidgetFormInput);
+    $this->form->setWidget('email', new sfWidgetFormInput());
 
     $this->form->setValidator('password', new sfValidatorString(array('required' => true), array(
       'required' => $this->context->i18n->__('You must enter your password'))));
-    $this->form->setWidget('password', new sfWidgetFormInputPassword);
+    $this->form->setWidget('password', new sfWidgetFormInputPassword());
 
     if ($request->isMethod('post'))
     {
@@ -82,7 +82,7 @@ class UserLoginAction extends sfAction
           $this->redirect('@homepage');
         }
 
-        $this->form->getErrorSchema()->addError(new sfValidatorError(new sfValidatorPass, 'Sorry, unrecognized email or password'));
+        $this->form->getErrorSchema()->addError(new sfValidatorError(new sfValidatorPass(), 'Sorry, unrecognized email or password'));
       }
 
       // In some templates (language menu for example) the links are generated

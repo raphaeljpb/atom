@@ -22,7 +22,7 @@ class ApiInformationObjectsTreeAction extends QubitApiAction
   protected function get($request)
   {
     // Get parent slug so we can determine its ID
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitSlug::SLUG, $request->parent_slug);
 
     $slug = QubitSlug::getOne($criteria);
@@ -45,7 +45,7 @@ class ApiInformationObjectsTreeAction extends QubitApiAction
   {
     $results = array();
 
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitInformationObject::PARENT_ID, $parentId);
 
     $inforationObjects = QubitInformationObject::get($criteria);

@@ -384,7 +384,7 @@ class ClipboardExportAction extends DefaultEditAction
       // and, information object type
       case 'levels':
 
-        $this->form->setValidator('levels', new sfValidatorPass);
+        $this->form->setValidator('levels', new sfValidatorPass());
 
         $this->levelChoices = array();
         foreach (QubitTerm::getLevelsOfDescription() as $item)

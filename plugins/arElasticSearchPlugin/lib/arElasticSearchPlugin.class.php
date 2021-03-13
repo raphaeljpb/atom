@@ -234,7 +234,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
     }
 
     // Load first mapping.yml file found
-    $esMapping = new arElasticSearchMapping;
+    $esMapping = new arElasticSearchMapping();
     $esMapping->loadYAML(array_shift($files));
     return $esMapping;
   }
@@ -362,7 +362,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
     // Document counter, timer and errors
     $total = 0;
-    $timer = new QubitTimer;
+    $timer = new QubitTimer();
     $errors = array();
     $showErrors = false;
 
@@ -377,10 +377,10 @@ class arElasticSearchPlugin extends QubitSearchEngine
         // type's documents if not updating
         if (count($excludeTypes) && !$update)
         {
-          $this->index->getType('Qubit'. $camelizedTypeName)->deleteByQuery(new \Elastica\Query\MatchAll);
+          $this->index->getType('Qubit'. $camelizedTypeName)->deleteByQuery(new \Elastica\Query\MatchAll());
         }
 
-        $class = new $className;
+        $class = new $className();
         $class->setTimer($timer);
 
         $typeErrors = $class->populate();

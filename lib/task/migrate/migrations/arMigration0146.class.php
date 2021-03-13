@@ -40,7 +40,7 @@ class arMigration0146
   {
     if (null === QubitSetting::getByName('digital_object_geolocation'))
     {
-      $setting = new QubitSetting;
+      $setting = new QubitSetting();
       $setting->setName('digital_object_geolocation');
       $setting->setScope('element_visibility');
       $setting->setValue('1');

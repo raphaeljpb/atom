@@ -55,7 +55,7 @@ class arMigration0094
 
     // Add the "Information object templates" taxonomy
     QubitMigrate::bumpTaxonomy(QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID, $configuration);
-    $taxonomy = new QubitTaxonomy;
+    $taxonomy = new QubitTaxonomy();
     $taxonomy->id = QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID;
     $taxonomy->name = 'Information object templates';
     $taxonomy->culture = 'en';
@@ -68,7 +68,7 @@ class arMigration0094
       'mods'  => 'MODS, Version 3.3. U.S. Library of Congress',
       'rad'   => 'RAD, July 2008 version. Canadian Council of Archives') as $key => $value)
     {
-      $term = new QubitTerm;
+      $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID;
       $term->code = $key;

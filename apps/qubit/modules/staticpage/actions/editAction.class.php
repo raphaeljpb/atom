@@ -28,7 +28,7 @@ class StaticPageEditAction extends DefaultEditAction
   {
     $this->form->getWidgetSchema()->setIdFormat('edit-%s');
 
-    $this->resource = new QubitStaticPage;
+    $this->resource = new QubitStaticPage();
     $title = $this->context->i18n->__('Add new page');
 
     if (isset($this->getRoute()->resource))
@@ -58,21 +58,21 @@ class StaticPageEditAction extends DefaultEditAction
     {
       case 'content':
         $this->form->setDefault('content', $this->resource->content);
-        $this->form->setValidator('content', new sfValidatorString);
-        $this->form->setWidget('content', new sfWidgetFormTextarea);
+        $this->form->setValidator('content', new sfValidatorString());
+        $this->form->setWidget('content', new sfWidgetFormTextarea());
 
         break;
 
       case 'slug':
         $this->form->setDefault('slug', $this->resource->slug);
         $this->form->setValidator('slug', new sfValidatorRegex(array('pattern' => '/^[^;]*$/'), array('invalid' => $this->context->i18n->__('Mustn\'t contain ";"'))));
-        $this->form->setWidget('slug', new sfWidgetFormInput);
+        $this->form->setWidget('slug', new sfWidgetFormInput());
 
         // no break
       case 'title':
         $this->form->setDefault('title', $this->resource->title);
-        $this->form->setValidator('title', new sfValidatorString);
-        $this->form->setWidget('title', new sfWidgetFormInput);
+        $this->form->setValidator('title', new sfValidatorString());
+        $this->form->setWidget('title', new sfWidgetFormInput());
 
         // no break
       default:

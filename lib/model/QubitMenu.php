@@ -182,7 +182,7 @@ class QubitMenu extends BaseMenu
    */
   public static function getByName($menuName, $options = array())
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitMenu::NAME, $menuName);
 
     return QubitMenu::getOne($criteria);
@@ -281,7 +281,7 @@ class QubitMenu extends BaseMenu
    */
   public function getChildren()
   {
-    $c = new Criteria;
+    $c = new Criteria();
     $c->add(QubitMenu::PARENT_ID, $this->id);
     $c->addAscendingOrderByColumn(QubitMenu::LFT);
 
@@ -357,7 +357,7 @@ class QubitMenu extends BaseMenu
     }
 
     // Get all descendents of "top" menu
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitMenu::LFT, $topMenu->getLft(), Criteria::GREATER_THAN);
     $criteria->addAnd(QubitMenu::RGT, $topMenu->getRgt(), Criteria::LESS_THAN);
     $criteria->addAscendingOrderByColumn(QubitMenu::LFT);

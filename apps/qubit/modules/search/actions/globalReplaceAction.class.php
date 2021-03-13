@@ -87,7 +87,7 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
   public function addFields()
   {
     // Information object attribute (db column) to perform s/r on
-    $map = new InformationObjectI18nTableMap;
+    $map = new InformationObjectI18nTableMap();
 
     foreach ($map->getColumns() as $col)
     {
@@ -99,25 +99,25 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
     }
     $choices['identifier'] = $this->context->i18n->__('Identifier');
 
-    $this->form->setValidator('column', new sfValidatorString);
+    $this->form->setValidator('column', new sfValidatorString());
     $this->form->setWidget('column', new sfWidgetFormSelect(array('choices' => $choices), array('style' => 'width: auto')));
 
     // Search-replace values
-    $this->form->setValidator('pattern', new sfValidatorString);
-    $this->form->setWidget('pattern', new sfWidgetFormInput);
+    $this->form->setValidator('pattern', new sfValidatorString());
+    $this->form->setWidget('pattern', new sfWidgetFormInput());
 
-    $this->form->setValidator('replacement', new sfValidatorString);
-    $this->form->setWidget('replacement', new sfWidgetFormInput);
+    $this->form->setValidator('replacement', new sfValidatorString());
+    $this->form->setWidget('replacement', new sfWidgetFormInput());
 
-    $this->form->setValidator('caseSensitive', new sfValidatorBoolean);
-    $this->form->setWidget('caseSensitive', new sfWidgetFormInputCheckbox);
+    $this->form->setValidator('caseSensitive', new sfValidatorBoolean());
+    $this->form->setWidget('caseSensitive', new sfWidgetFormInputCheckbox());
 
-    $this->form->setValidator('allowRegex', new sfValidatorBoolean);
-    $this->form->setWidget('allowRegex', new sfWidgetFormInputCheckbox);
+    $this->form->setValidator('allowRegex', new sfValidatorBoolean());
+    $this->form->setWidget('allowRegex', new sfWidgetFormInputCheckbox());
 
     if ($this->request->isMethod('post') && !isset($this->request->confirm) && !empty($this->request->pattern) && !empty($this->request->replacement))
     {
-      $this->form->setValidator('confirm', new sfValidatorBoolean);
+      $this->form->setValidator('confirm', new sfValidatorBoolean());
       $this->form->setWidget('confirm', new sfWidgetFormInputHidden(array(), array('value' => true)));
     }
   }

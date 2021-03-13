@@ -44,7 +44,7 @@ class AccessionEditAction extends DefaultEditAction
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    $this->resource = new QubitAccession;
+    $this->resource = new QubitAccession();
 
     if (isset($this->getRoute()->resource))
     {
@@ -93,7 +93,7 @@ class AccessionEditAction extends DefaultEditAction
     {
       case 'acquisitionType':
         $this->form->setDefault('acquisitionType', $this->context->routing->generate(null, array($this->resource->acquisitionType, 'module' => 'term')));
-        $this->form->setValidator('acquisitionType', new sfValidatorString);
+        $this->form->setValidator('acquisitionType', new sfValidatorString());
 
         $choices = array();
         $choices[null] = null;
@@ -108,7 +108,7 @@ class AccessionEditAction extends DefaultEditAction
 
       case 'processingPriority':
         $this->form->setDefault('processingPriority', $this->context->routing->generate(null, array($this->resource->processingPriority, 'module' => 'term')));
-        $this->form->setValidator('processingPriority', new sfValidatorString);
+        $this->form->setValidator('processingPriority', new sfValidatorString());
 
         $choices = array();
         $choices[null] = null;
@@ -123,7 +123,7 @@ class AccessionEditAction extends DefaultEditAction
 
       case 'processingStatus':
         $this->form->setDefault('processingStatus', $this->context->routing->generate(null, array($this->resource->processingStatus, 'module' => 'term')));
-        $this->form->setValidator('processingStatus', new sfValidatorString);
+        $this->form->setValidator('processingStatus', new sfValidatorString());
 
         $choices = array();
         $choices[null] = null;
@@ -138,7 +138,7 @@ class AccessionEditAction extends DefaultEditAction
 
       case 'resourceType':
         $this->form->setDefault('resourceType', $this->context->routing->generate(null, array($this->resource->resourceType, 'module' => 'term')));
-        $this->form->setValidator('resourceType', new sfValidatorString);
+        $this->form->setValidator('resourceType', new sfValidatorString());
 
         $choices = array();
         $choices[null] = null;
@@ -159,7 +159,7 @@ class AccessionEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault('creators', $value);
-        $this->form->setValidator('creators', new sfValidatorPass);
+        $this->form->setValidator('creators', new sfValidatorPass());
         $this->form->setWidget('creators', new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
 
         break;
@@ -169,11 +169,11 @@ class AccessionEditAction extends DefaultEditAction
 
         if (!isset($this->resource->id))
         {
-          $dt = new DateTime;
+          $dt = new DateTime();
           $this->form->setDefault('date', $dt->format('Y-m-d'));
         }
 
-        $this->form->setWidget('date', new sfWidgetFormInput);
+        $this->form->setWidget('date', new sfWidgetFormInput());
         $this->form->setValidator('date', new sfValidatorDate(array(
           'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
           'date_format_error' => 'YYYY-MM-DD')));
@@ -186,7 +186,7 @@ class AccessionEditAction extends DefaultEditAction
         // If accession mask enable setting isn't set or is set to on, then populate default with mask value
         if (!isset($this->resource->id) && QubitAccession::maskEnabled())
         {
-          $dt = new DateTime;
+          $dt = new DateTime();
           $this->form->setDefault('identifier', QubitAccession::nextAvailableIdentifier());
         }
 
@@ -199,14 +199,14 @@ class AccessionEditAction extends DefaultEditAction
         // Store URL for checking identifiers as a hidden field so we can relay it to JavaScript validation
         $routingParams = array('module' => 'accession', 'action' => 'checkIdentifierAvailable', 'accession_id' => $this->resource->id);
         $this->form->setDefault($name, $this->context->getRouting()->generate(null, $routingParams));
-        $this->form->setWidget($name, new sfWidgetFormInputHidden);
+        $this->form->setWidget($name, new sfWidgetFormInputHidden());
 
         break;
 
       case 'title':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormInput);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
 
         break;
 
@@ -219,13 +219,13 @@ class AccessionEditAction extends DefaultEditAction
       case 'scopeAndContent':
       case 'sourceOfAcquisition':
         $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString);
-        $this->form->setWidget($name, new sfWidgetFormTextarea);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormTextarea());
 
         break;
 
       case 'informationObjects':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitRelation::OBJECT_ID, $this->resource->id);
         $criteria->add(QubitRelation::TYPE_ID, QubitTerm::ACCESSION_ID);
 
@@ -238,7 +238,7 @@ class AccessionEditAction extends DefaultEditAction
         }
 
         $this->form->setDefault($name, $value);
-        $this->form->setValidator($name, new sfValidatorPass);
+        $this->form->setValidator($name, new sfValidatorPass());
         $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices, 'multiple' => true)));
 
         break;
@@ -276,7 +276,7 @@ class AccessionEditAction extends DefaultEditAction
 
         foreach ($filtered as $item)
         {
-          $relation = new QubitRelation;
+          $relation = new QubitRelation();
           $relation->subject = $item;
           $relation->typeId = QubitTerm::CREATION_ID;
 
@@ -328,7 +328,7 @@ class AccessionEditAction extends DefaultEditAction
 
         foreach ($filtered as $item)
         {
-          $relation = new QubitRelation;
+          $relation = new QubitRelation();
           $relation->subject = $item;
           $relation->typeId = QubitTerm::ACCESSION_ID;
           $relation->indexOnSave = false;
@@ -363,8 +363,8 @@ class AccessionEditAction extends DefaultEditAction
 
         // Add id of the information object source
         $this->form->setDefault('accession', $request->accession);
-        $this->form->setValidator('accession', new sfValidatorString);
-        $this->form->setWidget('accession', new sfWidgetFormInputHidden);
+        $this->form->setValidator('accession', new sfValidatorString());
+        $this->form->setWidget('accession', new sfWidgetFormInputHidden());
       }
     }
 
@@ -399,7 +399,7 @@ class AccessionEditAction extends DefaultEditAction
         // Relation between accesion will only be accepted if the object is new
         if (!isset($this->resource->id) && isset($this->accession))
         {
-          $relation = new QubitRelation;
+          $relation = new QubitRelation();
           $relation->typeId = QubitTerm::ACCRUAL_ID;
           $relation->object = $this->accession;
 

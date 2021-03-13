@@ -29,7 +29,7 @@ class userAclMenuComponent extends sfComponent
   public function execute($request)
   {
     // Get menu
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->add(QubitMenu::NAME, 'users');
 
     $this->userAclMenu = null;

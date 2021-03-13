@@ -78,8 +78,8 @@ class ActorRelatedInformationObjectsAction extends sfAction
    */
   public static function getRelatedInformationObjects($actorId, $page, $limit, $eventTypeId = null)
   {
-    $query = new \Elastica\Query;
-    $queryBool = new \Elastica\Query\BoolQuery;
+    $query = new \Elastica\Query();
+    $queryBool = new \Elastica\Query\BoolQuery();
 
     if (!isset($eventTypeId))
     {
@@ -91,7 +91,7 @@ class ActorRelatedInformationObjectsAction extends sfAction
     else
     {
       // Get related by event IOs
-      $queryBoolDates = new \Elastica\Query\BoolQuery;
+      $queryBoolDates = new \Elastica\Query\BoolQuery();
       $queryBoolDates->addMust(new \Elastica\Query\Term(array('dates.actorId' => $actorId)));
       $queryBoolDates->addMust(new \Elastica\Query\Term(array('dates.typeId' => $eventTypeId)));
 

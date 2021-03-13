@@ -21,7 +21,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
 {
   protected function post($request, $payload)
   {
-    $this->do = new QubitDigitalObject;
+    $this->do = new QubitDigitalObject();
     $this->do->parentId = null;
 
     foreach ($payload as $field => $value)
@@ -66,7 +66,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
           continue;
         }
 
-        $property = new QubitProperty;
+        $property = new QubitProperty();
         $property->objectId = $this->do->objectId;
         $property->name = $pval;
         $property->value = $payload->$pkey;
@@ -96,7 +96,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
 
       case 'information_object_slug':
         // Get parent slug so we can determine its ID
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->add(QubitSlug::SLUG, $value);
 
         $slug = QubitSlug::getOne($criteria);
@@ -112,7 +112,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
         break;
 
       case 'information_object_id':
-        $io = new QubitInformationObject;
+        $io = new QubitInformationObject();
         $io->parentId = $value;
         $io->setLevelOfDescriptionByName('item');
         $io->save();
@@ -123,7 +123,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
       case 'media_type':
         if (!empty($value))
         {
-          $criteria = new Criteria;
+          $criteria = new Criteria();
           $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
           $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MEDIA_TYPE_ID);
           $criteria->add(QubitTermI18n::NAME, $value);
@@ -135,7 +135,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
         break;
 
       case 'usage':
-        $criteria = new Criteria;
+        $criteria = new Criteria();
         $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::DIGITAL_OBJECT_USAGE_ID);
         $criteria->add(QubitTermI18n::NAME, $value);

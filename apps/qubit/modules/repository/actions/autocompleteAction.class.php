@@ -21,7 +21,7 @@ class RepositoryAutocompleteAction extends sfAction
 {
   public function execute($request)
   {
-    $criteria = new Criteria;
+    $criteria = new Criteria();
     $criteria->addJoin(QubitActor::ID, QubitActorI18n::ID);
     $criteria->add(QubitActor::PARENT_ID, QubitRepository::ROOT_ID);
 
