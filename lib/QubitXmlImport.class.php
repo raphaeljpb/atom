@@ -982,7 +982,7 @@ class QubitXmlImport
               $dacsVariantTitleInformationNoteTypeId = array_search('Variant title information', $termData['dacsSpecializedNotesTypes']['en']);
 
               // Invoke the object and method defined in the schema map
-              $result = call_user_func_array([ & $currentObject, $methodMap['Method']], $parameters);
+              $result = call_user_func_array([& $currentObject, $methodMap['Method']], $parameters);
 
               // If an actor/event object was returned, track that
               // in the events cache for later cleanup
