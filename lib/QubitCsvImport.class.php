@@ -248,7 +248,7 @@ class QubitCsvImport
   /**
    * Return true if import had errors
    *
-   * @return boolean
+   * @return bool
    */
   public function hasErrors()
   {

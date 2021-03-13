@@ -231,7 +231,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
    *
    * @param string $url URL or path
    *
-   * @return boolean True if path links to an action
+   * @return bool True if path links to an action
    */
   public static function actionExistsForUrl($url)
   {
@@ -573,8 +573,8 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   /**
    * Get a specific physical object related to this object
    *
-   * @param  integer $physicalObjectId the id of the related physical object
-   * @return mixed   the QubitRelation object on success, null if no match found
+   * @param  int   $physicalObjectId the id of the related physical object
+   * @return mixed the QubitRelation object on success, null if no match found
    */
   public function getPhysicalObject($physicalObjectId)
   {

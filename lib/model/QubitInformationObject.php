@@ -1007,8 +1007,8 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Get name access point by $actorId and $eventTypeId (should be unique)
    *
-   * @param  integer    $actorId     foreign key to QubitActor::ID
-   * @param  integer    $eventTypeId foreign key to QubitTerm (even type taxonomy)
+   * @param  int        $actorId     foreign key to QubitActor::ID
+   * @param  int        $eventTypeId foreign key to QubitTerm (even type taxonomy)
    * @return QubitEvent object or NULL if no matching relation found
    */
   public function getNameAccessPoint($actorId, $eventTypeId)
@@ -1029,7 +1029,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Add a many-to-many Term relation to this information object.
    *
-   * @param  integer                $termId       primary key of QubitTerm
+   * @param  int                    $termId       primary key of QubitTerm
    * @param  string                 $relationNote descriptive string (optional)
    * @return QubitInformationObject $this
    */
@@ -2345,7 +2345,7 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Get Record by Oai identifier
-   * @param  integer    $identifier, the oai_identifier
+   * @param  int        $identifier, the oai_identifier
    * @return QubitQuery collection of QubitInformationObjects
    */
   public static function getRecordByOaiID($oai_local_identifier)
@@ -2405,7 +2405,7 @@ class QubitInformationObject extends BaseInformationObject
    * @param string $title      informationObject title
    * @param string $repoName   repository authorizedFormOfName
    *
-   * @return integer InfoObj id
+   * @return int InfoObj id
    */
   public static function getByTitleIdentifierAndRepo($identifier, $title, $repoName)
   {

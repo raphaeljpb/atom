@@ -113,7 +113,7 @@ class QubitInformationObjectXmlCache
    *
    * @param object  information object resource to get file path for
    * @param string  XML format
-   * @param boolean  whether or not to get file path for just the XML's contents (no XML header lines)
+   * @param bool  whether or not to get file path for just the XML's contents (no XML header lines)
    *
    * @return string file path of EAD XML
    */
@@ -203,7 +203,7 @@ class QubitInformationObjectXmlCache
    *
    * @param string  source file
    * @param string  destination file
-   * @param integer  number of lines to skip
+   * @param int  number of lines to skip
    *
    * @return null
    */

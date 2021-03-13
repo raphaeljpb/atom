@@ -174,17 +174,17 @@ abstract class i18nTransformBaseTask extends arBaseTask
    * @param string   $tableName name of table
    * @param array    $columns   available columns
    *
-   * @return integer number of columns changed
+   * @return int number of columns changed
    */
   abstract protected function processRow($row, $tableName, $columns);
 
   /**
    * Update i18n table row with modified values
    *
-   * @param string  $table        i18n table name
-   * @param integer $id           ID of row in an i18n table
-   * @param string  $culture      culture code of a row in an i18n table
-   * @param array   $columnValues column/value data to process
+   * @param string $table        i18n table name
+   * @param int    $id           ID of row in an i18n table
+   * @param string $culture      culture code of a row in an i18n table
+   * @param array  $columnValues column/value data to process
    *
    * @return void
    */

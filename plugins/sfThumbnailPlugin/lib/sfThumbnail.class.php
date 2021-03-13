@@ -39,8 +39,8 @@ class sfThumbnail
    *
    * @param int (optional) max width of thumbnail
    * @param int (optional) max height of thumbnail
-   * @param boolean (optional) if true image scales
-   * @param boolean (optional) if true inflate small images
+   * @param bool (optional) if true image scales
+   * @param bool (optional) if true inflate small images
    * @param string (optional) adapter class name
    * @param array (optional) adapter options
    */
@@ -70,7 +70,7 @@ class sfThumbnail
    *
    * @param string filename (with absolute path) of the image to load. If the filename is a http(s) URL, then an attempt to download the file will be made.
    *
-   * @return boolean   True if the image was properly loaded
+   * @return bool      True if the image was properly loaded
    * @throws Exception If the image cannot be loaded, or if its mime type is not supported
    */
   public function loadFile($image)
@@ -126,7 +126,7 @@ class sfThumbnail
    * @param string the image string (must be a format accepted by imagecreatefromstring())
    * @param string mime type of the image
    *
-   * @return boolean   True if the image was properly loaded
+   * @return bool      True if the image was properly loaded
    * @throws Exception If image mime type is not supported
    */
   public function loadData($image, $mime)

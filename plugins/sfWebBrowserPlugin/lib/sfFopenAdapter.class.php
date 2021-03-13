@@ -33,7 +33,7 @@ class sfFopenAdapter
    * @param string  The request method
    * @param array   The request parameters (associative array)
    * @param array   The request headers (associative array)
-   * @param boolean To specify is the request changes the browser history
+   * @param bool To specify is the request changes the browser history
    *
    * @return sfWebBrowser The current browser object
    */

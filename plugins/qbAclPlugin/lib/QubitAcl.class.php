@@ -89,9 +89,9 @@ class QubitAcl
    * Note: Current sf_user is assumed, but can be overridden with
    * $options['user']
    *
-   * @param mixed   $resource object to which user is requesting access
-   * @param integer $actions  requested action key
-   * @param array   $options  optional parameters
+   * @param mixed $resource object to which user is requesting access
+   * @param int   $actions  requested action key
+   * @param array $options  optional parameters
    */
   public static function check($resource, $actions, $options = [])
   {
@@ -887,7 +887,7 @@ class QubitAcl
    * @param string   $rootClass     the class name of the resource being checked on
    * @param array    $resourceCache a cache of objects so we don't need to call getById() frequently
    * @param array    $resourceIds   an array of object ids which we are either allowed / denied to view
-   * @param boolean  $allow         which type of access the ids in the array represent, allow access (true) or deny (false)
+   * @param bool     $allow         which type of access the ids in the array represent, allow access (true) or deny (false)
    *
    * @return Criterion
    */

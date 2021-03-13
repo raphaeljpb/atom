@@ -207,7 +207,7 @@ class QubitFlatfileImport
    *
    * @param string $column name of column
    *
-   * @return boolean
+   * @return bool
    */
   public function columnExists($column)
   {
@@ -290,8 +290,8 @@ class QubitFlatfileImport
   /**
    * Log error message if an error log has been defined
    *
-   * @param string  $message                 error message
-   * @param boolean $includeCurrentRowNumber prefix error message with row number
+   * @param string $message                 error message
+   * @param bool   $includeCurrentRowNumber prefix error message with row number
    *
    * @return string message prefixed with current row number
    */
@@ -379,7 +379,7 @@ class QubitFlatfileImport
    * Pull data from a csv file and process each row
    *
    * @param resource $fh       file handler for file containing CSV data
-   * @param integer  $skipRows number of rows to skip (optional)
+   * @param int      $skipRows number of rows to skip (optional)
    *
    * @return void
    */
@@ -738,7 +738,7 @@ class QubitFlatfileImport
   /**
    * Create one or more Qubit notes of a certain type
    *
-   * @param integer $typeId              term ID of note type
+   * @param int     $typeId              term ID of note type
    * @param string  $array               Note text items
    * @param closure $transformationLogic logic to manipulate note text
    *
@@ -797,7 +797,7 @@ class QubitFlatfileImport
   /**
    * Create a Qubit note
    *
-   * @param integer $typeId              term ID of note type
+   * @param int     $typeId              term ID of note type
    * @param string  $text                Note text
    * @param closure $transformationLogic logic to manipulate note text
    *
@@ -840,8 +840,8 @@ class QubitFlatfileImport
   /**
    * Create a Qubit event, or add an i18n row to existing event
    *
-   * @param integer $typeId  term ID of event type
-   * @param array   $options option parameter
+   * @param int   $typeId  term ID of event type
+   * @param array $options option parameter
    *
    */
   public function createOrUpdateEvent($typeId, $options = [])
@@ -937,9 +937,9 @@ class QubitFlatfileImport
   /**
    * Create a Qubit physical object or, if one already exists, fetch it
    *
-   * @param string  $name     name of physical object
-   * @param string  $location location of physical object
-   * @param integer $typeId   type ID of physical object
+   * @param string $name     name of physical object
+   * @param string $location location of physical object
+   * @param int    $typeId   type ID of physical object
    *
    * @return QubitPhysicalObject created or fetched physical object
    */
@@ -1131,8 +1131,8 @@ class QubitFlatfileImport
    * Create Qubit contract information for an actor or, if it already exists,
    * fetch it
    *
-   * @param integer $actorId ID of actor
-   * @param string  $options contact information creation properties
+   * @param int    $actorId ID of actor
+   * @param string $options contact information creation properties
    *
    * @return QubitContactInformation created or fetched contact info
    */
@@ -1189,10 +1189,10 @@ class QubitFlatfileImport
    * Create or fetch Qubit terms from array, depending on if they already exist
    * Must all be from same taxonomy.
    *
-   * @param integer $taxonomyId term taxonomy
-   * @param mixed   $names      can be passed as single term name string
-   *                            or array of term names
-   * @param string  $culture    culture code (defaulting to English)
+   * @param int    $taxonomyId term taxonomy
+   * @param mixed  $names      can be passed as single term name string
+   *                           or array of term names
+   * @param string $culture    culture code (defaulting to English)
    *
    * @return mixed created terms or fetched objects containing term data. Depending
    *               on what was provided on input - string or array is returned.
@@ -1237,9 +1237,9 @@ class QubitFlatfileImport
   /**
    * Create a Qubit term
    *
-   * @param integer $taxonomyId term taxonomy
-   * @param string  $name       name of term
-   * @param string  $culture    culture code (defaulting to English)
+   * @param int    $taxonomyId term taxonomy
+   * @param string $name       name of term
+   * @param string $culture    culture code (defaulting to English)
    *
    * @return QubitTerm created term
    */
@@ -1260,7 +1260,7 @@ class QubitFlatfileImport
    *
    * @param  string              $name     name of physical object
    * @param  string              $location location of physical object
-   * @param  integer             $typeId   physical object type ID
+   * @param  int                 $typeId   physical object type ID
    * @return QubitPhysicalObject created physical object
    */
   public function createPhysicalObject($name, $location, $typeId)
@@ -1298,9 +1298,9 @@ class QubitFlatfileImport
   /**
    * Create a relation between two Qubit objects
    *
-   * @param integer $subjectId subject ID
-   * @param integer $objectId  object ID
-   * @param integer $typeId    relation type
+   * @param int $subjectId subject ID
+   * @param int $objectId  object ID
+   * @param int $typeId    relation type
    *
    * @return QubitRelation created relation
    */
@@ -1325,8 +1325,8 @@ class QubitFlatfileImport
   /**
    * Create a relation between a term and a Qubit object
    *
-   * @param integer $objectId object ID
-   * @param integer $termId   term ID
+   * @param int $objectId object ID
+   * @param int $termId   term ID
    *
    * @return QubitObjectTermRelation created relation
    */
@@ -1350,8 +1350,8 @@ class QubitFlatfileImport
   /**
    * Check whether or not an object-term relation already exists for this info object.
    *
-   * @param integer $objectId information object we're relating to
-   * @param integer $termId   the term or actor we're relating to
+   * @param int $objectId information object we're relating to
+   * @param int $termId   the term or actor we're relating to
    *
    * @return bool true if this relation already exists, false otherwise
    */
@@ -1367,9 +1367,9 @@ class QubitFlatfileImport
   /**
    * Create or fetch a term and relate it to an object
    *
-   * @param integer $taxonomyId taxonomy ID
-   * @param string  $name       name of term
-   * @param string  $culture    culture code (defaulting to row's current culture)
+   * @param int    $taxonomyId taxonomy ID
+   * @param string $name       name of term
+   * @param string $culture    culture code (defaulting to row's current culture)
    *
    * @return void
    */
@@ -1390,7 +1390,7 @@ class QubitFlatfileImport
   /**
    * Get the terms in a taxonomy using sql query
    *
-   * @param integer $taxonomyId taxonomy ID
+   * @param int $taxonomyId taxonomy ID
    *
    * @return array objects resultset
    */
@@ -1524,9 +1524,9 @@ class QubitFlatfileImport
    * legacy ID (source ID), the name of the import where it was mapped (source
    * name), and the type of entity (target name)
    *
-   * @param integer $sourceId   source ID
-   * @param string  $sourceName source name
-   * @param string  $targetName target name
+   * @param int    $sourceId   source ID
+   * @param string $sourceName source name
+   * @param string $targetName target name
    *
    * @return stdClass result object
    */
@@ -1553,7 +1553,7 @@ class QubitFlatfileImport
    * @param array  $valueToTermNameMap array mapping possible values to term names
    * @param array  $terms              array mapping term IDs to term names
    *
-   * @return integer term ID
+   * @return int term ID
    */
   public function translateNameToTermId($description, $value, $valueToTermNameMap, $terms)
   {
@@ -2394,7 +2394,7 @@ class QubitFlatfileImport
    * @param array  $rows Results array from term query lookup
    * @param string $name Term name
    *
-   * @return integer Index value if $name is found otherwise null
+   * @return int Index value if $name is found otherwise null
    */
   private static function getTermIndex($rows, $name)
   {
@@ -2438,8 +2438,8 @@ class QubitFlatfileImport
   /**
    * Check whether or not a term / phys obj relation already exists for this info object.
    *
-   * @param integer $subjectId the term, actor or phys object we're relating to
-   * @param integer $objectId  information object we're relating to
+   * @param int $subjectId the term, actor or phys object we're relating to
+   * @param int $objectId  information object we're relating to
    *
    * @return bool true if this relation already exists, false otherwise
    */

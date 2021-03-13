@@ -127,9 +127,9 @@ class QubitMigrate
    * From http://ca3.php.net/manual/en/function.array-splice.php
    * @author weikard at gmx dot de (15-Sep-2005 08:53)
    *
-   * @param array   $array        Primary array
-   * @param integer $position     insert index
-   * @param array   $insert_array spliced array
+   * @param array $array        Primary array
+   * @param int   $position     insert index
+   * @param array $insert_array spliced array
    */
   public static function array_insert(&$array, $position, $insert_array)
   {

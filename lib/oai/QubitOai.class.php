@@ -320,8 +320,8 @@ class QubitOai
   /**
    * Validate that an xml extract is valid
    *
-   * @param  string  $xml, an xml string to validate
-   * @return boolean true if valid
+   * @param  string $xml, an xml string to validate
+   * @return bool   true if valid
    */
   public static function validate($xml)
   {

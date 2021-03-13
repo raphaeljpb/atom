@@ -84,7 +84,7 @@ class QubitPdoPager extends sfPager
   /**
    * Returns true if the current query has any results
    *
-   * @return boolean
+   * @return bool
    */
   public function hasResults()
   {

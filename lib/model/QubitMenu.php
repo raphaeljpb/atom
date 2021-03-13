@@ -141,7 +141,7 @@ class QubitMenu extends BaseMenu
   /**
    * Test if this menu is protected (can't delete)
    *
-   * @return boolean
+   * @return bool
    */
   public function isProtected()
   {
@@ -181,7 +181,7 @@ class QubitMenu extends BaseMenu
   /**
    * Test if this menu is selected (based on current module/action)
    *
-   * @return boolean
+   * @return bool
    */
   public function isSelected()
   {
@@ -249,7 +249,7 @@ class QubitMenu extends BaseMenu
   /**
    * Test if a descendant of this menu is selected.
    *
-   * @return boolean
+   * @return bool
    */
   public function isDescendantSelected()
   {
@@ -281,7 +281,7 @@ class QubitMenu extends BaseMenu
   /**
    * Move this menu before $referenceMenu
    *
-   * @param integer reference menu id
+   * @param int reference menu id
    * @return QubitMenu $this object
    */
   public function moveBeforeById($referenceMenuId)
@@ -297,7 +297,7 @@ class QubitMenu extends BaseMenu
   /**
    * Move this menu after $referenceMenu
    *
-   * @param integer reference menu id
+   * @param int reference menu id
    * @return QubitMenu $this object
    */
   public function moveAfterById($referenceMenuId)
@@ -400,7 +400,7 @@ class QubitMenu extends BaseMenu
    * for accurately representing a menu heirarchy as a nested XHTML list.
    *
    * @param  QubitMenu $parent  parent menu object for hierarchy branch
-   * @param  integer   $depth   current (relative) depth from top of tree (for styling)
+   * @param  int       $depth   current (relative) depth from top of tree (for styling)
    * @param  array     $options optional parameters
    * @return string    an indented, nested XHTML list
    */

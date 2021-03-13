@@ -51,7 +51,7 @@ class QubitInformationObjectXmlCacheResource
    * Get file path of an information object's XML representation.
    *
    * @param string  format of XML ("dc" or "ead")
-   * @param boolean  where or not to store just the contents (no XML header lines)
+   * @param bool  where or not to store just the contents (no XML header lines)
    *
    * @return string path to XML representation
    */

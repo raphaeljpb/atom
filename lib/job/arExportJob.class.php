@@ -175,7 +175,7 @@ class arExportJob extends arBaseJob
    * Create ZIP file from exported files
    *
    * @param string   Path of file to write CSV data to
-   * @param boolean  Optional: Whether to include digital objects
+   * @param bool  Optional: Whether to include digital objects
    *
    * @return array Error messages
    */

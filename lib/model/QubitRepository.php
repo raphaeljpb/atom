@@ -215,9 +215,9 @@ class QubitRepository extends BaseRepository
   /**
    * Create new related QubitNote
    *
-   * @param integer $userId     QubitUser id
-   * @param string  $note       Note text
-   * @param integer $noteTypeId Type of note (QubitTerm pk)
+   * @param int    $userId     QubitUser id
+   * @param string $note       Note text
+   * @param int    $noteTypeId Type of note (QubitTerm pk)
    */
   public function setRepositoryNote($userId, $note, $noteTypeId)
   {
@@ -325,7 +325,7 @@ class QubitRepository extends BaseRepository
   /**
    * Get disk space used by digital objects in this repository
    *
-   * @return integer disk usage in bytes
+   * @return int disk usage in bytes
    */
   public function getDiskUsage($options = [])
   {
@@ -478,7 +478,7 @@ class QubitRepository extends BaseRepository
   /**
    * Check if the logo asset exists
    *
-   * @return boolean
+   * @return bool
    */
   public function existsLogo()
   {
@@ -488,7 +488,7 @@ class QubitRepository extends BaseRepository
   /**
    * Check if the banner asset exists
    *
-   * @return boolean
+   * @return bool
    */
   public function existsBanner()
   {

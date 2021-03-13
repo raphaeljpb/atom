@@ -92,7 +92,7 @@ class QubitRelation extends BaseRelation
    * Get records from relation table linked to object (semantic)
    * QubitObject identified by primary key $id.
    *
-   * @param  integer    $id      primary key of "object" QubitObject
+   * @param  int        $id      primary key of "object" QubitObject
    * @param  array      $options optional parameters
    * @return QubitQuery collection of QubitRelation objects
    */
@@ -113,7 +113,7 @@ class QubitRelation extends BaseRelation
    * Get records from relation table linked to subject
    * QubitObject identified by primary key $id.
    *
-   * @param  integer    $id      primary key of "subject" QubitObject
+   * @param  int        $id      primary key of "subject" QubitObject
    * @param  array      $options optional parameters
    * @return QubitQuery collection of QubitRelation objects
    */
@@ -133,7 +133,7 @@ class QubitRelation extends BaseRelation
   /**
    * Get all relations from/to given object $id
    *
-   * @param  integer    $id      primary key of object
+   * @param  int        $id      primary key of object
    * @param  array      $options optional parameters
    * @return QubitQuery collection of QubitRelation objects
    */
@@ -162,7 +162,7 @@ class QubitRelation extends BaseRelation
    * Get related subject objects via QubitRelation many-to-many relationship
    *
    * @param  string     $className type of objects to return
-   * @param  integer    $objectId  primary key of "object" QubitObject
+   * @param  int        $objectId  primary key of "object" QubitObject
    * @param  array      $options   list of options to pass to QubitQuery
    * @return QubitQuery collection of QubitObjects
    */
@@ -185,7 +185,7 @@ class QubitRelation extends BaseRelation
    * Get related "object" (semantic) QubitObjects
    *
    * @param  string     $className type of objects to return
-   * @param  integer    $subjectId primary key of "subject" QubitObject
+   * @param  int        $subjectId primary key of "subject" QubitObject
    * @param  array      $options   list of options to pass to QubitQuery
    * @return QubitQuery collection of QubitObjects
    */
@@ -207,8 +207,8 @@ class QubitRelation extends BaseRelation
   /**
    * Get opposite vertex of relation
    *
-   * @param  integer $referenceId primary key of reference object
-   * @return mixed   other object in relationship
+   * @param  int   $referenceId primary key of reference object
+   * @return mixed other object in relationship
    */
   public function getOpposedObject($reference)
   {

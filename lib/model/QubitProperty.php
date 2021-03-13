@@ -97,7 +97,7 @@ class QubitProperty extends BaseProperty
   /**
    * Get a unique property associated with object identified by $objectId
    *
-   * @param  integer       $objectId foreign key to related object
+   * @param  int           $objectId foreign key to related object
    * @param  string        $name     name of property
    * @param  array         $options  optional parameter array
    * @return QubitProperty matching property (if any)
@@ -120,7 +120,7 @@ class QubitProperty extends BaseProperty
    * Add property after verifying that there isn't already one with an identical
    * object_id, name, and (optionally) scope.
    *
-   * @param  integer       $objectId related object foreign key
+   * @param  int           $objectId related object foreign key
    * @param  string        $name     name of property
    * @param  string        $value    value to set for property
    * @param  array         $options  optional parameters
@@ -157,11 +157,11 @@ class QubitProperty extends BaseProperty
   /**
    * Determine if a property matching passed values already exists.
    *
-   * @param  integer $objectId foreign key to QubitObject::ID
-   * @param  string  $name     name of property
-   * @param  string  $value    value of property
-   * @param  string  $options  array of optional parameters
-   * @return boolean true if QubitProperty exists
+   * @param  int    $objectId foreign key to QubitObject::ID
+   * @param  string $name     name of property
+   * @param  string $value    value of property
+   * @param  string $options  array of optional parameters
+   * @return bool   true if QubitProperty exists
    */
   public static function isExistent($objectId, $name, $value, $options = [])
   {

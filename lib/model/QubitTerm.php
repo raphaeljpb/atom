@@ -631,8 +631,8 @@ class QubitTerm extends BaseTerm
    * Get a list of child terms of $parentTermId. Prefix $indentStr * depth of child
    * relative to parent
    *
-   * @param integer $parentTermId Primary key of parent term
-   * @param string  $indentStr    String to prefix to each sub-level for indenting
+   * @param int    $parentTermId Primary key of parent term
+   * @param string $indentStr    String to prefix to each sub-level for indenting
    *
    * @return mixed false on failure, else array of children formatted for select box
    */
@@ -698,7 +698,7 @@ class QubitTerm extends BaseTerm
   /**
    * Get an aggregate count of all objects related to this term
    *
-   * @return integer count of related objects
+   * @return int count of related objects
    */
   public function getRelatedObjectCount()
   {
@@ -718,7 +718,7 @@ class QubitTerm extends BaseTerm
   /**
    * Count the number of actors that use this term
    *
-   * @return integer number of related actors
+   * @return int number of related actors
    */
   public function getRelatedActorCount()
   {
@@ -736,7 +736,7 @@ class QubitTerm extends BaseTerm
    * Count the number of actor names that use this term
    * (taxonomy.id = ACTOR_NAME_TYPE_ID)
    *
-   * @return integer number of related actor_names
+   * @return int number of related actor_names
    */
   public function getRelatedNameCount()
   {
@@ -749,7 +749,7 @@ class QubitTerm extends BaseTerm
   /**
    * Count the number of digital objects that use this term
    *
-   * @return integer number of related digital objects
+   * @return int number of related digital objects
    */
   public function getRelatedDigitalObjectCount()
   {
@@ -764,7 +764,7 @@ class QubitTerm extends BaseTerm
    * Count the number of events that use this term
    * (taxonomy.id = EVENT_TYPE_ID)
    *
-   * @return integer number of related events
+   * @return int number of related events
    */
   public function getRelatedEventCount()
   {
@@ -777,7 +777,7 @@ class QubitTerm extends BaseTerm
   /**
    * Count the number of information objects that use this term
    *
-   * @return integer number of related information objects
+   * @return int number of related information objects
    */
   public function getRelatedInfoObjectCount()
   {
@@ -793,7 +793,7 @@ class QubitTerm extends BaseTerm
   /**
    * Get a count of notes that use this term
    *
-   * @return integer number of related notes
+   * @return int number of related notes
    */
   public function getRelatedNoteCount()
   {
@@ -806,7 +806,7 @@ class QubitTerm extends BaseTerm
   /**
    * Get a count of object_term_relation records that use this term
    *
-   * @return integer related object count
+   * @return int related object count
    */
   public function getRelatedObjectTermRelationCount()
   {
@@ -820,7 +820,7 @@ class QubitTerm extends BaseTerm
    * Count the number of physical objects that use this term
    * (taxonomy.id = PHYSICAL_OBJECT_TYPE_ID)
    *
-   * @return integer number of related physical objects
+   * @return int number of related physical objects
    */
   public function getRelatedPhysicalObjectCount()
   {
@@ -833,7 +833,7 @@ class QubitTerm extends BaseTerm
   /**
    * Count the number of repositories that use this term
    *
-   * @return integer number of related repositories
+   * @return int number of related repositories
    */
   public function getRelatedRepositoryCount()
   {
@@ -850,8 +850,8 @@ class QubitTerm extends BaseTerm
   /**
    * Get a count of related information objects
    *
-   * @param integer  ID of term
-   * @return integer count of related information objects
+   * @param int  ID of term
+   * @return int count of related information objects
    */
   public static function countRelatedInformationObjects($id)
   {
@@ -872,9 +872,9 @@ class QubitTerm extends BaseTerm
    * Get a basic key['id']/value['name'] array for use as options in form
    * select lists
    *
-   * @param  integer $taxonomyId parent taxonomy id
-   * @param  array   $options    optional paramters
-   * @return array   select box options
+   * @param  int   $taxonomyId parent taxonomy id
+   * @param  array $options    optional paramters
+   * @return array select box options
    */
   public static function getOptionsForSelectList($taxonomyId, $options = [])
   {

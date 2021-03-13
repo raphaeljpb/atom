@@ -1430,8 +1430,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * Populate a digital object from a base64-encoded character stream.
    * This is for, eg. importing encoded digital objects from XML
    *
-   * @param  string  $encodedString base64-encoded string
-   * @return boolean success or failure
+   * @param  string $encodedString base64-encoded string
+   * @return bool   success or failure
    */
   public function importFromBase64($encodedString, $filename, $options = [])
   {
@@ -1469,7 +1469,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Check whether the digital object usage involves an externally stored
    * master that's used to generate derivatives
    *
-   * @return boolean whether or not usage relies on an external master
+   * @return bool whether or not usage relies on an external master
    */
   public function derivativesGeneratedFromExternalMaster($usageId)
   {
@@ -1531,7 +1531,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Test that image will display in major web browsers
    *
-   * @return boolean
+   * @return bool
    */
   public function isWebCompatibleImageFormat()
   {
@@ -1618,7 +1618,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Find *first* child of current digital object that matches $usageid.
    *
-   * @param integer  Constant value from QubitTerm (THUMBNAIL_ID, REFERENCE_ID)
+   * @param int  Constant value from QubitTerm (THUMBNAIL_ID, REFERENCE_ID)
    */
   public function getChildByUsageId($usageId)
   {
@@ -1652,8 +1652,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * Get a representation for the given $usageId.  Currently only searches
    * direct children of current digital object.
    *
-   * @param  integer $usageId
-   * @return mixed   DigitalObject on success
+   * @param  int   $usageId
+   * @return mixed DigitalObject on success
    *
    * @todo look for matching usage id up and down object tree?
    */
@@ -1689,7 +1689,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Determine if this digital object is an image, based on mimetype
    *
-   * @return boolean
+   * @return bool
    */
   public function isImage()
   {
@@ -1699,7 +1699,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Return true if this is a compound digital object
    *
-   * @return boolean
+   * @return bool
    */
   public function isCompoundObject()
   {
@@ -1915,7 +1915,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create various representations for this digital object
    *
-   * @param  integer            $usageId intended use of asset
+   * @param  int                $usageId intended use of asset
    * @return QubitDigitalObject this object
    */
   public function createRepresentations($usageId, $connection = null)
@@ -2048,7 +2048,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Get the number of pages in asset (multi-page file)
    *
-   * @return integer number of pages
+   * @return int number of pages
    */
   public function getPageCount()
   {
@@ -2202,7 +2202,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Test various php settings that affect POST size and report the
    * most limiting one.
    *
-   * @return integer max POST file size in bytes
+   * @return int max POST file size in bytes
    */
   public static function getMaxPostSize()
   {
@@ -2217,7 +2217,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Test various php settings that affect file upload size and report the
    * most limiting one.
    *
-   * @return integer max upload file size in bytes
+   * @return int max upload file size in bytes
    */
   public static function getMaxUploadSize()
   {
@@ -2233,7 +2233,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Given array, detect min value and return it. Return -1 if array is empty.
    * most limiting one.
    *
-   * @return integer max upload file size in bytes
+   * @return int max upload file size in bytes
    */
   public static function getMin($settings)
   {
@@ -2313,7 +2313,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create an derivative of an image (a smaller image ;)
    *
-   * @param  integer            $usageId usage type id
+   * @param  int                $usageId usage type id
    * @return QubitDigitalObject derivative object
    */
   public function createImageDerivative($usageId, $connection = null)
@@ -2355,10 +2355,10 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Resize this digital object (image)
    *
-   * @param integer $maxwidth  Max width of resized image
-   * @param integer $maxheight Max height of resized image
+   * @param int $maxwidth  Max width of resized image
+   * @param int $maxheight Max height of resized image
    *
-   * @return boolean success or failure
+   * @return bool success or failure
    */
   public function resize($maxwidth, $maxheight = null)
   {
@@ -2376,8 +2376,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Resize current digital object according to a specific usage type
    *
-   * @param  integer $usageId
-   * @return boolean success or failure
+   * @param  int  $usageId
+   * @return bool success or failure
    */
   public function resizeByUsageId($usageId)
   {
@@ -2402,8 +2402,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Allow multiple ways of getting the max dimensions for image by usage
    *
-   * @param  integer $usageId the usage type
-   * @return array   $maxwidth, $maxheight
+   * @param  int   $usageId the usage type
+   * @return array $maxwidth, $maxheight
    *
    * @todo Add THUMBNAIL_MAX_DIMENSION to Qubit Settings
    */
@@ -2446,9 +2446,9 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Resize an image using the sfThubmnail Plugin.
    *
-   * @param string  $originalImageName
-   * @param integer $width
-   * @param integer $height
+   * @param string $originalImageName
+   * @param int    $width
+   * @param int    $height
    *
    * @return string (thumbnail's bitstream)
    */
@@ -2526,7 +2526,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Test if ImageMagick library is installed
    *
-   * @return boolean true if ImageMagick is found
+   * @return bool true if ImageMagick is found
    */
   public static function hasImageMagick()
   {
@@ -2539,7 +2539,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Test if GD Extension for PHP is installed
    *
-   * @return boolean true if GD extension found
+   * @return bool true if GD extension found
    */
   public static function hasGdExtension()
   {
@@ -2549,7 +2549,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Wrapper for canThumbnailMimeType() for use on instantiated objects
    *
-   * @return boolean
+   * @return bool
    * @see canThumbnailMimeType
    */
   public function canThumbnail()
@@ -2561,7 +2561,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Test if current digital object can be thumbnailed
    *
    * @param string    The current thumbnailing adapter
-   * @return boolean true if thumbnail is possible
+   * @return bool true if thumbnail is possible
    */
   public static function canThumbnailMimeType($mimeType)
   {
@@ -2590,8 +2590,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Return true if derived mimeType is "image/*"
    *
-   * @param  string  $filename
-   * @return boolean
+   * @param  string $filename
+   * @return bool
    */
   public static function isImageFile($filename)
   {
@@ -2722,7 +2722,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create video derivatives (either flv movie or thumbnail)
    *
-   * @param  integer            $usageId usage type id
+   * @param  int                $usageId usage type id
    * @return QubitDigitalObject derivative object
    */
   public function createVideoDerivative($usageId, $connection = null)
@@ -2805,7 +2805,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Test if FFmpeg library is installed
    *
-   * @return boolean true if FFmpeg is found
+   * @return bool true if FFmpeg is found
    */
   public static function hasFfmpeg()
   {
@@ -2818,12 +2818,12 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create a mp4 video derivative using the FFmpeg library.
    *
-   * @param string  $originalPath path to original video
-   * @param string  $newPath      path to derivative video
-   * @param integer $maxwidth     derivative video maximum width
-   * @param integer $maxheight    derivative video maximum height
+   * @param string $originalPath path to original video
+   * @param string $newPath      path to derivative video
+   * @param int    $maxwidth     derivative video maximum width
+   * @param int    $maxheight    derivative video maximum height
    *
-   * @return boolean success or failure
+   * @return bool success or failure
    *
    * @todo implement $maxwidth and $maxheight constraints on video
    */
@@ -2846,12 +2846,12 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create a video thumbnail using the FFmpeg library.
    *
-   * @param string  $originalPath path to original video
-   * @param string  $newPath      path to derivative video
-   * @param integer $maxwidth     derivative video maximum width
-   * @param integer $maxheight    derivative video maximum height
+   * @param string $originalPath path to original video
+   * @param string $newPath      path to derivative video
+   * @param int    $maxwidth     derivative video maximum width
+   * @param int    $maxheight    derivative video maximum height
    *
-   * @return boolean success or failure
+   * @return bool success or failure
    *
    * @todo implement $maxwidth and $maxheight constraints on video
    */
@@ -2885,8 +2885,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Return true if derived mimeType is "video/*"
    *
-   * @param  string  $filename
-   * @return boolean
+   * @param  string $filename
+   * @return bool
    */
   public static function isVideoFile($filename)
   {
@@ -2904,9 +2904,9 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create a thumbnail from a video file using FFmpeg library
    *
-   * @param string  $originalImageName
-   * @param integer $width
-   * @param integer $height
+   * @param string $originalImageName
+   * @param int    $width
+   * @param int    $height
    *
    * @return string (thumbnail's bitstream)
    */
@@ -2954,7 +2954,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Test if text extraction is possible
    *
    * @param string mime-type
-   * @return boolean true if extraction is supported
+   * @return bool true if extraction is supported
    */
   public static function canExtractText($mimeType)
   {
@@ -3187,7 +3187,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Decide whether to show child digital objects as a compound object based
    * on 'displayAsCompound' toggle and available digital objects.
    *
-   * @return boolean
+   * @return bool
    */
   public function showAsCompoundDigitalObject()
   {
@@ -3252,7 +3252,7 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * @param string $dir directory name
    *
-   * @return boolean true if empty
+   * @return bool true if empty
    */
   public static function isEmptyDir($dir)
   {
@@ -3267,7 +3267,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Check if uploads are allowed
    *
-   * @return boolean true if allowed
+   * @return bool true if allowed
    */
   public static function isUploadAllowed()
   {
@@ -3277,7 +3277,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Check the upload limit has been reached
    *
-   * @return boolean true if reached
+   * @return bool true if reached
    */
   public static function reachedAppUploadLimit()
   {
@@ -3298,7 +3298,7 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Check if digital object (master) has an active conditional copyright statement
    *
-   * @return boolean
+   * @return bool
    */
   public function hasConditionalCopyright()
   {
@@ -3423,8 +3423,8 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * Taken from http://ca2.php.net/manual/en/function.ini-get.php
    *
-   * @param  string  $value A string denoting byte size by multiple (e.g. 2M)
-   * @return integer size in bytes
+   * @param  string $value A string denoting byte size by multiple (e.g. 2M)
+   * @return int    size in bytes
    */
   protected static function returnBytes($val)
   {

@@ -199,8 +199,8 @@ class arElasticSearchPluginQuery
   /**
    * Returns the query
    *
-   * @param boolean $allowEmpty   get all or none if the query is empty
-   * @param boolean $filterDrafts filter draft records
+   * @param bool $allowEmpty   get all or none if the query is empty
+   * @param bool $filterDrafts filter draft records
    *
    * @return \Elastica\Query
    */

@@ -470,8 +470,8 @@ class QubitActor extends BaseActor
   /**
    * Save new link to a term.
    *
-   * @param integer $termId       QubitTerm primary key
-   * @param string  $relationNote DEPRECATED
+   * @param int    $termId       QubitTerm primary key
+   * @param string $relationNote DEPRECATED
    */
   public function setTermRelation($termId, $relationNote = null)
   {

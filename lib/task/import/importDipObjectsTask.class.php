@@ -306,11 +306,11 @@ EOF;
   /**
    * Import digital objects
    *
-   * @param array   $digitalObjects Hash with keys of unique value for
-   *                                specifying information objects, values:
-   *                                digital object filenames
-   * @param boolean $auditMode      Whether to audit, rather than import, objects
-   * @param string  $undoLog        Path to undo log
+   * @param array  $digitalObjects Hash with keys of unique value for
+   *                               specifying information objects, values:
+   *                               digital object filenames
+   * @param bool   $auditMode      Whether to audit, rather than import, objects
+   * @param string $undoLog        Path to undo log
    *
    * @return void
    */
@@ -438,8 +438,8 @@ EOF;
    *
    * @param object QubitInformationObject $informationObject Information object
    * @param string                        $filepath          Path, within DIP, to file
-   * @param boolean                       $undoLog           Optional undo log location
-   * @param boolean                       $container         Whether information object contains others
+   * @param bool                          $undoLog           Optional undo log location
+   * @param bool                          $container         Whether information object contains others
    *
    * @return void
    */

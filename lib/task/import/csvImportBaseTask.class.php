@@ -590,7 +590,7 @@ abstract class csvImportBaseTask extends arBaseTask
    *
    * @param string $name option name
    *
-   * @return boolean
+   * @return bool
    */
   protected function acceptsOption($name)
   {

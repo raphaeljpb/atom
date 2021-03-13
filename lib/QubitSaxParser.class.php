@@ -93,8 +93,8 @@ class QubitSaxParser
    * The parser can optionally not be freed after a parse, if one wants to
    * inspect error state externally.
    *
-   * @param string  $file           file path of XML to parse
-   * @param boolean $freeAfterParse whether to free parser after parse
+   * @param string $file           file path of XML to parse
+   * @param bool   $freeAfterParse whether to free parser after parse
    *
    * @return void
    */
@@ -417,7 +417,7 @@ class QubitSaxParser
    *
    * @param string $subPath XML path or path fragment
    *
-   * @return boolean true if subpath exists in current path
+   * @return bool true if subpath exists in current path
    */
   protected function pathIncludes($subPath)
   {
@@ -486,7 +486,7 @@ class QubitSaxParser
    *
    * @param string $method name of method
    *
-   * @return boolean true if method is a handler
+   * @return bool true if method is a handler
    */
   protected function methodIsHandler($method)
   {

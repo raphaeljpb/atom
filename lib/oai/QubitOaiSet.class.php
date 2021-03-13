@@ -29,7 +29,7 @@ interface QubitOaiSet
    *
    * @param mixed $record A record that can be part of an OAI set
    *
-   * @return boolean true if $record is contained in this OAI set
+   * @return bool true if $record is contained in this OAI set
    */
   public function contains($record);
 
