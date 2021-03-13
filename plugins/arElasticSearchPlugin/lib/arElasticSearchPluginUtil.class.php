@@ -57,8 +57,8 @@ class arElasticSearchPluginUtil
    * @param  string  date  The date string
    * @param  bool  endDate  If this is set to true, use 12-31 instead
    *
-   * @return  mixed  A string indicating the normalized date in YYYY-MM-DD format,
-   *                 otherwise null indicating an invalid date string was given.
+   * @return mixed A string indicating the normalized date in YYYY-MM-DD format,
+   *               otherwise null indicating an invalid date string was given.
    */
   public static function normalizeDateWithoutMonthOrDay($date, $endDate = false)
   {
@@ -150,11 +150,11 @@ class arElasticSearchPluginUtil
   /**
    * Expands i18n field names into various specified cultures.
    *
-   * @param array $fields  Which fields to expand. For example, 'i18n.%s.title' will expand to 'i18n.en.title',
-   *                       'i18n.fr.title', 'i18n.es.title', etc.
+   * @param array $fields Which fields to expand. For example, 'i18n.%s.title' will expand to 'i18n.en.title',
+   *                      'i18n.fr.title', 'i18n.es.title', etc.
    *
-   * @param array $cultures  An array specifying which cultures to expand to. If not specified, we look up which
-   *                         cultures are active in AtoM and go off that.
+   * @param array $cultures An array specifying which cultures to expand to. If not specified, we look up which
+   *                        cultures are active in AtoM and go off that.
    *
    */
   public static function getI18nFieldNames($fields, $cultures = null)
@@ -189,9 +189,9 @@ class arElasticSearchPluginUtil
    * Generate a boolean query with a should clause for each field.
    *
    * @param string $query  Unescaped search term.
-   * @param string $fields  Key/value array with fieldname/boost.
+   * @param string $fields Key/value array with fieldname/boost.
    *
-   * @return \Elastica\Query\BoolQuery  The generated boolean query.
+   * @return \Elastica\Query\BoolQuery The generated boolean query.
    */
   public static function generateBoolQueryString($query, $fields)
   {
@@ -224,12 +224,12 @@ class arElasticSearchPluginUtil
   /**
    * Generate a query string query.
    *
-   * @param string $query  Escaped search term.
-   * @param string $field  Full fieldname (including culture if needed).
-   * @param float $boost  Boost for the query. Default: 1.
-   * @param string $operator  Query operator (AND/OR). Default: AND.
+   * @param string $query    Escaped search term.
+   * @param string $field    Full fieldname (including culture if needed).
+   * @param float  $boost    Boost for the query. Default: 1.
+   * @param string $operator Query operator (AND/OR). Default: AND.
    *
-   * @return \Elastica\Query\QueryString  The generated query string query.
+   * @return \Elastica\Query\QueryString The generated query string query.
    */
   public static function generateQueryString($query, $field, $boost = 1, $operator = 'AND')
   {
@@ -455,18 +455,18 @@ class arElasticSearchPluginUtil
    * This function will be called recursively on foreign types and nested fields.
    *
    *
-   * @param string $rootIndexType  The current, top level index type we're adding fields to, e.g. "informationObject".
+   * @param string $rootIndexType The current, top level index type we're adding fields to, e.g. "informationObject".
    *
    *                               Note that since we recursively call getAllObjectStringFields to get foreign type
    *                               fields, this value may not be the "current" index being parsed, e.g. when adding
    *                               creators.name actor fields inside informationObject.
    *
-   * @param array $object  An array containing the current object mappings.
-   * @param string $prefix  The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
-   * @param bool $foreignType  Whether or not this field in question is being parsed for a foreign type,
-   *                           e.g. inside informationObject.creators
+   * @param array  $object      An array containing the current object mappings.
+   * @param string $prefix      The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
+   * @param bool   $foreignType Whether or not this field in question is being parsed for a foreign type,
+   *                            e.g. inside informationObject.creators
    *
-   * @param array $i18nIncludeInAll  A list of i18n fields to be allowed when searching _all
+   * @param array $i18nIncludeInAll A list of i18n fields to be allowed when searching _all
    */
   protected static function getAllObjectStringFields($rootIndexType, $object, $prefix, $foreignType = false,
                                                      $i18nIncludeInAll = null)
@@ -540,7 +540,7 @@ class arElasticSearchPluginUtil
   /**
    * Retrieve the default template type given a specified ES index type.
    *
-   * @return string  The default template (e.g. isad)
+   * @return string The default template (e.g. isad)
    */
   private static function getTemplate($indexType)
   {
@@ -560,7 +560,7 @@ class arElasticSearchPluginUtil
   /**
    * Retrieve a list of fields that are set to hidden in the visible elements settings.
    *
-   * @return array  An array specifying which fields are to be hidden from anonymous users.
+   * @return array An array specifying which fields are to be hidden from anonymous users.
    */
   private static function getHiddenFields()
   {
@@ -631,10 +631,10 @@ class arElasticSearchPluginUtil
   /**
    * Based on indexType, set the boost values for each field.
    *
-   * @param string $indexType  Which index type we're setting the field boost values for.
-   * @param array $fields  The fields we're setting the boost values on.
+   * @param string $indexType Which index type we're setting the field boost values for.
+   * @param array  $fields    The fields we're setting the boost values on.
    *
-   * @return array  Key/value array with fieldname/boost.
+   * @return array Key/value array with fieldname/boost.
    */
   private static function setBoostValues($indexType, $fields)
   {
@@ -674,11 +674,11 @@ class arElasticSearchPluginUtil
   /**
    * Check whether an i18n field should be included in the list of fields for an _all search
    *
-   * @param string $prefix  The current prefix for the field name, e.g. "creators." for "creators.name"
-   * @param string $fieldName  The current field name, e.g. "name" in "creators.name"
-   * @param array $i18nIncludeInAll  A list of i18n fields to be allowed when searching _all
+   * @param string $prefix           The current prefix for the field name, e.g. "creators." for "creators.name"
+   * @param string $fieldName        The current field name, e.g. "name" in "creators.name"
+   * @param array  $i18nIncludeInAll A list of i18n fields to be allowed when searching _all
    *
-   * @return bool  True if we should include this field in the _all search, false otherwise.
+   * @return bool True if we should include this field in the _all search, false otherwise.
    */
   private static function checkI18nIncludeInAll($prefix, $fieldName, $i18nIncludeInAll)
   {
@@ -696,19 +696,19 @@ class arElasticSearchPluginUtil
    * Depending on the index type, there may be special rules we need to check before adding i18n fields to
    * our fields list.
    *
-   * @param string $rootIndexType  The current, top level index type we're adding fields to, e.g. "informationObject".
+   * @param string $rootIndexType The current, top level index type we're adding fields to, e.g. "informationObject".
    *
    *                               Note that since we recursively call getAllObjectStringFields to get foreign type
    *                               fields, this value may not be the "current" index being parsed, e.g. when adding
    *                               creators.name actor fields inside informationObject.
    *
-   * @param array &$fields  A reference to our list of fields we're searching over with our _all query.
-   * @param string $prefix  The current prefix for the field name, e.g. "creators." for "creators.name"
-   * @param string $fieldName  The current field name, e.g. "name" in "creators.name"
-   * @param bool $foreignType  Whether or not this field in question is being parsed for a foreign type,
-   *                           e.g. inside informationObject.creators
+   * @param array  &$fields     A reference to our list of fields we're searching over with our _all query.
+   * @param string $prefix      The current prefix for the field name, e.g. "creators." for "creators.name"
+   * @param string $fieldName   The current field name, e.g. "name" in "creators.name"
+   * @param bool   $foreignType Whether or not this field in question is being parsed for a foreign type,
+   *                            e.g. inside informationObject.creators
    *
-   * @param array $i18nIncludeInAll  A list of i18n fields to be allowed when searching _all
+   * @param array $i18nIncludeInAll A list of i18n fields to be allowed when searching _all
    *
    *
    */
@@ -738,17 +738,17 @@ class arElasticSearchPluginUtil
    * Depending on the index type, there may be special rules we need to check before adding string fields to
    * our fields list.
    *
-   * @param string $rootIndexType  The current, top level index type we're adding fields to, e.g. "informationObject".
+   * @param string $rootIndexType The current, top level index type we're adding fields to, e.g. "informationObject".
    *
    *                               Note that since we recursively call getAllObjectStringFields to get foreign type
    *                               fields, this value may not be the "current" index being parsed, e.g. when adding
    *                               creators.name actor fields inside informationObject.
    *
-   * @param array &$fields  A reference to our list of fields we're searching over with our _all query.
-   * @param string $prefix  The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
-   * @param string $propertyName  The current property name, e.g. "slug" in "informationObject.slug"
-   * @param bool $foreignType  Whether or not this field in question is being parsed for a foreign type,
-   *                           e.g. inside informationObject.creators
+   * @param array  &$fields      A reference to our list of fields we're searching over with our _all query.
+   * @param string $prefix       The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
+   * @param string $propertyName The current property name, e.g. "slug" in "informationObject.slug"
+   * @param bool   $foreignType  Whether or not this field in question is being parsed for a foreign type,
+   *                             e.g. inside informationObject.creators
    */
   private static function handleNonI18nStringFields($rootIndexType, &$fields, $prefix, $propertyName, $foreignType)
   {

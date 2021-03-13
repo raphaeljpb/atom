@@ -32,7 +32,7 @@ class QubitOtherName extends BaseOtherName
   /**
    * Static method to delete an actor name with given $id
    *
-   * @param integer $id primary key of property
+   * @param integer    $id         primary key of property
    * @param Connection $connection database connection object
    */
   public static function deleteById($id, $connection = null)

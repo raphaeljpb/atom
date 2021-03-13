@@ -117,7 +117,7 @@ class QubitInformationObjectXmlCache
    * @param string  XML format
    * @param boolean  whether or not to get file path for just the XML's contents (no XML header lines)
    *
-   * @return string  file path of EAD XML
+   * @return string file path of EAD XML
    */
   public static function resourceExportFilePath($resource, $format, $contentsOnly = false)
   {

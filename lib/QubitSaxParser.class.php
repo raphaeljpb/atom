@@ -95,8 +95,8 @@ class QubitSaxParser
    * The parser can optionally not be freed after a parse, if one wants to
    * inspect error state externally.
    *
-   * @param string $file  file path of XML to parse
-   * @param boolean $freeAfterParse  whether to free parser after parse
+   * @param string  $file           file path of XML to parse
+   * @param boolean $freeAfterParse whether to free parser after parse
    *
    * @return void
    */
@@ -162,7 +162,7 @@ class QubitSaxParser
    *
    * Can be used to inspect error state externally
    *
-   * @return resource  SAX parser
+   * @return resource SAX parser
    */
   public function getParser()
   {
@@ -172,7 +172,7 @@ class QubitSaxParser
   /**
    * Get parsing error description
    *
-   * @return string  Description of parsing error
+   * @return string Description of parsing error
    */
   public function getErrorData()
   {
@@ -189,9 +189,9 @@ class QubitSaxParser
    * 3) Calls a method with suffix "TagInit" if it exists...
    *    otherwise, it calls a method called "startTagHandler"
    *
-   * @param object $sax  SAX parser
-   * @param string $tag  tag name of element currently being processed
-   * @param array $array  array of attribute data
+   * @param object $sax   SAX parser
+   * @param string $tag   tag name of element currently being processed
+   * @param array  $array array of attribute data
    *
    * @return void
    */
@@ -217,9 +217,9 @@ class QubitSaxParser
    *
    * Take note of which handlers have been called
    *
-   * @param string $tag  tag name of element currently being processed
+   * @param string $tag                  tag name of element currently being processed
    * @param string $handlerMethodSuffix  handler naming scheme suffix
-   * @param string $defaultHandlerMethod  name of generic handler
+   * @param string $defaultHandlerMethod name of generic handler
    *
    * @return void
    */
@@ -250,7 +250,7 @@ class QubitSaxParser
   /**
    * Note that a handler method has been triggered
    *
-   * @param string $method  name of handler method
+   * @param string $method name of handler method
    *
    * @return void
    */
@@ -288,7 +288,7 @@ class QubitSaxParser
    * Note that this gets executed even for whitespace between tags.
    *
    * @param object $sax  SAX parser
-   * @param string $data  CDATA text
+   * @param string $data CDATA text
    *
    * @return void
    */
@@ -313,8 +313,8 @@ class QubitSaxParser
    *    otherwise, it calls a method called "endTagHandler"
    * 3) Discards current tag data
    *
-   * @param object $sax  SAX parser
-   * @param string $tag  tag name of element currently being processed
+   * @param object $sax SAX parser
+   * @param string $tag tag name of element currently being processed
    *
    * @return void
    */
@@ -346,7 +346,7 @@ class QubitSaxParser
   /**
    * Get name of current tag being processed
    *
-   * @return string  name of current tag being processed
+   * @return string name of current tag being processed
    */
   protected function tag()
   {
@@ -356,7 +356,7 @@ class QubitSaxParser
   /**
    * Get CDATA of current tag being processed
    *
-   * @return string  CDATA content
+   * @return string CDATA content
    */
   protected function data()
   {
@@ -366,9 +366,9 @@ class QubitSaxParser
   /**
    * Get attribute of current tag being processed
    *
-   * @param string $attrName  attribute name
+   * @param string $attrName attribute name
    *
-   * @return string  attribute value
+   * @return string attribute value
    */
   protected function attr($attrName)
   {
@@ -380,7 +380,7 @@ class QubitSaxParser
   /**
    * Get all attribute data for current tag being processed
    *
-   * @return array  array where key is attribute name
+   * @return array array where key is attribute name
    */
   protected function currentAttr()
   {
@@ -390,7 +390,7 @@ class QubitSaxParser
   /**
    * Return immediate ancestor
    *
-   * @return array  parent tag data
+   * @return array parent tag data
    */
   protected function parent()
   {
@@ -400,7 +400,7 @@ class QubitSaxParser
   /**
    * Return path in XML hierarchy
    *
-   * @return string  string representation of path
+   * @return string string representation of path
    */
   protected function path()
   {
@@ -417,9 +417,9 @@ class QubitSaxParser
   /**
    * Check if the current path in the XML hierarchy contains a subpath
    *
-   * @param string $subPath  XML path or path fragment
+   * @param string $subPath XML path or path fragment
    *
-   * @return boolean  true if subpath exists in current path
+   * @return boolean true if subpath exists in current path
    */
   protected function pathIncludes($subPath)
   {
@@ -435,7 +435,7 @@ class QubitSaxParser
   /**
    * Return array of handlers defined
    *
-   * @return array  array of handlers
+   * @return array array of handlers
    */
   protected function handlers()
   {
@@ -460,7 +460,7 @@ class QubitSaxParser
    * This can be used to make sure the documents you're parsing aren't missing
    * any elements.
    *
-   * @return array  array of handlers
+   * @return array array of handlers
    */
   protected function untriggeredHandlers()
   {
@@ -473,7 +473,7 @@ class QubitSaxParser
    * This can be used to make sure you haven't misnamed any handlers (if
    * a handler is returned by this function then it is likely misnamed).
    *
-   * @return array  array of handlers
+   * @return array array of handlers
    */
   protected function nonHandlers()
   {
@@ -486,9 +486,9 @@ class QubitSaxParser
   /**
    * Check if a method is a handler
    *
-   * @param string $method  name of method
+   * @param string $method name of method
    *
-   * @return boolean  true if method is a handler
+   * @return boolean true if method is a handler
    */
   protected function methodIsHandler($method)
   {

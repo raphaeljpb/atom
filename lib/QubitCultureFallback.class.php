@@ -47,8 +47,8 @@ class QubitCultureFallback
   /**
    * Add fallback query criteria to $criteria
    *
-   * @param Criteria $criteria
-   * @param array $options
+   * @param  Criteria   $criteria
+   * @param  array      $options
    * @return QubitQuery array of objects
    */
   public static function addFallbackCriteria($criteria, $fallbackClassName, $options = [])
@@ -94,7 +94,7 @@ class QubitCultureFallback
   /**
    * Build SQL 'case' statement to get the most relevant value for $column
    *
-   * @param string $column name
+   * @param  string $column name
    * @return string SQL case statement
    */
   protected static function getfallbackCaseStmt($column)

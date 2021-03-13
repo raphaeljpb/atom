@@ -214,7 +214,7 @@ class QubitFlatfileExport
   /**
    * Set column value in current row if the column's being exported
    *
-   * @param string $column  column name
+   * @param string $column column name
    * @param string $value  value to set current row's column value to
    *
    * @return void
@@ -234,8 +234,8 @@ class QubitFlatfileExport
   /**
    * Set column value in current row to store notes if the column's being exported
    *
-   * @param string $column  column name
-   * @param int $noteTypeId  ID of the type of note to store
+   * @param string $column     column name
+   * @param int    $noteTypeId ID of the type of note to store
    *
    * @return void
    */
@@ -257,7 +257,7 @@ class QubitFlatfileExport
   /**
    * Export a resource as a flatfile row
    *
-   * @param object $resource  object to export
+   * @param object $resource object to export
    *
    * @return void
    */
@@ -448,7 +448,7 @@ class QubitFlatfileExport
   /**
    * If an array is provided as a value, implode it
    *
-   * @param string $value  value
+   * @param string $value value
    *
    * @return void
    */
@@ -466,8 +466,8 @@ class QubitFlatfileExport
   /**
    * Append row data to file
    *
-   * @param string $filePath  path to file
-   * @param array $row  array of each column's values
+   * @param string $filePath path to file
+   * @param array  $row      array of each column's values
    *
    * @return void
    */

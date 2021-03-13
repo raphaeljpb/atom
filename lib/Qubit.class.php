@@ -90,9 +90,9 @@ class Qubit
    * Attempt to parse date from non-machine-readable text,
    * returning false upon failure.
    *
-   * @param string $dateText  description of date
+   * @param string $dateText description of date
    *
-   * @return string/void  date in Y-MM-DD, Y-MM or Y format or nothing
+   * @return string/void date in Y-MM-DD, Y-MM or Y format or nothing
    */
   public static function parseDate($dateText)
   {
@@ -198,7 +198,7 @@ class Qubit
    * Given a directory return its size
    *
    * @param string $directory path
-   * @param array $options
+   * @param array  $options
    *
    * @return int
    */
@@ -270,9 +270,9 @@ class Qubit
    * Based on function by Kioob at:
    * http://www.php.net/manual/en/function.gzwrite.php#34955
    *
-   * @param string $source Path to file that should be compressed
-   * @param integer $level GZIP compression level (default: 9)
-   * @return string New filename (with .gz appended) if success, or false if operation fails
+   * @param  string  $source Path to file that should be compressed
+   * @param  integer $level  GZIP compression level (default: 9)
+   * @return string  New filename (with .gz appended) if success, or false if operation fails
    */
   public static function gzipFile($source, $level = 9)
   {
@@ -432,8 +432,8 @@ class Qubit
   /**
    * Generate an identifier using a counter value and a mask
    *
-   * @param int $counter  current counter value
-   * @param string $mask  mask
+   * @param int    $counter current counter value
+   * @param string $mask    mask
    *
    * @return string
    */

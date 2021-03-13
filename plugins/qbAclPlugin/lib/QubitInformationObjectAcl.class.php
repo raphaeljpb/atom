@@ -48,10 +48,10 @@ class QubitInformationObjectAcl extends QubitAcl
   /**
    * Do custom ACL checks for QubitInformationObject resources
    *
-   * @param myUser $user to authorize
+   * @param myUser                 $user     to authorize
    * @param QubitInformationObject $resource target of the requested action
-   * @param string $action requested for authorization (e.g. 'read')
-   * @param array|null $options optional parameters
+   * @param string                 $action   requested for authorization (e.g. 'read')
+   * @param array|null             $options  optional parameters
    *
    * @return bool true if the access request is authorized
    */
@@ -77,10 +77,10 @@ class QubitInformationObjectAcl extends QubitAcl
   /**
    * Custom QubitInformationObject "read" authorization rules
    *
-   * @param myUser $user to authorize
-   * @param mixed $resource target of the requested action
-   * @param string $action requested for authorization (e.g. 'read')
-   * @param array|null $options optional parameters
+   * @param myUser     $user     to authorize
+   * @param mixed      $resource target of the requested action
+   * @param string     $action   requested for authorization (e.g. 'read')
+   * @param array|null $options  optional parameters
    *
    * @return bool true if the access request is authorized
    */
@@ -114,10 +114,10 @@ class QubitInformationObjectAcl extends QubitAcl
   /**
    * Do custom ACL checks for digital object actions
    *
-   * @param myUser $user to authorize
-   * @param mixed $resource target of the requested action
-   * @param string $action requested for authorization (e.g. 'read')
-   * @param array|null $options optional parameters
+   * @param myUser     $user     to authorize
+   * @param mixed      $resource target of the requested action
+   * @param string     $action   requested for authorization (e.g. 'read')
+   * @param array|null $options  optional parameters
    */
   private static function isDigitalObjectActionAllowed(
     $user, $resource, $action, $options = []

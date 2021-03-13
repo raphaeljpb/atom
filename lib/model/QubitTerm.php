@@ -598,7 +598,7 @@ class QubitTerm extends BaseTerm
   /**
    * Return a list of all Physical Object terms
    *
-   * @param array $options  option array to pass to Qubit Query object
+   * @param  array      $options option array to pass to Qubit Query object
    * @return QubitQuery array of Physical Object QubitTerm objects
    */
   public static function getPhysicalObjectTypes($options = [])
@@ -609,7 +609,7 @@ class QubitTerm extends BaseTerm
   /**
    * Return a list of all Relation Type terms
    *
-   * @param array $options  option array to pass to Qubit Query object
+   * @param  array      $options option array to pass to Qubit Query object
    * @return QubitQuery object
    */
   public static function getRelationTypes($options = [])
@@ -633,10 +633,10 @@ class QubitTerm extends BaseTerm
    * Get a list of child terms of $parentTermId. Prefix $indentStr * depth of child
    * relative to parent
    *
-   * @param integer $parentTermId  Primary key of parent term
-   * @param string  $indentStr     String to prefix to each sub-level for indenting
+   * @param integer $parentTermId Primary key of parent term
+   * @param string  $indentStr    String to prefix to each sub-level for indenting
    *
-   * @return mixed  false on failure, else array of children formatted for select box
+   * @return mixed false on failure, else array of children formatted for select box
    */
   public static function getIndentedChildTree($parentTermId, $indentStr = '&nbsp;', $options = [])
   {
@@ -853,7 +853,7 @@ class QubitTerm extends BaseTerm
    * Get a count of related information objects
    *
    * @param integer  ID of term
-   * @return integer  count of related information objects
+   * @return integer count of related information objects
    */
   public static function countRelatedInformationObjects($id)
   {
@@ -874,9 +874,9 @@ class QubitTerm extends BaseTerm
    * Get a basic key['id']/value['name'] array for use as options in form
    * select lists
    *
-   * @param integer $taxonomyId parent taxonomy id
-   * @param array $options optional paramters
-   * @return array select box options
+   * @param  integer $taxonomyId parent taxonomy id
+   * @param  array   $options    optional paramters
+   * @return array   select box options
    */
   public static function getOptionsForSelectList($taxonomyId, $options = [])
   {
@@ -927,7 +927,7 @@ class QubitTerm extends BaseTerm
   /**
    * Get the direct descendents of the current term
    *
-   * @param array $options optional paramters
+   * @param  array      $options optional paramters
    * @return QubitQuery collection of QubitTerm objects
    */
   public function getChildren($options = [])
@@ -1094,7 +1094,7 @@ class QubitTerm extends BaseTerm
   /**
    * Get a term's converse actor relation term (or null if none exists).
    *
-   * @return mixed  QubitTerm or null
+   * @return mixed QubitTerm or null
    */
   public function getConverseActorRelationTerm()
   {

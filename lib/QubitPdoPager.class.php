@@ -25,10 +25,10 @@ class QubitPdoPager extends sfPager
   protected $countSql = null;
 
   /**
-   * @param string $sql        Main SQL query
-   * @param array $sqlParams   Params for main SQL query
-   * @param string $countSql   SQL query to count results (should SELECT only one column)
-   * @param array $sqlParams   Params for SQL query to count results
+   * @param string $sql       Main SQL query
+   * @param array  $sqlParams Params for main SQL query
+   * @param string $countSql  SQL query to count results (should SELECT only one column)
+   * @param array  $sqlParams Params for SQL query to count results
    *
    * @return void
    */

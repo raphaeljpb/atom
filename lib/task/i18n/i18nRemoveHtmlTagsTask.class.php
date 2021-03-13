@@ -70,9 +70,9 @@ EOF;
   /**
    * Transform HTML into text using the Document Object Model
    *
-   * @param string $html  HTML to transform into text
+   * @param string $html HTML to transform into text
    *
-   * @return string  transformed text
+   * @return string transformed text
    */
   private function transformHtmlToText($html)
   {
@@ -90,7 +90,7 @@ EOF;
   /**
    * Transform specific tags within a DOM document
    *
-   * @param DOMDocument  $doc  DOM document
+   * @param DOMDocument $doc DOM document
    *
    * @return void
    */
@@ -109,7 +109,7 @@ EOF;
   /**
    * Transform link tags into text
    *
-   * @param DOMDocument  $doc  DOM document
+   * @param DOMDocument $doc DOM document
    *
    * @return void
    */
@@ -140,7 +140,7 @@ EOF;
    * Transform unordered list-related tags into text and enclose in
    * <p> tags
    *
-   * @param DOMDocument  $doc  DOM document
+   * @param DOMDocument $doc DOM document
    *
    * @return void
    */
@@ -174,7 +174,7 @@ EOF;
   /**
    * Transform description list-related tags
    *
-   * @param DOMDocument  $doc  DOM document
+   * @param DOMDocument $doc DOM document
    *
    * @return void
    */
@@ -206,7 +206,7 @@ EOF;
   /**
    * Transform break tags into newlines
    *
-   * @param DOMDocument  $doc  DOM document
+   * @param DOMDocument $doc DOM document
    *
    * @return void
    */
@@ -228,7 +228,7 @@ EOF;
   /**
    * Transform paragraph tags into newlines
    *
-   * @param DOMDocument  $doc  DOM document
+   * @param DOMDocument $doc DOM document
    *
    * @return void
    */

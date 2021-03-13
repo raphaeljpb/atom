@@ -25,7 +25,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   /**
    * Call this function when casting object instance as type string
    *
-   * @return string  Physical Object Name
+   * @return string Physical Object Name
    */
   public function __toString()
   {
@@ -102,7 +102,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   /**
    * Get related information object via QubitRelation relationship
    *
-   * @param array $options list of options to pass to QubitQuery
+   * @param  array      $options list of options to pass to QubitQuery
    * @return QubitQuery collection of Information Objects
    */
   public function getInformationObjects($options = [])
@@ -338,7 +338,7 @@ SQL;
    * - physical_object.type_id
    * - physical_object_i18n.location
    *
-   * @param array $data a keyed array (column => value)
+   * @param array     $data       a keyed array (column => value)
    * @param PropelPDO $connection a connection object
    */
   public function quickUpdate(array $data, $connection = null)

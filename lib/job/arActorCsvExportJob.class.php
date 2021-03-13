@@ -46,8 +46,8 @@ class arActorCsvExportJob extends arActorExportJob
    * when requested
    *
    * @param QubitActor $resource actor to export
-   * @param string $path of temporary job directory for export
-   * @param array $options optional parameters
+   * @param string     $path     of temporary job directory for export
+   * @param array      $options  optional parameters
    */
   protected function exportResource($resource, $path, $options = [])
   {

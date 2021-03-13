@@ -38,7 +38,7 @@ class QubitInformationObjectXmlCacheResource
    *
    * @param string  format of XML ("dc" or "ead")
    *
-   * @return string  XML representation
+   * @return string XML representation
    */
   public function generateXmlRepresentation($format)
   {
@@ -55,7 +55,7 @@ class QubitInformationObjectXmlCacheResource
    * @param string  format of XML ("dc" or "ead")
    * @param boolean  where or not to store just the contents (no XML header lines)
    *
-   * @return string  path to XML representation
+   * @return string path to XML representation
    */
   public function getFilePath($format, $contentsOnly = false)
   {
@@ -76,7 +76,7 @@ class QubitInformationObjectXmlCacheResource
    *
    * @param string  format of XML ("dc" or "ead")
    *
-   * @return string  URL of XML representation
+   * @return string URL of XML representation
    */
   public function getPathForDownload($format)
   {

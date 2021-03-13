@@ -674,7 +674,7 @@ class QubitMetsParser
   /**
    * Get the PREMIS events of a single type in a <mets:amdSec> element
    *
-   * @param string $admId METS ADMID
+   * @param string $admId     METS ADMID
    * @param string $eventType a PREMIS event type
    *
    * @return array the list of <premis:event> elements

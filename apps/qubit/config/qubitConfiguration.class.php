@@ -126,8 +126,8 @@ class qubitConfiguration extends sfApplicationConfiguration
    * N.B. to get a config variable for the current context/environment, use
    * sfConfing::get() instead!
    *
-   * @param string $varname config variable name
-   * @param string $env Environment name (e.g. 'prod', 'cli')
+   * @param string $varname    config variable name
+   * @param string $env        Environment name (e.g. 'prod', 'cli')
    * @param string $configFile config file to check (e.g. 'config/settings.yml')
    *
    * @return string|null config value or null if variable is not set

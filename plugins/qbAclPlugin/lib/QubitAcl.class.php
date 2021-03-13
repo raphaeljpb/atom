@@ -92,8 +92,8 @@ class QubitAcl
    * $options['user']
    *
    * @param mixed   $resource object to which user is requesting access
-   * @param integer $actions requested action key
-   * @param array   $options optional parameters
+   * @param integer $actions  requested action key
+   * @param array   $options  optional parameters
    */
   public static function check($resource, $actions, $options = [])
   {
@@ -158,10 +158,10 @@ class QubitAcl
   /**
    * Check if user ($role) can perform $action on $resource
    *
-   * @param myUser $role actor's role to authorize
-   * @param mixed $resource target of the requested action
-   * @param string $action requested for authorization (e.g. 'read')
-   * @param array|null $options optional parameters
+   * @param myUser     $role     actor's role to authorize
+   * @param mixed      $resource target of the requested action
+   * @param string     $action   requested for authorization (e.g. 'read')
+   * @param array|null $options  optional parameters
    *
    * @return bool true if the access request is authorized
    */
@@ -393,9 +393,9 @@ class QubitAcl
   /**
    * Get a list of user permissions by action and class of resource
    *
-   * @param sfBasicSecurityUser $user - user session
-   * @param string $action - requested ACL action
-   * @param string $class - resource class
+   * @param sfBasicSecurityUser $user   - user session
+   * @param string              $action - requested ACL action
+   * @param string              $class  - resource class
    *
    * @return QubitQuery list of QubitAclPermissions
    */
@@ -474,8 +474,8 @@ class QubitAcl
   /**
    * Get a new criterion to filter a SQL query by ACL rules
    *
-   * @param Criteria $criteria
-   * @param mixed $root - root object for list
+   * @param  Criteria  $criteria
+   * @param  mixed     $root     - root object for list
    * @return Criterion
    */
   public static function getFilterCriterion($criteria, $root, $action)
@@ -616,10 +616,10 @@ class QubitAcl
    * E.g. when creating a new resource, authorize the "create" action against
    * the parent of the resource
    *
-   * @param myUser $role actor's role to authorize
-   * @param mixed $resource target of the requested action
-   * @param string $action requested for authorization (e.g. 'read')
-   * @param array|null $options optional parameters
+   * @param myUser     $role     actor's role to authorize
+   * @param mixed      $resource target of the requested action
+   * @param string     $action   requested for authorization (e.g. 'read')
+   * @param array|null $options  optional parameters
    *
    * @return bool true if the access request is authorized
    */
@@ -831,10 +831,10 @@ class QubitAcl
    * Check if the current user has access to this resource, based on
    * class specific rules. This is a helper function to QubitAcl::check().
    *
-   * @param mixed $resource target of the requested action
-   * @param myUser $user actor requesting to perform the action
-   * @param string $action ACL action being requested (e.g. 'read')
-   * @param array|null $options optional parameters
+   * @param mixed      $resource target of the requested action
+   * @param myUser     $user     actor requesting to perform the action
+   * @param string     $action   ACL action being requested (e.g. 'read')
+   * @param array|null $options  optional parameters
    */
   private static function checkAccessByClass($resource, $user, $action, $options)
   {
@@ -885,11 +885,11 @@ class QubitAcl
   /**
    * Get a Criteria query either including allowed object ids, or filter out denied object ids.
    *
-   * @param Criteria  $criteria  The Criteria object passed to getFilterCriterion
-   * @param string  $rootClass  The class name of the resource being checked on.
-   * @param array  $resourceCache  A cache of objects so we don't need to call getById() frequently.
-   * @param array  $resourceIds  An array of object ids which we are either allowed / denied to view.
-   * @param boolean  $allow  Which type of access the ids in the array represent, allow access (true) or deny (false).
+   * @param Criteria $criteria      The Criteria object passed to getFilterCriterion
+   * @param string   $rootClass     The class name of the resource being checked on.
+   * @param array    $resourceCache A cache of objects so we don't need to call getById() frequently.
+   * @param array    $resourceIds   An array of object ids which we are either allowed / denied to view.
+   * @param boolean  $allow         Which type of access the ids in the array represent, allow access (true) or deny (false).
    *
    * @return Criterion
    */

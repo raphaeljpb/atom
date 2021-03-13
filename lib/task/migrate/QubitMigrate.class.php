@@ -94,10 +94,10 @@ class QubitMigrate
    * Loop through row searching for $searchColumn value = $searchValue.
    * Return row key for first matched object.
    *
-   * @param string $searchRow row array to search
-   * @param string $searchColumn Name of column to check for $searchValue
-   * @param mixed  $searchValue Value to find - can be string or array
-   * @return array row key
+   * @param  string $searchRow    row array to search
+   * @param  string $searchColumn Name of column to check for $searchValue
+   * @param  mixed  $searchValue  Value to find - can be string or array
+   * @return array  row key
    */
   public static function findRowKeyForColumnValue($searchRow, $searchColumn, $searchValue)
   {
@@ -129,9 +129,9 @@ class QubitMigrate
    * From http://ca3.php.net/manual/en/function.array-splice.php
    * @author weikard at gmx dot de (15-Sep-2005 08:53)
    *
-   * @param array $array Primary array
-   * @param integer $position insert index
-   * @param array $insert_array spliced array
+   * @param array   $array        Primary array
+   * @param integer $position     insert index
+   * @param array   $insert_array spliced array
    */
   public static function array_insert(&$array, $position, $insert_array)
   {
@@ -142,9 +142,9 @@ class QubitMigrate
   /**
    * Get the index for a given key of an associative array
    *
-   * @param array  $arr array to search
-   * @param string $findKey key to search for
-   * @return mixed integer on success, false (bool) if key does not exist
+   * @param  array  $arr     array to search
+   * @param  string $findKey key to search for
+   * @return mixed  integer on success, false (bool) if key does not exist
    */
   public static function getArrayKeyIndex($arr, $findKey)
   {
@@ -861,9 +861,9 @@ class QubitMigrate
   /**
    * Wrapper for findRowKeyForColumnValue() method.
    *
-   * @param string $className
-   * @param string $searchColumn
-   * @param string $searchKey
+   * @param  string $className
+   * @param  string $searchColumn
+   * @param  string $searchKey
    * @return string key for matched row
    */
   protected function getRowKey($className, $searchColumn, $searchKey)
@@ -878,7 +878,7 @@ class QubitMigrate
    * Convienience method for grabbing a QubitTerm row key based on the value of
    * the 'id' column
    *
-   * @param string $searchKey
+   * @param  string $searchKey
    * @return string key for matched row
    */
   protected function getTermKey($searchKey)
@@ -943,9 +943,9 @@ class QubitMigrate
    * structure), before the row specified by $pivotKey.  Update lft and rgt
    * values appropriately.
    *
-   * @param array $originalData The existing YAML dataset array
-   * @param string $pivotKey key of row that should follow the inserted data
-   * @param array $newData data to insert in $originalData
+   * @param array  $originalData The existing YAML dataset array
+   * @param string $pivotKey     key of row that should follow the inserted data
+   * @param array  $newData      data to insert in $originalData
    */
   protected static function insertBeforeNestedSet(array &$originalData, $pivotKey, array $newData)
   {

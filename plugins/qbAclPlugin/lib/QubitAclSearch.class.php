@@ -29,8 +29,8 @@ class QubitAclSearch
   /**
    * Filter search query by repository
    *
-   * @param  \Elastica\Query $query Search query object
-   * @param  string         $action Action
+   * @param  \Elastica\Query $query  Search query object
+   * @param  string          $action Action
    * @return \Elastica\Query Filtered query
    */
   public static function filterByRepository(Elastica\Query $query, $action)
@@ -80,7 +80,7 @@ class QubitAclSearch
    * Filter search query by resource specific ACL
    *
    * @param  \Elastica\Query $query Search query object
-   * @param  mixed          $root Root object for list
+   * @param  mixed           $root  Root object for list
    * @return \Elastica\Query Filtered query
    */
   public static function filterByResource(Elastica\Query $query, $root)
@@ -164,7 +164,7 @@ class QubitAclSearch
   /**
    * Filter search query by resource specific ACL
    *
-   * @param  \Elastica\Query\BoolQuery $queryBool Search query object
+   * @param \Elastica\Query\BoolQuery $queryBool Search query object
    */
   public static function filterDrafts(Elastica\Query\BoolQuery $queryBool)
   {

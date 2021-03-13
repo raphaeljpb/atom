@@ -48,7 +48,7 @@ class QubitGrantedRight extends BaseGrantedRight
    * @param  string  denyReason  An optional parameter for the function to pass out
    *                 which rule was responsible for any denial (e.g. 'conditional')
    *
-   * @return bool  Whether or not the user has permission
+   * @return bool Whether or not the user has permission
    */
   public static function checkPremis($id, $action, &$denyReason = null)
   {
@@ -80,7 +80,7 @@ class QubitGrantedRight extends BaseGrantedRight
    * Get all the granted rights for a particular information object
    * @param $id  The information object ID
    * @param $actId  The optional ID for the act type (gets all types by default)
-   * @return array  An array of QubitGrantedRight objects
+   * @return array An array of QubitGrantedRight objects
    */
   public static function getByObjectIdAndAct($id, $actId = null)
   {
@@ -135,7 +135,7 @@ class QubitGrantedRight extends BaseGrantedRight
    * Gets the string related to a restriction.
    *
    * @param int  restrictionId  The restriction number.
-   * @return string  The string representing the restriction.
+   * @return string The string representing the restriction.
    */
   public static function getRestrictionString($restrictionId)
   {
@@ -157,7 +157,7 @@ class QubitGrantedRight extends BaseGrantedRight
    * Gets whether or not an information object has granted rights.
    *
    * @param int  id  The information object id
-   * @return bool  True if has granted rights, false otherwise
+   * @return bool True if has granted rights, false otherwise
    */
   public static function hasGrantedRights($id)
   {
@@ -167,7 +167,7 @@ class QubitGrantedRight extends BaseGrantedRight
   /**
    * Gets whether or not granted right has been deleted.
    *
-   * @return bool  True if granted right has been deleted, false otherwise
+   * @return bool True if granted right has been deleted, false otherwise
    */
   public function isDeleted()
   {
@@ -184,8 +184,8 @@ class QubitGrantedRight extends BaseGrantedRight
    * @param  string  denyReason  An optional parameter for the function to pass out
    *                 which rule was responsible for any denial (e.g. 'conditional')
    *
-   * @return  array  An array of groupIds that are allowed to perform $action on
-   *                 the specified information object.
+   * @return array An array of groupIds that are allowed to perform $action on
+   *               the specified information object.
    */
   private static function checkPremisRightsAgainstGroups($id, $action, &$denyReason = null)
   {

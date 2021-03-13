@@ -467,8 +467,8 @@ class sfWebBrowser
   /**
    * Transforms an associative array of header names => header values to its HTTP equivalent.
    *
-   * @param    array     $headers
-   * @return   string
+   * @param  array  $headers
+   * @return string
    */
   public function prepareHeaders($headers = [])
   {
@@ -641,8 +641,8 @@ class sfWebBrowser
   /**
    * Get a SimpleXML version of the response
    *
-   * @return  SimpleXMLElement                      The reponse contents
-   * @throws  sfWebBrowserInvalidResponseException  when response is not in a valid format
+   * @return SimpleXMLElement                     The reponse contents
+   * @throws sfWebBrowserInvalidResponseException when response is not in a valid format
    */
   public function getResponseXML()
   {
@@ -669,7 +669,7 @@ class sfWebBrowser
   /**
    * Returns true if server response is an error.
    *
-   * @return   bool
+   * @return bool
    */
   public function responseIsError()
   {
@@ -713,7 +713,7 @@ class sfWebBrowser
   /**
    * Returns the response message (the 'Not Found' part in  'HTTP/1.1 404 Not Found')
    *
-   * @return   string
+   * @return string
    */
   public function getResponseMessage()
   {
@@ -723,7 +723,7 @@ class sfWebBrowser
   /**
    * Sets response message.
    *
-   * @param    string    $message
+   * @param string $message
    */
   public function setResponseMessage($msg)
   {
@@ -743,8 +743,8 @@ class sfWebBrowser
   /**
    * Adds default headers to the supplied headers array.
    *
-   * @param       array    $headers
-   * @return      array
+   * @param  array $headers
+   * @return array
    */
   public function initializeRequestHeaders($headers = [])
   {
@@ -800,8 +800,8 @@ class sfWebBrowser
   /**
    * Decodes gzip-encoded content ("content-encoding: gzip" response header).
    *
-   * @param       stream     $gzip_text
-   * @return      string
+   * @param  stream $gzip_text
+   * @return string
    */
   protected function decodeGzip($gzip_text)
   {
@@ -811,8 +811,8 @@ class sfWebBrowser
   /**
    * Decodes deflate-encoded content ("content-encoding: deflate" response header).
    *
-   * @param       stream     $deflate_text
-   * @return      string
+   * @param  stream $deflate_text
+   * @return string
    */
   protected function decodeDeflate($deflate_text)
   {
@@ -822,8 +822,8 @@ class sfWebBrowser
   /**
    * Validates supplied headers and turns all names to lowercase.
    *
-   * @param     array     $headers
-   * @return    array
+   * @param  array $headers
+   * @return array
    */
   protected function fixHeaders($headers)
   {

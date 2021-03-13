@@ -92,7 +92,7 @@ class arExportJob extends arBaseJob
    * Return the job's download file path (or null if job doesn't create
    * a download).
    *
-   * @return string  file path
+   * @return string file path
    */
   public function getDownloadFilePath()
   {
@@ -112,7 +112,7 @@ class arExportJob extends arBaseJob
    * Return the job's download file's relative path (or null if job doesn't
    * create a download).
    *
-   * @return string  file path
+   * @return string file path
    */
   public function getDownloadRelativeFilePath()
   {
@@ -132,7 +132,7 @@ class arExportJob extends arBaseJob
    * Get the jobs download directory, a subdirectory of main AtoM downloads
    * directory
    *
-   * @return string  directory path
+   * @return string directory path
    */
   public function getJobsDownloadDirectory()
   {
@@ -157,7 +157,7 @@ class arExportJob extends arBaseJob
    * it's done in sites with public and private instances), where the job id
    * could be repeated, adding the export results to an existing export folder.
    *
-   * @return string  Temporary directory path
+   * @return string Temporary directory path
    */
   protected function createJobTempDir()
   {
@@ -179,7 +179,7 @@ class arExportJob extends arBaseJob
    * @param string   Path of file to write CSV data to
    * @param boolean  Optional: Whether to include digital objects
    *
-   * @return array   Error messages
+   * @return array Error messages
    */
   protected function createZipForDownload($tempDir)
   {
@@ -241,8 +241,8 @@ class arExportJob extends arBaseJob
   /**
    * Copy a digital object to the temporary job directory for export
    *
-   * @param mixed $resource the object to which the digital object is attached
-   * @param string $tempDir the temporary export job directory
+   * @param mixed  $resource the object to which the digital object is attached
+   * @param string $tempDir  the temporary export job directory
    */
   protected function addDigitalObject($resource, $tempDir)
   {

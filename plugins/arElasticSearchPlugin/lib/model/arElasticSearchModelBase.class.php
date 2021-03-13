@@ -210,8 +210,8 @@ abstract class arElasticSearchModelBase
   /**
    * Recursively find all ancestors (except the root) for a term.
    *
-   * @param array $id  The term id to find the ancestors for.
-   * @return array  Ids of the ancestors and self.
+   * @param  array $id The term id to find the ancestors for.
+   * @return array Ids of the ancestors and self.
    */
   private static function recursivelyGetParentTerms($id)
   {

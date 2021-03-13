@@ -229,9 +229,9 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   /**
    * Checks to see if a path links to an action.
    *
-   * @param string $url  URL or path
+   * @param string $url URL or path
    *
-   * @return boolean  True if path links to an action
+   * @return boolean True if path links to an action
    */
   public static function actionExistsForUrl($url)
   {
@@ -388,7 +388,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   /**
    * Get the digital object's public URL
    *
-   * @return string  digital object URL or null
+   * @return string digital object URL or null
    */
   public function getDigitalObjectPublicUrl()
   {
@@ -468,7 +468,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   /**
    * Get the digital object's checksum value
    *
-   * @return string  digital object checksum or null
+   * @return string digital object checksum or null
    */
   public function getDigitalObjectChecksum()
   {
@@ -529,8 +529,8 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
    * Get first matching related property by name (optionally scope).
    * Return an empty QubitProperty object if a matching one doesn't exist.
    *
-   * @param string $name
-   * @param array $options
+   * @param  string        $name
+   * @param  array         $options
    * @return QubitProperty
    */
   public function getPropertyByName($name, $options = [])
@@ -551,8 +551,8 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
    * Add a relation from this object to a physical object. Check to make
    * sure the relationship is unique.
    *
-   * @param QubitPhysicalObject  $physicalObject Subject of relationship
-   * @return QubitObject  this object
+   * @param  QubitPhysicalObject $physicalObject Subject of relationship
+   * @return QubitObject         this object
    */
   public function addPhysicalObject($physicalObject)
   {
@@ -573,8 +573,8 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   /**
    * Get a specific physical object related to this object
    *
-   * @param integer $physicalObjectId  the id of the related physical object
-   * @return mixed  the QubitRelation object on success, null if no match found
+   * @param  integer $physicalObjectId the id of the related physical object
+   * @return mixed   the QubitRelation object on success, null if no match found
    */
   public function getPhysicalObject($physicalObjectId)
   {
@@ -598,7 +598,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
    * Delete this resource and its descendants from bottom to top, updating the
    * nested set values only at the end and doing it within a transaction.
    *
-   * @return int  Number of resources deleted.
+   * @return int Number of resources deleted.
    */
   public function deleteFullHierarchy()
   {

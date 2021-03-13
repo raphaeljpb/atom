@@ -52,7 +52,7 @@ class JobsExportAction extends DefaultBrowseAction
 
   /**
    * Generate a CSV with a jobs history for all jobs in $jobs.
-   * @param  array $jobs  The array of jobs to write information to CSV for
+   * @param array $jobs The array of jobs to write information to CSV for
    */
   private function getCSVString($jobs)
   {

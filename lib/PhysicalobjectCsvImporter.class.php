@@ -547,9 +547,9 @@ EOM;
   /**
    * Create keymap entry for object
    *
-   * @param string $sourceName  Name of source data
-   * @param int $sourceId  ID from source data
-   * @param object $object  Object to create entry for
+   * @param string $sourceName Name of source data
+   * @param int    $sourceId   ID from source data
+   * @param object $object     Object to create entry for
    *
    * @return void
    */

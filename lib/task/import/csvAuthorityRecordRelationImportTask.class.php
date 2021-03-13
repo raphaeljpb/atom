@@ -222,9 +222,9 @@ EOF;
    *
    * @param int $sourceActorId  ID of an actor that possibly relates to others
    * @param int $targetActorId  ID of an actor that possibly relates to others
-   * @param int $relationTypeId  ID of relation type
+   * @param int $relationTypeId ID of relation type
    *
-   * @return mixed  integer ID of the relation or boolean false if there's no result
+   * @return mixed integer ID of the relation or boolean false if there's no result
    */
   private function getRelationByType($sourceActorId, $targetActorId, $relationTypeId)
   {
@@ -257,10 +257,10 @@ EOF;
   /**
    * Use SQL to fetch relations
    *
-   * @param int $sourceActorId  ID of an actor that possibly relates to others
-   * @param int $targetActorId  ID of an actor that possibly relates to others
+   * @param int $sourceActorId ID of an actor that possibly relates to others
+   * @param int $targetActorId ID of an actor that possibly relates to others
    *
-   * @return array  array of relation IDs
+   * @return array array of relation IDs
    */
   private function getRelations($sourceActorId, $targetActorId)
   {
@@ -280,7 +280,7 @@ EOF;
    *
    * @param int $sourceActorId  ID of an actor
    * @param int $targetActorId  ID of an actor
-   * @param int $relationTypeId  ID of relation type
+   * @param int $relationTypeId ID of relation type
    */
   private function addRelation($sourceActorId, $targetActorId, $relationTypeId)
   {
@@ -296,10 +296,10 @@ EOF;
   /**
    * Update relation using CSV row data
    *
-   * @param int $relationId  ID of relation to update
+   * @param int $relationId     ID of relation to update
    * @param int $sourceActorId  ID of an actor
    * @param int $targetActorId  ID of an actor
-   * @param int $relationTypeId  ID of relation type
+   * @param int $relationTypeId ID of relation type
    */
   private function updateRelation($relationId, $sourceActorId, $targetActorId, $relationTypeId)
   {
@@ -313,10 +313,10 @@ EOF;
   /**
    * Set relation properties using CSV row data
    *
-   * @param QubitRelation $relation  Relation to update
-   * @param int $sourceActorId  ID of an actor
-   * @param int $targetActorId  ID of an actor
-   * @param int $relationTypeId  ID of relation type
+   * @param QubitRelation $relation       Relation to update
+   * @param int           $sourceActorId  ID of an actor
+   * @param int           $targetActorId  ID of an actor
+   * @param int           $relationTypeId ID of relation type
    */
   private function setRelationFields(&$relation, $sourceActorId, $targetActorId, $relationTypeId)
   {
@@ -338,7 +338,7 @@ EOF;
   /**
    * Note actor IDs whose relationship data has possibly changed
    *
-   * @param array $actorIds  IDs of actors
+   * @param array $actorIds IDs of actors
    */
   private function addUpdatedActorIds($actorIds)
   {

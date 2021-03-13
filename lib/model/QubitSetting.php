@@ -129,7 +129,7 @@ class QubitSetting extends BaseSetting
    * not the source culture.  This is used on edit forms to show the source
    * culture value for a field as an aid for tranlslation.
    *
-   * @param string $culture current culture context
+   * @param  string $culture current culture context
    * @return string source culture value for field
    */
   public function getSourceCultureHelper($culture)
@@ -246,8 +246,8 @@ class QubitSetting extends BaseSetting
   /**
    * Create a new setting object with some default properties
    *
-   * @param string $name object name
-   * @param string $value object value
+   * @param string $name    object name
+   * @param string $value   object value
    * @param array  $options array of options
    */
   public static function createNewSetting($name, $value, $options = [])

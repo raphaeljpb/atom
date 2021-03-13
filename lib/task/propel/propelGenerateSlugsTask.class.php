@@ -239,7 +239,7 @@ EOF;
    * For now we only have special slug basis settings for information objects, but other
    * class types may get their own custom settings in the future.
    *
-   * @return string  The string to base our slug off of.
+   * @return string The string to base our slug off of.
    */
   private function getStringToSlugify($row, $table)
   {
@@ -256,8 +256,8 @@ EOF;
   /**
    * Get string to slugify for an information object, based on the slug basis setting.
    *
-   * @param array $row  Data pulled from the database about the information object.
-   * @return string  The string to use to slugify.
+   * @param  array  $row Data pulled from the database about the information object.
+   * @return string The string to use to slugify.
    */
   private function getInformationObjectStringToSlugify($row)
   {
@@ -286,12 +286,12 @@ EOF;
   /**
    * Get an information object string from ES to use as the basis for generating a slug.
    *
-   * @param int $id  The id for the information object we're looking up.
+   * @param int $id The id for the information object we're looking up.
    *
-   * @param string $property  Depending on the slug basis, this is the property that contains the string we want.
-   *                          e.g., referenceCode, identifier, etc.
+   * @param string $property Depending on the slug basis, this is the property that contains the string we want.
+   *                         e.g., referenceCode, identifier, etc.
    *
-   * @return string  Return the specified string to use as a basis to generate the slug.
+   * @return string Return the specified string to use as a basis to generate the slug.
    */
   private function getSlugStringFromES($id, $property)
   {

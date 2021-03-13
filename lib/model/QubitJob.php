@@ -66,7 +66,7 @@ class QubitJob extends BaseJob
   /**
    * Set the job status to error
    *
-   * @param string  $errorNote  Optional note to give additional error information
+   * @param string $errorNote Optional note to give additional error information
    */
   public function setStatusError($errorNote = null)
   {
@@ -98,7 +98,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get a string representing the job creation date.
-   * @return  string  The job's creation date in a human readable string.
+   * @return string The job's creation date in a human readable string.
    */
   public function getCreationDateString()
   {
@@ -107,7 +107,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get a string representing the job completion date.
-   * @return  string  The job's creation date in a human readable string.
+   * @return string The job's creation date in a human readable string.
    */
   public function getCompletionDateString()
   {
@@ -116,7 +116,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get a string representing the job status.
-   * @return  string  The job's status in a human readable string.
+   * @return string The job's status in a human readable string.
    */
   public function getStatusString()
   {
@@ -143,8 +143,8 @@ class QubitJob extends BaseJob
    * Get the module type for this job's corresponding object.
    * e.g., informationobject, actor, etc.
    *
-   * @return mixed  A string indicating the module type of the object for this job,
-   *                or else null.
+   * @return mixed A string indicating the module type of the object for this job,
+   *               or else null.
    */
   public function getObjectModule()
   {
@@ -160,7 +160,7 @@ class QubitJob extends BaseJob
   /**
    * Get the associated object's slug for this job.
    *
-   * @return mixed  A string indicating the object's slug. If none, return null.
+   * @return mixed A string indicating the object's slug. If none, return null.
    */
   public function getObjectSlug()
   {
@@ -169,7 +169,7 @@ class QubitJob extends BaseJob
 
   /**
    * Add a basic note to this job. This function creates/saves a new note.
-   * @param  string  $contents  The text for the note
+   * @param string $contents The text for the note
    */
   public function addNoteText($contents)
   {
@@ -189,7 +189,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get the notes attached to this job
-   * @return  QubitQuery  An query of the notes for this job
+   * @return QubitQuery An query of the notes for this job
    */
   public function getNotes()
   {
@@ -202,8 +202,8 @@ class QubitJob extends BaseJob
   /**
    * Generate a unique token property to associate unauthenticated users with jobs.
    *
-   * @throws  sfException  If a unique token can't be generated.
-   * @return  QubitProperty  Generated user token property.
+   * @throws sfException   If a unique token can't be generated.
+   * @return QubitProperty Generated user token property.
    */
   public function generateUserTokenProperty()
   {
@@ -246,8 +246,8 @@ class QubitJob extends BaseJob
   /**
    * Get the QubitJob associated with a given user token, if any.
    *
-   * @param  string  $token  The user token.
-   * @return  mixed  QubitJob associated with the token or null.
+   * @param  string $token The user token.
+   * @return mixed  QubitJob associated with the token or null.
    */
   public static function getByUserTokenProperty($token)
   {
@@ -266,7 +266,7 @@ class QubitJob extends BaseJob
 
   /**
    * Add a basic note to this job
-   * @param  sfBasicSecurityUser  $user  the currently logged in user.
+   * @param sfBasicSecurityUser $user the currently logged in user.
    */
   public static function getJobsByUser($user)
   {
@@ -279,13 +279,13 @@ class QubitJob extends BaseJob
   /**
    * Run a job via gearman
    *
-   * @param string  $jobName  The name of the ability the worker will execute
+   * @param string $jobName The name of the ability the worker will execute
    *
-   * @param array   $jobParams  Whatever parameters need to be passed to the worker.
-   * You can set 'name' to specify the job name, otherwise the class name is used.
-   * You can set 'description' to summarize what the job is doing.
+   * @param array $jobParams Whatever parameters need to be passed to the worker.
+   *                         You can set 'name' to specify the job name, otherwise the class name is used.
+   *                         You can set 'description' to summarize what the job is doing.
    *
-   * @return  QubitJob  The job that was just created for the running job
+   * @return QubitJob The job that was just created for the running job
    */
   public static function runJob($jobName, $jobParams = [])
   {
@@ -371,7 +371,7 @@ class QubitJob extends BaseJob
   /**
    * Get a string representation of a job's user name
    *
-   * @return  string  The user name
+   * @return string The user name
    */
   public static function getUserString($job)
   {
@@ -387,7 +387,7 @@ class QubitJob extends BaseJob
 
   /**
    * Get a string representing a date.
-   * @return  string  The job's creation date in a human readable string.
+   * @return string The job's creation date in a human readable string.
    */
   private function formatDate($date)
   {

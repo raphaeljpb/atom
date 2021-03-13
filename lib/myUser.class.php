@@ -232,8 +232,8 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
    * is done for performance reasons (to avoid the performance hit of parsing
    * the YAML repeatedly).
    *
-   * @param string $module  Name of module to check
-   * @param string $action  Name of action to check
+   * @param string $module Name of module to check
+   * @param string $action Name of action to check
    *
    * @return boolean
    */
@@ -257,8 +257,8 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
    * Get action-specific security setting value, if available, or, if not,
    * global or default value
    *
-   * @param string $action  Name of module action to check
-   * @param string $securitySetting  Security property to check
+   * @param string $action          Name of module action to check
+   * @param string $securitySetting Security property to check
    *
    * @return boolean
    */

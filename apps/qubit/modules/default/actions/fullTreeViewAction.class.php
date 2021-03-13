@@ -46,8 +46,8 @@ class DefaultFullTreeViewAction extends sfAction
   /**
    * Get treeview data for the children of the given information object
    *
-   * @param int $informationObjectId information object id
-   * @param array $options optional arguments
+   * @param int   $informationObjectId information object id
+   * @param array $options             optional arguments
    *
    * @return array treeview data
    */
@@ -134,8 +134,8 @@ class DefaultFullTreeViewAction extends sfAction
   /**
    * Get Elasticsearch query object for the given $term
    *
-   * @param \Elastica\Query\Term $term query term
-   * @param array $options optional arguments
+   * @param \Elastica\Query\Term $term    query term
+   * @param array                $options optional arguments
    *
    * @return \Elastica\Query query object
    */
@@ -166,8 +166,8 @@ class DefaultFullTreeViewAction extends sfAction
   /**
    * Do Elasticsearch query for given $term
    *
-   * @param \Elastica\Query\Term $term query term
-   * @param array $options optional arguments
+   * @param \Elastica\Query\Term $term    query term
+   * @param array                $options optional arguments
    *
    * @return \Elastica\ResultSet search result set
    */
@@ -188,7 +188,7 @@ class DefaultFullTreeViewAction extends sfAction
   /**
    * Get Elasticsearch data for information object
    *
-   * @param int $id information_object id
+   * @param int   $id      information_object id
    * @param array $options optional arguments
    *
    * @return \Elastica\Result Elasticsearch search result
@@ -214,7 +214,7 @@ class DefaultFullTreeViewAction extends sfAction
   /**
    * Find children of information object
    *
-   * @param int $id information_object.id (pkey)
+   * @param int   $id      information_object.id (pkey)
    * @param array $options optional arguments
    *
    * @return \Elastica\ResultSet search result set
@@ -229,7 +229,7 @@ class DefaultFullTreeViewAction extends sfAction
   /**
    * Return a count of an information object's children
    *
-   * @param int $id information_object.id (pkey)
+   * @param int   $id      information_object.id (pkey)
    * @param array $options optional arguments
    *
    * @return int number of children
@@ -252,7 +252,7 @@ class DefaultFullTreeViewAction extends sfAction
    * Format Elasticsearch results data for treeview javascript
    *
    * @param \Elastica\ResultSet $results Elasticsearch results
-   * @param array $options optional arguments
+   * @param array               $options optional arguments
    *
    * @return array treeview data
    */
@@ -279,8 +279,8 @@ class DefaultFullTreeViewAction extends sfAction
   /**
    * Format Elasticsearch result data for use in treeview javasccript
    *
-   * @param Elastica\Result $result Elasticsearch search result
-   * @param array $options optional arguments
+   * @param Elastica\Result $result  Elasticsearch search result
+   * @param array           $options optional arguments
    *
    * @return array formatted data for treeview node
    */
@@ -383,8 +383,8 @@ class DefaultFullTreeViewAction extends sfAction
   /**
    * Set sort order for Elasticsearch query
    *
-   * @param arElasticSearchPluginQuery $query Elasticsearch query object
-   * @param array $options optional arguments
+   * @param arElasticSearchPluginQuery $query   Elasticsearch query object
+   * @param array                      $options optional arguments
    *
    * @return void
    */
@@ -463,7 +463,7 @@ class DefaultFullTreeViewAction extends sfAction
    * Prepend an identifier or reference code based on the application "full
    * width treeview > show identifier" setting
    *
-   * @param array $text input text
+   * @param array $text   input text
    * @param array $record information object data
    *
    * @return string the updated text
@@ -504,8 +504,8 @@ class DefaultFullTreeViewAction extends sfAction
   /**
    * Prepend level of description text when appropriate
    *
-   * @param string $text input text
-   * @param array $record information object data
+   * @param string $text   input text
+   * @param array  $record information object data
    *
    * @return string updated text
    */
@@ -530,8 +530,8 @@ class DefaultFullTreeViewAction extends sfAction
   /**
    * Append dates when appropriate
    *
-   * @param string $text input text
-   * @param array $record information object data
+   * @param string $text   input text
+   * @param array  $record information object data
    *
    * @return string updated text
    */
@@ -560,8 +560,8 @@ class DefaultFullTreeViewAction extends sfAction
   /**
    * Prepend "(Draft)" to draft descriptions
    *
-   * @param string $text input text
-   * @param array $record information object data
+   * @param string $text   input text
+   * @param array  $record information object data
    *
    * @return string updated text
    */

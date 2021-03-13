@@ -28,7 +28,7 @@ class QubitOaiRepository extends BaseOaiRepository
 {
   /**
    * Get repository by URI
-   * @param string $url the url of the repository to find
+   * @param  string     $url the url of the repository to find
    * @return QubitQuery collection of OAI-PMH Repositories
    */
   public static function getByURI($URI)

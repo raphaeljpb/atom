@@ -278,7 +278,7 @@ class QubitRepository extends BaseRepository
   /**
    * Only find repository objects, not other actor types
    *
-   * @param Criteria $criteria current search criteria
+   * @param  Criteria $criteria current search criteria
    * @return Criteria modified search critieria
    */
   public static function addGetOnlyRepositoryCriteria($criteria)
@@ -304,8 +304,8 @@ class QubitRepository extends BaseRepository
   /**
    * Return an options_for_select array
    *
-   * @param mixed $default current selected value for select list
-   * @param array $options optional parameters
+   * @param  mixed $default current selected value for select list
+   * @param  array $options optional parameters
    * @return array options_for_select compatible array
    */
   public static function getOptionsForSelectList($default, $options = [])
@@ -500,7 +500,7 @@ class QubitRepository extends BaseRepository
   /**
    * Add repository specific logic to the insert action
    *
-   * @param mixed $connection The database connection object
+   * @param  mixed           $connection The database connection object
    * @return QubitRepository self-reference
    */
   protected function insert($connection = null)
@@ -529,7 +529,7 @@ class QubitRepository extends BaseRepository
    * @param  $getFunction  The get function for the field we want to return.
    *                       e.g. getFromPrimaryOrFirstValidContact('getCity')
    *
-   * @return  mixed  Returns the field if found, null otherwise
+   * @return mixed Returns the field if found, null otherwise
    */
   private function getFromPrimaryOrFirstValidContact($getFunction, $options)
   {

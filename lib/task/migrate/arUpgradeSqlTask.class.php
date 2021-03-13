@@ -379,12 +379,12 @@ EOF;
   /**
    * Run new style migrations in a directory
    *
-   * @param int $version  Version of schema before running migrations in this directory
-   * @param string $migrationsDirectory  Directory with migrations in it
-   * @param int $previousMilestone  Previous milestone
-   * @param int $currentMilestone  Current milestone
+   * @param int    $version             Version of schema before running migrations in this directory
+   * @param string $migrationsDirectory Directory with migrations in it
+   * @param int    $previousMilestone   Previous milestone
+   * @param int    $currentMilestone    Current milestone
    *
-   * @return int  Version of schema after running migrations in this directory
+   * @return int Version of schema after running migrations in this directory
    */
   private function runMigrationsInDirectory($version, $migrationsDirectory, $previousMilestone, $currentMilestone)
   {
@@ -524,8 +524,8 @@ EOF;
   /**
    * Change to a new theme, selected out of a list provided.
    *
-   * @param array  $themes  The themes present in the plugins/ folder ($name => $path)
-   * @return string  The new theme name
+   * @param  array  $themes The themes present in the plugins/ folder ($name => $path)
+   * @return string The new theme name
    */
   private function getNewTheme($themes)
   {
@@ -559,7 +559,7 @@ EOF;
    * Get plugins that are currently present in the plugins/ directory.
    *
    * @param $themePluginsOnly  Whether to get all plugins or just theme plugins
-   * @return array  An array containing the theme names and paths ($name => $path)
+   * @return array An array containing the theme names and paths ($name => $path)
    */
   private function getPluginsPresent($themePluginsOnly = false)
   {

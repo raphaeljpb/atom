@@ -27,7 +27,7 @@ class arElasticSearchPluginQuery
   /**
    * Constructor
    *
-   * @param int $limit  how many results should be returned
+   * @param int $limit how many results should be returned
    * @param int $skip  how many results should be skipped
    *
    * @return void
@@ -45,7 +45,7 @@ class arElasticSearchPluginQuery
    * Translate internal representation of aggregations
    * to Elastica API, adding them to the query.
    *
-   * @param array $aggs  search aggregations
+   * @param array $aggs search aggregations
    *
    * @return void
    */
@@ -81,8 +81,8 @@ class arElasticSearchPluginQuery
   /**
    * Add filters from aggregations to the query
    *
-   * @param array $aggs  search aggregations
-   * @param array $params  search filters from aggregations
+   * @param array $aggs   search aggregations
+   * @param array $params search filters from aggregations
    *
    * @return void
    */
@@ -199,8 +199,8 @@ class arElasticSearchPluginQuery
   /**
    * Returns the query
    *
-   * @param boolean $allowEmpty  get all or none if the query is empty
-   * @param boolean $filterDrafts  filter draft records
+   * @param boolean $allowEmpty   get all or none if the query is empty
+   * @param boolean $filterDrafts filter draft records
    *
    * @return \Elastica\Query
    */
@@ -238,7 +238,7 @@ class arElasticSearchPluginQuery
    *     'sf0' => ''
    *   );
    *
-   * @return object  \Elastica\Query\BoolQuery instance
+   * @return object \Elastica\Query\BoolQuery instance
    */
   protected function parseQuery($params, $archivalStandard)
   {

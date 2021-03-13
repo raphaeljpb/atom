@@ -121,7 +121,7 @@ class arGenerateReportJob extends arBaseJob
   /**
    * Get a report's filename based on slug, report type and format.
    *
-   * @return string  The report filename.
+   * @return string The report filename.
    */
   public static function getFilename($resource, $format, $type)
   {

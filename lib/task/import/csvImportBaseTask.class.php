@@ -30,7 +30,7 @@ abstract class csvImportBaseTask extends arBaseTask
    * If updating, delete existing digital object if updating, a path or UI has
    * been specified, and not keeping digial objects.
    *
-   * @param QubitFlatfileImport $self  A reference to our flat file importer.
+   * @param QubitFlatfileImport $self A reference to our flat file importer.
    */
   public function deleteDigitalObjectIfUpdatingAndNotKeeping($self)
   {
@@ -76,7 +76,7 @@ abstract class csvImportBaseTask extends arBaseTask
    *
    * If both a URI and path are provided, the former is preferred.
    *
-   * @param QubitFlatfileImport $self  A reference to our flat file importer.
+   * @param QubitFlatfileImport $self A reference to our flat file importer.
    */
   public function importDigitalObject($self)
   {
@@ -96,9 +96,9 @@ abstract class csvImportBaseTask extends arBaseTask
   /**
    * Create new digital object from a URI and link it to a resource.
    *
-   * @param QubitFlatfileImport $self  A reference to our flat file importer ($self->object refers to
-   *                                   the resource we're currently importing)
-   * @param string $uri  Asset URI
+   * @param QubitFlatfileImport $self A reference to our flat file importer ($self->object refers to
+   *                                  the resource we're currently importing)
+   * @param string              $uri  Asset URI
    */
   public function addDigitalObjectFromURI($self, $uri)
   {
@@ -133,9 +133,9 @@ abstract class csvImportBaseTask extends arBaseTask
   /**
    * Create new digital object from a path and link it to a resource.
    *
-   * @param QubitFlatfileImport $self  A reference to our flat file importer ($self->object refers to
-   *                                   the resource we're currently importing).
-   * @param string $path  Asset file path
+   * @param QubitFlatfileImport $self A reference to our flat file importer ($self->object refers to
+   *                                  the resource we're currently importing).
+   * @param string              $path Asset file path
    */
   public function addDigitalObjectFromPath($self, $path)
   {
@@ -451,10 +451,10 @@ abstract class csvImportBaseTask extends arBaseTask
    * Search array for a value, ignoring case, and return the first
    * corresponding key.
    *
-   * @param string $search  string to search for
-   * @param array $array  array to search through
+   * @param string $search string to search for
+   * @param array  $array  array to search through
    *
-   * @return int|bool  key for found search item or FALSE if not found
+   * @return int|bool key for found search item or FALSE if not found
    */
   public static function arraySearchCaseInsensitive($search, $array)
   {
@@ -464,9 +464,9 @@ abstract class csvImportBaseTask extends arBaseTask
   /**
    * Add alternative identifiers to an information object.
    *
-   * @param QubitInformationObject $io  information object
-   * @param array $altIds  array of alternative identfier IDs
-   * @param array $altIdLabels  array of alternative identifier labels
+   * @param QubitInformationObject $io          information object
+   * @param array                  $altIds      array of alternative identfier IDs
+   * @param array                  $altIdLabels array of alternative identifier labels
    *
    * @return void
    */
@@ -488,9 +488,9 @@ abstract class csvImportBaseTask extends arBaseTask
    * whenever we create new terms on the fly when importing the file,
    * so subsequent rows can use the newly created terms.
    *
-   * @param int $taxonomyId  ID of taxonomy
+   * @param int $taxonomyId ID of taxonomy
    *
-   * @return array  array containing taxonomy terms
+   * @return array array containing taxonomy terms
    */
   public static function refreshTaxonomyTerms($taxonomyId)
   {
@@ -522,7 +522,7 @@ abstract class csvImportBaseTask extends arBaseTask
    * Validate import-related options, throwing exceptions or warning when
    * appropriate
    *
-   * @param array $options  options
+   * @param array $options options
    *
    * @return void
    */
@@ -567,7 +567,7 @@ abstract class csvImportBaseTask extends arBaseTask
   /**
    * Validate --update option values, throw an exception if invalid value specified.
    *
-   * @param array $options  CLI options passed in during import.
+   * @param array $options CLI options passed in during import.
    */
   protected function validateUpdateOptions($options)
   {
@@ -590,7 +590,7 @@ abstract class csvImportBaseTask extends arBaseTask
   /**
    * Checks to see if a particular option is supported
    *
-   * @param string $name  option name
+   * @param string $name option name
    *
    * @return boolean
    */

@@ -419,8 +419,8 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Return all keymap entries associated with this object.
    *
-   * @return array  Array of keymap records. Returns null if no keymap
-   *                records found.
+   * @return array Array of keymap records. Returns null if no keymap
+   *               records found.
    */
   public function fetchAllKeymapEntries()
   {
@@ -437,7 +437,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Get number of information objects with draft status
    *
-   * @return int  Number of information objects with draft status
+   * @return int Number of information objects with draft status
    */
   public static function getDraftCount()
   {
@@ -452,7 +452,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Get all information objects updated between two dates
    *
-   * @return array  collection of QubitInformationObjects and remaining object count
+   * @return array collection of QubitInformationObjects and remaining object count
    */
   public static function getUpdatedRecords($options = [])
   {
@@ -544,7 +544,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Wrapper for getRepository method to allow inheriting repo from ancestors
    *
-   * @param array $options optional parameters
+   * @param  array           $options optional parameters
    * @return QubitRepository repository object
    */
   public function getRepository(array $options = [])
@@ -574,11 +574,11 @@ class QubitInformationObject extends BaseInformationObject
    * Returns whether or not this information object would
    * inherit the specified repository from one of its ancestors.
    *
-   * @param int $repositoryId  The repository to check again. If this is
-   * null, this function will return false.
+   * @param int $repositoryId The repository to check again. If this is
+   *                          null, this function will return false.
    *
-   * @return bool  Whether or not this information object would inherit
-   * a repository with the same id as $repositoryId.
+   * @return bool Whether or not this information object would inherit
+   *              a repository with the same id as $repositoryId.
    */
   public function canInheritRepository($repositoryId)
   {
@@ -656,7 +656,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Return URL to EAD XML or, if unpublished, action to generate XML.
    *
-   * @return string  URL
+   * @return string URL
    */
   public function urlForEadExport()
   {
@@ -674,7 +674,7 @@ class QubitInformationObject extends BaseInformationObject
    * Return file path to EAD XML, regardless of whether it's available.
    *
    * @param
-   * @return string  file path of EAD XML
+   * @return string file path of EAD XML
    */
   public function pathToEadExport($contentsOnly = false)
   {
@@ -685,7 +685,7 @@ class QubitInformationObject extends BaseInformationObject
    * Return URL to DC XML or, if unpublished, action to generate XML.
    *
    * @param
-   * @return string  URL
+   * @return string URL
    */
   public function urlForDcExport()
   {
@@ -703,7 +703,7 @@ class QubitInformationObject extends BaseInformationObject
    * Return file path to DC XML, regardless of whether it's available.
    *
    * @param
-   * @return string  file path of DC XML
+   * @return string file path of DC XML
    */
   public function pathToDcExport($contentsOnly = false)
   {
@@ -717,7 +717,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Get direct descendants of current object.
    *
-   * @param array $options optional parameters
+   * @param  array      $options optional parameters
    * @return QubitQuery collection of children
    */
   public function getChildren($options = [])
@@ -755,7 +755,7 @@ class QubitInformationObject extends BaseInformationObject
    * Get all info objects that have the root node as a parent, and have children
    * (not orphans). Filtering drafts when requested.
    *
-   * @return array  collection of QubitInformationObjects and remaining object count
+   * @return array collection of QubitInformationObjects and remaining object count
    */
   public static function getCollections($options = [])
   {
@@ -1009,8 +1009,8 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Get name access point by $actorId and $eventTypeId (should be unique)
    *
-   * @param integer $actorId foreign key to QubitActor::ID
-   * @param integer $eventTypeId foreign key to QubitTerm (even type taxonomy)
+   * @param  integer    $actorId     foreign key to QubitActor::ID
+   * @param  integer    $eventTypeId foreign key to QubitTerm (even type taxonomy)
    * @return QubitEvent object or NULL if no matching relation found
    */
   public function getNameAccessPoint($actorId, $eventTypeId)
@@ -1031,8 +1031,8 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Add a many-to-many Term relation to this information object.
    *
-   * @param integer $termId primary key of QubitTerm
-   * @param string  $relationNote descriptive string (optional)
+   * @param  integer                $termId       primary key of QubitTerm
+   * @param  string                 $relationNote descriptive string (optional)
    * @return QubitInformationObject $this
    */
   public function addTermRelation($termId, $options = [])
@@ -1130,9 +1130,9 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Add a property related to this information object
    *
-   * @param string $name  Name of property
-   * @param string $value Value of property
-   * @param string $options array of optional parameters
+   * @param  string                 $name    Name of property
+   * @param  string                 $value   Value of property
+   * @param  string                 $options array of optional parameters
    * @return QubitInformationObject this information object
    */
   public function addProperty($name, $value, $options = [])
@@ -1162,8 +1162,8 @@ class QubitInformationObject extends BaseInformationObject
    * Return all properties related to this information object,
    * with option of filtering by name and/or scope
    *
-   * @param string $name filter results by name (optional)
-   * @param string $scope filter results by scope (optional)
+   * @param  string     $name  filter results by name (optional)
+   * @param  string     $scope filter results by scope (optional)
    * @return QubitQuery list of QubitProperty objects matching criteria
    */
   public function getProperties($name = null, $scope = null)
@@ -1186,9 +1186,9 @@ class QubitInformationObject extends BaseInformationObject
    * Save a related property and create a new property if a matching one doesn't
    * already exist.
    *
-   * @param string $name name of property
-   * @param string $value new value to set
-   * @param array $options array of options
+   * @param  string                 $name    name of property
+   * @param  string                 $value   new value to set
+   * @param  array                  $options array of options
    * @return QubitInformationObject
    */
   public function saveProperty($name, $value, $options = [])
@@ -1336,7 +1336,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Wrapper for QubitDigitalObject::importFromUri() method
    *
-   * @param array $uris URIs of remote files
+   * @param  array                  $uris URIs of remote files
    * @return QubitInformationObject $this
    *
    * @TODO allow for different usage types
@@ -1416,8 +1416,8 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Wrapper for QubitDigitalObject::importFromBase64() method
    *
-   * @param string $encodedString base-64 encoded data
-   * @param string $filename name of destination file
+   * @param  string                 $encodedString base-64 encoded data
+   * @param  string                 $filename      name of destination file
    * @return QubitInformationObject $this
    *
    * @TODO allow for different usage types
@@ -1531,7 +1531,7 @@ class QubitInformationObject extends BaseInformationObject
    * @param $name  The name of the actor
    * @param $options  An array of options filling in the new event or name access point info.
    *
-   * @return QubitActor  The new or existing actor just added to the event/name access point list.
+   * @return QubitActor The new or existing actor just added to the event/name access point list.
    */
   public function setActorByName($name, $options)
   {
@@ -2347,7 +2347,7 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Get Record by Oai identifier
-   * @param integer $identifier, the oai_identifier
+   * @param  integer    $identifier, the oai_identifier
    * @return QubitQuery collection of QubitInformationObjects
    */
   public static function getRecordByOaiID($oai_local_identifier)
@@ -2403,9 +2403,9 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Try to match informationObject to an existing one in system.
    *
-   * @param string $identifier  informationObject identifier
-   * @param string $title       informationObject title
-   * @param string $repoName    repository authorizedFormOfName
+   * @param string $identifier informationObject identifier
+   * @param string $title      informationObject title
+   * @param string $repoName   repository authorizedFormOfName
    *
    * @return integer InfoObj id
    */
@@ -2816,8 +2816,8 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Return this information object's full, inherited reference code.
    *
-   * @param bool $includeRepoAndCountry  Whether to include the repository identifier and country
-   * code.
+   * @param bool $includeRepoAndCountry Whether to include the repository identifier and country
+   *                                    code.
    *
    * @return string
    */
@@ -2876,7 +2876,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Get current identifier counter for identifier mask from database.
    *
-   * @return QubitSetting  The identifier counter setting (use ->value to get value).
+   * @return QubitSetting The identifier counter setting (use ->value to get value).
    */
   public static function getIdentifierCounter()
   {
@@ -2891,7 +2891,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Generate identifier based on identifier mask and current counter.
    *
-   * @return string  The generated identifier.
+   * @return string The generated identifier.
    */
   public static function generateIdentiferFromMask()
   {
@@ -3027,7 +3027,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Parse chronlist tags from within a bioghist tag.
    *
-   * @param DOMNodeList $chronlistNodeList  A node list containing the chronlist tag and its children.
+   * @param DOMNodeList $chronlistNodeList A node list containing the chronlist tag and its children.
    */
   private function parseChronlist($chronlistNodeList)
   {

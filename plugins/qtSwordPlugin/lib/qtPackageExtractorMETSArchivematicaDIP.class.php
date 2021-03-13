@@ -181,8 +181,8 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   /**
    * Add miscellaneous metadata related to a DIP object
    *
-   * @param QubitInformationObject $io target information object
-   * @param string $fileId METS FILEID
+   * @param QubitInformationObject $io     target information object
+   * @param string                 $fileId METS FILEID
    *
    * @return QubitInformationObject with added metadata
    */
@@ -234,9 +234,9 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    * After internal review it was decided to store them in their original UTC format in the AtoM database
    * and to convert them to the local time set for the AtoM server when displaying these values in AtoM templates.
    *
-   * @param QubitInformationObject $io target information object
-   * @param string $fileId METS FILEID
-   * @param array $options list of options to pass to QubitProperty
+   * @param QubitInformationObject $io      target information object
+   * @param string                 $fileId  METS FILEID
+   * @param array                  $options list of options to pass to QubitProperty
    *
    * @return QubitInformationObject with added metadata
    */
@@ -282,8 +282,8 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    * If the METS file includes a dmdSec, add the Dublin Core metadata to this
    * informatoin object
    *
-   * @param QubitInformationObject $io target information object
-   * @param string $fileId target file id
+   * @param QubitInformationObject $io     target information object
+   * @param string                 $fileId target file id
    *
    * @return QubitInformationObject with added metadata
    */
@@ -303,8 +303,8 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   /**
    * Create a QubitDigitalObject and link it to the passed IO
    *
-   * @param QubitInformationObject $io parent information object
-   * @param string $path digital object path
+   * @param QubitInformationObject $io   parent information object
+   * @param string                 $path digital object path
    *
    * @return QubitInformationObject with linked digital object
    */
@@ -346,8 +346,8 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    * Adds avaialable PREMIS object, FITS, MediaInfo, PREMIS Events, and Agents
    * data
    *
-   * @param QubitInformationObject $io the object to which the data is attached
-   * @param string $objectUUID the METS object UUID
+   * @param QubitInformationObject $io         the object to which the data is attached
+   * @param string                 $objectUUID the METS object UUID
    *
    * @param QubitInformationObject the passed object with added amdSec data
    */
@@ -574,7 +574,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    * metadata-only nodes (directories) as well as the primary digital object
    * nodes that describe the digital object, and link to the file on disk.
    *
-   * @param SimpleXMLElement $element
+   * @param SimpleXMLElement       $element
    * @param QubitInformationObject $parent
    */
   protected function recursivelyAddChildrenFromStructMap($element, $parent)
@@ -607,7 +607,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    *
    * Set parent, title, level of description, and publication status
    *
-   * @param SimpleXMLElement $div an object representing a <div> element
+   * @param SimpleXMLElement       $div    an object representing a <div> element
    * @param QubitInformationObject $parent the parent of the new info object
    *
    * @return QubitInformationObject
@@ -643,8 +643,8 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    * metadata (a title and level of description), and have no attached digital
    * object
    *
-   * @param SimpleXMLElement $element an object representing a <div> element
-   * @param QubitInformationObject $parent the parent for a new directory IO
+   * @param SimpleXMLElement       $element an object representing a <div> element
+   * @param QubitInformationObject $parent  the parent for a new directory IO
    *
    * @return QubitInformationObject the directory object
    */
@@ -674,7 +674,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    *
    * Only files under use original and inside the objects folder will be added
    *
-   * @param SimpleXMLElement $div an object representing a <div> element
+   * @param SimpleXMLElement       $div    an object representing a <div> element
    * @param QubitInformationObject $parent the parent for a new directory IO
    *
    * @return QubitInformationObject an ORM object representing a DIP object

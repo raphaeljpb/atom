@@ -600,8 +600,8 @@ class QubitXmlImport
    *  - load the schema locations
    *  - validate the file on the main schema (the one without prefix)
    *
-   * @param string $xmlFile XML document file
-   * @param array $options optional parameters
+   * @param  string      $xmlFile XML document file
+   * @param  array       $options optional parameters
    * @return DOMDocument an object representation of the XML document
    */
   protected function loadXML($xmlFile, $options = [])
@@ -683,7 +683,7 @@ class QubitXmlImport
   /**
    * Populate EAD information objects.
    *
-   * @return bool  True if we want to continue populating objects, false if we want to end the import.
+   * @return bool True if we want to continue populating objects, false if we want to end the import.
    */
   private function populateObject(&$domNode, &$importDOM, &$mapping, &$currentObject, $importSchema)
   {
@@ -1128,7 +1128,7 @@ class QubitXmlImport
    * based on the update, skip and limit options
    *
    * @param mixed  QubitInformationObject or QubitActor to save
-   * @return bool  true to save the record, false to skip saving it
+   * @return bool true to save the record, false to skip saving it
    */
   private function handlePreSaveLogic($resource)
   {
@@ -1264,9 +1264,9 @@ class QubitXmlImport
    * - The limit option is the slug of the resource's collection root
    * - The limit option is the slug of the resource's inherit repository
    *
-   * @param QubitInformationObject $io  The information object to check
-   * @return bool  The information object passes the limit option or not
-   * @throws sfException  When the limit option is not accepted
+   * @param  QubitInformationObject $io The information object to check
+   * @return bool                   The information object passes the limit option or not
+   * @throws sfException            When the limit option is not accepted
    */
   private function passesLimitOptionForIo($io)
   {
@@ -1297,9 +1297,9 @@ class QubitXmlImport
    * - The limit option is not set
    * - The limit option is the slug of the resource's maintaining repository
    *
-   * @param QubitActor $actor  The actor object to check
-   * @return bool  The actor passes the limit option or not
-   * @throws sfException  When the limit option is not accepted
+   * @param  QubitActor  $actor The actor object to check
+   * @return bool        The actor passes the limit option or not
+   * @throws sfException When the limit option is not accepted
    */
   private function passesLimitOptionForActor($actor)
   {
@@ -1323,8 +1323,8 @@ class QubitXmlImport
   /**
    * Obtain the limit type (class_name) and id based on the limit option slug
    *
-   * @return mixed  bool false if no option set or no slug found or
-   *                stdClass object with 'id' and 'class_name' properties
+   * @return mixed bool false if no option set or no slug found or
+   *               stdClass object with 'id' and 'class_name' properties
    */
   private function getLimitIdAndClassName()
   {

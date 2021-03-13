@@ -221,7 +221,7 @@ class sfImageMagickAdapter
    *
    * @param string  file we want the mime type for
    *
-   * @return string  Mime type
+   * @return string Mime type
    */
   public static function getMimeType($file)
   {

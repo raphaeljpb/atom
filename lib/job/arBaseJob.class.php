@@ -131,7 +131,7 @@ class arBaseJob extends Net_Gearman_Job_Common
    * Check if all required parameters are present in $parameters,
    * if one is missing throw an exception.
    *
-   * @param   $parameters  the parameters passed to this job
+   * @param $parameters the parameters passed to this job
    */
   protected function checkRequiredParameters($parameters)
   {
@@ -153,7 +153,7 @@ class arBaseJob extends Net_Gearman_Job_Common
    * A wrapper to log error messages and set the QubitJob status to error.
    * This will also attach the error message as a note in the QubitJob.
    *
-   * @param string  $message  the error message
+   * @param string $message the error message
    */
   protected function error($message)
   {
@@ -170,7 +170,7 @@ class arBaseJob extends Net_Gearman_Job_Common
   /**
    * A wrapper to log info messages.
    *
-   * @param string  $message  the error message
+   * @param string $message the error message
    */
   protected function info($message)
   {

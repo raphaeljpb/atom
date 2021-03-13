@@ -45,10 +45,10 @@ class QubitActorAcl extends QubitAcl
   /**
    * Do custom ACL checks for QubitActor resources
    *
-   * @param myUser $user to authorize
+   * @param myUser     $user     to authorize
    * @param QubitActor $resource target of the requested action
-   * @param string $action requested for authorization (e.g. 'read')
-   * @param array|null $options optional parameters
+   * @param string     $action   requested for authorization (e.g. 'read')
+   * @param array|null $options  optional parameters
    *
    * @return bool true if the access request is authorized
    */
@@ -70,8 +70,8 @@ class QubitActorAcl extends QubitAcl
    * Check if $user is authorized to do $action on the digital object linked to
    * this actor
    *
-   * @param QubitUser $user to authorize
-   * @param string $action being requested (e.g. "readReference")
+   * @param QubitUser $user   to authorize
+   * @param string    $action being requested (e.g. "readReference")
    *
    * @return bool true if $user is authorized to perform $action
    */

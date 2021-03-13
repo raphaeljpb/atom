@@ -40,8 +40,8 @@ EOF;
    * @see sfTask::log()
    * @see sfLoggger::log()
    *
-   * @param string $message N.B. sfTask::log() accepts an array or string, but
-   *                        sfLogger::log() expects a string only
+   * @param string $message  N.B. sfTask::log() accepts an array or string, but
+   *                         sfLogger::log() expects a string only
    * @param string $priority See sfLogger for priority levels
    */
   public function log($message, $priority = sfLogger::INFO)

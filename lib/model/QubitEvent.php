@@ -34,7 +34,7 @@ class QubitEvent extends BaseEvent
   /**
    * Additional save functionality, e.g. update search index
    *
-   * @param mixed $connection provide a database connection
+   * @param  mixed                  $connection provide a database connection
    * @return QubitInformationObject self-reference
    */
   public function save($connection = null)

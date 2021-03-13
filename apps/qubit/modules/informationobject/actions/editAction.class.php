@@ -749,7 +749,7 @@ class InformationObjectEditAction extends DefaultEditAction
   /**
    * Copy over a source information object's alternative identifiers when duplicating.
    *
-   * @param QubitInformationObject $sourceIo  The source information object we're duplicating from.
+   * @param QubitInformationObject $sourceIo The source information object we're duplicating from.
    */
   private function duplicateAlternativeIdentifiers($sourceIo)
   {
@@ -768,7 +768,7 @@ class InformationObjectEditAction extends DefaultEditAction
   /**
    * Copy over a source information object's notes when duplicating.
    *
-   * @param QubitInformationObject $sourceIo  The source information object we're duplicating from.
+   * @param QubitInformationObject $sourceIo The source information object we're duplicating from.
    */
   private function duplicateNotes($sourceIo)
   {

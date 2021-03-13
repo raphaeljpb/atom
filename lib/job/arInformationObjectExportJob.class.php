@@ -37,9 +37,9 @@ class arInformationObjectExportJob extends arExportJob
   /**
    * Find records for export based on export parameters
    *
-   * @param array $parameters  Export parameters
+   * @param array $parameters Export parameters
    *
-   * @return arElasticSearchPluginQuery  AtoM Elasticsearch query
+   * @return arElasticSearchPluginQuery AtoM Elasticsearch query
    */
   public static function findExportRecords($parameters)
   {
@@ -77,7 +77,7 @@ class arInformationObjectExportJob extends arExportJob
   /**
    * Get the current archival standard
    *
-   * @return arElasticSearchPluginQuery  AtoM Elasticsearch query
+   * @return arElasticSearchPluginQuery AtoM Elasticsearch query
    */
   public static function getCurrentArchivalStandard()
   {

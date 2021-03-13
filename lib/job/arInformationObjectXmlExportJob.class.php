@@ -50,7 +50,7 @@ class arInformationObjectXmlExportJob extends arInformationObjectExportJob
    * Export resource metadata and (optionally) digital object
    *
    * @param QubitInformationObject $resource object to export
-   * @param string $path temporary export job working directory
+   * @param string                 $path     temporary export job working directory
    */
   protected function exportResource($resource, $path)
   {

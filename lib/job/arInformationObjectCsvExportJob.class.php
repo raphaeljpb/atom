@@ -34,7 +34,7 @@ class arInformationObjectCsvExportJob extends arInformationObjectExportJob
    *
    * @see arInformationObjectExportJob::doExport()
    *
-   * @param string $path  Path of file to write CSV data to
+   * @param string $path Path of file to write CSV data to
    */
   protected function doExport($path)
   {
@@ -47,7 +47,7 @@ class arInformationObjectCsvExportJob extends arInformationObjectExportJob
    * Export resource metadata and digital object (if requested)
    *
    * @param QubitInformationObject $resource object to export
-   * @param string $path temporary export job working directory
+   * @param string                 $path     temporary export job working directory
    */
   protected function exportResource($resource, $path)
   {
@@ -73,7 +73,7 @@ class arInformationObjectCsvExportJob extends arInformationObjectExportJob
    * Export resource metadata and associated digital object
    *
    * @param QubitInformationObject $resource object to export
-   * @param string $path temporary export job working directory
+   * @param string                 $path     temporary export job working directory
    */
   protected function exportDataAndDigitalObject($resource, $path)
   {

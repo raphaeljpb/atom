@@ -77,7 +77,7 @@ class arRepositoryCsvExportJob extends arExportJob
    *
    * @param string  Path of file to write CSV data to
    *
-   * @return int  Number of descriptions exported, -1 if and error occurred and to end the job.
+   * @return int Number of descriptions exported, -1 if and error occurred and to end the job.
    */
   protected function exportResults($path)
   {

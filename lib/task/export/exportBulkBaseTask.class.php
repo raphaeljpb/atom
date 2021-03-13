@@ -118,7 +118,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
    * @param $extension  The file extension (e.g. csv, xml)
    * @param $formatAbbreviation  The type of export format (e.g. ead, eac, mods)
    *
-   * @return string  The generated filename based on the format, info object id, slug, and extension
+   * @return string The generated filename based on the format, info object id, slug, and extension
    */
   public static function generateSortableFilename($resource, $extension, $formatAbbreviation)
   {

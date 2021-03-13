@@ -97,10 +97,10 @@ class QubitFlatfileImport
    * properties (restricting to a set of allowed properties and allowing the
    * specification of properties that should be ignored and not set)
    *
-   * @param object &$object  object to act upon
-   * @param array $propertyArray  array of properties and their respective values
-   * @param array $allowedProperties  array of properties that can be set or true if any allowed
-   * @param array $ignore  array of properties that should be ignored
+   * @param object &$object           object to act upon
+   * @param array  $propertyArray     array of properties and their respective values
+   * @param array  $allowedProperties array of properties that can be set or true if any allowed
+   * @param array  $ignore            array of properties that should be ignored
    *
    * @return void
    */
@@ -194,7 +194,7 @@ class QubitFlatfileImport
   /**
    * Set status variable value
    *
-   * @param string $var  name of variable
+   * @param string $var name of variable
    * @param value  value of variable (could be any type)
    *
    * @return void
@@ -207,7 +207,7 @@ class QubitFlatfileImport
   /**
    * Determine whether or not a column exists
    *
-   * @param string $column  name of column
+   * @param string $column name of column
    *
    * @return boolean
    */
@@ -253,9 +253,9 @@ class QubitFlatfileImport
   /**
    * Get status variable value
    *
-   * @param string $var  name of variable
+   * @param string $var name of variable
    *
-   * @return value  value of variable (could be any type)
+   * @return value value of variable (could be any type)
    */
   public function getStatus($var)
   {
@@ -265,7 +265,7 @@ class QubitFlatfileImport
   /**
    * Test whether a property is set and, if so, execute it
    *
-   * @param string $property  name of property
+   * @param string $property name of property
    *
    * @return void
    */
@@ -282,7 +282,7 @@ class QubitFlatfileImport
   /**
    * Get time elapsed during import
    *
-   * @return int  microseconds since import began
+   * @return int microseconds since import began
    */
   public function getTimeElapsed()
   {
@@ -292,10 +292,10 @@ class QubitFlatfileImport
   /**
    * Log error message if an error log has been defined
    *
-   * @param string $message  error message
-   * @param boolean $includeCurrentRowNumber  prefix error message with row number
+   * @param string  $message                 error message
+   * @param boolean $includeCurrentRowNumber prefix error message with row number
    *
-   * @return string  message prefixed with current row number
+   * @return string message prefixed with current row number
    */
   public function logError($message, $includeCurrentRowNumber = true)
   {
@@ -313,10 +313,10 @@ class QubitFlatfileImport
    * Append content to existing content, prepending a line break to new content
    * if necessary
    *
-   * @param string $oldContent  existing content
-   * @param string $newContent  new content to add to existing content
+   * @param string $oldContent existing content
+   * @param string $newContent new content to add to existing content
    *
-   * @return string  both strings appended
+   * @return string both strings appended
    */
   public function appendWithLineBreakIfNeeded($oldContent, $newContent)
   {
@@ -326,10 +326,10 @@ class QubitFlatfileImport
   /**
    * Combine column text, using optional pre-column prefixes
    *
-   * @param array $prefixesAndColumns  array, optional keys specifying prefix
+   * @param array  $prefixesAndColumns array, optional keys specifying prefix
    * @param string $destinationColumn  optional destination column for result
    *
-   * @return string  combined column text
+   * @return string combined column text
    */
   public function amalgamateColumns($prefixesAndColumns, $destinationColumn = false)
   {
@@ -364,9 +364,9 @@ class QubitFlatfileImport
    * Convert human readable (e.g. 'This string') strings to camelCase
    * representation (e.g. 'thisString')
    *
-   * @param string $str  input string
+   * @param string $str input string
    *
-   * @return string  camelCase string
+   * @return string camelCase string
    */
   public static function camelize($str)
   {
@@ -380,8 +380,8 @@ class QubitFlatfileImport
   /**
    * Pull data from a csv file and process each row
    *
-   * @param resource $fh  file handler for file containing CSV data
-   * @param integer $skipRows  number of rows to skip (optional)
+   * @param resource $fh       file handler for file containing CSV data
+   * @param integer  $skipRows number of rows to skip (optional)
    *
    * @return void
    */
@@ -480,7 +480,7 @@ class QubitFlatfileImport
   /**
    * Check array of event data from import, check if this exact event already exists.
    *
-   * @return bool  True if exists, false if not
+   * @return bool True if exists, false if not
    */
   public function hasDuplicateEvent($event)
   {
@@ -536,7 +536,7 @@ class QubitFlatfileImport
   /**
    * Process a row of imported data
    *
-   * @param array $row  array of column data
+   * @param array $row array of column data
    *
    * @return void
    */
@@ -596,7 +596,7 @@ class QubitFlatfileImport
   /**
    * Output import progress, time elapsed, and memory usage
    *
-   * @return string  description of import progress
+   * @return string description of import progress
    */
   public function renderProgressDescription()
   {
@@ -633,8 +633,8 @@ class QubitFlatfileImport
   /**
    * Add an ad-hoc column handler
    *
-   * @param string $column  name of column
-   * @param closure $handler  column handling logic
+   * @param string  $column  name of column
+   * @param closure $handler column handling logic
    *
    * @return void
    */
@@ -646,8 +646,8 @@ class QubitFlatfileImport
   /**
    * Add an ad-hoc column handler to multiple columns
    *
-   * @param array $columns  names of columns
-   * @param closure $handler  column handling logic
+   * @param array   $columns names of columns
+   * @param closure $handler column handling logic
    *
    * @return void
    */
@@ -662,9 +662,9 @@ class QubitFlatfileImport
   /**
    * Handle mapping of column to object property
    *
-   * @param array $mapDefinition  array defining which property to map to and
+   * @param array  $mapDefinition array defining which property to map to and
    *                              optional transformation logic
-   * @param string $value  column value
+   * @param string $value         column value
    *
    * @return void
    */
@@ -696,9 +696,9 @@ class QubitFlatfileImport
    * Handle mapping of column, containing multiple values delimited by a
    * character, to an array. Any values set to 'NULL' will be filtered out.
    *
-   * @param string $column  column name
-   * @param array $delimiter  delimiting character
-   * @param string $value  column value
+   * @param string $column    column name
+   * @param array  $delimiter delimiting character
+   * @param string $value     column value
    *
    * @return void
    */
@@ -720,9 +720,9 @@ class QubitFlatfileImport
    * Issue an SQL query
    *
    * @param string $query  SQL query
-   * @param string $params  values to map to placeholders (optional)
+   * @param string $params values to map to placeholders (optional)
    *
-   * @return object  database statement object
+   * @return object database statement object
    */
   public static function sqlQuery($query, $params = [])
   {
@@ -740,11 +740,11 @@ class QubitFlatfileImport
   /**
    * Create one or more Qubit notes of a certain type
    *
-   * @param integer $typeId  term ID of note type
-   * @param string $array  Note text items
-   * @param closure $transformationLogic  logic to manipulate note text
+   * @param integer $typeId              term ID of note type
+   * @param string  $array               Note text items
+   * @param closure $transformationLogic logic to manipulate note text
    *
-   * @return array  Notes created
+   * @return array Notes created
    */
   public function createOrUpdateNotes($typeId, $textArray, $transformationLogic = false)
   {
@@ -799,11 +799,11 @@ class QubitFlatfileImport
   /**
    * Create a Qubit note
    *
-   * @param integer $typeId  term ID of note type
-   * @param string $text  Note text
-   * @param closure $transformationLogic  logic to manipulate note text
+   * @param integer $typeId              term ID of note type
+   * @param string  $text                Note text
+   * @param closure $transformationLogic logic to manipulate note text
    *
-   * @return QubitNote  created note
+   * @return QubitNote created note
    */
   public function createOrUpdateNote($typeId, $text, $options = [])
   {
@@ -843,7 +843,7 @@ class QubitFlatfileImport
    * Create a Qubit event, or add an i18n row to existing event
    *
    * @param integer $typeId  term ID of event type
-   * @param array $options  option parameter
+   * @param array   $options option parameter
    *
    */
   public function createOrUpdateEvent($typeId, $options = [])
@@ -939,11 +939,11 @@ class QubitFlatfileImport
   /**
    * Create a Qubit physical object or, if one already exists, fetch it
    *
-   * @param string $name  name of physical object
-   * @param string $location  location of physical object
-   * @param integer $typeId  type ID of physical object
+   * @param string  $name     name of physical object
+   * @param string  $location location of physical object
+   * @param integer $typeId   type ID of physical object
    *
-   * @return QubitPhysicalObject  created or fetched physical object
+   * @return QubitPhysicalObject created or fetched physical object
    */
   public function createOrFetchPhysicalObject($name, $location, $typeId)
   {
@@ -967,9 +967,9 @@ class QubitFlatfileImport
   /**
    * Create a Qubit repository or, if one already exists, fetch it
    *
-   * @param string $name  name of repository
+   * @param string $name name of repository
    *
-   * @return QubitRepository  created or fetched repository
+   * @return QubitRepository created or fetched repository
    */
   public static function createOrFetchRepository($name)
   {
@@ -996,10 +996,10 @@ class QubitFlatfileImport
    * actor history in matches from the same repository when using
    * the match and update option
    *
-   * @param string $name     name of actor
-   * @param array  $options  optional data
+   * @param string $name    name of actor
+   * @param array  $options optional data
    *
-   * @return QubitActor  created or fetched actor
+   * @return QubitActor created or fetched actor
    */
   public function createOrFetchAndUpdateActorForIo($name, $options = [])
   {
@@ -1046,10 +1046,10 @@ class QubitFlatfileImport
   /**
    * Create a Qubit actor or, if one already exists, fetch it
    *
-   * @param string $name     name of actor
-   * @param string $options  optional data
+   * @param string $name    name of actor
+   * @param string $options optional data
    *
-   * @return QubitActor  created or fetched actor
+   * @return QubitActor created or fetched actor
    */
   public static function createOrFetchActor($name, $options = [])
   {
@@ -1066,9 +1066,9 @@ class QubitFlatfileImport
   /**
    * Create a Qubit rights holder or, if one already exists, fetch it
    *
-   * @param string $name  name of rights holder
+   * @param string $name name of rights holder
    *
-   * @return QubitRightsHolder  created or fetched rights holder
+   * @return QubitRightsHolder created or fetched rights holder
    */
   public function createOrFetchRightsHolder($name)
   {
@@ -1099,9 +1099,9 @@ class QubitFlatfileImport
   /**
    * Create a QubitDonor or, if one already exists, fetch it
    *
-   * @param string $name     name of donor
+   * @param string $name name of donor
    *
-   * @return QubitDonor  created or fetched donor
+   * @return QubitDonor created or fetched donor
    */
   public function createOrFetchDonor($name)
   {
@@ -1133,10 +1133,10 @@ class QubitFlatfileImport
    * Create Qubit contract information for an actor or, if it already exists,
    * fetch it
    *
-   * @param integer $actorId  ID of actor
-   * @param string $options  contact information creation properties
+   * @param integer $actorId ID of actor
+   * @param string  $options contact information creation properties
    *
-   * @return QubitContactInformation  created or fetched contact info
+   * @return QubitContactInformation created or fetched contact info
    */
   public function createOrFetchContactInformation($actorId, $options)
   {
@@ -1158,10 +1158,10 @@ class QubitFlatfileImport
   /**
    * Create Qubit contact information for an actor
    *
-   * @param string $actorId  ID of actor
-   * @param string $options  property values for new object
+   * @param string $actorId ID of actor
+   * @param string $options property values for new object
    *
-   * @return QubitContactInformation  created contact information
+   * @return QubitContactInformation created contact information
    */
   public function createContactInformation($actorId, $options)
   {
@@ -1191,10 +1191,10 @@ class QubitFlatfileImport
    * Create or fetch Qubit terms from array, depending on if they already exist
    * Must all be from same taxonomy.
    *
-   * @param integer $taxonomyId  term taxonomy
-   * @param mixed  $names Can be passed as single term name string
-   *                      or array of term names.
-   * @param string $culture  culture code (defaulting to English)
+   * @param integer $taxonomyId term taxonomy
+   * @param mixed   $names      Can be passed as single term name string
+   *                            or array of term names.
+   * @param string  $culture    culture code (defaulting to English)
    *
    * @return mixed created terms or fetched objects containing term data. Depending
    *               on what was provided on input - string or array is returned.
@@ -1239,11 +1239,11 @@ class QubitFlatfileImport
   /**
    * Create a Qubit term
    *
-   * @param integer $taxonomyId  term taxonomy
-   * @param string $name  name of term
-   * @param string $culture  culture code (defaulting to English)
+   * @param integer $taxonomyId term taxonomy
+   * @param string  $name       name of term
+   * @param string  $culture    culture code (defaulting to English)
    *
-   * @return QubitTerm  created term
+   * @return QubitTerm created term
    */
   public static function createTerm($taxonomyId, $name, $culture = 'en')
   {
@@ -1260,10 +1260,10 @@ class QubitFlatfileImport
   /**
    * Create a Qubit physical object
    *
-   * @param string $name  name of physical object
-   * @param string $location  location of physical object
-   * @param integer $typeId  physical object type ID
-   * @return QubitPhysicalObject  created physical object
+   * @param  string              $name     name of physical object
+   * @param  string              $location location of physical object
+   * @param  integer             $typeId   physical object type ID
+   * @return QubitPhysicalObject created physical object
    */
   public function createPhysicalObject($name, $location, $typeId)
   {
@@ -1284,9 +1284,9 @@ class QubitFlatfileImport
   /**
    * Create a Qubit repository
    *
-   * @param string $name  name of repository
+   * @param string $name name of repository
    *
-   * @return QubitRepository  created repository
+   * @return QubitRepository created repository
    */
   public static function createRepository($name)
   {
@@ -1300,11 +1300,11 @@ class QubitFlatfileImport
   /**
    * Create a relation between two Qubit objects
    *
-   * @param integer $subjectId  subject ID
+   * @param integer $subjectId subject ID
    * @param integer $objectId  object ID
-   * @param integer $typeId  relation type
+   * @param integer $typeId    relation type
    *
-   * @return QubitRelation  created relation
+   * @return QubitRelation created relation
    */
   public function createRelation($subjectId, $objectId, $typeId)
   {
@@ -1327,10 +1327,10 @@ class QubitFlatfileImport
   /**
    * Create a relation between a term and a Qubit object
    *
-   * @param integer $objectId  object ID
-   * @param integer $termId  term ID
+   * @param integer $objectId object ID
+   * @param integer $termId   term ID
    *
-   * @return QubitObjectTermRelation  created relation
+   * @return QubitObjectTermRelation created relation
    */
   public static function createObjectTermRelation($objectId, $termId)
   {
@@ -1352,10 +1352,10 @@ class QubitFlatfileImport
   /**
    * Check whether or not an object-term relation already exists for this info object.
    *
-   * @param integer $objectId  Information object we're relating to.
-   * @param integer $termId  The term or actor we're relating to.
+   * @param integer $objectId Information object we're relating to.
+   * @param integer $termId   The term or actor we're relating to.
    *
-   * @return bool  True if this relation already exists, false otherwise.
+   * @return bool True if this relation already exists, false otherwise.
    */
   public static function objectTermRelationExists($objectId, $termId)
   {
@@ -1369,9 +1369,9 @@ class QubitFlatfileImport
   /**
    * Create or fetch a term and relate it to an object
    *
-   * @param integer $taxonomyId  taxonomy ID
-   * @param string $name  name of term
-   * @param string $culture  culture code (defaulting to row's current culture)
+   * @param integer $taxonomyId taxonomy ID
+   * @param string  $name       name of term
+   * @param string  $culture    culture code (defaulting to row's current culture)
    *
    * @return void
    */
@@ -1392,9 +1392,9 @@ class QubitFlatfileImport
   /**
    * Get the terms in a taxonomy using sql query
    *
-   * @param integer $taxonomyId  taxonomy ID
+   * @param integer $taxonomyId taxonomy ID
    *
-   * @return array  objects resultset
+   * @return array objects resultset
    */
   public static function getTaxonomyTerms($taxonomyId)
   {
@@ -1411,9 +1411,9 @@ class QubitFlatfileImport
    * Load terms from one or more taxonomies and use the terms to populate one
    * or more array elements.
    *
-   * @param array $taxonomies  array of taxonomy IDs and identifying names
+   * @param array $taxonomies array of taxonomy IDs and identifying names
    *
-   * @return array  array of arrays containing taxonomy terms
+   * @return array array of arrays containing taxonomy terms
    */
   public static function loadTermsFromTaxonomies($taxonomies)
   {
@@ -1437,9 +1437,9 @@ class QubitFlatfileImport
    * the basis term (basisID), the ID of the act term (actID), and the ID of
    * the copyright status term (copyrightStatusId).
    *
-   * @param array $options  options
+   * @param array $options options
    *
-   * @return QubitRelation  result object
+   * @return QubitRelation result object
    */
   public function createRightAndRelation($options)
   {
@@ -1467,8 +1467,8 @@ class QubitFlatfileImport
    * Store a property of the imported object containing a serialized array of
    * language values
    *
-   * @param string $propertyName  Name of QubitProperty to create
-   * @param array $values  values to serialize and store
+   * @param string $propertyName Name of QubitProperty to create
+   * @param array  $values       values to serialize and store
    *
    * @return void
    */
@@ -1482,8 +1482,8 @@ class QubitFlatfileImport
    * Store a property of the imported object containing a serialized array of
    * script values
    *
-   * @param string $propertyName  Name of QubitProperty to create
-   * @param array $values  values to serialize and store
+   * @param string $propertyName Name of QubitProperty to create
+   * @param array  $values       values to serialize and store
    *
    * @return void
    */
@@ -1496,9 +1496,9 @@ class QubitFlatfileImport
   /**
    * Create keymap entry for object
    *
-   * @param string $sourceName  Name of source data
-   * @param int $sourceId  ID from source data
-   * @param object $object  Object to create entry for
+   * @param string $sourceName Name of source data
+   * @param int    $sourceId   ID from source data
+   * @param object $object     Object to create entry for
    *
    * @return void
    */
@@ -1526,11 +1526,11 @@ class QubitFlatfileImport
    * legacy ID (source ID), the name of the import where it was mapped (source
    * name), and the type of entity (target name)
    *
-   * @param integer $sourceId  source ID
-   * @param string $sourceName  source name
-   * @param string $targetName  target name
+   * @param integer $sourceId   source ID
+   * @param string  $sourceName source name
+   * @param string  $targetName target name
    *
-   * @return stdClass  result object
+   * @return stdClass result object
    */
   public static function fetchKeymapEntryBySourceAndTargetName($sourceId, $sourceName, $targetName)
   {
@@ -1550,12 +1550,12 @@ class QubitFlatfileImport
    * Map a value to its corresponding term name then return the term ID
    * corresponding to the term name
    *
-   * @param string $description  description of subject (for error output)
-   * @param string $value  value that needs to be mapped to a term ID
-   * @param array $valueToTermNameMap  array mapping possible values to term names
-   * @param array $terms  array mapping term IDs to term names
+   * @param string $description        description of subject (for error output)
+   * @param string $value              value that needs to be mapped to a term ID
+   * @param array  $valueToTermNameMap array mapping possible values to term names
+   * @param array  $terms              array mapping term IDs to term names
    *
-   * @return integer  term ID
+   * @return integer term ID
    */
   public function translateNameToTermId($description, $value, $valueToTermNameMap, $terms)
   {
@@ -1601,9 +1601,9 @@ class QubitFlatfileImport
   /**
    * Get country code using input that's either a country code or country name
    *
-   * @param string $value  country code or country name
+   * @param string $value country code or country name
    *
-   * @return string  country code
+   * @return string country code
    */
   public static function normalizeCountryAsCountryCode($value)
   {
@@ -1643,7 +1643,7 @@ class QubitFlatfileImport
   /**
    * Combine two or more arrays, eliminating any duplicates
    *
-   * @return array  combined array
+   * @return array combined array
    */
   protected function combineArraysWithoutDuplicates()
   {
@@ -1718,7 +1718,7 @@ class QubitFlatfileImport
   /**
    * Log error message if an error log has been defined
    *
-   * @param string $message  error message
+   * @param string $message error message
    *
    * @return void
    */
@@ -1751,7 +1751,7 @@ class QubitFlatfileImport
    * Perform row processing for before an object is saved such as setting
    * object properties and executing ad-hoc column handlers
    *
-   * @param array $row  array of column data
+   * @param array $row array of column data
    *
    * @return void
    */
@@ -1811,7 +1811,7 @@ class QubitFlatfileImport
    * Perform row processing for after an object is saved and has an ID such
    * as creating child properties and notes
    *
-   * @param array $row  array of column data
+   * @param array $row array of column data
    *
    * @return void
    */
@@ -1863,9 +1863,9 @@ class QubitFlatfileImport
   /**
    * Execute logic, defined by a closure, on each column of a row
    *
-   * @param array $row  array of column data
+   * @param array $row array of column data
    *
-   * @param closure $logic  logic that should be performed on the column value
+   * @param closure $logic logic that should be performed on the column value
    *
    * @return void
    */
@@ -1915,9 +1915,9 @@ class QubitFlatfileImport
    * Filter out elements containing blank strings and check if any elements
    * remain
    *
-   * @param array $row  Array of column values
+   * @param array $row Array of column values
    *
-   * @return bool  True if non-blank strings exist in row
+   * @return bool True if non-blank strings exist in row
    */
   private function rowContainsData($row)
   {
@@ -1972,10 +1972,10 @@ class QubitFlatfileImport
    * Compare two date strings. This function has some custom logic to account for MySQL adding
    * '-00-00' to dates that only indicate year, but not month / day.
    *
-   * @param string $dbDate  First date in the comparison. This is the date fetched from the db with potential
-   *                        '-00-00' in it.
-   * @param string $csvDate  Second date for comparison.
-   * @return bool  True if date strings are equal, false otherwise.
+   * @param  string $dbDate  First date in the comparison. This is the date fetched from the db with potential
+   *                         '-00-00' in it.
+   * @param  string $csvDate Second date for comparison.
+   * @return bool   True if date strings are equal, false otherwise.
    */
   private function dateStringsEqual($dbDate, $csvDate)
   {
@@ -2014,7 +2014,7 @@ class QubitFlatfileImport
   /**
    * Handle various update options when importing information objects.
    *
-   * @return bool  Whether to skip row processing for this description.
+   * @return bool Whether to skip row processing for this description.
    */
   private function handleInformationObjectRow()
   {
@@ -2098,7 +2098,7 @@ class QubitFlatfileImport
   /**
    * Return a string indicating what action the import process is going to take for this row.
    *
-   * @return string  The action description string.
+   * @return string The action description string.
    */
   private function getActionDescription()
   {
@@ -2232,7 +2232,7 @@ class QubitFlatfileImport
   /**
    * Handle various update options when importing repositories and actors.
    *
-   * @return bool  Whether to skip row processing for this record.
+   * @return bool Whether to skip row processing for this record.
    */
   private function handleRepositoryAndActorRow()
   {
@@ -2336,11 +2336,11 @@ class QubitFlatfileImport
    * This function is used to build a list to match against existing to prevent
    * creating duplicate notes when updating descriptions.
    *
-   * @param int $objectId  Object id for object that the note belongs to.
-   * @param int $typeId  Note type id indicating note type.
+   * @param int    $objectId Object id for object that the note belongs to.
+   * @param int    $typeId   Note type id indicating note type.
    * @param string $culture  Note culture to check against.
    *
-   * @return bool  Array of all note content.
+   * @return bool Array of all note content.
    */
   private function getExistingNotes($objectId, $typeId, $culture)
   {
@@ -2367,10 +2367,10 @@ class QubitFlatfileImport
    *
    * This function is to prevent creating duplicate notes when updating descriptions.
    *
-   * @param array $existingNotes  Notes already found in the database for this
-   * @param string $content  Note content to check against.
+   * @param array  $existingNotes Notes already found in the database for this
+   * @param string $content       Note content to check against.
    *
-   * @return bool  True if the same note exists, false otherwise.
+   * @return bool True if the same note exists, false otherwise.
    */
   private function checkNoteExists(&$existingNotes, $content)
   {
@@ -2393,8 +2393,8 @@ class QubitFlatfileImport
    * Retrieve term index from PDO terms query response.
    * Must all be from same taxonomy.
    *
-   * @param array  $rows  Results array from term query lookup
-   * @param string $name  Term name
+   * @param array  $rows Results array from term query lookup
+   * @param string $name Term name
    *
    * @return integer Index value if $name is found otherwise null
    */
@@ -2411,10 +2411,10 @@ class QubitFlatfileImport
   /**
    * Create a Qubit actor
    *
-   * @param string $name  name of actor
-   * @param string $history  history of actor (optional)
+   * @param string $name    name of actor
+   * @param string $history history of actor (optional)
    *
-   * @return QubitActor  created actor
+   * @return QubitActor created actor
    */
   private static function createActor($name, $options = [])
   {
@@ -2440,10 +2440,10 @@ class QubitFlatfileImport
   /**
    * Check whether or not a term / phys obj relation already exists for this info object.
    *
-   * @param integer $subjectId  The term, actor or phys object we're relating to.
+   * @param integer $subjectId The term, actor or phys object we're relating to.
    * @param integer $objectId  Information object we're relating to.
    *
-   * @return bool  True if this relation already exists, false otherwise.
+   * @return bool True if this relation already exists, false otherwise.
    */
   private function relationExists($subjectId, $objectId)
   {
@@ -2458,9 +2458,9 @@ class QubitFlatfileImport
    * Store a property of the imported object containing a serialized array of
    * values from a controlled vocabulary
    *
-   * @param string $propertyName  Name of QubitProperty to create
-   * @param array $values  values to serialize and store
-   * @param string $vocabulary  allowable values
+   * @param string $propertyName Name of QubitProperty to create
+   * @param array  $values       values to serialize and store
+   * @param string $vocabulary   allowable values
    *
    * @return void
    */

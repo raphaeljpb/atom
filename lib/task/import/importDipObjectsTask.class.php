@@ -157,8 +157,8 @@ EOF;
   /**
    * Make sure argument and option values are valid
    *
-   * @param array $arguments  array of sfCommandArgument instances
-   * @param array $options  array of sfCommandOption instances
+   * @param array $arguments array of sfCommandArgument instances
+   * @param array $options   array of sfCommandOption instances
    *
    * @return void
    */
@@ -181,9 +181,9 @@ EOF;
    * Return file pointer resource for the first CSV file found within the DIP's
    * objects directory. CSV file's extension must be lower-case.
    *
-   * @param string $objectsPathh  Path to DIP object files
+   * @param string $objectsPathh Path to DIP object files
    *
-   * @return resource  File pointer resource for CSV file
+   * @return resource File pointer resource for CSV file
    */
   protected function openFirstCsvFile($objectsPath)
   {
@@ -206,11 +206,11 @@ EOF;
    * object unique values and the original filenames of digital objects that
    * should be imported and associated with these information objects.
    *
-   * @param resource $fh  File pointer resource for CSV file
-   * @param string $objectsPath  Path to DIP object files
+   * @param resource $fh          File pointer resource for CSV file
+   * @param string   $objectsPath Path to DIP object files
    *
-   * @return array  Hash with hash key being unique value and hash value(s)
-   *                being original object filenames
+   * @return array Hash with hash key being unique value and hash value(s)
+   *               being original object filenames
    */
   protected function parseCsvData($fh, $objectsPath)
   {
@@ -278,7 +278,7 @@ EOF;
    * used as a unique value to specify information objects to import digital
    * objects to.
    *
-   * @param resource $fh  File pointer resource for CSV file
+   * @param resource $fh File pointer resource for CSV file
    *
    * @return void
    */
@@ -308,11 +308,11 @@ EOF;
   /**
    * Import digital objects
    *
-   * @param array $digitalObjects  Hash with keys of unique value for
-   *                               specifying information objects, values:
-   *                               digital object filenames
-   * @param boolean $auditMode  Whether to audit, rather than import, objects
-   * @param string $undoLog  Path to undo log
+   * @param array   $digitalObjects Hash with keys of unique value for
+   *                                specifying information objects, values:
+   *                                digital object filenames
+   * @param boolean $auditMode      Whether to audit, rather than import, objects
+   * @param string  $undoLog        Path to undo log
    *
    * @return void
    */
@@ -378,7 +378,7 @@ EOF;
   /**
    * Get information object using unique identifier
    *
-   * @param string $uniqueValue  Unique value for specifying information object
+   * @param string $uniqueValue Unique value for specifying information object
    *
    * @return object QubitInformationObject  Information object
    */
@@ -417,7 +417,7 @@ EOF;
    * Check to see if an object has already been imported and, if not, print
    * text to notify.
    *
-   * @param string $filepath  Path, within DIP, to file
+   * @param string $filepath Path, within DIP, to file
    *
    * @return void
    */
@@ -438,10 +438,10 @@ EOF;
   /**
    * Import object, associate with information object, and, optionally, log
    *
-   * @param object QubitInformationObject $informationObject  Information object
-   * @param string $filepath  Path, within DIP, to file
-   * @param boolean $undoLog  Optional undo log location
-   * @param boolean $container  Whether information object contains others
+   * @param object QubitInformationObject $informationObject Information object
+   * @param string                        $filepath          Path, within DIP, to file
+   * @param boolean                       $undoLog           Optional undo log location
+   * @param boolean                       $container         Whether information object contains others
    *
    * @return void
    */
@@ -507,9 +507,9 @@ EOF;
    *   [somefile] => ad0acf68-34b4-47ea-aef7-e5e29c5b7388-somefile.tif
    * )
    *
-   * @param string $objectsPath  Path to DIP objects
+   * @param string $objectsPath Path to DIP objects
    *
-   * @return array  Hash (see function description)
+   * @return array Hash (see function description)
    */
   protected function createFilenameLookup($objectsPath)
   {
