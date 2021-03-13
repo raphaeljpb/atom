@@ -3260,8 +3260,6 @@ class QubitDigitalObject extends BaseDigitalObject
    * Recursively remove empty directories.
    *
    * @param string $dir directory name
-   *
-   * @return void
    */
   public static function pruneEmptyDirs($dir)
   {

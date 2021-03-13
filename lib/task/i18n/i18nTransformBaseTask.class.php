@@ -187,8 +187,6 @@ abstract class i18nTransformBaseTask extends arBaseTask
    * @param int    $id           ID of row in an i18n table
    * @param string $culture      culture code of a row in an i18n table
    * @param array  $columnValues column/value data to process
-   *
-   * @return void
    */
   protected function updateRow($table, $id, $culture, $columnValues)
   {

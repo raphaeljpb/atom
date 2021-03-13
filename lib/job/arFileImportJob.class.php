@@ -121,8 +121,6 @@ class arFileImportJob extends arBaseJob
    *         array()
    * @param mixed $importer
    * @param mixed $parameters
-   *
-   * @return null
    */
   private function setCsvImportParams(&$importer, $parameters)
   {

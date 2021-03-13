@@ -550,8 +550,6 @@ EOM;
    * @param object $object     Object to create entry for
    * @param mixed  $objectId
    * @param mixed  $csvdata
-   *
-   * @return void
    */
   public function createKeymapEntry($objectId, $csvdata)
   {

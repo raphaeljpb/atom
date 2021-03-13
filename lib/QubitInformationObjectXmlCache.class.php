@@ -40,8 +40,6 @@ class QubitInformationObjectXmlCache
    * @param string  format of XML ('dc' or 'ead')
    * @param mixed      $resource
    * @param null|mixed $format
-   *
-   * @return null
    */
   public function export($resource, $format = null)
   {
@@ -59,8 +57,6 @@ class QubitInformationObjectXmlCache
 
   /**
    * Export all information objects to EAD (if top-level) and/or DC.
-   *
-   * @return null
    *
    * @param mixed $options
    */
@@ -134,8 +130,6 @@ class QubitInformationObjectXmlCache
   /**
    * Check if downloads/exports, and format-specific subdirectories, have been created and, if not,
    * create them.
-   *
-   * @return null
    */
   protected function createExportDestinationDirs()
   {
@@ -164,8 +158,6 @@ class QubitInformationObjectXmlCache
    * @param string  format of XML ("dc" or "ead")
    * @param mixed $resource
    * @param mixed $format
-   *
-   * @return null
    */
   protected function cacheXmlFormat($resource, $format)
   {
@@ -193,8 +185,6 @@ class QubitInformationObjectXmlCache
    * @param mixed $filePath
    * @param mixed $resource
    * @param mixed $format
-   *
-   * @return null
    */
   protected function storeXmlExport($filePath, $resource, $format)
   {
@@ -219,8 +209,6 @@ class QubitInformationObjectXmlCache
    * @param mixed $source
    * @param mixed $destination
    * @param mixed $skipLines
-   *
-   * @return null
    */
   protected function rewriteFileSkippingLines($source, $destination, $skipLines = 0)
   {

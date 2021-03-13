@@ -77,8 +77,6 @@ class importDipObjectsTask extends arBaseTask
   /**
    * Get value of column, using column name, from array representing row of CSV data.
    *
-   * @return void
-   *
    * @param mixed $column
    * @param mixed $row
    */
@@ -163,8 +161,6 @@ EOF;
    *
    * @param array $arguments array of sfCommandArgument instances
    * @param array $options   array of sfCommandOption instances
-   *
-   * @return void
    */
   protected function checkArgumentsAndOptions($arguments, $options)
   {
@@ -284,8 +280,6 @@ EOF;
    * objects to.
    *
    * @param resource $fh File pointer resource for CSV file
-   *
-   * @return void
    */
   protected function processCsvHeaderRow($fh)
   {
@@ -318,8 +312,6 @@ EOF;
    *                               digital object filenames
    * @param bool   $auditMode      Whether to audit, rather than import, objects
    * @param string $undoLog        Path to undo log
-   *
-   * @return void
    */
   protected function importDigitalObjects($digitalObjects, $auditMode = false, $undoLog = null)
   {
@@ -423,8 +415,6 @@ EOF;
    * text to notify.
    *
    * @param string $filepath Path, within DIP, to file
-   *
-   * @return void
    */
   protected function auditDigitalObject($filepath)
   {
@@ -447,8 +437,6 @@ EOF;
    * @param string                        $filepath          Path, within DIP, to file
    * @param bool                          $undoLog           Optional undo log location
    * @param bool                          $container         Whether information object contains others
-   *
-   * @return void
    */
   protected function addDigitalObject($informationObject, $filepath, $undoLog = null, $container = false)
   {

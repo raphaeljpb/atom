@@ -469,8 +469,6 @@ abstract class csvImportBaseTask extends arBaseTask
    * @param QubitInformationObject $io          information object
    * @param array                  $altIds      array of alternative identfier IDs
    * @param array                  $altIdLabels array of alternative identifier labels
-   *
-   * @return void
    */
   public static function setAlternativeIdentifiers($io, $altIds, $altIdLabels)
   {
@@ -525,8 +523,6 @@ abstract class csvImportBaseTask extends arBaseTask
    * appropriate.
    *
    * @param array $options options
-   *
-   * @return void
    */
   protected function validateOptions($options)
   {

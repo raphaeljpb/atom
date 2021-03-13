@@ -38,8 +38,6 @@ class csvActorExport extends QubitFlatfileExport
    * Export a actor, and additionally any aliases / relationships.
    *
    * @param object $resource object to export
-   *
-   * @return void
    */
   public function exportResource(&$resource)
   {

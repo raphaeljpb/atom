@@ -93,8 +93,6 @@ EOF;
    * Transform specific tags within a DOM document.
    *
    * @param DOMDocument $doc DOM document
-   *
-   * @return void
    */
   private function transformDocument(&$doc)
   {
@@ -112,8 +110,6 @@ EOF;
    * Transform link tags into text.
    *
    * @param DOMDocument $doc DOM document
-   *
-   * @return void
    */
   private function transformDocumentLinks(&$doc)
   {
@@ -143,8 +139,6 @@ EOF;
    * <p> tags.
    *
    * @param DOMDocument $doc DOM document
-   *
-   * @return void
    */
   private function transformDocumentLists(&$doc)
   {
@@ -177,8 +171,6 @@ EOF;
    * Transform description list-related tags.
    *
    * @param DOMDocument $doc DOM document
-   *
-   * @return void
    */
   private function transformDocumentDescriptionLists(&$doc)
   {
@@ -209,8 +201,6 @@ EOF;
    * Transform break tags into newlines.
    *
    * @param DOMDocument $doc DOM document
-   *
-   * @return void
    */
   private function transformDocumentBreaks(&$doc)
   {
@@ -231,8 +221,6 @@ EOF;
    * Transform paragraph tags into newlines.
    *
    * @param DOMDocument $doc DOM document
-   *
-   * @return void
    */
   private function transformDocumentParasIntoNewlines(&$doc)
   {

@@ -55,8 +55,6 @@ class arXmlExportSingleFileJob extends arBaseJob
    * Export XML representation of information object as file.
    *
    * @param object  information object to be export
-   *
-   * @return null
    */
   protected function exportResource()
   {

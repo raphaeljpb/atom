@@ -210,8 +210,6 @@ class QubitMigrate
    *
    * @param $objectList array full dataset
    * @param $deleteObjectKey string key of array object to delete
-   *
-   * @return void
    */
   public static function cascadeDelete($objectList, $deleteObjectKey)
   {

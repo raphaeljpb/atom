@@ -121,8 +121,6 @@ class AclGroupEditAction extends sfAction
    * Process form fields.
    *
    * @param $field mixed symfony form widget
-   *
-   * @return void
    */
   protected function processField($field)
   {

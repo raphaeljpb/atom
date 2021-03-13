@@ -134,8 +134,6 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
 
   /**
    * Save the AIP metadata to the database.
-   *
-   * @return void
    */
   protected function saveAipMetadata()
   {

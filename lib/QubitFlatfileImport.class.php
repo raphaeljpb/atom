@@ -99,8 +99,6 @@ class QubitFlatfileImport
    * @param array  $propertyArray     array of properties and their respective values
    * @param array  $allowedProperties array of properties that can be set or true if any allowed
    * @param array  $ignore            array of properties that should be ignored
-   *
-   * @return void
    */
   public function setPropertiesFromArray(&$object, $propertyArray, $allowedProperties, $ignore = [])
   {
@@ -193,8 +191,6 @@ class QubitFlatfileImport
    * @param string $var name of variable
    * @param value  value of variable (could be any type)
    * @param mixed $value
-   *
-   * @return void
    */
   public function setStatus($var, $value)
   {
@@ -267,8 +263,6 @@ class QubitFlatfileImport
    * Test whether a property is set and, if so, execute it.
    *
    * @param string $property name of property
-   *
-   * @return void
    */
   public function executeClosurePropertyIfSet($property)
   {
@@ -383,8 +377,6 @@ class QubitFlatfileImport
    *
    * @param resource $fh       file handler for file containing CSV data
    * @param int      $skipRows number of rows to skip (optional)
-   *
-   * @return void
    */
   public function csv($fh, $skipRows = 0)
   {
@@ -540,8 +532,6 @@ class QubitFlatfileImport
    * Process a row of imported data.
    *
    * @param array $row array of column data
-   *
-   * @return void
    */
   public function row($row = [])
   {
@@ -638,8 +628,6 @@ class QubitFlatfileImport
    *
    * @param string  $column  name of column
    * @param closure $handler column handling logic
-   *
-   * @return void
    */
   public function addColumnHandler($column, $handler)
   {
@@ -651,8 +639,6 @@ class QubitFlatfileImport
    *
    * @param array   $columns names of columns
    * @param closure $handler column handling logic
-   *
-   * @return void
    */
   public function addColumnHandlers($columns, $handler)
   {
@@ -668,8 +654,6 @@ class QubitFlatfileImport
    * @param array  $mapDefinition array defining which property to map to and
    *                              optional transformation logic
    * @param string $value         column value
-   *
-   * @return void
    */
   public function mappedColumnHandler($mapDefinition, $value)
   {
@@ -702,8 +686,6 @@ class QubitFlatfileImport
    * @param string $column    column name
    * @param array  $delimiter delimiting character
    * @param string $value     column value
-   *
-   * @return void
    */
   public function arrayColumnHandler($column, $delimiter, $value)
   {
@@ -1372,8 +1354,6 @@ class QubitFlatfileImport
    * @param string $name       name of term
    * @param string $culture    culture code (defaulting to row's current culture)
    * @param mixed  $names
-   *
-   * @return void
    */
   public function createOrFetchTermAndAddRelation($taxonomyId, $names, $culture = null)
   {
@@ -1469,8 +1449,6 @@ class QubitFlatfileImport
    *
    * @param string $propertyName Name of QubitProperty to create
    * @param array  $values       values to serialize and store
-   *
-   * @return void
    */
   public function storeLanguageSerializedProperty($propertyName, $values)
   {
@@ -1484,8 +1462,6 @@ class QubitFlatfileImport
    *
    * @param string $propertyName Name of QubitProperty to create
    * @param array  $values       values to serialize and store
-   *
-   * @return void
    */
   public function storeScriptSerializedProperty($propertyName, $values)
   {
@@ -1499,8 +1475,6 @@ class QubitFlatfileImport
    * @param string $sourceName Name of source data
    * @param int    $sourceId   ID from source data
    * @param object $object     Object to create entry for
-   *
-   * @return void
    */
   public function createKeymapEntry($sourceName, $sourceId, $object = null)
   {
@@ -1617,8 +1591,6 @@ class QubitFlatfileImport
 
   /**
    * Start import timer.
-   *
-   * @return void
    */
   protected function startTimer()
   {
@@ -1628,8 +1600,6 @@ class QubitFlatfileImport
 
   /**
    * Stop import timer.
-   *
-   * @return void
    */
   protected function stopTimer()
   {
@@ -1667,8 +1637,6 @@ class QubitFlatfileImport
 
   /**
    * Assign names to unnamed columns.
-   *
-   * @return void
    */
   protected function handleUnnamedColumns()
   {
@@ -1694,8 +1662,6 @@ class QubitFlatfileImport
 
   /**
    * Rename specified columns.
-   *
-   * @return void
    */
   protected function handleColumnRenaming()
   {
@@ -1716,8 +1682,6 @@ class QubitFlatfileImport
    *
    * @param string $message error message
    * @param mixed  $row
-   *
-   * @return void
    */
   protected function rowProcessingBeforeObjectCreation($row)
   {
@@ -1748,8 +1712,6 @@ class QubitFlatfileImport
    * object properties and executing ad-hoc column handlers.
    *
    * @param array $row array of column data
-   *
-   * @return void
    */
   protected function rowProcessingBeforeSave($row)
   {
@@ -1807,8 +1769,6 @@ class QubitFlatfileImport
    * as creating child properties and notes.
    *
    * @param array $row array of column data
-   *
-   * @return void
    */
   protected function rowProcessingAfterSave($row)
   {
@@ -1860,8 +1820,6 @@ class QubitFlatfileImport
    *
    * @param array   $row   array of column data
    * @param closure $logic logic that should be performed on the column value
-   *
-   * @return void
    */
   protected function forEachRowColumn($row, $logic)
   {
@@ -2456,8 +2414,6 @@ class QubitFlatfileImport
    * @param string $propertyName Name of QubitProperty to create
    * @param array  $values       values to serialize and store
    * @param string $vocabulary   allowable values
-   *
-   * @return void
    */
   private function storeSerializedPropertyUsingControlledVocabulary($propertyName, $values, $vocabulary)
   {

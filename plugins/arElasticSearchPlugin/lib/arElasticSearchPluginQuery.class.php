@@ -29,8 +29,6 @@ class arElasticSearchPluginQuery
    *
    * @param int $limit how many results should be returned
    * @param int $skip  how many results should be skipped
-   *
-   * @return void
    */
   public function __construct($limit = 10, $skip = 0)
   {
@@ -46,8 +44,6 @@ class arElasticSearchPluginQuery
    * to Elastica API, adding them to the query.
    *
    * @param array $aggs search aggregations
-   *
-   * @return void
    */
   public function addAggs($aggs)
   {
@@ -83,8 +79,6 @@ class arElasticSearchPluginQuery
    *
    * @param array $aggs   search aggregations
    * @param array $params search filters from aggregations
-   *
-   * @return void
    */
   public function addAggFilters($aggs, $params)
   {
@@ -137,8 +131,6 @@ class arElasticSearchPluginQuery
 
   /**
    * Add criteria to query based on advanced search form and other params.
-   *
-   * @return void
    *
    * @param mixed $fieldNames
    * @param mixed $params

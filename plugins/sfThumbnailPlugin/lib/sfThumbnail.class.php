@@ -153,8 +153,6 @@ class sfThumbnail
    * @param string The mime-type of the thumbnail (possible values are 'image/jpeg', 'image/png', and 'image/gif')
    * @param mixed      $thumbDest
    * @param null|mixed $targetMime
-   *
-   * @return void
    */
   public function save($thumbDest, $targetMime = null)
   {

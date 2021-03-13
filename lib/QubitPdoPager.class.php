@@ -30,8 +30,6 @@ class QubitPdoPager extends sfPager
    * @param string $countSql       SQL query to count results (should SELECT only one column)
    * @param array  $sqlParams      Params for SQL query to count results
    * @param mixed  $countSqlParams
-   *
-   * @return void
    */
   public function __construct($sql, $sqlParams, $countSql, $countSqlParams)
   {

@@ -306,8 +306,6 @@ class Qubit
 
   /**
    * Clear Qubit's class-specific, in-memory caches.
-   *
-   * @return void
    */
   public static function clearClassCaches()
   {

@@ -183,8 +183,6 @@ class arBaseJob extends Net_Gearman_Job_Common
   /**
    * Set job owner in user Context. ACL checks require this to be set.
    * Job owner's user is grabbed from the QubitJob instance.
-   *
-   * @return null
    */
   protected function signIn()
   {
@@ -199,8 +197,6 @@ class arBaseJob extends Net_Gearman_Job_Common
 
   /**
    * Clean up job owner & user Context.
-   *
-   * @return null
    */
   protected function signOut()
   {
@@ -215,8 +211,6 @@ class arBaseJob extends Net_Gearman_Job_Common
 
   /**
    * Delete old unauthenticated jobs.
-   *
-   * @return null
    */
   protected function deleteOldUnauthenticatedJobs()
   {

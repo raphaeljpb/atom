@@ -80,8 +80,6 @@ class sfIsdfPluginEditAction extends FunctionEditAction
    * Add fields to form.
    *
    * @param $name string
-   *
-   * @return void
    */
   protected function addField($name)
   {
@@ -141,8 +139,6 @@ class sfIsdfPluginEditAction extends FunctionEditAction
    * Process form fields.
    *
    * @param $field mixed symfony form widget
-   *
-   * @return void
    */
   protected function processField($field)
   {

@@ -348,8 +348,6 @@ class arExportJob extends arBaseJob
 
   /**
    * Log export progress every LOG_INTERVAL rows and clear Qubit class caches.
-   *
-   * @return void
    */
   protected function logExportProgress()
   {

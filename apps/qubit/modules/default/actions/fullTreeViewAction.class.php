@@ -385,8 +385,6 @@ class DefaultFullTreeViewAction extends sfAction
    *
    * @param arElasticSearchPluginQuery $query   Elasticsearch query object
    * @param array                      $options optional arguments
-   *
-   * @return void
    */
   protected function setSortOrder(&$query, $options)
   {

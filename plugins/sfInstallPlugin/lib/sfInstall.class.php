@@ -535,8 +535,6 @@ class sfInstall
   /**
    * Make any additional sql changes that cannot be made via schema.yml.
    * Needs to be run for new installs and the tools:purge task.
-   *
-   * @return null
    */
   public static function modifySql()
   {

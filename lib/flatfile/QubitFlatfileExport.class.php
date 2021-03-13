@@ -214,8 +214,6 @@ class QubitFlatfileExport
    *
    * @param string $column column name
    * @param string $value  value to set current row's column value to
-   *
-   * @return void
    */
   public function setColumn($column, $value)
   {
@@ -234,8 +232,6 @@ class QubitFlatfileExport
    *
    * @param string $column     column name
    * @param int    $noteTypeId ID of the type of note to store
-   *
-   * @return void
    */
   public function setColumnToNotes($column, $noteTypeId)
   {
@@ -256,8 +252,6 @@ class QubitFlatfileExport
    * Export a resource as a flatfile row.
    *
    * @param object $resource object to export
-   *
-   * @return void
    */
   public function exportResource(&$resource)
   {
@@ -319,8 +313,6 @@ class QubitFlatfileExport
 
   /**
    * Prepare row from resource.
-   *
-   * @return void
    */
   public function prepareRowFromResource()
   {
@@ -447,8 +439,6 @@ class QubitFlatfileExport
    * If an array is provided as a value, implode it.
    *
    * @param string $value value
-   *
-   * @return void
    */
   protected function content($value)
   {
@@ -466,8 +456,6 @@ class QubitFlatfileExport
    *
    * @param string $filePath path to file
    * @param array  $row      array of each column's values
-   *
-   * @return void
    */
   protected function appendRowToCsvFile($filePath, $row)
   {
@@ -496,8 +484,6 @@ class QubitFlatfileExport
    *
    * If the user has "readMaster" permission use master DO values, otherwise
    * use reference DO values
-   *
-   * @return void
    */
   protected function setDigitalObjectValues()
   {

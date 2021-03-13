@@ -195,8 +195,6 @@ class ActorEditAction extends DefaultEditAction
    * Process form fields.
    *
    * @param $field mixed symfony form widget
-   *
-   * @return void
    */
   protected function processField($field)
   {

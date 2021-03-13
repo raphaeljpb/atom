@@ -497,8 +497,6 @@ class QubitXmlImport
    * Multiple tag filters can be specified for a given XML node. Each filter can
    * specify it's own class and method for processing.
    *
-   * @return void
-   *
    * @param mixed $node
    * @param mixed $filterParam
    */

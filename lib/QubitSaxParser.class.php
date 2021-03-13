@@ -95,8 +95,6 @@ class QubitSaxParser
    *
    * @param string $file           file path of XML to parse
    * @param bool   $freeAfterParse whether to free parser after parse
-   *
-   * @return void
    */
   public function parse($file, $freeAfterParse = true)
   {
@@ -191,8 +189,6 @@ class QubitSaxParser
    * @param string $tag   tag name of element currently being processed
    * @param array  $array array of attribute data
    * @param mixed  $attr
-   *
-   * @return void
    */
   protected function startTagInternalHandler($sax, $tag, $attr)
   {
@@ -219,8 +215,6 @@ class QubitSaxParser
    * @param string $tag                  tag name of element currently being processed
    * @param string $handlerMethodSuffix  handler naming scheme suffix
    * @param string $defaultHandlerMethod name of generic handler
-   *
-   * @return void
    */
   protected function callOptionalTagHandlers($tag, $handlerMethodSuffix, $defaultHandlerMethod)
   {
@@ -250,8 +244,6 @@ class QubitSaxParser
    * Note that a handler method has been triggered.
    *
    * @param string $method name of handler method
-   *
-   * @return void
    */
   protected function logTriggeredHandler($method)
   {
@@ -263,8 +255,6 @@ class QubitSaxParser
 
   /**
    * If descending the hierarchy, store ancestor data.
-   *
-   * @return void
    */
   protected function storeAncestorIfNesting()
   {
@@ -288,8 +278,6 @@ class QubitSaxParser
    *
    * @param object $sax  SAX parser
    * @param string $data CDATA text
-   *
-   * @return void
    */
   protected function tagDataInternalHandler($sax, $data)
   {
@@ -314,8 +302,6 @@ class QubitSaxParser
    *
    * @param object $sax SAX parser
    * @param string $tag tag name of element currently being processed
-   *
-   * @return void
    */
   protected function endTagInternalHandler($sax, $tag)
   {
