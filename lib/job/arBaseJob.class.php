@@ -18,7 +18,7 @@
  */
 
 /**
- * A base for a Gearman job in AtoM
+ * A base for a Gearman job in AtoM.
  *
  * @author     Mike G <mikeg@artefactual.com>
  */

@@ -18,14 +18,14 @@
  */
 
 /**
- * Upgrade qubit data from version 1.0.4 to 1.0.5 schema
+ * Upgrade qubit data from version 1.0.4 to 1.0.5 schema.
  *
  * @author     David Juhasz <david@artefactual.com
  */
 class QubitMigrate104 extends QubitMigrate
 {
   /**
-   * Controller for calling methods to alter data
+   * Controller for calling methods to alter data.
    *
    * @return QubitMigrate104 this object
    */
@@ -46,7 +46,7 @@ class QubitMigrate104 extends QubitMigrate
   }
 
   /**
-   * Call all sort methods
+   * Call all sort methods.
    *
    * @return QubitMigrate104 this object
    */
@@ -63,7 +63,7 @@ class QubitMigrate104 extends QubitMigrate
   }
 
   /**
-   * Alter QubitInformationObject data
+   * Alter QubitInformationObject data.
    *
    * @return QubitMigrate104 this object
    */
@@ -79,7 +79,7 @@ class QubitMigrate104 extends QubitMigrate
   }
 
   /**
-   * Alter QubitRoles data
+   * Alter QubitRoles data.
    *
    * @return QubitMigrate104 this object
    */
@@ -116,7 +116,7 @@ class QubitMigrate104 extends QubitMigrate
   }
 
   /**
-   * Alter QubitSetting data
+   * Alter QubitSetting data.
    *
    * @return QubitMigrate104 this object
    */
@@ -170,7 +170,7 @@ class QubitMigrate104 extends QubitMigrate
   }
 
   /**
-   * Alter QubitStaticPage data
+   * Alter QubitStaticPage data.
    *
    * @return QubitMigrate104 this object
    */
@@ -192,7 +192,7 @@ class QubitMigrate104 extends QubitMigrate
   }
 
   /**
-   * Alter QubitMenu data
+   * Alter QubitMenu data.
    *
    * @return QubitMigrate104 this object
    */
@@ -369,7 +369,7 @@ class QubitMigrate104 extends QubitMigrate
   }
 
   /**
-   * Alter QubitTerm data
+   * Alter QubitTerm data.
    *
    * @return QubitMigrate104 this object
    */
@@ -485,7 +485,7 @@ class QubitMigrate104 extends QubitMigrate
 
   /**
    * Sort term objects with pre-defined IDs to start of array to prevent
-   * pre-emptive assignment IDs by auto-increment
+   * pre-emptive assignment IDs by auto-increment.
    *
    * @return QubitMigrate104 this object
    */
@@ -566,7 +566,7 @@ class QubitMigrate104 extends QubitMigrate
   }
 
   /**
-   * Sort ORM classes to avoid foreign key constraint failures on data load
+   * Sort ORM classes to avoid foreign key constraint failures on data load.
    *
    * @return QubitMigrate104 this object
    */

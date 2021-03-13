@@ -18,7 +18,7 @@
  */
 
 /**
- * Updates actor document relationships in the Elasticsearch index
+ * Updates actor document relationships in the Elasticsearch index.
  *
  */
 class arUpdateEsActorRelationsJob extends arBaseJob

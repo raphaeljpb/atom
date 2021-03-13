@@ -18,7 +18,7 @@
  */
 
 /**
- * Physical Object deletion
+ * Physical Object deletion.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

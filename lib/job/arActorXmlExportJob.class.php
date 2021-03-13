@@ -19,7 +19,7 @@
 
 /**
  * Asynchronous job to export clipboard actor data to XML documents, plus
- * related digital objects when requested
+ * related digital objects when requested.
  *
  */
 class arActorXmlExportJob extends arActorExportJob
@@ -27,7 +27,7 @@ class arActorXmlExportJob extends arActorExportJob
   public const XML_STANDARD = 'eac';
 
   /**
-   * Export search results as XML
+   * Export search results as XML.
    *
    * @param string  Path of file to write XML data to
    */
@@ -40,7 +40,7 @@ class arActorXmlExportJob extends arActorExportJob
 
   /**
    * Export actor metadata to an XML file, and export related digital object
-   * when requested
+   * when requested.
    *
    * @param QubitActor $resource actor to export
    * @param string     $path     of temporary job directory for export

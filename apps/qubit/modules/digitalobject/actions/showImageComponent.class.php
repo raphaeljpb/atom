@@ -18,7 +18,7 @@
  */
 
 /**
- * Display an 'image' digital asset
+ * Display an 'image' digital asset.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

@@ -39,7 +39,7 @@ class QubitAclGroup extends BaseAclGroup implements Zend_Acl_Role_Interface
   }
 
   /**
-   * Required for Zend_Acl_Role_Interface
+   * Required for Zend_Acl_Role_Interface.
    */
   public function getRoleId()
   {

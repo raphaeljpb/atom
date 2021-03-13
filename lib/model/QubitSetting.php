@@ -143,7 +143,7 @@ class QubitSetting extends BaseSetting
 
   /**
    * Get all system settings that are "non-global" (scope <> NULL) and not
-   * "site information" settings
+   * "site information" settings.
    *
    * @return QubitQuery collection of QubitSetting objects
    */
@@ -177,7 +177,7 @@ class QubitSetting extends BaseSetting
   }
 
   /**
-   * Get a setting by it's name
+   * Get a setting by it's name.
    *
    * @return QubitSetting object
    */
@@ -190,7 +190,7 @@ class QubitSetting extends BaseSetting
   }
 
   /**
-   * Get a setting by it's name & scope
+   * Get a setting by it's name & scope.
    *
    * @return QubitSetting object
    */
@@ -204,7 +204,7 @@ class QubitSetting extends BaseSetting
   }
 
   /**
-   * Find a setting, and save a new value to it
+   * Find a setting, and save a new value to it.
    *
    * @return QubitSetting object
    */
@@ -243,7 +243,7 @@ class QubitSetting extends BaseSetting
   }
 
   /**
-   * Create a new setting object with some default properties
+   * Create a new setting object with some default properties.
    *
    * @param string $name    object name
    * @param string $value   object value

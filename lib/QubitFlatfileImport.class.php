@@ -18,7 +18,7 @@
  */
 
 /**
- * Import flatfile data
+ * Import flatfile data.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */
@@ -93,7 +93,7 @@ class QubitFlatfileImport
   /**
    * Use an array of properties and their respective values to set an object's
    * properties (restricting to a set of allowed properties and allowing the
-   * specification of properties that should be ignored and not set)
+   * specification of properties that should be ignored and not set).
    *
    * @param object &$object           object to act upon
    * @param array  $propertyArray     array of properties and their respective values
@@ -190,7 +190,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Set status variable value
+   * Set status variable value.
    *
    * @param string $var name of variable
    * @param value  value of variable (could be any type)
@@ -203,7 +203,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Determine whether or not a column exists
+   * Determine whether or not a column exists.
    *
    * @param string $column name of column
    *
@@ -217,7 +217,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Get/set values in internal representation of current row
+   * Get/set values in internal representation of current row.
    */
   public function columnValue($column, $value = false)
   {
@@ -241,7 +241,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Copy one column value to another column in internal representation of current row
+   * Copy one column value to another column in internal representation of current row.
    */
   public function copy($sourceColumn, $destinationColumn)
   {
@@ -249,7 +249,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Get status variable value
+   * Get status variable value.
    *
    * @param string $var name of variable
    *
@@ -261,7 +261,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Test whether a property is set and, if so, execute it
+   * Test whether a property is set and, if so, execute it.
    *
    * @param string $property name of property
    *
@@ -278,7 +278,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Get time elapsed during import
+   * Get time elapsed during import.
    *
    * @return int microseconds since import began
    */
@@ -288,7 +288,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Log error message if an error log has been defined
+   * Log error message if an error log has been defined.
    *
    * @param string $message                 error message
    * @param bool   $includeCurrentRowNumber prefix error message with row number
@@ -309,7 +309,7 @@ class QubitFlatfileImport
 
   /**
    * Append content to existing content, prepending a line break to new content
-   * if necessary
+   * if necessary.
    *
    * @param string $oldContent existing content
    * @param string $newContent new content to add to existing content
@@ -322,7 +322,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Combine column text, using optional pre-column prefixes
+   * Combine column text, using optional pre-column prefixes.
    *
    * @param array  $prefixesAndColumns array, optional keys specifying prefix
    * @param string $destinationColumn  optional destination column for result
@@ -360,7 +360,7 @@ class QubitFlatfileImport
 
   /**
    * Convert human readable (e.g. 'This string') strings to camelCase
-   * representation (e.g. 'thisString')
+   * representation (e.g. 'thisString').
    *
    * @param string $str input string
    *
@@ -376,7 +376,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Pull data from a csv file and process each row
+   * Pull data from a csv file and process each row.
    *
    * @param resource $fh       file handler for file containing CSV data
    * @param int      $skipRows number of rows to skip (optional)
@@ -532,7 +532,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Process a row of imported data
+   * Process a row of imported data.
    *
    * @param array $row array of column data
    *
@@ -592,7 +592,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Output import progress, time elapsed, and memory usage
+   * Output import progress, time elapsed, and memory usage.
    *
    * @return string description of import progress
    */
@@ -629,7 +629,7 @@ class QubitFlatfileImport
    */
 
   /**
-   * Add an ad-hoc column handler
+   * Add an ad-hoc column handler.
    *
    * @param string  $column  name of column
    * @param closure $handler column handling logic
@@ -642,7 +642,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Add an ad-hoc column handler to multiple columns
+   * Add an ad-hoc column handler to multiple columns.
    *
    * @param array   $columns names of columns
    * @param closure $handler column handling logic
@@ -658,7 +658,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Handle mapping of column to object property
+   * Handle mapping of column to object property.
    *
    * @param array  $mapDefinition array defining which property to map to and
    *                              optional transformation logic
@@ -715,7 +715,7 @@ class QubitFlatfileImport
    */
 
   /**
-   * Issue an SQL query
+   * Issue an SQL query.
    *
    * @param string $query  SQL query
    * @param string $params values to map to placeholders (optional)
@@ -736,7 +736,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create one or more Qubit notes of a certain type
+   * Create one or more Qubit notes of a certain type.
    *
    * @param int     $typeId              term ID of note type
    * @param string  $array               Note text items
@@ -795,7 +795,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a Qubit note
+   * Create a Qubit note.
    *
    * @param int     $typeId              term ID of note type
    * @param string  $text                Note text
@@ -838,7 +838,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a Qubit event, or add an i18n row to existing event
+   * Create a Qubit event, or add an i18n row to existing event.
    *
    * @param int   $typeId  term ID of event type
    * @param array $options option parameter
@@ -935,7 +935,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a Qubit physical object or, if one already exists, fetch it
+   * Create a Qubit physical object or, if one already exists, fetch it.
    *
    * @param string $name     name of physical object
    * @param string $location location of physical object
@@ -963,7 +963,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a Qubit repository or, if one already exists, fetch it
+   * Create a Qubit repository or, if one already exists, fetch it.
    *
    * @param string $name name of repository
    *
@@ -992,7 +992,7 @@ class QubitFlatfileImport
    * Fetch or create a QubitActor record based on the actor name,
    * the imported IO repository and the update options. Update the
    * actor history in matches from the same repository when using
-   * the match and update option
+   * the match and update option.
    *
    * @param string $name    name of actor
    * @param array  $options optional data
@@ -1042,7 +1042,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a Qubit actor or, if one already exists, fetch it
+   * Create a Qubit actor or, if one already exists, fetch it.
    *
    * @param string $name    name of actor
    * @param string $options optional data
@@ -1062,7 +1062,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a Qubit rights holder or, if one already exists, fetch it
+   * Create a Qubit rights holder or, if one already exists, fetch it.
    *
    * @param string $name name of rights holder
    *
@@ -1095,7 +1095,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a QubitDonor or, if one already exists, fetch it
+   * Create a QubitDonor or, if one already exists, fetch it.
    *
    * @param string $name name of donor
    *
@@ -1129,7 +1129,7 @@ class QubitFlatfileImport
 
   /**
    * Create Qubit contract information for an actor or, if it already exists,
-   * fetch it
+   * fetch it.
    *
    * @param int    $actorId ID of actor
    * @param string $options contact information creation properties
@@ -1154,7 +1154,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create Qubit contact information for an actor
+   * Create Qubit contact information for an actor.
    *
    * @param string $actorId ID of actor
    * @param string $options property values for new object
@@ -1235,7 +1235,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a Qubit term
+   * Create a Qubit term.
    *
    * @param int    $taxonomyId term taxonomy
    * @param string $name       name of term
@@ -1256,7 +1256,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a Qubit physical object
+   * Create a Qubit physical object.
    *
    * @param string $name     name of physical object
    * @param string $location location of physical object
@@ -1281,7 +1281,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a Qubit repository
+   * Create a Qubit repository.
    *
    * @param string $name name of repository
    *
@@ -1297,7 +1297,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a relation between two Qubit objects
+   * Create a relation between two Qubit objects.
    *
    * @param int $subjectId subject ID
    * @param int $objectId  object ID
@@ -1324,7 +1324,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a relation between a term and a Qubit object
+   * Create a relation between a term and a Qubit object.
    *
    * @param int $objectId object ID
    * @param int $termId   term ID
@@ -1366,7 +1366,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create or fetch a term and relate it to an object
+   * Create or fetch a term and relate it to an object.
    *
    * @param int    $taxonomyId taxonomy ID
    * @param string $name       name of term
@@ -1389,7 +1389,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Get the terms in a taxonomy using sql query
+   * Get the terms in a taxonomy using sql query.
    *
    * @param int $taxonomyId taxonomy ID
    *
@@ -1464,7 +1464,7 @@ class QubitFlatfileImport
 
   /**
    * Store a property of the imported object containing a serialized array of
-   * language values
+   * language values.
    *
    * @param string $propertyName Name of QubitProperty to create
    * @param array  $values       values to serialize and store
@@ -1479,7 +1479,7 @@ class QubitFlatfileImport
 
   /**
    * Store a property of the imported object containing a serialized array of
-   * script values
+   * script values.
    *
    * @param string $propertyName Name of QubitProperty to create
    * @param array  $values       values to serialize and store
@@ -1493,7 +1493,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create keymap entry for object
+   * Create keymap entry for object.
    *
    * @param string $sourceName Name of source data
    * @param int    $sourceId   ID from source data
@@ -1523,7 +1523,7 @@ class QubitFlatfileImport
   /**
    * Fetch keymap an entity's Qubit object ID (target ID) by looking up its
    * legacy ID (source ID), the name of the import where it was mapped (source
-   * name), and the type of entity (target name)
+   * name), and the type of entity (target name).
    *
    * @param int    $sourceId   source ID
    * @param string $sourceName source name
@@ -1547,7 +1547,7 @@ class QubitFlatfileImport
 
   /**
    * Map a value to its corresponding term name then return the term ID
-   * corresponding to the term name
+   * corresponding to the term name.
    *
    * @param string $description        description of subject (for error output)
    * @param string $value              value that needs to be mapped to a term ID
@@ -1598,7 +1598,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Get country code using input that's either a country code or country name
+   * Get country code using input that's either a country code or country name.
    *
    * @param string $value country code or country name
    *
@@ -1619,7 +1619,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Start import timer
+   * Start import timer.
    *
    * @return void
    */
@@ -1630,7 +1630,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Stop import timer
+   * Stop import timer.
    *
    * @return void
    */
@@ -1640,7 +1640,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Combine two or more arrays, eliminating any duplicates
+   * Combine two or more arrays, eliminating any duplicates.
    *
    * @return array combined array
    */
@@ -1669,7 +1669,7 @@ class QubitFlatfileImport
    */
 
   /**
-   * Assign names to unnamed columns
+   * Assign names to unnamed columns.
    *
    * @return void
    */
@@ -1696,7 +1696,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Rename specified columns
+   * Rename specified columns.
    *
    * @return void
    */
@@ -1715,7 +1715,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Log error message if an error log has been defined
+   * Log error message if an error log has been defined.
    *
    * @param string $message error message
    *
@@ -1748,7 +1748,7 @@ class QubitFlatfileImport
 
   /**
    * Perform row processing for before an object is saved such as setting
-   * object properties and executing ad-hoc column handlers
+   * object properties and executing ad-hoc column handlers.
    *
    * @param array $row array of column data
    *
@@ -1808,7 +1808,7 @@ class QubitFlatfileImport
 
   /**
    * Perform row processing for after an object is saved and has an ID such
-   * as creating child properties and notes
+   * as creating child properties and notes.
    *
    * @param array $row array of column data
    *
@@ -1860,7 +1860,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Execute logic, defined by a closure, on each column of a row
+   * Execute logic, defined by a closure, on each column of a row.
    *
    * @param array   $row   array of column data
    * @param closure $logic logic that should be performed on the column value
@@ -1911,7 +1911,7 @@ class QubitFlatfileImport
 
   /**
    * Filter out elements containing blank strings and check if any elements
-   * remain
+   * remain.
    *
    * @param array $row Array of column values
    *
@@ -1953,7 +1953,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Make row data match columns (in case virtual columns have been added)
+   * Make row data match columns (in case virtual columns have been added).
    */
   private function handleVirtualCols()
   {
@@ -2408,7 +2408,7 @@ class QubitFlatfileImport
   }
 
   /**
-   * Create a Qubit actor
+   * Create a Qubit actor.
    *
    * @param string $name    name of actor
    * @param string $history history of actor (optional)
@@ -2455,7 +2455,7 @@ class QubitFlatfileImport
 
   /**
    * Store a property of the imported object containing a serialized array of
-   * values from a controlled vocabulary
+   * values from a controlled vocabulary.
    *
    * @param string $propertyName Name of QubitProperty to create
    * @param array  $values       values to serialize and store

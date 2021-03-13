@@ -18,7 +18,7 @@
  */
 
 /**
- * Finding Aid settings
+ * Finding Aid settings.
  *
  */
 class SettingsFindingAidAction extends sfAction
@@ -53,7 +53,7 @@ class SettingsFindingAidAction extends sfAction
   }
 
   /**
-   * Populate the Finding Aid form
+   * Populate the Finding Aid form.
    */
   protected function populateFindingAidForm()
   {
@@ -69,7 +69,7 @@ class SettingsFindingAidAction extends sfAction
   }
 
   /**
-   * Update the Finding Aid settings
+   * Update the Finding Aid settings.
    */
   protected function updateFindingAidSettings()
   {

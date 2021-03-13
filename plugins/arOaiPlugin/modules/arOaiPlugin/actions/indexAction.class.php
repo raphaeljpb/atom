@@ -18,7 +18,7 @@
  */
 
 /**
- * Generate the OAI-PMH response
+ * Generate the OAI-PMH response.
  *
  * @author     Mathieu Fortin Library and Archives Canada <mathieu.fortin@lac-bac.gc.ca>
  */
@@ -38,7 +38,7 @@ class arOaiPluginIndexAction extends sfAction
   public $oaiVerbArr = ['Identify', 'ListMetadataFormats', 'ListSets', 'ListRecords', 'ListIdentifiers', 'GetRecord'];
 
   /**
-   * Executes action
+   * Executes action.
    *
    * @param sfRequest $request A request object
    */

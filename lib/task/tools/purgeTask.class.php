@@ -18,7 +18,7 @@
  */
 
 /**
- * Purge AtoM data
+ * Purge AtoM data.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

@@ -18,7 +18,7 @@
  */
 
 /**
- * Physical Object edit
+ * Physical Object edit.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

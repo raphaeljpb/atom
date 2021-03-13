@@ -154,7 +154,7 @@ class Qubit
   }
 
   /**
-   * Given a directory,
+   * Given a directory,.
    *
    * @param string $directory path
    *
@@ -195,7 +195,7 @@ class Qubit
   }
 
   /**
-   * Given a directory return its size
+   * Given a directory return its size.
    *
    * @param string $directory path
    * @param array  $options
@@ -264,7 +264,7 @@ class Qubit
   }
 
   /**
-   * GZIPs a file on disk (appending .gz to the name)
+   * GZIPs a file on disk (appending .gz to the name).
    *
    * From http://stackoverflow.com/questions/6073397/how-do-you-create-a-gz-file-using-php
    * Based on function by Kioob at:
@@ -307,7 +307,7 @@ class Qubit
   }
 
   /**
-   * Clear Qubit's class-specific, in-memory caches
+   * Clear Qubit's class-specific, in-memory caches.
    *
    * @return void
    */
@@ -323,7 +323,7 @@ class Qubit
   }
 
   /**
-   * Format poorly formatted XML strings
+   * Format poorly formatted XML strings.
    */
   public static function tidyXml($xml)
   {
@@ -399,7 +399,7 @@ class Qubit
   }
 
   /**
-   * Create "uploads/" and "uploads/tmp/" if they don't exist
+   * Create "uploads/" and "uploads/tmp/" if they don't exist.
    */
   public static function createUploadDirsIfNeeded()
   {
@@ -419,7 +419,7 @@ class Qubit
   }
 
   /**
-   * Create "downloads/" directory if it doesn't exist
+   * Create "downloads/" directory if it doesn't exist.
    */
   public static function createDownloadsDirIfNeeded()
   {
@@ -431,7 +431,7 @@ class Qubit
   }
 
   /**
-   * Generate an identifier using a counter value and a mask
+   * Generate an identifier using a counter value and a mask.
    *
    * @param int    $counter current counter value
    * @param string $mask    mask

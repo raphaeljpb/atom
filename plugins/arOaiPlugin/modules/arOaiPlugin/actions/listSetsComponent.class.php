@@ -18,14 +18,14 @@
  */
 
 /**
- * Generate  listSets response of the OAI-PMH protocol for the Access to Memory (AtoM)
+ * Generate  listSets response of the OAI-PMH protocol for the Access to Memory (AtoM).
  *
  * @author     Mathieu Fortin Library and Archives Canada <mathieu.fortin@lac-bac.gc.ca>
  */
 class arOaiPluginlistSetsComponent extends arOaiPluginComponent
 {
   /**
-   * Executes action
+   * Executes action.
    *
    * @param sfRequest $request A request object
    */

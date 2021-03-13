@@ -23,7 +23,7 @@
 class QubitCultureFallback
 {
   /**
-   * Assign fallback values for each column in the $fallbackClassName table
+   * Assign fallback values for each column in the $fallbackClassName table.
    *
    * @param Criteria $criteria
    * @param string   $fallbackClass name of Prople class for table with desired fallback columns
@@ -44,7 +44,7 @@ class QubitCultureFallback
   }
 
   /**
-   * Add fallback query criteria to $criteria
+   * Add fallback query criteria to $criteria.
    *
    * @param Criteria $criteria
    * @param array    $options
@@ -92,7 +92,7 @@ class QubitCultureFallback
   }
 
   /**
-   * Build SQL 'case' statement to get the most relevant value for $column
+   * Build SQL 'case' statement to get the most relevant value for $column.
    *
    * @param string $column name
    *

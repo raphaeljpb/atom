@@ -19,7 +19,7 @@
 
 /**
  * QubitPatternRouting add Qubit specific functionality to the sfPatternRouting
- * class
+ * class.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

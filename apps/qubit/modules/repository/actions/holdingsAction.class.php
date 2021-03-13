@@ -72,7 +72,7 @@ class RepositoryHoldingsAction extends sfAction
   }
 
   /**
-   * Query this repository's holdings
+   * Query this repository's holdings.
    */
   public static function getHoldings($id, $page, $limit)
   {

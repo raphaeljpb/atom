@@ -18,7 +18,7 @@
  */
 
 /**
- * List/edit current menu tree
+ * List/edit current menu tree.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

@@ -20,22 +20,22 @@
 class sfThumbnail
 {
   /**
-   * Width of thumbnail in pixels
+   * Width of thumbnail in pixels.
    */
   protected $thumbWidth;
 
   /**
-   * Height of thumbnail in pixels
+   * Height of thumbnail in pixels.
    */
   protected $thumbHeight;
 
   /**
-   * Temporary file if the source is not local
+   * Temporary file if the source is not local.
    */
   protected $tempFile = null;
 
   /**
-   * Thumbnail constructor
+   * Thumbnail constructor.
    *
    * @param int (optional) max width of thumbnail
    * @param int (optional) max height of thumbnail
@@ -66,7 +66,7 @@ class sfThumbnail
   }
 
   /**
-   * Loads an image from a file or URL and creates an internal thumbnail out of it
+   * Loads an image from a file or URL and creates an internal thumbnail out of it.
    *
    * @param string filename (with absolute path) of the image to load. If the filename is a http(s) URL, then an attempt to download the file will be made.
    *
@@ -122,7 +122,7 @@ class sfThumbnail
   }
 
   /**
-   * Loads an image from a string (e.g. database) and creates an internal thumbnail out of it
+   * Loads an image from a string (e.g. database) and creates an internal thumbnail out of it.
    *
    * @param string the image string (must be a format accepted by imagecreatefromstring())
    * @param string mime type of the image
@@ -189,7 +189,7 @@ class sfThumbnail
   }
 
   /**
-   * Returns the width of the thumbnail
+   * Returns the width of the thumbnail.
    */
   public function getThumbWidth()
   {
@@ -197,7 +197,7 @@ class sfThumbnail
   }
 
   /**
-   * Returns the height of the thumbnail
+   * Returns the height of the thumbnail.
    */
   public function getThumbHeight()
   {
@@ -205,7 +205,7 @@ class sfThumbnail
   }
 
   /**
-   * Returns the mime type of the source image
+   * Returns the mime type of the source image.
    */
   public function getMime()
   {
@@ -214,7 +214,7 @@ class sfThumbnail
 
   /**
    * Computes the thumbnail width and height
-   * Used by adapter
+   * Used by adapter.
    */
   public function initThumb($sourceWidth, $sourceHeight, $maxWidth, $maxHeight, $scale, $inflate)
   {

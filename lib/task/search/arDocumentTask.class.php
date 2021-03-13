@@ -18,7 +18,7 @@
  */
 
 /**
- * Display search index document
+ * Display search index document.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

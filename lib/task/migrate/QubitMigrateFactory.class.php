@@ -18,7 +18,7 @@
  */
 
 /**
- * Factory for running Qubit data migrations
+ * Factory for running Qubit data migrations.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

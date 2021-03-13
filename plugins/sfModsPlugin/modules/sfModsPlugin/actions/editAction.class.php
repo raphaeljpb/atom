@@ -18,7 +18,7 @@
  */
 
 /**
- * Information Object - editMods
+ * Information Object - editMods.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  */

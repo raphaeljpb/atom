@@ -18,14 +18,14 @@
  */
 
 /**
- * Digital Object display component
+ * Digital Object display component.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
 class DigitalObjectShowComponent extends sfComponent
 {
   /**
-   * Show digital object representation
+   * Show digital object representation.
    *
    * @param sfWebRequest $request
    *
@@ -92,7 +92,7 @@ class DigitalObjectShowComponent extends sfComponent
 
   /**
    * Get warning messages if access denied via 'deny' or 'conditional' PREMIS
-   * rules
+   * rules.
    *
    * @return string Custom PREMIS "access denied" message, or an empty string
    */

@@ -18,7 +18,7 @@
  */
 
 /**
- * Settings module - "Default template" form definition
+ * Settings module - "Default template" form definition.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

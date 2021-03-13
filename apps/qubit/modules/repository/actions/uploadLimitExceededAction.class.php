@@ -18,7 +18,7 @@
  */
 
 /**
- * Display warning when repository upload limit is exceeded
+ * Display warning when repository upload limit is exceeded.
  *
  * @author     david juhasz <david@artefactual.com>
  */

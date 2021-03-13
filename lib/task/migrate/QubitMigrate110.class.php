@@ -18,7 +18,7 @@
  */
 
 /**
- * Upgrade qubit version 1.1 data for version 1.2 schema
+ * Upgrade qubit version 1.1 data for version 1.2 schema.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
@@ -41,7 +41,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Controller for calling methods to alter data
+   * Controller for calling methods to alter data.
    *
    * @return QubitMigrate110 this object
    */
@@ -112,7 +112,7 @@ class QubitMigrate110 extends QubitMigrate
 
   /**
    * Add accession module menu entry, internal
-   * taxonomies, terms, settings
+   * taxonomies, terms, settings.
    *
    * @return QubitMigrate110 this object
    */
@@ -455,7 +455,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Migrate relation notes for date and description to relation_i18n table
+   * Migrate relation notes for date and description to relation_i18n table.
    *
    * @return QubitMigrate110 this object
    */
@@ -506,7 +506,7 @@ class QubitMigrate110 extends QubitMigrate
 
   /**
    * Prior to revision 9340 all checksums were md5 and the algorithm was not
-   * recorded
+   * recorded.
    *
    * @return QubitMigrate110 SELF
    */
@@ -531,7 +531,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Add menu node, see also r9373
+   * Add menu node, see also r9373.
    *
    * @return QubitMigrate110 SELF
    */
@@ -549,7 +549,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Add menu node
+   * Add menu node.
    *
    * @return QubitMigrate110 SELF
    */
@@ -567,7 +567,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Add setting for repository upload quota
+   * Add setting for repository upload quota.
    *
    * @return QubitMigrate110 SELF
    */
@@ -585,7 +585,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Add separator character setting
+   * Add separator character setting.
    *
    * @return QubitMigrate110 SELF
    */
@@ -604,7 +604,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Add themes menu and update plugins menu path
+   * Add themes menu and update plugins menu path.
    *
    * @return QubitMigrate110 SELF
    */
@@ -644,7 +644,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Move digital objects to repository specific paths like (SVN r9503)
+   * Move digital objects to repository specific paths like (SVN r9503).
    *
    * @return QubitMigrate110 SELF
    */
@@ -754,7 +754,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Add default value for repository.upload_limit column
+   * Add default value for repository.upload_limit column.
    *
    * @return QubitMigrate110 SELF
    */
@@ -769,7 +769,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Add physical object menu
+   * Add physical object menu.
    *
    * @return QubitMigrate110 SELF
    */
@@ -802,7 +802,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Migrate to sfCaribou theme to users that are currently using sfClassic
+   * Migrate to sfCaribou theme to users that are currently using sfClassic.
    *
    * @return QubitMigrate110 SELF
    */
@@ -834,7 +834,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Ensure all information objects get an explicit publication status
+   * Ensure all information objects get an explicit publication status.
    *
    * @return QubitMigrate110 SELF
    */
@@ -892,7 +892,7 @@ class QubitMigrate110 extends QubitMigrate
    * Slugs are inserted when some resources are inserted, but slugs are dumped
    * separately when data is dumped. So loading slug data will try to insert
    * duplicate slugs. To work around this, turn slugs into resource properties
-   * and drop slug data
+   * and drop slug data.
    */
   protected function slugData()
   {
@@ -924,7 +924,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Set repository.parent_id to null
+   * Set repository.parent_id to null.
    *
    * All repositories were made children of the QubitActor root object from
    * Revision 8603 onward, but this causes a foreign key error on data-load
@@ -946,7 +946,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Call all sort methods
+   * Call all sort methods.
    *
    * @return QubitMigrate110 this object
    */
@@ -977,7 +977,7 @@ class QubitMigrate110 extends QubitMigrate
 
   /**
    * Sort term objects with pre-defined IDs to start of array to prevent
-   * pre-emptive assignment by auto-increment
+   * pre-emptive assignment by auto-increment.
    *
    * @return QubitMigrate110 this object
    */
@@ -1099,7 +1099,7 @@ class QubitMigrate110 extends QubitMigrate
   }
 
   /**
-   * Sort ORM classes to avoid foreign key constraint failures on data load
+   * Sort ORM classes to avoid foreign key constraint failures on data load.
    *
    * @return QubitMigrate110 this object
    */

@@ -18,7 +18,7 @@
  */
 
 /**
- * Action Handler for FullWidth TreeView
+ * Action Handler for FullWidth TreeView.
  *
  * @author Andy Koch <koch.andy@gmail.com>
  */

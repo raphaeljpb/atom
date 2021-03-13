@@ -18,7 +18,7 @@
  */
 
 /**
- * Digital Object coverflow component
+ * Digital Object coverflow component.
  *
  * @author     david juhasz <david@artefactual.com>
  */
@@ -109,7 +109,7 @@ class DigitalObjectImageflowComponent extends sfComponent
 
   /**
    * Query Elasticsearch to get a count of all digital objects that are
-   * descendants of the current resource
+   * descendants of the current resource.
    *
    * @return int count of descendants with digital objects
    */

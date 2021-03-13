@@ -18,7 +18,7 @@
  */
 
 /**
- * Action Handler for FullWidth TreeView
+ * Action Handler for FullWidth TreeView.
  *
  * @author Andy Koch <koch.andy@gmail.com>
  * @author David Juhasz <david@artefactual.com>
@@ -42,7 +42,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Get treeview data for the children of the given information object
+   * Get treeview data for the children of the given information object.
    *
    * @param int   $informationObjectId information object id
    * @param array $options             optional arguments
@@ -59,7 +59,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Get treeview data for ancestors and siblings of $this->resource
+   * Get treeview data for ancestors and siblings of $this->resource.
    *
    * @param array $options optional arguments
    *
@@ -81,7 +81,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Get an array of ids for the ancestors of the given information object
+   * Get an array of ids for the ancestors of the given information object.
    *
    * @param int $informationObjectId information object id
    *
@@ -102,7 +102,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Get the collection root for this $this->resource
+   * Get the collection root for this $this->resource.
    *
    * The collection root is first child of the information object root node
    * which is either an ancestor of $this->resource, or $this->resource itself
@@ -130,7 +130,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Get Elasticsearch query object for the given $term
+   * Get Elasticsearch query object for the given $term.
    *
    * @param \Elastica\Query\Term $term    query term
    * @param array                $options optional arguments
@@ -162,7 +162,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Do Elasticsearch query for given $term
+   * Do Elasticsearch query for given $term.
    *
    * @param \Elastica\Query\Term $term    query term
    * @param array                $options optional arguments
@@ -184,7 +184,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Get Elasticsearch data for information object
+   * Get Elasticsearch data for information object.
    *
    * @param int   $id      information_object id
    * @param array $options optional arguments
@@ -210,7 +210,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Find children of information object
+   * Find children of information object.
    *
    * @param int   $id      information_object.id (pkey)
    * @param array $options optional arguments
@@ -225,7 +225,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Return a count of an information object's children
+   * Return a count of an information object's children.
    *
    * @param int   $id      information_object.id (pkey)
    * @param array $options optional arguments
@@ -247,7 +247,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Format Elasticsearch results data for treeview javascript
+   * Format Elasticsearch results data for treeview javascript.
    *
    * @param \Elastica\ResultSet $results Elasticsearch results
    * @param array               $options optional arguments
@@ -275,7 +275,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Format Elasticsearch result data for use in treeview javasccript
+   * Format Elasticsearch result data for use in treeview javasccript.
    *
    * @param Elastica\Result $result  Elasticsearch search result
    * @param array           $options optional arguments
@@ -334,7 +334,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Get number of results to show per "page"
+   * Get number of results to show per "page".
    *
    * @param array $options optional query parameters
    *
@@ -360,7 +360,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Get number of results to skip to show current "page" of results
+   * Get number of results to skip to show current "page" of results.
    *
    * @param array $options optional query parameters
    *
@@ -379,7 +379,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Set sort order for Elasticsearch query
+   * Set sort order for Elasticsearch query.
    *
    * @param arElasticSearchPluginQuery $query   Elasticsearch query object
    * @param array                      $options optional arguments
@@ -408,7 +408,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Get the display text for a treeview node
+   * Get the display text for a treeview node.
    *
    * In addition to the description title, the dispay text may include
    * the description identifier, reference code, level of description, event
@@ -438,7 +438,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Get the title of a description in the best available culture
+   * Get the title of a description in the best available culture.
    *
    * Return description title in the current culture if available, and if not
    * then fall back to the source culture title.  If the description has *no*
@@ -459,7 +459,7 @@ class DefaultFullTreeViewAction extends sfAction
 
   /**
    * Prepend an identifier or reference code based on the application "full
-   * width treeview > show identifier" setting
+   * width treeview > show identifier" setting.
    *
    * @param array $text   input text
    * @param array $record information object data
@@ -500,7 +500,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Prepend level of description text when appropriate
+   * Prepend level of description text when appropriate.
    *
    * @param string $text   input text
    * @param array  $record information object data
@@ -526,7 +526,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Append dates when appropriate
+   * Append dates when appropriate.
    *
    * @param string $text   input text
    * @param array  $record information object data
@@ -556,7 +556,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Prepend "(Draft)" to draft descriptions
+   * Prepend "(Draft)" to draft descriptions.
    *
    * @param string $text   input text
    * @param array  $record information object data
@@ -582,7 +582,7 @@ class DefaultFullTreeViewAction extends sfAction
   }
 
   /**
-   * Sort data in-memory by "text" attribute of each node
+   * Sort data in-memory by "text" attribute of each node.
    *
    * @param array $data data to sort
    */

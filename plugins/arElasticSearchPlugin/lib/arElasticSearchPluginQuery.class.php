@@ -25,7 +25,7 @@ class arElasticSearchPluginQuery
   public $criteria;
 
   /**
-   * Constructor
+   * Constructor.
    *
    * @param int $limit how many results should be returned
    * @param int $skip  how many results should be skipped
@@ -79,7 +79,7 @@ class arElasticSearchPluginQuery
   }
 
   /**
-   * Add filters from aggregations to the query
+   * Add filters from aggregations to the query.
    *
    * @param array $aggs   search aggregations
    * @param array $params search filters from aggregations
@@ -136,7 +136,7 @@ class arElasticSearchPluginQuery
   }
 
   /**
-   * Add criteria to query based on advanced search form and other params
+   * Add criteria to query based on advanced search form and other params.
    *
    * @return void
    */
@@ -197,7 +197,7 @@ class arElasticSearchPluginQuery
   }
 
   /**
-   * Returns the query
+   * Returns the query.
    *
    * @param bool $allowEmpty   get all or none if the query is empty
    * @param bool $filterDrafts filter draft records

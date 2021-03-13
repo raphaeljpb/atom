@@ -18,7 +18,7 @@
  */
 
 /**
- * Context menu for taxonomies
+ * Context menu for taxonomies.
  *
  * @author Peter Van Garderen <peter@artefactual.com>
  * @author David Juhasz <david@artefactual.com>

@@ -18,7 +18,7 @@
  */
 
 /**
- * Display ACL permission tabs
+ * Display ACL permission tabs.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

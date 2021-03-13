@@ -20,7 +20,7 @@
 /**
  * Import a CSV file into Qubit.
  * This class is a wrapper to interact with the import CSV tasks located
- * under the lib/task/import directory
+ * under the lib/task/import directory.
  *
  */
 class QubitCsvImport
@@ -246,7 +246,7 @@ class QubitCsvImport
   }
 
   /**
-   * Return true if import had errors
+   * Return true if import had errors.
    *
    * @return bool
    */
@@ -256,7 +256,7 @@ class QubitCsvImport
   }
 
   /**
-   * Return array of error messages
+   * Return array of error messages.
    *
    * @return unknown
    */
@@ -266,7 +266,7 @@ class QubitCsvImport
   }
 
   /**
-   * Get the root object for the import
+   * Get the root object for the import.
    *
    * @return mixed the root object (object type depends on import type)
    */
@@ -276,7 +276,7 @@ class QubitCsvImport
   }
 
   /**
-   * Set the parent QubitObject for the import
+   * Set the parent QubitObject for the import.
    */
   public function setParent($parentId)
   {

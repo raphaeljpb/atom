@@ -18,7 +18,7 @@
  */
 
 /**
- * Map between ISAAR CSV format and Qubit data model
+ * Map between ISAAR CSV format and Qubit data model.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

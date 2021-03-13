@@ -18,7 +18,7 @@
  */
 
 /**
- * Import csv repository data
+ * Import csv repository data.
  *
  * @author     Mike Gale <MikeG@Artefactual.com>
  * @author     Mike Cantelon <mike@artefactual.com>

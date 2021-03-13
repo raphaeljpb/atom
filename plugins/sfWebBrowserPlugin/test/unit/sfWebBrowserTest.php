@@ -45,7 +45,7 @@ $cookies_dir = dirname(__FILE__).'/../data/sfCurlAdapter';
 $cookies_file = $cookies_dir.'/cookies.txt';
 
 /**
- * stub class
+ * stub class.
  *
  **/
 class myTestWebBrowser extends sfWebBrowser

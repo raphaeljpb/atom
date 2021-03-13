@@ -41,7 +41,7 @@ class QubitPdoPager extends sfPager
   }
 
   /**
-   * Add limiting to main SQL query
+   * Add limiting to main SQL query.
    *
    * @return string
    */
@@ -82,7 +82,7 @@ class QubitPdoPager extends sfPager
   }
 
   /**
-   * Returns true if the current query has any results
+   * Returns true if the current query has any results.
    *
    * @return bool
    */

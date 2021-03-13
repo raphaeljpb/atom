@@ -18,7 +18,7 @@
  */
 
 /**
- * Custom ACL rules for QubitInformationObject resources
+ * Custom ACL rules for QubitInformationObject resources.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
@@ -44,7 +44,7 @@ class QubitInformationObjectAcl extends QubitAcl
   protected static $_digitalObjectActions = ['readMaster', 'readReference', 'readThumbnail'];
 
   /**
-   * Do custom ACL checks for QubitInformationObject resources
+   * Do custom ACL checks for QubitInformationObject resources.
    *
    * @param myUser                 $user     to authorize
    * @param QubitInformationObject $resource target of the requested action
@@ -73,7 +73,7 @@ class QubitInformationObjectAcl extends QubitAcl
   }
 
   /**
-   * Custom QubitInformationObject "read" authorization rules
+   * Custom QubitInformationObject "read" authorization rules.
    *
    * @param myUser     $user     to authorize
    * @param mixed      $resource target of the requested action
@@ -110,7 +110,7 @@ class QubitInformationObjectAcl extends QubitAcl
   }
 
   /**
-   * Do custom ACL checks for digital object actions
+   * Do custom ACL checks for digital object actions.
    *
    * @param myUser     $user     to authorize
    * @param mixed      $resource target of the requested action

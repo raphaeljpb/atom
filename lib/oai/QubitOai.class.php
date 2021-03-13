@@ -18,7 +18,7 @@
  */
 
 /**
- * Shared functions for OAI-PMH module
+ * Shared functions for OAI-PMH module.
  *
  * @author     Mathieu Fortin Library and Archives Canada <mathieu.fortin@lac-bac.gc.ca>
  * @author     Peter Van Garderen <peter@artefactual.com>
@@ -31,7 +31,7 @@ class QubitOai
   private static $additionalOaiSets = [];
 
   /**
-   * Check that all supplied keys are valid for the provided request
+   * Check that all supplied keys are valid for the provided request.
    *
    * @param array $keys             submited request's keys
    * @param array $requestValidKeys valid keys
@@ -62,7 +62,7 @@ class QubitOai
   }
 
   /**
-   * Check that metadata format is valid
+   * Check that metadata format is valid.
    *
    * @param string    metadata format
    *
@@ -82,7 +82,7 @@ class QubitOai
   }
 
   /**
-   * Check if there are null values in the parameters
+   * Check if there are null values in the parameters.
    *
    * @param array $parameters query's parameters
    *
@@ -104,7 +104,7 @@ class QubitOai
   }
 
   /**
-   * Validates date format
+   * Validates date format.
    *
    * @param array $date submited date
    *
@@ -141,7 +141,7 @@ class QubitOai
   }
 
   /**
-   * Validates OaiKey
+   * Validates OaiKey.
    *
    * @param string $key the oai key
    *
@@ -158,7 +158,7 @@ class QubitOai
   }
 
   /**
-   * Returns formated date
+   * Returns formated date.
    *
    * @param string $date optional date value
    *
@@ -175,7 +175,7 @@ class QubitOai
   }
 
   /**
-   * Returns MetadataPrefixes
+   * Returns MetadataPrefixes.
    *
    * @return array associative array of metadataPrefixes available
    */
@@ -190,7 +190,7 @@ class QubitOai
   }
 
   /**
-   * Load array of OAI sets
+   * Load array of OAI sets.
    *
    * @return array of available OAI sets
    */
@@ -237,7 +237,7 @@ class QubitOai
   }
 
   /**
-   * Return array of additional OAI sets
+   * Return array of additional OAI sets.
    *
    * @return array of additional OAI sets
    */
@@ -247,7 +247,7 @@ class QubitOai
   }
 
   /**
-   * Add a new OAI set to the available list
+   * Add a new OAI set to the available list.
    */
   public static function addOaiSet($oaiSet)
   {
@@ -255,7 +255,7 @@ class QubitOai
   }
 
   /**
-   * Returns the OAI set matching $setSpec
+   * Returns the OAI set matching $setSpec.
    *
    * @param string $setSpec, the setSpec of an OAI set
    *
@@ -312,7 +312,7 @@ class QubitOai
   }
 
   /**
-   * Give back the Oai Identifier unique key given a full OAI_Identifier
+   * Give back the Oai Identifier unique key given a full OAI_Identifier.
    *
    * @param array $oai_identifier the full oai identifier
    *
@@ -326,7 +326,7 @@ class QubitOai
   }
 
   /**
-   * Validate that an xml extract is valid
+   * Validate that an xml extract is valid.
    *
    * @param string $xml, an xml string to validate
    *
@@ -347,7 +347,7 @@ class QubitOai
   }
 
   /**
-   * Extracts a resumption token from a response
+   * Extracts a resumption token from a response.
    *
    * @param string $oaiResponse, an xml string from which to extract the resumption token
    *

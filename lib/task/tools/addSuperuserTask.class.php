@@ -18,7 +18,7 @@
  */
 
 /**
- * Add Qubit superuser
+ * Add Qubit superuser.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

@@ -18,7 +18,7 @@
  */
 
 /**
- * Bulk export data to XML
+ * Bulk export data to XML.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

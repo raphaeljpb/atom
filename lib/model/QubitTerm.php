@@ -594,7 +594,7 @@ class QubitTerm extends BaseTerm
   }
 
   /**
-   * Return a list of all Physical Object terms
+   * Return a list of all Physical Object terms.
    *
    * @param array $options option array to pass to Qubit Query object
    *
@@ -606,7 +606,7 @@ class QubitTerm extends BaseTerm
   }
 
   /**
-   * Return a list of all Relation Type terms
+   * Return a list of all Relation Type terms.
    *
    * @param array $options option array to pass to Qubit Query object
    *
@@ -618,7 +618,7 @@ class QubitTerm extends BaseTerm
   }
 
   /**
-   * Return a list of all Physical object container types
+   * Return a list of all Physical object container types.
    *
    * @return QubitQuery array of container QubitTerm objects
    */
@@ -631,7 +631,7 @@ class QubitTerm extends BaseTerm
 
   /**
    * Get a list of child terms of $parentTermId. Prefix $indentStr * depth of child
-   * relative to parent
+   * relative to parent.
    *
    * @param int    $parentTermId Primary key of parent term
    * @param string $indentStr    String to prefix to each sub-level for indenting
@@ -698,7 +698,7 @@ class QubitTerm extends BaseTerm
   }
 
   /**
-   * Get an aggregate count of all objects related to this term
+   * Get an aggregate count of all objects related to this term.
    *
    * @return int count of related objects
    */
@@ -718,7 +718,7 @@ class QubitTerm extends BaseTerm
   }
 
   /**
-   * Count the number of actors that use this term
+   * Count the number of actors that use this term.
    *
    * @return int number of related actors
    */
@@ -736,7 +736,7 @@ class QubitTerm extends BaseTerm
 
   /**
    * Count the number of actor names that use this term
-   * (taxonomy.id = ACTOR_NAME_TYPE_ID)
+   * (taxonomy.id = ACTOR_NAME_TYPE_ID).
    *
    * @return int number of related actor_names
    */
@@ -749,7 +749,7 @@ class QubitTerm extends BaseTerm
   }
 
   /**
-   * Count the number of digital objects that use this term
+   * Count the number of digital objects that use this term.
    *
    * @return int number of related digital objects
    */
@@ -764,7 +764,7 @@ class QubitTerm extends BaseTerm
 
   /**
    * Count the number of events that use this term
-   * (taxonomy.id = EVENT_TYPE_ID)
+   * (taxonomy.id = EVENT_TYPE_ID).
    *
    * @return int number of related events
    */
@@ -777,7 +777,7 @@ class QubitTerm extends BaseTerm
   }
 
   /**
-   * Count the number of information objects that use this term
+   * Count the number of information objects that use this term.
    *
    * @return int number of related information objects
    */
@@ -793,7 +793,7 @@ class QubitTerm extends BaseTerm
   }
 
   /**
-   * Get a count of notes that use this term
+   * Get a count of notes that use this term.
    *
    * @return int number of related notes
    */
@@ -806,7 +806,7 @@ class QubitTerm extends BaseTerm
   }
 
   /**
-   * Get a count of object_term_relation records that use this term
+   * Get a count of object_term_relation records that use this term.
    *
    * @return int related object count
    */
@@ -820,7 +820,7 @@ class QubitTerm extends BaseTerm
 
   /**
    * Count the number of physical objects that use this term
-   * (taxonomy.id = PHYSICAL_OBJECT_TYPE_ID)
+   * (taxonomy.id = PHYSICAL_OBJECT_TYPE_ID).
    *
    * @return int number of related physical objects
    */
@@ -833,7 +833,7 @@ class QubitTerm extends BaseTerm
   }
 
   /**
-   * Count the number of repositories that use this term
+   * Count the number of repositories that use this term.
    *
    * @return int number of related repositories
    */
@@ -850,7 +850,7 @@ class QubitTerm extends BaseTerm
   }
 
   /**
-   * Get a count of related information objects
+   * Get a count of related information objects.
    *
    * @param int  ID of term
    *
@@ -873,7 +873,7 @@ class QubitTerm extends BaseTerm
 
   /**
    * Get a basic key['id']/value['name'] array for use as options in form
-   * select lists
+   * select lists.
    *
    * @param int   $taxonomyId parent taxonomy id
    * @param array $options    optional paramters
@@ -927,7 +927,7 @@ class QubitTerm extends BaseTerm
   }
 
   /**
-   * Get the direct descendents of the current term
+   * Get the direct descendents of the current term.
    *
    * @param array $options optional paramters
    *

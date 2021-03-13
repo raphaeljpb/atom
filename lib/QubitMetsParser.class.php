@@ -202,7 +202,7 @@ class QubitMetsParser
 
   /**
    * Find the original filename
-   * simple_load_string() is used to make xpath queries faster
+   * simple_load_string() is used to make xpath queries faster.
    */
   public function getOriginalFilename($fileId)
   {
@@ -224,7 +224,7 @@ class QubitMetsParser
   /**
    * The <fileGrp type="original"> provides a comprehensive catalog of all of
    * the "original" files stored in the AIP, which is useful when submission
-   * documents, normalized files, etc. are not relevant
+   * documents, normalized files, etc. are not relevant.
    *
    * @return SimpleXmlElement a SimpleXML collection of fileGrp files
    */
@@ -236,7 +236,7 @@ class QubitMetsParser
   }
 
   /**
-   * Return a simple count of original files in the AIP
+   * Return a simple count of original files in the AIP.
    *
    * @return int the number of original files in the AIP
    */
@@ -483,7 +483,7 @@ class QubitMetsParser
   }
 
   /**
-   * Return an original file path and name relative to the AIP root directory
+   * Return an original file path and name relative to the AIP root directory.
    *
    * The file path is parsed from a METS <fileSec><file><FLocat> element
    *
@@ -507,7 +507,7 @@ class QubitMetsParser
   }
 
   /**
-   * Get the size of the "original" file
+   * Get the size of the "original" file.
    *
    * @param string $fileId METS FILEID
    *
@@ -525,7 +525,7 @@ class QubitMetsParser
   }
 
   /**
-   * Get the filename of the preservation copy of a file
+   * Get the filename of the preservation copy of a file.
    *
    * @param string $fileId METS FILEID
    *
@@ -542,7 +542,7 @@ class QubitMetsParser
   }
 
   /**
-   * Get the size of the preservation copy of a file
+   * Get the size of the preservation copy of a file.
    *
    * @param string $fileId METS FILEID
    *
@@ -560,7 +560,7 @@ class QubitMetsParser
   }
 
   /**
-   * Get the datetime of the ingestion PREMIS event of the original file
+   * Get the datetime of the ingestion PREMIS event of the original file.
    *
    * @param string $fileId METS FILEID
    *
@@ -578,7 +578,7 @@ class QubitMetsParser
   }
 
   /**
-   * Get the datetime of the creation PREMIS event of the preservation file
+   * Get the datetime of the creation PREMIS event of the preservation file.
    *
    * @param string $fileId METS FILEID
    *
@@ -596,7 +596,7 @@ class QubitMetsParser
   }
 
   /**
-   * Get the <mets:file> element from the original file group
+   * Get the <mets:file> element from the original file group.
    *
    * @param string $fileId METS FILEID
    *
@@ -614,7 +614,7 @@ class QubitMetsParser
   }
 
   /**
-   * Get the <mets:file> element from the preservation file group
+   * Get the <mets:file> element from the preservation file group.
    *
    * @param string $fileId METS FILEID
    *
@@ -634,7 +634,7 @@ class QubitMetsParser
   }
 
   /**
-   * Get the filename part of the path in the <premis:originalName> element of a <mets:amdSec> element
+   * Get the filename part of the path in the <premis:originalName> element of a <mets:amdSec> element.
    *
    * @param string $admId METS ADMID
    *
@@ -654,7 +654,7 @@ class QubitMetsParser
   }
 
   /**
-   * Get the <premis:size> element of the PREMIS object in a <mets:amdSec> element
+   * Get the <premis:size> element of the PREMIS object in a <mets:amdSec> element.
    *
    * @param string $admId METS ADMID
    *
@@ -672,7 +672,7 @@ class QubitMetsParser
   }
 
   /**
-   * Get the PREMIS events of a single type in a <mets:amdSec> element
+   * Get the PREMIS events of a single type in a <mets:amdSec> element.
    *
    * @param string $admId     METS ADMID
    * @param string $eventType a PREMIS event type
@@ -702,7 +702,7 @@ class QubitMetsParser
   }
 
   /**
-   * Get the datetime of the first event with a <premis:eventDateTime> element
+   * Get the datetime of the first event with a <premis:eventDateTime> element.
    *
    * @param array $events list of SimpleXmlElement objects representing PREMIS events
    *

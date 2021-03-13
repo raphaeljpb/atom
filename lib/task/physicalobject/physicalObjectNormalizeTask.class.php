@@ -18,7 +18,7 @@
  */
 
 /**
- * Normalize physical objects
+ * Normalize physical objects.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

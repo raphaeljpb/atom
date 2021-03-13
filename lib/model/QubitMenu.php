@@ -56,7 +56,7 @@ class QubitMenu extends BaseMenu
   public $disableNestedSetUpdating = false;
 
   /**
-   * Return name of menu if object is cast as string
+   * Return name of menu if object is cast as string.
    *
    * @return string menu name
    */
@@ -68,7 +68,7 @@ class QubitMenu extends BaseMenu
   /**
    * Wrapper for BaseMenu::getPath() call to allow additional functionality
    *  option 'resolveAlias' - resolve aliases into full path
-   *  option 'getUrl' - resolve path to internal or external URL
+   *  option 'getUrl' - resolve path to internal or external URL.
    *
    * @param array $options Optional parameters
    *
@@ -140,7 +140,7 @@ class QubitMenu extends BaseMenu
   }
 
   /**
-   * Test if this menu is protected (can't delete)
+   * Test if this menu is protected (can't delete).
    *
    * @return bool
    */
@@ -165,7 +165,7 @@ class QubitMenu extends BaseMenu
   }
 
   /**
-   * Find menu by name
+   * Find menu by name.
    *
    * @param string $topMenuName name of top ancestor
    * @param array  $options     optional parameters
@@ -181,7 +181,7 @@ class QubitMenu extends BaseMenu
   }
 
   /**
-   * Test if this menu is selected (based on current module/action)
+   * Test if this menu is selected (based on current module/action).
    *
    * @return bool
    */
@@ -281,7 +281,7 @@ class QubitMenu extends BaseMenu
   }
 
   /**
-   * Move this menu before $referenceMenu
+   * Move this menu before $referenceMenu.
    *
    * @param int reference menu id
    *
@@ -298,7 +298,7 @@ class QubitMenu extends BaseMenu
   }
 
   /**
-   * Move this menu after $referenceMenu
+   * Move this menu after $referenceMenu.
    *
    * @param int reference menu id
    *
@@ -315,7 +315,7 @@ class QubitMenu extends BaseMenu
   }
 
   /**
-   * Find top menu by id, then get all descendents with relative depth
+   * Find top menu by id, then get all descendents with relative depth.
    *
    * @param string $topMenuName name of top ancestor
    * @param array  $options     optional parameters

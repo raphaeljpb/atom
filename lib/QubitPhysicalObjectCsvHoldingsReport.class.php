@@ -20,7 +20,7 @@
 require_once __DIR__.'/../vendor/composer/autoload.php';
 
 /**
- * Exporter for physical object holdings CSV data
+ * Exporter for physical object holdings CSV data.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

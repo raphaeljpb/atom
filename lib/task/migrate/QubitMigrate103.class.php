@@ -18,7 +18,7 @@
  */
 
 /**
- * Upgrade qubit data model from 1.0.3 to 1.0.4
+ * Upgrade qubit data model from 1.0.3 to 1.0.4.
  *
  * @author     David Juhasz <david@artefactual.com
  */
@@ -27,7 +27,7 @@ class QubitMigrate103 extends QubitMigrate
   protected $taxonomyActorRoleKey;
 
   /**
-   * Controller for calling methods to alter data
+   * Controller for calling methods to alter data.
    *
    * @return QubitMigrate103 this object
    */
@@ -51,7 +51,7 @@ class QubitMigrate103 extends QubitMigrate
   }
 
   /**
-   * Call all sort methods
+   * Call all sort methods.
    *
    * @return QubitMigrate103 this object
    */
@@ -68,7 +68,7 @@ class QubitMigrate103 extends QubitMigrate
   }
 
   /**
-   * Alter QubitActor data
+   * Alter QubitActor data.
    *
    * @return QubitMigrate103 $this object
    */
@@ -79,7 +79,7 @@ class QubitMigrate103 extends QubitMigrate
   }
 
   /**
-   * Alter QubitEvent data
+   * Alter QubitEvent data.
    *
    * @return QubitMigrate103 this object
    */
@@ -155,7 +155,7 @@ class QubitMigrate103 extends QubitMigrate
   }
 
   /**
-   * Alter QubitProperty data
+   * Alter QubitProperty data.
    *
    * @return QubitMigrate103 this object
    */
@@ -175,7 +175,7 @@ class QubitMigrate103 extends QubitMigrate
   }
 
   /**
-   * Alter QubitStaticPage data
+   * Alter QubitStaticPage data.
    *
    * @return QubitMigrate103 this object
    */
@@ -197,7 +197,7 @@ class QubitMigrate103 extends QubitMigrate
   }
 
   /**
-   * Alter QubitSetting data
+   * Alter QubitSetting data.
    *
    * @return QubitMigrate103 this object
    */
@@ -303,7 +303,7 @@ class QubitMigrate103 extends QubitMigrate
   }
 
   /**
-   * Alter QubitTaxonomy data
+   * Alter QubitTaxonomy data.
    *
    * @return QubitMigrate103 this object
    */
@@ -338,7 +338,7 @@ class QubitMigrate103 extends QubitMigrate
   }
 
   /**
-   * Alter QubitTerm data
+   * Alter QubitTerm data.
    *
    * @return QubitMigrate103 this object
    */
@@ -600,7 +600,7 @@ class QubitMigrate103 extends QubitMigrate
   }
 
   /**
-   * Alter QubitNotes data
+   * Alter QubitNotes data.
    *
    * @return QubitMigrate103 this object
    */
@@ -770,7 +770,7 @@ class QubitMigrate103 extends QubitMigrate
 
   /**
    * Sort term objects with pre-defined IDs to start of array to prevent
-   * pre-emptive assignment IDs by auto-increment
+   * pre-emptive assignment IDs by auto-increment.
    *
    * @return QubitMigrate103 this object
    */
@@ -848,7 +848,7 @@ class QubitMigrate103 extends QubitMigrate
   }
 
   /**
-   * Sort ORM classes to avoid foreign key constraint failures on data load
+   * Sort ORM classes to avoid foreign key constraint failures on data load.
    *
    * @return QubitMigrate103 this object
    */
@@ -902,7 +902,7 @@ class QubitMigrate103 extends QubitMigrate
   }
 
   /**
-   * Get Taxonomy Actor Role key - used to delete the taxonomy and it's terms
+   * Get Taxonomy Actor Role key - used to delete the taxonomy and it's terms.
    *
    * @return string key for the Taxonomy in $this->data array
    */
@@ -917,7 +917,7 @@ class QubitMigrate103 extends QubitMigrate
   }
 
   /**
-   * Get and cache Existence Term key
+   * Get and cache Existence Term key.
    *
    * @return string key in $this->data array
    */

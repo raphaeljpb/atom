@@ -23,7 +23,7 @@
 class InformationObjectAutocompleteAction extends sfAction
 {
   /**
-   * Return all information objects (not just top-level) for ajax request
+   * Return all information objects (not just top-level) for ajax request.
    */
   public function execute($request)
   {

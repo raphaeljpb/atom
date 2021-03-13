@@ -52,7 +52,7 @@ class RightIndexAction extends sfAction
     }
 
     /**
-     * Basis: copyright
+     * Basis: copyright.
      */
     if (isset($this->resource->copyrightStatus))
     {
@@ -75,7 +75,7 @@ class RightIndexAction extends sfAction
     }
 
     /**
-     * Basis: license
+     * Basis: license.
      */
     if (isset($this->resource->licenseIdentifier))
     {
@@ -93,7 +93,7 @@ class RightIndexAction extends sfAction
     }
 
     /**
-     * Basis: statute
+     * Basis: statute.
      */
     if (isset($this->resource->statuteJurisdiction))
     {

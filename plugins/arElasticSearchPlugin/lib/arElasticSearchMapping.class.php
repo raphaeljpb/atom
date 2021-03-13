@@ -20,7 +20,7 @@
 class arElasticSearchMapping
 {
   /**
-   * Inner objects
+   * Inner objects.
    *
    * @return array
    */
@@ -62,7 +62,7 @@ class arElasticSearchMapping
   ];
 
   /**
-   * Dumps schema as array
+   * Dumps schema as array.
    *
    * @return array
    */
@@ -72,7 +72,7 @@ class arElasticSearchMapping
   }
 
   /**
-   * Load mapping from array
+   * Load mapping from array.
    *
    * @param array $mapping_array
    */
@@ -97,7 +97,7 @@ class arElasticSearchMapping
   }
 
   /**
-   * Load mapping from YAML file
+   * Load mapping from YAML file.
    *
    * @param string $file
    */
@@ -221,7 +221,7 @@ class arElasticSearchMapping
   }
 
   /**
-   * Fixes YAML shorthands
+   * Fixes YAML shorthands.
    */
   protected function fixYamlShorthands()
   {
@@ -245,7 +245,7 @@ class arElasticSearchMapping
   }
 
   /**
-   * Given a mapping, it parses its special attributes and update it accordingly
+   * Given a mapping, it parses its special attributes and update it accordingly.
    */
   protected function processPropertyAttributes($typeName, array &$typeProperties)
   {
@@ -334,7 +334,7 @@ class arElasticSearchMapping
   }
 
   /**
-   * Given a mapping, adds other objects within it
+   * Given a mapping, adds other objects within it.
    */
   protected function processForeignTypes(array &$typeProperties)
   {
@@ -364,7 +364,7 @@ class arElasticSearchMapping
   }
 
   /**
-   * Given a mapping, adds partial foreing objects within it
+   * Given a mapping, adds partial foreing objects within it.
    */
   protected function processPartialForeignTypes(array &$typeProperties)
   {
@@ -432,7 +432,7 @@ class arElasticSearchMapping
   }
 
   /**
-   * Exclude nested types if there are not root objects using them
+   * Exclude nested types if there are not root objects using them.
    */
   protected function excludeNestedOnlyTypes()
   {
@@ -450,7 +450,7 @@ class arElasticSearchMapping
   }
 
   /**
-   * Sets entry if not set
+   * Sets entry if not set.
    *
    * @param string $entry
    * @param string $key
@@ -501,7 +501,7 @@ class arElasticSearchMapping
   }
 
   /**
-   * Add "alphasort" Elasticsearch fields
+   * Add "alphasort" Elasticsearch fields.
    *
    * Add i18n "alphasort" keyword field that is lowercase, has punctation
    * stripped, and is ASCII folded to allow more natural alphabetic sorting

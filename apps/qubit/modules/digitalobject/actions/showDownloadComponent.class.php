@@ -18,7 +18,7 @@
  */
 
 /**
- * Digital Object display component
+ * Digital Object display component.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

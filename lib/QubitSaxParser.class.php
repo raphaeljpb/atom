@@ -19,7 +19,7 @@
 
 /**
  * Simplified SAX parser base class
- * --------------------------------
+ * --------------------------------.
  *
  * This class can be used as a parent class for classes that need to access
  * XML data.
@@ -88,7 +88,7 @@ class QubitSaxParser
   }
 
   /**
-   * Parse contents of file
+   * Parse contents of file.
    *
    * The parser can optionally not be freed after a parse, if one wants to
    * inspect error state externally.
@@ -156,7 +156,7 @@ class QubitSaxParser
   }
 
   /**
-   * Get parser
+   * Get parser.
    *
    * Can be used to inspect error state externally
    *
@@ -168,7 +168,7 @@ class QubitSaxParser
   }
 
   /**
-   * Get parsing error description
+   * Get parsing error description.
    *
    * @return string Description of parsing error
    */
@@ -178,7 +178,7 @@ class QubitSaxParser
   }
 
   /**
-   * Handle start tags
+   * Handle start tags.
    *
    * The start tag handler:
    *
@@ -211,7 +211,7 @@ class QubitSaxParser
   }
 
   /**
-   * Attempt to call tag handler by suffix, or default, if they exist
+   * Attempt to call tag handler by suffix, or default, if they exist.
    *
    * Take note of which handlers have been called
    *
@@ -246,7 +246,7 @@ class QubitSaxParser
   }
 
   /**
-   * Note that a handler method has been triggered
+   * Note that a handler method has been triggered.
    *
    * @param string $method name of handler method
    *
@@ -261,7 +261,7 @@ class QubitSaxParser
   }
 
   /**
-   * If descending the hierarchy, store ancestor data
+   * If descending the hierarchy, store ancestor data.
    *
    * @return void
    */
@@ -281,7 +281,7 @@ class QubitSaxParser
   }
 
   /**
-   * Handle tag CDATA
+   * Handle tag CDATA.
    *
    * Note that this gets executed even for whitespace between tags.
    *
@@ -302,7 +302,7 @@ class QubitSaxParser
   }
 
   /**
-   * Handle end tags
+   * Handle end tags.
    *
    * The end tag handler:
    *
@@ -342,7 +342,7 @@ class QubitSaxParser
    */
 
   /**
-   * Get name of current tag being processed
+   * Get name of current tag being processed.
    *
    * @return string name of current tag being processed
    */
@@ -352,7 +352,7 @@ class QubitSaxParser
   }
 
   /**
-   * Get CDATA of current tag being processed
+   * Get CDATA of current tag being processed.
    *
    * @return string CDATA content
    */
@@ -362,7 +362,7 @@ class QubitSaxParser
   }
 
   /**
-   * Get attribute of current tag being processed
+   * Get attribute of current tag being processed.
    *
    * @param string $attrName attribute name
    *
@@ -376,7 +376,7 @@ class QubitSaxParser
   }
 
   /**
-   * Get all attribute data for current tag being processed
+   * Get all attribute data for current tag being processed.
    *
    * @return array array where key is attribute name
    */
@@ -386,7 +386,7 @@ class QubitSaxParser
   }
 
   /**
-   * Return immediate ancestor
+   * Return immediate ancestor.
    *
    * @return array parent tag data
    */
@@ -396,7 +396,7 @@ class QubitSaxParser
   }
 
   /**
-   * Return path in XML hierarchy
+   * Return path in XML hierarchy.
    *
    * @return string string representation of path
    */
@@ -413,7 +413,7 @@ class QubitSaxParser
   }
 
   /**
-   * Check if the current path in the XML hierarchy contains a subpath
+   * Check if the current path in the XML hierarchy contains a subpath.
    *
    * @param string $subPath XML path or path fragment
    *
@@ -431,7 +431,7 @@ class QubitSaxParser
    */
 
   /**
-   * Return array of handlers defined
+   * Return array of handlers defined.
    *
    * @return array array of handlers
    */
@@ -453,7 +453,7 @@ class QubitSaxParser
   }
 
   /**
-   * Return array of handlers that weren't triggered during parsing
+   * Return array of handlers that weren't triggered during parsing.
    *
    * This can be used to make sure the documents you're parsing aren't missing
    * any elements.
@@ -466,7 +466,7 @@ class QubitSaxParser
   }
 
   /**
-   * Return array of methods defined in child class that are not handlers
+   * Return array of methods defined in child class that are not handlers.
    *
    * This can be used to make sure you haven't misnamed any handlers (if
    * a handler is returned by this function then it is likely misnamed).
@@ -482,7 +482,7 @@ class QubitSaxParser
   }
 
   /**
-   * Check if a method is a handler
+   * Check if a method is a handler.
    *
    * @param string $method name of method
    *

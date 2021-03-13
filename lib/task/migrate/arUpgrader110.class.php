@@ -18,7 +18,7 @@
  */
 
 /**
- * Upgrade Qubit data from Release 1.1
+ * Upgrade Qubit data from Release 1.1.
  *
  */
 class arUpgrader110

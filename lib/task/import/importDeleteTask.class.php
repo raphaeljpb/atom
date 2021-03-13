@@ -18,7 +18,7 @@
  */
 
 /**
- * Delete import data
+ * Delete import data.
  *
  * @author     David Juhasz <djjuhasz@gmail.com>
  */
@@ -208,7 +208,7 @@ EOL;
   }
 
   /**
-   * Allow the user to abort if they aren't ready to proceed with deletion
+   * Allow the user to abort if they aren't ready to proceed with deletion.
    *
    * @param bool $isForced true to force delete without confirmation
    *

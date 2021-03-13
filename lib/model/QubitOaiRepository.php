@@ -25,7 +25,7 @@
 class QubitOaiRepository extends BaseOaiRepository
 {
   /**
-   * Get repository by URI
+   * Get repository by URI.
    *
    * @param string $url the url of the repository to find
    *

@@ -18,7 +18,7 @@
  */
 
 /**
- * SitemapWriterSection
+ * SitemapWriterSection.
  */
 class SitemapWriterSection
 {
@@ -35,42 +35,42 @@ class SitemapWriterSection
   public const MAX_SIZE_SITEMAP = 52428800;
 
   /**
-   * The size of the batches that we command XmlWriter to write
+   * The size of the batches that we command XmlWriter to write.
    */
   public const BUFFER_LIMIT = 500;
 
   /**
-   * Instance of XMLWriter
+   * Instance of XMLWriter.
    */
   private $writer;
 
   /**
-   * Instance of XMLWriter using memory
+   * Instance of XMLWriter using memory.
    */
   private $buffer;
 
   /**
-   * Total size
+   * Total size.
    */
   private $size = 0;
 
   /**
-   * Size of the buffer
+   * Size of the buffer.
    */
   private $bufferSize = 0;
 
   /**
-   * Base URL
+   * Base URL.
    */
   private $baseUrl;
 
   /**
-   * Indent XML output
+   * Indent XML output.
    */
   private $indent = false;
 
   /**
-   * Compress XML output
+   * Compress XML output.
    */
   private $compress = false;
 
@@ -80,7 +80,7 @@ class SitemapWriterSection
   private $ended = false;
 
   /**
-   * Constructor
+   * Constructor.
    */
   public function __construct($file, $index, $baseUrl, $indent, $compress)
   {

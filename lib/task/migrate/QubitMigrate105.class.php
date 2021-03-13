@@ -18,14 +18,14 @@
  */
 
 /**
- * Upgrade qubit data from version 1.0.5 to 1.0.6 schema
+ * Upgrade qubit data from version 1.0.5 to 1.0.6 schema.
  *
  * @author     David Juhasz <david@artefactual.com
  */
 class QubitMigrate105 extends QubitMigrate
 {
   /**
-   * Controller for calling methods to alter data
+   * Controller for calling methods to alter data.
    *
    * @return QubitMigrate105 this object
    */
@@ -44,7 +44,7 @@ class QubitMigrate105 extends QubitMigrate
   }
 
   /**
-   * Call all sort methods
+   * Call all sort methods.
    *
    * @return QubitMigrate105 this object
    */
@@ -61,7 +61,7 @@ class QubitMigrate105 extends QubitMigrate
   }
 
   /**
-   * Alter QubitMenu data
+   * Alter QubitMenu data.
    *
    * @return QubitMigrate105 this object
    */
@@ -136,7 +136,7 @@ class QubitMigrate105 extends QubitMigrate
   }
 
   /**
-   * Alter QubitSetting data
+   * Alter QubitSetting data.
    *
    * @return QubitMigrate105 this object
    */
@@ -179,7 +179,7 @@ class QubitMigrate105 extends QubitMigrate
   }
 
   /**
-   * Alter QubitStaticPage data
+   * Alter QubitStaticPage data.
    *
    * @return QubitMigrate105 this object
    */
@@ -201,7 +201,7 @@ class QubitMigrate105 extends QubitMigrate
   }
 
   /**
-   * Alter QubitTerm data
+   * Alter QubitTerm data.
    *
    * @return QubitMigrate105 this object
    */
@@ -262,7 +262,7 @@ class QubitMigrate105 extends QubitMigrate
 
   /**
    * Sort term objects with pre-defined IDs to start of array to prevent
-   * pre-emptive assignment IDs by auto-increment
+   * pre-emptive assignment IDs by auto-increment.
    *
    * @return QubitMigrate105 this object
    */
@@ -346,7 +346,7 @@ class QubitMigrate105 extends QubitMigrate
   }
 
   /**
-   * Sort ORM classes to avoid foreign key constraint failures on data load
+   * Sort ORM classes to avoid foreign key constraint failures on data load.
    *
    * @return QubitMigrate105 this object
    */

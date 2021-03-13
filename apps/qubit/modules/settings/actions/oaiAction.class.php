@@ -18,7 +18,7 @@
  */
 
 /**
- * OAI settings
+ * OAI settings.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Jack Bates <jack@nottheoilrig.com>
@@ -59,7 +59,7 @@ class SettingsOaiAction extends sfAction
   }
 
   /**
-   * Populate the OAI Repository form with database values (non-localized)
+   * Populate the OAI Repository form with database values (non-localized).
    */
   protected function populateOaiRepositoryForm()
   {
@@ -85,7 +85,7 @@ class SettingsOaiAction extends sfAction
   }
 
   /**
-   * Update the OAI Repository settings in database (non-localized)
+   * Update the OAI Repository settings in database (non-localized).
    */
   protected function updateOaiRepositorySettings()
   {

@@ -18,7 +18,7 @@
  */
 
 /**
- * Import csv authoriy record data
+ * Import csv authoriy record data.
  *
  * @author     David Juhasz <djuhasz@artefactual.com>
  */

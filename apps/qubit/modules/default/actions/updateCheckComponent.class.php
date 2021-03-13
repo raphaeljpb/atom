@@ -18,7 +18,7 @@
  */
 
 /**
- * Check for updates component
+ * Check for updates component.
  *
  * @author Jesús García Crespo <correo@sevein.com>
  */

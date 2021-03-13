@@ -18,7 +18,7 @@
  */
 
 /**
- * Digital Object edit component
+ * Digital Object edit component.
  *
  * @author     david juhasz <david@artefactual.com>
  */

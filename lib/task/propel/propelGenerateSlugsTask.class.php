@@ -18,7 +18,7 @@
  */
 
 /**
- * Generate missing slugs
+ * Generate missing slugs.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

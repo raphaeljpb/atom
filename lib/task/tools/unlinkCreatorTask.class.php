@@ -18,7 +18,7 @@
  */
 
 /**
- * Unlink Creator Task
+ * Unlink Creator Task.
  *
  * @author     Steve Breker <sbreker@artefactual.com>
  */

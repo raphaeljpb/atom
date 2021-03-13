@@ -316,7 +316,7 @@ class QubitMetadataRoute extends QubitRoute
 
   /**
    * Fetch the default template for a given module from the database/settings
-   * TODO: this should be cached somewhere
+   * TODO: this should be cached somewhere.
    */
   protected function getDefaultTemplate($module)
   {

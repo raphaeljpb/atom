@@ -18,7 +18,7 @@
  */
 
 /**
- * Export flatfile repository data
+ * Export flatfile repository data.
  *
  * @author     Mike Gale <mikeg@artefactual.com>
  */

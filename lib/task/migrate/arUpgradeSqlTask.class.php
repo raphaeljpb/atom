@@ -18,7 +18,7 @@
  */
 
 /**
- * Migrate qubit data model via direct SQL calls
+ * Migrate qubit data model via direct SQL calls.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
@@ -249,7 +249,7 @@ EOF;
   }
 
   /**
-   * Figure out what's the last milestone used
+   * Figure out what's the last milestone used.
    *
    * @return int Previous milestone (e.g. 1, 2)
    */
@@ -275,7 +275,7 @@ EOF;
   }
 
   /**
-   * Update the settings with the latest database version
+   * Update the settings with the latest database version.
    *
    * @param int New database version
    */
@@ -286,7 +286,7 @@ EOF;
   }
 
   /**
-   * Update the settings with the latest milestone
+   * Update the settings with the latest milestone.
    */
   protected function updateMilestone()
   {
@@ -334,7 +334,7 @@ EOF;
   }
 
   /**
-   * Run specific migrations by number
+   * Run specific migrations by number.
    *
    * @param array  Array of migration numbers
    */
@@ -375,7 +375,7 @@ EOF;
   }
 
   /**
-   * Run new style migrations in a directory
+   * Run new style migrations in a directory.
    *
    * @param int    $version             Version of schema before running migrations in this directory
    * @param string $migrationsDirectory Directory with migrations in it
@@ -475,7 +475,7 @@ EOF;
 
   /**
    * Check if a theme configured in setting/setting_i18n isn't present under plugins/
-   * If it isn't, prompt the user to choose one of the available themes detected in plugins/
+   * If it isn't, prompt the user to choose one of the available themes detected in plugins/.
    */
   private function checkMissingThemes()
   {

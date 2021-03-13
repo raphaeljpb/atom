@@ -20,7 +20,7 @@
 class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
 {
   /**
-   * Define form field names
+   * Define form field names.
    *
    * @var string
    */

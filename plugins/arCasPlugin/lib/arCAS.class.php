@@ -25,7 +25,7 @@ class arCAS
   protected static $phpCASIsInitialized = false;
 
   /**
-   * Initialize the phpCAS library
+   * Initialize the phpCAS library.
    */
   public static function initializePhpCAS()
   {

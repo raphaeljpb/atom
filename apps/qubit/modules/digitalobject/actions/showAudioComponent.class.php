@@ -18,7 +18,7 @@
  */
 
 /**
- * Digital Object audio display component
+ * Digital Object audio display component.
  *
  * @author     Jesús García Crespo <correo@sevein.com>
  */

@@ -18,7 +18,7 @@
  */
 
 /**
- * Action Handler for Browse Hierarchy JSON Data
+ * Action Handler for Browse Hierarchy JSON Data.
  *
  * @author Mike Cantelon <mike@artefactual.com>
  */

@@ -23,7 +23,7 @@
 class InformationObjectListAction extends sfAction
 {
   /**
-   * Display a paginated hitlist of information objects (top-level only)
+   * Display a paginated hitlist of information objects (top-level only).
    *
    * @param sfRequest $request
    */

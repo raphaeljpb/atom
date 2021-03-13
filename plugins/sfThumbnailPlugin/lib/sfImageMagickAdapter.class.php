@@ -30,7 +30,7 @@ class sfImageMagickAdapter
   protected $magickCommands;
 
   /**
-   * Mime types this adapter supports
+   * Mime types this adapter supports.
    */
   protected $imgTypes = [
     'application/pdf',
@@ -78,7 +78,7 @@ class sfImageMagickAdapter
   ];
 
   /**
-   * Imagemagick-specific Type to Mime type map
+   * Imagemagick-specific Type to Mime type map.
    */
   protected $mimeMap = [
     'bmp' => 'image/bmp',

@@ -18,7 +18,7 @@
  */
 
 /**
- * Export flatfile actor data
+ * Export flatfile actor data.
  */
 class csvActorExport extends QubitFlatfileExport
 {

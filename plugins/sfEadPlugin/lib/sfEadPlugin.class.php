@@ -207,7 +207,7 @@ class sfEadPlugin
   }
 
   /**
-   * Get the URL for the current resource
+   * Get the URL for the current resource.
    *
    * @return string URL of the resource
    */

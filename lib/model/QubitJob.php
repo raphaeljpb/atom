@@ -18,7 +18,7 @@
  */
 
 /**
- * Represent an asynchronous job
+ * Represent an asynchronous job.
  *
  */
 class QubitJob extends BaseJob
@@ -31,7 +31,7 @@ class QubitJob extends BaseJob
   }
 
   /**
-   * Save the job along with its notes
+   * Save the job along with its notes.
    */
   public function save($connection = null)
   {
@@ -44,7 +44,7 @@ class QubitJob extends BaseJob
   }
 
   /**
-   * Delete the job along with its notes
+   * Delete the job along with its notes.
    */
   public function delete($connection = null)
   {
@@ -62,7 +62,7 @@ class QubitJob extends BaseJob
   }
 
   /**
-   * Set the job status to error
+   * Set the job status to error.
    *
    * @param string $errorNote Optional note to give additional error information
    */
@@ -78,7 +78,7 @@ class QubitJob extends BaseJob
   }
 
   /**
-   * Set the job status to in progress
+   * Set the job status to in progress.
    */
   public function setStatusInProgress()
   {
@@ -86,7 +86,7 @@ class QubitJob extends BaseJob
   }
 
   /**
-   * Set the job status to complete
+   * Set the job status to complete.
    */
   public function setStatusCompleted()
   {
@@ -190,7 +190,7 @@ class QubitJob extends BaseJob
   }
 
   /**
-   * Get the notes attached to this job
+   * Get the notes attached to this job.
    *
    * @return QubitQuery An query of the notes for this job
    */
@@ -270,7 +270,7 @@ class QubitJob extends BaseJob
   }
 
   /**
-   * Add a basic note to this job
+   * Add a basic note to this job.
    *
    * @param sfBasicSecurityUser $user the currently logged in user
    */
@@ -283,7 +283,7 @@ class QubitJob extends BaseJob
   }
 
   /**
-   * Run a job via gearman
+   * Run a job via gearman.
    *
    * @param string $jobName   The name of the ability the worker will execute
    * @param array  $jobParams Whatever parameters need to be passed to the worker.
@@ -374,7 +374,7 @@ class QubitJob extends BaseJob
   }
 
   /**
-   * Get a string representation of a job's user name
+   * Get a string representation of a job's user name.
    *
    * @return string The user name
    */

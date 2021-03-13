@@ -312,7 +312,7 @@ class QubitActor extends BaseActor
   }
 
   /**
-   * Return an options_for_select array
+   * Return an options_for_select array.
    *
    * @param mixed $default current selected value for select list
    * @param array $options optional parameters
@@ -353,7 +353,7 @@ class QubitActor extends BaseActor
 
   /**
    * Returns only Actor objects, excluding those
-   * that are an instance of the User or Repository class
+   * that are an instance of the User or Repository class.
    *
    * @return QubitQuery array of QubitActor objects
    */
@@ -488,7 +488,7 @@ class QubitActor extends BaseActor
   }
 
   /**
-   * Get many-to-many links to QubitTerm objects
+   * Get many-to-many links to QubitTerm objects.
    *
    * @param mixed $taxonomyId Limit results by taxonomy type
    *
@@ -516,7 +516,7 @@ class QubitActor extends BaseActor
   }
 
   /**
-   * Get actor-to-actor relations linked to this actor
+   * Get actor-to-actor relations linked to this actor.
    *
    * @return QubitQuery collection of QubitRelation objects
    */
@@ -536,7 +536,7 @@ class QubitActor extends BaseActor
 
   /**
    * Search for an actor by the AUTHORIZED_FORM_OF_NAME i18n column. Optionally
-   * limit search to a specific culture, history or maintaining repository
+   * limit search to a specific culture, history or maintaining repository.
    *
    * @param string $name    search string
    * @param array  $options optional parameters
@@ -693,7 +693,7 @@ class QubitActor extends BaseActor
   *****************/
 
   /**
-   * Wrapper for QubitDigitalObject::importFromUri() method
+   * Wrapper for QubitDigitalObject::importFromUri() method.
    *
    * @param array $uris URIs of remote files
    *
@@ -769,7 +769,7 @@ class QubitActor extends BaseActor
   }
 
   /**
-   * Wrapper for QubitDigitalObject::importFromBase64() method
+   * Wrapper for QubitDigitalObject::importFromBase64() method.
    *
    * @param string $encodedString base-64 encoded data
    * @param string $filename      name of destination file

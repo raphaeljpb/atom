@@ -18,7 +18,7 @@
  */
 
 /**
- * Import csv data
+ * Import csv data.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */
@@ -33,7 +33,7 @@ Import CSV data
 EOF;
 
   /**
-   * Echo and log a message
+   * Echo and log a message.
    *
    * @see sfTask::log()
    * @see sfLoggger::log()

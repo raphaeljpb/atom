@@ -41,7 +41,7 @@ EOF;
 class SitemapInformationObjectUrl extends AbstractSitemapUrl
 {
   /**
-   * A map of (int)levelOfDescriptionId => (string)priority
+   * A map of (int)levelOfDescriptionId => (string)priority.
    */
   public static $priorities = [];
 

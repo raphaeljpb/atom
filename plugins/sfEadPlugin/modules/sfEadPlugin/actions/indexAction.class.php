@@ -18,7 +18,7 @@
  */
 
 /**
- * Render resource in EAD XML format
+ * Render resource in EAD XML format.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  */

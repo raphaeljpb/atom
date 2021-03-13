@@ -18,7 +18,7 @@
  */
 
 /**
- * Digital Object metadata component
+ * Digital Object metadata component.
  *
  * @author     Mike G <mikeg@artefactual.com>
  */

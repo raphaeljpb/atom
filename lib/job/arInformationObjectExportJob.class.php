@@ -33,7 +33,7 @@ class arInformationObjectExportJob extends arExportJob
   protected $params = [];
 
   /**
-   * Find records for export based on export parameters
+   * Find records for export based on export parameters.
    *
    * @param array $parameters Export parameters
    *
@@ -73,7 +73,7 @@ class arInformationObjectExportJob extends arExportJob
   }
 
   /**
-   * Get the current archival standard
+   * Get the current archival standard.
    *
    * @return arElasticSearchPluginQuery AtoM Elasticsearch query
    */
@@ -89,7 +89,7 @@ class arInformationObjectExportJob extends arExportJob
   }
 
   /**
-   * Add clipboard search criteria to ES query
+   * Add clipboard search criteria to ES query.
    */
   protected static function addClipboardCriteria(&$search, $parameters)
   {
@@ -107,7 +107,7 @@ class arInformationObjectExportJob extends arExportJob
   }
 
   /**
-   * Export clipboard item metadata and digital objects
+   * Export clipboard item metadata and digital objects.
    *
    * @param string $path temporary export job working directory
    */
@@ -140,7 +140,7 @@ class arInformationObjectExportJob extends arExportJob
   }
 
   /**
-   * Test if passed level of description id is allowed for export
+   * Test if passed level of description id is allowed for export.
    *
    * @param int $levelId level of description id to test
    *

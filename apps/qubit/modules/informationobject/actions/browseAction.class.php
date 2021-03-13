@@ -574,7 +574,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
   }
 
   /**
-   * Set browse page layout view
+   * Set browse page layout view.
    */
   private function setView($request)
   {

@@ -18,7 +18,7 @@
  */
 
 /**
- * Extend functionality of propel generated "BaseDigitalObject" class
+ * Extend functionality of propel generated "BaseDigitalObject" class.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
@@ -1211,7 +1211,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
   /**
    * Override base delete method to unlink related digital assets (thumbnail
-   * and file)
+   * and file).
    *
    * @param  sfConnection  A database connection
    */
@@ -1271,7 +1271,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Create a digital object representation of an asset
+   * Create a digital object representation of an asset.
    *
    * @param mixed parent object (digital object or object)
    * @param QubitAsset asset to represent
@@ -1365,7 +1365,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
   /**
    * Populate a digital object from a resource pointed to by a URI
-   * This is for, eg. importing encoded digital objects from XML
+   * This is for, eg. importing encoded digital objects from XML.
    *
    * @param string $uri     remote digital object URI
    * @param array  $options Optional arguments
@@ -1394,7 +1394,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Populate a digital object from a file, but don't store the master
+   * Populate a digital object from a file, but don't store the master.
    *
    * @param string $filepath path to digital object
    * @param array  $options  Optional arguments
@@ -1429,7 +1429,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
   /**
    * Populate a digital object from a base64-encoded character stream.
-   * This is for, eg. importing encoded digital objects from XML
+   * This is for, eg. importing encoded digital objects from XML.
    *
    * @param string $encodedString base64-encoded string
    *
@@ -1452,7 +1452,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Get count of digital objects by media-type
+   * Get count of digital objects by media-type.
    */
   public static function getCount($mediaTypeId, $options = [])
   {
@@ -1469,7 +1469,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
   /**
    * Check whether the digital object usage involves an externally stored
-   * master that's used to generate derivatives
+   * master that's used to generate derivatives.
    *
    * @return bool whether or not usage relies on an external master
    */
@@ -1484,7 +1484,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Get path to asset, relative to sf_web_dir
+   * Get path to asset, relative to sf_web_dir.
    *
    * @return string path to asset
    */
@@ -1521,7 +1521,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Get absolute path to asset
+   * Get absolute path to asset.
    *
    * @return string absolute path to asset
    */
@@ -1531,7 +1531,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Test that image will display in major web browsers
+   * Test that image will display in major web browsers.
    *
    * @return bool
    */
@@ -1541,7 +1541,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Set Mime-type and Filetype all at once
+   * Set Mime-type and Filetype all at once.
    *
    */
   public function setMimeAndMediaType($mimeType = null)
@@ -1560,7 +1560,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
   /**
    * Set default mediaTypeId based on digital asset's mime-type.  Media types
-   * id's are defined in the QubitTerms db
+   * id's are defined in the QubitTerms db.
    *
    * @return mixed integer if mediatype mapped, null if no valid mapping
    */
@@ -1634,7 +1634,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Find QubitDigitalObject by PATH and FILE
+   * Find QubitDigitalObject by PATH and FILE.
    *
    * @param string  a string expected to match on the PATH column
    * @param string  a string expected to match on the FILE column
@@ -1674,7 +1674,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
   /**
    * Return a compound representation for this digital object - generating the
-   * rep if necessary
+   * rep if necessary.
    *
    * @return QubitDigitalObject compound image representation
    */
@@ -1690,7 +1690,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Determine if this digital object is an image, based on mimetype
+   * Determine if this digital object is an image, based on mimetype.
    *
    * @return bool
    */
@@ -1700,7 +1700,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Return true if this is a compound digital object
+   * Return true if this is a compound digital object.
    *
    * @return bool
    */
@@ -1712,7 +1712,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Derive file path for a digital object asset
+   * Derive file path for a digital object asset.
    *
    * All digital object paths are keyed by object id that is the
    * nearest ancestor of the current digital object. Because we may not know
@@ -1772,7 +1772,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Get path to the appropriate generic icon for $mimeType
+   * Get path to the appropriate generic icon for $mimeType.
    *
    * @param string $mimeType
    *
@@ -1920,7 +1920,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Create various representations for this digital object
+   * Create various representations for this digital object.
    *
    * @param int $usageId intended use of asset
    *
@@ -2012,7 +2012,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Set 'page_count' property for this asset
+   * Set 'page_count' property for this asset.
    *
    * NOTE: requires the ImageMagick library
    *
@@ -2054,7 +2054,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Get the number of pages in asset (multi-page file)
+   * Get the number of pages in asset (multi-page file).
    *
    * @return int number of pages
    */
@@ -2085,7 +2085,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Explode multi-page asset into multiple image files
+   * Explode multi-page asset into multiple image files.
    *
    * @return unknown
    */
@@ -2127,7 +2127,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Create an info and digital object tree for multi-page assets
+   * Create an info and digital object tree for multi-page assets.
    *
    * For digital objects that describe a multi-page digital asset (e.g. a
    * multi-page tif image), create a derived asset for each page, create a child
@@ -2271,7 +2271,7 @@ class QubitDigitalObject extends BaseDigitalObject
    */
 
   /**
-   * Create a thumbnail derivative for the current digital object
+   * Create a thumbnail derivative for the current digital object.
    *
    * @return QubitDigitalObject
    */
@@ -2284,7 +2284,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Create a reference derivative for the current digital object
+   * Create a reference derivative for the current digital object.
    *
    * @return QubitDigitalObject The new derived reference digital object
    */
@@ -2319,7 +2319,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Create an derivative of an image (a smaller image ;)
+   * Create an derivative of an image (a smaller image ;).
    *
    * @param int $usageId usage type id
    *
@@ -2362,7 +2362,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Resize this digital object (image)
+   * Resize this digital object (image).
    *
    * @param int $maxwidth  Max width of resized image
    * @param int $maxheight Max height of resized image
@@ -2383,7 +2383,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Resize current digital object according to a specific usage type
+   * Resize current digital object according to a specific usage type.
    *
    * @param int $usageId
    *
@@ -2410,7 +2410,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Allow multiple ways of getting the max dimensions for image by usage
+   * Allow multiple ways of getting the max dimensions for image by usage.
    *
    * @param int $usageId the usage type
    *
@@ -2506,7 +2506,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
   /**
    * Get a valid adapter for the sfThumbnail library (either GD or ImageMagick)
-   * Cache the adapter value because is very expensive to calculate it
+   * Cache the adapter value because is very expensive to calculate it.
    *
    * @return mixed name of adapter on success, false on failure
    */
@@ -2535,7 +2535,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Test if ImageMagick library is installed
+   * Test if ImageMagick library is installed.
    *
    * @return bool true if ImageMagick is found
    */
@@ -2548,7 +2548,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Test if GD Extension for PHP is installed
+   * Test if GD Extension for PHP is installed.
    *
    * @return bool true if GD extension found
    */
@@ -2558,7 +2558,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Wrapper for canThumbnailMimeType() for use on instantiated objects
+   * Wrapper for canThumbnailMimeType() for use on instantiated objects.
    *
    * @return bool
    *
@@ -2570,7 +2570,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Test if current digital object can be thumbnailed
+   * Test if current digital object can be thumbnailed.
    *
    * @param string    The current thumbnailing adapter
    *
@@ -2601,7 +2601,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Return true if derived mimeType is "image/*"
+   * Return true if derived mimeType is "image/*".
    *
    * @param string $filename
    *
@@ -2734,7 +2734,7 @@ class QubitDigitalObject extends BaseDigitalObject
    */
 
   /**
-   * Create video derivatives (either flv movie or thumbnail)
+   * Create video derivatives (either flv movie or thumbnail).
    *
    * @param int $usageId usage type id
    *
@@ -2818,7 +2818,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Test if FFmpeg library is installed
+   * Test if FFmpeg library is installed.
    *
    * @return bool true if FFmpeg is found
    */
@@ -2898,7 +2898,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Return true if derived mimeType is "video/*"
+   * Return true if derived mimeType is "video/*".
    *
    * @param string $filename
    *
@@ -2918,7 +2918,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Create a thumbnail from a video file using FFmpeg library
+   * Create a thumbnail from a video file using FFmpeg library.
    *
    * @param string $originalImageName
    * @param int    $width
@@ -2967,7 +2967,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Test if text extraction is possible
+   * Test if text extraction is possible.
    *
    * @param string mime-type
    *
@@ -2992,7 +2992,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
   /**
    * Extracts text from the current digital object
-   * and creates a 'transcript' property
+   * and creates a 'transcript' property.
    *
    * @return String Text extracted
    */
@@ -3068,7 +3068,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * --------------------------------------------------------------------- */
 
   /**
-   * Set a checksum value for this digital object
+   * Set a checksum value for this digital object.
    *
    * @param string $value   the checksum string
    * @param array  $options optional parameters
@@ -3088,7 +3088,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Generate a checksum from the file specified
+   * Generate a checksum from the file specified.
    *
    * @param string $filename name of file
    *
@@ -3116,7 +3116,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * --------------------------------------------------------------------- */
 
   /**
-   * Setter for "displayAsCompound" property
+   * Setter for "displayAsCompound" property.
    *
    * @param string $value new value for property
    *
@@ -3143,7 +3143,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Getter for related "displayAsCompound" property
+   * Getter for related "displayAsCompound" property.
    *
    * @return string property value
    */
@@ -3157,7 +3157,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Setter for "digitalObjectAltText" property
+   * Setter for "digitalObjectAltText" property.
    *
    * @param string $value new value for property
    *
@@ -3238,7 +3238,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Recursively remove empty directories
+   * Recursively remove empty directories.
    *
    * @param string $dir directory name
    *
@@ -3268,7 +3268,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Check if directory is empty
+   * Check if directory is empty.
    *
    * @param string $dir directory name
    *
@@ -3285,7 +3285,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Check if uploads are allowed
+   * Check if uploads are allowed.
    *
    * @return bool true if allowed
    */
@@ -3295,7 +3295,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Check the upload limit has been reached
+   * Check the upload limit has been reached.
    *
    * @return bool true if reached
    */
@@ -3316,7 +3316,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Check if digital object (master) has an active conditional copyright statement
+   * Check if digital object (master) has an active conditional copyright statement.
    *
    * @return bool
    */
@@ -3374,7 +3374,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Test if $usageId indicates a local file
+   * Test if $usageId indicates a local file.
    *
    * Note: returns false if $usageId is not set
    *
@@ -3404,7 +3404,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Save data as file and attach as an asset
+   * Save data as file and attach as an asset.
    *
    * @param string $filename name of file
    * @param string $contents data to save
@@ -3428,7 +3428,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Remove undesirable characters from a filename
+   * Remove undesirable characters from a filename.
    *
    * @param string $filename incoming file name
    *
@@ -3440,7 +3440,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Transform the php.ini notation for numbers (like '2M') to number of bytes
+   * Transform the php.ini notation for numbers (like '2M') to number of bytes.
    *
    * Taken from http://ca2.php.net/manual/en/function.ini-get.php
    *
@@ -3481,7 +3481,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Download external file via sfWebBrowser and return its temporary location
+   * Download external file via sfWebBrowser and return its temporary location.
    *
    * @param string URI
    * @param array options optional arguments
@@ -3550,7 +3550,7 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Get filename from URI path
+   * Get filename from URI path.
    *
    * @param string URI
    *

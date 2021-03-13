@@ -87,7 +87,7 @@ class ActorBrowseAction extends DefaultBrowseAction
   ];
 
   /**
-   * Return ElasticSearch field(s) for a given "friendly" field name
+   * Return ElasticSearch field(s) for a given "friendly" field name.
    *
    * We do this as we don't want to expose our ElasticSearch schema.
    *

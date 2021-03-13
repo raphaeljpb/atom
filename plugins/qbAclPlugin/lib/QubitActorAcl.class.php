@@ -18,7 +18,7 @@
  */
 
 /**
- * Custom ACL rules for QubitActor resources
+ * Custom ACL rules for QubitActor resources.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
@@ -41,7 +41,7 @@ class QubitActorAcl extends QubitAcl
   protected static $_digitalObjectActions = ['readMaster', 'readReference', 'readThumbnail'];
 
   /**
-   * Do custom ACL checks for QubitActor resources
+   * Do custom ACL checks for QubitActor resources.
    *
    * @param myUser     $user     to authorize
    * @param QubitActor $resource target of the requested action
@@ -66,7 +66,7 @@ class QubitActorAcl extends QubitAcl
 
   /**
    * Check if $user is authorized to do $action on the digital object linked to
-   * this actor
+   * this actor.
    *
    * @param QubitUser $user   to authorize
    * @param string    $action being requested (e.g. "readReference")

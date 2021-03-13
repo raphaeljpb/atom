@@ -18,7 +18,7 @@
  */
 
 /**
- * An OAI set for a single collection
+ * An OAI set for a single collection.
  *
  * @author     Mark Triggs <mark@teaspoon-consulting.com>
  */

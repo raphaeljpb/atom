@@ -44,7 +44,7 @@ class arRestApiPluginUtils
       $dt = new DateTime();
 
       /**
-       * [ TEMPORARY HACK ]
+       * [ TEMPORARY HACK ].
        *
        * ElasticSearch uses UTC but we are storing local times.
        * So their ISO dates are using the Z suffix (stands for UTC). This hack
@@ -72,7 +72,7 @@ class arRestApiPluginUtils
   }
 
   /**
-   * Convert array into JSON, pretty printing it if in dev mode
+   * Convert array into JSON, pretty printing it if in dev mode.
    */
   public static function arrayToJson($data)
   {

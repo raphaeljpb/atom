@@ -18,13 +18,13 @@
  */
 
 /**
- * Write Sitemap XML (URL inclusion protocol)
+ * Write Sitemap XML (URL inclusion protocol).
  *
  */
 class sitemapTask extends sfBaseTask
 {
   /**
-   * Sitemap services for submission
+   * Sitemap services for submission.
    */
   private static $urls = [
     'Google' => 'http://www.google.com/webmasters/sitemaps/ping?sitemap=%s',

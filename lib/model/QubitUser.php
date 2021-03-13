@@ -18,7 +18,7 @@
  */
 
 /**
- * QubitUser model
+ * QubitUser model.
  */
 class QubitUser extends BaseUser
 {
@@ -178,7 +178,7 @@ class QubitUser extends BaseUser
   }
 
   /**
-   * Check if user belongs to *any* of the checkGroup(s) listed
+   * Check if user belongs to *any* of the checkGroup(s) listed.
    *
    * @param mixed $groups - integer value for group id, or array of group ids
    *
@@ -220,7 +220,7 @@ class QubitUser extends BaseUser
   }
 
   /**
-   * Get system admin
+   * Get system admin.
    *
    * We are assuming the first admin user is the system admin
    *
@@ -247,7 +247,7 @@ class QubitUser extends BaseUser
 
   /**
    * Get an array of QubitRepository objects where the current user has been
-   * added explicit access via its own user of any of its groups
+   * added explicit access via its own user of any of its groups.
    *
    * @return QubitUser
    */

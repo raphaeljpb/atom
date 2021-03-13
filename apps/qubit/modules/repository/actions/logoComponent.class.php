@@ -18,7 +18,7 @@
  */
 
 /**
- * Context menu for the repository logo
+ * Context menu for the repository logo.
  *
  */
 class RepositoryLogoComponent extends sfComponent

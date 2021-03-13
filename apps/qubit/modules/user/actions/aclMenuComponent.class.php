@@ -18,7 +18,7 @@
  */
 
 /**
- * Display "aclMenu" navigation menu
+ * Display "aclMenu" navigation menu.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

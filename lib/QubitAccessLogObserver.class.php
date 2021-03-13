@@ -18,7 +18,7 @@
  */
 
 /**
- * Observer of notificiation of access events
+ * Observer of notificiation of access events.
  *
  */
 class QubitAccessLogObserver

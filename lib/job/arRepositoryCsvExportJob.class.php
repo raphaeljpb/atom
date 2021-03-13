@@ -71,7 +71,7 @@ class arRepositoryCsvExportJob extends arExportJob
   }
 
   /**
-   * Export search results as CSV
+   * Export search results as CSV.
    *
    * @param string  Path of file to write CSV data to
    *

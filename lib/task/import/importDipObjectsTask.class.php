@@ -19,7 +19,7 @@
 
 /**
  * Process a CSV file to import digital objects from an Archivematica DIP and
- * associate them with existing information objects in AtoM
+ * associate them with existing information objects in AtoM.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
@@ -72,7 +72,7 @@ class importDipObjectsTask extends arBaseTask
   }
 
   /**
-   * Get value of column, using column name, from array representing row of CSV data
+   * Get value of column, using column name, from array representing row of CSV data.
    *
    * @return void
    */
@@ -153,7 +153,7 @@ EOF;
   }
 
   /**
-   * Make sure argument and option values are valid
+   * Make sure argument and option values are valid.
    *
    * @param array $arguments array of sfCommandArgument instances
    * @param array $options   array of sfCommandOption instances
@@ -304,7 +304,7 @@ EOF;
   }
 
   /**
-   * Import digital objects
+   * Import digital objects.
    *
    * @param array  $digitalObjects Hash with keys of unique value for
    *                               specifying information objects, values:
@@ -374,7 +374,7 @@ EOF;
   }
 
   /**
-   * Get information object using unique identifier
+   * Get information object using unique identifier.
    *
    * @param string $uniqueValue Unique value for specifying information object
    *
@@ -434,7 +434,7 @@ EOF;
   }
 
   /**
-   * Import object, associate with information object, and, optionally, log
+   * Import object, associate with information object, and, optionally, log.
    *
    * @param object QubitInformationObject $informationObject Information object
    * @param string                        $filepath          Path, within DIP, to file
@@ -496,7 +496,7 @@ EOF;
   /**
    * Create a lookup table that will be used to match original filename
    * (example: foo.TIF) with its DIP object filename (example:
-   * 979c4458-21f3-11e1-a4bd-001d09282b9d-foo.jpg)
+   * 979c4458-21f3-11e1-a4bd-001d09282b9d-foo.jpg).
    *
    * The lookup table stores files by their basename in this format:
    *

@@ -18,7 +18,7 @@
  */
 
 /**
- * Run ad-hoc PHP logic contained in a file
+ * Run ad-hoc PHP logic contained in a file.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

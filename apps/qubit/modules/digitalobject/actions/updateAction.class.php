@@ -18,7 +18,7 @@
  */
 
 /**
- * Digital Object - Update database from "edit" form
+ * Digital Object - Update database from "edit" form.
  *
  * @author     david juhasz <david@artefactual.com>
  *

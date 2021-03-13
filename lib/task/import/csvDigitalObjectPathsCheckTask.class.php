@@ -18,7 +18,7 @@
  */
 
 /**
- * Check digital object paths in CSV data
+ * Check digital object paths in CSV data.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

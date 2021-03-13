@@ -18,14 +18,14 @@
  */
 
 /**
- * Display a generic representation of a digital object
+ * Display a generic representation of a digital object.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
 class DigitalObjectShowGenericIconComponent extends sfComponent
 {
   /**
-   * Show a generic representation of a digital object image
+   * Show a generic representation of a digital object image.
    *
    * @param sfWebRequest $request
    */

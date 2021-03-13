@@ -19,7 +19,7 @@
 
 /**
  * This class is used to provide methods that supplement the core Qubit information object with behaviour or
- * presentation features that are specific to the Canadian Rules for Archival Description (RAD) standard
+ * presentation features that are specific to the Canadian Rules for Archival Description (RAD) standard.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  */

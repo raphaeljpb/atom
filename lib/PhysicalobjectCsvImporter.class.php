@@ -20,7 +20,7 @@
 require_once __DIR__.'/../vendor/composer/autoload.php';
 
 /**
- * Importer for Physical Object CSV data
+ * Importer for Physical Object CSV data.
  *
  * @author     David Juhasz <djuhasz@artefactual.com>
  */
@@ -543,7 +543,7 @@ EOM;
   }
 
   /**
-   * Create keymap entry for object
+   * Create keymap entry for object.
    *
    * @param string $sourceName Name of source data
    * @param int    $sourceId   ID from source data
@@ -900,7 +900,7 @@ EOL;
   }
 
   /**
-   * Check if $value should update the current db data
+   * Check if $value should update the current db data.
    */
   protected function shouldUpdateDb($value)
   {

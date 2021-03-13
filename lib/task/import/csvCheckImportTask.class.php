@@ -18,7 +18,7 @@
  */
 
 /**
- * Check csv data
+ * Check csv data.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

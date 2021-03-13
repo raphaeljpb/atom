@@ -18,7 +18,7 @@
  */
 
 /**
- * Digital Object deletion
+ * Digital Object deletion.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

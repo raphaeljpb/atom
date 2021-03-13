@@ -18,7 +18,7 @@
  */
 
 /**
- * Import csv deaccession data
+ * Import csv deaccession data.
  *
  * @author     Steve Breker <sbreker@artefactual.com>
  */

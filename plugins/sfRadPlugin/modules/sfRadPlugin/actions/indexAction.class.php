@@ -18,7 +18,7 @@
  */
 
 /**
- * Information Object - showRad
+ * Information Object - showRad.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  */

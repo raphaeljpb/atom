@@ -18,7 +18,7 @@
  */
 
 /**
- * EAC representation of an Actor
+ * EAC representation of an Actor.
  *
  * @author     Jack Bates <jack@nottheoilrig.com>
  */

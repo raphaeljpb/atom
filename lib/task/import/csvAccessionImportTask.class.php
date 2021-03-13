@@ -18,7 +18,7 @@
  */
 
 /**
- * Import csv accession data
+ * Import csv accession data.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

@@ -18,13 +18,13 @@
  */
 
 /**
- * arElasticSearchPluginUtil
+ * arElasticSearchPluginUtil.
  *
  */
 class arElasticSearchPluginUtil
 {
   /**
-   * Scroll per-page limit to use for bulk queries
+   * Scroll per-page limit to use for bulk queries.
    */
   public const SCROLL_SIZE = 1000;
 
@@ -50,7 +50,7 @@ class arElasticSearchPluginUtil
   /**
    * Given a date string in the format YYYY-MM-DD, if either MM or DD is
    * set to 00 (such as when indexing a MySQL date with *only* the year filled
-   * in), fill in the blank MM or DD with 01s. e.g. 2014-00-00 -> 2014-01-01
+   * in), fill in the blank MM or DD with 01s. e.g. 2014-00-00 -> 2014-01-01.
    *
    * @param  string  date  The date string
    * @param  bool  endDate  If this is set to true, use 12-31 instead
@@ -376,7 +376,7 @@ class arElasticSearchPluginUtil
   }
 
   /**
-   * Escapes the special chars specified in the "escape_queries" setting
+   * Escapes the special chars specified in the "escape_queries" setting.
    *
    * @param string $term Query term to escape
    *
@@ -416,7 +416,7 @@ class arElasticSearchPluginUtil
   }
 
   /**
-   * Scroll through search, returning hit IDs as an array
+   * Scroll through search, returning hit IDs as an array.
    *
    * Scrolled queries are a way to return search result sets larger than the limit
    * index.max_result_window sets. Scrolled results, however, by default expire
@@ -667,7 +667,7 @@ class arElasticSearchPluginUtil
   }
 
   /**
-   * Check whether an i18n field should be included in the list of fields for an _all search
+   * Check whether an i18n field should be included in the list of fields for an _all search.
    *
    * @param string $prefix           The current prefix for the field name, e.g. "creators." for "creators.name"
    * @param string $fieldName        The current field name, e.g. "name" in "creators.name"

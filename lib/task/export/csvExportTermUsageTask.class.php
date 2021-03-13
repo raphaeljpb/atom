@@ -18,7 +18,7 @@
  */
 
 /**
- * Bulk export data about usage of term as CSV
+ * Bulk export data about usage of term as CSV.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

@@ -18,7 +18,7 @@
  */
 
 /**
- * Delete AtoM user
+ * Delete AtoM user.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

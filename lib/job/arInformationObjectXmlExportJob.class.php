@@ -29,7 +29,7 @@ class arInformationObjectXmlExportJob extends arInformationObjectExportJob
   protected $xmlCachingEnabled = false;
 
   /**
-   * Export clipboard item metadata and (optionally) digital objects to $path
+   * Export clipboard item metadata and (optionally) digital objects to $path.
    *
    * @see arInformationObjectExportJob::doExport()
    *
@@ -45,7 +45,7 @@ class arInformationObjectXmlExportJob extends arInformationObjectExportJob
   }
 
   /**
-   * Export resource metadata and (optionally) digital object
+   * Export resource metadata and (optionally) digital object.
    *
    * @param QubitInformationObject $resource object to export
    * @param string                 $path     temporary export job working directory

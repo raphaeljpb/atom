@@ -18,7 +18,7 @@
  */
 
 /**
- * Gearman worker task
+ * Gearman worker task.
  *
  */
 class jobWorkerTask extends arBaseTask

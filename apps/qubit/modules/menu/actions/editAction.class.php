@@ -18,7 +18,7 @@
  */
 
 /**
- * Edit menu
+ * Edit menu.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

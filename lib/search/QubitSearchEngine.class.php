@@ -18,13 +18,13 @@
  */
 
 /**
- * Designed to be extended by arElasticSearchPlugin
+ * Designed to be extended by arElasticSearchPlugin.
  *
  */
 abstract class QubitSearchEngine
 {
   /**
-   * Constructor
+   * Constructor.
    */
   public function __construct()
   {
@@ -41,7 +41,7 @@ abstract class QubitSearchEngine
   }
 
   /**
-   * Log a message
+   * Log a message.
    *
    * @param string $message Log message
    */

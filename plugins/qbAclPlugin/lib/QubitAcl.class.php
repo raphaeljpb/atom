@@ -18,7 +18,7 @@
  */
 
 /**
- * Access Control List (ACL) functionality
+ * Access Control List (ACL) functionality.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
@@ -76,7 +76,7 @@ class QubitAcl
    * Each request is completely unique in PHP however our workers run in a loop
    * where state is held across jobs. This class was built as a singleton so we
    * need this extra method to void the instance when needed when running ACL
-   * checks from a worker process
+   * checks from a worker process.
    */
   public static function destruct()
   {
@@ -84,7 +84,7 @@ class QubitAcl
   }
 
   /**
-   * Test user access to the given resource
+   * Test user access to the given resource.
    *
    * Note: Current sf_user is assumed, but can be overridden with
    * $options['user']
@@ -154,7 +154,7 @@ class QubitAcl
   }
 
   /**
-   * Check if user ($role) can perform $action on $resource
+   * Check if user ($role) can perform $action on $resource.
    *
    * @param myUser     $role     actor's role to authorize
    * @param mixed      $resource target of the requested action
@@ -199,7 +199,7 @@ class QubitAcl
   }
 
   /**
-   * Add permissions to repository access array
+   * Add permissions to repository access array.
    *
    * @param $repositoryAccess input access array
    * @param $permissions QubitQuery permission list
@@ -250,7 +250,7 @@ class QubitAcl
   }
 
   /**
-   * List the repository access rules for the current user
+   * List the repository access rules for the current user.
    *
    * @param $action integer Access privilige being requested
    * @param $options array optional parameters
@@ -393,7 +393,7 @@ class QubitAcl
   }
 
   /**
-   * Get a list of user permissions by action and class of resource
+   * Get a list of user permissions by action and class of resource.
    *
    * @param sfBasicSecurityUser $user   - user session
    * @param string              $action - requested ACL action
@@ -474,7 +474,7 @@ class QubitAcl
   }
 
   /**
-   * Get a new criterion to filter a SQL query by ACL rules
+   * Get a new criterion to filter a SQL query by ACL rules.
    *
    * @param Criteria $criteria
    * @param mixed    $root     - root object for list
@@ -614,7 +614,7 @@ class QubitAcl
   }
 
   /**
-   * Authorize ACL action against the parent of the target resource
+   * Authorize ACL action against the parent of the target resource.
    *
    * E.g. when creating a new resource, authorize the "create" action against
    * the parent of the resource

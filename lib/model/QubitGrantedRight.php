@@ -78,7 +78,7 @@ class QubitGrantedRight extends BaseGrantedRight
   }
 
   /**
-   * Get all the granted rights for a particular information object
+   * Get all the granted rights for a particular information object.
    *
    * @param $id  The information object ID
    * @param $actId  The optional ID for the act type (gets all types by default)
@@ -103,7 +103,7 @@ class QubitGrantedRight extends BaseGrantedRight
   }
 
   /**
-   * Return act_id and permissions for global PREMIS rights settings
+   * Return act_id and permissions for global PREMIS rights settings.
    */
   public static function getPremisSettings()
   {
@@ -127,7 +127,7 @@ class QubitGrantedRight extends BaseGrantedRight
      *   'conditional_thumb'     => int 1,
      *   'disallow_master'       => int 1,
      *   'disallow_reference'    => int 0,
-     *   'disallow_thumb'        => int 0
+     *   'disallow_thumb'        => int 0.
      */
     $permissions = QubitSetting::getByName('premisAccessRightValues');
 

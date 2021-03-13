@@ -61,7 +61,7 @@ class QubitSlug extends BaseSlug
   }
 
   /**
-   * Slugify a specified string
+   * Slugify a specified string.
    *
    * @param string $slug         The string we want to slugify
    * @param bool   $dropArticles Whether or not to drop English articles from the slug.

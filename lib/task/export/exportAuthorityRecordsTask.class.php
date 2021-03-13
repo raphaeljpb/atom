@@ -18,7 +18,7 @@
  */
 
 /**
- * Export authority records to a CSV file
+ * Export authority records to a CSV file.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

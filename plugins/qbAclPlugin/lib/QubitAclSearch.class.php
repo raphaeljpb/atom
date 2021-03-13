@@ -25,7 +25,7 @@
 class QubitAclSearch
 {
   /**
-   * Filter search query by repository
+   * Filter search query by repository.
    *
    * @param \Elastica\Query $query  Search query object
    * @param string          $action Action
@@ -76,7 +76,7 @@ class QubitAclSearch
   }
 
   /**
-   * Filter search query by resource specific ACL
+   * Filter search query by resource specific ACL.
    *
    * @param \Elastica\Query $query Search query object
    * @param mixed           $root  Root object for list
@@ -162,7 +162,7 @@ class QubitAclSearch
   }
 
   /**
-   * Filter search query by resource specific ACL
+   * Filter search query by resource specific ACL.
    *
    * @param \Elastica\Query\BoolQuery $queryBool Search query object
    */

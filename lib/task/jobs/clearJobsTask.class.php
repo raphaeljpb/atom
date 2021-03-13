@@ -18,7 +18,7 @@
  */
 
 /**
- * Clear the AtoM jobs table
+ * Clear the AtoM jobs table.
  *
  * @author     Mike Gale <mikeg@artefactual.com>
  */

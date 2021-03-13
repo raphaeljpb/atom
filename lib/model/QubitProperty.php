@@ -18,7 +18,7 @@
  */
 
 /**
- * Extended methods for Property object model
+ * Extended methods for Property object model.
  *
  * @author Jack Bates <jack@nottheoilrig.com>
  * @author Peter Van Garderen <peter@artefactual.com>
@@ -96,7 +96,7 @@ class QubitProperty extends BaseProperty
   }
 
   /**
-   * Get a unique property associated with object identified by $objectId
+   * Get a unique property associated with object identified by $objectId.
    *
    * @param int    $objectId foreign key to related object
    * @param string $name     name of property

@@ -18,7 +18,7 @@
  */
 
 /**
- * Generate  identify response of the OAI-PMH protocol for the Access to Memory (AtoM)
+ * Generate  identify response of the OAI-PMH protocol for the Access to Memory (AtoM).
  *
  * @author     Mathieu Fortin Library and Archives Canada <mathieu.fortin@lac-bac.gc.ca>
  */

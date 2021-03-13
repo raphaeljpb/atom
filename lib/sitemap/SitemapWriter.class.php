@@ -18,47 +18,47 @@
  */
 
 /**
- * SitemapWriter
+ * SitemapWriter.
  */
 class SitemapWriter
 {
   /**
-   * Instance of XMLWriter
+   * Instance of XMLWriter.
    */
   private $writer;
 
   /**
-   * Batch size
+   * Batch size.
    */
   private $batchSize = 0;
 
   /**
-   * Current sitemap
+   * Current sitemap.
    */
   private $sitemap;
 
   /**
-   * Sitemap index
+   * Sitemap index.
    */
   private $sitemapIndex = 0;
 
   /**
-   * Base URL
+   * Base URL.
    */
   private $baseUrl;
 
   /**
-   * Indent XML output
+   * Indent XML output.
    */
   private $indent = false;
 
   /**
-   * Compress XML output
+   * Compress XML output.
    */
   private $compress = false;
 
   /**
-   * Main document location
+   * Main document location.
    */
   private $file;
 
@@ -68,17 +68,17 @@ class SitemapWriter
   private $ended = false;
 
   /**
-   * Configuration object
+   * Configuration object.
    */
   private $config;
 
   /**
-   * Configuration path
+   * Configuration path.
    */
   private static $configPath = 'config/sitemap.yml';
 
   /**
-   * Constructor
+   * Constructor.
    */
   public function __construct($baseDir, $baseUrl, $indent = false, $compress = false)
   {

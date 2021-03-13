@@ -18,7 +18,7 @@
  */
 
 /**
- * Simple representation of an asset
+ * Simple representation of an asset.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

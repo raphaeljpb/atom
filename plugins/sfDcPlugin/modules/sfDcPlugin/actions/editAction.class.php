@@ -18,7 +18,7 @@
  */
 
 /**
- * Information Object - editDc
+ * Information Object - editDc.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  */

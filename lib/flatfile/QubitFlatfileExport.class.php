@@ -18,7 +18,7 @@
  */
 
 /**
- * Export flatfile data
+ * Export flatfile data.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */
@@ -210,7 +210,7 @@ class QubitFlatfileExport
    */
 
   /**
-   * Set column value in current row if the column's being exported
+   * Set column value in current row if the column's being exported.
    *
    * @param string $column column name
    * @param string $value  value to set current row's column value to
@@ -230,7 +230,7 @@ class QubitFlatfileExport
   }
 
   /**
-   * Set column value in current row to store notes if the column's being exported
+   * Set column value in current row to store notes if the column's being exported.
    *
    * @param string $column     column name
    * @param int    $noteTypeId ID of the type of note to store
@@ -253,7 +253,7 @@ class QubitFlatfileExport
   }
 
   /**
-   * Export a resource as a flatfile row
+   * Export a resource as a flatfile row.
    *
    * @param object $resource object to export
    *
@@ -318,7 +318,7 @@ class QubitFlatfileExport
   }
 
   /**
-   * Prepare row from resource
+   * Prepare row from resource.
    *
    * @return void
    */
@@ -444,7 +444,7 @@ class QubitFlatfileExport
   }
 
   /**
-   * If an array is provided as a value, implode it
+   * If an array is provided as a value, implode it.
    *
    * @param string $value value
    *
@@ -462,7 +462,7 @@ class QubitFlatfileExport
   }
 
   /**
-   * Append row data to file
+   * Append row data to file.
    *
    * @param string $filePath path to file
    * @param array  $row      array of each column's values
@@ -492,7 +492,7 @@ class QubitFlatfileExport
   }
 
   /**
-   * Set digital object URL and checksum values
+   * Set digital object URL and checksum values.
    *
    * If the user has "readMaster" permission use master DO values, otherwise
    * use reference DO values
@@ -522,7 +522,7 @@ class QubitFlatfileExport
   }
 
   /**
-   * Get the highest quality digital object to which the current user has access
+   * Get the highest quality digital object to which the current user has access.
    *
    * @return QubitDigitalObject|null a digital object, or null
    */

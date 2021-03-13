@@ -18,7 +18,7 @@
  */
 
 /**
- * Get JSON representation of relation
+ * Get JSON representation of relation.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

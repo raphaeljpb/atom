@@ -210,7 +210,7 @@ class QubitTaxonomy extends BaseTaxonomy
   }
 
   /**
-   * Get an associative array of terms
+   * Get an associative array of terms.
    */
   public function getTermsAsArray($connection = null)
   {

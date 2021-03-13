@@ -74,7 +74,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Get the filesystem path of the METS file
+   * Get the filesystem path of the METS file.
    *
    * @return string filesystem path and filename of METS file
    */
@@ -108,7 +108,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Search the "objects/" directory by an $fileId to get associate file path
+   * Search the "objects/" directory by an $fileId to get associate file path.
    *
    * @param string $fileId the file identifier for the desired DIP object
    *
@@ -133,7 +133,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Save the AIP metadata to the database
+   * Save the AIP metadata to the database.
    *
    * @return void
    */
@@ -167,7 +167,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Parse AIP name to extract filename
+   * Parse AIP name to extract filename.
    *
    * @return string $filename
    */
@@ -179,7 +179,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Add miscellaneous metadata related to a DIP object
+   * Add miscellaneous metadata related to a DIP object.
    *
    * @param QubitInformationObject $io     target information object
    * @param string                 $fileId METS FILEID
@@ -277,7 +277,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Add dmdSec file metadata to an information object
+   * Add dmdSec file metadata to an information object.
    *
    * If the METS file includes a dmdSec, add the Dublin Core metadata to this
    * informatoin object
@@ -301,7 +301,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Create a QubitDigitalObject and link it to the passed IO
+   * Create a QubitDigitalObject and link it to the passed IO.
    *
    * @param QubitInformationObject $io   parent information object
    * @param string                 $path digital object path
@@ -323,7 +323,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Create a QubitRelation linking $io to $aip
+   * Create a QubitRelation linking $io to $aip.
    *
    * @param QubitAip $aip the QubitRelation->subject
    *
@@ -341,7 +341,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Add METS PREMIS data to the passed information object
+   * Add METS PREMIS data to the passed information object.
    *
    * Adds avaialable PREMIS object, FITS, MediaInfo, PREMIS Events, and Agents
    * data
@@ -368,7 +368,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Add object metadata and files for standard (non-hierarchical) DIP upload
+   * Add object metadata and files for standard (non-hierarchical) DIP upload.
    *
    * Create a parent information object, then create a child information object
    * with attached digital object for each entry in METS fileGrp (USE: Original)
@@ -399,7 +399,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Get a parent information_object for this DIP
+   * Get a parent information_object for this DIP.
    *
    * If the METS file has a dmdSec then a new, intermediate information_object
    * should be created to hold the DC Simple metadata from the dmdSec, and
@@ -445,7 +445,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Build an array of digital object metadata from METS fileGrp file elements
+   * Build an array of digital object metadata from METS fileGrp file elements.
    *
    * @return array digital object metadata, sorted alphabetically
    */
@@ -492,7 +492,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Derive information_object title from digital object filename
+   * Derive information_object title from digital object filename.
    *
    * Use the PREMIS originalName if it exists - if not, find the filename in the
    * DIP "objects/" directory with getAccessCopyPath()
@@ -527,7 +527,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Create an access system record for a DIP object (from <fileGrp> metadata)
+   * Create an access system record for a DIP object (from <fileGrp> metadata).
    *
    * Create an information_object DB record for a DIP object, move the DIP
    * access file to the AtoM uploads/ directory, and link the info object to a
@@ -563,7 +563,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Add object metadata and files for hierarchical DIP upload
+   * Add object metadata and files for hierarchical DIP upload.
    *
    * Read the hierarchical arrangement of the DIP contents from the logical
    * structMap in the METS file.
@@ -602,7 +602,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Create a basic QubitInformationObject from <structMap><div> data
+   * Create a basic QubitInformationObject from <structMap><div> data.
    *
    * Set parent, title, level of description, and publication status
    *
@@ -636,7 +636,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Get or create a "directory" QubitInformationObject
+   * Get or create a "directory" QubitInformationObject.
    *
    * Directory information objects are purely organizational, have minimal
    * metadata (a title and level of description), and have no attached digital
@@ -669,7 +669,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   }
 
   /**
-   * Add digital object metadata, file metadata, and file path to access system
+   * Add digital object metadata, file metadata, and file path to access system.
    *
    * Only files under use original and inside the objects folder will be added
    *

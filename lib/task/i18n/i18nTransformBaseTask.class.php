@@ -179,7 +179,7 @@ abstract class i18nTransformBaseTask extends arBaseTask
   abstract protected function processRow($row, $tableName, $columns);
 
   /**
-   * Update i18n table row with modified values
+   * Update i18n table row with modified values.
    *
    * @param string $table        i18n table name
    * @param int    $id           ID of row in an i18n table

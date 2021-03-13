@@ -18,7 +18,7 @@
  */
 
 /**
- * Global settings
+ * Global settings.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Jack Bates <jack@nottheoilrig.com>
@@ -61,7 +61,7 @@ class SettingsGlobalAction extends sfAction
   }
 
   /**
-   * Populate the Global form with database values (non-localized)
+   * Populate the Global form with database values (non-localized).
    */
   protected function populateGlobalForm()
   {
@@ -118,7 +118,7 @@ class SettingsGlobalAction extends sfAction
   }
 
   /**
-   * Update the global settings in database (non-localized)
+   * Update the global settings in database (non-localized).
    */
   protected function updateGlobalSettings()
   {

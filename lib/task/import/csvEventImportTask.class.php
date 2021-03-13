@@ -18,7 +18,7 @@
  */
 
 /**
- * Import csv event record data
+ * Import csv event record data.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

@@ -18,7 +18,7 @@
  */
 
 /**
- * Display privacy message component
+ * Display privacy message component.
  *
  * @author Steven Breker <sbreker@artefactual.com>
  */

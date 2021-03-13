@@ -18,7 +18,7 @@
  */
 
 /**
- * Repository maintained actors component
+ * Repository maintained actors component.
  *
  */
 class RepositoryMaintainedActorsComponent extends sfComponent

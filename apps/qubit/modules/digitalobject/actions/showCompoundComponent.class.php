@@ -18,14 +18,14 @@
  */
 
 /**
- * Digital Object - display compound digital asset
+ * Digital Object - display compound digital asset.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
 class DigitalObjectShowCompoundComponent extends sfComponent
 {
   /**
-   * Show a page turner for compound digital objects
+   * Show a page turner for compound digital objects.
    *
    * @param sfWebRequest $request
    */

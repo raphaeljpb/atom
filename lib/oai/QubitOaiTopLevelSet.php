@@ -18,7 +18,7 @@
  */
 
 /**
- * An OAI set for all top-level (collection) records
+ * An OAI set for all top-level (collection) records.
  *
  * @author     Mark Triggs <mark@teaspoon-consulting.com>
  */

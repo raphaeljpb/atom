@@ -192,7 +192,7 @@ class ActorEditAction extends DefaultEditAction
   }
 
   /**
-   * Process form fields
+   * Process form fields.
    *
    * @param $field mixed symfony form widget
    *

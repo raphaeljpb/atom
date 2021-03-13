@@ -18,7 +18,7 @@
  */
 
 /**
- * Represent the time, place and/or agent of events in an artifact's history
+ * Represent the time, place and/or agent of events in an artifact's history.
  *
  */
 class QubitAip extends BaseAip
@@ -27,7 +27,7 @@ class QubitAip extends BaseAip
   public $indexOnSave = true;
 
   /**
-   * Additional save functionality (e.g. update search index)
+   * Additional save functionality (e.g. update search index).
    *
    * @param mixed $connection a database connection object
    *
@@ -46,7 +46,7 @@ class QubitAip extends BaseAip
   }
 
   /**
-   * Get AIP by UUID
+   * Get AIP by UUID.
    *
    * @param string $uuid AIP UUID
    *

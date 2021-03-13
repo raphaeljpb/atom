@@ -18,7 +18,7 @@
  */
 
 /**
- * Manage actors in search index
+ * Manage actors in search index.
  *
  * @author     MJ Suhonos <mj@suhonos.ca>
  */
@@ -35,7 +35,7 @@ class arElasticSearchActorPdo
   protected static $converseTermIds;
 
   /**
-   * METHODS
+   * METHODS.
    */
   public function __construct($id, $options = [])
   {

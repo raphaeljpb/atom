@@ -18,7 +18,7 @@
  */
 
 /**
- * Represent the time, place and/or agent of events in an artifact's history
+ * Represent the time, place and/or agent of events in an artifact's history.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Jack Bates <jack@nottheoilrig.com>
@@ -30,7 +30,7 @@ class QubitEvent extends BaseEvent
   public $indexOnSave = true;
 
   /**
-   * Additional save functionality, e.g. update search index
+   * Additional save functionality, e.g. update search index.
    *
    * @param mixed $connection provide a database connection
    *

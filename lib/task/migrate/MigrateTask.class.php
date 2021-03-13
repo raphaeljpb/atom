@@ -18,7 +18,7 @@
  */
 
 /**
- * Migrate qubit data model
+ * Migrate qubit data model.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

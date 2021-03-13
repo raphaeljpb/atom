@@ -18,7 +18,7 @@
  */
 
 /**
- * Actor - showIsaar
+ * Actor - showIsaar.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  */

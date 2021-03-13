@@ -18,7 +18,7 @@
  */
 
 /**
- * Minor adaption of Vic Cherubini's light PDO wrapper
+ * Minor adaption of Vic Cherubini's light PDO wrapper.
  *
  * <http://leftnode.com/entry/the-last-php-pdo-library-you-will-ever-need>
  *

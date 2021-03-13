@@ -18,7 +18,7 @@
  */
 
 /**
- * Manage information objects in search index
+ * Manage information objects in search index.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
@@ -125,7 +125,7 @@ class arElasticSearchInformationObjectPdo
   }
 
   /**
-   * Return an array of ancestors
+   * Return an array of ancestors.
    *
    * @return array of ancestors
    */
@@ -159,7 +159,7 @@ class arElasticSearchInformationObjectPdo
   }
 
   /**
-   * Return an array of children
+   * Return an array of children.
    *
    * @return array of children
    */
@@ -181,7 +181,7 @@ class arElasticSearchInformationObjectPdo
   }
 
   /**
-   * Return the closest repository
+   * Return the closest repository.
    *
    * @return QubitRepository
    */
@@ -475,7 +475,7 @@ class arElasticSearchInformationObjectPdo
   }
 
   /**
-   * Get text transcript, if one exists
+   * Get text transcript, if one exists.
    */
   public function getTranscript()
   {
@@ -503,7 +503,7 @@ class arElasticSearchInformationObjectPdo
   }
 
   /**
-   * Get finding aid text transcript, if one exists
+   * Get finding aid text transcript, if one exists.
    */
   public function getFindingAidTranscript()
   {
@@ -526,7 +526,7 @@ class arElasticSearchInformationObjectPdo
   }
 
   /**
-   * Get finding aid status
+   * Get finding aid status.
    */
   public function getFindingAidStatus()
   {

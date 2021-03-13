@@ -295,7 +295,7 @@ class TermEditAction extends DefaultEditAction
   }
 
   /**
-   * Process form fields
+   * Process form fields.
    *
    * @param $field mixed symfony form widget
    *
@@ -551,7 +551,7 @@ class TermEditAction extends DefaultEditAction
   }
 
   /**
-   * Process form
+   * Process form.
    *
    * @return void
    */

@@ -18,7 +18,7 @@
  */
 
 /**
- * Page elements
+ * Page elements.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Jack Bates <jack@nottheoilrig.com>

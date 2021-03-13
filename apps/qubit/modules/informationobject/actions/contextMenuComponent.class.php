@@ -18,7 +18,7 @@
  */
 
 /**
- * Context menu for information objects
+ * Context menu for information objects.
  *
  * @author Peter Van Garderen <peter@artefactual.com>
  * @author David Juhasz <david@artefactual.com>

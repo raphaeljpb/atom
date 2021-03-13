@@ -25,7 +25,7 @@
 class QubitOaiHarvest extends BaseOaiHarvest
 {
   /**
-   * Get last harvest for a repository
+   * Get last harvest for a repository.
    *
    * @var int id, the id for the repository
    *

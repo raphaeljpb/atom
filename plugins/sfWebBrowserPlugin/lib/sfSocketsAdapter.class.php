@@ -29,7 +29,7 @@ class sfSocketsAdapter
   }
 
   /**
-   * Submits a request
+   * Submits a request.
    *
    * @param string  The request uri
    * @param string  The request method

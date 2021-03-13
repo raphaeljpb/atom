@@ -31,7 +31,7 @@ class sfGDAdapter
 
   /**
    * List of accepted image types based on MIME
-   * descriptions that this adapter supports
+   * descriptions that this adapter supports.
    */
   protected $imgTypes = [
     'image/jpeg',
@@ -41,7 +41,7 @@ class sfGDAdapter
   ];
 
   /**
-   * Stores function names for each image type
+   * Stores function names for each image type.
    */
   protected $imgLoaders = [
     'image/jpeg' => 'imagecreatefromjpeg',
@@ -51,7 +51,7 @@ class sfGDAdapter
   ];
 
   /**
-   * Stores function names for each image type
+   * Stores function names for each image type.
    */
   protected $imgCreators = [
     'image/jpeg' => 'imagejpeg',

@@ -18,7 +18,7 @@
  */
 
 /**
- * Manage functions in search index
+ * Manage functions in search index.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */
@@ -33,7 +33,7 @@ class arElasticSearchFunctionObjectPdo
   protected static $statements;
 
   /**
-   * METHODS
+   * METHODS.
    */
   public function __construct($id, $options = [])
   {

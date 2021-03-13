@@ -18,7 +18,7 @@
  */
 
 /**
- * Settings module - generic form definition
+ * Settings module - generic form definition.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

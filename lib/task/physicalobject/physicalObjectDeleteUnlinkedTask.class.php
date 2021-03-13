@@ -18,7 +18,7 @@
  */
 
 /**
- * Delete unlinked physical objects
+ * Delete unlinked physical objects.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

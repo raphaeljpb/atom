@@ -18,7 +18,7 @@
  */
 
 /**
- * Normalize taxonomy
+ * Normalize taxonomy.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

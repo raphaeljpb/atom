@@ -246,7 +246,7 @@ class sfInstall
 
   /**
    * Check that memory_limit ini value meets Qubit's minimum requirements
-   * (currently 64 MB)
+   * (currently 64 MB).
    *
    * @return current memory limit if less than 64M
    */

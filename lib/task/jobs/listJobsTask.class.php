@@ -18,7 +18,7 @@
  */
 
 /**
- * List AtoM job information
+ * List AtoM job information.
  *
  * @author     Mike Gale <mikeg@artefactual.com>
  */

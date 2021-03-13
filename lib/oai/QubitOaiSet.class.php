@@ -18,14 +18,14 @@
  */
 
 /**
- * The interface provided by OAI set implementations
+ * The interface provided by OAI set implementations.
  *
  * @author     Mark Triggs <mark@teaspoon-consulting.com>
  */
 interface QubitOaiSet
 {
   /**
-   * Query OAI set membership by record
+   * Query OAI set membership by record.
    *
    * @param mixed $record A record that can be part of an OAI set
    *
@@ -34,21 +34,21 @@ interface QubitOaiSet
   public function contains($record);
 
   /**
-   * The OAI set specification for the current set
+   * The OAI set specification for the current set.
    *
    * @return string An OAI set specification
    */
   public function setSpec();
 
   /**
-   * The name of the current OAI set
+   * The name of the current OAI set.
    *
    * @return string A display name
    */
   public function getName();
 
   /**
-   * Apply the current set's restrictions to $criteria
+   * Apply the current set's restrictions to $criteria.
    *
    * @param Criteria $criteria The search criteria to be modified
    *

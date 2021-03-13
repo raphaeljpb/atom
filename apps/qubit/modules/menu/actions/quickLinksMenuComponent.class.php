@@ -18,7 +18,7 @@
  */
 
 /**
- * Display "quicklinks" navigation menu
+ * Display "quicklinks" navigation menu.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

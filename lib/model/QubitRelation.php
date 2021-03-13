@@ -32,7 +32,7 @@ class QubitRelation extends BaseRelation
   public $indexObjectOnDelete = true;
 
   /**
-   * Additional save functionality (e.g. update search index)
+   * Additional save functionality (e.g. update search index).
    *
    * @param mixed $connection a database connection object
    *
@@ -134,7 +134,7 @@ class QubitRelation extends BaseRelation
   }
 
   /**
-   * Get all relations from/to given object $id
+   * Get all relations from/to given object $id.
    *
    * @param int   $id      primary key of object
    * @param array $options optional parameters
@@ -163,7 +163,7 @@ class QubitRelation extends BaseRelation
   }
 
   /**
-   * Get related subject objects via QubitRelation many-to-many relationship
+   * Get related subject objects via QubitRelation many-to-many relationship.
    *
    * @param string $className type of objects to return
    * @param int    $objectId  primary key of "object" QubitObject
@@ -187,7 +187,7 @@ class QubitRelation extends BaseRelation
   }
 
   /**
-   * Get related "object" (semantic) QubitObjects
+   * Get related "object" (semantic) QubitObjects.
    *
    * @param string $className type of objects to return
    * @param int    $subjectId primary key of "subject" QubitObject
@@ -211,7 +211,7 @@ class QubitRelation extends BaseRelation
   }
 
   /**
-   * Get opposite vertex of relation
+   * Get opposite vertex of relation.
    *
    * @param int $referenceId primary key of reference object
    *

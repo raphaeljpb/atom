@@ -19,7 +19,7 @@
 
 /**
  * Restore i18n strings lost when XLIFF files were broken into plugin-specific
- * directories
+ * directories.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
@@ -30,7 +30,7 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
 
   /**
    * Override sfI18nApplicationExtract::configure() so we extract from plugin
-   * XLIFF files
+   * XLIFF files.
    */
   public function configure()
   {
@@ -183,7 +183,7 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
   }
 
   /**
-   * Extracts i18n strings from YML fixtures
+   * Extracts i18n strings from YML fixtures.
    *
    * @param string $dir The PHP full path name
    */

@@ -18,7 +18,7 @@
  */
 
 /**
- * Jobs subclass for export related methods
+ * Jobs subclass for export related methods.
  *
  * @author     Mike G <mikeg@artefactual.com>
  */
@@ -128,7 +128,7 @@ class arExportJob extends arBaseJob
 
   /**
    * Get the jobs download directory, a subdirectory of main AtoM downloads
-   * directory
+   * directory.
    *
    * @return string directory path
    */
@@ -172,7 +172,7 @@ class arExportJob extends arBaseJob
   }
 
   /**
-   * Create ZIP file from exported files
+   * Create ZIP file from exported files.
    *
    * @param string   Path of file to write CSV data to
    * @param bool  Optional: Whether to include digital objects
@@ -237,7 +237,7 @@ class arExportJob extends arBaseJob
   }
 
   /**
-   * Copy a digital object to the temporary job directory for export
+   * Copy a digital object to the temporary job directory for export.
    *
    * @param mixed  $resource the object to which the digital object is attached
    * @param string $tempDir  the temporary export job directory
@@ -346,7 +346,7 @@ class arExportJob extends arBaseJob
   }
 
   /**
-   * Log export progress every LOG_INTERVAL rows and clear Qubit class caches
+   * Log export progress every LOG_INTERVAL rows and clear Qubit class caches.
    *
    * @return void
    */

@@ -18,7 +18,7 @@
  */
 
 /**
- * Import csv data using custom logic defined in an external file
+ * Import csv data using custom logic defined in an external file.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

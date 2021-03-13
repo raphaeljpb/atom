@@ -18,7 +18,7 @@
  */
 
 /**
- * Repository - editIsdiah
+ * Repository - editIsdiah.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  */

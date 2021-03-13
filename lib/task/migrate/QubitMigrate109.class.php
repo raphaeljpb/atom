@@ -18,7 +18,7 @@
  */
 
 /**
- * Upgrade qubit data from version 1.0.9 to 1.1 schema
+ * Upgrade qubit data from version 1.0.9 to 1.1 schema.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
@@ -41,7 +41,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Controller for calling methods to alter data
+   * Controller for calling methods to alter data.
    *
    * @return QubitMigrate109 this object
    */
@@ -260,7 +260,7 @@ class QubitMigrate109 extends QubitMigrate
    * Slugs are inserted when some resources are inserted, but slugs are dumped
    * separately when data is dumped.  So loading slug data will try to insert
    * duplicate slugs.  To work around this, turn slugs into resource properties
-   * and drop slug data
+   * and drop slug data.
    */
   protected function slugData()
   {
@@ -292,7 +292,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Call all sort methods
+   * Call all sort methods.
    *
    * @return QubitMigrate109 this object
    */
@@ -309,7 +309,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 40: Update static page release number to 1.1
+   * Ver 40: Update static page release number to 1.1.
    *
    * @return QubitMigrate109 this object
    */
@@ -331,7 +331,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 41: Merge alternate labels from related terms into other_name table
+   * Ver 41: Merge alternate labels from related terms into other_name table.
    *
    * @return QubitMigrate109 this object
    */
@@ -368,7 +368,7 @@ class QubitMigrate109 extends QubitMigrate
 
   /**
    * Ver 42: Change Term constant "TERM_RELATION_EQUIVALENCE_ID" to
-   * "ALTERNATIVE_LABEL_ID"
+   * "ALTERNATIVE_LABEL_ID".
    *
    * @return QubitMigrate109 this object
    */
@@ -386,7 +386,7 @@ class QubitMigrate109 extends QubitMigrate
 
   /**
    * Ver 43: Activate sfEacPlugin, sfIsaarPlugin, sfIsdiahPlugin
-   * and sfSkosPlugin plugins
+   * and sfSkosPlugin plugins.
    *
    * @return QubitMigrate109 this object
    */
@@ -421,7 +421,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 44: Update taxonomy paths like revision 7131 and 7132
+   * Ver 44: Update taxonomy paths like revision 7131 and 7132.
    *
    * @return QubitMigrate109 this object
    */
@@ -442,7 +442,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 45: Add check_for_updates QubitSetting
+   * Ver 45: Add check_for_updates QubitSetting.
    *
    * @return QubitMigrate109 this object
    */
@@ -461,7 +461,7 @@ class QubitMigrate109 extends QubitMigrate
 
   /**
    * Ver 46: Change taxonomy name "ISDF Relation Type" -> "Function Relation
-   * Type"
+   * Type".
    *
    * @return QubitMigrate109 this object
    */
@@ -476,7 +476,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 47: Make an educated guess at source_standard for legacy data
+   * Ver 47: Make an educated guess at source_standard for legacy data.
    *
    * @return QubitMigrate109 this object
    */
@@ -543,7 +543,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 48: Add explode_multipage_files QubitSetting
+   * Ver 48: Add explode_multipage_files QubitSetting.
    *
    * @return QubitMigrate109 this object
    */
@@ -561,7 +561,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 49: Add show_tooltips QubitSetting
+   * Ver 49: Add show_tooltips QubitSetting.
    *
    * @return QubitMigrate109 this object
    */
@@ -579,7 +579,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 50: Add "function" UI label QubitSetting
+   * Ver 50: Add "function" UI label QubitSetting.
    *
    * @return QubitMigrate109 this object
    */
@@ -601,7 +601,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 51: Add descriptionUpdates to Admin menu
+   * Ver 51: Add descriptionUpdates to Admin menu.
    *
    * @return QubitMigrate109 this object
    */
@@ -619,7 +619,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 52: Add default publication status with initial value "draft"
+   * Ver 52: Add default publication status with initial value "draft".
    *
    * @return QubitMigrate109 this object
    */
@@ -635,7 +635,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 53: Explicitly set publication status on all info objects
+   * Ver 53: Explicitly set publication status on all info objects.
    *
    * @return QubitMigrate109 this object
    */
@@ -692,7 +692,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 54: Activate sfIsdfPlugin plugin
+   * Ver 54: Activate sfIsdfPlugin plugin.
    *
    * @return QubitMigrate109 this object
    */
@@ -727,7 +727,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Ver 62: Update name of QubitTerm::RELATION_NOTE_DATE_ID
+   * Ver 62: Update name of QubitTerm::RELATION_NOTE_DATE_ID.
    *
    * @return QubitMigrate109 this object
    */
@@ -759,7 +759,7 @@ class QubitMigrate109 extends QubitMigrate
 
   /**
    * Sort term objects with pre-defined IDs to start of array to prevent
-   * pre-emptive assignment by auto-increment
+   * pre-emptive assignment by auto-increment.
    *
    * @return QubitMigrate109 this object
    */
@@ -872,7 +872,7 @@ class QubitMigrate109 extends QubitMigrate
   }
 
   /**
-   * Sort ORM classes to avoid foreign key constraint failures on data load
+   * Sort ORM classes to avoid foreign key constraint failures on data load.
    *
    * @return QubitMigrate109 this object
    */

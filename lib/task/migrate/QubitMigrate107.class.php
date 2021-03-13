@@ -18,14 +18,14 @@
  */
 
 /**
- * Upgrade qubit data from version 1.0.7 to 1.0.8 schema
+ * Upgrade qubit data from version 1.0.7 to 1.0.8 schema.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitMigrate107 extends QubitMigrate
 {
   /**
-   * Controller for calling methods to alter data
+   * Controller for calling methods to alter data.
    *
    * @return QubitMigrate107 this object
    */
@@ -63,7 +63,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Call all sort methods
+   * Call all sort methods.
    *
    * @return QubitMigrate107 this object
    */
@@ -297,7 +297,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Add the 'Actor Relation Type' taxonomy and terms
+   * Add the 'Actor Relation Type' taxonomy and terms.
    *
    * @return QubitMigrate107 this object
    */
@@ -341,7 +341,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Add the 'Actor Relation Note' taxonomy and terms
+   * Add the 'Actor Relation Note' taxonomy and terms.
    *
    * @return QubitMigrate107 this object
    */
@@ -372,7 +372,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Add 'term relation type' taxonomy and terms
+   * Add 'term relation type' taxonomy and terms.
    *
    * @return QubitMigrate107 this object
    */
@@ -403,7 +403,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Add 'Status' taxonomies and terms
+   * Add 'Status' taxonomies and terms.
    *
    * @return QubitMigrate107 this object
    */
@@ -525,7 +525,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Alter QubitEvent data
+   * Alter QubitEvent data.
    *
    * @return QubitMigrate107 this object
    */
@@ -550,7 +550,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Alter QubitMenu data
+   * Alter QubitMenu data.
    *
    * @return QubitMigrate107 this object
    */
@@ -707,7 +707,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Alter QubitProperty data
+   * Alter QubitProperty data.
    *
    * @return QubitMigrate107 this object
    */
@@ -782,7 +782,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Alter QubitSetting data
+   * Alter QubitSetting data.
    *
    * @return QubitMigrate107 this object
    */
@@ -898,7 +898,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Alter QubitStaticPage data
+   * Alter QubitStaticPage data.
    *
    * @return QubitMigrate107 this object
    */
@@ -920,7 +920,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Alter QubitStatus data
+   * Alter QubitStatus data.
    *
    * @return QubitMigrate107 this object
    */
@@ -955,7 +955,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Alter QubitTerms data
+   * Alter QubitTerms data.
    *
    * @return QubitMigrate107 this object
    */
@@ -1057,7 +1057,7 @@ class QubitMigrate107 extends QubitMigrate
 
   /**
    * Sort term objects with pre-defined IDs to start of array to prevent
-   * pre-emptive assignment IDs by auto-increment
+   * pre-emptive assignment IDs by auto-increment.
    *
    * @return QubitMigrate107 this object
    */
@@ -1162,7 +1162,7 @@ class QubitMigrate107 extends QubitMigrate
   }
 
   /**
-   * Sort ORM classes to avoid foreign key constraint failures on data load
+   * Sort ORM classes to avoid foreign key constraint failures on data load.
    *
    * @return QubitMigrate107 this object
    */

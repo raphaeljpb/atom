@@ -18,7 +18,7 @@
  */
 
 /**
- * Settings module - "Permissions" form definition
+ * Settings module - "Permissions" form definition.
  *
  * @author     Andy Koch <koch.andy@gmail.com>
  */

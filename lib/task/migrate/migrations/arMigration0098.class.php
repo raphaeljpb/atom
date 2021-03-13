@@ -32,7 +32,7 @@ class arMigration0098
     MIN_MILESTONE = 1; // The minimum milestone required
 
   /**
-   * Upgrade
+   * Upgrade.
    *
    * @return bool True if the upgrade succeeded, False otherwise
    */

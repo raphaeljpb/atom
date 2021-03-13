@@ -18,7 +18,7 @@
  */
 
 /**
- * Information Object - editIsad
+ * Information Object - editIsad.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Jesús García Crespo <correo@sevein.com>

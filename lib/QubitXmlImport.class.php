@@ -404,7 +404,7 @@ class QubitXmlImport
   }
 
   /**
-   * Return true if import had errors
+   * Return true if import had errors.
    *
    * @return bool
    */
@@ -414,7 +414,7 @@ class QubitXmlImport
   }
 
   /**
-   * Return array of error messages
+   * Return array of error messages.
    *
    * @return unknown
    */
@@ -424,7 +424,7 @@ class QubitXmlImport
   }
 
   /**
-   * Get the root object for the import
+   * Get the root object for the import.
    *
    * @return mixed the root object (object type depends on import type)
    */
@@ -434,7 +434,7 @@ class QubitXmlImport
   }
 
   /**
-   * Set the parent resource for the import
+   * Set the parent resource for the import.
    */
   public function setParent($parentId)
   {
@@ -442,7 +442,7 @@ class QubitXmlImport
   }
 
   /**
-   * Replace </lb> tags for '\n'
+   * Replace </lb> tags for '\n'.
    *
    * @return node value without linebreaks tags
    */
@@ -487,7 +487,7 @@ class QubitXmlImport
    * Run filter methods based on Filters array specified per node in the template
    * .yml file config. This function will process filters against an XML node
    * passed in by reference so no need to return the node after it is processed.
-   * Filter setup example (see ead.yml, edition):
+   * Filter setup example (see ead.yml, edition):.
    *
    * Multiple tag filters can be specified for a given XML node. Each filter can
    * specify it's own class and method for processing.
@@ -525,7 +525,7 @@ class QubitXmlImport
   }
 
   /**
-   * Normalize node, replaces <p> and <lb/>
+   * Normalize node, replaces <p> and <lb/>.
    *
    * @return node value normalized
    */
@@ -582,7 +582,7 @@ class QubitXmlImport
   }
 
   /**
-   * modified helper methods from (http://www.php.net/manual/en/ref.dom.php):
+   * modified helper methods from (http://www.php.net/manual/en/ref.dom.php):.
    *
    * - create a DOMDocument from a file
    * - parse the namespaces in it
@@ -1113,7 +1113,7 @@ class QubitXmlImport
   }
 
   /**
-   * Run presave logic (only available for information objects and actors)
+   * Run presave logic (only available for information objects and actors).
    *
    * This method will determine if a new record should be created, skipped or replaced
    * based on the update, skip and limit options
@@ -1254,7 +1254,7 @@ class QubitXmlImport
    * Check if an information object passes the limit option. Passes when:
    * - The limit option is not set
    * - The limit option is the slug of the resource's collection root
-   * - The limit option is the slug of the resource's inherit repository
+   * - The limit option is the slug of the resource's inherit repository.
    *
    * @param QubitInformationObject $io The information object to check
    *
@@ -1289,7 +1289,7 @@ class QubitXmlImport
   /**
    * Check if an actor passes the limit option. Passes when:
    * - The limit option is not set
-   * - The limit option is the slug of the resource's maintaining repository
+   * - The limit option is the slug of the resource's maintaining repository.
    *
    * @param QubitActor $actor The actor object to check
    *
@@ -1317,7 +1317,7 @@ class QubitXmlImport
   }
 
   /**
-   * Obtain the limit type (class_name) and id based on the limit option slug
+   * Obtain the limit type (class_name) and id based on the limit option slug.
    *
    * @return mixed bool false if no option set or no slug found or
    *               stdClass object with 'id' and 'class_name' properties

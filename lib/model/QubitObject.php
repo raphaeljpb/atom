@@ -277,7 +277,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   }
 
   /**
-   * Required by Zend_Acl_Resource_Interface interface
+   * Required by Zend_Acl_Resource_Interface interface.
    */
   public function getResourceId()
   {
@@ -386,7 +386,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   }
 
   /**
-   * Get the digital object's public URL
+   * Get the digital object's public URL.
    *
    * @return string digital object URL or null
    */
@@ -466,7 +466,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   }
 
   /**
-   * Get the digital object's checksum value
+   * Get the digital object's checksum value.
    *
    * @return string digital object checksum or null
    */
@@ -479,7 +479,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   }
 
   /**
-   * Check if this object is linked to a text (PDF) digital object
+   * Check if this object is linked to a text (PDF) digital object.
    *
    * @return bool true if related digital object has mediaType of "text"
    */
@@ -573,7 +573,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   }
 
   /**
-   * Get a specific physical object related to this object
+   * Get a specific physical object related to this object.
    *
    * @param int $physicalObjectId the id of the related physical object
    *
@@ -589,7 +589,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   }
 
   /**
-   * Get all physical objects related to this object
+   * Get all physical objects related to this object.
    *
    */
   public function getPhysicalObjects()

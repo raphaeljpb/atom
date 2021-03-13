@@ -18,7 +18,7 @@
  */
 
 /**
- * Import csv data
+ * Import csv data.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */
@@ -198,7 +198,7 @@ abstract class csvImportBaseTask extends arBaseTask
   }
 
   /**
-   * Import physical objects
+   * Import physical objects.
    */
   public static function importPhysicalObjects($self)
   {
@@ -272,7 +272,7 @@ abstract class csvImportBaseTask extends arBaseTask
   }
 
   /**
-   * Import events
+   * Import events.
    */
   public static function importEvents(&$import)
   {
@@ -518,7 +518,7 @@ abstract class csvImportBaseTask extends arBaseTask
 
   /**
    * Validate import-related options, throwing exceptions or warning when
-   * appropriate
+   * appropriate.
    *
    * @param array $options options
    *
@@ -586,7 +586,7 @@ abstract class csvImportBaseTask extends arBaseTask
   }
 
   /**
-   * Checks to see if a particular option is supported
+   * Checks to see if a particular option is supported.
    *
    * @param string $name option name
    *

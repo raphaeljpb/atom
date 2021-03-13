@@ -18,7 +18,7 @@
  */
 
 /**
- * Manage aips in search index
+ * Manage aips in search index.
  *
  */
 class arElasticSearchAipPdo
@@ -32,7 +32,7 @@ class arElasticSearchAipPdo
   protected static $statements;
 
   /**
-   * METHODS
+   * METHODS.
    */
   public function __construct($id, $options = [])
   {

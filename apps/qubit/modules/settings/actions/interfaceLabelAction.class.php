@@ -18,7 +18,7 @@
  */
 
 /**
- * Interface labels
+ * Interface labels.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Jack Bates <jack@nottheoilrig.com>
@@ -63,7 +63,7 @@ class SettingsInterfaceLabelAction extends sfAction
   }
 
   /**
-   * Populate the ui_label form with database values (localized)
+   * Populate the ui_label form with database values (localized).
    */
   protected function populateUiLabelForm($form)
   {
@@ -74,7 +74,7 @@ class SettingsInterfaceLabelAction extends sfAction
   }
 
   /**
-   * Update ui_label db values with form values (localized)
+   * Update ui_label db values with form values (localized).
    *
    * @return $this
    */

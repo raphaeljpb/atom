@@ -57,7 +57,7 @@ class QubitObjectTermRelation extends BaseObjectTermRelation
   }
 
   /**
-   * Get first ObjectTermRelation with given $objectId
+   * Get first ObjectTermRelation with given $objectId.
    *
    * @param int $objectId foreign key to object
    *

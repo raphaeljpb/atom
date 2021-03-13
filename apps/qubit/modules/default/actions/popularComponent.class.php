@@ -18,7 +18,7 @@
  */
 
 /**
- * Check for updates component
+ * Check for updates component.
  *
  */
 class DefaultPopularComponent extends sfComponent

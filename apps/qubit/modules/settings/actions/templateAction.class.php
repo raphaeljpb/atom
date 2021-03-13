@@ -18,7 +18,7 @@
  */
 
 /**
- * Default template
+ * Default template.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Jack Bates <jack@nottheoilrig.com>
@@ -56,7 +56,7 @@ class SettingsTemplateAction extends sfAction
   }
 
   /**
-   * Populate the default template settings from the database (non-localized)
+   * Populate the default template settings from the database (non-localized).
    */
   protected function populateDefaultTemplateForm($form)
   {
@@ -73,7 +73,7 @@ class SettingsTemplateAction extends sfAction
   }
 
   /**
-   * Update default template db values with form values (non-localized)
+   * Update default template db values with form values (non-localized).
    *
    * @return $this;
    */

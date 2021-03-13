@@ -18,7 +18,7 @@
  */
 
 /**
- * Regenerate nested set column values
+ * Regenerate nested set column values.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

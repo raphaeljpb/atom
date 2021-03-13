@@ -18,7 +18,7 @@
  */
 
 /**
- * Asynchronous job to export clipboard actor data and digital objects
+ * Asynchronous job to export clipboard actor data and digital objects.
  *
  */
 class arActorExportJob extends arExportJob
@@ -29,7 +29,7 @@ class arActorExportJob extends arExportJob
   protected $downloadFileExtension = 'zip';
 
   /**
-   * Create and return an ES search for clipboard actor records
+   * Create and return an ES search for clipboard actor records.
    *
    * @param array $parameters job parameters
    *
@@ -52,7 +52,7 @@ class arActorExportJob extends arExportJob
   }
 
   /**
-   * Export actor metadata and related digital objects if appropriate
+   * Export actor metadata and related digital objects if appropriate.
    *
    * @param string $path to tempoarary export directory
    */

@@ -18,7 +18,7 @@
  */
 
 /**
- * Form for adding and editing related events
+ * Form for adding and editing related events.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

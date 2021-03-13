@@ -18,7 +18,7 @@
  */
 
 /**
- * Information Object - showDc
+ * Information Object - showDc.
  *
  * @author     Peter Van Garderen <peter@artefactual.com>
  */

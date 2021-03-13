@@ -18,7 +18,7 @@
  */
 
 /**
- * ACL conditional assert
+ * ACL conditional assert.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

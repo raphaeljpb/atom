@@ -23,7 +23,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   public $indexOnSave = false;
 
   /**
-   * Call this function when casting object instance as type string
+   * Call this function when casting object instance as type string.
    *
    * @return string Physical Object Name
    */
@@ -74,7 +74,7 @@ class QubitPhysicalObject extends BasePhysicalObject
 
   /**
    * Overwrite BasePhysicalObject::delete() method to add cascading delete
-   * logic
+   * logic.
    *
    * @param mixed $connection a database connection object
    */
@@ -86,7 +86,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   }
 
   /**
-   * Delete relation records linking this physical object to information objects
+   * Delete relation records linking this physical object to information objects.
    */
   public function deleteInformationObjectRelations()
   {
@@ -100,7 +100,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   }
 
   /**
-   * Get related information object via QubitRelation relationship
+   * Get related information object via QubitRelation relationship.
    *
    * @param array $options list of options to pass to QubitQuery
    *
@@ -117,7 +117,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   }
 
   /**
-   * Get physical objects by name and location
+   * Get physical objects by name and location.
    *
    * @param name  The name of the physical object
    * @param location  The location of the physical object
@@ -146,7 +146,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   }
 
   /**
-   * Get physical objects by name
+   * Get physical objects by name.
    *
    * @param name    The name of the physical object
    * @param options Array of optional paramaters
@@ -227,7 +227,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   }
 
   /**
-   * Add new information object relations
+   * Add new information object relations.
    *
    * @param array newInfobjIds array of new information object ids to link
    */
@@ -252,7 +252,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   }
 
   /**
-   * Update
+   * Update.
    */
   public function updateInfobjRelations(array $relatedInfobjIds)
   {
@@ -331,7 +331,7 @@ SQL;
   }
 
   /**
-   * An quick update of an existing physical_object database row
+   * An quick update of an existing physical_object database row.
    *
    * If passed data wouldn't alter the current db data, return false without
    * writing to the database

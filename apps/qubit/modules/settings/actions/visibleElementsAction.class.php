@@ -18,7 +18,7 @@
  */
 
 /**
- * List of qubit settings
+ * List of qubit settings.
  *
  * @author     Wu liu <wu.liu@usask.ca>
  */

@@ -18,14 +18,14 @@
  */
 
 /**
- * Generate the OAI-PMH response
+ * Generate the OAI-PMH response.
  *
  * @author     Mathieu Fortin Library and Archives Canada <mathieu.fortin@lac-bac.gc.ca>
  */
 class arOaiPluginErrorAction extends sfAction
 {
   /**
-   * Executes action
+   * Executes action.
    *
    * @param sfRequest $request A request object
    */

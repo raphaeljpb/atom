@@ -19,14 +19,14 @@
 
 /**
  * Asynchronous job to export clipboard actor data to a CSV document, plus
- * related digital objects when requested
+ * related digital objects when requested.
  *
  */
 class arActorCsvExportJob extends arActorExportJob
 {
   /**
    * Export search results as CSV, and include related digital objects when
-   * requested
+   * requested.
    *
    * @see arActorExportJob::doExport()
    *
@@ -41,7 +41,7 @@ class arActorCsvExportJob extends arActorExportJob
 
   /**
    * Export actor metadata to an XML file, and export related digital object
-   * when requested
+   * when requested.
    *
    * @param QubitActor $resource actor to export
    * @param string     $path     of temporary job directory for export
@@ -57,7 +57,7 @@ class arActorCsvExportJob extends arActorExportJob
   }
 
   /**
-   * Configure and return CSV writer
+   * Configure and return CSV writer.
    *
    * @param string $path of temporary job directory for export
    *

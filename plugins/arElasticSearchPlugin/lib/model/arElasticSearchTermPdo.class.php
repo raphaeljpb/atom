@@ -18,7 +18,7 @@
  */
 
 /**
- * Manage terms in search index
+ * Manage terms in search index.
  *
  */
 class arElasticSearchTermPdo
@@ -32,7 +32,7 @@ class arElasticSearchTermPdo
   protected static $statements;
 
   /**
-   * METHODS
+   * METHODS.
    */
   public function __construct($id, $options = [])
   {

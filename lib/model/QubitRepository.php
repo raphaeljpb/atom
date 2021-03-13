@@ -183,7 +183,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Additional actions to take on delete
+   * Additional actions to take on delete.
    *
    */
   public function delete($connection = null)
@@ -213,7 +213,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Create new related QubitNote
+   * Create new related QubitNote.
    *
    * @param int    $userId     QubitUser id
    * @param string $note       Note text
@@ -231,7 +231,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Get related notes
+   * Get related notes.
    *
    * @return QubitQuery list of QubitNote objects
    */
@@ -246,7 +246,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Get country of primary contact for repository (If one exists)
+   * Get country of primary contact for repository (If one exists).
    *
    * @return string primary contact's country
    */
@@ -274,7 +274,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Only find repository objects, not other actor types
+   * Only find repository objects, not other actor types.
    *
    * @param Criteria $criteria current search criteria
    *
@@ -301,7 +301,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Return an options_for_select array
+   * Return an options_for_select array.
    *
    * @param mixed $default current selected value for select list
    * @param array $options optional parameters
@@ -325,7 +325,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Get disk space used by digital objects in this repository
+   * Get disk space used by digital objects in this repository.
    *
    * @return int disk usage in bytes
    */
@@ -448,7 +448,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Get the current repository uploads directory
+   * Get the current repository uploads directory.
    *
    * @return string
    */
@@ -458,7 +458,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Get logo image path within the repository uploads directory
+   * Get logo image path within the repository uploads directory.
    *
    * @return string
    */
@@ -468,7 +468,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Get banner image path within the repository uploads directory
+   * Get banner image path within the repository uploads directory.
    *
    * @return string
    */
@@ -478,7 +478,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Check if the logo asset exists
+   * Check if the logo asset exists.
    *
    * @return bool
    */
@@ -488,7 +488,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Check if the banner asset exists
+   * Check if the banner asset exists.
    *
    * @return bool
    */
@@ -498,7 +498,7 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Add repository specific logic to the insert action
+   * Add repository specific logic to the insert action.
    *
    * @param mixed $connection The database connection object
    *

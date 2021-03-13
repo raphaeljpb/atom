@@ -18,7 +18,7 @@
  */
 
 /**
- * arElasticSearchPlugin main class
+ * arElasticSearchPlugin main class.
  *
  * @author      MJ Suhonos <mj@suhonos.ca>
  * @author      Jesús García Crespo <jesus@sevein.com>
@@ -26,32 +26,32 @@
 class arElasticSearchPlugin extends QubitSearchEngine
 {
   /**
-   * Minimum version of Elasticsearch supported
+   * Minimum version of Elasticsearch supported.
    */
   public const MIN_VERSION = '1.3.0';
   /**
-   * Elastic_Client object
+   * Elastic_Client object.
    *
    * @var mixed defaults to null
    */
   public $client = null;
 
   /**
-   * Elastic_Index object
+   * Elastic_Index object.
    *
    * @var mixed defaults to null
    */
   public $index = null;
 
   /**
-   * Mappings configuration, mapping.yml
+   * Mappings configuration, mapping.yml.
    *
    * @var mixed defaults to null
    */
   protected $mappings = null;
 
   /**
-   * If false, this plugin will perform a trial run with no changes made
+   * If false, this plugin will perform a trial run with no changes made.
    *
    * @var mixed defaults to true
    */
@@ -75,7 +75,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
   private $batchDeleteDocs = [];
 
   /**
-   * Constructor
+   * Constructor.
    */
   public function __construct(array $options = [])
   {
@@ -135,7 +135,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
   }
 
   /**
-   * Optimize index
+   * Optimize index.
    */
   public function optimize($args = [])
   {
@@ -204,7 +204,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
   }
 
   /**
-   * Populate index
+   * Populate index.
    */
   public function populate($options = [])
   {
@@ -308,7 +308,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
   }
 
   /**
-   * Populate index
+   * Populate index.
    */
   public function enable()
   {
@@ -323,7 +323,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
   // ---------------------------------------------------------------------------
 
   /**
-   * Centralize document addition to keep control of the batch queue
+   * Centralize document addition to keep control of the batch queue.
    */
   public function addDocument($data, $type)
   {
@@ -461,7 +461,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
   }
 
   /**
-   * Initialize ES index if it does not exist
+   * Initialize ES index if it does not exist.
    */
   protected function initialize()
   {
@@ -515,7 +515,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
   }
 
   /**
-   * Obtain the version of the Elasticsearch server
+   * Obtain the version of the Elasticsearch server.
    */
   private function getVersion()
   {
@@ -530,7 +530,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
   /**
    * Check if the server version is recent enough and cache it if so to avoid
-   * hitting Elasticsearch again for each request
+   * hitting Elasticsearch again for each request.
    */
   private function checkVersion()
   {
@@ -565,7 +565,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
   }
 
   /**
-   * Display types that will be indexed
+   * Display types that will be indexed.
    */
   private function displayTypesToIndex($excludeTypes)
   {

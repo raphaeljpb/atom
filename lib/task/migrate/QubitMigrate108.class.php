@@ -18,7 +18,7 @@
  */
 
 /**
- * Upgrade qubit data from version 1.0.8 to 1.0.9 schema
+ * Upgrade qubit data from version 1.0.8 to 1.0.9 schema.
  *
  * @author     David Juhasz <david@artefactual.com>
  */
@@ -32,7 +32,7 @@ class QubitMigrate108 extends QubitMigrate
     FINAL_VERSION = 39;
 
   /**
-   * Controller for calling methods to alter data
+   * Controller for calling methods to alter data.
    *
    * @return QubitMigrate108 this object
    */
@@ -255,7 +255,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Call all sort methods
+   * Call all sort methods.
    *
    * @return QubitMigrate108 this object
    */
@@ -273,7 +273,7 @@ class QubitMigrate108 extends QubitMigrate
 
   /**
    * Ver 3: Change table name from QubitActorName to QubitOtherName and column
-   * actor_id -> object_id
+   * actor_id -> object_id.
    *
    * @return QubitMigrate108 this object
    */
@@ -303,7 +303,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 2: Add ISDF function types to 'Function' taxonomy
+   * Ver 2: Add ISDF function types to 'Function' taxonomy.
    *
    * @return QubitMigrate108 this object
    */
@@ -355,7 +355,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 5: Drop the "Import digital object" menu
+   * Ver 5: Drop the "Import digital object" menu.
    *
    * @return QubitMigrate108 this object
    */
@@ -372,7 +372,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 6: Swap 'recent updates' menu for 'functions' menu
+   * Ver 6: Swap 'recent updates' menu for 'functions' menu.
    *
    * @return QubitMigrate108 this object
    */
@@ -398,7 +398,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 8: Add ISDF relation type taxonomy
+   * Ver 8: Add ISDF relation type taxonomy.
    *
    * @return QubitMigrate108 this object
    */
@@ -449,7 +449,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 9: Convert repository 'type_id' field to a QubitObjectTermRelation
+   * Ver 9: Convert repository 'type_id' field to a QubitObjectTermRelation.
    *
    * @return QubitMigrate108 this object
    */
@@ -472,7 +472,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 10: Give "Standarized form of name" a constant id
+   * Ver 10: Give "Standarized form of name" a constant id.
    *
    * @return QubitMigrate108 this object
    */
@@ -486,7 +486,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 11: Change "Functions" taxonomy name to "ISDF Function Types"
+   * Ver 11: Change "Functions" taxonomy name to "ISDF Function Types".
    *
    * @return QubitMigrate108 this object
    */
@@ -510,7 +510,7 @@ class QubitMigrate108 extends QubitMigrate
 
   /**
    * Ver 12: Drop acl_action and acl_action_i18n tables and migrate action
-   * constants to plain strings
+   * constants to plain strings.
    *
    * @return QubitMigrate108 this object
    */
@@ -557,7 +557,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 13: Promote 'groups' menu to child of 'admin'
+   * Ver 13: Promote 'groups' menu to child of 'admin'.
    *
    * @return QubitMigrate108 this object
    */
@@ -628,7 +628,7 @@ class QubitMigrate108 extends QubitMigrate
 
   /**
    * Ver 14: Add user sub-menus 'profile' and 'archival description
-   * permissions'
+   * permissions'.
    *
    * @return QubitMigrate108 this object
    */
@@ -663,7 +663,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 15: Change translator 'update' permission to 'translate'
+   * Ver 15: Change translator 'update' permission to 'translate'.
    *
    * @return QubitMigrate108 this object
    */
@@ -690,7 +690,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 16: Drop QubitRole and QubitUserRoleRelation table data
+   * Ver 16: Drop QubitRole and QubitUserRoleRelation table data.
    *
    * @return QubitMigrate108 this object
    */
@@ -710,7 +710,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 17: Add actor root object and adopt all existing actors
+   * Ver 17: Add actor root object and adopt all existing actors.
    *
    * @return QubitMigrate108 this object
    */
@@ -730,7 +730,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 18: Add actor permissions to default groups
+   * Ver 18: Add actor permissions to default groups.
    *
    * @return QubitMigrate108 this object
    */
@@ -774,7 +774,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 19: Add menu for acl permissions to user page
+   * Ver 19: Add menu for acl permissions to user page.
    *
    * @return QubitMigrate108 this object
    */
@@ -796,7 +796,7 @@ class QubitMigrate108 extends QubitMigrate
 
   /**
    * Ver 20: Re-parent authenticated group to ROOT instead of inheriting from
-   * the anonymous group
+   * the anonymous group.
    *
    * @return QubitMigrate108 this object
    */
@@ -811,7 +811,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 21: Add group "tab" sub-menus
+   * Ver 21: Add group "tab" sub-menus.
    *
    * @return QubitMigrate108 this object
    */
@@ -854,7 +854,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 22: Give "External URI" a constant id
+   * Ver 22: Give "External URI" a constant id.
    *
    * @return QubitMigrate108 this object
    */
@@ -875,7 +875,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 23: Add readMaster and readReference permissions to default groups
+   * Ver 23: Add readMaster and readReference permissions to default groups.
    *
    * @return QubitMigrate108 this object
    */
@@ -917,7 +917,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 24: Add menus for term ACL
+   * Ver 24: Add menus for term ACL.
    *
    * @return QubitMigrate108 this object
    */
@@ -955,7 +955,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 25: Make all taxonomy objects children of taxonomy root
+   * Ver 25: Make all taxonomy objects children of taxonomy root.
    *
    * @return QubitMigrate108 this object
    */
@@ -985,7 +985,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 26: Remove multiple admin rules and add single global 'grant'
+   * Ver 26: Remove multiple admin rules and add single global 'grant'.
    *
    * @return QubitMigrate108 this object
    */
@@ -1022,7 +1022,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 27: Remove multiple read acl rules and add single grant
+   * Ver 27: Remove multiple read acl rules and add single grant.
    *
    * @return QubitMigrate108 this object
    */
@@ -1053,7 +1053,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 28: Add default term permissions
+   * Ver 28: Add default term permissions.
    *
    * @return QubitMigrate108 this object
    */
@@ -1085,7 +1085,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 29: Change add/edit menu to "add" menu, like revision 6151
+   * Ver 29: Change add/edit menu to "add" menu, like revision 6151.
    *
    * @return QubitMigrate108 this object
    */
@@ -1122,7 +1122,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 30: Change 'show' paths to 'index' paths
+   * Ver 30: Change 'show' paths to 'index' paths.
    *
    * @return QubitMigrate108 this object
    */
@@ -1140,7 +1140,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 31: Change 'Admin -> Themes' menu to 'Admin -> Plugins', like r6320
+   * Ver 31: Change 'Admin -> Themes' menu to 'Admin -> Plugins', like r6320.
    *
    * @return QubitMigrate108 this object
    */
@@ -1160,7 +1160,7 @@ class QubitMigrate108 extends QubitMigrate
 
   /**
    * Ver 32: Remove Themes 'List | Configure' menu option. Has been moved to
-   * Settings -> Default Page Elements
+   * Settings -> Default Page Elements.
    *
    * @return QubitMigrate108 this object
    */
@@ -1182,7 +1182,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 33: Add taxonomy link to main menu
+   * Ver 33: Add taxonomy link to main menu.
    *
    * @return QubitMigrate108 this object
    */
@@ -1215,7 +1215,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 34: Add browse menu, like r6431, r6432 & r6440
+   * Ver 34: Add browse menu, like r6431, r6432 & r6440.
    *
    * @return QubitMigrate108 this object
    */
@@ -1341,7 +1341,7 @@ class QubitMigrate108 extends QubitMigrate
 
   /**
    * Ver 36: Remove Actor::ROOT_ID parent from QubitRepository and QubitUser
-   * rows (See https://projects.artefactual.com/issues/3459)
+   * rows (See https://projects.artefactual.com/issues/3459).
    *
    * @return QubitMigrate108 this object
    */
@@ -1366,7 +1366,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 37: Update names of "add" menus, like r6787
+   * Ver 37: Update names of "add" menus, like r6787.
    *
    * @return QubitMigrate108 this object
    */
@@ -1429,7 +1429,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 38: Migrate to sfCaribou theme to users that are currently using sfClassic
+   * Ver 38: Migrate to sfCaribou theme to users that are currently using sfClassic.
    *
    * @return QubitMigrate108 this object
    */
@@ -1462,7 +1462,7 @@ class QubitMigrate108 extends QubitMigrate
 
   /**
    * Ver 39: Update menu labels to match data fixtures as of r6802 (English
-   * only)
+   * only).
    *
    * @return QubitMigrate108 this object
    */
@@ -1521,7 +1521,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Ver 1: Update version number in static pages
+   * Ver 1: Update version number in static pages.
    *
    * @return QubitMigrate108 this object
    */
@@ -1557,7 +1557,7 @@ class QubitMigrate108 extends QubitMigrate
 
   /**
    * Sort term objects with pre-defined IDs to start of array to prevent
-   * pre-emptive assignment by auto-increment
+   * pre-emptive assignment by auto-increment.
    *
    * @return QubitMigrate108 this object
    */
@@ -1669,7 +1669,7 @@ class QubitMigrate108 extends QubitMigrate
   }
 
   /**
-   * Sort ORM classes to avoid foreign key constraint failures on data load
+   * Sort ORM classes to avoid foreign key constraint failures on data load.
    *
    * @return QubitMigrate108 this object
    */

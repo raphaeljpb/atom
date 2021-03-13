@@ -18,7 +18,7 @@
  */
 
 /**
- * Digital Object view action
+ * Digital Object view action.
  *
  * @author     Andy Koch <koch.andy@gmail.com>
  */

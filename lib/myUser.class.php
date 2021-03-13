@@ -25,7 +25,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
   protected $security = [];
 
   /**
-   * Required for Zend_Acl_Role_Interface
+   * Required for Zend_Acl_Role_Interface.
    */
   public function getRoleId()
   {
@@ -224,7 +224,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
 
   /**
    * Checks whether or not a user, based on security.yml settings, has access
-   * to a module's action
+   * to a module's action.
    *
    * This method uses the checkConfig method, used in other permission checks
    * in Symfony, that returns the name of a file containing PHP code derived
@@ -255,7 +255,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
 
   /**
    * Get action-specific security setting value, if available, or, if not,
-   * global or default value
+   * global or default value.
    *
    * @param string $action          Name of module action to check
    * @param string $securitySetting Security property to check

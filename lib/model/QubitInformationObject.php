@@ -18,7 +18,7 @@
  */
 
 /**
- * Extended methods for Information object model
+ * Extended methods for Information object model.
  *
  * @author Jack Bates <jack@nottheoilrig.com>
  * @author Peter Van Garderen <peter@artefactual.com>
@@ -38,7 +38,7 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * When cast as a string, return i18n-ized object title with fallback to
-   * source culture
+   * source culture.
    *
    * @return string title value with fallback to source culture
    */
@@ -349,7 +349,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Additional actions to take on delete
+   * Additional actions to take on delete.
    *
    */
   public function delete($connection = null)
@@ -433,7 +433,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Get number of information objects with draft status
+   * Get number of information objects with draft status.
    *
    * @return int Number of information objects with draft status
    */
@@ -448,7 +448,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Get all information objects updated between two dates
+   * Get all information objects updated between two dates.
    *
    * @return array collection of QubitInformationObjects and remaining object count
    */
@@ -540,7 +540,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Wrapper for getRepository method to allow inheriting repo from ancestors
+   * Wrapper for getRepository method to allow inheriting repo from ancestors.
    *
    * @param array $options optional parameters
    *
@@ -829,7 +829,7 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Returns descendants order by lft checking their visivility.
-   * The childs of a non visible descendant will not be added even if they are visible
+   * The childs of a non visible descendant will not be added even if they are visible.
    *
    * @return array of QubitInformationObject objects
    */
@@ -969,7 +969,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Related events which have a date
+   * Related events which have a date.
    */
   public function getDates(array $options = [])
   {
@@ -1010,7 +1010,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Get name access point by $actorId and $eventTypeId (should be unique)
+   * Get name access point by $actorId and $eventTypeId (should be unique).
    *
    * @param int $actorId     foreign key to QubitActor::ID
    * @param int $eventTypeId foreign key to QubitTerm (even type taxonomy)
@@ -1069,7 +1069,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Get related term object by id (should be unique)
+   * Get related term object by id (should be unique).
    *
    * @param
    */
@@ -1133,7 +1133,7 @@ class QubitInformationObject extends BaseInformationObject
   ***************/
 
   /**
-   * Add a property related to this information object
+   * Add a property related to this information object.
    *
    * @param string $name    Name of property
    * @param string $value   Value of property
@@ -1166,7 +1166,7 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Return all properties related to this information object,
-   * with option of filtering by name and/or scope
+   * with option of filtering by name and/or scope.
    *
    * @param string $name  filter results by name (optional)
    * @param string $scope filter results by scope (optional)
@@ -1342,7 +1342,7 @@ class QubitInformationObject extends BaseInformationObject
   *****************/
 
   /**
-   * Wrapper for QubitDigitalObject::importFromUri() method
+   * Wrapper for QubitDigitalObject::importFromUri() method.
    *
    * @param array $uris URIs of remote files
    *
@@ -1423,7 +1423,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Wrapper for QubitDigitalObject::importFromBase64() method
+   * Wrapper for QubitDigitalObject::importFromBase64() method.
    *
    * @param string $encodedString base-64 encoded data
    * @param string $filename      name of destination file
@@ -1494,7 +1494,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Import access points (only subjects and places)
+   * Import access points (only subjects and places).
    */
   public function setAccessPointByName($name, $options = [])
   {
@@ -1664,7 +1664,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Import data from a <originalsloc> tag in EAD2002
+   * Import data from a <originalsloc> tag in EAD2002.
    *
    * As the locations of originals field is unstructured, EAD content must
    * be amalgamated as text. Note that when EAD exported from AtoM the content
@@ -1695,7 +1695,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Import language-related data from a <langusage> tag in EAD2002
+   * Import language-related data from a <langusage> tag in EAD2002.
    *
    * @param $langusageNode  DOMNode  EAD langusage DOM node
    */
@@ -1762,7 +1762,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Import language-related data from a <langmaterial> tag in EAD2002
+   * Import language-related data from a <langmaterial> tag in EAD2002.
    *
    * @param $langmaterialNode  DOMNode  EAD langmaterial DOM node
    */
@@ -1851,7 +1851,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Import creator data from an <origination> tag in EAD2002
+   * Import creator data from an <origination> tag in EAD2002.
    *
    * @param $node  DOMNode  EAD origination DOM node
    */
@@ -1887,7 +1887,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Import creation-related data from an <bioghist> tag in EAD2002
+   * Import creation-related data from an <bioghist> tag in EAD2002.
    *
    * @param $biogHistNode  DOMNode  EAD bioghist DOM node
    * @param $key Position of the current bioghist node
@@ -1948,7 +1948,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Import actor history from on <bioghist> tag in EAD2002
+   * Import actor history from on <bioghist> tag in EAD2002.
    *
    * @param $history string actor history
    */
@@ -2017,7 +2017,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Set publication status using a status name
+   * Set publication status using a status name.
    *
    * @param $name  valid publication status name
    */
@@ -2034,7 +2034,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Set description level of detail using a name
+   * Set description level of detail using a name.
    *
    * @param $name  valid description detail level name
    */
@@ -2048,7 +2048,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Set description status using a status name
+   * Set description status using a status name.
    *
    * @param $name  valid publication status name
    */
@@ -2062,7 +2062,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Set term ID property using term name
+   * Set term ID property using term name.
    *
    * @param $property  object property to set
    * @param $name  valid term name
@@ -2356,7 +2356,7 @@ class QubitInformationObject extends BaseInformationObject
   ***************/
 
   /**
-   * Get Record by Oai identifier
+   * Get Record by Oai identifier.
    *
    * @param int $identifier, the oai_identifier
    *
@@ -2371,7 +2371,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Get Oai identifier
+   * Get Oai identifier.
    *
    * @param
    *
@@ -2387,7 +2387,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Set source Oai identifier
+   * Set source Oai identifier.
    *
    * @param
    *
@@ -2791,7 +2791,7 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Return the correct class instance for the current standards-based template
-   * (e.g. 'sfRadPlugin', 'sfIsadPlugin')
+   * (e.g. 'sfRadPlugin', 'sfIsadPlugin').
    *
    * @param QubitInformationObject resource
    *
@@ -2820,7 +2820,7 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Return the extentAndMedium field without XML tags for the index pages.
-   * strip_tags() is not working in the templates after the escaping changes
+   * strip_tags() is not working in the templates after the escaping changes.
    *
    * @return string Cleaned extentAndMedium field
    */
@@ -2955,7 +2955,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Remove any corresponding keymap entries on delete of this object
+   * Remove any corresponding keymap entries on delete of this object.
    *
    */
   private function removeKeymapEntries()
@@ -2976,7 +2976,7 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Returns an actor if one exists with the specified name and
    * is related to this information object (either as a subject
-   * or an object)
+   * or an object).
    *
    * @param $name  The actor name
    * @param $relatedBy  The relation type, either 'object' or 'subject'
@@ -3162,7 +3162,7 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Returns a date string YYYY-MM-DD when given a date from an EAD <unitdate> @normal attribute
+   * Returns a date string YYYY-MM-DD when given a date from an EAD <unitdate> @normal attribute.
    *
    * @param $date  A date string from an EAD file, e.g. 19601103
    *

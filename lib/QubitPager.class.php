@@ -18,7 +18,7 @@
  */
 
 /**
- * Qubit specifc extension to the sfPropelPager
+ * Qubit specifc extension to the sfPropelPager.
  *
  * @author  David Juhasz <david@artefactual.com>
  * @author  Mike Cantelon <mike@artefactual.com>
@@ -29,7 +29,7 @@ class QubitPager extends sfPropelPager
     protected $nbResults = null;
 
   /**
-   * BasePeer::doCount() returns PDOStatement
+   * BasePeer::doCount() returns PDOStatement.
    */
   public function doCount(Criteria $criteria)
   {
@@ -52,7 +52,7 @@ class QubitPager extends sfPropelPager
   }
 
   /**
-   * Override ::getNbResults() to call ->init() first
+   * Override ::getNbResults() to call ->init() first.
    *
    * @see sfPager
    */
@@ -67,7 +67,7 @@ class QubitPager extends sfPropelPager
   }
 
   /**
-   * Override ::getResults() to call ->init() first
+   * Override ::getResults() to call ->init() first.
    *
    * @see sfPager
    */
@@ -79,7 +79,7 @@ class QubitPager extends sfPropelPager
   }
 
   /**
-   * Similar to getResults but gets raw row data, not objects
+   * Similar to getResults but gets raw row data, not objects.
    *
    * Columns need to be selected using the criteria
    *

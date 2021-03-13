@@ -18,7 +18,7 @@
  */
 
 /**
- * Load a csv list of digital objects
+ * Load a csv list of digital objects.
  *
  * @author     David Juhasz <david@artefactual.com>
  */

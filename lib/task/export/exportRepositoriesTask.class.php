@@ -18,7 +18,7 @@
  */
 
 /**
- * Export repository information to a CSV
+ * Export repository information to a CSV.
  *
  * @author     Mike Gale <mikeg@artefactual.com>
  */

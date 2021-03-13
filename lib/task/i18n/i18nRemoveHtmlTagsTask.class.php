@@ -66,7 +66,7 @@ EOF;
   }
 
   /**
-   * Transform HTML into text using the Document Object Model
+   * Transform HTML into text using the Document Object Model.
    *
    * @param string $html HTML to transform into text
    *
@@ -86,7 +86,7 @@ EOF;
   }
 
   /**
-   * Transform specific tags within a DOM document
+   * Transform specific tags within a DOM document.
    *
    * @param DOMDocument $doc DOM document
    *
@@ -105,7 +105,7 @@ EOF;
   }
 
   /**
-   * Transform link tags into text
+   * Transform link tags into text.
    *
    * @param DOMDocument $doc DOM document
    *
@@ -136,7 +136,7 @@ EOF;
 
   /**
    * Transform unordered list-related tags into text and enclose in
-   * <p> tags
+   * <p> tags.
    *
    * @param DOMDocument $doc DOM document
    *
@@ -170,7 +170,7 @@ EOF;
   }
 
   /**
-   * Transform description list-related tags
+   * Transform description list-related tags.
    *
    * @param DOMDocument $doc DOM document
    *
@@ -202,7 +202,7 @@ EOF;
   }
 
   /**
-   * Transform break tags into newlines
+   * Transform break tags into newlines.
    *
    * @param DOMDocument $doc DOM document
    *
@@ -224,7 +224,7 @@ EOF;
   }
 
   /**
-   * Transform paragraph tags into newlines
+   * Transform paragraph tags into newlines.
    *
    * @param DOMDocument $doc DOM document
    *

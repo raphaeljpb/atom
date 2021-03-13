@@ -28,7 +28,7 @@ class arInformationObjectCsvExportJob extends arInformationObjectExportJob
   protected $csvWriter;
 
   /**
-   * Export clipboard item metadata to a CSV file, and related digital objects
+   * Export clipboard item metadata to a CSV file, and related digital objects.
    *
    * @see arInformationObjectExportJob::doExport()
    *
@@ -42,7 +42,7 @@ class arInformationObjectCsvExportJob extends arInformationObjectExportJob
   }
 
   /**
-   * Export resource metadata and digital object (if requested)
+   * Export resource metadata and digital object (if requested).
    *
    * @param QubitInformationObject $resource object to export
    * @param string                 $path     temporary export job working directory
@@ -68,7 +68,7 @@ class arInformationObjectCsvExportJob extends arInformationObjectExportJob
   }
 
   /**
-   * Export resource metadata and associated digital object
+   * Export resource metadata and associated digital object.
    *
    * @param QubitInformationObject $resource object to export
    * @param string                 $path     temporary export job working directory

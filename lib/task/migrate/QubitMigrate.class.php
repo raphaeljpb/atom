@@ -18,7 +18,7 @@
  */
 
 /**
- * Base class for migrating qubit data
+ * Base class for migrating qubit data.
  *
  * @author     David Juhasz <david@artefactual.com
  */
@@ -34,7 +34,7 @@ class QubitMigrate
   }
 
   /**
-   * Do migration of data
+   * Do migration of data.
    *
    * @return array modified data
    */
@@ -47,7 +47,7 @@ class QubitMigrate
   }
 
   /**
-   * Getter for migration data
+   * Getter for migration data.
    *
    * @return array arrayized yaml data
    */
@@ -58,7 +58,7 @@ class QubitMigrate
 
   /**
    * Try to match a row when the search key may be the row key or the object id
-   * - as is often the case with foreign key relations in $this->data
+   * - as is often the case with foreign key relations in $this->data.
    *
    * @param string classname name of Qubit class (e.g. QubitInformationObject)
    * @param string keyOrId row key or 'id' column value
@@ -141,7 +141,7 @@ class QubitMigrate
   }
 
   /**
-   * Get the index for a given key of an associative array
+   * Get the index for a given key of an associative array.
    *
    * @param array  $arr     array to search
    * @param string $findKey key to search for
@@ -164,7 +164,7 @@ class QubitMigrate
   }
 
   /**
-   * Sort the given objectList by left value
+   * Sort the given objectList by left value.
    *
    * @param $objectList array of data objects
    */
@@ -204,7 +204,7 @@ class QubitMigrate
   }
 
   /**
-   * Recursively delete a hierarchical data tree
+   * Recursively delete a hierarchical data tree.
    *
    * @param $objectList array full dataset
    * @param $deleteObjectKey string key of array object to delete
@@ -880,7 +880,7 @@ class QubitMigrate
 
   /**
    * Convienience method for grabbing a QubitTerm row key based on the value of
-   * the 'id' column
+   * the 'id' column.
    *
    * @param string $searchKey
    *

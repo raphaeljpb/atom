@@ -56,7 +56,7 @@ class sfWebBrowser
   // Browser methods
 
   /**
-   * Restarts the browser
+   * Restarts the browser.
    *
    * @param array default browser options
    *
@@ -74,7 +74,7 @@ class sfWebBrowser
   }
 
   /**
-   * Sets the browser user agent name
+   * Sets the browser user agent name.
    *
    * @param string agent name
    *
@@ -88,7 +88,7 @@ class sfWebBrowser
   }
 
   /**
-   * Gets the browser user agent name
+   * Gets the browser user agent name.
    *
    * @return string agent name
    */
@@ -98,7 +98,7 @@ class sfWebBrowser
   }
 
   /**
-   * Submits a GET request
+   * Submits a GET request.
    *
    * @param string The request uri
    * @param array  The request parameters (associative array)
@@ -127,7 +127,7 @@ class sfWebBrowser
   }
 
   /**
-   * Submits a POST request
+   * Submits a POST request.
    *
    * @param string The request uri
    * @param array  The request parameters (associative array)
@@ -169,7 +169,7 @@ class sfWebBrowser
   }
 
   /**
-   * Submits a request
+   * Submits a request.
    *
    * @param string  The request uri
    * @param string  The request method
@@ -227,7 +227,7 @@ class sfWebBrowser
   }
 
   /**
-   * Gives a value to a form field in the response
+   * Gives a value to a form field in the response.
    *
    * @param string field name
    * @param string field value
@@ -243,7 +243,7 @@ class sfWebBrowser
   }
 
   /**
-   * Looks for a link or a button in the response and submits the related request
+   * Looks for a link or a button in the response and submits the related request.
    *
    * @param string The link/button value/href/alt
    * @param array request parameters (associative array)
@@ -380,7 +380,7 @@ class sfWebBrowser
   }
 
   /**
-   * Adds the current request to the history stack
+   * Adds the current request to the history stack.
    *
    * @param string  The request uri
    * @param string  The request method
@@ -404,7 +404,7 @@ class sfWebBrowser
   }
 
   /**
-   * Submits the previous request in history again
+   * Submits the previous request in history again.
    *
    * @return sfWebBrowser The current browser object
    */
@@ -425,7 +425,7 @@ class sfWebBrowser
   }
 
   /**
-   * Submits the next request in history again
+   * Submits the next request in history again.
    *
    * @return sfWebBrowser The current browser object
    */
@@ -446,7 +446,7 @@ class sfWebBrowser
   }
 
   /**
-   * Submits the current request again
+   * Submits the current request again.
    *
    * @return sfWebBrowser The current browser object
    */
@@ -485,7 +485,7 @@ class sfWebBrowser
   // Response methods
 
   /**
-   * Initializes the response and erases all content from prior requests
+   * Initializes the response and erases all content from prior requests.
    */
   public function initializeResponse()
   {
@@ -499,7 +499,7 @@ class sfWebBrowser
   }
 
   /**
-   * Set the response headers
+   * Set the response headers.
    *
    * @param array The response headers as an array of strings shaped like "key: value"
    *
@@ -523,7 +523,7 @@ class sfWebBrowser
   }
 
   /**
-   * Set the response code
+   * Set the response code.
    *
    * @param string The first line of the response
    *
@@ -545,7 +545,7 @@ class sfWebBrowser
   }
 
   /**
-   * Set the response contents
+   * Set the response contents.
    *
    * @param string The response contents
    *
@@ -559,7 +559,7 @@ class sfWebBrowser
   }
 
   /**
-   * Get a text version of the response
+   * Get a text version of the response.
    *
    * @return string The response contents
    */
@@ -588,7 +588,7 @@ class sfWebBrowser
   }
 
   /**
-   * Get a text version of the body part of the response (without <body> and </body>)
+   * Get a text version of the body part of the response (without <body> and </body>).
    *
    * @return string The body part of the response contents
    */
@@ -600,7 +600,7 @@ class sfWebBrowser
   }
 
   /**
-   * Get a DOMDocument version of the response
+   * Get a DOMDocument version of the response.
    *
    * @return DOMDocument The reponse contents
    */
@@ -621,7 +621,7 @@ class sfWebBrowser
   }
 
   /**
-   * Get a sfDomCssSelector version of the response
+   * Get a sfDomCssSelector version of the response.
    *
    * @return sfDomCssSelector The response contents
    */
@@ -640,7 +640,7 @@ class sfWebBrowser
   }
 
   /**
-   * Get a SimpleXML version of the response
+   * Get a SimpleXML version of the response.
    *
    * @return SimpleXMLElement The reponse contents
    *
@@ -679,7 +679,7 @@ class sfWebBrowser
   }
 
   /**
-   * Get the response headers
+   * Get the response headers.
    *
    * @return array The response headers
    */
@@ -689,7 +689,7 @@ class sfWebBrowser
   }
 
   /**
-   * Get a response header
+   * Get a response header.
    *
    * @param string The response header name
    *
@@ -703,7 +703,7 @@ class sfWebBrowser
   }
 
   /**
-   * Get the response code
+   * Get the response code.
    *
    * @return string The response code
    */
@@ -713,7 +713,7 @@ class sfWebBrowser
   }
 
   /**
-   * Returns the response message (the 'Not Found' part in  'HTTP/1.1 404 Not Found')
+   * Returns the response message (the 'Not Found' part in  'HTTP/1.1 404 Not Found').
    *
    * @return string
    */

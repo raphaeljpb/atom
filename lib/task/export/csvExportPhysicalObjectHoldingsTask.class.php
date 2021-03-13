@@ -18,7 +18,7 @@
  */
 
 /**
- * Export physical object holdings CSV data
+ * Export physical object holdings CSV data.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

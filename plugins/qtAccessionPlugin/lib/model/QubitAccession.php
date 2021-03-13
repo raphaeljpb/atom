@@ -124,7 +124,7 @@ class QubitAccession extends BaseAccession
   }
 
   /**
-   * Get related actors
+   * Get related actors.
    */
   public function getActors($options = [])
   {
@@ -149,7 +149,7 @@ class QubitAccession extends BaseAccession
   }
 
   /**
-   * Get creators
+   * Get creators.
    */
   public function getCreators($options = [])
   {
@@ -157,7 +157,7 @@ class QubitAccession extends BaseAccession
   }
 
   /**
-   * Related events which have a date
+   * Related events which have a date.
    */
   public function getDates(array $options = [])
   {
@@ -184,7 +184,7 @@ class QubitAccession extends BaseAccession
   }
 
   /**
-   * Get alternative identifiers
+   * Get alternative identifiers.
    */
   public function getAlternativeIdentifiers()
   {

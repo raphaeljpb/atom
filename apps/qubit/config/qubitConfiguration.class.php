@@ -121,7 +121,7 @@ class qubitConfiguration extends sfApplicationConfiguration
 
   /**
    * Get a config variable from an application config file (YAML) for a specific
-   * environment (e.g. "prod", "dev", "cli")
+   * environment (e.g. "prod", "dev", "cli").
    *
    * N.B. to get a config variable for the current context/environment, use
    * sfConfing::get() instead!

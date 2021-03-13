@@ -182,7 +182,7 @@ function strip_markdown($value)
 }
 
 /**
- * Return a human readable file size, using the appropriate SI prefix
+ * Return a human readable file size, using the appropriate SI prefix.
  *
  * @param int $val value in bytes
  *

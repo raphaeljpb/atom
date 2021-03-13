@@ -18,7 +18,7 @@
  */
 
 /**
- * Export flatfile information object data
+ * Export flatfile information object data.
  *
  * @author     Mike Cantelon <mike@artefactual.com>
  */

@@ -18,7 +18,7 @@
  */
 
 /**
- * Display a list of recently updates to the db
+ * Display a list of recently updates to the db.
  *
  * @author David Juhasz <david@artefactual.com>
  */
