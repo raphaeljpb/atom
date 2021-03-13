@@ -35,7 +35,7 @@ class arMigration0117
   {
     // Add genre search label setting
     $setting = new QubitSetting();
-    $setting->name  = 'genre';
+    $setting->name = 'genre';
     $setting->scope = 'ui_label';
     $setting->editable = 1;
     $setting->deleteable = 0;

@@ -14,16 +14,16 @@ $tests_imagemagick = 3;
 $tests_gd = 3;
 
 $data = [
-  'invalid'      => dirname(__FILE__).'/../data/invalid.txt',
-  'blob'         => dirname(__FILE__).'/../data/image.blob',
-  'image/jpeg'   => dirname(__FILE__).'/../data/einstein.jpg',
+  'invalid' => dirname(__FILE__).'/../data/invalid.txt',
+  'blob' => dirname(__FILE__).'/../data/image.blob',
+  'image/jpeg' => dirname(__FILE__).'/../data/einstein.jpg',
   //'image/pjpeg'  => dirname(__FILE__).'/../data/pjpeg.jpg',
-  'image/png'    => dirname(__FILE__).'/../data/gnome.png',
-  'image/gif'    => dirname(__FILE__).'/../data/symfony.gif',
+  'image/png' => dirname(__FILE__).'/../data/gnome.png',
+  'image/gif' => dirname(__FILE__).'/../data/symfony.gif',
   'document/pdf' => dirname(__FILE__).'/../data/mogpres.pdf',
 ];
 
-$result  = getResultPath();
+$result = getResultPath();
 $mimeMap = unserialize(file_get_contents(dirname(__FILE__).'/../data/mime_types.dat'));
 
 function getResultPath()

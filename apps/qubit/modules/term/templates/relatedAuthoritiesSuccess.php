@@ -69,8 +69,8 @@
         [
           'options' => [
             'lastUpdated' => __('Date modified'),
-            'alphabetic'  => __('Name'),
-            'identifier'  => __('Identifier')]]) ?>
+            'alphabetic' => __('Name'),
+            'identifier' => __('Identifier')]]) ?>
     </div>
 
   </section>

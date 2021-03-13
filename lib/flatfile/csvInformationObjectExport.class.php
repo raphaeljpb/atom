@@ -32,14 +32,14 @@ class csvInformationObjectExport extends QubitFlatfileExport
   protected $titleNoteMap;
 
   // Taxonomy cache properties
-  protected $commonNoteTypeIds       = [];
-  protected $radNoteTypeIds          = [];
-  protected $titleNoteTypeIds        = [];
+  protected $commonNoteTypeIds = [];
+  protected $radNoteTypeIds = [];
+  protected $titleNoteTypeIds = [];
   protected $levelOfDescriptionTerms = [];
-  protected $levelOfDetailTerms      = [];
-  protected $descriptionStatusTerms  = [];
-  protected $eventTypeTerms          = [];
-  protected $physicalObjectTypes     = [];
+  protected $levelOfDetailTerms = [];
+  protected $descriptionStatusTerms = [];
+  protected $eventTypeTerms = [];
+  protected $physicalObjectTypes = [];
 
   protected $options = [];
 
@@ -62,8 +62,8 @@ class csvInformationObjectExport extends QubitFlatfileExport
   {
     // Store note mappings
     $this->commonNoteMap = $config['note']['common'];
-    $this->radNoteMap    = $config['note']['rad'];
-    $this->titleNoteMap  = $config['note']['title'];
+    $this->radNoteMap = $config['note']['rad'];
+    $this->titleNoteMap = $config['note']['title'];
   }
 
   /*
@@ -189,7 +189,7 @@ class csvInformationObjectExport extends QubitFlatfileExport
   {
     $properties = $this->resource->getProperties(null, 'alternativeIdentifiers');
 
-    $alternativeIdentifiers      = [];
+    $alternativeIdentifiers = [];
     $alternativeIdentifierLabels = [];
 
     foreach ($properties as $property)
@@ -211,15 +211,15 @@ class csvInformationObjectExport extends QubitFlatfileExport
   {
     $physicalObjects = $this->resource->getPhysicalObjects();
 
-    $physicalObjectNames     = [];
+    $physicalObjectNames = [];
     $physicalObjectLocations = [];
-    $physicalObjectTypes     = [];
+    $physicalObjectTypes = [];
 
     foreach ($physicalObjects as $physicalObject)
     {
-      $physicalObjectNames[]     = $physicalObject->name;
+      $physicalObjectNames[] = $physicalObject->name;
       $physicalObjectLocations[] = $physicalObject->location;
-      $physicalObjectTypes[]     = $this->physicalObjectTypes[$physicalObject->typeId];
+      $physicalObjectTypes[] = $this->physicalObjectTypes[$physicalObject->typeId];
     }
 
     $this->setColumn('physicalObjectName', $physicalObjectNames);
@@ -253,27 +253,27 @@ class csvInformationObjectExport extends QubitFlatfileExport
    */
   protected function setEventColumns()
   {
-    $types          = [];
-    $dates          = [];
-    $startDates     = [];
-    $endDates       = [];
-    $descriptions   = [];
-    $actors         = [];
+    $types = [];
+    $dates = [];
+    $startDates = [];
+    $endDates = [];
+    $descriptions = [];
+    $actors = [];
     $actorHistories = [];
-    $places         = [];
+    $places = [];
 
     $events = $this->resource->getEventsRelatedByobjectId();
 
     foreach ($events as $event)
     {
-      $types[]          = $this->eventTypeTerms[$event->typeId] ? $this->eventTypeTerms[$event->typeId] : 'NULL';
-      $dates[]          = $event->date ? $event->date : 'NULL';
-      $startDates[]     = $event->startDate ? $event->startDate : 'NULL';
-      $endDates[]       = $event->endDate ? $event->endDate : 'NULL';
-      $descriptions[]   = $event->description ? $event->description : 'NULL';
-      $actors[]         = $event->actor->authorizedFormOfName ? $event->actor->authorizedFormOfName : 'NULL';
+      $types[] = $this->eventTypeTerms[$event->typeId] ? $this->eventTypeTerms[$event->typeId] : 'NULL';
+      $dates[] = $event->date ? $event->date : 'NULL';
+      $startDates[] = $event->startDate ? $event->startDate : 'NULL';
+      $endDates[] = $event->endDate ? $event->endDate : 'NULL';
+      $descriptions[] = $event->description ? $event->description : 'NULL';
+      $actors[] = $event->actor->authorizedFormOfName ? $event->actor->authorizedFormOfName : 'NULL';
       $actorHistories[] = $event->actor->history ? $event->actor->history : 'NULL';
-      $places[]         = $event->getPlace()->name ? $event->getPlace()->name : 'NULL';
+      $places[] = $event->getPlace()->name ? $event->getPlace()->name : 'NULL';
     }
 
     $this->setColumn('eventTypes', $types);
@@ -325,7 +325,7 @@ class csvInformationObjectExport extends QubitFlatfileExport
   {
     $accessPoints = $this->resource->getNameAccessPoints();
 
-    $data          = [];
+    $data = [];
     $data['names'] = [];
 
     foreach ($accessPoints as $accessPoint)
@@ -349,7 +349,7 @@ class csvInformationObjectExport extends QubitFlatfileExport
 
     $accessPoints = $this->resource->getPlaceAccessPoints();
 
-    $data          = [];
+    $data = [];
     $data['names'] = [];
 
     foreach ($accessPoints as $accessPoint)
@@ -396,7 +396,7 @@ class csvInformationObjectExport extends QubitFlatfileExport
   {
     $accessPoints = $this->resource->getGenreAccessPoints();
 
-    $data          = [];
+    $data = [];
     $data['names'] = [];
 
     foreach ($accessPoints as $accessPoint)

@@ -211,7 +211,7 @@
         <div class="digital-object-metadata-body">
           <?php if ($showThumbnailCopyFileName): ?>
             <?php if ($canAccessThumbnailCopy): ?>
-              <?php echo render_show(__('Filename'), link_to(render_value_inline($thumbnailCopy->name), $thumbnailCopy->getFullPath(), ['target'=> '_blank']), ['fieldLabel' => 'thumbnailCopyFileName']) ?>
+              <?php echo render_show(__('Filename'), link_to(render_value_inline($thumbnailCopy->name), $thumbnailCopy->getFullPath(), ['target' => '_blank']), ['fieldLabel' => 'thumbnailCopyFileName']) ?>
             <?php else: ?>
               <?php echo render_show(__('Filename'), render_value($thumbnailCopy->name), ['fieldLabel' => 'thumbnailCopyFileName']) ?>
             <?php endif; ?>

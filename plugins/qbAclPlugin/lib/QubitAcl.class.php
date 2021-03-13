@@ -28,7 +28,7 @@ class QubitAcl
 {
   public const GRANT = 2;
   public const INHERIT = 1;
-  public const DENY  = 0;
+  public const DENY = 0;
 
   public static $ACTIONS = [
     'read' => 'Read',

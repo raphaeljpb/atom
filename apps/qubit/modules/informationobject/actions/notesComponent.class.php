@@ -186,7 +186,7 @@ class InformationObjectNotesComponent extends sfComponent
       {
         if (is_null($this->note))
         {
-          $this->resource->notes[] =  $this->note = new QubitNote();
+          $this->resource->notes[] = $this->note = new QubitNote();
         }
 
         if (isset($item['type']))

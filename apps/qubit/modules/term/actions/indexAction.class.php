@@ -24,24 +24,24 @@ class TermIndexAction extends DefaultBrowseAction
   // Arrays not allowed in class constants
   public static $AGGS = [
       'languages' =>
-        ['type'  => 'term',
+        ['type' => 'term',
               'field' => 'i18n.languages',
-              'size'  => 10],
+              'size' => 10],
       'places' =>
-        ['type'  => 'term',
+        ['type' => 'term',
               'field' => 'places.id',
-              'size'  => 10],
+              'size' => 10],
       'subjects' =>
-        ['type'  => 'term',
+        ['type' => 'term',
               'field' => 'subjects.id',
-              'size'  => 10],
+              'size' => 10],
       'genres' =>
-        ['type'  => 'term',
+        ['type' => 'term',
               'field' => 'genres.id',
-              'size'  => 10],
+              'size' => 10],
       'direct' =>
         ['type' => 'filter',
-              'field'  => '',
+              'field' => '',
               'populate' => false]];
 
   public function checkForRepeatedNames($validator, $value)

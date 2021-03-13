@@ -353,7 +353,7 @@ class QubitMigrate103 extends QubitMigrate
       $subjectTerm = $this->data['QubitTerm'][$existenceKey];
       $subjectTerm['id'] = '<?php echo QubitTerm::SUBJECT_ID."\n" ?>';
       $subjectTerm['name'] = [
-        'en'=>'Subject', 'fr' => 'Sujet', 'nl' => 'Onderwerp', 'pt' => 'Assunto'];
+        'en' => 'Subject', 'fr' => 'Sujet', 'nl' => 'Onderwerp', 'pt' => 'Assunto'];
 
       // Splice SUBJECT_ID term into data array where EXISTENCE_ID lives now
       QubitMigrate::array_insert($this->data['QubitTerm'], $existenceArrayKeyIndex, ['QubitTerm_subject' => $subjectTerm]);

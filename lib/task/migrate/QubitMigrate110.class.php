@@ -679,7 +679,7 @@ class QubitMigrate110 extends QubitMigrate
       // Get repository
       if (isset($infoObject['repository_id']))
       {
-        $repo =& $this->data['QubitRepository'][$infoObject['repository_id']];
+        $repo = & $this->data['QubitRepository'][$infoObject['repository_id']];
 
         if (!isset($repo['slug']))
         {

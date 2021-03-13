@@ -26,9 +26,9 @@ $adapter_list = ['sfCurlAdapter', 'sfFopenAdapter', 'sfSocketsAdapter'];
 // -- sites used for testing requests
 $example_site_url = 'http://www.google.com';
 $askeet_params = [
-  'url'         => 'http://www.askeet.com',
-  'login'       => 'francois',
-  'password'    => 'llactnevda2',
+  'url' => 'http://www.askeet.com',
+  'login' => 'francois',
+  'password' => 'llactnevda2',
 ];
 
 // -- cookies, file and directory automatically created
@@ -244,7 +244,7 @@ foreach($adapter_list as $adapter)
   $b = new sfWebBrowser([], $adapter);
   $headers = [
     'Accept-language' => 'fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3',
-    'Accept'          => 'text/xml'];
+    'Accept' => 'text/xml'];
   $t->like(
     $b->get($dump_headers_url, [], $headers)->getResponseText(),
     "/fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3/",
@@ -270,7 +270,7 @@ foreach($adapter_list as $adapter)
   $field = '';
   try
   {
-    $headers = ['UA-CPU'=>'x86', 'UA-OS'=>'MacOS', 'UA-Color'=>'color16', 'UA-Pixels'=>'240x320'];
+    $headers = ['UA-CPU' => 'x86', 'UA-OS' => 'MacOS', 'UA-Color' => 'color16', 'UA-Pixels' => '240x320'];
     $resp = $b->get($dump_headers_url, [], $headers)->getResponseText();
     foreach ($headers as $field => $value)
     {
@@ -405,9 +405,9 @@ foreach($adapter_list as $adapter)
   if ($adapter == 'sfCurlAdapter')
   {
     $b = new sfWebBrowser([], $adapter, [
-      'cookies'      => true,
+      'cookies' => true,
       'cookies_file' => $cookies_file,
-      'cookies_dir'  => $cookies_dir,
+      'cookies_dir' => $cookies_dir,
     ]);
     $b->call($askeet_params['url'].'/login', 'POST', [
       'nickname' => $askeet_params['login'],
@@ -447,8 +447,8 @@ foreach($adapter_list as $adapter)
   $t->diag('Soap requests');
   $url = 'http://www.abundanttech.com/WebServices/Population/population.asmx';
   $headers = [
-    'Soapaction'      => 'http://www.abundanttech.com/WebServices/Population/getWorldPopulation',
-    'Content-Type'    => 'text/xml'
+    'Soapaction' => 'http://www.abundanttech.com/WebServices/Population/getWorldPopulation',
+    'Content-Type' => 'text/xml'
   ];
   $requestBody = <<<EOT
 <?xml version="1.0" encoding="utf-8"?>
@@ -464,8 +464,8 @@ EOT;
 
   $url = 'http://www.abundanttech.com/WebServices/Population/population.asmx';
   $headers = [
-    'Soapaction'      => 'http://www.abundanttech.com/WebServices/Population/getPopulation',
-    'Content-Type'    => 'text/xml'
+    'Soapaction' => 'http://www.abundanttech.com/WebServices/Population/getPopulation',
+    'Content-Type' => 'text/xml'
   ];
   $requestBody = <<<EOT
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pop="http://www.abundanttech.com/WebServices/Population">

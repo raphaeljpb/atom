@@ -27,8 +27,8 @@
  */
 class eacExportTask extends exportBulkBaseTask
 {
-  protected $namespace        = 'export';
-  protected $name             = 'auth-recs';
+  protected $namespace = 'export';
+  protected $name = 'auth-recs';
   protected $briefDescription = 'Bulk export multiple EAC XML files at once for authority records.';
 
   /**

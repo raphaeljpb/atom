@@ -26,8 +26,8 @@
  */
 class csvImportTask extends csvImportBaseTask
 {
-    protected $namespace        = 'csv';
-    protected $name             = 'import';
+    protected $namespace = 'csv';
+    protected $name = 'import';
     protected $briefDescription = 'Import csv information object data';
 
     protected $detailedDescription = <<<EOF
@@ -78,16 +78,16 @@ EOF;
 
     // Load taxonomies into variables to avoid use of magic numbers
     $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
-      QubitTaxonomy::DESCRIPTION_STATUS_ID       => 'descriptionStatusTypes',
-      QubitTaxonomy::PUBLICATION_STATUS_ID       => 'pubStatusTypes',
+      QubitTaxonomy::DESCRIPTION_STATUS_ID => 'descriptionStatusTypes',
+      QubitTaxonomy::PUBLICATION_STATUS_ID => 'pubStatusTypes',
       QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID => 'levelOfDetailTypes',
-      QubitTaxonomy::NOTE_TYPE_ID                => 'noteTypes',
-      QubitTaxonomy::RAD_NOTE_ID                 => 'radNoteTypes',
-      QubitTaxonomy::RAD_TITLE_NOTE_ID           => 'titleNoteTypes',
-      QubitTaxonomy::MATERIAL_TYPE_ID            => 'materialTypes',
-      QubitTaxonomy::RIGHT_ACT_ID                => 'copyrightActTypes',
-      QubitTaxonomy::COPYRIGHT_STATUS_ID         => 'copyrightStatusTypes',
-      QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID     => 'physicalObjectTypes'
+      QubitTaxonomy::NOTE_TYPE_ID => 'noteTypes',
+      QubitTaxonomy::RAD_NOTE_ID => 'radNoteTypes',
+      QubitTaxonomy::RAD_TITLE_NOTE_ID => 'titleNoteTypes',
+      QubitTaxonomy::MATERIAL_TYPE_ID => 'materialTypes',
+      QubitTaxonomy::RIGHT_ACT_ID => 'copyrightActTypes',
+      QubitTaxonomy::COPYRIGHT_STATUS_ID => 'copyrightStatusTypes',
+      QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID => 'physicalObjectTypes'
     ]);
 
     if (
@@ -129,17 +129,17 @@ EOF;
       // The status array is a place to put data that should be accessible
       // from closure logic using the getStatus method
       'status' => [
-        'options'                => $options,
-        'sourceName'             => $sourceName,
-        'defaultParentId'        => $this->getDefaultParentId($sourceName, $options),
-        'copyrightStatusTypes'   => $termData['copyrightStatusTypes'],
-        'copyrightActTypes'      => $termData['copyrightActTypes'],
-        'defaultStatusId'        => $defaultStatusId,
+        'options' => $options,
+        'sourceName' => $sourceName,
+        'defaultParentId' => $this->getDefaultParentId($sourceName, $options),
+        'copyrightStatusTypes' => $termData['copyrightStatusTypes'],
+        'copyrightActTypes' => $termData['copyrightActTypes'],
+        'defaultStatusId' => $defaultStatusId,
         'descriptionStatusTypes' => $termData['descriptionStatusTypes'],
-        'pubStatusTypes'         => $termData['pubStatusTypes'],
-        'levelOfDetailTypes'     => $termData['levelOfDetailTypes'],
-        'materialTypes'          => $termData['materialTypes'],
-        'physicalObjectTypes'    => $termData['physicalObjectTypes'],
+        'pubStatusTypes' => $termData['pubStatusTypes'],
+        'levelOfDetailTypes' => $termData['levelOfDetailTypes'],
+        'materialTypes' => $termData['materialTypes'],
+        'physicalObjectTypes' => $termData['physicalObjectTypes'],
       ],
 
       // Import columns that map directory to QubitInformationObject properties
@@ -194,21 +194,21 @@ EOF;
       // Import columns that can be added using the
       // QubitInformationObject::addProperty method
       'propertyMap' => [
-        'radOtherTitleInformation'            => 'otherTitleInformation',
-        'radTitleStatementOfResponsibility'   => 'titleStatementOfResponsibility',
-        'radStatementOfProjection'            => 'statementOfProjection',
-        'radStatementOfCoordinates'           => 'statementOfCoordinates',
-        'radStatementOfScaleArchitectural'    => 'statementOfScaleArchitectural',
-        'radStatementOfScaleCartographic'     => 'statementOfScaleCartographic',
-        'radPublishersSeriesNote'             => 'noteOnPublishersSeries',
-        'radIssuingJurisdiction'              => 'issuingJurisdictionAndDenomination',
+        'radOtherTitleInformation' => 'otherTitleInformation',
+        'radTitleStatementOfResponsibility' => 'titleStatementOfResponsibility',
+        'radStatementOfProjection' => 'statementOfProjection',
+        'radStatementOfCoordinates' => 'statementOfCoordinates',
+        'radStatementOfScaleArchitectural' => 'statementOfScaleArchitectural',
+        'radStatementOfScaleCartographic' => 'statementOfScaleCartographic',
+        'radPublishersSeriesNote' => 'noteOnPublishersSeries',
+        'radIssuingJurisdiction' => 'issuingJurisdictionAndDenomination',
         'radEditionStatementOfResponsibility' => 'editionStatementOfResponsibility',
-        'radTitleProperOfPublishersSeries'    => 'titleProperOfPublishersSeries',
+        'radTitleProperOfPublishersSeries' => 'titleProperOfPublishersSeries',
         'radParallelTitlesOfPublishersSeries' => 'parallelTitleOfPublishersSeries',
         'radOtherTitleInformationOfPublishersSeries' => 'otherTitleInformationOfPublishersSeries',
         'radStatementOfResponsibilityRelatingToPublishersSeries' => 'statementOfResponsibilityRelatingToPublishersSeries',
-        'radNumberingWithinPublishersSeries'  => 'numberingWithinPublishersSeries',
-        'radStandardNumber'                   => 'standardNumber'
+        'radNumberingWithinPublishersSeries' => 'numberingWithinPublishersSeries',
+        'radStandardNumber' => 'standardNumber'
       ],
 
       // Import columns that can be added as QubitNote objects
@@ -283,13 +283,13 @@ EOF;
 
       // Import columns with values that should be serialized/added as a language property
       'languageMap' => [
-        'language'              => 'language',
+        'language' => 'language',
         'languageOfDescription' => 'languageOfDescription'
       ],
 
       // Import columns with values that should be serialized/added as a script property
       'scriptMap' => [
-        'script'              => 'script',
+        'script' => 'script',
         'scriptOfDescription' => 'scriptOfDescription'
       ],
 
@@ -316,38 +316,38 @@ EOF;
 
       // These values get exploded and stored to the rowStatusVars array
       'arrayColumns' => [
-        'accessionNumber'              => '|',
-        'alternativeIdentifiers'       => '|',
-        'alternativeIdentifierLabels'  => '|',
+        'accessionNumber' => '|',
+        'alternativeIdentifiers' => '|',
+        'alternativeIdentifierLabels' => '|',
 
-        'nameAccessPoints'          => '|',
-        'nameAccessPointHistories'  => '|',
-        'placeAccessPoints'         => '|',
+        'nameAccessPoints' => '|',
+        'nameAccessPointHistories' => '|',
+        'placeAccessPoints' => '|',
         'placeAccessPointHistories' => '|', // Not yet implemented
-        'subjectAccessPoints'       => '|',
-        'subjectAccessPointScopes'  => '|',  // Not yet implemented
-        'genreAccessPoints'         => '|',
+        'subjectAccessPoints' => '|',
+        'subjectAccessPointScopes' => '|',  // Not yet implemented
+        'genreAccessPoints' => '|',
 
-        'eventActors'          => '|',
-        'eventActorHistories'  => '|',
-        'eventTypes'           => '|',
-        'eventPlaces'          => '|',
-        'eventDates'           => '|',
-        'eventStartDates'      => '|',
-        'eventEndDates'        => '|',
-        'eventDescriptions'    => '|',
+        'eventActors' => '|',
+        'eventActorHistories' => '|',
+        'eventTypes' => '|',
+        'eventPlaces' => '|',
+        'eventDates' => '|',
+        'eventStartDates' => '|',
+        'eventEndDates' => '|',
+        'eventDescriptions' => '|',
 
         // These columns are for backwards compatibility
-        'creators'           => '|',
-        'creatorHistories'   => '|',
-        'creatorDates'       => '|',
-        'creatorDatesStart'  => '|',
-        'creatorDatesEnd'    => '|',
-        'creatorDateNotes'   => '|',
-        'creationDates'      => '|',
+        'creators' => '|',
+        'creatorHistories' => '|',
+        'creatorDates' => '|',
+        'creatorDatesStart' => '|',
+        'creatorDatesEnd' => '|',
+        'creatorDateNotes' => '|',
+        'creationDates' => '|',
         'creationDatesStart' => '|',
-        'creationDatesEnd'   => '|',
-        'creationDateNotes'  => '|'
+        'creationDatesEnd' => '|',
+        'creationDateNotes' => '|'
       ],
 
       'updatePreparationLogic' => function (&$self)
@@ -567,8 +567,8 @@ EOF;
         // Add subject access points
         $accessPointColumns = [
           'subjectAccessPoints' => QubitTaxonomy::SUBJECT_ID,
-          'placeAccessPoints'   => QubitTaxonomy::PLACE_ID,
-          'genreAccessPoints'   => QubitTaxonomy::GENRE_ID
+          'placeAccessPoints' => QubitTaxonomy::PLACE_ID,
+          'genreAccessPoints' => QubitTaxonomy::GENRE_ID
         ];
 
         foreach ($accessPointColumns as $columnName => $taxonomyId)
@@ -756,9 +756,9 @@ EOF;
                 }
 
                 $rightAndRelation = [
-                  'restriction'       => $restriction,
-                  'basisId'           => QubitTerm::RIGHT_BASIS_COPYRIGHT_ID,
-                  'actId'             => array_search(
+                  'restriction' => $restriction,
+                  'basisId' => QubitTerm::RIGHT_BASIS_COPYRIGHT_ID,
+                  'actId' => array_search(
                     'Replicate',
                     $self->getStatus('copyrightActTypes')
                   ),
@@ -795,14 +795,14 @@ EOF;
               break;
 
             case 'unknown':
-              $rightsHolder   = $self->createOrFetchRightsHolder('Unknown');
+              $rightsHolder = $self->createOrFetchRightsHolder('Unknown');
               $rightsHolderId = $rightsHolder->id;
 
               $rightAndRelation = [
-                'rightsHolderId'    => $rightsHolderId,
-                'restriction'       => 0,
-                'basisId'           => QubitTerm::RIGHT_BASIS_COPYRIGHT_ID,
-                'actId'             => array_search(
+                'rightsHolderId' => $rightsHolderId,
+                'restriction' => 0,
+                'basisId' => QubitTerm::RIGHT_BASIS_COPYRIGHT_ID,
+                'actId' => array_search(
                   'Replicate',
                   $self->getStatus('copyrightActTypes')
                 ),
@@ -823,9 +823,9 @@ EOF;
             case 'public domain':
 
               $rightAndRelation = [
-                'restriction'       => 1,
-                'basisId'           => QubitTerm::RIGHT_BASIS_COPYRIGHT_ID,
-                'actId'             => array_search(
+                'restriction' => 1,
+                'basisId' => QubitTerm::RIGHT_BASIS_COPYRIGHT_ID,
+                'actId' => array_search(
                   'Replicate',
                   $self->getStatus('copyrightActTypes')
                 ),

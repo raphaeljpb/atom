@@ -254,7 +254,7 @@ class UserEditAction extends DefaultEditAction
 
         $this->form->setDefault('translate', $defaults);
         $this->form->setValidator('translate', new sfValidatorPass());
-        $this->form->setWidget('translate', new sfWidgetFormSelect(['choices'  => $choices, 'multiple' => true]));
+        $this->form->setWidget('translate', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
 
         break;
 
@@ -262,9 +262,9 @@ class UserEditAction extends DefaultEditAction
       case 'oaiApiKey':
         // Give user option of (re)generating or deleting API key
         $choices = [
-          ''         => $this->context->i18n->__('-- Select action --'),
+          '' => $this->context->i18n->__('-- Select action --'),
           'generate' => $this->context->i18n->__('(Re)generate API key'),
-          'delete'   => $this->context->i18n->__('Delete API key')
+          'delete' => $this->context->i18n->__('Delete API key')
         ];
 
         $this->form->setValidator($name, new sfValidatorString());

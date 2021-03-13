@@ -45,7 +45,7 @@ class SettingsGlobalForm extends sfForm
       'default_repository_browse_view' => new sfWidgetFormSelectRadio(['choices' => ['card' => $this->i18n->__('card'), 'table' => $this->i18n->__('table')]], ['class' => 'radio']),
       'default_archival_description_browse_view' => new sfWidgetFormSelectRadio(['choices' => ['card' => $this->i18n->__('card'), 'table' => $this->i18n->__('table')]], ['class' => 'radio']),
       'multi_repository' => new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']),
-      'enable_institutional_scoping' => new sfWidgetFormSelectRadio(['choices'=>[1=>'yes', 0=>'no']], ['class'=>'radio']),
+      'enable_institutional_scoping' => new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']),
       'audit_log_enabled' => new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']),
       'show_tooltips' => new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']),
       'slug_basis_informationobject' => $this->getSlugBasisInformationObjectWidget(),
@@ -113,8 +113,8 @@ class SettingsGlobalForm extends sfForm
       ],
       [
         'required' => $this->i18n->__('This field is required'),
-        'min'=> $this->i18n->__('You must show at least %min% hits per page'),
-        'max'=> $this->i18n->__('You cannot show more than %max% hits per page')
+        'min' => $this->i18n->__('You must show at least %min% hits per page'),
+        'max' => $this->i18n->__('You cannot show more than %max% hits per page')
       ]
     );
 

@@ -71,7 +71,7 @@ class addSuperuserTask extends sfBaseTask
       $emailPrompt = 'Admin email';
       $emailPrompt .= ($defaultEmail) ? ' ['. $defaultEmail .']' : '';
       $emailPrompt .= ': ';
-      $email    = readline($emailPrompt);
+      $email = readline($emailPrompt);
       $email = ($email) ? $email : $defaultEmail;
     }
 

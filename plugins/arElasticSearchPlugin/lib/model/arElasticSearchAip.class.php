@@ -21,7 +21,7 @@ class arElasticSearchAip extends arElasticSearchModelBase
 {
   public function load()
   {
-    $sql  = 'SELECT id';
+    $sql = 'SELECT id';
     $sql .= ' FROM '.QubitAip::TABLE_NAME;
 
     $aips = QubitPdo::fetchAll($sql, ['QubitAip']);

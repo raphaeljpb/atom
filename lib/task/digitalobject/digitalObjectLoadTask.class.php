@@ -246,7 +246,7 @@ class digitalObjectLoadTask extends sfBaseTask
         else
         {
           // If more than one digital object linked to this information object
-          for ($i=0; $i < count($item); $i++)
+          for ($i = 0; $i < count($item); $i++)
           {
             if (!file_exists($path = self::getPath($item[$i], $options)))
             {

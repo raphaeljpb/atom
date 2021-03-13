@@ -21,7 +21,7 @@ class arElasticSearchTerm extends arElasticSearchModelBase
 {
   public function load()
   {
-    $sql  = 'SELECT term.id';
+    $sql = 'SELECT term.id';
     $sql .= ' FROM '.QubitTerm::TABLE_NAME.' term';
     $sql .= ' JOIN '.QubitObject::TABLE_NAME.' object ON term.id = object.id';
     $sql .= ' WHERE term.id != ? AND object.class_name = ?';

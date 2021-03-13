@@ -243,11 +243,11 @@ class ObjectImportSelectAction extends DefaultEditAction
   private function checkForValidCsvFile($request, $fileName)
   {
     $importOjectClassNames = [
-      'informationObject'           => 'QubitInformationObject',
-      'accession'                   => 'QubitAccession',
-      'authorityRecord'             => 'QubitActor',
-      'event'                       => 'QubitEvent',
-      'repository'                  => 'QubitRepository',
+      'informationObject' => 'QubitInformationObject',
+      'accession' => 'QubitAccession',
+      'authorityRecord' => 'QubitActor',
+      'event' => 'QubitEvent',
+      'repository' => 'QubitRepository',
       'authorityRecordRelationship' => 'QubitRelation-actor',
     ];
 

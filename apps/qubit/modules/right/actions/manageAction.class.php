@@ -74,9 +74,9 @@ class RightManageAction extends sfAction
 
     $this->form->setWidget('all_or_digital_only', new sfWidgetFormChoice([
       'expanded' => true,
-      'choices'  => ['all' => $this->context->i18n->__('Apply to all descendants'),
+      'choices' => ['all' => $this->context->i18n->__('Apply to all descendants'),
                           'digital_only' => $this->context->i18n->__('Apply only to %1% descendants', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))])],
-      'default'  => 'all'
+      'default' => 'all'
     ]));
 
     $choices = [
@@ -86,8 +86,8 @@ class RightManageAction extends sfAction
 
     $this->form->setWidget('overwrite_or_combine', new sfWidgetFormChoice([
       'expanded' => true,
-      'choices'  => $choices,
-      'default'  => 'overwrite'
+      'choices' => $choices,
+      'default' => 'overwrite'
     ]));
 
     $this->form->setValidators([

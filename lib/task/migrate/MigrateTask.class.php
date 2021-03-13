@@ -203,10 +203,10 @@ EOF;
         }
         else
         {
-          $this->version = $this->validReleases[$i+1];
+          $this->version = $this->validReleases[$i + 1];
         }
 
-        $this->logSection('migrate', 'Data migrated to Release '.$this->validReleases[$i+1]);
+        $this->logSection('migrate', 'Data migrated to Release '.$this->validReleases[$i + 1]);
       }
     }
   }

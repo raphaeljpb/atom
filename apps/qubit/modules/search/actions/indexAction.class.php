@@ -80,11 +80,11 @@ class SearchIndexAction extends DefaultBrowseAction
 
     if (sfConfig::get('app_enable_institutional_scoping') && $this->context->user->hasAttribute('search-realm'))
     {
-      $url = url_for(['module' => 'informationobject', 'action' => 'browse', 'collection' =>  $request->collection, 'repos' => $this->context->user->getAttribute('search-realm'), 'query' => $request->query, 'topLod' => '0']);
+      $url = url_for(['module' => 'informationobject', 'action' => 'browse', 'collection' => $request->collection, 'repos' => $this->context->user->getAttribute('search-realm'), 'query' => $request->query, 'topLod' => '0']);
     }
     else
     {
-      $url = url_for(['module' => 'informationobject', 'action' => 'browse', 'collection' =>  $request->collection, 'query' => $request->query, 'topLod' => '0']);
+      $url = url_for(['module' => 'informationobject', 'action' => 'browse', 'collection' => $request->collection, 'query' => $request->query, 'topLod' => '0']);
     }
 
     $link = $this->context->i18n->__('Browse all descriptions');

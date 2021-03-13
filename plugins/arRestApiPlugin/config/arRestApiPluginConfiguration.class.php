@@ -26,7 +26,7 @@
 class arRestApiPluginConfiguration extends sfPluginConfiguration
 {
   public const REGEX_UUID = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
-  public const REGEX_ID   = '\d+';
+  public const REGEX_ID = '\d+';
   public const REGEX_SLUG = '[0-9A-Za-z-]+';
 
   public static $summary = 'REST API plugin';

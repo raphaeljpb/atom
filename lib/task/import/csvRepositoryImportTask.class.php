@@ -28,9 +28,9 @@
 
 class csvRepositoryImportTask extends csvImportBaseTask
 {
-  protected $namespace           = 'csv';
-  protected $name                = 'repository-import';
-  protected $briefDescription    = 'Import csv repository data';
+  protected $namespace = 'csv';
+  protected $name = 'repository-import';
+  protected $briefDescription = 'Import csv repository data';
   protected $detailedDescription = <<<EOF
 Import CSV data
 EOF;
@@ -65,7 +65,7 @@ EOF;
 
     // Load taxonomies into variables to avoid use of magic numbers
     $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
-      QubitTaxonomy::DESCRIPTION_STATUS_ID       => 'descriptionStatusTypes',
+      QubitTaxonomy::DESCRIPTION_STATUS_ID => 'descriptionStatusTypes',
       QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID => 'levelOfDetailTypes'
     ]);
 
@@ -86,10 +86,10 @@ EOF;
       // the status array is a place to put data that should be accessible
       // from closure logic using the getStatus method
       'status' => [
-        'options'                => $options,
-        'sourceName'             => $sourceName,
+        'options' => $options,
+        'sourceName' => $sourceName,
         'descriptionStatusTypes' => $termData['descriptionStatusTypes'],
-        'levelOfDetailTypes'     => $termData['levelOfDetailTypes']
+        'levelOfDetailTypes' => $termData['levelOfDetailTypes']
       ],
 
       // Import columns that map directory to QubitRepository properties
@@ -115,18 +115,18 @@ EOF;
       ],
 
       'columnMap' => [
-        'descriptionIdentifier'      => 'descIdentifier',
-        'institutionIdentifier'      => 'descInstitutionIdentifier',
-        'descriptionRules'           => 'descRules',
+        'descriptionIdentifier' => 'descIdentifier',
+        'institutionIdentifier' => 'descInstitutionIdentifier',
+        'descriptionRules' => 'descRules',
         'descriptionRevisionHistory' => 'descRevisionHistory',
-        'descriptionSources'         => 'descSources'
+        'descriptionSources' => 'descSources'
       ],
 
       // Import columns that map to taxonomy terms
       'termRelations' => [
         'geographicSubregions' => QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID,
-        'thematicAreas'        => QubitTaxonomy::THEMATIC_AREA_ID,
-        'types'                => QubitTaxonomy::REPOSITORY_TYPE_ID
+        'thematicAreas' => QubitTaxonomy::THEMATIC_AREA_ID,
+        'types' => QubitTaxonomy::REPOSITORY_TYPE_ID
       ],
 
       // Import columns that can be added as QubitNote objects

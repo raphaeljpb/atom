@@ -111,7 +111,7 @@ class sitemapTask extends sfBaseTask
 
   protected function configure()
   {
-    $outputDirectory =  sfConfig::get('sf_root_dir');
+    $outputDirectory = sfConfig::get('sf_root_dir');
 
     $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),

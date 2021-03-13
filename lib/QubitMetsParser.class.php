@@ -87,7 +87,7 @@ class QubitMetsParser
 
         $lodName = (string)$item['TYPE'];
 
-        $sql  = 'SELECT
+        $sql = 'SELECT
                     term.id';
         $sql .= ' FROM '.QubitTerm::TABLE_NAME.' term';
         $sql .= ' JOIN '.QubitTermI18n::TABLE_NAME.' i18n

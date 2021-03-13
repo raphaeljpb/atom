@@ -40,11 +40,11 @@ class QubitPhysicalObject
     {
       case 'DJ001':
         $object = new self();
-        $object->id       = 111111;
-        $object->name     = 'DJ001';
-        $object->typeId   = 1;
+        $object->id = 111111;
+        $object->name = 'DJ001';
+        $object->typeId = 1;
         $object->location = 'unknown';
-        $object->culture  = 'de';
+        $object->culture = 'de';
 
         $results->append($object);
 
@@ -53,20 +53,20 @@ class QubitPhysicalObject
       case 'DJ002':
         // Simulate a match on two existing records with the same name
         $object = new self();
-        $object->id       = 222222;
-        $object->name     = 'DJ002';
-        $object->typeId   = 2;
+        $object->id = 222222;
+        $object->name = 'DJ002';
+        $object->typeId = 2;
         $object->location = 'boîte 20191031';
-        $object->culture  = 'fr';
+        $object->culture = 'fr';
 
         $results->append($object);
 
         $object = new self();
-        $object->id       = 333333;
-        $object->name     = 'DJ002';
-        $object->typeId   = 1;
+        $object->id = 333333;
+        $object->name = 'DJ002';
+        $object->typeId = 1;
         $object->location = 'Aisle 11, Shelf 31';
-        $object->culture  = 'en';
+        $object->culture = 'en';
 
         $results->append($object);
 
@@ -79,20 +79,20 @@ class QubitPhysicalObject
         ) {
           // Simulate partial match on start of name
           $object = new self();
-          $object->id       = 444444;
-          $object->name     = 'DJ003 folders 1-6';
-          $object->typeId   = 1;
+          $object->id = 444444;
+          $object->name = 'DJ003 folders 1-6';
+          $object->typeId = 1;
           $object->location = '200-A-19';
-          $object->culture  = 'en';
+          $object->culture = 'en';
 
           $results->append($object);
 
           $object = new self();
-          $object->id       = 555555;
-          $object->name     = 'DJ003 folders 7-12';
-          $object->typeId   = 1;
+          $object->id = 555555;
+          $object->name = 'DJ003 folders 7-12';
+          $object->typeId = 1;
           $object->location = '200-B-01';
-          $object->culture  = 'en';
+          $object->culture = 'en';
 
           $results->append($object);
         }

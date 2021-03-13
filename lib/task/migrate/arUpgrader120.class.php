@@ -42,7 +42,7 @@ class arUpgrader120
       // Add setting for job_scheduling
       case 75:
         $setting = new QubitSetting();
-        $setting->name  = 'use_job_scheduler';
+        $setting->name = 'use_job_scheduler';
         $setting->value = '0';
         $setting->culture = 'en';
 
@@ -53,7 +53,7 @@ class arUpgrader120
       // Add SWORD deposit directory setting
       case 76:
         $setting = new QubitSetting();
-        $setting->name  = 'sword_deposit_dir';
+        $setting->name = 'sword_deposit_dir';
         $setting->value = '/tmp';
         $setting->culture = 'en';
 
@@ -64,19 +64,19 @@ class arUpgrader120
       // Add security settings
       case 77:
         $setting = new QubitSetting();
-        $setting->name  = 'require_ssl_admin';
+        $setting->name = 'require_ssl_admin';
         $setting->value = '0';
         $setting->culture = 'en';
         $setting->save();
 
         $setting = new QubitSetting();
-        $setting->name  = 'require_strong_passwords';
+        $setting->name = 'require_strong_passwords';
         $setting->value = '0';
         $setting->culture = 'en';
         $setting->save();
 
         $setting = new QubitSetting();
-        $setting->name  = 'limit_admin_ip';
+        $setting->name = 'limit_admin_ip';
         $setting->value = '0';
         $setting->culture = 'en';
         $setting->save();
@@ -86,13 +86,13 @@ class arUpgrader120
       // Add browse sort settings
       case 78:
         $setting = new QubitSetting();
-        $setting->name  = 'sort_browser_user';
+        $setting->name = 'sort_browser_user';
         $setting->value = 'lastUpdated';
         $setting->culture = 'en';
         $setting->save();
 
         $setting = new QubitSetting();
-        $setting->name  = 'sort_browser_anonymous';
+        $setting->name = 'sort_browser_anonymous';
         $setting->value = 'alphabetic';
         $setting->culture = 'en';
         $setting->save();
@@ -274,7 +274,7 @@ class arUpgrader120
 
       // Fix typo: r11890
       case 85:
-        $sql  = 'UPDATE '.QubitTermI18n::TABLE_NAME;
+        $sql = 'UPDATE '.QubitTermI18n::TABLE_NAME;
         $sql .= ' SET '.QubitTermI18n::NAME.' = "Disseminate"';
         $sql .= ' WHERE '.QubitTermI18n::CULTURE.' = "en"';
         $sql .= ' AND '.QubitTermI18n::NAME.' = "Disemanite"';
@@ -380,7 +380,7 @@ class arUpgrader120
         foreach ($elements as $item)
         {
           $setting = new QubitSetting();
-          $setting->name  = $item;
+          $setting->name = $item;
           $setting->scope = 'element_visibility';
           $setting->value = 1;
           $setting->culture = 'en';

@@ -22,9 +22,9 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
     $this->vdbcon = $this->createMock(DebugPDO::class);
     $this->ormClasses = [
       'informationObject' => \AccessToMemory\test\mock\QubitInformationObject::class,
-      'keymap'            => \AccessToMemory\test\mock\QubitKeymap::class,
-      'physicalObject'    => \AccessToMemory\test\mock\QubitPhysicalObject::class,
-      'relation'          => \AccessToMemory\test\mock\QubitRelation::class,
+      'keymap' => \AccessToMemory\test\mock\QubitKeymap::class,
+      'physicalObject' => \AccessToMemory\test\mock\QubitPhysicalObject::class,
+      'relation' => \AccessToMemory\test\mock\QubitRelation::class,
     ];
 
     $this->csvHeader = 'legacyId,name,type,location,culture,descriptionSlugs';
@@ -83,28 +83,28 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
   public function setOptionsProvider()
   {
     $defaultOptions = [
-      'debug'               => false,
-      'defaultCulture'      => 'en',
-      'errorLog'            => null,
-      'header'              => null,
-      'insertNew'           => true,
+      'debug' => false,
+      'defaultCulture' => 'en',
+      'errorLog' => null,
+      'header' => null,
+      'insertNew' => true,
       'multiValueDelimiter' => '|',
-      'onMultiMatch'        => 'skip',
-      'overwriteWithEmpty'  => false,
-      'partialMatches'      => false,
-      'progressFrequency'   => 1,
-      'quiet'               => false,
-      'sourceName'          => null,
-      'updateExisting'      => false,
-      'updateSearchIndex'   => false,
+      'onMultiMatch' => 'skip',
+      'overwriteWithEmpty' => false,
+      'partialMatches' => false,
+      'progressFrequency' => 1,
+      'quiet' => false,
+      'sourceName' => null,
+      'updateExisting' => false,
+      'updateSearchIndex' => false,
     ];
 
     $inputs = [
       null,
       [],
       [
-        'insertNew'      => false,
-        'onMultiMatch'   => 'first',
+        'insertNew' => false,
+        'onMultiMatch' => 'first',
         'updateExisting' => true,
       ],
     ];
@@ -113,20 +113,20 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
       $defaultOptions,
       $defaultOptions,
       [
-        'debug'               => false,
-        'defaultCulture'      => 'en',
-        'errorLog'            => null,
-        'header'              => null,
-        'insertNew'           => false,
+        'debug' => false,
+        'defaultCulture' => 'en',
+        'errorLog' => null,
+        'header' => null,
+        'insertNew' => false,
         'multiValueDelimiter' => '|',
-        'onMultiMatch'        => 'first',
-        'overwriteWithEmpty'  => false,
-        'partialMatches'      => false,
-        'progressFrequency'   => 1,
-        'quiet'               => false,
-        'sourceName'          => null,
-        'updateExisting'      => true,
-        'updateSearchIndex'   => false,
+        'onMultiMatch' => 'first',
+        'overwriteWithEmpty' => false,
+        'partialMatches' => false,
+        'progressFrequency' => 1,
+        'quiet' => false,
+        'sourceName' => null,
+        'updateExisting' => true,
+        'updateSearchIndex' => false,
       ],
     ];
 
@@ -142,68 +142,68 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
     $inputs = [
       // Leading and trailing whitespace is intentional
       [
-        'legacyId'         => 'B10101 ',
-        'name'             => ' DJ001',
-        'type'             => 'Boîte Hollinger ',
-        'location'         => ' Voûte, étagère 0074',
-        'culture'          => 'fr ',
+        'legacyId' => 'B10101 ',
+        'name' => ' DJ001',
+        'type' => 'Boîte Hollinger ',
+        'location' => ' Voûte, étagère 0074',
+        'culture' => 'fr ',
         'descriptionSlugs' => ' test-fonds-1 | test-collection ',
       ],
       [
-        'legacyId'         => ' ',
-        'name'             => 'DJ002 ',
-        'type'             => 'Folder',
-        'location'         => 'Aisle 25, Shelf D',
+        'legacyId' => ' ',
+        'name' => 'DJ002 ',
+        'type' => 'Folder',
+        'location' => 'Aisle 25, Shelf D',
         // Test case insensitivity (should match 'en')
-        'culture'          => 'EN',
+        'culture' => 'EN',
         // Slugs are case sensitive
         'descriptionSlugs' => '|Mixed-Case-Fonds|no-match|',
       ],
       [
-        'name'             => 'DJ003',
-        'location'         => 'Aisle 11, Shelf J',
+        'name' => 'DJ003',
+        'location' => 'Aisle 11, Shelf J',
       ],
       [
-        'legacyId'         => '',
-        'name'             => 'DJ004',
-        'type'             => '',
-        'location'         => '',
-        'culture'          => '',
+        'legacyId' => '',
+        'name' => 'DJ004',
+        'type' => '',
+        'location' => '',
+        'culture' => '',
         'descriptionSlugs' => '',
       ],
     ];
 
     $expectedResults = [
       [
-        'legacyId'             => 'B10101',
-        'name'                 => 'DJ001',
-        'typeId'               => 1,
-        'location'             => 'Voûte, étagère 0074',
-        'culture'              => 'fr',
+        'legacyId' => 'B10101',
+        'name' => 'DJ001',
+        'typeId' => 1,
+        'location' => 'Voûte, étagère 0074',
+        'culture' => 'fr',
         'informationObjectIds' => [111111, 222222],
       ],
       [
-        'legacyId'             => null,
-        'name'                 => 'DJ002',
-        'typeId'               => 2,
-        'location'             => 'Aisle 25, Shelf D',
-        'culture'              => 'en',
+        'legacyId' => null,
+        'name' => 'DJ002',
+        'typeId' => 2,
+        'location' => 'Aisle 25, Shelf D',
+        'culture' => 'en',
         'informationObjectIds' => [333333],
       ],
       [
-        'legacyId'             => null,
-        'name'                 => 'DJ003',
-        'typeId'               => null,
-        'location'             => 'Aisle 11, Shelf J',
-        'culture'              => 'en',
+        'legacyId' => null,
+        'name' => 'DJ003',
+        'typeId' => null,
+        'location' => 'Aisle 11, Shelf J',
+        'culture' => 'en',
         'informationObjectIds' => [],
       ],
       [
-        'legacyId'             => null,
-        'name'                 => 'DJ004',
-        'typeId'               => null,
-        'location'             => null,
-        'culture'              => 'en',
+        'legacyId' => null,
+        'name' => 'DJ004',
+        'typeId' => null,
+        'location' => null,
+        'culture' => 'en',
         'informationObjectIds' => [],
       ],
     ];
@@ -339,9 +339,9 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
   {
     $importer = new PhysicalObjectCsvImporter($this->context, $this->vdbcon);
     $importer->setOptions([
-      'header'            => 'name,location,type,culture',
-      'offset'            => 1,
-      'sourceName'        => 'test-002',
+      'header' => 'name,location,type,culture',
+      'offset' => 1,
+      'sourceName' => 'test-002',
       'updateSearchIndex' => true,
     ]);
 
@@ -481,10 +481,10 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
     $importer->typeIdLookupTable = $this->typeIdLookupTableFixture;
 
     $importer->processRow([
-      'name'     => '',
-      'type'     => 'Boîte Hollinger',
+      'name' => '',
+      'type' => 'Boîte Hollinger',
       'location' => '',
-      'culture'  => 'fr'
+      'culture' => 'fr'
     ]);
   }
 
@@ -496,10 +496,10 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
     $importer->typeIdLookupTable = $this->typeIdLookupTableFixture;
 
     $importer->processRow([
-      'name'     => 'MPATHG',
-      'type'     => 'Spam',
+      'name' => 'MPATHG',
+      'type' => 'Spam',
       'location' => 'Camelot',
-      'culture'  => 'en'
+      'culture' => 'en'
     ]);
   }
 
@@ -534,11 +534,11 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
   public function testMatchExistingRecordsWithMultipleMatchesGetFirstMatch()
   {
     $mock = new $this->ormClasses['physicalObject']();
-    $mock->id       = 222222;
-    $mock->name     = 'DJ002';
-    $mock->typeId   = 2;
+    $mock->id = 222222;
+    $mock->name = 'DJ002';
+    $mock->typeId = 2;
     $mock->location = 'boîte 20191031';
-    $mock->culture  = 'fr';
+    $mock->culture = 'fr';
 
     $importer = new PhysicalObjectCsvImporter($this->context, $this->vdbcon);
     $importer->setOrmClasses($this->ormClasses);
@@ -556,7 +556,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
     $importer->setOrmClasses($this->ormClasses);
     $importer->setOptions([
       'updateExisting' => true,
-      'onMultiMatch'   => 'all',
+      'onMultiMatch' => 'all',
       'partialMatches' => true,
     ]);
 

@@ -63,7 +63,7 @@ class arMigration0107
     foreach ($elements as $item)
     {
       $setting = new QubitSetting();
-      $setting->name  = $item;
+      $setting->name = $item;
       $setting->scope = 'element_visibility';
       $setting->value = 1;
       $setting->culture = 'en';

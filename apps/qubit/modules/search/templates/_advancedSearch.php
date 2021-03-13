@@ -168,7 +168,7 @@
         </div>
 
         <?php $showCopyright = sfConfig::get('app_toggleCopyrightFilter') ?>
-        <?php $showMaterial  = sfConfig::get('app_toggleMaterialFilter') ?>
+        <?php $showMaterial = sfConfig::get('app_toggleMaterialFilter') ?>
 
         <?php if ($showCopyright || $showMaterial): ?>
           <div class="filter-row">

@@ -43,7 +43,7 @@ class QubitCsvImport
     $commandSkipMatched = '';
     $commandSkipUnmatched = '';
     $commandLimit = '';
-    $exitCode= 0;
+    $exitCode = 0;
 
     if (null === $csvOrigFileName)
     {

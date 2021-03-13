@@ -29,11 +29,11 @@ require_once __DIR__.'/../vendor/composer/autoload.php';
 class PhysicalObjectCsvImporter
 {
   public static $columnMap = [
-    'legacyId'         => 'legacyId',
-    'name'             => 'name',
-    'type'             => 'typeId',
-    'location'         => 'location',
-    'culture'          => 'culture',
+    'legacyId' => 'legacyId',
+    'name' => 'name',
+    'type' => 'typeId',
+    'location' => 'location',
+    'culture' => 'culture',
     'descriptionSlugs' => 'informationObjectIds',
   ];
 
@@ -43,31 +43,31 @@ class PhysicalObjectCsvImporter
   protected $errorLogHandle;
   protected $filename;
   protected $matchedExisting;
-  protected $offset             = 0;
+  protected $offset = 0;
   protected $ormClasses;
   protected $physicalObjectTypeTaxonomy;
   protected $reader;
-  protected $rowsImported       = 0;
-  protected $rowsTotal          = 0;
+  protected $rowsImported = 0;
+  protected $rowsTotal = 0;
   protected $timers;
   protected $typeIdLookupTable;
 
   // Default options
   protected $options = [
-    'debug'               => false,
-    'defaultCulture'      => 'en',
-    'errorLog'            => null,
-    'header'              => null,
-    'insertNew'           => true,
+    'debug' => false,
+    'defaultCulture' => 'en',
+    'errorLog' => null,
+    'header' => null,
+    'insertNew' => true,
     'multiValueDelimiter' => '|',
-    'onMultiMatch'        => 'skip',
-    'overwriteWithEmpty'  => false,
-    'partialMatches'      => false,
-    'progressFrequency'   => 1,
-    'quiet'               => false,
-    'sourceName'          => null,
-    'updateExisting'      => false,
-    'updateSearchIndex'   => false,
+    'onMultiMatch' => 'skip',
+    'overwriteWithEmpty' => false,
+    'partialMatches' => false,
+    'progressFrequency' => 1,
+    'quiet' => false,
+    'sourceName' => null,
+    'updateExisting' => false,
+    'updateSearchIndex' => false,
   ];
 
 
@@ -85,16 +85,16 @@ class PhysicalObjectCsvImporter
 
     $this->setOrmClasses([
       'informationObject' => QubitInformationObject::class,
-      'keymap'            => QubitKeymap::class,
-      'physicalObject'    => QubitPhysicalObject::class,
-      'relation'          => QubitRelation::class,
+      'keymap' => QubitKeymap::class,
+      'physicalObject' => QubitPhysicalObject::class,
+      'relation' => QubitRelation::class,
     ]);
 
     $this->physicalObjectTypeTaxonomy = new QubitTaxonomy(
       QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID);
 
     $this->context = $context;
-    $this->dbcon   = $dbcon;
+    $this->dbcon = $dbcon;
 
     $this->setOptions($options);
   }
@@ -567,9 +567,9 @@ EOQ;
     $sth = $this->dbcon->prepare($query);
     $sth->execute([
       ':sourceName' => $this->getOption('sourceName'),
-      ':sourceId'   => $csvdata['legacyId'],
+      ':sourceId' => $csvdata['legacyId'],
       ':targetName' => 'physical_object',
-      ':targetId'   =>  $objectId
+      ':targetId' => $objectId
     ]);
 
     $timer->add();
@@ -647,9 +647,9 @@ EOQ;
     // Create a new db object, if no match is found
     $physobj = new $this->ormClasses['physicalObject']();
 
-    $physobj->name        = $csvdata['name'];
-    $physobj->typeId      = $csvdata['typeId'];
-    $physobj->location    = $csvdata['location'];
+    $physobj->name = $csvdata['name'];
+    $physobj->typeId = $csvdata['typeId'];
+    $physobj->location = $csvdata['location'];
     $physobj->indexOnSave = $this->getOption('updateSearchIndex');
     $physobj->save($this->dbcon);
 

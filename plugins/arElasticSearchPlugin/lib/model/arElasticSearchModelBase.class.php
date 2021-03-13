@@ -125,7 +125,7 @@ abstract class arElasticSearchModelBase
   {
     // We can't reuse this statement as there is no way to bind
     // arrays with unknown length to use them in an IN condition.
-    $sql  = 'SELECT term.taxonomy_id, term.id
+    $sql = 'SELECT term.taxonomy_id, term.id
       FROM object_term_relation otr
       JOIN term ON otr.term_id = term.id
       WHERE otr.object_id = ?
@@ -136,7 +136,7 @@ abstract class arElasticSearchModelBase
     return QubitPdo::fetchAll(
       $sql,
       [$objectId],
-      ['fetchMode' => PDO::FETCH_GROUP|PDO::FETCH_COLUMN]
+      ['fetchMode' => PDO::FETCH_GROUP | PDO::FETCH_COLUMN]
     );
   }
 

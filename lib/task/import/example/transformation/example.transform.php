@@ -56,12 +56,12 @@ $rowParentKeyLookupLogic = function (&$self) {
 };
 
 $setup = new QubitCsvTransformFactory([
-  'cliOptions'              => $options,
-  'machineName'             => 'accessions',
-  'addColumns'              => $addColumns,
-  'renameColumns'           => $renameColumns,
-  'transformLogic'          => $transformLogic,
-  'parentKeyLogic'          => $parentKeyLogic,
+  'cliOptions' => $options,
+  'machineName' => 'accessions',
+  'addColumns' => $addColumns,
+  'renameColumns' => $renameColumns,
+  'transformLogic' => $transformLogic,
+  'parentKeyLogic' => $parentKeyLogic,
   'rowParentKeyLookupLogic' => $rowParentKeyLookupLogic
 ]);
 

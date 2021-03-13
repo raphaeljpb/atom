@@ -66,7 +66,7 @@ class i18nDiffTask extends sfBaseTask
     $rows[0] = ['Action', 'Source', 'Target'];
 
     // Old messages
-    foreach ($this->getOldTranslations($extract) as $source=>$target)
+    foreach ($this->getOldTranslations($extract) as $source => $target)
     {
       $rows[] = ['Removed', $source, $target];
     }

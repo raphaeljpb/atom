@@ -26,8 +26,8 @@
  */
 class exportRepositoriesTask extends arBaseTask
 {
-    protected $namespace        = 'csv';
-    protected $name             = 'repository-export';
+    protected $namespace = 'csv';
+    protected $name = 'repository-export';
     protected $briefDescription = 'Export repository information to a CSV';
 
     protected $detailedDescription = <<<EOF

@@ -170,7 +170,7 @@ class arElasticSearchInformationObjectPdo
     if (!isset($this->children))
     {
       // Find children
-      $sql  = 'SELECT
+      $sql = 'SELECT
                   node.id';
       $sql .= ' FROM '.QubitInformationObject::TABLE_NAME.' node';
       $sql .= ' WHERE node.parent_id = :id';
@@ -218,7 +218,7 @@ class arElasticSearchInformationObjectPdo
 
     if (!isset(self::$statements['inheritedCreators']))
     {
-      $sql  = 'SELECT
+      $sql = 'SELECT
                   event.actor_id as id';
       $sql .= ' FROM '.QubitEvent::TABLE_NAME.' event';
       $sql .= ' WHERE event.actor_id IS NOT NULL';
@@ -301,7 +301,7 @@ class arElasticSearchInformationObjectPdo
 
     if (!isset(self::$statements['actor']))
     {
-      $sql  = 'SELECT
+      $sql = 'SELECT
                   actor.id,
                   actor.entity_type_id,
                   slug.slug';
@@ -345,7 +345,7 @@ class arElasticSearchInformationObjectPdo
     // Subject relations
     if (!isset(self::$statements['actorRelation']))
     {
-      $sql  = 'SELECT actor.id';
+      $sql = 'SELECT actor.id';
       $sql .= ' FROM '.QubitActor::TABLE_NAME.' actor';
       $sql .= ' JOIN '.QubitRelation::TABLE_NAME.' relation
                   ON actor.id = relation.object_id';
@@ -436,7 +436,7 @@ class arElasticSearchInformationObjectPdo
   {
     if (!isset(self::$statements['rights']))
     {
-      $sql  = 'SELECT
+      $sql = 'SELECT
                   rights.*, rightsi18n.*';
       $sql .= ' FROM '.QubitRights::TABLE_NAME.' rights';
       $sql .= ' JOIN '.QubitRightsI18n::TABLE_NAME.' rightsi18n
@@ -459,7 +459,7 @@ class arElasticSearchInformationObjectPdo
   {
     if (!isset(self::$statements['grantedRights']))
     {
-      $sql  = 'SELECT
+      $sql = 'SELECT
                   gr.*';
       $sql .= ' FROM '.QubitGrantedRight::TABLE_NAME.' gr';
       $sql .= ' JOIN '.QubitRelation::TABLE_NAME.' rel
@@ -487,7 +487,7 @@ class arElasticSearchInformationObjectPdo
 
     if (!isset(self::$statements['transcript']))
     {
-      $sql  = 'SELECT i18n.value
+      $sql = 'SELECT i18n.value
         FROM '.QubitProperty::TABLE_NAME.' property
         JOIN '.QubitPropertyI18n::TABLE_NAME.' i18n
           ON property.id = i18n.id
@@ -510,7 +510,7 @@ class arElasticSearchInformationObjectPdo
   {
     if (!isset(self::$statements['findingAidTranscript']))
     {
-      $sql  = 'SELECT i18n.value
+      $sql = 'SELECT i18n.value
         FROM '.QubitProperty::TABLE_NAME.' property
         JOIN '.QubitPropertyI18n::TABLE_NAME.' i18n
           ON property.id = i18n.id
@@ -533,7 +533,7 @@ class arElasticSearchInformationObjectPdo
   {
     if (!isset(self::$statements['findingAidStatus']))
     {
-      $sql  = 'SELECT i18n.value
+      $sql = 'SELECT i18n.value
         FROM '.QubitProperty::TABLE_NAME.' property
         JOIN '.QubitPropertyI18n::TABLE_NAME.' i18n
           ON property.id = i18n.id
@@ -946,7 +946,7 @@ class arElasticSearchInformationObjectPdo
 
       if (!isset(self::$statements['event']))
       {
-        $sql  = 'SELECT
+        $sql = 'SELECT
                     event.id,
                     event.start_date,
                     event.end_date,
@@ -994,7 +994,7 @@ class arElasticSearchInformationObjectPdo
     // Find langs and scripts
     if (!isset(self::$statements['alternativeIdentifiers']))
     {
-      $sql  = 'SELECT
+      $sql = 'SELECT
                   node.name,
                   i18n.value';
       $sql .= ' FROM '.QubitProperty::TABLE_NAME.' node';
@@ -1027,7 +1027,7 @@ class arElasticSearchInformationObjectPdo
 
   protected function getProperty($name)
   {
-    $sql  = 'SELECT
+    $sql = 'SELECT
                 prop.id, prop.source_culture';
     $sql .= ' FROM '.QubitProperty::TABLE_NAME.' prop';
     $sql .= ' WHERE prop.object_id = ?
@@ -1041,7 +1041,7 @@ class arElasticSearchInformationObjectPdo
 
   protected function getAips()
   {
-    $sql  = 'SELECT
+    $sql = 'SELECT
                 aip.id';
     $sql .= ' FROM '.QubitAip::TABLE_NAME.' aip';
     $sql .= ' JOIN '.QubitRelation::TABLE_NAME.' relation
@@ -1057,7 +1057,7 @@ class arElasticSearchInformationObjectPdo
 
   protected function getPhysicalObjects()
   {
-    $sql  = 'SELECT
+    $sql = 'SELECT
                 phys.id,
                 phys.source_culture';
     $sql .= ' FROM '.QubitPhysicalObject::TABLE_NAME.' phys';

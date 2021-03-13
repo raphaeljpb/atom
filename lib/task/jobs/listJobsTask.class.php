@@ -26,8 +26,8 @@
  */
 class listJobsTask extends arBaseTask
 {
-    protected $namespace        = 'jobs';
-    protected $name             = 'list';
+    protected $namespace = 'jobs';
+    protected $name = 'list';
     protected $briefDescription = 'List AtoM jobs';
 
     protected $detailedDescription = <<<EOF

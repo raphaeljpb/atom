@@ -19,18 +19,18 @@
  */
 class sfWebBrowser
 {
-  protected $defaultHeaders          = [];
-  protected $stack                   = [];
-  protected $stackPosition           = -1;
-  protected $responseHeaders         = [];
-  protected $responseCode            = '';
-  protected $responseMessage         = '';
-  protected $responseText            = '';
-  protected $responseDom             = null;
-  protected $responseDomCssSelector  = null;
-  protected $responseXml             = null;
-  protected $fields                  = [];
-  protected $urlInfo                 = [];
+  protected $defaultHeaders = [];
+  protected $stack = [];
+  protected $stackPosition = -1;
+  protected $responseHeaders = [];
+  protected $responseCode = '';
+  protected $responseMessage = '';
+  protected $responseText = '';
+  protected $responseDom = null;
+  protected $responseDomCssSelector = null;
+  protected $responseXml = null;
+  protected $fields = [];
+  protected $urlInfo = [];
 
   public function __construct($defaultHeaders = [], $adapterClass = null, $adapterOptions = [])
   {
@@ -65,9 +65,9 @@ class sfWebBrowser
   public function restart($defaultHeaders = [])
   {
     $this->defaultHeaders = $this->fixHeaders($defaultHeaders);
-    $this->stack          = [];
-    $this->stackPosition  = -1;
-    $this->urlInfo        = [];
+    $this->stack = [];
+    $this->stackPosition = -1;
+    $this->urlInfo = [];
     $this->initializeResponse();
 
     return $this;
@@ -296,8 +296,8 @@ class sfWebBrowser
     foreach ($xpath->query('descendant::input | descendant::textarea | descendant::select', $form) as $element)
     {
       $elementName = $element->getAttribute('name');
-      $nodeName    = $element->nodeName;
-      $value       = null;
+      $nodeName = $element->nodeName;
+      $value = null;
       if ($nodeName == 'input' && ($element->getAttribute('type') == 'checkbox' || $element->getAttribute('type') == 'radio'))
       {
         if ($element->getAttribute('checked'))
@@ -391,10 +391,10 @@ class sfWebBrowser
   {
     $this->stack = array_slice($this->stack, 0, $this->stackPosition + 1);
     $this->stack[] = [
-      'uri'        => $uri,
-      'method'     => $method,
+      'uri' => $uri,
+      'method' => $method,
       'parameters' => $parameters,
-      'headers'    => $headers
+      'headers' => $headers
     ];
     $this->stackPosition = count($this->stack) - 1;
 
@@ -484,13 +484,13 @@ class sfWebBrowser
    */
   public function initializeResponse()
   {
-    $this->responseHeaders        = [];
-    $this->responseCode           = '';
-    $this->responseText           = '';
-    $this->responseDom            = null;
+    $this->responseHeaders = [];
+    $this->responseCode = '';
+    $this->responseText = '';
+    $this->responseDom = null;
     $this->responseDomCssSelector = null;
-    $this->responseXml            = null;
-    $this->fields                 = [];
+    $this->responseXml = null;
+    $this->fields = [];
   }
 
   /**

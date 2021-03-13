@@ -55,8 +55,8 @@ class taxonomyNormalizeTask extends arBaseTask
       )
     ]);
 
-    $this->namespace        = 'taxonomy';
-    $this->name             = 'normalize';
+    $this->namespace = 'taxonomy';
+    $this->name = 'normalize';
     $this->briefDescription = 'Normalize taxonomy terms';
     $this->detailedDescription = <<<EOF
 Normalize taxonomy terms

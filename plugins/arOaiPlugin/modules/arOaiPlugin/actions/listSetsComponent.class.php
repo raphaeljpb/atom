@@ -51,6 +51,6 @@ class arOaiPluginlistSetsComponent extends arOaiPluginComponent
     $this->oaiSets = $results['data'];
     $this->remaining = $results['remaining'];
     $resumptionCursor = $this->cursor + $options['limit'];
-    $this->resumptionToken  = base64_encode(json_encode(['cursor' => $resumptionCursor]));
+    $this->resumptionToken = base64_encode(json_encode(['cursor' => $resumptionCursor]));
   }
 }

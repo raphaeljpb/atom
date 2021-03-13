@@ -63,9 +63,9 @@ class QubitSaxParser
   protected $ancestors = [];
 
   // Nesting level bookkeeping
-  protected $level             = 0;
+  protected $level = 0;
   protected $lastTagStartLevel = 1;
-  protected $lastTagEndLevel   = 1;
+  protected $lastTagEndLevel = 1;
 
   // Get set to properties of current tag being processed
   protected $tag;
@@ -131,11 +131,11 @@ class QubitSaxParser
       $errorCode = xml_get_error_code($this->sax);
 
       $this->error = [
-        'code'   => $errorCode,
+        'code' => $errorCode,
         'string' => xml_error_string($errorCode),
-        'line'   => xml_get_current_line_number($this->sax),
+        'line' => xml_get_current_line_number($this->sax),
         'column' => xml_get_current_column_number($this->sax),
-        'byte'   => xml_get_current_byte_index($this->sax)
+        'byte' => xml_get_current_byte_index($this->sax)
       ];
 
       $this->error['summary'] = sprintf(
@@ -272,7 +272,7 @@ class QubitSaxParser
     if ($this->level > $this->lastTagStartLevel)
     {
       $ancestorData = [
-        'tag'  => $this->tag,
+        'tag' => $this->tag,
         'attr' => $this->currentAttr(),
         'data' => $this->data
       ];

@@ -146,7 +146,7 @@ class QubitRights extends BaseRights
       $newGrantedRight->startDate = $sourceGrantedRight->startDate;
       $newGrantedRight->endDate = $sourceGrantedRight->endDate;
       $newGrantedRight->notes = $sourceGrantedRight->notes;
-      $newGrantedRight->serialNumber= $sourceGrantedRight->serialNumber;
+      $newGrantedRight->serialNumber = $sourceGrantedRight->serialNumber;
 
       $newRights->grantedRights[] = $newGrantedRight;
     }

@@ -31,9 +31,9 @@ class SettingsFindingAidForm extends sfForm
 
     // Build widgets
     $this->setWidgets([
-      'finding_aid_format' =>  new sfWidgetFormSelect(['choices'=>['pdf' => 'PDF', 'rtf' => 'RTF']]),
-      'finding_aid_model' =>  new sfWidgetFormSelect(['choices'=>['inventory-summary' => 'Inventory summary', 'full-details' => 'Full details']]),
-      'public_finding_aid' => new sfWidgetFormSelectRadio(['choices'=>[1=>'yes', 0=>'no']], ['class'=>'radio'])
+      'finding_aid_format' => new sfWidgetFormSelect(['choices' => ['pdf' => 'PDF', 'rtf' => 'RTF']]),
+      'finding_aid_model' => new sfWidgetFormSelect(['choices' => ['inventory-summary' => 'Inventory summary', 'full-details' => 'Full details']]),
+      'public_finding_aid' => new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio'])
     ]);
 
     // Add labels

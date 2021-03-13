@@ -26,11 +26,11 @@
  */
 class QubitFlatfileExport
 {
-  public $columnNames     = [];       // ordered header column names
+  public $columnNames = [];       // ordered header column names
   public $standardColumns = [];       // flatfile columns that are object properties
-  public $columnMap       = [];       // flatfile columns that map to object properties
-  public $propertyMap     = [];       // flatfile columns that map to Qubit properties
-  public $user            = null;          // user doing the export
+  public $columnMap = [];       // flatfile columns that map to object properties
+  public $propertyMap = [];       // flatfile columns that map to Qubit properties
+  public $user = null;          // user doing the export
   protected $configurationLoaded = false;  // has the configuuration been loaded?
 
   protected $resource;                     // current resource being exported
@@ -62,7 +62,7 @@ class QubitFlatfileExport
    */
   public function __construct($destinationPath, $standard = null, $rowsPerFile = false)
   {
-    $this->path     = $destinationPath;
+    $this->path = $destinationPath;
     $this->standard = $standard;
 
     if ($rowsPerFile !== false)
@@ -108,10 +108,10 @@ class QubitFlatfileExport
       $this->overrideConfigData($config, $standardConfig);
     }
 
-    $this->columnNames     = $config['columnNames'];
+    $this->columnNames = $config['columnNames'];
     $this->standardColumns = isset($config['direct']) ? $config['direct'] : [];
-    $this->columnMap       = isset($config['map']) ? $config['map'] : [];
-    $this->propertyMap     = isset($config['property']) ? $config['property'] : [];
+    $this->columnMap = isset($config['map']) ? $config['map'] : [];
+    $this->propertyMap = isset($config['property']) ? $config['property'] : [];
 
     // If column names/order aren't specified, derive them
     if ($this->columnNames === null)

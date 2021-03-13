@@ -26,8 +26,8 @@
  */
 class importDeleteTask extends arBaseTask
 {
-  protected $namespace        = 'import';
-  protected $name             = 'delete';
+  protected $namespace = 'import';
+  protected $name = 'delete';
   protected $briefDescription = 'Delete data created by an import';
 
   protected $detailedDescription = <<<EOF

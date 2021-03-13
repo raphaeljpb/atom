@@ -374,7 +374,7 @@ class arElasticSearchActorPdo
   {
     if (!isset(self::$statements['maintainingRepository']))
     {
-      $sql  = 'SELECT rel.subject_id';
+      $sql = 'SELECT rel.subject_id';
       $sql .= ' FROM '.QubitRelation::TABLE_NAME.' rel';
       $sql .= ' WHERE rel.object_id = :object_id';
       $sql .= '   AND rel.type_id = :type_id';
@@ -393,7 +393,7 @@ class arElasticSearchActorPdo
   {
     if (!isset(self::$statements['occupations']))
     {
-      $sql  = 'SELECT term.id as term_id, note.id as note_id';
+      $sql = 'SELECT term.id as term_id, note.id as note_id';
       $sql .= ' FROM '.QubitObjectTermRelation::TABLE_NAME.' rel';
       $sql .= ' JOIN '.QubitTerm::TABLE_NAME.' term
                   ON rel.term_id = term.id';
@@ -416,7 +416,7 @@ class arElasticSearchActorPdo
 
   protected function getProperty($name)
   {
-    $sql  = 'SELECT
+    $sql = 'SELECT
                 prop.id, prop.source_culture';
     $sql .= ' FROM '.QubitProperty::TABLE_NAME.' prop';
     $sql .= ' WHERE prop.object_id = ?

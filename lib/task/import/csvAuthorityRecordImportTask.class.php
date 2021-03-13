@@ -26,9 +26,9 @@
  */
 class csvAuthorityRecordImportTask extends csvImportBaseTask
 {
-  protected $namespace           = 'csv';
-  protected $name                = 'authority-import';
-  protected $briefDescription    = 'Import csv authority record data';
+  protected $namespace = 'csv';
+  protected $name = 'authority-import';
+  protected $briefDescription = 'Import csv authority record data';
   protected $detailedDescription = <<<EOF
 Import CSV data
 EOF;
@@ -58,10 +58,10 @@ EOF;
 
     // Load taxonomies into variables to avoid use of magic numbers
     $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
-      QubitTaxonomy::NOTE_TYPE_ID                => 'noteTypes',
-      QubitTaxonomy::ACTOR_ENTITY_TYPE_ID        => 'actorTypes',
-      QubitTaxonomy::ACTOR_RELATION_TYPE_ID      => 'actorRelationTypes',
-      QubitTaxonomy::DESCRIPTION_STATUS_ID       => 'descriptionStatusTypes',
+      QubitTaxonomy::NOTE_TYPE_ID => 'noteTypes',
+      QubitTaxonomy::ACTOR_ENTITY_TYPE_ID => 'actorTypes',
+      QubitTaxonomy::ACTOR_RELATION_TYPE_ID => 'actorRelationTypes',
+      QubitTaxonomy::DESCRIPTION_STATUS_ID => 'descriptionStatusTypes',
       QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID => 'detailLevelTypes'
     ]);
 
@@ -82,12 +82,12 @@ EOF;
       // The status array is a place to put data that should be accessible
       // from closure logic using the getStatus method
       'status' => [
-        'sourceName'             => $sourceName,
-        'actorTypes'             => $termData['actorTypes'],
+        'sourceName' => $sourceName,
+        'actorTypes' => $termData['actorTypes'],
         'descriptionStatusTypes' => $termData['descriptionStatusTypes'],
-        'detailLevelTypes'       => $termData['detailLevelTypes'],
-        'aliases'                => $aliases,
-        'actorNames'             => []
+        'detailLevelTypes' => $termData['detailLevelTypes'],
+        'aliases' => $aliases,
+        'actorNames' => []
       ],
 
       // Import columns that map directory to QubitActor properties

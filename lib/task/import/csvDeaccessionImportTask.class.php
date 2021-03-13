@@ -26,9 +26,9 @@
  */
 class csvDeaccessionImportTask extends csvImportBaseTask
 {
-  protected $namespace           = 'csv';
-  protected $name                = 'deaccession-import';
-  protected $briefDescription    = 'Import CSV deaccession data';
+  protected $namespace = 'csv';
+  protected $name = 'deaccession-import';
+  protected $briefDescription = 'Import CSV deaccession data';
   protected $detailedDescription = <<<EOF
 Import CSV deaccession data
 EOF;
@@ -52,7 +52,7 @@ EOF;
 
     // Load taxonomies into variables to avoid use of magic numbers
     $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
-      QubitTaxonomy::DEACCESSION_SCOPE_ID    => 'scopeTypes',     // part or whole
+      QubitTaxonomy::DEACCESSION_SCOPE_ID => 'scopeTypes',     // part or whole
     ]);
 
     // Define import
@@ -69,8 +69,8 @@ EOF;
       // The status array is a place to put data that should be accessible
       // from closure logic using the getStatus method
       'status' => [
-        'scopeTypes'          => $termData['scopeTypes'],
-        'options'             => $options,
+        'scopeTypes' => $termData['scopeTypes'],
+        'options' => $options,
       ],
 
       'standardColumns' => [
@@ -93,7 +93,7 @@ EOF;
       // Import logic to load deaccession
       'rowInitLogic' => function (&$self)
       {
-        $accessionIdentifier =  $self->rowStatusVars['accessionNumber'];
+        $accessionIdentifier = $self->rowStatusVars['accessionNumber'];
 
         // Look up Qubit ID of pre-created accession
         $accessionQueryStatement = $self->sqlQuery(

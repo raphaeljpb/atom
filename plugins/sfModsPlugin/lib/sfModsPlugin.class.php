@@ -99,14 +99,14 @@ class sfModsPlugin implements ArrayAccess
         $map = [
           'architectural drawing' => 'still image',
           'cartographic material' => 'cartographic',
-          'graphic material'      => 'still image',
-          'moving images'         => 'moving image',
-          'multiple media'        => 'mixed material',
-          'object'                => 'three dimensional object',
-          'philatelic record'     => 'still image',
-          'sound recording'       => 'sound recording',
-          'technical drawing'     => 'still image',
-          'textual record'        => 'text'
+          'graphic material' => 'still image',
+          'moving images' => 'moving image',
+          'multiple media' => 'mixed material',
+          'object' => 'three dimensional object',
+          'philatelic record' => 'still image',
+          'sound recording' => 'sound recording',
+          'technical drawing' => 'still image',
+          'textual record' => 'text'
         ];
 
         // Real MODS resource types

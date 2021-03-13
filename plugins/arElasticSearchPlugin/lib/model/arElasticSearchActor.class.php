@@ -21,7 +21,7 @@ class arElasticSearchActor extends arElasticSearchModelBase
 {
   public function load()
   {
-    $sql  = 'SELECT actor.id';
+    $sql = 'SELECT actor.id';
     $sql .= ' FROM '.QubitActor::TABLE_NAME.' actor';
     $sql .= ' JOIN '.QubitObject::TABLE_NAME.' object ON actor.id = object.id';
     $sql .= ' WHERE actor.id != ? AND object.class_name = ?';

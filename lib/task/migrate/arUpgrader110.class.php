@@ -52,14 +52,14 @@ class arUpgrader110
       case 62:
         // Add accession mask user setting
         $setting = new QubitSetting();
-        $setting->name  = 'accession_mask';
+        $setting->name = 'accession_mask';
         $setting->value = '%Y-%m-%d/#i';
         $setting->culture = 'en';
         $setting->save();
 
         // Add accession counter setting
         $setting = new QubitSetting();
-        $setting->name  = 'accession_counter';
+        $setting->name = 'accession_counter';
         $setting->value = '0';
         $setting->culture = 'en';
         $setting->save();
@@ -86,7 +86,7 @@ class arUpgrader110
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
-          $nodeI18n->label= $value;
+          $nodeI18n->label = $value;
 
           $node->menuI18ns[] = $nodeI18n;
         }
@@ -117,7 +117,7 @@ class arUpgrader110
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
-          $nodeI18n->label= $value;
+          $nodeI18n->label = $value;
 
           $node->menuI18ns[] = $nodeI18n;
         }
@@ -153,7 +153,7 @@ class arUpgrader110
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
-          $nodeI18n->label= $value;
+          $nodeI18n->label = $value;
 
           $node->menuI18ns[] = $nodeI18n;
         }
@@ -183,7 +183,7 @@ class arUpgrader110
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
-          $nodeI18n->label= $value;
+          $nodeI18n->label = $value;
 
           $node->menuI18ns[] = $nodeI18n;
         }
@@ -213,7 +213,7 @@ class arUpgrader110
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
-          $nodeI18n->label= $value;
+          $nodeI18n->label = $value;
 
           $node->menuI18ns[] = $nodeI18n;
         }
@@ -434,7 +434,7 @@ class arUpgrader110
 
       // Migrate relation notes for date and description to relation_i18n table
       case 63:
-        $sql  = sprintf('SELECT id FROM note WHERE note.type_id IN (%s, %s)',
+        $sql = sprintf('SELECT id FROM note WHERE note.type_id IN (%s, %s)',
           QubitTerm::RELATION_NOTE_DATE_ID,
           QubitTerm::RELATION_NOTE_DESCRIPTION_ID);
         $stmt = QubitPdo::prepareAndExecute($sql);
@@ -476,7 +476,7 @@ class arUpgrader110
       // Prior to r9340 all checksums were md5 and the algorithm was not
       // recorded, update checksum_type column
       case 64:
-        $sql  = 'UPDATE '.QubitDigitalObject::TABLE_NAME;
+        $sql = 'UPDATE '.QubitDigitalObject::TABLE_NAME;
         $sql .= ' SET '.QubitDigitalObject::CHECKSUM_TYPE.' = "md5"';
         $sql .= ' WHERE CHAR_LENGTH(checksum) > 0';
         QubitPdo::modify($sql);
@@ -489,7 +489,7 @@ class arUpgrader110
         $node->parentId = QubitMenu::IMPORT_ID;
         $node->name = 'importCsv';
         $node->path = 'object/importSelect?type=csv';
-        $node->label= 'CSV';
+        $node->label = 'CSV';
         $node->save();
 
         break;
@@ -508,7 +508,7 @@ class arUpgrader110
       // Add setting for repository upload quota
       case 67:
         $setting = new QubitSetting();
-        $setting->name  = 'repository_quota';
+        $setting->name = 'repository_quota';
         $setting->value = '-1';
         $setting->culture = 'en';
         $setting->save();
@@ -518,7 +518,7 @@ class arUpgrader110
       // Add separator character setting
       case 68:
         $setting = new QubitSetting();
-        $setting->name  = 'separator_character';
+        $setting->name = 'separator_character';
         $setting->value = '-';
         $setting->culture = 'en';
         $setting->save();
@@ -542,7 +542,7 @@ class arUpgrader110
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
-          $nodeI18n->label= $value;
+          $nodeI18n->label = $value;
 
           $node->menuI18ns[] = $nodeI18n;
         }
@@ -686,7 +686,7 @@ class arUpgrader110
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
-          $nodeI18n->label= $value;
+          $nodeI18n->label = $value;
 
           $node->menuI18ns[] = $nodeI18n;
         }
@@ -728,7 +728,7 @@ class arUpgrader110
 
       // Ensure all information objects get an explicit publication status
       case 74:
-        $sql  = '
+        $sql = '
           SELECT id
           FROM information_object
           WHERE
@@ -855,14 +855,14 @@ sql;
       ] as $item)
     {
       // Copy column updated_at and drop it
-      $sql  = "UPDATE object, $item";
+      $sql = "UPDATE object, $item";
       $sql .= " SET object.updated_at = $item.updated_at";
       $sql .= " WHERE object.id = $item.id";
       QubitPdo::modify($sql);
       QubitMigrate::dropColumn($item, 'updated_at');
 
       // Copy column created_at and drop it
-      $sql  = "UPDATE object, $item";
+      $sql = "UPDATE object, $item";
       $sql .= " SET object.created_at = $item.created_at";
       $sql .= " WHERE object.id = $item.id";
       QubitPdo::modify($sql);

@@ -31,7 +31,7 @@ class QubitMenu extends BaseMenu
   public const
 
 
-    QUICK_LINKS_ID  = 3;
+    QUICK_LINKS_ID = 3;
   public const
 
 
@@ -326,7 +326,7 @@ class QubitMenu extends BaseMenu
    * @param array $options optional parameters
    * @return array of menu columns, with an additional 'depth' column
    */
-  public static function getTreeById($id, $options=[])
+  public static function getTreeById($id, $options = [])
   {
     // Attempt to grab topMenu object via id
     if (null === $topMenu = QubitMenu::getById($id))
@@ -346,7 +346,7 @@ class QubitMenu extends BaseMenu
    * @param array $options optional parameters
    * @return array of menu columns, with an additional 'depth' column
    */
-  public static function getTree(QubitMenu $topMenu, $options=[])
+  public static function getTree(QubitMenu $topMenu, $options = [])
   {
     $maxDepth = 0;
 

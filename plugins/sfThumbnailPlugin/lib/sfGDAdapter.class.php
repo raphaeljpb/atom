@@ -45,20 +45,20 @@ class sfGDAdapter
    * Stores function names for each image type
    */
   protected $imgLoaders = [
-    'image/jpeg'  => 'imagecreatefromjpeg',
+    'image/jpeg' => 'imagecreatefromjpeg',
     'image/pjpeg' => 'imagecreatefromjpeg',
-    'image/png'   => 'imagecreatefrompng',
-    'image/gif'   => 'imagecreatefromgif',
+    'image/png' => 'imagecreatefrompng',
+    'image/gif' => 'imagecreatefromgif',
   ];
 
   /**
    * Stores function names for each image type
    */
   protected $imgCreators = [
-    'image/jpeg'  => 'imagejpeg',
+    'image/jpeg' => 'imagejpeg',
     'image/pjpeg' => 'imagejpeg',
-    'image/png'   => 'imagepng',
-    'image/gif'   => 'imagegif',
+    'image/png' => 'imagepng',
+    'image/gif' => 'imagegif',
   ];
 
   public function __construct($maxWidth, $maxHeight, $scale, $inflate, $quality, $options)

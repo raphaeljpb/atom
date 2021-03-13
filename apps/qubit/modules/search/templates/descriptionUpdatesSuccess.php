@@ -23,9 +23,9 @@
 <?php slot('content') ?>
 
   <?php echo get_partial('search/updatesSearch', [
-    'form'         => $form,
-    'show'         => $showForm,
-    'user'         => $user]) ?>
+    'form' => $form,
+    'show' => $showForm,
+    'user' => $user]) ?>
 
   <?php if ('QubitInformationObject' == $className && sfConfig::get('app_audit_log_enabled', false)): ?>
 

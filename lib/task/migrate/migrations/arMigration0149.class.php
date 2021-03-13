@@ -51,7 +51,7 @@ class arMigration0149
     if (null === QubitSetting::getByName('globalSearch'))
     {
       $setting = new QubitSetting();
-      $setting->name  = 'globalSearch';
+      $setting->name = 'globalSearch';
       $setting->scope = 'ui_label';
       $setting->editable = 1;
       $setting->deleteable = 0;
@@ -63,7 +63,7 @@ class arMigration0149
     if (null === QubitSetting::getByName('institutionSearchHoldings'))
     {
       $setting = new QubitSetting();
-      $setting->name  = 'institutionSearchHoldings';
+      $setting->name = 'institutionSearchHoldings';
       $setting->scope = 'ui_label';
       $setting->editable = 1;
       $setting->deleteable = 0;

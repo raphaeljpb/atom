@@ -41,14 +41,14 @@ class ActorBrowseAction extends DefaultBrowseAction
     ];
   public static $FILTERTAGS = [
       'hasDigitalObject' => [],
-      'repository'       => ['model' => 'QubitRepository'],
-      'entityType'       => ['model' => 'QubitTerm'],
-      'relatedType'      => ['model' => 'QubitTerm'],
-      'occupation'       => ['model' => 'QubitTerm'],
-      'place'            => ['model' => 'QubitTerm'],
-      'subject'          => ['model' => 'QubitTerm'],
-      'mediatypes'       => ['model' => 'QubitTerm'],
-      'emptyField'       => []
+      'repository' => ['model' => 'QubitRepository'],
+      'entityType' => ['model' => 'QubitTerm'],
+      'relatedType' => ['model' => 'QubitTerm'],
+      'occupation' => ['model' => 'QubitTerm'],
+      'place' => ['model' => 'QubitTerm'],
+      'subject' => ['model' => 'QubitTerm'],
+      'mediatypes' => ['model' => 'QubitTerm'],
+      'emptyField' => []
     ];
   public static $AGGS = [
       'languages' =>
@@ -72,13 +72,13 @@ class ActorBrowseAction extends DefaultBrowseAction
               'field' => 'occupations.id',
               'size' => 10],
       'place' =>
-        ['type'   => 'term',
-              'field'  => 'places.id',
-              'size'   => 10],
+        ['type' => 'term',
+              'field' => 'places.id',
+              'size' => 10],
       'subject' =>
-        ['type'   => 'term',
-              'field'  => 'subjects.id',
-              'size'   => 10]];
+        ['type' => 'term',
+              'field' => 'subjects.id',
+              'size' => 10]];
 
   /**
    * Return ElasticSearch field(s) for a given "friendly" field name
@@ -140,22 +140,22 @@ class ActorBrowseAction extends DefaultBrowseAction
     $this->i18n = $this->context->i18n;
 
     $this->fieldOptions = [
-      'authorizedFormOfName'             => $this->i18n->__('Authorized form of name'),
-      'parallelNames'                    => $this->i18n->__('Parallel form(s) of name'),
-      'otherNames'                       => $this->i18n->__('Other form(s) of name'),
-      'datesOfExistence'                 => $this->i18n->__('Dates of existence'),
-      'history'                          => $this->i18n->__('History'),
-      'legalStatus'                      => $this->i18n->__('Legal status'),
-      'places'                           => $this->i18n->__('Places'),
-      'generalContext'                   => $this->i18n->__('General context'),
-      'occupations'                      => $this->i18n->__('Occupation access points'),
-      'occupationNotes'                  => $this->i18n->__('Occupation access point notes'),
-      'subject'                          => $this->i18n->__('Subject access points'),
-      'place'                            => $this->i18n->__('Place access points'),
-      'descriptionIdentifier'            => $this->i18n->__('Authority record identifier'),
+      'authorizedFormOfName' => $this->i18n->__('Authorized form of name'),
+      'parallelNames' => $this->i18n->__('Parallel form(s) of name'),
+      'otherNames' => $this->i18n->__('Other form(s) of name'),
+      'datesOfExistence' => $this->i18n->__('Dates of existence'),
+      'history' => $this->i18n->__('History'),
+      'legalStatus' => $this->i18n->__('Legal status'),
+      'places' => $this->i18n->__('Places'),
+      'generalContext' => $this->i18n->__('General context'),
+      'occupations' => $this->i18n->__('Occupation access points'),
+      'occupationNotes' => $this->i18n->__('Occupation access point notes'),
+      'subject' => $this->i18n->__('Subject access points'),
+      'place' => $this->i18n->__('Place access points'),
+      'descriptionIdentifier' => $this->i18n->__('Authority record identifier'),
       'institutionResponsibleIdentifier' => $this->i18n->__('Institution identifier'),
-      'sources'                          => $this->i18n->__('Sources'),
-      'maintenanceNotes'                 => $this->i18n->__('Maintenance notes')
+      'sources' => $this->i18n->__('Sources'),
+      'maintenanceNotes' => $this->i18n->__('Maintenance notes')
     ];
 
     // If a global search has been requested, translate that into an advanced search
@@ -248,7 +248,7 @@ class ActorBrowseAction extends DefaultBrowseAction
 
       case 'hasDigitalObject':
         $choices = [
-          ''  => '',
+          '' => '',
           '1' => $this->context->i18n->__('Yes'),
           '0' => $this->context->i18n->__('No')
         ];

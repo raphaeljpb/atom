@@ -20,7 +20,7 @@
 class QubitPhysicalObject extends BasePhysicalObject
 {
   public $disableNestedSetUpdating = false;
-  public $indexOnSave              = false;
+  public $indexOnSave = false;
 
   /**
    * Call this function when casting object instance as type string
@@ -91,7 +91,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   public function deleteInformationObjectRelations()
   {
     $informationObjectRelations = QubitRelation::getRelationsBySubjectId($this->id,
-    ['typeId'=>QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
+    ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
 
     foreach ($informationObjectRelations as $relation)
     {
@@ -239,8 +239,8 @@ class QubitPhysicalObject extends BasePhysicalObject
     {
       $relation = new QubitRelation();
       $relation->subjectId = $this->id;
-      $relation->objectId  = $infobjId;
-      $relation->typeId    = QubitTerm::HAS_PHYSICAL_OBJECT_ID;
+      $relation->objectId = $infobjId;
+      $relation->typeId = QubitTerm::HAS_PHYSICAL_OBJECT_ID;
 
       $relation->indexOnSave = $this->indexOnSave;
 
@@ -344,7 +344,7 @@ SQL;
   public function quickUpdate(array $data, $connection = null)
   {
     $doUpdate = false;
-    $newvals  = [];
+    $newvals = [];
 
     $updateCols = [
       'typeId',
@@ -389,8 +389,8 @@ SQL;
     );
 
     $result = $sth->execute([
-      ':typeId'   => $newvals['typeId'],
-      ':id'       => $this->id,
+      ':typeId' => $newvals['typeId'],
+      ':id' => $this->id,
     ]);
 
     if (!$result) {
@@ -405,7 +405,7 @@ SQL;
 
     $result = $sth->execute([
       ':location' => $newvals['location'],
-      ':id'       => $this->id,
+      ':id' => $this->id,
     ]);
 
     $connection->commit();

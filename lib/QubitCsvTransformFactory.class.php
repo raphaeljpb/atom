@@ -66,14 +66,14 @@ class QubitCsvTransformFactory
       'options' => $this->cliOptions,
 
       'status' => [
-        'cliOptions'              => $this->cliOptions,
-        'parentKeys'              => [],
-        'ignoreRows'              => $this->ignoreRows,
-        'ignoreRowCheckLogic'     => $this->ignoreRowCheckLogic,
-        'noIdentifierCount'       => 0,
-        'tempFile'                => $tempCsvFile,
-        'outFh'                   => fopen($tempCsvFile, 'w'),
-        'parentKeyLogic'          => $this->parentKeyLogic,
+        'cliOptions' => $this->cliOptions,
+        'parentKeys' => [],
+        'ignoreRows' => $this->ignoreRows,
+        'ignoreRowCheckLogic' => $this->ignoreRowCheckLogic,
+        'noIdentifierCount' => 0,
+        'tempFile' => $tempCsvFile,
+        'outFh' => fopen($tempCsvFile, 'w'),
+        'parentKeyLogic' => $this->parentKeyLogic,
         'rowParentKeyLookupLogic' => $this->rowParentKeyLookupLogic
       ],
 
@@ -119,16 +119,16 @@ class QubitCsvTransformFactory
           'skipOptionsAndEnvironmentCheck' => true,
 
           'status' => [
-            'cliOptions'              => $self->status['cliOptions'],
-            'finalOutputFile'         => $self->status['finalOutputFile'],
-            'parentKeys'              => $self->status['parentKeys'],
-            'badParents'              => 0,
-            'ignoreRows'              => $self->status['ignoreRows'],
-            'ignoreRowCheckLogic'     => $self->status['ignoreRowCheckLogic'],
-            'tempFile'                => $self->status['tempFile'],
-            'badLevelOfDescription'   => 0,
+            'cliOptions' => $self->status['cliOptions'],
+            'finalOutputFile' => $self->status['finalOutputFile'],
+            'parentKeys' => $self->status['parentKeys'],
+            'badParents' => 0,
+            'ignoreRows' => $self->status['ignoreRows'],
+            'ignoreRowCheckLogic' => $self->status['ignoreRowCheckLogic'],
+            'tempFile' => $self->status['tempFile'],
+            'badLevelOfDescription' => 0,
             'rowParentKeyLookupLogic' => $self->status['rowParentKeyLookupLogic'],
-            'ignoreBadLod'            => $self->status['ignoreBadLod']
+            'ignoreBadLod' => $self->status['ignoreBadLod']
           ],
 
           'errorLog' => $self->errorLog,

@@ -60,7 +60,7 @@ class QubitCsvTransform extends QubitFlatfileImport
       $this->status['finalOutputFile'] = $cliOptions['output-file'];
       $this->status['ignoreBadLod'] = $cliOptions['ignore-bad-lod'];
     }
-    $this->status['headersWritten']  = false;
+    $this->status['headersWritten'] = false;
 
     // Load levels of description from database
     $criteria = new Criteria();
@@ -136,9 +136,9 @@ class QubitCsvTransform extends QubitFlatfileImport
 
   public function numberedFilePathVariation($filename, $number)
   {
-    $parts     = pathinfo($filename);
-    $base      = $parts['filename'];
-    $path      = $parts['dirname'];
+    $parts = pathinfo($filename);
+    $base = $parts['filename'];
+    $path = $parts['dirname'];
     return $path .'/'. $base .'_'. $number .'.'. $parts['extension'];
   }
 

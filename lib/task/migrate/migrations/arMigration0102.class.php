@@ -40,7 +40,7 @@ class arMigration0102
   {
     // Create setting
     $setting = new QubitSetting();
-    $setting->name  = 'facetstitle';
+    $setting->name = 'facetstitle';
     $setting->scope = 'ui_label';
     $setting->editable = 1;
     $setting->deleteable = 0;

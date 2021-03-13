@@ -18,14 +18,14 @@ class sfModsConvertor extends QubitSaxParser
   protected $originDateEnd;
 
   // Misc. import bookkeeping
-  protected $subjects         = [];
-  protected $geographic       = [];
+  protected $subjects = [];
+  protected $geographic = [];
   protected $typesOfResources = [];
-  protected $genres           = [];
-  protected $languages        = [];
-  protected $notes            = [];
-  protected $materialTypes    = [];
-  protected $digitalObjects   = [];
+  protected $genres = [];
+  protected $languages = [];
+  protected $notes = [];
+  protected $materialTypes = [];
+  protected $digitalObjects = [];
 
   /*
    * Import helpers
@@ -422,17 +422,17 @@ class sfModsConvertor extends QubitSaxParser
   protected function importTypesOfResources($typeOfResources)
   {
     $map = [
-      'text'                          => 'Textual record',
-      'cartographic'                  => 'Cartographic material',
-      'notated music'                 => 'Textual record',
-      'sound recording-musical'     => 'Sound recording',
+      'text' => 'Textual record',
+      'cartographic' => 'Cartographic material',
+      'notated music' => 'Textual record',
+      'sound recording-musical' => 'Sound recording',
       'sound recording-nonmusical' => 'Sound recording',
-      'sound recording'               => 'Sound recording',
-      'still image'                   => 'Graphic material',
-      'moving image'                  => 'Moving images',
-      'three dimensional object'      => 'Object',
-      'software, multimedia'          => 'Multiple media',
-      'mixed material'                => 'Multiple media'
+      'sound recording' => 'Sound recording',
+      'still image' => 'Graphic material',
+      'moving image' => 'Moving images',
+      'three dimensional object' => 'Object',
+      'software, multimedia' => 'Multiple media',
+      'mixed material' => 'Multiple media'
     ];
 
     $typeOfResourceTermNames = $gmdTermNames = [];

@@ -316,7 +316,7 @@ class QubitInformationObject extends BaseInformationObject
 
       try
       {
-        $sql  = 'SELECT MAX('.QubitInformationObject::LFT.')';
+        $sql = 'SELECT MAX('.QubitInformationObject::LFT.')';
         $sql .= ' FROM '.QubitInformationObject::TABLE_NAME;
 
         if (isset($this->parentId))
@@ -329,7 +329,7 @@ class QubitInformationObject extends BaseInformationObject
         $statement->execute();
         $maxLft = $statement->fetchColumn();
 
-        $sql  = 'UPDATE '.QubitInformationObject::TABLE_NAME;
+        $sql = 'UPDATE '.QubitInformationObject::TABLE_NAME;
         $sql .= ' SET '.QubitInformationObject::LFT.' = '.($maxLft + 1);
         $sql .= ' WHERE '.QubitInformationObject::ID.' = '.$this->id;
 
@@ -509,7 +509,7 @@ class QubitInformationObject extends BaseInformationObject
     $criteria->setLimit($options['limit']);
 
     return [
-      'data'      => QubitInformationObject::get($criteria),
+      'data' => QubitInformationObject::get($criteria),
       'remaining' => $remaining
     ];
   }
@@ -633,7 +633,7 @@ class QubitInformationObject extends BaseInformationObject
       // Export top-level parent as EAD
       $params = [
         'objectId' => $this->getCollectionRoot()->id,
-        'format'   => 'ead'
+        'format' => 'ead'
       ];
       QubitJob::runJob('arXmlExportSingleFileJob', $params);
     }
@@ -816,7 +816,7 @@ class QubitInformationObject extends BaseInformationObject
       return;
     }
 
-    return $property->getValue(['sourceCulture'=>true]);
+    return $property->getValue(['sourceCulture' => true]);
   }
 
   public function setRoot()
@@ -1854,8 +1854,8 @@ class QubitInformationObject extends BaseInformationObject
     $entityTypes = [
       'persname' => QubitTerm::PERSON_ID,
       'corpname' => QubitTerm::CORPORATE_BODY_ID,
-      'famname'  => QubitTerm::FAMILY_ID,
-      'name'     => null
+      'famname' => QubitTerm::FAMILY_ID,
+      'name' => null
     ];
 
     foreach ($entityTypes as $type => $typeId)
@@ -2367,7 +2367,7 @@ class QubitInformationObject extends BaseInformationObject
   public function getOaiIdentifier()
   {
     $domain = sfContext::getInstance()->request->getHost();
-    $oaiRepositoryCode = QubitSetting::getByName('oai_repository_code')->getValue(['sourceCulture'=>true]);
+    $oaiRepositoryCode = QubitSetting::getByName('oai_repository_code')->getValue(['sourceCulture' => true]);
     $oaiIdentifier = 'oai:'.$domain.':'.$oaiRepositoryCode.'_'.$this->getOaiLocalIdentifier();
 
     return $oaiIdentifier;
@@ -2550,7 +2550,7 @@ class QubitInformationObject extends BaseInformationObject
 
           $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitInformationObject');
 
-          $concatCurrent  = $current->__get('identifier') ? str_pad($current->__get('identifier'), 12, '0', STR_PAD_RIGHT) : " ";
+          $concatCurrent = $current->__get('identifier') ? str_pad($current->__get('identifier'), 12, '0', STR_PAD_RIGHT) : " ";
           $concatCurrent .= $current->getTitle(['sourceCulture' => true]);
           $concatCurrent .= str_pad($current->lft, 12, '0', STR_PAD_LEFT);
           $concatCurrent = Propel::getConnection()->quote($concatCurrent);
@@ -3080,14 +3080,14 @@ class QubitInformationObject extends BaseInformationObject
         }
 
         $possibleNameFields = [
-          'name'     => QubitTerm::PERSON_ID,
+          'name' => QubitTerm::PERSON_ID,
           'persname' => QubitTerm::PERSON_ID,
-          'famname'  => QubitTerm::FAMILY_ID,
+          'famname' => QubitTerm::FAMILY_ID,
           'corpname' => QubitTerm::CORPORATE_BODY_ID
         ];
 
         $typeId = QubitTerm::PERSON_ID;
-        $name   = '';
+        $name = '';
 
         foreach ($possibleNameFields as $fieldName => $fieldTypeId)
         {
@@ -3100,8 +3100,8 @@ class QubitInformationObject extends BaseInformationObject
 
           if ($fieldValue != '')
           {
-            $name             = $fieldValue;
-            $typeId           = $fieldTypeId;
+            $name = $fieldValue;
+            $typeId = $fieldTypeId;
             $datesOfExistence = $datesValue;
           }
         }
@@ -3116,7 +3116,7 @@ class QubitInformationObject extends BaseInformationObject
         $eventSpec = [
           'event_type_id' => QubitTerm::CREATION_ID,
           'entity_type_id' => $typeId,
-          'history'       => $history
+          'history' => $history
         ];
 
         if ($date)
@@ -3173,11 +3173,11 @@ class QubitInformationObject extends BaseInformationObject
 
     switch (true)
     {
-      case strlen($date) >= 4: $year  = (int)substr($date, 0, 4);
+      case strlen($date) >= 4: $year = (int)substr($date, 0, 4);
       // no break
       case strlen($date) >= 6: $month = (int)substr($date, 4, 2);
       // no break
-      case strlen($date) == 8: $day   = (int)substr($date, 6, 2);
+      case strlen($date) == 8: $day = (int)substr($date, 6, 2);
     }
 
     if ($year === 0)

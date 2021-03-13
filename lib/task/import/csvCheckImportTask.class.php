@@ -26,8 +26,8 @@
  */
 class csvCheckImportTask extends csvImportBaseTask
 {
-    protected $namespace        = 'csv';
-    protected $name             = 'check-import';
+    protected $namespace = 'csv';
+    protected $name = 'check-import';
     protected $briefDescription = 'Check CSV data, providing diagnostic info';
 
     protected $detailedDescription = <<<EOF
@@ -45,10 +45,10 @@ EOF;
 
     $filenames = explode(',', $arguments['filename']);
 
-    $nonEmptyColumns    = [];
+    $nonEmptyColumns = [];
     $sampleColumnValues = [];
-    $multiValueColumns  = [];
-    $rowCount           = 0;
+    $multiValueColumns = [];
+    $rowCount = 0;
 
     foreach($filenames as $filename)
     {
@@ -64,11 +64,11 @@ EOF;
         'context' => sfContext::createInstance($this->configuration),
 
         'status' => [
-          'nonEmptyColumns'             => $nonEmptyColumns,
-          'sampleColumnValues'          => $sampleColumnValues,
-          'multiValueColumns'           => [],
+          'nonEmptyColumns' => $nonEmptyColumns,
+          'sampleColumnValues' => $sampleColumnValues,
+          'multiValueColumns' => [],
           'sampleOnlyMultivalueColumns' => false,
-          'numberOfSampleValues'        => 1
+          'numberOfSampleValues' => 1
         ],
 
         'saveLogic' => function (&$self)
@@ -117,7 +117,7 @@ EOF;
 
       $import->csv($fh, $skipRows);
 
-      $nonEmptyColumns    = array_merge(
+      $nonEmptyColumns = array_merge(
         $nonEmptyColumns,
         $import->status['nonEmptyColumns']
       );

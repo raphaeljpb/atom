@@ -86,7 +86,7 @@ class SettingsVisibleElementsAction extends sfAction
     if (null === $setting = QubitSetting::getByNameAndScope($name, 'element_visibility'))
     {
       $setting = new QubitSetting();
-      $setting->name  = $name;
+      $setting->name = $name;
       $setting->scope = 'element_visibility';
       $setting->culture = 'en';
     }

@@ -28,7 +28,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
   public function load()
   {
     // Get count of all information objects
-    $sql  = 'SELECT COUNT(*)';
+    $sql = 'SELECT COUNT(*)';
     $sql .= ' FROM '.QubitInformationObject::TABLE_NAME;
     $sql .= ' WHERE id > ?';
 
@@ -92,7 +92,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
       {
         // Pass ancestors, repository and creators down to descendants
         $this->recursivelyAddInformationObjects($item->id, $totalRows, [
-          'ancestors'  => $ancestors,
+          'ancestors' => $ancestors,
           'repository' => $repository,
           'inheritedCreators' => $inheritedCreators
         ]);
@@ -156,7 +156,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
 
     if (!isset(self::$statement))
     {
-      $sql  = 'SELECT
+      $sql = 'SELECT
                   io.id,
                   io.lft,
                   io.rgt';

@@ -169,7 +169,7 @@ class Qubit
       $thisdir = array_pop($stack);
       if ($dircont = scandir($thisdir))
       {
-        $i=0;
+        $i = 0;
         while (isset($dircont[$i]))
         {
           if ($dircont[$i] !== '.' && $dircont[$i] !== '..'

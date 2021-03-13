@@ -69,8 +69,8 @@ class ClipboardViewAction extends DefaultBrowseAction
 
     $this->uiLabels = [
       'informationObject' => sfConfig::get('app_ui_label_informationobject'),
-      'actor'             => sfConfig::get('app_ui_label_actor'),
-      'repository'        => sfConfig::get('app_ui_label_repository')
+      'actor' => sfConfig::get('app_ui_label_actor'),
+      'repository' => sfConfig::get('app_ui_label_repository')
     ];
 
     // Remove slugs parameter. In some templates (entity type dropdown
@@ -86,7 +86,7 @@ class ClipboardViewAction extends DefaultBrowseAction
   {
     $this->sortOptions = [
       'lastUpdated' => $this->context->i18n->__('Date modified'),
-      'alphabetic'  => $this->context->i18n->__('Name'),
+      'alphabetic' => $this->context->i18n->__('Name'),
     ];
 
     // IOs and Repos have identifier sort option in common

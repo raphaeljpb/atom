@@ -61,11 +61,11 @@ class RepositoryHoldingsAction extends sfAction
     }
 
     $data = [
-      'results'     => $results,
-      'start'       => $pager->getFirstIndice(),
-      'end'         => $pager->getLastIndice(),
+      'results' => $results,
+      'start' => $pager->getFirstIndice(),
+      'end' => $pager->getLastIndice(),
       'currentPage' => $pager->getPage(),
-      'lastPage'    => $pager->getLastPage()
+      'lastPage' => $pager->getLastPage()
     ];
 
     return $this->renderText(json_encode($data));

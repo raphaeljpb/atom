@@ -26,8 +26,8 @@
  */
 class csvExportInformationObjectsTask extends exportBulkBaseTask
 {
-  protected $namespace        = 'csv';
-  protected $name             = 'export';
+  protected $namespace = 'csv';
+  protected $name = 'export';
   protected $briefDescription = 'Export descriptions as CSV file(s)';
 
   /**

@@ -26,9 +26,9 @@
  */
 class csvAccessionImportTask extends csvImportBaseTask
 {
-  protected $namespace           = 'csv';
-  protected $name                = 'accession-import';
-  protected $briefDescription    = 'Import csv acession data';
+  protected $namespace = 'csv';
+  protected $name = 'accession-import';
+  protected $briefDescription = 'Import csv acession data';
   protected $detailedDescription = <<<EOF
 Import CSV accession data
 EOF;
@@ -58,13 +58,13 @@ EOF;
 
     // Load taxonomies into variables to avoid use of magic numbers
     $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
-      QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID    => 'acquisitionTypes',
-      QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID       => 'resourceTypes',
-      QubitTaxonomy::ACCESSION_PROCESSING_STATUS_ID   => 'processingStatus',
+      QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID => 'acquisitionTypes',
+      QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID => 'resourceTypes',
+      QubitTaxonomy::ACCESSION_PROCESSING_STATUS_ID => 'processingStatus',
       QubitTaxonomy::ACCESSION_PROCESSING_PRIORITY_ID => 'processingPriority',
       QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID => 'alternativeIdentifierTypes',
-      QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID          => 'physicalObjectTypes',
-      QubitTaxonomy::ACCESSION_EVENT_TYPE_ID          => 'accessionEventTypes'
+      QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID => 'physicalObjectTypes',
+      QubitTaxonomy::ACCESSION_EVENT_TYPE_ID => 'accessionEventTypes'
     ]);
 
     // Define import
@@ -81,15 +81,15 @@ EOF;
       // The status array is a place to put data that should be accessible
       // from closure logic using the getStatus method
       'status' => [
-        'sourceName'                  => $sourceName,
-        'acquisitionTypes'            => $termData['acquisitionTypes'],
-        'resourceTypes'               => $termData['resourceTypes'],
-        'physicalObjectTypes'         => $termData['physicalObjectTypes'],
-        'processingStatus'            => $termData['processingStatus'],
-        'processingPriority'          => $termData['processingPriority'],
-        'alternativeIdentifierTypes'  => $termData['alternativeIdentifierTypes'],
-        'accessionEventTypes'         => $termData['accessionEventTypes'],
-        'assignId'                    => $options['assign-id']
+        'sourceName' => $sourceName,
+        'acquisitionTypes' => $termData['acquisitionTypes'],
+        'resourceTypes' => $termData['resourceTypes'],
+        'physicalObjectTypes' => $termData['physicalObjectTypes'],
+        'processingStatus' => $termData['processingStatus'],
+        'processingPriority' => $termData['processingPriority'],
+        'alternativeIdentifierTypes' => $termData['alternativeIdentifierTypes'],
+        'accessionEventTypes' => $termData['accessionEventTypes'],
+        'assignId' => $options['assign-id']
       ],
 
       'standardColumns' => [
@@ -105,36 +105,36 @@ EOF;
       ],
 
       'arrayColumns' => [
-        'alternativeIdentifiers'     => '|',
+        'alternativeIdentifiers' => '|',
         'alternativeIdentifierTypes' => '|',
         'alternativeIdentifierNotes' => '|',
 
-        'eventActors'          => '|',
-        'eventActorHistories'  => '|',
-        'eventTypes'           => '|',
-        'eventPlaces'          => '|',
-        'eventDates'           => '|',
-        'eventStartDates'      => '|',
-        'eventEndDates'        => '|',
-        'eventDescriptions'    => '|',
+        'eventActors' => '|',
+        'eventActorHistories' => '|',
+        'eventTypes' => '|',
+        'eventPlaces' => '|',
+        'eventDates' => '|',
+        'eventStartDates' => '|',
+        'eventEndDates' => '|',
+        'eventDescriptions' => '|',
 
-        'accessionEventTypes'  => '|',
-        'accessionEventDates'  => '|',
+        'accessionEventTypes' => '|',
+        'accessionEventDates' => '|',
         'accessionEventAgents' => '|',
-        'accessionEventNotes'  => '|',
+        'accessionEventNotes' => '|',
 
         // These columns are for backwards compatibility
-        'creators'           => '|',
-        'creatorHistories'   => '|',
-        'creatorDates'       => '|',
-        'creatorDatesStart'  => '|',
-        'creatorDatesEnd'    => '|',
-        'creatorDateNotes'   => '|',
-        'creationDates'      => '|',
+        'creators' => '|',
+        'creatorHistories' => '|',
+        'creatorDates' => '|',
+        'creatorDatesStart' => '|',
+        'creatorDatesEnd' => '|',
+        'creatorDateNotes' => '|',
+        'creationDates' => '|',
         'creationDatesStart' => '|',
-        'creationDatesEnd'   => '|',
-        'creationDateNotes'  => '|',
-        'creationDatesType'  => '|'
+        'creationDatesEnd' => '|',
+        'creationDateNotes' => '|',
+        'creationDatesType' => '|'
       ],
 
       'columnMap' => [
@@ -167,7 +167,7 @@ EOF;
       // Import logic to load accession
       'rowInitLogic' => function (&$self)
       {
-        $accessionNumber =  $self->rowStatusVars['accessionNumber'];
+        $accessionNumber = $self->rowStatusVars['accessionNumber'];
 
         // Look up Qubit ID of pre-created accession
         $statement = $self->sqlQuery(
@@ -350,14 +350,14 @@ EOF;
 
             // Map column names to QubitContactInformation properties
             $columnToProperty = [
-              'donorEmail'         => 'email',
-              'donorTelephone'     => 'telephone',
-              'donorFax'           => 'fax',
+              'donorEmail' => 'email',
+              'donorTelephone' => 'telephone',
+              'donorFax' => 'fax',
               'donorStreetAddress' => 'streetAddress',
-              'donorCity'          => 'city',
-              'donorRegion'        => 'region',
-              'donorPostalCode'    => 'postalCode',
-              'donorNote'          => 'note',
+              'donorCity' => 'city',
+              'donorRegion' => 'region',
+              'donorPostalCode' => 'postalCode',
+              'donorNote' => 'note',
               'donorContactPerson' => 'contactPerson'
             ];
 

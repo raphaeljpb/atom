@@ -95,7 +95,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
             // Don't disable default plugins
             if (!($item == 'sfIsdiahPlugin'
                 || $item == 'sfIsaarPlugin'
-                || ($item == 'sfIsadPlugin' && $this->defaultTemplate =='isad')
+                || ($item == 'sfIsadPlugin' && $this->defaultTemplate == 'isad')
                 || ($item == 'sfRadPlugin' && $this->defaultTemplate == 'rad')
                 || ($item == 'sfDcPlugin' && $this->defaultTemplate == 'dc')
                 || ($item == 'sfModsPlugin' && $this->defaultTemplate == 'mods')))

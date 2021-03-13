@@ -93,9 +93,9 @@ EOF;
       'context' => sfContext::createInstance($this->configuration),
 
       'status' => [
-        'updateMode'         => $updateMode,
+        'updateMode' => $updateMode,
         'actorRelationTypes' => $termData['actorRelationTypes'],
-        'actorIds'           => [],
+        'actorIds' => [],
       ],
 
       'variableColumns' => [
@@ -321,9 +321,9 @@ EOF;
   private function setRelationFields(&$relation, $sourceActorId, $targetActorId, $relationTypeId)
   {
     // Note that the column names don't map to the internal representation
-    $relation->objectId  = $targetActorId;
+    $relation->objectId = $targetActorId;
     $relation->subjectId = $sourceActorId;
-    $relation->typeId    = $relationTypeId;
+    $relation->typeId = $relationTypeId;
 
     // Set relationship properties from column values
     foreach (['date', 'startDate', 'endDate', 'description'] as $property)

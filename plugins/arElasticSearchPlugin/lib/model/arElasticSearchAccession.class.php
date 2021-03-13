@@ -70,7 +70,7 @@ class arElasticSearchAccession extends arElasticSearchModelBase
   {
     if (!isset(self::$statements['event']))
     {
-      $sql  = 'SELECT
+      $sql = 'SELECT
                  event.id,
                  event.type_id,
                  event.date,

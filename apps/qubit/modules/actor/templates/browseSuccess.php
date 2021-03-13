@@ -114,11 +114,11 @@
 
   <?php echo get_partial('actor/advancedSearch',
     [
-      'criteria'     => $search->criteria,
-      'form'         => $form,
+      'criteria' => $search->criteria,
+      'form' => $form,
       'fieldOptions' => $fieldOptions,
       'hiddenFields' => $hiddenFields,
-      'show'         => $showAdvanced,
+      'show' => $showAdvanced,
     ]
   ) ?>
 
@@ -130,8 +130,8 @@
           [
             'options' => [
               'lastUpdated' => __('Date modified'),
-              'alphabetic'  => __('Name'),
-              'identifier'  => __('Identifier')]]) ?>
+              'alphabetic' => __('Name'),
+              'identifier' => __('Identifier')]]) ?>
       </div>
 
     </section>

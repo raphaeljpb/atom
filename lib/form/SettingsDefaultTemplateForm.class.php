@@ -66,9 +66,9 @@ class SettingsDefaultTemplateForm extends sfForm
 
     // Build widgets
     $this->setWidgets([
-      'informationobject' => new sfWidgetFormSelect(['choices'=>$informationObjectTemplates]),
-      'actor' => new sfWidgetFormSelect(['choices'=>$actorTemplates]),
-      'repository' => new sfWidgetFormSelect(['choices'=>$repositoryTemplates]),
+      'informationobject' => new sfWidgetFormSelect(['choices' => $informationObjectTemplates]),
+      'actor' => new sfWidgetFormSelect(['choices' => $actorTemplates]),
+      'repository' => new sfWidgetFormSelect(['choices' => $repositoryTemplates]),
     ]);
 
     // Add labels

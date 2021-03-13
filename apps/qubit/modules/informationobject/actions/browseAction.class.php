@@ -42,21 +42,21 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
       'findingAidStatus'
     ];
   public static $FILTERTAGS = [
-      'repos'            => ['model' => 'QubitRepository'],
-      'collection'       => ['model' => 'QubitInformationObject'],
-      'creators'         => ['model' => 'QubitActor'],
-      'names'            => ['model' => 'QubitActor'],
-      'places'           => ['model' => 'QubitTerm'],
-      'levels'           => ['model' => 'QubitTerm'],
-      'subjects'         => ['model' => 'QubitTerm'],
-      'mediatypes'       => ['model' => 'QubitTerm'],
-      'copyrightStatus'  => ['model' => 'QubitTerm'],
-      'materialType'     => ['model' => 'QubitTerm'],
-      'onlyMedia'        => [],
-      'languages'        => [],
-      'dateRange'        => ['params' => ['startDate', 'endDate'], 'operator' => 'or'],
+      'repos' => ['model' => 'QubitRepository'],
+      'collection' => ['model' => 'QubitInformationObject'],
+      'creators' => ['model' => 'QubitActor'],
+      'names' => ['model' => 'QubitActor'],
+      'places' => ['model' => 'QubitTerm'],
+      'levels' => ['model' => 'QubitTerm'],
+      'subjects' => ['model' => 'QubitTerm'],
+      'mediatypes' => ['model' => 'QubitTerm'],
+      'copyrightStatus' => ['model' => 'QubitTerm'],
+      'materialType' => ['model' => 'QubitTerm'],
+      'onlyMedia' => [],
+      'languages' => [],
+      'dateRange' => ['params' => ['startDate', 'endDate'], 'operator' => 'or'],
       'findingAidStatus' => [],
-      'ancestor'         => ['model' => 'QubitInformationObject']
+      'ancestor' => ['model' => 'QubitInformationObject']
     ];
   public static $AGGS = [
       'languages' =>
@@ -80,29 +80,29 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
               'field' => 'repository.id',
               'size' => 10],
       'places' =>
-        ['type'   => 'term',
-              'field'  => 'places.id',
-              'size'   => 10],
+        ['type' => 'term',
+              'field' => 'places.id',
+              'size' => 10],
       'subjects' =>
-        ['type'   => 'term',
-              'field'  => 'subjects.id',
-              'size'   => 10],
+        ['type' => 'term',
+              'field' => 'subjects.id',
+              'size' => 10],
       'genres' =>
-        ['type'   => 'term',
-              'field'  => 'genres.id',
-              'size'   => 10],
+        ['type' => 'term',
+              'field' => 'genres.id',
+              'size' => 10],
       'creators' =>
-        ['type'   => 'term',
-              'field'  => 'creators.id',
-              'size'   => 10],
+        ['type' => 'term',
+              'field' => 'creators.id',
+              'size' => 10],
       'names' =>
-        ['type'   => 'term',
-              'field'  => 'names.id',
-              'size'   => 10],
+        ['type' => 'term',
+              'field' => 'names.id',
+              'size' => 10],
       'collection' =>
-        ['type'   => 'term',
-              'field'  => 'partOf.id',
-              'size'   => 10]];
+        ['type' => 'term',
+              'field' => 'partOf.id',
+              'size' => 10]];
 
   public function execute($request)
   {
@@ -173,7 +173,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     $this->template = 'isad';
     if (null !== $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template'))
     {
-      $this->template = $infoObjectTemplate->getValue(['sourceCulture'=>true]);
+      $this->template = $infoObjectTemplate->getValue(['sourceCulture' => true]);
     }
 
     // Add print preview style
@@ -291,7 +291,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
       case 'onlyMedia':
         $choices = [
-          ''  => '',
+          '' => '',
           '1' => $this->context->i18n->__('Yes'),
           '0' => $this->context->i18n->__('No')
         ];
@@ -406,7 +406,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
       case 'findingAidStatus':
         $choices = [
-          ''  => '',
+          '' => '',
           'yes' => $this->context->i18n->__('Yes'),
           'no' => $this->context->i18n->__('No'),
           'generated' => $this->context->i18n->__('Generated'),
@@ -553,10 +553,10 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     if (!empty($request->findingAidStatus))
     {
       $labels = [
-        'yes'       => $i18n->__('With finding aid'),
-        'no'        => $i18n->__('Without finding aid'),
+        'yes' => $i18n->__('With finding aid'),
+        'no' => $i18n->__('Without finding aid'),
         'generated' => $i18n->__('With generated finding aid'),
-        'uploaded'  => $i18n->__('With uploaded finding aid')
+        'uploaded' => $i18n->__('With uploaded finding aid')
       ];
 
       $this->setFilterTagLabel('findingAidStatus', $labels[$request->findingAidStatus]);

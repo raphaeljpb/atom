@@ -29,9 +29,9 @@ class sfInstallDatabaseConfigHandler extends sfDatabaseConfigHandler
         'propel' => [
           'class' => 'sfPropelDatabase',
           'param' => [
-            'encoding'   => 'utf8mb4',
+            'encoding' => 'utf8mb4',
             'persistent' => true,
-            'pooling'    => true
+            'pooling' => true
           ]
         ]
       ],
@@ -42,10 +42,10 @@ class sfInstallDatabaseConfigHandler extends sfDatabaseConfigHandler
             'debug' => [
               'realmemoryusage' => true,
               'details' => [
-                'time'     => ['enabled' => true],
-                'slow'     => ['enabled' => true, 'threshold' => 0.1],
-                'mem'      => ['enabled' => true],
-                'mempeak'  => ['enabled' => true],
+                'time' => ['enabled' => true],
+                'slow' => ['enabled' => true, 'threshold' => 0.1],
+                'mem' => ['enabled' => true],
+                'mempeak' => ['enabled' => true],
                 'memdelta' => ['enabled' => true]
               ]
             ]

@@ -77,13 +77,13 @@ class SettingsOaiAction extends sfAction
 
     // Set defaults for global form
     $this->oaiRepositoryForm->setDefaults([
-      'oai_authentication_enabled' => (isset($oaiAuthenticationEnabled)) ? intval($oaiAuthenticationEnabled->getValue(['sourceCulture'=>true])) : 1,
-      'oai_repository_code' => (isset($oaiRepositoryCode)) ? $oaiRepositoryCode->getValue(['sourceCulture'=>true]) : null,
+      'oai_authentication_enabled' => (isset($oaiAuthenticationEnabled)) ? intval($oaiAuthenticationEnabled->getValue(['sourceCulture' => true])) : 1,
+      'oai_repository_code' => (isset($oaiRepositoryCode)) ? $oaiRepositoryCode->getValue(['sourceCulture' => true]) : null,
       'oai_repository_identifier' => $oaiRepositoryIdentifier,
       'oai_admin_emails' => $oaiAdminEmails,
       'sample_oai_identifier' => $sampleOaiIdentifier,
-      'resumption_token_limit' => (isset($resumptionTokenLimit)) ? $resumptionTokenLimit->getValue(['sourceCulture'=>true]) : null,
-      'oai_additional_sets_enabled' => (isset($oaiAdditionalSetsEnabled)) ? intval($oaiAdditionalSetsEnabled->getValue(['sourceCulture'=>true])) : 0
+      'resumption_token_limit' => (isset($resumptionTokenLimit)) ? $resumptionTokenLimit->getValue(['sourceCulture' => true]) : null,
+      'oai_additional_sets_enabled' => (isset($oaiAdditionalSetsEnabled)) ? intval($oaiAdditionalSetsEnabled->getValue(['sourceCulture' => true])) : 0
     ]);
   }
 

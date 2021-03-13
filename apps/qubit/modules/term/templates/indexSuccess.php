@@ -68,9 +68,9 @@
         <?php echo get_partial('default/sortPickers', [
           'options' => [
             'lastUpdated' => __('Date modified'),
-            'alphabetic'  => __('Title'),
-            'referenceCode'  => __('Reference code'),
-            'date'        => __('Start date')]]) ?>
+            'alphabetic' => __('Title'),
+            'referenceCode' => __('Reference code'),
+            'date' => __('Start date')]]) ?>
       </div>
     </section>
 

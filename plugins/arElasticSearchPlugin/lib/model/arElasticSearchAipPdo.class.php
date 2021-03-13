@@ -98,7 +98,7 @@ class arElasticSearchAipPdo
   {
     if (!isset(self::$statements['aip']))
     {
-      $sql  = 'SELECT *';
+      $sql = 'SELECT *';
       $sql .= ' FROM '.QubitAip::TABLE_NAME;
       $sql .= ' WHERE id = :id';
 
@@ -123,7 +123,7 @@ class arElasticSearchAipPdo
 
   protected function getDigitalObjects()
   {
-    $sql  = 'SELECT
+    $sql = 'SELECT
                 do.name,
                 do.byte_size,
                 do.mime_type,

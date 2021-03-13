@@ -37,7 +37,7 @@ class InformationObjectSlugPreviewAction extends sfAction
     $availableSlug = $this->determineAvailableSlug($this->request->getParameter('text'), $this->resource->id);
 
     $response = [
-      'slug'   => $availableSlug,
+      'slug' => $availableSlug,
       'padded' => $availableSlug != QubitSlug::slugify($this->request->getParameter('text'))
     ];
 

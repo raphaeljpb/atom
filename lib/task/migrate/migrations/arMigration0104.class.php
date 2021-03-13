@@ -39,14 +39,14 @@ class arMigration0104
   public function up($configuration)
   {
     $setting = new QubitSetting();
-    $setting->name  = 'isad_archival_history';
+    $setting->name = 'isad_archival_history';
     $setting->scope = 'element_visibility';
     $setting->value = 1;
     $setting->culture = 'en';
     $setting->save();
 
     $setting = new QubitSetting();
-    $setting->name  = 'rad_archival_history';
+    $setting->name = 'rad_archival_history';
     $setting->scope = 'element_visibility';
     $setting->value = 1;
     $setting->culture = 'en';

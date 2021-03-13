@@ -79,7 +79,7 @@ class sfSkosPlugin
 
     $this->logger->info($this->i18n->__('Type of scheme: %1%', ['%1%' => $scheme]));
     $this->logger->info($this->i18n->__('Taxonomy: %1%', ['%1%' => $this->taxonomy->getName(['cultureFallback' => true])]));
-    $this->logger->info($this->i18n->__('Term ID: %1%', ['%1%' => $this->parent-id]));
+    $this->logger->info($this->i18n->__('Term ID: %1%', ['%1%' => $this->parent - id]));
 
     if ($scheme === 'file')
     {

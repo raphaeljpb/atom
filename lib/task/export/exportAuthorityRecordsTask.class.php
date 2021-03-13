@@ -26,8 +26,8 @@
  */
 class exportAuthorityRecordsTask extends exportBulkBaseTask
 {
-    protected $namespace        = 'csv';
-    protected $name             = 'authority-export';
+    protected $namespace = 'csv';
+    protected $name = 'authority-export';
     protected $briefDescription = 'Export authority record data as CSV file(s)';
 
     protected $detailedDescription = <<<EOF

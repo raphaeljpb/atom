@@ -65,9 +65,9 @@ class SettingsFindingAidAction extends sfAction
     $publicFindingAid = QubitSetting::getByName('publicFindingAid');
 
     $this->findingAidForm->setDefaults([
-      'finding_aid_format' => (isset($findingAidFormat)) ? $findingAidFormat->getValue(['sourceCulture'=>true]) : 'pdf',
-      'finding_aid_model' => (isset($findingAidModel)) ? $findingAidModel->getValue(['sourceCulture'=>true]) : 'inventory-summary',
-      'public_finding_aid' => (isset($publicFindingAid)) ? $publicFindingAid->getValue(['sourceCulture'=>true]) : 1
+      'finding_aid_format' => (isset($findingAidFormat)) ? $findingAidFormat->getValue(['sourceCulture' => true]) : 'pdf',
+      'finding_aid_model' => (isset($findingAidModel)) ? $findingAidModel->getValue(['sourceCulture' => true]) : 'inventory-summary',
+      'public_finding_aid' => (isset($publicFindingAid)) ? $publicFindingAid->getValue(['sourceCulture' => true]) : 1
     ]);
   }
 

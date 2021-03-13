@@ -69,9 +69,9 @@ class SettingsTemplateAction extends sfAction
 
     // Set defaults for global form
     $this->defaultTemplateForm->setDefaults([
-      'informationobject' => (isset($infoObjectTemplate)) ? $infoObjectTemplate->getValue(['sourceCulture'=>true]) : null,
-      'actor' => (isset($actorTemplate)) ? $actorTemplate->getValue(['sourceCulture'=>true]) : null,
-      'repository' => (isset($repositoryTemplate)) ? $repositoryTemplate->getValue(['sourceCulture'=>true]) : null,
+      'informationobject' => (isset($infoObjectTemplate)) ? $infoObjectTemplate->getValue(['sourceCulture' => true]) : null,
+      'actor' => (isset($actorTemplate)) ? $actorTemplate->getValue(['sourceCulture' => true]) : null,
+      'repository' => (isset($repositoryTemplate)) ? $repositoryTemplate->getValue(['sourceCulture' => true]) : null,
     ]);
   }
 
@@ -85,19 +85,19 @@ class SettingsTemplateAction extends sfAction
     if (null !== $newValue = $form->getValue('informationobject'))
     {
       $setting = QubitSetting::findAndSave('informationobject', $newValue, [
-        'scope'=>'default_template', 'createNew'=>true, 'sourceCulture'=>true]);
+        'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true]);
     }
 
     if (null !== $newValue = $form->getValue('actor'))
     {
       $setting = QubitSetting::findAndSave('actor', $newValue, [
-        'scope'=>'default_template', 'createNew'=>true, 'sourceCulture'=>true]);
+        'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true]);
     }
 
     if (null !== $newValue = $form->getValue('repository'))
     {
       $setting = QubitSetting::findAndSave('repository', $newValue, [
-        'scope'=>'default_template', 'createNew'=>true, 'sourceCulture'=>true]);
+        'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true]);
     }
 
     return $this;

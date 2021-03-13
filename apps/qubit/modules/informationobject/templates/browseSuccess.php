@@ -145,12 +145,12 @@
 <?php slot('content') ?>
 
   <?php echo get_partial('search/advancedSearch', [
-    'criteria'     => $search->criteria,
-    'template'     => $template,
-    'form'         => $form,
-    'show'         => $showAdvanced,
-    'topLod'       => $topLod,
-    'rangeType'    => $rangeType,
+    'criteria' => $search->criteria,
+    'template' => $template,
+    'form' => $form,
+    'show' => $showAdvanced,
+    'topLod' => $topLod,
+    'rangeType' => $rangeType,
     'hiddenFields' => $hiddenFields]) ?>
 
   <?php if (isset($pager) && $pager->getNbResults()): ?>
@@ -180,13 +180,13 @@
       <div class="pickers">
         <?php echo get_partial('default/sortPickers', [
           'options' => [
-            'lastUpdated'   => __('Date modified'),
-            'alphabetic'    => __('Title'),
-            'relevance'     => __('Relevance'),
-            'identifier'    => __('Identifier'),
+            'lastUpdated' => __('Date modified'),
+            'alphabetic' => __('Title'),
+            'relevance' => __('Relevance'),
+            'identifier' => __('Identifier'),
             'referenceCode' => __('Reference code'),
-            'startDate'     => __('Start date'),
-            'endDate'       => __('End date')]]) ?>
+            'startDate' => __('Start date'),
+            'endDate' => __('End date')]]) ?>
       </div>
     </section>
 

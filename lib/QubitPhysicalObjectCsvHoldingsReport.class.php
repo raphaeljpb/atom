@@ -69,8 +69,8 @@ class QubitPhysicalObjectCsvHoldingsReport
 
     $this->setOrmClasses([
       'informationobject' => QubitInformationObject::class,
-      'accession'         => QubitAccession::class,
-      'physicalobject'    => QubitPhysicalObject::class,
+      'accession' => QubitAccession::class,
+      'physicalobject' => QubitPhysicalObject::class,
     ]);
   }
 

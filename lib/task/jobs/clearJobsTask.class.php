@@ -26,8 +26,8 @@
  */
 class clearJobsTask extends arBaseTask
 {
-    protected $namespace        = 'jobs';
-    protected $name             = 'clear';
+    protected $namespace = 'jobs';
+    protected $name = 'clear';
     protected $briefDescription = 'Clear AtoM jobs';
 
     protected $detailedDescription = <<<EOF

@@ -225,13 +225,13 @@ class RightEditAction extends sfAction
           }
 
           $actparams = $this->context->routing->parse(Qubit::pathInfo($data['act']));
-          $grantedRight->act            = $actparams['_sf_route']->resource;
-          $grantedRight->restriction    = $data['restriction'];
+          $grantedRight->act = $actparams['_sf_route']->resource;
+          $grantedRight->restriction = $data['restriction'];
 
           // empty dates come in as empty strings, but propel wants 'null' or it'll default to today's date
-          $grantedRight->startDate      = strlen($data['startDate'] > 0) ? $data['startDate'] : null;
-          $grantedRight->endDate        = strlen($data['endDate'] > 0) ? $data['endDate'] : null;
-          $grantedRight->notes          = $data['notes'];
+          $grantedRight->startDate = strlen($data['startDate'] > 0) ? $data['startDate'] : null;
+          $grantedRight->endDate = strlen($data['endDate'] > 0) ? $data['endDate'] : null;
+          $grantedRight->notes = $data['notes'];
 
           // relate it to the Right if it is new
           if (null === $grantedRight->id)

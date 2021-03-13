@@ -26,8 +26,8 @@
  */
 class csvCustomImportTask extends csvImportBaseTask
 {
-    protected $namespace        = 'csv';
-    protected $name             = 'custom-import';
+    protected $namespace = 'csv';
+    protected $name = 'custom-import';
     protected $briefDescription = 'Import csv data using custom criteria';
 
     protected $detailedDescription = <<<EOF

@@ -167,20 +167,20 @@ EOF;
     $opts = [];
 
     $keymap = [
-      'culture'           => 'defaultCulture',
-      'debug'             => 'debug',
-      'empty-overwrite'   => 'overwriteWithEmpty',
-      'error-log'         => 'errorLog',
-      'header'            => 'header',
-      'index'             => 'updateSearchIndex',
-      'skip-rows'         => 'offset',
-      'skip-unmatched'    => 'insertNew',
-      'multi-match'       => 'onMultiMatch',
-      'partial-matches'   => 'partialMatches',
-      'quiet'             => 'quiet',
+      'culture' => 'defaultCulture',
+      'debug' => 'debug',
+      'empty-overwrite' => 'overwriteWithEmpty',
+      'error-log' => 'errorLog',
+      'header' => 'header',
+      'index' => 'updateSearchIndex',
+      'skip-rows' => 'offset',
+      'skip-unmatched' => 'insertNew',
+      'multi-match' => 'onMultiMatch',
+      'partial-matches' => 'partialMatches',
+      'quiet' => 'quiet',
       'rows-until-update' => 'progressFrequency',
-      'source-name'       => 'sourceName',
-      'update'            => 'updateExisting'
+      'source-name' => 'sourceName',
+      'update' => 'updateExisting'
     ];
 
     foreach ($keymap as $oldkey => $newkey)

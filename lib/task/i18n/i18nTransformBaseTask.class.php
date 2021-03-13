@@ -104,8 +104,8 @@ abstract class i18nTransformBaseTask extends arBaseTask
   {
     parent::execute($arguments, $options);
 
-    $rowCount            = 0;
-    $changedCount        = 0;
+    $rowCount = 0;
+    $changedCount = 0;
     $columnsChangedCount = 0;
 
     $rootIds = implode(', ', [

@@ -55,7 +55,7 @@ class InformationObjectAlternativeIdentifiersComponent extends sfComponent
 
         if (is_null($property))
         {
-          $this->resource->propertys[] =  $property = new QubitProperty();
+          $this->resource->propertys[] = $property = new QubitProperty();
           $property->scope = 'alternativeIdentifiers';
         }
 

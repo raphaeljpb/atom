@@ -28,7 +28,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
     $archivalStandard = 'isad';
     if (null !== $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template'))
     {
-      $archivalStandard = $infoObjectTemplate->getValue(['sourceCulture'=>true]);
+      $archivalStandard = $infoObjectTemplate->getValue(['sourceCulture' => true]);
     }
 
     $limit = sfConfig::get('app_hits_per_page');

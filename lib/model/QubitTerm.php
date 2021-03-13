@@ -987,7 +987,7 @@ class QubitTerm extends BaseTerm
     }
     foreach ($terms as $term)
     {
-      $displayValue = $term->getName(['cultureFallback'=>true]);
+      $displayValue = $term->getName(['cultureFallback' => true]);
 
       // Display note content instead of term name - used mainly for displaying
       // event type actor vs. action (e.g. "creator" vs. "creation")
@@ -995,7 +995,7 @@ class QubitTerm extends BaseTerm
       {
         if (count($notes = $term->getNotesByType(QubitTerm::DISPLAY_NOTE_ID)))
         {
-          $displayValue = $notes[0]->getContent(['cultureFallback'=>true]);
+          $displayValue = $notes[0]->getContent(['cultureFallback' => true]);
         }
       }
 
@@ -1158,7 +1158,7 @@ class QubitTerm extends BaseTerm
    */
   public static function loadTermParentList($taxonomyIds = [])
   {
-    $sql  = 'SELECT term.id, term.parent_id';
+    $sql = 'SELECT term.id, term.parent_id';
     $sql .= ' FROM '.QubitTerm::TABLE_NAME.' term';
     $sql .= ' WHERE term.parent_id != ?';
 

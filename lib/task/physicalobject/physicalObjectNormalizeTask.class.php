@@ -26,8 +26,8 @@
  */
 class physicalObjectNormalizeTask extends arBaseTask
 {
-  protected $namespace        = 'physicalobject';
-  protected $name             = 'normalize';
+  protected $namespace = 'physicalobject';
+  protected $name = 'normalize';
   protected $briefDescription = 'Normalize physical object data';
 
   protected $detailedDescription = <<<EOF
@@ -227,8 +227,8 @@ EOF;
       $sql .= ' WHERE p.type_id=:type_id AND pi.name=:name AND pi.location=:location';
 
       $params = [
-        ':type_id'  => $physicalObject->type_id,
-        ':name'     => $physicalObject->name,
+        ':type_id' => $physicalObject->type_id,
+        ':name' => $physicalObject->name,
         ':location' => $physicalObject->location
       ];
 

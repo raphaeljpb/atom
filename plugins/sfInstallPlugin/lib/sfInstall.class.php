@@ -458,15 +458,15 @@ class sfInstall
     foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
     {
       $premisAccessRightValues[$item->slug] = [
-        'allow_master'          => 1,
-        'allow_reference'       => 1,
-        'allow_thumb'           => 1,
-        'conditional_master'    => 0,
+        'allow_master' => 1,
+        'allow_reference' => 1,
+        'allow_thumb' => 1,
+        'conditional_master' => 0,
         'conditional_reference' => 1,
-        'conditional_thumb'     => 1,
-        'disallow_master'       => 0,
-        'disallow_reference'    => 0,
-        'disallow_thumb'        => 0
+        'conditional_thumb' => 1,
+        'disallow_master' => 0,
+        'disallow_reference' => 0,
+        'disallow_thumb' => 0
       ];
     }
     $setting = new QubitSetting();

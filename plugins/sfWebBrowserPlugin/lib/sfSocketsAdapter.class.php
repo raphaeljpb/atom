@@ -19,9 +19,9 @@
  */
 class sfSocketsAdapter
 {
-  protected $options             = [];
+  protected $options = [];
   protected $adapterErrorMessage = null;
-  protected $browser             = null;
+  protected $browser = null;
 
   public function __construct($options = [])
   {
@@ -110,7 +110,7 @@ class sfSocketsAdapter
 
     $start_body = false;
     $response_headers = [];
-    for($i=0; $i<count($response_lines); $i++)
+    for($i = 0; $i < count($response_lines); $i++)
     {
       // grab body
       if ($start_body == true)

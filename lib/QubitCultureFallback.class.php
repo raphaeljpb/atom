@@ -99,7 +99,7 @@ class QubitCultureFallback
    */
   protected static function getfallbackCaseStmt($column)
   {
-    $fallbackCaseStmt  = '(CASE WHEN (current.'.$column.' IS NOT NULL AND current.'.$column.' <> \'\') THEN current.'.$column;
+    $fallbackCaseStmt = '(CASE WHEN (current.'.$column.' IS NOT NULL AND current.'.$column.' <> \'\') THEN current.'.$column;
     $fallbackCaseStmt .= ' ELSE source.'.$column.' END)';
 
     return $fallbackCaseStmt;

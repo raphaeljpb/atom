@@ -38,43 +38,43 @@ class propelGenerateSlugsTask extends arBaseTask
 
     $classesData = [
       'QubitAccession' => [
-        'select'    => 'SELECT base.id, base.identifier',
+        'select' => 'SELECT base.id, base.identifier',
         'i18nQuery' => false],
       'QubitActor' => [
-        'select'    => 'SELECT base.id, i18n.authorized_form_of_name',
+        'select' => 'SELECT base.id, i18n.authorized_form_of_name',
         'i18nQuery' => true],
       'QubitDeaccession' => [
-        'select'    => 'SELECT base.id, base.identifier',
+        'select' => 'SELECT base.id, base.identifier',
         'i18nQuery' => false],
       'QubitDigitalObject' => [
-        'select'    => 'SELECT base.id, base.name',
+        'select' => 'SELECT base.id, base.name',
         'i18nQuery' => false],
       'QubitEvent' => [
-        'select'    => 'SELECT base.id, i18n.name',
+        'select' => 'SELECT base.id, i18n.name',
         'i18nQuery' => true],
       'QubitFunctionObject' => [
-        'select'    => 'SELECT base.id, i18n.authorized_form_of_name',
+        'select' => 'SELECT base.id, i18n.authorized_form_of_name',
         'i18nQuery' => true],
       'QubitInformationObject' => [
-        'select'    => 'SELECT base.id, i18n.title',
+        'select' => 'SELECT base.id, i18n.title',
         'i18nQuery' => true],
       'QubitPhysicalObject' => [
-        'select'    => 'SELECT base.id, i18n.name',
+        'select' => 'SELECT base.id, i18n.name',
         'i18nQuery' => true],
       'QubitRelation' => [
-        'select'    => 'SELECT base.id',
+        'select' => 'SELECT base.id',
         'i18nQuery' => false],
       'QubitRights' => [
-        'select'    => 'SELECT base.id',
+        'select' => 'SELECT base.id',
         'i18nQuery' => false],
       'QubitStaticPage' => [
-        'select'    => 'SELECT base.id, i18n.title',
+        'select' => 'SELECT base.id, i18n.title',
         'i18nQuery' => true],
       'QubitTaxonomy' => [
-        'select'    => 'SELECT base.id, i18n.name',
+        'select' => 'SELECT base.id, i18n.name',
         'i18nQuery' => true],
       'QubitTerm' => [
-        'select'    => 'SELECT base.id, i18n.name',
+        'select' => 'SELECT base.id, i18n.name',
         'i18nQuery' => true]
     ];
 
@@ -175,7 +175,7 @@ class propelGenerateSlugsTask extends arBaseTask
         $values = [];
         $sql = "INSERT INTO slug (object_id, slug) VALUES ";
 
-        $last = min($i+$inc, count($newRows));
+        $last = min($i + $inc, count($newRows));
         for ($j = $i; $j < $last; $j++)
         {
           // Use PDO param/value binding - ensures special chars are escaped on DB insert.

@@ -117,18 +117,18 @@
   <?php
   // Load taxonomies into variables to avoid use of magic numbers
   $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
-    QubitTaxonomy::RAD_NOTE_ID       => 'radNoteTypes',
+    QubitTaxonomy::RAD_NOTE_ID => 'radNoteTypes',
     QubitTaxonomy::RAD_TITLE_NOTE_ID => 'titleNoteTypes',
-    QubitTaxonomy::DACS_NOTE_ID      => 'dacsSpecializedNoteTypes'
+    QubitTaxonomy::DACS_NOTE_ID => 'dacsSpecializedNoteTypes'
   ]);
 
   $radTitleNotes = [
-    'Variations in title'                         => 'titleVariation',
-    'Attributions and conjectures'                => 'titleAttributions',
-    'Continuation of title'                       => 'titleContinuation',
-    'Statements of responsibility'                => 'titleStatRep',
+    'Variations in title' => 'titleVariation',
+    'Attributions and conjectures' => 'titleAttributions',
+    'Continuation of title' => 'titleContinuation',
+    'Statements of responsibility' => 'titleStatRep',
     'Parallel titles and other title information' => 'titleParallel',
-    'Source of title proper'                      => 'titleSource'
+    'Source of title proper' => 'titleSource'
   ];
 
   foreach ($radTitleNotes as $name => $xmlType)
@@ -143,13 +143,13 @@
   }
 
   $radNotes = [
-    'Edition'                    => 'edition',
-    'Physical description'       => 'physDesc',
-    'Conservation'               => 'conservation',
-    'Accompanying material'      => 'material',
+    'Edition' => 'edition',
+    'Physical description' => 'physDesc',
+    'Conservation' => 'conservation',
+    'Accompanying material' => 'material',
     'Alpha-numeric designations' => 'alphanumericDesignation',
-    "Publisher's series"         => 'bibSeries',
-    'Rights'                     => 'rights'
+    "Publisher's series" => 'bibSeries',
+    'Rights' => 'rights'
   ];
 
   foreach($radNotes as $name => $xmlType)
@@ -164,11 +164,11 @@
   }
 
   $dacsSpecializedNotes = [
-    'Conservation'              => 'dacsConservation',
-    'Citation'                  => 'dacsCitation',
+    'Conservation' => 'dacsConservation',
+    'Citation' => 'dacsCitation',
     'Alphanumeric designations' => 'dacsAlphanumericDesignation',
     'Variant title information' => 'dacsVariantTitleInformation',
-    'Processing information'    => 'dacsProcessingInformation'
+    'Processing information' => 'dacsProcessingInformation'
   ];
 
   foreach ($dacsSpecializedNotes as $name => $xmlType)

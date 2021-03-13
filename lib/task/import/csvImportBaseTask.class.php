@@ -171,9 +171,9 @@ abstract class csvImportBaseTask extends arBaseTask
   public static function importAlternateFormsOfName($self)
   {
     $typeIds = [
-      'parallel'     => QubitTerm::PARALLEL_FORM_OF_NAME_ID,
+      'parallel' => QubitTerm::PARALLEL_FORM_OF_NAME_ID,
       'standardized' => QubitTerm::STANDARDIZED_FORM_OF_NAME_ID,
-      'other'        => QubitTerm::OTHER_FORM_OF_NAME_ID
+      'other' => QubitTerm::OTHER_FORM_OF_NAME_ID
     ];
 
     foreach ($typeIds as $typeName => $typeId)
@@ -189,9 +189,9 @@ abstract class csvImportBaseTask extends arBaseTask
           // Add other name
           $otherName = new QubitOtherName();
           $otherName->objectId = $self->object->id;
-          $otherName->name     = $alias;
-          $otherName->typeId   = $typeId;
-          $otherName->culture  = $self->columnValue('culture');
+          $otherName->name = $alias;
+          $otherName->typeId = $typeId;
+          $otherName->culture = $self->columnValue('culture');
           $otherName->save();
         }
       }
@@ -282,32 +282,32 @@ abstract class csvImportBaseTask extends arBaseTask
     // Event columns grouped by version
     foreach ([
       '2.1' => [
-        'actorName'    => 'creators',
+        'actorName' => 'creators',
         'actorHistory' => 'creatorHistories',
-        'date'         => 'creatorDates',
-        'startDate'    => 'creatorDatesStart',
-        'endDate'      => 'creatorDatesEnd',
-        'description'  => 'creatorDateNotes',
-        'type'         => '-',
-        'place'        => '-'],
+        'date' => 'creatorDates',
+        'startDate' => 'creatorDatesStart',
+        'endDate' => 'creatorDatesEnd',
+        'description' => 'creatorDateNotes',
+        'type' => '-',
+        'place' => '-'],
       '2.2' => [
-        'actorName'    => 'creators',
+        'actorName' => 'creators',
         'actorHistory' => 'creatorHistories',
-        'date'         => 'creationDates',
-        'startDate'    => 'creationDatesStart',
-        'endDate'      => 'creationDatesEnd',
-        'description'  => 'creationDateNotes',
-        'type'         => 'creationDatesType',
-        'place'        => '-'],
+        'date' => 'creationDates',
+        'startDate' => 'creationDatesStart',
+        'endDate' => 'creationDatesEnd',
+        'description' => 'creationDateNotes',
+        'type' => 'creationDatesType',
+        'place' => '-'],
       '2.3' => [
-        'actorName'    => 'eventActors',
+        'actorName' => 'eventActors',
         'actorHistory' => 'eventActorHistories',
-        'date'         => 'eventDates',
-        'startDate'    => 'eventStartDates',
-        'endDate'      => 'eventEndDates',
-        'description'  => 'eventDescriptions',
-        'type'         => 'eventTypes',
-        'place'        => 'eventPlaces']] as $version => $propertyColumns)
+        'date' => 'eventDates',
+        'startDate' => 'eventStartDates',
+        'endDate' => 'eventEndDates',
+        'description' => 'eventDescriptions',
+        'type' => 'eventTypes',
+        'place' => 'eventPlaces']] as $version => $propertyColumns)
     {
       // Get event data if one of the columns is populated in the current index
       $index = 0;
@@ -578,7 +578,7 @@ abstract class csvImportBaseTask extends arBaseTask
 
     if (!in_array(trim($options['update']), $validParams))
     {
-      $msg  = sprintf('Parameter "%s" is not valid for --update option. ', $options['update']);
+      $msg = sprintf('Parameter "%s" is not valid for --update option. ', $options['update']);
       $msg .= sprintf('Valid options are: %s', implode(', ', $validParams));
       throw new sfException($msg);
     }

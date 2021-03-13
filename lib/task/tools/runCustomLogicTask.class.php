@@ -26,8 +26,8 @@
  */
 class runCustomLogicTask extends arBaseTask
 {
-    protected $namespace        = 'tools';
-    protected $name             = 'run';
+    protected $namespace = 'tools';
+    protected $name = 'run';
     protected $briefDescription = 'Run ad-hoc logic contained in a PHP file';
 
     protected $detailedDescription = <<<EOF

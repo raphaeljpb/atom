@@ -24,8 +24,8 @@ class QubitInformationObject
   public $id;
 
   protected static $slugToIdMap = [
-    'test-fonds-1'     => 111111,
-    'test-collection'  => 222222,
+    'test-fonds-1' => 111111,
+    'test-collection' => 222222,
     'Mixed-Case-Fonds' => 333333,
   ];
 

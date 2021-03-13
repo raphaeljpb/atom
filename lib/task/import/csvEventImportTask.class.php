@@ -26,8 +26,8 @@
  */
 class csvEventRecordImportTask extends csvImportBaseTask
 {
-  protected $namespace        = 'csv';
-  protected $name             = 'event-import';
+  protected $namespace = 'csv';
+  protected $name = 'event-import';
   protected $briefDescription = 'Import csv event record data';
   protected $detailedDescription = <<<EOF
 Import CSV event record data
@@ -59,15 +59,15 @@ EOF;
       QubitTaxonomy::EVENT_TYPE_ID => 'eventTypes'
     ]);
 
-    $subjectTable       = 'actor_i18n';
-    $subjectKeyColumn   = 'authorized_form_of_name';
+    $subjectTable = 'actor_i18n';
+    $subjectKeyColumn = 'authorized_form_of_name';
     $subjectValueColumn = 'eventActorName';
-    $subjectIdColumn    = 'id';
+    $subjectIdColumn = 'id';
 
-    $objectTable        = 'keymap';
-    $objectKeyColumn    = 'source_id';
-    $objectValueColumn  = 'legacyId';
-    $objectIdColumn     = 'target_id';
+    $objectTable = 'keymap';
+    $objectKeyColumn = 'source_id';
+    $objectValueColumn = 'legacyId';
+    $objectIdColumn = 'target_id';
 
     $relationTypeColumn = 'eventType';
 
@@ -76,24 +76,24 @@ EOF;
       'context' => sfContext::createInstance($this->configuration),
 
       'status' => [
-        'sourceName'         => $sourceName,
-        'eventTypes'         => $termData['eventTypes'],
-        'subjectTable'       => $subjectTable,
-        'subjectKeyColumn'   => $subjectKeyColumn,
+        'sourceName' => $sourceName,
+        'eventTypes' => $termData['eventTypes'],
+        'subjectTable' => $subjectTable,
+        'subjectKeyColumn' => $subjectKeyColumn,
         'subjectValueColumn' => $subjectValueColumn,
-        'subjectIdColumn'    => $subjectIdColumn,
-        'objectTable'        => $objectTable,
-        'objectKeyColumn'    => $objectKeyColumn,
-        'objectValueColumn'  => $objectValueColumn,
-        'objectIdColumn'     => $objectIdColumn,
+        'subjectIdColumn' => $subjectIdColumn,
+        'objectTable' => $objectTable,
+        'objectKeyColumn' => $objectKeyColumn,
+        'objectValueColumn' => $objectValueColumn,
+        'objectIdColumn' => $objectIdColumn,
         'relationTypeColumn' => $relationTypeColumn,
-        'dataCached'         => false,
-        'subjectKeys'        => [],
-        'objectKeys'         => [],
-        'goodSubjects'       => 0,
-        'badSubjects'        => 0,
-        'goodObjects'        => 0,
-        'badObjects'         => 0
+        'dataCached' => false,
+        'subjectKeys' => [],
+        'objectKeys' => [],
+        'goodSubjects' => 0,
+        'badSubjects' => 0,
+        'goodObjects' => 0,
+        'badObjects' => 0
       ],
 
       'errorLog' => $options['error-log'],
@@ -181,8 +181,8 @@ EOF;
 
             $event = new QubitEvent();
             $event->objectId = $objectId;
-            $event->typeId              = $typeId;
-            $event->actorId             = $subjectId;
+            $event->typeId = $typeId;
+            $event->actorId = $subjectId;
             $event->save();
           }
           else

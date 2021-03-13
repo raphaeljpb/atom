@@ -183,7 +183,7 @@ class QubitTaxonomy extends BaseTaxonomy
 
     // Add criteria to sort by name with culture fallback
     $criteria->addAscendingOrderByColumn('name');
-    $options = ['returnClass'=>'QubitTaxonomy'];
+    $options = ['returnClass' => 'QubitTaxonomy'];
     $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitTaxonomy', $options);
 
     return QubitTaxonomy::get($criteria);

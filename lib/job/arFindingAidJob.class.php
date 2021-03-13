@@ -25,7 +25,7 @@
 class arFindingAidJob extends arBaseJob
 {
   public const GENERATED_STATUS = 1;
-  public const UPLOADED_STATUS  = 2;
+  public const UPLOADED_STATUS = 2;
 
   /**
    * @see arBaseJob::$requiredParameters

@@ -25,24 +25,24 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
   public static $FILTERTAGS = [];
   public static $AGGS = [
       'languages' =>
-        ['type'  => 'term',
+        ['type' => 'term',
               'field' => 'i18n.languages',
-              'size'  => 10],
+              'size' => 10],
       'occupations' =>
-        ['type'  => 'term',
+        ['type' => 'term',
               'field' => 'occupations.id',
-              'size'  => 10],
+              'size' => 10],
       'places' =>
-        ['type'  => 'term',
+        ['type' => 'term',
               'field' => 'places.id',
-              'size'  => 10],
+              'size' => 10],
       'subjects' =>
-        ['type'  => 'term',
+        ['type' => 'term',
               'field' => 'subjects.id',
-              'size'  => 10],
+              'size' => 10],
       'direct' =>
         ['type' => 'filter',
-              'field'  => '',
+              'field' => '',
               'populate' => false]];
 
   public function execute($request)

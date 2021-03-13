@@ -99,8 +99,8 @@ abstract class arOaiPluginComponent extends sfComponent
   public function getUpdates($options = [])
   {
     $presetOptions = [
-      'from'   => $this->from,
-      'until'  => $this->until,
+      'from' => $this->from,
+      'until' => $this->until,
       'offset' => $this->cursor,
       'limit' => QubitSetting::getByName('resumption_token_limit')->__toString()];
 
@@ -116,10 +116,10 @@ abstract class arOaiPluginComponent extends sfComponent
     $update = QubitInformationObject::getUpdatedRecords($options);
 
     $this->publishedRecords = $update['data'];
-    $this->remaining        = $update['remaining'];
-    $this->recordsCount     = count($this->publishedRecords);
-    $resumptionCursor       = $this->cursor + $options['limit'];
-    $this->resumptionToken  = base64_encode(json_encode(['from' => $this->from,
+    $this->remaining = $update['remaining'];
+    $this->recordsCount = count($this->publishedRecords);
+    $resumptionCursor = $this->cursor + $options['limit'];
+    $this->resumptionToken = base64_encode(json_encode(['from' => $this->from,
                                                               'until' => $this->until,
                                                               'cursor' => $resumptionCursor,
                                                               'metadataPrefix' => $this->metadataPrefix,

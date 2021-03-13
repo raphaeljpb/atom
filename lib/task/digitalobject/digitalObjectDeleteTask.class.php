@@ -32,7 +32,7 @@ class digitalObjectDeleteTask extends arBaseTask
     $this->validMediaTypes = [
       'audio' => QubitTerm::AUDIO_ID,
       'image' => QubitTerm::IMAGE_ID,
-      'text'  => QubitTerm::TEXT_ID,
+      'text' => QubitTerm::TEXT_ID,
       'video' => QubitTerm::VIDEO_ID
     ];
 

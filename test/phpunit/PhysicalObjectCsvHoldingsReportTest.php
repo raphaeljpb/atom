@@ -14,13 +14,13 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
   {
     $this->ormClasses = [
       'informationObject' => \AccessToMemory\test\mock\QubitInformationObject::class,
-      'accession'         => \AccessToMemory\test\mock\QubitAccession::class,
-      'physicalObject'    => \AccessToMemory\test\mock\QubitPhysicalObject::class,
+      'accession' => \AccessToMemory\test\mock\QubitAccession::class,
+      'physicalObject' => \AccessToMemory\test\mock\QubitPhysicalObject::class,
     ];
 
     $this->typeMap = [
       'description' => \AccessToMemory\test\mock\QubitInformationObject::class,
-      'accession'   => \AccessToMemory\test\mock\QubitAccession::class,
+      'accession' => \AccessToMemory\test\mock\QubitAccession::class,
     ];
   }
 

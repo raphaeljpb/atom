@@ -26,8 +26,8 @@
  */
 class exportBulkTask extends exportBulkBaseTask
 {
-  protected $namespace        = 'export';
-  protected $name             = 'bulk';
+  protected $namespace = 'export';
+  protected $name = 'bulk';
   protected $briefDescription = 'Bulk export multiple XML files at once';
 
   /**

@@ -153,7 +153,7 @@ EOF;
 
     $node['rgt'] = $node['lft'] + $width - 1;
 
-    $sql  = 'UPDATE '.$classname::TABLE_NAME;
+    $sql = 'UPDATE '.$classname::TABLE_NAME;
     $sql .= ' SET lft = '.$node['lft'];
     $sql .= ', rgt = '.$node['rgt'];
     $sql .= ' WHERE id = '.$node['id'].";";

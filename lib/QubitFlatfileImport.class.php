@@ -32,33 +32,33 @@ class QubitFlatfileImport
   public $displayProgress = true;    // display progress by default
   public $rowsUntilProgressDisplay;  // optional display progress every n rows
 
-  public $searchIndexingDisabled   = true;  // disable per-object search indexing by default
+  public $searchIndexingDisabled = true;  // disable per-object search indexing by default
   public $disableNestedSetUpdating = false; // update nested set on object creation
-  public $matchAndUpdate           = false; // match existing records & update them
-  public $deleteAndReplace         = false; // delete matching records & replace them
-  public $skipMatched              = false; // skip creating new record if matching one is found
-  public $skipUnmatched            = false; // skip creating new record if matching one is not found
-  public $roundtrip                = false; // treat legacy ID as internal ID
-  public $keepDigitalObjects       = false; // skip deletion of DOs when set. Works when --update set.
-  public $limitToId                = 0;     // id of repository or TLD to limit our update matching under
-  public $status          = []; // place to store data related to overall import
-  public $rowStatusVars   = []; // place to store data related to current row
+  public $matchAndUpdate = false; // match existing records & update them
+  public $deleteAndReplace = false; // delete matching records & replace them
+  public $skipMatched = false; // skip creating new record if matching one is found
+  public $skipUnmatched = false; // skip creating new record if matching one is not found
+  public $roundtrip = false; // treat legacy ID as internal ID
+  public $keepDigitalObjects = false; // skip deletion of DOs when set. Works when --update set.
+  public $limitToId = 0;     // id of repository or TLD to limit our update matching under
+  public $status = []; // place to store data related to overall import
+  public $rowStatusVars = []; // place to store data related to current row
 
-  public $columnNames     = []; // column names from first row of imported CSV
-  public $ignoreColumns   = []; // columns in CSV to ignore
-  public $renameColumns   = []; // CSV header column substitutions
-  public $addColumns      = []; // columns to add to internal row buffer
+  public $columnNames = []; // column names from first row of imported CSV
+  public $ignoreColumns = []; // columns in CSV to ignore
+  public $renameColumns = []; // CSV header column substitutions
+  public $addColumns = []; // columns to add to internal row buffer
 
   public $standardColumns = []; // columns in CSV are object properties
-  public $columnMap       = []; // columns in CSV that map to object properties
-  public $propertyMap     = []; // columns in CSV that map to Qubit properties
-  public $termRelations   = []; // columns in CSV that map to terms in a given taxonomy
-  public $noteMap         = []; // columns in CSV that should become notes
-  public $languageMap     = []; // columns in CSV that map to serialized language Qubit properties
-  public $scriptMap       = []; // columns in CSV that map to serialized script Qubit properties
-  public $handlers        = []; // columns in CSV paired with custom handling logic
+  public $columnMap = []; // columns in CSV that map to object properties
+  public $propertyMap = []; // columns in CSV that map to Qubit properties
+  public $termRelations = []; // columns in CSV that map to terms in a given taxonomy
+  public $noteMap = []; // columns in CSV that should become notes
+  public $languageMap = []; // columns in CSV that map to serialized language Qubit properties
+  public $scriptMap = []; // columns in CSV that map to serialized script Qubit properties
+  public $handlers = []; // columns in CSV paired with custom handling logic
   public $variableColumns = []; // columns in CSV to be later referenced by logic
-  public $arrayColumns    = []; // columns in CSV to explode and later reference
+  public $arrayColumns = []; // columns in CSV to explode and later reference
 
   public $updatePreparationLogic;  // Optional pre-update logic (remove related data, etc.)
   public $rowInitLogic;            // Optional logic to create/load object if not using $className
@@ -81,9 +81,9 @@ class QubitFlatfileImport
     $this->setPropertiesFromArray($this, $options, true);
 
     // initialize bookkeeping of rows processed
-    $this->status['rows']       = 0;
+    $this->status['rows'] = 0;
     $this->status['duplicates'] = 0;
-    $this->status['updated']    = 0;
+    $this->status['updated'] = 0;
   }
 
 
@@ -220,7 +220,7 @@ class QubitFlatfileImport
   /**
    * Get/set values in internal representation of current row
    */
-  public function columnValue($column, $value =  false)
+  public function columnValue($column, $value = false)
   {
     $columnIndex = array_search($column, $this->columnNames);
 
@@ -869,7 +869,7 @@ class QubitFlatfileImport
     }
 
     $allowedProperties = ['date', 'description', 'startDate', 'endDate', 'typeId'];
-    $ignoreOptions  = ['actorName', 'actorHistory', 'place', 'culture'];
+    $ignoreOptions = ['actorName', 'actorHistory', 'place', 'culture'];
 
     $this->setPropertiesFromArray($event, $options, $allowedProperties, $ignoreOptions);
 
@@ -1313,8 +1313,8 @@ class QubitFlatfileImport
 
     $relation = new QubitRelation();
     $relation->subjectId = $subjectId;
-    $relation->objectId  = $objectId;
-    $relation->typeId    = $typeId;
+    $relation->objectId = $objectId;
+    $relation->typeId = $typeId;
     $relation->indexOnSave = false;
     $relation->save();
     return $relation;
@@ -1510,8 +1510,8 @@ class QubitFlatfileImport
 
     $keymap = new QubitKeymap();
     $keymap->sourceName = $sourceName;
-    $keymap->sourceId   = $sourceId;
-    $keymap->targetId   = $object->id;
+    $keymap->sourceId = $sourceId;
+    $keymap->targetId = $object->id;
     $keymap->targetName = $targetName;
     $keymap->save();
   }
@@ -1932,7 +1932,7 @@ class QubitFlatfileImport
     if (!in_array('culture', $this->columnNames))
     {
       $this->columnNames[] = 'culture';
-      $this->addColumns[]  = 'culture';
+      $this->addColumns[] = 'culture';
     }
 
     // Default culture to English

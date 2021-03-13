@@ -26,7 +26,7 @@ class arWidgetFormSelectRadioOaiAdditionalSetEnable extends sfWidgetFormSelectRa
     $oaiAdditionalSetsEnabled = QubitSetting::getByName('oai_additional_sets_enabled');
 
     // If OAI additional sets are enabled, display a list of links to them
-    if (isset($oaiAdditionalSetsEnabled) && intval($oaiAdditionalSetsEnabled->getValue(['sourceCulture'=>true])))
+    if (isset($oaiAdditionalSetsEnabled) && intval($oaiAdditionalSetsEnabled->getValue(['sourceCulture' => true])))
     {
       foreach(QubitOai::getAdditionalOaiSets() as $set)
       {

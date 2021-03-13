@@ -1060,26 +1060,26 @@ class QubitDigitalObject extends BaseDigitalObject
       'image/png'];
   // Qubit generic icon list
     protected static $qubitGenericThumbs = [
-      'application/vnd.ms-excel'      => 'excel.png',
-      'application/msword'            => 'word.png',
+      'application/vnd.ms-excel' => 'excel.png',
+      'application/msword' => 'word.png',
       'application/vnd.ms-powerpoint' => 'powerpoint.png',
-      'audio/*'                       => 'audio.png',
-      'video/*'                       => 'video.png',
-      'application/pdf'               => 'pdf.png',
+      'audio/*' => 'audio.png',
+      'video/*' => 'video.png',
+      'application/pdf' => 'pdf.png',
       // text & rich text
-      'text/plain'                    => 'text.png',
-      'application/rtf'               => 'text.png',
-      'text/richtext'                 => 'text.png',
+      'text/plain' => 'text.png',
+      'application/rtf' => 'text.png',
+      'text/richtext' => 'text.png',
       // archives: zip, rar, tar
-      'application/x-tar'             => 'archive.png',
-      'application/zip'               => 'archive.png',
-      'application/x-rar-compressed'  => 'archive.png',
+      'application/x-tar' => 'archive.png',
+      'application/zip' => 'archive.png',
+      'application/x-rar-compressed' => 'archive.png',
       // images
-      'image/jpeg'                    => 'image.png',
-      'image/jpg'                     => 'image.png',
-      'image/jpe'                     => 'image.png',
-      'image/gif'                     => 'image.png',
-      'image/png'                     => 'image.png'];
+      'image/jpeg' => 'image.png',
+      'image/jpg' => 'image.png',
+      'image/jpe' => 'image.png',
+      'image/gif' => 'image.png',
+      'image/png' => 'image.png'];
   protected static $qubitGenericReference = [
       '*/*' => 'blank.png'];
 
@@ -1309,10 +1309,10 @@ class QubitDigitalObject extends BaseDigitalObject
     }
 
     // Upload paths for this object / digital object
-    $objectPath     = $this->getAssetPath($asset->getChecksum());
-    $filePath       = sfConfig::get('sf_web_dir').$objectPath.'/';
-    $relativePath   = $objectPath.'/';
-    $filePathName   = $filePath.$cleanFileName;
+    $objectPath = $this->getAssetPath($asset->getChecksum());
+    $filePath = sfConfig::get('sf_web_dir').$objectPath.'/';
+    $relativePath = $objectPath.'/';
+    $filePathName = $filePath.$cleanFileName;
 
     // make the target directory if necessary
     // NB: this will always return false if the path exists
@@ -1771,7 +1771,7 @@ class QubitDigitalObject extends BaseDigitalObject
    */
   public static function getGenericIconPath($mimeType, $usageType)
   {
-    $genericIconDir  = self::GENERIC_ICON_DIR;
+    $genericIconDir = self::GENERIC_ICON_DIR;
     $matchedMimeType = null;
 
     switch ($usageType)
@@ -1874,7 +1874,7 @@ class QubitDigitalObject extends BaseDigitalObject
    */
   public static function deriveMimeType($filename)
   {
-    $mimeType     = 'unknown';
+    $mimeType = 'unknown';
     $mimeTypeList = QubitDigitalObject::$qubitMimeTypes; // point to "master" mime-type array
 
     $filePieces = explode('.', basename($filename));
@@ -2345,7 +2345,7 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * @return boolean success or failure
    */
-  public function resize($maxwidth, $maxheight=null)
+  public function resize($maxwidth, $maxheight = null)
   {
     // Only operate on digital objects that are images
     if ($this->isImage())
@@ -2431,7 +2431,7 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * @return string (thumbnail's bitstream)
    */
-  public static function resizeImage($originalImageName, $width=null, $height=null)
+  public static function resizeImage($originalImageName, $width = null, $height = null)
   {
     $mimeType = QubitDigitalObject::deriveMimeType($originalImageName);
 
@@ -2802,7 +2802,7 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * @todo implement $maxwidth and $maxheight constraints on video
    */
-  public static function convertVideoToMp4($originalPath, $newPath, $width=null, $height=null)
+  public static function convertVideoToMp4($originalPath, $newPath, $width = null, $height = null)
   {
     // Test for FFmpeg library
     if (!self::hasFfmpeg())
@@ -2845,7 +2845,7 @@ class QubitDigitalObject extends BaseDigitalObject
     if (0 === $status && is_array($output) && 1 === count($output))
     {
       // ffprobe outputs duration as SS.MICROSECONDS
-      $thumbnailPosition = intval(floatval($output[0])/2);
+      $thumbnailPosition = intval(floatval($output[0]) / 2);
     }
 
     // Do conversion to jpeg
@@ -2885,7 +2885,7 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * @return string (thumbnail's bitstream)
    */
-  public static function createThumbnailFromVideo($originalPath, $width=null, $height=null)
+  public static function createThumbnailFromVideo($originalPath, $width = null, $height = null)
   {
     // Test for FFmpeg library
     if (!self::hasFfmpeg())
@@ -3451,7 +3451,7 @@ class QubitDigitalObject extends BaseDigitalObject
     $retries = (isset($options['downloadRetries']) && 0 < $options['downloadRetries']) ? $options['downloadRetries'] : 0;
 
     // Attempt to download the digital object, with possible retries
-    for ($i=0; $i <= $retries; $i++)
+    for ($i = 0; $i <= $retries; $i++)
     {
       try
       {

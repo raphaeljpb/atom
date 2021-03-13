@@ -248,7 +248,7 @@ class arElasticSearchPluginUtil
   {
     $premisData = [];
 
-    $sql  = 'SELECT *
+    $sql = 'SELECT *
       FROM '.QubitPremisObject::TABLE_NAME.' premis
       WHERE premis.information_object_id = ?';
 
@@ -272,12 +272,12 @@ class arElasticSearchPluginUtil
       switch ($field)
       {
         case 'last_modified':
-          $premisData['lastModified'] =  arElasticSearchPluginUtil::convertDate($value);
+          $premisData['lastModified'] = arElasticSearchPluginUtil::convertDate($value);
 
           break;
 
         case 'date_ingested':
-          $premisData['dateIngested'] =  arElasticSearchPluginUtil::convertDate($value);
+          $premisData['dateIngested'] = arElasticSearchPluginUtil::convertDate($value);
 
           break;
 
@@ -303,7 +303,7 @@ class arElasticSearchPluginUtil
       }
     }
 
-    $sql  = 'SELECT property.name, i18n.value
+    $sql = 'SELECT property.name, i18n.value
       FROM '.QubitProperty::TABLE_NAME.' property
       JOIN '.QubitPropertyI18n::TABLE_NAME.' i18n
         ON property.id = i18n.id
@@ -550,7 +550,7 @@ class arElasticSearchPluginUtil
         $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template');
         if (isset($infoObjectTemplate))
         {
-          return $infoObjectTemplate->getValue(['sourceCulture'=>true]);
+          return $infoObjectTemplate->getValue(['sourceCulture' => true]);
         }
 
       // TODO: Other index types (actor, term, etc)

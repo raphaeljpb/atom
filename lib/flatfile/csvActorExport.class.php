@@ -104,13 +104,13 @@ class csvActorExport extends QubitFlatfileExport
 
       $rows[] = [
         'subjectAuthorizedFormOfName' => $relatedEntity->authorizedFormOfName,
-        'relationType'                => (string)$relationType, // Return string representation for QubitTerm
-        'objectAuthorizedFormOfName'  => $resource->authorizedFormOfName,
-        'description'                 => $relation->description,
-        'date'                        => $relation->date,
-        'startDate'                   => $relation->startDate,
-        'endDate'                     => $relation->endDate,
-        'culture'                     => $resource->culture
+        'relationType' => (string)$relationType, // Return string representation for QubitTerm
+        'objectAuthorizedFormOfName' => $resource->authorizedFormOfName,
+        'description' => $relation->description,
+        'date' => $relation->date,
+        'startDate' => $relation->startDate,
+        'endDate' => $relation->endDate,
+        'culture' => $resource->culture
       ];
     }
 
@@ -197,7 +197,7 @@ class csvActorExport extends QubitFlatfileExport
 
     $accessPoints = $this->resource->getPlaceAccessPoints();
 
-    $data          = [];
+    $data = [];
     $data['names'] = [];
 
     foreach ($accessPoints as $accessPoint)

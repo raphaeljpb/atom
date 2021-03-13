@@ -139,7 +139,7 @@ class AclGroupEditAction extends sfAction
           if (null === $translatePermission)
           {
             $translatePermission = new QubitAclPermission();
-            $translatePermission->action  = 'translate';
+            $translatePermission->action = 'translate';
             $translatePermission->grantDeny = 1;
           }
           else

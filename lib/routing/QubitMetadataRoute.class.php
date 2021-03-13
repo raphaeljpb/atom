@@ -21,21 +21,21 @@ class QubitMetadataRoute extends QubitRoute
 {
   public static $METADATA_PLUGINS = [
       'isaar' => 'sfIsaarPlugin',
-      'eac'   => 'sfEacPlugin',
-      'ead'   => 'sfEadPlugin',
-      'isad'  => 'sfIsadPlugin',
-      'dc'    => 'sfDcPlugin',
-      'skos'  => 'sfSkosPlugin',
-      'rad'   => 'sfRadPlugin',
-      'mods'  => 'sfModsPlugin',
-      'dacs'  => 'arDacsPlugin',
-      'isdf'  => 'sfIsdfPlugin'];
+      'eac' => 'sfEacPlugin',
+      'ead' => 'sfEadPlugin',
+      'isad' => 'sfIsadPlugin',
+      'dc' => 'sfDcPlugin',
+      'skos' => 'sfSkosPlugin',
+      'rad' => 'sfRadPlugin',
+      'mods' => 'sfModsPlugin',
+      'dacs' => 'arDacsPlugin',
+      'isdf' => 'sfIsdfPlugin'];
   public static $DEFAULT_MODULES = [
       'informationobject' => false,
-      'term'              => 'term',
-      'actor'             => 'sfIsaarPlugin',
-      'repository'        => 'sfIsdiahPlugin',
-      'function'          => 'sfIsdfPlugin'];
+      'term' => 'term',
+      'actor' => 'sfIsaarPlugin',
+      'repository' => 'sfIsdiahPlugin',
+      'function' => 'sfIsdfPlugin'];
 
   /**
    * Returns an array of parameters if the $url matches this route by looking up

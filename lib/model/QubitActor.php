@@ -359,7 +359,7 @@ class QubitActor extends BaseActor
    *
    * @return QubitQuery array of QubitActor objects
    */
-  public static function getOnlyActors($criteria=null, $options=[])
+  public static function getOnlyActors($criteria = null, $options = [])
   {
     if (is_null($criteria))
     {
