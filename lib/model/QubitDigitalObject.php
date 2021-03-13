@@ -2342,7 +2342,7 @@ class QubitDigitalObject extends BaseDigitalObject
     $settings[] = self::returnBytes(ini_get('post_max_size'));
     $settings[] = self::returnBytes(ini_get('memory_limit'));
 
-    return QubitDigitalObject::getMin($settings);    
+    return QubitDigitalObject::getMin($settings);
   }
 
   /**

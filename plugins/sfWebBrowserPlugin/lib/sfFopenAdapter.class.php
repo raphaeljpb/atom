@@ -17,7 +17,7 @@
  * @version    0.9
  */
 class sfFopenAdapter
-{ 
+{
   protected
     $options             = array(),
     $adapterErrorMessage = null,
@@ -25,7 +25,7 @@ class sfFopenAdapter
     
   public function __construct($options = array())
   {
-    $this->options = $options;     
+    $this->options = $options;
   }
     
   /**
@@ -38,9 +38,9 @@ class sfFopenAdapter
    * @param boolean To specify is the request changes the browser history
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function call($browser, $uri, $method = 'GET', $parameters = array(), $headers = array())
-  {    
+  {
     $m_headers = array_merge(array('Content-Type' => 'application/x-www-form-urlencoded'), $browser->getDefaultRequestHeaders(), $browser->initializeRequestHeaders($headers));
     $request_headers = $browser->prepareHeaders($m_headers);
     

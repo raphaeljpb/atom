@@ -23,7 +23,7 @@ class InformationObjectMultiFileUpdateAction extends sfAction
   protected $informationObjectOrignalTitles = array();
 
   public function execute($request)
-  { 
+  {
     $this->resource = $this->getRoute()->resource;
 
     // Check user authorization

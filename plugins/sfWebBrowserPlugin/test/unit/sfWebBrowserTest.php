@@ -201,7 +201,7 @@ foreach($adapter_list as $adapter)
   }
   catch (Exception $e)
   {
-    $t->fail(sprintf('%s : skipping askeet related tests', $e->getMessage()));  
+    $t->fail(sprintf('%s : skipping askeet related tests', $e->getMessage()));
   }
   
   /*******************************/
@@ -372,12 +372,12 @@ foreach($adapter_list as $adapter)
   $b->restart();
   try
   {
-    $b->reload();  
+    $b->reload();
     $t->fail('restart() reinitializes the browser history');
-  } 
+  }
   catch (Exception $e)
   {
-    $t->pass('restart() reinitializes the browser history');  
+    $t->pass('restart() reinitializes the browser history');
   }
   $t->is($b->getResponseText(), '', 'restart() reinitializes the response');
   
