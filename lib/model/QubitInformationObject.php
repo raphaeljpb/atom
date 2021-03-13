@@ -2374,7 +2374,7 @@ class QubitInformationObject extends BaseInformationObject
    *
    * @param
    *
-   * @return String containing OAI-compliant Identifier
+   * @return string containing OAI-compliant Identifier
    */
   public function getOaiIdentifier()
   {
@@ -2390,7 +2390,7 @@ class QubitInformationObject extends BaseInformationObject
    *
    * @param
    *
-   * @return String set the OAI Identifier returned from the source repository as part of an OAI response
+   * @return string set the OAI Identifier returned from the source repository as part of an OAI response
    */
   public function setSourceOaiIdentifier($value)
   {

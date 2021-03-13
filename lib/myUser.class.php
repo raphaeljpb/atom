@@ -288,7 +288,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
    * $sf_user->hasCredential('administrator') relies on session storage
    * See 4214.
    *
-   * @return Boolean
+   * @return bool
    */
   public function isAdministrator()
   {

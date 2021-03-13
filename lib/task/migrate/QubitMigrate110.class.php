@@ -930,7 +930,7 @@ class QubitMigrate110 extends QubitMigrate
    * Revision 8603 onward, but this causes a foreign key error on data-load
    * (issue 2041)
    *
-   * @return SELF
+   * @return self
    */
   protected function removeRepositoryRoot()
   {

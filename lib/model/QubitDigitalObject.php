@@ -2993,7 +2993,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Extracts text from the current digital object
    * and creates a 'transcript' property.
    *
-   * @return String Text extracted
+   * @return string Text extracted
    */
   public function extractText($connection = null)
   {
