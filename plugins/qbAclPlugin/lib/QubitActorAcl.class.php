@@ -46,7 +46,7 @@ class QubitActorAcl extends QubitAcl
    * @param myUser     $user     to authorize
    * @param QubitActor $resource target of the requested action
    * @param string     $action   requested for authorization (e.g. 'read')
-   * @param array|null $options  optional parameters
+   * @param null|array $options  optional parameters
    *
    * @return bool true if the access request is authorized
    */

@@ -452,7 +452,7 @@ abstract class csvImportBaseTask extends arBaseTask
    * @param string $search string to search for
    * @param array  $array  array to search through
    *
-   * @return int|bool key for found search item or FALSE if not found
+   * @return bool|int key for found search item or FALSE if not found
    */
   public static function arraySearchCaseInsensitive($search, $array)
   {

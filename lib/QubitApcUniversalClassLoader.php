@@ -51,7 +51,7 @@ class QubitApcUniversalClassLoader extends UniversalClassLoader
      *
      * @param string $class A class name to resolve to file
      *
-     * @return string|null The path, if found
+     * @return null|string The path, if found
      */
     public function findFile($class)
     {

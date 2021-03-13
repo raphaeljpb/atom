@@ -130,7 +130,7 @@ class qubitConfiguration extends sfApplicationConfiguration
    * @param string $env        Environment name (e.g. 'prod', 'cli')
    * @param string $configFile config file to check (e.g. 'config/settings.yml')
    *
-   * @return string|null config value or null if variable is not set
+   * @return null|string config value or null if variable is not set
    */
   public static function getConfigForEnvironment($varname, $env, $configFile)
   {

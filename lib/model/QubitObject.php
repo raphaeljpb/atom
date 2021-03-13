@@ -425,7 +425,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
    * Return the URL for the digital object master linked to this object, if the
    * current user has "read master" authorization.
    *
-   * @return string|null The URL of the digital object master, or null
+   * @return null|string The URL of the digital object master, or null
    */
   public function getDigitalObjectUrl()
   {

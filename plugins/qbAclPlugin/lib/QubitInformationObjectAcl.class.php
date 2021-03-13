@@ -49,7 +49,7 @@ class QubitInformationObjectAcl extends QubitAcl
    * @param myUser                 $user     to authorize
    * @param QubitInformationObject $resource target of the requested action
    * @param string                 $action   requested for authorization (e.g. 'read')
-   * @param array|null             $options  optional parameters
+   * @param null|array             $options  optional parameters
    *
    * @return bool true if the access request is authorized
    */
@@ -78,7 +78,7 @@ class QubitInformationObjectAcl extends QubitAcl
    * @param myUser     $user     to authorize
    * @param mixed      $resource target of the requested action
    * @param string     $action   requested for authorization (e.g. 'read')
-   * @param array|null $options  optional parameters
+   * @param null|array $options  optional parameters
    *
    * @return bool true if the access request is authorized
    */
@@ -115,7 +115,7 @@ class QubitInformationObjectAcl extends QubitAcl
    * @param myUser     $user     to authorize
    * @param mixed      $resource target of the requested action
    * @param string     $action   requested for authorization (e.g. 'read')
-   * @param array|null $options  optional parameters
+   * @param null|array $options  optional parameters
    */
   private static function isDigitalObjectActionAllowed(
     $user, $resource, $action, $options = []

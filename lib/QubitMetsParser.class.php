@@ -489,7 +489,7 @@ class QubitMetsParser
    *
    * @param string $fileId the <file @ID> attribute value
    *
-   * @return string|null the file's relative path, or null if not found
+   * @return null|string the file's relative path, or null if not found
    */
   public function getOriginalPathInAip($fileId)
   {

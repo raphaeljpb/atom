@@ -159,7 +159,7 @@ class QubitAcl
    * @param myUser     $role     actor's role to authorize
    * @param mixed      $resource target of the requested action
    * @param string     $action   requested for authorization (e.g. 'read')
-   * @param array|null $options  optional parameters
+   * @param null|array $options  optional parameters
    *
    * @return bool true if the access request is authorized
    */
@@ -622,7 +622,7 @@ class QubitAcl
    * @param myUser     $role     actor's role to authorize
    * @param mixed      $resource target of the requested action
    * @param string     $action   requested for authorization (e.g. 'read')
-   * @param array|null $options  optional parameters
+   * @param null|array $options  optional parameters
    *
    * @return bool true if the access request is authorized
    */
@@ -837,7 +837,7 @@ class QubitAcl
    * @param mixed      $resource target of the requested action
    * @param myUser     $user     actor requesting to perform the action
    * @param string     $action   ACL action being requested (e.g. 'read')
-   * @param array|null $options  optional parameters
+   * @param null|array $options  optional parameters
    */
   private static function checkAccessByClass($resource, $user, $action, $options)
   {

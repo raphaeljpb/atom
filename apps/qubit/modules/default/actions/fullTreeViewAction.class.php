@@ -108,7 +108,7 @@ class DefaultFullTreeViewAction extends sfAction
    * which is either an ancestor of $this->resource, or $this->resource itself
    * if it's a child of the root node
    *
-   * @return int|null collection root id; null if no collection root found
+   * @return null|int collection root id; null if no collection root found
    */
   protected function getCollectionRootId()
   {

@@ -524,7 +524,7 @@ class QubitFlatfileExport
   /**
    * Get the highest quality digital object to which the current user has access.
    *
-   * @return QubitDigitalObject|null a digital object, or null
+   * @return null|QubitDigitalObject a digital object, or null
    */
   protected function getAllowedDigitalObject()
   {
