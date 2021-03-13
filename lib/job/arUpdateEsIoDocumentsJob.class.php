@@ -23,7 +23,6 @@
  * @package    symfony
  * @subpackage jobs
  */
-
 class arUpdateEsIoDocumentsJob extends arBaseJob
 {
   /**

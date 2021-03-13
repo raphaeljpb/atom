@@ -24,7 +24,6 @@
  * @package    AccesstoMemory
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
-
 class sfDcPlugin implements ArrayAccess
 {
   protected $resource;

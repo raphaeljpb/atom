@@ -23,7 +23,6 @@
  * @package     arCasPlugin
  * @subpackage  config
  */
-
 class arCasPluginConfiguration extends sfPluginConfiguration
 {
   public static $summary = 'CAS authentication plugin.';

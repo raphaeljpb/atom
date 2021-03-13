@@ -26,7 +26,6 @@
  * @author     Jack Bates <jack@nottheoilrig.com>
  * @author     David Juhasz <david@artefactual.com>
  */
-
 class SettingsPageElementsAction extends sfAction
 {
   public static $NAMES = [

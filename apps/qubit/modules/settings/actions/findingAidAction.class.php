@@ -23,7 +23,6 @@
  * @package    AccesstoMemory
  * @subpackage settings
  */
-
 class SettingsFindingAidAction extends sfAction
 {
   public function execute($request)

@@ -24,7 +24,6 @@
  * @subpackage sfEadPlugin
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
-
 class sfEadPluginIndexAction extends InformationObjectIndexAction
 {
   public function execute($request)

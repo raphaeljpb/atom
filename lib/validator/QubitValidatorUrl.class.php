@@ -20,7 +20,6 @@
  /**
   * Validate URLs, but also allow for intranet URLs such as 'http://localhost'.
   */
-
 class QubitValidatorUrl extends sfValidatorBase
 {
   /**

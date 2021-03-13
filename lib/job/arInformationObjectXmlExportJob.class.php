@@ -24,7 +24,6 @@
  * @package    symfony
  * @subpackage jobs
  */
-
 class arInformationObjectXmlExportJob extends arInformationObjectExportJob
 {
   public const XML_STANDARD = 'ead';

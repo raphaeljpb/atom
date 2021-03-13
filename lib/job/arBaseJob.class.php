@@ -24,7 +24,6 @@
  * @subpackage jobs
  * @author     Mike G <mikeg@artefactual.com>
  */
-
 class arBaseJob extends Net_Gearman_Job_Common
 {
   /*

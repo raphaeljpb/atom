@@ -26,7 +26,6 @@ $t = new lime_test(19, new lime_output_color());
 /**
  * qubit_auto_link_text()
  */
-
 $t->diag('qubit_auto_link_text()');
 
 $t->is(

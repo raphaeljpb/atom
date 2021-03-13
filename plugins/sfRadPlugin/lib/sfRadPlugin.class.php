@@ -24,7 +24,6 @@
  * @package    AccesstoMemory
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
-
 class sfRadPlugin implements ArrayAccess
 {
   protected $resource;

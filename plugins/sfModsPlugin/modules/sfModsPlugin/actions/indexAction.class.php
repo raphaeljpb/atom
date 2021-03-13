@@ -24,7 +24,6 @@
  * @subpackage informationObject - initialize a showMods template for displaying an information object
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
-
 class sfModsPluginIndexAction extends InformationObjectIndexAction
 {
   public function execute($request)

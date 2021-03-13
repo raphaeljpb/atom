@@ -23,7 +23,6 @@
  * @package    AccesstoMemory
  * @subpackage model
  */
-
 class QubitJob extends BaseJob
 {
   private $notes = [];

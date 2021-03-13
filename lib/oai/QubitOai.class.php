@@ -26,7 +26,6 @@
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Damian Bauder <drbauder@ucalgary.ca>
  */
-
 class QubitOai
 {
   // Any custom OAI set implementations that are available (in addition to the

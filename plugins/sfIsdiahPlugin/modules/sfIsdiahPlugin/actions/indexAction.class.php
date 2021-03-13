@@ -24,7 +24,6 @@
  * @subpackage Actor - initialize a showIDIAH template for displaying a repository
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
-
 class sfIsdiahPluginIndexAction extends RepositoryIndexAction
 {
   public function execute($request)

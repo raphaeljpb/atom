@@ -17,7 +17,6 @@
  * @author     Ben Meynell <bmeynell@colorado.edu>
  * @version    0.9
  */
-
 class sfCurlAdapter
 {
   protected $options = [];

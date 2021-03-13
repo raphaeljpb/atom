@@ -24,7 +24,6 @@
  * @subpackage informationObject - initialize a showRad template for displaying an information object
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
-
 class sfRadPluginIndexAction extends InformationObjectIndexAction
 {
   public function execute($request)

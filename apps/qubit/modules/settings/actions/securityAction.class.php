@@ -26,7 +26,6 @@
  * @author     Jack Bates <jack@nottheoilrig.com>
  * @author     David Juhasz <david@artefactual.com>
  */
-
 class SettingsSecurityAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants

@@ -24,7 +24,6 @@
  * @subpackage qbAclPlugin
  * @author     David Juhasz <david@artefactual.com>
  */
-
 class QubitAclConditionalAssert implements Zend_Acl_Assert_Interface
 {
   public function __construct($permission)

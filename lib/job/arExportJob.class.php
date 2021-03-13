@@ -24,7 +24,6 @@
  * @subpackage jobs
  * @author     Mike G <mikeg@artefactual.com>
  */
-
 class arExportJob extends arBaseJob
 {
   // Log progress every n rows

@@ -25,7 +25,6 @@
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Mathieu Fortin Library and Archives Canada <mathieu.fortin@lac-bac.gc.ca>
  */
-
 class arOaiPluginGetRecordComponent extends arOaiPluginComponent
 {
   public function execute($request)

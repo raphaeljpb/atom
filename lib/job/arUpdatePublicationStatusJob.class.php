@@ -23,7 +23,6 @@
  * @package    symfony
  * @subpackage jobs
  */
-
 class arUpdatePublicationStatusJob extends arBaseJob
 {
   /**

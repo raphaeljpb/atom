@@ -25,7 +25,6 @@
  * @subpackage jobs
  * @see arInformationObjectExportJob
  */
-
 class arInformationObjectCsvExportJob extends arInformationObjectExportJob
 {
   protected $csvWriter;

@@ -82,7 +82,6 @@ sql;
      * The last three statements (regarding to .act_id) failed.
      * Fixed in arMigration0134.
      */
-
     QubitPdo::modify($sql);
 
     // Create default PREMIS settings

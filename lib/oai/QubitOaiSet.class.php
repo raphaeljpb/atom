@@ -24,7 +24,6 @@
  * @subpackage oai
  * @author     Mark Triggs <mark@teaspoon-consulting.com>
  */
-
 interface QubitOaiSet
 {
   /**

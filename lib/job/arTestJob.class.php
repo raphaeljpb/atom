@@ -24,7 +24,6 @@
  * @package    symfony
  * @subpackage jobs
  */
-
 class arTestJob extends arBaseJob
 {
   public function runJob($parameters)

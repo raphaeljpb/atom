@@ -25,7 +25,6 @@
  * @author     Mike Gale <MikeG@Artefactual.com>
  * @author     Mike Cantelon <mike@artefactual.com>
  */
-
 class csvRepositoryImportTask extends csvImportBaseTask
 {
   protected $namespace = 'csv';

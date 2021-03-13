@@ -24,7 +24,6 @@
  * @package    AccesstoMemory
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
-
 class sfModsPlugin implements ArrayAccess
 {
   protected $resource;

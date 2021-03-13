@@ -24,7 +24,6 @@
  * @subpackage sfEacPlugin
  * @author     Jack Bates <jack@nottheoilrig.com>
  */
-
 class sfEacPluginIndexAction extends ActorIndexAction
 {
   public function responseFilterContent(sfEvent $event, $content)

@@ -24,7 +24,6 @@
  * @package    symfony
  * @subpackage jobs
  */
-
 class arActorCsvExportJob extends arActorExportJob
 {
   /**

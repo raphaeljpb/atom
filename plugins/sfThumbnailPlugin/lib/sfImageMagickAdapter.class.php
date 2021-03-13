@@ -16,7 +16,6 @@
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Benjamin Meynell <bmeynell@colorado.edu>
  */
-
 class sfImageMagickAdapter
 {
   protected $sourceWidth;

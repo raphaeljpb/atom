@@ -27,7 +27,6 @@
  * @author     David Juhasz <david@artefactual.com>
  * @author     Damian Bauder <drbauder@ucalgary.ca>
  */
-
 class SettingsOaiAction extends sfAction
 {
   public function execute($request)

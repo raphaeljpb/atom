@@ -25,7 +25,6 @@
  * @package    symfony
  * @subpackage jobs
  */
-
 class arInheritRightsJob extends arBaseJob
 {
   /**

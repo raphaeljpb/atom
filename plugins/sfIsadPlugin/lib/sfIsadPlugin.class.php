@@ -25,7 +25,6 @@
  * @package    AccesstoMemory
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
-
 class sfIsadPlugin implements ArrayAccess
 {
   protected $resource;

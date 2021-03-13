@@ -24,7 +24,6 @@
  * @subpackage settings
  * @author     Wu liu <wu.liu@usask.ca>
  */
-
 class SettingsVisibleElementsAction extends sfAction
 {
   public function execute($request)

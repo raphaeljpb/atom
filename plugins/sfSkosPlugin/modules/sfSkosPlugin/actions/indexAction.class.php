@@ -24,7 +24,6 @@
  * @subpackage sfSkosPlugin
  * @author     David Juhasz <david@artefactual.com>
  */
-
 class sfSkosPluginIndexAction extends sfAction
 {
   public function execute($request)

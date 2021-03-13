@@ -24,7 +24,6 @@
  * @subpackage Actor - initialize an showISAAR template for displaying an actor
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
-
 class sfIsaarPluginIndexAction extends ActorIndexAction
 {
   public function execute($request)

@@ -24,7 +24,6 @@
  * @package    symfony
  * @subpackage jobs
  */
-
 class arActorXmlExportJob extends arActorExportJob
 {
   public const XML_STANDARD = 'eac';

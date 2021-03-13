@@ -24,7 +24,6 @@
  * @subpackage informationObject - initialize an editDc template for updating an information object
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
-
 class sfDcPluginEditAction extends InformationObjectEditAction
 {
   // Arrays not allowed in class constants

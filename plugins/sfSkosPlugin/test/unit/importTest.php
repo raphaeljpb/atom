@@ -998,7 +998,6 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
 /**
  * Test that getRootConcepts() is matching all the concepts.
  */
-
 function getPrivateMethod($object, $name)
 {
   $class = new ReflectionClass($object);
