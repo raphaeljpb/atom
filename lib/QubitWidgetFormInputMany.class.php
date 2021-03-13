@@ -60,7 +60,7 @@ class QubitWidgetFormInputMany extends sfWidgetFormInput
         {
           $inputStr .= <<<EOF
       <div class="default-translation">
-        $source
+        ${source}
       </div>
 EOF;
         }

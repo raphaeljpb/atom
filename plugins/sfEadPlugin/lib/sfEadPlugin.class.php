@@ -184,12 +184,12 @@ class sfEadPlugin
     {
       if (null !== $country = $this->resource->getRepository(['inherit' => true])->getCountryCode())
       {
-        $countryCode = " countrycode=\"$country\"";
+        $countryCode = " countrycode=\"${country}\"";
       }
 
       if (null !== $agency = $this->resource->getRepository(['inherit' => true])->getIdentifier())
       {
-        $mainAgencyCode = " mainagencycode=\"$agency\"";
+        $mainAgencyCode = " mainagencycode=\"${agency}\"";
       }
     }
 
@@ -203,7 +203,7 @@ class sfEadPlugin
     $sanitizedIdentifier = esc_specialchars($this->resource->identifier);
     $identifier = esc_specialchars($identifier);
 
-    return "<eadid identifier=\"$identifier\"$countryCode$mainAgencyCode url=\"$url\" encodinganalog=\"$encodinganalog\">{$sanitizedIdentifier}</eadid>";
+    return "<eadid identifier=\"${identifier}\"${countryCode}${mainAgencyCode} url=\"${url}\" encodinganalog=\"${encodinganalog}\">{$sanitizedIdentifier}</eadid>";
   }
 
   /**

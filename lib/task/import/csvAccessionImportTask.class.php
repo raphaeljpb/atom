@@ -450,7 +450,7 @@ EOF;
 
         if (false === $resourceTypeId)
         {
-          echo "\nTerm $data not found in resource type taxonomy, creating it...\n";
+          echo "\nTerm ${data} not found in resource type taxonomy, creating it...\n";
           $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID, $data, $self->columnValue('culture'));
           $self->status['resourceTypes'] = self::refreshTaxonomyTerms(QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID);
         }
@@ -474,7 +474,7 @@ EOF;
 
         if (false === $acquisitionTypeId)
         {
-          echo "\nTerm $data not found in acquisition type taxonomy, creating it...\n";
+          echo "\nTerm ${data} not found in acquisition type taxonomy, creating it...\n";
           $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID, $data, $self->columnValue('culture'));
           $self->status['acquisitionTypes'] = self::refreshTaxonomyTerms(QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID);
         }

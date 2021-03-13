@@ -268,13 +268,13 @@ class sfEacPlugin implements ArrayAccess
 
         return <<<return
 <maintenanceEvent id="5.4.6">
-  <eventDescription>$revisionHistory</eventDescription>
-  <eventDateTime standardDateTime="$createdAt">$createdDisplay</eventDateTime>
+  <eventDescription>${revisionHistory}</eventDescription>
+  <eventDateTime standardDateTime="${createdAt}">${createdDisplay}</eventDateTime>
 </maintenanceEvent>
 
 <maintenanceEvent id="5.4.9">
-  <eventDescription>$maintenanceNotes</eventDescription>
-  <eventDateTime standardDateTime="$updatedAt">$updatedDisplay</eventDateTime>
+  <eventDescription>${maintenanceNotes}</eventDescription>
+  <eventDateTime standardDateTime="${updatedAt}">${updatedDisplay}</eventDateTime>
 </maintenanceEvent>
 
 return;
@@ -1040,15 +1040,15 @@ return;
         $endDate = Qubit::renderDate($item->endDate);
         $dates = <<<str
                 <dateRange>
-                  <fromDate standardDate="$startDate">$startDate</fromDate>
-                  <toDate standardDate="$endDate">$endDate</toDate>
+                  <fromDate standardDate="${startDate}">${startDate}</fromDate>
+                  <toDate standardDate="${endDate}">${endDate}</toDate>
                 </dateRange>
 str;
       }
       else
       {
         $dates = <<<str
-                <date standardDate="$startDate">$startDate</date>
+                <date standardDate="${startDate}">${startDate}</date>
 str;
       }
     }

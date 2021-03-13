@@ -868,14 +868,14 @@ class arElasticSearchInformationObjectPdo
 
       if (!$rootSlug)
       {
-        throw new sfException("No slug found for information object $collectionRootId");
+        throw new sfException("No slug found for information object ${collectionRootId}");
       }
 
       $rootSourceCulture = QubitPdo::fetchColumn('SELECT source_culture FROM information_object WHERE id=?',
                                                  [$collectionRootId]);
       if (!$rootSourceCulture)
       {
-        throw new sfException("No source culture found for information object $collectionRootId");
+        throw new sfException("No source culture found for information object ${collectionRootId}");
       }
 
       $i18nFields = arElasticSearchModelBase::serializeI18ns(
@@ -929,7 +929,7 @@ class arElasticSearchInformationObjectPdo
 
     if (false === $this->data)
     {
-      throw new sfException("Couldn't find information object (id: $id)");
+      throw new sfException("Couldn't find information object (id: ${id})");
     }
 
     // Load event data

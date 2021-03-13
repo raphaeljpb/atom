@@ -64,12 +64,12 @@
 
           <?php } else { ?>
 
-            <?php echo $form["repFile_$usageId"]
+            <?php echo $form["repFile_${usageId}"]
               ->label(__('Select a %1% to upload', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]))
               ->renderRow(); ?>
 
             <?php if ($resource->canThumbnail()) { ?>
-              <?php echo $form["generateDerivative_$usageId"]
+              <?php echo $form["generateDerivative_${usageId}"]
                 ->label('Or auto-generate a new representation from master image')
                 ->renderRow(); ?>
             <?php } ?>

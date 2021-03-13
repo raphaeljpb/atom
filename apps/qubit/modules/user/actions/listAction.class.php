@@ -36,8 +36,8 @@ class UserListAction extends sfAction
     if (isset($request->subquery))
     {
       // Search over username or email
-      $c1 = $criteria->getNewCriterion(QubitUser::USERNAME, "%$request->subquery%", Criteria::LIKE);
-      $c2 = $criteria->getNewCriterion(QubitUser::EMAIL, "%$request->subquery%", Criteria::LIKE);
+      $c1 = $criteria->getNewCriterion(QubitUser::USERNAME, "%{$request->subquery}%", Criteria::LIKE);
+      $c2 = $criteria->getNewCriterion(QubitUser::EMAIL, "%{$request->subquery}%", Criteria::LIKE);
       $c1->addOr($c2);
       $criteria->add($c1);
     }

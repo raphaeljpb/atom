@@ -152,7 +152,7 @@ EOF;
     $pubStatusId = QubitPdo::fetchColumn($sql, [QubitTaxonomy::PUBLICATION_STATUS_ID, $pubStatus]);
     if (!$pubStatusId)
     {
-      throw new sfException("Invalid publication status specified: $pubStatus");
+      throw new sfException("Invalid publication status specified: ${pubStatus}");
     }
 
     return $pubStatusId;

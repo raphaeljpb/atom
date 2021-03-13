@@ -18,7 +18,7 @@ class sfDrupalWidgetFormSchemaFormatter extends sfWidgetFormSchemaFormatter
     //  * Take advantage that ->renderRow() always calls ->renderLabel(), which
     //    calls ->generateLabel(), before ->renderRow()
     return <<<return
-<div class="form-item form-item-$this->name">
+<div class="form-item form-item-{$this->name}">
   %label%
   %error%%field%
   %help%%hidden_fields%
@@ -31,7 +31,7 @@ return;
   {
     if (preg_match('/<input [^>]*type="checkbox"/', $field))
     {
-      return parent::formatRow(preg_replace('/<label[^>]*>/', "$0$field", $label), null, $errors, $help, $hiddenFields);
+      return parent::formatRow(preg_replace('/<label[^>]*>/', "$0${field}", $label), null, $errors, $help, $hiddenFields);
     }
 
     return parent::formatRow($label, $field, $errors, $help, $hiddenFields);

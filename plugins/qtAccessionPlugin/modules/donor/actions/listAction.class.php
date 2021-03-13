@@ -38,7 +38,7 @@ class DonorListAction extends sfAction
     {
       $criteria->addJoin(QubitDonor::ID, QubitActorI18n::ID);
       $criteria->add(QubitActorI18n::CULTURE, $this->context->user->getCulture());
-      $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "%$request->subquery%", Criteria::LIKE);
+      $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "%{$request->subquery}%", Criteria::LIKE);
     }
     else
     {

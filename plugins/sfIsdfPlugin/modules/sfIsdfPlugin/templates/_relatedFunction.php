@@ -63,7 +63,7 @@ $rowTemplate = json_encode(<<<value
   </td><td>
     {{$form->date->renderName()}}
   </td><td style="text-align: right">
-    $editHtml <button class="delete-small" name="delete" type="button"/>
+    ${editHtml} <button class="delete-small" name="delete" type="button"/>
   </td>
 </tr>
 
@@ -94,12 +94,12 @@ Drupal.behaviors.relatedFunction = {
       // Define dialog
       var dialog = new QubitDialog('functionRelation', {
         'displayTable': 'relatedFunctions',
-        'newRowTemplate': $rowTemplate,
+        'newRowTemplate': ${rowTemplate},
         'handleFieldRender': handleFieldRender,
         'relationTableMap': function (response)
           {
             response.resource = response.object;
-            if ('$url' === response.resource)
+            if ('${url}' === response.resource)
             {
               response.resource = response.subject;
             }
@@ -114,7 +114,7 @@ Drupal.behaviors.relatedFunction = {
             dialog.open(this.id);
           })
         .find('td:last')
-        .prepend('$editHtml');
+        .prepend('${editHtml}');
     } }
 
 content

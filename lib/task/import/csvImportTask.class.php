@@ -410,7 +410,7 @@ EOF;
           $levelOfDetailTermId = self::arraySearchCaseInsensitive($levelOfDetail, $self->status['levelOfDetailTypes'][$self->columnValue('culture')]);
           if (false === $levelOfDetailTermId)
           {
-            echo "\nTerm $levelOfDetail not found in description details level taxonomy, creating it...\n";
+            echo "\nTerm ${levelOfDetail} not found in description details level taxonomy, creating it...\n";
 
             $newTerm = QubitFlatfileImport::createTerm(
               QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID,
@@ -448,7 +448,7 @@ EOF;
           }
           else
           {
-            echo "\nTerm $descStatus not found in description status taxonomy, creating it...\n";
+            echo "\nTerm ${descStatus} not found in description status taxonomy, creating it...\n";
 
             $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::DESCRIPTION_STATUS_ID, $descStatus, $self->columnValue('culture'));
             $self->status['descriptionStatusTypes'] = self::refreshTaxonomyTerms(QubitTaxonomy::DESCRIPTION_STATUS_ID);
@@ -919,7 +919,7 @@ EOF;
           }
           else
           {
-            echo "\nTerm $value not found in material type taxonomy, creating it...\n";
+            echo "\nTerm ${value} not found in material type taxonomy, creating it...\n";
 
             $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::MATERIAL_TYPE_ID, $value, $self->columnValue('culture'));
             $self->status['materialTypes'] = self::refreshTaxonomyTerms(QubitTaxonomy::MATERIAL_TYPE_ID);
@@ -1052,7 +1052,7 @@ EOF;
 
       if (!$options['quiet'])
       {
-        $this->log("Parent ID of slug {$options['default-parent-slug']} is $parentId");
+        $this->log("Parent ID of slug {$options['default-parent-slug']} is ${parentId}");
       }
     }
     elseif ($options['default-legacy-parent-id'])
@@ -1065,7 +1065,7 @@ EOF;
       }
 
       $parentId = $keyMapEntry->target_id;
-      $this->log("Using default parent ID $parentId (legacy parent ID {$options['default-legacy-parent-id']})");
+      $this->log("Using default parent ID ${parentId} (legacy parent ID {$options['default-legacy-parent-id']})");
     }
     else
     {

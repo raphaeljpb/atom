@@ -126,7 +126,7 @@ class csvActorExport extends QubitFlatfileExport
 
     if (false === $fh = fopen($filename, 'a'))
     {
-      throw new sfException("Failed to create/open file $filename");
+      throw new sfException("Failed to create/open file ${filename}");
     }
 
     if (!filesize($filename))

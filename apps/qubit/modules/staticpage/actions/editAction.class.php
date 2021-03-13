@@ -77,7 +77,7 @@ class StaticPageEditAction extends DefaultEditAction
       $this->new = true;
     }
 
-    $this->response->setTitle("$title - {$this->response->getTitle()}");
+    $this->response->setTitle("${title} - {$this->response->getTitle()}");
   }
 
   protected function addField($name)

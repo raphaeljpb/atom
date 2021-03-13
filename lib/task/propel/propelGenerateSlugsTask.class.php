@@ -82,11 +82,11 @@ class propelGenerateSlugsTask extends arBaseTask
       foreach ($classesData as $class => $data)
       {
         $table = constant($class.'::TABLE_NAME');
-        $this->logSection('propel', "Delete $table slugs...");
+        $this->logSection('propel', "Delete ${table} slugs...");
 
-        $sql = "DELETE FROM slug WHERE object_id IN (SELECT id FROM $table)";
+        $sql = "DELETE FROM slug WHERE object_id IN (SELECT id FROM ${table})";
 
-        if (defined("$class::ROOT_ID"))
+        if (defined("${class}::ROOT_ID"))
         {
           $sql .= ' AND object_id != '.$class::ROOT_ID;
         }
@@ -111,7 +111,7 @@ class propelGenerateSlugsTask extends arBaseTask
     {
       $table = constant($class.'::TABLE_NAME');
 
-      $this->logSection('propel', "Generate $table slugs...");
+      $this->logSection('propel', "Generate ${table} slugs...");
       $newRows = []; // reset
 
       $sql = $data['select'].' FROM '.$table.' base';
@@ -128,7 +128,7 @@ class propelGenerateSlugsTask extends arBaseTask
       $sql .= '  ON base.id = sl.object_id';
       $sql .= ' WHERE';
 
-      if (defined("$class::ROOT_ID"))
+      if (defined("${class}::ROOT_ID"))
       {
         $sql .= '  base.id != '.$class::ROOT_ID.' AND';
       }
@@ -311,7 +311,7 @@ EOF;
 
     if (!array_key_exists($property, $doc))
     {
-      throw new sfException("ElasticSearch document for information object (id: $id) has no property $property");
+      throw new sfException("ElasticSearch document for information object (id: ${id}) has no property ${property}");
     }
 
     return $doc[$property];

@@ -59,11 +59,11 @@ class TermAutocompleteAction extends sfAction
       {
         if (sfConfig::get('app_markdown_enabled', true))
         {
-          $criteria->add(QubitTermI18n::NAME, "%$request->query%", Criteria::LIKE);
+          $criteria->add(QubitTermI18n::NAME, "%{$request->query}%", Criteria::LIKE);
         }
         else
         {
-          $criteria->add(QubitTermI18n::NAME, "$request->query%", Criteria::LIKE);
+          $criteria->add(QubitTermI18n::NAME, "{$request->query}%", Criteria::LIKE);
         }
       }
 
@@ -118,7 +118,7 @@ class TermAutocompleteAction extends sfAction
       }
 
       $connection = Propel::getConnection();
-      $statement = $connection->prepare("($s1) UNION ALL ($s2) ORDER BY name LIMIT :p4");
+      $statement = $connection->prepare("(${s1}) UNION ALL (${s2}) ORDER BY name LIMIT :p4");
       $params = $this->context->routing->parse(Qubit::pathInfo($request->taxonomy));
 
       $statement->bindValue(':p1', $params['_sf_route']->resource->id);
@@ -126,7 +126,7 @@ class TermAutocompleteAction extends sfAction
 
       if (isset($request->query))
       {
-        $statement->bindValue(':p3', "$request->query%");
+        $statement->bindValue(':p3', "{$request->query}%");
       }
 
       if (isset($request->parent))

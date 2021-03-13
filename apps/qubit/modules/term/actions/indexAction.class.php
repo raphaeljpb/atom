@@ -90,7 +90,7 @@ class TermIndexAction extends DefaultBrowseAction
       $title = $this->context->i18n->__('Untitled');
     }
 
-    $this->response->setTitle("$title - {$this->response->getTitle()}");
+    $this->response->setTitle("${title} - {$this->response->getTitle()}");
 
     if (QubitAcl::check($this->resource, 'update'))
     {
@@ -153,8 +153,8 @@ class TermIndexAction extends DefaultBrowseAction
 
             $previous = <<<EOF
 <li class="previous">
-  <a href="$url">
-    $link
+  <a href="${url}">
+    ${link}
   </a>
 </li>
 EOF;
@@ -167,8 +167,8 @@ EOF;
 
             $next = <<<EOF
 <li class="next">
-  <a href="$url">
-    $link
+  <a href="${url}">
+    ${link}
   </a>
 </li>
 EOF;
@@ -177,13 +177,13 @@ EOF;
           $response['more'] = <<<EOF
 <section>
   <div class="result-count">
-    $resultCount
+    ${resultCount}
   </div>
   <div>
     <div class="pager">
       <ul>
-        $previous
-        $next
+        ${previous}
+        ${next}
       </ul>
     </div>
   </div>

@@ -2182,7 +2182,7 @@ class QubitDigitalObject extends BaseDigitalObject
       chmod($newFilepath, 0644);
 
       // Save new file information
-      $newDigiObject->setPath("$assetPath/");
+      $newDigiObject->setPath("${assetPath}/");
       $newDigiObject->setName($filename);
       $newDigiObject->setByteSize(filesize($newFilepath));
       $newDigiObject->usageId = QubitTerm::MASTER_ID;
@@ -2873,7 +2873,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
     // Get the duration of the video and calculate the position of its thumbnail at 50%
     $thumbnailPosition = 0;
-    $command = "ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 $originalPath";
+    $command = "ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 ${originalPath}";
     exec($command, $output, $status);
     if (0 === $status && is_array($output) && 1 === count($output))
     {
@@ -2882,7 +2882,7 @@ class QubitDigitalObject extends BaseDigitalObject
     }
 
     // Do conversion to jpeg
-    $command = "ffmpeg -ss $thumbnailPosition -i $originalPath -vframes 1 -vf \"scale='min($width,iw):-1'\" $newPath";
+    $command = "ffmpeg -ss ${thumbnailPosition} -i ${originalPath} -vframes 1 -vf \"scale='min(${width},iw):-1'\" ${newPath}";
     exec($command.' 2>&1', $output, $status);
 
     chmod($newPath, 0644);

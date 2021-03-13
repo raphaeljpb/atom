@@ -65,7 +65,7 @@
           'confirmTitle' => __('Passwords match:'),
           'username' => '', ], ]); ?>
       <?php echo javascript_tag(<<<EOF
-jQuery.extend(Drupal.settings, $settings);
+jQuery.extend(Drupal.settings, ${settings});
 EOF
 ); ?>
 

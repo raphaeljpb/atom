@@ -192,7 +192,7 @@ EOF;
    */
   private function validateUrl($url)
   {
-    $invalidUrl = new sfException("Invalid base URL given: $url");
+    $invalidUrl = new sfException("Invalid base URL given: ${url}");
 
     // parse_url may return false for badly malformed URLs, but it shouldn't be used solely
     // to validate them. We're mainly using it here to determine if http:// or https:// is

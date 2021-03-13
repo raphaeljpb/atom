@@ -179,7 +179,7 @@ class qtPackageExtractorBase
         case 'https':
         case 'ftp':
         default:
-          throw new Exception("The $matches[1] protocol is not supported yet.");
+          throw new Exception("The {$matches[1]} protocol is not supported yet.");
       }
 
       // Ultimate check to make sure the file/directory exists

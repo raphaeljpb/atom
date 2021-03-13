@@ -40,7 +40,7 @@ $rowTemplate = json_encode(<<<value
   <td>
     {{$form->resource->renderName()}}
   </td><td style="text-align: right">
-    $editHtml <button class="delete-small" name="delete" type="button"/>
+    ${editHtml} <button class="delete-small" name="delete" type="button"/>
   </td>
 </tr>
 
@@ -54,7 +54,7 @@ Drupal.behaviors.relatedAuthorityRecord = {
       // Define dialog
       var dialog = new QubitDialog('relatedDonor', {
         'displayTable': 'relatedDonorDisplay',
-        'newRowTemplate': $rowTemplate,
+        'newRowTemplate': ${rowTemplate},
         'relationTableMap': function (response)
           {
             response.resource = response.object;
@@ -70,7 +70,7 @@ Drupal.behaviors.relatedAuthorityRecord = {
             dialog.open(this.id);
           })
         .find('td:last')
-        .prepend('$editHtml');
+        .prepend('${editHtml}');
 
       // Load primary contact data when a new item is selected.
       // Can't use dialog.loadData() with the donor primary contact url

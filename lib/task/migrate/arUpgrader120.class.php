@@ -29,7 +29,7 @@ class arUpgrader120
   {
     if ($options['verbose'])
     {
-      echo "up($version)\n";
+      echo "up(${version})\n";
     }
 
     switch ($version)
@@ -148,7 +148,7 @@ class arUpgrader120
               WHERE id = ?;', QubitAclPermission::TABLE_NAME);
 
             QubitPdo::modify($sql, [
-              "%p[$name] == %k[$name]",
+              "%p[${name}] == %k[${name}]",
               serialize([$name => $slug->slug]),
               $item->id, ]);
           }

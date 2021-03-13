@@ -117,7 +117,7 @@ class QubitCsvImport
         case 'delete-and-replace':
           $commandUpdate = ('match-and-update' == $this->updateType) ? '--update="match-and-update"' : '--update="delete-and-replace"';
           $commandSkipUnmatched = ($this->skipUnmatched) ? '--skip-unmatched' : '';
-          $commandLimit = ('' !== $this->limit) ? "--limit=\"$this->limit\"" : '';
+          $commandLimit = ('' !== $this->limit) ? "--limit=\"{$this->limit}\"" : '';
 
           break;
 

@@ -101,7 +101,7 @@ class exportBulkTask extends exportBulkBaseTask
 
       if (false === file_put_contents($filePath, $xml))
       {
-        throw new sfException("Cannot write to path: $filePath");
+        throw new sfException("Cannot write to path: ${filePath}");
       }
 
       $this->indicateProgress($options['items-until-update']);

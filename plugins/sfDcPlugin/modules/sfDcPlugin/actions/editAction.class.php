@@ -57,7 +57,7 @@ class sfDcPluginEditAction extends InformationObjectEditAction
       $title = "Edit {$title}";
     }
 
-    $this->response->setTitle("$title - {$this->response->getTitle()}");
+    $this->response->setTitle("${title} - {$this->response->getTitle()}");
 
     $this->dcDatesComponent = new sfDcPluginDcDatesComponent($this->context, 'sfDcPlugin', 'dcDates');
     $this->dcDatesComponent->resource = $this->resource;

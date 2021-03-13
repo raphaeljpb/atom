@@ -76,7 +76,7 @@ class AccessionEditAction extends DefaultEditAction
       $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
-    $this->response->setTitle("$title - {$this->response->getTitle()}");
+    $this->response->setTitle("${title} - {$this->response->getTitle()}");
 
     $this->relatedDonorComponent = new AccessionRelatedDonorComponent($this->context, 'accession', 'relatedDonor');
     $this->relatedDonorComponent->resource = $this->resource;

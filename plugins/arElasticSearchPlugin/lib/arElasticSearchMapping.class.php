@@ -351,7 +351,7 @@ class arElasticSearchMapping
 
       if (!isset($this->mapping[$foreignTypeNameCamelized]))
       {
-        throw new sfException("$foreignTypeName could not be found within the mappings.");
+        throw new sfException("${foreignTypeName} could not be found within the mappings.");
       }
 
       $mapping = $this->mapping[$foreignTypeNameCamelized];

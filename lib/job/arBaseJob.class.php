@@ -142,7 +142,7 @@ class arBaseJob extends Net_Gearman_Job_Common
     {
       if (!isset($parameters[$paramName]))
       {
-        throw new Net_Gearman_Job_Exception("Required parameter not found for job: $paramName");
+        throw new Net_Gearman_Job_Exception("Required parameter not found for job: ${paramName}");
       }
     }
   }
@@ -252,7 +252,7 @@ class arBaseJob extends Net_Gearman_Job_Common
     $sql = "SELECT job.id FROM job
      LEFT JOIN object ON object.id = job.id
      WHERE job.status_id = :statusId
-     AND job.name IN $jobNames
+     AND job.name IN ${jobNames}
      ORDER BY object.created_at;";
 
     $params = [':statusId' => QubitTerm::JOB_STATUS_IN_PROGRESS_ID];

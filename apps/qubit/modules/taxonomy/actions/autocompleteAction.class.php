@@ -31,11 +31,11 @@ class TaxonomyAutocompleteAction extends sfAction
     {
       if (sfConfig::get('app_markdown_enabled', true))
       {
-        $criteria->add(QubitTaxonomyI18n::NAME, "%$request->query%", Criteria::LIKE);
+        $criteria->add(QubitTaxonomyI18n::NAME, "%{$request->query}%", Criteria::LIKE);
       }
       else
       {
-        $criteria->add(QubitTaxonomyI18n::NAME, "$request->query%", Criteria::LIKE);
+        $criteria->add(QubitTaxonomyI18n::NAME, "{$request->query}%", Criteria::LIKE);
       }
     }
 

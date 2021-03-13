@@ -87,11 +87,11 @@ class eacExportTask extends exportBulkBaseTask
       }
       else
       {
-        $this->log("$filePath already exists, skipping...");
+        $this->log("${filePath} already exists, skipping...");
       }
     }
 
-    $this->log("\nExport complete ($itemsExported actors exported).");
+    $this->log("\nExport complete (${itemsExported} actors exported).");
   }
 
   /**

@@ -27,11 +27,11 @@ class RepositoryAutocompleteAction extends sfAction
 
     if (sfConfig::get('app_markdown_enabled', true))
     {
-      $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "%$request->query%", Criteria::LIKE);
+      $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "%{$request->query}%", Criteria::LIKE);
     }
     else
     {
-      $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "$request->query%", Criteria::LIKE);
+      $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "{$request->query}%", Criteria::LIKE);
     }
 
     $criteria->addAscendingOrderByColumn('authorized_form_of_name');

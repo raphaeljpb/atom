@@ -53,7 +53,7 @@ class DigitalObjectViewAction extends sfAction
       $this->resource = $this->resource->object;
 
       $this->accessToken = bin2hex(random_bytes(32)); // URL friendly
-      $this->context->user->setAttribute("token-$this->digitalObjectId", $this->accessToken, 'symfony/user/sfUser/copyrightStatementTmpAccess');
+      $this->context->user->setAttribute("token-{$this->digitalObjectId}", $this->accessToken, 'symfony/user/sfUser/copyrightStatementTmpAccess');
 
       $this->response->addMeta('robots', 'noindex,nofollow');
       $this->setTemplate('viewCopyrightStatement');
@@ -131,7 +131,7 @@ class DigitalObjectViewAction extends sfAction
   private function isAccessTokenValid()
   {
     $providedToken = $this->request->token;
-    $internalToken = $this->context->user->getAttribute("token-$this->digitalObjectId", null, 'symfony/user/sfUser/copyrightStatementTmpAccess');
+    $internalToken = $this->context->user->getAttribute("token-{$this->digitalObjectId}", null, 'symfony/user/sfUser/copyrightStatementTmpAccess');
 
     if (empty($providedToken) || empty($internalToken))
     {

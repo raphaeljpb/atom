@@ -97,10 +97,10 @@
 <?php slot('after-content'); ?>
 
 <?php echo javascript_tag(<<<content
-Qubit.multiFileUpload.maxFileSize = '$maxFileSize';
-Qubit.multiFileUpload.maxPostSize = '$maxPostSize';
-Qubit.multiFileUpload.uploadResponsePath = '$uploadResponsePath';
-Qubit.multiFileUpload.slug = '$resource->slug';
+Qubit.multiFileUpload.maxFileSize = '${maxFileSize}';
+Qubit.multiFileUpload.maxPostSize = '${maxPostSize}';
+Qubit.multiFileUpload.uploadResponsePath = '${uploadResponsePath}';
+Qubit.multiFileUpload.slug = '{$resource->slug}';
 Qubit.multiFileUpload.thumbWidth = 150;
 
 Qubit.multiFileUpload.i18nMaxFileSizeMessage = '{$sf_context->i18n->__('Maximum file size: ')}';

@@ -549,7 +549,7 @@ class DefaultFullTreeViewAction extends sfAction
     // Append dates to text
     if (!empty($dates))
     {
-      $text .= ", $dates";
+      $text .= ", ${dates}";
     }
 
     return $text;

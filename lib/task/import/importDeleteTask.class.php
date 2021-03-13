@@ -223,7 +223,7 @@ EOL;
 
     $confirmed = $this->askConfirmation(
       [
-        "Continuing will delete $this->count database records and related data.",
+        "Continuing will delete {$this->count} database records and related data.",
         '',
         'THIS DATA DELETION CAN NOT BE REVERSED!!!',
         '',
@@ -249,7 +249,7 @@ EOL;
 
     if (null == $obj)
     {
-      throw sfException("Error: couldn\\'t get object id: $objectId");
+      throw sfException("Error: couldn\\'t get object id: ${objectId}");
     }
 
     $this->logMsg(

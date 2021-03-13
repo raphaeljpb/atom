@@ -73,7 +73,7 @@ class arDacsPluginEditAction extends InformationObjectEditAction
       $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
-    $this->response->setTitle("$title - {$this->response->getTitle()}");
+    $this->response->setTitle("${title} - {$this->response->getTitle()}");
 
     $this->alternativeIdentifiersComponent = new InformationObjectAlternativeIdentifiersComponent($this->context, 'informationobject', 'alternativeIdentifiers');
     $this->alternativeIdentifiersComponent->resource = $this->resource;

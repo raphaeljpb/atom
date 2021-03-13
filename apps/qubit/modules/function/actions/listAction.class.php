@@ -38,7 +38,7 @@ class FunctionListAction extends sfAction
     {
       $criteria->addJoin(QubitFunctionObject::ID, QubitFunctionObjectI18n::ID);
       $criteria->add(QubitFunctionObjectI18n::CULTURE, $this->context->user->getCulture());
-      $criteria->add(QubitFunctionObjectI18n::AUTHORIZED_FORM_OF_NAME, "%$request->subquery%", Criteria::LIKE);
+      $criteria->add(QubitFunctionObjectI18n::AUTHORIZED_FORM_OF_NAME, "%{$request->subquery}%", Criteria::LIKE);
     }
     else
     {

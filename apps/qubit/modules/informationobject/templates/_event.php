@@ -21,7 +21,7 @@ $rowTemplate = json_encode(<<<value
   </td><td>
     {{$form->date->renderName()}}
   </td><td style="text-align: right">
-    $editHtml <button class="delete-small" name="delete" type="button"/>
+    ${editHtml} <button class="delete-small" name="delete" type="button"/>
   </td>
 </tr>
 
@@ -40,7 +40,7 @@ jQuery('#relatedEvents tr[id]', context)
       dialog.open(this.id);
     })
   .find('td:last')
-  .prepend('$editHtml');
+  .prepend('${editHtml}');
 
 editButtonJs;
 }
@@ -67,9 +67,9 @@ Drupal.behaviors.event = {
       var dialog = new QubitDialog('updateEvent', {
         'displayTable': 'relatedEvents',
         'handleFieldRender': handleFieldRender,
-        'newRowTemplate': $rowTemplate });
+        'newRowTemplate': ${rowTemplate} });
 
-      $editButtonJs
+      ${editButtonJs}
     } }
 
 content

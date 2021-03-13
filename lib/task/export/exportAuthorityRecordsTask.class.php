@@ -61,7 +61,7 @@ EOF;
     }
 
     $this->log('');
-    $this->logSection('csv', "Export complete ($itemsExported authority records exported).");
+    $this->logSection('csv', "Export complete (${itemsExported} authority records exported).");
   }
 
   /**

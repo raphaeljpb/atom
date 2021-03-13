@@ -58,7 +58,7 @@ EOF;
     $jobs = QubitJob::get($criteria);
     foreach ($jobs as $job)
     {
-      echo "$job->name\n";
+      echo "{$job->name}\n";
       echo ' Status: '.$job->getStatusString()."\n";
       echo ' Started: '.$job->getCreationDateString()."\n";
       echo ' Completed: '.$job->getCompletionDateString()."\n";

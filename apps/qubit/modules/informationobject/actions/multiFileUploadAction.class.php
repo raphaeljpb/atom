@@ -116,13 +116,13 @@ class InformationObjectMultiFileUploadAction extends sfAction
       // Save description
       $informationObject->save();
 
-      if (file_exists("$tmpPath/$file[tmpName]"))
+      if (file_exists("${tmpPath}/{$file['tmpName']}"))
       {
         // Upload asset and create digital object
         $digitalObject = new QubitDigitalObject();
         $digitalObject->object = $informationObject;
         $digitalObject->usageId = QubitTerm::MASTER_ID;
-        $digitalObject->assets[] = new QubitAsset($file['name'], file_get_contents("$tmpPath/$file[tmpName]"));
+        $digitalObject->assets[] = new QubitAsset($file['name'], file_get_contents("${tmpPath}/{$file['tmpName']}"));
 
         $digitalObject->save();
       }
@@ -130,9 +130,9 @@ class InformationObjectMultiFileUploadAction extends sfAction
       $informationObjectSlugList[] = $informationObject->slug;
 
       // Clean up temp files
-      if (file_exists("$tmpPath/$file[tmpName]"))
+      if (file_exists("${tmpPath}/{$file['tmpName']}"))
       {
-        unlink("$tmpPath/$file[tmpName]");
+        unlink("${tmpPath}/{$file['tmpName']}");
       }
     }
 

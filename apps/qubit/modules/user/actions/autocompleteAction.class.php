@@ -37,11 +37,11 @@ class UserAutocompleteAction extends sfAction
     {
       if (sfConfig::get('app_markdown_enabled', true))
       {
-        $criteria->add(QubitUser::USERNAME, "%$request->query%", Criteria::LIKE);
+        $criteria->add(QubitUser::USERNAME, "%{$request->query}%", Criteria::LIKE);
       }
       else
       {
-        $criteria->add(QubitUser::USERNAME, "$request->query%", Criteria::LIKE);
+        $criteria->add(QubitUser::USERNAME, "{$request->query}%", Criteria::LIKE);
       }
     }
 

@@ -98,7 +98,7 @@ class DigitalObjectEditAction extends sfAction
     $uploadedFiles = [];
     foreach ($this->representations as $usageId => $representation)
     {
-      if (null !== $uf = $this->form->getValue("repFile_$usageId"))
+      if (null !== $uf = $this->form->getValue("repFile_${usageId}"))
       {
         $uploadedFiles[$usageId] = $uf;
       }
@@ -237,8 +237,8 @@ class DigitalObjectEditAction extends sfAction
     {
       if (null === $representation)
       {
-        $repName = "repFile_$usageId";
-        $derName = "generateDerivative_$usageId";
+        $repName = "repFile_${usageId}";
+        $derName = "generateDerivative_${usageId}";
 
         $this->form->setValidator($repName, new sfValidatorFile());
         $this->form->setWidget($repName, new sfWidgetFormInputFile());

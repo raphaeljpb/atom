@@ -168,7 +168,7 @@ class arGenerateReportJob extends arBaseJob
 
     if (null === $lod = QubitTermI18n::getOne($c2))
     {
-      throw new sfException("Can't find '$levelOfDescription' level of description in term table");
+      throw new sfException("Can't find '${levelOfDescription}' level of description in term table");
     }
 
     $criteria = new Criteria();

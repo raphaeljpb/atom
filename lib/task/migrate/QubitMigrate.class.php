@@ -323,7 +323,7 @@ class QubitMigrate
   {
     $last = QubitPdo::fetchOne('SELECT (MAX(id) + 1) AS last FROM object')->last;
 
-    QubitPdo::modify("ALTER TABLE object AUTO_INCREMENT = $last");
+    QubitPdo::modify("ALTER TABLE object AUTO_INCREMENT = ${last}");
   }
 
   public static function bumpTerm($id, $configuration)
@@ -357,13 +357,13 @@ class QubitMigrate
         // From the list of columns that the codebase is giving us, it may happen that some of them are
         // not available yet in the database since we are still running the migration. If this is the case,
         // ignore it, otherwise the UPDATE will fail.
-        if (false === QubitPdo::fetchOne("SHOW COLUMNS FROM $item[table] LIKE ?", [$item['column']]))
+        if (false === QubitPdo::fetchOne("SHOW COLUMNS FROM {$item['table']} LIKE ?", [$item['column']]))
         {
           continue;
         }
 
         QubitPdo::modify(
-          "UPDATE $item[table] SET $item[column] = ? WHERE $item[column] = ?", [
+          "UPDATE {$item['table']} SET {$item['column']} = ? WHERE {$item['column']} = ?", [
             $last,
             $id, ]);
       }
@@ -411,7 +411,7 @@ class QubitMigrate
       foreach ($foreignKeys as $item)
       {
         QubitPdo::modify(
-          "UPDATE $item[table] SET $item[column] = ? WHERE $item[column] = ?", [
+          "UPDATE {$item['table']} SET {$item['column']} = ? WHERE {$item['column']} = ?", [
             $last,
             $id, ]);
       }
@@ -459,7 +459,7 @@ class QubitMigrate
       foreach ($foreignKeys as $item)
       {
         QubitPdo::modify(
-          "UPDATE $item[table] SET $item[column] = ? WHERE $item[column] = ?", [
+          "UPDATE {$item['table']} SET {$item['column']} = ? WHERE {$item['column']} = ?", [
             $last,
             $id, ]);
       }
@@ -483,16 +483,16 @@ class QubitMigrate
 
     $queries = [];
 
-    $sql = "ALTER TABLE $table ADD $column";
+    $sql = "ALTER TABLE ${table} ADD ${column}";
 
     // Position of the new column
     if (isset($options['after']))
     {
-      $sql .= " AFTER $options[after]";
+      $sql .= " AFTER {$options['after']}";
     }
     elseif (isset($options['before']))
     {
-      $sql .= " BEFORE $options[before]";
+      $sql .= " BEFORE {$options['before']}";
     }
     elseif (isset($options['first']))
     {
@@ -507,7 +507,7 @@ class QubitMigrate
     // Index
     if (isset($options['idx']))
     {
-      $queries[] = "ALTER TABLE $table ADD INDEX ($column);";
+      $queries[] = "ALTER TABLE ${table} ADD INDEX (${column});";
     }
 
     // Foreign key
@@ -626,7 +626,7 @@ class QubitMigrate
     {
       $connection->exec('SET FOREIGN_KEY_CHECKS = 0');
 
-      $connection->exec("DROP TABLE IF EXISTS $table");
+      $connection->exec("DROP TABLE IF EXISTS ${table}");
 
       $connection->exec('SET FOREIGN_KEY_CHECKS = 1');
     }
@@ -680,14 +680,14 @@ class QubitMigrate
           $colname = 'name';
       }
 
-      $query = "INSERT INTO $table ($colname, id, culture) VALUES (?, ?, ?);";
+      $query = "INSERT INTO ${table} (${colname}, id, culture) VALUES (?, ?, ?);";
       $insertStmt = $conn->prepare($query);
 
-      $query = "SELECT target.culture, source.id FROM $table source
-        JOIN $table target ON source.id = target.id
+      $query = "SELECT target.culture, source.id FROM ${table} source
+        JOIN ${table} target ON source.id = target.id
         WHERE source.culture = 'en'
           AND target.culture <> 'en'
-          AND source.$colname = ?";
+          AND source.${colname} = ?";
       $selectStmt = $conn->prepare($query);
 
       foreach ($row as $key => $columns)

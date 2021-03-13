@@ -21,7 +21,7 @@
 
       <?php $i = 0; foreach ($notes as $item) { ?>
 
-        <?php $form->getWidgetSchema()->setNameFormat($arrayName."[$i][%s]"); ?>
+        <?php $form->getWidgetSchema()->setNameFormat($arrayName."[${i}][%s]"); ?>
 
         <tr class="<?php echo 0 == $i % 2 ? 'even' : 'odd'; ?> related_obj_<?php echo $item->id; ?>">
           <td>
@@ -46,7 +46,7 @@
         <?php ++$i; ?>
       <?php } ?>
 
-      <?php $form->getWidgetSchema()->setNameFormat($arrayName."[$i][%s]"); ?>
+      <?php $form->getWidgetSchema()->setNameFormat($arrayName."[${i}][%s]"); ?>
 
       <tr class="<?php echo 0 == $i % 2 ? 'even' : 'odd'; ?>">
         <td>

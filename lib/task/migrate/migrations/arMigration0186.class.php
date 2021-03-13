@@ -46,7 +46,7 @@ class arMigration0186
     foreach ($menuPaths as $oldPath => $newPath)
     {
       $criteria = new Criteria();
-      $criteria->add(QubitMenu::PATH, "$oldPath%", Criteria::LIKE);
+      $criteria->add(QubitMenu::PATH, "${oldPath}%", Criteria::LIKE);
 
       foreach (QubitMenu::get($criteria) as $menu)
       {

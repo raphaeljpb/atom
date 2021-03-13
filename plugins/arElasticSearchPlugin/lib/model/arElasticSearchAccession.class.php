@@ -144,7 +144,7 @@ class arElasticSearchAccession extends arElasticSearchModelBase
 
     if (false === $data)
     {
-      throw new sfException("Couldn't find accession (id: $id)");
+      throw new sfException("Couldn't find accession (id: ${id})");
     }
 
     $serialized = [];

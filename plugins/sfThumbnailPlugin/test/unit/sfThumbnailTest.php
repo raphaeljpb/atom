@@ -40,7 +40,7 @@ class my_lime_test extends lime_test
   {
     if ($adapter)
     {
-      $adapter = " [$adapter]";
+      $adapter = " [${adapter}]";
     }
     $this->output->diag($message.$adapter);
   }

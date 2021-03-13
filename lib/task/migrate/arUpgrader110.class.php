@@ -37,7 +37,7 @@ class arUpgrader110
 
     if ($options['verbose'])
     {
-      echo "up($version)\n";
+      echo "up(${version})\n";
     }
 
     switch ($version)
@@ -836,16 +836,16 @@ sql;
     ] as $item)
     {
       // Copy column updated_at and drop it
-      $sql = "UPDATE object, $item";
-      $sql .= " SET object.updated_at = $item.updated_at";
-      $sql .= " WHERE object.id = $item.id";
+      $sql = "UPDATE object, ${item}";
+      $sql .= " SET object.updated_at = ${item}.updated_at";
+      $sql .= " WHERE object.id = ${item}.id";
       QubitPdo::modify($sql);
       QubitMigrate::dropColumn($item, 'updated_at');
 
       // Copy column created_at and drop it
-      $sql = "UPDATE object, $item";
-      $sql .= " SET object.created_at = $item.created_at";
-      $sql .= " WHERE object.id = $item.id";
+      $sql = "UPDATE object, ${item}";
+      $sql .= " SET object.created_at = ${item}.created_at";
+      $sql .= " WHERE object.id = ${item}.id";
       QubitPdo::modify($sql);
       QubitMigrate::dropColumn($item, 'created_at');
     }

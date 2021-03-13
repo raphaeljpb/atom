@@ -52,11 +52,11 @@ class sfSocketsAdapter
 
     if (!$socket = @fsockopen($url_info['host'], $url_info['port'], $errno, $errstr, 15))
     {
-      throw new Exception("Could not connect ($errno): $errstr");
+      throw new Exception("Could not connect (${errno}): ${errstr}");
     }
 
     // build request
-    $request = "$method $path$qstring HTTP/1.1\r\n";
+    $request = "${method} ${path}${qstring} HTTP/1.1\r\n";
     $request .= 'Host: '.$url_info['host'].':'.$url_info['port']."\r\n";
     $request .= $request_headers;
     $request .= "Connection: Close\r\n";

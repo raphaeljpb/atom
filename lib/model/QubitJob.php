@@ -295,7 +295,7 @@ class QubitJob extends BaseJob
   {
     if (!self::checkWorkerAvailable(self::getJobPrefix().$jobName))
     {
-      throw new Net_Gearman_Exception("No Gearman worker available that can handle the job $jobName.");
+      throw new Net_Gearman_Exception("No Gearman worker available that can handle the job ${jobName}.");
     }
 
     $job = new QubitJob();
