@@ -72,7 +72,7 @@
         <skos:narrower rdf:resource="<?php echo url_for(array($child, 'module' => 'term'), true) ?>"/>
       <?php endforeach; // children ?>
 
-      <?php if (0 < count ($relations = QubitRelation::getBySubjectOrObjectId($term->id, array('typeId' => QubitTerm::TERM_RELATION_ASSOCIATIVE_ID)))): ?>
+      <?php if (0 < count($relations = QubitRelation::getBySubjectOrObjectId($term->id, array('typeId' => QubitTerm::TERM_RELATION_ASSOCIATIVE_ID)))): ?>
         <?php foreach($relations as $relation): ?>
           <skos:related rdf:resource="<?php echo url_for(array($relation->getOpposedObject($term->id), 'module' => 'term'), true) ?>"/>
         <?php endforeach; ?>

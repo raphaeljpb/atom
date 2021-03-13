@@ -288,7 +288,7 @@ class QubitMigrate109 extends QubitMigrate
     {
       foreach ($value as $row => $value)
       {
-        if (isset ($slug[$row]))
+        if (isset($slug[$row]))
         {
           $this->data[$table][$row]['slug'] = $slug[$row];
         }
