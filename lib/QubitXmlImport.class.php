@@ -489,15 +489,7 @@ class QubitXmlImport
    * Run filter methods based on Filters array specified per node in the template
    * .yml file config. This function will process filters against an XML node
    * passed in by reference so no need to return the node after it is processed.
-   * Filter setup example (see ead.yml):
-   *
-   *  edition:
-   *    XPath:   "did/unittitle[not(@type)]/edition"
-   *    Method:  setEdition
-   *    Filters:
-   *      -
-   *        emph:
-   *          QubitMarkdown: eadTagToMarkdown
+   * Filter setup example (see ead.yml, edition):
    *
    * Multiple tag filters can be specified for a given XML node. Each filter can
    * specify it's own class and method for processing.
