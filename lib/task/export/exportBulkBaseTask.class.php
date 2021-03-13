@@ -99,7 +99,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
 
     ob_start();
 
-    include($template);
+    include $template;
     $output = ob_get_contents();
     if ($format == 'dc')
     {

@@ -46,7 +46,7 @@ EOF;
       throw new sfException('You must specify a valid filename');
     }
 
-    include($arguments['filename']);
+    include $arguments['filename'];
 
     // Optionally log script execution
     if ($options['log'])

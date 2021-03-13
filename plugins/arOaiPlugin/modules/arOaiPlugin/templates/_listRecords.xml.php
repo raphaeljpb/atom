@@ -17,7 +17,7 @@
             <?php arOaiPluginComponent::includeCachedMetadata($record, $metadataPrefix) ?>
           <?php endif; ?>
         </metadata>
-        <?php include('_about.xml.php') ?>
+        <?php include '_about.xml.php'?>
       </record>
     <?php endif; ?>
   <?php endforeach; ?>

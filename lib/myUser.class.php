@@ -243,7 +243,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
     $securityFilePath = 'modules/'.$module.'/config/security.yml';
     if ($file = sfContext::getInstance()->getConfigCache()->checkConfig($securityFilePath, true))
     {
-      require($file);
+      require $file;
     }
 
     // Get credentials, using security.yml parsing convention

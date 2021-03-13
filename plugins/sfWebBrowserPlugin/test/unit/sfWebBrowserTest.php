@@ -1,28 +1,28 @@
 <?php
 
-include(dirname(__FILE__).'/../../../../test/bootstrap/unit.php');
+include dirname(__FILE__).'/../../../../test/bootstrap/unit.php';
 if(!isset($sf_symfony_lib_dir))
 {
   $sf_symfony_lib_dir = $configuration->getSymfonyLibDir();
 }
 
-require_once(dirname(__FILE__).'/../../lib/sfWebBrowser.class.php');
+require_once dirname(__FILE__).'/../../lib/sfWebBrowser.class.php';
 
-require_once(dirname(__FILE__).'/../../lib/sfFopenAdapter.class.php');
+require_once dirname(__FILE__).'/../../lib/sfFopenAdapter.class.php';
 
-require_once(dirname(__FILE__).'/../../lib/sfCurlAdapter.class.php');
+require_once dirname(__FILE__).'/../../lib/sfCurlAdapter.class.php';
 
-require_once(dirname(__FILE__).'/../../lib/sfSocketsAdapter.class.php');
+require_once dirname(__FILE__).'/../../lib/sfSocketsAdapter.class.php';
 
-require_once($sf_symfony_lib_dir.'/exception/sfException.class.php');
+require_once $sf_symfony_lib_dir.'/exception/sfException.class.php';
 
-require_once(dirname(__FILE__).'/../../lib/sfWebBrowserInvalidResponseException.class.php');
+require_once dirname(__FILE__).'/../../lib/sfWebBrowserInvalidResponseException.class.php';
 
-require_once($sf_symfony_lib_dir.'/config/sfConfig.class.php');
+require_once $sf_symfony_lib_dir.'/config/sfConfig.class.php';
 
-require_once($sf_symfony_lib_dir.'/util/sfDomCssSelector.class.php');
+require_once $sf_symfony_lib_dir.'/util/sfDomCssSelector.class.php';
 
-require_once($sf_symfony_lib_dir.'/util/sfToolkit.class.php');
+require_once $sf_symfony_lib_dir.'/util/sfToolkit.class.php';
 
 // Configuration
 // -- this script is needed for some tests. It is located in plugin's test/unit/utils folder

@@ -91,9 +91,9 @@
 
   $topLevelDid = true;
 
-  include('indexSuccessBodyDidElement.xml.php');
+  include 'indexSuccessBodyDidElement.xml.php';
 
-  include('indexSuccessBodyBioghistElement.xml.php');
+  include 'indexSuccessBodyBioghistElement.xml.php';
 
   $topLevelDid = false;
   ?>
@@ -316,9 +316,9 @@
         $creators = $$resourceVar->getCreators();
         $events = $$resourceVar->getActorEvents(['eventTypeId' => QubitTerm::CREATION_ID]);
 
-        include('indexSuccessBodyDidElement.xml.php');
+        include 'indexSuccessBodyDidElement.xml.php';
 
-        include('indexSuccessBodyBioghistElement.xml.php');
+        include 'indexSuccessBodyBioghistElement.xml.php';
       ?>
 
       <?php if ($descendant->getPublicationStatus()): ?>

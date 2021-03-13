@@ -58,7 +58,7 @@ EOF;
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
     // Get import definition
-    $import = require($options['import-definition']);
+    $import = require $options['import-definition'];
 
     $import->csv($fh, $skipRows);
   }

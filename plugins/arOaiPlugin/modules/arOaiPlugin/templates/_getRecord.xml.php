@@ -16,7 +16,7 @@
         <?php endif; ?>
       </metadata>
       <?php if (count($record->digitalObjectsRelatedByobjectId)): ?>
-        <?php include('_about.xml.php') ?>
+        <?php include '_about.xml.php'?>
       <?php endif; ?>
     </record>
   </GetRecord>

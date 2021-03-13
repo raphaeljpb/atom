@@ -17,7 +17,7 @@
  * along with Access to Memory (AtoM).  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
+require_once dirname(__FILE__).'/../../bootstrap/unit.php';
 
 global $preambleExceptions;
 $preambleExceptions = '/'.implode('|', [

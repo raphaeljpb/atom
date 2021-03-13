@@ -160,6 +160,6 @@ abstract class arOaiPluginComponent extends sfComponent
   {
     $format = self::parseXmlFormatFromMetadataPrefix($metadataPrefix);
 
-    include(QubitInformationObjectXmlCache::resourceExportFilePath($resource, $format, true));
+    include QubitInformationObjectXmlCache::resourceExportFilePath($resource, $format, true);
   }
 }

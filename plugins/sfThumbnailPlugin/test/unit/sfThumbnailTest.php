@@ -1,12 +1,12 @@
 <?php
 
-require_once(dirname(__FILE__).'/../../../../test/bootstrap/unit.php');
+require_once dirname(__FILE__).'/../../../../test/bootstrap/unit.php';
 
-require_once(dirname(__FILE__).'/../../lib/sfThumbnail.class.php');
+require_once dirname(__FILE__).'/../../lib/sfThumbnail.class.php';
 
-require_once(dirname(__FILE__).'/../../lib/sfGDAdapter.class.php');
+require_once dirname(__FILE__).'/../../lib/sfGDAdapter.class.php';
 
-require_once(dirname(__FILE__).'/../../lib/sfImageMagickAdapter.class.php');
+require_once dirname(__FILE__).'/../../lib/sfImageMagickAdapter.class.php';
 
 // These tests require you have both [http://php.net/gd GD]
 // and [http://www.imagemagick.org ImageMagick] installed
