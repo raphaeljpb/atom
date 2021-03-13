@@ -87,7 +87,7 @@ foreach ($tests as $item)
 
 
 // Test if sfSkosUniqueRelations is working with the UNESCO Thesaurus
-die(0);  // DISABLED! You can download the data from: http://vocabularies.unesco.org/exports/thesaurus/latest/unesco-thesaurus.rdf
+exit(0);  // DISABLED! You can download the data from: http://vocabularies.unesco.org/exports/thesaurus/latest/unesco-thesaurus.rdf
 $unescoThesaurus = realpath(dirname(__FILE__)).'/data/unesco-thesaurus.rdf';
 $graph = new EasyRdf_Graph();
 $graph->parseFile($unescoThesaurus);
