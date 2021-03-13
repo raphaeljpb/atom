@@ -81,7 +81,7 @@ class QubitLimitIpFilter extends sfFilter
       }
 
       // Range
-      elseif (2 == count($limit))
+      if (2 == count($limit))
       {
         $limit[0] = trim($limit[0]);
         $limit[1] = trim($limit[1]);

@@ -229,7 +229,7 @@ class PhysicalObjectCsvImporter
     {
       return $this->options[$name];
     }
-    elseif ('sourceName' == $name)
+    if ('sourceName' == $name)
     {
       return basename($this->filename);
     }
@@ -305,7 +305,7 @@ EOM;
     {
       return $this->options['header'];
     }
-    elseif (null !== $this->reader)
+    if (null !== $this->reader)
     {
       return $this->reader->getHeader();
     }
@@ -593,7 +593,7 @@ EOQ;
     {
       return null;
     }
-    elseif (1 == count($matches))
+    if (1 == count($matches))
     {
       $this->matchedExisting = 1;
 

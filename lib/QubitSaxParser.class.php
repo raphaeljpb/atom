@@ -499,7 +499,7 @@ class QubitSaxParser
     {
       return true;
     }
-    elseif ('Tag' === substr($method, -strlen('Tag')))
+    if ('Tag' === substr($method, -strlen('Tag')))
     {
       return true;
     }

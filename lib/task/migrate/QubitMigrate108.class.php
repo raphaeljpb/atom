@@ -589,7 +589,7 @@ class QubitMigrate108 extends QubitMigrate
 
         break;
       }
-      elseif (isset($row['name']) && 'users' == $row['name'])
+      if (isset($row['name']) && 'users' == $row['name'])
       {
         // Find the 'users' menu that is a child of the admin menu
         if (strpos($row['parent_id'], 'QubitMenu::ADMIN_ID') ||

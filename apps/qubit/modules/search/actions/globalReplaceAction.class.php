@@ -37,7 +37,7 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
         return;
       }
       // Make sure we have confirmed the action
-      elseif (!isset($request->confirm))
+      if (!isset($request->confirm))
       {
         $this->title = $this->context->i18n->__('Are you sure you want to replace "%1%" with "%2%" in %3%?', ['%1%' => $request->pattern, '%2%' => $request->replacement, '%3%' => sfInflector::humanize(sfInflector::underscore($request->column))]);
 

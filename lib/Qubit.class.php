@@ -446,7 +446,7 @@ class Qubit
       {
         return strftime('%'.$match[2]);
       }
-      elseif ('#' == $match[1])
+      if ('#' == $match[1])
       {
         if (0 < preg_match('/^i+$/', $match[2], $matches))
         {

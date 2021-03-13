@@ -1611,7 +1611,7 @@ class QubitFlatfileImport
     {
       return $value; // Value was a country code
     }
-    elseif ($countryCode = array_search($value, $countries))
+    if ($countryCode = array_search($value, $countries))
     {
       return $countryCode; // Value was a country name
     }
@@ -2102,7 +2102,7 @@ class QubitFlatfileImport
     {
       return 'updating using delete and replace';
     }
-    elseif ($this->matchAndUpdate)
+    if ($this->matchAndUpdate)
     {
       return 'updating in place';
     }

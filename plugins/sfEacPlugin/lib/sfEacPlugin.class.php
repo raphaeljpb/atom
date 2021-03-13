@@ -911,19 +911,19 @@ return;
         {
           return 'hierarchical-parent';
         }
-        elseif ('is the subordinate of' == $typeName || 'is controlled by' == $typeName || 'is owned by' == $typeName)
+        if ('is the subordinate of' == $typeName || 'is controlled by' == $typeName || 'is owned by' == $typeName)
         {
           return 'hierarchical-child';
         }
-        elseif ('is the predecessor of' == $typeName)
+        if ('is the predecessor of' == $typeName)
         {
           return 'temporal-earlier';
         }
-        elseif ('is the successor of' == $typeName)
+        if ('is the successor of' == $typeName)
         {
           return 'temporal-later';
         }
-        elseif (QubitTerm::ROOT_ID != $type->parentId)
+        if (QubitTerm::ROOT_ID != $type->parentId)
         {
           return self::toCpfRelationType($type->parentId);
         }

@@ -78,7 +78,7 @@ class digitalObjectDeleteTask extends arBaseTask
     {
       throw new sfException('Failed to fetch information object with the slug given.');
     }
-    elseif ('QubitRepository' == $row['class_name'] &&
+    if ('QubitRepository' == $row['class_name'] &&
       null === $repository = QubitRepository::getById($row['object_id']))
     {
       throw new sfException('Failed to fetch repository with the slug given.');

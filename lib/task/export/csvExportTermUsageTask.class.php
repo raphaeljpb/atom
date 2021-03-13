@@ -87,7 +87,7 @@ class csvExportTermUsageTask extends exportBulkBaseTask
 
       return $options['taxonomy-id'];
     }
-    elseif (isset($options['taxonomy-name']))
+    if (isset($options['taxonomy-name']))
     {
       $culture = (isset($options['taxonomy-name-culture'])) ? $options['taxonomy-name-culture'] : 'en';
 

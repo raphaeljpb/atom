@@ -595,7 +595,7 @@ class QubitAcl
     {
       return false; // No allows, always false
     }
-    elseif (!$forceBan && 0 == count($bans) && $isAllowedActionOnRoot)
+    if (!$forceBan && 0 == count($bans) && $isAllowedActionOnRoot)
     {
       return true; // No bans, always true
     }
