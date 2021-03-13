@@ -19,7 +19,6 @@
 
 /**
  * Manage aips in search index.
- *
  */
 class arElasticSearchAipPdo
 {

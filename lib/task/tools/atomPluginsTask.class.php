@@ -19,7 +19,6 @@
 
 /**
  * Purge Qubit data.
- *
  */
 class atomPluginsTask extends sfBaseTask
 {

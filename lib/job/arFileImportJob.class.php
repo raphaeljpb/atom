@@ -19,7 +19,6 @@
 
 /**
  * Job worker for file-based imports initiated from the WebUI.
- *
  */
 class arFileImportJob extends arBaseJob
 {

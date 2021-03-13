@@ -19,7 +19,6 @@
 
 /**
  * A worker to export a description as XML.
- *
  */
 class arXmlExportSingleFileJob extends arBaseJob
 {

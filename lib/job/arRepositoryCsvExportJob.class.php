@@ -19,7 +19,6 @@
 
 /**
  * Asynchronous job to export repository metadata from clipboard.
- *
  */
 class arRepositoryCsvExportJob extends arExportJob
 {

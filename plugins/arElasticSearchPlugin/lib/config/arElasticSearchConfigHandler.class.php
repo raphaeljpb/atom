@@ -19,7 +19,6 @@
 
 /**
  * arElasticSearchConfigHandler.
- *
  */
 class arElasticSearchConfigHandler extends sfYamlConfigHandler
 {

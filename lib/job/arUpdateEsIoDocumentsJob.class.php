@@ -19,7 +19,6 @@
 
 /**
  * Updates information object documents in the Elasticsearch index.
- *
  */
 class arUpdateEsIoDocumentsJob extends arBaseJob
 {

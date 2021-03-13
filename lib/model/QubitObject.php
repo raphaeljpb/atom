@@ -590,7 +590,6 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
 
   /**
    * Get all physical objects related to this object.
-   *
    */
   public function getPhysicalObjects()
   {

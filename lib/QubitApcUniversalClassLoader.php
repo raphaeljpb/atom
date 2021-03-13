@@ -25,7 +25,6 @@ use Symfony\Component\ClassLoader\UniversalClassLoader;
  * Based on ApcUniversalClassLoader.
  *
  * @author Mike Cantelon <mike@artefactual.com>
- *
  */
 class QubitApcUniversalClassLoader extends UniversalClassLoader
 {

@@ -389,8 +389,6 @@ class QubitXmlImport
   }
 
   /**
-   *
-   *
    * @return DOMNodeList
    */
   public static function queryDomNode($node, $xpathQuery)

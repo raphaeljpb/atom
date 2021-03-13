@@ -19,7 +19,6 @@
 
 /**
  * Context menu for the repository logo.
- *
  */
 class RepositoryLogoComponent extends sfComponent
 {

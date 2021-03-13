@@ -19,7 +19,6 @@
 
 /**
  * Finding Aid form definition for settings module - with validation.
- *
  */
 class SettingsFindingAidForm extends sfForm
 {

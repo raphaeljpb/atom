@@ -19,7 +19,6 @@
 
 /**
  * Observer of notificiation of access events.
- *
  */
 class QubitAccessLogObserver
 {

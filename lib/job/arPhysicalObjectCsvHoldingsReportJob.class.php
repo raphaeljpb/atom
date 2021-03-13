@@ -19,7 +19,6 @@
 
 /**
  * A job to export a physical object holdings report as CSV data.
- *
  */
 class arPhysicalObjectCsvHoldingsReportJob extends arExportJob
 {

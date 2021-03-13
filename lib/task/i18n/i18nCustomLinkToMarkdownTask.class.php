@@ -19,7 +19,6 @@
 
 /**
  * Convert custom link format to Markdown syntax in various i18n table fields.
- *
  */
 class i18nCustomLinkToMarkdownTask extends i18nTransformBaseTask
 {

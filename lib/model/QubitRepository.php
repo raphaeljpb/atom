@@ -184,7 +184,6 @@ class QubitRepository extends BaseRepository
 
   /**
    * Additional actions to take on delete.
-   *
    */
   public function delete($connection = null)
   {

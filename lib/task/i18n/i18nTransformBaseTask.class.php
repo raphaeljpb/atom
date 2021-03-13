@@ -19,7 +19,6 @@
 
 /**
  * Base task to process i18n fields.
- *
  */
 abstract class i18nTransformBaseTask extends arBaseTask
 {

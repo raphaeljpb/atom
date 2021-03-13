@@ -21,7 +21,6 @@
  * Digital Object - Update database from "edit" form.
  *
  * @author     david juhasz <david@artefactual.com>
- *
  */
 class DigitalObjectUpdateAction extends sfAction
 {

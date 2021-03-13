@@ -19,7 +19,6 @@
 
 /**
  * Represent the time, place and/or agent of events in an artifact's history.
- *
  */
 class QubitAip extends BaseAip
 {

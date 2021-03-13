@@ -842,7 +842,6 @@ class QubitFlatfileImport
    *
    * @param int   $typeId  term ID of event type
    * @param array $options option parameter
-   *
    */
   public function createOrUpdateEvent($typeId, $options = [])
   {
@@ -2155,7 +2154,6 @@ class QubitFlatfileImport
    *
    * This function will check to ensure if the current matching information object is within the limit,
    * and if not, set the object back to null since it isn't a match we want.
-   *
    */
   private function checkInformationObjectMatchLimit()
   {

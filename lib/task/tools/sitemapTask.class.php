@@ -19,7 +19,6 @@
 
 /**
  * Write Sitemap XML (URL inclusion protocol).
- *
  */
 class sitemapTask extends sfBaseTask
 {

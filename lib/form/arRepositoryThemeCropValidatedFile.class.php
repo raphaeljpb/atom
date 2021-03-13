@@ -21,7 +21,6 @@
  * This class extends the save method in sfValidatedFile so the logo or banner
  * uploaded in repository/editThemeAction.class.php can be cropped to fit the
  * application requirements.
- *
  */
 class arRepositoryThemeCropValidatedFile extends sfValidatedFile
 {

@@ -20,7 +20,6 @@
 /**
  * A bare bones worker to test Gearman / AtoM jobs
  * If optional parameter 'error' is set, print an error.
- *
  */
 class arTestJob extends arBaseJob
 {

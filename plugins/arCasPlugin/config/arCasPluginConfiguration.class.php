@@ -19,7 +19,6 @@
 
 /**
  * arCasPlugin configuration.
- *
  */
 class arCasPluginConfiguration extends sfPluginConfiguration
 {

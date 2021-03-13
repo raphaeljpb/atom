@@ -52,7 +52,6 @@ class QubitRoute extends sfRoute
    *
    * Overridden from sfRoute to call customized generateWithTokens() below.
    * (AtoM ticket 11761).
-   *
    */
   public function generate($params, $context = [], $absolute = false)
   {

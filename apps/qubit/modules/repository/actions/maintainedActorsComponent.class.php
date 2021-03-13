@@ -19,7 +19,6 @@
 
 /**
  * Repository maintained actors component.
- *
  */
 class RepositoryMaintainedActorsComponent extends sfComponent
 {

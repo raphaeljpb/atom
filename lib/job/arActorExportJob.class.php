@@ -19,7 +19,6 @@
 
 /**
  * Asynchronous job to export clipboard actor data and digital objects.
- *
  */
 class arActorExportJob extends arExportJob
 {

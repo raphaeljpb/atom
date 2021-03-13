@@ -19,7 +19,6 @@
 
 /**
  * Finding Aid settings.
- *
  */
 class SettingsFindingAidAction extends sfAction
 {

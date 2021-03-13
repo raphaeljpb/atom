@@ -19,7 +19,6 @@
 
 /**
  * Updates the publication status to the descendants of an information object.
- *
  */
 class arUpdatePublicationStatusJob extends arBaseJob
 {

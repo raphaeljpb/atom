@@ -51,7 +51,6 @@ interface QubitOaiSet
    * Apply the current set's restrictions to $criteria.
    *
    * @param Criteria $criteria The search criteria to be modified
-   *
    */
   public function apply($criteria);
 }

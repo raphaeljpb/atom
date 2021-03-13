@@ -19,7 +19,6 @@
 
 /**
  * Manage terms in search index.
- *
  */
 class arElasticSearchTermPdo
 {

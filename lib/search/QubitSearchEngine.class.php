@@ -19,7 +19,6 @@
 
 /**
  * Designed to be extended by arElasticSearchPlugin.
- *
  */
 abstract class QubitSearchEngine
 {

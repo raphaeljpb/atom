@@ -892,7 +892,6 @@ class QubitMigrate
   }
 
   /**
-   *
    * @return unknown_type
    */
   protected function deleteStubObjects()

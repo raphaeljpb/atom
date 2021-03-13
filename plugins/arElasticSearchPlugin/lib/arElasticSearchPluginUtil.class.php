@@ -19,7 +19,6 @@
 
 /**
  * arElasticSearchPluginUtil.
- *
  */
 class arElasticSearchPluginUtil
 {
@@ -152,7 +151,6 @@ class arElasticSearchPluginUtil
    *                        'i18n.fr.title', 'i18n.es.title', etc.
    * @param array $cultures An array specifying which cultures to expand to. If not specified, we look up which
    *                        cultures are active in AtoM and go off that.
-   *
    */
   public static function getI18nFieldNames($fields, $cultures = null)
   {
@@ -702,8 +700,6 @@ class arElasticSearchPluginUtil
    * @param bool   $foreignType      Whether or not this field in question is being parsed for a foreign type,
    *                                 e.g. inside informationObject.creators
    * @param array  $i18nIncludeInAll A list of i18n fields to be allowed when searching _all
-   *
-   *
    */
   private static function handleI18nStringFields($rootIndexType, &$fields, $prefix, $fieldName, $foreignType,
                                                  $i18nIncludeInAll)

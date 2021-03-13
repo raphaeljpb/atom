@@ -21,7 +21,6 @@
  * A job to make an archival description's children inherit its
  * granted rights. Afterward, the job will initiate another job to
  * calculate new ACL rules based on the granted rights.
- *
  */
 class arInheritRightsJob extends arBaseJob
 {

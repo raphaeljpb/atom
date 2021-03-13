@@ -19,7 +19,6 @@
 
 /**
  * Singleton factory class for QubitSearchEngine and subclasses.
- *
  */
 class QubitSearch
 {

@@ -19,7 +19,6 @@
 
 /**
  * Populate search index.
- *
  */
 class arSearchPopulateTask extends sfBaseTask
 {

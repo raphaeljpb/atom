@@ -24,7 +24,6 @@ class arStorageServiceUtils
   /**
    * Use phpcurl to request a URL and pass the header and stream back to
    * the browser.
-   *
    */
   public static function getFileFromStorageService($url)
   {
@@ -68,7 +67,6 @@ class arStorageServiceUtils
 
   /**
    * Return true if plugin is enabled and feature is activated.
-   *
    */
   public static function getAipDownloadEnabled()
   {

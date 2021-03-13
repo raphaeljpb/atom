@@ -19,7 +19,6 @@
 
 /**
  * Use _msearch to query ES multiple times at once, using query_string.
- *
  */
 class SearchAutocompleteAction extends sfAction
 {

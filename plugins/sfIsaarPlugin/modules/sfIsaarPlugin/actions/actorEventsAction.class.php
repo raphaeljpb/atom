@@ -19,7 +19,6 @@
 
 /**
  * Actor - show event data as JSON.
- *
  */
 class sfIsaarPluginActorEventsAction extends sfAction
 {

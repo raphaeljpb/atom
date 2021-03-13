@@ -73,7 +73,6 @@ class arStorageServiceDownloadAction extends sfAction
    * Build the request URL for the Storage Service API's 'download' endpoint
    * and make the request. Ensure if there is an error that the Storage Service
    * return status is passed back to the browser.
-   *
    */
   protected function downloadAip($request)
   {

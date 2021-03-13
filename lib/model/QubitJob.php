@@ -19,7 +19,6 @@
 
 /**
  * Represent an asynchronous job.
- *
  */
 class QubitJob extends BaseJob
 {

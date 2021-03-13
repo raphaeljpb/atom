@@ -20,7 +20,6 @@
 /**
  * Asynchronous job to export clipboard actor data to a CSV document, plus
  * related digital objects when requested.
- *
  */
 class arActorCsvExportJob extends arActorExportJob
 {

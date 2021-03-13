@@ -20,7 +20,6 @@
 /**
  * Build browse menu as simple xhtml lists, relying on css styling to
  * format the display of the menus.
- *
  */
 class MenuBrowseMenuInstitutionComponent extends sfComponent
 {

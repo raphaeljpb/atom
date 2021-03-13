@@ -19,7 +19,6 @@
 
 /**
  * Upgrade Qubit data from Release 1.2.
- *
  */
 class arUpgrader120
 {

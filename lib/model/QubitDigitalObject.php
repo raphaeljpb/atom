@@ -1542,7 +1542,6 @@ class QubitDigitalObject extends BaseDigitalObject
 
   /**
    * Set Mime-type and Filetype all at once.
-   *
    */
   public function setMimeAndMediaType($mimeType = null)
   {

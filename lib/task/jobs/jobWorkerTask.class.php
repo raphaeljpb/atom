@@ -19,7 +19,6 @@
 
 /**
  * Gearman worker task.
- *
  */
 class jobWorkerTask extends arBaseTask
 {

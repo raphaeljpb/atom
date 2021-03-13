@@ -19,7 +19,6 @@
 
 /**
  * Promote user to admin.
- *
  */
 class promoteUserToAdminTask extends sfBaseTask
 {

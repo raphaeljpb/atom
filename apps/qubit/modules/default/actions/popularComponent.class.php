@@ -19,7 +19,6 @@
 
 /**
  * Check for updates component.
- *
  */
 class DefaultPopularComponent extends sfComponent
 {

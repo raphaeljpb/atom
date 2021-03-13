@@ -28,7 +28,6 @@ class DigitalObjectShowTextComponent extends sfComponent
    * Show a representation of a digital object image.
    *
    * @param sfWebRequest $request
-   *
    */
   public function execute($request)
   {

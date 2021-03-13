@@ -21,7 +21,6 @@
  * Import a CSV file into Qubit.
  * This class is a wrapper to interact with the import CSV tasks located
  * under the lib/task/import directory.
- *
  */
 class QubitCsvImport
 {
@@ -193,7 +192,6 @@ class QubitCsvImport
   /**
    * Trigger a csv transform on the server using a configured transformation
    * script.
-   *
    */
   public function doTransform($csvFile)
   {

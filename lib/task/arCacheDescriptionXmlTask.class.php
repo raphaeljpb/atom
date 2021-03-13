@@ -20,7 +20,6 @@
 /**
  * Cycle through all information objects and export their EAD and DC XML
  * representations as files.
- *
  */
 class arCacheDescriptionXmlTask extends arBaseTask
 {

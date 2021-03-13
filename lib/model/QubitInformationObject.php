@@ -350,7 +350,6 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Additional actions to take on delete.
-   *
    */
   public function delete($connection = null)
   {
@@ -2956,7 +2955,6 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Remove any corresponding keymap entries on delete of this object.
-   *
    */
   private function removeKeymapEntries()
   {

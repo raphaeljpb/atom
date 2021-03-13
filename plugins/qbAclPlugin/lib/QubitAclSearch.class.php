@@ -20,7 +20,6 @@
 /**
  * Filter search query objects based in the access lists. The queries are
  * instances of the \Elastica\Query class.
- *
  */
 class QubitAclSearch
 {

@@ -19,7 +19,6 @@
 
 /**
  * arRestApiPluginConfiguration configuration.
- *
  */
 class arRestApiPluginConfiguration extends sfPluginConfiguration
 {

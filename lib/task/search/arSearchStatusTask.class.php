@@ -19,7 +19,6 @@
 
 /**
  * Display search index status.
- *
  */
 class arSearchStatusTask extends arBaseTask
 {
