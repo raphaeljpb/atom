@@ -50,5 +50,3 @@ class arMigration0148
     return true;
   }
 }
-
-
