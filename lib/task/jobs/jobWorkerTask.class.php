@@ -29,6 +29,8 @@ class jobWorkerTask extends arBaseTask
 
   /**
    * @see sfTask
+   *
+   * @param mixed $message
    */
   public function log($message)
   {

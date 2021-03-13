@@ -37,6 +37,9 @@ class importDipObjectsTask extends arBaseTask
 
   /**
    * @see sfTask
+   *
+   * @param mixed $arguments
+   * @param mixed $options
    */
   public function execute($arguments = [], $options = [])
   {
@@ -75,6 +78,9 @@ class importDipObjectsTask extends arBaseTask
    * Get value of column, using column name, from array representing row of CSV data.
    *
    * @return void
+   *
+   * @param mixed $column
+   * @param mixed $row
    */
   public function getRowColumnValue($column, $row)
   {
@@ -180,6 +186,7 @@ EOF;
    * objects directory. CSV file's extension must be lower-case.
    *
    * @param string $objectsPathh Path to DIP object files
+   * @param mixed  $objectsPath
    *
    * @return resource File pointer resource for CSV file
    */

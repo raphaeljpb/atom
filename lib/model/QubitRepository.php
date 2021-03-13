@@ -183,6 +183,8 @@ class QubitRepository extends BaseRepository
 
   /**
    * Additional actions to take on delete.
+   *
+   * @param null|mixed $connection
    */
   public function delete($connection = null)
   {
@@ -326,6 +328,8 @@ class QubitRepository extends BaseRepository
    * Get disk space used by digital objects in this repository.
    *
    * @return int disk usage in bytes
+   *
+   * @param mixed $options
    */
   public function getDiskUsage($options = [])
   {
@@ -447,6 +451,8 @@ class QubitRepository extends BaseRepository
    * Get the current repository uploads directory.
    *
    * @return string
+   *
+   * @param mixed $absolute
    */
   public function getUploadsPath($absolute = false)
   {
@@ -457,6 +463,8 @@ class QubitRepository extends BaseRepository
    * Get logo image path within the repository uploads directory.
    *
    * @return string
+   *
+   * @param mixed $absolute
    */
   public function getLogoPath($absolute = false)
   {
@@ -467,6 +475,8 @@ class QubitRepository extends BaseRepository
    * Get banner image path within the repository uploads directory.
    *
    * @return string
+   *
+   * @param mixed $absolute
    */
   public function getBannerPath($absolute = false)
   {
@@ -525,6 +535,7 @@ class QubitRepository extends BaseRepository
    *
    * @param  $getFunction  The get function for the field we want to return.
    *                       e.g. getFromPrimaryOrFirstValidContact('getCity')
+   * @param mixed $options
    *
    * @return mixed Returns the field if found, null otherwise
    */

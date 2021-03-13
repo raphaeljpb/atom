@@ -196,6 +196,8 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
 
   /**
    * @dataProvider fetchHoldingsRowsProvider
+   *
+   * @param mixed $rows
    */
   public function testSummarizeHoldingsDataTotal($rows)
   {
@@ -206,6 +208,8 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
 
   /**
    * @dataProvider fetchHoldingsRowsProvider
+   *
+   * @param mixed $rows
    */
   public function testSummarizeHoldingsDataTypeTotals($rows)
   {
@@ -218,6 +222,8 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
 
   /**
    * @dataProvider mixedHoldingsDataProvider
+   *
+   * @param mixed $holdingsData
    */
   public function testWritePhysicalObjectAndMixedHoldings($holdingsData)
   {
@@ -241,6 +247,8 @@ EOM;
 
   /**
    * @dataProvider mixedHoldingsDataProvider
+   *
+   * @param mixed $holdingsData
    */
   public function testWritePhysicalObjectAndMixedHoldingsForInformationObjectHoldingType($holdingsData)
   {
@@ -262,6 +270,8 @@ EOM;
 
   /**
    * @dataProvider mixedHoldingsDataProvider
+   *
+   * @param mixed $holdingsData
    */
   public function testWritePhysicalObjectAndMixedHoldingsForAccessionHoldingType($holdingsData)
   {
@@ -283,6 +293,8 @@ EOM;
 
   /**
    * @dataProvider mixedHoldingsDataProvider
+   *
+   * @param mixed $holdingsData
    */
   public function testWritePhysicalObjectAndMixedHoldingsForNoneHoldingType($holdingsData)
   {
@@ -299,6 +311,8 @@ EOM;
 
   /**
    * @dataProvider informationObjectHoldingsDataProvider
+   *
+   * @param mixed $holdingsData
    */
   public function testWritePhysicalObjectAndInformationObjectHoldings($holdingsData)
   {
@@ -320,6 +334,8 @@ EOM;
 
   /**
    * @dataProvider informationObjectHoldingsDataProvider
+   *
+   * @param mixed $holdingsData
    */
   public function testWritePhysicalObjectAndInformationObjectHoldingsWithAccessionHoldingType($holdingsData)
   {
@@ -334,6 +350,8 @@ EOM;
 
   /**
    * @dataProvider informationObjectHoldingsDataProvider
+   *
+   * @param mixed $holdingsData
    */
   public function testWritePhysicalObjectAndInformationObjectHoldingsWithNoneHoldingType($holdingsData)
   {

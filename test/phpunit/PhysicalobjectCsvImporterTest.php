@@ -275,6 +275,9 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
 
   /**
    * @dataProvider setOptionsProvider
+   *
+   * @param mixed $options
+   * @param mixed $expected
    */
   public function testSetOptions($options, $expected)
   {
@@ -450,6 +453,9 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
 
   /**
    * @dataProvider processRowProvider
+   *
+   * @param mixed $data
+   * @param mixed $expectedResult
    */
   public function testProcessRow($data, $expectedResult)
   {

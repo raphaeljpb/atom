@@ -35,6 +35,8 @@ class QubitValidatorUrl extends sfValidatorBase
 
   /**
    * @see sfValidatorBase
+   *
+   * @param mixed $value
    */
   protected function doClean($value)
   {

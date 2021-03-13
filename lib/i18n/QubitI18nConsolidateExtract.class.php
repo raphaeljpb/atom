@@ -156,6 +156,8 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
    * Extracts i18n strings from PHP files tracking its source files.
    *
    * @see sfI18nExtract
+   *
+   * @param mixed $dir
    */
   protected function extractFromPhpFiles($dir)
   {

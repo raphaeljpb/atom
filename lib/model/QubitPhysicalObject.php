@@ -122,6 +122,9 @@ class QubitPhysicalObject extends BasePhysicalObject
    * @param name  The name of the physical object
    * @param location  The location of the physical object
    * @param typeId  The type id of the physical object (Box, etc.)
+   * @param mixed $name
+   * @param mixed $location
+   * @param mixed $typeId
    *
    * @return QubitQuery collection of Physical Objects
    */
@@ -150,6 +153,8 @@ class QubitPhysicalObject extends BasePhysicalObject
    *
    * @param name    The name of the physical object
    * @param options Array of optional paramaters
+   * @param mixed $name
+   * @param mixed $options
    *
    * @return QubitQuery A collection of matching physicalobject objects
    */
@@ -185,6 +190,10 @@ class QubitPhysicalObject extends BasePhysicalObject
    * @param location  The location of the physical object
    * @param typeId  The type id of the physical object (Box, etc.)
    * @param collectionId  The collection id to check inside for the physical object
+   * @param mixed $name
+   * @param mixed $location
+   * @param mixed $typeId
+   * @param mixed $collectionId
    *
    * @return A physical object if found matching, otherwise null
    */

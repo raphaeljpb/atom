@@ -176,6 +176,7 @@ class arExportJob extends arBaseJob
    *
    * @param string   Path of file to write CSV data to
    * @param bool  Optional: Whether to include digital objects
+   * @param mixed $tempDir
    *
    * @return array Error messages
    */

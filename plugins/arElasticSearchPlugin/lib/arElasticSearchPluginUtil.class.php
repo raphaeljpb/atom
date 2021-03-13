@@ -53,6 +53,8 @@ class arElasticSearchPluginUtil
    *
    * @param  string  date  The date string
    * @param  bool  endDate  If this is set to true, use 12-31 instead
+   * @param mixed $date
+   * @param mixed $endDate
    *
    * @return mixed a string indicating the normalized date in YYYY-MM-DD format,
    *               otherwise null indicating an invalid date string was given
@@ -101,6 +103,9 @@ class arElasticSearchPluginUtil
    *
    * Tried to add the result fields to the cache but APC (our default caching engine) uses separate
    * memory spaces for web/cli and the cached fields can't be removed in arSearchPopulateTask
+   *
+   * @param mixed $indexType
+   * @param mixed $except
    */
   public static function getAllFields($indexType, $except = [])
   {
@@ -531,6 +536,8 @@ class arElasticSearchPluginUtil
    * Retrieve the default template type given a specified ES index type.
    *
    * @return string The default template (e.g. isad)
+   *
+   * @param mixed $indexType
    */
   private static function getTemplate($indexType)
   {

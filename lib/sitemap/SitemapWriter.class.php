@@ -79,6 +79,11 @@ class SitemapWriter
 
   /**
    * Constructor.
+   *
+   * @param mixed $baseDir
+   * @param mixed $baseUrl
+   * @param mixed $indent
+   * @param mixed $compress
    */
   public function __construct($baseDir, $baseUrl, $indent = false, $compress = false)
   {

@@ -27,6 +27,8 @@ class QubitPatternRouting extends sfPatternRouting
 {
   /**
    * @see sfPatternRouting
+   *
+   * @param mixed $url
    */
   public function parse($url)
   {

@@ -203,6 +203,8 @@ class QubitMetsParser
   /**
    * Find the original filename
    * simple_load_string() is used to make xpath queries faster.
+   *
+   * @param mixed $fileId
    */
   public function getOriginalFilename($fileId)
   {

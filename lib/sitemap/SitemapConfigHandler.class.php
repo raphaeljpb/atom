@@ -21,6 +21,8 @@ class SitemapConfigHandler extends sfYamlConfigHandler
 {
   /**
    * @see sfConfigHandler
+   *
+   * @param mixed $configFiles
    */
   public function execute($configFiles)
   {

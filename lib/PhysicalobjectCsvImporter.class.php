@@ -548,6 +548,8 @@ EOM;
    * @param string $sourceName Name of source data
    * @param int    $sourceId   ID from source data
    * @param object $object     Object to create entry for
+   * @param mixed  $objectId
+   * @param mixed  $csvdata
    *
    * @return void
    */
@@ -900,6 +902,8 @@ EOL;
 
   /**
    * Check if $value should update the current db data.
+   *
+   * @param mixed $value
    */
   protected function shouldUpdateDb($value)
   {

@@ -575,6 +575,8 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
   /**
    * Set browse page layout view.
+   *
+   * @param mixed $request
    */
   private function setView($request)
   {

@@ -68,6 +68,8 @@ EOF;
 
   /**
    * Parse out the params and set the criteria that will drive the data lookup.
+   *
+   * @param mixed $options
    */
   private function getCriteria($options = [])
   {
@@ -126,6 +128,8 @@ EOF;
   /**
    * Determine if creators can be removed from descriptions to be replaced
    * with creator inheritance.
+   *
+   * @param mixed $criteria
    */
   private function unlinkCreators($criteria)
   {
@@ -211,6 +215,9 @@ EOF;
 
   /**
    * Remove creators from this description.
+   *
+   * @param null|mixed $infoObj
+   * @param mixed      $creatorIds
    */
   private function removeCreator($infoObj = null, $creatorIds)
   {

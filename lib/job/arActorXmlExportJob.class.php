@@ -29,6 +29,7 @@ class arActorXmlExportJob extends arActorExportJob
    * Export search results as XML.
    *
    * @param string  Path of file to write XML data to
+   * @param mixed $path
    */
   protected function doExport($path)
   {

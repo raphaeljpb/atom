@@ -139,6 +139,10 @@ class arElasticSearchPluginQuery
    * Add criteria to query based on advanced search form and other params.
    *
    * @return void
+   *
+   * @param mixed $fieldNames
+   * @param mixed $params
+   * @param mixed $archivalStandard
    */
   public function addAdvancedSearchFilters($fieldNames, $params, $archivalStandard)
   {
@@ -239,6 +243,9 @@ class arElasticSearchPluginQuery
    *   );
    *
    * @return object \Elastica\Query\BoolQuery instance
+   *
+   * @param mixed $params
+   * @param mixed $archivalStandard
    */
   protected function parseQuery($params, $archivalStandard)
   {

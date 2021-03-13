@@ -136,6 +136,8 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
   /**
    * Optimize index.
+   *
+   * @param mixed $args
    */
   public function optimize($args = [])
   {
@@ -205,6 +207,8 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
   /**
    * Populate index.
+   *
+   * @param mixed $options
    */
   public function populate($options = [])
   {
@@ -324,6 +328,9 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
   /**
    * Centralize document addition to keep control of the batch queue.
+   *
+   * @param mixed $data
+   * @param mixed $type
    */
   public function addDocument($data, $type)
   {
@@ -364,6 +371,9 @@ class arElasticSearchPlugin extends QubitSearchEngine
    * replacing core "keys/values" and arrays). There is no
    * way to delete a field using this method but, if it's
    * considered where needed, it can be set to 'null'.
+   *
+   * @param mixed $object
+   * @param mixed $data
    */
   public function partialUpdate($object, $data)
   {
@@ -566,6 +576,8 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
   /**
    * Display types that will be indexed.
+   *
+   * @param mixed $excludeTypes
    */
   private function displayTypesToIndex($excludeTypes)
   {

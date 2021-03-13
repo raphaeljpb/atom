@@ -117,6 +117,10 @@ class arGenerateReportJob extends arBaseJob
    * Get a report's filename based on slug, report type and format.
    *
    * @return string the report filename
+   *
+   * @param mixed $resource
+   * @param mixed $format
+   * @param mixed $type
    */
   public static function getFilename($resource, $format, $type)
   {
@@ -155,6 +159,8 @@ class arGenerateReportJob extends arBaseJob
 
   /**
    * Get a list of items or files to report on given the specified resource.
+   *
+   * @param mixed $levelOfDescription
    */
   private function getFileOrItemListResults($levelOfDescription)
   {
@@ -252,6 +258,7 @@ class arGenerateReportJob extends arBaseJob
    * Write box label report to CSV.
    *
    * @param array results  A list of box label results for the report
+   * @param mixed $results
    */
   private function writeBoxLabelCsv($results)
   {
@@ -281,6 +288,7 @@ class arGenerateReportJob extends arBaseJob
    * Write storage location report to CSV.
    *
    * @param array results  A list of results for the report
+   * @param mixed $results
    */
   private function writeStorageLocationsCsv($results)
   {
@@ -310,6 +318,7 @@ class arGenerateReportJob extends arBaseJob
    * Write file or item list report to CSV.
    *
    * @param array results  A list of results for the report
+   * @param mixed $results
    */
   private function writeItemOrListCsv($results)
   {
@@ -366,6 +375,7 @@ class arGenerateReportJob extends arBaseJob
    * the output of html report templates based on report type.
    *
    * @param array results  A list of results for the report
+   * @param mixed $results
    */
   private function writeHtml($results)
   {
@@ -403,6 +413,8 @@ class arGenerateReportJob extends arBaseJob
 
   /**
    * Return a ; delineated string of locations based on a resource's physical objects.
+   *
+   * @param mixed $resource
    */
   private function getLocationString($resource)
   {
@@ -422,6 +434,8 @@ class arGenerateReportJob extends arBaseJob
    * Get first creation date given specified resource.
    *
    * @return QubitEvent specifying first creation date encountered, null otherwise
+   *
+   * @param mixed $resource
    */
   private function getCreationDates($resource)
   {

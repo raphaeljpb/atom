@@ -68,8 +68,10 @@ class QubitActorAcl extends QubitAcl
    * Check if $user is authorized to do $action on the digital object linked to
    * this actor.
    *
-   * @param QubitUser $user   to authorize
-   * @param string    $action being requested (e.g. "readReference")
+   * @param QubitUser $user     to authorize
+   * @param string    $action   being requested (e.g. "readReference")
+   * @param mixed     $resource
+   * @param mixed     $options
    *
    * @return bool true if $user is authorized to perform $action
    */

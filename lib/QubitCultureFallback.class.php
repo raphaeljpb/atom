@@ -26,7 +26,8 @@ class QubitCultureFallback
    * Assign fallback values for each column in the $fallbackClassName table.
    *
    * @param Criteria $criteria
-   * @param string   $fallbackClass name of Prople class for table with desired fallback columns
+   * @param string   $fallbackClass     name of Prople class for table with desired fallback columns
+   * @param mixed    $fallbackClassName
    *
    * @return Criteria $criteria object withi extra calculated fallback columns
    */
@@ -48,6 +49,7 @@ class QubitCultureFallback
    *
    * @param Criteria $criteria
    * @param array    $options
+   * @param mixed    $fallbackClassName
    *
    * @return QubitQuery array of objects
    */

@@ -180,7 +180,8 @@ class QubitUser extends BaseUser
   /**
    * Check if user belongs to *any* of the checkGroup(s) listed.
    *
-   * @param mixed $groups - integer value for group id, or array of group ids
+   * @param mixed $groups      - integer value for group id, or array of group ids
+   * @param mixed $checkGroups
    *
    * @return bool
    */

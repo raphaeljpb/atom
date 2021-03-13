@@ -34,6 +34,9 @@ class arElasticSearchFunctionObjectPdo
 
   /**
    * METHODS.
+   *
+   * @param mixed $id
+   * @param mixed $options
    */
   public function __construct($id, $options = [])
   {

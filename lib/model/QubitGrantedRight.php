@@ -45,6 +45,9 @@ class QubitGrantedRight extends BaseGrantedRight
    * @param string  action  The digital object action, i.e. 'readThumb', 'readMaster', 'readReference'
    * @param  string  denyReason  An optional parameter for the function to pass out
    *                 which rule was responsible for any denial (e.g. 'conditional')
+   * @param mixed      $id
+   * @param mixed      $action
+   * @param null|mixed $denyReason
    *
    * @return bool Whether or not the user has permission
    */
@@ -135,6 +138,7 @@ class QubitGrantedRight extends BaseGrantedRight
    * Gets the string related to a restriction.
    *
    * @param int  restrictionId  The restriction number
+   * @param mixed $restrictionId
    *
    * @return string the string representing the restriction
    */
@@ -158,6 +162,7 @@ class QubitGrantedRight extends BaseGrantedRight
    * Gets whether or not an information object has granted rights.
    *
    * @param int  id  The information object id
+   * @param mixed $id
    *
    * @return bool True if has granted rights, false otherwise
    */
@@ -185,6 +190,9 @@ class QubitGrantedRight extends BaseGrantedRight
    * @param  string  action  The action to check against, e.g. 'readReference'
    * @param  string  denyReason  An optional parameter for the function to pass out
    *                 which rule was responsible for any denial (e.g. 'conditional')
+   * @param mixed      $id
+   * @param mixed      $action
+   * @param null|mixed $denyReason
    *
    * @return array an array of groupIds that are allowed to perform $action on
    *               the specified information object

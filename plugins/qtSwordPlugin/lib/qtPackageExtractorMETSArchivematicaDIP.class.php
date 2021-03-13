@@ -170,6 +170,8 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    * Parse AIP name to extract filename.
    *
    * @return string $filename
+   *
+   * @param mixed $filename
    */
   protected function extractAipNameFromFileName($filename)
   {
@@ -326,6 +328,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    * Create a QubitRelation linking $io to $aip.
    *
    * @param QubitAip $aip the QubitRelation->subject
+   * @param mixed    $io
    *
    * @return QubitInformationObject the QubitRelation->object
    */
@@ -448,6 +451,8 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    * Build an array of digital object metadata from METS fileGrp file elements.
    *
    * @return array digital object metadata, sorted alphabetically
+   *
+   * @param mixed $files
    */
   protected function getChildDataFromFileGrp($files)
   {
@@ -496,6 +501,8 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    *
    * Use the PREMIS originalName if it exists - if not, find the filename in the
    * DIP "objects/" directory with getAccessCopyPath()
+   *
+   * @param mixed $fileId
    */
   protected function getTitleFromFilename($fileId)
   {
@@ -534,6 +541,9 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    * digital_object record
    *
    * @return QubitInformationObject a child object
+   *
+   * @param mixed $fileId
+   * @param mixed $data
    */
   protected function createInformationObjectFromFileGrp($fileId, $data)
   {

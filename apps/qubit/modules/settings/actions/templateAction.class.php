@@ -57,6 +57,8 @@ class SettingsTemplateAction extends sfAction
 
   /**
    * Populate the default template settings from the database (non-localized).
+   *
+   * @param mixed $form
    */
   protected function populateDefaultTemplateForm($form)
   {
@@ -76,6 +78,8 @@ class SettingsTemplateAction extends sfAction
    * Update default template db values with form values (non-localized).
    *
    * @return $this;
+   *
+   * @param mixed $form
    */
   protected function updateDefaultTemplateSettings($form)
   {

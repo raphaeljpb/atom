@@ -73,6 +73,10 @@ class RepositoryHoldingsAction extends sfAction
 
   /**
    * Query this repository's holdings.
+   *
+   * @param mixed $id
+   * @param mixed $page
+   * @param mixed $limit
    */
   public static function getHoldings($id, $page, $limit)
   {

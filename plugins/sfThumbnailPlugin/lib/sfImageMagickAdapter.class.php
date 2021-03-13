@@ -218,6 +218,7 @@ class sfImageMagickAdapter
    * Determine file mime type using the PHP fileinfo library.
    *
    * @param string  file we want the mime type for
+   * @param mixed $file
    *
    * @return string Mime type
    */
@@ -429,6 +430,8 @@ class sfImageMagickAdapter
 
   /**
    * If failure, this method returns 0.
+   *
+   * @param mixed $image
    */
   private function getCount($image)
   {

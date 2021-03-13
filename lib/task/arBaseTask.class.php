@@ -33,6 +33,9 @@ abstract class arBaseTask extends sfBaseTask
 
   /**
    * @see sfTask
+   *
+   * @param mixed $arguments
+   * @param mixed $options
    */
   protected function execute($arguments = [], $options = [])
   {

@@ -62,6 +62,8 @@ class QubitMigrate
    *
    * @param string classname name of Qubit class (e.g. QubitInformationObject)
    * @param string keyOrId row key or 'id' column value
+   * @param mixed $classname
+   * @param mixed $keyOrId
    *
    * @return array the found row, or NULL for no match
    */

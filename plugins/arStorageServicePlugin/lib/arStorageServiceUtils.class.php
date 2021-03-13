@@ -24,6 +24,8 @@ class arStorageServiceUtils
   /**
    * Use phpcurl to request a URL and pass the header and stream back to
    * the browser.
+   *
+   * @param mixed $url
    */
   public static function getFileFromStorageService($url)
   {

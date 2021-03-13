@@ -62,6 +62,8 @@ class qubitConfiguration extends sfApplicationConfiguration
 
   /**
    * @see sfApplicationConfiguration
+   *
+   * @param mixed $moduleName
    */
   public function getControllerDirs($moduleName)
   {
@@ -95,6 +97,8 @@ class qubitConfiguration extends sfApplicationConfiguration
 
   /**
    * @see sfApplicationConfiguration
+   *
+   * @param mixed $moduleName
    */
   public function getTemplateDirs($moduleName)
   {
@@ -110,6 +114,8 @@ class qubitConfiguration extends sfApplicationConfiguration
 
   /**
    * @see sfProjectConfiguration
+   *
+   * @param mixed $path
    */
   public function setRootDir($path)
   {

@@ -52,6 +52,9 @@ class QubitMetadataRoute extends QubitRoute
    *        is descrbied in self::$DEFAULT_MODULES
    *
    * @see sfRoute
+   *
+   * @param mixed $url
+   * @param mixed $context
    */
   public function matchesUrl($url, $context = [])
   {
@@ -229,6 +232,9 @@ class QubitMetadataRoute extends QubitRoute
 
   /**
    * @see sfRoute
+   *
+   * @param mixed $params
+   * @param mixed $context
    */
   public function matchesParameters($params, $context = [])
   {
@@ -248,6 +254,10 @@ class QubitMetadataRoute extends QubitRoute
 
   /**
    * @see sfRoute
+   *
+   * @param mixed $params
+   * @param mixed $context
+   * @param mixed $absolute
    */
   public function generate($params, $context = [], $absolute = false)
   {
@@ -317,6 +327,8 @@ class QubitMetadataRoute extends QubitRoute
   /**
    * Fetch the default template for a given module from the database/settings
    * TODO: this should be cached somewhere.
+   *
+   * @param mixed $module
    */
   protected function getDefaultTemplate($module)
   {

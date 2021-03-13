@@ -161,6 +161,8 @@ class QubitTaxonomy extends BaseTaxonomy
 
   /**
    * Get an associative array of terms.
+   *
+   * @param null|mixed $connection
    */
   public function getTermsAsArray($connection = null)
   {

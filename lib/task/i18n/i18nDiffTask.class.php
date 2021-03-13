@@ -33,6 +33,9 @@ class i18nDiffTask extends sfBaseTask
   /**
    * @see sfTask
    * @see sfI18nExtract
+   *
+   * @param mixed $arguments
+   * @param mixed $options
    */
   public function execute($arguments = [], $options = [])
   {

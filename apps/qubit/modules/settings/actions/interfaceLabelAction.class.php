@@ -64,6 +64,8 @@ class SettingsInterfaceLabelAction extends sfAction
 
   /**
    * Populate the ui_label form with database values (localized).
+   *
+   * @param mixed $form
    */
   protected function populateUiLabelForm($form)
   {
@@ -77,6 +79,8 @@ class SettingsInterfaceLabelAction extends sfAction
    * Update ui_label db values with form values (localized).
    *
    * @return $this
+   *
+   * @param mixed $form
    */
   protected function updateUiLabelSettings($form)
   {

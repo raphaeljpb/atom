@@ -38,6 +38,8 @@ class QubitInformationObjectXmlCache
    *
    * @param object  information object instance to export
    * @param string  format of XML ('dc' or 'ead')
+   * @param mixed      $resource
+   * @param null|mixed $format
    *
    * @return null
    */
@@ -59,6 +61,8 @@ class QubitInformationObjectXmlCache
    * Export all information objects to EAD (if top-level) and/or DC.
    *
    * @return null
+   *
+   * @param mixed $options
    */
   public function exportAll($options = [])
   {
@@ -114,6 +118,9 @@ class QubitInformationObjectXmlCache
    * @param object  information object resource to get file path for
    * @param string  XML format
    * @param bool  whether or not to get file path for just the XML's contents (no XML header lines)
+   * @param mixed $resource
+   * @param mixed $format
+   * @param mixed $contentsOnly
    *
    * @return string file path of EAD XML
    */
@@ -155,6 +162,8 @@ class QubitInformationObjectXmlCache
    *
    * @param object  information object to cache
    * @param string  format of XML ("dc" or "ead")
+   * @param mixed $resource
+   * @param mixed $format
    *
    * @return null
    */
@@ -181,6 +190,9 @@ class QubitInformationObjectXmlCache
    * @param string  path to temporary file containing XML
    * @param object  information object instance to cache
    * @param string  format of XML ("dc" or "ead")
+   * @param mixed $filePath
+   * @param mixed $resource
+   * @param mixed $format
    *
    * @return null
    */
@@ -204,6 +216,9 @@ class QubitInformationObjectXmlCache
    * @param string  source file
    * @param string  destination file
    * @param int  number of lines to skip
+   * @param mixed $source
+   * @param mixed $destination
+   * @param mixed $skipLines
    *
    * @return null
    */

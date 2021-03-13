@@ -73,6 +73,8 @@ class arStorageServiceExtractFileAction extends sfAction
    * Build the request URL for the Storage Service API's 'extractFile' endpoint
    * and make the request. Ensure if there is an error that the Storage Service
    * return status is passed back to the browser.
+   *
+   * @param mixed $request
    */
   protected function extractFile($request)
   {

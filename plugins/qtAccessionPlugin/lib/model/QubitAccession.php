@@ -125,6 +125,8 @@ class QubitAccession extends BaseAccession
 
   /**
    * Get related actors.
+   *
+   * @param mixed $options
    */
   public function getActors($options = [])
   {
@@ -150,6 +152,8 @@ class QubitAccession extends BaseAccession
 
   /**
    * Get creators.
+   *
+   * @param mixed $options
    */
   public function getCreators($options = [])
   {

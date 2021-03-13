@@ -35,6 +35,11 @@ class sfSocketsAdapter
    * @param string  The request method
    * @param array   The request parameters (associative array)
    * @param array   The request headers (associative array)
+   * @param mixed $browser
+   * @param mixed $uri
+   * @param mixed $method
+   * @param mixed $parameters
+   * @param mixed $headers
    *
    * @return sfWebBrowser The current browser object
    */

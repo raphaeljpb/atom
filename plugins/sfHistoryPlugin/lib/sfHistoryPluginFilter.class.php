@@ -12,6 +12,8 @@ class sfHistoryPluginFilter extends sfFilter
 {
   /**
    * @see Filter::execute()
+   *
+   * @param mixed $filterChain
    */
   public function execute($filterChain)
   {

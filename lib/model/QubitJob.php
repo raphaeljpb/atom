@@ -31,6 +31,8 @@ class QubitJob extends BaseJob
 
   /**
    * Save the job along with its notes.
+   *
+   * @param null|mixed $connection
    */
   public function save($connection = null)
   {
@@ -44,6 +46,8 @@ class QubitJob extends BaseJob
 
   /**
    * Delete the job along with its notes.
+   *
+   * @param null|mixed $connection
    */
   public function delete($connection = null)
   {
@@ -376,6 +380,8 @@ class QubitJob extends BaseJob
    * Get a string representation of a job's user name.
    *
    * @return string The user name
+   *
+   * @param mixed $job
    */
   public static function getUserString($job)
   {
@@ -393,6 +399,8 @@ class QubitJob extends BaseJob
    * Get a string representing a date.
    *
    * @return string the job's creation date in a human readable string
+   *
+   * @param mixed $date
    */
   private function formatDate($date)
   {

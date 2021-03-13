@@ -26,6 +26,9 @@ class purgeTask extends sfBaseTask
 {
   /**
    * @see sfTask
+   *
+   * @param mixed $arguments
+   * @param mixed $options
    */
   public function execute($arguments = [], $options = [])
   {
@@ -174,6 +177,8 @@ EOF;
   /**
    * Set the site to have default demo site values,
    * i.e. admin user is demo@example.com / demo.
+   *
+   * @param mixed $options
    */
   private function setDemoOptions(&$options)
   {

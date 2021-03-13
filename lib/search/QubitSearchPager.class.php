@@ -56,6 +56,8 @@ class QubitSearchPager extends sfPager
 
   /**
    * @see sfPager
+   *
+   * @param mixed $offset
    */
   public function retrieveObject($offset)
   {

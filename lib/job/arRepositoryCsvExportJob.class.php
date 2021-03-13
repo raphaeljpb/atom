@@ -73,6 +73,7 @@ class arRepositoryCsvExportJob extends arExportJob
    * Export search results as CSV.
    *
    * @param string  Path of file to write CSV data to
+   * @param mixed $path
    *
    * @return int number of descriptions exported, -1 if and error occurred and to end the job
    */

@@ -75,6 +75,8 @@ class arGearman
    * 'worker types' as outlined in config/gearman.yml. If no abilities are
    * specified as options, the worker will have all abilities defined under
    * lib/job/.
+   *
+   * @param mixed $options
    */
   public static function getAbilities($options = [])
   {

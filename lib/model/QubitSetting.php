@@ -180,6 +180,8 @@ class QubitSetting extends BaseSetting
    * Get a setting by it's name.
    *
    * @return QubitSetting object
+   *
+   * @param mixed $name
    */
   public static function getByName($name)
   {
@@ -193,6 +195,9 @@ class QubitSetting extends BaseSetting
    * Get a setting by it's name & scope.
    *
    * @return QubitSetting object
+   *
+   * @param mixed $name
+   * @param mixed $scope
    */
   public static function getByNameAndScope($name, $scope)
   {
@@ -207,6 +212,10 @@ class QubitSetting extends BaseSetting
    * Find a setting, and save a new value to it.
    *
    * @return QubitSetting object
+   *
+   * @param mixed $name
+   * @param mixed $value
+   * @param mixed $options
    */
   public static function findAndSave($name, $value, $options)
   {

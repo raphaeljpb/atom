@@ -349,6 +349,8 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Additional actions to take on delete.
+   *
+   * @param null|mixed $connection
    */
   public function delete($connection = null)
   {
@@ -449,6 +451,8 @@ class QubitInformationObject extends BaseInformationObject
    * Get all information objects updated between two dates.
    *
    * @return array collection of QubitInformationObjects and remaining object count
+   *
+   * @param mixed $options
    */
   public static function getUpdatedRecords($options = [])
   {
@@ -667,6 +671,7 @@ class QubitInformationObject extends BaseInformationObject
    * Return file path to EAD XML, regardless of whether it's available.
    *
    * @param
+   * @param mixed $contentsOnly
    *
    * @return string file path of EAD XML
    */
@@ -696,6 +701,7 @@ class QubitInformationObject extends BaseInformationObject
    * Return file path to DC XML, regardless of whether it's available.
    *
    * @param
+   * @param mixed $contentsOnly
    *
    * @return string file path of DC XML
    */
@@ -749,6 +755,8 @@ class QubitInformationObject extends BaseInformationObject
    * (not orphans). Filtering drafts when requested.
    *
    * @return array collection of QubitInformationObjects and remaining object count
+   *
+   * @param mixed $options
    */
   public static function getCollections($options = [])
   {
@@ -822,6 +830,8 @@ class QubitInformationObject extends BaseInformationObject
    * The childs of a non visible descendant will not be added even if they are visible.
    *
    * @return array of QubitInformationObject objects
+   *
+   * @param mixed $options
    */
   public function getDescendantsForExport($options = [])
   {
@@ -1023,6 +1033,7 @@ class QubitInformationObject extends BaseInformationObject
    *
    * @param int    $termId       primary key of QubitTerm
    * @param string $relationNote descriptive string (optional)
+   * @param mixed  $options
    *
    * @return QubitInformationObject $this
    */
@@ -1058,6 +1069,7 @@ class QubitInformationObject extends BaseInformationObject
    * Get related term object by id (should be unique).
    *
    * @param
+   * @param mixed $termId
    */
   public function getTermRelation($termId)
   {
@@ -1318,7 +1330,8 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Wrapper for QubitDigitalObject::importFromUri() method.
    *
-   * @param array $uris URIs of remote files
+   * @param array $uris   URIs of remote files
+   * @param mixed $errors
    *
    * @return QubitInformationObject $this
    *
@@ -1469,6 +1482,9 @@ class QubitInformationObject extends BaseInformationObject
 
   /**
    * Import access points (only subjects and places).
+   *
+   * @param mixed $name
+   * @param mixed $options
    */
   public function setAccessPointByName($name, $options = [])
   {
@@ -2329,7 +2345,8 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Get Record by Oai identifier.
    *
-   * @param int $identifier, the oai_identifier
+   * @param int   $identifier,          the oai_identifier
+   * @param mixed $oai_local_identifier
    *
    * @return QubitQuery collection of QubitInformationObjects
    */
@@ -2361,6 +2378,7 @@ class QubitInformationObject extends BaseInformationObject
    * Set source Oai identifier.
    *
    * @param
+   * @param mixed $value
    *
    * @return string set the OAI Identifier returned from the source repository as part of an OAI response
    */
@@ -2759,6 +2777,7 @@ class QubitInformationObject extends BaseInformationObject
    * (e.g. 'sfRadPlugin', 'sfIsadPlugin').
    *
    * @param QubitInformationObject resource
+   * @param mixed $resource
    *
    * @return mixed standards-based class instance
    */
@@ -2788,6 +2807,8 @@ class QubitInformationObject extends BaseInformationObject
    * strip_tags() is not working in the templates after the escaping changes.
    *
    * @return string Cleaned extentAndMedium field
+   *
+   * @param mixed $options
    */
   public function getCleanExtentAndMedium($options = [])
   {

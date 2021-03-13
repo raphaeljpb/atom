@@ -33,6 +33,8 @@ class arMigration0143
    * Upgrade.
    *
    * @return bool True if the upgrade succeeded, False otherwise
+   *
+   * @param mixed $configuration
    */
   public function up($configuration)
   {

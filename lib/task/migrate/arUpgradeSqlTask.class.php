@@ -68,6 +68,9 @@ EOF;
 
   /**
    * @see sfBaseTask
+   *
+   * @param mixed $arguments
+   * @param mixed $options
    */
   protected function execute($arguments = [], $options = [])
   {
@@ -277,6 +280,7 @@ EOF;
    * Update the settings with the latest database version.
    *
    * @param int New database version
+   * @param mixed $version
    */
   protected function updateDatabaseVersion($version)
   {
@@ -336,6 +340,7 @@ EOF;
    * Run specific migrations by number.
    *
    * @param array  Array of migration numbers
+   * @param mixed $numbers
    */
   private function runSpecificMigrations($numbers)
   {

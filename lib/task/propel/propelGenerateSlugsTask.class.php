@@ -26,6 +26,9 @@ class propelGenerateSlugsTask extends arBaseTask
 {
   /**
    * @see sfTask
+   *
+   * @param mixed $arguments
+   * @param mixed $options
    */
   public function execute($arguments = [], $options = [])
   {
@@ -238,6 +241,9 @@ EOF;
    * class types may get their own custom settings in the future.
    *
    * @return string the string to base our slug off of
+   *
+   * @param mixed $row
+   * @param mixed $table
    */
   private function getStringToSlugify($row, $table)
   {

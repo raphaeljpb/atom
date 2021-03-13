@@ -33,6 +33,8 @@ class QubitMessageSource_XLIFF extends sfMessageSource_XLIFF
    * using autonumeric ids and they clash.
    *
    * @see sfMessageSource_XLIFF
+   *
+   * @param mixed $catalogue
    */
   public function save($catalogue = 'messages')
   {

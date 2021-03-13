@@ -147,6 +147,9 @@ class ldapUser extends myUser implements Zend_Acl_Role_Interface
   /**
    * ldapAuthenticate caches the result of ldapBind with a short TTL
    * to avoid hitting the directory.
+   *
+   * @param mixed $username
+   * @param mixed $password
    */
   private function ldapAuthenticate($username, $password)
   {

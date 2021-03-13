@@ -27,6 +27,8 @@ class QubitI18N
    * This function is probably very slow to be used in the
    * request/response cycle but it is probably okay to use it during the
    * execution of a CLI task or during the installation.
+   *
+   * @param mixed $string
    */
   public static function getTranslations($string)
   {

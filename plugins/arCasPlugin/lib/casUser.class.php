@@ -27,6 +27,9 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
 
   /**
    * Try to login with the CAS server.
+   *
+   * @param null|mixed $username
+   * @param null|mixed $password
    */
   public function authenticate($username = null, $password = null)
   {
@@ -73,6 +76,9 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
 
   /**
    * Set group membership based on user attributes returned by CAS server.
+   *
+   * @param mixed $user
+   * @param mixed $attributes
    */
   protected function setGroupsFromCasAttributes($user, $attributes)
   {

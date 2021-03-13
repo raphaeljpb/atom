@@ -192,6 +192,7 @@ class QubitFlatfileImport
    *
    * @param string $var name of variable
    * @param value  value of variable (could be any type)
+   * @param mixed $value
    *
    * @return void
    */
@@ -216,6 +217,9 @@ class QubitFlatfileImport
 
   /**
    * Get/set values in internal representation of current row.
+   *
+   * @param mixed $column
+   * @param mixed $value
    */
   public function columnValue($column, $value = false)
   {
@@ -238,6 +242,9 @@ class QubitFlatfileImport
 
   /**
    * Copy one column value to another column in internal representation of current row.
+   *
+   * @param mixed $sourceColumn
+   * @param mixed $destinationColumn
    */
   public function copy($sourceColumn, $destinationColumn)
   {
@@ -475,6 +482,8 @@ class QubitFlatfileImport
    * Check array of event data from import, check if this exact event already exists.
    *
    * @return bool True if exists, false if not
+   *
+   * @param mixed $event
    */
   public function hasDuplicateEvent($event)
   {
@@ -737,6 +746,7 @@ class QubitFlatfileImport
    * @param int     $typeId              term ID of note type
    * @param string  $array               Note text items
    * @param closure $transformationLogic logic to manipulate note text
+   * @param mixed   $textArray
    *
    * @return array Notes created
    */
@@ -796,6 +806,7 @@ class QubitFlatfileImport
    * @param int     $typeId              term ID of note type
    * @param string  $text                Note text
    * @param closure $transformationLogic logic to manipulate note text
+   * @param mixed   $options
    *
    * @return QubitNote created note
    */
@@ -1360,6 +1371,7 @@ class QubitFlatfileImport
    * @param int    $taxonomyId taxonomy ID
    * @param string $name       name of term
    * @param string $culture    culture code (defaulting to row's current culture)
+   * @param mixed  $names
    *
    * @return void
    */
@@ -1703,6 +1715,7 @@ class QubitFlatfileImport
    * Log error message if an error log has been defined.
    *
    * @param string $message error message
+   * @param mixed  $row
    *
    * @return void
    */
@@ -2394,6 +2407,7 @@ class QubitFlatfileImport
    *
    * @param string $name    name of actor
    * @param string $history history of actor (optional)
+   * @param mixed  $options
    *
    * @return QubitActor created actor
    */

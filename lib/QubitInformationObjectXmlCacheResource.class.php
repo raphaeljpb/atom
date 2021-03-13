@@ -35,6 +35,7 @@ class QubitInformationObjectXmlCacheResource
    * Generate XML representation of information object.
    *
    * @param string  format of XML ("dc" or "ead")
+   * @param mixed $format
    *
    * @return string XML representation
    */
@@ -52,6 +53,8 @@ class QubitInformationObjectXmlCacheResource
    *
    * @param string  format of XML ("dc" or "ead")
    * @param bool  where or not to store just the contents (no XML header lines)
+   * @param mixed $format
+   * @param mixed $contentsOnly
    *
    * @return string path to XML representation
    */
@@ -73,6 +76,7 @@ class QubitInformationObjectXmlCacheResource
    * Get URL of an information object's XML representation.
    *
    * @param string  format of XML ("dc" or "ead")
+   * @param mixed $format
    *
    * @return string URL of XML representation
    */

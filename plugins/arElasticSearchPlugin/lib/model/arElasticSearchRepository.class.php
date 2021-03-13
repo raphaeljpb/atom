@@ -134,6 +134,9 @@ class arElasticSearchRepository extends arElasticSearchModelBase
    *
    * These values will be the city & region of the primary contact if valid, otherwise the first contact
    * that has a valid city / region will be used.
+   *
+   * @param mixed $i18n
+   * @param mixed $object
    */
   private static function addExtraSortInfo(&$i18n, $object)
   {

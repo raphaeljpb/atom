@@ -92,6 +92,8 @@ class ActorBrowseAction extends DefaultBrowseAction
    * We do this as we don't want to expose our ElasticSearch schema.
    *
    * @return array Array containing ElasticSearch fields
+   *
+   * @param mixed $field
    */
   public function getEsFields($field)
   {

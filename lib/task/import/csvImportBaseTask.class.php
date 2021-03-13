@@ -199,6 +199,8 @@ abstract class csvImportBaseTask extends arBaseTask
 
   /**
    * Import physical objects.
+   *
+   * @param mixed $self
    */
   public static function importPhysicalObjects($self)
   {
@@ -273,6 +275,8 @@ abstract class csvImportBaseTask extends arBaseTask
 
   /**
    * Import events.
+   *
+   * @param mixed $import
    */
   public static function importEvents(&$import)
   {

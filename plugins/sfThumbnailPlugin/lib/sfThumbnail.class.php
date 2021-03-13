@@ -43,6 +43,13 @@ class sfThumbnail
    * @param bool (optional) if true inflate small images
    * @param string (optional) adapter class name
    * @param array (optional) adapter options
+   * @param null|mixed $maxWidth
+   * @param null|mixed $maxHeight
+   * @param mixed      $scale
+   * @param mixed      $inflate
+   * @param mixed      $quality
+   * @param null|mixed $adapterClass
+   * @param mixed      $adapterOptions
    */
   public function __construct($maxWidth = null, $maxHeight = null, $scale = true, $inflate = true, $quality = 75, $adapterClass = null, $adapterOptions = [])
   {
@@ -69,6 +76,7 @@ class sfThumbnail
    * Loads an image from a file or URL and creates an internal thumbnail out of it.
    *
    * @param string filename (with absolute path) of the image to load. If the filename is a http(s) URL, then an attempt to download the file will be made.
+   * @param mixed $image
    *
    * @return bool True if the image was properly loaded
    *
@@ -125,6 +133,8 @@ class sfThumbnail
    *
    * @param string the image string (must be a format accepted by imagecreatefromstring())
    * @param string mime type of the image
+   * @param mixed $image
+   * @param mixed $mime
    *
    * @return bool True if the image was properly loaded
    *
@@ -141,6 +151,8 @@ class sfThumbnail
    *
    * @param string the image thumbnail file destination (with absolute path)
    * @param string The mime-type of the thumbnail (possible values are 'image/jpeg', 'image/png', and 'image/gif')
+   * @param mixed      $thumbDest
+   * @param null|mixed $targetMime
    *
    * @return void
    */
@@ -154,6 +166,7 @@ class sfThumbnail
    * If no target mime type is specified, the thumbnail is created with the same mime type as the source file.
    *
    * @param string The mime-type of the thumbnail (possible values are adapter dependent)
+   * @param null|mixed $targetMime
    *
    * @return string
    */
@@ -213,6 +226,13 @@ class sfThumbnail
   /**
    * Computes the thumbnail width and height
    * Used by adapter.
+   *
+   * @param mixed $sourceWidth
+   * @param mixed $sourceHeight
+   * @param mixed $maxWidth
+   * @param mixed $maxHeight
+   * @param mixed $scale
+   * @param mixed $inflate
    */
   public function initThumb($sourceWidth, $sourceHeight, $maxWidth, $maxHeight, $scale, $inflate)
   {

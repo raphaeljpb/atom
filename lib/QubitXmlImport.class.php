@@ -389,6 +389,9 @@ class QubitXmlImport
 
   /**
    * @return DOMNodeList
+   *
+   * @param mixed $node
+   * @param mixed $xpathQuery
    */
   public static function queryDomNode($node, $xpathQuery)
   {
@@ -432,6 +435,8 @@ class QubitXmlImport
 
   /**
    * Set the parent resource for the import.
+   *
+   * @param mixed $parentId
    */
   public function setParent($parentId)
   {
@@ -442,6 +447,9 @@ class QubitXmlImport
    * Replace </lb> tags for '\n'.
    *
    * @return node value without linebreaks tags
+   *
+   * @param mixed $node
+   * @param mixed $methodMap
    */
   public static function replaceLineBreaks($node, $methodMap = [])
   {
@@ -490,6 +498,9 @@ class QubitXmlImport
    * specify it's own class and method for processing.
    *
    * @return void
+   *
+   * @param mixed $node
+   * @param mixed $filterParam
    */
   public static function runFilters(&$node, $filterParam)
   {
@@ -525,6 +536,9 @@ class QubitXmlImport
    * Normalize node, replaces <p> and <lb/>.
    *
    * @return node value normalized
+   *
+   * @param mixed $node
+   * @param mixed $methodMap
    */
   public static function normalizeNodeValue($node, $methodMap = [])
   {
@@ -672,6 +686,12 @@ class QubitXmlImport
    * Populate EAD information objects.
    *
    * @return bool true if we want to continue populating objects, false if we want to end the import
+   *
+   * @param mixed $domNode
+   * @param mixed $importDOM
+   * @param mixed $mapping
+   * @param mixed $currentObject
+   * @param mixed $importSchema
    */
   private function populateObject(&$domNode, &$importDOM, &$mapping, &$currentObject, $importSchema)
   {
@@ -1012,6 +1032,8 @@ class QubitXmlImport
   /**
    * Make sure to remove any default namespaces from
    * EAD tags. See issue #7280 for details.
+   *
+   * @param mixed $xml
    */
   private function removeDefaultNamespace($xml)
   {
@@ -1020,6 +1042,8 @@ class QubitXmlImport
 
   /**
    * Remove all XML comments from the document.
+   *
+   * @param mixed $doc
    */
   private function stripComments($doc)
   {
@@ -1036,6 +1060,9 @@ class QubitXmlImport
    * Track objects to be reassociated with an event on import.
    * This is used to associate actors and places with events for
    * RAD-style events.
+   *
+   * @param mixed $object
+   * @param mixed $node
    */
   private function trackEvent($object, $node)
   {
@@ -1116,6 +1143,7 @@ class QubitXmlImport
    * based on the update, skip and limit options
    *
    * @param mixed  QubitInformationObject or QubitActor to save
+   * @param mixed $resource
    *
    * @return bool true to save the record, false to skip saving it
    */
@@ -1333,6 +1361,8 @@ class QubitXmlImport
 
   /**
    * Save the EAD Url to the keymap table for matching against next time.
+   *
+   * @param mixed $currentObject
    */
   private function saveEadUrl(&$currentObject)
   {

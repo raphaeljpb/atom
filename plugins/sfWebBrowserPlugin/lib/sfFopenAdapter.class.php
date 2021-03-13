@@ -35,6 +35,11 @@ class sfFopenAdapter
    * @param array   The request parameters (associative array)
    * @param array   The request headers (associative array)
    * @param bool To specify is the request changes the browser history
+   * @param mixed $browser
+   * @param mixed $uri
+   * @param mixed $method
+   * @param mixed $parameters
+   * @param mixed $headers
    *
    * @return sfWebBrowser The current browser object
    */
@@ -85,6 +90,12 @@ class sfFopenAdapter
    * usable.
    *
    * @see  http://php.net/set_error_handler
+   *
+   * @param mixed      $errno
+   * @param mixed      $errstr
+   * @param null|mixed $errfile
+   * @param null|mixed $errline
+   * @param mixed      $errcontext
    */
   public function handleRuntimeError($errno, $errstr, $errfile = null, $errline = null, $errcontext = [])
   {

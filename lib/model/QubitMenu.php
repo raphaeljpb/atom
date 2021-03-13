@@ -147,6 +147,7 @@ class QubitMenu extends BaseMenu
    *
    * @param string $topMenuName name of top ancestor
    * @param array  $options     optional parameters
+   * @param mixed  $menuName
    *
    * @return array of menu columns, with an additional 'depth' column
    */
@@ -262,6 +263,7 @@ class QubitMenu extends BaseMenu
    * Move this menu before $referenceMenu.
    *
    * @param int reference menu id
+   * @param mixed $referenceMenuId
    *
    * @return QubitMenu $this object
    */
@@ -279,6 +281,7 @@ class QubitMenu extends BaseMenu
    * Move this menu after $referenceMenu.
    *
    * @param int reference menu id
+   * @param mixed $referenceMenuId
    *
    * @return QubitMenu $this object
    */
@@ -297,6 +300,7 @@ class QubitMenu extends BaseMenu
    *
    * @param string $topMenuName name of top ancestor
    * @param array  $options     optional parameters
+   * @param mixed  $id
    *
    * @return array of menu columns, with an additional 'depth' column
    */

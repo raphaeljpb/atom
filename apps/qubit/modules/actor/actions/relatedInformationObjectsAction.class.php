@@ -75,6 +75,11 @@ class ActorRelatedInformationObjectsAction extends sfAction
   /**
    * Get related IOs by event type. If no event type id
    * is provided, 'Subject of' IOs are returned.
+   *
+   * @param mixed      $actorId
+   * @param mixed      $page
+   * @param mixed      $limit
+   * @param null|mixed $eventTypeId
    */
   public static function getRelatedInformationObjects($actorId, $page, $limit, $eventTypeId = null)
   {

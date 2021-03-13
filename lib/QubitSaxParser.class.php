@@ -190,6 +190,7 @@ class QubitSaxParser
    * @param object $sax   SAX parser
    * @param string $tag   tag name of element currently being processed
    * @param array  $array array of attribute data
+   * @param mixed  $attr
    *
    * @return void
    */

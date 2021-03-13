@@ -36,6 +36,9 @@ EOF;
 
   /**
    * @see BaseTask::execute()
+   *
+   * @param mixed $arguments
+   * @param mixed $options
    */
   protected function execute($arguments = [], $options = [])
   {

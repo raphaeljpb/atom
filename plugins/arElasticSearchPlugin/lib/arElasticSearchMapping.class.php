@@ -122,6 +122,7 @@ class arElasticSearchMapping
    * we don't want to send those special properties in the mapping.
    *
    * @param array mapping  A reference to our ES YAML mappings
+   * @param null|mixed $mapping
    */
   public function cleanYamlShorthands(&$mapping = null)
   {
@@ -188,6 +189,8 @@ class arElasticSearchMapping
   /**
    * Camelize field names by creating and unsetting array items recursively.
    * Only properties are camelized, other attributes are ignored.
+   *
+   * @param null|mixed $mapping
    */
   protected function camelizeFieldNames(&$mapping = null)
   {
@@ -246,6 +249,8 @@ class arElasticSearchMapping
 
   /**
    * Given a mapping, it parses its special attributes and update it accordingly.
+   *
+   * @param mixed $typeName
    */
   protected function processPropertyAttributes($typeName, array &$typeProperties)
   {
@@ -505,6 +510,9 @@ class arElasticSearchMapping
    *
    * Add i18n "alphasort" keyword field that is lowercase, has punctation
    * stripped, and is ASCII folded to allow more natural alphabetic sorting
+   *
+   * @param mixed $nestedI18nFields
+   * @param mixed $typeProperties
    */
   protected function addSortFields($nestedI18nFields, $typeProperties)
   {

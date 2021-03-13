@@ -467,6 +467,7 @@ class QubitTerm extends BaseTerm
    *
    * @param int    $parentTermId Primary key of parent term
    * @param string $indentStr    String to prefix to each sub-level for indenting
+   * @param mixed  $options
    *
    * @return mixed false on failure, else array of children formatted for select box
    */
@@ -685,6 +686,7 @@ class QubitTerm extends BaseTerm
    * Get a count of related information objects.
    *
    * @param int  ID of term
+   * @param mixed $id
    *
    * @return int count of related information objects
    */
@@ -889,6 +891,9 @@ class QubitTerm extends BaseTerm
 
   /**
    * Get terms by taxonomy id. This function gets its results from ElasticSearch.
+   *
+   * @param mixed $taxonomyId
+   * @param mixed $limit
    */
   public static function getEsTermsByTaxonomyId($taxonomyId, $limit = 10)
   {
@@ -907,6 +912,8 @@ class QubitTerm extends BaseTerm
   /**
    * Get an array of term id => parent id excluding the root
    * and optionally filtering by taxonomies.
+   *
+   * @param mixed $taxonomyIds
    */
   public static function loadTermParentList($taxonomyIds = [])
   {

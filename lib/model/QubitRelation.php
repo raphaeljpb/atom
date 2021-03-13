@@ -213,7 +213,8 @@ class QubitRelation extends BaseRelation
   /**
    * Get opposite vertex of relation.
    *
-   * @param int $referenceId primary key of reference object
+   * @param int   $referenceId primary key of reference object
+   * @param mixed $reference
    *
    * @return mixed other object in relationship
    */

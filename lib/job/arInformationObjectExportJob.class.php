@@ -90,6 +90,9 @@ class arInformationObjectExportJob extends arExportJob
 
   /**
    * Add clipboard search criteria to ES query.
+   *
+   * @param mixed $search
+   * @param mixed $parameters
    */
   protected static function addClipboardCriteria(&$search, $parameters)
   {

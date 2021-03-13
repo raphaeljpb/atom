@@ -75,6 +75,9 @@ EOF;
 
   /**
    * @see sfBaseTask
+   *
+   * @param mixed $arguments
+   * @param mixed $options
    */
   protected function execute($arguments = [], $options = [])
   {

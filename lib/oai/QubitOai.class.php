@@ -35,6 +35,7 @@ class QubitOai
    *
    * @param array $keys             submited request's keys
    * @param array $requestValidKeys valid keys
+   * @param mixed $mandatoryKeys
    *
    * @return bool are the attributes valid or not
    */
@@ -65,6 +66,7 @@ class QubitOai
    * Check that metadata format is valid.
    *
    * @param string    metadata format
+   * @param mixed $metadataFormat
    *
    * @return bool is the metadata format valid or not
    */
@@ -193,6 +195,8 @@ class QubitOai
    * Load array of OAI sets.
    *
    * @return array of available OAI sets
+   *
+   * @param mixed $options
    */
   public static function getOaiSets($options = [])
   {
@@ -248,6 +252,8 @@ class QubitOai
 
   /**
    * Add a new OAI set to the available list.
+   *
+   * @param mixed $oaiSet
    */
   public static function addOaiSet($oaiSet)
   {
@@ -315,6 +321,7 @@ class QubitOai
    * Give back the Oai Identifier unique key given a full OAI_Identifier.
    *
    * @param array $oai_identifier the full oai identifier
+   * @param mixed $identifier
    *
    * @return int the oai identifier key
    */

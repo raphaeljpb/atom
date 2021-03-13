@@ -100,6 +100,9 @@ class sfSkosUniqueRelations implements Iterator, Countable
   /**
    * Use cantor pairing function: https://en.wikipedia.org/wiki/Pairing_function.
    * The vector is sorted before so the same sum is obtained regardless the order.
+   *
+   * @param mixed $x
+   * @param mixed $y
    */
   protected function hash($x, $y)
   {

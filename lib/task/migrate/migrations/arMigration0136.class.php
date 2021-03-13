@@ -76,6 +76,9 @@ class arMigration0136
   /**
    * Build a dictionary with all the different translations for a given setting.
    * The translations are indexed in the dictionary with their language codes.
+   *
+   * @param mixed $name
+   * @param mixed $scope
    */
   protected function getSettingI18nValues($name, $scope)
   {

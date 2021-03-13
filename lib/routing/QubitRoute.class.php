@@ -25,6 +25,8 @@ class QubitRoute extends sfRoute
    * These chars are allowed in slugs when 'permissive slugs' setting is on.
    * If 'permissive slugs' is OFF, use urlencode as normal.  This should ONLY
    * affect the slug portion of an AtoM URI.
+   *
+   * @param mixed $string
    */
   public static function urlencode3986($string)
   {
@@ -41,6 +43,9 @@ class QubitRoute extends sfRoute
 
   /**
    * @see sfRoute
+   *
+   * @param mixed $params
+   * @param mixed $context
    */
   public function matchesParameters($params, $context = [])
   {
@@ -52,6 +57,10 @@ class QubitRoute extends sfRoute
    *
    * Overridden from sfRoute to call customized generateWithTokens() below.
    * (AtoM ticket 11761).
+   *
+   * @param mixed $params
+   * @param mixed $context
+   * @param mixed $absolute
    */
   public function generate($params, $context = [], $absolute = false)
   {

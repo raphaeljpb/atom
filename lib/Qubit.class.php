@@ -322,6 +322,8 @@ class Qubit
 
   /**
    * Format poorly formatted XML strings.
+   *
+   * @param mixed $xml
    */
   public static function tidyXml($xml)
   {
@@ -336,6 +338,9 @@ class Qubit
   /**
    * Similar to the one in sfWebRequest but will check for a list of headers
    * and return the first match or a fallback value that defaults to null.
+   *
+   * @param mixed      $names
+   * @param null|mixed $default
    */
   public static function getHttpHeader($names, $default = null)
   {

@@ -190,6 +190,8 @@ class QubitCsvImport
   /**
    * Trigger a csv transform on the server using a configured transformation
    * script.
+   *
+   * @param mixed $csvFile
    */
   public function doTransform($csvFile)
   {
@@ -273,6 +275,8 @@ class QubitCsvImport
 
   /**
    * Set the parent QubitObject for the import.
+   *
+   * @param mixed $parentId
    */
   public function setParent($parentId)
   {

@@ -30,6 +30,9 @@ class csvExportInformationObjectsTask extends exportBulkBaseTask
 
   /**
    * @see sfTask
+   *
+   * @param mixed $arguments
+   * @param mixed $options
    */
   public function execute($arguments = [], $options = [])
   {

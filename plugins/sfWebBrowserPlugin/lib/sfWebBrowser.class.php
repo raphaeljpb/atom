@@ -59,6 +59,7 @@ class sfWebBrowser
    * Restarts the browser.
    *
    * @param array default browser options
+   * @param mixed $defaultHeaders
    *
    * @return sfWebBrowser The current browser object
    */
@@ -77,6 +78,7 @@ class sfWebBrowser
    * Sets the browser user agent name.
    *
    * @param string agent name
+   * @param mixed $agent
    *
    * @return sfWebBrowser The current browser object
    */
@@ -103,6 +105,9 @@ class sfWebBrowser
    * @param string The request uri
    * @param array  The request parameters (associative array)
    * @param array  The request headers (associative array)
+   * @param mixed $uri
+   * @param mixed $parameters
+   * @param mixed $headers
    *
    * @return sfWebBrowser The current browser object
    */
@@ -132,6 +137,9 @@ class sfWebBrowser
    * @param string The request uri
    * @param array  The request parameters (associative array)
    * @param array  The request headers (associative array)
+   * @param mixed $uri
+   * @param mixed $parameters
+   * @param mixed $headers
    *
    * @return sfWebBrowser The current browser object
    */
@@ -146,6 +154,9 @@ class sfWebBrowser
    * @param string The request uri
    * @param array  The request parameters (associative array)
    * @param array  The request headers (associative array)
+   * @param mixed $uri
+   * @param mixed $parameters
+   * @param mixed $headers
    *
    * @return sfWebBrowser The current browser object
    */
@@ -160,6 +171,9 @@ class sfWebBrowser
    * @param string The request uri
    * @param array  The request parameters (associative array)
    * @param array  The request headers (associative array)
+   * @param mixed $uri
+   * @param mixed $parameters
+   * @param mixed $headers
    *
    * @return sfWebBrowser The current browser object
    */
@@ -176,6 +190,11 @@ class sfWebBrowser
    * @param array   The request parameters (associative array)
    * @param array   The request headers (associative array)
    * @param bool To specify is the request changes the browser history
+   * @param mixed $uri
+   * @param mixed $method
+   * @param mixed $parameters
+   * @param mixed $headers
+   * @param mixed $changeStack
    *
    * @return sfWebBrowser The current browser object
    */
@@ -231,6 +250,8 @@ class sfWebBrowser
    *
    * @param string field name
    * @param string field value
+   * @param mixed $name
+   * @param mixed $value
    *
    * @return sfWebBrowser The current browser object
    */
@@ -247,6 +268,8 @@ class sfWebBrowser
    *
    * @param string The link/button value/href/alt
    * @param array request parameters (associative array)
+   * @param mixed $name
+   * @param mixed $arguments
    *
    * @return sfWebBrowser The current browser object
    */
@@ -382,6 +405,10 @@ class sfWebBrowser
    * @param string  The request method
    * @param array   The request parameters (associative array)
    * @param array   The request headers (associative array)
+   * @param mixed $uri
+   * @param mixed $method
+   * @param mixed $parameters
+   * @param mixed $headers
    *
    * @return sfWebBrowser The current browser object
    */
@@ -498,6 +525,7 @@ class sfWebBrowser
    * Set the response headers.
    *
    * @param array The response headers as an array of strings shaped like "key: value"
+   * @param mixed $headers
    *
    * @return sfWebBrowser The current browser object
    */
@@ -522,6 +550,7 @@ class sfWebBrowser
    * Set the response code.
    *
    * @param string The first line of the response
+   * @param mixed $firstLine
    *
    * @return sfWebBrowser The current browser object
    */
@@ -544,6 +573,7 @@ class sfWebBrowser
    * Set the response contents.
    *
    * @param string The response contents
+   * @param mixed $res
    *
    * @return sfWebBrowser The current browser object
    */
@@ -688,6 +718,7 @@ class sfWebBrowser
    * Get a response header.
    *
    * @param string The response header name
+   * @param mixed $key
    *
    * @return string The response header value
    */
@@ -722,6 +753,7 @@ class sfWebBrowser
    * Sets response message.
    *
    * @param string $message
+   * @param mixed  $msg
    */
   public function setResponseMessage($msg)
   {
@@ -848,6 +880,7 @@ class sfWebBrowser
    * Retrieves a normalized Header.
    *
    * @param string Header name
+   * @param mixed $name
    *
    * @return string Normalized header
    */

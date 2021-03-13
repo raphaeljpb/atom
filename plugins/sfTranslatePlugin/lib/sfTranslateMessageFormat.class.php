@@ -12,6 +12,10 @@ class sfTranslateMessageFormat extends sfMessageFormat
 {
   /**
    * @see MessageFormat::formatString()
+   *
+   * @param mixed      $string
+   * @param mixed      $args
+   * @param null|mixed $catalogue
    */
   protected function formatString($string, $args = [], $catalogue = null)
   {

@@ -251,8 +251,9 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
    * Get action-specific security setting value, if available, or, if not,
    * global or default value.
    *
-   * @param string $action          Name of module action to check
-   * @param string $securitySetting Security property to check
+   * @param string     $action          Name of module action to check
+   * @param string     $securitySetting Security property to check
+   * @param null|mixed $default
    *
    * @return bool
    */

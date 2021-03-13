@@ -22,6 +22,8 @@ class arRestApiPluginUtils
   /**
    * Convert dates into ISO 8601 and UTC, recommended format in REST APIs.
    * Integers are treated as timestamps. Strings will be parsed using strtotime().
+   *
+   * @param mixed $date
    */
   public static function convertDate($date, array $options = [])
   {
@@ -73,6 +75,8 @@ class arRestApiPluginUtils
 
   /**
    * Convert array into JSON, pretty printing it if in dev mode.
+   *
+   * @param mixed $data
    */
   public static function arrayToJson($data)
   {

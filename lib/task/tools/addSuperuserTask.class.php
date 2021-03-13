@@ -26,6 +26,9 @@ class addSuperuserTask extends sfBaseTask
 {
   /**
    * @see sfTask
+   *
+   * @param mixed $arguments
+   * @param mixed $options
    */
   public function execute($arguments = [], $options = [])
   {
@@ -124,6 +127,9 @@ EOF;
   /**
    * Set the user to have default demo values,
    * i.e. admin user is demo@example.com / demo.
+   *
+   * @param mixed $arguments
+   * @param mixed $options
    */
   private function setDemoOptions(&$arguments, &$options)
   {

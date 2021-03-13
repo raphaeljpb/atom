@@ -355,6 +355,9 @@ class QubitActor extends BaseActor
    * that are an instance of the User or Repository class.
    *
    * @return QubitQuery array of QubitActor objects
+   *
+   * @param null|mixed $criteria
+   * @param mixed      $options
    */
   public static function getOnlyActors($criteria = null, $options = [])
   {
@@ -690,7 +693,8 @@ class QubitActor extends BaseActor
   /**
    * Wrapper for QubitDigitalObject::importFromUri() method.
    *
-   * @param array $uris URIs of remote files
+   * @param array $uris   URIs of remote files
+   * @param mixed $errors
    *
    * @return QubitActor $this
    *

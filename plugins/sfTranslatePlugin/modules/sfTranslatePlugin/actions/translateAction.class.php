@@ -17,6 +17,8 @@ class sfTranslatePluginTranslateAction extends sfAction
 {
   /**
    * Executes index action.
+   *
+   * @param mixed $request
    */
   public function execute($request)
   {

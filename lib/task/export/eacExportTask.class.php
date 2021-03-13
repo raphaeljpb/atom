@@ -31,6 +31,9 @@ class eacExportTask extends exportBulkBaseTask
 
   /**
    * @see exportBulkBaseTask
+   *
+   * @param mixed $arguments
+   * @param mixed $options
    */
   public function execute($arguments = [], $options = [])
   {

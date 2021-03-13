@@ -40,6 +40,10 @@ EOF;
 
   /**
    * @see i18nProcessColumnsBaseTask
+   *
+   * @param mixed $row
+   * @param mixed $tableName
+   * @param mixed $columns
    */
   protected function processRow($row, $tableName, $columns)
   {

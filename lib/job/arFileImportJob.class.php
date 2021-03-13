@@ -24,6 +24,8 @@ class arFileImportJob extends arBaseJob
 {
   /**
    * @see arBaseJob::$requiredParameters
+   *
+   * @param mixed $parameters
    */
   public function runJob($parameters)
   {
@@ -117,6 +119,8 @@ class arFileImportJob extends arBaseJob
    *
    * @param  reference to QubitCsvImport object
    *         array()
+   * @param mixed $importer
+   * @param mixed $parameters
    *
    * @return null
    */
@@ -190,6 +194,8 @@ class arFileImportJob extends arBaseJob
    *
    * @param  reference to QubitXmlImport object
    *         array() reference
+   * @param mixed $importer
+   * @param mixed $parameters
    *
    * @return array()
    */

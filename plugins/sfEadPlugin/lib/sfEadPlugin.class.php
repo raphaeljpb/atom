@@ -376,6 +376,9 @@ class sfEadPlugin
 
   /**
    * Get a string representation of the resource's level of description.
+   *
+   * @param mixed $resource
+   * @param mixed $eadLevels
    */
   public static function renderLOD($resource, $eadLevels)
   {

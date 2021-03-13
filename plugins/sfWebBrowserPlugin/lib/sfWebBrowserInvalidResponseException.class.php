@@ -12,6 +12,8 @@ class sfWebBrowserInvalidResponseException extends sfException
    *
    * @param string The error message
    * @param int    The error code
+   * @param null|mixed $message
+   * @param mixed      $code
    */
   public function __construct($message = null, $code = 0)
   {

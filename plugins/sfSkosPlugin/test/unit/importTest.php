@@ -992,6 +992,9 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
 
 /**
  * Test that getRootConcepts() is matching all the concepts.
+ *
+ * @param mixed $object
+ * @param mixed $name
  */
 function getPrivateMethod($object, $name)
 {

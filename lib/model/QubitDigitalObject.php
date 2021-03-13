@@ -1208,6 +1208,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * and file).
    *
    * @param  sfConnection  A database connection
+   * @param null|mixed $connection
    */
   public function delete($connection = null)
   {
@@ -1270,6 +1271,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * @param mixed parent object (digital object or object)
    * @param QubitAsset asset to represent
    * @param array options array of optional paramaters
+   * @param mixed $asset
+   * @param mixed $options
    *
    * @return QubitDigitalObject
    */
@@ -1426,6 +1429,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * This is for, eg. importing encoded digital objects from XML.
    *
    * @param string $encodedString base64-encoded string
+   * @param mixed  $filename
+   * @param mixed  $options
    *
    * @return bool success or failure
    */
@@ -1447,6 +1452,9 @@ class QubitDigitalObject extends BaseDigitalObject
 
   /**
    * Get count of digital objects by media-type.
+   *
+   * @param mixed $mediaTypeId
+   * @param mixed $options
    */
   public static function getCount($mediaTypeId, $options = [])
   {
@@ -1466,6 +1474,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * master that's used to generate derivatives.
    *
    * @return bool whether or not usage relies on an external master
+   *
+   * @param mixed $usageId
    */
   public function derivativesGeneratedFromExternalMaster($usageId)
   {
@@ -1532,6 +1542,8 @@ class QubitDigitalObject extends BaseDigitalObject
 
   /**
    * Set Mime-type and Filetype all at once.
+   *
+   * @param null|mixed $mimeType
    */
   public function setMimeAndMediaType($mimeType = null)
   {
@@ -1610,6 +1622,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Find *first* child of current digital object that matches $usageid.
    *
    * @param int  Constant value from QubitTerm (THUMBNAIL_ID, REFERENCE_ID)
+   * @param mixed $usageId
    */
   public function getChildByUsageId($usageId)
   {
@@ -1627,6 +1640,8 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * @param string  a string expected to match on the PATH column
    * @param string  a string expected to match on the FILE column
+   * @param mixed $path
+   * @param mixed $name
    */
   public static function getByPathFile($path, $name)
   {
@@ -1709,6 +1724,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * The directory structure is based on the checksum of the master digital object.
    *
    * @return string asset file path
+   *
+   * @param mixed $checksum
    */
   public function getAssetPath($checksum)
   {
@@ -1760,6 +1777,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Get path to the appropriate generic icon for $mimeType.
    *
    * @param string $mimeType
+   * @param mixed  $usageType
    *
    * @return string
    */
@@ -1855,6 +1873,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Get a generic representation for the current digital object.
    *
    * @param string $mimeType
+   * @param mixed  $usageType
    *
    * @return QubitDigitalObject
    */
@@ -1874,6 +1893,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * lie, but this should be "good enough" for the majority of cases.
    *
    * @param string   name of the file
+   * @param mixed $filename
    *
    * @return string mime-type of file (or "unknown" if no match)
    */
@@ -1907,7 +1927,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create various representations for this digital object.
    *
-   * @param int $usageId intended use of asset
+   * @param int        $usageId    intended use of asset
+   * @param null|mixed $connection
    *
    * @return QubitDigitalObject this object
    */
@@ -2002,6 +2023,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * NOTE: requires the ImageMagick library
    *
    * @return QubitDigitalObject this object
+   *
+   * @param null|mixed $connection
    */
   public function setPageCount($connection = null)
   {
@@ -2122,6 +2145,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * NOTE: Requires the Imagemagick library for creating derivative assets
    *
    * @return QubitDigitalObject this object
+   *
+   * @param null|mixed $connection
    */
   public function createCompoundChildren($connection = null)
   {
@@ -2227,6 +2252,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * most limiting one.
    *
    * @return int max upload file size in bytes
+   *
+   * @param mixed $settings
    */
   public static function getMin($settings)
   {
@@ -2257,6 +2284,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * Create a thumbnail derivative for the current digital object.
    *
    * @return QubitDigitalObject
+   *
+   * @param null|mixed $connection
    */
   public function createThumbnail($connection = null)
   {
@@ -2270,6 +2299,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * Create a reference derivative for the current digital object.
    *
    * @return QubitDigitalObject The new derived reference digital object
+   *
+   * @param null|mixed $connection
    */
   public function createReferenceImage($connection = null)
   {
@@ -2304,7 +2335,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create an derivative of an image (a smaller image ;).
    *
-   * @param int $usageId usage type id
+   * @param int        $usageId    usage type id
+   * @param null|mixed $connection
    *
    * @return QubitDigitalObject derivative object
    */
@@ -2556,6 +2588,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Test if current digital object can be thumbnailed.
    *
    * @param string    The current thumbnailing adapter
+   * @param mixed $mimeType
    *
    * @return bool true if thumbnail is possible
    */
@@ -2715,7 +2748,8 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create video derivatives (either flv movie or thumbnail).
    *
-   * @param int $usageId usage type id
+   * @param int        $usageId    usage type id
+   * @param null|mixed $connection
    *
    * @return QubitDigitalObject derivative object
    */
@@ -2812,10 +2846,12 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create a mp4 video derivative using the FFmpeg library.
    *
-   * @param string $originalPath path to original video
-   * @param string $newPath      path to derivative video
-   * @param int    $maxwidth     derivative video maximum width
-   * @param int    $maxheight    derivative video maximum height
+   * @param string     $originalPath path to original video
+   * @param string     $newPath      path to derivative video
+   * @param int        $maxwidth     derivative video maximum width
+   * @param int        $maxheight    derivative video maximum height
+   * @param null|mixed $width
+   * @param null|mixed $height
    *
    * @return bool success or failure
    *
@@ -2840,10 +2876,12 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create a video thumbnail using the FFmpeg library.
    *
-   * @param string $originalPath path to original video
-   * @param string $newPath      path to derivative video
-   * @param int    $maxwidth     derivative video maximum width
-   * @param int    $maxheight    derivative video maximum height
+   * @param string     $originalPath path to original video
+   * @param string     $newPath      path to derivative video
+   * @param int        $maxwidth     derivative video maximum width
+   * @param int        $maxheight    derivative video maximum height
+   * @param null|mixed $width
+   * @param null|mixed $height
    *
    * @return bool success or failure
    *
@@ -2900,6 +2938,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * @param string $originalImageName
    * @param int    $width
    * @param int    $height
+   * @param mixed  $originalPath
    *
    * @return string (thumbnail's bitstream)
    */
@@ -2947,6 +2986,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Test if text extraction is possible.
    *
    * @param string mime-type
+   * @param mixed $mimeType
    *
    * @return bool true if extraction is supported
    */
@@ -2972,6 +3012,8 @@ class QubitDigitalObject extends BaseDigitalObject
    * and creates a 'transcript' property.
    *
    * @return string Text extracted
+   *
+   * @param null|mixed $connection
    */
   public function extractText($connection = null)
   {
@@ -3422,6 +3464,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Taken from http://ca2.php.net/manual/en/function.ini-get.php
    *
    * @param string $value A string denoting byte size by multiple (e.g. 2M)
+   * @param mixed  $val
    *
    * @return int size in bytes
    */
@@ -3462,6 +3505,8 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * @param string URI
    * @param array options optional arguments
+   * @param mixed $uri
+   * @param mixed $options
    *
    * @return string contents
    */
@@ -3530,6 +3575,7 @@ class QubitDigitalObject extends BaseDigitalObject
    * Get filename from URI path.
    *
    * @param string URI
+   * @param mixed $uri
    *
    * @return mixed null if error, string otherwise
    */
