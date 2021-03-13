@@ -20,8 +20,6 @@
 /**
  * Actor - editIsaar
  *
- * @package    AccesstoMemory
- * @subpackage Actor - initialize an editISAAR template for updating an actor
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
 class sfIsaarPluginEditAction extends ActorEditAction

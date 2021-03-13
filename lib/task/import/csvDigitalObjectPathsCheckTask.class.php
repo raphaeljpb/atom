@@ -20,8 +20,6 @@
 /**
  * Check digital object paths in CSV data
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class csvDigitalObjectPathsCheckTask extends arBaseTask

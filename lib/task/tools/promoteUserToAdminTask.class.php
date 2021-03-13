@@ -20,8 +20,6 @@
 /**
  * Promote user to admin
  *
- * @package    symfony
- * @subpackage task
  */
 class promoteUserToAdminTask extends sfBaseTask
 {

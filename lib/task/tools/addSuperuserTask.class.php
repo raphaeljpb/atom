@@ -20,8 +20,6 @@
 /**
  * Add Qubit superuser
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class addSuperuserTask extends sfBaseTask

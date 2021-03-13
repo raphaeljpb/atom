@@ -20,8 +20,6 @@
 /**
  * Import csv authoriy record data
  *
- * @package    AccessToMemory
- * @subpackage lib/task/csvImport
  * @author     David Juhasz <djuhasz@artefactual.com>
  */
 class csvPhysicalobjectImportTask extends arBaseTask

@@ -20,8 +20,6 @@
 /**
  * Designed to be extended by arElasticSearchPlugin
  *
- * @package AccesstoMemory
- * @subpackage search
  */
 abstract class QubitSearchEngine
 {

@@ -11,8 +11,6 @@
 /**
  * i18n actions.
  *
- * @package    symfony
- * @subpackage i18n
  * @author     Your name here
  */
 class sfTranslatePluginTranslateAction extends sfAction

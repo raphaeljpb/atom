@@ -20,8 +20,6 @@
 /**
  * arElasticSearchPlugin main class
  *
- * @package     AccesstoMemory
- * @subpackage  arElasticSearchPlugin
  * @author      MJ Suhonos <mj@suhonos.ca>
  * @author      Jesús García Crespo <jesus@sevein.com>
  */

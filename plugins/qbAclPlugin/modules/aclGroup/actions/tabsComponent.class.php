@@ -20,8 +20,6 @@
 /**
  * Display ACL permission tabs
  *
- * @package    AccesstoMemory
- * @subpackage aclGroup
  * @author     David Juhasz <david@artefactual.com>
  */
 class aclGroupTabsComponent extends sfComponent

@@ -20,8 +20,6 @@
 /**
  * Settings module - "Default template" form definition
  *
- * @package    AccesstoMemory
- * @subpackage settings
  * @author     David Juhasz <david@artefactual.com>
  */
 class SettingsDefaultTemplateForm extends sfForm

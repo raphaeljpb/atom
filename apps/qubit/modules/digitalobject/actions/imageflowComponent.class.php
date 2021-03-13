@@ -20,8 +20,6 @@
 /**
  * Digital Object coverflow component
  *
- * @package    AccesstoMemory
- * @subpackage digitalobject
  * @author     david juhasz <david@artefactual.com>
  */
 class DigitalObjectImageflowComponent extends sfComponent

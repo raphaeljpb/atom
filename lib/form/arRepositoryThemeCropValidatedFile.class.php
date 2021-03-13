@@ -22,8 +22,6 @@
  * uploaded in repository/editThemeAction.class.php can be cropped to fit the
  * application requirements
  *
- * @package AccesstoMemory
- * @subpackage form
  */
 class arRepositoryThemeCropValidatedFile extends sfValidatedFile
 {

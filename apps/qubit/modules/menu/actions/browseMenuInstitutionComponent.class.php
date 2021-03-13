@@ -21,8 +21,6 @@
  * Build browse menu as simple xhtml lists, relying on css styling to
  * format the display of the menus.
  *
- * @package    AccesstoMemory
- * @subpackage menu
  */
 class MenuBrowseMenuInstitutionComponent extends sfComponent
 {

@@ -20,8 +20,6 @@
 /**
  * Import flatfile data
  *
- * @package    symfony
- * @subpackage library
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class QubitFlatfileImport

@@ -20,8 +20,6 @@
 /**
  * Return list of users for autocomplete (XHR) response.
  *
- * @package    AccesstoMemory
- * @subpackage user
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class UserAutocompleteAction extends sfAction

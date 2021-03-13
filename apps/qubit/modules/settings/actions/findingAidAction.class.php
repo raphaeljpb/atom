@@ -20,8 +20,6 @@
 /**
  * Finding Aid settings
  *
- * @package    AccesstoMemory
- * @subpackage settings
  */
 class SettingsFindingAidAction extends sfAction
 {

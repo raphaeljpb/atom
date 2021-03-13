@@ -21,8 +21,6 @@
  * A worker to, given the HTTP GET parameters sent to advanced search,
  * replicate the search and export the resulting descriptions to CSV.
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arInformationObjectXmlExportJob extends arInformationObjectExportJob
 {

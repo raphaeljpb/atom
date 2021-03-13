@@ -20,8 +20,6 @@
 /**
  * Custom ACL rules for QubitInformationObject resources
  *
- * @package    qbAclPlugin
- * @subpackage acl
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitInformationObjectAcl extends QubitAcl

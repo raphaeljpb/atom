@@ -20,8 +20,6 @@
 /**
  * Extend BaseAclGroup functionality.
  *
- * @package    AccesstoMemory
- * @subpackage acl
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitAclGroup extends BaseAclGroup implements Zend_Acl_Role_Interface

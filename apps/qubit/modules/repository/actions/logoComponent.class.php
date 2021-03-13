@@ -20,8 +20,6 @@
 /**
  * Context menu for the repository logo
  *
- * @package AccesstoMemory
- * @subpackage repository
  */
 class RepositoryLogoComponent extends sfComponent
 {

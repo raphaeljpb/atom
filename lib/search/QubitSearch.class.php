@@ -20,8 +20,6 @@
 /**
  * Singleton factory class for QubitSearchEngine and subclasses
  *
- * @package AccesstoMemory
- * @subpackage search
  */
 class QubitSearch
 {

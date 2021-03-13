@@ -20,8 +20,6 @@
 /**
  * Information Object - editDc
  *
- * @package    AccesstoMemory
- * @subpackage informationObject - initialize an editDc template for updating an information object
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
 class sfDcPluginEditAction extends InformationObjectEditAction

@@ -20,8 +20,6 @@
 /**
  * Item list report
  *
- * @package    AccesstoMemory
- * @subpackage informationobject
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     David Juhasz <david@artefactual.com>
  */

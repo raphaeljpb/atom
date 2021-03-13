@@ -20,8 +20,6 @@
 /**
  * Actor - show event data as JSON
  *
- * @package    AccesstoMemory
- * @subpackage Actor - initialize an editISAAR template for updating an actor
  */
 class sfIsaarPluginActorEventsAction extends sfAction
 {

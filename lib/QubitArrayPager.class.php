@@ -18,8 +18,6 @@
  */
 
 /**
- * @package    AccesstoMemory
- * @subpackage search
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
 class QubitArrayPager extends sfPager

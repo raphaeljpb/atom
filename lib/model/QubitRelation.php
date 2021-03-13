@@ -21,8 +21,6 @@
  * Represent relations between data objects as a subject-action-object
  * triplet.
  *
- * @package    AccesstoMemory
- * @subpackage relation
  * @author     Jack Bates <jack@nottheoilrig.com>
  * @author     David Juhasz <david@artefactual.com>
  */

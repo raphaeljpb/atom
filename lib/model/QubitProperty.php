@@ -20,8 +20,6 @@
 /**
  * Extended methods for Property object model
  *
- * @package AccesstoMemory
- * @subpackage model
  * @author Jack Bates <jack@nottheoilrig.com>
  * @author Peter Van Garderen <peter@artefactual.com>
  * @author David Juhasz <david@artefactual.com>

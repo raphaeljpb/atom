@@ -20,8 +20,6 @@
 /**
  * Context menu for information objects
  *
- * @package AccesstoMemory
- * @subpackage information object
  * @author Peter Van Garderen <peter@artefactual.com>
  * @author David Juhasz <david@artefactual.com>
  */

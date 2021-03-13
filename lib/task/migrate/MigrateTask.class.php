@@ -20,8 +20,6 @@
 /**
  * Migrate qubit data model
  *
- * @package    AccesstoMemory
- * @subpackage migration
  * @author     David Juhasz <david@artefactual.com>
  */
 class MigrateTask extends sfBaseTask

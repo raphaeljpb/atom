@@ -20,8 +20,6 @@
 /**
  * Get JSON representation of relation
  *
- * @package AccesstoMemory
- * @subpackage relation
  * @author     David Juhasz <david@artefactual.com>
  */
 class RelationIndexAction extends sfAction

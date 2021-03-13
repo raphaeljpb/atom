@@ -20,8 +20,6 @@
 /**
  * Controller for editing func information.
  *
- * @package    AccesstoMemory
- * @subpackage function
  * @author     David Juhasz <david@artefactual.com>
  */
 class FunctionEditAction extends DefaultEditAction

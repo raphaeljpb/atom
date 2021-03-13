@@ -22,8 +22,6 @@ require_once __DIR__.'/../vendor/composer/autoload.php';
 /**
  * Importer for Physical Object CSV data
  *
- * @package    AccessToMemory
- * @subpackage PhysicalObject
  * @author     David Juhasz <djuhasz@artefactual.com>
  */
 class PhysicalObjectCsvImporter

@@ -23,8 +23,6 @@
  * Output formats currrently include csv and tab to allow easy import into a
  * spreadsheet application.
  *
- * @package    AccesstoMemory
- * @subpackage task
  * @author     David Juhasz <david@artefactual.com>
  */
 class i18nDiffTask extends sfBaseTask

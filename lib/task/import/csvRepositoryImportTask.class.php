@@ -20,8 +20,6 @@
 /**
  * Import csv repository data
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Gale <MikeG@Artefactual.com>
  * @author     Mike Cantelon <mike@artefactual.com>
  */

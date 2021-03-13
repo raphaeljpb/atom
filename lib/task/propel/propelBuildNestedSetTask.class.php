@@ -20,8 +20,6 @@
 /**
  * Regenerate nested set column values
  *
- * @package    symfony
- * @subpackage task
  * @author     David Juhasz <david@artefactual.com>
  */
 class propelBuildNestedSetTask extends sfBaseTask

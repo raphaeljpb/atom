@@ -20,8 +20,6 @@
 /**
  * arCasPlugin configuration.
  *
- * @package     arCasPlugin
- * @subpackage  config
  */
 class arCasPluginConfiguration extends sfPluginConfiguration
 {

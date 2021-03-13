@@ -3,7 +3,6 @@
 /**
  * This exception is thrown when response sent to browser is not in a valid format.
  *
- * @package    sfWebBrowserPlugin
  * @author     Tristan Rivoallan <tristan@rivoallan.net>
  */
 class sfWebBrowserInvalidResponseException extends sfException

@@ -20,8 +20,6 @@
 /**
  * Delete unlinked physical objects
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class physicalObjectDeleteUnlinkedTask extends arBaseTask

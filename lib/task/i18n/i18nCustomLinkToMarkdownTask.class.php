@@ -20,8 +20,6 @@
 /**
  * Convert custom link format to Markdown syntax in various i18n table fields.
  *
- * @package    symfony
- * @subpackage task
  */
 class i18nCustomLinkToMarkdownTask extends i18nTransformBaseTask
 {

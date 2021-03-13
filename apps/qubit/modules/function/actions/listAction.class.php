@@ -20,8 +20,6 @@
 /**
  * Show paginated list of functions.
  *
- * @package    AccesstoMemory
- * @subpackage function
  * @author     David Juhasz <david@artefactual.com>
  */
 class FunctionListAction extends sfAction

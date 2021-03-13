@@ -20,8 +20,6 @@
 /**
  * Import csv accession data
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class csvAccessionImportTask extends csvImportBaseTask

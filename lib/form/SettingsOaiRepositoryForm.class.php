@@ -20,8 +20,6 @@
 /**
  * OAI plugin form definition for settings module - with validation.
  *
- * @package    AccesstoMemory
- * @subpackage settings
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
 class SettingsOaiRepositoryForm extends sfForm

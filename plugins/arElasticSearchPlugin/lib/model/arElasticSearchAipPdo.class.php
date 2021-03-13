@@ -20,8 +20,6 @@
 /**
  * Manage aips in search index
  *
- * @package    AccesstoMemory
- * @subpackage arElasticSearchPlugin
  */
 class arElasticSearchAipPdo
 {

@@ -21,8 +21,6 @@
  * Asynchronous job to export clipboard actor data to a CSV document, plus
  * related digital objects when requested
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arActorCsvExportJob extends arActorExportJob
 {

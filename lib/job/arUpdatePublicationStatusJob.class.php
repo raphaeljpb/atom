@@ -20,8 +20,6 @@
 /**
  * Updates the publication status to the descendants of an information object
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arUpdatePublicationStatusJob extends arBaseJob
 {

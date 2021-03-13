@@ -20,7 +20,6 @@
 /**
  * Qubit specifc extension to the sfPropelPager
  *
- * @package AccesstoMemory
  * @author  David Juhasz <david@artefactual.com>
  * @author  Mike Cantelon <mike@artefactual.com>
  */

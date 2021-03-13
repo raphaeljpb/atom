@@ -20,8 +20,6 @@
 /**
  * A job to move an object to a new parent or to another position among its siblings
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arObjectMoveJob extends arBaseJob
 {

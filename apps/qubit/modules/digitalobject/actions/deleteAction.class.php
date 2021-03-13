@@ -20,8 +20,6 @@
 /**
  * Digital Object deletion
  *
- * @package    AccesstoMemory
- * @subpackage digitalObject
  * @author     David Juhasz <david@artefactual.com>
  */
 class DigitalObjectDeleteAction extends sfAction

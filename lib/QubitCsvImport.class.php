@@ -22,8 +22,6 @@
  * This class is a wrapper to interact with the import CSV tasks located
  * under the lib/task/import directory
  *
- * @package    AccesstoMemory
- * @subpackage library
  */
 class QubitCsvImport
 {
@@ -196,8 +194,6 @@ class QubitCsvImport
    * Trigger a csv transform on the server using a configured transformation
    * script.
    *
-   * @package    AccesstoMemory
-   * @subpackage library
    */
   public function doTransform($csvFile)
   {

@@ -18,7 +18,6 @@
  */
 
 /**
- * @package    AccesstoMemory
  * @author     Mike G <mikeg@artefactual.com>
  */
 class arGenerateReportJob extends arBaseJob

@@ -18,8 +18,6 @@
  */
 
 /**
- * @package    AccesstoMemory
- * @subpackage lib
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitCultureFallback

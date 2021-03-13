@@ -20,8 +20,6 @@
 /**
  * Populate search index.
  *
- * @package     AccesstoMemory
- * @subpackage  task
  */
 class arSearchPopulateTask extends sfBaseTask
 {

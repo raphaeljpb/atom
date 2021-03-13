@@ -20,8 +20,6 @@
 /**
  * Map between ISAAR CSV format and Qubit data model
  *
- * @package    AccesstoMemory
- * @subpackage sfIsaarPlugin
  * @author     David Juhasz <david@artefactual.com>
  */
 class qtIsaarCsv extends sfIsaarPlugin

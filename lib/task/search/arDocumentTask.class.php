@@ -20,8 +20,6 @@
 /**
  * Display search index document
  *
- * @package    AccessToMemory
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class arSearchDocumentTask extends arBaseTask

@@ -20,8 +20,6 @@
 /**
  * Settings module - "Permissions" form definition
  *
- * @package    AccesstoMemory
- * @subpackage settings
  * @author     Andy Koch <koch.andy@gmail.com>
  */
 class SettingsPermissionsForm extends sfForm

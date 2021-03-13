@@ -20,8 +20,6 @@
 /**
  * Export authority records to a CSV file
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class exportAuthorityRecordsTask extends exportBulkBaseTask

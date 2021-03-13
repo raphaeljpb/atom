@@ -20,8 +20,6 @@
 /**
  * Finding Aid form definition for settings module - with validation.
  *
- * @package    AccesstoMemory
- * @subpackage settings
  */
 class SettingsFindingAidForm extends sfForm
 {

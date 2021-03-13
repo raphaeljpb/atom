@@ -20,8 +20,6 @@
 /**
  * Import csv deaccession data
  *
- * @package    symfony
- * @subpackage task
  * @author     Steve Breker <sbreker@artefactual.com>
  */
 class csvDeaccessionImportTask extends csvImportBaseTask

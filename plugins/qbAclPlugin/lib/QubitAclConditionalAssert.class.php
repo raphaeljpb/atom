@@ -20,8 +20,6 @@
 /**
  * ACL conditional assert
  *
- * @package    AccesstoMemory
- * @subpackage qbAclPlugin
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitAclConditionalAssert implements Zend_Acl_Assert_Interface

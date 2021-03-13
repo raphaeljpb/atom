@@ -3,8 +3,6 @@
 /**
  * sfTranslatePlugin configuration.
  *
- * @package     sfTranslatePlugin
- * @subpackage  config
  * @author      Your name here
  */
 class sfTranslatePluginConfiguration extends sfPluginConfiguration

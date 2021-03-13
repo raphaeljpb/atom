@@ -18,8 +18,6 @@
  */
 
 /**
- * @package    AccesstoMemory
- * @subpackage jobs
  * @author     Mike G <mikeg@artefactual.com>
  */
 class JobsExportAction extends DefaultBrowseAction

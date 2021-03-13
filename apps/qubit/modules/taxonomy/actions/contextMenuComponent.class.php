@@ -20,8 +20,6 @@
 /**
  * Context menu for taxonomies
  *
- * @package AccesstoMemory
- * @subpackage term
  * @author Peter Van Garderen <peter@artefactual.com>
  * @author David Juhasz <david@artefactual.com>
  */

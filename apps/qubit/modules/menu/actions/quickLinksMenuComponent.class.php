@@ -20,8 +20,6 @@
 /**
  * Display "quicklinks" navigation menu
  *
- * @package    AccesstoMemory
- * @subpackage menu
  * @author     David Juhasz <david@artefactual.com>
  */
 class menuQuickLinksMenuComponent extends sfComponent

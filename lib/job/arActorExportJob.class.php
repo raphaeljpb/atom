@@ -20,8 +20,6 @@
 /**
  * Asynchronous job to export clipboard actor data and digital objects
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arActorExportJob extends arExportJob
 {

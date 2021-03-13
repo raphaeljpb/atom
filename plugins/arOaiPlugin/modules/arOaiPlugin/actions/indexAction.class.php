@@ -20,8 +20,6 @@
 /**
  * Generate the OAI-PMH response
  *
- * @package    AccesstoMemory
- * @subpackage oai
  * @author     Mathieu Fortin Library and Archives Canada <mathieu.fortin@lac-bac.gc.ca>
  */
 class arOaiPluginIndexAction extends sfAction

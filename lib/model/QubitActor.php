@@ -18,8 +18,6 @@
  */
 
 /**
- * @package    AccesstoMemory
- * @subpackage actor
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     David Juhasz <david@artefactual.com>
  */

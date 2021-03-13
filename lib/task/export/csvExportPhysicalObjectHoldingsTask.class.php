@@ -20,8 +20,6 @@
 /**
  * Export physical object holdings CSV data
  *
- * @package    AccessToMemory
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class csvExportPhysicalObjectHoldingsTask extends arBaseTask

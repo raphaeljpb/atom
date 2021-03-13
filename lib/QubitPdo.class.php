@@ -22,7 +22,6 @@
  *
  * <http://leftnode.com/entry/the-last-php-pdo-library-you-will-ever-need>
  *
- * @package    AccesstoMemory
  * @author     Vic Cheubini
  * @author     David Juhasz <david@artefactual.com>
  */

@@ -20,8 +20,6 @@
 /**
  * Delete AtoM user
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class deleteUserTask extends arBaseTask

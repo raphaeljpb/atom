@@ -20,8 +20,6 @@
 /**
  * Digital Object edit component
  *
- * @package    AccesstoMemory
- * @subpackage digital object
  * @author     David Juhasz <david@artefactual.com>
  */
 class DigitalObjectEditAction extends sfAction

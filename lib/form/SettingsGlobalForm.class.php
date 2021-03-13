@@ -20,8 +20,6 @@
 /**
  * Global form definition for settings module - with validation.
  *
- * @package    AccesstoMemory
- * @subpackage settings
  * @author     David Juhasz <david@artefactual.com>
  */
 class SettingsGlobalForm extends sfForm

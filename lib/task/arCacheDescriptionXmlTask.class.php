@@ -21,8 +21,6 @@
  * Cycle through all information objects and export their EAD and DC XML
  * representations as files
  *
- * @package     AccesstoMemory
- * @subpackage  cache
  */
 class arCacheDescriptionXmlTask extends arBaseTask
 {

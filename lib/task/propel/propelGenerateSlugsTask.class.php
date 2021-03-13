@@ -20,8 +20,6 @@
 /**
  * Generate missing slugs
  *
- * @package    symfony
- * @subpackage task
  * @author     David Juhasz <david@artefactual.com>
  */
 class propelGenerateSlugsTask extends arBaseTask

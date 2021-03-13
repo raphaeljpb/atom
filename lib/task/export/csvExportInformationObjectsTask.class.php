@@ -20,8 +20,6 @@
 /**
  * Bulk export data to XML
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class csvExportInformationObjectsTask extends exportBulkBaseTask

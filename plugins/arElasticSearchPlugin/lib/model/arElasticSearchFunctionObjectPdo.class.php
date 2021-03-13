@@ -20,8 +20,6 @@
 /**
  * Manage functions in search index
  *
- * @package    AccesstoMemory
- * @subpackage arElasticSearchPlugin
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class arElasticSearchFunctionObjectPdo

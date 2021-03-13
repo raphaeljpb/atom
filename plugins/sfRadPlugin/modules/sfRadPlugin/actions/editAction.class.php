@@ -20,8 +20,6 @@
 /**
  * Information Object - editRad
  *
- * @package    AccesstoMemory
- * @subpackage informationObject - initialize an editRad template for updating an information object
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     David Juhasz <david@artefactual.com>
  */

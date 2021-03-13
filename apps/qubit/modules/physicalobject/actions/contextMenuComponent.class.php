@@ -20,8 +20,6 @@
 /**
  * Context Menu component for physical objects.
  *
- * @package AccesstoMemory
- * @subpackage physicalobject
  * @author david juhasz <david@artefactual.com>
  */
 class PhysicalObjectContextMenuComponent extends sfComponent

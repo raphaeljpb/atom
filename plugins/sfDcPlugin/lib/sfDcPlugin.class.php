@@ -21,7 +21,6 @@
  * This class is used to provide methods that supplement the core Qubit information object with behaviour or
  * presentation features that are specific to the Dublin Core standard
  *
- * @package    AccesstoMemory
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
 class sfDcPlugin implements ArrayAccess

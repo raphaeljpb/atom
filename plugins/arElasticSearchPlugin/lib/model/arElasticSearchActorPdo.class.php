@@ -20,8 +20,6 @@
 /**
  * Manage actors in search index
  *
- * @package    AccesstoMemory
- * @subpackage arElasticSearchPlugin
  * @author     MJ Suhonos <mj@suhonos.ca>
  */
 class arElasticSearchActorPdo

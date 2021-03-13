@@ -20,8 +20,6 @@
 /**
  * Migrate qubit data model via direct SQL calls
  *
- * @package    AccesstoMemory
- * @subpackage migration
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitUpgradeSqlTask extends sfBaseTask

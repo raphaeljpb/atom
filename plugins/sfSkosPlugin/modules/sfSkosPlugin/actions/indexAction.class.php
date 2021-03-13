@@ -20,8 +20,6 @@
 /**
  * SKOS representation of taxonomic data.
  *
- * @package    AccesstoMemory
- * @subpackage sfSkosPlugin
  * @author     David Juhasz <david@artefactual.com>
  */
 class sfSkosPluginIndexAction extends sfAction

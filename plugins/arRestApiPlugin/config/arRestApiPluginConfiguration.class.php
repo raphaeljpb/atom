@@ -20,8 +20,6 @@
 /**
  * arRestApiPluginConfiguration configuration.
  *
- * @package     arRestApiPluginConfiguration
- * @subpackage  config
  */
 class arRestApiPluginConfiguration extends sfPluginConfiguration
 {

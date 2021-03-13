@@ -20,8 +20,6 @@
 /**
  * Show paginated list of actors.
  *
- * @package    AccesstoMemory
- * @subpackage actor
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     David Juhasz <david@artefactual.com>
  * @author     Wu Liu <wu.liu@usask.ca>

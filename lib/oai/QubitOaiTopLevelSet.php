@@ -20,8 +20,6 @@
 /**
  * An OAI set for all top-level (collection) records
  *
- * @package    AccesstoMemory
- * @subpackage oai
  * @author     Mark Triggs <mark@teaspoon-consulting.com>
  */
 class QubitOaiTopLevelSet implements QubitOaiSet

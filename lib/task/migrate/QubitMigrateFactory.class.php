@@ -20,8 +20,6 @@
 /**
  * Factory for running Qubit data migrations
  *
- * @package    AccesstoMemory
- * @subpackage migration
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitMigrateFactory

@@ -20,8 +20,6 @@
 /**
  * arElasticSearchConfigHandler
  *
- * @package atom
- * @subpackage arElasticSearchPlugin
  */
 class arElasticSearchConfigHandler extends sfYamlConfigHandler
 {

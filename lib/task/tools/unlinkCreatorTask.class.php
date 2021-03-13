@@ -20,8 +20,6 @@
 /**
  * Unlink Creator Task
  *
- * @package    symfony
- * @subpackage task
  * @author     Steve Breker <sbreker@artefactual.com>
  */
 class unlinkCreatorTask extends sfBaseTask

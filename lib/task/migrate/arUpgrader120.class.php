@@ -20,8 +20,6 @@
 /**
  * Upgrade Qubit data from Release 1.2
  *
- * @package    AccesstoMemory
- * @subpackage migration
  */
 class arUpgrader120
 {

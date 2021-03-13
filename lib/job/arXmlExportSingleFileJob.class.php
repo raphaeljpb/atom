@@ -20,8 +20,6 @@
 /**
  * A worker to export a description as XML.
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arXmlExportSingleFileJob extends arBaseJob
 {

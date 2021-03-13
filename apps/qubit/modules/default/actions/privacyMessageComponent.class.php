@@ -20,8 +20,6 @@
 /**
  * Display privacy message component
  *
- * @package AccesstoMemory
- * @subpackage default
  * @author Steven Breker <sbreker@artefactual.com>
  */
 class DefaultPrivacyMessageComponent extends sfComponent

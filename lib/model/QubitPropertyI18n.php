@@ -5,7 +5,6 @@
  *
  *
  *
- * @package lib.model
  */
 class QubitPropertyI18n extends BasePropertyI18n
 {

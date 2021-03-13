@@ -20,8 +20,6 @@
 /**
  * Base task to process i18n fields.
  *
- * @package    symfony
- * @subpackage task
  */
 abstract class i18nTransformBaseTask extends arBaseTask
 {

@@ -20,8 +20,6 @@
 /**
  * Normalize taxonomy
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class taxonomyNormalizeTask extends arBaseTask

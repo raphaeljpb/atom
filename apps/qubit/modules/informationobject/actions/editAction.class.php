@@ -20,8 +20,6 @@
 /**
  * Get current state data for information object edit form.
  *
- * @package    AccesstoMemory
- * @subpackage informationobject
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     David Juhasz <david@artefactual.com>
  */

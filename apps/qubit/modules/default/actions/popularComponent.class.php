@@ -20,8 +20,6 @@
 /**
  * Check for updates component
  *
- * @package AccesstoMemory
- * @subpackage default
  */
 class DefaultPopularComponent extends sfComponent
 {

@@ -20,8 +20,6 @@
 /**
  * Repository - editIsdiah
  *
- * @package    AccesstoMemory
- * @subpackage Actor - initialize an editIDIAH template for updating a repository
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
 class sfIsdiahPluginEditAction extends RepositoryEditAction

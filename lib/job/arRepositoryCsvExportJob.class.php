@@ -20,8 +20,6 @@
 /**
  * Asynchronous job to export repository metadata from clipboard.
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arRepositoryCsvExportJob extends arExportJob
 {

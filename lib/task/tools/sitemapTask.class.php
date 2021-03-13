@@ -20,8 +20,6 @@
 /**
  * Write Sitemap XML (URL inclusion protocol)
  *
- * @package    symfony
- * @subpackage task
  */
 class sitemapTask extends sfBaseTask
 {

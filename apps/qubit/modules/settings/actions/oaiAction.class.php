@@ -20,8 +20,6 @@
 /**
  * OAI settings
  *
- * @package    AccesstoMemory
- * @subpackage settings
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Jack Bates <jack@nottheoilrig.com>
  * @author     David Juhasz <david@artefactual.com>

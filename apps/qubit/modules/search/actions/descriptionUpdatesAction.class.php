@@ -20,8 +20,6 @@
 /**
  * Display a list of recently updates to the db
  *
- * @package AccesstoMemory
- * @subpackage search
  * @author David Juhasz <david@artefactual.com>
  */
 class SearchDescriptionUpdatesAction extends sfAction

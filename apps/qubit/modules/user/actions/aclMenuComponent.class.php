@@ -20,8 +20,6 @@
 /**
  * Display "aclMenu" navigation menu
  *
- * @package    AccesstoMemory
- * @subpackage user
  * @author     David Juhasz <david@artefactual.com>
  */
 class userAclMenuComponent extends sfComponent

@@ -20,8 +20,6 @@
 /**
  * Return list of functions for autocomplete (XHR) response.
  *
- * @package    AccesstoMemory
- * @subpackage function
  * @author     David Juhasz <david@artefactual.com>
  */
 class FunctionAutocompleteAction extends sfAction

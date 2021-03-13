@@ -20,8 +20,6 @@
 /**
  * Bulk export data to XML
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Gale <mikeg@artefactual.com>
  * @author     Mike Cantelon <mike@artefactual.com>
  */

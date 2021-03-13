@@ -20,8 +20,6 @@
 /**
  * Action Handler for Browse Hierarchy JSON Data
  *
- * @package AccesstoMemory
- * @subpackage model
  * @author Mike Cantelon <mike@artefactual.com>
  */
 class BrowseHierarchyDataAction extends DefaultFullTreeViewAction

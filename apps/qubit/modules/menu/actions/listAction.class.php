@@ -20,8 +20,6 @@
 /**
  * List/edit current menu tree
  *
- * @package    AccesstoMemory
- * @subpackage menu
  * @author     David Juhasz <david@artefactual.com>
  */
 class MenuListAction extends sfAction

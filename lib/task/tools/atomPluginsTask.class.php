@@ -20,8 +20,6 @@
 /**
  * Purge Qubit data
  *
- * @package    symfony
- * @subpackage task
  */
 class atomPluginsTask extends sfBaseTask
 {

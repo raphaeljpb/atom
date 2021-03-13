@@ -20,8 +20,6 @@
 /**
  * Digital Object video display component
  *
- * @package    AccesstoMemory
- * @subpackage digitalObject
  * @author     David Juhasz <david@artefactual.com>
  */
 class DigitalObjectShowVideoComponent extends sfComponent

@@ -21,7 +21,6 @@
  * This class is used to provide methods that supplement the core Qubit information object with behaviour or
  * presentation features that are specific to the Metadata Object Description Schema (MODS) standard
  *
- * @package    AccesstoMemory
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
 class sfModsPlugin implements ArrayAccess

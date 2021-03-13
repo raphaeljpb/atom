@@ -14,7 +14,6 @@
  * This is taken from Harry Fueck's Thumbnail class and
  * converted for PHP5 strict compliance for use with symfony.
  *
- * @package    sfThumbnailPlugin
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
  * @author     Benjamin Meynell <bmeynell@colorado.edu>
  */

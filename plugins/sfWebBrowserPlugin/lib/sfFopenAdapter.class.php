@@ -12,7 +12,6 @@
 /**
  * sfWebBrowser provides a basic HTTP client.
  *
- * @package    sfWebBrowserPlugin
  * @author     Francois Zaninotto <francois.zaninotto@symfony-project.com>
  * @version    0.9
  */

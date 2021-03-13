@@ -20,8 +20,6 @@
 /**
  * Represent the time, place and/or agent of events in an artifact's history
  *
- * @package    AccesstoMemory
- * @subpackage event
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Jack Bates <jack@nottheoilrig.com>
  * @author     David Juhasz <david@artefactual.com>

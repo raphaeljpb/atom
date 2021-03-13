@@ -22,8 +22,6 @@
  * granted rights. Afterward, the job will initiate another job to
  * calculate new ACL rules based on the granted rights.
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arInheritRightsJob extends arBaseJob
 {

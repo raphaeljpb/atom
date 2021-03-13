@@ -20,8 +20,6 @@
 /**
  * Load a csv list of digital objects
  *
- * @package    symfony
- * @subpackage task
  * @author     David Juhasz <david@artefactual.com>
  */
 class digitalObjectLoadTask extends sfBaseTask

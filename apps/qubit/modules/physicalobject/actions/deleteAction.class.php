@@ -20,8 +20,6 @@
 /**
  * Physical Object deletion
  *
- * @package    AccesstoMemory
- * @subpackage physicalobject
  * @author     David Juhasz <david@artefactual.com>
  */
 class PhysicalObjectDeleteAction extends sfAction

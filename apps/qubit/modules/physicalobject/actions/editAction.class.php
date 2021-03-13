@@ -20,8 +20,6 @@
 /**
  * Physical Object edit
  *
- * @package    AccesstoMemory
- * @subpackage physicalobject
  * @author     David Juhasz <david@artefactual.com>
  */
 class PhysicalObjectEditAction extends DefaultEditAction

@@ -20,8 +20,6 @@
 /**
  * Repository maintained actors component
  *
- * @package AccesstoMemory
- * @subpackage repository
  */
 class RepositoryMaintainedActorsComponent extends sfComponent
 {

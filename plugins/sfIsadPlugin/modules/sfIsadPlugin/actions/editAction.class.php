@@ -20,8 +20,6 @@
 /**
  * Information Object - editIsad
  *
- * @package    AccesstoMemory
- * @subpackage informationObject - initialize an editIsad template for updating an information object
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Jesús García Crespo <correo@sevein.com>
  */

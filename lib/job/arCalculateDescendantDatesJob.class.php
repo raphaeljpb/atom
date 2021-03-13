@@ -21,8 +21,6 @@
  * A job to calculate, for a given information object and event type, the
  * earliest start date and latest end date
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arCalculateDescendantDatesJob extends arBaseJob
 {

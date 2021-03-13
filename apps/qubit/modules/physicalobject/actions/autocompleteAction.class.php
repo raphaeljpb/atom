@@ -18,8 +18,6 @@
  */
 
 /**
- * @package    AccesstoMemory
- * @subpackage repository
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
 class PhysicalObjectAutocompleteAction extends sfAction

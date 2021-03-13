@@ -20,8 +20,6 @@
 /**
  * Edit menu
  *
- * @package    AccesstoMemory
- * @subpackage menu
  * @author     David Juhasz <david@artefactual.com>
  */
 class MenuEditAction extends sfAction

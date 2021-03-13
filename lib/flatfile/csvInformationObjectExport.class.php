@@ -20,8 +20,6 @@
 /**
  * Export flatfile information object data
  *
- * @package    symfony
- * @subpackage library
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class csvInformationObjectExport extends QubitFlatfileExport

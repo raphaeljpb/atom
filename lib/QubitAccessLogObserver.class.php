@@ -20,8 +20,6 @@
 /**
  * Observer of notificiation of access events
  *
- * @package AccesstoMemory
- * @subpackage lib
  */
 class QubitAccessLogObserver
 {

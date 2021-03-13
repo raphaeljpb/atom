@@ -20,8 +20,6 @@
 /**
  * A job to export a physical object holdings report as CSV data.
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arPhysicalObjectCsvHoldingsReportJob extends arExportJob
 {

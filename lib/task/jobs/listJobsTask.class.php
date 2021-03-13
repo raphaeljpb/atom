@@ -20,8 +20,6 @@
 /**
  * List AtoM job information
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Gale <mikeg@artefactual.com>
  */
 class listJobsTask extends arBaseTask

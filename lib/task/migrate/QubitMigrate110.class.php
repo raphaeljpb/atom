@@ -20,8 +20,6 @@
 /**
  * Upgrade qubit version 1.1 data for version 1.2 schema
  *
- * @package    AccesstoMemory
- * @subpackage migration
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitMigrate110 extends QubitMigrate

@@ -20,8 +20,6 @@
 /**
  * Digital Object metadata component
  *
- * @package    AccesstoMemory
- * @subpackage digitalobject
  * @author     Mike G <mikeg@artefactual.com>
  */
 class DigitalObjectMetadataComponent extends sfComponent

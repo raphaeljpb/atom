@@ -22,8 +22,6 @@ require_once __DIR__.'/../vendor/composer/autoload.php';
 /**
  * Exporter for physical object holdings CSV data
  *
- * @package    AccessToMemory
- * @subpackage PhysicalObject
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class QubitPhysicalObjectCsvHoldingsReport

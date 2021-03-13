@@ -50,8 +50,6 @@
  *   path()                        Returns path to current element
  *   pathIncludes(<path fragment>) Check if current path contains subpath
  *
- * @package AccesstoMemory
- * @subpackage model
  * @author Mike Cantelon <mike@artefactual.com>
  */
 class QubitSaxParser

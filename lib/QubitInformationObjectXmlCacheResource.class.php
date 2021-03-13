@@ -20,8 +20,6 @@
 /**
  * Represent information object(s) as EAD and/or DC XML.
  *
- * @package    AccesstoMemory
- * @subpackage library
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class QubitInformationObjectXmlCacheResource

@@ -20,8 +20,6 @@
 /**
  * Digital Object view action
  *
- * @package    AccesstoMemory
- * @subpackage digital object
  * @author     Andy Koch <koch.andy@gmail.com>
  */
 class DigitalObjectViewAction extends sfAction

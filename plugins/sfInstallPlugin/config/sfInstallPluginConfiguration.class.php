@@ -3,8 +3,6 @@
 /**
  * sfInstallPlugin configuration.
  *
- * @package     sfInstallPlugin
- * @subpackage  config
  * @author      Your name here
  */
 class sfInstallPluginConfiguration extends sfPluginConfiguration

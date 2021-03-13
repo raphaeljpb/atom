@@ -21,8 +21,6 @@
  * Build main user navigation menu as simple xhtml lists, relying on css styling to
  * format the display of the menus.
  *
- * @package    AccesstoMemory
- * @subpackage menu
  * @author     David Juhasz <david@artefactual.com>
  */
 class MenuMainMenuComponent extends sfComponent

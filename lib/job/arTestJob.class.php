@@ -21,8 +21,6 @@
  * A bare bones worker to test Gearman / AtoM jobs
  * If optional parameter 'error' is set, print an error.
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arTestJob extends arBaseJob
 {

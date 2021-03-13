@@ -20,8 +20,6 @@
 /**
  * Extend BaseSetting functionality.
  *
- * @package    AccesstoMemory
- * @subpackage model
  * @author     Mathieu Fortin Library and Archives Canada <mathieu.fortin@lac-bac.gc.ca>
  */
 class QubitOaiHarvest extends BaseOaiHarvest

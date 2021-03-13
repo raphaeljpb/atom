@@ -20,8 +20,6 @@
 /**
  * Import csv event record data
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class csvEventRecordImportTask extends csvImportBaseTask

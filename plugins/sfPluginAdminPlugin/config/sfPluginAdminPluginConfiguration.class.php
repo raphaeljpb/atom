@@ -3,8 +3,6 @@
 /**
  * sfPluginAdminPlugin configuration.
  *
- * @package     sfPluginAdminPlugin
- * @subpackage  config
  * @author      Your name here
  */
 class sfPluginAdminPluginConfiguration extends sfPluginConfiguration

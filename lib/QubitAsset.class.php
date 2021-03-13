@@ -20,8 +20,6 @@
 /**
  * Simple representation of an asset
  *
- * @package    AccesstoMemory
- * @subpackage libraries
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitAsset

@@ -20,8 +20,6 @@
 /**
  * Check for updates component
  *
- * @package AccesstoMemory
- * @subpackage default
  * @author Jesús García Crespo <correo@sevein.com>
  */
 class DefaultUpdateCheckComponent extends sfComponent

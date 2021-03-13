@@ -20,8 +20,6 @@
 /**
  * Extend functionality of propel generated "BaseTerm" model class.
  *
- * @package    AccesstoMemory
- * @subpackage model
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     David Juhasz <david@artefactual.com>
  */

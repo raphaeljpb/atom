@@ -20,8 +20,6 @@
 /**
  * Extend BaseSetting functionality.
  *
- * @package    AccesstoMemory
- * @subpackage model
  * @author     MJ Suhonos
  * @author     Jack Bates <jack@nottheoilrig.com>
  */

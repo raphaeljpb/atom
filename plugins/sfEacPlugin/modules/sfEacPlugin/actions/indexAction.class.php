@@ -20,8 +20,6 @@
 /**
  * EAC representation of an Actor
  *
- * @package    AccesstoMemory
- * @subpackage sfEacPlugin
  * @author     Jack Bates <jack@nottheoilrig.com>
  */
 class sfEacPluginIndexAction extends ActorIndexAction

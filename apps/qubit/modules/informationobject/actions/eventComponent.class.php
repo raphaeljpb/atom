@@ -20,8 +20,6 @@
 /**
  * Form for adding and editing related events
  *
- * @package    AccesstoMemory
- * @subpackage information object
  * @author     David Juhasz <david@artefactual.com>
  */
 class InformationObjectEventComponent extends EventEditComponent

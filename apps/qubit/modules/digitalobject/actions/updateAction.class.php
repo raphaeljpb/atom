@@ -20,8 +20,6 @@
 /**
  * Digital Object - Update database from "edit" form
  *
- * @package    AccesstoMemory
- * @subpackage digitalobject
  * @author     david juhasz <david@artefactual.com>
  *
  */

@@ -20,8 +20,6 @@
 /**
  * Instantiable class for Markdown operations.
  *
- * @package    AccesstoMemory
- * @subpackage library
  * @author     Steve Breker <sbreker@artefactual.com>
  */
 class QubitMarkdown

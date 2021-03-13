@@ -20,8 +20,6 @@
 /**
  * List of qubit settings
  *
- * @package    AccesstoMemory
- * @subpackage settings
  * @author     Wu liu <wu.liu@usask.ca>
  */
 class SettingsVisibleElementsAction extends sfAction

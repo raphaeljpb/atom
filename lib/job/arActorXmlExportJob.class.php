@@ -21,8 +21,6 @@
  * Asynchronous job to export clipboard actor data to XML documents, plus
  * related digital objects when requested
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arActorXmlExportJob extends arActorExportJob
 {

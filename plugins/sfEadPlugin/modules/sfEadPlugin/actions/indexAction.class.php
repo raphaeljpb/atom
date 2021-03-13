@@ -20,8 +20,6 @@
 /**
  * Render resource in EAD XML format
  *
- * @package    AccesstoMemory
- * @subpackage sfEadPlugin
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
 class sfEadPluginIndexAction extends InformationObjectIndexAction

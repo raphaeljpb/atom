@@ -22,8 +22,6 @@
  * Because HTML doesn't support multi-value inputs natively, we are faking it
  * with a list of related inputs.
  *
- * @package    AccesstoMemory
- * @subpackage widget
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitWidgetFormInputMany extends sfWidgetFormInput

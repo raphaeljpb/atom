@@ -20,8 +20,6 @@
 /**
  * Run ad-hoc PHP logic contained in a file
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class runCustomLogicTask extends arBaseTask

@@ -20,8 +20,6 @@
 /**
  * Custom ACL rules for QubitActor resources
  *
- * @package    qbAclPlugin
- * @subpackage acl
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitActorAcl extends QubitAcl

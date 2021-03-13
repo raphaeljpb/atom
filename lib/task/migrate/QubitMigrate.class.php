@@ -20,8 +20,6 @@
 /**
  * Base class for migrating qubit data
  *
- * @package    AccesstoMemory
- * @subpackage migration
  * @author     David Juhasz <david@artefactual.com
  */
 class QubitMigrate

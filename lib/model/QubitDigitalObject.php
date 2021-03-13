@@ -20,8 +20,6 @@
 /**
  * Extend functionality of propel generated "BaseDigitalObject" class
  *
- * @package    AccesstoMemory
- * @subpackage model
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitDigitalObject extends BaseDigitalObject

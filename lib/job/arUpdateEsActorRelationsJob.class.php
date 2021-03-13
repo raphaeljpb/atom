@@ -20,8 +20,6 @@
 /**
  * Updates actor document relationships in the Elasticsearch index
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arUpdateEsActorRelationsJob extends arBaseJob
 {

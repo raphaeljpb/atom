@@ -20,8 +20,6 @@
 /**
  * Information Object - showDc
  *
- * @package    AccesstoMemory
- * @subpackage informationObject - initialize a showDc template for displaying an information object
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
 class sfDcPluginIndexAction extends InformationObjectIndexAction

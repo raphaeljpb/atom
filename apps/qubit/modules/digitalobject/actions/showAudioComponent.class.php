@@ -20,8 +20,6 @@
 /**
  * Digital Object audio display component
  *
- * @package    AccesstoMemory
- * @subpackage resource
  * @author     Jesús García Crespo <correo@sevein.com>
  */
 class DigitalObjectShowAudioComponent extends sfComponent

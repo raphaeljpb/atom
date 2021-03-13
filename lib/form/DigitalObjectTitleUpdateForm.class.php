@@ -20,8 +20,6 @@
 /**
  * Settings module - generic form definition
  *
- * @package    AccesstoMemory
- * @subpackage Information Object
  * @author     Steve Breker <sbreker@artefactual.com>
  */
 class DigitalObjectTitleUpdateForm extends sfForm

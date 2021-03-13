@@ -20,8 +20,6 @@
 /**
  * Delete import data
  *
- * @package    AccessToMemory
- * @subpackage task
  * @author     David Juhasz <djjuhasz@gmail.com>
  */
 class importDeleteTask extends arBaseTask

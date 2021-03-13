@@ -20,8 +20,6 @@
 /**
  * Upgrade qubit data model from 1.0.3 to 1.0.4
  *
- * @package    AccesstoMemory
- * @subpackage migration
  * @author     David Juhasz <david@artefactual.com
  */
 class QubitMigrate103 extends QubitMigrate

@@ -22,7 +22,6 @@
  * information object with behaviour or presentation features that are specific
  * to the ICA's International Standard Archival Description (ISAD)
  *
- * @package    AccesstoMemory
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
 class sfIsadPlugin implements ArrayAccess

@@ -20,8 +20,6 @@
 /**
  * Manage terms in search index
  *
- * @package    AccesstoMemory
- * @subpackage arElasticSearchPlugin
  */
 class arElasticSearchTermPdo
 {

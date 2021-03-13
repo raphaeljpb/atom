@@ -20,8 +20,6 @@
 /**
  * Clear the AtoM jobs table
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Gale <mikeg@artefactual.com>
  */
 class clearJobsTask extends arBaseTask

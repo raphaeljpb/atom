@@ -20,8 +20,6 @@
 /**
  * arElasticSearchPluginUtil
  *
- * @package     AccesstoMemory
- * @subpackage  arElasticSearchPlugin
  */
 class arElasticSearchPluginUtil
 {

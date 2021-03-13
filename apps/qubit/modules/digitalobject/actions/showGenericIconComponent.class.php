@@ -20,8 +20,6 @@
 /**
  * Display a generic representation of a digital object
  *
- * @package    AccesstoMemory
- * @subpackage digital object
  * @author     David Juhasz <david@artefactual.com>
  */
 class DigitalObjectShowGenericIconComponent extends sfComponent

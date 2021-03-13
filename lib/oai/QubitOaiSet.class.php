@@ -20,8 +20,6 @@
 /**
  * The interface provided by OAI set implementations
  *
- * @package    AccesstoMemory
- * @subpackage oai
  * @author     Mark Triggs <mark@teaspoon-consulting.com>
  */
 interface QubitOaiSet

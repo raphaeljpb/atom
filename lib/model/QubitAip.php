@@ -20,8 +20,6 @@
 /**
  * Represent the time, place and/or agent of events in an artifact's history
  *
- * @package    AccesstoMemory
- * @subpackage model
  */
 class QubitAip extends BaseAip
 {

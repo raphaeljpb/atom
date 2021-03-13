@@ -20,8 +20,6 @@
 /**
  * Information Object - showIsad
  *
- * @package    AccesstoMemory
- * @subpackage informationObject - initialize a showIsad template for displaying an information object
  * @author     Peter Van Garderen <peter@artefactual.com>
  */
 class sfIsadPluginIndexAction extends InformationObjectIndexAction

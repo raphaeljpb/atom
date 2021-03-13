@@ -20,8 +20,6 @@
 /**
  * Represent an asynchronous job
  *
- * @package    AccesstoMemory
- * @subpackage model
  */
 class QubitJob extends BaseJob
 {

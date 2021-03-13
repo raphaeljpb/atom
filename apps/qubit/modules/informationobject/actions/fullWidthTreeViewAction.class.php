@@ -20,8 +20,6 @@
 /**
  * Action Handler for FullWidth TreeView
  *
- * @package AccesstoMemory
- * @subpackage model
  * @author Andy Koch <koch.andy@gmail.com>
  */
 class InformationObjectFullWidthTreeViewAction extends DefaultFullTreeViewAction

@@ -20,8 +20,6 @@
 /**
  * Display warning when repository upload limit is exceeded
  *
- * @package    AccesstoMemory
- * @subpackage repository
  * @author     david juhasz <david@artefactual.com>
  */
 class RepositoryUploadLimitExceededAction extends sfAction

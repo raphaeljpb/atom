@@ -21,8 +21,6 @@
  * QubitPatternRouting add Qubit specific functionality to the sfPatternRouting
  * class
  *
- * @package    AccesstoMemory
- * @subpackage routing
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitPatternRouting extends sfPatternRouting

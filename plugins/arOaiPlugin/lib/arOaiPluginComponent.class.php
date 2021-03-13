@@ -20,8 +20,6 @@
 /**
  * Generate  listIdentifiers response of the OAI-PMH protocol for the Access to Memory (AtoM)
  *
- * @package    AccesstoMemory
- * @subpackage oai
  * @author     Mathieu Fortin Library and Archives Canada <mathieu.fortin@lac-bac.gc.ca>
  */
 abstract class arOaiPluginComponent extends sfComponent

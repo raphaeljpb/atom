@@ -20,8 +20,6 @@
 /**
  * Access Control List (ACL) functionality
  *
- * @package    AccesstoMemory
- * @subpackage qbAclPlugin
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitAcl

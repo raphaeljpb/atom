@@ -20,8 +20,6 @@
 /**
  * Digital Object - display compound digital asset
  *
- * @package    AccesstoMemory
- * @subpackage digital object
  * @author     David Juhasz <david@artefactual.com>
  */
 class DigitalObjectShowCompoundComponent extends sfComponent

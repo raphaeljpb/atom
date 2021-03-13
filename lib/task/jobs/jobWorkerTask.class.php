@@ -20,8 +20,6 @@
 /**
  * Gearman worker task
  *
- * @package    symfony
- * @subpackage task
  */
 class jobWorkerTask extends arBaseTask
 {

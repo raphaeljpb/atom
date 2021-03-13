@@ -20,8 +20,6 @@
 /**
  * Export flatfile repository data
  *
- * @package    symfony
- * @subpackage library
  * @author     Mike Gale <mikeg@artefactual.com>
  */
 class csvRepositoryExport extends QubitFlatfileExport

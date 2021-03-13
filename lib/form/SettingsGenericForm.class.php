@@ -20,8 +20,6 @@
 /**
  * Settings module - generic form definition
  *
- * @package    AccesstoMemory
- * @subpackage settings
  * @author     David Juhasz <david@artefactual.com>
  */
 class SettingsGenericForm extends sfForm

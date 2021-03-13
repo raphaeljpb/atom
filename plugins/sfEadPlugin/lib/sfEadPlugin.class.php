@@ -18,8 +18,6 @@
  */
 
 /**
- * @package    AccesstoMemory
- * @subpackage sfEadPlugin
  * @author     David Juhasz <david@artefactual.com>
  */
 class sfEadPlugin

@@ -20,8 +20,6 @@
 /**
  * Manage information objects in search index
  *
- * @package    AccesstoMemory
- * @subpackage arElasticSearchPlugin
  * @author     David Juhasz <david@artefactual.com>
  */
 class arElasticSearchInformationObjectPdo

@@ -20,8 +20,6 @@
 /**
  * Remove HTML tags from various i18n table fields.
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  * @author     Mike Gale <mikeg@artefactual.com>
  */

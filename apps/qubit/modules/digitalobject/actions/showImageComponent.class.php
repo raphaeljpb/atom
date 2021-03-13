@@ -20,8 +20,6 @@
 /**
  * Display an 'image' digital asset
  *
- * @package    AccesstoMemory
- * @subpackage digital object
  * @author     David Juhasz <david@artefactual.com>
  */
 class DigitalObjectShowImageComponent extends sfComponent

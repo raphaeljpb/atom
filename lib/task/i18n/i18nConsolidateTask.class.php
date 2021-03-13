@@ -21,8 +21,6 @@
  * Restore i18n strings lost when XLIFF files were broken into plugin-specific
  * directories
  *
- * @package    AccesstoMemory
- * @subpackage task
  * @author     David Juhasz <david@artefactual.com>
  */
 class i18nConsolidateTask extends sfBaseTask

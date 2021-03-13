@@ -20,8 +20,6 @@
 /**
  * Get current state data for information object edit form.
  *
- * @package    AccesstoMemory
- * @subpackage oai
  * @author     Peter Van Garderen <peter@artefactual.com>
  * @author     Mathieu Fortin Library and Archives Canada <mathieu.fortin@lac-bac.gc.ca>
  */

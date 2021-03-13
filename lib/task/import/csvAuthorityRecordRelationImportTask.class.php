@@ -20,8 +20,6 @@
 /**
  * Import authority record relations using CSV
  *
- * @package    AccessToMemory
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class csvAuthorityRecordRelationImportTask extends csvImportBaseTask

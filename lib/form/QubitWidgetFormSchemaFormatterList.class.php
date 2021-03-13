@@ -20,8 +20,6 @@
 /**
  * Form decorator for <table class="list"> css definition.
  *
- * @package    AccesstoMemory
- * @subpackage forms
  * @author     David Juhasz <david@artefactual.com>
  */
 class QubitWidgetFormSchemaFormatterList extends sfWidgetFormSchemaFormatter

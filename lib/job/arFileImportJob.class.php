@@ -20,8 +20,6 @@
 /**
  * Job worker for file-based imports initiated from the WebUI.
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arFileImportJob extends arBaseJob
 {

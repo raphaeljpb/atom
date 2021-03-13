@@ -20,8 +20,6 @@
 /**
  * Bulk export data about usage of term as CSV
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class csvExportTermUsageTask extends exportBulkBaseTask

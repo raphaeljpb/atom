@@ -20,8 +20,6 @@
 /**
  * Updates information object documents in the Elasticsearch index
  *
- * @package    symfony
- * @subpackage jobs
  */
 class arUpdateEsIoDocumentsJob extends arBaseJob
 {

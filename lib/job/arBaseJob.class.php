@@ -20,8 +20,6 @@
 /**
  * A base for a Gearman job in AtoM
  *
- * @package    AccesstoMemory
- * @subpackage jobs
  * @author     Mike G <mikeg@artefactual.com>
  */
 class arBaseJob extends Net_Gearman_Job_Common

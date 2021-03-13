@@ -20,8 +20,6 @@
 /**
  * Purge AtoM data
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class purgeTask extends sfBaseTask

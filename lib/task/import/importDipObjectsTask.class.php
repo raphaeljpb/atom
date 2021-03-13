@@ -21,8 +21,6 @@
  * Process a CSV file to import digital objects from an Archivematica DIP and
  * associate them with existing information objects in AtoM
  *
- * @package    symfony
- * @subpackage task
  * @author     David Juhasz <david@artefactual.com>
  */
 class importDipObjectsTask extends arBaseTask

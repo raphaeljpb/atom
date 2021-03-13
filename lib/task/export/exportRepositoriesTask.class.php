@@ -20,8 +20,6 @@
 /**
  * Export repository information to a CSV
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Gale <mikeg@artefactual.com>
  */
 class exportRepositoriesTask extends arBaseTask

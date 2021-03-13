@@ -20,8 +20,6 @@
 /**
  * Display search index status.
  *
- * @package    AccesstoMemory
- * @subpackage task
  */
 class arSearchStatusTask extends arBaseTask
 {

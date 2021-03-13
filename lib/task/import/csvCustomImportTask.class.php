@@ -20,8 +20,6 @@
 /**
  * Import csv data using custom logic defined in an external file
  *
- * @package    symfony
- * @subpackage task
  * @author     Mike Cantelon <mike@artefactual.com>
  */
 class csvCustomImportTask extends csvImportBaseTask
