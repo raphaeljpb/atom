@@ -31,158 +31,368 @@ class QubitTerm extends BaseTerm
   const
 
     // ROOT term id
-    ROOT_ID = 110,
+    ROOT_ID = 110;
+  const
 
+    
     // Event type taxonomy
-    CREATION_ID = 111,
-    CUSTODY_ID = 113,
-    PUBLICATION_ID = 114,
-    CONTRIBUTION_ID = 115,
-    COLLECTION_ID = 117,
-    ACCUMULATION_ID = 118,
+    CREATION_ID = 111;
+  const
 
+    
+    CUSTODY_ID = 113;
+  const
+
+    
+    PUBLICATION_ID = 114;
+  const
+
+    
+    CONTRIBUTION_ID = 115;
+  const
+
+    
+    COLLECTION_ID = 117;
+  const
+
+    
+    ACCUMULATION_ID = 118;
+  const
+
+    
     // Note type taxonomy
-    TITLE_NOTE_ID = 119,
-    PUBLICATION_NOTE_ID = 120,
-    SOURCE_NOTE_ID = 121,
-    SCOPE_NOTE_ID = 122,
-    DISPLAY_NOTE_ID = 123,
-    ARCHIVIST_NOTE_ID = 124,
-    GENERAL_NOTE_ID = 125,
-    OTHER_DESCRIPTIVE_DATA_ID = 126,
-    MAINTENANCE_NOTE_ID = 127,
+    TITLE_NOTE_ID = 119;
+  const
 
+    
+    PUBLICATION_NOTE_ID = 120;
+  const
+
+    
+    SOURCE_NOTE_ID = 121;
+  const
+
+    
+    SCOPE_NOTE_ID = 122;
+  const
+
+    
+    DISPLAY_NOTE_ID = 123;
+  const
+
+    
+    ARCHIVIST_NOTE_ID = 124;
+  const
+
+    
+    GENERAL_NOTE_ID = 125;
+  const
+
+    
+    OTHER_DESCRIPTIVE_DATA_ID = 126;
+  const
+
+    
+    MAINTENANCE_NOTE_ID = 127;
+  const
+
+    
     // Collection type taxonomy
-    ARCHIVAL_MATERIAL_ID = 128,
-    PUBLISHED_MATERIAL_ID = 129,
-    ARTEFACT_MATERIAL_ID = 130,
+    ARCHIVAL_MATERIAL_ID = 128;
+  const
 
+    
+    PUBLISHED_MATERIAL_ID = 129;
+  const
+
+    
+    ARTEFACT_MATERIAL_ID = 130;
+  const
+
+    
     // Actor type taxonomy
-    CORPORATE_BODY_ID = 131,
-    PERSON_ID = 132,
-    FAMILY_ID = 133,
+    CORPORATE_BODY_ID = 131;
+  const
 
+    
+    PERSON_ID = 132;
+  const
+
+    
+    FAMILY_ID = 133;
+  const
+
+    
     // Other name type taxonomy
-    FAMILY_NAME_FIRST_NAME_ID = 134,
+    FAMILY_NAME_FIRST_NAME_ID = 134;
+  const
 
+    
     // Media type taxonomy
-    AUDIO_ID = 135,
-    IMAGE_ID = 136,
-    TEXT_ID = 137,
-    VIDEO_ID = 138,
-    OTHER_ID = 139,
+    AUDIO_ID = 135;
+  const
 
+    
+    IMAGE_ID = 136;
+  const
+
+    
+    TEXT_ID = 137;
+  const
+
+    
+    VIDEO_ID = 138;
+  const
+
+    
+    OTHER_ID = 139;
+  const
+
+    
     // Digital object usage taxonomy
-    MASTER_ID = 140,
-    REFERENCE_ID = 141,
-    THUMBNAIL_ID = 142,
-    COMPOUND_ID = 143,
+    MASTER_ID = 140;
+  const
 
+    
+    REFERENCE_ID = 141;
+  const
+
+    
+    THUMBNAIL_ID = 142;
+  const
+
+    
+    COMPOUND_ID = 143;
+  const
+
+    
     // Physical object type taxonomy
-    LOCATION_ID = 144,
-    CONTAINER_ID = 145,
-    ARTEFACT_ID = 146,
+    LOCATION_ID = 144;
+  const
 
+    
+    CONTAINER_ID = 145;
+  const
+
+    
+    ARTEFACT_ID = 146;
+  const
+
+    
     // Relation type taxonomy
-    HAS_PHYSICAL_OBJECT_ID = 147,
+    HAS_PHYSICAL_OBJECT_ID = 147;
+  const
 
+    
     // Actor name type taxonomy
-    PARALLEL_FORM_OF_NAME_ID = 148,
-    OTHER_FORM_OF_NAME_ID = 149,
+    PARALLEL_FORM_OF_NAME_ID = 148;
+  const
 
+    
+    OTHER_FORM_OF_NAME_ID = 149;
+  const
+
+    
     // Actor relation type taxonomy
-    HIERARCHICAL_RELATION_ID = 150,
-    TEMPORAL_RELATION_ID = 151,
-    FAMILY_RELATION_ID = 152,
-    ASSOCIATIVE_RELATION_ID = 153,
+    HIERARCHICAL_RELATION_ID = 150;
+  const
 
+    
+    TEMPORAL_RELATION_ID = 151;
+  const
+
+    
+    FAMILY_RELATION_ID = 152;
+  const
+
+    
+    ASSOCIATIVE_RELATION_ID = 153;
+  const
+
+    
     // Actor relation note taxonomy
-    RELATION_NOTE_DESCRIPTION_ID = 154,
-    RELATION_NOTE_DATE_ID = 155,
+    RELATION_NOTE_DESCRIPTION_ID = 154;
+  const
 
+    
+    RELATION_NOTE_DATE_ID = 155;
+  const
+
+    
     // Term relation taxonomy
-    ALTERNATIVE_LABEL_ID = 156,
-    TERM_RELATION_ASSOCIATIVE_ID = 157,
+    ALTERNATIVE_LABEL_ID = 156;
+  const
 
+    
+    TERM_RELATION_ASSOCIATIVE_ID = 157;
+  const
+
+    
     // Status type taxonomy
-    STATUS_TYPE_PUBLICATION_ID = 158,
+    STATUS_TYPE_PUBLICATION_ID = 158;
+  const
 
+    
     // Publication status taxonomy
-    PUBLICATION_STATUS_DRAFT_ID = 159,
-    PUBLICATION_STATUS_PUBLISHED_ID = 160,
+    PUBLICATION_STATUS_DRAFT_ID = 159;
+  const
 
+    
+    PUBLICATION_STATUS_PUBLISHED_ID = 160;
+  const
+
+    
     // Name access point
-    NAME_ACCESS_POINT_ID = 161,
+    NAME_ACCESS_POINT_ID = 161;
+  const
 
+    
     // Function relation type taxonomy
-    ISDF_HIERARCHICAL_RELATION_ID = 162,
-    ISDF_TEMPORAL_RELATION_ID = 163,
-    ISDF_ASSOCIATIVE_RELATION_ID = 164,
+    ISDF_HIERARCHICAL_RELATION_ID = 162;
+  const
 
+    
+    ISDF_TEMPORAL_RELATION_ID = 163;
+  const
+
+    
+    ISDF_ASSOCIATIVE_RELATION_ID = 164;
+  const
+
+    
     // ISAAR standardized form name
-    STANDARDIZED_FORM_OF_NAME_ID = 165,
+    STANDARDIZED_FORM_OF_NAME_ID = 165;
+  const
 
+    
     // Digital object usage taxonomy (addition)
-    EXTERNAL_URI_ID = 166,
+    EXTERNAL_URI_ID = 166;
+  const
 
+    
     // Relation types
-    ACCESSION_ID = 167,
-    RIGHT_ID = 168,
-    DONOR_ID = 169,
+    ACCESSION_ID = 167;
+  const
 
+    
+    RIGHT_ID = 168;
+  const
+
+    
+    DONOR_ID = 169;
+  const
+
+    
     // Rights basis
-    RIGHT_BASIS_COPYRIGHT_ID = 170,
-    RIGHT_BASIS_LICENSE_ID = 171,
-    RIGHT_BASIS_STATUTE_ID = 172,
-    RIGHT_BASIS_POLICY_ID = 173,
+    RIGHT_BASIS_COPYRIGHT_ID = 170;
+  const
 
+    
+    RIGHT_BASIS_LICENSE_ID = 171;
+  const
+
+    
+    RIGHT_BASIS_STATUTE_ID = 172;
+  const
+
+    
+    RIGHT_BASIS_POLICY_ID = 173;
+  const
+
+    
     // Language note
-    LANGUAGE_NOTE_ID = 174,
+    LANGUAGE_NOTE_ID = 174;
+  const
 
+    
     // Accrual relation type
-    ACCRUAL_ID = 175,
+    ACCRUAL_ID = 175;
+  const
 
+    
     // Relation type
-    RELATED_MATERIAL_DESCRIPTIONS_ID = 176,
+    RELATED_MATERIAL_DESCRIPTIONS_ID = 176;
+  const
 
+    
     // Converse term relation
-    CONVERSE_TERM_ID = 177,
+    CONVERSE_TERM_ID = 177;
+  const
 
+    
     // AIP relation
-    AIP_RELATION_ID = 178,
+    AIP_RELATION_ID = 178;
+  const
 
+    
     // AIP types
-    ARTWORK_COMPONENT_ID = 179,
-    ARTWORK_MATERIAL_ID = 180,
-    SUPPORTING_DOCUMENTATION_ID = 181,
-    SUPPORTING_TECHNOLOGY_ID = 182,
+    ARTWORK_COMPONENT_ID = 179;
+  const
 
+    
+    ARTWORK_MATERIAL_ID = 180;
+  const
+
+    
+    SUPPORTING_DOCUMENTATION_ID = 181;
+  const
+
+    
+    SUPPORTING_TECHNOLOGY_ID = 182;
+  const
+
+    
     // Job statuses
-    JOB_STATUS_IN_PROGRESS_ID = 183,
-    JOB_STATUS_COMPLETED_ID = 184,
-    JOB_STATUS_ERROR_ID = 185,
+    JOB_STATUS_IN_PROGRESS_ID = 183;
+  const
 
+    
+    JOB_STATUS_COMPLETED_ID = 184;
+  const
+
+    
+    JOB_STATUS_ERROR_ID = 185;
+  const
+
+    
     // Digital object usage taxonomy (addition)
-    OFFLINE_ID = 186,
+    OFFLINE_ID = 186;
+  const
 
+    
     // Relation type taxonomy
-    MAINTAINING_REPOSITORY_RELATION_ID = 187,
+    MAINTAINING_REPOSITORY_RELATION_ID = 187;
+  const
 
-    ACTOR_OCCUPATION_NOTE_ID = 188,
+    
+    ACTOR_OCCUPATION_NOTE_ID = 188;
+  const
 
+    
     // User action taxonomy
-    USER_ACTION_CREATION_ID = 189,
-    USER_ACTION_MODIFICATION_ID = 190,
+    USER_ACTION_CREATION_ID = 189;
+  const
 
+    
+    USER_ACTION_MODIFICATION_ID = 190;
+  const
+
+    
     // Digital object usage taxonomy (addition)
-    EXTERNAL_FILE_ID = 191,
+    EXTERNAL_FILE_ID = 191;
+  const
 
+    
     // Accession alternative identifier taxonomy
-    ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID = 192,
+    ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID = 192;
+  const
 
+    
     // Accession event type: physical transfer
-    ACCESSION_EVENT_PHYSICAL_TRANSFER_ID = 193,
+    ACCESSION_EVENT_PHYSICAL_TRANSFER_ID = 193;
+  const
 
+    
     // Accession event note
     ACCESSION_EVENT_NOTE_ID = 194;
 

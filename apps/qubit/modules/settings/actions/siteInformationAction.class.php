@@ -34,8 +34,8 @@ class SettingsSiteInformationAction extends SettingsEditAction
     $NAMES = array(
       'siteTitle',
       'siteDescription',
-      'siteBaseUrl'),
-
+      'siteBaseUrl');
+  public static
     $I18N = array(
       'siteTitle',
       'siteDescription',

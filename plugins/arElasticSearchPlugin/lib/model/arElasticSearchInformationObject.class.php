@@ -20,8 +20,10 @@
 class arElasticSearchInformationObject extends arElasticSearchModelBase
 {
   protected static
-    $conn,
-    $statement,
+    $conn;
+  protected static
+    $statement;
+  protected static
     $counter = 0;
 
   protected

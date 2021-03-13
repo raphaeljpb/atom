@@ -20,10 +20,14 @@
 class sfIsdfPlugin implements ArrayAccess
 {
   protected
-    $resource,
-    $relatedAuthorityRecord,
-    $relatedFunction,
-    $relatedResource,
+    $resource;
+  protected
+    $relatedAuthorityRecord;
+  protected
+    $relatedFunction;
+  protected
+    $relatedResource;
+  protected
     $maintenanceNote;
 
   public function __construct(QubitFunctionObject $resource)

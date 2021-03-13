@@ -26,7 +26,9 @@
 class arMigration0135
 {
   const
-    VERSION = 135, // The new database version
+    VERSION = 135;
+  const
+    // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)

@@ -26,7 +26,8 @@
  */
 class propelBuildNestedSetTask extends sfBaseTask
 {
-  private $children, $conn;
+  private $children;
+  private $conn;
 
   /**
    * @see sfTask

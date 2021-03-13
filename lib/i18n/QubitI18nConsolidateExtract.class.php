@@ -28,7 +28,8 @@
 class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
 {
   protected
-    $messageSource = array(),
+    $messageSource = array();
+  protected
     $sourceFiles = array();
 
   /**

@@ -27,8 +27,10 @@
 class QubitMigrate108 extends QubitMigrate
 {
   const
-    MILESTONE = '1.0.8',
-    INIT_VERSION = 0,
+    MILESTONE = '1.0.8';
+  const
+    INIT_VERSION = 0;
+  const
     FINAL_VERSION = 39;
 
   /**

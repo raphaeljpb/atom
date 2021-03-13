@@ -27,7 +27,8 @@
 class QubitMigrate
 {
   public
-    $data,
+    $data;
+  public
     $version;
 
   public function __construct($data, $version)

@@ -20,9 +20,12 @@
 class QubitTimer
 {
   public
-    $fh = null,
-    $start = null,
-    $end = null,
+    $fh = null;
+  public
+    $start = null;
+  public
+    $end = null;
+  public
     $total = 0;
 
   public function __construct($logFile = null)

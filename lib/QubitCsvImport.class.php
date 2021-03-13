@@ -28,8 +28,10 @@
 class QubitCsvImport
 {
   protected
-    $errors = null,
-    $rootObject = null,
+    $errors = null;
+  protected
+    $rootObject = null;
+  protected
     $parent = null;
 
   public $indexDuringImport = false;

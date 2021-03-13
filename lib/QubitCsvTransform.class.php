@@ -20,8 +20,10 @@
 class QubitCsvTransform extends QubitFlatfileImport
 {
   public
-    $setupLogic,
-    $transformLogic,
+    $setupLogic;
+  public
+    $transformLogic;
+  public
     $rowsPerFile = 1000;
 
   private

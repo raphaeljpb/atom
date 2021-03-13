@@ -20,7 +20,8 @@
 class sfIsdiahPluginConfiguration extends sfPluginConfiguration
 {
   public static
-    $summary = 'Metadata standard plugin.  Enables data-entry and display using International Standard for Describing Institutions with Archival Holdings (ISDIAH).',
+    $summary = 'Metadata standard plugin.  Enables data-entry and display using International Standard for Describing Institutions with Archival Holdings (ISDIAH).';
+  public static
     $version = '1.0.0';
 
   /**

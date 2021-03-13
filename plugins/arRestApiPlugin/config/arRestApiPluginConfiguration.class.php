@@ -30,7 +30,8 @@ class arRestApiPluginConfiguration extends sfPluginConfiguration
   const REGEX_SLUG = '[0-9A-Za-z-]+';
 
   public static
-    $summary = 'REST API plugin',
+    $summary = 'REST API plugin';
+  public static
     $version = '1.0.0';
 
   public function routingLoadConfiguration(sfEvent $event)

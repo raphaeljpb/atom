@@ -20,7 +20,8 @@
 class sfSkosPluginConfiguration extends sfPluginConfiguration
 {
   public static
-    $summary = 'Data transform plugin.  Enables XML import and export of Simple Knowledge Organization System (SKOS) data.',
+    $summary = 'Data transform plugin.  Enables XML import and export of Simple Knowledge Organization System (SKOS) data.';
+  public static
     $version = '1.0.0';
 
   /**

@@ -26,7 +26,9 @@
 class arMigration0146
 {
   const
-    VERSION = 146, // The new database version
+    VERSION = 146;
+  const
+    // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   /**

@@ -24,7 +24,8 @@
 class sfSkosUniqueRelations implements Iterator, Countable
 {
   private
-    $relations = array(),
+    $relations = array();
+  private
     $visited = array();
 
   public function __construct() {

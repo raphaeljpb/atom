@@ -19,8 +19,10 @@
 class sfFopenAdapter
 {
   protected
-    $options             = array(),
-    $adapterErrorMessage = null,
+    $options             = array();
+  protected
+    $adapterErrorMessage = null;
+  protected
     $browser             = null;
     
   public function __construct($options = array())

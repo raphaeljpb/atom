@@ -21,7 +21,8 @@ class QubitObjectTermRelation extends BaseObjectTermRelation
 {
   // Flag for updating search index on save or delete
   public
-    $indexOnSave = true,
+    $indexOnSave = true;
+  public
     $indexObjectOnDelete = true;
 
   public function save($connection = null)

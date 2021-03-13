@@ -20,12 +20,15 @@
 abstract class arElasticSearchModelBase
 {
   protected
-    $timer = null,
+    $timer = null;
+  protected
     $count = 0;
 
   protected static
-    $conn,
-    $termParentList,
+    $conn;
+  protected static
+    $termParentList;
+  protected static
     $allowedLanguages;
 
   public function __construct()

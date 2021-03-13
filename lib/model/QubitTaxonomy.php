@@ -22,78 +22,112 @@ class QubitTaxonomy extends BaseTaxonomy
   public $disableNestedSetUpdating = false;
 
   const
-    ROOT_ID = 30,
-    DESCRIPTION_DETAIL_LEVEL_ID = 31,
-    ACTOR_ENTITY_TYPE_ID = 32,
-    DESCRIPTION_STATUS_ID = 33,
-    LEVEL_OF_DESCRIPTION_ID = 34,
-    SUBJECT_ID = 35,
-    ACTOR_NAME_TYPE_ID = 36,
-    NOTE_TYPE_ID = 37,
-    REPOSITORY_TYPE_ID = 38,
-    EVENT_TYPE_ID = 40,
-    QUBIT_SETTING_LABEL_ID = 41,
-    PLACE_ID = 42,
-    FUNCTION_ID = 43,
-    HISTORICAL_EVENT_ID = 44,
-    COLLECTION_TYPE_ID = 45,
-    MEDIA_TYPE_ID = 46,
-    DIGITAL_OBJECT_USAGE_ID = 47,
-    PHYSICAL_OBJECT_TYPE_ID = 48,
-    RELATION_TYPE_ID = 49,
-    MATERIAL_TYPE_ID = 50,
-
+    ROOT_ID = 30;
+  const
+    DESCRIPTION_DETAIL_LEVEL_ID = 31;
+  const
+    ACTOR_ENTITY_TYPE_ID = 32;
+  const
+    DESCRIPTION_STATUS_ID = 33;
+  const
+    LEVEL_OF_DESCRIPTION_ID = 34;
+  const
+    SUBJECT_ID = 35;
+  const
+    ACTOR_NAME_TYPE_ID = 36;
+  const
+    NOTE_TYPE_ID = 37;
+  const
+    REPOSITORY_TYPE_ID = 38;
+  const
+    EVENT_TYPE_ID = 40;
+  const
+    QUBIT_SETTING_LABEL_ID = 41;
+  const
+    PLACE_ID = 42;
+  const
+    FUNCTION_ID = 43;
+  const
+    HISTORICAL_EVENT_ID = 44;
+  const
+    COLLECTION_TYPE_ID = 45;
+  const
+    MEDIA_TYPE_ID = 46;
+  const
+    DIGITAL_OBJECT_USAGE_ID = 47;
+  const
+    PHYSICAL_OBJECT_TYPE_ID = 48;
+  const
+    RELATION_TYPE_ID = 49;
+  const
+    MATERIAL_TYPE_ID = 50;
+  const
     // Rules for Archival Description (RAD) taxonomies
-    RAD_NOTE_ID = 51,
-    RAD_TITLE_NOTE_ID = 52,
-
-    MODS_RESOURCE_TYPE_ID = 53,
-    DC_TYPE_ID = 54,
-    ACTOR_RELATION_TYPE_ID = 55,
-    RELATION_NOTE_TYPE_ID = 56,
-    TERM_RELATION_TYPE_ID = 57,
-    STATUS_TYPE_ID = 59,
-    PUBLICATION_STATUS_ID = 60,
-    ISDF_RELATION_TYPE_ID = 61,
-
+    RAD_NOTE_ID = 51;
+  const
+    RAD_TITLE_NOTE_ID = 52;
+  const
+    MODS_RESOURCE_TYPE_ID = 53;
+  const
+    DC_TYPE_ID = 54;
+  const
+    ACTOR_RELATION_TYPE_ID = 55;
+  const
+    RELATION_NOTE_TYPE_ID = 56;
+  const
+    TERM_RELATION_TYPE_ID = 57;
+  const
+    STATUS_TYPE_ID = 59;
+  const
+    PUBLICATION_STATUS_ID = 60;
+  const
+    ISDF_RELATION_TYPE_ID = 61;
+  const
     // Accession taxonomies
-    ACCESSION_RESOURCE_TYPE_ID = 62,
-    ACCESSION_ACQUISITION_TYPE_ID = 63,
-    ACCESSION_PROCESSING_PRIORITY_ID = 64,
-    ACCESSION_PROCESSING_STATUS_ID = 65,
-    DEACCESSION_SCOPE_ID = 66,
-
+    ACCESSION_RESOURCE_TYPE_ID = 62;
+  const
+    ACCESSION_ACQUISITION_TYPE_ID = 63;
+  const
+    ACCESSION_PROCESSING_PRIORITY_ID = 64;
+  const
+    ACCESSION_PROCESSING_STATUS_ID = 65;
+  const
+    DEACCESSION_SCOPE_ID = 66;
+  const
     // Right taxonomies
-    RIGHT_ACT_ID = 67,
-    RIGHT_BASIS_ID = 68,
-    COPYRIGHT_STATUS_ID = 69,
-
+    RIGHT_ACT_ID = 67;
+  const
+    RIGHT_BASIS_ID = 68;
+  const
+    COPYRIGHT_STATUS_ID = 69;
+  const
     // Metadata templates
-    INFORMATION_OBJECT_TEMPLATE_ID = 70,
-
+    INFORMATION_OBJECT_TEMPLATE_ID = 70;
+  const
     // Metadata templates
-    AIP_TYPE_ID = 71,
-
-    THEMATIC_AREA_ID = 72,
-    GEOGRAPHIC_SUBREGION_ID = 73,
-
+    AIP_TYPE_ID = 71;
+  const
+    THEMATIC_AREA_ID = 72;
+  const
+    GEOGRAPHIC_SUBREGION_ID = 73;
+  const
     // DACS notes
-    DACS_NOTE_ID = 74,
-
+    DACS_NOTE_ID = 74;
+  const
     // PREMIS Rights Statues
-    RIGHTS_STATUTES_ID = 75,
-
+    RIGHTS_STATUTES_ID = 75;
+  const
     // Genre taxonomy
-    GENRE_ID = 78,
-
-    JOB_STATUS_ID = 79,
-
-    ACTOR_OCCUPATION_ID = 80,
-
-    USER_ACTION_ID = 81,
-
-    ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID = 82,
-
+    GENRE_ID = 78;
+  const
+    JOB_STATUS_ID = 79;
+  const
+    ACTOR_OCCUPATION_ID = 80;
+  const
+    USER_ACTION_ID = 81;
+  const
+    ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID = 82;
+  const
     ACCESSION_EVENT_TYPE_ID = 83;
 
   public static

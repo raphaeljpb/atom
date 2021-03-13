@@ -27,10 +27,14 @@
 class QubitAsset
 {
   protected
-    $name,
-    $contents,
-    $checksum,
-    $checksumAlgorithm,
+    $name;
+  protected
+    $contents;
+  protected
+    $checksum;
+  protected
+    $checksumAlgorithm;
+  protected
     $path;
 
   public function __construct()

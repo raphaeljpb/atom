@@ -43,7 +43,8 @@ class QubitInformationObjectAcl extends QubitAcl
   // For information objects check parent authorization for create OR publish
   // actions
   protected static
-    $_parentAuthActions = ['create', 'publish'],
+    $_parentAuthActions = ['create', 'publish'];
+  protected static
     $_digitalObjectActions = ['readMaster', 'readReference', 'readThumbnail'];
 
   /**

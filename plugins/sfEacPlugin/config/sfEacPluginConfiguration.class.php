@@ -20,7 +20,8 @@
 class sfEacPluginConfiguration extends sfPluginConfiguration
 {
   public static
-    $summary = 'Metadata standard plugin. Enables XML import and export using Encoded Archival Context (EAC).',
+    $summary = 'Metadata standard plugin. Enables XML import and export using Encoded Archival Context (EAC).';
+  public static
     $version = '1.0.0';
 
   /**

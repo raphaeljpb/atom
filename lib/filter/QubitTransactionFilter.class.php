@@ -20,7 +20,8 @@
 class QubitTransactionFilter extends sfFilter
 {
   protected static
-    $retry = 0,
+    $retry = 0;
+  protected static
     $retryLimit = 3;
 
   protected function retry()

@@ -39,8 +39,8 @@ class ActorBrowseAction extends DefaultBrowseAction
       'emptyField',
       'relatedType',
       'relatedAuthority'
-    ),
-
+    );
+  public static
     $FILTERTAGS = array(
       'hasDigitalObject' => array(),
       'repository'       => array('model' => 'QubitRepository'),
@@ -51,8 +51,8 @@ class ActorBrowseAction extends DefaultBrowseAction
       'subject'          => array('model' => 'QubitTerm'),
       'mediatypes'       => array('model' => 'QubitTerm'),
       'emptyField'       => array()
-    ),
-
+    );
+  public static
     $AGGS = array(
       'languages' =>
         array('type' => 'term',

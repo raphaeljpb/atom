@@ -25,8 +25,8 @@ class TermNavigateRelatedComponent extends sfComponent
       QubitTaxonomy::PLACE_ID   => 'places.id',
       QubitTaxonomy::SUBJECT_ID => 'subjects.id',
       QubitTaxonomy::GENRE_ID   => 'genres.id'
-    ),
-
+    );
+  public static
     $TAXONOMY_ES_DIRECT_FIELDS = array(
       QubitTaxonomy::PLACE_ID   => 'directPlaces',
       QubitTaxonomy::SUBJECT_ID => 'directSubjects',

@@ -30,8 +30,10 @@ class QubitRelation extends BaseRelation
 {
   // Flags for updating search index on save or delete
   public
-    $indexOnSave = true,
-    $indexSubjectOnDelete = true,
+    $indexOnSave = true;
+  public
+    $indexSubjectOnDelete = true;
+  public
     $indexObjectOnDelete = true;
 
   /**

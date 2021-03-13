@@ -20,7 +20,8 @@
 class arGearman
 {
   protected static
-    $configPath = 'config/gearman.yml',
+    $configPath = 'config/gearman.yml';
+  protected static
     $config = null;
 
   public static function getConfiguration()

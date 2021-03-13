@@ -46,8 +46,10 @@ class QubitAcl
   protected static $_parentAuthActions = ['create'];
 
   protected
-    $_roles = array(),
-    $_resources = array(),
+    $_roles = array();
+  protected
+    $_resources = array();
+  protected
     $_user;
 
   public function __construct($user = null)

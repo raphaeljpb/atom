@@ -26,7 +26,9 @@
 class arMigration0165
 {
   const
-    VERSION = 165, // The new database version
+    VERSION = 165;
+  const
+    // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   // Add Privacy static page links.

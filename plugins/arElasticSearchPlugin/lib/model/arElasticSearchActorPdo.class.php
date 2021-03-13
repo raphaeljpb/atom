@@ -34,9 +34,12 @@ class arElasticSearchActorPdo
     $data = array();
 
   protected static
-    $conn,
-    $lookups,
-    $statements,
+    $conn;
+  protected static
+    $lookups;
+  protected static
+    $statements;
+  protected static
     $converseTermIds;
 
   /**

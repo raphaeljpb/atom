@@ -22,19 +22,26 @@ require_once 'propel/engine/builder/om/php5/PHP5ObjectBuilder.php';
 class QubitObjectBuilder extends PHP5ObjectBuilder
 {
   protected
-    $basePeerClassName = null,
-
-    $classNameColumn = null,
-    $cultureColumn = null,
-    $nestedSetLeftColumn = null,
-    $nestedSetRightColumn = null,
-    $sourceCultureColumn = null,
-
-    $inheritanceFk = null,
-    $selfFk = null,
-
-    $i18nFk = null,
-    $emulateOnDeleteCascade = null,
+    $basePeerClassName = null;
+  protected
+    $classNameColumn = null;
+  protected
+    $cultureColumn = null;
+  protected
+    $nestedSetLeftColumn = null;
+  protected
+    $nestedSetRightColumn = null;
+  protected
+    $sourceCultureColumn = null;
+  protected
+    $inheritanceFk = null;
+  protected
+    $selfFk = null;
+  protected
+    $i18nFk = null;
+  protected
+    $emulateOnDeleteCascade = null;
+  protected
     $emulateOnDeleteSetNull = null;
 
   public function __construct(Table $table)

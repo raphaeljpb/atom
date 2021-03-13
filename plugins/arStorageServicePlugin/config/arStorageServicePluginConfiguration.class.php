@@ -20,7 +20,8 @@
 class arStorageServicePluginConfiguration extends sfPluginConfiguration
 {
   public static
-    $summary = 'Archivematica Storage Service integration plugin',
+    $summary = 'Archivematica Storage Service integration plugin';
+  public static
     $version = '1.0.0';
 
   public function initialize()

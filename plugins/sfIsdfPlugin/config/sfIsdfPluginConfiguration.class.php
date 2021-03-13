@@ -20,7 +20,8 @@
 class sfIsdfPluginConfiguration extends sfPluginConfiguration
 {
   public static
-    $summary = 'Metadata standard plugin.  Enables data-entry and display using International Standard for Describing Functions (ISDF).',
+    $summary = 'Metadata standard plugin.  Enables data-entry and display using International Standard for Describing Functions (ISDF).';
+  public static
     $version = '1.0.0';
 
   /**

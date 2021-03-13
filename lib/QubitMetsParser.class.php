@@ -19,7 +19,8 @@
 
 class QubitMetsParser
 {
-  private $document, $resource;
+  private $document;
+  private $resource;
 
   public function __construct($document, $options = array())
   {

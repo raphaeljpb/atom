@@ -20,7 +20,8 @@
 class QubitPhysicalObject extends BasePhysicalObject
 {
   public
-    $disableNestedSetUpdating = false,
+    $disableNestedSetUpdating = false;
+  public
     $indexOnSave              = false;
 
   /**

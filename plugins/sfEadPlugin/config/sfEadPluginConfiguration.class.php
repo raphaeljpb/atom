@@ -20,7 +20,8 @@
 class sfEadPluginConfiguration extends sfPluginConfiguration
 {
   public static
-    $summary = 'Metadata standard plugin.  Enables XML import and export using Encoded Archival Description (EAD).',
+    $summary = 'Metadata standard plugin.  Enables XML import and export using Encoded Archival Description (EAD).';
+  public static
     $version = '1.0.0';
 
   /**

@@ -21,8 +21,10 @@
 class sfCurlAdapter
 {
   protected
-    $options = array(),
-    $curl    = null,
+    $options = array();
+  protected
+    $curl    = null;
+  protected
     $headers = array();
 
   /**

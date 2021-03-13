@@ -25,7 +25,8 @@
 class sfEadPlugin
 {
   public
-    $resource,
+    $resource;
+  public
     $siteBaseUrl;
 
   public static

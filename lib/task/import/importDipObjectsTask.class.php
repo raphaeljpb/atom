@@ -28,10 +28,18 @@
 class importDipObjectsTask extends arBaseTask
 {
   protected
-    $conn,                    // Database connection
-    $dipDir,                  // Path to DIP
-    $columnNames = array(),   // Sequence of column names
-    $columnIndexes = array(), // Index in CSV row for each column
+    $conn;
+  protected
+    // Database connection
+    $dipDir;
+  protected
+    // Path to DIP
+    $columnNames = array();
+  protected
+    // Sequence of column names
+    $columnIndexes = array();
+  protected
+    // Index in CSV row for each column
     $uniqueValueColumnName;   // Column name of unique identifier ("identifier" or "slug")
 
   /**

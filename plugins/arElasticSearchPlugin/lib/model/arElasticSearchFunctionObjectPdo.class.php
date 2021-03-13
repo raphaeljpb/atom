@@ -33,8 +33,10 @@ class arElasticSearchFunctionObjectPdo
     $data = array();
 
   protected static
-    $conn,
-    $lookups,
+    $conn;
+  protected static
+    $lookups;
+  protected static
     $statements;
 
   /**

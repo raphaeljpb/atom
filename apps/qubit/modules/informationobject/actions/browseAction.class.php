@@ -41,8 +41,8 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
       'topLod',
       'rangeType',
       'findingAidStatus'
-    ),
-
+    );
+  public static
     $FILTERTAGS = array(
       'repos'            => array('model' => 'QubitRepository'),
       'collection'       => array('model' => 'QubitInformationObject'),
@@ -59,8 +59,8 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
       'dateRange'        => array('params' => array('startDate', 'endDate'), 'operator' => 'or'),
       'findingAidStatus' => array(),
       'ancestor'         => array('model' => 'QubitInformationObject')
-    ),
-
+    );
+  public static
     $AGGS = array(
       'languages' =>
         array('type' => 'term',

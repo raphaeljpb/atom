@@ -31,8 +31,8 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
       'containers',
       'location',
       'name',
-      'type'),
-
+      'type');
+  public static
     $MODEL_MODULE = array(
       'QubitInformationObject' => 'informationobject',
       'QubitAccession' => 'accession'

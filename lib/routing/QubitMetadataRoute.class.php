@@ -31,7 +31,8 @@ class QubitMetadataRoute extends QubitRoute
       'rad'   => 'sfRadPlugin',
       'mods'  => 'sfModsPlugin',
       'dacs'  => 'arDacsPlugin',
-      'isdf'  => 'sfIsdfPlugin'),
+      'isdf'  => 'sfIsdfPlugin');
+  public static
 
     $DEFAULT_MODULES = array(
       'informationobject' => false,

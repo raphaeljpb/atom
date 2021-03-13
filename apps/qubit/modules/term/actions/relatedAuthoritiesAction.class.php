@@ -23,8 +23,8 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
 
   // Arrays not allowed in class constants
   public static
-    $FILTERTAGS = array(),
-
+    $FILTERTAGS = array();
+  public static
     $AGGS = array(
       'languages' =>
         array('type'  => 'term',

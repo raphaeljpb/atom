@@ -20,7 +20,8 @@
 class arArchivesCanadaPluginConfiguration extends sfPluginConfiguration
 {
   public static
-    $summary = 'Theme plugin, extension of arDominionPlugin.',
+    $summary = 'Theme plugin, extension of arDominionPlugin.';
+  public static
     $version = '0.0.1';
 
   public function contextLoadFactories(sfEvent $event)

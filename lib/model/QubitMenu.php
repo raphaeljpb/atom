@@ -24,20 +24,44 @@ class QubitMenu extends BaseMenu
   const
 
     // Root menu
-    ROOT_ID = 1,
+    ROOT_ID = 1;
+  const
 
+    
     // 2nd generation constant ids
-    MAIN_MENU_ID = 2,
-    QUICK_LINKS_ID  = 3,
-    BROWSE_ID = 4,
+    MAIN_MENU_ID = 2;
+  const
 
+    
+    QUICK_LINKS_ID  = 3;
+  const
+
+    
+    BROWSE_ID = 4;
+  const
+
+    
     // 3rd generation constant ids
-    ADD_EDIT_ID = 5,
-    IMPORT_ID = 7,
-    TRANSLATE_ID = 8,
-    ADMIN_ID = 9,
-    MANAGE_ID = 10,
+    ADD_EDIT_ID = 5;
+  const
 
+    
+    IMPORT_ID = 7;
+  const
+
+    
+    TRANSLATE_ID = 8;
+  const
+
+    
+    ADMIN_ID = 9;
+  const
+
+    
+    MANAGE_ID = 10;
+  const
+
+    
     // 4rd generation constant ids
     TAXONOMY_ID = 6;
 

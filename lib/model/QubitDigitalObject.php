@@ -29,17 +29,24 @@ class QubitDigitalObject extends BaseDigitalObject
   const
 
     // Directory for generic icons
-    GENERIC_ICON_DIR = 'generic-icons',
+    GENERIC_ICON_DIR = 'generic-icons';
+  const
 
+    
     // Mime-type for thumbnails (including reference image)
-    THUMB_MIME_TYPE = 'image/jpeg',
+    THUMB_MIME_TYPE = 'image/jpeg';
+  const
 
+    
     THUMB_EXTENSION = 'jpg';
 
   // Variables for save actions
   public
-    $assets = array(),
-    $indexOnSave = true, // Flag for updating search index on save or delete
+    $assets = array();
+  public
+    $indexOnSave = true;
+  public
+    // Flag for updating search index on save or delete
     $createDerivatives = true;
 
   /*
@@ -1056,8 +1063,8 @@ class QubitDigitalObject extends BaseDigitalObject
       'image/jpg',
       'image/jpe',
       'image/gif',
-      'image/png'),
-
+      'image/png');
+  protected static
     // Qubit generic icon list
     $qubitGenericThumbs = array(
       'application/vnd.ms-excel'      => 'excel.png',
@@ -1079,8 +1086,8 @@ class QubitDigitalObject extends BaseDigitalObject
       'image/jpg'                     => 'image.png',
       'image/jpe'                     => 'image.png',
       'image/gif'                     => 'image.png',
-      'image/png'                     => 'image.png'),
-
+      'image/png'                     => 'image.png');
+  protected static
     $qubitGenericReference = array(
       '*/*' => 'blank.png');
 

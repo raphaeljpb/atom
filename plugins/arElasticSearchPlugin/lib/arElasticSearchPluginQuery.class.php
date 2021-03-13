@@ -19,10 +19,10 @@
 
 class arElasticSearchPluginQuery
 {
-  public $query,
-         $queryBool,
-         $filters,
-         $criteria;
+  public $query;
+  public $queryBool;
+  public $filters;
+  public $criteria;
 
   /**
    * Constructor

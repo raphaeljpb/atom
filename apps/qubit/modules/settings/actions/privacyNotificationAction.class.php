@@ -23,8 +23,8 @@ class SettingsPrivacyNotificationAction extends SettingsEditAction
   public static
     $NAMES = array(
       'privacy_notification_enabled',
-      'privacy_notification'),
-
+      'privacy_notification');
+  public static
     $I18N = array(
       'privacy_notification'
     );
