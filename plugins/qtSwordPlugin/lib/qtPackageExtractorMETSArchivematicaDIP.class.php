@@ -167,9 +167,9 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   /**
    * Parse AIP name to extract filename.
    *
-   * @return string $filename
-   *
    * @param mixed $filename
+   *
+   * @return string $filename
    */
   protected function extractAipNameFromFileName($filename)
   {
@@ -448,9 +448,9 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   /**
    * Build an array of digital object metadata from METS fileGrp file elements.
    *
-   * @return array digital object metadata, sorted alphabetically
-   *
    * @param mixed $files
+   *
+   * @return array digital object metadata, sorted alphabetically
    */
   protected function getChildDataFromFileGrp($files)
   {
@@ -538,10 +538,10 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    * access file to the AtoM uploads/ directory, and link the info object to a
    * digital_object record
    *
-   * @return QubitInformationObject a child object
-   *
    * @param mixed $fileId
    * @param mixed $data
+   *
+   * @return QubitInformationObject a child object
    */
   protected function createInformationObjectFromFileGrp($fileId, $data)
   {

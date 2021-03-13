@@ -327,9 +327,9 @@ class QubitRepository extends BaseRepository
   /**
    * Get disk space used by digital objects in this repository.
    *
-   * @return int disk usage in bytes
-   *
    * @param mixed $options
+   *
+   * @return int disk usage in bytes
    */
   public function getDiskUsage($options = [])
   {
@@ -450,9 +450,9 @@ class QubitRepository extends BaseRepository
   /**
    * Get the current repository uploads directory.
    *
-   * @return string
-   *
    * @param mixed $absolute
+   *
+   * @return string
    */
   public function getUploadsPath($absolute = false)
   {
@@ -462,9 +462,9 @@ class QubitRepository extends BaseRepository
   /**
    * Get logo image path within the repository uploads directory.
    *
-   * @return string
-   *
    * @param mixed $absolute
+   *
+   * @return string
    */
   public function getLogoPath($absolute = false)
   {
@@ -474,9 +474,9 @@ class QubitRepository extends BaseRepository
   /**
    * Get banner image path within the repository uploads directory.
    *
-   * @return string
-   *
    * @param mixed $absolute
+   *
+   * @return string
    */
   public function getBannerPath($absolute = false)
   {

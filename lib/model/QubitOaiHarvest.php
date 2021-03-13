@@ -29,9 +29,9 @@ class QubitOaiHarvest extends BaseOaiHarvest
    *
    * @var int id, the id for the repository
    *
-   * @return date the last harvest date for that repository
-   *
    * @param mixed $id
+   *
+   * @return date the last harvest date for that repository
    */
   public static function getLastHarvestByID($id)
   {

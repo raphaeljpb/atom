@@ -535,9 +535,9 @@ class arElasticSearchPluginUtil
   /**
    * Retrieve the default template type given a specified ES index type.
    *
-   * @return string The default template (e.g. isad)
-   *
    * @param mixed $indexType
+   *
+   * @return string The default template (e.g. isad)
    */
   private static function getTemplate($indexType)
   {

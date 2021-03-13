@@ -450,9 +450,9 @@ class QubitInformationObject extends BaseInformationObject
   /**
    * Get all information objects updated between two dates.
    *
-   * @return array collection of QubitInformationObjects and remaining object count
-   *
    * @param mixed $options
+   *
+   * @return array collection of QubitInformationObjects and remaining object count
    */
   public static function getUpdatedRecords($options = [])
   {
@@ -754,9 +754,9 @@ class QubitInformationObject extends BaseInformationObject
    * Get all info objects that have the root node as a parent, and have children
    * (not orphans). Filtering drafts when requested.
    *
-   * @return array collection of QubitInformationObjects and remaining object count
-   *
    * @param mixed $options
+   *
+   * @return array collection of QubitInformationObjects and remaining object count
    */
   public static function getCollections($options = [])
   {
@@ -829,9 +829,9 @@ class QubitInformationObject extends BaseInformationObject
    * Returns descendants order by lft checking their visivility.
    * The childs of a non visible descendant will not be added even if they are visible.
    *
-   * @return array of QubitInformationObject objects
-   *
    * @param mixed $options
+   *
+   * @return array of QubitInformationObject objects
    */
   public function getDescendantsForExport($options = [])
   {
@@ -2806,9 +2806,9 @@ class QubitInformationObject extends BaseInformationObject
    * Return the extentAndMedium field without XML tags for the index pages.
    * strip_tags() is not working in the templates after the escaping changes.
    *
-   * @return string Cleaned extentAndMedium field
-   *
    * @param mixed $options
+   *
+   * @return string Cleaned extentAndMedium field
    */
   public function getCleanExtentAndMedium($options = [])
   {

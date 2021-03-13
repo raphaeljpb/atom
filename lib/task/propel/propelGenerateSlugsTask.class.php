@@ -240,10 +240,10 @@ EOF;
    * For now we only have special slug basis settings for information objects, but other
    * class types may get their own custom settings in the future.
    *
-   * @return string the string to base our slug off of
-   *
    * @param mixed $row
    * @param mixed $table
+   *
+   * @return string the string to base our slug off of
    */
   private function getStringToSlugify($row, $table)
   {

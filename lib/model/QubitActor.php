@@ -354,10 +354,10 @@ class QubitActor extends BaseActor
    * Returns only Actor objects, excluding those
    * that are an instance of the User or Repository class.
    *
-   * @return QubitQuery array of QubitActor objects
-   *
    * @param null|mixed $criteria
    * @param mixed      $options
+   *
+   * @return QubitQuery array of QubitActor objects
    */
   public static function getOnlyActors($criteria = null, $options = [])
   {

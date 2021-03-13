@@ -379,9 +379,9 @@ class QubitJob extends BaseJob
   /**
    * Get a string representation of a job's user name.
    *
-   * @return string The user name
-   *
    * @param mixed $job
+   *
+   * @return string The user name
    */
   public static function getUserString($job)
   {
@@ -398,9 +398,9 @@ class QubitJob extends BaseJob
   /**
    * Get a string representing a date.
    *
-   * @return string the job's creation date in a human readable string
-   *
    * @param mixed $date
+   *
+   * @return string the job's creation date in a human readable string
    */
   private function formatDate($date)
   {

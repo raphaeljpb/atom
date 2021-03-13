@@ -194,9 +194,9 @@ class QubitOai
   /**
    * Load array of OAI sets.
    *
-   * @return array of available OAI sets
-   *
    * @param mixed $options
+   *
+   * @return array of available OAI sets
    */
   public static function getOaiSets($options = [])
   {

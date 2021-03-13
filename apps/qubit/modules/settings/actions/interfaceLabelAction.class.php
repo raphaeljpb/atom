@@ -78,9 +78,9 @@ class SettingsInterfaceLabelAction extends sfAction
   /**
    * Update ui_label db values with form values (localized).
    *
-   * @return $this
-   *
    * @param mixed $form
+   *
+   * @return $this
    */
   protected function updateUiLabelSettings($form)
   {

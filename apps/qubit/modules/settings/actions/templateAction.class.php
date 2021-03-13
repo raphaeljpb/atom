@@ -77,9 +77,9 @@ class SettingsTemplateAction extends sfAction
   /**
    * Update default template db values with form values (non-localized).
    *
-   * @return $this;
-   *
    * @param mixed $form
+   *
+   * @return $this;
    */
   protected function updateDefaultTemplateSettings($form)
   {

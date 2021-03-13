@@ -1473,9 +1473,9 @@ class QubitDigitalObject extends BaseDigitalObject
    * Check whether the digital object usage involves an externally stored
    * master that's used to generate derivatives.
    *
-   * @return bool whether or not usage relies on an external master
-   *
    * @param mixed $usageId
+   *
+   * @return bool whether or not usage relies on an external master
    */
   public function derivativesGeneratedFromExternalMaster($usageId)
   {
@@ -1723,9 +1723,9 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * The directory structure is based on the checksum of the master digital object.
    *
-   * @return string asset file path
-   *
    * @param mixed $checksum
+   *
+   * @return string asset file path
    */
   public function getAssetPath($checksum)
   {
@@ -2022,9 +2022,9 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * NOTE: requires the ImageMagick library
    *
-   * @return QubitDigitalObject this object
-   *
    * @param null|mixed $connection
+   *
+   * @return QubitDigitalObject this object
    */
   public function setPageCount($connection = null)
   {
@@ -2144,9 +2144,9 @@ class QubitDigitalObject extends BaseDigitalObject
    *
    * NOTE: Requires the Imagemagick library for creating derivative assets
    *
-   * @return QubitDigitalObject this object
-   *
    * @param null|mixed $connection
+   *
+   * @return QubitDigitalObject this object
    */
   public function createCompoundChildren($connection = null)
   {
@@ -2251,9 +2251,9 @@ class QubitDigitalObject extends BaseDigitalObject
    * Given array, detect min value and return it. Return -1 if array is empty.
    * most limiting one.
    *
-   * @return int max upload file size in bytes
-   *
    * @param mixed $settings
+   *
+   * @return int max upload file size in bytes
    */
   public static function getMin($settings)
   {
@@ -2283,9 +2283,9 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create a thumbnail derivative for the current digital object.
    *
-   * @return QubitDigitalObject
-   *
    * @param null|mixed $connection
+   *
+   * @return QubitDigitalObject
    */
   public function createThumbnail($connection = null)
   {
@@ -2298,9 +2298,9 @@ class QubitDigitalObject extends BaseDigitalObject
   /**
    * Create a reference derivative for the current digital object.
    *
-   * @return QubitDigitalObject The new derived reference digital object
-   *
    * @param null|mixed $connection
+   *
+   * @return QubitDigitalObject The new derived reference digital object
    */
   public function createReferenceImage($connection = null)
   {
@@ -3011,9 +3011,9 @@ class QubitDigitalObject extends BaseDigitalObject
    * Extracts text from the current digital object
    * and creates a 'transcript' property.
    *
-   * @return string Text extracted
-   *
    * @param null|mixed $connection
+   *
+   * @return string Text extracted
    */
   public function extractText($connection = null)
   {

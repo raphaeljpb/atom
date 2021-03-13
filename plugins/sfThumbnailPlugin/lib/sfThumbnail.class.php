@@ -78,9 +78,9 @@ class sfThumbnail
    * @param string filename (with absolute path) of the image to load. If the filename is a http(s) URL, then an attempt to download the file will be made.
    * @param mixed $image
    *
-   * @return bool True if the image was properly loaded
-   *
    * @throws Exception If the image cannot be loaded, or if its mime type is not supported
+   *
+   * @return bool True if the image was properly loaded
    */
   public function loadFile($image)
   {
@@ -136,9 +136,9 @@ class sfThumbnail
    * @param mixed $image
    * @param mixed $mime
    *
-   * @return bool True if the image was properly loaded
-   *
    * @throws Exception If image mime type is not supported
+   *
+   * @return bool True if the image was properly loaded
    */
   public function loadData($image, $mime)
   {

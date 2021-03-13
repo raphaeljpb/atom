@@ -143,10 +143,10 @@ class QubitMarkdown
   /**
    * Convert an EAD markup tag to it's corresponding markdown symbols.
    *
-   * @return ead string with markdown replacement
-   *
    * @param mixed $eadTag
    * @param mixed $node
+   *
+   * @return ead string with markdown replacement
    */
   public static function eadTagToMarkdown($eadTag, $node)
   {

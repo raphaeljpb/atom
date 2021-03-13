@@ -473,9 +473,9 @@ class QubitFlatfileImport
   /**
    * Check array of event data from import, check if this exact event already exists.
    *
-   * @return bool True if exists, false if not
-   *
    * @param mixed $event
+   *
+   * @return bool True if exists, false if not
    */
   public function hasDuplicateEvent($event)
   {

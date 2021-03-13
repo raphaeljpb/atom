@@ -668,9 +668,9 @@ class sfWebBrowser
   /**
    * Get a SimpleXML version of the response.
    *
-   * @return SimpleXMLElement The reponse contents
-   *
    * @throws sfWebBrowserInvalidResponseException when response is not in a valid format
+   *
+   * @return SimpleXMLElement The reponse contents
    */
   public function getResponseXML()
   {

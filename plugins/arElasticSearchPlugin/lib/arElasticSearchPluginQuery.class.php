@@ -234,10 +234,10 @@ class arElasticSearchPluginQuery
    *     'sf0' => ''
    *   );
    *
-   * @return object \Elastica\Query\BoolQuery instance
-   *
    * @param mixed $params
    * @param mixed $archivalStandard
+   *
+   * @return object \Elastica\Query\BoolQuery instance
    */
   protected function parseQuery($params, $archivalStandard)
   {

@@ -388,10 +388,10 @@ class QubitXmlImport
   }
 
   /**
-   * @return DOMNodeList
-   *
    * @param mixed $node
    * @param mixed $xpathQuery
+   *
+   * @return DOMNodeList
    */
   public static function queryDomNode($node, $xpathQuery)
   {
@@ -446,10 +446,10 @@ class QubitXmlImport
   /**
    * Replace </lb> tags for '\n'.
    *
-   * @return node value without linebreaks tags
-   *
    * @param mixed $node
    * @param mixed $methodMap
+   *
+   * @return node value without linebreaks tags
    */
   public static function replaceLineBreaks($node, $methodMap = [])
   {
@@ -533,10 +533,10 @@ class QubitXmlImport
   /**
    * Normalize node, replaces <p> and <lb/>.
    *
-   * @return node value normalized
-   *
    * @param mixed $node
    * @param mixed $methodMap
+   *
+   * @return node value normalized
    */
   public static function normalizeNodeValue($node, $methodMap = [])
   {
@@ -683,13 +683,13 @@ class QubitXmlImport
   /**
    * Populate EAD information objects.
    *
-   * @return bool true if we want to continue populating objects, false if we want to end the import
-   *
    * @param mixed $domNode
    * @param mixed $importDOM
    * @param mixed $mapping
    * @param mixed $currentObject
    * @param mixed $importSchema
+   *
+   * @return bool true if we want to continue populating objects, false if we want to end the import
    */
   private function populateObject(&$domNode, &$importDOM, &$mapping, &$currentObject, $importSchema)
   {
@@ -1279,9 +1279,9 @@ class QubitXmlImport
    *
    * @param QubitInformationObject $io The information object to check
    *
-   * @return bool The information object passes the limit option or not
-   *
    * @throws sfException When the limit option is not accepted
+   *
+   * @return bool The information object passes the limit option or not
    */
   private function passesLimitOptionForIo($io)
   {
@@ -1314,9 +1314,9 @@ class QubitXmlImport
    *
    * @param QubitActor $actor The actor object to check
    *
-   * @return bool The actor passes the limit option or not
-   *
    * @throws sfException When the limit option is not accepted
+   *
+   * @return bool The actor passes the limit option or not
    */
   private function passesLimitOptionForActor($actor)
   {

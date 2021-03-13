@@ -116,11 +116,11 @@ class arGenerateReportJob extends arBaseJob
   /**
    * Get a report's filename based on slug, report type and format.
    *
-   * @return string the report filename
-   *
    * @param mixed $resource
    * @param mixed $format
    * @param mixed $type
+   *
+   * @return string the report filename
    */
   public static function getFilename($resource, $format, $type)
   {
@@ -433,9 +433,9 @@ class arGenerateReportJob extends arBaseJob
   /**
    * Get first creation date given specified resource.
    *
-   * @return QubitEvent specifying first creation date encountered, null otherwise
-   *
    * @param mixed $resource
+   *
+   * @return QubitEvent specifying first creation date encountered, null otherwise
    */
   private function getCreationDates($resource)
   {
