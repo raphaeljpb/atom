@@ -22,6 +22,27 @@ class SettingsMarkdownAction extends DefaultEditAction
   // Arrays not allowed in class constants
   public static $NAMES = array('enabled');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        QubitCache::getInstance()->removePattern('settings:i18n:*');
+
+        $this->getUser()->setFlash('notice', $this->i18n->__('Markdown settings saved.'));
+
+        $this->redirect(array('module' => 'settings', 'action' => 'markdown'));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->i18n = sfContext::getInstance()->i18n;
@@ -62,27 +83,6 @@ class SettingsMarkdownAction extends DefaultEditAction
         $this->settingEnabled->save();
 
         break;
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        QubitCache::getInstance()->removePattern('settings:i18n:*');
-
-        $this->getUser()->setFlash('notice', $this->i18n->__('Markdown settings saved.'));
-
-        $this->redirect(array('module' => 'settings', 'action' => 'markdown'));
-      }
     }
   }
 }

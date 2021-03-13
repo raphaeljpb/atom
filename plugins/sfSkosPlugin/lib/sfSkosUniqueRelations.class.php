@@ -30,24 +30,6 @@ class sfSkosUniqueRelations implements Iterator, Countable
     $this->position = 0;
   }
 
-  protected function visited($sum)
-  {
-    return false !== array_key_exists($sum, $this->visited);
-  }
-
-  /**
-   * Use cantor pairing function: https://en.wikipedia.org/wiki/Pairing_function.
-   * The vector is sorted before so the same sum is obtained regardless the order.
-   */
-  protected function hash($x, $y)
-  {
-    $vec = array($x, $y);
-    sort($vec);
-    list($x, $y) = $vec;
-
-    return (($x + $y) * ($x + $y + 1)) / 2 + $y;
-  }
-
   public function insert($x, $y)
   {
     $sum = $this->hash($x, $y);
@@ -108,5 +90,23 @@ class sfSkosUniqueRelations implements Iterator, Countable
   public function count()
   {
     return count($this->relations);
+  }
+
+  protected function visited($sum)
+  {
+    return false !== array_key_exists($sum, $this->visited);
+  }
+
+  /**
+   * Use cantor pairing function: https://en.wikipedia.org/wiki/Pairing_function.
+   * The vector is sorted before so the same sum is obtained regardless the order.
+   */
+  protected function hash($x, $y)
+  {
+    $vec = array($x, $y);
+    sort($vec);
+    list($x, $y) = $vec;
+
+    return (($x + $y) * ($x + $y + 1)) / 2 + $y;
   }
 }

@@ -25,33 +25,6 @@
  */
 class arSearchPopulateTask extends sfBaseTask
 {
-  protected function configure()
-  {
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('slug', null, sfCommandOption::PARAMETER_OPTIONAL, 'Slug of resource to index (ignoring exclude-types option).'),
-      new sfCommandOption('ignore-descendants', null, sfCommandOption::PARAMETER_NONE, "Don't index resource's descendants (applies to --slug option only)."),
-      new sfCommandOption('exclude-types', null, sfCommandOption::PARAMETER_OPTIONAL, 'Exclude document type(s) (command-separated) from indexing'),
-      new sfCommandOption('show-types', null, sfCommandOption::PARAMETER_NONE, 'Show available document type(s), that can be excluded, before indexing'),
-      new sfCommandOption('update', null, sfCommandOption::PARAMETER_NONE, "Don't delete existing records before indexing.")));
-
-    $this->namespace = 'search';
-    $this->name = 'populate';
-
-    $this->briefDescription = 'Populates the search index';
-    $this->detailedDescription = <<<EOF
-The [search:populate|INFO] task empties, populates, and optimizes the index
-in the current project. It may take quite a while to run.
-
-To exclude a document type, use the --exclude-types option. For example:
-
-  php symfony search:populate --exclude-types="term,actor"
-
-To see a list of available document types that can be excluded use the --show-types option.
-EOF;
-  }
-
   public function execute($arguments = array(), $options = array())
   {
     sfContext::createInstance($this->configuration);
@@ -80,6 +53,32 @@ EOF;
 
       QubitSearch::getInstance()->populate($populateOptions);
     }
+  }
+  protected function configure()
+  {
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('slug', null, sfCommandOption::PARAMETER_OPTIONAL, 'Slug of resource to index (ignoring exclude-types option).'),
+      new sfCommandOption('ignore-descendants', null, sfCommandOption::PARAMETER_NONE, "Don't index resource's descendants (applies to --slug option only)."),
+      new sfCommandOption('exclude-types', null, sfCommandOption::PARAMETER_OPTIONAL, 'Exclude document type(s) (command-separated) from indexing'),
+      new sfCommandOption('show-types', null, sfCommandOption::PARAMETER_NONE, 'Show available document type(s), that can be excluded, before indexing'),
+      new sfCommandOption('update', null, sfCommandOption::PARAMETER_NONE, "Don't delete existing records before indexing.")));
+
+    $this->namespace = 'search';
+    $this->name = 'populate';
+
+    $this->briefDescription = 'Populates the search index';
+    $this->detailedDescription = <<<EOF
+The [search:populate|INFO] task empties, populates, and optimizes the index
+in the current project. It may take quite a while to run.
+
+To exclude a document type, use the --exclude-types option. For example:
+
+  php symfony search:populate --exclude-types="term,actor"
+
+To see a list of available document types that can be excluded use the --show-types option.
+EOF;
   }
 
   private function availableDocumentTypes()

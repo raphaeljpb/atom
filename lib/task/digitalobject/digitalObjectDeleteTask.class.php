@@ -20,33 +20,6 @@
 class digitalObjectDeleteTask extends arBaseTask
 {
   private $validMediaTypes;
-  /**
-   * @see sfTask
-   */
-  protected function configure()
-  {
-    $this->addArguments(array(
-      new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Slug.')
-    ));
-
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('and-descendants', null, sfCommandOption::PARAMETER_NONE, 'Remove digital objects for descendant archival descriptions as well'),
-      new sfCommandOption('media-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'Limit digital object deletion to a specific media type (e.g. "audio" or "image" or "text" or "video). "Other" is not supported', null),
-      new sfCommandOption('dry-run', 'd', sfCommandOption::PARAMETER_NONE, 'Dry run (no database changes)', null),
-    ));
-
-    $this->namespace = 'digitalobject';
-    $this->name = 'delete';
-    $this->briefDescription = 'Delete digital objects given an archival description slug.';
-
-    $this->detailedDescription = <<<EOF
-Delete digital objects by slug. Slug must be an information object, or a
-repository.
-EOF;
-  }
 
   /**
    * @see sfTask
@@ -150,6 +123,33 @@ EOF;
     }
 
     $this->logSection('digital-object', sprintf('%d digital objects deleted (%.2fs elapsed)', $nDeleted, $t->elapsed()));
+  }
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    $this->addArguments(array(
+      new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Slug.')
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('and-descendants', null, sfCommandOption::PARAMETER_NONE, 'Remove digital objects for descendant archival descriptions as well'),
+      new sfCommandOption('media-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'Limit digital object deletion to a specific media type (e.g. "audio" or "image" or "text" or "video). "Other" is not supported', null),
+      new sfCommandOption('dry-run', 'd', sfCommandOption::PARAMETER_NONE, 'Dry run (no database changes)', null),
+    ));
+
+    $this->namespace = 'digitalobject';
+    $this->name = 'delete';
+    $this->briefDescription = 'Delete digital objects given an archival description slug.';
+
+    $this->detailedDescription = <<<EOF
+Delete digital objects by slug. Slug must be an information object, or a
+repository.
+EOF;
   }
 
   private function getIoDescendantIds($lft, $rgt)

@@ -389,29 +389,6 @@ class sfImageMagickAdapter
     return $this->sourceMime;
   }
 
-  /**
-   * If failure, this method returns 0.
-   */
-  private function getCount($image)
-  {
-    $extension = pathinfo($image, PATHINFO_EXTENSION);
-
-    // If processing a PDF, attempt to use pdfinfo as it's faster
-    if ('application/pdf' == $this->getSourceMime())
-    {
-      return sfImageMagickAdapter::getPdfPageCount($image);
-    }
-
-    $command = $this->magickCommands['identify'].' -format %n '.escapeshellarg($image);
-    exec($command, $stdout, $retval);
-    if ($retval === 1)
-    {
-      throw new Exception('Image could not be identified.');
-    }
-
-    return intval(@$stdout[0]);
-  }
-
   public static function pdfinfoToolAvailable()
   {
     return !empty(shell_exec('which pdfinfo'));
@@ -447,6 +424,29 @@ class sfImageMagickAdapter
     }
 
     throw new Exception('PDF analysis incomplete.');
+  }
+
+  /**
+   * If failure, this method returns 0.
+   */
+  private function getCount($image)
+  {
+    $extension = pathinfo($image, PATHINFO_EXTENSION);
+
+    // If processing a PDF, attempt to use pdfinfo as it's faster
+    if ('application/pdf' == $this->getSourceMime())
+    {
+      return sfImageMagickAdapter::getPdfPageCount($image);
+    }
+
+    $command = $this->magickCommands['identify'].' -format %n '.escapeshellarg($image);
+    exec($command, $stdout, $retval);
+    if ($retval === 1)
+    {
+      throw new Exception('Image could not be identified.');
+    }
+
+    return intval(@$stdout[0]);
   }
 
   private function getExtract($image, array $options = array())

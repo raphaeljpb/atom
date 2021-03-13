@@ -44,6 +44,16 @@ class csvInformationObjectExport extends QubitFlatfileExport
   protected $options = array();
 
   /*
+   * Store export parameters for use.
+   *
+   * @return void
+   */
+  public function setOptions($options = array())
+  {
+    $this->options = $options;
+  }
+
+  /*
    * Information object-specific property setting based on configuration data
    *
    * @return void
@@ -54,16 +64,6 @@ class csvInformationObjectExport extends QubitFlatfileExport
     $this->commonNoteMap = $config['note']['common'];
     $this->radNoteMap    = $config['note']['rad'];
     $this->titleNoteMap  = $config['note']['title'];
-  }
-
-  /*
-   * Store export parameters for use.
-   *
-   * @return void
-   */
-  public function setOptions($options = array())
-  {
-    $this->options = $options;
   }
 
   /*

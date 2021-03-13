@@ -104,6 +104,172 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
               'field'  => 'partOf.id',
               'size'   => 10));
 
+  public function execute($request)
+  {
+    // To keep the top level descriptions filter an agg in sync
+    // the autocomplete value is converted to the resource id
+    // before the agg filters are added to the query
+    $this->getParameters = $request->getGetParameters();
+    if (isset($this->getParameters['collection']) && !ctype_digit($this->getParameters['collection']))
+    {
+      $params = sfContext::getInstance()->routing->parse(Qubit::pathInfo($this->getParameters['collection']));
+      $this->collection = $params['_sf_route']->resource;
+
+      unset($this->getParameters['collection']);
+
+      if ($this->collection instanceof QubitInformationObject)
+      {
+        $this->getParameters['collection'] = $this->collection->id;
+      }
+    }
+    elseif (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection']))
+    {
+      $this->collection = QubitInformationObject::getById($this->getParameters['collection']);
+    }
+
+    // Set search realm if searching by repository
+    if (isset($request->repos) && ctype_digit($request->repos))
+    {
+      // Add repo to the user session as realm
+      if (sfConfig::get('app_enable_institutional_scoping'))
+      {
+        $this->context->user->setAttribute('search-realm', $request->repos);
+      }
+    }
+    elseif (sfConfig::get('app_enable_institutional_scoping'))
+    {
+      // Remove realm
+      $this->context->user->removeAttribute('search-realm');
+    }
+
+    // Add first criterion to the search box if it's over any field
+    if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->sq0) && !isset($request->sf0))
+    {
+      $request->query = $request->sq0;
+      $this->getParameters['query'] = $request->sq0;
+    }
+
+    // And search box query to the first criterion
+    if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->query))
+    {
+      $request->sq0 = $request->query;
+      $this->getParameters['sq0'] = $request->query;
+    }
+
+    // Create the query and filter it with the selected aggs
+    parent::execute($request);
+
+    // Create advanced search form (without CSRF protection)
+    $this->form = new sfForm([], [], false);
+    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+
+    foreach ($this::$NAMES as $name)
+    {
+      $this->addField($name);
+    }
+
+    // Get actual information object template to check archival history
+    // visibility in _advancedSearch partial and in parseQuery function
+    $this->template = 'isad';
+    if (null !== $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template'))
+    {
+      $this->template = $infoObjectTemplate->getValue(array('sourceCulture'=>true));
+    }
+
+    // Add print preview style
+    if ('print' == $request->media)
+    {
+      $this->getResponse()->addStylesheet('print-preview', 'last');
+    }
+
+    // Default to hide the advanced search panel
+    $this->showAdvanced = false;
+    if (filter_var($request->showAdvanced, FILTER_VALIDATE_BOOLEAN))
+    {
+      $this->showAdvanced = true;
+    }
+
+    // Default to show only top level descriptions
+    $this->topLod = true;
+    if (isset($request->topLod) && !filter_var($request->topLod, FILTER_VALIDATE_BOOLEAN))
+    {
+      $this->topLod = false;
+    }
+
+    // Defaults to inclusive date range type
+    $this->rangeType = 'inclusive';
+    if (isset($request->rangeType))
+    {
+      $this->rangeType = $request->rangeType;
+    }
+
+    $this->addHiddenFields($request);
+    $this->setFilterTags($request);
+
+    // Add advanced form filter to the query
+    $this->search->addAdvancedSearchFilters($this::$NAMES, $this->getParameters, $this->template);
+
+    // Stop if the input is not valid. It must be after the query is created but before
+    // it's executed to keep the boolean search and other params for the next request
+    $this->form->bind($request->getRequestParameters() + $request->getGetParameters());
+    if (!$this->form->isValid())
+    {
+      return;
+    }
+
+    // Sort
+    switch ($request->sort)
+    {
+      // Sort by highest ES score
+      case 'relevance':
+        $this->search->query->addSort(array('_score' => $request->sortDir));
+
+        break;
+
+      case 'identifier':
+        $this->search->query->addSort(array('identifier.untouched' => $request->sortDir));
+
+        break;
+
+      case 'referenceCode':
+        $this->search->query->addSort(array('referenceCode.untouched' => $request->sortDir));
+
+        break;
+
+      case 'alphabetic':
+        $field = sprintf('i18n.%s.title.alphasort', $this->selectedCulture);
+        $this->search->query->addSort(array($field => $request->sortDir));
+
+        break;
+
+      case 'startDate':
+        $this->search->query->setSort(array('startDateSort' => $request->sortDir));
+
+        break;
+
+      case 'endDate':
+        $this->search->query->setSort(array('endDateSort' => $request->sortDir));
+
+        break;
+
+      case 'lastUpdated':
+      default:
+        $this->search->query->setSort(array('updatedAt' => $request->sortDir));
+    }
+
+    $this->setView($request);
+
+    $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($this->search->getQuery(false, true));
+
+    // Page results
+    $this->pager = new QubitSearchPager($resultSet);
+    $this->pager->setPage($request->page ? $request->page : 1);
+    $this->pager->setMaxPerPage($this->limit);
+    $this->pager->init();
+
+    $this->populateAggs($resultSet);
+  }
+
   protected function addField($name)
   {
     switch ($name)
@@ -395,172 +561,6 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
       $this->setFilterTagLabel('findingAidStatus', $labels[$request->findingAidStatus]);
     }
-  }
-
-  public function execute($request)
-  {
-    // To keep the top level descriptions filter an agg in sync
-    // the autocomplete value is converted to the resource id
-    // before the agg filters are added to the query
-    $this->getParameters = $request->getGetParameters();
-    if (isset($this->getParameters['collection']) && !ctype_digit($this->getParameters['collection']))
-    {
-      $params = sfContext::getInstance()->routing->parse(Qubit::pathInfo($this->getParameters['collection']));
-      $this->collection = $params['_sf_route']->resource;
-
-      unset($this->getParameters['collection']);
-
-      if ($this->collection instanceof QubitInformationObject)
-      {
-        $this->getParameters['collection'] = $this->collection->id;
-      }
-    }
-    elseif (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection']))
-    {
-      $this->collection = QubitInformationObject::getById($this->getParameters['collection']);
-    }
-
-    // Set search realm if searching by repository
-    if (isset($request->repos) && ctype_digit($request->repos))
-    {
-      // Add repo to the user session as realm
-      if (sfConfig::get('app_enable_institutional_scoping'))
-      {
-        $this->context->user->setAttribute('search-realm', $request->repos);
-      }
-    }
-    elseif (sfConfig::get('app_enable_institutional_scoping'))
-    {
-      // Remove realm
-      $this->context->user->removeAttribute('search-realm');
-    }
-
-    // Add first criterion to the search box if it's over any field
-    if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->sq0) && !isset($request->sf0))
-    {
-      $request->query = $request->sq0;
-      $this->getParameters['query'] = $request->sq0;
-    }
-
-    // And search box query to the first criterion
-    if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->query))
-    {
-      $request->sq0 = $request->query;
-      $this->getParameters['sq0'] = $request->query;
-    }
-
-    // Create the query and filter it with the selected aggs
-    parent::execute($request);
-
-    // Create advanced search form (without CSRF protection)
-    $this->form = new sfForm([], [], false);
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-
-    foreach ($this::$NAMES as $name)
-    {
-      $this->addField($name);
-    }
-
-    // Get actual information object template to check archival history
-    // visibility in _advancedSearch partial and in parseQuery function
-    $this->template = 'isad';
-    if (null !== $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template'))
-    {
-      $this->template = $infoObjectTemplate->getValue(array('sourceCulture'=>true));
-    }
-
-    // Add print preview style
-    if ('print' == $request->media)
-    {
-      $this->getResponse()->addStylesheet('print-preview', 'last');
-    }
-
-    // Default to hide the advanced search panel
-    $this->showAdvanced = false;
-    if (filter_var($request->showAdvanced, FILTER_VALIDATE_BOOLEAN))
-    {
-      $this->showAdvanced = true;
-    }
-
-    // Default to show only top level descriptions
-    $this->topLod = true;
-    if (isset($request->topLod) && !filter_var($request->topLod, FILTER_VALIDATE_BOOLEAN))
-    {
-      $this->topLod = false;
-    }
-
-    // Defaults to inclusive date range type
-    $this->rangeType = 'inclusive';
-    if (isset($request->rangeType))
-    {
-      $this->rangeType = $request->rangeType;
-    }
-
-    $this->addHiddenFields($request);
-    $this->setFilterTags($request);
-
-    // Add advanced form filter to the query
-    $this->search->addAdvancedSearchFilters($this::$NAMES, $this->getParameters, $this->template);
-
-    // Stop if the input is not valid. It must be after the query is created but before
-    // it's executed to keep the boolean search and other params for the next request
-    $this->form->bind($request->getRequestParameters() + $request->getGetParameters());
-    if (!$this->form->isValid())
-    {
-      return;
-    }
-
-    // Sort
-    switch ($request->sort)
-    {
-      // Sort by highest ES score
-      case 'relevance':
-        $this->search->query->addSort(array('_score' => $request->sortDir));
-
-        break;
-
-      case 'identifier':
-        $this->search->query->addSort(array('identifier.untouched' => $request->sortDir));
-
-        break;
-
-      case 'referenceCode':
-        $this->search->query->addSort(array('referenceCode.untouched' => $request->sortDir));
-
-        break;
-
-      case 'alphabetic':
-        $field = sprintf('i18n.%s.title.alphasort', $this->selectedCulture);
-        $this->search->query->addSort(array($field => $request->sortDir));
-
-        break;
-
-      case 'startDate':
-        $this->search->query->setSort(array('startDateSort' => $request->sortDir));
-
-        break;
-
-      case 'endDate':
-        $this->search->query->setSort(array('endDateSort' => $request->sortDir));
-
-        break;
-
-      case 'lastUpdated':
-      default:
-        $this->search->query->setSort(array('updatedAt' => $request->sortDir));
-    }
-
-    $this->setView($request);
-
-    $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($this->search->getQuery(false, true));
-
-    // Page results
-    $this->pager = new QubitSearchPager($resultSet);
-    $this->pager->setPage($request->page ? $request->page : 1);
-    $this->pager->setMaxPerPage($this->limit);
-    $this->pager->init();
-
-    $this->populateAggs($resultSet);
   }
 
   /**

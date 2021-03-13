@@ -140,6 +140,11 @@ class sfCurlAdapter
     curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, array($this, 'read_header'));
   }
 
+  public function __destruct()
+  {
+    curl_close($this->curl);
+  }
+
   /**
    * Submits a request
    *
@@ -225,11 +230,6 @@ class sfCurlAdapter
     $this->headers = array();
 
     return $browser;
-  }
-
-  public function __destruct()
-  {
-    curl_close($this->curl);
   }
 
   protected function read_header($curl, $headers)

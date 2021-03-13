@@ -25,22 +25,6 @@
  */
 class arSearchStatusTask extends arBaseTask
 {
-  protected function configure()
-  {
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-    ));
-
-    $this->namespace = 'search';
-    $this->name = 'status';
-
-    $this->briefDescription = 'Display search index status';
-    $this->detailedDescription = <<<EOF
-The [search:status|INFO] task displays the status of search indexing for each document type.
-EOF;
-  }
-
   public function execute($arguments = array(), $options = array())
   {
     parent::execute($arguments, $options);
@@ -67,6 +51,21 @@ EOF;
 
       $this->log(sprintf(' - %s: %d/%d', $docTypeDescription, $docTypeIndexedCount, $docTypeAvailableCount));
     }
+  }
+  protected function configure()
+  {
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+    ));
+
+    $this->namespace = 'search';
+    $this->name = 'status';
+
+    $this->briefDescription = 'Display search index status';
+    $this->detailedDescription = <<<EOF
+The [search:status|INFO] task displays the status of search indexing for each document type.
+EOF;
   }
 
   private function availableDocumentTypes()

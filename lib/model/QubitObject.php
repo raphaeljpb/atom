@@ -148,15 +148,6 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     return $this;
   }
 
-  protected function insert($connection = null)
-  {
-    parent::insert($connection);
-
-    self::insertSlug($connection);
-
-    return $this;
-  }
-
   public function insertSlug($connection = null)
   {
     if (!isset($connection))
@@ -238,17 +229,6 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     }
 
     return $this;
-  }
-
-  protected function checkIfSlugIsReserved()
-  {
-    // Check if slug is used by a plugin that may not be enabled yet
-    if (in_array($this->slug, array('api', 'sword')))
-    {
-      return true;
-    }
-
-    return self::actionExistsForUrl($this->slug);
   }
 
   /**
@@ -658,5 +638,25 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     }
 
     return $n;
+  }
+
+  protected function insert($connection = null)
+  {
+    parent::insert($connection);
+
+    self::insertSlug($connection);
+
+    return $this;
+  }
+
+  protected function checkIfSlugIsReserved()
+  {
+    // Check if slug is used by a plugin that may not be enabled yet
+    if (in_array($this->slug, array('api', 'sword')))
+    {
+      return true;
+    }
+
+    return self::actionExistsForUrl($this->slug);
   }
 }

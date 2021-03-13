@@ -38,112 +38,6 @@ class QubitGrantedRight extends BaseGrantedRight
   }
 
   /**
-   * This method will check global PREMIS settings against granted rights
-   * on an information object, & return which groups are allowed to perform
-   * a specified action.
-   *
-   * @param  int  id  The ID of the information object to check permissions against.
-   * @param  string  action  The action to check against, e.g. 'readReference'
-   * @param  string  denyReason  An optional parameter for the function to pass out
-   *                 which rule was responsible for any denial (e.g. 'conditional')
-   *
-   * @return  array  An array of groupIds that are allowed to perform $action on
-   *                 the specified information object.
-   */
-  private static function checkPremisRightsAgainstGroups($id, $action, &$denyReason = null)
-  {
-    list($actId, $premisPerms) = self::getPremisSettings();
-    $grantedRights = self::getByObjectIdAndAct($id, $actId);
-
-    $groupIds = array(
-      QubitAclGroup::AUTHENTICATED_ID,
-      QubitAclGroup::ADMINISTRATOR_ID,
-      QubitAclGroup::ANONYMOUS_ID
-    );
-
-    if ($id == QubitInformationObject::ROOT_ID)
-    {
-      throw new sfException('Cannot call checkPremisRightsAgainstGroups with ROOT_ID');
-    }
-
-    // Get usage, e.g. 'reference', 'master'
-    $usage = strtolower(str_replace('read', '', $action));
-
-    // Check the $grantedRights of the information object against the global
-    // PREMIS rights for $action.
-    foreach ($grantedRights as $right)
-    {
-      if ($right->actId != $actId)
-      {
-        continue;
-      }
-
-      if (empty($right->rights) || empty($right->rights->basisId))
-      {
-        continue;
-      }
-
-      switch ($right->restriction)
-      {
-        case QubitGrantedRight::DENY_RIGHT:
-          $restriction = 'disallow';
-          break;
-
-        case QubitGrantedRight::GRANT_RIGHT:
-          $restriction = 'allow';
-          break;
-
-        case QubitGrantedRight::CONDITIONAL_RIGHT:
-          $restriction = 'conditional';
-          break;
-
-        default:
-          throw new sfException("Invalid restriction value given: {$right->restriction}");
-      }
-
-      // Remove unauthenticated user access and finish loop,
-      // as one "denied" permission overules any "grants" we'll see.
-      $basisSlug = $right->rights->basis->slug;
-      if (empty($premisPerms[$basisSlug]) ||
-          empty($premisPerms[$basisSlug]["{$restriction}_{$usage}"]) ||
-          !$premisPerms[$basisSlug]["{$restriction}_{$usage}"])
-      {
-        if (($key = array_search(QubitAclGroup::ANONYMOUS_ID, $groupIds)) !== false)
-        {
-          unset($groupIds[$key]);
-          if ($denyReason !== null)
-          {
-            $denyReason = self::getAccessWarning($basisSlug, $restriction);
-          }
-        }
-
-        break;
-      }
-    }
-
-    return $groupIds;
-  }
-
-  private static function getAccessWarning($basisSlug, $restriction)
-  {
-    if ($restriction === 'conditional')
-    {
-      $setting = QubitSetting::getByNameAndScope("{$basisSlug}_conditional", 'access_statement');
-    }
-    else
-    {
-      $setting = QubitSetting::getByNameAndScope("{$basisSlug}_disallow", 'access_statement');
-    }
-
-    if ($setting === null)
-    {
-      return false;
-    }
-
-    return $setting->getValue(array('cultureFallback' => true));
-  }
-
-  /**
    * A wrapper for checkPremisRightsAgainstGroups. This method will check to see
    * if the current user is anonymous. If so, it will check the current global
    * PREMIS settings against an information object given a specified digital object
@@ -278,5 +172,111 @@ class QubitGrantedRight extends BaseGrantedRight
   public function isDeleted()
   {
     return $this->deleted;
+  }
+
+  /**
+   * This method will check global PREMIS settings against granted rights
+   * on an information object, & return which groups are allowed to perform
+   * a specified action.
+   *
+   * @param  int  id  The ID of the information object to check permissions against.
+   * @param  string  action  The action to check against, e.g. 'readReference'
+   * @param  string  denyReason  An optional parameter for the function to pass out
+   *                 which rule was responsible for any denial (e.g. 'conditional')
+   *
+   * @return  array  An array of groupIds that are allowed to perform $action on
+   *                 the specified information object.
+   */
+  private static function checkPremisRightsAgainstGroups($id, $action, &$denyReason = null)
+  {
+    list($actId, $premisPerms) = self::getPremisSettings();
+    $grantedRights = self::getByObjectIdAndAct($id, $actId);
+
+    $groupIds = array(
+      QubitAclGroup::AUTHENTICATED_ID,
+      QubitAclGroup::ADMINISTRATOR_ID,
+      QubitAclGroup::ANONYMOUS_ID
+    );
+
+    if ($id == QubitInformationObject::ROOT_ID)
+    {
+      throw new sfException('Cannot call checkPremisRightsAgainstGroups with ROOT_ID');
+    }
+
+    // Get usage, e.g. 'reference', 'master'
+    $usage = strtolower(str_replace('read', '', $action));
+
+    // Check the $grantedRights of the information object against the global
+    // PREMIS rights for $action.
+    foreach ($grantedRights as $right)
+    {
+      if ($right->actId != $actId)
+      {
+        continue;
+      }
+
+      if (empty($right->rights) || empty($right->rights->basisId))
+      {
+        continue;
+      }
+
+      switch ($right->restriction)
+      {
+        case QubitGrantedRight::DENY_RIGHT:
+          $restriction = 'disallow';
+          break;
+
+        case QubitGrantedRight::GRANT_RIGHT:
+          $restriction = 'allow';
+          break;
+
+        case QubitGrantedRight::CONDITIONAL_RIGHT:
+          $restriction = 'conditional';
+          break;
+
+        default:
+          throw new sfException("Invalid restriction value given: {$right->restriction}");
+      }
+
+      // Remove unauthenticated user access and finish loop,
+      // as one "denied" permission overules any "grants" we'll see.
+      $basisSlug = $right->rights->basis->slug;
+      if (empty($premisPerms[$basisSlug]) ||
+          empty($premisPerms[$basisSlug]["{$restriction}_{$usage}"]) ||
+          !$premisPerms[$basisSlug]["{$restriction}_{$usage}"])
+      {
+        if (($key = array_search(QubitAclGroup::ANONYMOUS_ID, $groupIds)) !== false)
+        {
+          unset($groupIds[$key]);
+          if ($denyReason !== null)
+          {
+            $denyReason = self::getAccessWarning($basisSlug, $restriction);
+          }
+        }
+
+        break;
+      }
+    }
+
+    return $groupIds;
+  }
+
+  private static function getAccessWarning($basisSlug, $restriction)
+  {
+    if ($restriction === 'conditional')
+    {
+      $setting = QubitSetting::getByNameAndScope("{$basisSlug}_conditional", 'access_statement');
+    }
+    else
+    {
+      $setting = QubitSetting::getByNameAndScope("{$basisSlug}_disallow", 'access_statement');
+    }
+
+    if ($setting === null)
+    {
+      return false;
+    }
+
+    return $setting->getValue(array('cultureFallback' => true));
   }
 }

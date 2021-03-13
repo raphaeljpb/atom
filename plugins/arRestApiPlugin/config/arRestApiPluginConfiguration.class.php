@@ -108,6 +108,20 @@ class arRestApiPluginConfiguration extends sfPluginConfiguration
       'action' => 'endpointNotFound'));
   }
 
+  /**
+   * @see sfPluginConfiguration
+   */
+  public function initialize()
+  {
+    // Enable sfInstallPlugin module
+    $enabledModules = sfConfig::get('sf_enabled_modules');
+    $enabledModules[] = 'api';
+    sfConfig::set('sf_enabled_modules', $enabledModules);
+
+    // Connect event listener to add routes
+    $this->dispatcher->connect('routing.load_configuration', array($this, 'routingLoadConfiguration'));
+  }
+
   protected function addRoute($method, $pattern, array $options = array())
   {
     $defaults = $requirements = array();
@@ -145,19 +159,5 @@ class arRestApiPluginConfiguration extends sfPluginConfiguration
     // Add route before slug;default_index
     $this->routing->insertRouteBefore('slug/default', $name,
       new sfRequestRoute($pattern, $defaults, $requirements));
-  }
-
-  /**
-   * @see sfPluginConfiguration
-   */
-  public function initialize()
-  {
-    // Enable sfInstallPlugin module
-    $enabledModules = sfConfig::get('sf_enabled_modules');
-    $enabledModules[] = 'api';
-    sfConfig::set('sf_enabled_modules', $enabledModules);
-
-    // Connect event listener to add routes
-    $this->dispatcher->connect('routing.load_configuration', array($this, 'routingLoadConfiguration'));
   }
 }

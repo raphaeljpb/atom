@@ -22,6 +22,25 @@ class UserEditTermAclAction extends DefaultEditAction
   public static $NAMES = array(
       'taxonomy');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        $this->resource->save();
+
+        $this->redirect(array($this->resource, 'module' => 'user', 'action' => 'indexTermAcl'));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
@@ -125,25 +144,6 @@ class UserEditTermAclAction extends DefaultEditAction
 
           $this->resource->aclPermissions[] = $aclPermission;
         }
-      }
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        $this->resource->save();
-
-        $this->redirect(array($this->resource, 'module' => 'user', 'action' => 'indexTermAcl'));
       }
     }
   }

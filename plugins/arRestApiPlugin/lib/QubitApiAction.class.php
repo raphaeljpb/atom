@@ -29,47 +29,6 @@ class QubitApiAction extends sfAction
     return $this->process($request);
   }
 
-  private function authenticateUser()
-  {
-    // Cookie-based authentication (already signed)
-    if ($this->context->user->isAuthenticated())
-    {
-      return true;
-    }
-
-    // Basic authentication
-    if (isset($_SERVER['PHP_AUTH_USER']))
-    {
-      if ($this->context->user->authenticateWithBasicAuth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
-      {
-        return true;
-      }
-    }
-
-    // X_REST_API_KEY is and old name still checked for backward compatibility. Last attempt!
-    if (null !== $key = Qubit::getHttpHeader(array('REST-API-Key', 'HTTP_X_REST_API_KEY')))
-    {
-      $criteria = new Criteria();
-      $criteria->add(QubitProperty::NAME, 'restApiKey');
-      $criteria->add(QubitPropertyI18n::VALUE, $key);
-      if (null === $restApiKeyProperty = QubitProperty::getOne($criteria))
-      {
-        return false;
-      }
-
-      if (null === $user = QubitUser::getById($restApiKeyProperty->objectId))
-      {
-        return false;
-      }
-
-      $this->context->user->signIn($user);
-
-      return true;
-    }
-
-    return false;
-  }
-
   public function process($request)
   {
     $method = strtoupper($request->getMethod());
@@ -178,5 +137,46 @@ class QubitApiAction extends sfAction
     }
 
     $array[$key] = $value;
+  }
+
+  private function authenticateUser()
+  {
+    // Cookie-based authentication (already signed)
+    if ($this->context->user->isAuthenticated())
+    {
+      return true;
+    }
+
+    // Basic authentication
+    if (isset($_SERVER['PHP_AUTH_USER']))
+    {
+      if ($this->context->user->authenticateWithBasicAuth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
+      {
+        return true;
+      }
+    }
+
+    // X_REST_API_KEY is and old name still checked for backward compatibility. Last attempt!
+    if (null !== $key = Qubit::getHttpHeader(array('REST-API-Key', 'HTTP_X_REST_API_KEY')))
+    {
+      $criteria = new Criteria();
+      $criteria->add(QubitProperty::NAME, 'restApiKey');
+      $criteria->add(QubitPropertyI18n::VALUE, $key);
+      if (null === $restApiKeyProperty = QubitProperty::getOne($criteria))
+      {
+        return false;
+      }
+
+      if (null === $user = QubitUser::getById($restApiKeyProperty->objectId))
+      {
+        return false;
+      }
+
+      $this->context->user->signIn($user);
+
+      return true;
+    }
+
+    return false;
   }
 }

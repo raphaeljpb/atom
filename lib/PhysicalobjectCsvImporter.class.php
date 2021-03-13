@@ -99,11 +99,6 @@ class PhysicalObjectCsvImporter
     $this->setOptions($options);
   }
 
-  public function setOrmClasses(array $classes)
-  {
-    $this->ormClasses = $classes;
-  }
-
   public function __get($name)
   {
     switch ($name)
@@ -141,6 +136,11 @@ class PhysicalObjectCsvImporter
       default:
         throw new sfException("Couldn't set unknown property \"$name\"");
     }
+  }
+
+  public function setOrmClasses(array $classes)
+  {
+    $this->ormClasses = $classes;
   }
 
   public function setFilename($filename)
@@ -546,86 +546,6 @@ EOM;
     return $msg;
   }
 
-
-  #
-  # Protected methods
-  #
-
-  protected function insertPhysicalObject($csvdata)
-  {
-    $timer = $this->startTimer('insertNew');
-
-    if (!$this->getOption('insertNew'))
-    {
-      throw new UnexpectedValueException(sprintf(
-        'Couldn\'t match name "%s"', $csvdata['name']
-      ));
-    }
-
-    // Create a new db object, if no match is found
-    $physobj = new $this->ormClasses['physicalObject']();
-
-    $physobj->name        = $csvdata['name'];
-    $physobj->typeId      = $csvdata['typeId'];
-    $physobj->location    = $csvdata['location'];
-    $physobj->indexOnSave = $this->getOption('updateSearchIndex');
-    $physobj->save($this->dbcon);
-
-    $this->createKeymapEntry($physobj->id, $csvdata);
-
-    $physobj->addInfobjRelations($csvdata['informationObjectIds']);
-
-    $timer->add();
-  }
-
-  protected function updatePhysicalObject($physobj, $csvdata)
-  {
-    $updates = [];
-
-    if ($this->shouldUpdateDb($csvdata['typeId']))
-    {
-      $updates['typeId'] = $csvdata['typeId'];
-    }
-
-    if ($this->shouldUpdateDb($csvdata['location']))
-    {
-      $updates['location'] = $csvdata['location'];
-    }
-
-    // Only do update if $updates array is populated
-    if (!empty($updates))
-    {
-      $timer = $this->startTimer('physobjSave');
-      $updated = $physobj->quickUpdate($updates, $this->getDbConnection());
-      $timer->add();
-
-      if ($updated)
-      {
-        $this->createKeymapEntry($physobj->id, $csvdata);
-      }
-    }
-
-    if ($this->shouldUpdateDb($csvdata['informationObjectIds']))
-    {
-      $this->updateInfoObjRelations($physobj, $csvdata['informationObjectIds']);
-    }
-  }
-
-  protected function updateInfoObjRelations($physobj, $informationObjectIds)
-  {
-    $timer->startTimer('updateInfObjRelations');
-
-    // Update the search index of related information objects
-    $physobj->indexOnSave = $this->getOption('updateSearchIndex');
-
-    if (isset($updates['informationObjectIds']))
-    {
-      $physobj->updateInfobjRelations($informationObjectIds);
-    }
-
-    $timer->add();
-  }
-
   /**
    * Create keymap entry for object
    *
@@ -706,6 +626,86 @@ EOQ;
     }
 
     return $matches;
+  }
+
+
+  #
+  # Protected methods
+  #
+
+  protected function insertPhysicalObject($csvdata)
+  {
+    $timer = $this->startTimer('insertNew');
+
+    if (!$this->getOption('insertNew'))
+    {
+      throw new UnexpectedValueException(sprintf(
+        'Couldn\'t match name "%s"', $csvdata['name']
+      ));
+    }
+
+    // Create a new db object, if no match is found
+    $physobj = new $this->ormClasses['physicalObject']();
+
+    $physobj->name        = $csvdata['name'];
+    $physobj->typeId      = $csvdata['typeId'];
+    $physobj->location    = $csvdata['location'];
+    $physobj->indexOnSave = $this->getOption('updateSearchIndex');
+    $physobj->save($this->dbcon);
+
+    $this->createKeymapEntry($physobj->id, $csvdata);
+
+    $physobj->addInfobjRelations($csvdata['informationObjectIds']);
+
+    $timer->add();
+  }
+
+  protected function updatePhysicalObject($physobj, $csvdata)
+  {
+    $updates = [];
+
+    if ($this->shouldUpdateDb($csvdata['typeId']))
+    {
+      $updates['typeId'] = $csvdata['typeId'];
+    }
+
+    if ($this->shouldUpdateDb($csvdata['location']))
+    {
+      $updates['location'] = $csvdata['location'];
+    }
+
+    // Only do update if $updates array is populated
+    if (!empty($updates))
+    {
+      $timer = $this->startTimer('physobjSave');
+      $updated = $physobj->quickUpdate($updates, $this->getDbConnection());
+      $timer->add();
+
+      if ($updated)
+      {
+        $this->createKeymapEntry($physobj->id, $csvdata);
+      }
+    }
+
+    if ($this->shouldUpdateDb($csvdata['informationObjectIds']))
+    {
+      $this->updateInfoObjRelations($physobj, $csvdata['informationObjectIds']);
+    }
+  }
+
+  protected function updateInfoObjRelations($physobj, $informationObjectIds)
+  {
+    $timer->startTimer('updateInfObjRelations');
+
+    // Update the search index of related information objects
+    $physobj->indexOnSave = $this->getOption('updateSearchIndex');
+
+    if (isset($updates['informationObjectIds']))
+    {
+      $physobj->updateInfobjRelations($informationObjectIds);
+    }
+
+    $timer->add();
   }
 
   protected function log($msg)

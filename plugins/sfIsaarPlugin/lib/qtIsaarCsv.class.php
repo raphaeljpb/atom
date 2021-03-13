@@ -26,10 +26,6 @@
  */
 class qtIsaarCsv extends sfIsaarPlugin
 {
-  protected $resource;
-  protected $isaar;
-  protected $sourceId;
-
   public static $keymapSource;
   public static $keymapTarget = 'actor';
   public static $entityTypeLookup;
@@ -57,6 +53,9 @@ class qtIsaarCsv extends sfIsaarPlugin
       //'standardizedNames'
       'uniqueId'
     );
+  protected $resource;
+  protected $isaar;
+  protected $sourceId;
 
   public function __construct($resource)
   {

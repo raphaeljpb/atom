@@ -55,52 +55,6 @@ class sfModsPlugin implements ArrayAccess
     return $string;
   }
 
-  public function levelOfDescriptionAndIdentifier()
-  {
-    $string = '';
-
-    if (isset($this->resource->levelOfDescription))
-    {
-      $string .= $this->resource->levelOfDescription->__toString();
-    }
-
-    if (isset($this->resource->identifier))
-    {
-      $string .= (!empty($string)) ? ' ' : '';
-      $string .= $this->resource->identifier;
-    }
-
-    return $string;
-  }
-
-  public function offsetExists($offset)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array(array($this, '__isset'), $args);
-  }
-
-  protected function baseUrl()
-  {
-    $baseUrl = QubitSetting::getByName('siteBaseUrl');
-    $baseUrl = ($baseUrl == null) ? 'http://'. gethostname() : $baseUrl;
-
-    return $baseUrl;
-  }
-
-  public function getDateTagNameForEventType($typeId)
-  {
-    switch ($typeId)
-    {
-      case QubitTerm::CREATION_ID:
-        return 'dateCreated';
-      case QubitTerm::PUBLICATION_ID:
-        return 'dateIssued';
-      default:
-        return 'dateOther';
-    }
-  }
-
   public function __get($name)
   {
     switch ($name)
@@ -212,6 +166,44 @@ class sfModsPlugin implements ArrayAccess
     }
   }
 
+  public function levelOfDescriptionAndIdentifier()
+  {
+    $string = '';
+
+    if (isset($this->resource->levelOfDescription))
+    {
+      $string .= $this->resource->levelOfDescription->__toString();
+    }
+
+    if (isset($this->resource->identifier))
+    {
+      $string .= (!empty($string)) ? ' ' : '';
+      $string .= $this->resource->identifier;
+    }
+
+    return $string;
+  }
+
+  public function offsetExists($offset)
+  {
+    $args = func_get_args();
+
+    return call_user_func_array(array($this, '__isset'), $args);
+  }
+
+  public function getDateTagNameForEventType($typeId)
+  {
+    switch ($typeId)
+    {
+      case QubitTerm::CREATION_ID:
+        return 'dateCreated';
+      case QubitTerm::PUBLICATION_ID:
+        return 'dateIssued';
+      default:
+        return 'dateOther';
+    }
+  }
+
   public function getMatchingRadNotesByName($noteTypeName)
   {
     foreach (QubitTerm::getRADNotes() as $term)
@@ -282,5 +274,13 @@ class sfModsPlugin implements ArrayAccess
     $args = func_get_args();
 
     return call_user_func_array(array($this, '__unset'), $args);
+  }
+
+  protected function baseUrl()
+  {
+    $baseUrl = QubitSetting::getByName('siteBaseUrl');
+    $baseUrl = ($baseUrl == null) ? 'http://'. gethostname() : $baseUrl;
+
+    return $baseUrl;
   }
 }

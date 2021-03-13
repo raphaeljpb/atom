@@ -29,30 +29,6 @@ class propelGenerateSlugsTask extends arBaseTask
   /**
    * @see sfTask
    */
-  protected function configure()
-  {
-    $this->addArguments(array(
-    ));
-
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('delete', null, sfCommandOption::PARAMETER_NONE, 'Delete existing slugs before generating'),
-    ));
-
-    $this->namespace = 'propel';
-    $this->name = 'generate-slugs';
-    $this->briefDescription = 'Generate slugs for all slug-less objects.';
-
-    $this->detailedDescription = <<<EOF
-Generate slugs for all slug-less objects.
-EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
   public function execute($arguments = array(), $options = array())
   {
     parent::execute($arguments, $options);
@@ -219,6 +195,29 @@ EOF;
     );
 
     $this->logSection('propel', 'Done!');
+  }
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    $this->addArguments(array(
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('delete', null, sfCommandOption::PARAMETER_NONE, 'Delete existing slugs before generating'),
+    ));
+
+    $this->namespace = 'propel';
+    $this->name = 'generate-slugs';
+    $this->briefDescription = 'Generate slugs for all slug-less objects.';
+
+    $this->detailedDescription = <<<EOF
+Generate slugs for all slug-less objects.
+EOF;
   }
 
   private function getRandomSlug()

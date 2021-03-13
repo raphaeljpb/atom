@@ -19,6 +19,36 @@
 
 class DefaultEditAction extends sfAction
 {
+  public function execute($request)
+  {
+    // Force subclassing
+    if ('default' == $this->context->getModuleName() && 'edit' == $this->context->getActionName())
+    {
+      $this->forward404();
+    }
+
+    $this->form = new sfForm();
+
+    // Call early execute logic, if defined by a child class
+    if (method_exists($this, 'earlyExecute'))
+    {
+      call_user_func(array($this, 'earlyExecute'));
+    }
+
+    // Mainly used in autocomplete.js, this tells us that the user wants to
+    // reuse existing objects instead of adding new ones.
+    if (isset($this->request->linkExisting))
+    {
+      $this->form->setDefault('linkExisting', $this->request->linkExisting);
+      $this->form->setValidator('linkExisting', new sfValidatorBoolean());
+      $this->form->setWidget('linkExisting', new sfWidgetFormInputHidden());
+    }
+
+    foreach ($this::$NAMES as $name)
+    {
+      $this->addField($name);
+    }
+  }
   protected function addField($name)
   {
     switch ($name)
@@ -185,37 +215,6 @@ class DefaultEditAction extends sfAction
     foreach ($this->form as $field)
     {
       $this->processField($field);
-    }
-  }
-
-  public function execute($request)
-  {
-    // Force subclassing
-    if ('default' == $this->context->getModuleName() && 'edit' == $this->context->getActionName())
-    {
-      $this->forward404();
-    }
-
-    $this->form = new sfForm();
-
-    // Call early execute logic, if defined by a child class
-    if (method_exists($this, 'earlyExecute'))
-    {
-      call_user_func(array($this, 'earlyExecute'));
-    }
-
-    // Mainly used in autocomplete.js, this tells us that the user wants to
-    // reuse existing objects instead of adding new ones.
-    if (isset($this->request->linkExisting))
-    {
-      $this->form->setDefault('linkExisting', $this->request->linkExisting);
-      $this->form->setValidator('linkExisting', new sfValidatorBoolean());
-      $this->form->setWidget('linkExisting', new sfWidgetFormInputHidden());
-    }
-
-    foreach ($this::$NAMES as $name)
-    {
-      $this->addField($name);
     }
   }
 }

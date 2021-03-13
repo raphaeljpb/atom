@@ -24,6 +24,11 @@ class QubitStaticPage extends BaseStaticPage
     return (string) $this->title;
   }
 
+  public function isProtected()
+  {
+    return $this->slug == 'home';
+  }
+
   protected function insert($connection = null)
   {
     if (!isset($this->slug))
@@ -65,10 +70,5 @@ class QubitStaticPage extends BaseStaticPage
     }
 
     return parent::update($connection);
-  }
-
-  public function isProtected()
-  {
-    return $this->slug == 'home';
   }
 }

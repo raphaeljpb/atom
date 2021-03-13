@@ -19,6 +19,22 @@
 
 class QubitValidatorMenuName extends sfValidatorBase
 {
+  public static function nameCanBeUsed($name, $menu = null)
+  {
+    // Only do this check for new menu items or menu items that can be renamed
+    if ($menu->isProtected())
+    {
+      return true;
+    }
+
+    $criteria = new Criteria();
+    $criteria->add(QubitMenu::NAME, $name);
+
+    // Name is valid if it isn't yet used or if it's used by the menu item being edited
+    $nameIsValid = (null === $foundMenu = QubitMenu::getOne($criteria)) || ($menu->id == $foundMenu->id);
+
+    return $nameIsValid;
+  }
   protected function configure($options = array(), $messages = array())
   {
     parent::configure($options, $messages);
@@ -35,22 +51,5 @@ class QubitValidatorMenuName extends sfValidatorBase
     }
 
     throw new sfValidatorError($this, sfContext::getInstance()->i18n->__('This name is already in use.'), array('value' => $value));
-  }
-
-  public static function nameCanBeUsed($name, $menu = null)
-  {
-    // Only do this check for new menu items or menu items that can be renamed
-    if ($menu->isProtected())
-    {
-      return true;
-    }
-
-    $criteria = new Criteria();
-    $criteria->add(QubitMenu::NAME, $name);
-
-    // Name is valid if it isn't yet used or if it's used by the menu item being edited
-    $nameIsValid = (null === $foundMenu = QubitMenu::getOne($criteria)) || ($menu->id == $foundMenu->id);
-
-    return $nameIsValid;
   }
 }

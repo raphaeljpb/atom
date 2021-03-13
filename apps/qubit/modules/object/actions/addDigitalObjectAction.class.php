@@ -26,26 +26,6 @@
  */
 class ObjectAddDigitalObjectAction extends sfAction
 {
-  protected function addFields($request)
-  {
-    // Single upload
-    if (0 < count($request->getFiles()))
-    {
-      $this->form->setValidator('file', new sfValidatorFile());
-    }
-
-    $this->form->setWidget('file', new sfWidgetFormInputFile());
-
-    // URL
-    if (isset($request->url) && 'http://' != $request->url)
-    {
-      $this->form->setValidator('url', new QubitValidatorUrl());
-    }
-
-    $this->form->setDefault('url', 'http://');
-    $this->form->setWidget('url', new sfWidgetFormInput());
-  }
-
   public function execute($request)
   {
     $this->form = new sfForm();
@@ -160,5 +140,24 @@ class ObjectAddDigitalObjectAction extends sfAction
     }
 
     $this->resource->digitalObjectsRelatedByobjectId[] = $digitalObject;
+  }
+  protected function addFields($request)
+  {
+    // Single upload
+    if (0 < count($request->getFiles()))
+    {
+      $this->form->setValidator('file', new sfValidatorFile());
+    }
+
+    $this->form->setWidget('file', new sfWidgetFormInputFile());
+
+    // URL
+    if (isset($request->url) && 'http://' != $request->url)
+    {
+      $this->form->setValidator('url', new QubitValidatorUrl());
+    }
+
+    $this->form->setDefault('url', 'http://');
+    $this->form->setWidget('url', new sfWidgetFormInput());
   }
 }

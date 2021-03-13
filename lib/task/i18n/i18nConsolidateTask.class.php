@@ -30,6 +30,23 @@ class i18nConsolidateTask extends sfBaseTask
   /**
    * @see sfTask
    */
+  public function execute($arguments = array(), $options = array())
+  {
+    if (!file_exists($arguments['target']))
+    {
+      throw new sfException('Target directory "'.$arguments['target'].'" doesn\t exist');
+    }
+
+    $this->logSection('i18n', sprintf('Consolidating "%s" i18n messages', $arguments['culture']));
+
+    $i18n = new sfI18N($this->configuration, new sfNoCache(), array('source' => 'XLIFF', 'debug' => false));
+    $extract = new QubitI18nConsolidatedExtract($i18n, $arguments['culture'], array('target' => $arguments['target']));
+    $extract->extract();
+    $extract->save();
+  }
+  /**
+   * @see sfTask
+   */
   protected function configure()
   {
     $this->addArguments(array(
@@ -50,23 +67,5 @@ class i18nConsolidateTask extends sfBaseTask
 Combine all application messages into a single output (XLIFF) file for ease of
 use by translators.
 EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
-  public function execute($arguments = array(), $options = array())
-  {
-    if (!file_exists($arguments['target']))
-    {
-      throw new sfException('Target directory "'.$arguments['target'].'" doesn\t exist');
-    }
-
-    $this->logSection('i18n', sprintf('Consolidating "%s" i18n messages', $arguments['culture']));
-
-    $i18n = new sfI18N($this->configuration, new sfNoCache(), array('source' => 'XLIFF', 'debug' => false));
-    $extract = new QubitI18nConsolidatedExtract($i18n, $arguments['culture'], array('target' => $arguments['target']));
-    $extract->extract();
-    $extract->save();
   }
 }

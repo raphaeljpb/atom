@@ -19,6 +19,26 @@
 
 class AclGroupEditDefaultAclAction extends sfAction
 {
+  public function execute($request)
+  {
+    $this->form = new sfForm();
+    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+
+    if (isset($this->request->id))
+    {
+      $this->resource = QubitAclGroup::getById($this->request->id);
+
+      if (!isset($this->resource))
+      {
+        $this->forward404();
+      }
+    }
+
+    foreach ($this::$NAMES as $name)
+    {
+      $this->addField($name);
+    }
+  }
   protected function addField($name)
   {
     $this->form->setValidator($name, new sfValidatorString());
@@ -99,26 +119,5 @@ class AclGroupEditDefaultAclAction extends sfAction
     }
 
     $this->resource->save();
-  }
-
-  public function execute($request)
-  {
-    $this->form = new sfForm();
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-
-    if (isset($this->request->id))
-    {
-      $this->resource = QubitAclGroup::getById($this->request->id);
-
-      if (!isset($this->resource))
-      {
-        $this->forward404();
-      }
-    }
-
-    foreach ($this::$NAMES as $name)
-    {
-      $this->addField($name);
-    }
   }
 }

@@ -19,6 +19,37 @@
 
 class RightManageAction extends sfAction
 {
+  public function execute($request)
+  {
+    $this->earlyExecute();
+    $this->formSetup();
+
+    if ($request->isMethod('post'))
+    {
+      $params = $request->getPostParameters();
+      $this->form->bind($params);
+
+      if ($this->form->isValid())
+      {
+        // Set job params
+        $jobParams = $this->form->getValues();
+        $jobParams['objectId'] = $this->resource->getId();
+
+        $jobParams['name'] = $this->context->i18n->__('Inherit rights');
+
+        $desc = $this->context->i18n->__('Children inheriting rights from record: ') .
+                $this->resource->getTitle(array('cultureFallback' => true));
+
+        $jobParams['description'] = $desc;
+
+        // Queue job with params
+        $job = QubitJob::runJob('arInheritRightsJob', $jobParams);
+
+        // redirect to info object view page
+        $this->redirect(array($this->resource, 'module' => 'informationobject'));
+      }
+    }
+  }
   protected function earlyExecute()
   {
     $this->resource = $this->getRoute()->resource;
@@ -63,37 +94,5 @@ class RightManageAction extends sfAction
       'all_or_digital_only' => new sfValidatorChoice(array('choices' => array('all', 'digital_only'), 'required' => true)),
       'overwrite_or_combine' => new sfValidatorChoice(array('choices' => array('overwrite', 'combine'), 'required' => true))
     ));
-  }
-
-  public function execute($request)
-  {
-    $this->earlyExecute();
-    $this->formSetup();
-
-    if ($request->isMethod('post'))
-    {
-      $params = $request->getPostParameters();
-      $this->form->bind($params);
-
-      if ($this->form->isValid())
-      {
-        // Set job params
-        $jobParams = $this->form->getValues();
-        $jobParams['objectId'] = $this->resource->getId();
-
-        $jobParams['name'] = $this->context->i18n->__('Inherit rights');
-
-        $desc = $this->context->i18n->__('Children inheriting rights from record: ') .
-                $this->resource->getTitle(array('cultureFallback' => true));
-
-        $jobParams['description'] = $desc;
-
-        // Queue job with params
-        $job = QubitJob::runJob('arInheritRightsJob', $jobParams);
-
-        // redirect to info object view page
-        $this->redirect(array($this->resource, 'module' => 'informationobject'));
-      }
-    }
   }
 }

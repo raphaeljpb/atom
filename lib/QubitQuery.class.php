@@ -32,6 +32,55 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
   protected $indexByName = null;
   protected $orderByNames = null;
 
+  public function __isset($name)
+  {
+    list($objects, $sorted) = $this->getData($this);
+
+    return array_key_exists($name, $this->objects);
+  }
+
+  public function __get($name)
+  {
+    if ('transient' === $name)
+    {
+      if (!isset($this->objects))
+      {
+        return array();
+      }
+
+      return $this->objects;
+    }
+
+    list($objects, $sorted) = $this->getData($this);
+
+    if (isset($this->objects[$name]))
+    {
+      return $this->objects[$name];
+    }
+  }
+
+  public function __set($name, $value)
+  {
+    if (null === $name)
+    {
+      $this->objects[] = $value;
+    }
+
+    if (isset($this->indexByName))
+    {
+      $value[$this->indexByName] = $name;
+      $this->objects[$name] = $value;
+
+      // HACK
+      if (isset($this->parent))
+      {
+        $this->parent[] = $value;
+      }
+    }
+
+    return $this;
+  }
+
   public static function create(array $options = array())
   {
     $query = new QubitQuery();
@@ -46,6 +95,106 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
     $query->criteria = $criteria;
     $query->className = $className;
     $query->options = $options;
+
+    return $query;
+  }
+
+  public function offsetExists($offset)
+  {
+    $args = func_get_args();
+
+    return call_user_func_array(array($this, '__isset'), $args);
+  }
+
+  public function offsetGet($offset)
+  {
+    $args = func_get_args();
+
+    return call_user_func_array(array($this, '__get'), $args);
+  }
+
+  public function offsetSet($offset, $value)
+  {
+    $args = func_get_args();
+
+    return call_user_func_array(array($this, '__set'), $args);
+  }
+
+  public function offsetUnset($offset)
+  {
+  }
+
+  public function count()
+  {
+    return $this->getCount($this);
+  }
+
+  public function current()
+  {
+    list($objects, $sorted) = $this->getData($this);
+
+    return current($this->objects);
+  }
+
+  public function key()
+  {
+    list($objects, $sorted) = $this->getData($this);
+
+    return key($this->objects);
+  }
+
+  public function next()
+  {
+    $this->offset++;
+
+    list($objects, $sorted) = $this->getData($this);
+
+    return next($this->objects);
+  }
+
+  public function rewind()
+  {
+    $this->offset = 0;
+
+    list($objects, $sorted) = $this->getData($this);
+
+    return reset($this->objects);
+  }
+
+  public function valid()
+  {
+    list($objects, $sorted) = $this->getData($this);
+
+    return $this->offset < count($this->objects);
+  }
+
+  public function orderBy($name)
+  {
+    $query = new QubitQuery();
+    $query->parent = $this;
+    $query->orderByName = $name;
+
+    return $query;
+  }
+
+  public function andSelf()
+  {
+    $query = new QubitQuery();
+    $query->parent = $this;
+
+    // Set andSelf and remove 'self' option
+    $query->options = $this->getOptions();
+    $query->andSelf = $query->options['self'];
+    unset($query->options['self']);
+
+    return $query;
+  }
+
+  public function indexBy($name)
+  {
+    $query = new QubitQuery();
+    $query->parent = $this;
+    $query->indexByName = $name;
 
     return $query;
   }
@@ -167,80 +316,6 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
     return array($this->objects, $sorted);
   }
 
-  public function __isset($name)
-  {
-    list($objects, $sorted) = $this->getData($this);
-
-    return array_key_exists($name, $this->objects);
-  }
-
-  public function offsetExists($offset)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array(array($this, '__isset'), $args);
-  }
-
-  public function __get($name)
-  {
-    if ('transient' === $name)
-    {
-      if (!isset($this->objects))
-      {
-        return array();
-      }
-
-      return $this->objects;
-    }
-
-    list($objects, $sorted) = $this->getData($this);
-
-    if (isset($this->objects[$name]))
-    {
-      return $this->objects[$name];
-    }
-  }
-
-  public function offsetGet($offset)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array(array($this, '__get'), $args);
-  }
-
-  public function __set($name, $value)
-  {
-    if (null === $name)
-    {
-      $this->objects[] = $value;
-    }
-
-    if (isset($this->indexByName))
-    {
-      $value[$this->indexByName] = $name;
-      $this->objects[$name] = $value;
-
-      // HACK
-      if (isset($this->parent))
-      {
-        $this->parent[] = $value;
-      }
-    }
-
-    return $this;
-  }
-
-  public function offsetSet($offset, $value)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array(array($this, '__set'), $args);
-  }
-
-  public function offsetUnset($offset)
-  {
-  }
-
   protected function getCount(QubitQuery $leaf)
   {
     if (!isset($this->objects))
@@ -272,50 +347,6 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
     }
 
     return count($this->objects);
-  }
-
-  public function count()
-  {
-    return $this->getCount($this);
-  }
-
-  public function current()
-  {
-    list($objects, $sorted) = $this->getData($this);
-
-    return current($this->objects);
-  }
-
-  public function key()
-  {
-    list($objects, $sorted) = $this->getData($this);
-
-    return key($this->objects);
-  }
-
-  public function next()
-  {
-    $this->offset++;
-
-    list($objects, $sorted) = $this->getData($this);
-
-    return next($this->objects);
-  }
-
-  public function rewind()
-  {
-    $this->offset = 0;
-
-    list($objects, $sorted) = $this->getData($this);
-
-    return reset($this->objects);
-  }
-
-  public function valid()
-  {
-    list($objects, $sorted) = $this->getData($this);
-
-    return $this->offset < count($this->objects);
   }
 
   protected function getOrderByNames()
@@ -359,15 +390,6 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
     }
   }
 
-  public function orderBy($name)
-  {
-    $query = new QubitQuery();
-    $query->parent = $this;
-    $query->orderByName = $name;
-
-    return $query;
-  }
-
   protected function getOptions()
   {
     if (!isset($this->options))
@@ -383,27 +405,5 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
     }
 
     return $this->options;
-  }
-
-  public function andSelf()
-  {
-    $query = new QubitQuery();
-    $query->parent = $this;
-
-    // Set andSelf and remove 'self' option
-    $query->options = $this->getOptions();
-    $query->andSelf = $query->options['self'];
-    unset($query->options['self']);
-
-    return $query;
-  }
-
-  public function indexBy($name)
-  {
-    $query = new QubitQuery();
-    $query->parent = $this;
-    $query->indexByName = $name;
-
-    return $query;
   }
 }

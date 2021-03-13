@@ -19,13 +19,6 @@
 
 class QubitFunctionObject extends BaseFunctionObject
 {
-  public function save($connection = null)
-  {
-    parent::save($connection);
-
-    QubitSearch::getInstance()->update($this);
-  }
-
   public function __toString()
   {
     $string = $this->authorizedFormOfName;
@@ -115,15 +108,11 @@ class QubitFunctionObject extends BaseFunctionObject
 
     return call_user_func_array(array($this, 'BaseFunctionObject::__set'), $args);
   }
-
-  protected function insert($connection = null)
+  public function save($connection = null)
   {
-    if (!isset($this->slug))
-    {
-      $this->slug = QubitSlug::slugify($this->__get('authorizedFormOfName', array('sourceCulture' => true)));
-    }
+    parent::save($connection);
 
-    return parent::insert($connection);
+    QubitSearch::getInstance()->update($this);
   }
 
   public function getLabel()
@@ -139,5 +128,15 @@ class QubitFunctionObject extends BaseFunctionObject
     }
 
     return $label;
+  }
+
+  protected function insert($connection = null)
+  {
+    if (!isset($this->slug))
+    {
+      $this->slug = QubitSlug::slugify($this->__get('authorizedFormOfName', array('sourceCulture' => true)));
+    }
+
+    return parent::insert($connection);
   }
 }

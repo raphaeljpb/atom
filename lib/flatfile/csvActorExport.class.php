@@ -53,6 +53,26 @@ class csvActorExport extends QubitFlatfileExport
     $this->exportRelations($filename, $resource);
   }
 
+  /*
+   * Specific column settings before CSV row write
+   *
+   * @return void
+   */
+  protected function modifyRowBeforeExport()
+  {
+    // Set common column values
+    parent::modifyRowBeforeExport();
+
+    $this->setColumn('parallelFormsOfName', $this->getNames(QubitTerm::PARALLEL_FORM_OF_NAME_ID));
+    $this->setColumn('standardizedFormsOfName', $this->getNames(QubitTerm::STANDARDIZED_FORM_OF_NAME_ID));
+    $this->setColumn('otherFormsOfName', $this->getNames(QubitTerm::OTHER_FORM_OF_NAME_ID));
+
+    $this->setMaintenanceNote();
+    $this->setOccupations();
+    $this->setPlaceAccessPoints();
+    $this->setSubjectAccessPoints();
+  }
+
   private function exportRelations($filename, $resource)
   {
     $rows = array();
@@ -121,26 +141,6 @@ class csvActorExport extends QubitFlatfileExport
     }
 
     fclose($fh);
-  }
-
-  /*
-   * Specific column settings before CSV row write
-   *
-   * @return void
-   */
-  protected function modifyRowBeforeExport()
-  {
-    // Set common column values
-    parent::modifyRowBeforeExport();
-
-    $this->setColumn('parallelFormsOfName', $this->getNames(QubitTerm::PARALLEL_FORM_OF_NAME_ID));
-    $this->setColumn('standardizedFormsOfName', $this->getNames(QubitTerm::STANDARDIZED_FORM_OF_NAME_ID));
-    $this->setColumn('otherFormsOfName', $this->getNames(QubitTerm::OTHER_FORM_OF_NAME_ID));
-
-    $this->setMaintenanceNote();
-    $this->setOccupations();
-    $this->setPlaceAccessPoints();
-    $this->setSubjectAccessPoints();
   }
 
   private function setMaintenanceNote()

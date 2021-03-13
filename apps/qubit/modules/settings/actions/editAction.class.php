@@ -22,6 +22,40 @@ class SettingsEditAction extends DefaultEditAction
   // Arrays not allowed in class constants
   public static $I18N = array();
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    // Handle posted data
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        QubitCache::getInstance()->removePattern('settings:i18n:*');
+
+        if (!empty($this->updateMessage))
+        {
+          $this->getUser()->setFlash('notice', $this->updateMessage);
+        }
+
+        $this->redirect(array(
+          'module' => $this->getContext()->getModuleName(),
+          'action' => $this->getContext()->getActionName()
+        ));
+      }
+    }
+
+    // Set form field defaults
+    foreach ($this::$NAMES as $name)
+    {
+      $this->setFormFieldDefault($name);
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->settings = array();
@@ -82,40 +116,6 @@ class SettingsEditAction extends DefaultEditAction
       $this->settings[$name]->setValue($value, $settingSetOptions);
 
       $this->settings[$name]->save();
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    // Handle posted data
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        QubitCache::getInstance()->removePattern('settings:i18n:*');
-
-        if (!empty($this->updateMessage))
-        {
-          $this->getUser()->setFlash('notice', $this->updateMessage);
-        }
-
-        $this->redirect(array(
-          'module' => $this->getContext()->getModuleName(),
-          'action' => $this->getContext()->getActionName()
-        ));
-      }
-    }
-
-    // Set form field defaults
-    foreach ($this::$NAMES as $name)
-    {
-      $this->setFormFieldDefault($name);
     }
   }
 }

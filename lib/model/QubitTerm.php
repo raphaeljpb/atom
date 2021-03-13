@@ -27,7 +27,6 @@
  */
 class QubitTerm extends BaseTerm
 {
-  public $disableNestedSetUpdating = false;
   public const
 
     // ROOT term id
@@ -395,6 +394,22 @@ class QubitTerm extends BaseTerm
 
     // Accession event note
     ACCESSION_EVENT_NOTE_ID = 194;
+  public $disableNestedSetUpdating = false;
+
+  protected $CountryHitCount = null;
+  protected $LanguageHitCount = null;
+  protected $SubjectHitCount = null;
+
+  public function __toString()
+  {
+    $string = $this->name;
+    if (!isset($string))
+    {
+      $string = $this->getName(array('sourceCulture' => true));
+    }
+
+    return (string) $string;
+  }
 
   public static function isProtected($id)
   {
@@ -469,27 +484,6 @@ class QubitTerm extends BaseTerm
       QubitTerm::ACCESSION_EVENT_NOTE_ID));
   }
 
-  public function __toString()
-  {
-    $string = $this->name;
-    if (!isset($string))
-    {
-      $string = $this->getName(array('sourceCulture' => true));
-    }
-
-    return (string) $string;
-  }
-
-  protected function insert($connection = null)
-  {
-    if (!isset($this->slug))
-    {
-      $this->slug = QubitSlug::slugify($this->__get('name', array('sourceCulture' => true)));
-    }
-
-    return parent::insert($connection);
-  }
-
   public function save($connection = null)
   {
     // Add root term as parent if no parent is set and it's not the root term
@@ -519,14 +513,6 @@ class QubitTerm extends BaseTerm
   public function setRoot()
   {
     $this->parentId = QubitTerm::ROOT_ID;
-  }
-
-  protected function updateNestedSet($connection = null)
-  {
-    if (!$this->disableNestedSetUpdating)
-    {
-      return parent::updateNestedSet($connection);
-    }
   }
 
   public function delete($connection = null)
@@ -762,10 +748,6 @@ class QubitTerm extends BaseTerm
     return $tree;
   }
 
-  protected $CountryHitCount = null;
-  protected $LanguageHitCount = null;
-  protected $SubjectHitCount = null;
-
   public function setCountryHitCount($count)
   {
     $this->CountryHitCount = $count;
@@ -814,19 +796,6 @@ class QubitTerm extends BaseTerm
     $count += $this->getRelatedRepositoryCount();
 
     return $count;
-  }
-
-  protected static function executeCount($sql)
-  {
-    $conn = Propel::getConnection();
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    if (count($row = $stmt->fetch()))
-    {
-      return intval($row[0]);
-    }
-
-    return 0;
   }
 
   /**
@@ -1222,5 +1191,36 @@ class QubitTerm extends BaseTerm
     {
       return $converseTerms[0]->getOpposedObject($this->id);
     }
+  }
+
+  protected function insert($connection = null)
+  {
+    if (!isset($this->slug))
+    {
+      $this->slug = QubitSlug::slugify($this->__get('name', array('sourceCulture' => true)));
+    }
+
+    return parent::insert($connection);
+  }
+
+  protected function updateNestedSet($connection = null)
+  {
+    if (!$this->disableNestedSetUpdating)
+    {
+      return parent::updateNestedSet($connection);
+    }
+  }
+
+  protected static function executeCount($sql)
+  {
+    $conn = Propel::getConnection();
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    if (count($row = $stmt->fetch()))
+    {
+      return intval($row[0]);
+    }
+
+    return 0;
   }
 }

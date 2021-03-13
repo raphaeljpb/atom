@@ -36,102 +36,6 @@ class SearchDescriptionUpdatesAction extends sfAction
       'user'
     );
 
-  protected function addField($name)
-  {
-    switch ($name)
-    {
-      case 'className':
-        $choices = array(
-          'QubitInformationObject' => sfConfig::get('app_ui_label_informationobject'),
-          'QubitActor' => sfConfig::get('app_ui_label_actor'),
-          'QubitRepository' => sfConfig::get('app_ui_label_repository'),
-          'QubitTerm' => sfConfig::get('app_ui_label_term'),
-          'QubitFunctionObject' => sfConfig::get('app_ui_label_function'));
-
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
-
-        break;
-
-      case 'startDate':
-        $this->form->setValidator($name, new sfValidatorDate(array(), array('invalid' => $this->context->i18n->__('Invalid start date'))));
-        $this->form->setWidget($name, new sfWidgetFormInput());
-
-        break;
-
-      case 'endDate':
-        $this->form->setValidator($name, new sfValidatorDate(array(), array('invalid' => $this->context->i18n->__('Invalid end date'))));
-        $this->form->setWidget($name, new sfWidgetFormInput());
-
-        break;
-
-      case 'dateOf':
-        $choices = array(
-          'CREATED_AT' => $this->context->i18n->__('Creation'),
-          'UPDATED_AT' => $this->context->i18n->__('Revision'),
-          'both' => $this->context->i18n->__('Both')
-        );
-
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new arWidgetFormSelectRadio(array('choices' => $choices, 'class' => 'radio inline')));
-
-        break;
-
-      case 'publicationStatus':
-        $choices = array(
-          QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID => QubitTerm::getById(QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)->name,
-          QubitTerm::PUBLICATION_STATUS_DRAFT_ID => QubitTerm::getById(QubitTerm::PUBLICATION_STATUS_DRAFT_ID)->name,
-          'all' => $this->context->i18n->__('All')
-        );
-
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new arWidgetFormSelectRadio(array('choices' => $choices, 'class' => 'radio inline')));
-
-        break;
-
-      case 'repository':
-        // Get list of repositories
-        $criteria = new Criteria();
-
-        // Do source culture fallback
-        $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');
-
-        // Ignore root repository
-        $criteria->add(QubitActor::ID, QubitRepository::ROOT_ID, Criteria::NOT_EQUAL);
-
-        $criteria->addAscendingOrderByColumn('authorized_form_of_name');
-
-        $cache = QubitCache::getInstance();
-        $cacheKey = 'search:list-of-repositories:'.$this->context->user->getCulture();
-        if ($cache->has($cacheKey))
-        {
-          $choices = $cache->get($cacheKey);
-        }
-        else
-        {
-          $choices = array();
-          $choices[null] = null;
-          foreach (QubitRepository::get($criteria) as $repository)
-          {
-            $choices[$repository->id] = $repository->__toString();
-          }
-
-          $cache->set($cacheKey, $choices, 3600);
-        }
-
-        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
-
-        break;
-
-      case 'user':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => array()), array('class' => 'form-autocomplete')));
-
-        break;
-    }
-  }
-
   public function execute($request)
   {
     // Store user and user URL for convenience
@@ -304,6 +208,102 @@ class SearchDescriptionUpdatesAction extends sfAction
     $this->pager->setMaxPerPage($limit);
     $this->pager->setPage($page);
     $this->pager->init();
+  }
+
+  protected function addField($name)
+  {
+    switch ($name)
+    {
+      case 'className':
+        $choices = array(
+          'QubitInformationObject' => sfConfig::get('app_ui_label_informationobject'),
+          'QubitActor' => sfConfig::get('app_ui_label_actor'),
+          'QubitRepository' => sfConfig::get('app_ui_label_repository'),
+          'QubitTerm' => sfConfig::get('app_ui_label_term'),
+          'QubitFunctionObject' => sfConfig::get('app_ui_label_function'));
+
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+
+        break;
+
+      case 'startDate':
+        $this->form->setValidator($name, new sfValidatorDate(array(), array('invalid' => $this->context->i18n->__('Invalid start date'))));
+        $this->form->setWidget($name, new sfWidgetFormInput());
+
+        break;
+
+      case 'endDate':
+        $this->form->setValidator($name, new sfValidatorDate(array(), array('invalid' => $this->context->i18n->__('Invalid end date'))));
+        $this->form->setWidget($name, new sfWidgetFormInput());
+
+        break;
+
+      case 'dateOf':
+        $choices = array(
+          'CREATED_AT' => $this->context->i18n->__('Creation'),
+          'UPDATED_AT' => $this->context->i18n->__('Revision'),
+          'both' => $this->context->i18n->__('Both')
+        );
+
+        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
+        $this->form->setWidget($name, new arWidgetFormSelectRadio(array('choices' => $choices, 'class' => 'radio inline')));
+
+        break;
+
+      case 'publicationStatus':
+        $choices = array(
+          QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID => QubitTerm::getById(QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)->name,
+          QubitTerm::PUBLICATION_STATUS_DRAFT_ID => QubitTerm::getById(QubitTerm::PUBLICATION_STATUS_DRAFT_ID)->name,
+          'all' => $this->context->i18n->__('All')
+        );
+
+        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
+        $this->form->setWidget($name, new arWidgetFormSelectRadio(array('choices' => $choices, 'class' => 'radio inline')));
+
+        break;
+
+      case 'repository':
+        // Get list of repositories
+        $criteria = new Criteria();
+
+        // Do source culture fallback
+        $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');
+
+        // Ignore root repository
+        $criteria->add(QubitActor::ID, QubitRepository::ROOT_ID, Criteria::NOT_EQUAL);
+
+        $criteria->addAscendingOrderByColumn('authorized_form_of_name');
+
+        $cache = QubitCache::getInstance();
+        $cacheKey = 'search:list-of-repositories:'.$this->context->user->getCulture();
+        if ($cache->has($cacheKey))
+        {
+          $choices = $cache->get($cacheKey);
+        }
+        else
+        {
+          $choices = array();
+          $choices[null] = null;
+          foreach (QubitRepository::get($criteria) as $repository)
+          {
+            $choices[$repository->id] = $repository->__toString();
+          }
+
+          $cache->set($cacheKey, $choices, 3600);
+        }
+
+        $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
+        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+
+        break;
+
+      case 'user':
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => array()), array('class' => 'form-autocomplete')));
+
+        break;
+    }
   }
 
   private function addDateRangeQuery($queryBool, $dateOf)

@@ -61,6 +61,11 @@ class sfThumbnail
     $this->adapter = new $adapterClass($maxWidth, $maxHeight, $scale, $inflate, $quality, $adapterOptions);
   }
 
+  public function __destruct()
+  {
+    $this->freeAll();
+  }
+
   /**
    * Loads an image from a file or URL and creates an internal thumbnail out of it
    *
@@ -255,10 +260,5 @@ class sfThumbnail
       $this->thumbWidth = floor($ratioWidth * $sourceWidth);
       $this->thumbHeight = ceil($ratioHeight * $sourceHeight);
     }
-  }
-
-  public function __destruct()
-  {
-    $this->freeAll();
   }
 }

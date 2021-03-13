@@ -28,15 +28,6 @@
 class arBaseJob extends Net_Gearman_Job_Common
 {
   /*
-   * Required parameters:
-   *
-   * Declares parameters that are mandatory for the jobs execution. They can be
-   * extended on each job subclasse using the $extraRequiredParameters property.
-   * If any of the required paramareters is missing the job will fail.
-   */
-  private $requiredParameters = array('id', 'name');
-
-  /*
    * Parallel execution and retry time:
    *
    * In instances where two or more workers are setup, multiple jobs could run in parallel.
@@ -52,6 +43,14 @@ class arBaseJob extends Net_Gearman_Job_Common
   protected $waitForRetryTime = 10;
   protected $maxRetries = 10;
   protected $dispatcher = null;
+  /*
+   * Required parameters:
+   *
+   * Declares parameters that are mandatory for the jobs execution. They can be
+   * extended on each job subclasse using the $extraRequiredParameters property.
+   * If any of the required paramareters is missing the job will fail.
+   */
+  private $requiredParameters = array('id', 'name');
 
   public function run($parameters)
   {

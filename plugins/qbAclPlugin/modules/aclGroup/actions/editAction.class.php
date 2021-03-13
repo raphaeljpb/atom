@@ -25,6 +25,40 @@ class AclGroupEditAction extends sfAction
       'description',
       'translate');
 
+  public function execute($request)
+  {
+    $this->group = new QubitAclGroup();
+
+    if (isset($this->request->id))
+    {
+      $this->group = QubitAclGroup::getById($this->request->id);
+
+      if (!isset($this->group))
+      {
+        $this->forward404();
+      }
+    }
+
+    $this->form = new sfForm();
+    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+
+    foreach ($this::$NAMES as $name)
+    {
+      $this->addField($name);
+    }
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+        $this->redirect(array($this->group, 'module' => 'aclGroup'));
+      }
+    }
+  }
+
   protected function addField($name)
   {
     switch ($name)
@@ -64,40 +98,6 @@ class AclGroupEditAction extends sfAction
         $this->form->setWidget($name, new sfWidgetFormChoice(array('expanded' => true, 'choices' => $choices)));
 
         break;
-    }
-  }
-
-  public function execute($request)
-  {
-    $this->group = new QubitAclGroup();
-
-    if (isset($this->request->id))
-    {
-      $this->group = QubitAclGroup::getById($this->request->id);
-
-      if (!isset($this->group))
-      {
-        $this->forward404();
-      }
-    }
-
-    $this->form = new sfForm();
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-
-    foreach ($this::$NAMES as $name)
-    {
-      $this->addField($name);
-    }
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-        $this->redirect(array($this->group, 'module' => 'aclGroup'));
-      }
     }
   }
 

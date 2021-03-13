@@ -35,22 +35,6 @@ Export repository information to a CSV.
 EOF;
 
   /**
-   * @see sfBaseTask
-   */
-  protected function configure()
-  {
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-    ));
-
-    $this->addArguments(array(
-      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'Filename for the CSV')
-    ));
-  }
-
-  /**
    * @see sfTask
    */
   public function execute($arguments = array(), $options = array())
@@ -68,6 +52,22 @@ EOF;
       $this->logSection('csv', 'exported '.$repository->getAuthorizedFormOfName(array('cultureFallback' => true)).
                         " (culture: {$r->culture})");
     }
+  }
+
+  /**
+   * @see sfBaseTask
+   */
+  protected function configure()
+  {
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+    ));
+
+    $this->addArguments(array(
+      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'Filename for the CSV')
+    ));
   }
 
   private function getRepositories()

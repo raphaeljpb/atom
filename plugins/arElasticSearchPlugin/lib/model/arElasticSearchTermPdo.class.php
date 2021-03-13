@@ -69,6 +69,39 @@ class arElasticSearchTermPdo
     $this->data[$name] = $value;
   }
 
+  public function serialize()
+  {
+    $serialized = array();
+
+    $serialized['id'] = $this->id;
+    $serialized['slug'] = $this->slug;
+
+    $serialized['taxonomyId'] = $this->taxonomy_id;
+
+    $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
+    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::ALTERNATIVE_LABEL_ID)) as $item)
+    {
+      $serialized['useFor'][] = arElasticSearchOtherName::serialize($item);
+    }
+
+    $sql = 'SELECT id, source_culture FROM '.QubitNote::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
+    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::SCOPE_NOTE_ID)) as $item)
+    {
+      $serialized['scopeNotes'][] = arElasticSearchNote::serialize($item);
+    }
+
+    $serialized['isProtected'] = QubitTerm::isProtected($this->id);
+    $serialized['numberOfDescendants'] = ($this->rgt - $this->lft - 1) / 2;
+
+    $serialized['createdAt'] = arElasticSearchPluginUtil::convertDate($this->created_at);
+    $serialized['updatedAt'] = arElasticSearchPluginUtil::convertDate($this->updated_at);
+
+    $serialized['sourceCulture'] = $this->source_culture;
+    $serialized['i18n'] = arElasticSearchModelBase::serializeI18ns($this->id, array('QubitTerm'));
+
+    return $serialized;
+  }
+
   protected function loadData($id)
   {
     if (!isset(self::$statements['term']))
@@ -102,38 +135,5 @@ class arElasticSearchTermPdo
     self::$statements['term']->closeCursor();
 
     return $this;
-  }
-
-  public function serialize()
-  {
-    $serialized = array();
-
-    $serialized['id'] = $this->id;
-    $serialized['slug'] = $this->slug;
-
-    $serialized['taxonomyId'] = $this->taxonomy_id;
-
-    $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::ALTERNATIVE_LABEL_ID)) as $item)
-    {
-      $serialized['useFor'][] = arElasticSearchOtherName::serialize($item);
-    }
-
-    $sql = 'SELECT id, source_culture FROM '.QubitNote::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::SCOPE_NOTE_ID)) as $item)
-    {
-      $serialized['scopeNotes'][] = arElasticSearchNote::serialize($item);
-    }
-
-    $serialized['isProtected'] = QubitTerm::isProtected($this->id);
-    $serialized['numberOfDescendants'] = ($this->rgt - $this->lft - 1) / 2;
-
-    $serialized['createdAt'] = arElasticSearchPluginUtil::convertDate($this->created_at);
-    $serialized['updatedAt'] = arElasticSearchPluginUtil::convertDate($this->updated_at);
-
-    $serialized['sourceCulture'] = $this->source_culture;
-    $serialized['i18n'] = arElasticSearchModelBase::serializeI18ns($this->id, array('QubitTerm'));
-
-    return $serialized;
   }
 }

@@ -73,6 +73,26 @@ class DeaccessionEditAction extends DefaultEditAction
     $this->response->setTitle("$title - {$this->response->getTitle()}");
   }
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        $this->resource->save();
+
+        $this->redirect(array($this->resource->accession, 'module' => 'accession'));
+      }
+    }
+
+    QubitDescription::addAssets($this->response);
+  }
+
   protected function addField($name)
   {
     switch ($name)
@@ -149,25 +169,5 @@ class DeaccessionEditAction extends DefaultEditAction
       default:
         return parent::processField($field);
     }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        $this->resource->save();
-
-        $this->redirect(array($this->resource->accession, 'module' => 'accession'));
-      }
-    }
-
-    QubitDescription::addAssets($this->response);
   }
 }

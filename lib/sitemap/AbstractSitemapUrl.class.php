@@ -27,31 +27,6 @@ abstract class AbstractSitemapUrl
     $this->dateFormatter = new sfDateFormat('en');
   }
 
-  protected function getLoc()
-  {
-    return '/'.$this->slug;
-  }
-
-  protected function getPriority()
-  {
-    return;
-  }
-
-  protected function getLastmod()
-  {
-    if (empty($this->updated_at))
-    {
-      return;
-    }
-
-    return date('Y-m-d', strtotime($this->updated_at));
-  }
-
-  protected function getChangefreq()
-  {
-    return 'monthly';
-  }
-
   public function getUrl($baseUrl, $indent = true)
   {
     $this->writer->setIndent($indent);
@@ -85,5 +60,30 @@ abstract class AbstractSitemapUrl
     $this->writer->endElement();
 
     return $this->writer->outputMemory();
+  }
+
+  protected function getLoc()
+  {
+    return '/'.$this->slug;
+  }
+
+  protected function getPriority()
+  {
+    return;
+  }
+
+  protected function getLastmod()
+  {
+    if (empty($this->updated_at))
+    {
+      return;
+    }
+
+    return date('Y-m-d', strtotime($this->updated_at));
+  }
+
+  protected function getChangefreq()
+  {
+    return 'monthly';
   }
 }

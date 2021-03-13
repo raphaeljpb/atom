@@ -44,31 +44,6 @@ class TermIndexAction extends DefaultBrowseAction
               'field'  => '',
               'populate' => false));
 
-  protected function populateAgg($name, $buckets)
-  {
-    switch ($name)
-    {
-      case 'places':
-      case 'subjects':
-      case 'genres':
-        $ids = array_column($buckets, 'key');
-        $criteria = new Criteria();
-        $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
-
-        foreach (QubitTerm::get($criteria) as $item)
-        {
-          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(array('cultureFallback' => true));
-        }
-
-        break;
-
-      default:
-        return parent::populateAgg($name, $buckets);
-    }
-
-    return $buckets;
-  }
-
   public function checkForRepeatedNames($validator, $value)
   {
     $criteria = new Criteria();
@@ -298,6 +273,31 @@ EOF;
         $this->loadListTerms($request);
       }
     }
+  }
+
+  protected function populateAgg($name, $buckets)
+  {
+    switch ($name)
+    {
+      case 'places':
+      case 'subjects':
+      case 'genres':
+        $ids = array_column($buckets, 'key');
+        $criteria = new Criteria();
+        $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
+
+        foreach (QubitTerm::get($criteria) as $item)
+        {
+          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(array('cultureFallback' => true));
+        }
+
+        break;
+
+      default:
+        return parent::populateAgg($name, $buckets);
+    }
+
+    return $buckets;
   }
 
   protected function setAndCheckResource()

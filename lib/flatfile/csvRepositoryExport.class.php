@@ -32,12 +32,6 @@ class csvRepositoryExport extends QubitFlatfileExport
     $this->loadHelpers();
   }
 
-  private function loadHelpers()
-  {
-    include_once sfConfig::get('sf_root_dir').'/lib/helper/QubitHelper.php';
-    ProjectConfiguration::getActive()->loadHelpers('I18N');
-  }
-
   /*
    * Information object-specific column setting before CSV row write
    *
@@ -65,6 +59,12 @@ class csvRepositoryExport extends QubitFlatfileExport
     $this->setContactInfo();
 
     $this->setColumnToNotes('maintenanceNote', QubitTerm::MAINTENANCE_NOTE_ID);
+  }
+
+  private function loadHelpers()
+  {
+    include_once sfConfig::get('sf_root_dir').'/lib/helper/QubitHelper.php';
+    ProjectConfiguration::getActive()->loadHelpers('I18N');
   }
 
   private function getRelatedTermNames($taxonomyId)

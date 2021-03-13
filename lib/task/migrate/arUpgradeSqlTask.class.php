@@ -251,6 +251,91 @@ EOF;
   }
 
   /**
+   * Figure out what's the last milestone used
+   *
+   * @return int Previous milestone (e.g. 1, 2)
+   */
+  protected function getPreviousMilestone()
+  {
+    // There is no doubt that the user is running 1.x if the initial database
+    // version was 92 or lower (before the fork happened)
+    if ($this->initialVersion <= 92)
+    {
+      $previousMilestone = 1;
+    }
+    // Otherwise, we'll look for the milestone in the database
+    else
+    {
+      $sql = 'SELECT value
+        FROM setting JOIN setting_i18n ON setting.id = setting_i18n.id
+        WHERE name = "milestone";';
+
+      $previousMilestone = QubitPdo::fetchColumn($sql);
+    }
+
+    return $previousMilestone;
+  }
+
+  /**
+   * Update the settings with the latest database version
+   *
+   * @param int New database version
+   */
+  protected function updateDatabaseVersion($version)
+  {
+    $sql = 'UPDATE setting_i18n SET value = ? WHERE id = (SELECT id FROM setting WHERE name = ?);';
+    QubitPdo::modify($sql, array($version, 'version'));
+  }
+
+  /**
+   * Update the settings with the latest milestone
+   */
+  protected function updateMilestone()
+  {
+    // Get current codebase milestone
+    $substrings = preg_split('/\./', qubitConfiguration::VERSION);
+    $milestone = array_shift($substrings);
+
+    // Run SQL query
+    $sql = 'UPDATE setting_i18n SET value = ? WHERE id = (SELECT id FROM setting WHERE name = ?);';
+    QubitPdo::modify($sql, array($milestone, 'milestone'));
+  }
+
+  protected function parseDsn($dsn)
+  {
+    $params = array(
+      'host' => 'localhost',
+      'port' => '3307');
+
+    // Require a prefix
+    if (!preg_match('/^(\w+):/', $dsn, $matches))
+    {
+      return;
+    }
+    $params['prefix'] = $matches[1];
+
+    // Require a dbname
+    if (!preg_match('/dbname=(\w+)/', $dsn, $matches))
+    {
+      return;
+    }
+    $params['dbname'] = $matches[1];
+
+    // Optional params (host, port)
+    if (preg_match('/host=([^;]+)/', $dsn, $matches))
+    {
+      $params['host'] = $matches[1];
+    }
+
+    if (preg_match('/port=(\d+)/', $dsn, $matches))
+    {
+      $params['port'] = $matches[1];
+    }
+
+    return $params;
+  }
+
+  /**
    * Run specific migrations by number
    *
    * @param array  Array of migration numbers
@@ -289,43 +374,6 @@ EOF;
         }
       }
     }
-  }
-
-  /**
-   * Figure out what's the last milestone used
-   *
-   * @return int Previous milestone (e.g. 1, 2)
-   */
-  protected function getPreviousMilestone()
-  {
-    // There is no doubt that the user is running 1.x if the initial database
-    // version was 92 or lower (before the fork happened)
-    if ($this->initialVersion <= 92)
-    {
-      $previousMilestone = 1;
-    }
-    // Otherwise, we'll look for the milestone in the database
-    else
-    {
-      $sql = 'SELECT value
-        FROM setting JOIN setting_i18n ON setting.id = setting_i18n.id
-        WHERE name = "milestone";';
-
-      $previousMilestone = QubitPdo::fetchColumn($sql);
-    }
-
-    return $previousMilestone;
-  }
-
-  /**
-   * Update the settings with the latest database version
-   *
-   * @param int New database version
-   */
-  protected function updateDatabaseVersion($version)
-  {
-    $sql = 'UPDATE setting_i18n SET value = ? WHERE id = (SELECT id FROM setting WHERE name = ?);';
-    QubitPdo::modify($sql, array($version, 'version'));
   }
 
   /**
@@ -381,54 +429,6 @@ EOF;
     }
 
     return $version;
-  }
-
-  /**
-   * Update the settings with the latest milestone
-   */
-  protected function updateMilestone()
-  {
-    // Get current codebase milestone
-    $substrings = preg_split('/\./', qubitConfiguration::VERSION);
-    $milestone = array_shift($substrings);
-
-    // Run SQL query
-    $sql = 'UPDATE setting_i18n SET value = ? WHERE id = (SELECT id FROM setting WHERE name = ?);';
-    QubitPdo::modify($sql, array($milestone, 'milestone'));
-  }
-
-  protected function parseDsn($dsn)
-  {
-    $params = array(
-      'host' => 'localhost',
-      'port' => '3307');
-
-    // Require a prefix
-    if (!preg_match('/^(\w+):/', $dsn, $matches))
-    {
-      return;
-    }
-    $params['prefix'] = $matches[1];
-
-    // Require a dbname
-    if (!preg_match('/dbname=(\w+)/', $dsn, $matches))
-    {
-      return;
-    }
-    $params['dbname'] = $matches[1];
-
-    // Optional params (host, port)
-    if (preg_match('/host=([^;]+)/', $dsn, $matches))
-    {
-      $params['host'] = $matches[1];
-    }
-
-    if (preg_match('/port=(\d+)/', $dsn, $matches))
-    {
-      $params['port'] = $matches[1];
-    }
-
-    return $params;
   }
 
   /**

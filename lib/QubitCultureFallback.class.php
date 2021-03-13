@@ -45,20 +45,6 @@ class QubitCultureFallback
   }
 
   /**
-   * Build SQL 'case' statement to get the most relevant value for $column
-   *
-   * @param string $column name
-   * @return string SQL case statement
-   */
-  protected static function getfallbackCaseStmt($column)
-  {
-    $fallbackCaseStmt  = '(CASE WHEN (current.'.$column.' IS NOT NULL AND current.'.$column.' <> \'\') THEN current.'.$column;
-    $fallbackCaseStmt .= ' ELSE source.'.$column.' END)';
-
-    return $fallbackCaseStmt;
-  }
-
-  /**
    * Add fallback query criteria to $criteria
    *
    * @param Criteria $criteria
@@ -103,5 +89,19 @@ class QubitCultureFallback
       Criteria::LEFT_JOIN);
 
     return $criteria;
+  }
+
+  /**
+   * Build SQL 'case' statement to get the most relevant value for $column
+   *
+   * @param string $column name
+   * @return string SQL case statement
+   */
+  protected static function getfallbackCaseStmt($column)
+  {
+    $fallbackCaseStmt  = '(CASE WHEN (current.'.$column.' IS NOT NULL AND current.'.$column.' <> \'\') THEN current.'.$column;
+    $fallbackCaseStmt .= ' ELSE source.'.$column.' END)';
+
+    return $fallbackCaseStmt;
   }
 }

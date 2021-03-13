@@ -21,6 +21,25 @@ class UserEditInformationObjectAclAction extends DefaultEditAction
 {
   public static $NAMES = array();
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        $this->resource->save();
+
+        $this->redirect(array($this->resource, 'module' => 'user', 'action' => 'indexInformationObjectAcl'));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
@@ -129,25 +148,6 @@ class UserEditInformationObjectAclAction extends DefaultEditAction
 
           $this->resource->aclPermissions[] = $aclPermission;
         }
-      }
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        $this->resource->save();
-
-        $this->redirect(array($this->resource, 'module' => 'user', 'action' => 'indexInformationObjectAcl'));
       }
     }
   }

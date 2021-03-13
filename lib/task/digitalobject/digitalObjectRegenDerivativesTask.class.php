@@ -19,6 +19,67 @@
 
 class digitalObjectRegenDerivativesTask extends arBaseTask
 {
+  public static function regenerateDerivatives(&$digitalObject, $options = array())
+  {
+    // Determine usage ID from type flag
+    switch($options['type'])
+    {
+      case "reference":
+        $usageId = QubitTerm::REFERENCE_ID;
+        break;
+
+      case "thumbnail":
+        $usageId = QubitTerm::THUMBNAIL_ID;
+        break;
+
+      default:
+        $usageId = $digitalObject->usageId; // MASTER_ID or EXTERNAL_URI_ID or EXTERNAL_FILE_ID
+    }
+
+    // If master isn't stored in AtoM, attempt to cache external resource before deleting
+    // existing derivatives (an unavailable resource will result in an exception)
+    if ($digitalObject->derivativesGeneratedFromExternalMaster($digitalObject->usageId))
+    {
+      $digitalObject->getLocalPath();
+    }
+
+    // Delete existing derivatives
+    $criteria = new Criteria();
+    $criteria->add(QubitDigitalObject::PARENT_ID, $digitalObject->id);
+
+    // Delete only ref or thumnail derivative if "type" flag set
+    if (QubitTerm::REFERENCE_ID == $usageId || QubitTerm::THUMBNAIL_ID == $usageId)
+    {
+      $criteria->add(QubitDigitalObject::USAGE_ID, $usageId);
+    }
+
+    foreach(QubitDigitalObject::get($criteria) as $derivative)
+    {
+      $derivative->delete();
+    }
+
+    // Delete existing transcript if 'keepTranscript' option is not sent or it's false,
+    // we need to keep it to avoid an error trying to save a deleted property when this
+    // method is called from IO rename action
+    if (!isset($options['keepTranscript']) || !$options['keepTranscript'])
+    {
+      $transcriptProperty = $digitalObject->getPropertyByName('transcript');
+      $transcriptProperty->delete();
+    }
+
+    // Generate new derivatives
+    $digitalObject->createRepresentations($usageId, $conn);
+
+    if ($options['index'])
+    {
+      // Update index
+      $digitalObject->save();
+    }
+
+    // Destroy out-of-scope objects
+    QubitDigitalObject::clearCache();
+    QubitInformationObject::clearCache();
+  }
   protected function configure()
   {
     // Validate "type" options
@@ -227,67 +288,5 @@ EOF;
     }
 
     $this->logSection('digital object', 'Done!');
-  }
-
-  public static function regenerateDerivatives(&$digitalObject, $options = array())
-  {
-    // Determine usage ID from type flag
-    switch($options['type'])
-    {
-      case "reference":
-        $usageId = QubitTerm::REFERENCE_ID;
-        break;
-
-      case "thumbnail":
-        $usageId = QubitTerm::THUMBNAIL_ID;
-        break;
-
-      default:
-        $usageId = $digitalObject->usageId; // MASTER_ID or EXTERNAL_URI_ID or EXTERNAL_FILE_ID
-    }
-
-    // If master isn't stored in AtoM, attempt to cache external resource before deleting
-    // existing derivatives (an unavailable resource will result in an exception)
-    if ($digitalObject->derivativesGeneratedFromExternalMaster($digitalObject->usageId))
-    {
-      $digitalObject->getLocalPath();
-    }
-
-    // Delete existing derivatives
-    $criteria = new Criteria();
-    $criteria->add(QubitDigitalObject::PARENT_ID, $digitalObject->id);
-
-    // Delete only ref or thumnail derivative if "type" flag set
-    if (QubitTerm::REFERENCE_ID == $usageId || QubitTerm::THUMBNAIL_ID == $usageId)
-    {
-      $criteria->add(QubitDigitalObject::USAGE_ID, $usageId);
-    }
-
-    foreach(QubitDigitalObject::get($criteria) as $derivative)
-    {
-      $derivative->delete();
-    }
-
-    // Delete existing transcript if 'keepTranscript' option is not sent or it's false,
-    // we need to keep it to avoid an error trying to save a deleted property when this
-    // method is called from IO rename action
-    if (!isset($options['keepTranscript']) || !$options['keepTranscript'])
-    {
-      $transcriptProperty = $digitalObject->getPropertyByName('transcript');
-      $transcriptProperty->delete();
-    }
-
-    // Generate new derivatives
-    $digitalObject->createRepresentations($usageId, $conn);
-
-    if ($options['index'])
-    {
-      // Update index
-      $digitalObject->save();
-    }
-
-    // Destroy out-of-scope objects
-    QubitDigitalObject::clearCache();
-    QubitInformationObject::clearCache();
   }
 }

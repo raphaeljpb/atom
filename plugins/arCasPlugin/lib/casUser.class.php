@@ -62,6 +62,16 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
   }
 
   /**
+   * Logout from AtoM and the CAS server.
+   */
+  public function logout()
+  {
+    $this->signOut();
+    arCAS::initializePhpCAS();
+    phpCAS::logout();
+  }
+
+  /**
    * Set group membership based on user attributes returned by CAS server.
    */
   protected function setGroupsFromCasAttributes($user, $attributes)
@@ -118,15 +128,5 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
         }
       }
     }
-  }
-
-  /**
-   * Logout from AtoM and the CAS server.
-   */
-  public function logout()
-  {
-    $this->signOut();
-    arCAS::initializePhpCAS();
-    phpCAS::logout();
   }
 }

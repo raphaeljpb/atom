@@ -66,38 +66,6 @@ class InformationObjectItemOrFileListAction extends sfAction
     return 'Criteria';
   }
 
-  private function initiateReportGeneration()
-  {
-    $reportType = (false === strpos(strtolower($this->type), 'item')) ? 'fileList' : 'itemList';
-
-    if (is_array($this->form->includeThumbnails->getValue()) &&
-        '1' === array_pop($this->form->includeThumbnails->getValue()))
-    {
-      $includeThumbnails = true;
-    }
-    else
-    {
-      $includeThumbnails = false;
-    }
-
-    $params = array(
-        'objectId' => $this->resource->id,
-        'reportType' => $reportType,
-        'reportTypeLabel' => $this->type,
-        'sortBy' => $this->form->sortBy->getValue(),
-        'reportFormat' => $this->form->format->getValue(),
-        'includeThumbnails' => $includeThumbnails
-    );
-
-    QubitJob::runJob('arGenerateReportJob', $params);
-
-    $reportsUrl = url_for(array($this->resource, 'module' => 'informationobject', 'action' => 'reports'));
-    $message = $this->context->i18n->__('Report generation has started, please check the <a href="%1">reports</a> page again soon.',
-                                        array('%1' => $reportsUrl));
-
-    $this->getUser()->setFlash('notice', $message);
-  }
-
   protected function addField($name)
   {
     switch ($name)
@@ -143,5 +111,37 @@ class InformationObjectItemOrFileListAction extends sfAction
         $this->form->setValidator($name, new sfValidatorChoice(array('choices' => array_keys($choices))));
         $this->form->setWidget($name, new sfWidgetFormChoice(array('expanded' => true, 'choices' => $choices)));
     }
+  }
+
+  private function initiateReportGeneration()
+  {
+    $reportType = (false === strpos(strtolower($this->type), 'item')) ? 'fileList' : 'itemList';
+
+    if (is_array($this->form->includeThumbnails->getValue()) &&
+        '1' === array_pop($this->form->includeThumbnails->getValue()))
+    {
+      $includeThumbnails = true;
+    }
+    else
+    {
+      $includeThumbnails = false;
+    }
+
+    $params = array(
+        'objectId' => $this->resource->id,
+        'reportType' => $reportType,
+        'reportTypeLabel' => $this->type,
+        'sortBy' => $this->form->sortBy->getValue(),
+        'reportFormat' => $this->form->format->getValue(),
+        'includeThumbnails' => $includeThumbnails
+    );
+
+    QubitJob::runJob('arGenerateReportJob', $params);
+
+    $reportsUrl = url_for(array($this->resource, 'module' => 'informationobject', 'action' => 'reports'));
+    $message = $this->context->i18n->__('Report generation has started, please check the <a href="%1">reports</a> page again soon.',
+                                        array('%1' => $reportsUrl));
+
+    $this->getUser()->setFlash('notice', $message);
   }
 }

@@ -26,13 +26,12 @@
  */
 class QubitFlatfileExport
 {
-  protected $configurationLoaded = false;  // has the configuuration been loaded?
-
   public $columnNames     = array();       // ordered header column names
   public $standardColumns = array();       // flatfile columns that are object properties
   public $columnMap       = array();       // flatfile columns that map to object properties
   public $propertyMap     = array();       // flatfile columns that map to Qubit properties
   public $user            = null;          // user doing the export
+  protected $configurationLoaded = false;  // has the configuuration been loaded?
 
   protected $resource;                     // current resource being exported
   protected $row;                          // current row being prepared for export
@@ -208,97 +207,6 @@ class QubitFlatfileExport
     }
   }
 
-  /*
-   * Custom configuration logic
-   *
-   * (Child classes can override this if necessary)
-   *
-   * @return void
-   */
-  protected function config(&$config)
-  {
-  }
-
-
-  /*
-   *
-   *  Taxonomy caching methods
-   *  ------------------------
-   */
-
-  /*
-   * Cache a number of taxonomies as properties of the current class instance
-   *
-   * @param array $map  keys are property names and values QubitTaxonomy
-   *                    constants that represent IDs
-   *
-   * @return void
-   */
-  protected function cacheTaxonomies($map)
-  {
-    $taxonomyCacheMap = array();
-
-    // Prepare taxonomy cache map
-    foreach ($map as $property => $taxonomy)
-    {
-      $taxonomyCacheMap[$property] = constant('QubitTaxonomy::'. $taxonomy);
-    }
-
-    if (count($taxonomyCacheMap))
-    {
-      $this->cacheTaxonomiesAsProperties($taxonomyCacheMap);
-    }
-  }
-
-  /*
-   * Cache a number of taxonomies as properties of the current class instance
-   *
-   * @param array $map  keys are property names and values taxonomy IDs
-   *
-   * @return void
-   */
-  protected function cacheTaxonomiesAsProperties($map)
-  {
-    foreach($map as $propertyName => $taxonomyId)
-    {
-      $this->cacheTaxonomyAsProperty($propertyName, $taxonomyId);
-    }
-  }
-
-  /*
-   * Cache a taxonomy in a property of the current class instance
-   *
-   * @param string $propertyName  name of property to set
-   * @param integer $taxonomyId  ID of taxonomy to cache
-   *
-   * @return void
-   */
-  protected function cacheTaxonomyAsProperty($propertyName, $taxonomyId)
-  {
-    $this->{$propertyName} = $this->getTaxonomyTermValues($taxonomyId);
-  }
-
-  /*
-   * Get taxonomy terms as an array where key is ID and value is term as string
-   *
-   * @param integer $taxonomyId  ID of taxonomy to fetch
-   *
-   * @return array  key is term ID and value is term name
-   */
-  protected function getTaxonomyTermValues($taxonomyId)
-  {
-    $terms = array();
-
-    foreach (QubitFlatfileImport::getTaxonomyTerms($taxonomyId) as $term)
-    {
-      $terms[$term->culture][$term->id] = $term->name;
-    }
-
-    // QubitFlatfileImport::getTaxonomyTerms has changed to allow a better
-    // culture matching on import. On export we're still only using english terms
-    return $terms['en'];
-  }
-
 
   /*
    *
@@ -348,24 +256,6 @@ class QubitFlatfileExport
     {
       $this->setColumn($column, $noteContent);
     }
-  }
-
-  /**
-   * If an array is provided as a value, implode it
-   *
-   * @param string $value  value
-   *
-   * @return void
-   */
-  protected function content($value)
-  {
-    if (is_array($value))
-    {
-      // Remove empty strings from the array via array_filter too, to prevent superfluous separators
-      return implode($this->separatorChar, array_filter($value, 'strlen'));
-    }
-
-    return $value;
   }
 
   /**
@@ -467,6 +357,115 @@ class QubitFlatfileExport
     }
 
     $this->modifyRowBeforeExport();
+  }
+
+  /*
+   * Custom configuration logic
+   *
+   * (Child classes can override this if necessary)
+   *
+   * @return void
+   */
+  protected function config(&$config)
+  {
+  }
+
+
+  /*
+   *
+   *  Taxonomy caching methods
+   *  ------------------------
+   */
+
+  /*
+   * Cache a number of taxonomies as properties of the current class instance
+   *
+   * @param array $map  keys are property names and values QubitTaxonomy
+   *                    constants that represent IDs
+   *
+   * @return void
+   */
+  protected function cacheTaxonomies($map)
+  {
+    $taxonomyCacheMap = array();
+
+    // Prepare taxonomy cache map
+    foreach ($map as $property => $taxonomy)
+    {
+      $taxonomyCacheMap[$property] = constant('QubitTaxonomy::'. $taxonomy);
+    }
+
+    if (count($taxonomyCacheMap))
+    {
+      $this->cacheTaxonomiesAsProperties($taxonomyCacheMap);
+    }
+  }
+
+  /*
+   * Cache a number of taxonomies as properties of the current class instance
+   *
+   * @param array $map  keys are property names and values taxonomy IDs
+   *
+   * @return void
+   */
+  protected function cacheTaxonomiesAsProperties($map)
+  {
+    foreach($map as $propertyName => $taxonomyId)
+    {
+      $this->cacheTaxonomyAsProperty($propertyName, $taxonomyId);
+    }
+  }
+
+  /*
+   * Cache a taxonomy in a property of the current class instance
+   *
+   * @param string $propertyName  name of property to set
+   * @param integer $taxonomyId  ID of taxonomy to cache
+   *
+   * @return void
+   */
+  protected function cacheTaxonomyAsProperty($propertyName, $taxonomyId)
+  {
+    $this->{$propertyName} = $this->getTaxonomyTermValues($taxonomyId);
+  }
+
+  /*
+   * Get taxonomy terms as an array where key is ID and value is term as string
+   *
+   * @param integer $taxonomyId  ID of taxonomy to fetch
+   *
+   * @return array  key is term ID and value is term name
+   */
+  protected function getTaxonomyTermValues($taxonomyId)
+  {
+    $terms = array();
+
+    foreach (QubitFlatfileImport::getTaxonomyTerms($taxonomyId) as $term)
+    {
+      $terms[$term->culture][$term->id] = $term->name;
+    }
+
+    // QubitFlatfileImport::getTaxonomyTerms has changed to allow a better
+    // culture matching on import. On export we're still only using english terms
+    return $terms['en'];
+  }
+
+  /**
+   * If an array is provided as a value, implode it
+   *
+   * @param string $value  value
+   *
+   * @return void
+   */
+  protected function content($value)
+  {
+    if (is_array($value))
+    {
+      // Remove empty strings from the array via array_filter too, to prevent superfluous separators
+      return implode($this->separatorChar, array_filter($value, 'strlen'));
+    }
+
+    return $value;
   }
 
   /**

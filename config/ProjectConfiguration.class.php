@@ -53,6 +53,11 @@ class ProjectConfiguration extends sfProjectConfiguration
       array('arWebDebugPanel', 'listenToLoadDebugWebPanelEvent'));
   }
 
+  public function isPluginEnabled($pluginName)
+  {
+    return false !== array_search($pluginName, $this->plugins);
+  }
+
   protected function namespacesClassLoader()
   {
     $rootDir = sfConfig::get('sf_root_dir');
@@ -75,10 +80,5 @@ class ProjectConfiguration extends sfProjectConfiguration
       'Psr' => $rootDir.DIRECTORY_SEPARATOR.'vendor'));
 
     $loader->register();
-  }
-
-  public function isPluginEnabled($pluginName)
-  {
-    return false !== array_search($pluginName, $this->plugins);
   }
 }

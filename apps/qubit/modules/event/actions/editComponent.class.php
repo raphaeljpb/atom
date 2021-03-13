@@ -19,102 +19,6 @@
 
 class EventEditComponent extends sfComponent
 {
-  protected function addField($name)
-  {
-    switch ($name)
-    {
-      case 'date':
-        $this->form->setValidator('date', new sfValidatorString());
-        $this->form->setWidget('date', new sfWidgetFormInput());
-
-        $this->form->getWidgetSchema()->date->setHelp($this->context->i18n->__('Enter free-text information, including qualifiers or typographical symbols to express uncertainty, to change the way the date displays. If this field is not used, the default will be the start and end years only.'));
-
-        break;
-
-      case 'endDate':
-        $this->form->setValidator('endDate', new sfValidatorString());
-        $this->form->setWidget('endDate', new sfWidgetFormInput());
-
-        $this->form->getWidgetSchema()->endDate->setHelp($this->context->i18n->__('Enter the end year. Do not use any qualifiers or typographical symbols to express uncertainty. Acceptable date formats: YYYYMMDD, YYYY-MM-DD, YYYY-MM, YYYY.'));
-        $this->form->getWidgetSchema()->endDate->setLabel($this->context->i18n->__('End'));
-
-        break;
-
-      case 'startDate':
-        $this->form->setValidator('startDate', new sfValidatorString());
-        $this->form->setWidget('startDate', new sfWidgetFormInput());
-
-        $this->form->getWidgetSchema()->startDate->setHelp($this->context->i18n->__('Enter the start year. Do not use any qualifiers or typographical symbols to express uncertainty. Acceptable date formats: YYYYMMDD, YYYY-MM-DD, YYYY-MM, YYYY.'));
-        $this->form->getWidgetSchema()->startDate->setLabel($this->context->i18n->__('Start'));
-
-        break;
-
-      case 'type':
-
-        // Event types, Dublin Core is restricted
-        $eventTypes = QubitTaxonomy::getTermsById(QubitTaxonomy::EVENT_TYPE_ID);
-        if ('sfDcPlugin' == $this->request->module)
-        {
-          $eventTypes = sfDcPlugin::eventTypes();
-        }
-
-        $choices = array();
-        foreach ($eventTypes as $item)
-        {
-          // Default event type is creation
-          if (QubitTerm::CREATION_ID == $item->id)
-          {
-            $this->form->setDefault('type', $this->context->routing->generate(null, array($item, 'module' => 'term')));
-          }
-
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
-        }
-
-        $this->form->setValidator('type', new sfValidatorString());
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
-
-        break;
-    }
-  }
-
-  protected function processField($field)
-  {
-    switch ($field->getName())
-    {
-      case 'type':
-      case 'resourceType':
-        unset($this->event[$field->getName()]);
-
-        $value = $this->form->getValue($field->getName());
-        if (isset($value))
-        {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          $this->event[$field->getName()] = $params['_sf_route']->resource;
-        }
-
-        break;
-
-      case 'startDate':
-      case 'endDate':
-        $value = $this->form->getValue($field->getName());
-        if (isset($value) && preg_match('/^\d{8}\z/', trim($value), $matches))
-        {
-          $value = substr($matches[0], 0, 4).'-'.substr($matches[0], 4, 2).'-'.substr($matches[0], 6, 2);
-        }
-        elseif (isset($value) && preg_match('/^\d{6}\z/', trim($value), $matches))
-        {
-          $value = substr($matches[0], 0, 4).'-'.substr($matches[0], 4, 2);
-        }
-
-        $this->event[$field->getName()] = $value;
-
-        break;
-
-      default:
-        $this->event[$field->getName()] = $this->form->getValue($field->getName());
-    }
-  }
-
   public function processForm()
   {
     $params = array($this->request->editEvent);
@@ -213,6 +117,101 @@ class EventEditComponent extends sfComponent
     foreach ($this::$NAMES as $name)
     {
       $this->addField($name);
+    }
+  }
+  protected function addField($name)
+  {
+    switch ($name)
+    {
+      case 'date':
+        $this->form->setValidator('date', new sfValidatorString());
+        $this->form->setWidget('date', new sfWidgetFormInput());
+
+        $this->form->getWidgetSchema()->date->setHelp($this->context->i18n->__('Enter free-text information, including qualifiers or typographical symbols to express uncertainty, to change the way the date displays. If this field is not used, the default will be the start and end years only.'));
+
+        break;
+
+      case 'endDate':
+        $this->form->setValidator('endDate', new sfValidatorString());
+        $this->form->setWidget('endDate', new sfWidgetFormInput());
+
+        $this->form->getWidgetSchema()->endDate->setHelp($this->context->i18n->__('Enter the end year. Do not use any qualifiers or typographical symbols to express uncertainty. Acceptable date formats: YYYYMMDD, YYYY-MM-DD, YYYY-MM, YYYY.'));
+        $this->form->getWidgetSchema()->endDate->setLabel($this->context->i18n->__('End'));
+
+        break;
+
+      case 'startDate':
+        $this->form->setValidator('startDate', new sfValidatorString());
+        $this->form->setWidget('startDate', new sfWidgetFormInput());
+
+        $this->form->getWidgetSchema()->startDate->setHelp($this->context->i18n->__('Enter the start year. Do not use any qualifiers or typographical symbols to express uncertainty. Acceptable date formats: YYYYMMDD, YYYY-MM-DD, YYYY-MM, YYYY.'));
+        $this->form->getWidgetSchema()->startDate->setLabel($this->context->i18n->__('Start'));
+
+        break;
+
+      case 'type':
+
+        // Event types, Dublin Core is restricted
+        $eventTypes = QubitTaxonomy::getTermsById(QubitTaxonomy::EVENT_TYPE_ID);
+        if ('sfDcPlugin' == $this->request->module)
+        {
+          $eventTypes = sfDcPlugin::eventTypes();
+        }
+
+        $choices = array();
+        foreach ($eventTypes as $item)
+        {
+          // Default event type is creation
+          if (QubitTerm::CREATION_ID == $item->id)
+          {
+            $this->form->setDefault('type', $this->context->routing->generate(null, array($item, 'module' => 'term')));
+          }
+
+          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
+        }
+
+        $this->form->setValidator('type', new sfValidatorString());
+        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
+
+        break;
+    }
+  }
+
+  protected function processField($field)
+  {
+    switch ($field->getName())
+    {
+      case 'type':
+      case 'resourceType':
+        unset($this->event[$field->getName()]);
+
+        $value = $this->form->getValue($field->getName());
+        if (isset($value))
+        {
+          $params = $this->context->routing->parse(Qubit::pathInfo($value));
+          $this->event[$field->getName()] = $params['_sf_route']->resource;
+        }
+
+        break;
+
+      case 'startDate':
+      case 'endDate':
+        $value = $this->form->getValue($field->getName());
+        if (isset($value) && preg_match('/^\d{8}\z/', trim($value), $matches))
+        {
+          $value = substr($matches[0], 0, 4).'-'.substr($matches[0], 4, 2).'-'.substr($matches[0], 6, 2);
+        }
+        elseif (isset($value) && preg_match('/^\d{6}\z/', trim($value), $matches))
+        {
+          $value = substr($matches[0], 0, 4).'-'.substr($matches[0], 4, 2);
+        }
+
+        $this->event[$field->getName()] = $value;
+
+        break;
+
+      default:
+        $this->event[$field->getName()] = $this->form->getValue($field->getName());
     }
   }
 }

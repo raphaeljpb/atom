@@ -34,6 +34,14 @@ class QubitTimer
     }
   }
 
+  public function __destruct()
+  {
+    if (isset($this->fh))
+    {
+      fclose($this->fh);
+    }
+  }
+
   public function start()
   {
     $this->start = microtime(true);
@@ -81,13 +89,5 @@ class QubitTimer
     }
 
     fwrite($this->fh, $string.' ('.$this->elapsed()."s)\n");
-  }
-
-  public function __destruct()
-  {
-    if (isset($this->fh))
-    {
-      fclose($this->fh);
-    }
   }
 }

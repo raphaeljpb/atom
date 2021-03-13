@@ -35,19 +35,6 @@ Clears jobs
 EOF;
 
   /**
-   * @see sfBaseTask
-   */
-  protected function configure()
-  {
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('no-confirmation', 'B', sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
-    ));
-  }
-
-  /**
    * @see sfTask
    */
   public function execute($arguments = array(), $options = array())
@@ -82,5 +69,18 @@ EOF;
     }
 
     $this->logSection('jobs:clear', 'All jobs cleared successfully!');
+  }
+
+  /**
+   * @see sfBaseTask
+   */
+  protected function configure()
+  {
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('no-confirmation', 'B', sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
+    ));
   }
 }

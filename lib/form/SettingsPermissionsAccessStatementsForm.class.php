@@ -41,13 +41,13 @@ class SettingsPermissionsAccessStatementsForm extends sfForm
     }
   }
 
-  protected function getSetting($name)
-  {
-    return QubitSetting::getByNameAndScope($name, 'access_statement');
-  }
-
   public function getSettings()
   {
     return $this->settings;
+  }
+
+  protected function getSetting($name)
+  {
+    return QubitSetting::getByNameAndScope($name, 'access_statement');
   }
 }

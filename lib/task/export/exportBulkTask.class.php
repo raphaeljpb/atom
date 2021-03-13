@@ -33,17 +33,6 @@ class exportBulkTask extends exportBulkBaseTask
   /**
    * @see sfTask
    */
-  protected function configure()
-  {
-    $this->addCommonArgumentsAndOptions();
-    $this->addOptions(array(
-      new sfCommandOption('format', null, sfCommandOption::PARAMETER_OPTIONAL, 'XML format ("ead" or "mods")', 'ead')
-    ));
-  }
-
-  /**
-   * @see sfTask
-   */
   public function execute($arguments = array(), $options = array())
   {
     $options['format'] = $this->normalizeExportFormat(
@@ -126,5 +115,16 @@ class exportBulkTask extends exportBulkBaseTask
     }
 
     print "\nExport complete (". $itemsExported ." descriptions exported).\n";
+  }
+
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    $this->addCommonArgumentsAndOptions();
+    $this->addOptions(array(
+      new sfCommandOption('format', null, sfCommandOption::PARAMETER_OPTIONAL, 'XML format ("ead" or "mods")', 'ead')
+    ));
   }
 }

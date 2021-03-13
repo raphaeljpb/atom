@@ -13,13 +13,6 @@ class sfIsaarPlugin implements ArrayAccess
     $this->resource = $resource;
   }
 
-  public function offsetExists($offset)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array(array($this, '__isset'), $args);
-  }
-
   public function __get($name)
   {
     $args = func_get_args();
@@ -65,13 +58,6 @@ class sfIsaarPlugin implements ArrayAccess
     }
   }
 
-  public function offsetGet($offset)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array(array($this, '__get'), $args);
-  }
-
   public function __set($name, $value)
   {
     switch ($name)
@@ -81,6 +67,20 @@ class sfIsaarPlugin implements ArrayAccess
 
         return $this;
     }
+  }
+
+  public function offsetExists($offset)
+  {
+    $args = func_get_args();
+
+    return call_user_func_array(array($this, '__isset'), $args);
+  }
+
+  public function offsetGet($offset)
+  {
+    $args = func_get_args();
+
+    return call_user_func_array(array($this, '__get'), $args);
   }
 
   public function offsetSet($offset, $value)

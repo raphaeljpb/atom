@@ -33,24 +33,6 @@ class csvExportTermUsageTask extends exportBulkBaseTask
   /**
    * @see sfTask
    */
-  protected function configure()
-  {
-    $this->addCoreArgumentsAndOptions();
-
-    $this->addOptions(array(
-      new sfCommandOption('taxonomy-id', null, sfCommandOption::PARAMETER_OPTIONAL, 'ID of taxonomy')
-    ));
-    $this->addOptions(array(
-      new sfCommandOption('taxonomy-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'Name of taxonomy')
-    ));
-    $this->addOptions(array(
-      new sfCommandOption('taxonomy-name-culture', null, sfCommandOption::PARAMETER_OPTIONAL, 'Culture to use for taxonomy name lookup')
-    ));
-  }
-
-  /**
-   * @see sfTask
-   */
   public function execute($arguments = array(), $options = array())
   {
     if (isset($options['items-until-update']) && !ctype_digit($options['items-until-update']))
@@ -73,6 +55,24 @@ class csvExportTermUsageTask extends exportBulkBaseTask
     {
       $this->log("No term usages found to export.");
     }
+  }
+
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    $this->addCoreArgumentsAndOptions();
+
+    $this->addOptions(array(
+      new sfCommandOption('taxonomy-id', null, sfCommandOption::PARAMETER_OPTIONAL, 'ID of taxonomy')
+    ));
+    $this->addOptions(array(
+      new sfCommandOption('taxonomy-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'Name of taxonomy')
+    ));
+    $this->addOptions(array(
+      new sfCommandOption('taxonomy-name-culture', null, sfCommandOption::PARAMETER_OPTIONAL, 'Culture to use for taxonomy name lookup')
+    ));
   }
 
   private function determineTaxonomyId($options)

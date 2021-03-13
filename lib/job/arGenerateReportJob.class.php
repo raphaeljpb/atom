@@ -24,13 +24,6 @@
 
 class arGenerateReportJob extends arBaseJob
 {
-  /**
-   * @see arBaseJob::$requiredParameters
-   */
-  protected $extraRequiredParameters = array('objectId', 'reportType', 'reportTypeLabel', 'reportFormat');
-
-  private $resource = null;
-
   public const
     itemOrFileTemplatePath = 'apps/qubit/modules/informationobject/templates/itemOrFileListSuccess.php';
   public const
@@ -39,6 +32,12 @@ class arGenerateReportJob extends arBaseJob
     boxLabelTemplatePath = 'apps/qubit/modules/informationobject/templates/boxLabelSuccess.php';
   public const
     reportsDir = 'downloads/reports';
+  /**
+   * @see arBaseJob::$requiredParameters
+   */
+  protected $extraRequiredParameters = array('objectId', 'reportType', 'reportTypeLabel', 'reportFormat');
+
+  private $resource = null;
 
   private $templatePaths = array(
       'itemList' => self::itemOrFileTemplatePath,
@@ -119,6 +118,16 @@ class arGenerateReportJob extends arBaseJob
   }
 
   /**
+   * Get a report's filename based on slug, report type and format.
+   *
+   * @return string  The report filename.
+   */
+  public static function getFilename($resource, $format, $type)
+  {
+    return self::reportsDir.DIRECTORY_SEPARATOR.$resource->slug.'-'.$type.'.'.$format;
+  }
+
+  /**
    * Create downloads/reports directory if it doesn't already exist.
    */
   private function createReportsDir()
@@ -129,16 +138,6 @@ class arGenerateReportJob extends arBaseJob
     {
       throw new sfException('Failed to create reports directory.');
     }
-  }
-
-  /**
-   * Get a report's filename based on slug, report type and format.
-   *
-   * @return string  The report filename.
-   */
-  public static function getFilename($resource, $format, $type)
-  {
-    return self::reportsDir.DIRECTORY_SEPARATOR.$resource->slug.'-'.$type.'.'.$format;
   }
 
   /**

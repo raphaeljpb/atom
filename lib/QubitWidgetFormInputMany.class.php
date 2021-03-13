@@ -29,19 +29,6 @@
 class QubitWidgetFormInputMany extends sfWidgetFormInput
 {
   /**
-   * @param array $options     An array of options
-   * @param array $attributes  An array of default HTML attributes
-   *
-   * @see sfWidgetFormSelect
-   */
-  protected function configure($options = array(), $attributes = array())
-  {
-    parent::configure($options, $attributes);
-    $this->addRequiredOption('defaults');
-    $this->addOption('fieldname', 'name');
-  }
-
-  /**
    * @param  string $name        The element name
    * @param  string $value       The value displayed in this widget
    * @param  array  $attributes  An array of HTML attributes to be merged with the default HTML attributes
@@ -90,5 +77,17 @@ EOF;
     $new = $this->renderTag('input', array_merge(array('name' => $name.'[new]', 'type' => $this->getOption('type')), $attributes));
 
     return $null.$inputStr.$new;
+  }
+  /**
+   * @param array $options     An array of options
+   * @param array $attributes  An array of default HTML attributes
+   *
+   * @see sfWidgetFormSelect
+   */
+  protected function configure($options = array(), $attributes = array())
+  {
+    parent::configure($options, $attributes);
+    $this->addRequiredOption('defaults');
+    $this->addOption('fieldname', 'name');
   }
 }

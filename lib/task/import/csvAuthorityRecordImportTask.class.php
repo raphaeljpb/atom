@@ -34,65 +34,6 @@ Import CSV data
 EOF;
 
   /**
-   * @see csvImportBaseTask
-   */
-  protected function configure()
-  {
-    parent::configure();
-
-    $this->addOptions(array(
-      new sfCommandOption(
-        'source-name',
-        null,
-        sfCommandOption::PARAMETER_OPTIONAL,
-        'Source name to use when inserting keymap entries.'
-      ),
-      new sfCommandOption(
-        'index',
-        null,
-        sfCommandOption::PARAMETER_NONE,
-        "Index for search during import."
-      ),
-      new sfCommandOption(
-        'update',
-        null,
-        sfCommandOption::PARAMETER_REQUIRED,
-        'Attempt to update if an actor already exists. Valid option values are "match-and-update" and "delete-and-replace".'
-      ),
-      new sfCommandOption(
-        'skip-matched',
-        null,
-        sfCommandOption::PARAMETER_NONE,
-        'When importing records without --update, use this option to skip creating new records when an existing one matches.'
-      ),
-      new sfCommandOption(
-        'skip-unmatched',
-        null,
-        sfCommandOption::PARAMETER_NONE,
-        "When importing records with --update, skip creating new records if no existing records match."
-      ),
-      new sfCommandOption(
-        'skip-derivatives',
-        null,
-        sfCommandOption::PARAMETER_NONE,
-        "Skip creation of digital object derivatives."
-      ),
-      new sfCommandOption(
-        'keep-digital-objects',
-        null,
-        sfCommandOption::PARAMETER_NONE,
-        'Skip the deletion of existing digital objects and their derivatives when using --update with "match-and-update".'
-      ),
-      new sfCommandOption(
-        'limit',
-        null,
-        sfCommandOption::PARAMETER_REQUIRED,
-        'Limit --update matching to under a specified maintaining repository via slug.'
-      ),
-    ));
-  }
-
-  /**
    * @see sfTask
    */
   public function execute($arguments = array(), $options = array())
@@ -440,5 +381,64 @@ EOF;
     $import->setUpdateOptions($options);
 
     $import->csv($fh, $skipRows);
+  }
+
+  /**
+   * @see csvImportBaseTask
+   */
+  protected function configure()
+  {
+    parent::configure();
+
+    $this->addOptions(array(
+      new sfCommandOption(
+        'source-name',
+        null,
+        sfCommandOption::PARAMETER_OPTIONAL,
+        'Source name to use when inserting keymap entries.'
+      ),
+      new sfCommandOption(
+        'index',
+        null,
+        sfCommandOption::PARAMETER_NONE,
+        "Index for search during import."
+      ),
+      new sfCommandOption(
+        'update',
+        null,
+        sfCommandOption::PARAMETER_REQUIRED,
+        'Attempt to update if an actor already exists. Valid option values are "match-and-update" and "delete-and-replace".'
+      ),
+      new sfCommandOption(
+        'skip-matched',
+        null,
+        sfCommandOption::PARAMETER_NONE,
+        'When importing records without --update, use this option to skip creating new records when an existing one matches.'
+      ),
+      new sfCommandOption(
+        'skip-unmatched',
+        null,
+        sfCommandOption::PARAMETER_NONE,
+        "When importing records with --update, skip creating new records if no existing records match."
+      ),
+      new sfCommandOption(
+        'skip-derivatives',
+        null,
+        sfCommandOption::PARAMETER_NONE,
+        "Skip creation of digital object derivatives."
+      ),
+      new sfCommandOption(
+        'keep-digital-objects',
+        null,
+        sfCommandOption::PARAMETER_NONE,
+        'Skip the deletion of existing digital objects and their derivatives when using --update with "match-and-update".'
+      ),
+      new sfCommandOption(
+        'limit',
+        null,
+        sfCommandOption::PARAMETER_REQUIRED,
+        'Limit --update matching to under a specified maintaining repository via slug.'
+      ),
+    ));
   }
 }

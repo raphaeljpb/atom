@@ -72,6 +72,76 @@ class arFindingAidJob extends arBaseJob
     return true;
   }
 
+  public static function getStatus($id)
+  {
+    $sql = '
+      SELECT j.status_id as statusId FROM
+      job j JOIN object o ON j.id = o.id
+      WHERE j.name = ? AND j.object_id = ?
+      ORDER BY o.created_at DESC
+    ';
+
+    $ret = QubitPdo::fetchOne($sql, array(get_class(), $id));
+
+    return $ret ? (int)$ret->statusId : null;
+  }
+
+  public static function getPossibleFilenames($id)
+  {
+    $filenames = array(
+      $id . '.pdf',
+      $id . '.rtf'
+    );
+
+    if (null !== $slug = QubitSlug::getByObjectId($id))
+    {
+      $filenames[] = $slug->slug . '.pdf';
+      $filenames[] = $slug->slug . '.rtf';
+    }
+
+    return $filenames;
+  }
+
+  public static function getFindingAidPathForDownload($id)
+  {
+    foreach (self::getPossibleFilenames($id) as $filename)
+    {
+      $path = 'downloads' . DIRECTORY_SEPARATOR . $filename;
+
+      if (file_exists(sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . $path))
+      {
+        return $path;
+      }
+    }
+
+    return null;
+  }
+
+  public static function getFindingAidPath($id)
+  {
+    if (null !== $slug = QubitSlug::getByObjectId($id))
+    {
+      $filename = $slug->slug;
+    }
+
+    if (!isset($filename))
+    {
+      $filename = $id;
+    }
+
+    return 'downloads' . DIRECTORY_SEPARATOR . $filename . '.' . self::getFindingAidFormat();
+  }
+
+  public static function getFindingAidFormat()
+  {
+    if (null !== $setting = QubitSetting::getByName('findingAidFormat'))
+    {
+      $format = $setting->getValue(array('sourceCulture' => true));
+    }
+
+    return isset($format) ? $format : 'pdf';
+  }
+
   private function generate()
   {
     $this->info($this->i18n->__('Generating finding aid (%1)...', array('%1' => $this->resource->slug)));
@@ -369,75 +439,5 @@ class arFindingAidJob extends arBaseJob
     $meta_data = stream_get_meta_data($handle);
 
     return $meta_data['uri'];
-  }
-
-  public static function getStatus($id)
-  {
-    $sql = '
-      SELECT j.status_id as statusId FROM
-      job j JOIN object o ON j.id = o.id
-      WHERE j.name = ? AND j.object_id = ?
-      ORDER BY o.created_at DESC
-    ';
-
-    $ret = QubitPdo::fetchOne($sql, array(get_class(), $id));
-
-    return $ret ? (int)$ret->statusId : null;
-  }
-
-  public static function getPossibleFilenames($id)
-  {
-    $filenames = array(
-      $id . '.pdf',
-      $id . '.rtf'
-    );
-
-    if (null !== $slug = QubitSlug::getByObjectId($id))
-    {
-      $filenames[] = $slug->slug . '.pdf';
-      $filenames[] = $slug->slug . '.rtf';
-    }
-
-    return $filenames;
-  }
-
-  public static function getFindingAidPathForDownload($id)
-  {
-    foreach (self::getPossibleFilenames($id) as $filename)
-    {
-      $path = 'downloads' . DIRECTORY_SEPARATOR . $filename;
-
-      if (file_exists(sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . $path))
-      {
-        return $path;
-      }
-    }
-
-    return null;
-  }
-
-  public static function getFindingAidPath($id)
-  {
-    if (null !== $slug = QubitSlug::getByObjectId($id))
-    {
-      $filename = $slug->slug;
-    }
-
-    if (!isset($filename))
-    {
-      $filename = $id;
-    }
-
-    return 'downloads' . DIRECTORY_SEPARATOR . $filename . '.' . self::getFindingAidFormat();
-  }
-
-  public static function getFindingAidFormat()
-  {
-    if (null !== $setting = QubitSetting::getByName('findingAidFormat'))
-    {
-      $format = $setting->getValue(array('sourceCulture' => true));
-    }
-
-    return isset($format) ? $format : 'pdf';
   }
 }

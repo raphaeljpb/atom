@@ -24,6 +24,34 @@ class StaticPageEditAction extends DefaultEditAction
       'slug',
       'content');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        $this->resource->save();
+
+        // Invalidate static page content cache entry
+        if (!$this->new && null !== $cache = QubitCache::getInstance())
+        {
+          foreach (sfConfig::get('app_i18n_languages') as $culture)
+          {
+            $cacheKey = 'staticpage:'.$this->resource->id.':'.$culture;
+            $cache->remove($cacheKey);
+          }
+        }
+
+        $this->redirect(array($this->resource, 'module' => 'staticpage'));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->form->getWidgetSchema()->setIdFormat('edit-%s');
@@ -97,34 +125,6 @@ class StaticPageEditAction extends DefaultEditAction
       default:
 
         return parent::processField($field);
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        $this->resource->save();
-
-        // Invalidate static page content cache entry
-        if (!$this->new && null !== $cache = QubitCache::getInstance())
-        {
-          foreach (sfConfig::get('app_i18n_languages') as $culture)
-          {
-            $cacheKey = 'staticpage:'.$this->resource->id.':'.$culture;
-            $cache->remove($cacheKey);
-          }
-        }
-
-        $this->redirect(array($this->resource, 'module' => 'staticpage'));
-      }
     }
   }
 }

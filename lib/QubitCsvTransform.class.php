@@ -76,22 +76,6 @@ class QubitCsvTransform extends QubitFlatfileImport
     }
   }
 
-  protected function checkTaskOptionsAndEnvironment($options)
-  {
-    if (!$options['output-file'])
-    {
-      throw new sfException('You must specifiy the output-file option.');
-    }
-
-    foreach(array('MYSQL_HOST', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DB') as $var)
-    {
-      if (getEnv($var) === false)
-      {
-        throw new sfException('You must set the '. $var .' environmental variable.');
-      }
-    }
-  }
-
   public function writeHeadersOnFirstPass()
   {
     // execute setup logic, if any
@@ -203,5 +187,21 @@ class QubitCsvTransform extends QubitFlatfileImport
   public function levelOfDescriptionToSortorder($level)
   {
     return array_search(strtolower($level), $this->levelsOfDescription);
+  }
+
+  protected function checkTaskOptionsAndEnvironment($options)
+  {
+    if (!$options['output-file'])
+    {
+      throw new sfException('You must specifiy the output-file option.');
+    }
+
+    foreach(array('MYSQL_HOST', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DB') as $var)
+    {
+      if (getEnv($var) === false)
+      {
+        throw new sfException('You must set the '. $var .' environmental variable.');
+      }
+    }
   }
 }

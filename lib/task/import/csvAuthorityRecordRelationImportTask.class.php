@@ -32,6 +32,22 @@ class csvAuthorityRecordRelationImportTask extends csvImportBaseTask
   /**
    * @see sfTask
    */
+  public function execute($arguments = [], $options = [])
+  {
+    parent::execute($arguments, $options);
+
+    $this->validateUpdateOptions($options);
+
+    $this->log('Importing relations...');
+
+    $this->import($arguments['filename'], $options['index'], $options['update']);
+
+    $this->log('Done.');
+  }
+
+  /**
+   * @see sfTask
+   */
   protected function configure()
   {
     $this->addArguments([
@@ -59,22 +75,6 @@ class csvAuthorityRecordRelationImportTask extends csvImportBaseTask
     $this->detailedDescription = <<<EOF
       Import authority record relations using CSV data
 EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
-  public function execute($arguments = [], $options = [])
-  {
-    parent::execute($arguments, $options);
-
-    $this->validateUpdateOptions($options);
-
-    $this->log('Importing relations...');
-
-    $this->import($arguments['filename'], $options['index'], $options['update']);
-
-    $this->log('Done.');
   }
 
   private function import($filepath, $indexDuringImport = false, $updateMode = false)

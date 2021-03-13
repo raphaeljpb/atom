@@ -31,6 +31,29 @@ class PhysicalObjectEditAction extends DefaultEditAction
       'name',
       'type');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        $this->resource->save();
+
+        if (null !== $next = $this->form->getValue('next'))
+        {
+          $this->redirect($next);
+        }
+
+        $this->redirect(array($this->resource, 'module' => 'physicalobject'));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->resource = new QubitPhysicalObject();
@@ -93,29 +116,6 @@ class PhysicalObjectEditAction extends DefaultEditAction
       default:
 
         return parent::processField($field);
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        $this->resource->save();
-
-        if (null !== $next = $this->form->getValue('next'))
-        {
-          $this->redirect($next);
-        }
-
-        $this->redirect(array($this->resource, 'module' => 'physicalobject'));
-      }
     }
   }
 }

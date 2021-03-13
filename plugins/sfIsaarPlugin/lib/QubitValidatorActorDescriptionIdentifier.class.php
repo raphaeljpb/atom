@@ -19,6 +19,19 @@
 
 class QubitValidatorActorDescriptionIdentifier extends sfValidatorBase
 {
+  public static function identifierUsedByAnotherActor($identifier, $byResource)
+  {
+    $criteria = new Criteria();
+    $criteria->add(QubitActor::DESCRIPTION_IDENTIFIER, $identifier);
+
+    // If actor isn't new, exclude it in check to see if the identifier's already been used
+    if ($byResource !== null && isset($byResource->id))
+    {
+      $criteria->add(QubitActor::ID, $byResource->id, Criteria::NOT_EQUAL);
+    }
+
+    return count(QubitActor::get($criteria)) > 0;
+  }
   protected function configure($options = array(), $messages = array())
   {
     parent::configure($options, $messages);
@@ -39,19 +52,5 @@ class QubitValidatorActorDescriptionIdentifier extends sfValidatorBase
     }
 
     return $value;
-  }
-
-  public static function identifierUsedByAnotherActor($identifier, $byResource)
-  {
-    $criteria = new Criteria();
-    $criteria->add(QubitActor::DESCRIPTION_IDENTIFIER, $identifier);
-
-    // If actor isn't new, exclude it in check to see if the identifier's already been used
-    if ($byResource !== null && isset($byResource->id))
-    {
-      $criteria->add(QubitActor::ID, $byResource->id, Criteria::NOT_EQUAL);
-    }
-
-    return count(QubitActor::get($criteria)) > 0;
   }
 }

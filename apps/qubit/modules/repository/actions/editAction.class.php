@@ -28,6 +28,27 @@
  */
 class RepositoryEditAction extends DefaultEditAction
 {
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+      if ($this->form->isValid())
+      {
+        $this->contactInformationEditComponent->processForm();
+
+        $this->processForm();
+
+        $this->resource->save();
+
+        $this->redirect(array($this->resource, 'module' => 'repository'));
+      }
+    }
+
+    QubitDescription::addAssets($this->response);
+  }
   protected function earlyExecute()
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
@@ -337,27 +358,5 @@ class RepositoryEditAction extends DefaultEditAction
 
         return parent::processField($field);
     }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
-        $this->contactInformationEditComponent->processForm();
-
-        $this->processForm();
-
-        $this->resource->save();
-
-        $this->redirect(array($this->resource, 'module' => 'repository'));
-      }
-    }
-
-    QubitDescription::addAssets($this->response);
   }
 }

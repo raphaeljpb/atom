@@ -90,6 +90,95 @@ class QubitSaxParser
   }
 
   /**
+   * Parse contents of file
+   *
+   * The parser can optionally not be freed after a parse, if one wants to
+   * inspect error state externally.
+   *
+   * @param string $file  file path of XML to parse
+   * @param boolean $freeAfterParse  whether to free parser after parse
+   *
+   * @return void
+   */
+  public function parse($file, $freeAfterParse = true)
+  {
+    $fp = fopen($file, 'r');
+
+    if (!$fp)
+    {
+      $this->error = array(
+        'string' => 'Unable to open file'
+      );
+
+      return false;
+    }
+
+    $success = true;
+
+    // Parse in chunks to preserve memory
+    while ($data = fread($fp, 4096))
+    {
+      if (!xml_parse($this->sax, $data, feof($fp)))
+      {
+        $success = false;
+        break;
+      }
+    }
+    fclose($fp);
+
+    if (!$success)
+    {
+      $errorCode = xml_get_error_code($this->sax);
+
+      $this->error = array(
+        'code'   => $errorCode,
+        'string' => xml_error_string($errorCode),
+        'line'   => xml_get_current_line_number($this->sax),
+        'column' => xml_get_current_column_number($this->sax),
+        'byte'   => xml_get_current_byte_index($this->sax)
+      );
+
+      $this->error['summary'] = sprintf(
+        'Parsing error %d: "%s" at line %d, column %d (byte %d)',
+        $this->error['code'],
+        $this->error['string'],
+        $this->error['line'],
+        $this->error['column'],
+        $this->error['byte']
+      );
+    }
+
+    if ($freeAfterParse)
+    {
+      xml_parser_free($this->sax);
+    }
+
+    return $success;
+  }
+
+  /**
+   * Get parser
+   *
+   * Can be used to inspect error state externally
+   *
+   * @return resource  SAX parser
+   */
+  public function getParser()
+  {
+    return $this->sax;
+  }
+
+  /**
+   * Get parsing error description
+   *
+   * @return string  Description of parsing error
+   */
+  public function getErrorData()
+  {
+    return $this->error;
+  }
+
+  /**
    * Handle start tags
    *
    * The start tag handler:
@@ -245,95 +334,6 @@ class QubitSaxParser
 
     // Discard this tag's attribute data
     array_pop($this->attrStack);
-  }
-
-  /**
-   * Parse contents of file
-   *
-   * The parser can optionally not be freed after a parse, if one wants to
-   * inspect error state externally.
-   *
-   * @param string $file  file path of XML to parse
-   * @param boolean $freeAfterParse  whether to free parser after parse
-   *
-   * @return void
-   */
-  public function parse($file, $freeAfterParse = true)
-  {
-    $fp = fopen($file, 'r');
-
-    if (!$fp)
-    {
-      $this->error = array(
-        'string' => 'Unable to open file'
-      );
-
-      return false;
-    }
-
-    $success = true;
-
-    // Parse in chunks to preserve memory
-    while ($data = fread($fp, 4096))
-    {
-      if (!xml_parse($this->sax, $data, feof($fp)))
-      {
-        $success = false;
-        break;
-      }
-    }
-    fclose($fp);
-
-    if (!$success)
-    {
-      $errorCode = xml_get_error_code($this->sax);
-
-      $this->error = array(
-        'code'   => $errorCode,
-        'string' => xml_error_string($errorCode),
-        'line'   => xml_get_current_line_number($this->sax),
-        'column' => xml_get_current_column_number($this->sax),
-        'byte'   => xml_get_current_byte_index($this->sax)
-      );
-
-      $this->error['summary'] = sprintf(
-        'Parsing error %d: "%s" at line %d, column %d (byte %d)',
-        $this->error['code'],
-        $this->error['string'],
-        $this->error['line'],
-        $this->error['column'],
-        $this->error['byte']
-      );
-    }
-
-    if ($freeAfterParse)
-    {
-      xml_parser_free($this->sax);
-    }
-
-    return $success;
-  }
-
-  /**
-   * Get parser
-   *
-   * Can be used to inspect error state externally
-   *
-   * @return resource  SAX parser
-   */
-  public function getParser()
-  {
-    return $this->sax;
-  }
-
-  /**
-   * Get parsing error description
-   *
-   * @return string  Description of parsing error
-   */
-  public function getErrorData()
-  {
-    return $this->error;
   }
 
 

@@ -30,6 +30,27 @@ class SettingsTreeviewAction extends DefaultEditAction
       'showDates',
       'fullItemsPerPage');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        QubitCache::getInstance()->removePattern('settings:i18n:*');
+
+        $this->getUser()->setFlash('notice', $this->i18n->__('Treeview settings saved.'));
+
+        $this->redirect(array('module' => 'settings', 'action' => 'treeview'));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->i18n = sfContext::getInstance()->i18n;
@@ -140,18 +161,6 @@ class SettingsTreeviewAction extends DefaultEditAction
     }
   }
 
-  private function addSettingRadioButtonsField($setting, $fieldName, $default, $options)
-  {
-    if (isset($setting))
-    {
-      $default = $setting->getValue(array('sourceCulture' => true));
-    }
-
-    $this->form->setDefault($fieldName, $default);
-    $this->form->setValidator($fieldName, new sfValidatorString(array('required' => false)));
-    $this->form->setWidget($fieldName, new sfWidgetFormSelectRadio(array('choices' => $options), array('class' => 'radio')));
-  }
-
 
   protected function processField($field)
   {
@@ -199,6 +208,18 @@ class SettingsTreeviewAction extends DefaultEditAction
     }
   }
 
+  private function addSettingRadioButtonsField($setting, $fieldName, $default, $options)
+  {
+    if (isset($setting))
+    {
+      $default = $setting->getValue(array('sourceCulture' => true));
+    }
+
+    $this->form->setDefault($fieldName, $default);
+    $this->form->setValidator($fieldName, new sfValidatorString(array('required' => false)));
+    $this->form->setWidget($fieldName, new sfWidgetFormSelectRadio(array('choices' => $options), array('class' => 'radio')));
+  }
+
   private function createOrUpdateSetting($setting, $name, $value)
   {
     if (!isset($setting))
@@ -210,26 +231,5 @@ class SettingsTreeviewAction extends DefaultEditAction
 
     $setting->setValue($value, array('culture' => 'en'));
     $setting->save();
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        QubitCache::getInstance()->removePattern('settings:i18n:*');
-
-        $this->getUser()->setFlash('notice', $this->i18n->__('Treeview settings saved.'));
-
-        $this->redirect(array('module' => 'settings', 'action' => 'treeview'));
-      }
-    }
   }
 }

@@ -33,6 +33,27 @@ class SettingsIdentifierAction extends DefaultEditAction
       'prevent_duplicate_actor_identifiers'
     );
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        QubitCache::getInstance()->removePattern('settings:i18n:*');
+
+        $this->getUser()->setFlash('notice', $this->i18n->__('Identifier settings saved.'));
+
+        $this->redirect(array('module' => 'settings', 'action' => 'identifier'));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->i18n = sfContext::getInstance()->i18n;
@@ -109,27 +130,6 @@ class SettingsIdentifierAction extends DefaultEditAction
         $this->$name->save();
 
         break;
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        QubitCache::getInstance()->removePattern('settings:i18n:*');
-
-        $this->getUser()->setFlash('notice', $this->i18n->__('Identifier settings saved.'));
-
-        $this->redirect(array('module' => 'settings', 'action' => 'identifier'));
-      }
     }
   }
 }

@@ -87,6 +87,87 @@ class AccessionEditAction extends DefaultEditAction
     $this->eventComponent->execute($this->request);
   }
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    // Parameter "accession" is sent when creating an accrual
+    if (isset($request->accession))
+    {
+      $params = $this->context->routing->parse(Qubit::pathInfo($request->accession));
+
+      if (isset($params['_sf_route']))
+      {
+        $this->accession = $params['_sf_route']->resource;
+
+        if ($this->accession->isAccrual())
+        {
+          throw new sfException('This accession can\'t be created.');
+        }
+
+        // Add id of the information object source
+        $this->form->setDefault('accession', $request->accession);
+        $this->form->setValidator('accession', new sfValidatorString());
+        $this->form->setWidget('accession', new sfWidgetFormInputHidden());
+      }
+    }
+
+    // Handle alternative identifiers
+    $this->alternativeIdentifiersComponent = new AccessionAlternativeIdentifiersComponent($this->context, 'accession', 'alternativeIdentifiers');
+    $this->alternativeIdentifiersComponent->resource = $this->resource;
+    $this->alternativeIdentifiersComponent->execute($this->request);
+
+    // Handle accession events
+    $this->eventsComponent = new AccessionEventsComponent($this->context, 'accession', 'events');
+    $this->eventsComponent->resource = $this->resource;
+    $this->eventsComponent->execute($this->request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+      if ($this->form->isValid())
+      {
+        $this->relatedDonorComponent->processForm();
+
+        $this->eventComponent->processForm();
+
+        if (isset($this->request->deleteRelations))
+        {
+          foreach ($this->request->deleteRelations as $item)
+          {
+            $params = $this->context->routing->parse(Qubit::pathInfo($item));
+            $params['_sf_route']->resource->delete();
+          }
+        }
+
+        // Relation between accesion will only be accepted if the object is new
+        if (!isset($this->resource->id) && isset($this->accession))
+        {
+          $relation = new QubitRelation();
+          $relation->typeId = QubitTerm::ACCRUAL_ID;
+          $relation->object = $this->accession;
+
+          $this->resource->relationsRelatedBysubjectId[] = $relation;
+        }
+
+        $this->processForm();
+
+        // Postpone search indexing until alternative IDs are added
+        $this->resource->indexOnSave = false;
+        $this->resource->save();
+
+        $this->alternativeIdentifiersComponent->processForm();
+        $this->eventsComponent->processForm();
+
+        QubitSearch::getInstance()->update($this->resource);
+
+        $this->redirect(array($this->resource, 'module' => 'accession'));
+      }
+    }
+
+    QubitDescription::addAssets($this->response);
+  }
+
   protected function addField($name)
   {
     switch ($name)
@@ -341,86 +422,5 @@ class AccessionEditAction extends DefaultEditAction
       default:
         return parent::processField($field);
     }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    // Parameter "accession" is sent when creating an accrual
-    if (isset($request->accession))
-    {
-      $params = $this->context->routing->parse(Qubit::pathInfo($request->accession));
-
-      if (isset($params['_sf_route']))
-      {
-        $this->accession = $params['_sf_route']->resource;
-
-        if ($this->accession->isAccrual())
-        {
-          throw new sfException('This accession can\'t be created.');
-        }
-
-        // Add id of the information object source
-        $this->form->setDefault('accession', $request->accession);
-        $this->form->setValidator('accession', new sfValidatorString());
-        $this->form->setWidget('accession', new sfWidgetFormInputHidden());
-      }
-    }
-
-    // Handle alternative identifiers
-    $this->alternativeIdentifiersComponent = new AccessionAlternativeIdentifiersComponent($this->context, 'accession', 'alternativeIdentifiers');
-    $this->alternativeIdentifiersComponent->resource = $this->resource;
-    $this->alternativeIdentifiersComponent->execute($this->request);
-
-    // Handle accession events
-    $this->eventsComponent = new AccessionEventsComponent($this->context, 'accession', 'events');
-    $this->eventsComponent->resource = $this->resource;
-    $this->eventsComponent->execute($this->request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
-        $this->relatedDonorComponent->processForm();
-
-        $this->eventComponent->processForm();
-
-        if (isset($this->request->deleteRelations))
-        {
-          foreach ($this->request->deleteRelations as $item)
-          {
-            $params = $this->context->routing->parse(Qubit::pathInfo($item));
-            $params['_sf_route']->resource->delete();
-          }
-        }
-
-        // Relation between accesion will only be accepted if the object is new
-        if (!isset($this->resource->id) && isset($this->accession))
-        {
-          $relation = new QubitRelation();
-          $relation->typeId = QubitTerm::ACCRUAL_ID;
-          $relation->object = $this->accession;
-
-          $this->resource->relationsRelatedBysubjectId[] = $relation;
-        }
-
-        $this->processForm();
-
-        // Postpone search indexing until alternative IDs are added
-        $this->resource->indexOnSave = false;
-        $this->resource->save();
-
-        $this->alternativeIdentifiersComponent->processForm();
-        $this->eventsComponent->processForm();
-
-        QubitSearch::getInstance()->update($this->resource);
-
-        $this->redirect(array($this->resource, 'module' => 'accession'));
-      }
-    }
-
-    QubitDescription::addAssets($this->response);
   }
 }

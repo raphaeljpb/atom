@@ -23,6 +23,33 @@ class SettingsInventoryAction extends DefaultEditAction
   public static $NAMES = array(
       'levels');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        if (null !== $this->settingLevels->value)
+        {
+          $this->settingLevels->save();
+        }
+
+        QubitCache::getInstance()->removePattern('settings:i18n:*');
+
+        $notice = sfContext::getInstance()->i18n->__('Inventory settings saved.');
+        $this->getUser()->setFlash('notice', $notice);
+
+        $this->redirect(array('module' => 'settings', 'action' => 'inventory'));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->settingLevels = QubitSetting::getByName('inventory_levels');
@@ -86,33 +113,6 @@ class SettingsInventoryAction extends DefaultEditAction
         $this->settingLevels->value = serialize($levels);
 
         break;
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        if (null !== $this->settingLevels->value)
-        {
-          $this->settingLevels->save();
-        }
-
-        QubitCache::getInstance()->removePattern('settings:i18n:*');
-
-        $notice = sfContext::getInstance()->i18n->__('Inventory settings saved.');
-        $this->getUser()->setFlash('notice', $notice);
-
-        $this->redirect(array('module' => 'settings', 'action' => 'inventory'));
-      }
     }
   }
 }

@@ -28,30 +28,6 @@ class promoteUserToAdminTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  protected function configure()
-  {
-    $this->addArguments(array(
-      new sfCommandArgument('username', sfCommandArgument::REQUIRED, 'The username')
-    ));
-
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-    ));
-
-    $this->namespace = 'tools';
-    $this->name = 'promote-user-to-admin';
-    $this->briefDescription = 'Promote user to admin.';
-
-    $this->detailedDescription = <<<EOF
-Prompote existing user to admin.
-EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
   public function execute($arguments = array(), $options = array())
   {
     sfContext::createInstance($this->configuration);
@@ -81,5 +57,28 @@ EOF;
     $group->save();
 
     $this->logSection('info', 'The user '.$user->username.' is now an administrator.');
+  }
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    $this->addArguments(array(
+      new sfCommandArgument('username', sfCommandArgument::REQUIRED, 'The username')
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+    ));
+
+    $this->namespace = 'tools';
+    $this->name = 'promote-user-to-admin';
+    $this->briefDescription = 'Promote user to admin.';
+
+    $this->detailedDescription = <<<EOF
+Prompote existing user to admin.
+EOF;
   }
 }

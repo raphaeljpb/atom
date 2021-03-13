@@ -29,6 +29,20 @@ class csvExportPhysicalObjectHoldingsTask extends arBaseTask
   /**
    * @see sfTask
    */
+  public function execute($arguments = [], $options = [])
+  {
+    parent::execute($arguments, $options);
+
+    $this->log('Exporting physical storage holdings report..');
+
+    $report = new QubitPhysicalObjectCsvHoldingsReport($this->getReportOptions($options));
+    $report->write($arguments['filename']);
+
+    $this->log('Done.');
+  }
+  /**
+   * @see sfTask
+   */
   protected function configure()
   {
     $this->addArguments([
@@ -63,21 +77,6 @@ class csvExportPhysicalObjectHoldingsTask extends arBaseTask
       * "accession" (accessions)
       * "none" (omit non-empty physical storage)
 EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
-  public function execute($arguments = [], $options = [])
-  {
-    parent::execute($arguments, $options);
-
-    $this->log('Exporting physical storage holdings report..');
-
-    $report = new QubitPhysicalObjectCsvHoldingsReport($this->getReportOptions($options));
-    $report->write($arguments['filename']);
-
-    $this->log('Done.');
   }
 
   protected function getReportOptions($options = [])

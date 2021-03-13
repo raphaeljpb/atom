@@ -198,16 +198,6 @@ class QubitJob extends BaseJob
   }
 
   /**
-   * Get a string representing a date.
-   * @return  string  The job's creation date in a human readable string.
-   */
-  private function formatDate($date)
-  {
-    $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $date);
-    return $dateTime ? $dateTime->format('Y-m-d h:i A') : 'N/A';
-  }
-
-  /**
    * Generate a unique token property to associate unauthenticated users with jobs.
    *
    * @throws  sfException  If a unique token can't be generated.
@@ -364,19 +354,6 @@ class QubitJob extends BaseJob
     return $job;
   }
 
-  private static function checkWorkerAvailable($jobName)
-  {
-    $manager = new Net_Gearman_Manager(arGearman::getServer(), 2);
-    $status = $manager->status();
-
-    if (!array_key_exists($jobName, $status) || !$status[$jobName]['capable_workers'])
-    {
-      return false;
-    }
-
-    return true;
-  }
-
   /**
    * Get a unique identifier to associate a job with a particular AtoM install.
    * See workers_key in config/app.yml for more information.
@@ -402,5 +379,28 @@ class QubitJob extends BaseJob
     }
 
     return 'Command line';
+  }
+
+  /**
+   * Get a string representing a date.
+   * @return  string  The job's creation date in a human readable string.
+   */
+  private function formatDate($date)
+  {
+    $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $date);
+    return $dateTime ? $dateTime->format('Y-m-d h:i A') : 'N/A';
+  }
+
+  private static function checkWorkerAvailable($jobName)
+  {
+    $manager = new Net_Gearman_Manager(arGearman::getServer(), 2);
+    $status = $manager->status();
+
+    if (!array_key_exists($jobName, $status) || !$status[$jobName]['capable_workers'])
+    {
+      return false;
+    }
+
+    return true;
   }
 }

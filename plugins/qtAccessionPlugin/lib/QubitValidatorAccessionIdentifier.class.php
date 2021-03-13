@@ -19,6 +19,19 @@
 
 class QubitValidatorAccessionIdentifier extends sfValidatorBase
 {
+  public static function identifierCanBeUsed($identifier, $byResource = null)
+  {
+    $criteria = new Criteria();
+    $criteria->add(QubitAccession::IDENTIFIER, $identifier);
+
+    // If accession isn't new, make sure no accession other than it is using proposed identifier
+    if ($byResource !== null && isset($byResource->id))
+    {
+      $criteria->add(QubitAccession::ID, $byResource->id, Criteria::NOT_EQUAL);
+    }
+
+    return (0 == count(QubitAccession::get($criteria)));
+  }
   protected function configure($options = array(), $messages = array())
   {
     parent::configure($options, $messages);
@@ -35,19 +48,5 @@ class QubitValidatorAccessionIdentifier extends sfValidatorBase
     }
 
     throw new sfValidatorError($this, sfContext::getInstance()->i18n->__('This identifer is already in use.'), array('value' => $value));
-  }
-
-  public static function identifierCanBeUsed($identifier, $byResource = null)
-  {
-    $criteria = new Criteria();
-    $criteria->add(QubitAccession::IDENTIFIER, $identifier);
-
-    // If accession isn't new, make sure no accession other than it is using proposed identifier
-    if ($byResource !== null && isset($byResource->id))
-    {
-      $criteria->add(QubitAccession::ID, $byResource->id, Criteria::NOT_EQUAL);
-    }
-
-    return (0 == count(QubitAccession::get($criteria)));
   }
 }

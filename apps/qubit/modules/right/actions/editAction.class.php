@@ -40,6 +40,24 @@ class RightEditAction extends sfAction
       'statuteDeterminationDate',
       'statuteNote');
 
+
+  public function execute($request)
+  {
+    $this->earlyExecute();
+    $this->formSetup();
+
+    if ($request->isMethod('post'))
+    {
+      $params = $request->getPostParameters();
+      $this->form->bind($params['right']);
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+        $this->redirect($this->redirectTo);
+      }
+    }
+  }
+
   protected function dateWidget()
   {
     $widget = new sfWidgetFormInput();
@@ -461,23 +479,5 @@ class RightEditAction extends sfAction
     $gr = new QubitGrantedRight();
     $this->form->embedForm('blank', $this->grantedRightFormSetup($gr));
     $this->form->embedForm('grantedRights', $subForm);
-  }
-
-
-  public function execute($request)
-  {
-    $this->earlyExecute();
-    $this->formSetup();
-
-    if ($request->isMethod('post'))
-    {
-      $params = $request->getPostParameters();
-      $this->form->bind($params['right']);
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-        $this->redirect($this->redirectTo);
-      }
-    }
   }
 }

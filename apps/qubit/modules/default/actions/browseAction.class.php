@@ -19,6 +19,100 @@
 
 class DefaultBrowseAction extends sfAction
 {
+  public function execute($request)
+  {
+    // Force subclassing
+    if ('default' == $this->context->getModuleName() && 'browse' == $this->context->getActionName())
+    {
+      $this->forward404();
+    }
+
+    // If we're searching, by default sort by relevance
+    if (array_key_exists('query', $request->getGetParameters()))
+    {
+      $sortSetting = 'relevance';
+    }
+    elseif ($this->getUser()->isAuthenticated())
+    {
+      $sortSetting = sfConfig::get('app_sort_browser_user');
+    }
+    else
+    {
+      $sortSetting = sfConfig::get('app_sort_browser_anonymous');
+    }
+
+    if (!isset($request->sort))
+    {
+      $request->sort = $sortSetting;
+    }
+
+    // Default sort direction
+    $sortDir = 'asc';
+    if (in_array($request->sort, array('lastUpdated', 'relevance', 'endDate')))
+    {
+      $sortDir = 'desc';
+    }
+
+    // Set default sort direction in request if not present or not valid
+    if (!isset($request->sortDir) || !in_array($request->sortDir, array('asc', 'desc')))
+    {
+      $request->sortDir = $sortDir;
+    }
+
+    $this->limit = sfConfig::get('app_hits_per_page');
+    if (isset($request->limit) && ctype_digit($request->limit))
+    {
+      $this->limit = $request->limit;
+    }
+
+    $skip = 0;
+    if (isset($request->page) && ctype_digit($request->page))
+    {
+      $skip = ($request->page - 1) * $this->limit;
+    }
+
+    // Avoid pagination over ES' max result window config (default: 10000)
+    $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
+
+    if ((int)$this->limit + (int)$skip > $maxResultWindow)
+    {
+      // Show alert
+      $message = $this->context->i18n->__(
+        "We've redirected you to the first page of results." .
+        " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
+        " To view the last records in the current result set, try changing the sort direction.",
+        array('%1%' => $maxResultWindow)
+      );
+      $this->getUser()->setFlash('notice', $message);
+
+      // Redirect to first page
+      $params = $request->getParameterHolder()->getAll();
+      unset($params['page']);
+      $this->redirect($params);
+    }
+
+    $this->search = new arElasticSearchPluginQuery($this->limit, $skip);
+
+    if (property_exists($this, 'AGGS'))
+    {
+      if (!isset($this->getParameters))
+      {
+        $this->getParameters = $request->getGetParameters();
+      }
+
+      $this->search->addAggs($this::$AGGS);
+      $this->search->addAggFilters($this::$AGGS, $this->getParameters);
+    }
+
+    if (isset($this->search->filters['languages']))
+    {
+      $this->selectedCulture = $this->search->filters['languages'];
+    }
+    else
+    {
+      $this->selectedCulture = $this->context->user->getCulture();
+    }
+  }
   protected function populateAggs($resultSet)
   {
     $this->aggs = array();
@@ -154,101 +248,6 @@ class DefaultBrowseAction extends sfAction
       }
 
       $this->hiddenFields[$key] = $value;
-    }
-  }
-
-  public function execute($request)
-  {
-    // Force subclassing
-    if ('default' == $this->context->getModuleName() && 'browse' == $this->context->getActionName())
-    {
-      $this->forward404();
-    }
-
-    // If we're searching, by default sort by relevance
-    if (array_key_exists('query', $request->getGetParameters()))
-    {
-      $sortSetting = 'relevance';
-    }
-    elseif ($this->getUser()->isAuthenticated())
-    {
-      $sortSetting = sfConfig::get('app_sort_browser_user');
-    }
-    else
-    {
-      $sortSetting = sfConfig::get('app_sort_browser_anonymous');
-    }
-
-    if (!isset($request->sort))
-    {
-      $request->sort = $sortSetting;
-    }
-
-    // Default sort direction
-    $sortDir = 'asc';
-    if (in_array($request->sort, array('lastUpdated', 'relevance', 'endDate')))
-    {
-      $sortDir = 'desc';
-    }
-
-    // Set default sort direction in request if not present or not valid
-    if (!isset($request->sortDir) || !in_array($request->sortDir, array('asc', 'desc')))
-    {
-      $request->sortDir = $sortDir;
-    }
-
-    $this->limit = sfConfig::get('app_hits_per_page');
-    if (isset($request->limit) && ctype_digit($request->limit))
-    {
-      $this->limit = $request->limit;
-    }
-
-    $skip = 0;
-    if (isset($request->page) && ctype_digit($request->page))
-    {
-      $skip = ($request->page - 1) * $this->limit;
-    }
-
-    // Avoid pagination over ES' max result window config (default: 10000)
-    $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
-
-    if ((int)$this->limit + (int)$skip > $maxResultWindow)
-    {
-      // Show alert
-      $message = $this->context->i18n->__(
-        "We've redirected you to the first page of results." .
-        " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
-        " To view the last records in the current result set, try changing the sort direction.",
-        array('%1%' => $maxResultWindow)
-      );
-      $this->getUser()->setFlash('notice', $message);
-
-      // Redirect to first page
-      $params = $request->getParameterHolder()->getAll();
-      unset($params['page']);
-      $this->redirect($params);
-    }
-
-    $this->search = new arElasticSearchPluginQuery($this->limit, $skip);
-
-    if (property_exists($this, 'AGGS'))
-    {
-      if (!isset($this->getParameters))
-      {
-        $this->getParameters = $request->getGetParameters();
-      }
-
-      $this->search->addAggs($this::$AGGS);
-      $this->search->addAggFilters($this::$AGGS, $this->getParameters);
-    }
-
-    if (isset($this->search->filters['languages']))
-    {
-      $this->selectedCulture = $this->search->filters['languages'];
-    }
-    else
-    {
-      $this->selectedCulture = $this->context->user->getCulture();
     }
   }
 }

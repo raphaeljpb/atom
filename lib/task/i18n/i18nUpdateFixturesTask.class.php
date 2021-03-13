@@ -30,6 +30,16 @@ class I18nUpdateFixturesTask extends sfBaseTask
   /**
    * @see sfTask
    */
+  public function execute($arguments = array(), $options = array())
+  {
+    // Extract translation strings from XLIFF files
+    $translations = $this->extractTranslations($arguments, $options);
+
+    $this->updateFixtures($translations);
+  }
+  /**
+   * @see sfTask
+   */
   protected function configure()
   {
     $this->addArguments(array(
@@ -50,17 +60,6 @@ class I18nUpdateFixturesTask extends sfBaseTask
     $this->detailedDescription = <<<EOF
 Reads XLIFF files from {{path}} and merges translations to database fixture files
 EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
-  public function execute($arguments = array(), $options = array())
-  {
-    // Extract translation strings from XLIFF files
-    $translations = $this->extractTranslations($arguments, $options);
-
-    $this->updateFixtures($translations);
   }
 
   protected function extractTranslations($arguments = array(), $options = array())

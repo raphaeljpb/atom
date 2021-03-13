@@ -153,30 +153,6 @@ class InformationObjectNotesComponent extends sfComponent
     }
   }
 
-  protected function addField($name)
-  {
-    switch ($name)
-    {
-      case 'content':
-        $this->form->setValidator('content', new sfValidatorString());
-        $this->form->setWidget('content', new sfWidgetFormTextarea());
-
-        break;
-
-      case 'type':
-        $choices = array();
-        foreach (QubitTerm::getOptionsForSelectList($this->taxonomyId) as $value => $label)
-        {
-          $choices[$value] = htmlentities($label, ENT_QUOTES, sfConfig::get('sf_charset'));
-        }
-
-        $this->form->setValidator('type', new sfValidatorString());
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
-
-        break;
-    }
-  }
-
   public function processForm()
   {
     $params = array();
@@ -242,6 +218,30 @@ class InformationObjectNotesComponent extends sfComponent
       {
         $item->delete();
       }
+    }
+  }
+
+  protected function addField($name)
+  {
+    switch ($name)
+    {
+      case 'content':
+        $this->form->setValidator('content', new sfValidatorString());
+        $this->form->setWidget('content', new sfWidgetFormTextarea());
+
+        break;
+
+      case 'type':
+        $choices = array();
+        foreach (QubitTerm::getOptionsForSelectList($this->taxonomyId) as $value => $label)
+        {
+          $choices[$value] = htmlentities($label, ENT_QUOTES, sfConfig::get('sf_charset'));
+        }
+
+        $this->form->setValidator('type', new sfValidatorString());
+        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
+
+        break;
     }
   }
 }

@@ -19,14 +19,6 @@
 
 class arWidgetFormSelectRadio extends sfWidgetFormSelectRadio
 {
-  protected function configure($options = array(), $attributes = array())
-  {
-    parent::configure($options, $attributes);
-
-    $this->addOption('class', 'control-group');
-    $this->addOption('label_separator', '');
-  }
-
   public function formatter($widget, $inputs)
   {
     $rows = array();
@@ -39,5 +31,12 @@ class arWidgetFormSelectRadio extends sfWidgetFormSelectRadio
     }
 
     return !$rows ? '' : $this->renderContentTag('div', implode($this->getOption('separator'), $rows), array('class' => $this->getOption('class')));
+  }
+  protected function configure($options = array(), $attributes = array())
+  {
+    parent::configure($options, $attributes);
+
+    $this->addOption('class', 'control-group');
+    $this->addOption('label_separator', '');
   }
 }

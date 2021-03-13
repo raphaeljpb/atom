@@ -19,11 +19,6 @@
 
 class arWidgetFormUploadQuota extends sfWidgetFormInput
 {
-  protected function configure($options = array(), $attributes = array())
-  {
-    parent::configure($options, $attributes);
-  }
-
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
     $uploadLimit = (int) sfConfig::get('app_upload_limit');
@@ -46,5 +41,9 @@ class arWidgetFormUploadQuota extends sfWidgetFormInput
     return '<label>' . __('%1% used of %2%', array(
       '%1%' => hr_filesize($size),
       '%2%' => $uploadLimit.' GB')).'</label>';
+  }
+  protected function configure($options = array(), $attributes = array())
+  {
+    parent::configure($options, $attributes);
   }
 }

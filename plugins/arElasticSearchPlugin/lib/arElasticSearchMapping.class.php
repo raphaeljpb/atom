@@ -114,6 +114,78 @@ class arElasticSearchMapping
   }
 
   /**
+   * Clean YAML shorthands recursively.
+   *
+   * We have some special YAML properties in mapping.yml that we only use internally
+   * to indicate foreign types, special attributes, etc. This method will remove those
+   * from the mappings array, which is necessary since when we generate our ES schema
+   * we don't want to send those special properties in the mapping.
+   *
+   * @param array mapping  A reference to our ES YAML mappings
+   */
+  public function cleanYamlShorthands(&$mapping = null)
+  {
+    // If no parameter is passed, $this->mapping will be used
+    if (null === $mapping)
+    {
+      $mapping =& $this->mapping;
+    }
+
+    foreach ($mapping as $key => &$value)
+    {
+      switch ($key)
+      {
+        case '_attributes':
+        case '_foreign_types':
+        case '_partial_foreign_types':
+        case '_i18nFields':
+          unset($mapping[$key]);
+
+          break;
+
+        default:
+          if (is_array($value))
+          {
+            $this->cleanYamlShorthands($value);
+          }
+
+          break;
+      }
+    }
+  }
+
+  /*
+   * Given a class name (eg. Repository or QubitRepostiroy), returns
+   * an array of i18n fields
+   */
+  public static function getI18nFields($class)
+  {
+    // Use table maps to find existing i18n columns
+    $className = str_replace('Qubit', '', $class) . 'I18nTableMap';
+
+    // Ignore models without i18n table that will include i18nExtra (donors)
+    if (!class_exists($className))
+    {
+      return;
+    }
+
+    $map = new $className();
+
+    $fields = array();
+    foreach ($map->getColumns() as $column)
+    {
+      if (!$column->isPrimaryKey() && !$column->isForeignKey())
+      {
+        $colName = $column->getPhpName();
+
+        $fields[] = $colName;
+      }
+    }
+
+    return $fields;
+  }
+
+  /**
    * Camelize field names by creating and unsetting array items recursively.
    * Only properties are camelized, other attributes are ignored.
    */
@@ -169,47 +241,6 @@ class arElasticSearchMapping
     foreach ($this->mapping as $typeName => &$typeProperties)
     {
       $this->processForeignTypes($typeProperties);
-    }
-  }
-
-  /**
-   * Clean YAML shorthands recursively.
-   *
-   * We have some special YAML properties in mapping.yml that we only use internally
-   * to indicate foreign types, special attributes, etc. This method will remove those
-   * from the mappings array, which is necessary since when we generate our ES schema
-   * we don't want to send those special properties in the mapping.
-   *
-   * @param array mapping  A reference to our ES YAML mappings
-   */
-  public function cleanYamlShorthands(&$mapping = null)
-  {
-    // If no parameter is passed, $this->mapping will be used
-    if (null === $mapping)
-    {
-      $mapping =& $this->mapping;
-    }
-
-    foreach ($mapping as $key => &$value)
-    {
-      switch ($key)
-      {
-        case '_attributes':
-        case '_foreign_types':
-        case '_partial_foreign_types':
-        case '_i18nFields':
-          unset($mapping[$key]);
-
-          break;
-
-        default:
-          if (is_array($value))
-          {
-            $this->cleanYamlShorthands($value);
-          }
-
-          break;
-      }
     }
   }
 
@@ -300,37 +331,6 @@ class arElasticSearchMapping
           break;
       }
     }
-  }
-
-  /*
-   * Given a class name (eg. Repository or QubitRepostiroy), returns
-   * an array of i18n fields
-   */
-  public static function getI18nFields($class)
-  {
-    // Use table maps to find existing i18n columns
-    $className = str_replace('Qubit', '', $class) . 'I18nTableMap';
-
-    // Ignore models without i18n table that will include i18nExtra (donors)
-    if (!class_exists($className))
-    {
-      return;
-    }
-
-    $map = new $className();
-
-    $fields = array();
-    foreach ($map->getColumns() as $column)
-    {
-      if (!$column->isPrimaryKey() && !$column->isForeignKey())
-      {
-        $colName = $column->getPhpName();
-
-        $fields[] = $colName;
-      }
-    }
-
-    return $fields;
   }
 
   /**

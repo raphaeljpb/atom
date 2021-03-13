@@ -22,41 +22,6 @@ class QubitTransactionFilter extends sfFilter
   protected static $retry = 0;
   protected static $retryLimit = 3;
 
-  protected function retry()
-  {
-    // If we've hit the retry limit, abort and return false
-    if (self::$retry++ > self::$retryLimit)
-    {
-      return false;
-    }
-
-    // Log a warning
-    if (sfConfig::get('sf_logging_enabled'))
-    {
-      $this->context->getLogger()->warning(
-        sprintf('Encountered a SQL transaction deadlock, retry %d of %d',
-          self::$retry, self::$retryLimit
-        )
-      );
-    }
-
-    // Get the current action instance
-    $actionInstance = $this->context
-      ->getController()
-      ->getActionStack()
-      ->getLastEntry()
-      ->getActionInstance();
-
-    // Create a new filter chain and reload config
-    $filterChain = new sfFilterChain();
-    $filterChain->loadConfiguration($actionInstance);
-
-    // Execute whole filter chain again
-    $filterChain->execute();
-
-    return true;
-  }
-
   public function execute($filterChain)
   {
     try
@@ -116,5 +81,40 @@ class QubitTransactionFilter extends sfFilter
 
       throw $e;
     }
+  }
+
+  protected function retry()
+  {
+    // If we've hit the retry limit, abort and return false
+    if (self::$retry++ > self::$retryLimit)
+    {
+      return false;
+    }
+
+    // Log a warning
+    if (sfConfig::get('sf_logging_enabled'))
+    {
+      $this->context->getLogger()->warning(
+        sprintf('Encountered a SQL transaction deadlock, retry %d of %d',
+          self::$retry, self::$retryLimit
+        )
+      );
+    }
+
+    // Get the current action instance
+    $actionInstance = $this->context
+      ->getController()
+      ->getActionStack()
+      ->getLastEntry()
+      ->getActionInstance();
+
+    // Create a new filter chain and reload config
+    $filterChain = new sfFilterChain();
+    $filterChain->loadConfiguration($actionInstance);
+
+    // Execute whole filter chain again
+    $filterChain->execute();
+
+    return true;
   }
 }

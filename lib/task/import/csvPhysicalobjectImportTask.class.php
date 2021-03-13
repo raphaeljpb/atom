@@ -27,6 +27,43 @@
 class csvPhysicalobjectImportTask extends arBaseTask
 {
   /**
+   * @see sfTask
+   */
+  public function execute($arguments = array(), $options = array())
+  {
+    parent::execute($arguments, $options);
+
+    $importOptions = $this->setImportOptions($options);
+
+    $importer = new PhysicalObjectCsvImporter(
+      $this->context, $this->getDbConnection(), $importOptions);
+    $importer->setFilename($arguments['filename']);
+
+    $this->log(sprintf('Importing physical object data from %s...'.PHP_EOL,
+      $importer->getFilename()));
+
+    if (isset($options['skip-rows']) && $options['skip-rows'] > 0)
+    {
+      if (1 == $options['skip-rows'])
+      {
+        $this->log('Skipping first row...');
+      }
+      else
+      {
+        $this->log(sprintf('Skipping first %u rows...', $options['skip-rows']));
+      }
+    }
+
+    $importer->doImport();
+
+    $this->log(sprintf(PHP_EOL.'Done! Imported %u of %u rows.'.PHP_EOL,
+      $importer->countRowsImported(),
+      $importer->countRowsTotal())
+    );
+
+    $this->log($importer->reportTimes());
+  }
+  /**
    * @see sfBaseTask
    */
   protected function configure()
@@ -114,44 +151,6 @@ class csvPhysicalobjectImportTask extends arBaseTask
     $this->detailedDescription = <<<EOF
       Import physical object CSV data
 EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
-  public function execute($arguments = array(), $options = array())
-  {
-    parent::execute($arguments, $options);
-
-    $importOptions = $this->setImportOptions($options);
-
-    $importer = new PhysicalObjectCsvImporter(
-      $this->context, $this->getDbConnection(), $importOptions);
-    $importer->setFilename($arguments['filename']);
-
-    $this->log(sprintf('Importing physical object data from %s...'.PHP_EOL,
-      $importer->getFilename()));
-
-    if (isset($options['skip-rows']) && $options['skip-rows'] > 0)
-    {
-      if (1 == $options['skip-rows'])
-      {
-        $this->log('Skipping first row...');
-      }
-      else
-      {
-        $this->log(sprintf('Skipping first %u rows...', $options['skip-rows']));
-      }
-    }
-
-    $importer->doImport();
-
-    $this->log(sprintf(PHP_EOL.'Done! Imported %u of %u rows.'.PHP_EOL,
-      $importer->countRowsImported(),
-      $importer->countRowsTotal())
-    );
-
-    $this->log($importer->reportTimes());
   }
 
   protected function getDbConnection()

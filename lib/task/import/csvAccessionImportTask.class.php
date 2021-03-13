@@ -36,34 +36,6 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function configure()
-  {
-    parent::configure();
-
-    $this->addOptions(array(
-      new sfCommandOption(
-        'source-name',
-        null,
-        sfCommandOption::PARAMETER_OPTIONAL, 'Source name to use when inserting keymap entries.'
-      ),
-      new sfCommandOption(
-        'index',
-        null,
-        sfCommandOption::PARAMETER_NONE,
-        "Index for search during import."
-      ),
-      new sfCommandOption(
-        'assign-id',
-        null,
-        sfCommandOption::PARAMETER_NONE,
-        "Assign identifier, based on mask and counter, if no accession number specified in row."
-      )
-    ));
-  }
-
-  /**
-   * @see sfTask
-   */
   public function execute($arguments = array(), $options = array())
   {
     parent::execute($arguments, $options);
@@ -545,5 +517,33 @@ EOF;
     $import->searchIndexingDisabled = ($options['index']) ? false : true;
 
     $import->csv($fh, $skipRows);
+  }
+
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    parent::configure();
+
+    $this->addOptions(array(
+      new sfCommandOption(
+        'source-name',
+        null,
+        sfCommandOption::PARAMETER_OPTIONAL, 'Source name to use when inserting keymap entries.'
+      ),
+      new sfCommandOption(
+        'index',
+        null,
+        sfCommandOption::PARAMETER_NONE,
+        "Index for search during import."
+      ),
+      new sfCommandOption(
+        'assign-id',
+        null,
+        sfCommandOption::PARAMETER_NONE,
+        "Assign identifier, based on mask and counter, if no accession number specified in row."
+      )
+    ));
   }
 }

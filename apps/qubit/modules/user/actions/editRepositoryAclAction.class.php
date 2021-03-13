@@ -21,6 +21,25 @@ class UserEditRepositoryAclAction extends DefaultEditAction
 {
   public static $NAMES = array();
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        $this->resource->save();
+
+        $this->redirect(array($this->resource, 'module' => 'user', 'action' => 'indexRepositoryAcl'));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
@@ -101,25 +120,6 @@ class UserEditRepositoryAclAction extends DefaultEditAction
           $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
           $this->resource->aclPermissions[] = $aclPermission;
         }
-      }
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        $this->resource->save();
-
-        $this->redirect(array($this->resource, 'module' => 'user', 'action' => 'indexRepositoryAcl'));
       }
     }
   }

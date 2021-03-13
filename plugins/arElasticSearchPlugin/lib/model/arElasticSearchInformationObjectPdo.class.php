@@ -126,51 +126,6 @@ class arElasticSearchInformationObjectPdo
     $this->data[$name] = $value;
   }
 
-  protected function loadData($id, $options = array())
-  {
-    if (!isset(self::$statements['informationObject']))
-    {
-      $sql = 'SELECT
-         io.*,
-         obj.created_at,
-         obj.updated_at,
-         slug.slug,
-         pubstat.status_id as publication_status_id,
-         do.id as digital_object_id,
-         do.media_type_id as media_type_id,
-         do.usage_id as usage_id,
-         do.name as filename
-       FROM '.QubitInformationObject::TABLE_NAME.' io
-       JOIN '.QubitObject::TABLE_NAME.' obj
-         ON io.id = obj.id
-       JOIN '.QubitSlug::TABLE_NAME.' slug
-         ON io.id = slug.object_id
-       JOIN '.QubitStatus::TABLE_NAME.' pubstat
-         ON io.id = pubstat.object_id
-       LEFT JOIN '.QubitDigitalObject::TABLE_NAME.' do
-         ON io.id = do.object_id
-       WHERE io.id = :id';
-
-      self::$statements['informationObject'] = self::$conn->prepare($sql);
-    }
-
-    // Do select
-    self::$statements['informationObject']->execute(array(':id' => $id));
-
-    // Get first result
-    $this->data = self::$statements['informationObject']->fetch(PDO::FETCH_ASSOC);
-
-    if (false === $this->data)
-    {
-      throw new sfException("Couldn't find information object (id: $id)");
-    }
-
-    // Load event data
-    $this->loadEvents();
-
-    return $this;
-  }
-
   /**
    * Return an array of ancestors
    *
@@ -338,57 +293,6 @@ class arElasticSearchInformationObjectPdo
     $refcode .= implode(sfConfig::get('app_separator_character', '-'), $identifiers);
 
     return $refcode;
-  }
-
-  protected function loadEvents()
-  {
-    if (!isset($this->events))
-    {
-      $events = array();
-
-      if (!isset(self::$statements['event']))
-      {
-        $sql  = 'SELECT
-                    event.id,
-                    event.start_date,
-                    event.end_date,
-                    event.actor_id,
-                    event.type_id,
-                    event.source_culture,
-                    i18n.date,
-                    i18n.culture';
-        $sql .= ' FROM '.QubitEvent::TABLE_NAME.' event';
-        $sql .= ' JOIN '.QubitEventI18n::TABLE_NAME.' i18n
-                    ON event.id = i18n.id';
-        $sql .= ' WHERE event.object_id = ?';
-
-        self::$statements['event'] = self::$conn->prepare($sql);
-      }
-
-      self::$statements['event']->execute(array($this->__get('id')));
-
-      foreach (self::$statements['event']->fetchAll() as $item)
-      {
-        if (!isset($events[$item['id']]))
-        {
-          $event = new stdClass();
-          $event->id = $item['id'];
-          $event->start_date = $item['start_date'];
-          $event->end_date = $item['end_date'];
-          $event->actor_id = $item['actor_id'];
-          $event->type_id = $item['type_id'];
-          $event->source_culture = $item['source_culture'];
-
-          $events[$item['id']] = $event;
-        }
-
-        $events[$item['id']]->dates[$item['culture']] = $item['date'];
-      }
-
-      $this->events = $events;
-    }
-
-    return $this->events;
   }
 
   public function getActors($options = array())
@@ -643,145 +547,6 @@ class arElasticSearchInformationObjectPdo
     self::$statements['findingAidStatus']->execute(array($this->__get('id')));
 
     return self::$statements['findingAidStatus']->fetchColumn();
-  }
-
-  protected function getAlternativeIdentifiers()
-  {
-    // Find langs and scripts
-    if (!isset(self::$statements['alternativeIdentifiers']))
-    {
-      $sql  = 'SELECT
-                  node.name,
-                  i18n.value';
-      $sql .= ' FROM '.QubitProperty::TABLE_NAME.' node';
-      $sql .= ' JOIN '.QubitPropertyI18n::TABLE_NAME.' i18n
-                  ON node.id = i18n.id';
-      $sql .= ' WHERE node.source_culture = i18n.culture
-                  AND node.object_id = ?
-                  AND node.scope = ?';
-
-      self::$statements['alternativeIdentifiers'] = self::$conn->prepare($sql);
-    }
-
-    self::$statements['alternativeIdentifiers']->execute(array(
-      $this->__get('id'),
-      'alternativeIdentifiers'));
-
-    $alternativeIdentifiers = array();
-    foreach (self::$statements['alternativeIdentifiers']->fetchAll() as $item)
-    {
-      $tmp = array();
-
-      $tmp['label'] = $item['name'];
-      $tmp['identifier'] = $item['value'];
-
-      $alternativeIdentifiers[] = $tmp;
-    }
-
-    return $alternativeIdentifiers;
-  }
-
-  protected function getProperty($name)
-  {
-    $sql  = 'SELECT
-                prop.id, prop.source_culture';
-    $sql .= ' FROM '.QubitProperty::TABLE_NAME.' prop';
-    $sql .= ' WHERE prop.object_id = ?
-                AND prop.name = ?';
-
-    self::$statements['property'] = self::$conn->prepare($sql);
-    self::$statements['property']->execute(array($this->__get('id'), $name));
-
-    return self::$statements['property']->fetch(PDO::FETCH_OBJ);
-  }
-
-  protected function getAips()
-  {
-    $sql  = 'SELECT
-                aip.id';
-    $sql .= ' FROM '.QubitAip::TABLE_NAME.' aip';
-    $sql .= ' JOIN '.QubitRelation::TABLE_NAME.' relation
-                ON aip.id = relation.subject_id';
-    $sql .= ' WHERE relation.object_id = ?
-                AND relation.type_id = ?';
-
-    self::$statements['aips'] = self::$conn->prepare($sql);
-    self::$statements['aips']->execute(array($this->__get('id'), QubitTerm::AIP_RELATION_ID));
-
-    return self::$statements['aips']->fetchAll(PDO::FETCH_OBJ);
-  }
-
-  protected function getPhysicalObjects()
-  {
-    $sql  = 'SELECT
-                phys.id,
-                phys.source_culture';
-    $sql .= ' FROM '.QubitPhysicalObject::TABLE_NAME.' phys';
-    $sql .= ' JOIN '.QubitRelation::TABLE_NAME.' relation
-                ON phys.id = relation.subject_id';
-    $sql .= ' WHERE relation.object_id = ?
-                AND relation.type_id = ?';
-
-    self::$statements['physicalObjects'] = self::$conn->prepare($sql);
-    self::$statements['physicalObjects']->execute(array($this->__get('id'), QubitTerm::HAS_PHYSICAL_OBJECT_ID));
-
-    return self::$statements['physicalObjects']->fetchAll(PDO::FETCH_OBJ);
-  }
-
-  private function getBasisRights()
-  {
-    $basisRights = array();
-
-    foreach ($this->getRights() as $right)
-    {
-      $basisRight = array();
-
-      $basisRight['startDate'] = arElasticSearchPluginUtil::normalizeDateWithoutMonthOrDay($right->start_date);
-      $basisRight['endDate'] = arElasticSearchPluginUtil::normalizeDateWithoutMonthOrDay($right->end_date, true);
-      $basisRight['rightsNote'] = $right->rights_note;
-      $basisRight['licenseTerms'] = $right->license_terms;
-
-      if ($right->rights_holder_id)
-      {
-        $basisRight['rightsHolder'] = QubitActor::getById($right->rights_holder_id)->getAuthorizedFormOfName();
-      }
-
-      if ($right->basis_id)
-      {
-        $basisRight['basis'] = QubitTerm::getById($right->basis_id)->getName();
-      }
-
-      if ($right->copyright_status_id)
-      {
-        $basisRight['copyrightStatus'] = QubitTerm::getById($right->copyright_status_id)->getName();
-      }
-
-      $basisRights[] = $basisRight;
-    }
-
-    return $basisRights;
-  }
-
-  private function getActRights()
-  {
-    $actRights = array();
-    foreach ($this->getGrantedRights() as $grantedRight)
-    {
-      $actRight = array();
-
-      if ($grantedRight->act_id)
-      {
-        $actRight['act'] = QubitTerm::getById($grantedRight->act_id)->getName();
-      }
-
-      $actRight['restriction'] = QubitGrantedRight::getRestrictionString($grantedRight->restriction);
-      $actRight['startDate'] = arElasticSearchPluginUtil::normalizeDateWithoutMonthOrDay($grantedRight->start_date);
-      $actRight['endDate'] = arElasticSearchPluginUtil::normalizeDateWithoutMonthOrDay($grantedRight->end_date, true);
-
-      $actRights[] = $actRight;
-    }
-
-    return $actRights;
   }
 
   public function serialize()
@@ -1126,5 +891,240 @@ class arElasticSearchInformationObjectPdo
     }
 
     return $serialized;
+  }
+
+  protected function loadData($id, $options = array())
+  {
+    if (!isset(self::$statements['informationObject']))
+    {
+      $sql = 'SELECT
+         io.*,
+         obj.created_at,
+         obj.updated_at,
+         slug.slug,
+         pubstat.status_id as publication_status_id,
+         do.id as digital_object_id,
+         do.media_type_id as media_type_id,
+         do.usage_id as usage_id,
+         do.name as filename
+       FROM '.QubitInformationObject::TABLE_NAME.' io
+       JOIN '.QubitObject::TABLE_NAME.' obj
+         ON io.id = obj.id
+       JOIN '.QubitSlug::TABLE_NAME.' slug
+         ON io.id = slug.object_id
+       JOIN '.QubitStatus::TABLE_NAME.' pubstat
+         ON io.id = pubstat.object_id
+       LEFT JOIN '.QubitDigitalObject::TABLE_NAME.' do
+         ON io.id = do.object_id
+       WHERE io.id = :id';
+
+      self::$statements['informationObject'] = self::$conn->prepare($sql);
+    }
+
+    // Do select
+    self::$statements['informationObject']->execute(array(':id' => $id));
+
+    // Get first result
+    $this->data = self::$statements['informationObject']->fetch(PDO::FETCH_ASSOC);
+
+    if (false === $this->data)
+    {
+      throw new sfException("Couldn't find information object (id: $id)");
+    }
+
+    // Load event data
+    $this->loadEvents();
+
+    return $this;
+  }
+
+  protected function loadEvents()
+  {
+    if (!isset($this->events))
+    {
+      $events = array();
+
+      if (!isset(self::$statements['event']))
+      {
+        $sql  = 'SELECT
+                    event.id,
+                    event.start_date,
+                    event.end_date,
+                    event.actor_id,
+                    event.type_id,
+                    event.source_culture,
+                    i18n.date,
+                    i18n.culture';
+        $sql .= ' FROM '.QubitEvent::TABLE_NAME.' event';
+        $sql .= ' JOIN '.QubitEventI18n::TABLE_NAME.' i18n
+                    ON event.id = i18n.id';
+        $sql .= ' WHERE event.object_id = ?';
+
+        self::$statements['event'] = self::$conn->prepare($sql);
+      }
+
+      self::$statements['event']->execute(array($this->__get('id')));
+
+      foreach (self::$statements['event']->fetchAll() as $item)
+      {
+        if (!isset($events[$item['id']]))
+        {
+          $event = new stdClass();
+          $event->id = $item['id'];
+          $event->start_date = $item['start_date'];
+          $event->end_date = $item['end_date'];
+          $event->actor_id = $item['actor_id'];
+          $event->type_id = $item['type_id'];
+          $event->source_culture = $item['source_culture'];
+
+          $events[$item['id']] = $event;
+        }
+
+        $events[$item['id']]->dates[$item['culture']] = $item['date'];
+      }
+
+      $this->events = $events;
+    }
+
+    return $this->events;
+  }
+
+  protected function getAlternativeIdentifiers()
+  {
+    // Find langs and scripts
+    if (!isset(self::$statements['alternativeIdentifiers']))
+    {
+      $sql  = 'SELECT
+                  node.name,
+                  i18n.value';
+      $sql .= ' FROM '.QubitProperty::TABLE_NAME.' node';
+      $sql .= ' JOIN '.QubitPropertyI18n::TABLE_NAME.' i18n
+                  ON node.id = i18n.id';
+      $sql .= ' WHERE node.source_culture = i18n.culture
+                  AND node.object_id = ?
+                  AND node.scope = ?';
+
+      self::$statements['alternativeIdentifiers'] = self::$conn->prepare($sql);
+    }
+
+    self::$statements['alternativeIdentifiers']->execute(array(
+      $this->__get('id'),
+      'alternativeIdentifiers'));
+
+    $alternativeIdentifiers = array();
+    foreach (self::$statements['alternativeIdentifiers']->fetchAll() as $item)
+    {
+      $tmp = array();
+
+      $tmp['label'] = $item['name'];
+      $tmp['identifier'] = $item['value'];
+
+      $alternativeIdentifiers[] = $tmp;
+    }
+
+    return $alternativeIdentifiers;
+  }
+
+  protected function getProperty($name)
+  {
+    $sql  = 'SELECT
+                prop.id, prop.source_culture';
+    $sql .= ' FROM '.QubitProperty::TABLE_NAME.' prop';
+    $sql .= ' WHERE prop.object_id = ?
+                AND prop.name = ?';
+
+    self::$statements['property'] = self::$conn->prepare($sql);
+    self::$statements['property']->execute(array($this->__get('id'), $name));
+
+    return self::$statements['property']->fetch(PDO::FETCH_OBJ);
+  }
+
+  protected function getAips()
+  {
+    $sql  = 'SELECT
+                aip.id';
+    $sql .= ' FROM '.QubitAip::TABLE_NAME.' aip';
+    $sql .= ' JOIN '.QubitRelation::TABLE_NAME.' relation
+                ON aip.id = relation.subject_id';
+    $sql .= ' WHERE relation.object_id = ?
+                AND relation.type_id = ?';
+
+    self::$statements['aips'] = self::$conn->prepare($sql);
+    self::$statements['aips']->execute(array($this->__get('id'), QubitTerm::AIP_RELATION_ID));
+
+    return self::$statements['aips']->fetchAll(PDO::FETCH_OBJ);
+  }
+
+  protected function getPhysicalObjects()
+  {
+    $sql  = 'SELECT
+                phys.id,
+                phys.source_culture';
+    $sql .= ' FROM '.QubitPhysicalObject::TABLE_NAME.' phys';
+    $sql .= ' JOIN '.QubitRelation::TABLE_NAME.' relation
+                ON phys.id = relation.subject_id';
+    $sql .= ' WHERE relation.object_id = ?
+                AND relation.type_id = ?';
+
+    self::$statements['physicalObjects'] = self::$conn->prepare($sql);
+    self::$statements['physicalObjects']->execute(array($this->__get('id'), QubitTerm::HAS_PHYSICAL_OBJECT_ID));
+
+    return self::$statements['physicalObjects']->fetchAll(PDO::FETCH_OBJ);
+  }
+
+  private function getBasisRights()
+  {
+    $basisRights = array();
+
+    foreach ($this->getRights() as $right)
+    {
+      $basisRight = array();
+
+      $basisRight['startDate'] = arElasticSearchPluginUtil::normalizeDateWithoutMonthOrDay($right->start_date);
+      $basisRight['endDate'] = arElasticSearchPluginUtil::normalizeDateWithoutMonthOrDay($right->end_date, true);
+      $basisRight['rightsNote'] = $right->rights_note;
+      $basisRight['licenseTerms'] = $right->license_terms;
+
+      if ($right->rights_holder_id)
+      {
+        $basisRight['rightsHolder'] = QubitActor::getById($right->rights_holder_id)->getAuthorizedFormOfName();
+      }
+
+      if ($right->basis_id)
+      {
+        $basisRight['basis'] = QubitTerm::getById($right->basis_id)->getName();
+      }
+
+      if ($right->copyright_status_id)
+      {
+        $basisRight['copyrightStatus'] = QubitTerm::getById($right->copyright_status_id)->getName();
+      }
+
+      $basisRights[] = $basisRight;
+    }
+
+    return $basisRights;
+  }
+
+  private function getActRights()
+  {
+    $actRights = array();
+    foreach ($this->getGrantedRights() as $grantedRight)
+    {
+      $actRight = array();
+
+      if ($grantedRight->act_id)
+      {
+        $actRight['act'] = QubitTerm::getById($grantedRight->act_id)->getName();
+      }
+
+      $actRight['restriction'] = QubitGrantedRight::getRestrictionString($grantedRight->restriction);
+      $actRight['startDate'] = arElasticSearchPluginUtil::normalizeDateWithoutMonthOrDay($grantedRight->start_date);
+      $actRight['endDate'] = arElasticSearchPluginUtil::normalizeDateWithoutMonthOrDay($grantedRight->end_date, true);
+
+      $actRights[] = $actRight;
+    }
+
+    return $actRights;
   }
 }

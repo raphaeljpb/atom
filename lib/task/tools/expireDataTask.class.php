@@ -59,20 +59,6 @@ Delete expired data (in entirety or by age)
 EOF;
   }
 
-  private function supportedTypesDescription()
-  {
-    $description = '';
-
-    foreach (array_keys(self::$TYPE_SPECIFICATONS) as $dataType)
-    {
-      // Prepend with comma if not the first item
-      $description = ($description) ? $description .', ' : $description;
-      $description .= '"'. $dataType .'"';
-    }
-
-    return $description;
-  }
-
   protected function execute($arguments = array(), $options = array())
   {
     parent::execute($arguments, $options);
@@ -105,6 +91,20 @@ EOF;
     }
 
     $this->logSection('expire-data', 'Done!');
+  }
+
+  private function supportedTypesDescription()
+  {
+    $description = '';
+
+    foreach (array_keys(self::$TYPE_SPECIFICATONS) as $dataType)
+    {
+      // Prepend with comma if not the first item
+      $description = ($description) ? $description .', ' : $description;
+      $description .= '"'. $dataType .'"';
+    }
+
+    return $description;
   }
 
   private function validateDataTypes($dataTypes)

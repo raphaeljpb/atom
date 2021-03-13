@@ -36,29 +36,6 @@ class QubitInformationObjectXmlCache
   }
 
   /**
-   * Check if downloads/exports, and format-specific subdirectories, have been created and, if not,
-   * create them.
-   *
-   * @return null
-   */
-  protected function createExportDestinationDirs()
-  {
-    $exportsPath = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . 'downloads' . DIRECTORY_SEPARATOR .'exports';
-
-    $eadExportPath = $exportsPath . DIRECTORY_SEPARATOR .'ead';
-    if (!is_dir($eadExportPath))
-    {
-      mkdir($eadExportPath, 0755, true);
-    }
-
-    $dcExportPath = $exportsPath . DIRECTORY_SEPARATOR .'dc';
-    if (!is_dir($dcExportPath))
-    {
-      mkdir($dcExportPath, 0755, true);
-    }
-  }
-
-  /**
    * Export information object to EAD (if top-level) and/or DC.
    *
    * @param object  information object instance to export
@@ -130,6 +107,44 @@ class QubitInformationObjectXmlCache
         // Keep caches clear to prevent memory use from ballooning
         Qubit::clearClassCaches();
       }
+    }
+  }
+
+  /**
+   * Get a resource's file path to an XML export of a given format.
+   *
+   * @param object  information object resource to get file path for
+   * @param string  XML format
+   * @param boolean  whether or not to get file path for just the XML's contents (no XML header lines)
+   *
+   * @return string  file path of EAD XML
+   */
+  public static function resourceExportFilePath($resource, $format, $contentsOnly = false)
+  {
+    $cacheResource = new QubitInformationObjectXmlCacheResource($resource);
+    return $cacheResource->getFilePath($format, $contentsOnly);
+  }
+
+  /**
+   * Check if downloads/exports, and format-specific subdirectories, have been created and, if not,
+   * create them.
+   *
+   * @return null
+   */
+  protected function createExportDestinationDirs()
+  {
+    $exportsPath = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . 'downloads' . DIRECTORY_SEPARATOR .'exports';
+
+    $eadExportPath = $exportsPath . DIRECTORY_SEPARATOR .'ead';
+    if (!is_dir($eadExportPath))
+    {
+      mkdir($eadExportPath, 0755, true);
+    }
+
+    $dcExportPath = $exportsPath . DIRECTORY_SEPARATOR .'dc';
+    if (!is_dir($dcExportPath))
+    {
+      mkdir($dcExportPath, 0755, true);
     }
   }
 
@@ -216,20 +231,5 @@ class QubitInformationObjectXmlCache
 
     fclose($sfp);
     fclose($dfp);
-  }
-
-  /**
-   * Get a resource's file path to an XML export of a given format.
-   *
-   * @param object  information object resource to get file path for
-   * @param string  XML format
-   * @param boolean  whether or not to get file path for just the XML's contents (no XML header lines)
-   *
-   * @return string  file path of EAD XML
-   */
-  public static function resourceExportFilePath($resource, $format, $contentsOnly = false)
-  {
-    $cacheResource = new QubitInformationObjectXmlCacheResource($resource);
-    return $cacheResource->getFilePath($format, $contentsOnly);
   }
 }

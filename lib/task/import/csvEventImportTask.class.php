@@ -34,19 +34,6 @@ Import CSV event record data
 EOF;
 
   /**
-   * @see csvImportBaseTask
-   */
-  protected function configure()
-  {
-    parent::configure();
-
-    $this->addOptions(array(
-      new sfCommandOption('event-types', null, sfCommandOption::PARAMETER_OPTIONAL, 'Event type terms to create, if they do not yet exist, before import.'),
-      new sfCommandOption('source-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'Source name to use when inserting keymap entries.')
-    ));
-  }
-
-  /**
    * @see sfTask
    */
   public function execute($arguments = array(), $options = array())
@@ -222,6 +209,19 @@ EOF;
     ));
 
     $import->csv($fh, $skipRows);
+  }
+
+  /**
+   * @see csvImportBaseTask
+   */
+  protected function configure()
+  {
+    parent::configure();
+
+    $this->addOptions(array(
+      new sfCommandOption('event-types', null, sfCommandOption::PARAMETER_OPTIONAL, 'Event type terms to create, if they do not yet exist, before import.'),
+      new sfCommandOption('source-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'Source name to use when inserting keymap entries.')
+    ));
   }
 }
 

@@ -28,6 +28,10 @@
 class arElasticSearchPlugin extends QubitSearchEngine
 {
   /**
+   * Minimum version of Elasticsearch supported
+   */
+  public const MIN_VERSION = '1.3.0';
+  /**
    * Elastic_Client object
    *
    * @var mixed Defaults to null.
@@ -40,6 +44,20 @@ class arElasticSearchPlugin extends QubitSearchEngine
    * @var mixed Defaults to null.
    */
   public $index = null;
+
+  /**
+   * Mappings configuration, mapping.yml
+   *
+   * @var mixed Defaults to null.
+   */
+  protected $mappings = null;
+
+  /**
+   * If false, this plugin will perform a trial run with no changes made
+   *
+   * @var mixed Defaults to true.
+   */
+  protected $enabled = true;
 
   /**
    * Elasticsearch bulk API makes it possible to perform many operations in a
@@ -57,25 +75,6 @@ class arElasticSearchPlugin extends QubitSearchEngine
    * @var array
    */
   private $batchDeleteDocs = array();
-
-  /**
-   * Mappings configuration, mapping.yml
-   *
-   * @var mixed Defaults to null.
-   */
-  protected $mappings = null;
-
-  /**
-   * If false, this plugin will perform a trial run with no changes made
-   *
-   * @var mixed Defaults to true.
-   */
-  protected $enabled = true;
-
-  /**
-   * Minimum version of Elasticsearch supported
-   */
-  public const MIN_VERSION = '1.3.0';
 
   /**
    * Constructor
@@ -115,109 +114,6 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
     $this->flushBatch();
     $this->index->refresh();
-  }
-
-  /**
-   * Obtain the version of the Elasticsearch server
-   */
-  private function getVersion()
-  {
-    $data = $this->client->request('/')->getData();
-    if (null === $version = @$data['version']['number'])
-    {
-      throw new \Elastica\Exception\ResponseException('Unexpected response');
-    }
-
-    return $version;
-  }
-
-  /**
-   * Check if the server version is recent enough and cache it if so to avoid
-   * hitting Elasticsearch again for each request
-   */
-  private function checkVersion()
-  {
-    // Avoid the check if the cache entry is still available
-    if ($this->cache->has('elasticsearch_version_ok'))
-    {
-      return;
-    }
-
-    // This is slow as it hits the server
-    $version = $this->getVersion();
-    if (!version_compare($version, self::MIN_VERSION, '>='))
-    {
-      $message = sprintf('The version of Elasticsearch that you are running is out of date (%s), and no longer compatible with this version of AtoM. Please upgrade to version %s or newer.', $version, self::MIN_VERSION);
-      throw new \Elastica\Exception\ClientException($message);
-    }
-
-    // We know at this point that the server meets the requirements. We cache it
-    // for an hour.
-    $this->cache->set('elasticsearch_version_ok', 1, 3600);
-  }
-
-  /**
-   * Initialize ES index if it does not exist
-   */
-  protected function initialize()
-  {
-    try
-    {
-      $this->index->open();
-    }
-    catch (Exception $e)
-    {
-      // If the index has not been initialized, create it
-      if ($e instanceof \Elastica\Exception\ResponseException)
-      {
-        // Based on the markdown_enabled setting, add a new filter to strip Markdown tags
-        if (sfConfig::get('app_markdown_enabled', true)
-          && isset($this->config['index']['configuration']['analysis']['char_filter']['strip_md']))
-        {
-          foreach ($this->config['index']['configuration']['analysis']['analyzer'] as $key => $analyzer)
-          {
-            $this->config['index']['configuration']['analysis']['analyzer'][$key]['char_filter'] = array('strip_md');
-          }
-        }
-
-        $this->index->create($this->config['index']['configuration'],
-          array('recreate' => true));
-      }
-
-      // Load and normalize mappings
-      $this->loadAndNormalizeMappings();
-
-      // Iterate over types (actor, informationobject, ...)
-      foreach ($this->mappings as $typeName => $typeProperties)
-      {
-        $typeName = 'Qubit'.sfInflector::camelize($typeName);
-
-        // Define mapping in elasticsearch
-        $mapping = new \Elastica\Type\Mapping();
-        $mapping->setType($this->index->getType($typeName));
-        $mapping->setProperties($typeProperties['properties']);
-
-        // Parse other parameters
-        unset($typeProperties['properties']);
-        foreach ($typeProperties as $key => $value)
-        {
-          $mapping->setParam($key, $value);
-        }
-
-        $this->log(sprintf('Defining mapping %s...', $typeName));
-        $mapping->send();
-      }
-    }
-  }
-
-  private function loadAndNormalizeMappings()
-  {
-    if (null === $this->mappings)
-    {
-      $mappings = self::loadMappings();
-      $mappings->cleanYamlShorthands(); // Remove _attributes, _foreign_types, etc.
-      $this->mappings = $mappings->asArray();
-    }
   }
 
   public static function loadMappings()
@@ -414,30 +310,6 @@ class arElasticSearchPlugin extends QubitSearchEngine
   }
 
   /**
-   * Display types that will be indexed
-   */
-  private function displayTypesToIndex($excludeTypes)
-  {
-    $typeCount = 0;
-
-    $this->log('Types that will be indexed:');
-
-    foreach ($this->mappings as $typeName => $typeProperties)
-    {
-      if (!in_array(strtolower($typeName), $excludeTypes))
-      {
-        $this->log(' - '. $typeName);
-        $typeCount++;
-      }
-    }
-
-    if (!$typeCount)
-    {
-      $this->log('   None');
-    }
-  }
-
-  /**
    * Populate index
    */
   public function enable()
@@ -588,5 +460,132 @@ class arElasticSearchPlugin extends QubitSearchEngine
     }
 
     call_user_func(array($className, 'update'), $object);
+  }
+
+  /**
+   * Initialize ES index if it does not exist
+   */
+  protected function initialize()
+  {
+    try
+    {
+      $this->index->open();
+    }
+    catch (Exception $e)
+    {
+      // If the index has not been initialized, create it
+      if ($e instanceof \Elastica\Exception\ResponseException)
+      {
+        // Based on the markdown_enabled setting, add a new filter to strip Markdown tags
+        if (sfConfig::get('app_markdown_enabled', true)
+          && isset($this->config['index']['configuration']['analysis']['char_filter']['strip_md']))
+        {
+          foreach ($this->config['index']['configuration']['analysis']['analyzer'] as $key => $analyzer)
+          {
+            $this->config['index']['configuration']['analysis']['analyzer'][$key]['char_filter'] = array('strip_md');
+          }
+        }
+
+        $this->index->create($this->config['index']['configuration'],
+          array('recreate' => true));
+      }
+
+      // Load and normalize mappings
+      $this->loadAndNormalizeMappings();
+
+      // Iterate over types (actor, informationobject, ...)
+      foreach ($this->mappings as $typeName => $typeProperties)
+      {
+        $typeName = 'Qubit'.sfInflector::camelize($typeName);
+
+        // Define mapping in elasticsearch
+        $mapping = new \Elastica\Type\Mapping();
+        $mapping->setType($this->index->getType($typeName));
+        $mapping->setProperties($typeProperties['properties']);
+
+        // Parse other parameters
+        unset($typeProperties['properties']);
+        foreach ($typeProperties as $key => $value)
+        {
+          $mapping->setParam($key, $value);
+        }
+
+        $this->log(sprintf('Defining mapping %s...', $typeName));
+        $mapping->send();
+      }
+    }
+  }
+
+  /**
+   * Obtain the version of the Elasticsearch server
+   */
+  private function getVersion()
+  {
+    $data = $this->client->request('/')->getData();
+    if (null === $version = @$data['version']['number'])
+    {
+      throw new \Elastica\Exception\ResponseException('Unexpected response');
+    }
+
+    return $version;
+  }
+
+  /**
+   * Check if the server version is recent enough and cache it if so to avoid
+   * hitting Elasticsearch again for each request
+   */
+  private function checkVersion()
+  {
+    // Avoid the check if the cache entry is still available
+    if ($this->cache->has('elasticsearch_version_ok'))
+    {
+      return;
+    }
+
+    // This is slow as it hits the server
+    $version = $this->getVersion();
+    if (!version_compare($version, self::MIN_VERSION, '>='))
+    {
+      $message = sprintf('The version of Elasticsearch that you are running is out of date (%s), and no longer compatible with this version of AtoM. Please upgrade to version %s or newer.', $version, self::MIN_VERSION);
+      throw new \Elastica\Exception\ClientException($message);
+    }
+
+    // We know at this point that the server meets the requirements. We cache it
+    // for an hour.
+    $this->cache->set('elasticsearch_version_ok', 1, 3600);
+  }
+
+  private function loadAndNormalizeMappings()
+  {
+    if (null === $this->mappings)
+    {
+      $mappings = self::loadMappings();
+      $mappings->cleanYamlShorthands(); // Remove _attributes, _foreign_types, etc.
+      $this->mappings = $mappings->asArray();
+    }
+  }
+
+  /**
+   * Display types that will be indexed
+   */
+  private function displayTypesToIndex($excludeTypes)
+  {
+    $typeCount = 0;
+
+    $this->log('Types that will be indexed:');
+
+    foreach ($this->mappings as $typeName => $typeProperties)
+    {
+      if (!in_array(strtolower($typeName), $excludeTypes))
+      {
+        $this->log(' - '. $typeName);
+        $typeCount++;
+      }
+    }
+
+    if (!$typeCount)
+    {
+      $this->log('   None');
+    }
   }
 }

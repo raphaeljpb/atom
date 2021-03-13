@@ -55,13 +55,6 @@ class sfDcPlugin implements ArrayAccess
     return $string;
   }
 
-  public function offsetExists($offset)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array(array($this, '__isset'), $args);
-  }
-
   public function __get($name)
   {
     switch ($name)
@@ -219,6 +212,13 @@ class sfDcPlugin implements ArrayAccess
 
         return $type;
     }
+  }
+
+  public function offsetExists($offset)
+  {
+    $args = func_get_args();
+
+    return call_user_func_array(array($this, '__isset'), $args);
   }
 
   public function offsetGet($offset)

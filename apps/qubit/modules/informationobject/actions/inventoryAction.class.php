@@ -77,6 +77,18 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
     $this->pager->init();
   }
 
+  public static function showInventory($resource)
+  {
+    if (empty(self::getLevels()))
+    {
+      return false;
+    }
+
+    $resultSet = self::getResults($resource);
+
+    return $resultSet->getTotalHits() > 0;
+  }
+
   private static function getLevels()
   {
     if (self::$levels !== null)
@@ -173,17 +185,5 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
     $query->setQuery($queryBool);
 
     return QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($query);
-  }
-
-  public static function showInventory($resource)
-  {
-    if (empty(self::getLevels()))
-    {
-      return false;
-    }
-
-    $resultSet = self::getResults($resource);
-
-    return $resultSet->getTotalHits() > 0;
   }
 }

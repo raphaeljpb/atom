@@ -156,64 +156,6 @@ class QubitAcl
   }
 
   /**
-   * Check if the current user has access to this resource, based on
-   * class specific rules. This is a helper function to QubitAcl::check().
-   *
-   * @param mixed $resource target of the requested action
-   * @param myUser $user actor requesting to perform the action
-   * @param string $action ACL action being requested (e.g. 'read')
-   * @param array|null $options optional parameters
-   */
-  private static function checkAccessByClass($resource, $user, $action, $options)
-  {
-    switch (get_class($resource))
-    {
-      // Allow access to editors and administrators
-      case 'QubitAccession':
-      case 'QubitDeaccession':
-      case 'QubitDonor':
-      case 'QubitFunctionObject':
-      case 'QubitRightsHolder':
-        $hasAccess = $user->isAuthenticated() && ($user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID) ||
-                     $user->hasGroup(QubitAclGroup::EDITOR_ID));
-
-        break;
-
-      // Administrator only
-      case 'QubitUser':
-      case 'QubitMenu':
-      case 'QubitStaticPage':
-      case 'QubitAclGroup':
-      case 'QubitAclUser':
-        $hasAccess = $user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID);
-
-        break;
-
-      // Class specific ACL rules
-      case 'QubitActor':
-        $hasAccess = QubitActorAcl::isAllowed(
-          $user, $resource, $action, $options
-        );
-
-        break;
-
-      case 'QubitInformationObject':
-        $hasAccess = QubitInformationObjectAcl::isAllowed(
-          $user, $resource, $action, $options
-        );
-
-        break;
-
-      // Rely on ACL for authorization
-      // TODO Switch *all* authorization to ACL
-      default:
-        $hasAccess = self::isAllowed($user, $resource, $action, $options);
-    }
-
-    return $hasAccess;
-  }
-
-  /**
    * Check if user ($role) can perform $action on $resource
    *
    * @param myUser $role actor's role to authorize
@@ -256,223 +198,6 @@ class QubitAcl
     self::getInstance()->buildAcl($resource, $options);
 
     return self::getInstance()->acl->isAllowed($role, $resource, $action);
-  }
-
-  /**
-   * Authorize ACL action against the parent of the target resource
-   *
-   * E.g. when creating a new resource, authorize the "create" action against
-   * the parent of the resource
-   *
-   * @param myUser $role actor's role to authorize
-   * @param mixed $resource target of the requested action
-   * @param string $action requested for authorization (e.g. 'read')
-   * @param array|null $options optional parameters
-   *
-   * @return bool true if the access request is authorized
-   */
-  protected static function authorizeAgainstParent($role, $resource, $action)
-  {
-    // If parent authorization is allowed for this $action type, then get the
-    // parent object
-    if (in_array($action, self::$_parentAuthActions))
-    {
-      $parent = $resource->parent;
-    }
-
-    // If we don't have a valid parent for authorization, deny action
-    if (!isset($parent) || !isset($parent->id))
-    {
-      return false;
-    }
-
-    return self::getInstance()->acl->isAllowed($role, $parent, $action);
-  }
-
-  protected function addRole($role)
-  {
-    if (is_object($role))
-    {
-      if (!in_array($role->id, $this->_roles))
-      {
-        foreach ($role->getAncestorsAndSelfForAcl() as $ancestor)
-        {
-          if (!in_array($ancestor->id, $this->_roles))
-          {
-            $this->acl->addRole($ancestor, $ancestor->parentId);
-          }
-        }
-      }
-    }
-    elseif (!in_array($role, $this->_roles))
-    {
-      $this->acl->addRole($role);
-    }
-
-    return $this;
-  }
-
-  protected function buildUserRoleList($user)
-  {
-    // Don't add user twice
-    if (in_array($user->getUserID(), $this->_roles))
-    {
-      return $this;
-    }
-
-    $parents = array(); // Immediate parents of user role
-
-    if ($user->isAuthenticated())
-    {
-      // Add authenticated group
-      $this->acl->addRole(QubitAclGroup::getById(QubitAclGroup::AUTHENTICATED_ID));
-      $this->_roles[] = QubitAclGroup::AUTHENTICATED_ID;
-
-      // Add groups (if user belongs to any)
-      if (0 < count($aclUserGroups = $user->user->getAclUserGroups()))
-      {
-        foreach ($aclUserGroups as $aclUserGroup)
-        {
-          $aclGroup = $aclUserGroup->group;
-          $this->acl->addRole($aclGroup, $aclGroup->parent);
-          $this->_roles[] = $aclGroup->id;
-          $parents[] = $aclGroup->id;
-        }
-      }
-      else
-      {
-        $parents = QubitAclGroup::AUTHENTICATED_ID;
-      }
-
-      // Add user role
-      $this->acl->addRole($user->getUserID(), $parents);
-      $this->_roles[] = $user->getUserID();
-    }
-    else
-    {
-      // Add anonymous role
-      $this->acl->addRole(QubitAclGroup::getById(QubitAclGroup::ANONYMOUS_ID));
-      $this->_roles[] = QubitAclGroup::ANONYMOUS_ID;
-    }
-
-    return $this;
-  }
-
-  protected function buildResourceList($resource, $options = array())
-  {
-    $resourceId = (is_object($resource)) ? $resource->id : $resource;
-
-    // Don't add same resource twice
-    if (in_array($resourceId, $this->_resources))
-    {
-      return $this;
-    }
-
-    // Add resource hierarchy
-    if (is_object($resource))
-    {
-      foreach ($resource->getAncestorsAndSelfForAcl() as $r)
-      {
-        if (!in_array($r->id, $this->_resources))
-        {
-          $this->acl->addResource($r->id, $r->parentId);
-          $this->_resources[] = $r->id;
-        }
-      }
-    }
-    else
-    {
-      $this->acl->addResource($resource);
-      $this->_resources[] = $resourceId;
-    }
-
-    return $this;
-  }
-
-  protected function buildAcl($resource, $options = array())
-  {
-    $resources = $this->_resources;
-
-    if (null !== $resource)
-    {
-      $this->buildResourceList($resource, $options);
-    }
-    elseif (!isset($this->resources['null']))
-    {
-      // Still test ACL against 'null' resource (requires permissions on null)
-      $this->_resources['null'] = null;
-    }
-
-    // Only add permissions for resources that have not already been added
-    $newResources = array_diff($this->_resources, $resources);
-    if (array() === $newResources)
-    {
-      return $this;
-    }
-
-    // Add all permissions related to the current roles and resources
-    $criteria = new Criteria();
-    $c1 = $criteria->getNewCriterion(QubitAclPermission::GROUP_ID, $this->_roles, Criteria::IN);
-    if ($this->_user->isAuthenticated())
-    {
-      $c2 = $criteria->getNewCriterion(QubitAclPermission::USER_ID, $this->_user->getUserID());
-      $c1->addOr($c2);
-    }
-    $c3 = $criteria->getNewCriterion(QubitAclPermission::OBJECT_ID, $newResources, Criteria::IN);
-    $c4 = $criteria->getNewCriterion(QubitAclPermission::OBJECT_ID, null, Criteria::ISNULL);
-    $c3->addOr($c4);
-    $c1->addAnd($c3);
-    $criteria->add($c1);
-
-    if (0 < count($permissions = QubitAclPermission::get($criteria)))
-    {
-      foreach ($permissions as $permission)
-      {
-        $aclMethod = (1 == $permission->grantDeny) ? 'allow' : 'deny';
-
-        if (isset($permission->userId))
-        {
-          // Ignore permission belonging to other users, refs #7817
-          if ($permission->userId != $this->_user->getUserID())
-          {
-            continue;
-          }
-
-          $roleId = $permission->userId;
-        }
-        else
-        {
-          $roleId = $permission->groupId;
-        }
-
-        /* Debugging
-        var_dump('id:', $permission->id, 'access:', $aclMethod, 'role:', $roleId, 'resource:', $permission->objectId, 'action:', $permission->action);
-        echo '<br>';
-        */
-
-        // Test assertion for translate, update and any permission with a conditional
-        if (
-          null != $permission->conditional || in_array($permission->action, array('update', 'translate')))
-        {
-          call_user_func_array(array($this->acl, $aclMethod), array(
-            $roleId,
-            $permission->objectId,
-            $permission->action,
-            new QubitAclConditionalAssert($permission)
-          ));
-        }
-        else
-        {
-          call_user_func_array(array($this->acl, $aclMethod), array(
-            $roleId,
-            $permission->objectId,
-            $permission->action)
-          );
-        }
-      }
-    }
-
-    return $this;
   }
 
   /**
@@ -881,6 +606,281 @@ class QubitAcl
     }
 
     return $criterion;
+  }
+
+  /**
+   * Authorize ACL action against the parent of the target resource
+   *
+   * E.g. when creating a new resource, authorize the "create" action against
+   * the parent of the resource
+   *
+   * @param myUser $role actor's role to authorize
+   * @param mixed $resource target of the requested action
+   * @param string $action requested for authorization (e.g. 'read')
+   * @param array|null $options optional parameters
+   *
+   * @return bool true if the access request is authorized
+   */
+  protected static function authorizeAgainstParent($role, $resource, $action)
+  {
+    // If parent authorization is allowed for this $action type, then get the
+    // parent object
+    if (in_array($action, self::$_parentAuthActions))
+    {
+      $parent = $resource->parent;
+    }
+
+    // If we don't have a valid parent for authorization, deny action
+    if (!isset($parent) || !isset($parent->id))
+    {
+      return false;
+    }
+
+    return self::getInstance()->acl->isAllowed($role, $parent, $action);
+  }
+
+  protected function addRole($role)
+  {
+    if (is_object($role))
+    {
+      if (!in_array($role->id, $this->_roles))
+      {
+        foreach ($role->getAncestorsAndSelfForAcl() as $ancestor)
+        {
+          if (!in_array($ancestor->id, $this->_roles))
+          {
+            $this->acl->addRole($ancestor, $ancestor->parentId);
+          }
+        }
+      }
+    }
+    elseif (!in_array($role, $this->_roles))
+    {
+      $this->acl->addRole($role);
+    }
+
+    return $this;
+  }
+
+  protected function buildUserRoleList($user)
+  {
+    // Don't add user twice
+    if (in_array($user->getUserID(), $this->_roles))
+    {
+      return $this;
+    }
+
+    $parents = array(); // Immediate parents of user role
+
+    if ($user->isAuthenticated())
+    {
+      // Add authenticated group
+      $this->acl->addRole(QubitAclGroup::getById(QubitAclGroup::AUTHENTICATED_ID));
+      $this->_roles[] = QubitAclGroup::AUTHENTICATED_ID;
+
+      // Add groups (if user belongs to any)
+      if (0 < count($aclUserGroups = $user->user->getAclUserGroups()))
+      {
+        foreach ($aclUserGroups as $aclUserGroup)
+        {
+          $aclGroup = $aclUserGroup->group;
+          $this->acl->addRole($aclGroup, $aclGroup->parent);
+          $this->_roles[] = $aclGroup->id;
+          $parents[] = $aclGroup->id;
+        }
+      }
+      else
+      {
+        $parents = QubitAclGroup::AUTHENTICATED_ID;
+      }
+
+      // Add user role
+      $this->acl->addRole($user->getUserID(), $parents);
+      $this->_roles[] = $user->getUserID();
+    }
+    else
+    {
+      // Add anonymous role
+      $this->acl->addRole(QubitAclGroup::getById(QubitAclGroup::ANONYMOUS_ID));
+      $this->_roles[] = QubitAclGroup::ANONYMOUS_ID;
+    }
+
+    return $this;
+  }
+
+  protected function buildResourceList($resource, $options = array())
+  {
+    $resourceId = (is_object($resource)) ? $resource->id : $resource;
+
+    // Don't add same resource twice
+    if (in_array($resourceId, $this->_resources))
+    {
+      return $this;
+    }
+
+    // Add resource hierarchy
+    if (is_object($resource))
+    {
+      foreach ($resource->getAncestorsAndSelfForAcl() as $r)
+      {
+        if (!in_array($r->id, $this->_resources))
+        {
+          $this->acl->addResource($r->id, $r->parentId);
+          $this->_resources[] = $r->id;
+        }
+      }
+    }
+    else
+    {
+      $this->acl->addResource($resource);
+      $this->_resources[] = $resourceId;
+    }
+
+    return $this;
+  }
+
+  protected function buildAcl($resource, $options = array())
+  {
+    $resources = $this->_resources;
+
+    if (null !== $resource)
+    {
+      $this->buildResourceList($resource, $options);
+    }
+    elseif (!isset($this->resources['null']))
+    {
+      // Still test ACL against 'null' resource (requires permissions on null)
+      $this->_resources['null'] = null;
+    }
+
+    // Only add permissions for resources that have not already been added
+    $newResources = array_diff($this->_resources, $resources);
+    if (array() === $newResources)
+    {
+      return $this;
+    }
+
+    // Add all permissions related to the current roles and resources
+    $criteria = new Criteria();
+    $c1 = $criteria->getNewCriterion(QubitAclPermission::GROUP_ID, $this->_roles, Criteria::IN);
+    if ($this->_user->isAuthenticated())
+    {
+      $c2 = $criteria->getNewCriterion(QubitAclPermission::USER_ID, $this->_user->getUserID());
+      $c1->addOr($c2);
+    }
+    $c3 = $criteria->getNewCriterion(QubitAclPermission::OBJECT_ID, $newResources, Criteria::IN);
+    $c4 = $criteria->getNewCriterion(QubitAclPermission::OBJECT_ID, null, Criteria::ISNULL);
+    $c3->addOr($c4);
+    $c1->addAnd($c3);
+    $criteria->add($c1);
+
+    if (0 < count($permissions = QubitAclPermission::get($criteria)))
+    {
+      foreach ($permissions as $permission)
+      {
+        $aclMethod = (1 == $permission->grantDeny) ? 'allow' : 'deny';
+
+        if (isset($permission->userId))
+        {
+          // Ignore permission belonging to other users, refs #7817
+          if ($permission->userId != $this->_user->getUserID())
+          {
+            continue;
+          }
+
+          $roleId = $permission->userId;
+        }
+        else
+        {
+          $roleId = $permission->groupId;
+        }
+
+        /* Debugging
+        var_dump('id:', $permission->id, 'access:', $aclMethod, 'role:', $roleId, 'resource:', $permission->objectId, 'action:', $permission->action);
+        echo '<br>';
+        */
+
+        // Test assertion for translate, update and any permission with a conditional
+        if (
+          null != $permission->conditional || in_array($permission->action, array('update', 'translate')))
+        {
+          call_user_func_array(array($this->acl, $aclMethod), array(
+            $roleId,
+            $permission->objectId,
+            $permission->action,
+            new QubitAclConditionalAssert($permission)
+          ));
+        }
+        else
+        {
+          call_user_func_array(array($this->acl, $aclMethod), array(
+            $roleId,
+            $permission->objectId,
+            $permission->action)
+          );
+        }
+      }
+    }
+
+    return $this;
+  }
+
+  /**
+   * Check if the current user has access to this resource, based on
+   * class specific rules. This is a helper function to QubitAcl::check().
+   *
+   * @param mixed $resource target of the requested action
+   * @param myUser $user actor requesting to perform the action
+   * @param string $action ACL action being requested (e.g. 'read')
+   * @param array|null $options optional parameters
+   */
+  private static function checkAccessByClass($resource, $user, $action, $options)
+  {
+    switch (get_class($resource))
+    {
+      // Allow access to editors and administrators
+      case 'QubitAccession':
+      case 'QubitDeaccession':
+      case 'QubitDonor':
+      case 'QubitFunctionObject':
+      case 'QubitRightsHolder':
+        $hasAccess = $user->isAuthenticated() && ($user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID) ||
+                     $user->hasGroup(QubitAclGroup::EDITOR_ID));
+
+        break;
+
+      // Administrator only
+      case 'QubitUser':
+      case 'QubitMenu':
+      case 'QubitStaticPage':
+      case 'QubitAclGroup':
+      case 'QubitAclUser':
+        $hasAccess = $user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID);
+
+        break;
+
+      // Class specific ACL rules
+      case 'QubitActor':
+        $hasAccess = QubitActorAcl::isAllowed(
+          $user, $resource, $action, $options
+        );
+
+        break;
+
+      case 'QubitInformationObject':
+        $hasAccess = QubitInformationObjectAcl::isAllowed(
+          $user, $resource, $action, $options
+        );
+
+        break;
+
+      // Rely on ACL for authorization
+      // TODO Switch *all* authorization to ACL
+      default:
+        $hasAccess = self::isAllowed($user, $resource, $action, $options);
+    }
+
+    return $hasAccess;
   }
 
   /**

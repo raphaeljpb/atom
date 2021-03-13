@@ -26,6 +26,26 @@
  */
 class csvDigitalObjectPathsCheckTask extends arBaseTask
 {
+  public function execute($arguments = array(), $options = array())
+  {
+    parent::execute($arguments, $options);
+
+    if (!is_dir($arguments['path-to-images']))
+    {
+      throw new sfException("Images directory doesn't exist.");
+    }
+
+    if (!file_exists($arguments['path-to-csv-file']))
+    {
+      throw new sfException("CSV file doesn't exist.");
+    }
+
+    $csvFilePathColumnName = ($options['csv-column-name']) ? $options['csv-column-name'] : 'digitalObjectPath';
+
+    $this->logSection('digital-object-path-check', 'Checking '. $csvFilePathColumnName .' column.');
+
+    $this->printImageUsageInfo($arguments['path-to-images'], $arguments['path-to-csv-file'], $csvFilePathColumnName);
+  }
   protected function configure()
   {
     $this->addArguments(array(
@@ -51,27 +71,6 @@ column (digitalObjectPath by default) and display a report.
 Determines which files aren't referenced in the CSV data, which are referenced
 in CSV data but missing, and which files are references more than once.
 EOF;
-  }
-
-  public function execute($arguments = array(), $options = array())
-  {
-    parent::execute($arguments, $options);
-
-    if (!is_dir($arguments['path-to-images']))
-    {
-      throw new sfException("Images directory doesn't exist.");
-    }
-
-    if (!file_exists($arguments['path-to-csv-file']))
-    {
-      throw new sfException("CSV file doesn't exist.");
-    }
-
-    $csvFilePathColumnName = ($options['csv-column-name']) ? $options['csv-column-name'] : 'digitalObjectPath';
-
-    $this->logSection('digital-object-path-check', 'Checking '. $csvFilePathColumnName .' column.');
-
-    $this->printImageUsageInfo($arguments['path-to-images'], $arguments['path-to-csv-file'], $csvFilePathColumnName);
   }
 
   private function printImageUsageInfo($pathToImages, $csvFilePath, $csvFilePathColumnName)

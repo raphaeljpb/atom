@@ -54,40 +54,6 @@ class RepositoryBrowseAction extends DefaultBrowseAction
               'field' => 'thematicAreas',
               'size' => 10));
 
-  protected function populateAgg($name, $buckets)
-  {
-    switch ($name)
-    {
-      case 'types':
-      case 'geographicSubregions':
-      case 'thematicAreas':
-        $ids = array_column($buckets, 'key');
-        $criteria = new Criteria();
-        $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
-
-        foreach (QubitTerm::get($criteria) as $item)
-        {
-          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(array('cultureFallback' => true));
-        }
-
-        break;
-
-      case 'regions':
-      case 'locality':
-        foreach ($buckets as $key => $bucket)
-        {
-          $buckets[$key]['display'] = $bucket['key'];
-        }
-
-        break;
-
-      default:
-        return parent::populateAgg($name, $buckets);
-    }
-
-    return $buckets;
-  }
-
   public function execute($request)
   {
     // Must call this first as parent::execute() calls addFacets().
@@ -190,6 +156,40 @@ class RepositoryBrowseAction extends DefaultBrowseAction
     }
 
     $this->getAdvancedFilterTerms();
+  }
+
+  protected function populateAgg($name, $buckets)
+  {
+    switch ($name)
+    {
+      case 'types':
+      case 'geographicSubregions':
+      case 'thematicAreas':
+        $ids = array_column($buckets, 'key');
+        $criteria = new Criteria();
+        $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
+
+        foreach (QubitTerm::get($criteria) as $item)
+        {
+          $buckets[array_search($item->id, $ids)]['display'] = $item->getName(array('cultureFallback' => true));
+        }
+
+        break;
+
+      case 'regions':
+      case 'locality':
+        foreach ($buckets as $key => $bucket)
+        {
+          $buckets[$key]['display'] = $bucket['key'];
+        }
+
+        break;
+
+      default:
+        return parent::populateAgg($name, $buckets);
+    }
+
+    return $buckets;
   }
 
   private function getAdvancedFilterTerms()

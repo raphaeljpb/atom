@@ -35,14 +35,6 @@ Export authority record data as CSV file(s).
 EOF;
 
   /**
-   * @see sfBaseTask
-   */
-  protected function configure()
-  {
-    $this->addCoreArgumentsAndOptions();
-  }
-
-  /**
    * @see sfTask
    */
   public function execute($arguments = array(), $options = array())
@@ -72,6 +64,14 @@ EOF;
 
     $this->log('');
     $this->logSection('csv', "Export complete ($itemsExported authority records exported).");
+  }
+
+  /**
+   * @see sfBaseTask
+   */
+  protected function configure()
+  {
+    $this->addCoreArgumentsAndOptions();
   }
 
   private function getActors()

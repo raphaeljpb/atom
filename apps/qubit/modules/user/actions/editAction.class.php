@@ -31,6 +31,86 @@ class UserEditAction extends DefaultEditAction
       'restApiKey',
       'oaiApiKey');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        if ($this->resource !== sfContext::getInstance()->getUser()->user)
+        {
+          $this->resource->active = 0;
+        }
+
+        $this->processForm();
+
+        $this->resource->save();
+
+        // Allowed languages for translation must be saved after the user is created
+        $languages = $this->form->getValue('translate');
+
+        $criteria = new Criteria();
+        $criteria->add(QubitAclPermission::USER_ID, $this->resource->id);
+        $criteria->addAnd(QubitAclPermission::USER_ID, null, Criteria::ISNOTNULL);
+        $criteria->add(QubitAclPermission::ACTION, 'translate');
+
+        if (null === $permission = QubitAclPermission::getOne($criteria))
+        {
+          $permission = new QubitAclPermission();
+          $permission->userId = $this->resource->id;
+          $permission->action = 'translate';
+          $permission->grantDeny = 1;
+          $permission->conditional = 'in_array(%p[language], %k[languages])';
+        }
+        elseif (!is_array($languages))
+        {
+          // If $languages is not an array, then remove the translate permission
+          $permission->delete();
+        }
+
+        if (is_array($languages))
+        {
+          $permission->setConstants(array('languages' => $languages));
+          $permission->save();
+        }
+
+        if ($this->context->getViewCacheManager() !== null)
+        {
+          // We just need to remove the cache for this user but sf_cache_key
+          // contents also the culture code, it worth the try? I don't think so
+          $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
+        }
+
+        $this->redirect(array($this->resource, 'module' => 'user'));
+      }
+    }
+  }
+
+  public function exists($validator, $values)
+  {
+    $criteria = new Criteria();
+
+    if (isset($this->resource->id))
+    {
+      $criteria->add(QubitUser::ID, $this->resource->id, Criteria::NOT_EQUAL);
+    }
+
+    $criterion1 = $criteria->getNewCriterion(QubitUser::USERNAME, $values['username']);
+    $criterion2 = $criteria->getNewCriterion(QubitUser::EMAIL, $values['email']);
+    $criteria->add($criterion1->addOr($criterion2));
+
+    if (0 < count(QubitUser::get($criteria)))
+    {
+      throw new sfValidatorError($validator, $this->context->i18n->__('The username or e-mail address you entered is already in use'));
+    }
+
+    return $values;
+  }
+
   protected function earlyExecute()
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
@@ -324,85 +404,5 @@ class UserEditAction extends DefaultEditAction
       default:
         $this->resource[$name] = $this->form->getValue($name);
     }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        if ($this->resource !== sfContext::getInstance()->getUser()->user)
-        {
-          $this->resource->active = 0;
-        }
-
-        $this->processForm();
-
-        $this->resource->save();
-
-        // Allowed languages for translation must be saved after the user is created
-        $languages = $this->form->getValue('translate');
-
-        $criteria = new Criteria();
-        $criteria->add(QubitAclPermission::USER_ID, $this->resource->id);
-        $criteria->addAnd(QubitAclPermission::USER_ID, null, Criteria::ISNOTNULL);
-        $criteria->add(QubitAclPermission::ACTION, 'translate');
-
-        if (null === $permission = QubitAclPermission::getOne($criteria))
-        {
-          $permission = new QubitAclPermission();
-          $permission->userId = $this->resource->id;
-          $permission->action = 'translate';
-          $permission->grantDeny = 1;
-          $permission->conditional = 'in_array(%p[language], %k[languages])';
-        }
-        elseif (!is_array($languages))
-        {
-          // If $languages is not an array, then remove the translate permission
-          $permission->delete();
-        }
-
-        if (is_array($languages))
-        {
-          $permission->setConstants(array('languages' => $languages));
-          $permission->save();
-        }
-
-        if ($this->context->getViewCacheManager() !== null)
-        {
-          // We just need to remove the cache for this user but sf_cache_key
-          // contents also the culture code, it worth the try? I don't think so
-          $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
-        }
-
-        $this->redirect(array($this->resource, 'module' => 'user'));
-      }
-    }
-  }
-
-  public function exists($validator, $values)
-  {
-    $criteria = new Criteria();
-
-    if (isset($this->resource->id))
-    {
-      $criteria->add(QubitUser::ID, $this->resource->id, Criteria::NOT_EQUAL);
-    }
-
-    $criterion1 = $criteria->getNewCriterion(QubitUser::USERNAME, $values['username']);
-    $criterion2 = $criteria->getNewCriterion(QubitUser::EMAIL, $values['email']);
-    $criteria->add($criterion1->addOr($criterion2));
-
-    if (0 < count(QubitUser::get($criteria)))
-    {
-      throw new sfValidatorError($validator, $this->context->i18n->__('The username or e-mail address you entered is already in use'));
-    }
-
-    return $values;
   }
 }

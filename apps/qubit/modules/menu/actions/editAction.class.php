@@ -33,6 +33,66 @@ class MenuEditAction extends sfAction
       'path',
       'description');
 
+  public function processForm()
+  {
+    foreach ($this->form as $field)
+    {
+      if (isset($this->request[$field->getName()]))
+      {
+        $this->processField($field);
+      }
+    }
+
+    return $this;
+  }
+
+  public function execute($request)
+  {
+    $this->form = new sfForm();
+    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+
+    $this->menu = new QubitMenu();
+
+    if (isset($request->id))
+    {
+      $this->menu = QubitMenu::getById($request->id);
+
+      if (!isset($this->menu))
+      {
+        $this->forward404();
+      }
+    }
+
+    foreach ($this::$NAMES as $name)
+    {
+      $this->addField($name);
+    }
+
+    // Handle POST data (form submit)
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        $this->menu->save();
+
+        // Remove cache
+        if ($this->context->getViewCacheManager() !== null)
+        {
+          $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
+          $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
+        }
+
+        $this->redirect(array('module' => 'menu', 'action' => 'list'));
+      }
+    }
+
+    QubitDescription::addAssets($this->response);
+  }
+
   protected function addField($name)
   {
     switch ($name)
@@ -118,65 +178,5 @@ class MenuEditAction extends sfAction
 
         $this->menu[$field->getName()] = $this->form->getValue($field->getName());
     }
-  }
-
-  public function processForm()
-  {
-    foreach ($this->form as $field)
-    {
-      if (isset($this->request[$field->getName()]))
-      {
-        $this->processField($field);
-      }
-    }
-
-    return $this;
-  }
-
-  public function execute($request)
-  {
-    $this->form = new sfForm();
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-
-    $this->menu = new QubitMenu();
-
-    if (isset($request->id))
-    {
-      $this->menu = QubitMenu::getById($request->id);
-
-      if (!isset($this->menu))
-      {
-        $this->forward404();
-      }
-    }
-
-    foreach ($this::$NAMES as $name)
-    {
-      $this->addField($name);
-    }
-
-    // Handle POST data (form submit)
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        $this->menu->save();
-
-        // Remove cache
-        if ($this->context->getViewCacheManager() !== null)
-        {
-          $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
-          $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
-        }
-
-        $this->redirect(array('module' => 'menu', 'action' => 'list'));
-      }
-    }
-
-    QubitDescription::addAssets($this->response);
   }
 }

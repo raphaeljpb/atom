@@ -26,29 +26,6 @@
  */
 class deleteUserTask extends arBaseTask
 {
-  protected function configure()
-  {
-    $this->addArguments(array(
-      new sfCommandArgument('username', sfCommandArgument::REQUIRED, 'The username to delete.')
-    ));
-
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('force', 'f', sfCommandOption::PARAMETER_NONE, 'Delete without confirmation', null),
-      new sfCommandOption('update-notes', 'n', sfCommandOption::PARAMETER_NONE, 'Dissassociate any notes the user has created', null)
-    ));
-
-    $this->namespace = 'tools';
-    $this->name = 'delete-user';
-    $this->briefDescription = 'Delete a user.';
-
-    $this->detailedDescription = <<<EOF
-Delete a user.
-EOF;
-  }
-
   public function execute($arguments = array(), $options = array())
   {
     parent::execute($arguments, $options);
@@ -90,6 +67,28 @@ EOF;
 
     $user->delete();
     $this->logSection('delete-user', 'Deleted user "'. $arguments['username'] .'".');
+  }
+  protected function configure()
+  {
+    $this->addArguments(array(
+      new sfCommandArgument('username', sfCommandArgument::REQUIRED, 'The username to delete.')
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('force', 'f', sfCommandOption::PARAMETER_NONE, 'Delete without confirmation', null),
+      new sfCommandOption('update-notes', 'n', sfCommandOption::PARAMETER_NONE, 'Dissassociate any notes the user has created', null)
+    ));
+
+    $this->namespace = 'tools';
+    $this->name = 'delete-user';
+    $this->briefDescription = 'Delete a user.';
+
+    $this->detailedDescription = <<<EOF
+Delete a user.
+EOF;
   }
 
   private function getConfirmation($username)

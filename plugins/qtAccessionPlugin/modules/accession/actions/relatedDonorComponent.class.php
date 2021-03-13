@@ -44,6 +44,40 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
       'longitude',
       'note');
 
+  public function processForm()
+  {
+    parent::processForm();
+
+    if (isset($this->contactInformation->city) ||
+        isset($this->contactInformation->contactPerson) ||
+        isset($this->contactInformation->email) ||
+        isset($this->contactInformation->postalCode) ||
+        isset($this->contactInformation->region) ||
+        isset($this->contactInformation->streetAddress) ||
+        isset($this->contactInformation->telephone) ||
+        isset($this->contactInformation->countryCode) ||
+        isset($this->contactInformation->contactType) ||
+        isset($this->contactInformation->latitude) ||
+        isset($this->contactInformation->longitude) ||
+        isset($this->contactInformation->note) ||
+        isset($this->contactInformation->fax) ||
+        isset($this->contactInformation->website))
+    {
+      $this->contactInformation->actor = $this->relation->object;
+      $this->contactInformation->save();
+      $this->contactInformation->makePrimaryContact();
+    }
+  }
+
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    $this->form->getWidgetSchema()->setNameFormat('relatedDonor[%s]');
+
+    $this->relatedDonorRecord = QubitRelation::getRelationsBySubjectId($this->resource->id, array('typeId' => QubitTerm::DONOR_ID));
+  }
+
   protected function addField($name)
   {
     switch ($name)
@@ -143,39 +177,5 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
       default:
         parent::processField($field);
     }
-  }
-
-  public function processForm()
-  {
-    parent::processForm();
-
-    if (isset($this->contactInformation->city) ||
-        isset($this->contactInformation->contactPerson) ||
-        isset($this->contactInformation->email) ||
-        isset($this->contactInformation->postalCode) ||
-        isset($this->contactInformation->region) ||
-        isset($this->contactInformation->streetAddress) ||
-        isset($this->contactInformation->telephone) ||
-        isset($this->contactInformation->countryCode) ||
-        isset($this->contactInformation->contactType) ||
-        isset($this->contactInformation->latitude) ||
-        isset($this->contactInformation->longitude) ||
-        isset($this->contactInformation->note) ||
-        isset($this->contactInformation->fax) ||
-        isset($this->contactInformation->website))
-    {
-      $this->contactInformation->actor = $this->relation->object;
-      $this->contactInformation->save();
-      $this->contactInformation->makePrimaryContact();
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    $this->form->getWidgetSchema()->setNameFormat('relatedDonor[%s]');
-
-    $this->relatedDonorRecord = QubitRelation::getRelationsBySubjectId($this->resource->id, array('typeId' => QubitTerm::DONOR_ID));
   }
 }

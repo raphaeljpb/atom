@@ -25,32 +25,6 @@
  */
 class atomPluginsTask extends sfBaseTask
 {
-  protected function configure()
-  {
-    $this->addArguments(array(
-      new sfCommandArgument('action', sfCommandArgument::REQUIRED, 'The action (add, delete or list).'),
-      new sfCommandArgument('plugin', sfCommandArgument::OPTIONAL, 'The plugin name.')
-    ));
-
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('action', null, sfCommandOption::PARAMETER_REQUIRED, 'Desired action')
-    ));
-
-    $this->namespace = 'tools';
-    $this->name = 'atom-plugins';
-    $this->briefDescription = 'Manage AtoM plugins.';
-
-    $this->detailedDescription = <<<EOF
-Manage AtoM plugins stored in the database. Examples:
- - symfony atom-plugins add arFoobarPlugin
- - symfony atom-plugins delete arFoobarPlugin
- - symfony atom-plugins list
-EOF;
-  }
-
   public function execute($arguments = array(), $options = array())
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
@@ -111,5 +85,30 @@ EOF;
         throw new sfException('Missing action');
 
     }
+  }
+  protected function configure()
+  {
+    $this->addArguments(array(
+      new sfCommandArgument('action', sfCommandArgument::REQUIRED, 'The action (add, delete or list).'),
+      new sfCommandArgument('plugin', sfCommandArgument::OPTIONAL, 'The plugin name.')
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('action', null, sfCommandOption::PARAMETER_REQUIRED, 'Desired action')
+    ));
+
+    $this->namespace = 'tools';
+    $this->name = 'atom-plugins';
+    $this->briefDescription = 'Manage AtoM plugins.';
+
+    $this->detailedDescription = <<<EOF
+Manage AtoM plugins stored in the database. Examples:
+ - symfony atom-plugins add arFoobarPlugin
+ - symfony atom-plugins delete arFoobarPlugin
+ - symfony atom-plugins list
+EOF;
   }
 }

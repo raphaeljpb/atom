@@ -48,21 +48,6 @@ abstract class arElasticSearchModelBase
     $this->timer = $timer;
   }
 
-  protected function log($message)
-  {
-    $this->search->log($message);
-  }
-
-  protected function logEntry($title, $count)
-  {
-    $this->log(sprintf('    [%s] %s inserted (%ss) (%s/%s)',
-      str_replace('arElasticSearch', '', get_class($this)),
-      $title,
-      $this->timer->elapsed(),
-      $count,
-      $this->getCount()));
-  }
-
   public static function serializeI18ns($id, array $classes, $options = array())
   {
     if (empty($classes))
@@ -205,6 +190,21 @@ abstract class arElasticSearchModelBase
       array(QubitTerm::ROOT_ID),
       array('fetchMode' => PDO::FETCH_COLUMN)
     );
+  }
+
+  protected function log($message)
+  {
+    $this->search->log($message);
+  }
+
+  protected function logEntry($title, $count)
+  {
+    $this->log(sprintf('    [%s] %s inserted (%ss) (%s/%s)',
+      str_replace('arElasticSearch', '', get_class($this)),
+      $title,
+      $this->timer->elapsed(),
+      $count,
+      $this->getCount()));
   }
 
   /**

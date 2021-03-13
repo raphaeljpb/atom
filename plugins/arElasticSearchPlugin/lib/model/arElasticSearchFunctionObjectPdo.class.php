@@ -70,6 +70,37 @@ class arElasticSearchFunctionObjectPdo
     $this->data[$name] = $value;
   }
 
+  public function serialize()
+  {
+    $serialized = array();
+
+    $serialized['id'] = $this->id;
+    $serialized['slug'] = $this->slug;
+    $serialized['descriptionStatusId'] = $this->description_status_id;
+    $serialized['descriptionDetailId'] = $this->description_detail_id;
+    $serialized['descriptionIdentifier'] = $this->description_identifier;
+
+    $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
+    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::OTHER_FORM_OF_NAME_ID)) as $item)
+    {
+      $serialized['otherNames'][] = arElasticSearchOtherName::serialize($item);
+    }
+
+    $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
+    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::PARALLEL_FORM_OF_NAME_ID)) as $item)
+    {
+      $serialized['parallelNames'][] = arElasticSearchOtherName::serialize($item);
+    }
+
+    $serialized['createdAt'] = arElasticSearchPluginUtil::convertDate($this->created_at);
+    $serialized['updatedAt'] = arElasticSearchPluginUtil::convertDate($this->updated_at);
+
+    $serialized['sourceCulture'] = $this->source_culture;
+    $serialized['i18n'] = arElasticSearchModelBase::serializeI18ns($this->id, array('QubitFunctionObject'));
+
+    return $serialized;
+  }
+
   protected function loadData($id)
   {
     if (!isset(self::$statements['function']))
@@ -103,36 +134,5 @@ class arElasticSearchFunctionObjectPdo
     self::$statements['function']->closeCursor();
 
     return $this;
-  }
-
-  public function serialize()
-  {
-    $serialized = array();
-
-    $serialized['id'] = $this->id;
-    $serialized['slug'] = $this->slug;
-    $serialized['descriptionStatusId'] = $this->description_status_id;
-    $serialized['descriptionDetailId'] = $this->description_detail_id;
-    $serialized['descriptionIdentifier'] = $this->description_identifier;
-
-    $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::OTHER_FORM_OF_NAME_ID)) as $item)
-    {
-      $serialized['otherNames'][] = arElasticSearchOtherName::serialize($item);
-    }
-
-    $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, array($this->id, QubitTerm::PARALLEL_FORM_OF_NAME_ID)) as $item)
-    {
-      $serialized['parallelNames'][] = arElasticSearchOtherName::serialize($item);
-    }
-
-    $serialized['createdAt'] = arElasticSearchPluginUtil::convertDate($this->created_at);
-    $serialized['updatedAt'] = arElasticSearchPluginUtil::convertDate($this->updated_at);
-
-    $serialized['sourceCulture'] = $this->source_culture;
-    $serialized['i18n'] = arElasticSearchModelBase::serializeI18ns($this->id, array('QubitFunctionObject'));
-
-    return $serialized;
   }
 }

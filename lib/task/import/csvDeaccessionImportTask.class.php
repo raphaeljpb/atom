@@ -36,22 +36,6 @@ EOF;
   /**
    * @see sfTask
    */
-  protected function configure()
-  {
-    parent::configure();
-    $this->addOptions(array(
-      new sfCommandOption(
-        'ignore-duplicates',
-        null,
-        sfCommandOption::PARAMETER_NONE,
-        'Load all records from csv, including duplicates.'
-      ),
-    ));
-  }
-
-  /**
-   * @see sfTask
-   */
   public function execute($arguments = array(), $options = array())
   {
     $this->validateOptions($options);
@@ -197,5 +181,21 @@ EOF;
     });
 
     $import->csv($fh, $skipRows);
+  }
+
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    parent::configure();
+    $this->addOptions(array(
+      new sfCommandOption(
+        'ignore-duplicates',
+        null,
+        sfCommandOption::PARAMETER_NONE,
+        'Load all records from csv, including duplicates.'
+      ),
+    ));
   }
 }

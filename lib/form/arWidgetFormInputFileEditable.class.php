@@ -19,20 +19,6 @@
 
 class arWidgetFormInputFileEditable extends sfWidgetFormInputFile
 {
-  protected function configure($options = array(), $attributes = array())
-  {
-    parent::configure($options, $attributes);
-
-    $this->setOption('type', 'file');
-    $this->setOption('needs_multipart', true);
-
-    $this->addRequiredOption('file_src');
-    $this->addOption('is_image', false);
-    $this->addOption('edit_mode', true);
-    $this->addOption('with_delete', true);
-    $this->addOption('delete_label', 'Remove the current file');
-  }
-
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
     $input = parent::render($name, $value, $attributes, $errors);
@@ -56,6 +42,19 @@ class arWidgetFormInputFileEditable extends sfWidgetFormInputFile
     {
       return $this->getFileAsTag($attributes).$input;
     }
+  }
+  protected function configure($options = array(), $attributes = array())
+  {
+    parent::configure($options, $attributes);
+
+    $this->setOption('type', 'file');
+    $this->setOption('needs_multipart', true);
+
+    $this->addRequiredOption('file_src');
+    $this->addOption('is_image', false);
+    $this->addOption('edit_mode', true);
+    $this->addOption('with_delete', true);
+    $this->addOption('delete_label', 'Remove the current file');
   }
 
   protected function getFileAsTag($attributes)

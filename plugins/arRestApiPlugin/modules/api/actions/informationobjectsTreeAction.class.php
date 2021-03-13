@@ -19,28 +19,6 @@
 
 class ApiInformationObjectsTreeAction extends QubitApiAction
 {
-  protected function get($request)
-  {
-    // Get parent slug so we can determine its ID
-    $criteria = new Criteria();
-    $criteria->add(QubitSlug::SLUG, $request->parent_slug);
-
-    $slug = QubitSlug::getOne($criteria);
-
-    $io = QubitInformationObject::getById($slug->objectId);
-
-    $result = $this->informationObjectToArray($io);
-
-    $children = $this->getChildren($io->id);
-
-    if (count($children))
-    {
-      $result['children'] = $children;
-    }
-
-    return $result;
-  }
-
   public function getChildren($parentId)
   {
     $results = array();
@@ -65,6 +43,27 @@ class ApiInformationObjectsTreeAction extends QubitApiAction
     }
 
     return $results;
+  }
+  protected function get($request)
+  {
+    // Get parent slug so we can determine its ID
+    $criteria = new Criteria();
+    $criteria->add(QubitSlug::SLUG, $request->parent_slug);
+
+    $slug = QubitSlug::getOne($criteria);
+
+    $io = QubitInformationObject::getById($slug->objectId);
+
+    $result = $this->informationObjectToArray($io);
+
+    $children = $this->getChildren($io->id);
+
+    if (count($children))
+    {
+      $result['children'] = $children;
+    }
+
+    return $result;
   }
 
   private function informationObjectToArray($io)

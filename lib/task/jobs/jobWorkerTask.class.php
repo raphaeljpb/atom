@@ -25,6 +25,18 @@
  */
 class jobWorkerTask extends arBaseTask
 {
+  public function gearmanWorkerLogger(sfEvent $event)
+  {
+    $this->log($event['message']);
+  }
+
+  /**
+   * @see sfTask
+   */
+  public function log($message)
+  {
+    parent::log(date('Y-m-d H:i:s > ').$message);
+  }
   protected function configure()
   {
     $this->addOptions(array(
@@ -121,18 +133,5 @@ EOF;
           QubitPdo::prepareAndExecute('SELECT 1');
         }
       });
-  }
-
-  public function gearmanWorkerLogger(sfEvent $event)
-  {
-    $this->log($event['message']);
-  }
-
-  /**
-   * @see sfTask
-   */
-  public function log($message)
-  {
-    parent::log(date('Y-m-d H:i:s > ').$message);
   }
 }

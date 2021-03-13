@@ -31,22 +31,6 @@ class ClipboardExportAction extends DefaultEditAction
 
   private $choices = array();
 
-  protected function earlyExecute()
-  {
-    sfProjectConfiguration::getActive()->loadHelpers(array('I18N'));
-
-    // Initialize help array: messages added depending on visibility of fields
-    $this->helpMessages = array();
-
-    $this->typeChoices = array(
-      'informationObject' => sfConfig::get('app_ui_label_informationobject'),
-      'actor' => sfConfig::get('app_ui_label_actor'),
-      'repository' => sfConfig::get('app_ui_label_repository')
-    );
-
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-  }
-
   public function execute($request)
   {
     // Get object type and validate
@@ -214,6 +198,22 @@ class ClipboardExportAction extends DefaultEditAction
 
       return $this->renderText(json_encode(array('error' => $e->getMessage())));
     }
+  }
+
+  protected function earlyExecute()
+  {
+    sfProjectConfiguration::getActive()->loadHelpers(array('I18N'));
+
+    // Initialize help array: messages added depending on visibility of fields
+    $this->helpMessages = array();
+
+    $this->typeChoices = array(
+      'informationObject' => sfConfig::get('app_ui_label_informationobject'),
+      'actor' => sfConfig::get('app_ui_label_actor'),
+      'repository' => sfConfig::get('app_ui_label_repository')
+    );
+
+    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
   }
 
   protected function runExportJob($options)

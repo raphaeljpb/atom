@@ -173,32 +173,6 @@ class sfInstall
     return $propelIni;
   }
 
-  // TODO Use sfWebBrowserPlugin
-  protected static function get($url)
-  {
-    $request = sfContext::getInstance()->request;
-    $browser = new sfWebBrowser();
-
-    try
-    {
-      if (true !== $browser->get($request->getUriPrefix().$url)->responseIsError())
-      {
-        // Successful response (e.g. 200, 201, etc.)
-        return $browser->getResponseText();
-      }
-      else
-      {
-        // Error response (e.g. 404, 500, etc.)
-        return false;
-      }
-    }
-    catch (Exception $e)
-    {
-      // Adapter error [curl,fopen,fsockopen] (e.g. Host not found)
-      return false;
-    }
-  }
-
   public static function setNoScriptName($noScriptName, $settingsYmlContents)
   {
     // TODO Make this pattern more robust, or parse the YAML?
@@ -569,5 +543,31 @@ class sfInstall
     // Keep PAD SPACE collation `utf8mb4_bin` (instead of new `utf8mb4_0900_bin`).
     $sql = "ALTER TABLE `slug` MODIFY `slug` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL";
     QubitPdo::modify($sql);
+  }
+
+  // TODO Use sfWebBrowserPlugin
+  protected static function get($url)
+  {
+    $request = sfContext::getInstance()->request;
+    $browser = new sfWebBrowser();
+
+    try
+    {
+      if (true !== $browser->get($request->getUriPrefix().$url)->responseIsError())
+      {
+        // Successful response (e.g. 200, 201, etc.)
+        return $browser->getResponseText();
+      }
+      else
+      {
+        // Error response (e.g. 404, 500, etc.)
+        return false;
+      }
+    }
+    catch (Exception $e)
+    {
+      // Adapter error [curl,fopen,fsockopen] (e.g. Host not found)
+      return false;
+    }
   }
 }

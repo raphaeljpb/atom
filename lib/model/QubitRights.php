@@ -43,13 +43,6 @@ class QubitRights extends BaseRights
     return $string;
   }
 
-  protected function insert($connection = null)
-  {
-    $this->slug = QubitSlug::slugify($this->slug);
-
-    return parent::insert($connection);
-  }
-
   public function delete($connection = null)
   {
     // Make sure that the associated QubitRelation object is removed before
@@ -161,5 +154,12 @@ class QubitRights extends BaseRights
     $newRights->save();
 
     return $newRights;
+  }
+
+  protected function insert($connection = null)
+  {
+    $this->slug = QubitSlug::slugify($this->slug);
+
+    return parent::insert($connection);
   }
 }

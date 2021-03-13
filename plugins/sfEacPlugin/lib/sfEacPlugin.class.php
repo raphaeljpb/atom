@@ -219,13 +219,6 @@ class sfEacPlugin implements ArrayAccess
     $this->resource = $resource;
   }
 
-  public function offsetExists($offset)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array(array($this, '__isset'), $args);
-  }
-
   public function __get($name)
   {
     switch ($name)
@@ -350,13 +343,6 @@ return;
     }
   }
 
-  public function offsetGet($offset)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array(array($this, '__get'), $args);
-  }
-
   public function __set($name, $value)
   {
     switch ($name)
@@ -475,6 +461,20 @@ return;
 
         return $this;
     }
+  }
+
+  public function offsetExists($offset)
+  {
+    $args = func_get_args();
+
+    return call_user_func_array(array($this, '__isset'), $args);
+  }
+
+  public function offsetGet($offset)
+  {
+    $args = func_get_args();
+
+    return call_user_func_array(array($this, '__get'), $args);
   }
 
   public function offsetSet($offset, $value)
@@ -958,38 +958,6 @@ return;
     }
   }
 
-  protected static function fromDiscursiveSet($value)
-  {
-    $value->namespaces(array('eac' => 'urn:isbn:1-931666-33-4'))
-      ->find('eac:list/eac:item')
-      ->replaceWith(function ($node)
-        {
-          return '* '.$node->textContent;
-        });
-
-    return $value->text();
-  }
-
-  // See render_value()
-  protected static function toDiscursiveSet($value)
-  {
-    // Convert XML entities
-    $value = esc_specialchars($value);
-
-    // Simple lists
-    $value = preg_replace('/(?:^\*.*\r?\n)*(?:^\*.*)/m', "<list>\n$0\n</list>", $value);
-    $value = preg_replace('/(?:^-.*\r?\n)*(?:^-.*)/m', "<list>\n$0\n</list>", $value);
-    $value = preg_replace('/^(?:\*|-)\s*(.*)/m', '<item>$1</item>', $value);
-    $value = preg_replace('/(?:\r?\n){2,}/', "</p>\n<p>", $value);
-
-    if ($value)
-    {
-      $value = '<p>'.$value.'</p>';
-    }
-
-    return $value;
-  }
-
   public function fromResourceRelationType($resourceRelationType, $xlinkRole)
   {
     switch ($resourceRelationType)
@@ -1147,5 +1115,37 @@ str;
     );
 
     return (bool)array_filter($descriptionElements);
+  }
+
+  protected static function fromDiscursiveSet($value)
+  {
+    $value->namespaces(array('eac' => 'urn:isbn:1-931666-33-4'))
+      ->find('eac:list/eac:item')
+      ->replaceWith(function ($node)
+        {
+          return '* '.$node->textContent;
+        });
+
+    return $value->text();
+  }
+
+  // See render_value()
+  protected static function toDiscursiveSet($value)
+  {
+    // Convert XML entities
+    $value = esc_specialchars($value);
+
+    // Simple lists
+    $value = preg_replace('/(?:^\*.*\r?\n)*(?:^\*.*)/m', "<list>\n$0\n</list>", $value);
+    $value = preg_replace('/(?:^-.*\r?\n)*(?:^-.*)/m', "<list>\n$0\n</list>", $value);
+    $value = preg_replace('/^(?:\*|-)\s*(.*)/m', '<item>$1</item>', $value);
+    $value = preg_replace('/(?:\r?\n){2,}/', "</p>\n<p>", $value);
+
+    if ($value)
+    {
+      $value = '<p>'.$value.'</p>';
+    }
+
+    return $value;
   }
 }

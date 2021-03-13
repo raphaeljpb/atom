@@ -40,6 +40,65 @@ class importDipObjectsTask extends arBaseTask
   /**
    * @see sfTask
    */
+  public function execute($arguments = array(), $options = array())
+  {
+    $this->checkArgumentsAndOptions($arguments, $options);
+
+    sfContext::createInstance($this->configuration);
+
+    QubitSearch::getInstance()->enable();
+
+    $databaseManager = new sfDatabaseManager($this->configuration);
+    $this->conn = $databaseManager->getDatabase('propel')->getConnection();
+
+    // Set dip directory
+    $this->dipDir = $arguments['dip'];
+
+    // Set undo log filename, if undo log directory is specified
+    $undoLog = null;
+    if (isset($options['undo-log-dir']))
+    {
+      $undoLog = rtrim($options['undo-log-dir'], '/') .'/'. date('Y-m-d') .'-'. basename($this->dipDir) .'.log';
+    }
+
+    // Set path to DIP objects
+    $objectsPath = rtrim($this->dipDir, '/') .'/objects';
+    $this->logSection('dip-import', sprintf('Looking for objects in: %s', $this->dipDir));
+
+    // Parse CSV file and import/audit objects
+    $digitalObjects = $this->parseCsvData($this->openFirstCsvFile($objectsPath), $objectsPath);
+    $count = $this->importDigitalObjects($digitalObjects, $options['audit'], $undoLog);
+
+    $verb = ($options['audit']) ? 'audited' : 'processed';
+    $this->logSection('dip-import', sprintf('Successfully %s %d digital objects.', $verb, $count));
+  }
+
+  /**
+   * Get value of column, using column name, from array representing row of CSV data
+   *
+   * @return void
+   */
+  public function getRowColumnValue($column, $row)
+  {
+    // Return cached column index, if present
+    if (isset($this->columnIndexes[$column]))
+    {
+      return $row[($this->columnIndexes[$column])];
+    }
+
+    // Determine column index and cache
+    if (is_numeric($columnIndex = array_search($column, $this->columnNames)))
+    {
+      $this->columnIndexes[$column] = $columnIndex;
+      return $row[$columnIndex];
+    }
+
+    throw new sfException('Missing column "'. $column .'".');
+  }
+
+  /**
+   * @see sfTask
+   */
   protected function configure()
   {
     $this->addArguments(array(
@@ -92,42 +151,6 @@ The audit option can be used to verify that all objects specified in a DIP's
 CSV file were imported. If any are found to be missing the object filename
 will be output.
 EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
-  public function execute($arguments = array(), $options = array())
-  {
-    $this->checkArgumentsAndOptions($arguments, $options);
-
-    sfContext::createInstance($this->configuration);
-
-    QubitSearch::getInstance()->enable();
-
-    $databaseManager = new sfDatabaseManager($this->configuration);
-    $this->conn = $databaseManager->getDatabase('propel')->getConnection();
-
-    // Set dip directory
-    $this->dipDir = $arguments['dip'];
-
-    // Set undo log filename, if undo log directory is specified
-    $undoLog = null;
-    if (isset($options['undo-log-dir']))
-    {
-      $undoLog = rtrim($options['undo-log-dir'], '/') .'/'. date('Y-m-d') .'-'. basename($this->dipDir) .'.log';
-    }
-
-    // Set path to DIP objects
-    $objectsPath = rtrim($this->dipDir, '/') .'/objects';
-    $this->logSection('dip-import', sprintf('Looking for objects in: %s', $this->dipDir));
-
-    // Parse CSV file and import/audit objects
-    $digitalObjects = $this->parseCsvData($this->openFirstCsvFile($objectsPath), $objectsPath);
-    $count = $this->importDigitalObjects($digitalObjects, $options['audit'], $undoLog);
-
-    $verb = ($options['audit']) ? 'audited' : 'processed';
-    $this->logSection('dip-import', sprintf('Successfully %s %d digital objects.', $verb, $count));
   }
 
   /**
@@ -279,29 +302,6 @@ EOF;
 
     // Determine which column name should be used to specific individual information objects
     $this->uniqueValueColumnName = (in_array('identifier', $this->columnNames)) ? 'identifier' : 'slug';
-  }
-
-  /**
-   * Get value of column, using column name, from array representing row of CSV data
-   *
-   * @return void
-   */
-  public function getRowColumnValue($column, $row)
-  {
-    // Return cached column index, if present
-    if (isset($this->columnIndexes[$column]))
-    {
-      return $row[($this->columnIndexes[$column])];
-    }
-
-    // Determine column index and cache
-    if (is_numeric($columnIndex = array_search($column, $this->columnNames)))
-    {
-      $this->columnIndexes[$column] = $columnIndex;
-      return $row[$columnIndex];
-    }
-
-    throw new sfException('Missing column "'. $column .'".');
   }
 
   /**

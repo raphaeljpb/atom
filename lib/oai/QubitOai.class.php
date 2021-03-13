@@ -155,20 +155,6 @@ class QubitOai
     return false;
   }
 
-  protected static function parseUrlHost($URL)
-  {
-    $parsedURL = parse_url($URL);
-
-    // If the scheme is missing from a URL, parse_url() mistakenly interprets the host as the path.
-    // Prepend a dummy scheme and re-parse, if this is the case.
-    if (!isset($parsedURL['scheme']))
-    {
-      $parsedURL = parse_url('http://'.$URL);
-    }
-
-    return $parsedURL['host'];
-  }
-
   /**
    * Returns formated date
    *
@@ -464,5 +450,19 @@ class QubitOai
     }
 
     return $doc;
+  }
+
+  protected static function parseUrlHost($URL)
+  {
+    $parsedURL = parse_url($URL);
+
+    // If the scheme is missing from a URL, parse_url() mistakenly interprets the host as the path.
+    // Prepend a dummy scheme and re-parse, if this is the case.
+    if (!isset($parsedURL['scheme']))
+    {
+      $parsedURL = parse_url('http://'.$URL);
+    }
+
+    return $parsedURL['host'];
   }
 }

@@ -75,13 +75,6 @@ class QubitRelation extends BaseRelation
     return $this;
   }
 
-  protected function insert($connection = null)
-  {
-    $this->slug = QubitSlug::slugify($this->slug);
-
-    return parent::insert($connection);
-  }
-
   public function delete($connection = null)
   {
     parent::delete($connection);
@@ -241,5 +234,12 @@ class QubitRelation extends BaseRelation
     }
 
     return $opposite;
+  }
+
+  protected function insert($connection = null)
+  {
+    $this->slug = QubitSlug::slugify($this->slug);
+
+    return parent::insert($connection);
   }
 }

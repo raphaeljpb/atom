@@ -24,6 +24,42 @@ class sfSkosPluginImportAction extends DefaultEditAction
       'taxonomy',
       'url');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters(), $request->getFiles());
+
+      if ($this->form->isValid())
+      {
+        $params = $this->context->routing->parse(Qubit::pathInfo($this->form->getValue('taxonomy')));
+        $taxonomyId = $params['_sf_route']->resource->id;
+        $parentId = is_null($this->parent) ? null : $this->parent->id;
+
+        try
+        {
+          $job = $this->doBackgroundImport($taxonomyId, $parentId);
+        }
+        catch (Exception $e)
+        {
+          $this->getUser()->setFlash('error', $this->context->i18n->__('Something wrong happened! Please check out the logs. Error: %1%', array('%1%' => $e->getMessage()), array('persist' => false)));
+
+          return;
+        }
+
+        $this->getUser()->setFlash('notice', $this->context->i18n->__('Import file initiated. Check %1%job %2%%3% to view the status of the import.', array(
+          '%1%' => sprintf('<a href="%s">', $this->context->routing->generate(null, array('module' => 'jobs', 'action' => 'report', 'id' => $job->id))),
+          '%2%' => $job->id,
+          '%3%' => '</a>'
+        )));
+
+        $this->redirect(array('module' => 'sfSkosPlugin', 'action' => 'import'));
+      }
+    }
+  }
+
   protected function addField($name)
   {
     switch ($name)
@@ -101,42 +137,6 @@ class sfSkosPluginImportAction extends DefaultEditAction
 
       return $values;
     })));
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters(), $request->getFiles());
-
-      if ($this->form->isValid())
-      {
-        $params = $this->context->routing->parse(Qubit::pathInfo($this->form->getValue('taxonomy')));
-        $taxonomyId = $params['_sf_route']->resource->id;
-        $parentId = is_null($this->parent) ? null : $this->parent->id;
-
-        try
-        {
-          $job = $this->doBackgroundImport($taxonomyId, $parentId);
-        }
-        catch (Exception $e)
-        {
-          $this->getUser()->setFlash('error', $this->context->i18n->__('Something wrong happened! Please check out the logs. Error: %1%', array('%1%' => $e->getMessage()), array('persist' => false)));
-
-          return;
-        }
-
-        $this->getUser()->setFlash('notice', $this->context->i18n->__('Import file initiated. Check %1%job %2%%3% to view the status of the import.', array(
-          '%1%' => sprintf('<a href="%s">', $this->context->routing->generate(null, array('module' => 'jobs', 'action' => 'report', 'id' => $job->id))),
-          '%2%' => $job->id,
-          '%3%' => '</a>'
-        )));
-
-        $this->redirect(array('module' => 'sfSkosPlugin', 'action' => 'import'));
-      }
-    }
   }
 
   protected function doBackgroundImport($taxonomyId, $parentId)

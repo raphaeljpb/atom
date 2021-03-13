@@ -45,6 +45,46 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
               'field'  => '',
               'populate' => false));
 
+  public function execute($request)
+  {
+    $this->setAndCheckResource();
+
+    $directField = TermNavigateRelatedComponent::$TAXONOMY_ES_DIRECT_FIELDS[$this->resource->taxonomyId];
+    $this::$AGGS['direct']['field'] = array($directField => $this->resource->id);
+
+    DefaultBrowseAction::execute($request);
+
+    // Disallow access to locked taxonomies
+    if (in_array($this->resource->taxonomyId, QubitTaxonomy::$lockedTaxonomies))
+    {
+      $this->getResponse()->setStatusCode(403);
+      return sfView::NONE;
+    }
+
+    $this->setCulture($request);
+
+    // Prepare filter tags, form, and hidden fields/values
+    $this->populateFilterTags($request);
+
+    // Take note of number of related information objects
+    $resultSet = TermNavigateRelatedComponent::getEsDocsRelatedToTerm('QubitInformationObject', $this->resource);
+    $this->relatedIoCount = $resultSet->count();
+
+    // Perform search and paging
+    $resultSet = $this->doSearch($request);
+    $this->relatedActorCount = $resultSet->count();
+
+    $this->pager = new QubitSearchPager($resultSet);
+    $this->pager->setPage($request->page ? $request->page : 1);
+    $this->pager->setMaxPerPage($this->limit);
+    $this->pager->init();
+
+    $this->populateAggs($resultSet);
+
+    // Load list terms
+    $this->loadListTerms($request);
+  }
+
   protected function populateAgg($name, $buckets)
   {
     switch ($name)
@@ -104,45 +144,5 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
     }
 
     return TermNavigateRelatedComponent::getEsDocsRelatedToTerm('QubitActor', $this->resource, $options);
-  }
-
-  public function execute($request)
-  {
-    $this->setAndCheckResource();
-
-    $directField = TermNavigateRelatedComponent::$TAXONOMY_ES_DIRECT_FIELDS[$this->resource->taxonomyId];
-    $this::$AGGS['direct']['field'] = array($directField => $this->resource->id);
-
-    DefaultBrowseAction::execute($request);
-
-    // Disallow access to locked taxonomies
-    if (in_array($this->resource->taxonomyId, QubitTaxonomy::$lockedTaxonomies))
-    {
-      $this->getResponse()->setStatusCode(403);
-      return sfView::NONE;
-    }
-
-    $this->setCulture($request);
-
-    // Prepare filter tags, form, and hidden fields/values
-    $this->populateFilterTags($request);
-
-    // Take note of number of related information objects
-    $resultSet = TermNavigateRelatedComponent::getEsDocsRelatedToTerm('QubitInformationObject', $this->resource);
-    $this->relatedIoCount = $resultSet->count();
-
-    // Perform search and paging
-    $resultSet = $this->doSearch($request);
-    $this->relatedActorCount = $resultSet->count();
-
-    $this->pager = new QubitSearchPager($resultSet);
-    $this->pager->setPage($request->page ? $request->page : 1);
-    $this->pager->setMaxPerPage($this->limit);
-    $this->pager->init();
-
-    $this->populateAggs($resultSet);
-
-    // Load list terms
-    $this->loadListTerms($request);
   }
 }

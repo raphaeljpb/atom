@@ -29,6 +29,26 @@ class arSearchDocumentTask extends arBaseTask
   /**
    * @see sfTask
    */
+  public function execute($arguments = [], $options = [])
+  {
+    parent::execute($arguments, $options);
+
+    if (null !== $slugObject = QubitObject::getBySlug($arguments[slug]))
+    {
+      $this->log(sprintf("Fetching data for %s ID %d...\n", $slugObject->className, $slugObject->id));
+
+      $doc = QubitSearch::getInstance()->index->getType($slugObject->className)->getDocument($slugObject->id);
+
+      print json_encode($doc->getData(), JSON_PRETTY_PRINT) . "\n";
+    }
+    else
+    {
+      throw new sfException('Slug not found');
+    }
+  }
+  /**
+   * @see sfTask
+   */
   protected function configure()
   {
     $this->addArguments([
@@ -50,26 +70,5 @@ class arSearchDocumentTask extends arBaseTask
     $this->detailedDescription = <<<EOF
       Output search index document data corresponding to an AtoM resource
 EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
-  public function execute($arguments = [], $options = [])
-  {
-    parent::execute($arguments, $options);
-
-    if (null !== $slugObject = QubitObject::getBySlug($arguments[slug]))
-    {
-      $this->log(sprintf("Fetching data for %s ID %d...\n", $slugObject->className, $slugObject->id));
-
-      $doc = QubitSearch::getInstance()->index->getType($slugObject->className)->getDocument($slugObject->id);
-
-      print json_encode($doc->getData(), JSON_PRETTY_PRINT) . "\n";
-    }
-    else
-    {
-      throw new sfException('Slug not found');
-    }
   }
 }

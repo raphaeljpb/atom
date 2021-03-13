@@ -30,12 +30,6 @@ class InformationObjectAlternativeIdentifiersComponent extends sfComponent
     $this->alternativeIdentifiers = $this->resource->getProperties(null, 'alternativeIdentifiers');
   }
 
-  protected function addField($name)
-  {
-    $this->form->setValidator($name, new sfValidatorString());
-    $this->form->setWidget($name, new sfWidgetFormInput());
-  }
-
   public function processForm()
   {
     $finalAlternativeIdentifiers = array();
@@ -89,5 +83,11 @@ class InformationObjectAlternativeIdentifiersComponent extends sfComponent
         $item->delete();
       }
     }
+  }
+
+  protected function addField($name)
+  {
+    $this->form->setValidator($name, new sfValidatorString());
+    $this->form->setWidget($name, new sfWidgetFormInput());
   }
 }

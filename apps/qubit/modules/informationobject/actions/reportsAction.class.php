@@ -58,36 +58,6 @@ class InformationObjectReportsAction extends sfAction
     }
   }
 
-  private function getExistingReports()
-  {
-    $formats = array('csv', 'html');
-    $types = array_keys($this->typeLabels);
-    $this->existingReports = array();
-
-    foreach ($types as $type)
-    {
-      foreach ($formats as $format)
-      {
-        $path = arGenerateReportJob::getFilename($this->resource, $format, $type);
-
-        if (file_exists($path))
-        {
-          if (!sfContext::getInstance()->user->isAuthenticated() &&
-              in_array($type, array('storageLocations', 'boxLabel')))
-          {
-            continue;
-          }
-
-          $this->existingReports[] = array(
-            'path' => sfConfig::get('app_siteBaseUrl').'/'.$path,
-            'type' => $this->typeLabels[$type],
-            'format' => strtoupper($format),
-          );
-        }
-      }
-    }
-  }
-
   protected function addField($name)
   {
     switch ($name)
@@ -131,6 +101,36 @@ class InformationObjectReportsAction extends sfAction
         }
 
         break;
+    }
+  }
+
+  private function getExistingReports()
+  {
+    $formats = array('csv', 'html');
+    $types = array_keys($this->typeLabels);
+    $this->existingReports = array();
+
+    foreach ($types as $type)
+    {
+      foreach ($formats as $format)
+      {
+        $path = arGenerateReportJob::getFilename($this->resource, $format, $type);
+
+        if (file_exists($path))
+        {
+          if (!sfContext::getInstance()->user->isAuthenticated() &&
+              in_array($type, array('storageLocations', 'boxLabel')))
+          {
+            continue;
+          }
+
+          $this->existingReports[] = array(
+            'path' => sfConfig::get('app_siteBaseUrl').'/'.$path,
+            'type' => $this->typeLabels[$type],
+            'format' => strtoupper($format),
+          );
+        }
+      }
     }
   }
 }

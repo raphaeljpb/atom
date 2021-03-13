@@ -26,6 +26,11 @@
  */
 class arCacheDescriptionXmlTask extends arBaseTask
 {
+  public function execute($arguments = array(), $options = array())
+  {
+    parent::execute($arguments, $options);
+    $this->exportAll($options);
+  }
   protected function configure()
   {
     $this->addOptions(array(
@@ -44,12 +49,6 @@ class arCacheDescriptionXmlTask extends arBaseTask
     $this->detailedDescription = <<<EOF
 Render all descriptions as XML and cache the results as files
 EOF;
-  }
-
-  public function execute($arguments = array(), $options = array())
-  {
-    parent::execute($arguments, $options);
-    $this->exportAll($options);
   }
 
   private function exportAll($options)

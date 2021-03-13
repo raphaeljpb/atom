@@ -27,16 +27,15 @@
  */
 class QubitCsvImport
 {
-  protected $errors = null;
-  protected $rootObject = null;
-  protected $parent = null;
-
   public $indexDuringImport = false;
   public $doCsvTransform = false;
   public $skipUnmatched = false;
   public $skipMatched = false;
   public $updateType = '';
   public $limit = '';
+  protected $errors = null;
+  protected $rootObject = null;
+  protected $parent = null;
 
   public function import($csvFile, $type = null, $csvOrigFileName = null)
   {

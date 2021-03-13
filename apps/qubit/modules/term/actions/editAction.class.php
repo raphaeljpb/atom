@@ -43,6 +43,24 @@ class TermEditAction extends DefaultEditAction
 
   protected $updatedLabel = false;
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        $this->resource->save();
+
+        $this->redirect(array($this->resource, 'module' => 'term'));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
@@ -552,24 +570,6 @@ class TermEditAction extends DefaultEditAction
     if ($this->updatedLabel)
     {
       $this->updateLinkedInfoObjects();
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        $this->resource->save();
-
-        $this->redirect(array($this->resource, 'module' => 'term'));
-      }
     }
   }
 

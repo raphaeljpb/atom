@@ -34,47 +34,6 @@ class i18nDiffTask extends sfBaseTask
 
   /**
    * @see sfTask
-   */
-  protected function configure()
-  {
-    $this->addArguments(array(
-      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'),
-      new sfCommandArgument('culture', sfCommandArgument::REQUIRED, 'The target culture'),
-    ));
-
-    $this->addOptions(array(
-      new sfCommandOption('file', 'f', sfCommandOption::PARAMETER_OPTIONAL, 'Specify a destination filename for writing output', 'stdout'),
-      new sfCommandOption('format', 'o', sfCommandOption::PARAMETER_OPTIONAL, 'Specify an output format (currently only supports csv & tab-delimited)', self::FORMAT_CSV)
-    ));
-
-    $this->namespace = 'i18n';
-    $this->name = 'diff';
-    $this->briefDescription = 'Compares existing XLIFF strings to new i18n strings extracted from PHP files as per the i18n:extract task.';
-
-    $this->detailedDescription = <<<EOF
-The [i18n:diff|INFO] task compares existing XLIFF strings to new i18n strings
-extracted from PHP files for the given application and target culture:
-
-  [./symfony i18n:diff frontend fr|INFO]
-
-By default, the task outputs to STDOUT. To specify an destination file
-use the [--file|COMMENT] or [-f|COMMENT] options:
-
-  [./symfony i18n:diff --file="french_diff.csv" frontend fr|INFO]
-  [./symfony i18n:diff -f="french_diff.csv" frontend fr|INFO]
-
-By defulat, the task outputs the differences in CSV format. To specify an
-alternate file format use the [--format|COMMENT] or [-t|COMMENT] options:
-
-  [./symfony i18n:diff --format="tab" frontend fr|INFO]
-  [./symfony i18n:diff -o="tab" frontend fr|INFO]
-
-Possible [--format|COMMENT] values are "csv" and "tab".
-EOF;
-  }
-
-  /**
-   * @see sfTask
    * @see sfI18nExtract
    */
   public function execute($arguments = array(), $options = array())
@@ -173,5 +132,46 @@ EOF;
     }
 
     return $oldTranslations;
+  }
+
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    $this->addArguments(array(
+      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application name'),
+      new sfCommandArgument('culture', sfCommandArgument::REQUIRED, 'The target culture'),
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('file', 'f', sfCommandOption::PARAMETER_OPTIONAL, 'Specify a destination filename for writing output', 'stdout'),
+      new sfCommandOption('format', 'o', sfCommandOption::PARAMETER_OPTIONAL, 'Specify an output format (currently only supports csv & tab-delimited)', self::FORMAT_CSV)
+    ));
+
+    $this->namespace = 'i18n';
+    $this->name = 'diff';
+    $this->briefDescription = 'Compares existing XLIFF strings to new i18n strings extracted from PHP files as per the i18n:extract task.';
+
+    $this->detailedDescription = <<<EOF
+The [i18n:diff|INFO] task compares existing XLIFF strings to new i18n strings
+extracted from PHP files for the given application and target culture:
+
+  [./symfony i18n:diff frontend fr|INFO]
+
+By default, the task outputs to STDOUT. To specify an destination file
+use the [--file|COMMENT] or [-f|COMMENT] options:
+
+  [./symfony i18n:diff --file="french_diff.csv" frontend fr|INFO]
+  [./symfony i18n:diff -f="french_diff.csv" frontend fr|INFO]
+
+By defulat, the task outputs the differences in CSV format. To specify an
+alternate file format use the [--format|COMMENT] or [-t|COMMENT] options:
+
+  [./symfony i18n:diff --format="tab" frontend fr|INFO]
+  [./symfony i18n:diff -o="tab" frontend fr|INFO]
+
+Possible [--format|COMMENT] values are "csv" and "tab".
+EOF;
   }
 }

@@ -76,6 +76,22 @@ class arInformationObjectExportJob extends arExportJob
   }
 
   /**
+   * Get the current archival standard
+   *
+   * @return arElasticSearchPluginQuery  AtoM Elasticsearch query
+   */
+  public static function getCurrentArchivalStandard()
+  {
+    if ('rad' == QubitSetting::getByNameAndScope('informationobject', 'default_template'))
+    {
+      return 'rad';
+    }
+
+    // If not using RAD, default to ISAD CSV export format
+    return 'isad';
+  }
+
+  /**
    * Add clipboard search criteria to ES query
    */
   protected static function addClipboardCriteria(&$search, $parameters)
@@ -91,22 +107,6 @@ class arInformationObjectExportJob extends arExportJob
         ['publicationStatusId' => QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID]
       ));
     }
-  }
-
-  /**
-   * Get the current archival standard
-   *
-   * @return arElasticSearchPluginQuery  AtoM Elasticsearch query
-   */
-  public static function getCurrentArchivalStandard()
-  {
-    if ('rad' == QubitSetting::getByNameAndScope('informationobject', 'default_template'))
-    {
-      return 'rad';
-    }
-
-    // If not using RAD, default to ISAD CSV export format
-    return 'isad';
   }
 
   /**

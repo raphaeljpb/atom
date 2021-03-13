@@ -97,100 +97,6 @@ class arElasticSearchPluginUtil
   }
 
   /**
-   * Retrieve the default template type given a specified ES index type.
-   *
-   * @return string  The default template (e.g. isad)
-   */
-  private static function getTemplate($indexType)
-  {
-    switch ($indexType)
-    {
-      case 'informationObject':
-        $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template');
-        if (isset($infoObjectTemplate))
-        {
-          return $infoObjectTemplate->getValue(array('sourceCulture'=>true));
-        }
-
-      // TODO: Other index types (actor, term, etc)
-    }
-  }
-
-  /**
-   * Retrieve a list of fields that are set to hidden in the visible elements settings.
-   *
-   * @return array  An array specifying which fields are to be hidden from anonymous users.
-   */
-  private static function getHiddenFields()
-  {
-    // Create array with relations (hidden field => ES mapping field) for the actual template
-    $relations = array();
-
-    if (null !== $template = self::getTemplate('informationObject'))
-    {
-      switch ($template)
-      {
-        case 'isad':
-
-          $relations = array(
-            'isad_archival_history' => 'i18n.%s.archivalHistory',
-            'isad_immediate_source' => 'i18n.%s.acquisition',
-            'isad_appraisal_destruction' => 'i18n.%s.appraisal',
-            'isad_notes' => '',
-            'isad_physical_condition' => 'i18n.%s.physicalCharacteristics',
-            'isad_control_description_identifier' => '',
-            'isad_control_institution_identifier' => 'i18n.%s.institutionResponsibleIdentifier',
-            'isad_control_rules_conventions' => 'i18n.%s.rules',
-            'isad_control_status' => '',
-            'isad_control_level_of_detail' => '',
-            'isad_control_dates' => 'i18n.%s.revisionHistory',
-            'isad_control_languages' => '',
-            'isad_control_scripts' => '',
-            'isad_control_sources' => 'i18n.%s.sources',
-            'isad_control_archivists_notes' => '');
-
-          break;
-
-        case 'rad':
-
-          $relations = array(
-            'rad_archival_history' => 'i18n.%s.archivalHistory',
-            'rad_physical_condition' => 'i18n.%s.physicalCharacteristics',
-            'rad_immediate_source' => 'i18n.%s.acquisition',
-            'rad_general_notes' => '',
-            'rad_conservation_notes' => '',
-            'rad_control_description_identifier' => '',
-            'rad_control_institution_identifier' => 'i18n.%s.institutionResponsibleIdentifier',
-            'rad_control_rules_conventions' => 'i18n.%s.rules',
-            'rad_control_status' => '',
-            'rad_control_level_of_detail' => '',
-            'rad_control_dates' => 'i18n.%s.revisionHistory',
-            'rad_control_language' => '',
-            'rad_control_script' => '',
-            'rad_control_sources' => 'i18n.%s.sources');
-
-          break;
-
-        // TODO: Other templates (dacs, dc, isaar, etc)
-      }
-    }
-
-    // Obtain hidden fields
-    $hiddenFields = array();
-
-    foreach (QubitSetting::getByScope('element_visibility') as $setting)
-    {
-      if(!(bool)$setting->getValue(array('sourceCulture' => true)) && isset($relations[$setting->name])
-        && $relations[$setting->name] != '')
-      {
-        $hiddenFields[] = $relations[$setting->name];
-      }
-    }
-
-    return $hiddenFields;
-  }
-
-  /**
    * Gets all string fields for a given index type, removing those hidden for public users
    * and those included in the except array. Returns a key/value array with the field names
    * as key and the boost as value, i18n fields will contain "%s" as culture placeholder, which
@@ -239,234 +145,6 @@ class arElasticSearchPluginUtil
     }
 
     return self::setBoostValues($indexType, $allFields);
-  }
-
-  /**
-   * Based on indexType, set the boost values for each field.
-   *
-   * @param string $indexType  Which index type we're setting the field boost values for.
-   * @param array $fields  The fields we're setting the boost values on.
-   *
-   * @return array  Key/value array with fieldname/boost.
-   */
-  private static function setBoostValues($indexType, $fields)
-  {
-    $boost = $boostedFields = array();
-
-    switch ($indexType)
-    {
-      case 'informationObject':
-        $boost = array(
-          'i18n.%s.title' => 10,
-          'creators.i18n.%s.authorizedFormOfName' => 6,
-          'identifier' => 5,
-          'subjects.i18n.%s.name' => 5,
-          'i18n.%s.scopeAndContent' => 5,
-          'names.i18n.%s.authorizedFormOfName' => 3,
-          'places.i18n.%s.name' => 3,
-        );
-
-        break;
-    }
-
-    foreach ($fields as $field)
-    {
-      if (isset($boost[$field]))
-      {
-        $boostedFields[$field] = $boost[$field];
-      }
-      else
-      {
-        $boostedFields[$field] = 1;
-      }
-    }
-
-    return $boostedFields;
-  }
-
-  /**
-   * Check whether an i18n field should be included in the list of fields for an _all search
-   *
-   * @param string $prefix  The current prefix for the field name, e.g. "creators." for "creators.name"
-   * @param string $fieldName  The current field name, e.g. "name" in "creators.name"
-   * @param array $i18nIncludeInAll  A list of i18n fields to be allowed when searching _all
-   *
-   * @return bool  True if we should include this field in the _all search, false otherwise.
-   */
-  private static function checkI18nIncludeInAll($prefix, $fieldName, $i18nIncludeInAll)
-  {
-    if (!$i18nIncludeInAll)
-    {
-      return; // Return and skip this check, no i18nIncludeInAll _attribute present.
-    }
-
-    return in_array($prefix.$fieldName, $i18nIncludeInAll);
-  }
-
-  /**
-   * Handle adding i18n fields to our fields list. This is a helper function for getAllObjectStringFields().
-   *
-   * Depending on the index type, there may be special rules we need to check before adding i18n fields to
-   * our fields list.
-   *
-   * @param string $rootIndexType  The current, top level index type we're adding fields to, e.g. "informationObject".
-   *
-   *                               Note that since we recursively call getAllObjectStringFields to get foreign type
-   *                               fields, this value may not be the "current" index being parsed, e.g. when adding
-   *                               creators.name actor fields inside informationObject.
-   *
-   * @param array &$fields  A reference to our list of fields we're searching over with our _all query.
-   * @param string $prefix  The current prefix for the field name, e.g. "creators." for "creators.name"
-   * @param string $fieldName  The current field name, e.g. "name" in "creators.name"
-   * @param bool $foreignType  Whether or not this field in question is being parsed for a foreign type,
-   *                           e.g. inside informationObject.creators
-   *
-   * @param array $i18nIncludeInAll  A list of i18n fields to be allowed when searching _all
-   *
-   *
-   */
-  private static function handleI18nStringFields($rootIndexType, &$fields, $prefix, $fieldName, $foreignType,
-                                                 $i18nIncludeInAll)
-  {
-    // We may add special rules for other index types in the future
-    switch ($rootIndexType)
-    {
-      case 'informationObject':
-        if ($foreignType && false === self::checkI18nIncludeInAll($prefix, $fieldName, $i18nIncludeInAll))
-        {
-          return; // Skip field
-        }
-
-        break;
-    }
-
-    // Concatenate object name ($prefix), culture placeholder and field name
-    $fields[] = $prefix.'i18n.%s.'.$fieldName;
-  }
-
-  /**
-   * Handle adding non-i18n string properties to our fields list. This is a helper function for
-   * getAllObjectStringFields().
-   *
-   * Depending on the index type, there may be special rules we need to check before adding string fields to
-   * our fields list.
-   *
-   * @param string $rootIndexType  The current, top level index type we're adding fields to, e.g. "informationObject".
-   *
-   *                               Note that since we recursively call getAllObjectStringFields to get foreign type
-   *                               fields, this value may not be the "current" index being parsed, e.g. when adding
-   *                               creators.name actor fields inside informationObject.
-   *
-   * @param array &$fields  A reference to our list of fields we're searching over with our _all query.
-   * @param string $prefix  The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
-   * @param string $propertyName  The current property name, e.g. "slug" in "informationObject.slug"
-   * @param bool $foreignType  Whether or not this field in question is being parsed for a foreign type,
-   *                           e.g. inside informationObject.creators
-   */
-  private static function handleNonI18nStringFields($rootIndexType, &$fields, $prefix, $propertyName, $foreignType)
-  {
-    // We may add special rules for other index types in the future
-    switch ($rootIndexType)
-    {
-      case 'informationObject':
-        if ($foreignType)
-        {
-          return; // Skip all foreign type non-i18n string fields for info objects
-        }
-
-        break;
-    }
-
-    // Concatenate object name ($prefix) and field name
-    $fields[] = $prefix.$propertyName;
-  }
-
-  /**
-   * Gets all string fields included in _all from a mapping object array and cultures.
-   *
-   * This function will be called recursively on foreign types and nested fields.
-   *
-   *
-   * @param string $rootIndexType  The current, top level index type we're adding fields to, e.g. "informationObject".
-   *
-   *                               Note that since we recursively call getAllObjectStringFields to get foreign type
-   *                               fields, this value may not be the "current" index being parsed, e.g. when adding
-   *                               creators.name actor fields inside informationObject.
-   *
-   * @param array $object  An array containing the current object mappings.
-   * @param string $prefix  The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
-   * @param bool $foreignType  Whether or not this field in question is being parsed for a foreign type,
-   *                           e.g. inside informationObject.creators
-   *
-   * @param array $i18nIncludeInAll  A list of i18n fields to be allowed when searching _all
-   */
-  protected static function getAllObjectStringFields($rootIndexType, $object, $prefix, $foreignType = false,
-                                                     $i18nIncludeInAll = null)
-  {
-    $fields = array();
-
-    if (isset($object['properties']))
-    {
-      foreach ($object['properties'] as $propertyName => $propertyProperties)
-      {
-        // Get i18n fields, they're always included in _all
-        if ($propertyName == 'i18n')
-        {
-          // Get the fields from a single culture and format them with
-          // 'i18n.%s.' to set the required cultures at query time.
-          foreach ($propertyProperties['properties'] as $culture => $cultureProperties)
-          {
-            if ($culture == 'languages')
-            {
-              continue;
-            }
-
-            foreach ($cultureProperties['properties'] as $fieldName => $fieldProperties)
-            {
-              self::handleI18nStringFields($rootIndexType, $fields, $prefix, $fieldName, $foreignType,
-                                           $i18nIncludeInAll);
-            }
-
-            break;
-          }
-        }
-        // Get nested objects fields
-        elseif (isset($propertyProperties['type']) && $propertyProperties['type'] == 'object')
-        {
-          $nestedFields = self::getAllObjectStringFields(
-            $rootIndexType,
-            $object['properties'][$propertyName],
-            $prefix.$propertyName.'.'
-          );
-
-          $fields = array_merge($fields, $nestedFields);
-        }
-        // Get foreign objects fields (couldn't find a better way than checking the dynamic property)
-        elseif (isset($propertyProperties['dynamic']))
-        {
-          $foreignObjectFields = self::getAllObjectStringFields(
-            $rootIndexType,
-            $object['properties'][$propertyName],
-            $prefix.$propertyName.'.',
-            true,
-            $i18nIncludeInAll
-          );
-
-          $fields = array_merge($fields, $foreignObjectFields);
-        }
-        // Get string fields included in _all
-        elseif ((!isset($propertyProperties['include_in_all'])
-          || $propertyProperties['include_in_all'])
-          && (isset($propertyProperties['type'])
-          && ($propertyProperties['type'] == 'text'
-          || $propertyProperties['type'] == 'keyword')))
-        {
-          self::handleNonI18nStringFields($rootIndexType, $fields, $prefix, $propertyName, $foreignType);
-        }
-      }
-    }
-
-    return $fields;
   }
 
   /**
@@ -769,5 +447,327 @@ class arElasticSearchPluginUtil
     }
 
     return $hitIds;
+  }
+
+  /**
+   * Gets all string fields included in _all from a mapping object array and cultures.
+   *
+   * This function will be called recursively on foreign types and nested fields.
+   *
+   *
+   * @param string $rootIndexType  The current, top level index type we're adding fields to, e.g. "informationObject".
+   *
+   *                               Note that since we recursively call getAllObjectStringFields to get foreign type
+   *                               fields, this value may not be the "current" index being parsed, e.g. when adding
+   *                               creators.name actor fields inside informationObject.
+   *
+   * @param array $object  An array containing the current object mappings.
+   * @param string $prefix  The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
+   * @param bool $foreignType  Whether or not this field in question is being parsed for a foreign type,
+   *                           e.g. inside informationObject.creators
+   *
+   * @param array $i18nIncludeInAll  A list of i18n fields to be allowed when searching _all
+   */
+  protected static function getAllObjectStringFields($rootIndexType, $object, $prefix, $foreignType = false,
+                                                     $i18nIncludeInAll = null)
+  {
+    $fields = array();
+
+    if (isset($object['properties']))
+    {
+      foreach ($object['properties'] as $propertyName => $propertyProperties)
+      {
+        // Get i18n fields, they're always included in _all
+        if ($propertyName == 'i18n')
+        {
+          // Get the fields from a single culture and format them with
+          // 'i18n.%s.' to set the required cultures at query time.
+          foreach ($propertyProperties['properties'] as $culture => $cultureProperties)
+          {
+            if ($culture == 'languages')
+            {
+              continue;
+            }
+
+            foreach ($cultureProperties['properties'] as $fieldName => $fieldProperties)
+            {
+              self::handleI18nStringFields($rootIndexType, $fields, $prefix, $fieldName, $foreignType,
+                                           $i18nIncludeInAll);
+            }
+
+            break;
+          }
+        }
+        // Get nested objects fields
+        elseif (isset($propertyProperties['type']) && $propertyProperties['type'] == 'object')
+        {
+          $nestedFields = self::getAllObjectStringFields(
+            $rootIndexType,
+            $object['properties'][$propertyName],
+            $prefix.$propertyName.'.'
+          );
+
+          $fields = array_merge($fields, $nestedFields);
+        }
+        // Get foreign objects fields (couldn't find a better way than checking the dynamic property)
+        elseif (isset($propertyProperties['dynamic']))
+        {
+          $foreignObjectFields = self::getAllObjectStringFields(
+            $rootIndexType,
+            $object['properties'][$propertyName],
+            $prefix.$propertyName.'.',
+            true,
+            $i18nIncludeInAll
+          );
+
+          $fields = array_merge($fields, $foreignObjectFields);
+        }
+        // Get string fields included in _all
+        elseif ((!isset($propertyProperties['include_in_all'])
+          || $propertyProperties['include_in_all'])
+          && (isset($propertyProperties['type'])
+          && ($propertyProperties['type'] == 'text'
+          || $propertyProperties['type'] == 'keyword')))
+        {
+          self::handleNonI18nStringFields($rootIndexType, $fields, $prefix, $propertyName, $foreignType);
+        }
+      }
+    }
+
+    return $fields;
+  }
+
+  /**
+   * Retrieve the default template type given a specified ES index type.
+   *
+   * @return string  The default template (e.g. isad)
+   */
+  private static function getTemplate($indexType)
+  {
+    switch ($indexType)
+    {
+      case 'informationObject':
+        $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template');
+        if (isset($infoObjectTemplate))
+        {
+          return $infoObjectTemplate->getValue(array('sourceCulture'=>true));
+        }
+
+      // TODO: Other index types (actor, term, etc)
+    }
+  }
+
+  /**
+   * Retrieve a list of fields that are set to hidden in the visible elements settings.
+   *
+   * @return array  An array specifying which fields are to be hidden from anonymous users.
+   */
+  private static function getHiddenFields()
+  {
+    // Create array with relations (hidden field => ES mapping field) for the actual template
+    $relations = array();
+
+    if (null !== $template = self::getTemplate('informationObject'))
+    {
+      switch ($template)
+      {
+        case 'isad':
+
+          $relations = array(
+            'isad_archival_history' => 'i18n.%s.archivalHistory',
+            'isad_immediate_source' => 'i18n.%s.acquisition',
+            'isad_appraisal_destruction' => 'i18n.%s.appraisal',
+            'isad_notes' => '',
+            'isad_physical_condition' => 'i18n.%s.physicalCharacteristics',
+            'isad_control_description_identifier' => '',
+            'isad_control_institution_identifier' => 'i18n.%s.institutionResponsibleIdentifier',
+            'isad_control_rules_conventions' => 'i18n.%s.rules',
+            'isad_control_status' => '',
+            'isad_control_level_of_detail' => '',
+            'isad_control_dates' => 'i18n.%s.revisionHistory',
+            'isad_control_languages' => '',
+            'isad_control_scripts' => '',
+            'isad_control_sources' => 'i18n.%s.sources',
+            'isad_control_archivists_notes' => '');
+
+          break;
+
+        case 'rad':
+
+          $relations = array(
+            'rad_archival_history' => 'i18n.%s.archivalHistory',
+            'rad_physical_condition' => 'i18n.%s.physicalCharacteristics',
+            'rad_immediate_source' => 'i18n.%s.acquisition',
+            'rad_general_notes' => '',
+            'rad_conservation_notes' => '',
+            'rad_control_description_identifier' => '',
+            'rad_control_institution_identifier' => 'i18n.%s.institutionResponsibleIdentifier',
+            'rad_control_rules_conventions' => 'i18n.%s.rules',
+            'rad_control_status' => '',
+            'rad_control_level_of_detail' => '',
+            'rad_control_dates' => 'i18n.%s.revisionHistory',
+            'rad_control_language' => '',
+            'rad_control_script' => '',
+            'rad_control_sources' => 'i18n.%s.sources');
+
+          break;
+
+        // TODO: Other templates (dacs, dc, isaar, etc)
+      }
+    }
+
+    // Obtain hidden fields
+    $hiddenFields = array();
+
+    foreach (QubitSetting::getByScope('element_visibility') as $setting)
+    {
+      if(!(bool)$setting->getValue(array('sourceCulture' => true)) && isset($relations[$setting->name])
+        && $relations[$setting->name] != '')
+      {
+        $hiddenFields[] = $relations[$setting->name];
+      }
+    }
+
+    return $hiddenFields;
+  }
+
+  /**
+   * Based on indexType, set the boost values for each field.
+   *
+   * @param string $indexType  Which index type we're setting the field boost values for.
+   * @param array $fields  The fields we're setting the boost values on.
+   *
+   * @return array  Key/value array with fieldname/boost.
+   */
+  private static function setBoostValues($indexType, $fields)
+  {
+    $boost = $boostedFields = array();
+
+    switch ($indexType)
+    {
+      case 'informationObject':
+        $boost = array(
+          'i18n.%s.title' => 10,
+          'creators.i18n.%s.authorizedFormOfName' => 6,
+          'identifier' => 5,
+          'subjects.i18n.%s.name' => 5,
+          'i18n.%s.scopeAndContent' => 5,
+          'names.i18n.%s.authorizedFormOfName' => 3,
+          'places.i18n.%s.name' => 3,
+        );
+
+        break;
+    }
+
+    foreach ($fields as $field)
+    {
+      if (isset($boost[$field]))
+      {
+        $boostedFields[$field] = $boost[$field];
+      }
+      else
+      {
+        $boostedFields[$field] = 1;
+      }
+    }
+
+    return $boostedFields;
+  }
+
+  /**
+   * Check whether an i18n field should be included in the list of fields for an _all search
+   *
+   * @param string $prefix  The current prefix for the field name, e.g. "creators." for "creators.name"
+   * @param string $fieldName  The current field name, e.g. "name" in "creators.name"
+   * @param array $i18nIncludeInAll  A list of i18n fields to be allowed when searching _all
+   *
+   * @return bool  True if we should include this field in the _all search, false otherwise.
+   */
+  private static function checkI18nIncludeInAll($prefix, $fieldName, $i18nIncludeInAll)
+  {
+    if (!$i18nIncludeInAll)
+    {
+      return; // Return and skip this check, no i18nIncludeInAll _attribute present.
+    }
+
+    return in_array($prefix.$fieldName, $i18nIncludeInAll);
+  }
+
+  /**
+   * Handle adding i18n fields to our fields list. This is a helper function for getAllObjectStringFields().
+   *
+   * Depending on the index type, there may be special rules we need to check before adding i18n fields to
+   * our fields list.
+   *
+   * @param string $rootIndexType  The current, top level index type we're adding fields to, e.g. "informationObject".
+   *
+   *                               Note that since we recursively call getAllObjectStringFields to get foreign type
+   *                               fields, this value may not be the "current" index being parsed, e.g. when adding
+   *                               creators.name actor fields inside informationObject.
+   *
+   * @param array &$fields  A reference to our list of fields we're searching over with our _all query.
+   * @param string $prefix  The current prefix for the field name, e.g. "creators." for "creators.name"
+   * @param string $fieldName  The current field name, e.g. "name" in "creators.name"
+   * @param bool $foreignType  Whether or not this field in question is being parsed for a foreign type,
+   *                           e.g. inside informationObject.creators
+   *
+   * @param array $i18nIncludeInAll  A list of i18n fields to be allowed when searching _all
+   *
+   *
+   */
+  private static function handleI18nStringFields($rootIndexType, &$fields, $prefix, $fieldName, $foreignType,
+                                                 $i18nIncludeInAll)
+  {
+    // We may add special rules for other index types in the future
+    switch ($rootIndexType)
+    {
+      case 'informationObject':
+        if ($foreignType && false === self::checkI18nIncludeInAll($prefix, $fieldName, $i18nIncludeInAll))
+        {
+          return; // Skip field
+        }
+
+        break;
+    }
+
+    // Concatenate object name ($prefix), culture placeholder and field name
+    $fields[] = $prefix.'i18n.%s.'.$fieldName;
+  }
+
+  /**
+   * Handle adding non-i18n string properties to our fields list. This is a helper function for
+   * getAllObjectStringFields().
+   *
+   * Depending on the index type, there may be special rules we need to check before adding string fields to
+   * our fields list.
+   *
+   * @param string $rootIndexType  The current, top level index type we're adding fields to, e.g. "informationObject".
+   *
+   *                               Note that since we recursively call getAllObjectStringFields to get foreign type
+   *                               fields, this value may not be the "current" index being parsed, e.g. when adding
+   *                               creators.name actor fields inside informationObject.
+   *
+   * @param array &$fields  A reference to our list of fields we're searching over with our _all query.
+   * @param string $prefix  The current prefix for the prop name, e.g. "informationObject." in "informationObject.slug"
+   * @param string $propertyName  The current property name, e.g. "slug" in "informationObject.slug"
+   * @param bool $foreignType  Whether or not this field in question is being parsed for a foreign type,
+   *                           e.g. inside informationObject.creators
+   */
+  private static function handleNonI18nStringFields($rootIndexType, &$fields, $prefix, $propertyName, $foreignType)
+  {
+    // We may add special rules for other index types in the future
+    switch ($rootIndexType)
+    {
+      case 'informationObject':
+        if ($foreignType)
+        {
+          return; // Skip all foreign type non-i18n string fields for info objects
+        }
+
+        break;
+    }
+
+    // Concatenate object name ($prefix) and field name
+    $fields[] = $prefix.$propertyName;
   }
 }

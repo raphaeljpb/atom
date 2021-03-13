@@ -27,6 +27,86 @@ class RepositoryEditThemeAction extends sfAction
       'logo',
       'logo_delete');
 
+  public function processForm()
+  {
+    foreach ($this->form as $field)
+    {
+      if (isset($this->request[$field->getName()]))
+      {
+        $this->processField($field);
+      }
+    }
+
+    return $this;
+  }
+
+  public function execute($request)
+  {
+    $this->resource = $this->getRoute()->resource;
+
+    // Check user authorization
+    if (!QubitAcl::check($this->resource, 'update'))
+    {
+      QubitAcl::forwardUnauthorized();
+    }
+
+    // We are going to need this later, when building the form
+    $this->existsLogo = $this->resource->existsLogo();
+    $this->existsBanner = $this->resource->existsBanner();
+
+    $this->form = new sfForm();
+
+    foreach ($this::$NAMES as $name)
+    {
+      $this->addField($name);
+    }
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters(), $request->getFiles());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        // Process logo and logo_delete together
+        if (null !== $this->form->getValue('logo_delete'))
+        {
+          unlink($this->resource->getLogoPath(true));
+        }
+        if (null !== $logo = $this->form->getValue('logo'))
+        {
+          // Call save() method found in sfValidatedFile
+          // TODO: force conversion to png
+          $logo->save($this->resource->getLogoPath(true));
+        }
+
+        // Process banner and banner_delete together
+        if (null !== $this->form->getValue('banner_delete'))
+        {
+          unlink($this->resource->getBannerPath(true));
+        }
+        if (null !== $logo = $this->form->getValue('banner'))
+        {
+          // Call save() method found in sfValidatedFile
+          // TODO: force conversion to png
+          $logo->save($this->resource->getBannerPath(true));
+        }
+
+        $this->resource->save();
+
+        // Invalidate cached htmlSnippet
+        if (!$this->new && null !== $cache = QubitCache::getInstance())
+        {
+          $cacheKey = 'repository:htmlsnippet:'.$this->resource->id;
+          $cache->remove($cacheKey);
+        }
+
+        $this->redirect(array($this->resource, 'module' => 'repository'));
+      }
+    }
+  }
+
   protected function addField($name)
   {
     switch ($name)
@@ -124,86 +204,6 @@ class RepositoryEditThemeAction extends sfAction
         $this->resource->setHtmlSnippet($this->form->getValue($field->getName()));
 
         break;
-    }
-  }
-
-  public function processForm()
-  {
-    foreach ($this->form as $field)
-    {
-      if (isset($this->request[$field->getName()]))
-      {
-        $this->processField($field);
-      }
-    }
-
-    return $this;
-  }
-
-  public function execute($request)
-  {
-    $this->resource = $this->getRoute()->resource;
-
-    // Check user authorization
-    if (!QubitAcl::check($this->resource, 'update'))
-    {
-      QubitAcl::forwardUnauthorized();
-    }
-
-    // We are going to need this later, when building the form
-    $this->existsLogo = $this->resource->existsLogo();
-    $this->existsBanner = $this->resource->existsBanner();
-
-    $this->form = new sfForm();
-
-    foreach ($this::$NAMES as $name)
-    {
-      $this->addField($name);
-    }
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters(), $request->getFiles());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        // Process logo and logo_delete together
-        if (null !== $this->form->getValue('logo_delete'))
-        {
-          unlink($this->resource->getLogoPath(true));
-        }
-        if (null !== $logo = $this->form->getValue('logo'))
-        {
-          // Call save() method found in sfValidatedFile
-          // TODO: force conversion to png
-          $logo->save($this->resource->getLogoPath(true));
-        }
-
-        // Process banner and banner_delete together
-        if (null !== $this->form->getValue('banner_delete'))
-        {
-          unlink($this->resource->getBannerPath(true));
-        }
-        if (null !== $logo = $this->form->getValue('banner'))
-        {
-          // Call save() method found in sfValidatedFile
-          // TODO: force conversion to png
-          $logo->save($this->resource->getBannerPath(true));
-        }
-
-        $this->resource->save();
-
-        // Invalidate cached htmlSnippet
-        if (!$this->new && null !== $cache = QubitCache::getInstance())
-        {
-          $cacheKey = 'repository:htmlsnippet:'.$this->resource->id;
-          $cache->remove($cacheKey);
-        }
-
-        $this->redirect(array($this->resource, 'module' => 'repository'));
-      }
     }
   }
 }

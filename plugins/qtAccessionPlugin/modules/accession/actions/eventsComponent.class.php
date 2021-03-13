@@ -59,40 +59,6 @@ class AccessionEventsComponent extends sfComponent
     }
   }
 
-  protected function addField($name)
-  {
-    switch ($name)
-    {
-    case 'eventType':
-        $this->form->setValidator($name, new sfValidatorInteger());
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $this->eventTypes]));
-
-        break;
-
-      case 'date':
-        $this->form->setValidator($name, new sfValidatorString());
-        $widget = new sfWidgetFormInput(['label' => false]);
-        $this->form->setWidget($name, $widget);
-
-        break;
-
-      case 'agent':
-        $this->form->setValidator($name, new sfValidatorString());
-        $widget = new sfWidgetFormInput(['label' => false]);
-        $this->form->setWidget($name, $widget);
-
-        break;
-
-      case 'note':
-        $this->form->setValidator($name, new sfValidatorString());
-        $widget = new sfWidgetFormTextarea(['label' => false]);
-        $widget->setAttribute('placeholder', $this->context->i18n->__('Notes'));
-        $this->form->setWidget($name, $widget);
-
-        break;
-    }
-  }
-
   public function processForm()
   {
     $finalEvents = [];
@@ -147,6 +113,40 @@ class AccessionEventsComponent extends sfComponent
         $event = QubitAccessionEvent::getById($item['id']);
         $event->delete();
       }
+    }
+  }
+
+  protected function addField($name)
+  {
+    switch ($name)
+    {
+    case 'eventType':
+        $this->form->setValidator($name, new sfValidatorInteger());
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $this->eventTypes]));
+
+        break;
+
+      case 'date':
+        $this->form->setValidator($name, new sfValidatorString());
+        $widget = new sfWidgetFormInput(['label' => false]);
+        $this->form->setWidget($name, $widget);
+
+        break;
+
+      case 'agent':
+        $this->form->setValidator($name, new sfValidatorString());
+        $widget = new sfWidgetFormInput(['label' => false]);
+        $this->form->setWidget($name, $widget);
+
+        break;
+
+      case 'note':
+        $this->form->setValidator($name, new sfValidatorString());
+        $widget = new sfWidgetFormTextarea(['label' => false]);
+        $widget->setAttribute('placeholder', $this->context->i18n->__('Notes'));
+        $this->form->setWidget($name, $widget);
+
+        break;
     }
   }
 }

@@ -34,63 +34,6 @@ abstract class exportBulkBaseTask extends sfBaseTask
     parent::__construct($dispatcher, $formatter);
   }
 
-  protected function addCoreArgumentsAndOptions()
-  {
-    $this->addArguments(array(
-      new sfCommandArgument('path', sfCommandArgument::REQUIRED, 'The destination directory for export file(s).')
-    ));
-
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('items-until-update', null, sfCommandOption::PARAMETER_OPTIONAL, 'Indicate progress every n items.')
-    ));
-  }
-
-  protected function addCommonArgumentsAndOptions()
-  {
-    $this->addCoreArgumentsAndOptions();
-
-    $this->addOptions(array(
-      new sfCommandOption('criteria', null, sfCommandOption::PARAMETER_OPTIONAL, 'Export criteria'),
-      new sfCommandOption('current-level-only', null, sfCommandOption::PARAMETER_NONE, 'Do not export child descriptions of exported items'),
-      new sfCommandOption('single-slug', null, sfCommandOption::PARAMETER_OPTIONAL, 'Export a single fonds or collection based on slug'),
-      new sfCommandOption('public', null, sfCommandOption::PARAMETER_NONE, 'Do not export draft physical locations or child descriptions')
-    ));
-  }
-
-  protected function checkPathIsWritable($path)
-  {
-    if (!is_dir($path))
-    {
-      throw new sfException('You must specify a valid directory');
-    }
-
-    if (!is_writable($path))
-    {
-      throw new sfException("Can't write to this directory");
-    }
-  }
-
-  protected function normalizeExportFormat($format, $validFormats)
-  {
-    $format = strtolower($format);
-
-    if (!in_array($format, $validFormats))
-    {
-      throw new sfException('Invalid format. Allowed formats: '. join(', ', $validFormats));
-    }
-
-    return $format;
-  }
-
-  protected function getDatabaseConnection()
-  {
-    $databaseManager = new sfDatabaseManager($this->configuration);
-    return $databaseManager->getDatabase('propel')->getConnection();
-  }
-
   public static function includeXmlExportClassesAndHelpers()
   {
     $appRoot = sfConfig::get('sf_root_dir');
@@ -181,15 +124,6 @@ abstract class exportBulkBaseTask extends sfBaseTask
                    substr($resource->slug, 0, $MAX_SLUG_CHARS), $extension);
   }
 
-  protected function indicateProgress($itemsUntilUpdate)
-  {
-    // If progress indicator should be displayed, display it
-    if (!isset($itemsUntilUpdate) || !($itemsExported % $itemsUntilUpdate))
-    {
-      print '.';
-    }
-  }
-
   public static function informationObjectQuerySql($options)
   {
     if (isset($options['single-slug']))
@@ -237,5 +171,71 @@ abstract class exportBulkBaseTask extends sfBaseTask
     }
 
     return $query;
+  }
+
+  protected function addCoreArgumentsAndOptions()
+  {
+    $this->addArguments(array(
+      new sfCommandArgument('path', sfCommandArgument::REQUIRED, 'The destination directory for export file(s).')
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('items-until-update', null, sfCommandOption::PARAMETER_OPTIONAL, 'Indicate progress every n items.')
+    ));
+  }
+
+  protected function addCommonArgumentsAndOptions()
+  {
+    $this->addCoreArgumentsAndOptions();
+
+    $this->addOptions(array(
+      new sfCommandOption('criteria', null, sfCommandOption::PARAMETER_OPTIONAL, 'Export criteria'),
+      new sfCommandOption('current-level-only', null, sfCommandOption::PARAMETER_NONE, 'Do not export child descriptions of exported items'),
+      new sfCommandOption('single-slug', null, sfCommandOption::PARAMETER_OPTIONAL, 'Export a single fonds or collection based on slug'),
+      new sfCommandOption('public', null, sfCommandOption::PARAMETER_NONE, 'Do not export draft physical locations or child descriptions')
+    ));
+  }
+
+  protected function checkPathIsWritable($path)
+  {
+    if (!is_dir($path))
+    {
+      throw new sfException('You must specify a valid directory');
+    }
+
+    if (!is_writable($path))
+    {
+      throw new sfException("Can't write to this directory");
+    }
+  }
+
+  protected function normalizeExportFormat($format, $validFormats)
+  {
+    $format = strtolower($format);
+
+    if (!in_array($format, $validFormats))
+    {
+      throw new sfException('Invalid format. Allowed formats: '. join(', ', $validFormats));
+    }
+
+    return $format;
+  }
+
+  protected function getDatabaseConnection()
+  {
+    $databaseManager = new sfDatabaseManager($this->configuration);
+    return $databaseManager->getDatabase('propel')->getConnection();
+  }
+
+  protected function indicateProgress($itemsUntilUpdate)
+  {
+    // If progress indicator should be displayed, display it
+    if (!isset($itemsUntilUpdate) || !($itemsExported % $itemsUntilUpdate))
+    {
+      print '.';
+    }
   }
 }

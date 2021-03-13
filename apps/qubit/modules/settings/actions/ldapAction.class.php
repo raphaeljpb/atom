@@ -26,6 +26,25 @@ class SettingsLdapAction extends DefaultEditAction
       'ldapBaseDn',
       'ldapBindAttribute');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        QubitCache::getInstance()->removePattern('settings:i18n:*');
+
+        $this->redirect(array('module' => 'settings', 'action' => 'ldap'));
+      }
+    }
+  }
+
   protected function addField($name)
   {
     switch ($name)
@@ -78,25 +97,6 @@ class SettingsLdapAction extends DefaultEditAction
         $this->{$name}->save();
 
         break;
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        QubitCache::getInstance()->removePattern('settings:i18n:*');
-
-        $this->redirect(array('module' => 'settings', 'action' => 'ldap'));
-      }
     }
   }
 }

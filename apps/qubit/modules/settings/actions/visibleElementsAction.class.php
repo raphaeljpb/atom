@@ -27,6 +27,33 @@
 
 class SettingsVisibleElementsAction extends sfAction
 {
+  public function execute($request)
+  {
+    $this->form = new sfForm();
+
+    foreach (QubitSetting::getByScope('element_visibility') as $item)
+    {
+      $this->addField($item);
+    }
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if (!$this->form->isValid())
+      {
+        return;
+      }
+
+      $this->processForm();
+
+      QubitCache::getInstance()->removePattern('settings:i18n:*');
+
+      $this->getUser()->setFlash('notice', sfContext::getInstance()->i18n->__('Visible elements configuration saved.'));
+
+      $this->redirect('settings/visibleElements');
+    }
+  }
   protected function addField(QubitSetting $setting)
   {
     $name = $setting->name;
@@ -70,33 +97,5 @@ class SettingsVisibleElementsAction extends sfAction
     $setting->setValue($value, array('sourceCulture' => true));
 
     $setting->save();
-  }
-
-  public function execute($request)
-  {
-    $this->form = new sfForm();
-
-    foreach (QubitSetting::getByScope('element_visibility') as $item)
-    {
-      $this->addField($item);
-    }
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if (!$this->form->isValid())
-      {
-        return;
-      }
-
-      $this->processForm();
-
-      QubitCache::getInstance()->removePattern('settings:i18n:*');
-
-      $this->getUser()->setFlash('notice', sfContext::getInstance()->i18n->__('Visible elements configuration saved.'));
-
-      $this->redirect('settings/visibleElements');
-    }
   }
 }

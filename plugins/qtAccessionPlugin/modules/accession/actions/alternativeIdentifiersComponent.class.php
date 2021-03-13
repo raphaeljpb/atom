@@ -55,32 +55,6 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
     }
   }
 
-  protected function addField($name)
-  {
-    switch ($name)
-    {
-    case 'identifierType':
-        $this->form->setValidator($name, new sfValidatorInteger());
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $this->identifierTypes]));
-
-        break;
-
-      case 'identifier':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
-
-        break;
-
-      case 'note':
-        $this->form->setValidator($name, new sfValidatorString());
-        $widget = new sfWidgetFormTextarea(['label' => false]);
-        $widget->setAttribute('placeholder', $this->context->i18n->__('Notes'));
-        $this->form->setWidget($name, $widget);
-
-        break;
-    }
-  }
-
   public function processForm()
   {
     $finalAlternativeIdentifiers = [];
@@ -121,6 +95,32 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
       {
         $identifier['object']->delete();
       }
+    }
+  }
+
+  protected function addField($name)
+  {
+    switch ($name)
+    {
+    case 'identifierType':
+        $this->form->setValidator($name, new sfValidatorInteger());
+        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $this->identifierTypes]));
+
+        break;
+
+      case 'identifier':
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
+
+        break;
+
+      case 'note':
+        $this->form->setValidator($name, new sfValidatorString());
+        $widget = new sfWidgetFormTextarea(['label' => false]);
+        $widget->setAttribute('placeholder', $this->context->i18n->__('Notes'));
+        $this->form->setWidget($name, $widget);
+
+        break;
     }
   }
 }

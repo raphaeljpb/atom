@@ -40,63 +40,6 @@ EOF;
   protected $timer;
 
   /**
-   * @see sfBaseTask
-   */
-  protected function configure()
-  {
-    $this->addOptions(
-      [
-        new sfCommandOption(
-          'application',
-          null,
-          sfCommandOption::PARAMETER_OPTIONAL,
-          'The application name', true
-        ),
-        new sfCommandOption(
-          'env',
-          null,
-          sfCommandOption::PARAMETER_REQUIRED,
-          'The environment', 'cli'
-        ),
-        new sfCommandOption(
-          'connection',
-          null,
-          sfCommandOption::PARAMETER_REQUIRED,
-          'The connection name', 'propel'
-        ),
-        new sfCommandOption(
-          'force',
-          'f',
-          sfCommandOption::PARAMETER_NONE,
-          'Don\'t prompt for confirmation before deleting data'
-        ),
-        new sfCommandOption(
-          'logfile',
-          'l',
-          sfCommandOption::PARAMETER_OPTIONAL,
-          'Log output to the named file'
-        ),
-        new sfCommandOption(
-          'verbose',
-          'v',
-          sfCommandOption::PARAMETER_NONE,
-          'More verbose output to aid in debugging'
-        )
-      ]
-    );
-
-    $this->addArguments(
-      [
-        new sfCommandArgument(
-          'name',
-          sfCommandArgument::REQUIRED,
-          'The import "source" name (keymap.source value)'
-        ),
-      ]
-    );
-  }
-
-  /**
    * @see sfTask
    */
   public function execute($arguments = array(), $options = array())
@@ -166,6 +109,63 @@ EOF;
         str_pad($this->timer->elapsed(), 7, '0', STR_PAD_LEFT),
         $message
       )
+    );
+  }
+
+  /**
+   * @see sfBaseTask
+   */
+  protected function configure()
+  {
+    $this->addOptions(
+      [
+        new sfCommandOption(
+          'application',
+          null,
+          sfCommandOption::PARAMETER_OPTIONAL,
+          'The application name', true
+        ),
+        new sfCommandOption(
+          'env',
+          null,
+          sfCommandOption::PARAMETER_REQUIRED,
+          'The environment', 'cli'
+        ),
+        new sfCommandOption(
+          'connection',
+          null,
+          sfCommandOption::PARAMETER_REQUIRED,
+          'The connection name', 'propel'
+        ),
+        new sfCommandOption(
+          'force',
+          'f',
+          sfCommandOption::PARAMETER_NONE,
+          'Don\'t prompt for confirmation before deleting data'
+        ),
+        new sfCommandOption(
+          'logfile',
+          'l',
+          sfCommandOption::PARAMETER_OPTIONAL,
+          'Log output to the named file'
+        ),
+        new sfCommandOption(
+          'verbose',
+          'v',
+          sfCommandOption::PARAMETER_NONE,
+          'More verbose output to aid in debugging'
+        )
+      ]
+    );
+
+    $this->addArguments(
+      [
+        new sfCommandArgument(
+          'name',
+          sfCommandArgument::REQUIRED,
+          'The import "source" name (keymap.source value)'
+        ),
+      ]
     );
   }
 

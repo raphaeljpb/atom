@@ -377,35 +377,6 @@ class sfWebBrowser
     }
   }
 
-  protected function parseArgumentAsArray($name, $value, &$vars)
-  {
-    if (false !== $pos = strpos($name, '['))
-    {
-      $var = &$vars;
-      $tmps = array_filter(preg_split('/(\[ | \[\] | \])/x', $name));
-      foreach ($tmps as $tmp)
-      {
-        $var = &$var[$tmp];
-      }
-      if ($var)
-      {
-        if (!is_array($var))
-        {
-          $var = array($var);
-        }
-        $var[] = $value;
-      }
-      else
-      {
-        $var = $value;
-      }
-    }
-    else
-    {
-      $vars[$name] = $value;
-    }
-  }
-
   /**
    * Adds the current request to the history stack
    *
@@ -724,28 +695,6 @@ class sfWebBrowser
   }
 
   /**
-   * Decodes gzip-encoded content ("content-encoding: gzip" response header).
-   *
-   * @param       stream     $gzip_text
-   * @return      string
-   */
-  protected function decodeGzip($gzip_text)
-  {
-    return gzinflate(substr($gzip_text, 10));
-  }
-
-  /**
-   * Decodes deflate-encoded content ("content-encoding: deflate" response header).
-   *
-   * @param       stream     $deflate_text
-   * @return      string
-   */
-  protected function decodeDeflate($deflate_text)
-  {
-    return gzuncompress($deflate_text);
-  }
-
-  /**
    * Get the response code
    *
    * @return string The response code
@@ -811,6 +760,57 @@ class sfWebBrowser
     $headers['Accept-Encoding'] = implode(',', array_unique($encodings));
 
     return $headers;
+  }
+
+  protected function parseArgumentAsArray($name, $value, &$vars)
+  {
+    if (false !== $pos = strpos($name, '['))
+    {
+      $var = &$vars;
+      $tmps = array_filter(preg_split('/(\[ | \[\] | \])/x', $name));
+      foreach ($tmps as $tmp)
+      {
+        $var = &$var[$tmp];
+      }
+      if ($var)
+      {
+        if (!is_array($var))
+        {
+          $var = array($var);
+        }
+        $var[] = $value;
+      }
+      else
+      {
+        $var = $value;
+      }
+    }
+    else
+    {
+      $vars[$name] = $value;
+    }
+  }
+
+  /**
+   * Decodes gzip-encoded content ("content-encoding: gzip" response header).
+   *
+   * @param       stream     $gzip_text
+   * @return      string
+   */
+  protected function decodeGzip($gzip_text)
+  {
+    return gzinflate(substr($gzip_text, 10));
+  }
+
+  /**
+   * Decodes deflate-encoded content ("content-encoding: deflate" response header).
+   *
+   * @param       stream     $deflate_text
+   * @return      string
+   */
+  protected function decodeDeflate($deflate_text)
+  {
+    return gzuncompress($deflate_text);
   }
 
   /**

@@ -19,8 +19,6 @@
 
 class QubitMenu extends BaseMenu
 {
-  public $disableNestedSetUpdating = false;
-
   public const
 
     // Root menu
@@ -64,6 +62,17 @@ class QubitMenu extends BaseMenu
 
     // 4rd generation constant ids
     TAXONOMY_ID = 6;
+  public $disableNestedSetUpdating = false;
+
+  /**
+   * Return name of menu if object is cast as string
+   *
+   * @return string menu name
+   */
+  public function __toString()
+  {
+    return (string) $this->name;
+  }
 
   /**
    * Wrapper for BaseMenu::getPath() call to allow additional functionality
@@ -161,16 +170,6 @@ class QubitMenu extends BaseMenu
     {
       return false;
     }
-  }
-
-  /**
-   * Return name of menu if object is cast as string
-   *
-   * @return string menu name
-   */
-  public function __toString()
-  {
-    return (string) $this->name;
   }
 
   /**

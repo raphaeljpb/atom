@@ -24,6 +24,43 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
       'publicationStatus',
       'updateDescendants');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($this->request->getMethod() == 'POST')
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        // Update resource synchronously
+        $publicationStatusId = $this->form->getValue('publicationStatus');
+        $this->resource->setPublicationStatus($publicationStatusId);
+        $this->resource->save();
+
+        // Update descendants using job scheduler
+        if (filter_var($this->form->getValue('updateDescendants'), FILTER_VALIDATE_BOOLEAN))
+        {
+          $options = array('objectId' => $this->resource->id, 'publicationStatusId' => $publicationStatusId);
+          QubitJob::runJob('arUpdatePublicationStatusJob', $options);
+
+          // Let user know descendants update has started
+          $i18n = $this->context->i18n;
+          $this->context->getConfiguration()->loadHelpers(array('Url'));
+          $jobsUrl = url_for(array('module' => 'jobs', 'action' => 'browse'));
+          $message = $i18n->__('Your description has been updated. Lower level descriptions are being updated now – check the <a href="%1">job scheduler page</a> for status and details.', array('%1' => $jobsUrl));
+          $this->getUser()->setFlash('notice', $message);
+        }
+
+        // Create or delete DC and EAD XML exports
+        $this->resource->updateXmlExports();
+
+        $this->redirect(array($this->resource, 'module' => 'informationobject'));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->resource = $this->getRoute()->resource;
@@ -73,43 +110,6 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
         $this->form->setWidget('updateDescendants', new sfWidgetFormInputCheckbox());
 
         break;
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($this->request->getMethod() == 'POST')
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        // Update resource synchronously
-        $publicationStatusId = $this->form->getValue('publicationStatus');
-        $this->resource->setPublicationStatus($publicationStatusId);
-        $this->resource->save();
-
-        // Update descendants using job scheduler
-        if (filter_var($this->form->getValue('updateDescendants'), FILTER_VALIDATE_BOOLEAN))
-        {
-          $options = array('objectId' => $this->resource->id, 'publicationStatusId' => $publicationStatusId);
-          QubitJob::runJob('arUpdatePublicationStatusJob', $options);
-
-          // Let user know descendants update has started
-          $i18n = $this->context->i18n;
-          $this->context->getConfiguration()->loadHelpers(array('Url'));
-          $jobsUrl = url_for(array('module' => 'jobs', 'action' => 'browse'));
-          $message = $i18n->__('Your description has been updated. Lower level descriptions are being updated now – check the <a href="%1">job scheduler page</a> for status and details.', array('%1' => $jobsUrl));
-          $this->getUser()->setFlash('notice', $message);
-        }
-
-        // Create or delete DC and EAD XML exports
-        $this->resource->updateXmlExports();
-
-        $this->redirect(array($this->resource, 'module' => 'informationobject'));
-      }
     }
   }
 }

@@ -27,6 +27,35 @@ class sfModsConvertor extends QubitSaxParser
   protected $materialTypes    = array();
   protected $digitalObjects   = array();
 
+  /*
+   * Import helpers
+   */
+
+  public function getResource()
+  {
+    return $this->resource;
+  }
+
+  public function importDigitalObjects($digitalObjects)
+  {
+    // Create digital objects
+    foreach ($digitalObjects as $digitalObject)
+    {
+      // Import digital object
+      $do = new QubitDigitalObject();
+      $do->informationObjectId = $this->resource->id;
+      $do->usageId = QubitTerm::MASTER_ID;
+      $do->assets[] = new QubitAsset(
+        $digitalObject['filename'],
+        file_get_contents($digitalObject['tempFile'])
+      );
+      $do->save();
+
+      // Delete tempfile
+      unlink($digitalObject['tempFile']);
+    }
+  }
+
   // <mods>
   protected function modsTagInit()
   {
@@ -325,15 +354,6 @@ class sfModsConvertor extends QubitSaxParser
     }
   }
 
-  /*
-   * Import helpers
-   */
-
-  public function getResource()
-  {
-    return $this->resource;
-  }
-
   protected function arrayPushIfValueNotEmpty(&$array, $value)
   {
     if (0 < strlen(trim($value)))
@@ -510,25 +530,5 @@ class sfModsConvertor extends QubitSaxParser
 
     // Add/associate place terms
     $this->importArrayOfTermNames(QubitTaxonomy::PLACE_ID, $this->places, $event->id);
-  }
-
-  public function importDigitalObjects($digitalObjects)
-  {
-    // Create digital objects
-    foreach ($digitalObjects as $digitalObject)
-    {
-      // Import digital object
-      $do = new QubitDigitalObject();
-      $do->informationObjectId = $this->resource->id;
-      $do->usageId = QubitTerm::MASTER_ID;
-      $do->assets[] = new QubitAsset(
-        $digitalObject['filename'],
-        file_get_contents($digitalObject['tempFile'])
-      );
-      $do->save();
-
-      // Delete tempfile
-      unlink($digitalObject['tempFile']);
-    }
   }
 }

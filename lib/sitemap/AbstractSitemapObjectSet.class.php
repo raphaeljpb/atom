@@ -24,6 +24,15 @@
 abstract class AbstractSitemapObjectSet implements Countable, Iterator
 {
   /**
+   * Propel PDO object
+   */
+  public $conn;
+
+  /**
+   * Sitemap configuration (sitemap.yml)
+   */
+  public $config;
+  /**
    * Database recordset
    */
   protected $rec;
@@ -38,25 +47,15 @@ abstract class AbstractSitemapObjectSet implements Countable, Iterator
    */
   private $item = null;
 
-  /**
-   * Propel PDO object
-   */
-  public $conn;
-
-  /**
-   * Sitemap configuration (sitemap.yml)
-   */
-  public $config;
+  public function __construct()
+  {
+    $this->conn = Propel::getConnection();
+  }
 
   /**
    * Force extending class to define init() to prepare the PDO statement
    */
   abstract public function init();
-
-  public function __construct()
-  {
-    $this->conn = Propel::getConnection();
-  }
 
   public function setConfig(&$config)
   {

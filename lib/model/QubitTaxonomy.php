@@ -19,8 +19,6 @@
 
 class QubitTaxonomy extends BaseTaxonomy
 {
-  public $disableNestedSetUpdating = false;
-
   public const
     ROOT_ID = 30;
   public const
@@ -129,6 +127,7 @@ class QubitTaxonomy extends BaseTaxonomy
     ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID = 82;
   public const
     ACCESSION_EVENT_TYPE_ID = 83;
+  public $disableNestedSetUpdating = false;
 
   public static $lockedTaxonomies = array(
       self::QUBIT_SETTING_LABEL_ID,
@@ -163,16 +162,6 @@ class QubitTaxonomy extends BaseTaxonomy
     }
 
     return (string) $this->getName();
-  }
-
-  protected function insert($connection = null)
-  {
-    if (!isset($this->slug))
-    {
-      $this->slug = QubitSlug::slugify($this->__get('name', array('sourceCulture' => true)));
-    }
-
-    return parent::insert($connection);
   }
 
   public static function getRoot()
@@ -277,5 +266,15 @@ SQL;
     }
 
     return $idLookupTable;
+  }
+
+  protected function insert($connection = null)
+  {
+    if (!isset($this->slug))
+    {
+      $this->slug = QubitSlug::slugify($this->__get('name', array('sourceCulture' => true)));
+    }
+
+    return parent::insert($connection);
   }
 }

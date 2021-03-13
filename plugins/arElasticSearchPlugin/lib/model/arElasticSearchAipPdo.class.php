@@ -69,6 +69,31 @@ class arElasticSearchAipPdo
     $this->data[$name] = $value;
   }
 
+  public function serialize()
+  {
+    $serialized = array();
+
+    $serialized['id'] = $this->id;
+    $serialized['uuid'] = $this->uuid;
+    $serialized['filename'] = $this->filename;
+    $serialized['sizeOnDisk'] = $this->size_on_disk;
+    $serialized['digitalObjectCount'] = $this->digital_object_count;
+    $serialized['createdAt'] = arElasticSearchPluginUtil::convertDate($this->created_at);
+
+    if (null !== $this->type_id)
+    {
+      $node = new arElasticSearchTermPdo($this->type_id);
+      $serialized['type'] = $node->serialize();
+    }
+
+    if (null !== $digitalObjects = $this->getDigitalObjects())
+    {
+      $serialized['digitalObjects'] = $digitalObjects;
+    }
+
+    return $serialized;
+  }
+
   protected function loadData($id)
   {
     if (!isset(self::$statements['aip']))
@@ -127,30 +152,5 @@ class arElasticSearchAipPdo
     {
       return $digitalObjects;
     }
-  }
-
-  public function serialize()
-  {
-    $serialized = array();
-
-    $serialized['id'] = $this->id;
-    $serialized['uuid'] = $this->uuid;
-    $serialized['filename'] = $this->filename;
-    $serialized['sizeOnDisk'] = $this->size_on_disk;
-    $serialized['digitalObjectCount'] = $this->digital_object_count;
-    $serialized['createdAt'] = arElasticSearchPluginUtil::convertDate($this->created_at);
-
-    if (null !== $this->type_id)
-    {
-      $node = new arElasticSearchTermPdo($this->type_id);
-      $serialized['type'] = $node->serialize();
-    }
-
-    if (null !== $digitalObjects = $this->getDigitalObjects())
-    {
-      $serialized['digitalObjects'] = $digitalObjects;
-    }
-
-    return $serialized;
   }
 }

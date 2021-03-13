@@ -189,26 +189,6 @@ class QubitRepository extends BaseRepository
   }
 
   /**
-   * Add repository specific logic to the insert action
-   *
-   * @param mixed $connection The database connection object
-   * @return QubitRepository self-reference
-   */
-  protected function insert($connection = null)
-  {
-    // When creating a new repository, set the upload_limit to the default
-    // value (app_repository_quota)
-    if (null == $this->__get('uploadLimit'))
-    {
-      $this->__set('uploadLimit', sfConfig::get('app_repository_quota'));
-    }
-
-    parent::insert($connection);
-
-    return $this;
-  }
-
-  /**
    * Additional actions to take on delete
    *
    */
@@ -281,38 +261,6 @@ class QubitRepository extends BaseRepository
     if ($this->getCountryCode())
     {
       return format_country($this->getCountryCode());
-    }
-  }
-
-  /**
-   * Get a value from this repository's contact information.
-   * This method will first check to see if there is a primary
-   * contact and return the field from there if it is set.
-   *
-   * If there is no primary contact or the primary contact does not
-   * have the specified field set, iterate over all contacts and return
-   * the first one that has the field set.
-   *
-   * @param  $getFunction  The get function for the field we want to return.
-   *                       e.g. getFromPrimaryOrFirstValidContact('getCity')
-   *
-   * @return  mixed  Returns the field if found, null otherwise
-   */
-  private function getFromPrimaryOrFirstValidContact($getFunction, $options)
-  {
-    $primaryContact = $this->getPrimaryContact();
-
-    if ($primaryContact && $primaryContact->$getFunction($options))
-    {
-      return $primaryContact->$getFunction($options);
-    }
-
-    foreach ($this->getContactInformation() as $contact)
-    {
-      if ($contact->$getFunction($options))
-      {
-        return $contact->$getFunction($options);
-      }
     }
   }
 
@@ -552,5 +500,57 @@ class QubitRepository extends BaseRepository
   public function existsBanner()
   {
     return is_file($this->getBannerPath(true));
+  }
+
+  /**
+   * Add repository specific logic to the insert action
+   *
+   * @param mixed $connection The database connection object
+   * @return QubitRepository self-reference
+   */
+  protected function insert($connection = null)
+  {
+    // When creating a new repository, set the upload_limit to the default
+    // value (app_repository_quota)
+    if (null == $this->__get('uploadLimit'))
+    {
+      $this->__set('uploadLimit', sfConfig::get('app_repository_quota'));
+    }
+
+    parent::insert($connection);
+
+    return $this;
+  }
+
+  /**
+   * Get a value from this repository's contact information.
+   * This method will first check to see if there is a primary
+   * contact and return the field from there if it is set.
+   *
+   * If there is no primary contact or the primary contact does not
+   * have the specified field set, iterate over all contacts and return
+   * the first one that has the field set.
+   *
+   * @param  $getFunction  The get function for the field we want to return.
+   *                       e.g. getFromPrimaryOrFirstValidContact('getCity')
+   *
+   * @return  mixed  Returns the field if found, null otherwise
+   */
+  private function getFromPrimaryOrFirstValidContact($getFunction, $options)
+  {
+    $primaryContact = $this->getPrimaryContact();
+
+    if ($primaryContact && $primaryContact->$getFunction($options))
+    {
+      return $primaryContact->$getFunction($options);
+    }
+
+    foreach ($this->getContactInformation() as $contact)
+    {
+      if ($contact->$getFunction($options))
+      {
+        return $contact->$getFunction($options);
+      }
+    }
   }
 }

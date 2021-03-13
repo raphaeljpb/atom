@@ -25,13 +25,14 @@
  */
 class QubitActor extends BaseActor
 {
+  public const
+    ROOT_ID = 3;
   // Allow per-object disabling of nested set updating during bulk imports
     public $disableNestedSetUpdating = false;
   // Flag for updating search index on save
     public $indexOnSave = true;
 
-  public const
-    ROOT_ID = 3;
+  protected $SubjectHitCount = null;
 
   public function __toString()
   {
@@ -121,16 +122,6 @@ class QubitActor extends BaseActor
     }
 
     return call_user_func_array(array($this, 'BaseActor::__set'), $args);
-  }
-
-  protected function insert($connection = null)
-  {
-    if (!isset($this->slug))
-    {
-      $this->slug = QubitSlug::slugify($this->__get('authorizedFormOfName', array('sourceCulture' => true)));
-    }
-
-    return parent::insert($connection);
   }
 
   public function save($connection = null)
@@ -303,27 +294,6 @@ class QubitActor extends BaseActor
     return parent::delete($connection);
   }
 
-  private function updateRelations($actorIds)
-  {
-    if (!empty($actorIds))
-    {
-      // Update, in Elasticsearch, relations of actors previously related to actor
-      if (!in_array(sfContext::getInstance()->getConfiguration()->getEnvironment(), array('cli', 'worker')))
-      {
-        QubitJob::runJob('arUpdateEsActorRelationsJob', ['actorIds' => $actorIds]);
-      }
-      else
-      {
-        foreach ($actorIds as $actorId)
-        {
-          $actor = QubitActor::getById($actorId);
-          arUpdateEsActorRelationsJob::updateActorRelationships($actor);
-          Qubit::clearClassCaches();
-        }
-      }
-    }
-  }
-
   public static function getRoot()
   {
     return self::getById(self::ROOT_ID);
@@ -490,8 +460,6 @@ class QubitActor extends BaseActor
       return QubitContactInformation::getOne($criteria);
     }
   }
-
-  protected $SubjectHitCount = null;
 
   public function setSubjectHitCount($count)
   {
@@ -811,5 +779,36 @@ class QubitActor extends BaseActor
     $digitalObject->importFromBase64($encodedString, $filename);
 
     $this->digitalObjectsRelatedByobjectId[] = $digitalObject;
+  }
+
+  protected function insert($connection = null)
+  {
+    if (!isset($this->slug))
+    {
+      $this->slug = QubitSlug::slugify($this->__get('authorizedFormOfName', array('sourceCulture' => true)));
+    }
+
+    return parent::insert($connection);
+  }
+
+  private function updateRelations($actorIds)
+  {
+    if (!empty($actorIds))
+    {
+      // Update, in Elasticsearch, relations of actors previously related to actor
+      if (!in_array(sfContext::getInstance()->getConfiguration()->getEnvironment(), array('cli', 'worker')))
+      {
+        QubitJob::runJob('arUpdateEsActorRelationsJob', ['actorIds' => $actorIds]);
+      }
+      else
+      {
+        foreach ($actorIds as $actorId)
+        {
+          $actor = QubitActor::getById($actorId);
+          arUpdateEsActorRelationsJob::updateActorRelationships($actor);
+          Qubit::clearClassCaches();
+        }
+      }
+    }
   }
 }

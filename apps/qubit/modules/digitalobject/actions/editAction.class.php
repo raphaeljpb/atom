@@ -26,109 +26,6 @@
  */
 class DigitalObjectEditAction extends sfAction
 {
-  protected function addFormFields()
-  {
-    // Media type field
-    $choices = array();
-    $criteria = new Criteria();
-    $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MEDIA_TYPE_ID);
-    foreach (QubitTerm::get($criteria) as $item)
-    {
-      $choices[$item->id] = $item->getName(array('cultureFallback' => true));
-    }
-
-    asort($choices); // Sort media types by name
-
-    $this->form->setValidator('mediaType', new sfValidatorChoice(array('choices' => array_keys($choices))));
-    $this->form->setWidget('mediaType', new sfWidgetFormSelect(array('choices' => $choices)));
-    $this->form->setDefault('mediaType', $this->resource->mediaTypeId);
-
-    // Only display "compound digital object" toggle if we have a child with a
-    // digital object
-    $this->showCompoundObjectToggle = false;
-    if ($this->object instanceof QubitInformationObject)
-    {
-      foreach ($this->object->getChildren() as $item)
-      {
-        if (null !== $item->getDigitalObject())
-        {
-          $this->showCompoundObjectToggle = true;
-
-          break;
-        }
-      }
-    }
-
-    if ($this->showCompoundObjectToggle)
-    {
-      $this->form->setValidator('displayAsCompound', new sfValidatorBoolean());
-      $this->form->setWidget('displayAsCompound', new sfWidgetFormSelectRadio(
-        array('choices' => array(
-          '1' => $this->context->i18n->__('Yes'),
-          '0' => $this->context->i18n->__('No')))));
-
-      // Set "displayAsCompound" value from QubitProperty
-      $criteria = new Criteria();
-      $criteria->add(QubitProperty::OBJECT_ID, $this->resource->id);
-      $criteria->add(QubitProperty::NAME, 'displayAsCompound');
-
-      if (null != $compoundProperty = QubitProperty::getOne($criteria))
-      {
-        $this->form->setDefault('displayAsCompound', $compoundProperty->getValue(array('sourceCulture' => true)));
-      }
-    }
-
-    $this->form->setValidator('digitalObjectAltText', new sfValidatorString());
-    $this->form->setWidget('digitalObjectAltText', new sfWidgetFormTextarea());
-    if (null !== $this->digitalObjectAltText = $this->resource->getDigitalObjectAltText())
-    {
-      $this->form->setDefault('digitalObjectAltText', $this->digitalObjectAltText);
-    }
-
-    $maxUploadSize = QubitDigitalObject::getMaxUploadSize();
-
-    ProjectConfiguration::getActive()->loadHelpers('Qubit');
-
-    // If reference representation doesn't exist, include upload widget
-    foreach ($this->representations as $usageId => $representation)
-    {
-      if (null === $representation)
-      {
-        $repName = "repFile_$usageId";
-        $derName = "generateDerivative_$usageId";
-
-        $this->form->setValidator($repName, new sfValidatorFile());
-        $this->form->setWidget($repName, new sfWidgetFormInputFile());
-
-        if (-1 < $maxUploadSize)
-        {
-          $this->form->getWidgetSchema()->$repName->setHelp($this->context->i18n->__('Max. size ~%1%', array('%1%' => hr_filesize($maxUploadSize))));
-        }
-        else
-        {
-          $this->form->getWidgetSchema()->$repName->setHelp('');
-        }
-
-        // Add "auto-generate" checkbox
-        $this->form->setValidator($derName, new sfValidatorBoolean());
-        $this->form->setWidget($derName, new sfWidgetFormInputCheckbox(array(), array('value' => 1)));
-      }
-    }
-
-    // Add latitude and longitude fields
-    foreach (array('latitude', 'longitude') as $geoPropertyField)
-    {
-      $this->form->setValidator($geoPropertyField, new sfValidatorNumber());
-      $this->form->setWidget($geoPropertyField, new sfWidgetFormInput());
-
-      $fieldProperty = $this->resource->getPropertyByName($geoPropertyField);
-      if (isset($fieldProperty->value))
-      {
-        $this->form->setDefault($geoPropertyField, $fieldProperty->value);
-      }
-    }
-  }
-
   public function execute($request)
   {
     $this->form = new sfForm();
@@ -271,6 +168,108 @@ class DigitalObjectEditAction extends sfAction
       // Set value and save
       $geoProperty->value = $this->form->getValue($geoPropertyField);
       $geoProperty->save();
+    }
+  }
+  protected function addFormFields()
+  {
+    // Media type field
+    $choices = array();
+    $criteria = new Criteria();
+    $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MEDIA_TYPE_ID);
+    foreach (QubitTerm::get($criteria) as $item)
+    {
+      $choices[$item->id] = $item->getName(array('cultureFallback' => true));
+    }
+
+    asort($choices); // Sort media types by name
+
+    $this->form->setValidator('mediaType', new sfValidatorChoice(array('choices' => array_keys($choices))));
+    $this->form->setWidget('mediaType', new sfWidgetFormSelect(array('choices' => $choices)));
+    $this->form->setDefault('mediaType', $this->resource->mediaTypeId);
+
+    // Only display "compound digital object" toggle if we have a child with a
+    // digital object
+    $this->showCompoundObjectToggle = false;
+    if ($this->object instanceof QubitInformationObject)
+    {
+      foreach ($this->object->getChildren() as $item)
+      {
+        if (null !== $item->getDigitalObject())
+        {
+          $this->showCompoundObjectToggle = true;
+
+          break;
+        }
+      }
+    }
+
+    if ($this->showCompoundObjectToggle)
+    {
+      $this->form->setValidator('displayAsCompound', new sfValidatorBoolean());
+      $this->form->setWidget('displayAsCompound', new sfWidgetFormSelectRadio(
+        array('choices' => array(
+          '1' => $this->context->i18n->__('Yes'),
+          '0' => $this->context->i18n->__('No')))));
+
+      // Set "displayAsCompound" value from QubitProperty
+      $criteria = new Criteria();
+      $criteria->add(QubitProperty::OBJECT_ID, $this->resource->id);
+      $criteria->add(QubitProperty::NAME, 'displayAsCompound');
+
+      if (null != $compoundProperty = QubitProperty::getOne($criteria))
+      {
+        $this->form->setDefault('displayAsCompound', $compoundProperty->getValue(array('sourceCulture' => true)));
+      }
+    }
+
+    $this->form->setValidator('digitalObjectAltText', new sfValidatorString());
+    $this->form->setWidget('digitalObjectAltText', new sfWidgetFormTextarea());
+    if (null !== $this->digitalObjectAltText = $this->resource->getDigitalObjectAltText())
+    {
+      $this->form->setDefault('digitalObjectAltText', $this->digitalObjectAltText);
+    }
+
+    $maxUploadSize = QubitDigitalObject::getMaxUploadSize();
+
+    ProjectConfiguration::getActive()->loadHelpers('Qubit');
+
+    // If reference representation doesn't exist, include upload widget
+    foreach ($this->representations as $usageId => $representation)
+    {
+      if (null === $representation)
+      {
+        $repName = "repFile_$usageId";
+        $derName = "generateDerivative_$usageId";
+
+        $this->form->setValidator($repName, new sfValidatorFile());
+        $this->form->setWidget($repName, new sfWidgetFormInputFile());
+
+        if (-1 < $maxUploadSize)
+        {
+          $this->form->getWidgetSchema()->$repName->setHelp($this->context->i18n->__('Max. size ~%1%', array('%1%' => hr_filesize($maxUploadSize))));
+        }
+        else
+        {
+          $this->form->getWidgetSchema()->$repName->setHelp('');
+        }
+
+        // Add "auto-generate" checkbox
+        $this->form->setValidator($derName, new sfValidatorBoolean());
+        $this->form->setWidget($derName, new sfWidgetFormInputCheckbox(array(), array('value' => 1)));
+      }
+    }
+
+    // Add latitude and longitude fields
+    foreach (array('latitude', 'longitude') as $geoPropertyField)
+    {
+      $this->form->setValidator($geoPropertyField, new sfValidatorNumber());
+      $this->form->setWidget($geoPropertyField, new sfWidgetFormInput());
+
+      $fieldProperty = $this->resource->getPropertyByName($geoPropertyField);
+      if (isset($fieldProperty->value))
+      {
+        $this->form->setDefault($geoPropertyField, $fieldProperty->value);
+      }
     }
   }
 }

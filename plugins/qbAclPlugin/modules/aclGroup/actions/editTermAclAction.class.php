@@ -28,27 +28,6 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
     'taxonomy'
   );
 
-  protected function addField($name)
-  {
-    switch ($name)
-    {
-      case 'taxonomy':
-        $choices = array();
-        $choices[null] = null;
-
-        foreach (QubitTaxonomy::getEditableTaxonomies() as $taxonomy)
-        {
-          $choices[$this->context->routing->generate(null, array($taxonomy, 'module' => 'taxonomy'))] = $taxonomy;
-        }
-
-        $this->form->setDefault($name, null);
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
-
-        break;
-    }
-  }
-
   public function execute($request)
   {
     parent::execute($request);
@@ -88,6 +67,27 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
         $this->processForm();
         $this->redirect(array($this->resource, 'module' => 'aclGroup', 'action' => 'indexTermAcl'));
       }
+    }
+  }
+
+  protected function addField($name)
+  {
+    switch ($name)
+    {
+      case 'taxonomy':
+        $choices = array();
+        $choices[null] = null;
+
+        foreach (QubitTaxonomy::getEditableTaxonomies() as $taxonomy)
+        {
+          $choices[$this->context->routing->generate(null, array($taxonomy, 'module' => 'taxonomy'))] = $taxonomy;
+        }
+
+        $this->form->setDefault($name, null);
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $choices)));
+
+        break;
     }
   }
 }

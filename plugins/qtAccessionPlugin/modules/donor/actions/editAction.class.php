@@ -23,6 +23,27 @@ class DonorEditAction extends DefaultEditAction
   public static $NAMES = array(
       'authorizedFormOfName');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->contactInformationEditComponent->processForm();
+
+        $this->processForm();
+
+        $this->resource->save();
+
+        $this->redirect(array($this->resource, 'module' => 'donor'));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
@@ -85,27 +106,6 @@ class DonorEditAction extends DefaultEditAction
       default:
 
         return parent::addField($name);
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->contactInformationEditComponent->processForm();
-
-        $this->processForm();
-
-        $this->resource->save();
-
-        $this->redirect(array($this->resource, 'module' => 'donor'));
-      }
     }
   }
 }

@@ -28,6 +28,13 @@ class sfIsdfPluginRelatedFunctionComponent extends RelationEditComponent
       'endDate',
       'date');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    $this->form->getWidgetSchema()->setNameFormat('relatedFunction[%s]');
+  }
+
   protected function addField($name)
   {
     switch ($name)
@@ -89,12 +96,5 @@ class sfIsdfPluginRelatedFunctionComponent extends RelationEditComponent
 
         return parent::processField($field);
     }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    $this->form->getWidgetSchema()->setNameFormat('relatedFunction[%s]');
   }
 }

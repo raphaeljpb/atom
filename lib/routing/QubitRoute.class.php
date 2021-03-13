@@ -19,38 +19,6 @@
 
 class QubitRoute extends sfRoute
 {
-  protected function filterParams($params)
-  {
-    // Fill in missing parameters with attributes of $params[0]
-    if (!is_array($params))
-    {
-      $params = array($params);
-    }
-
-    if (isset($params[0]))
-    {
-      if ($params[0] instanceof sfOutputEscaper)
-      {
-        $params[0] = sfOutputEscaper::unescape($params[0]);
-      }
-
-      foreach (array_diff_key($this->params + $this->variables, $params) as $key => $ignore)
-      {
-        try
-        {
-          $params[$key] = $params[0][$key];
-        }
-        catch (sfException $e)
-        {
-        }
-      }
-
-      unset($params[0]);
-    }
-
-    return $params;
-  }
-
   /**
   * Used to correctly represent the characters * ; : @ = , in the slug part
   * of a URI - this is the path segment.
@@ -135,6 +103,37 @@ class QubitRoute extends sfRoute
     }
 
     return $url;
+  }
+  protected function filterParams($params)
+  {
+    // Fill in missing parameters with attributes of $params[0]
+    if (!is_array($params))
+    {
+      $params = array($params);
+    }
+
+    if (isset($params[0]))
+    {
+      if ($params[0] instanceof sfOutputEscaper)
+      {
+        $params[0] = sfOutputEscaper::unescape($params[0]);
+      }
+
+      foreach (array_diff_key($this->params + $this->variables, $params) as $key => $ignore)
+      {
+        try
+        {
+          $params[$key] = $params[0][$key];
+        }
+        catch (sfException $e)
+        {
+        }
+      }
+
+      unset($params[0]);
+    }
+
+    return $params;
   }
 
   /**

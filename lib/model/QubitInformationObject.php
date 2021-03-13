@@ -205,16 +205,6 @@ class QubitInformationObject extends BaseInformationObject
     }
   }
 
-  protected function insert($connection = null)
-  {
-    if (!isset($this->slug))
-    {
-      $this->slug = $this->generateSlug();
-    }
-
-    return parent::insert($connection);
-  }
-
   public function save($connection = null)
   {
     // Determine user action ID
@@ -432,25 +422,6 @@ class QubitInformationObject extends BaseInformationObject
     QubitSearch::getInstance()->delete($this);
 
     parent::delete($connection);
-  }
-
-  /**
-   * Remove any corresponding keymap entries on delete of this object
-   *
-   */
-  private function removeKeymapEntries()
-  {
-    $criteria = new Criteria();
-    $criteria->add(QubitKeymap::TARGET_ID, $this->id);
-    $criteria->add(QubitKeymap::TARGET_NAME, 'information_object');
-
-    if ($objectKeymap = QubitKeymap::get($criteria))
-    {
-      foreach ($objectKeymap as $item)
-      {
-        $item->delete();
-      }
-    }
   }
 
   /**
@@ -855,14 +826,6 @@ class QubitInformationObject extends BaseInformationObject
     $parentId = QubitInformationObject::getOne($criteria)->id;
 
     $this->parentId = $parentId;
-  }
-
-  protected function updateNestedSet($connection = null)
-  {
-    if (!$this->disableNestedSetUpdating)
-    {
-      return parent::updateNestedSet($connection);
-    }
   }
 
   /**
@@ -1555,73 +1518,6 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Returns an actor if one exists with the specified name and
-   * is related to this information object (either as a subject
-   * or an object)
-   *
-   * @param $name  The actor name
-   * @param $relatedBy  The relation type, either 'object' or 'subject'
-   * @return QubitActor matching the specified parameters, null otherwise
-   */
-  private function getActorByNameAndRelation($name, $relatedBy = 'object')
-  {
-    // We could also maybe use $this->$varmagic here but
-    // I figure just a simple if/else was more readable.
-    if ($relatedBy === 'object')
-    {
-      $relations = $this->relationsRelatedByobjectId;
-    }
-    else
-    {
-      $relations = $this->relationsRelatedBysubjectId;
-    }
-
-    foreach ($relations as $relation)
-    {
-      if ($relation->$relatedBy instanceof QubitActor)
-      {
-        foreach ($relation->$relatedBy->actorI18ns as $actorI18n)
-        {
-          if (isset($actorI18n->authorizedFormOfName) &&
-            $name == $actorI18n->authorizedFormOfName)
-          {
-            return $relation->$relatedBy;
-          }
-        }
-      }
-    }
-
-    return null;
-  }
-
-  /**
-   * Returns an actor if one exists with the specified name and
-   * who is also part of an event related to this information object.
-   *
-   * @param $name  The actor name
-   * @return QubitActor matching the specified parameters, null otherwise
-   */
-  private function getActorByNameAndEvent($name)
-  {
-    foreach ($this->eventsRelatedByobjectId as $event)
-    {
-      if (isset($event->actor))
-      {
-        foreach ($event->actor->actorI18ns as $actorI18n)
-        {
-          if (isset($actorI18n->authorizedFormOfName) &&
-            $name == $actorI18n->authorizedFormOfName)
-          {
-            return $event->actor;
-          }
-        }
-      }
-    }
-
-    return null;
-  }
-
-  /**
    * This method will add an existing actor related to this information object to events or
    * name access points. Or, if no actor exists as such, create a new one to add to events
    * or name access point.
@@ -2044,125 +1940,6 @@ class QubitInformationObject extends BaseInformationObject
   }
 
   /**
-   * Parse chronlist tags from within a bioghist tag.
-   *
-   * @param DOMNodeList $chronlistNodeList  A node list containing the chronlist tag and its children.
-   */
-  private function parseChronlist($chronlistNodeList)
-  {
-    foreach ($chronlistNodeList as $chronlistNode)
-    {
-      // Get chronitem elements in chronlist element
-      $chronitemNodeList = $chronlistNode->getElementsByTagName('chronitem');
-      foreach ($chronitemNodeList as $chronitemNode)
-      {
-        // Get creation date element contents
-        $dateNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/date[@type='creation']");
-        foreach ($dateNodeList as $dateNode)
-        {
-          $date = $dateNode->nodeValue;
-        }
-
-        // Get creation start and end date from "normal" attribute
-        $dateNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/date[@type='creation']/@normal");
-        foreach ($dateNodeList as $dateNormalAttr)
-        {
-          $normalizedDates = sfEadPlugin::parseEadDenormalizedDateData($dateNormalAttr->value);
-
-          $date_start = $normalizedDates['start'];
-
-          if ($normalizedDates['end'])
-          {
-            $date_end = $normalizedDates['end'];
-          }
-        }
-
-        // Get dates of existence element contents
-        $dateNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/eventgrp/event/date[@type='existence']");
-        foreach ($dateNodeList as $dateNode)
-        {
-          $datesValue = $dateNode->nodeValue;
-        }
-
-        // Get creation end date element contents
-        $history = '';
-        $dateNodeList = QubitXmlImport::queryDomNode($chronitemNode, '/xml/chronitem/eventgrp/event/note[not(@type="eventNote")]/p');
-        foreach ($dateNodeList as $noteNode)
-        {
-          $history = $noteNode->nodeValue;
-        }
-
-        $possibleNameFields = array(
-          'name'     => QubitTerm::PERSON_ID,
-          'persname' => QubitTerm::PERSON_ID,
-          'famname'  => QubitTerm::FAMILY_ID,
-          'corpname' => QubitTerm::CORPORATE_BODY_ID
-        );
-
-        $typeId = QubitTerm::PERSON_ID;
-        $name   = '';
-
-        foreach ($possibleNameFields as $fieldName => $fieldTypeId)
-        {
-          $fieldValue = '';
-          $nameNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/eventgrp/event/origination/". $fieldName);
-          foreach ($nameNodeList as $nameNode)
-          {
-            $fieldValue = $nameNode->nodeValue;
-          }
-
-          if ($fieldValue != '')
-          {
-            $name             = $fieldValue;
-            $typeId           = $fieldTypeId;
-            $datesOfExistence = $datesValue;
-          }
-        }
-
-        $eventNote = '';
-        $eventNoteList = QubitXmlImport::queryDomNode($chronitemNode, '/xml/chronitem/eventgrp/event/note[@type="eventNote"]/p');
-        foreach ($eventNoteList as $eventNoteNode)
-        {
-          $eventNote = $eventNoteNode->nodeValue;
-        }
-
-        $eventSpec = array(
-          'event_type_id' => QubitTerm::CREATION_ID,
-          'entity_type_id' => $typeId,
-          'history'       => $history
-        );
-
-        if ($date)
-        {
-          $eventSpec['dates'] = $date;
-        }
-
-        if ($datesOfExistence)
-        {
-          $eventSpec['dates_of_existence'] = $datesOfExistence;
-        }
-
-        if ($date_start)
-        {
-          $eventSpec['date_start'] = $date_start;
-        }
-
-        if ($date_end)
-        {
-          $eventSpec['date_end'] = $date_end;
-        }
-
-        if (0 < strlen($eventNote))
-        {
-          $eventSpec['event_note'] = $eventNote;
-        }
-
-        $this->setActorByName($name, $eventSpec);
-      }
-    }
-  }
-
-  /**
    * Import actor history from on <bioghist> tag in EAD2002
    *
    * @param $history string actor history
@@ -2306,45 +2083,6 @@ class QubitInformationObject extends BaseInformationObject
     }
   }
 
-  /**
-   * Returns a date string YYYY-MM-DD when given a date from an EAD <unitdate> @normal attribute
-   *
-   * @param $date  A date string from an EAD file, e.g. 19601103
-   * @return Will return a MySQL friendly YYYY-MM-DD date string (uses '-0' if missing a field)
-   */
-  private function getNormalizedDate($date)
-  {
-    if (strpos($date, '-') !== false)
-    {
-      return $date; // Already in YYYY-MM-DD format (hopefully)
-    }
-
-    // Check to see if date is proper length, either 4 for year only,
-    // 6 for year & month, or 8 for year & month & day
-    if (!in_array(strlen($date), array(4, 6, 8)))
-    {
-      return null;
-    }
-
-    $year = $month = $day = 0;
-
-    switch (true)
-    {
-      case strlen($date) >= 4: $year  = (int)substr($date, 0, 4);
-      // no break
-      case strlen($date) >= 6: $month = (int)substr($date, 4, 2);
-      // no break
-      case strlen($date) == 8: $day   = (int)substr($date, 6, 2);
-    }
-
-    if ($year === 0)
-    {
-      return null; // Garbage date
-    }
-
-    return "$year-$month-$day";
-  }
-
   public function setDates($date, $options = array())
   {
     $normalizedDate = array('start' => null, 'end' => null);
@@ -2397,25 +2135,6 @@ class QubitInformationObject extends BaseInformationObject
     $this->eventsRelatedByobjectId[] = $event;
 
     return $event;
-  }
-
-  protected function getDefaultDateValue($date)
-  {
-    $dateArray = explode("-", $date);
-
-    $defaultDateValue = str_pad($dateArray[0], 4, "0", STR_PAD_LEFT);
-
-    if (isset($dateArray[1]))
-    {
-      $defaultDateValue .= '-'.str_pad($dateArray[1], 2, '0', STR_PAD_LEFT);
-    }
-
-    if (isset($dateArray[2]))
-    {
-      $defaultDateValue .= '-'.str_pad($dateArray[2], 2, '0', STR_PAD_LEFT);
-    }
-
-    return $defaultDateValue;
   }
 
   public function setIdentifierWithCodes($identifier, $options)
@@ -3101,52 +2820,6 @@ class QubitInformationObject extends BaseInformationObject
     return strip_tags($this->getExtentAndMedium($options));
   }
 
-  /*
-   * Generate a slug for this information object. This might be based
-   * on title, identifier (reference code), or other properties in the future.
-   *
-   * @return string  The generated slug.
-   */
-  private function generateSlug()
-  {
-    // Fall back to title as slug basis
-    $slugBasis = sfConfig::get('app_slug_basis_informationobject', QubitSlug::SLUG_BASIS_TITLE);
-
-    $stringToSlugify = null;
-
-    switch ($slugBasis)
-    {
-      case QubitSlug::SLUG_BASIS_REFERENCE_CODE:
-        $stringToSlugify = $this->getInheritedReferenceCode();
-        break;
-
-      case QubitSlug::SLUG_BASIS_TITLE:
-        $stringToSlugify = $this->getTitle(array('sourceCulture' => true));
-        break;
-
-      case QubitSlug::SLUG_BASIS_REFERENCE_CODE_NO_COUNTRY_REPO:
-        $stringToSlugify = $this->getInheritedReferenceCode(false);
-        break;
-
-      case QubitSlug::SLUG_BASIS_IDENTIFIER:
-        $stringToSlugify = $this->identifier;
-        break;
-
-      default:
-        throw new sfException('Unsupported slug basis specified in settings: '.$slugBasis);
-    }
-
-    // Blank string or null returned, attempt to fall back to slug based on title
-    if ($slugBasis != QubitSlug::SLUG_BASIS_TITLE && !$stringToSlugify)
-    {
-      $stringToSlugify = $this->getTitle(array('sourceCulture' => true));
-    }
-
-    // If we still have a blank or null value here, QubitObject will eventually create a random
-    // slug for us. See QubitObject::insertSlug().
-    return QubitSlug::slugify($stringToSlugify);
-  }
-
   /**
    * Return this information object's full, inherited reference code.
    *
@@ -3232,5 +2905,332 @@ class QubitInformationObject extends BaseInformationObject
     $counter = self::getIdentifierCounter();
     $counterValue = $counter->getValue(array('sourceCulture' => true));
     return Qubit::generateIdentifierFromCounterAndMask($counterValue, sfConfig::get('app_identifier_mask', ''));
+  }
+
+  protected function insert($connection = null)
+  {
+    if (!isset($this->slug))
+    {
+      $this->slug = $this->generateSlug();
+    }
+
+    return parent::insert($connection);
+  }
+
+  protected function updateNestedSet($connection = null)
+  {
+    if (!$this->disableNestedSetUpdating)
+    {
+      return parent::updateNestedSet($connection);
+    }
+  }
+
+  protected function getDefaultDateValue($date)
+  {
+    $dateArray = explode("-", $date);
+
+    $defaultDateValue = str_pad($dateArray[0], 4, "0", STR_PAD_LEFT);
+
+    if (isset($dateArray[1]))
+    {
+      $defaultDateValue .= '-'.str_pad($dateArray[1], 2, '0', STR_PAD_LEFT);
+    }
+
+    if (isset($dateArray[2]))
+    {
+      $defaultDateValue .= '-'.str_pad($dateArray[2], 2, '0', STR_PAD_LEFT);
+    }
+
+    return $defaultDateValue;
+  }
+
+  /**
+   * Remove any corresponding keymap entries on delete of this object
+   *
+   */
+  private function removeKeymapEntries()
+  {
+    $criteria = new Criteria();
+    $criteria->add(QubitKeymap::TARGET_ID, $this->id);
+    $criteria->add(QubitKeymap::TARGET_NAME, 'information_object');
+
+    if ($objectKeymap = QubitKeymap::get($criteria))
+    {
+      foreach ($objectKeymap as $item)
+      {
+        $item->delete();
+      }
+    }
+  }
+
+  /**
+   * Returns an actor if one exists with the specified name and
+   * is related to this information object (either as a subject
+   * or an object)
+   *
+   * @param $name  The actor name
+   * @param $relatedBy  The relation type, either 'object' or 'subject'
+   * @return QubitActor matching the specified parameters, null otherwise
+   */
+  private function getActorByNameAndRelation($name, $relatedBy = 'object')
+  {
+    // We could also maybe use $this->$varmagic here but
+    // I figure just a simple if/else was more readable.
+    if ($relatedBy === 'object')
+    {
+      $relations = $this->relationsRelatedByobjectId;
+    }
+    else
+    {
+      $relations = $this->relationsRelatedBysubjectId;
+    }
+
+    foreach ($relations as $relation)
+    {
+      if ($relation->$relatedBy instanceof QubitActor)
+      {
+        foreach ($relation->$relatedBy->actorI18ns as $actorI18n)
+        {
+          if (isset($actorI18n->authorizedFormOfName) &&
+            $name == $actorI18n->authorizedFormOfName)
+          {
+            return $relation->$relatedBy;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Returns an actor if one exists with the specified name and
+   * who is also part of an event related to this information object.
+   *
+   * @param $name  The actor name
+   * @return QubitActor matching the specified parameters, null otherwise
+   */
+  private function getActorByNameAndEvent($name)
+  {
+    foreach ($this->eventsRelatedByobjectId as $event)
+    {
+      if (isset($event->actor))
+      {
+        foreach ($event->actor->actorI18ns as $actorI18n)
+        {
+          if (isset($actorI18n->authorizedFormOfName) &&
+            $name == $actorI18n->authorizedFormOfName)
+          {
+            return $event->actor;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Parse chronlist tags from within a bioghist tag.
+   *
+   * @param DOMNodeList $chronlistNodeList  A node list containing the chronlist tag and its children.
+   */
+  private function parseChronlist($chronlistNodeList)
+  {
+    foreach ($chronlistNodeList as $chronlistNode)
+    {
+      // Get chronitem elements in chronlist element
+      $chronitemNodeList = $chronlistNode->getElementsByTagName('chronitem');
+      foreach ($chronitemNodeList as $chronitemNode)
+      {
+        // Get creation date element contents
+        $dateNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/date[@type='creation']");
+        foreach ($dateNodeList as $dateNode)
+        {
+          $date = $dateNode->nodeValue;
+        }
+
+        // Get creation start and end date from "normal" attribute
+        $dateNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/date[@type='creation']/@normal");
+        foreach ($dateNodeList as $dateNormalAttr)
+        {
+          $normalizedDates = sfEadPlugin::parseEadDenormalizedDateData($dateNormalAttr->value);
+
+          $date_start = $normalizedDates['start'];
+
+          if ($normalizedDates['end'])
+          {
+            $date_end = $normalizedDates['end'];
+          }
+        }
+
+        // Get dates of existence element contents
+        $dateNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/eventgrp/event/date[@type='existence']");
+        foreach ($dateNodeList as $dateNode)
+        {
+          $datesValue = $dateNode->nodeValue;
+        }
+
+        // Get creation end date element contents
+        $history = '';
+        $dateNodeList = QubitXmlImport::queryDomNode($chronitemNode, '/xml/chronitem/eventgrp/event/note[not(@type="eventNote")]/p');
+        foreach ($dateNodeList as $noteNode)
+        {
+          $history = $noteNode->nodeValue;
+        }
+
+        $possibleNameFields = array(
+          'name'     => QubitTerm::PERSON_ID,
+          'persname' => QubitTerm::PERSON_ID,
+          'famname'  => QubitTerm::FAMILY_ID,
+          'corpname' => QubitTerm::CORPORATE_BODY_ID
+        );
+
+        $typeId = QubitTerm::PERSON_ID;
+        $name   = '';
+
+        foreach ($possibleNameFields as $fieldName => $fieldTypeId)
+        {
+          $fieldValue = '';
+          $nameNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/eventgrp/event/origination/". $fieldName);
+          foreach ($nameNodeList as $nameNode)
+          {
+            $fieldValue = $nameNode->nodeValue;
+          }
+
+          if ($fieldValue != '')
+          {
+            $name             = $fieldValue;
+            $typeId           = $fieldTypeId;
+            $datesOfExistence = $datesValue;
+          }
+        }
+
+        $eventNote = '';
+        $eventNoteList = QubitXmlImport::queryDomNode($chronitemNode, '/xml/chronitem/eventgrp/event/note[@type="eventNote"]/p');
+        foreach ($eventNoteList as $eventNoteNode)
+        {
+          $eventNote = $eventNoteNode->nodeValue;
+        }
+
+        $eventSpec = array(
+          'event_type_id' => QubitTerm::CREATION_ID,
+          'entity_type_id' => $typeId,
+          'history'       => $history
+        );
+
+        if ($date)
+        {
+          $eventSpec['dates'] = $date;
+        }
+
+        if ($datesOfExistence)
+        {
+          $eventSpec['dates_of_existence'] = $datesOfExistence;
+        }
+
+        if ($date_start)
+        {
+          $eventSpec['date_start'] = $date_start;
+        }
+
+        if ($date_end)
+        {
+          $eventSpec['date_end'] = $date_end;
+        }
+
+        if (0 < strlen($eventNote))
+        {
+          $eventSpec['event_note'] = $eventNote;
+        }
+
+        $this->setActorByName($name, $eventSpec);
+      }
+    }
+  }
+
+  /**
+   * Returns a date string YYYY-MM-DD when given a date from an EAD <unitdate> @normal attribute
+   *
+   * @param $date  A date string from an EAD file, e.g. 19601103
+   * @return Will return a MySQL friendly YYYY-MM-DD date string (uses '-0' if missing a field)
+   */
+  private function getNormalizedDate($date)
+  {
+    if (strpos($date, '-') !== false)
+    {
+      return $date; // Already in YYYY-MM-DD format (hopefully)
+    }
+
+    // Check to see if date is proper length, either 4 for year only,
+    // 6 for year & month, or 8 for year & month & day
+    if (!in_array(strlen($date), array(4, 6, 8)))
+    {
+      return null;
+    }
+
+    $year = $month = $day = 0;
+
+    switch (true)
+    {
+      case strlen($date) >= 4: $year  = (int)substr($date, 0, 4);
+      // no break
+      case strlen($date) >= 6: $month = (int)substr($date, 4, 2);
+      // no break
+      case strlen($date) == 8: $day   = (int)substr($date, 6, 2);
+    }
+
+    if ($year === 0)
+    {
+      return null; // Garbage date
+    }
+
+    return "$year-$month-$day";
+  }
+
+  /*
+   * Generate a slug for this information object. This might be based
+   * on title, identifier (reference code), or other properties in the future.
+   *
+   * @return string  The generated slug.
+   */
+  private function generateSlug()
+  {
+    // Fall back to title as slug basis
+    $slugBasis = sfConfig::get('app_slug_basis_informationobject', QubitSlug::SLUG_BASIS_TITLE);
+
+    $stringToSlugify = null;
+
+    switch ($slugBasis)
+    {
+      case QubitSlug::SLUG_BASIS_REFERENCE_CODE:
+        $stringToSlugify = $this->getInheritedReferenceCode();
+        break;
+
+      case QubitSlug::SLUG_BASIS_TITLE:
+        $stringToSlugify = $this->getTitle(array('sourceCulture' => true));
+        break;
+
+      case QubitSlug::SLUG_BASIS_REFERENCE_CODE_NO_COUNTRY_REPO:
+        $stringToSlugify = $this->getInheritedReferenceCode(false);
+        break;
+
+      case QubitSlug::SLUG_BASIS_IDENTIFIER:
+        $stringToSlugify = $this->identifier;
+        break;
+
+      default:
+        throw new sfException('Unsupported slug basis specified in settings: '.$slugBasis);
+    }
+
+    // Blank string or null returned, attempt to fall back to slug based on title
+    if ($slugBasis != QubitSlug::SLUG_BASIS_TITLE && !$stringToSlugify)
+    {
+      $stringToSlugify = $this->getTitle(array('sourceCulture' => true));
+    }
+
+    // If we still have a blank or null value here, QubitObject will eventually create a random
+    // slug for us. See QubitObject::insertSlug().
+    return QubitSlug::slugify($stringToSlugify);
   }
 }

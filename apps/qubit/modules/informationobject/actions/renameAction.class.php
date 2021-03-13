@@ -25,35 +25,6 @@ class InformationObjectRenameAction extends DefaultEditAction
       'slug',
       'filename');
 
-  protected function earlyExecute()
-  {
-    $this->resource = $this->getRoute()->resource;
-
-    // Check user authorization
-    if (!QubitAcl::check($this->resource, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID))
-    {
-      QubitAcl::forwardUnauthorized();
-    }
-  }
-
-  protected function addField($name)
-  {
-    if (in_array($name, InformationObjectRenameAction::$NAMES))
-    {
-      if ($name == 'filename')
-      {
-        $this->form->setDefault($name, $this->resource->digitalObjectsRelatedByobjectId[0]->name);
-      }
-      else
-      {
-        $this->form->setDefault($name, $this->resource[$name]);
-      }
-
-      $this->form->setValidator($name, new sfValidatorString());
-      $this->form->setWidget($name, new sfWidgetFormInput());
-    }
-  }
-
 
   // Allow modification of title, slug, and digital object filename
   public function execute($request)
@@ -85,6 +56,35 @@ class InformationObjectRenameAction extends DefaultEditAction
 
         $this->redirect(array($this->resource, 'module' => 'informationobject'));
       }
+    }
+  }
+
+  protected function earlyExecute()
+  {
+    $this->resource = $this->getRoute()->resource;
+
+    // Check user authorization
+    if (!QubitAcl::check($this->resource, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID))
+    {
+      QubitAcl::forwardUnauthorized();
+    }
+  }
+
+  protected function addField($name)
+  {
+    if (in_array($name, InformationObjectRenameAction::$NAMES))
+    {
+      if ($name == 'filename')
+      {
+        $this->form->setDefault($name, $this->resource->digitalObjectsRelatedByobjectId[0]->name);
+      }
+      else
+      {
+        $this->form->setDefault($name, $this->resource[$name]);
+      }
+
+      $this->form->setValidator($name, new sfValidatorString());
+      $this->form->setWidget($name, new sfWidgetFormInput());
     }
   }
 

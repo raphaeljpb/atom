@@ -77,47 +77,6 @@ class arElasticSearchActorPdo
     $this->data[$name] = $value;
   }
 
-  protected function loadData($id)
-  {
-    if (!isset(self::$statements['actor']))
-    {
-      $sql = 'SELECT
-                actor.*,
-                slug.slug,
-                object.created_at,
-                object.updated_at,
-                do.id as digital_object_id,
-                do.media_type_id as media_type_id,
-                do.usage_id as usage_id,
-                do.name as filename
-              FROM '.QubitActor::TABLE_NAME.' actor
-              JOIN '.QubitSlug::TABLE_NAME.' slug
-                ON actor.id = slug.object_id
-              JOIN '.QubitObject::TABLE_NAME.' object
-                ON actor.id = object.id
-              LEFT JOIN '.QubitDigitalObject::TABLE_NAME.' do
-                ON actor.id = do.object_id
-              WHERE actor.id = :id';
-
-      self::$statements['actor'] = self::$conn->prepare($sql);
-    }
-
-    // Do select
-    self::$statements['actor']->execute(array(':id' => $id));
-
-    // Get first result
-    $this->data = self::$statements['actor']->fetch(PDO::FETCH_ASSOC);
-
-    if (false === $this->data)
-    {
-      throw new sfException("Couldn't find actor (id: $id)");
-    }
-
-    self::$statements['actor']->closeCursor();
-
-    return $this;
-  }
-
   public function getMimeType()
   {
     if (!$this->__isset('digital_object_id'))
@@ -162,50 +121,6 @@ class arElasticSearchActorPdo
     {
       return $do->getDigitalObjectAltText();
     }
-  }
-
-  protected function getMaintainingRepositoryId()
-  {
-    if (!isset(self::$statements['maintainingRepository']))
-    {
-      $sql  = 'SELECT rel.subject_id';
-      $sql .= ' FROM '.QubitRelation::TABLE_NAME.' rel';
-      $sql .= ' WHERE rel.object_id = :object_id';
-      $sql .= '   AND rel.type_id = :type_id';
-
-      self::$statements['maintainingRepository'] = self::$conn->prepare($sql);
-    }
-
-    self::$statements['maintainingRepository']->execute(array(
-      ':object_id' => $this->id,
-      ':type_id' => QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID));
-
-    return self::$statements['maintainingRepository']->fetchColumn();
-  }
-
-  protected function getOccupations()
-  {
-    if (!isset(self::$statements['occupations']))
-    {
-      $sql  = 'SELECT term.id as term_id, note.id as note_id';
-      $sql .= ' FROM '.QubitObjectTermRelation::TABLE_NAME.' rel';
-      $sql .= ' JOIN '.QubitTerm::TABLE_NAME.' term
-                  ON rel.term_id = term.id';
-      $sql .= ' LEFT JOIN '.QubitNote::TABLE_NAME.' note
-                  ON rel.id = note.object_id
-                  AND note.type_id = :type_id';
-      $sql .= ' WHERE rel.object_id = :object_id';
-      $sql .= ' AND term.taxonomy_id = :taxonomy_id';
-
-      self::$statements['occupations'] = self::$conn->prepare($sql);
-    }
-
-    self::$statements['occupations']->execute(array(
-      ':type_id' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID,
-      ':object_id' => $this->id,
-      ':taxonomy_id' => QubitTaxonomy::ACTOR_OCCUPATION_ID));
-
-    return self::$statements['occupations']->fetchAll(PDO::FETCH_OBJ);
   }
 
   public function serialize()
@@ -412,6 +327,91 @@ class arElasticSearchActorPdo
              AND object_id=? OR r.subject_id=?";
 
     return QubitPdo::fetchAll($sql, array($actorId, $actorId), array('fetchMode' => PDO::FETCH_ASSOC));
+  }
+
+  protected function loadData($id)
+  {
+    if (!isset(self::$statements['actor']))
+    {
+      $sql = 'SELECT
+                actor.*,
+                slug.slug,
+                object.created_at,
+                object.updated_at,
+                do.id as digital_object_id,
+                do.media_type_id as media_type_id,
+                do.usage_id as usage_id,
+                do.name as filename
+              FROM '.QubitActor::TABLE_NAME.' actor
+              JOIN '.QubitSlug::TABLE_NAME.' slug
+                ON actor.id = slug.object_id
+              JOIN '.QubitObject::TABLE_NAME.' object
+                ON actor.id = object.id
+              LEFT JOIN '.QubitDigitalObject::TABLE_NAME.' do
+                ON actor.id = do.object_id
+              WHERE actor.id = :id';
+
+      self::$statements['actor'] = self::$conn->prepare($sql);
+    }
+
+    // Do select
+    self::$statements['actor']->execute(array(':id' => $id));
+
+    // Get first result
+    $this->data = self::$statements['actor']->fetch(PDO::FETCH_ASSOC);
+
+    if (false === $this->data)
+    {
+      throw new sfException("Couldn't find actor (id: $id)");
+    }
+
+    self::$statements['actor']->closeCursor();
+
+    return $this;
+  }
+
+  protected function getMaintainingRepositoryId()
+  {
+    if (!isset(self::$statements['maintainingRepository']))
+    {
+      $sql  = 'SELECT rel.subject_id';
+      $sql .= ' FROM '.QubitRelation::TABLE_NAME.' rel';
+      $sql .= ' WHERE rel.object_id = :object_id';
+      $sql .= '   AND rel.type_id = :type_id';
+
+      self::$statements['maintainingRepository'] = self::$conn->prepare($sql);
+    }
+
+    self::$statements['maintainingRepository']->execute(array(
+      ':object_id' => $this->id,
+      ':type_id' => QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID));
+
+    return self::$statements['maintainingRepository']->fetchColumn();
+  }
+
+  protected function getOccupations()
+  {
+    if (!isset(self::$statements['occupations']))
+    {
+      $sql  = 'SELECT term.id as term_id, note.id as note_id';
+      $sql .= ' FROM '.QubitObjectTermRelation::TABLE_NAME.' rel';
+      $sql .= ' JOIN '.QubitTerm::TABLE_NAME.' term
+                  ON rel.term_id = term.id';
+      $sql .= ' LEFT JOIN '.QubitNote::TABLE_NAME.' note
+                  ON rel.id = note.object_id
+                  AND note.type_id = :type_id';
+      $sql .= ' WHERE rel.object_id = :object_id';
+      $sql .= ' AND term.taxonomy_id = :taxonomy_id';
+
+      self::$statements['occupations'] = self::$conn->prepare($sql);
+    }
+
+    self::$statements['occupations']->execute(array(
+      ':type_id' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID,
+      ':object_id' => $this->id,
+      ':taxonomy_id' => QubitTaxonomy::ACTOR_OCCUPATION_ID));
+
+    return self::$statements['occupations']->fetchAll(PDO::FETCH_OBJ);
   }
 
   protected function getProperty($name)

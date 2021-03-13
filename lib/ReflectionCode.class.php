@@ -26,13 +26,13 @@ class ReflectionCode
     $this->initialize($code);
   }
 
-  public function initialize($code)
-  {
-    $this->code = $code;
-  }
-
   public function __toString()
   {
     return (string) $this->code;
+  }
+
+  public function initialize($code)
+  {
+    $this->code = $code;
   }
 }

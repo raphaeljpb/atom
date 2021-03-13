@@ -99,12 +99,6 @@ class SitemapWriter
     $this->writer->writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
   }
 
-  private function loadConfiguration()
-  {
-    $configPaths = sfContext::getInstance()->getConfiguration()->getConfigPaths(self::$configPath);
-    $this->config = SitemapConfigHandler::getConfiguration($configPaths);
-  }
-
   /**
    * Add all the elements of a given set. The set must be
    * an object extending AbstractSitemapObjectSet.
@@ -119,6 +113,30 @@ class SitemapWriter
       $this->getSitemap()->add($item);
     }
     $this->sitemap->flush();
+  }
+
+  public function end()
+  {
+    if ($this->ended)
+    {
+      return;
+    }
+
+    if (null !== $this->sitemap)
+    {
+      $this->sitemap->end();
+    }
+
+    $this->writer->endElement(); // </sitemapindex>
+    $this->writer->endDocument();
+
+    $this->ended = true;
+  }
+
+  private function loadConfiguration()
+  {
+    $configPaths = sfContext::getInstance()->getConfiguration()->getConfigPaths(self::$configPath);
+    $this->config = SitemapConfigHandler::getConfiguration($configPaths);
   }
 
   /**
@@ -148,23 +166,5 @@ class SitemapWriter
     $this->writer->writeElement('loc', $this->sitemap->getLocation());
     $this->writer->writeElement('lastmod', date('c'));
     $this->writer->endElement();
-  }
-
-  public function end()
-  {
-    if ($this->ended)
-    {
-      return;
-    }
-
-    if (null !== $this->sitemap)
-    {
-      $this->sitemap->end();
-    }
-
-    $this->writer->endElement(); // </sitemapindex>
-    $this->writer->endDocument();
-
-    $this->ended = true;
   }
 }

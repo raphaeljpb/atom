@@ -28,6 +28,30 @@
  */
 class ActorEditAction extends DefaultEditAction
 {
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        $this->resource->save();
+
+        if (isset($request->id) && (0 < strlen($next = $this->form->getValue('next'))))
+        {
+          $this->redirect($next);
+        }
+
+        $this->redirect(array($this->resource, 'module' => 'actor'));
+      }
+    }
+
+    QubitDescription::addAssets($this->response);
+  }
   protected function earlyExecute()
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
@@ -260,30 +284,5 @@ class ActorEditAction extends DefaultEditAction
 
         return parent::processField($field);
     }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        $this->resource->save();
-
-        if (isset($request->id) && (0 < strlen($next = $this->form->getValue('next'))))
-        {
-          $this->redirect($next);
-        }
-
-        $this->redirect(array($this->resource, 'module' => 'actor'));
-      }
-    }
-
-    QubitDescription::addAssets($this->response);
   }
 }

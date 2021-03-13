@@ -33,41 +33,6 @@ class sitemapTask extends sfBaseTask
     'Bing' => 'http://www.bing.com/webmaster/ping.aspx?siteMap=%s'
   );
 
-  protected function configure()
-  {
-    $outputDirectory =  sfConfig::get('sf_root_dir');
-
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-
-      new sfCommandOption('output-directory', 'O', sfCommandOption::PARAMETER_OPTIONAL, 'Location of the sitemap file(s)', $outputDirectory),
-      new sfCommandOption('base-url', null, sfCommandOption::PARAMETER_OPTIONAL, 'Base URL', null),
-      new sfCommandOption('indent', null, sfCommandOption::PARAMETER_OPTIONAL, 'Indent XML', true),
-      new sfCommandOption('no-compress', null, sfCommandOption::PARAMETER_NONE, 'Compress XML output with Gzip'),
-      new sfCommandOption('no-confirmation', '-B', sfCommandOption::PARAMETER_NONE, 'Avoid prompting the user'),
-      new sfCommandOption('ping', null, sfCommandOption::PARAMETER_NONE, 'Submit sitemap to Google and Bing'),
-    ));
-
-    $this->namespace = 'tools';
-    $this->name = 'sitemap';
-    $this->briefDescription = 'Write a Sitemap XML file that lists the URLs of the site.';
-
-    $this->detailedDescription = <<<EOF
-Write a Sitemap XML file that lists the URLs of the current site.
-
-By default, the sitemap is stored in the root directory. Its final location can
-be defined using [--output-directory|INFO].
-
-The URLs included in the sitemap will be based on [Site base URL|INFO], that
-can be defined under the application settings in the web interface or using
-[--base-url|INFO].
-
-Optionally, you can submit the sitemap to Google and Bing with [--ping|INFO].
-EOF;
-  }
-
   public function execute($arguments = array(), $options = array())
   {
     sfContext::createInstance($this->configuration);
@@ -142,5 +107,40 @@ EOF;
     }
 
     $this->log('Done!');
+  }
+
+  protected function configure()
+  {
+    $outputDirectory =  sfConfig::get('sf_root_dir');
+
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+
+      new sfCommandOption('output-directory', 'O', sfCommandOption::PARAMETER_OPTIONAL, 'Location of the sitemap file(s)', $outputDirectory),
+      new sfCommandOption('base-url', null, sfCommandOption::PARAMETER_OPTIONAL, 'Base URL', null),
+      new sfCommandOption('indent', null, sfCommandOption::PARAMETER_OPTIONAL, 'Indent XML', true),
+      new sfCommandOption('no-compress', null, sfCommandOption::PARAMETER_NONE, 'Compress XML output with Gzip'),
+      new sfCommandOption('no-confirmation', '-B', sfCommandOption::PARAMETER_NONE, 'Avoid prompting the user'),
+      new sfCommandOption('ping', null, sfCommandOption::PARAMETER_NONE, 'Submit sitemap to Google and Bing'),
+    ));
+
+    $this->namespace = 'tools';
+    $this->name = 'sitemap';
+    $this->briefDescription = 'Write a Sitemap XML file that lists the URLs of the site.';
+
+    $this->detailedDescription = <<<EOF
+Write a Sitemap XML file that lists the URLs of the current site.
+
+By default, the sitemap is stored in the root directory. Its final location can
+be defined using [--output-directory|INFO].
+
+The URLs included in the sitemap will be based on [Site base URL|INFO], that
+can be defined under the application settings in the web interface or using
+[--base-url|INFO].
+
+Optionally, you can submit the sitemap to Google and Bing with [--ping|INFO].
+EOF;
   }
 }

@@ -197,6 +197,31 @@ class arElasticSearchPluginQuery
   }
 
   /**
+   * Returns the query
+   *
+   * @param boolean $allowEmpty  get all or none if the query is empty
+   * @param boolean $filterDrafts  filter draft records
+   *
+   * @return \Elastica\Query
+   */
+  public function getQuery($allowEmpty = false, $filterDrafts = false)
+  {
+    if (!$allowEmpty && 1 > count($this->queryBool->getParams()))
+    {
+      $this->queryBool->addMust(new \Elastica\Query\MatchAll());
+    }
+
+    if ($filterDrafts)
+    {
+      QubitAclSearch::filterDrafts($this->queryBool);
+    }
+
+    $this->query->setQuery($this->queryBool);
+
+    return $this->query;
+  }
+
+  /**
    * Translate array of search parameters to query criteria.
    *
    * Modified version of parseQuery method in the SearchAdvancedAction class
@@ -576,30 +601,5 @@ class arElasticSearchPluginQuery
     $queryNested->setQuery($query);
 
     return $queryNested;
-  }
-
-  /**
-   * Returns the query
-   *
-   * @param boolean $allowEmpty  get all or none if the query is empty
-   * @param boolean $filterDrafts  filter draft records
-   *
-   * @return \Elastica\Query
-   */
-  public function getQuery($allowEmpty = false, $filterDrafts = false)
-  {
-    if (!$allowEmpty && 1 > count($this->queryBool->getParams()))
-    {
-      $this->queryBool->addMust(new \Elastica\Query\MatchAll());
-    }
-
-    if ($filterDrafts)
-    {
-      QubitAclSearch::filterDrafts($this->queryBool);
-    }
-
-    $this->query->setQuery($this->queryBool);
-
-    return $this->query;
   }
 }

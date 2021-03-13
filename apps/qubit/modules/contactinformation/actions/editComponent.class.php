@@ -37,54 +37,6 @@ class ContactInformationEditComponent extends sfComponent
       'streetAddress',
       'website');
 
-  protected function addField($name)
-  {
-    switch ($name)
-    {
-      case 'countryCode':
-        $this->form->setValidator('countryCode', new sfValidatorI18nChoiceCountry());
-        $this->form->setWidget('countryCode', new sfWidgetFormI18nChoiceCountry(array('add_empty' => true, 'culture' => $this->context->user->getCulture())));
-
-        break;
-
-      case 'primaryContact':
-        $this->form->setDefault('primaryContact', false);
-        $this->form->setValidator('primaryContact', new sfValidatorBoolean());
-        $this->form->setWidget('primaryContact', new sfWidgetFormInputCheckbox());
-
-        break;
-
-      case 'latitude':
-      case 'longitude':
-        $this->form->setValidator($name, new sfValidatorNumber());
-        $this->form->setWidget($name, new sfWidgetFormInput());
-
-        break;
-
-      case 'streetAddress':
-      case 'note':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormTextArea(array(), array('rows' => 2)));
-
-        break;
-
-      default:
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
-
-        break;
-    }
-  }
-
-  protected function processField($field)
-  {
-    switch ($field->getName())
-    {
-      default:
-        $this->contactInformation[$field->getName()] = $this->form->getValue($field->getName());
-    }
-  }
-
   public function processForm()
   {
     // HACK For now, parameter name and action name are the same. Should
@@ -168,6 +120,54 @@ class ContactInformationEditComponent extends sfComponent
     foreach ($this::$NAMES as $name)
     {
       $this->addField($name);
+    }
+  }
+
+  protected function addField($name)
+  {
+    switch ($name)
+    {
+      case 'countryCode':
+        $this->form->setValidator('countryCode', new sfValidatorI18nChoiceCountry());
+        $this->form->setWidget('countryCode', new sfWidgetFormI18nChoiceCountry(array('add_empty' => true, 'culture' => $this->context->user->getCulture())));
+
+        break;
+
+      case 'primaryContact':
+        $this->form->setDefault('primaryContact', false);
+        $this->form->setValidator('primaryContact', new sfValidatorBoolean());
+        $this->form->setWidget('primaryContact', new sfWidgetFormInputCheckbox());
+
+        break;
+
+      case 'latitude':
+      case 'longitude':
+        $this->form->setValidator($name, new sfValidatorNumber());
+        $this->form->setWidget($name, new sfWidgetFormInput());
+
+        break;
+
+      case 'streetAddress':
+      case 'note':
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormTextArea(array(), array('rows' => 2)));
+
+        break;
+
+      default:
+        $this->form->setValidator($name, new sfValidatorString());
+        $this->form->setWidget($name, new sfWidgetFormInput());
+
+        break;
+    }
+  }
+
+  protected function processField($field)
+  {
+    switch ($field->getName())
+    {
+      default:
+        $this->contactInformation[$field->getName()] = $this->form->getValue($field->getName());
     }
   }
 }

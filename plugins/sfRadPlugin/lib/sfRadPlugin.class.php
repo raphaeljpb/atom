@@ -154,30 +154,6 @@ class sfRadPlugin implements ArrayAccess
     }
   }
 
-  protected function property($name)
-  {
-    if (!isset($this->property[$name]))
-    {
-      $criteria = new Criteria();
-      $this->resource->addPropertysCriteria($criteria);
-      $criteria->add(QubitProperty::NAME, $name);
-
-      if (1 == count($query = QubitProperty::get($criteria)))
-      {
-        $this->property[$name] = $query[0];
-      }
-      else
-      {
-        $this->property[$name] = new QubitProperty();
-        $this->property[$name]->name = $name;
-
-        $this->resource->propertys[] = $this->property[$name];
-      }
-    }
-
-    return $this->property[$name];
-  }
-
   public function offsetExists($offset)
   {
     $args = func_get_args();
@@ -204,5 +180,29 @@ class sfRadPlugin implements ArrayAccess
     $args = func_get_args();
 
     return call_user_func_array(array($this, '__unset'), $args);
+  }
+
+  protected function property($name)
+  {
+    if (!isset($this->property[$name]))
+    {
+      $criteria = new Criteria();
+      $this->resource->addPropertysCriteria($criteria);
+      $criteria->add(QubitProperty::NAME, $name);
+
+      if (1 == count($query = QubitProperty::get($criteria)))
+      {
+        $this->property[$name] = $query[0];
+      }
+      else
+      {
+        $this->property[$name] = new QubitProperty();
+        $this->property[$name]->name = $name;
+
+        $this->resource->propertys[] = $this->property[$name];
+      }
+    }
+
+    return $this->property[$name];
   }
 }

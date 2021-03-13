@@ -106,24 +106,6 @@ class sfSkosPlugin
     $this->logger->info($this->i18n->__('The graph contains %1% concepts.', array('%1%' => count($this->graph->allOfType('skos:Concept')))));
   }
 
-  /**
-   * We want to harvest the graph from top to bottom.
-   */
-  protected function getRootConcepts()
-  {
-    $conceptScheme = $this->graph->get('skos:ConceptScheme', '^rdf:type');
-    if (null !== $conceptScheme)
-    {
-      $topConcepts = $conceptScheme->allResources('skos:hasTopConcept');
-      if (0 < count($topConcepts))
-      {
-        return $topConcepts;
-      }
-    }
-
-    return $this->graph->allOfType('skos:Concept');
-  }
-
   public function importGraph()
   {
     $concepts = $this->getRootConcepts();
@@ -171,6 +153,39 @@ class sfSkosPlugin
     {
       QubitSearch::getInstance()->update($this->parent);
     }
+  }
+
+  public function hasErrors()
+  {
+    return 0 < count($this->errors);
+  }
+
+  public function getErrors()
+  {
+    return $this->errors;
+  }
+
+  public function getGraph()
+  {
+    return $this->graph;
+  }
+
+  /**
+   * We want to harvest the graph from top to bottom.
+   */
+  protected function getRootConcepts()
+  {
+    $conceptScheme = $this->graph->get('skos:ConceptScheme', '^rdf:type');
+    if (null !== $conceptScheme)
+    {
+      $topConcepts = $conceptScheme->allResources('skos:hasTopConcept');
+      if (0 < count($topConcepts))
+      {
+        return $topConcepts;
+      }
+    }
+
+    return $this->graph->allOfType('skos:Concept');
   }
 
   protected function addConcept(EasyRdf_Resource $concept, $parentId)
@@ -292,21 +307,6 @@ class sfSkosPlugin
     $this->unsupportedLanguages[$lang] = true;
 
     return false;
-  }
-
-  public function hasErrors()
-  {
-    return 0 < count($this->errors);
-  }
-
-  public function getErrors()
-  {
-    return $this->errors;
-  }
-
-  public function getGraph()
-  {
-    return $this->graph;
   }
 
   protected function notify()

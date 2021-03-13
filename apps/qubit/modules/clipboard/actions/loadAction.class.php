@@ -24,45 +24,6 @@ class ClipboardLoadAction extends DefaultEditAction
       'password',
       'mode');
 
-  protected function addField($name)
-  {
-    switch ($name)
-    {
-      case 'password':
-        $this->form->setValidator('password', new sfValidatorString(array('required' => true)));
-        $this->form->setWidget('password', new sfWidgetFormInput());
-
-        break;
-
-      case 'mode':
-        $this->form->setDefault('mode', 'merge');
-        $this->form->setValidator('mode', new sfValidatorString());
-        $choices = array(
-          'merge' => $this->context->i18n->__('Merge saved clipboard with existing clipboard results'),
-          'replace' => $this->context->i18n->__('Replace existing clipboard results with saved clipboard')
-        );
-        $this->form->setWidget('mode', new sfWidgetFormSelect(array('choices' => $choices)));
-
-        break;
-    }
-  }
-
-  protected function processField($field)
-  {
-    switch ($field->getName())
-    {
-      case 'password':
-        $this->password = $this->form->getValue($field->getName());
-
-        break;
-
-      case 'mode':
-        $this->mode = $this->form->getValue($field->getName());
-
-        break;
-    }
-  }
-
   public function execute($request)
   {
     parent::execute($request);
@@ -139,5 +100,44 @@ class ClipboardLoadAction extends DefaultEditAction
     $this->response->setStatusCode(200);
 
     return $this->renderText(json_encode(array('success' => $message, 'clipboard' => $clipboard)));
+  }
+
+  protected function addField($name)
+  {
+    switch ($name)
+    {
+      case 'password':
+        $this->form->setValidator('password', new sfValidatorString(array('required' => true)));
+        $this->form->setWidget('password', new sfWidgetFormInput());
+
+        break;
+
+      case 'mode':
+        $this->form->setDefault('mode', 'merge');
+        $this->form->setValidator('mode', new sfValidatorString());
+        $choices = array(
+          'merge' => $this->context->i18n->__('Merge saved clipboard with existing clipboard results'),
+          'replace' => $this->context->i18n->__('Replace existing clipboard results with saved clipboard')
+        );
+        $this->form->setWidget('mode', new sfWidgetFormSelect(array('choices' => $choices)));
+
+        break;
+    }
+  }
+
+  protected function processField($field)
+  {
+    switch ($field->getName())
+    {
+      case 'password':
+        $this->password = $this->form->getValue($field->getName());
+
+        break;
+
+      case 'mode':
+        $this->mode = $this->form->getValue($field->getName());
+
+        break;
+    }
   }
 }

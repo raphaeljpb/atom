@@ -36,37 +36,6 @@ class digitalObjectLoadTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  protected function configure()
-  {
-    $this->addArguments(array(
-      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The input file (csv format).')
-    ));
-
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('link-source', 's', sfCommandOption::PARAMETER_NONE, 'Link source', null),
-      new sfCommandOption('path', 'p', sfCommandOption::PARAMETER_OPTIONAL, 'Path prefix for digital objects', null),
-      new sfCommandOption('limit', 'l', sfCommandOption::PARAMETER_OPTIONAL, 'Limit number of digital objects imported to n', null),
-      new sfCommandOption('attach-only', 'a', sfCommandOption::PARAMETER_NONE, 'Always attach digital objects to a new child description', null),
-      new sfCommandOption('replace', 'r', sfCommandOption::PARAMETER_NONE, 'Delete and replace digital objects', null),
-      new sfCommandOption('index', 'i', sfCommandOption::PARAMETER_NONE, 'Update search index (defaults to false)', null),
-      new sfCommandOption('skip-nested-set-build', null, sfCommandOption::PARAMETER_NONE, "Don't build the nested set upon import completion.", null),
-    ));
-
-    $this->namespace = 'digitalobject';
-    $this->name = 'load';
-    $this->briefDescription = 'Load a csv list of digital objects';
-
-    $this->detailedDescription = <<<EOF
-Load a csv list of digital objects
-EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
   public function execute($arguments = array(), $options = array())
   {
     sfContext::createInstance($this->configuration);
@@ -303,6 +272,37 @@ EOF;
     {
       $this->logSection('digital-object', 'Please update the search index manually to reflect any changes');
     }
+  }
+
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    $this->addArguments(array(
+      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The input file (csv format).')
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('link-source', 's', sfCommandOption::PARAMETER_NONE, 'Link source', null),
+      new sfCommandOption('path', 'p', sfCommandOption::PARAMETER_OPTIONAL, 'Path prefix for digital objects', null),
+      new sfCommandOption('limit', 'l', sfCommandOption::PARAMETER_OPTIONAL, 'Limit number of digital objects imported to n', null),
+      new sfCommandOption('attach-only', 'a', sfCommandOption::PARAMETER_NONE, 'Always attach digital objects to a new child description', null),
+      new sfCommandOption('replace', 'r', sfCommandOption::PARAMETER_NONE, 'Delete and replace digital objects', null),
+      new sfCommandOption('index', 'i', sfCommandOption::PARAMETER_NONE, 'Update search index (defaults to false)', null),
+      new sfCommandOption('skip-nested-set-build', null, sfCommandOption::PARAMETER_NONE, "Don't build the nested set upon import completion.", null),
+    ));
+
+    $this->namespace = 'digitalobject';
+    $this->name = 'load';
+    $this->briefDescription = 'Load a csv list of digital objects';
+
+    $this->detailedDescription = <<<EOF
+Load a csv list of digital objects
+EOF;
   }
 
   protected function attachDigitalObject($item, $informationObjectId, $options = array())

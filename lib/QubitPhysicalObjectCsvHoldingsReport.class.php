@@ -28,9 +28,6 @@ require_once __DIR__.'/../vendor/composer/autoload.php';
  */
 class QubitPhysicalObjectCsvHoldingsReport
 {
-  protected $ormClasses;
-  protected $typeMap;
-
   public static $headerRow = [
     'physicalObjectName',
     'physicalObjectLocation',
@@ -46,6 +43,8 @@ class QubitPhysicalObjectCsvHoldingsReport
     'description' => 'QubitInformationObject',
     'accession' => 'QubitAccession',
   ];
+  protected $ormClasses;
+  protected $typeMap;
 
   // Default options
   protected $options = [

@@ -24,33 +24,6 @@ class deleteDescriptionTask extends arBaseTask
   /**
    * @see sfTask
    */
-  protected function configure()
-  {
-    $this->addArguments(array(
-      new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Description slug to delete. '.
-                            'Note: if --repository is set, this is instead a repository slug whose descriptions we will target for deletion.')
-    ));
-
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('no-confirmation', 'B', sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
-      new sfCommandOption('repository', 'r', sfCommandOption::PARAMETER_NONE, 'Delete descriptions under repository specified by slug.'),
-    ));
-
-    $this->namespace = 'tools';
-    $this->name = 'delete-description';
-    $this->briefDescription = 'Delete description given its slug.';
-
-    $this->detailedDescription = <<<EOF
-Delete archival descriptions by slug.
-EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
   public function execute($arguments = array(), $options = array())
   {
     parent::execute($arguments, $options);
@@ -76,6 +49,33 @@ EOF;
     }
 
     $this->logSection('delete-description', sprintf('[%s] Finished: %d descriptions deleted.', strftime('%r'), $this->nDeleted));
+  }
+
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    $this->addArguments(array(
+      new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Description slug to delete. '.
+                            'Note: if --repository is set, this is instead a repository slug whose descriptions we will target for deletion.')
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('no-confirmation', 'B', sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
+      new sfCommandOption('repository', 'r', sfCommandOption::PARAMETER_NONE, 'Delete descriptions under repository specified by slug.'),
+    ));
+
+    $this->namespace = 'tools';
+    $this->name = 'delete-description';
+    $this->briefDescription = 'Delete description given its slug.';
+
+    $this->detailedDescription = <<<EOF
+Delete archival descriptions by slug.
+EOF;
   }
 
   /**

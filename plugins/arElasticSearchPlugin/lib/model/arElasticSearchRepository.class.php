@@ -120,6 +120,15 @@ class arElasticSearchRepository extends arElasticSearchModelBase
     return $serialized;
   }
 
+  public static function update($object)
+  {
+    $data = self::serialize($object);
+
+    QubitSearch::getInstance()->addDocument($data, 'QubitRepository');
+
+    return true;
+  }
+
   /**
    * We store extra I18n fields (city, region) for table sorting purposes in the repository browse page.
    *
@@ -140,14 +149,5 @@ class arElasticSearchRepository extends arElasticSearchModelBase
         $i18n[$lang]['region'] = $object->getRegion(array('culture' => $lang));
       }
     }
-  }
-
-  public static function update($object)
-  {
-    $data = self::serialize($object);
-
-    QubitSearch::getInstance()->addDocument($data, 'QubitRepository');
-
-    return true;
   }
 }

@@ -110,14 +110,6 @@ class QubitObjectBuilder extends PHP5ObjectBuilder
     }
   }
 
-  protected function getBaseClass()
-  {
-    if (isset($this->inheritanceFk))
-    {
-      return self::getNewObjectBuilder($this->getForeignTable($this->inheritanceFk))->getObjectClassName();
-    }
-  }
-
   public function getClassName()
   {
     return $this->getBuildProperty('basePrefix').ucfirst($this->getTable()->getPhpName());
@@ -128,14 +120,42 @@ class QubitObjectBuilder extends PHP5ObjectBuilder
     return "{$this->getPeerClassName()}::".strtoupper($column->getName());
   }
 
-  protected function getColumnVarName(Column $column)
-  {
-    return $column->getPhpName();
-  }
-
   public function getPeerClassName()
   {
     return $this->getStubObjectBuilder()->getClassName();
+  }
+
+  public function getFkPhpName(ForeignKey $fk)
+  {
+    if (count($localNames = $fk->getLocalColumns()) < 2 && '_id' == substr($localNames[0], -3))
+    {
+      return substr($this->getTable()->getColumn($localNames[0])->getPhpName(), 0, -2);
+    }
+
+    return $this->getFkPhpNameAffix($fk);
+  }
+
+  public function getFkVarName(ForeignKey $fk)
+  {
+    return strtolower(substr($phpName = $this->getFkPhpName($fk), 0, 1)).substr($phpName, 1);
+  }
+
+  public function getRefFkCollVarName(ForeignKey $refFk)
+  {
+    return strtolower(substr($phpName = $this->getRefFkPhpNameAffix($refFk, true), 0, 1)).substr($phpName, 1);
+  }
+
+  protected function getBaseClass()
+  {
+    if (isset($this->inheritanceFk))
+    {
+      return self::getNewObjectBuilder($this->getForeignTable($this->inheritanceFk))->getObjectClassName();
+    }
+  }
+
+  protected function getColumnVarName(Column $column)
+  {
+    return $column->getPhpName();
   }
 
   protected function getRetrieveMethodName()
@@ -1745,26 +1765,6 @@ script;
   }
 
 script;
-  }
-
-  public function getFkPhpName(ForeignKey $fk)
-  {
-    if (count($localNames = $fk->getLocalColumns()) < 2 && '_id' == substr($localNames[0], -3))
-    {
-      return substr($this->getTable()->getColumn($localNames[0])->getPhpName(), 0, -2);
-    }
-
-    return $this->getFkPhpNameAffix($fk);
-  }
-
-  public function getFkVarName(ForeignKey $fk)
-  {
-    return strtolower(substr($phpName = $this->getFkPhpName($fk), 0, 1)).substr($phpName, 1);
-  }
-
-  public function getRefFkCollVarName(ForeignKey $refFk)
-  {
-    return strtolower(substr($phpName = $this->getRefFkPhpNameAffix($refFk, true), 0, 1)).substr($phpName, 1);
   }
 
   protected function addFkMethods(&$script)

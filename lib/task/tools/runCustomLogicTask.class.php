@@ -35,28 +35,6 @@ Run ad-hoc logic contained in a PHP file
 EOF;
 
   /**
-   * @see sfBaseTask
-   */
-  protected function configure()
-  {
-    $logFileDefault = sfConfig::get('sf_log_dir') . '/tools_run.log';
-
-    $this->addOptions(array(
-      new sfCommandOption('log', null, sfCommandOption::PARAMETER_NONE, 'Log execution of PHP file'),
-      new sfCommandOption('log_file', null, sfCommandOption::PARAMETER_OPTIONAL, 'File to log to', $logFileDefault),
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-    ));
-
-    $this->addArguments(array(
-      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The custom logic file (containing PHP logic).')
-    ));
-
-    // TODO: add capability to define ad-hoc arguments
-  }
-
-  /**
    * @see sfTask
    */
   public function execute($arguments = array(), $options = array())
@@ -76,5 +54,27 @@ EOF;
       $custom_logger = new sfFileLogger(new sfEventDispatcher(), array('file' => $options['log_file']));
       $custom_logger->info($arguments['filename']);
     }
+  }
+
+  /**
+   * @see sfBaseTask
+   */
+  protected function configure()
+  {
+    $logFileDefault = sfConfig::get('sf_log_dir') . '/tools_run.log';
+
+    $this->addOptions(array(
+      new sfCommandOption('log', null, sfCommandOption::PARAMETER_NONE, 'Log execution of PHP file'),
+      new sfCommandOption('log_file', null, sfCommandOption::PARAMETER_OPTIONAL, 'File to log to', $logFileDefault),
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+    ));
+
+    $this->addArguments(array(
+      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The custom logic file (containing PHP logic).')
+    ));
+
+    // TODO: add capability to define ad-hoc arguments
   }
 }

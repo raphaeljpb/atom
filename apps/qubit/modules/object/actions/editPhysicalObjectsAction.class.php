@@ -36,6 +36,26 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
       'QubitAccession' => 'accession'
     );
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    $this->relations = QubitRelation::getRelationsByObjectId($this->resource->id, array('typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID));
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        $this->resource->save();
+
+        $this->redirect(array($this->resource, 'module' => $this->moduleForAllowedResource()));
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
@@ -125,25 +145,5 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
   private function moduleForAllowedResource()
   {
     return @self::$MODEL_MODULE[get_class($this->resource)];
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    $this->relations = QubitRelation::getRelationsByObjectId($this->resource->id, array('typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID));
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        $this->resource->save();
-
-        $this->redirect(array($this->resource, 'module' => $this->moduleForAllowedResource()));
-      }
-    }
   }
 }

@@ -392,6 +392,295 @@ class QubitXmlImport
   }
 
   /**
+   *
+   *
+   * @return DOMNodeList
+   */
+  public static function queryDomNode($node, $xpathQuery)
+  {
+    $doc = new DOMDocument();
+    $doc->loadXML('<xml></xml>');
+    $doc->documentElement->appendChild($doc->importNode($node, true));
+    $xpath = new DOMXPath($doc);
+    return $xpath->query($xpathQuery);
+  }
+
+  /**
+   * Return true if import had errors
+   *
+   * @return boolean
+   */
+  public function hasErrors()
+  {
+    return $this->errors != null;
+  }
+
+  /**
+   * Return array of error messages
+   *
+   * @return unknown
+   */
+  public function getErrors()
+  {
+    return $this->errors;
+  }
+
+  /**
+   * Get the root object for the import
+   *
+   * @return mixed the root object (object type depends on import type)
+   */
+  public function getRootObject()
+  {
+    return $this->rootObject;
+  }
+
+  /**
+   * Set the parent resource for the import
+   */
+  public function setParent($parentId)
+  {
+    $this->parent = QubitObject::getById($parentId);
+  }
+
+  /**
+   * Replace </lb> tags for '\n'
+   *
+   * @return node value without linebreaks tags
+   */
+  public static function replaceLineBreaks($node, $methodMap = array())
+  {
+    $nodeValue = '';
+    $fieldsArray = array('extent', 'physfacet', 'dimensions');
+
+    foreach ($node->childNodes as $child)
+    {
+      if ($child->nodeName == 'lb')
+      {
+        $nodeValue .= "\n";
+      }
+      elseif (in_array($child->tagName, $fieldsArray))
+      {
+        foreach ($child->childNodes as $childNode)
+        {
+          if ($childNode->nodeName == 'lb')
+          {
+            $nodeValue .= "\n";
+          }
+          else
+          {
+            $nodeValue .= preg_replace('/[\n\r\s]+/', ' ', $childNode->nodeValue);
+          }
+        }
+      }
+      else
+      {
+        if (empty($methodMap['IgnoreChildElementText']) || !($child instanceof DOMElement))
+        {
+          $nodeValue .= preg_replace('/[\n\r\s]+/', ' ', $child->nodeValue);
+        }
+      }
+    }
+
+    return $nodeValue;
+  }
+
+  /**
+   * Run filter methods based on Filters array specified per node in the template
+   * .yml file config. This function will process filters against an XML node
+   * passed in by reference so no need to return the node after it is processed.
+   * Filter setup example (see ead.yml):
+   *
+   *  edition:
+   *    XPath:   "did/unittitle[not(@type)]/edition"
+   *    Method:  setEdition
+   *    Filters:
+   *      -
+   *        emph:
+   *          QubitMarkdown: eadTagToMarkdown
+   *
+   * Multiple tag filters can be specified for a given XML node. Each filter can
+   * specify it's own class and method for processing.
+   *
+   * @return void
+   */
+  public static function runFilters(&$node, $filterParam)
+  {
+    foreach ($filterParam as $filters)
+    {
+      foreach ($filters as $tag => $classes)
+      {
+        foreach ($classes as $class => $method)
+        {
+          $elementList = $node->getElementsByTagName($tag);
+
+          while ($elementList->length > 0)
+          {
+            $element = $elementList->item(0);
+
+            $parameters = [];
+            if (is_callable(array($class, $method)))
+            {
+              $parameters[] = $tag;
+              $parameters[] = $element;
+              $textValue = call_user_func_array(array($class, $method), $parameters);
+
+              $newTextNode = $node->ownerDocument->createTextNode($textValue);
+              $element->parentNode->replaceChild($newTextNode, $element);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Normalize node, replaces <p> and <lb/>
+   *
+   * @return node value normalized
+   */
+  public static function normalizeNodeValue($node, $methodMap = array())
+  {
+    $nodeValue = '';
+
+    if (!($node instanceof DOMAttr))
+    {
+      $nodeList = $node->getElementsByTagName('p');
+
+      if (0 < $nodeList->length)
+      {
+        $i = 0;
+        foreach ($nodeList as $pNode)
+        {
+          if ($i++ == 0)
+          {
+            $nodeValue .= self::replaceLineBreaks($pNode, $methodMap);
+          }
+          else
+          {
+            $nodeValue .= "\n\n" . self::replaceLineBreaks($pNode, $methodMap);
+          }
+        }
+      }
+      else
+      {
+        $nodeValue .= self::replaceLineBreaks($node, $methodMap);
+      }
+    }
+    else
+    {
+      $nodeValue .= $node->nodeValue;
+    }
+
+    return trim($nodeValue);
+  }
+
+  public static function includeClassesAndHelpers()
+  {
+    $appRoot = sfConfig::get('sf_root_dir');
+
+    $includes = array(
+      '/plugins/sfSkosPlugin/lib/sfSkosPlugin.class.php',
+      '/plugins/sfSkosPlugin/lib/sfSkosPluginException.class.php',
+      '/plugins/sfSkosPlugin/lib/sfSkosUniqueRelations.class.php',
+    );
+
+    foreach ($includes as $include)
+    {
+      include_once $appRoot.$include;
+    }
+  }
+
+  /**
+   * modified helper methods from (http://www.php.net/manual/en/ref.dom.php):
+   *
+   * - create a DOMDocument from a file
+   * - parse the namespaces in it
+   * - create a XPath object with all the namespaces registered
+   *  - load the schema locations
+   *  - validate the file on the main schema (the one without prefix)
+   *
+   * @param string $xmlFile XML document file
+   * @param array $options optional parameters
+   * @return DOMDocument an object representation of the XML document
+   */
+  protected function loadXML($xmlFile, $options = array())
+  {
+    libxml_use_internal_errors(true);
+    libxml_clear_errors();
+
+    // FIXME: trap possible load validation errors (just suppress for now)
+    $err_level = error_reporting(0);
+    $doc = new DOMDocument('1.0', 'UTF-8');
+
+    // Default $strictXmlParsing to false
+    $strictXmlParsing = (isset($options['strictXmlParsing'])) ? $options['strictXmlParsing'] : false;
+
+    // Pre-fetch the raw XML string from file so we can remove any default
+    // namespaces and reuse the string for later when finding/registering namespaces.
+    $rawXML = file_get_contents($xmlFile);
+
+    if ($strictXmlParsing)
+    {
+      // enforce all XML parsing rules and validation
+      $doc->validateOnParse = true;
+      $doc->resolveExternals = true;
+    }
+    else
+    {
+      // try to load whatever we've got, even if it's malformed or invalid
+      $doc->recover = true;
+      $doc->strictErrorChecking = false;
+    }
+    $doc->formatOutput = false;
+    $doc->preserveWhitespace = false;
+    $doc->substituteEntities = true;
+
+    $doc->loadXML($this->removeDefaultNamespace($rawXML));
+
+    $xsi = false;
+    $doc->namespaces = array();
+    $doc->xpath = new DOMXPath($doc);
+
+    // pass along any XML errors that have been generated
+    $doc->libxmlerrors = libxml_get_errors();
+
+    // if the document didn't parse correctly, stop right here
+    if (empty($doc->documentElement))
+    {
+      return $doc;
+    }
+
+    error_reporting($err_level);
+
+    // look through the entire document for namespaces
+    // FIXME: #2787
+    // https://projects.artefactual.com/issues/2787
+    //
+    // THIS SHOULD ONLY INSPECT THE ROOT NODE NAMESPACES
+    // Consider: http://www.php.net/manual/en/book.dom.php#73793
+
+    $re = '/xmlns:([^=]+)="([^"]+)"/';
+    preg_match_all($re, $rawXML, $mat, PREG_SET_ORDER);
+
+    foreach ($mat as $xmlns)
+    {
+      $pre = $xmlns[1];
+      $uri = $xmlns[2];
+
+      $doc->namespaces[$pre] = $uri;
+
+      if ($pre == '')
+      {
+        $pre = 'noname';
+      }
+      $doc->xpath->registerNamespace($pre, $uri);
+    }
+
+    return $doc;
+  }
+
+  /**
    * Populate EAD information objects.
    *
    * @return bool  True if we want to continue populating objects, false if we want to end the import.
@@ -732,189 +1021,6 @@ class QubitXmlImport
   }
 
   /**
-   * modified helper methods from (http://www.php.net/manual/en/ref.dom.php):
-   *
-   * - create a DOMDocument from a file
-   * - parse the namespaces in it
-   * - create a XPath object with all the namespaces registered
-   *  - load the schema locations
-   *  - validate the file on the main schema (the one without prefix)
-   *
-   * @param string $xmlFile XML document file
-   * @param array $options optional parameters
-   * @return DOMDocument an object representation of the XML document
-   */
-  protected function loadXML($xmlFile, $options = array())
-  {
-    libxml_use_internal_errors(true);
-    libxml_clear_errors();
-
-    // FIXME: trap possible load validation errors (just suppress for now)
-    $err_level = error_reporting(0);
-    $doc = new DOMDocument('1.0', 'UTF-8');
-
-    // Default $strictXmlParsing to false
-    $strictXmlParsing = (isset($options['strictXmlParsing'])) ? $options['strictXmlParsing'] : false;
-
-    // Pre-fetch the raw XML string from file so we can remove any default
-    // namespaces and reuse the string for later when finding/registering namespaces.
-    $rawXML = file_get_contents($xmlFile);
-
-    if ($strictXmlParsing)
-    {
-      // enforce all XML parsing rules and validation
-      $doc->validateOnParse = true;
-      $doc->resolveExternals = true;
-    }
-    else
-    {
-      // try to load whatever we've got, even if it's malformed or invalid
-      $doc->recover = true;
-      $doc->strictErrorChecking = false;
-    }
-    $doc->formatOutput = false;
-    $doc->preserveWhitespace = false;
-    $doc->substituteEntities = true;
-
-    $doc->loadXML($this->removeDefaultNamespace($rawXML));
-
-    $xsi = false;
-    $doc->namespaces = array();
-    $doc->xpath = new DOMXPath($doc);
-
-    // pass along any XML errors that have been generated
-    $doc->libxmlerrors = libxml_get_errors();
-
-    // if the document didn't parse correctly, stop right here
-    if (empty($doc->documentElement))
-    {
-      return $doc;
-    }
-
-    error_reporting($err_level);
-
-    // look through the entire document for namespaces
-    // FIXME: #2787
-    // https://projects.artefactual.com/issues/2787
-    //
-    // THIS SHOULD ONLY INSPECT THE ROOT NODE NAMESPACES
-    // Consider: http://www.php.net/manual/en/book.dom.php#73793
-
-    $re = '/xmlns:([^=]+)="([^"]+)"/';
-    preg_match_all($re, $rawXML, $mat, PREG_SET_ORDER);
-
-    foreach ($mat as $xmlns)
-    {
-      $pre = $xmlns[1];
-      $uri = $xmlns[2];
-
-      $doc->namespaces[$pre] = $uri;
-
-      if ($pre == '')
-      {
-        $pre = 'noname';
-      }
-      $doc->xpath->registerNamespace($pre, $uri);
-    }
-
-    return $doc;
-  }
-
-  /**
-   *
-   *
-   * @return DOMNodeList
-   */
-  public static function queryDomNode($node, $xpathQuery)
-  {
-    $doc = new DOMDocument();
-    $doc->loadXML('<xml></xml>');
-    $doc->documentElement->appendChild($doc->importNode($node, true));
-    $xpath = new DOMXPath($doc);
-    return $xpath->query($xpathQuery);
-  }
-
-  /**
-   * Return true if import had errors
-   *
-   * @return boolean
-   */
-  public function hasErrors()
-  {
-    return $this->errors != null;
-  }
-
-  /**
-   * Return array of error messages
-   *
-   * @return unknown
-   */
-  public function getErrors()
-  {
-    return $this->errors;
-  }
-
-  /**
-   * Get the root object for the import
-   *
-   * @return mixed the root object (object type depends on import type)
-   */
-  public function getRootObject()
-  {
-    return $this->rootObject;
-  }
-
-  /**
-   * Set the parent resource for the import
-   */
-  public function setParent($parentId)
-  {
-    $this->parent = QubitObject::getById($parentId);
-  }
-
-  /**
-   * Replace </lb> tags for '\n'
-   *
-   * @return node value without linebreaks tags
-   */
-  public static function replaceLineBreaks($node, $methodMap = array())
-  {
-    $nodeValue = '';
-    $fieldsArray = array('extent', 'physfacet', 'dimensions');
-
-    foreach ($node->childNodes as $child)
-    {
-      if ($child->nodeName == 'lb')
-      {
-        $nodeValue .= "\n";
-      }
-      elseif (in_array($child->tagName, $fieldsArray))
-      {
-        foreach ($child->childNodes as $childNode)
-        {
-          if ($childNode->nodeName == 'lb')
-          {
-            $nodeValue .= "\n";
-          }
-          else
-          {
-            $nodeValue .= preg_replace('/[\n\r\s]+/', ' ', $childNode->nodeValue);
-          }
-        }
-      }
-      else
-      {
-        if (empty($methodMap['IgnoreChildElementText']) || !($child instanceof DOMElement))
-        {
-          $nodeValue .= preg_replace('/[\n\r\s]+/', ' ', $child->nodeValue);
-        }
-      }
-    }
-
-    return $nodeValue;
-  }
-
-  /**
    * Make sure to remove any default namespaces from
    * EAD tags. See issue #7280 for details.
    */
@@ -935,96 +1041,6 @@ class QubitXmlImport
     {
       $nodes->item($i)->parentNode->removeChild($nodes->item($i));
     }
-  }
-
-  /**
-   * Run filter methods based on Filters array specified per node in the template
-   * .yml file config. This function will process filters against an XML node
-   * passed in by reference so no need to return the node after it is processed.
-   * Filter setup example (see ead.yml):
-   *
-   *  edition:
-   *    XPath:   "did/unittitle[not(@type)]/edition"
-   *    Method:  setEdition
-   *    Filters:
-   *      -
-   *        emph:
-   *          QubitMarkdown: eadTagToMarkdown
-   *
-   * Multiple tag filters can be specified for a given XML node. Each filter can
-   * specify it's own class and method for processing.
-   *
-   * @return void
-   */
-  public static function runFilters(&$node, $filterParam)
-  {
-    foreach ($filterParam as $filters)
-    {
-      foreach ($filters as $tag => $classes)
-      {
-        foreach ($classes as $class => $method)
-        {
-          $elementList = $node->getElementsByTagName($tag);
-
-          while ($elementList->length > 0)
-          {
-            $element = $elementList->item(0);
-
-            $parameters = [];
-            if (is_callable(array($class, $method)))
-            {
-              $parameters[] = $tag;
-              $parameters[] = $element;
-              $textValue = call_user_func_array(array($class, $method), $parameters);
-
-              $newTextNode = $node->ownerDocument->createTextNode($textValue);
-              $element->parentNode->replaceChild($newTextNode, $element);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  /**
-   * Normalize node, replaces <p> and <lb/>
-   *
-   * @return node value normalized
-   */
-  public static function normalizeNodeValue($node, $methodMap = array())
-  {
-    $nodeValue = '';
-
-    if (!($node instanceof DOMAttr))
-    {
-      $nodeList = $node->getElementsByTagName('p');
-
-      if (0 < $nodeList->length)
-      {
-        $i = 0;
-        foreach ($nodeList as $pNode)
-        {
-          if ($i++ == 0)
-          {
-            $nodeValue .= self::replaceLineBreaks($pNode, $methodMap);
-          }
-          else
-          {
-            $nodeValue .= "\n\n" . self::replaceLineBreaks($pNode, $methodMap);
-          }
-        }
-      }
-      else
-      {
-        $nodeValue .= self::replaceLineBreaks($node, $methodMap);
-      }
-    }
-    else
-    {
-      $nodeValue .= $node->nodeValue;
-    }
-
-    return trim($nodeValue);
   }
 
   /**
@@ -1337,22 +1353,6 @@ class QubitXmlImport
     if ($this->options['update'] && $this->options['update'] !== 'delete-and-replace')
     {
       throw new sfException($this->i18n->__('EAD import currently only supports %mode% update mode.', array('%mode%' => '"delete-and-replace"')));
-    }
-  }
-
-  public static function includeClassesAndHelpers()
-  {
-    $appRoot = sfConfig::get('sf_root_dir');
-
-    $includes = array(
-      '/plugins/sfSkosPlugin/lib/sfSkosPlugin.class.php',
-      '/plugins/sfSkosPlugin/lib/sfSkosPluginException.class.php',
-      '/plugins/sfSkosPlugin/lib/sfSkosUniqueRelations.class.php',
-    );
-
-    foreach ($includes as $include)
-    {
-      include_once $appRoot.$include;
     }
   }
 }

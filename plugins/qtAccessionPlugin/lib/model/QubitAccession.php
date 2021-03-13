@@ -27,33 +27,6 @@ class QubitAccession extends BaseAccession
     return (string) $this->identifier;
   }
 
-  protected function insert($connection = null)
-  {
-    // If identifier has been specified and the mask is enabled, increment the counter
-    if (!empty($this->identifier) && self::maskEnabled())
-    {
-      $con = Propel::getConnection();
-      try
-      {
-        $con->beginTransaction();
-        self::incrementAccessionCounter();
-        $con->commit();
-      }
-      catch (PropelException $e)
-      {
-        $con->rollback();
-        throw $e;
-      }
-    }
-
-    if (!isset($this->slug))
-    {
-      $this->slug = QubitSlug::slugify($this->__get('identifier', array('sourceCulture' => true)));
-    }
-
-    parent::insert($connection);
-  }
-
   public function save($connection = null)
   {
     parent::save($connection);
@@ -225,5 +198,32 @@ class QubitAccession extends BaseAccession
     }
 
     return $otherNames;
+  }
+
+  protected function insert($connection = null)
+  {
+    // If identifier has been specified and the mask is enabled, increment the counter
+    if (!empty($this->identifier) && self::maskEnabled())
+    {
+      $con = Propel::getConnection();
+      try
+      {
+        $con->beginTransaction();
+        self::incrementAccessionCounter();
+        $con->commit();
+      }
+      catch (PropelException $e)
+      {
+        $con->rollback();
+        throw $e;
+      }
+    }
+
+    if (!isset($this->slug))
+    {
+      $this->slug = QubitSlug::slugify($this->__get('identifier', array('sourceCulture' => true)));
+    }
+
+    parent::insert($connection);
   }
 }

@@ -30,26 +30,6 @@ class I18nRemoveDuplicatesTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  protected function configure()
-  {
-    $this->addOptions(array(
-      // http://trac.symfony-project.org/ticket/8352
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-    ));
-
-    $this->namespace = 'i18n';
-    $this->name = 'remove-duplicates';
-    $this->briefDescription = 'Delete duplicate source messages';
-
-    $this->detailedDescription = <<<EOF
-FIXME
-EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
   public function execute($arguments = array(), $options = array())
   {
     $this->logSection('i18n', sprintf('Removing duplicate i18n sources for the "%s" application', $options['application']));
@@ -121,6 +101,25 @@ EOF;
 
       $doc->save($filename);
     }
+  }
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    $this->addOptions(array(
+      // http://trac.symfony-project.org/ticket/8352
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+    ));
+
+    $this->namespace = 'i18n';
+    $this->name = 'remove-duplicates';
+    $this->briefDescription = 'Delete duplicate source messages';
+
+    $this->detailedDescription = <<<EOF
+FIXME
+EOF;
   }
 
 }

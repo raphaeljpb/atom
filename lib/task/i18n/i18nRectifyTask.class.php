@@ -30,30 +30,6 @@ class i18nRectifyTask extends sfBaseTask
   /**
    * @see sfTask
    */
-  protected function configure()
-  {
-    $this->addArguments(array(
-      new sfCommandArgument('culture', sfCommandArgument::REQUIRED, 'The target culture'),
-    ));
-
-    $this->addOptions(array(
-
-      // http://trac.symfony-project.org/ticket/8352
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', true),
-    ));
-
-    $this->namespace = 'i18n';
-    $this->name = 'rectify';
-    $this->briefDescription = 'Copy i18n target messages from application source to plugin source. This prevents losing translated string in the fragmentation of application message source into multiple plugin message sources.';
-
-    $this->detailedDescription = <<<EOF
-FIXME
-EOF;
-  }
-
-  /**
-   * @see sfTask
-   */
   public function execute($arguments = array(), $options = array())
   {
     $this->logSection('i18n', sprintf('Rectifying existing i18n strings for the "%s" application', $options['application']));
@@ -108,5 +84,28 @@ EOF;
 
       $messageSource->save();
     }
+  }
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    $this->addArguments(array(
+      new sfCommandArgument('culture', sfCommandArgument::REQUIRED, 'The target culture'),
+    ));
+
+    $this->addOptions(array(
+
+      // http://trac.symfony-project.org/ticket/8352
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', true),
+    ));
+
+    $this->namespace = 'i18n';
+    $this->name = 'rectify';
+    $this->briefDescription = 'Copy i18n target messages from application source to plugin source. This prevents losing translated string in the fragmentation of application message source into multiple plugin message sources.';
+
+    $this->detailedDescription = <<<EOF
+FIXME
+EOF;
   }
 }

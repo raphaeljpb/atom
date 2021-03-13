@@ -141,6 +141,31 @@ class QubitMarkdown
   }
 
   /**
+   * Convert an EAD markup tag to it's corresponding markdown symbols.
+   *
+   * @return ead string with markdown replacement
+   */
+  public static function eadTagToMarkdown($eadTag, $node)
+  {
+    // Don't convert if Markdown is not enabled
+    if (!sfConfig::get('app_markdown_enabled', true))
+    {
+      return $node->nodeValue;
+    }
+
+    switch ($eadTag)
+    {
+      // EAD tags that we want to convert to markdown.
+      case 'emph':
+        // Set default to italic when no render attribute is present.
+        $markdownSymbol = (!empty($node->getAttribute('render')))
+          ? QubitMarkdown::$markdownMap[$node->getAttribute('render')]
+          : QubitMarkdown::$markdownMap['italic'];
+        return $markdownSymbol . $node->nodeValue . $markdownSymbol;
+    }
+  }
+
+  /**
    * Returns the string value of the content. If content is an object
    * it calls `__toString` only if that method exists, otherwise it
    * returns an empty string, like it does with everything else that
@@ -167,30 +192,5 @@ class QubitMarkdown
     }
 
     return '';
-  }
-
-  /**
-   * Convert an EAD markup tag to it's corresponding markdown symbols.
-   *
-   * @return ead string with markdown replacement
-   */
-  public static function eadTagToMarkdown($eadTag, $node)
-  {
-    // Don't convert if Markdown is not enabled
-    if (!sfConfig::get('app_markdown_enabled', true))
-    {
-      return $node->nodeValue;
-    }
-
-    switch ($eadTag)
-    {
-      // EAD tags that we want to convert to markdown.
-      case 'emph':
-        // Set default to italic when no render attribute is present.
-        $markdownSymbol = (!empty($node->getAttribute('render')))
-          ? QubitMarkdown::$markdownMap[$node->getAttribute('render')]
-          : QubitMarkdown::$markdownMap['italic'];
-        return $markdownSymbol . $node->nodeValue . $markdownSymbol;
-    }
   }
 }

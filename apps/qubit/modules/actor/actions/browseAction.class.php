@@ -80,6 +80,127 @@ class ActorBrowseAction extends DefaultBrowseAction
               'field'  => 'subjects.id',
               'size'   => 10));
 
+  /**
+   * Return ElasticSearch field(s) for a given "friendly" field name
+   *
+   * We do this as we don't want to expose our ElasticSearch schema.
+   *
+   * @return array  Array containing ElasticSearch fields
+   */
+  public function getEsFields($field)
+  {
+    $esFields = array();
+
+    switch ($field)
+    {
+      case 'authorizedFormOfName':
+      case 'datesOfExistence':
+      case 'history':
+      case 'legalStatus':
+      case 'places':
+      case 'generalContext':
+      case 'institutionResponsibleIdentifier':
+      case 'sources':
+        $esFields = arElasticSearchPluginUtil::getI18nFieldNames(sprintf('i18n.%%s.%s', $field));
+        break;
+
+      case 'parallelNames':
+      case 'otherNames':
+      case 'occupations':
+        $esFields = arElasticSearchPluginUtil::getI18nFieldNames(sprintf('%s.i18n.%%s.name', $field));
+        break;
+
+      case 'subject':
+        $esFields = arElasticSearchPluginUtil::getI18nFieldNames('subjects.i18n.%s.name');
+        break;
+
+      case 'place':
+        $esFields = arElasticSearchPluginUtil::getI18nFieldNames('places.i18n.%s.name');
+        break;
+
+      case 'occupationNotes':
+        $esFields = arElasticSearchPluginUtil::getI18nFieldNames('occupations.i18n.%s.content');
+        break;
+
+      case 'maintenanceNotes':
+        $esFields = arElasticSearchPluginUtil::getI18nFieldNames('maintenanceNotes.i18n.%s.content');
+        break;
+
+      case 'descriptionIdentifier':
+        $esFields = array('descriptionIdentifier');
+        break;
+    }
+
+    return $esFields;
+  }
+
+  public function execute($request)
+  {
+    // Translate field labels
+    $this->i18n = $this->context->i18n;
+
+    $this->fieldOptions = array(
+      'authorizedFormOfName'             => $this->i18n->__('Authorized form of name'),
+      'parallelNames'                    => $this->i18n->__('Parallel form(s) of name'),
+      'otherNames'                       => $this->i18n->__('Other form(s) of name'),
+      'datesOfExistence'                 => $this->i18n->__('Dates of existence'),
+      'history'                          => $this->i18n->__('History'),
+      'legalStatus'                      => $this->i18n->__('Legal status'),
+      'places'                           => $this->i18n->__('Places'),
+      'generalContext'                   => $this->i18n->__('General context'),
+      'occupations'                      => $this->i18n->__('Occupation access points'),
+      'occupationNotes'                  => $this->i18n->__('Occupation access point notes'),
+      'subject'                          => $this->i18n->__('Subject access points'),
+      'place'                            => $this->i18n->__('Place access points'),
+      'descriptionIdentifier'            => $this->i18n->__('Authority record identifier'),
+      'institutionResponsibleIdentifier' => $this->i18n->__('Institution identifier'),
+      'sources'                          => $this->i18n->__('Sources'),
+      'maintenanceNotes'                 => $this->i18n->__('Maintenance notes')
+    );
+
+    // If a global search has been requested, translate that into an advanced search
+    if (isset($request->subquery))
+    {
+      $request->sq0 = $request->subquery;
+    }
+
+    parent::execute($request);
+
+    // Look up related authority, if specified
+    $this->relatedAuthority = $this->getRelatedAuthorityUsingSlug($request->relatedAuthority);
+
+    // Prepare filter tags, form, and hidden fields/values
+    $this->setFilterTagsAndForm($request);
+
+    $this->form->bind($request->getRequestParameters() + $request->getGetParameters());
+    if (!$this->form->isValid())
+    {
+      return;
+    }
+
+    // Perform search and paging
+    $resultSet = $this->doSearch($request);
+
+    $this->pager = new QubitSearchPager($resultSet);
+    $this->pager->setPage($request->page ? $request->page : 1);
+    $this->pager->setMaxPerPage($this->limit);
+    $this->pager->init();
+
+    $this->populateAggs($resultSet);
+
+    // Default to hide the advanced search panel
+    $this->showAdvanced = filter_var(
+      $request->showAdvanced,
+      FILTER_VALIDATE_BOOLEAN
+    );
+
+    // If an advanced search has been requested of all fields, put the query text into the global search field
+    if (!isset($request->subquery) && isset($request->sq0) && !isset($request->sf0))
+    {
+      $request->subquery = $request->sq0;
+    }
+  }
+
   protected function addField($name, $request)
   {
     switch ($name)
@@ -339,16 +460,6 @@ class ActorBrowseAction extends DefaultBrowseAction
     $this->setHiddenFields($request, $allowed, $ignored);
   }
 
-  private function getRelatedAuthorityUsingSlug($slug)
-  {
-    if (!empty($slug))
-    {
-      $params = $this->context->routing->parse(Qubit::pathInfo($slug));
-
-      return get_class($params['_sf_route']->resource) == 'QubitActor' ? $params['_sf_route']->resource : null;
-    }
-  }
-
   protected function doSearch($request)
   {
     $this->setSort($request);
@@ -414,6 +525,16 @@ class ActorBrowseAction extends DefaultBrowseAction
     return QubitSearch::getInstance()->index->getType('QubitActor')->search($this->search->getQuery(false));
   }
 
+  private function getRelatedAuthorityUsingSlug($slug)
+  {
+    if (!empty($slug))
+    {
+      $params = $this->context->routing->parse(Qubit::pathInfo($slug));
+
+      return get_class($params['_sf_route']->resource) == 'QubitActor' ? $params['_sf_route']->resource : null;
+    }
+  }
+
   private function actorRelationsQueryForActor($actorId)
   {
     // Result relations must have either a related object or subject ID
@@ -472,126 +593,5 @@ class ActorBrowseAction extends DefaultBrowseAction
     $queryBool->addMustNot($queryField);
 
     return $queryBool;
-  }
-
-  /**
-   * Return ElasticSearch field(s) for a given "friendly" field name
-   *
-   * We do this as we don't want to expose our ElasticSearch schema.
-   *
-   * @return array  Array containing ElasticSearch fields
-   */
-  public function getEsFields($field)
-  {
-    $esFields = array();
-
-    switch ($field)
-    {
-      case 'authorizedFormOfName':
-      case 'datesOfExistence':
-      case 'history':
-      case 'legalStatus':
-      case 'places':
-      case 'generalContext':
-      case 'institutionResponsibleIdentifier':
-      case 'sources':
-        $esFields = arElasticSearchPluginUtil::getI18nFieldNames(sprintf('i18n.%%s.%s', $field));
-        break;
-
-      case 'parallelNames':
-      case 'otherNames':
-      case 'occupations':
-        $esFields = arElasticSearchPluginUtil::getI18nFieldNames(sprintf('%s.i18n.%%s.name', $field));
-        break;
-
-      case 'subject':
-        $esFields = arElasticSearchPluginUtil::getI18nFieldNames('subjects.i18n.%s.name');
-        break;
-
-      case 'place':
-        $esFields = arElasticSearchPluginUtil::getI18nFieldNames('places.i18n.%s.name');
-        break;
-
-      case 'occupationNotes':
-        $esFields = arElasticSearchPluginUtil::getI18nFieldNames('occupations.i18n.%s.content');
-        break;
-
-      case 'maintenanceNotes':
-        $esFields = arElasticSearchPluginUtil::getI18nFieldNames('maintenanceNotes.i18n.%s.content');
-        break;
-
-      case 'descriptionIdentifier':
-        $esFields = array('descriptionIdentifier');
-        break;
-    }
-
-    return $esFields;
-  }
-
-  public function execute($request)
-  {
-    // Translate field labels
-    $this->i18n = $this->context->i18n;
-
-    $this->fieldOptions = array(
-      'authorizedFormOfName'             => $this->i18n->__('Authorized form of name'),
-      'parallelNames'                    => $this->i18n->__('Parallel form(s) of name'),
-      'otherNames'                       => $this->i18n->__('Other form(s) of name'),
-      'datesOfExistence'                 => $this->i18n->__('Dates of existence'),
-      'history'                          => $this->i18n->__('History'),
-      'legalStatus'                      => $this->i18n->__('Legal status'),
-      'places'                           => $this->i18n->__('Places'),
-      'generalContext'                   => $this->i18n->__('General context'),
-      'occupations'                      => $this->i18n->__('Occupation access points'),
-      'occupationNotes'                  => $this->i18n->__('Occupation access point notes'),
-      'subject'                          => $this->i18n->__('Subject access points'),
-      'place'                            => $this->i18n->__('Place access points'),
-      'descriptionIdentifier'            => $this->i18n->__('Authority record identifier'),
-      'institutionResponsibleIdentifier' => $this->i18n->__('Institution identifier'),
-      'sources'                          => $this->i18n->__('Sources'),
-      'maintenanceNotes'                 => $this->i18n->__('Maintenance notes')
-    );
-
-    // If a global search has been requested, translate that into an advanced search
-    if (isset($request->subquery))
-    {
-      $request->sq0 = $request->subquery;
-    }
-
-    parent::execute($request);
-
-    // Look up related authority, if specified
-    $this->relatedAuthority = $this->getRelatedAuthorityUsingSlug($request->relatedAuthority);
-
-    // Prepare filter tags, form, and hidden fields/values
-    $this->setFilterTagsAndForm($request);
-
-    $this->form->bind($request->getRequestParameters() + $request->getGetParameters());
-    if (!$this->form->isValid())
-    {
-      return;
-    }
-
-    // Perform search and paging
-    $resultSet = $this->doSearch($request);
-
-    $this->pager = new QubitSearchPager($resultSet);
-    $this->pager->setPage($request->page ? $request->page : 1);
-    $this->pager->setMaxPerPage($this->limit);
-    $this->pager->init();
-
-    $this->populateAggs($resultSet);
-
-    // Default to hide the advanced search panel
-    $this->showAdvanced = filter_var(
-      $request->showAdvanced,
-      FILTER_VALIDATE_BOOLEAN
-    );
-
-    // If an advanced search has been requested of all fields, put the query text into the global search field
-    if (!isset($request->subquery) && isset($request->sq0) && !isset($request->sf0))
-    {
-      $request->subquery = $request->sq0;
-    }
   }
 }

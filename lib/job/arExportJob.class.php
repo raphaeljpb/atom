@@ -149,11 +149,6 @@ class arExportJob extends arBaseJob
     return $path;
   }
 
-  private function getJobDownloadFilename()
-  {
-    return md5($this->job->id) .'.'. $this->downloadFileExtension;
-  }
-
   /**
    * Create job temporary directory where the files will be added before
    * they are compressed and added to the downloads folder. Use a MD5 hash
@@ -368,5 +363,10 @@ class arExportJob extends arBaseJob
 
       Qubit::clearClassCaches();
     }
+  }
+
+  private function getJobDownloadFilename()
+  {
+    return md5($this->job->id) .'.'. $this->downloadFileExtension;
   }
 }

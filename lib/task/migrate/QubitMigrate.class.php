@@ -59,85 +59,6 @@ class QubitMigrate
   }
 
   /**
-   * Wrapper for findRowKeyForColumnValue() method.
-   *
-   * @param string $className
-   * @param string $searchColumn
-   * @param string $searchKey
-   * @return string key for matched row
-   */
-  protected function getRowKey($className, $searchColumn, $searchKey)
-  {
-    if (isset($this->data[$className]))
-    {
-      return self::findRowKeyForColumnValue($this->data[$className], $searchColumn, $searchKey);
-    }
-  }
-
-  /**
-   * Convienience method for grabbing a QubitTerm row key based on the value of
-   * the 'id' column
-   *
-   * @param string $searchKey
-   * @return string key for matched row
-   */
-  protected function getTermKey($searchKey)
-  {
-    return $this->getRowKey('QubitTerm', 'id', $searchKey);
-  }
-
-  /**
-   *
-   * @return unknown_type
-   */
-  protected function deleteStubObjects()
-  {
-    // Delete "stub" QubitEvent objects that have no valid "event type"
-    if (isset($this->data['QubitEvent']))
-    {
-      foreach ($this->data['QubitEvent'] as $key => $row)
-      {
-        if (!isset($row['type_id']))
-        {
-          unset($this->data['QubitEvent'][$key]);
-
-          // Also delete related QubitObjectTermRelation object (if any)
-          while ($objectTermRelationKey = $this->getRowKey('QubitObjectTermRelation', 'object_id', $key))
-          {
-            unset($this->data['QubitObjectTermRelation'][$objectTermRelationKey]);
-          }
-        }
-      }
-    }
-
-    // Remove blank "stub" QubitObjectTermRelation objects
-    if (isset($this->data['QubitObjectTermRelation']))
-    {
-      foreach ($this->data['QubitObjectTermRelation'] as $key => $row)
-      {
-        if (!isset($row['object_id']) || !isset($row['term_id']))
-        {
-          unset($this->data['QubitObjectTermRelation'][$key]);
-        }
-      }
-    }
-
-    // Remove blank "stub" QubitRelation objects
-    if (isset($this->data['QubitRelation']))
-    {
-      foreach ($this->data['QubitRelation'] as $key => $row)
-      {
-        if (!isset($row['object_id']) || !isset($row['subject_id']))
-        {
-          unset($this->data['QubitRelation'][$key]);
-        }
-      }
-    }
-
-    return $this;
-  }
-
-  /**
    * Try to match a row when the search key may be the row key or the object id
    * - as is often the case with foreign key relations in $this->data
    *
@@ -216,75 +137,6 @@ class QubitMigrate
   {
     $first_array = array_splice($array, 0, $position);
     $array = array_merge($first_array, $insert_array, $array);
-  }
-
-  /**
-   * Insert a non-hierarchical $newData into an existing dataset ($originalData),
-   * which contains nested set columns (but is also non-hierarchical in
-   * structure), before the row specified by $pivotKey.  Update lft and rgt
-   * values appropriately.
-   *
-   * @param array $originalData The existing YAML dataset array
-   * @param string $pivotKey key of row that should follow the inserted data
-   * @param array $newData data to insert in $originalData
-   */
-  protected static function insertBeforeNestedSet(array &$originalData, $pivotKey, array $newData)
-  {
-    // If pivotKey doesn't exist, then just return a simple array merge
-    if (!isset($originalData[$pivotKey]))
-    {
-      return array_merge($originalData, $newData);
-    }
-
-    $pivotIndex = null;
-    $pivotLft = null;
-    $width = count($newData) * 2;
-
-    // Get index ($i) of pivot row and it's left value (if any)
-    $i = 0;
-    foreach ($originalData as $key => $row)
-    {
-      if ($pivotKey == $key)
-      {
-        $pivotIndex = $i;
-        if (isset($originalData[$key]['lft']))
-        {
-          $pivotLft = $originalData[$key]['lft'];
-        }
-        break;
-      }
-      $i++;
-    }
-
-    // If a left value was found, then set merged values for lft & rgt columns
-    if (null !== $pivotIndex)
-    {
-      // Loop through $newData and assign lft & rgt values
-      $j = 0;
-      foreach ($newData as &$row)
-      {
-        $row['lft'] = $pivotLft + ($j * 2);
-        $row['rgt'] = $pivotLft + ($j * 2) + 1;
-        $j++;
-      }
-
-      // Bump existing lft & rgt values
-      foreach ($originalData as &$row)
-      {
-        if (isset($row['lft']) && $pivotLft <= $row['lft'])
-        {
-          $row['lft'] += $width;
-        }
-
-        if (isset($row['rgt']) && $pivotLft < $row['rgt'])
-        {
-          $row['rgt'] += $width;
-        }
-      }
-    }
-
-    // Merge $newData into $originalData
-    QubitMigrate::array_insert($originalData, $i, $newData);
   }
 
   /**
@@ -1007,5 +859,153 @@ class QubitMigrate
         ));
       }
     }
+  }
+
+  /**
+   * Wrapper for findRowKeyForColumnValue() method.
+   *
+   * @param string $className
+   * @param string $searchColumn
+   * @param string $searchKey
+   * @return string key for matched row
+   */
+  protected function getRowKey($className, $searchColumn, $searchKey)
+  {
+    if (isset($this->data[$className]))
+    {
+      return self::findRowKeyForColumnValue($this->data[$className], $searchColumn, $searchKey);
+    }
+  }
+
+  /**
+   * Convienience method for grabbing a QubitTerm row key based on the value of
+   * the 'id' column
+   *
+   * @param string $searchKey
+   * @return string key for matched row
+   */
+  protected function getTermKey($searchKey)
+  {
+    return $this->getRowKey('QubitTerm', 'id', $searchKey);
+  }
+
+  /**
+   *
+   * @return unknown_type
+   */
+  protected function deleteStubObjects()
+  {
+    // Delete "stub" QubitEvent objects that have no valid "event type"
+    if (isset($this->data['QubitEvent']))
+    {
+      foreach ($this->data['QubitEvent'] as $key => $row)
+      {
+        if (!isset($row['type_id']))
+        {
+          unset($this->data['QubitEvent'][$key]);
+
+          // Also delete related QubitObjectTermRelation object (if any)
+          while ($objectTermRelationKey = $this->getRowKey('QubitObjectTermRelation', 'object_id', $key))
+          {
+            unset($this->data['QubitObjectTermRelation'][$objectTermRelationKey]);
+          }
+        }
+      }
+    }
+
+    // Remove blank "stub" QubitObjectTermRelation objects
+    if (isset($this->data['QubitObjectTermRelation']))
+    {
+      foreach ($this->data['QubitObjectTermRelation'] as $key => $row)
+      {
+        if (!isset($row['object_id']) || !isset($row['term_id']))
+        {
+          unset($this->data['QubitObjectTermRelation'][$key]);
+        }
+      }
+    }
+
+    // Remove blank "stub" QubitRelation objects
+    if (isset($this->data['QubitRelation']))
+    {
+      foreach ($this->data['QubitRelation'] as $key => $row)
+      {
+        if (!isset($row['object_id']) || !isset($row['subject_id']))
+        {
+          unset($this->data['QubitRelation'][$key]);
+        }
+      }
+    }
+
+    return $this;
+  }
+
+  /**
+   * Insert a non-hierarchical $newData into an existing dataset ($originalData),
+   * which contains nested set columns (but is also non-hierarchical in
+   * structure), before the row specified by $pivotKey.  Update lft and rgt
+   * values appropriately.
+   *
+   * @param array $originalData The existing YAML dataset array
+   * @param string $pivotKey key of row that should follow the inserted data
+   * @param array $newData data to insert in $originalData
+   */
+  protected static function insertBeforeNestedSet(array &$originalData, $pivotKey, array $newData)
+  {
+    // If pivotKey doesn't exist, then just return a simple array merge
+    if (!isset($originalData[$pivotKey]))
+    {
+      return array_merge($originalData, $newData);
+    }
+
+    $pivotIndex = null;
+    $pivotLft = null;
+    $width = count($newData) * 2;
+
+    // Get index ($i) of pivot row and it's left value (if any)
+    $i = 0;
+    foreach ($originalData as $key => $row)
+    {
+      if ($pivotKey == $key)
+      {
+        $pivotIndex = $i;
+        if (isset($originalData[$key]['lft']))
+        {
+          $pivotLft = $originalData[$key]['lft'];
+        }
+        break;
+      }
+      $i++;
+    }
+
+    // If a left value was found, then set merged values for lft & rgt columns
+    if (null !== $pivotIndex)
+    {
+      // Loop through $newData and assign lft & rgt values
+      $j = 0;
+      foreach ($newData as &$row)
+      {
+        $row['lft'] = $pivotLft + ($j * 2);
+        $row['rgt'] = $pivotLft + ($j * 2) + 1;
+        $j++;
+      }
+
+      // Bump existing lft & rgt values
+      foreach ($originalData as &$row)
+      {
+        if (isset($row['lft']) && $pivotLft <= $row['lft'])
+        {
+          $row['lft'] += $width;
+        }
+
+        if (isset($row['rgt']) && $pivotLft < $row['rgt'])
+        {
+          $row['rgt'] += $width;
+        }
+      }
+    }
+
+    // Merge $newData into $originalData
+    QubitMigrate::array_insert($originalData, $i, $newData);
   }
 }

@@ -67,13 +67,6 @@ class QubitEvent extends BaseEvent
     return $this;
   }
 
-  protected function insert($connection = null)
-  {
-    $this->slug = QubitSlug::slugify($this->slug);
-
-    return parent::insert($connection);
-  }
-
   public function delete($connection = null)
   {
     // Get related object
@@ -112,5 +105,12 @@ class QubitEvent extends BaseEvent
     {
       return null;
     }
+  }
+
+  protected function insert($connection = null)
+  {
+    $this->slug = QubitSlug::slugify($this->slug);
+
+    return parent::insert($connection);
   }
 }

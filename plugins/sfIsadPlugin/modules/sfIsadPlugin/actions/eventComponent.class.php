@@ -26,43 +26,6 @@ class sfIsadPluginEventComponent extends InformationObjectEventComponent
       'startDate',
       'type');
 
-  protected function addField($name)
-  {
-    switch ($name)
-    {
-      case 'type':
-
-        if ('arDacsPlugin' == $this->request->module)
-        {
-          $eventTypes = arDacsPlugin::eventTypes();
-        }
-        else
-        {
-          $eventTypes = sfIsadPlugin::eventTypes();
-        }
-
-        foreach ($eventTypes as $item)
-        {
-          // Default event type is creation
-          if (QubitTerm::CREATION_ID == $item->id)
-          {
-            $this->form->setDefault('type', $this->context->routing->generate(null, array($item, 'module' => 'term')));
-          }
-
-          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
-        }
-
-        $this->form->setValidator('type', new sfValidatorString());
-        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
-
-        break;
-
-      default:
-
-        return parent::addField($name);
-    }
-  }
-
   // TODO Refactor with parent::processForm()
   public function processForm()
   {
@@ -144,6 +107,43 @@ class sfIsadPluginEventComponent extends InformationObjectEventComponent
           $item->save();
         }
       }
+    }
+  }
+
+  protected function addField($name)
+  {
+    switch ($name)
+    {
+      case 'type':
+
+        if ('arDacsPlugin' == $this->request->module)
+        {
+          $eventTypes = arDacsPlugin::eventTypes();
+        }
+        else
+        {
+          $eventTypes = sfIsadPlugin::eventTypes();
+        }
+
+        foreach ($eventTypes as $item)
+        {
+          // Default event type is creation
+          if (QubitTerm::CREATION_ID == $item->id)
+          {
+            $this->form->setDefault('type', $this->context->routing->generate(null, array($item, 'module' => 'term')));
+          }
+
+          $choices[$this->context->routing->generate(null, array($item, 'module' => 'term'))] = $item->__toString();
+        }
+
+        $this->form->setValidator('type', new sfValidatorString());
+        $this->form->setWidget('type', new sfWidgetFormSelect(array('choices' => $choices)));
+
+        break;
+
+      default:
+
+        return parent::addField($name);
     }
   }
 }

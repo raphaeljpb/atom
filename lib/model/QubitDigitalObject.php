@@ -1130,16 +1130,6 @@ class QubitDigitalObject extends BaseDigitalObject
     return call_user_func_array(array($this, 'BaseDigitalObject::__get'), $args);
   }
 
-  protected function insert($connection = null)
-  {
-    if (!isset($this->slug))
-    {
-      $this->slug = QubitSlug::slugify($this->__get('name', array('sourceCulture' => true)));
-    }
-
-    return parent::insert($connection);
-  }
-
   public function save($connection = null)
   {
     // TODO: $cleanObject = $this->object->clean;
@@ -1288,18 +1278,6 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * If we have an associated object, ensure this digital object is cleared
-   * from its digitalObjects property.
-   */
-  private function deleteFromAssociatedObject()
-  {
-    if ((null !== $object = $this->getObject()) && isset($object->refFkValues['digitalObjectsRelatedByobjectId']))
-    {
-      unset($object->refFkValues['digitalObjectsRelatedByobjectId']);
-    }
-  }
-
-  /**
    * Create a digital object representation of an asset
    *
    * @param mixed parent object (digital object or object)
@@ -1392,95 +1370,6 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Download external file via sfWebBrowser and return its temporary location
-   *
-   * @param string URI
-   * @param array options optional arguments
-   *
-   * @return string contents
-   */
-  private function downloadExternalObject($uri, $options = array())
-  {
-    // Initialize web browser
-    $timeout = sfConfig::get("app_download_timeout");
-    $browser = new sfWebBrowser(array(), 'sfCurlAdapter', array('Timeout' => $timeout));
-
-    // Set retries from optional argument
-    $retries = (isset($options['downloadRetries']) && 0 < $options['downloadRetries']) ? $options['downloadRetries'] : 0;
-
-    // Attempt to download the digital object, with possible retries
-    for ($i=0; $i <= $retries; $i++)
-    {
-      try
-      {
-        $browser->get($uri);
-      }
-      catch (Exception $e)
-      {
-        // If request times out
-        if ($e->getCode() === CURLE_OPERATION_TIMEDOUT)
-        {
-          // Try again, up to $retries
-          continue;
-        }
-
-        throw $e;
-      }
-
-      // If response code is an error (4xx or 5xx)
-      if ($browser->responseIsError())
-      {
-        // Try again, up to $retries
-        continue;
-      }
-
-      if (false !== $contents = $browser->getResponseText())
-      {
-        return $contents;
-      }
-    }
-
-    // Throw exception on failure
-    throw new sfException(sprintf('Error downloading "%s" (attempts: %s).', $uri, $i));
-  }
-
-  private function file_get_contents_if_not_empty($filepath)
-  {
-    // Only return file contents if file is indeed a file and isn't empty
-    if (is_file($filepath))
-    {
-      $contents = file_get_contents($filepath);
-
-      if (!empty($contents))
-      {
-        return $contents;
-      }
-    }
-    // Return false on failure so CLI task will log an error and continue importing.
-    return false;
-  }
-
-  /**
-   * Get filename from URI path
-   *
-   * @param string URI
-   * @return mixed null if error, string otherwise
-   */
-  private function getFilenameFromUri($uri)
-  {
-    // Parse URL into components and get file/base name
-    $uriComponents = parse_url($uri);
-    $filename = basename($uriComponents['path']);
-
-    if (1 > strlen($filename))
-    {
-      throw new sfException(sprintf('Couldn\'t parse filename from uri %s', $uri));
-    }
-
-    return $filename;
-  }
-
-  /**
    * Populate a digital object from a resource pointed to by a URI
    * This is for, eg. importing encoded digital objects from XML
    *
@@ -1544,30 +1433,6 @@ class QubitDigitalObject extends BaseDigitalObject
   }
 
   /**
-   * Save data as file and attach as an asset
-   *
-   * @param string $filename name of file
-   * @param string $contents data to save
-   */
-  protected function saveAndAttachFileContent($filename, $contents)
-  {
-    // Save downloaded bitstream to a temp file
-    if (false === $this->localPath = Qubit::saveTemporaryFile($filename, $contents))
-    {
-      throw new sfException(sprintf('Error writing downloaded file to "%s".', $this->localPath));
-    }
-
-    // Attach downloaded file to digital object
-    $asset = new QubitAsset($this->localPath);
-    $this->assets[] = $asset;
-
-    // Set properties derived from file contents
-    $this->checksum = $asset->getChecksum();
-    $this->checksumType = $asset->getChecksumAlgorithm();
-    $this->byteSize = strlen($contents);
-  }
-
-  /**
    * Populate a digital object from a base64-encoded character stream.
    * This is for, eg. importing encoded digital objects from XML
    *
@@ -1588,17 +1453,6 @@ class QubitDigitalObject extends BaseDigitalObject
     }
 
     $this->assets[] = $asset;
-  }
-
-  /**
-   * Remove undesirable characters from a filename
-   *
-   * @param string $filename incoming file name
-   * @return string sanitized filename
-   */
-  protected static function sanitizeFilename($filename)
-  {
-    return preg_replace('/[^a-z0-9_\.-]/i', '_', $filename);
   }
 
   /**
@@ -2385,33 +2239,6 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       return min($settings);
     }
-  }
-
-  /**
-   * Transform the php.ini notation for numbers (like '2M') to number of bytes
-   *
-   * Taken from http://ca2.php.net/manual/en/function.ini-get.php
-   *
-   * @param string $value A string denoting byte size by multiple (e.g. 2M)
-   * @return integer size in bytes
-   */
-  protected static function returnBytes($val)
-  {
-    $val = trim($val);
-    $last = strtolower(substr($val, -1));
-    switch($last) {
-      // The 'G' modifier is available since PHP 5.1.0
-      case 'g':
-        $val *= 1024;
-        // no break
-      case 'm':
-        $val *= 1024;
-        // no break
-      case 'k':
-        $val *= 1024;
-    }
-
-    return $val;
   }
 
   /*
@@ -3520,5 +3347,178 @@ class QubitDigitalObject extends BaseDigitalObject
         QubitTerm::THUMBNAIL_ID,
       ]
     );
+  }
+
+  protected function insert($connection = null)
+  {
+    if (!isset($this->slug))
+    {
+      $this->slug = QubitSlug::slugify($this->__get('name', array('sourceCulture' => true)));
+    }
+
+    return parent::insert($connection);
+  }
+
+  /**
+   * Save data as file and attach as an asset
+   *
+   * @param string $filename name of file
+   * @param string $contents data to save
+   */
+  protected function saveAndAttachFileContent($filename, $contents)
+  {
+    // Save downloaded bitstream to a temp file
+    if (false === $this->localPath = Qubit::saveTemporaryFile($filename, $contents))
+    {
+      throw new sfException(sprintf('Error writing downloaded file to "%s".', $this->localPath));
+    }
+
+    // Attach downloaded file to digital object
+    $asset = new QubitAsset($this->localPath);
+    $this->assets[] = $asset;
+
+    // Set properties derived from file contents
+    $this->checksum = $asset->getChecksum();
+    $this->checksumType = $asset->getChecksumAlgorithm();
+    $this->byteSize = strlen($contents);
+  }
+
+  /**
+   * Remove undesirable characters from a filename
+   *
+   * @param string $filename incoming file name
+   * @return string sanitized filename
+   */
+  protected static function sanitizeFilename($filename)
+  {
+    return preg_replace('/[^a-z0-9_\.-]/i', '_', $filename);
+  }
+
+  /**
+   * Transform the php.ini notation for numbers (like '2M') to number of bytes
+   *
+   * Taken from http://ca2.php.net/manual/en/function.ini-get.php
+   *
+   * @param string $value A string denoting byte size by multiple (e.g. 2M)
+   * @return integer size in bytes
+   */
+  protected static function returnBytes($val)
+  {
+    $val = trim($val);
+    $last = strtolower(substr($val, -1));
+    switch($last) {
+      // The 'G' modifier is available since PHP 5.1.0
+      case 'g':
+        $val *= 1024;
+        // no break
+      case 'm':
+        $val *= 1024;
+        // no break
+      case 'k':
+        $val *= 1024;
+    }
+
+    return $val;
+  }
+
+  /**
+   * If we have an associated object, ensure this digital object is cleared
+   * from its digitalObjects property.
+   */
+  private function deleteFromAssociatedObject()
+  {
+    if ((null !== $object = $this->getObject()) && isset($object->refFkValues['digitalObjectsRelatedByobjectId']))
+    {
+      unset($object->refFkValues['digitalObjectsRelatedByobjectId']);
+    }
+  }
+
+  /**
+   * Download external file via sfWebBrowser and return its temporary location
+   *
+   * @param string URI
+   * @param array options optional arguments
+   *
+   * @return string contents
+   */
+  private function downloadExternalObject($uri, $options = array())
+  {
+    // Initialize web browser
+    $timeout = sfConfig::get("app_download_timeout");
+    $browser = new sfWebBrowser(array(), 'sfCurlAdapter', array('Timeout' => $timeout));
+
+    // Set retries from optional argument
+    $retries = (isset($options['downloadRetries']) && 0 < $options['downloadRetries']) ? $options['downloadRetries'] : 0;
+
+    // Attempt to download the digital object, with possible retries
+    for ($i=0; $i <= $retries; $i++)
+    {
+      try
+      {
+        $browser->get($uri);
+      }
+      catch (Exception $e)
+      {
+        // If request times out
+        if ($e->getCode() === CURLE_OPERATION_TIMEDOUT)
+        {
+          // Try again, up to $retries
+          continue;
+        }
+
+        throw $e;
+      }
+
+      // If response code is an error (4xx or 5xx)
+      if ($browser->responseIsError())
+      {
+        // Try again, up to $retries
+        continue;
+      }
+
+      if (false !== $contents = $browser->getResponseText())
+      {
+        return $contents;
+      }
+    }
+
+    // Throw exception on failure
+    throw new sfException(sprintf('Error downloading "%s" (attempts: %s).', $uri, $i));
+  }
+
+  private function file_get_contents_if_not_empty($filepath)
+  {
+    // Only return file contents if file is indeed a file and isn't empty
+    if (is_file($filepath))
+    {
+      $contents = file_get_contents($filepath);
+
+      if (!empty($contents))
+      {
+        return $contents;
+      }
+    }
+    // Return false on failure so CLI task will log an error and continue importing.
+    return false;
+  }
+
+  /**
+   * Get filename from URI path
+   *
+   * @param string URI
+   * @return mixed null if error, string otherwise
+   */
+  private function getFilenameFromUri($uri)
+  {
+    // Parse URL into components and get file/base name
+    $uriComponents = parse_url($uri);
+    $filename = basename($uriComponents['path']);
+
+    if (1 > strlen($filename))
+    {
+      throw new sfException(sprintf('Couldn\'t parse filename from uri %s', $uri));
+    }
+
+    return $filename;
   }
 }

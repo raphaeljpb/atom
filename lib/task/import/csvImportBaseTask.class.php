@@ -27,109 +27,6 @@
 abstract class csvImportBaseTask extends arBaseTask
 {
   /**
-   * @see sfTask
-   */
-  protected function configure()
-  {
-    $this->addArguments(array(
-      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The input file (csv format).')
-    ));
-
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('rows-until-update', null, sfCommandOption::PARAMETER_OPTIONAL, 'Output total rows imported every n rows.'),
-      new sfCommandOption('skip-rows', null, sfCommandOption::PARAMETER_OPTIONAL, 'Skip n rows before importing.'),
-      new sfCommandOption('error-log', null, sfCommandOption::PARAMETER_OPTIONAL, 'File to log errors to.')
-    ));
-  }
-
-  /**
-   * Validate import-related options, throwing exceptions or warning when
-   * appropriate
-   *
-   * @param array $options  options
-   *
-   * @return void
-   */
-  protected function validateOptions($options)
-  {
-    $numericOptions = array('rows-until-update', 'skip-rows');
-
-    foreach($numericOptions as $option)
-    {
-      if ($options[$option] && !is_numeric($options[$option]))
-      {
-        throw new sfException($option .' must be an integer');
-      }
-    }
-
-    if ($options['error-log'] && !is_dir(dirname($options['error-log'])))
-    {
-      throw new sfException('Path to error log is invalid.');
-    }
-
-    if ($this->acceptsOption('source-name') && !$options['source-name'])
-    {
-      print "WARNING: If you're importing multiple CSV files as part of the "
-        ."same import it's advisable to use the source-name CLI option to "
-        ."specify a source name (otherwise the filename will be used as a "
-        . "source name).\n";
-    }
-
-    if ($options['limit'] && !$options['update'])
-    {
-      throw new sfException('The --limit option requires the --update option to be present.');
-    }
-
-    if ($options['keep-digital-objects'] && 'match-and-update' != trim($options['update']))
-    {
-      throw new sfException('The --keep-digital-objects option can only be used when --update=\'match-and-update\' option is present.');
-    }
-
-    $this->validateUpdateOptions($options);
-  }
-
-  /**
-   * Validate --update option values, throw an exception if invalid value specified.
-   *
-   * @param array $options  CLI options passed in during import.
-   */
-  protected function validateUpdateOptions($options)
-  {
-    if (!$options['update'])
-    {
-      return;
-    }
-
-    $validParams = array('match-and-update', 'delete-and-replace');
-
-    if (!in_array(trim($options['update']), $validParams))
-    {
-      $msg  = sprintf('Parameter "%s" is not valid for --update option. ', $options['update']);
-      $msg .= sprintf('Valid options are: %s', implode(', ', $validParams));
-      throw new sfException($msg);
-    }
-  }
-
-  /**
-   * Checks to see if a particular option is supported
-   *
-   * @param string $name  option name
-   *
-   * @return boolean
-   */
-  protected function acceptsOption($name)
-  {
-    foreach($this->getOptions() as $option)
-    {
-      if ($name == $option->getName()) return true;
-    }
-    return false;
-  }
-
-  /**
    * If updating, delete existing digital object if updating, a path or UI has
    * been specified, and not keeping digial objects.
    *
@@ -599,5 +496,107 @@ abstract class csvImportBaseTask extends arBaseTask
     $result = QubitFlatfileImport::loadTermsFromTaxonomies(array($taxonomyId => 'terms'));
 
     return $result['terms'];
+  }
+  /**
+   * @see sfTask
+   */
+  protected function configure()
+  {
+    $this->addArguments(array(
+      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The input file (csv format).')
+    ));
+
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('rows-until-update', null, sfCommandOption::PARAMETER_OPTIONAL, 'Output total rows imported every n rows.'),
+      new sfCommandOption('skip-rows', null, sfCommandOption::PARAMETER_OPTIONAL, 'Skip n rows before importing.'),
+      new sfCommandOption('error-log', null, sfCommandOption::PARAMETER_OPTIONAL, 'File to log errors to.')
+    ));
+  }
+
+  /**
+   * Validate import-related options, throwing exceptions or warning when
+   * appropriate
+   *
+   * @param array $options  options
+   *
+   * @return void
+   */
+  protected function validateOptions($options)
+  {
+    $numericOptions = array('rows-until-update', 'skip-rows');
+
+    foreach($numericOptions as $option)
+    {
+      if ($options[$option] && !is_numeric($options[$option]))
+      {
+        throw new sfException($option .' must be an integer');
+      }
+    }
+
+    if ($options['error-log'] && !is_dir(dirname($options['error-log'])))
+    {
+      throw new sfException('Path to error log is invalid.');
+    }
+
+    if ($this->acceptsOption('source-name') && !$options['source-name'])
+    {
+      print "WARNING: If you're importing multiple CSV files as part of the "
+        ."same import it's advisable to use the source-name CLI option to "
+        ."specify a source name (otherwise the filename will be used as a "
+        . "source name).\n";
+    }
+
+    if ($options['limit'] && !$options['update'])
+    {
+      throw new sfException('The --limit option requires the --update option to be present.');
+    }
+
+    if ($options['keep-digital-objects'] && 'match-and-update' != trim($options['update']))
+    {
+      throw new sfException('The --keep-digital-objects option can only be used when --update=\'match-and-update\' option is present.');
+    }
+
+    $this->validateUpdateOptions($options);
+  }
+
+  /**
+   * Validate --update option values, throw an exception if invalid value specified.
+   *
+   * @param array $options  CLI options passed in during import.
+   */
+  protected function validateUpdateOptions($options)
+  {
+    if (!$options['update'])
+    {
+      return;
+    }
+
+    $validParams = array('match-and-update', 'delete-and-replace');
+
+    if (!in_array(trim($options['update']), $validParams))
+    {
+      $msg  = sprintf('Parameter "%s" is not valid for --update option. ', $options['update']);
+      $msg .= sprintf('Valid options are: %s', implode(', ', $validParams));
+      throw new sfException($msg);
+    }
+  }
+
+  /**
+   * Checks to see if a particular option is supported
+   *
+   * @param string $name  option name
+   *
+   * @return boolean
+   */
+  protected function acceptsOption($name)
+  {
+    foreach($this->getOptions() as $option)
+    {
+      if ($name == $option->getName()) return true;
+    }
+    return false;
   }
 }

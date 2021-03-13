@@ -24,6 +24,50 @@ class ObjectImportSelectAction extends DefaultEditAction
       'repos',
       'collection');
 
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getPostParameters());
+
+      if ($this->form->isValid())
+      {
+        $this->processForm();
+
+        $this->doBackgroundImport($request);
+
+        $this->setTemplate('importResults');
+      }
+    }
+    else
+    {
+      $this->response->addJavaScript('checkReposFilter', 'last');
+
+      // Check parameter
+      if (isset($request->type))
+      {
+        $this->type = $request->type;
+      }
+
+      switch ($this->type)
+      {
+        case 'csv':
+          $this->title = $this->context->i18n->__('Import CSV');
+          break;
+
+        case 'xml':
+          $this->title = $this->context->i18n->__('Import XML');
+          break;
+
+        default:
+          $this->redirect(array('module' => 'object', 'action' => 'importSelect', 'type' => 'xml'));
+          break;
+      }
+    }
+  }
+
   protected function earlyExecute()
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
@@ -193,50 +237,6 @@ class ObjectImportSelectAction extends DefaultEditAction
     {
       $this->context->user->setFlash('error', $e->getMessage());
       $this->redirect($importSelectRoute);
-    }
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    if ($request->isMethod('post'))
-    {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid())
-      {
-        $this->processForm();
-
-        $this->doBackgroundImport($request);
-
-        $this->setTemplate('importResults');
-      }
-    }
-    else
-    {
-      $this->response->addJavaScript('checkReposFilter', 'last');
-
-      // Check parameter
-      if (isset($request->type))
-      {
-        $this->type = $request->type;
-      }
-
-      switch ($this->type)
-      {
-        case 'csv':
-          $this->title = $this->context->i18n->__('Import CSV');
-          break;
-
-        case 'xml':
-          $this->title = $this->context->i18n->__('Import XML');
-          break;
-
-        default:
-          $this->redirect(array('module' => 'object', 'action' => 'importSelect', 'type' => 'xml'));
-          break;
-      }
     }
   }
 

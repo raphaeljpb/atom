@@ -24,16 +24,6 @@ class QubitDeaccession extends BaseDeaccession
     return (string) $this->accession->__toString().' - D'.$this->identifier;
   }
 
-  protected function insert($connection = null)
-  {
-    if (!isset($this->slug))
-    {
-      $this->slug = QubitSlug::slugify($this->__get('identifier', array('sourceCulture' => true)));
-    }
-
-    return parent::insert($connection);
-  }
-
   public function save($connection = null)
   {
     parent::save($connection);
@@ -44,5 +34,15 @@ class QubitDeaccession extends BaseDeaccession
   public function delete($connection = null)
   {
     return parent::delete($connection);
+  }
+
+  protected function insert($connection = null)
+  {
+    if (!isset($this->slug))
+    {
+      $this->slug = QubitSlug::slugify($this->__get('identifier', array('sourceCulture' => true)));
+    }
+
+    return parent::insert($connection);
   }
 }

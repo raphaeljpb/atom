@@ -29,6 +29,27 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
       'endDate',
       'date');
 
+  public function processForm()
+  {
+    if (isset($this->request->deleteRelations))
+    {
+      foreach ($this->request->deleteRelations as $item)
+      {
+        $params = $this->context->routing->parse(Qubit::pathInfo($item));
+        $params['_sf_route']->resource->delete();
+      }
+    }
+
+    return parent::processForm();
+  }
+
+  public function execute($request)
+  {
+    parent::execute($request);
+
+    $this->form->getWidgetSchema()->setNameFormat('relatedAuthorityRecord[%s]');
+  }
+
   protected function addField($name)
   {
     switch ($name)
@@ -116,26 +137,5 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
 
         return parent::processField($field);
     }
-  }
-
-  public function processForm()
-  {
-    if (isset($this->request->deleteRelations))
-    {
-      foreach ($this->request->deleteRelations as $item)
-      {
-        $params = $this->context->routing->parse(Qubit::pathInfo($item));
-        $params['_sf_route']->resource->delete();
-      }
-    }
-
-    return parent::processForm();
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    $this->form->getWidgetSchema()->setNameFormat('relatedAuthorityRecord[%s]');
   }
 }

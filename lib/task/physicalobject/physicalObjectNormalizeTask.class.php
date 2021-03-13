@@ -38,22 +38,6 @@ EOF;
   private $relationsUpdated = 0;
 
   /**
-   * @see sfBaseTask
-   */
-  protected function configure()
-  {
-    $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('name-only', 'n', sfCommandOption::PARAMETER_NONE, 'Normalize using physical object name only', null),
-      new sfCommandOption('verbose', 'v', sfCommandOption::PARAMETER_NONE, "Verbose (shows details of what's marked for deletion", null),
-      new sfCommandOption('force', 'f', sfCommandOption::PARAMETER_NONE, 'Normalize without confirmation', null),
-      new sfCommandOption('dry-run', 'd', sfCommandOption::PARAMETER_NONE, 'Dry run (no database changes)', null),
-    ));
-  }
-
-  /**
    * @see sfTask
    */
   public function execute($arguments = array(), $options = array())
@@ -156,6 +140,22 @@ EOF;
 
     // Enable search index
     QubitSearch::enable();
+  }
+
+  /**
+   * @see sfBaseTask
+   */
+  protected function configure()
+  {
+    $this->addOptions(array(
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('name-only', 'n', sfCommandOption::PARAMETER_NONE, 'Normalize using physical object name only', null),
+      new sfCommandOption('verbose', 'v', sfCommandOption::PARAMETER_NONE, "Verbose (shows details of what's marked for deletion", null),
+      new sfCommandOption('force', 'f', sfCommandOption::PARAMETER_NONE, 'Normalize without confirmation', null),
+      new sfCommandOption('dry-run', 'd', sfCommandOption::PARAMETER_NONE, 'Dry run (no database changes)', null),
+    ));
   }
 
   private function getPhysicalObjectCount()

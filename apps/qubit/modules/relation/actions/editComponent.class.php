@@ -19,6 +19,74 @@
 
 class RelationEditComponent extends sfComponent
 {
+  public function processForm()
+  {
+    // HACK For now, parameter name and action name are the same. Should
+    // really be configurable, ideally by interpreting
+    // $form->getWidgetSchema()->getNameFormat()?
+    $params = array($this->request[$this->actionName]);
+    if (isset($this->request["{$this->actionName}s"]))
+    {
+      // If dialog JavaScript did it's work, then use array of parameters
+      $params = $this->request["{$this->actionName}s"];
+    }
+
+    foreach ($params as $item)
+    {
+      // Continue only if user typed something
+      foreach ($item as $value)
+      {
+        if (0 < strlen($value))
+        {
+          break;
+        }
+      }
+
+      if (1 > strlen($value))
+      {
+        continue;
+      }
+
+      $this->form->bind($item);
+      if ($this->form->isValid())
+      {
+        if (isset($item['id']))
+        {
+          $params = $this->context->routing->parse(Qubit::pathInfo($item['id']));
+          $this->relation = $params['_sf_route']->resource;
+        }
+        else
+        {
+          $this->resource->relationsRelatedBysubjectId[] = $this->relation = new QubitRelation();
+        }
+
+        foreach ($this->form as $field)
+        {
+          if (isset($item[$field->getName()]))
+          {
+            $this->processField($field);
+          }
+        }
+
+        // Only transient objects will be saved automatically
+        if (isset($item['id']))
+        {
+          $this->relation->save();
+        }
+      }
+    }
+  }
+
+  public function execute($request)
+  {
+    $this->form = new sfForm();
+    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+
+    foreach ($this::$NAMES as $name)
+    {
+      $this->addField($name);
+    }
+  }
   protected function addField($name)
   {
     switch ($name)
@@ -96,75 +164,6 @@ class RelationEditComponent extends sfComponent
 
       default:
         $this->relation[$field->getName()] = $this->form->getValue($field->getName());
-    }
-  }
-
-  public function processForm()
-  {
-    // HACK For now, parameter name and action name are the same. Should
-    // really be configurable, ideally by interpreting
-    // $form->getWidgetSchema()->getNameFormat()?
-    $params = array($this->request[$this->actionName]);
-    if (isset($this->request["{$this->actionName}s"]))
-    {
-      // If dialog JavaScript did it's work, then use array of parameters
-      $params = $this->request["{$this->actionName}s"];
-    }
-
-    foreach ($params as $item)
-    {
-      // Continue only if user typed something
-      foreach ($item as $value)
-      {
-        if (0 < strlen($value))
-        {
-          break;
-        }
-      }
-
-      if (1 > strlen($value))
-      {
-        continue;
-      }
-
-      $this->form->bind($item);
-      if ($this->form->isValid())
-      {
-        if (isset($item['id']))
-        {
-          $params = $this->context->routing->parse(Qubit::pathInfo($item['id']));
-          $this->relation = $params['_sf_route']->resource;
-        }
-        else
-        {
-          $this->resource->relationsRelatedBysubjectId[] = $this->relation = new QubitRelation();
-        }
-
-        foreach ($this->form as $field)
-        {
-          if (isset($item[$field->getName()]))
-          {
-            $this->processField($field);
-          }
-        }
-
-        // Only transient objects will be saved automatically
-        if (isset($item['id']))
-        {
-          $this->relation->save();
-        }
-      }
-    }
-  }
-
-  public function execute($request)
-  {
-    $this->form = new sfForm();
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-
-    foreach ($this::$NAMES as $name)
-    {
-      $this->addField($name);
     }
   }
 }

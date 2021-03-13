@@ -22,57 +22,6 @@ class InformationObjectCalculateDatesAction extends sfAction
   // Arrays not allowed in class constants
   public static $NAMES = array('eventIdOrTypeId');
 
-  protected function addField($name)
-  {
-    switch ($name)
-    {
-      case 'eventIdOrTypeId':
-        if (count($this->events) || count($this->descendantEventTypes))
-        {
-          $eventIdChoices = $this->events + $this->descendantEventTypes;
-          $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $eventIdChoices)));
-          $this->form->setValidator($name, new sfValidatorInteger(array('required' => true)));
-        }
-
-        break;
-    }
-  }
-
-  protected function processField($field)
-  {
-    switch ($name = $field->getName())
-    {
-      case 'eventIdOrTypeId':
-        $this->eventIdOrTypeId = $field->getValue();
-
-        // Determine whether ID belongs to an event or a type (term)
-        $criteria = new Criteria();
-        $criteria->add(QubitObject::ID, $this->eventIdOrTypeId);
-
-        if (null !== $object = QubitObject::getOne($criteria))
-        {
-          if ($object->className == 'QubitEvent')
-          {
-            $this->eventId = $object->id;
-          }
-          else
-          {
-            $this->eventTypeId = $object->id;
-          }
-        }
-
-        break;
-    }
-  }
-
-  protected function processForm()
-  {
-    foreach ($this->form as $field)
-    {
-      $this->processField($field);
-    }
-  }
-
   public function execute($request)
   {
     $this->form = new sfForm();
@@ -129,31 +78,6 @@ class InformationObjectCalculateDatesAction extends sfAction
     }
   }
 
-  protected function beginDateCalculation()
-  {
-    // Specify parameters for job
-    $params = array(
-      'objectId' => $this->resource->id,
-      'eventId' => $this->eventId,
-      'eventTypeId' => $this->eventTypeId
-    );
-
-    // Catch no Gearman worker available exception
-    // and others to show alert with exception message
-    try
-    {
-      QubitJob::runJob('arCalculateDescendantDatesJob', $params);
-
-      $message = $this->i18n->__('Date calculation started.');
-      $this->context->user->setFlash('info', $message);
-    }
-    catch (Exception $e)
-    {
-      $message = $this->i18n->__('Calculation failed') .': '. $this->i18n->__($e->getMessage());
-      $this->context->user->setFlash('error', $message);
-    }
-  }
-
   public static function getDescendantDateTypes($resource)
   {
     $eventTypes = array();
@@ -181,6 +105,82 @@ class InformationObjectCalculateDatesAction extends sfAction
     }
 
     return $eventTypes;
+  }
+
+  protected function addField($name)
+  {
+    switch ($name)
+    {
+      case 'eventIdOrTypeId':
+        if (count($this->events) || count($this->descendantEventTypes))
+        {
+          $eventIdChoices = $this->events + $this->descendantEventTypes;
+          $this->form->setWidget($name, new sfWidgetFormSelect(array('choices' => $eventIdChoices)));
+          $this->form->setValidator($name, new sfValidatorInteger(array('required' => true)));
+        }
+
+        break;
+    }
+  }
+
+  protected function processField($field)
+  {
+    switch ($name = $field->getName())
+    {
+      case 'eventIdOrTypeId':
+        $this->eventIdOrTypeId = $field->getValue();
+
+        // Determine whether ID belongs to an event or a type (term)
+        $criteria = new Criteria();
+        $criteria->add(QubitObject::ID, $this->eventIdOrTypeId);
+
+        if (null !== $object = QubitObject::getOne($criteria))
+        {
+          if ($object->className == 'QubitEvent')
+          {
+            $this->eventId = $object->id;
+          }
+          else
+          {
+            $this->eventTypeId = $object->id;
+          }
+        }
+
+        break;
+    }
+  }
+
+  protected function processForm()
+  {
+    foreach ($this->form as $field)
+    {
+      $this->processField($field);
+    }
+  }
+
+  protected function beginDateCalculation()
+  {
+    // Specify parameters for job
+    $params = array(
+      'objectId' => $this->resource->id,
+      'eventId' => $this->eventId,
+      'eventTypeId' => $this->eventTypeId
+    );
+
+    // Catch no Gearman worker available exception
+    // and others to show alert with exception message
+    try
+    {
+      QubitJob::runJob('arCalculateDescendantDatesJob', $params);
+
+      $message = $this->i18n->__('Date calculation started.');
+      $this->context->user->setFlash('info', $message);
+    }
+    catch (Exception $e)
+    {
+      $message = $this->i18n->__('Calculation failed') .': '. $this->i18n->__($e->getMessage());
+      $this->context->user->setFlash('error', $message);
+    }
   }
 
   protected function getResourceEventsWithDateRangeSet($resource, $validEventTypes = null)
