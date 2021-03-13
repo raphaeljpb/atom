@@ -541,7 +541,7 @@ EOF;
       $n = 0;
       foreach (array_keys($themes) as $theme)
       {
-        print ++$n.") $theme\n";
+        echo ++$n.") $theme\n";
       }
 
       $choice = (int) readline('Select theme number: ');

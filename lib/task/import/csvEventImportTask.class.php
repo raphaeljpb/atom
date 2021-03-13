@@ -163,13 +163,13 @@ EOF;
             ++$self->status['goodObjects'];
 
             $type = $self->columnValue($self->status['relationTypeColumn']);
-            print 'Relate '.$subjectId.' to '.$objectId.' as '.$type.".\n";
+            echo 'Relate '.$subjectId.' to '.$objectId.' as '.$type.".\n";
 
             $typeId = array_search($type, $self->status['eventTypes'][$self->columnValue('culture')]);
 
             if (!$typeId)
             {
-              print "Term does not exist... adding.\n";
+              echo "Term does not exist... adding.\n";
               $term = QubitFlatfileImport::createTerm(
                 QubitTaxonomy::EVENT_TYPE_ID,
                 $type,
@@ -188,23 +188,23 @@ EOF;
           else
           {
             ++$self->status['badObjects'];
-            print 'ERROR: object '.$objectKey." not found.\n";
+            echo 'ERROR: object '.$objectKey." not found.\n";
           }
         }
         else
         {
           ++$self->status['badSubjects'];
-          print 'ERROR: subject '.$subjectKey." not found.\n";
+          echo 'ERROR: subject '.$subjectKey." not found.\n";
         }
       },
 
       'completeLogic' => function (&$self)
       {
-        print "Import complete.\n";
-        print "Good subjects: ".$self->status['goodSubjects']."\n";
-        print "Bad subjects:  ".$self->status['badSubjects']."\n";
-        print "Good objects:  ".$self->status['goodObjects']."\n";
-        print "Bad objects:   ".$self->status['badObjects']."\n";
+        echo "Import complete.\n";
+        echo "Good subjects: ".$self->status['goodSubjects']."\n";
+        echo "Bad subjects:  ".$self->status['badSubjects']."\n";
+        echo "Good objects:  ".$self->status['goodObjects']."\n";
+        echo "Bad objects:   ".$self->status['badObjects']."\n";
       }
     ]);
 
@@ -237,7 +237,7 @@ function getNameIdArrayFromTable(&$self, $tableName, $keyColumn, $idColumn, $whe
 
   if (!$statement)
   {
-    print 'DB error';
+    echo 'DB error';
 
 exit();
   }

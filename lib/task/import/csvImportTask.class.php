@@ -391,7 +391,7 @@ EOF;
           {
             $errorMessage = "Ignoring values in column(s) incompatible with translation rows: ";
             $errorMessage .= implode(' ', $ignoredColumns);
-            print $self->logError($errorMessage);
+            echo $self->logError($errorMessage);
           }
 
           return;
@@ -412,7 +412,7 @@ EOF;
           $levelOfDetailTermId = self::arraySearchCaseInsensitive($levelOfDetail, $self->status['levelOfDetailTypes'][$self->columnValue('culture')]);
           if ($levelOfDetailTermId === false)
           {
-            print "\nTerm $levelOfDetail not found in description details level taxonomy, creating it...\n";
+            echo "\nTerm $levelOfDetail not found in description details level taxonomy, creating it...\n";
 
             $newTerm = QubitFlatfileImport::createTerm(
               QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID,
@@ -450,7 +450,7 @@ EOF;
           }
           else
           {
-            print "\nTerm $descStatus not found in description status taxonomy, creating it...\n";
+            echo "\nTerm $descStatus not found in description status taxonomy, creating it...\n";
 
             $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::DESCRIPTION_STATUS_ID, $descStatus, $self->columnValue('culture'));
             $self->status['descriptionStatusTypes'] = self::refreshTaxonomyTerms(QubitTaxonomy::DESCRIPTION_STATUS_ID);
@@ -469,7 +469,7 @@ EOF;
 
           if (!$pubStatusTermId)
           {
-            print "\nPublication status: '".$self->rowStatusVars['publicationStatus']."' is invalid. Using default.\n";
+            echo "\nPublication status: '".$self->rowStatusVars['publicationStatus']."' is invalid. Using default.\n";
             $pubStatusTermId = $self->status['defaultStatusId'];
           }
         }
@@ -512,7 +512,7 @@ EOF;
               $error = sprintf('legacyId %s: could not find parentId %s in key_map table or existing data. Setting parent to root...',
                                $self->rowStatusVars['legacyId'], $self->rowStatusVars['parentId']);
 
-              print $self->logError($error);
+              echo $self->logError($error);
 
               // Set parent if not importing an QubitInformationObjectI18n translation row
               if ($notImportingTranslation)
@@ -689,7 +689,7 @@ EOF;
 
               if (null === $accession = QubitAccession::getone($criteria))
               {
-                print "\nCreating accession # ".$accessionNumber."\n";
+                echo "\nCreating accession # ".$accessionNumber."\n";
 
                 // Create new accession
                 $accession = new QubitAccession();
@@ -707,7 +707,7 @@ EOF;
               $accessionId = $accessionMapEntry->target_id;
             }
 
-            print "\nAssociating accession # ".$accessionNumber." with ".$self->object->title."\n";
+            echo "\nAssociating accession # ".$accessionNumber." with ".$self->object->title."\n";
 
             // Add relationship between information object and accession
             $self->createRelation($self->object->id, $accessionId, QubitTerm::ACCESSION_ID);
@@ -921,7 +921,7 @@ EOF;
           }
           else
           {
-            print "\nTerm $value not found in material type taxonomy, creating it...\n";
+            echo "\nTerm $value not found in material type taxonomy, creating it...\n";
 
             $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::MATERIAL_TYPE_ID, $value, $self->columnValue('culture'));
             $self->status['materialTypes'] = self::refreshTaxonomyTerms(QubitTaxonomy::MATERIAL_TYPE_ID);

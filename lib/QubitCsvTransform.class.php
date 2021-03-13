@@ -151,7 +151,7 @@ class QubitCsvTransform extends QubitFlatfileImport
 
     if (!$fhOut) throw new sfException('Error writing to '.$startFile.'.');
 
-    print "Writing to ".$startFile."...\n";
+    echo "Writing to ".$startFile."...\n";
 
     fputcsv($fhOut, $this->columnNames); // write headers
 
@@ -171,7 +171,7 @@ class QubitCsvTransform extends QubitFlatfileImport
         $chunkFilePath = $this->numberedFilePathVariation($filepath, $chunk);
         $fhOut = fopen($chunkFilePath, 'w');
 
-        print "Writing to ".$chunkFilePath."...\n";
+        echo "Writing to ".$chunkFilePath."...\n";
 
         fputcsv($fhOut, $this->columnNames); // write headers
       }

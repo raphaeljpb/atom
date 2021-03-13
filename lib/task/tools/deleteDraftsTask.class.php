@@ -79,7 +79,7 @@ EOF;
 
         if (++$n % 10 == 0)
         {
-          print '.';
+          echo '.';
           fflush(STDOUT);
         }
       }

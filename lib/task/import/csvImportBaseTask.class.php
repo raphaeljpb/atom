@@ -257,7 +257,7 @@ abstract class csvImportBaseTask extends arBaseTask
         // Create new physical object type if not found
         if ($physicalObjectTypeId === false)
         {
-          print "\nTerm $type not found in physical object type taxonomy, creating it...\n";
+          echo "\nTerm $type not found in physical object type taxonomy, creating it...\n";
 
           $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID, $type, $self->columnValue('culture'));
           $self->status['physicalObjectTypes'] = self::refreshTaxonomyTerms(QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID);
@@ -545,7 +545,7 @@ abstract class csvImportBaseTask extends arBaseTask
 
     if ($this->acceptsOption('source-name') && !$options['source-name'])
     {
-      print "WARNING: If you're importing multiple CSV files as part of the "
+      echo "WARNING: If you're importing multiple CSV files as part of the "
         ."same import it's advisable to use the source-name CLI option to "
         ."specify a source name (otherwise the filename will be used as a "
         ."source name).\n";

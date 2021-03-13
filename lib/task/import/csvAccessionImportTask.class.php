@@ -178,25 +178,25 @@ EOF;
         $result = $statement->fetch(PDO::FETCH_OBJ);
         if ($result)
         {
-          print $self->logError(sprintf('Found accession ID %d with identifier %s', $result->id, $accessionNumber));
+          echo $self->logError(sprintf('Found accession ID %d with identifier %s', $result->id, $accessionNumber));
           $self->object = QubitAccession::getById($result->id);
         }
         elseif (!empty($accessionNumber))
         {
-          print $self->logError(sprintf('Could not find accession # %s, creating.', $accessionNumber));
+          echo $self->logError(sprintf('Could not find accession # %s, creating.', $accessionNumber));
           $self->object = new QubitAccession();
           $self->object->identifier = $accessionNumber;
         }
         elseif ($self->getStatus('assignId'))
         {
           $identifier = QubitAccession::nextAvailableIdentifier();
-          print $self->logError(sprintf('No accession number, creating accession with identifier %s', $identifier));
+          echo $self->logError(sprintf('No accession number, creating accession with identifier %s', $identifier));
           $self->object = new QubitAccession();
           $self->object->identifier = $identifier;
         }
         else
         {
-          print $self->logError('No accession number, skipping');
+          echo $self->logError('No accession number, skipping');
         }
       },
 
@@ -377,7 +377,7 @@ EOF;
               $countryCode = QubitFlatfileImport::normalizeCountryAsCountryCode($self->rowStatusVars['donorCountry']);
               if ($countryCode === null)
               {
-                print sprintf("Could not find country or country code matching '%s'\n", $self->rowStatusVars['donorCountry']);
+                echo sprintf("Could not find country or country code matching '%s'\n", $self->rowStatusVars['donorCountry']);
               }
               else
               {
@@ -452,7 +452,7 @@ EOF;
 
         if ($resourceTypeId === false)
         {
-          print "\nTerm $data not found in resource type taxonomy, creating it...\n";
+          echo "\nTerm $data not found in resource type taxonomy, creating it...\n";
           $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID, $data, $self->columnValue('culture'));
           $self->status['resourceTypes'] = self::refreshTaxonomyTerms(QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID);
         }
@@ -476,7 +476,7 @@ EOF;
 
         if ($acquisitionTypeId === false)
         {
-          print "\nTerm $data not found in acquisition type taxonomy, creating it...\n";
+          echo "\nTerm $data not found in acquisition type taxonomy, creating it...\n";
           $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID, $data, $self->columnValue('culture'));
           $self->status['acquisitionTypes'] = self::refreshTaxonomyTerms(QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID);
         }

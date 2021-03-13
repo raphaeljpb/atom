@@ -235,7 +235,7 @@ EOF;
                 $countryCode = QubitFlatfileImport::normalizeCountryAsCountryCode($self->rowStatusVars[$field]);
                 if ($countryCode === null)
                 {
-                  print sprintf("Could not find country or country code matching '%s'\n", $self->rowStatusVars[$field]);
+                  echo sprintf("Could not find country or country code matching '%s'\n", $self->rowStatusVars[$field]);
                 }
                 else
                 {

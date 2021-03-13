@@ -411,7 +411,7 @@ class QubitFlatfileImport
     {
       if ($column != trim($column))
       {
-        print $this->logError(sprintf("WARNING: Column '%s' has whitespace before or after its name.", $column));
+        echo $this->logError(sprintf("WARNING: Column '%s' has whitespace before or after its name.", $column));
       }
     }
 
@@ -447,7 +447,7 @@ class QubitFlatfileImport
 
         if ($this->displayProgress)
         {
-          print $this->renderProgressDescription();
+          echo $this->renderProgressDescription();
         }
       }
       else
@@ -464,13 +464,13 @@ class QubitFlatfileImport
     if ($this->status['duplicates'])
     {
       $msg = sprintf('Duplicates found: %d', $this->status['duplicates']);
-      print $this->logError($msg, false);
+      echo $this->logError($msg, false);
     }
 
     if ($this->status['updated'])
     {
       $msg = sprintf('Updated: %d', $this->status['updated']);
-      print $this->logError($msg, false);
+      echo $this->logError($msg, false);
     }
 
     // add ability to define cleanup, etc. logic
@@ -1690,7 +1690,7 @@ class QubitFlatfileImport
         }
 
         $label = $baseLabel.$labelNumber;
-        print $this->logError(sprintf("Named blank column %d in header row '%s'.", $index + 1, $label));
+        echo $this->logError(sprintf("Named blank column %d in header row '%s'.", $index + 1, $label));
         $this->columnNames[$index] = $label;
       }
     }
@@ -2089,7 +2089,7 @@ class QubitFlatfileImport
         $skipRowProcessing = true;
       }
 
-      print $this->logError($msg);
+      echo $this->logError($msg);
     }
 
     return $skipRowProcessing;
@@ -2140,7 +2140,7 @@ class QubitFlatfileImport
                       $this->columnExists('title') ? trim($this->columnValue('title')) : '',
                       $this->columnExists('identifier') ? trim($this->columnValue('identifier')) : '');
 
-      print $this->logError($msg);
+      echo $this->logError($msg);
 
       return true;
     }
@@ -2259,7 +2259,7 @@ class QubitFlatfileImport
     {
       $msg = sprintf('Matching record found for "%s", skipping.',
                       $this->columnValue('authorizedFormOfName'));
-      print $this->logError($msg);
+      echo $this->logError($msg);
 
       ++$this->status['duplicates'];
       $this->object = null;
@@ -2272,7 +2272,7 @@ class QubitFlatfileImport
     {
       $msg = sprintf('No match found for record "%s", skipping.',
                       $this->columnValue('authorizedFormOfName'));
-      print $this->logError($msg);
+      echo $this->logError($msg);
 
       $this->object = null;
 
@@ -2292,7 +2292,7 @@ class QubitFlatfileImport
         {
           $msg = sprintf('Match found outside the repository limit for record "%s", skipping.',
                           $this->columnValue('authorizedFormOfName'));
-          print $this->logError($msg);
+          echo $this->logError($msg);
 
           $this->object = null;
 
@@ -2303,7 +2303,7 @@ class QubitFlatfileImport
       $msg = sprintf('Matching record found for "%s", %s.',
                       $this->columnValue('authorizedFormOfName'),
                       $this->getActionDescription());
-      print $this->logError($msg);
+      echo $this->logError($msg);
 
       ++$this->status['updated'];
       $this->object = call_user_func([$this->className, 'getById'], $result->id);

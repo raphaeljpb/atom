@@ -153,65 +153,65 @@ EOF;
       $rowCount = $rowCount + $import->status['rows'];
     }
 
-    print "\nAnalysis complete.";
+    echo "\nAnalysis complete.";
 
-    print "\n\n".$rowCount." rows, ".count($import->columnNames)." columns.";
+    echo "\n\n".$rowCount." rows, ".count($import->columnNames)." columns.";
 
     if (count($import->columnNames != count($nonEmptyColumns)))
     {
-      print "\n\nEmpty columns:\n";
-      print "--------------\n\n";
+      echo "\n\nEmpty columns:\n";
+      echo "--------------\n\n";
 
       $emptyCount = 0;
       foreach($import->columnNames as $column)
       {
         if (!isset($nonEmptyColumns[$column]))
         {
-          print $column.' ';
+          echo $column.' ';
           ++$emptyCount;
         }
       }
-      print ($emptyCount) ? '' : "[None]";
+      echo ($emptyCount) ? '' : "[None]";
     }
 
     if (count($multiValueColumns))
     {
-      print "\n\nMulti-value columns (contain \"|\" character):\n";
-      print "-------------------\n\n";
+      echo "\n\nMulti-value columns (contain \"|\" character):\n";
+      echo "-------------------\n\n";
 
       $displayCount = 1;
       foreach($multiValueColumns as $column => $count)
       {
-        print $column.'('.$count.')';
-        print ($displayCount < count($multiValueColumns)) ? ', ' : '';
+        echo $column.'('.$count.')';
+        echo ($displayCount < count($multiValueColumns)) ? ', ' : '';
         ++$displayCount;
       }
     }
 
     if ($import->status['numberOfSampleValues'] > 0)
     {
-      print "\n\nSample Values:\n";
-      print "--------------\n\n";
+      echo "\n\nSample Values:\n";
+      echo "--------------\n\n";
       foreach($sampleColumnValues as $column => $values)
       {
-        print '  '.$column.":";
+        echo '  '.$column.":";
         if (count($values))
         {
           $shownCount = 0;
           foreach($values as $value)
           {
-            print ($shownCount) ? '    ' : ' ';
-            print $value."\n";
+            echo ($shownCount) ? '    ' : ' ';
+            echo $value."\n";
             ++$shownCount;
           }
         }
         else
         {
-          print "    [empty]\n";
+          echo "    [empty]\n";
         }
       }
     }
 
-    print "\n";
+    echo "\n";
   }
 }

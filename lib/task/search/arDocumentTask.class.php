@@ -39,7 +39,7 @@ class arSearchDocumentTask extends arBaseTask
 
       $doc = QubitSearch::getInstance()->index->getType($slugObject->className)->getDocument($slugObject->id);
 
-      print json_encode($doc->getData(), JSON_PRETTY_PRINT)."\n";
+      echo json_encode($doc->getData(), JSON_PRETTY_PRINT)."\n";
     }
     else
     {

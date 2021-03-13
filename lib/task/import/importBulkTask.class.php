@@ -109,7 +109,7 @@ EOF;
 
       if ($options['verbose'])
       {
-        print 'Importing: '.$file."\n";
+        echo 'Importing: '.$file."\n";
       }
 
       // Choose import type based on file extension, eg. csv, xml
@@ -142,7 +142,7 @@ EOF;
 
       if (!$options['verbose'])
       {
-        print '.';
+        echo '.';
       }
 
       if ($importer->hasErrors())
@@ -153,7 +153,7 @@ EOF;
         }
       }
 
-      print '.';
+      echo '.';
 
       // Try to free up memory
       unset($importer);

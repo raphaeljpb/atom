@@ -60,11 +60,11 @@ EOF;
     $jobs = QubitJob::get($criteria);
     foreach ($jobs as $job)
     {
-      print "$job->name\n";
-      print " Status: ".$job->getStatusString()."\n";
-      print " Started: ".$job->getCreationDateString()."\n";
-      print " Completed: ".$job->getCompletionDateString()."\n";
-      print " User: ".QubitJob::getUserString($job)."\n";
+      echo "$job->name\n";
+      echo " Status: ".$job->getStatusString()."\n";
+      echo " Started: ".$job->getCreationDateString()."\n";
+      echo " Completed: ".$job->getCompletionDateString()."\n";
+      echo " User: ".QubitJob::getUserString($job)."\n";
 
       // Add notes (indented for readability)
       if (count($notes = $job->getNotes()) > 0)
@@ -73,12 +73,12 @@ EOF;
 
         foreach ($notes as $note)
         {
-          print $notesLabel.$note."\n";
+          echo $notesLabel.$note."\n";
           $notesLabel = "        ";
         }
       }
 
-      print "\n";
+      echo "\n";
     }
   }
 

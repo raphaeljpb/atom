@@ -188,14 +188,14 @@ EOF;
   {
     if (count($list))
     {
-      print $listHeader."\n";
+      echo $listHeader."\n";
 
       foreach($list as $item)
       {
-        print '* '.$item."\n";
+        echo '* '.$item."\n";
       }
 
-      print "\n";
+      echo "\n";
     }
   }
 }

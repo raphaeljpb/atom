@@ -111,7 +111,7 @@ EOF;
         else
         {
           $error = "Skipping. Match not found for accession number: ".$accessionIdentifier;
-          print $self->logError($error);
+          echo $self->logError($error);
         }
       },
 
@@ -155,7 +155,7 @@ EOF;
         {
           $self->object = null;
           $error = "Skipping duplicate deaccession: ".$self->rowStatusVars['accessionNumber'];
-          print $self->logError($error);
+          echo $self->logError($error);
         }
       },
 

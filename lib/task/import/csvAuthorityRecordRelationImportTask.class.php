@@ -126,7 +126,7 @@ EOF;
         if (!$relationTypeId)
         {
           $error = sprintf('Unknown relationship type "%s"... skipping row.', $self->columnValue('relationType'));
-          print $self->logError($error);
+          echo $self->logError($error);
         }
         else
         {
@@ -139,7 +139,7 @@ EOF;
               : $self->columnValue('subjectAuthorizedFormOfName');
 
             $error = sprintf('Actor "%s" does not exist... skipping row.', $badActor);
-            print $self->logError($error);
+            echo $self->logError($error);
           }
           else
           {

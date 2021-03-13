@@ -107,7 +107,7 @@ class QubitCsvTransformFactory
 
       'completeLogic' => function (&$self)
       {
-        print "Step 1 complete.\n";
+        echo "Step 1 complete.\n";
 
         $fhIn = fopen($self->status['tempFile'], 'r');
 
@@ -141,7 +141,7 @@ class QubitCsvTransformFactory
 
             if ($ignore)
             {
-              print "Ignoring row ".$self->status['rows']."...\n";
+              echo "Ignoring row ".$self->status['rows']."...\n";
 
               return;
             }
@@ -163,7 +163,7 @@ class QubitCsvTransformFactory
               else
               {
                 // ...otherwise if the parent key didn't exist, note that it's bad
-                print "Bad parent found: ".$keyOfRowParent." (row ".($self->getStatus('rows') + 1).")\n";
+                echo "Bad parent found: ".$keyOfRowParent." (row ".($self->getStatus('rows') + 1).")\n";
                 ++$self->status['badParents'];
               }
             }
@@ -188,7 +188,7 @@ class QubitCsvTransformFactory
                 $self->addRowToMySQL($sortorder);
               } else {
                 ++$self->status['badLevelOfDescription'];
-                print "Ignoring data with bad level of description: '".$self->columnValue('levelOfDescription')."'.\n";
+                echo "Ignoring data with bad level of description: '".$self->columnValue('levelOfDescription')."'.\n";
               }
             } else {
               $self->addRowToMySQL(0);
@@ -199,9 +199,9 @@ class QubitCsvTransformFactory
           {
             $self->writeMySQLRowsToCsvFilePath($self->status['finalOutputFile']);
 
-            print "Step 2 complete.\n";
-            print "Bad parents found: ".$self->status['badParents'].".\n";
-            print "Bad level of description found: ".$self->status['badLevelOfDescription'].".\n";
+            echo "Step 2 complete.\n";
+            echo "Bad parents found: ".$self->status['badParents'].".\n";
+            echo "Bad level of description found: ".$self->status['badLevelOfDescription'].".\n";
           }
         ]);
 

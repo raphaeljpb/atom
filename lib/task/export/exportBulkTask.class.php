@@ -114,7 +114,7 @@ class exportBulkTask extends exportBulkBaseTask
       }
     }
 
-    print "\nExport complete (".$itemsExported." descriptions exported).\n";
+    echo "\nExport complete (".$itemsExported." descriptions exported).\n";
   }
 
   /**
