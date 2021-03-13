@@ -52,39 +52,51 @@ class QubitMigrate110 extends QubitMigrate
       case 62:
         $this->addAccessionFixtures();
 
+        // no break
       case 63:
         $this->moveRelationNotesToI18n();
 
+        // no break
       case 64:
         $this->setChecksumType();
 
+        // no break
       case 65:
         $this->addCsvMenu();
 
+        // no break
       case 66:
         $this->addRepositoryQuotaSetting();
 
+        // no break
       case 67:
         $this->addSeparatorCharacterSetting();
 
+        // no break
       case 68:
         $this->addThemesMenu();
 
+        // no break
       case 69:
         $this->updatePathToAssets();
 
+        // no break
       case 70:
         $this->addRepostioryUploadLimit();
 
+        // no break
       case 71:
         $this->addPhysicalObjectBrowseMenu();
 
+        // no break
       case 72:
         $this->switchFromClassicToCaribouTheme();
 
+        // no break
       case 73:
         $this->addGlobalReplaceMenu();
 
+        // no break
       case 74:
         $this->ensurePublicationStatus();
     }

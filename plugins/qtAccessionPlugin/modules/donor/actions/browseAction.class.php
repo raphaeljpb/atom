@@ -75,6 +75,7 @@ class DonorBrowseAction extends sfAction
       case 'identifier':
         $criteria->$sortFunction(QubitActor::DESCRIPTION_IDENTIFIER);
 
+        // no break
       case 'alphabetic':
         $criteria->$sortFunction('authorized_form_of_name');
 

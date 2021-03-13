@@ -223,6 +223,7 @@ class RightEditAction extends sfAction
           }
         }
 
+        // no break
       case 'blank':
         break;
 

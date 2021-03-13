@@ -1112,6 +1112,7 @@ class QubitMetsParser
           }
         }
 
+        // no break
       case 'firstFloat':
         foreach ($results as $item)
         {
@@ -1121,6 +1122,7 @@ class QubitMetsParser
           }
         }
 
+        // no break
       case 'firstStringWithTwoPoints':
         foreach ($results as $item)
         {

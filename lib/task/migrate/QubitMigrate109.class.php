@@ -52,48 +52,63 @@ class QubitMigrate109 extends QubitMigrate
       case 39:
         $this->updateStaticPageVersionNumber();
 
+        // no break
       case 40:
         $this->mergeTermAltLabels();
 
+        // no break
       case 41:
         $this->renameEquivalenceTermConstant();
 
+        // no break
       case 42:
         $this->activateEacIsaarIsdiahAndSkosPlugins();
 
+        // no break
       case 43:
         $this->updateTaxonomyPaths();
 
+        // no break
       case 44:
         $this->addCheckForUpdatesSetting();
 
+        // no break
       case 45:
         $this->updateFunctionRelationTaxonomyName();
 
+        // no break
       case 46:
         $this->guessSourceStandard();
 
+        // no break
       case 47:
         $this->addExplodeMultipageFilesSetting();
 
+        // no break
       case 48:
         $this->addShowTooltipsSetting();
 
+        // no break
       case 49:
         $this->addFunctionUiLabel();
 
+        // no break
       case 50:
         $this->addDescriptionUpdatesToAdminMenu();
 
+        // no break
       case 51:
         $this->addDefaultPubStatusSetting();
 
+        // no break
       case 52:
         $this->setPubStatusExplictly();
 
+        // no break
       case 53:
         $this->activateIsdfPlugin();
 
+        // no break
       case 54:
 
         // Replace "permalink" property with "slug"
@@ -111,6 +126,7 @@ class QubitMigrate109 extends QubitMigrate
           }
         }
 
+        // no break
       case 55:
 
         // Update "home" and "about" links
@@ -130,6 +146,7 @@ class QubitMigrate109 extends QubitMigrate
           }
         }
 
+        // no break
       case 56:
 
         foreach ($this->data['QubitMenu'] as $key => $value)
@@ -140,6 +157,7 @@ class QubitMigrate109 extends QubitMigrate
           }
         }
 
+        // no break
       case 57:
 
         // Update tab links in user module
@@ -169,6 +187,7 @@ class QubitMigrate109 extends QubitMigrate
           }
         }
 
+        // no break
       case 58:
 
         if (isset($this->data['QubitEvent']))
@@ -184,6 +203,7 @@ class QubitMigrate109 extends QubitMigrate
           }
         }
 
+        // no break
       case 59:
 
         if (isset($this->data['QubitEvent']))
@@ -218,6 +238,7 @@ class QubitMigrate109 extends QubitMigrate
           }
         }
 
+        // no break
       case 60:
 
         if (isset($ths->data['QubitEvent']))
@@ -231,6 +252,7 @@ class QubitMigrate109 extends QubitMigrate
           }
         }
 
+        // no break
       case 61:
         $this->renameRelationNoteDateConstant();
     }

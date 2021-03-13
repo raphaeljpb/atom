@@ -75,6 +75,7 @@ class RightsHolderBrowseAction extends sfAction
       case 'identifier':
         $criteria->$sortFunction(QubitActor::DESCRIPTION_IDENTIFIER);
         // And continue to sort by alphabetic
+        // no break
       case 'alphabetic':
         $criteria->$sortFunction('authorized_form_of_name');
 

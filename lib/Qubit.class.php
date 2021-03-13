@@ -225,9 +225,11 @@ class Qubit
         case 'g':
           $size /= pow(10, 3);
 
+          // no break
         case 'm':
           $size /= pow(10, 3);
 
+          // no break
         case 'k':
           $size /= pow(10, 3);
       }

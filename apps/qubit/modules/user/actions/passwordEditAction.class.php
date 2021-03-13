@@ -71,6 +71,7 @@ class UserPasswordEditAction extends DefaultEditAction
 
         $this->form->setWidget('password', new sfWidgetFormInputPassword);
 
+        // no break
       case 'confirmPassword':
         $this->form->setDefault('confirmPassword', null);
         $this->form->setValidator('confirmPassword', new sfValidatorString);

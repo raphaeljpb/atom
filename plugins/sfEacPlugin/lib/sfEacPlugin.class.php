@@ -316,6 +316,7 @@ return;
             return 'new';
         }
 
+        // no break
       case 'publicationStatus':
 
         return 'approved';
@@ -1035,6 +1036,7 @@ return;
           return $term->id;
         }
 
+        // no break
       case 'subjectOf':
 
         return;

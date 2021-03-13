@@ -69,11 +69,13 @@ class StaticPageEditAction extends DefaultEditAction
         $this->form->setValidator('slug', new sfValidatorRegex(array('pattern' => '/^[^;]*$/'), array('invalid' => $this->context->i18n->__('Mustn\'t contain ";"'))));
         $this->form->setWidget('slug', new sfWidgetFormInput);
 
+        // no break
       case 'title':
         $this->form->setDefault('title', $this->resource->title);
         $this->form->setValidator('title', new sfValidatorString);
         $this->form->setWidget('title', new sfWidgetFormInput);
 
+        // no break
       default:
 
         return parent::addField($name);

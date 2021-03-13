@@ -43,12 +43,15 @@ class QubitMigrate108 extends QubitMigrate
       default:
         $this->updateStaticPageVersionNumber();
 
+        // no break
       case 1:
         $this->addIsdfFunctionTypes();
 
+        // no break
       case 2:
         $this->moveActorNameToOtherName();
 
+        // no break
       case 3:
 
         // Enable new plugins
@@ -79,12 +82,15 @@ class QubitMigrate108 extends QubitMigrate
           $this->data['QubitSetting'][rand()] = $value;
         }
 
+        // no break
       case 4:
         $this->dropImportDigitalObjectMenu();
 
+        // no break
       case 5:
         $this->alterMenuRecentUpdatesToFunctions();
 
+        // no break
       case 6:
 
         // Enable classic theme
@@ -115,99 +121,131 @@ class QubitMigrate108 extends QubitMigrate
           $this->data['QubitSetting'][rand()] = $value;
         }
 
+        // no break
       case 7:
         $this->addIsdfRelationTypeTaxonomy();
 
+        // no break
       case 8:
         $this->singleToMultiRepositoryType();
 
+        // no break
       case 9:
         $this->addStandardizedNameConstant();
 
+        // no break
       case 10:
         $this->changeFunctionsTaxonomyName();
 
+        // no break
       case 11:
         $this->dropAclActionTable();
 
+        // no break
       case 12:
         $this->promoteGroupsMenu();
 
+        // no break
       case 13:
         $this->addUserSubmenus();
 
+        // no break
       case 14:
         $this->updateTranslatorAcl();
 
+        // no break
       case 15:
         $this->dropRoleTables();
 
+        // no break
       case 16:
         $this->addRootActorAndAdopt();
 
+        // no break
       case 17:
         $this->addActorPermissions();
 
+        // no break
       case 18:
         $this->addActorAclMenu();
 
+        // no break
       case 19:
         $this->rootAuthenticatedGroup();
 
+        // no break
       case 20:
         $this->addGroupSubmenus();
 
+        // no break
       case 21:
         $this->addExternalUriConstant();
 
+        // no break
       case 22:
         $this->addDigitalObjectPermissions();
 
+        // no break
       case 23:
         $this->addTermAclMenus();
 
+        // no break
       case 24:
         $this->rootTaxonomies();
 
+        // no break
       case 25:
         $this->simplifyAdminAcl();
 
+        // no break
       case 26:
         $this->simplifyReadAcl();
 
+        // no break
       case 27:
         $this->addTermPermissions();
 
+        // no break
       case 28:
         $this->changeAddEditMenuToAdd();
 
+        // no break
       case 29:
         $this->changeShowPathToIndex();
 
+        // no break
       case 30:
         $this->changeThemesMenuToPlugins();
 
+        // no break
       case 31:
         $this->removeThemesConfigureMenuOptions();
 
+        // no break
       case 32:
         $this->addTaxonomyToMainMenu();
 
+        // no break
       case 33:
         $this->addBrowseMenu();
 
+        // no break
       case 34:
         $this->ensureCompoundRepTerm();
 
+        // no break
       case 35:
         $this->removeRepoAndUserParent();
 
+        // no break
       case 36:
         $this->camelCaseMenuNames();
 
+        // no break
       case 37:
         $this->switchFromClassicToCaribouTheme();
 
+        // no break
       case 38:
         $this->updateEnMenuLabels();
     }

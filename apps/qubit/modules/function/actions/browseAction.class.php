@@ -84,6 +84,7 @@ class FunctionBrowseAction extends sfAction
       case 'identifier':
         $criteria->$sortFunction(QubitFunctionObject::DESCRIPTION_IDENTIFIER);
         // And then back to authorized form of name
+        // no break
       case 'alphabetic':
         $criteria->$sortFunction('authorized_form_of_name');
 

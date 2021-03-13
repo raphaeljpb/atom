@@ -104,6 +104,7 @@ class UserEditAction extends DefaultEditAction
 
         $this->form->setWidget('password', new sfWidgetFormInputPassword);
 
+        // no break
       case 'confirmPassword':
         $this->form->setDefault('confirmPassword', null);
         // Required field only if a new user is being created

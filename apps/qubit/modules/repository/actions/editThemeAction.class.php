@@ -120,6 +120,7 @@ class RepositoryEditThemeAction extends sfAction
       case 'backgroundColor':
         $this->resource->setBackgroundColor($this->form->getValue($field->getName()), array('sourceCulture' => true));
 
+        // no break
       case 'htmlSnippet':
         $this->resource->setHtmlSnippet($this->form->getValue($field->getName()));
 

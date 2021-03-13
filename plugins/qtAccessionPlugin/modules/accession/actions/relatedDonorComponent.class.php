@@ -94,6 +94,7 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
         $this->form->setValidator($name, new sfValidatorString);
         $this->form->setWidget($name, new sfWidgetFormInput);
 
+        // no break
       default:
 
         return parent::addField($name);

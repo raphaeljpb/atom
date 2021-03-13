@@ -43,24 +43,31 @@ class InformationObjectIndexAction extends sfAction
               case 'Item':
                 $forbiddenValues[] = 'Item';
 
+                // no break
               case 'File':
                 $forbiddenValues[] = 'File';
 
+                // no break
               case 'Sub-subseries':
                 $forbiddenValues[] = 'Sub-subseries';
 
+                // no break
               case 'Subseries':
                 $forbiddenValues[] = 'Subseries';
 
+                // no break
               case 'Series':
                 $forbiddenValues[] = 'Series';
 
+                // no break
               case 'Sub-subfonds':
                 $forbiddenValues[] = 'Sub-subfonds';
 
+                // no break
               case 'Subfonds':
                 $forbiddenValues[] = 'Subfonds';
 
+                // no break
               case 'Fonds':
 
                 // Collection may not be a descendant of fonds

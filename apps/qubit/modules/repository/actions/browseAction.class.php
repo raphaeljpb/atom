@@ -160,6 +160,7 @@ class RepositoryBrowseAction extends DefaultBrowseAction
       case 'identifier':
         $this->search->query->addSort(array('identifier.untouched' => $request->sortDir));
 
+        // no break
       case 'alphabetic':
         $this->search->query->addSort(array($i18n.'authorizedFormOfName.alphasort' => $request->sortDir));
         break;
