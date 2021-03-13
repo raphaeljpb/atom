@@ -1,34 +1,34 @@
-<?php decorate_with('layout_2col.php') ?>
+<?php decorate_with('layout_2col.php'); ?>
 
-<?php slot('sidebar') ?>
+<?php slot('sidebar'); ?>
 
-  <?php echo get_component('settings', 'menu') ?>
+  <?php echo get_component('settings', 'menu'); ?>
 
-<?php end_slot() ?>
+<?php end_slot(); ?>
 
-<?php slot('title') ?>
+<?php slot('title'); ?>
 
-  <h1><?php echo __('Uploads settings') ?></h1>
+  <h1><?php echo __('Uploads settings'); ?></h1>
 
-<?php end_slot() ?>
+<?php end_slot(); ?>
 
-<?php slot('content') ?>
+<?php slot('content'); ?>
 
-  <?php echo $form->renderGlobalErrors() ?>
+  <?php echo $form->renderGlobalErrors(); ?>
 
   <?php echo $form->renderFormTag(url_for(
     ['module' => 'settings', 'action' => 'uploads']
-  )) ?>
+  )); ?>
 
-    <?php echo $form->renderHiddenFields() ?>
+    <?php echo $form->renderHiddenFields(); ?>
 
     <div id="content">
 
       <table class="table sticky-enabled">
         <thead>
           <tr>
-            <th><?php echo __('Name')?></th>
-            <th><?php echo __('Value')?></th>
+            <th><?php echo __('Name');?></th>
+            <th><?php echo __('Value');?></th>
           </tr>
         </thead>
 
@@ -37,7 +37,7 @@
           <?php echo $form
             ->upload_quota
             ->label(__('Total space available for uploads'))
-            ->renderRow()
+            ->renderRow();
           ?>
 
           <?php echo $form
@@ -58,7 +58,7 @@
                   '%2%' => strtolower(sfConfig::get('app_ui_label_digitalobject')),
                 ]
               ))
-            ->renderRow()
+            ->renderRow();
           ?>
 
           <?php echo $form
@@ -76,13 +76,13 @@
                   '%2%' => strtolower(sfConfig::get('app_ui_label_repository'))
                 ]
               ))
-            ->renderRow()
+            ->renderRow();
           ?>
 
           <?php echo $form
             ->explode_multipage_files
             ->label(__('Upload multi-page files as multiple descriptions'))
-            ->renderRow()
+            ->renderRow();
           ?>
 
         </tbody>
@@ -93,11 +93,11 @@
     <section class="actions">
       <ul>
         <li>
-          <input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/>
+          <input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save'); ?>"/>
         </li>
       </ul>
     </section>
 
   </form>
 
-<?php end_slot() ?>
+<?php end_slot(); ?>

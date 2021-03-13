@@ -1,35 +1,35 @@
-<?php $sf_response->addJavaScript('/vendor/yui/connection/connection-min', 'last') ?>
-<?php $sf_response->addJavaScript('/vendor/yui/datasource/datasource-min', 'last') ?>
-<?php $sf_response->addJavaScript('/vendor/yui/container/container-min', 'last') ?>
-<?php $sf_response->addJavaScript('/vendor/yui/tabview/tabview-min', 'last') ?>
-<?php $sf_response->addJavaScript('dialog', 'last') ?>
-<?php $sf_response->addJavaScript('multiDelete', 'last') ?>
+<?php $sf_response->addJavaScript('/vendor/yui/connection/connection-min', 'last'); ?>
+<?php $sf_response->addJavaScript('/vendor/yui/datasource/datasource-min', 'last'); ?>
+<?php $sf_response->addJavaScript('/vendor/yui/container/container-min', 'last'); ?>
+<?php $sf_response->addJavaScript('/vendor/yui/tabview/tabview-min', 'last'); ?>
+<?php $sf_response->addJavaScript('dialog', 'last'); ?>
+<?php $sf_response->addJavaScript('multiDelete', 'last'); ?>
 
-<?php use_helper('Javascript') ?>
+<?php use_helper('Javascript'); ?>
 
 <div class="section">
 
   <table class="table table-bordered" id="contactInformations">
     <caption>
-      <?php echo __('Related contact information') ?>
+      <?php echo __('Related contact information'); ?>
     </caption><thead>
       <tr>
         <th style="width: 60%">
-          <?php echo __('Contact person') ?>
+          <?php echo __('Contact person'); ?>
         </th><th style="width: 15%">
-          <?php echo __('Primary') ?>
+          <?php echo __('Primary'); ?>
         </th><th style="text-align: center; width: 10%">
         </th>
       </tr>
     </thead><tbody>
       <?php foreach ($resource->contactInformations as $item) { ?>
-        <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for([$item, 'module' => 'contactinformation']) ?>">
+        <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd'; ?> related_obj_<?php echo $item->id; ?>" id="<?php echo url_for([$item, 'module' => 'contactinformation']); ?>">
           <td>
-            <?php echo render_title($item->contactPerson) ?>
+            <?php echo render_title($item->contactPerson); ?>
           </td><td>
-            <input type="checkbox"<?php echo $item->primaryContact ? " checked=\"checked\"" : "" ?> disabled="disabled" />
+            <input type="checkbox"<?php echo $item->primaryContact ? " checked=\"checked\"" : ""; ?> disabled="disabled" />
           </td><td style="text-align: center">
-            <input class="multiDelete" name="deleteContactInformations[]" type="checkbox" value="<?php echo $item->id ?>"/>
+            <input class="multiDelete" name="deleteContactInformations[]" type="checkbox" value="<?php echo $item->id; ?>"/>
           </td>
         </tr>
       <?php } ?>
@@ -113,20 +113,20 @@ Drupal.behaviors.contactInformation = {
     } }
 
 content
-) ?>
+); ?>
 
   <!-- NOTE dialog.js wraps this *entire* table in a YUI dialog -->
   <div class="section" id="contactInformationRelation">
 
-    <h3><?php echo __('Related contact information') ?></h3>
+    <h3><?php echo __('Related contact information'); ?></h3>
 
     <div id="contactInformationRelationTabView" class="yui-navset">
 
       <ul class="yui-nav">
 
-        <li class="selected"><a href="#contactInformationRelation_Tab1"><em><?php echo __('Main') ?></em></a></li>
-        <li><a href="#contactInformationRelation_Tab2"><em><?php echo __('Physical location') ?></em></a></li>
-        <li><a href="#contactInformationRelation_Tab3"><em><?php echo __('Other details') ?></em></a></li>
+        <li class="selected"><a href="#contactInformationRelation_Tab1"><em><?php echo __('Main'); ?></em></a></li>
+        <li><a href="#contactInformationRelation_Tab2"><em><?php echo __('Physical location'); ?></em></a></li>
+        <li><a href="#contactInformationRelation_Tab3"><em><?php echo __('Other details'); ?></em></a></li>
 
       </ul>
 
@@ -136,27 +136,27 @@ content
 
           <?php echo $form->primaryContact
             ->label(__('Primary contract'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
           <?php echo $form->contactPerson
             ->label(__('Contact person'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
           <?php echo $form->telephone
             ->label(__('Phone'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
           <?php echo $form->fax
             ->label(__('Fax'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
           <?php echo $form->email
             ->label(__('Email'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
           <?php echo $form->website
             ->label(__('URL'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
         </div>
 
@@ -164,31 +164,31 @@ content
 
           <?php echo $form->streetAddress
             ->label(__('Street address'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
           <?php echo $form->region
             ->label(__('Region/province'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
           <?php echo $form->countryCode
             ->label(__('Country'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
           <?php echo $form->postalCode
             ->label(__('Postal code'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
           <?php echo $form->city
             ->label(__('City'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
           <?php echo $form->latitude
             ->label(__('Latitude'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
           <?php echo $form->longitude
             ->label(__('Longitude'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
         </div>
 
@@ -196,11 +196,11 @@ content
 
           <?php echo $form->contactType
             ->label(__('Contact type'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
           <?php echo $form->note
             ->label(__('Note'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
 
         </div>
 

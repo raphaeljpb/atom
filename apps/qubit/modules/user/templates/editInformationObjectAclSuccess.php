@@ -1,33 +1,33 @@
-<?php use_helper('Javascript') ?>
+<?php use_helper('Javascript'); ?>
 
-<h1><?php echo __('Edit %1% permissions of %2%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject')), '%2%' => render_title($resource)]) ?></h1>
+<h1><?php echo __('Edit %1% permissions of %2%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject')), '%2%' => render_title($resource)]); ?></h1>
 
-<?php echo $form->renderGlobalErrors() ?>
+<?php echo $form->renderGlobalErrors(); ?>
 
-<?php echo $form->renderFormTag(url_for([$resource, 'module' => 'user', 'action' => 'editInformationObjectAcl']), ['id' => 'editForm']) ?>
+<?php echo $form->renderFormTag(url_for([$resource, 'module' => 'user', 'action' => 'editInformationObjectAcl']), ['id' => 'editForm']); ?>
 
-  <?php echo $form->renderHiddenFields() ?>
+  <?php echo $form->renderHiddenFields(); ?>
   
   <section id="content">
 
     <fieldset class="collapsible" id="allInfoObjectsArea">
 
-      <legend><?php echo __('Permissions for all %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject'))]) ?></legend>
+      <legend><?php echo __('Permissions for all %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject'))]); ?></legend>
 
       <div class="form-item">
-        <?php echo get_component('aclGroup', 'aclTable', ['object' => QubitInformationObject::getRoot(), 'permissions' => $root, 'actions' => $basicActions]) ?>
+        <?php echo get_component('aclGroup', 'aclTable', ['object' => QubitInformationObject::getRoot(), 'permissions' => $root, 'actions' => $basicActions]); ?>
       </div>
 
     </fieldset> <!-- /#allInfoObjectsArea -->
 
     <fieldset class="collapsible collapsed" id="informationObjectArea">
 
-      <legend><?php echo __('Permissions by %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject'))]) ?></legend>
+      <legend><?php echo __('Permissions by %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject'))]); ?></legend>
 
       <?php if (0 < count($informationObjects)) { ?>
         <?php foreach ($informationObjects as $informationObjectId => $permissions) { ?>
           <div class="form-item">
-            <?php echo get_component('aclGroup', 'aclTable', ['object' => QubitInformationObject::getById($informationObjectId), 'permissions' => $permissions, 'actions' => $basicActions]) ?>
+            <?php echo get_component('aclGroup', 'aclTable', ['object' => QubitInformationObject::getById($informationObjectId), 'permissions' => $permissions, 'actions' => $basicActions]); ?>
           </div>
         <?php } ?>
       <?php } ?>
@@ -70,30 +70,30 @@ Drupal.behaviors.dialog = {
   }
 }
 EOL
-) ?>
+); ?>
 
       <!-- Add info object div - cut by aclDialog.js -->
       <div class="form-item" id="addInformationObject">
-        <label for="addInformationObject"><?php echo __('%1% name', ['%1%' => sfConfig::get('app_ui_label_informationobject')]) ?></label>
+        <label for="addInformationObject"><?php echo __('%1% name', ['%1%' => sfConfig::get('app_ui_label_informationobject')]); ?></label>
         <select name="addInformationObject" id="addInformationObject" class="form-autocomplete"></select>
-        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'autocomplete']) ?>"/>
+        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'autocomplete']); ?>"/>
       </div>
 
       <div class="form-item">
-        <label for="addInformationObjectLink"><?php echo __('Add permissions by %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject'))]) ?></label>
-        <a id="addInformationObjectLink" href="javascript:Qubit.infoObjectDialog.show()"><?php echo __('Add %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject'))]) ?></a>
+        <label for="addInformationObjectLink"><?php echo __('Add permissions by %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject'))]); ?></label>
+        <a id="addInformationObjectLink" href="javascript:Qubit.infoObjectDialog.show()"><?php echo __('Add %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject'))]); ?></a>
       </div>
 
     </fieldset> <!-- /#informationObjectArea -->
 
     <fieldset class="collapsible collapsed" id="repositoryArea">
 
-      <legend><?php echo __('Permissions by %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_repository'))]) ?></legend>
+      <legend><?php echo __('Permissions by %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_repository'))]); ?></legend>
 
       <?php if (0 < count($repositories)) { ?>
         <?php foreach ($repositories as $repository => $permissions) { ?>
           <div class="form-item">
-            <?php echo get_component('aclGroup', 'aclTable', ['object' => QubitRepository::getBySlug($repository), 'permissions' => $permissions, 'actions' => $basicActions]) ?>
+            <?php echo get_component('aclGroup', 'aclTable', ['object' => QubitRepository::getBySlug($repository), 'permissions' => $permissions, 'actions' => $basicActions]); ?>
           </div>
         <?php } ?>
       <?php } ?>
@@ -106,18 +106,18 @@ Drupal.behaviors.dialog2 = {
   }
 }
 EOL
-) ?>
+); ?>
 
       <!-- Add repository div - cut by aclDialog.js -->
       <div class="form-item" id="addRepository">
-        <label for="addRepository"><?php echo __('%1% name', ['%1%' => sfConfig::get('app_ui_label_repository')]) ?></label>
+        <label for="addRepository"><?php echo __('%1% name', ['%1%' => sfConfig::get('app_ui_label_repository')]); ?></label>
         <select name="addRepository" id="addRepository" class="form-autocomplete"></select>
-        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'repository', 'action' => 'autocomplete']) ?>"/>
+        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'repository', 'action' => 'autocomplete']); ?>"/>
       </div>
 
       <div class="form-item">
-        <label for="addRepositoryLink"><?php echo __('Add permissions by %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_repository'))]) ?></label>
-        <a id="addRepositoryLink" href="javascript:Qubit.repoDialog.show()"><?php echo __('Add %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_repository'))]) ?></a>
+        <label for="addRepositoryLink"><?php echo __('Add permissions by %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_repository'))]); ?></label>
+        <a id="addRepositoryLink" href="javascript:Qubit.repoDialog.show()"><?php echo __('Add %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_repository'))]); ?></a>
       </div>
 
     </fieldset> <!-- /#repositoryArea -->
@@ -126,8 +126,8 @@ EOL
 
   <section class="actions">
     <ul>
-      <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'user', 'action' => 'indexInformationObjectAcl'], ['class' => 'c-btn']) ?></li>
-      <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
+      <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'user', 'action' => 'indexInformationObjectAcl'], ['class' => 'c-btn']); ?></li>
+      <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save'); ?>"/></li>
     </ul>
   </section>
 

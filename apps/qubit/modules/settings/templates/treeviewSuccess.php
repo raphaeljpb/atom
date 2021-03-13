@@ -1,46 +1,46 @@
-<?php use_helper('Number') ?>
+<?php use_helper('Number'); ?>
 
-<?php decorate_with('layout_2col.php') ?>
+<?php decorate_with('layout_2col.php'); ?>
 
-<?php slot('sidebar') ?>
+<?php slot('sidebar'); ?>
 
-  <?php echo get_component('settings', 'menu') ?>
+  <?php echo get_component('settings', 'menu'); ?>
 
-<?php end_slot() ?>
+<?php end_slot(); ?>
 
-<?php slot('title') ?>
+<?php slot('title'); ?>
 
-  <h1><?php echo __('Treeview settings') ?></h1>
+  <h1><?php echo __('Treeview settings'); ?></h1>
 
-<?php end_slot() ?>
+<?php end_slot(); ?>
 
-<?php slot('content') ?>
+<?php slot('content'); ?>
 
-  <?php echo $form->renderGlobalErrors() ?>
+  <?php echo $form->renderGlobalErrors(); ?>
 
-  <?php echo $form->renderFormTag(url_for(['module' => 'settings', 'action' => 'treeview'])) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'settings', 'action' => 'treeview'])); ?>
 
-    <?php echo $form->renderHiddenFields() ?>
+    <?php echo $form->renderHiddenFields(); ?>
 
     <div id="content">
 
       <fieldset class="collapsible">
 
-        <legend><?php echo __('General') ?></legend>
+        <legend><?php echo __('General'); ?></legend>
 
         <div class="row">
 
           <div class="span4">
             <?php echo $form->type
               ->label(__('Type'))
-              ->renderRow() ?>
+              ->renderRow(); ?>
           </div>
 
           <div class="span4">
             <?php echo $form->showBrowseHierarchyPage
               ->label(__('Show browse hierarchy page'))
               ->help(__('Determines whether to show a link to the browse hierarchy page on the information objects browse/search pages'))
-              ->renderRow() ?>
+              ->renderRow(); ?>
            </div>
 
         </div>
@@ -48,44 +48,44 @@
         <p>
           <?php echo $form->allowFullWidthTreeviewCollapse
             ->label(__('Make full width treeview collapsible on description pages'))
-            ->renderRow() ?>
+            ->renderRow(); ?>
         </p>
 
       </fieldset>
 
       <fieldset class="collapsible">
 
-        <legend><?php echo __('Sidebar') ?></legend>
+        <legend><?php echo __('Sidebar'); ?></legend>
 
         <?php echo $form->ioSort
           ->label(__('Sort (information object)'))
           ->help(__('Determines whether to sort siblings in the information object treeview control and, if so, what sort criteria to use'))
-          ->renderRow() ?>
+          ->renderRow(); ?>
 
       </fieldset>
 
       <fieldset class="collapsible">
 
-        <legend><?php echo __('Full width') ?></legend>
+        <legend><?php echo __('Full width'); ?></legend>
 
         <div class="row">
 
           <div class="span3">
             <?php echo $form->showIdentifier
               ->label(__('Show identifier'))
-              ->renderRow() ?>
+              ->renderRow(); ?>
           </div>
 
           <div class="span3">
             <?php echo $form->showLevelOfDescription
               ->label(__('Show level of description'))
-              ->renderRow() ?>
+              ->renderRow(); ?>
           </div>
 
           <div class="span2">
             <?php echo $form->showDates
               ->label(__('Show dates'))
-              ->renderRow() ?>
+              ->renderRow(); ?>
           </div>
 
         </div>
@@ -103,7 +103,7 @@
                     ]
                   )
                 )
-              ->renderRow() ?>
+              ->renderRow(); ?>
         </p>
 
       </fieldset>
@@ -112,10 +112,10 @@
 
     <section class="actions">
       <ul>
-        <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
+        <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save'); ?>"/></li>
       </ul>
     </section>
 
   </form>
 
-<?php end_slot() ?>
+<?php end_slot(); ?>

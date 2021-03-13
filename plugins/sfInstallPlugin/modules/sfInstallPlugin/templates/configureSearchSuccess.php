@@ -7,18 +7,18 @@
   <div class="messages error">
     <ul>
       <?php foreach ($errors as $item) { ?>
-        <li><?php echo $item ?></li>
+        <li><?php echo $item; ?></li>
       <?php } ?>
     </ul>
   </div>
 
 <?php } ?>
 
-<?php slot('before-content') ?>
-  <?php echo $form->renderGlobalErrors() ?>
-  <?php echo $form->renderFormTag(url_for(['module' => 'sfInstallPlugin', 'action' => 'configureSearch'])) ?>
-  <?php echo $form->renderHiddenFields() ?>
-<?php end_slot() ?>
+<?php slot('before-content'); ?>
+  <?php echo $form->renderGlobalErrors(); ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'sfInstallPlugin', 'action' => 'configureSearch'])); ?>
+  <?php echo $form->renderHiddenFields(); ?>
+<?php end_slot(); ?>
 
   <fieldset class="collapsible">
 
@@ -32,24 +32,24 @@
 
     <?php echo $form
       ->searchHost
-      ->renderRow() ?>
+      ->renderRow(); ?>
 
     <?php echo $form
       ->searchPort
-      ->renderRow() ?>
+      ->renderRow(); ?>
 
     <?php echo $form
       ->searchIndex
       ->help('The name of the <em>ElasticSearch</em> index your data will be stored in.')
-      ->renderRow() ?>
+      ->renderRow(); ?>
 
   </fieldset>
 
-<?php slot('after-content') ?>
+<?php slot('after-content'); ?>
   <section class="actions">
     <ul>
       <li><input class="c-btn c-btn-submit" type="submit" value="Save and continue"/></li>
     </ul>
   </section>
   </form>
-<?php end_slot() ?>
+<?php end_slot(); ?>

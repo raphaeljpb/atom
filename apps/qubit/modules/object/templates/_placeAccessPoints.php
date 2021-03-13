@@ -1,11 +1,11 @@
 <div class="field">
 
   <?php if (isset($sidebar)) { ?>
-    <h4><?php echo __('Related places') ?></h4>
+    <h4><?php echo __('Related places'); ?></h4>
   <?php } elseif (isset($mods)){ ?>
-    <h3><?php echo __('Places') ?></h3>
+    <h3><?php echo __('Places'); ?></h3>
   <?php } else { ?>
-    <h3><?php echo __('Place access points') ?></h3>
+    <h3><?php echo __('Place access points'); ?></h3>
   <?php } ?>
 
   <div>
@@ -18,9 +18,9 @@
               &raquo;
             <?php } ?>
             <?php if ($resource->getClass() == 'QubitActor') { ?>
-              <?php echo link_to(render_title($place), [$place, 'module' => 'term', 'action' => 'relatedAuthorities']) ?>
+              <?php echo link_to(render_title($place), [$place, 'module' => 'term', 'action' => 'relatedAuthorities']); ?>
             <?php } else { ?>
-              <?php echo link_to(render_title($place), [$place, 'module' => 'term']) ?>
+              <?php echo link_to(render_title($place), [$place, 'module' => 'term']); ?>
             <?php } ?>
           <?php } ?>
         </li>

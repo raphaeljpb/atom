@@ -2,18 +2,18 @@
   <?php if ($treeviewType == 'sidebar') { ?>
     <li class="active">
       <a href="#treeview" data-toggle="#treeview">
-        <?php echo __('Holdings') ?>
+        <?php echo __('Holdings'); ?>
       </a>
     </li>
   <?php } ?>
-  <li <?php echo ($treeviewType != 'sidebar') ? 'class="active"' : '' ?>>
+  <li <?php echo ($treeviewType != 'sidebar') ? 'class="active"' : ''; ?>>
     <a href="#treeview-search" data-toggle="#treeview-search">
-      <?php echo __('Quick search') ?>
+      <?php echo __('Quick search'); ?>
     </a>
   </li>
 </ul>
 
-<div id="treeview" data-current-id="<?php echo $resource->id ?>" data-sortable="<?php echo empty($sortable) ? 'false' : 'true' ?>">
+<div id="treeview" data-current-id="<?php echo $resource->id; ?>" data-sortable="<?php echo empty($sortable) ? 'false' : 'true'; ?>">
 
   <?php if ($treeviewType == 'sidebar') { ?>
 
@@ -69,7 +69,7 @@
         <?php } ?>
 
         <?php // More button?>
-        <?php $last = isset($child) ? $child : $resource ?>
+        <?php $last = isset($child) ? $child : $resource; ?>
         <?php if ($hasNextSiblings) { ?>
           <?php echo render_treeview_node(
             null,
@@ -90,7 +90,7 @@
         <?php } ?>
 
         <?php // More button?>
-        <?php $last = isset($next) ? $next : $resource ?>
+        <?php $last = isset($next) ? $next : $resource; ?>
         <?php if ($hasNextSiblings) { ?>
           <?php echo render_treeview_node(
             null,
@@ -105,24 +105,24 @@
 
   <?php } else { ?>
 
-    <input type="button" id="fullwidth-treeview-reset-button" class="c-btn c-btn-submit" value="<?php echo __('Reset') ?>" />
-    <input type="button" id="fullwidth-treeview-more-button" class="c-btn c-btn-submit" data-label="<?php echo __('%1% more') ?>" value="" />
+    <input type="button" id="fullwidth-treeview-reset-button" class="c-btn c-btn-submit" value="<?php echo __('Reset'); ?>" />
+    <input type="button" id="fullwidth-treeview-more-button" class="c-btn c-btn-submit" data-label="<?php echo __('%1% more'); ?>" value="" />
     <span id="fullwidth-treeview-configuration"
-      data-collection-url="<?php echo url_for([$resource->getCollectionRoot(), 'module' => 'informationobject']) ?>"
-      data-collapse-enabled="<?php echo $collapsible ?>"
-      data-opened-text="<?php echo sfConfig::get('app_ui_label_fullTreeviewCollapseOpenedButtonText') ?>"
-      data-closed-text="<?php echo sfConfig::get('app_ui_label_fullTreeviewCollapseClosedButtonText') ?>"
-      data-items-per-page="<?php echo $itemsPerPage ?>"></span>
+      data-collection-url="<?php echo url_for([$resource->getCollectionRoot(), 'module' => 'informationobject']); ?>"
+      data-collapse-enabled="<?php echo $collapsible; ?>"
+      data-opened-text="<?php echo sfConfig::get('app_ui_label_fullTreeviewCollapseOpenedButtonText'); ?>"
+      data-closed-text="<?php echo sfConfig::get('app_ui_label_fullTreeviewCollapseClosedButtonText'); ?>"
+      data-items-per-page="<?php echo $itemsPerPage; ?>"></span>
 
   <?php } ?>
 
 </div>
 
-<div id="treeview-search" <?php echo ($treeviewType != 'sidebar') ? 'class="force-show"' : '' ?>>
+<div id="treeview-search" <?php echo ($treeviewType != 'sidebar') ? 'class="force-show"' : ''; ?>>
 
-  <form method="get" action="<?php echo url_for(['module' => 'search', 'action' => 'index', 'collection' => $resource->getCollectionRoot()->id]) ?>" data-not-found="<?php echo __('No results found.') ?>">
+  <form method="get" action="<?php echo url_for(['module' => 'search', 'action' => 'index', 'collection' => $resource->getCollectionRoot()->id]); ?>" data-not-found="<?php echo __('No results found.'); ?>">
     <div class="search-box">
-      <input type="text" name="query" placeholder="<?php echo __('Search') ?>" />
+      <input type="text" name="query" placeholder="<?php echo __('Search'); ?>" />
       <button type="submit"><i class="fa fa-search"></i></button>
     </div>
   </form>

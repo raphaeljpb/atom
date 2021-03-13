@@ -1,38 +1,38 @@
-<?php $sf_response->addJavaScript('date', 'last') ?>
-<?php $sf_response->addJavaScript('/vendor/yui/datasource/datasource-min', 'last') ?>
-<?php $sf_response->addJavaScript('/vendor/yui/container/container-min', 'last') ?>
-<?php $sf_response->addJavaScript('dialog', 'last') ?>
-<?php $sf_response->addJavaScript('multiDelete', 'last') ?>
+<?php $sf_response->addJavaScript('date', 'last'); ?>
+<?php $sf_response->addJavaScript('/vendor/yui/datasource/datasource-min', 'last'); ?>
+<?php $sf_response->addJavaScript('/vendor/yui/container/container-min', 'last'); ?>
+<?php $sf_response->addJavaScript('dialog', 'last'); ?>
+<?php $sf_response->addJavaScript('multiDelete', 'last'); ?>
 
-<?php use_helper('Javascript') ?>
+<?php use_helper('Javascript'); ?>
 
 <div class="section">
 
   <table id="relatedResourceDisplay" class="table table-bordered">
     <caption>
-      <?php echo __('Related resources') ?>
+      <?php echo __('Related resources'); ?>
     </caption><thead>
       <tr>
         <th style="width: 25%">
-          <?php echo __('Identifier/title') ?>
+          <?php echo __('Identifier/title'); ?>
         </th><th style="width: 30%">
-          <?php echo __('Nature of relationship') ?>
+          <?php echo __('Nature of relationship'); ?>
         </th><th style="width: 20%">
-          <?php echo __('Dates') ?>
+          <?php echo __('Dates'); ?>
         </th><th style="text-align: center; width: 10%">
         </th>
       </tr>
     </thead><tbody>
       <?php foreach ($isdf->relatedResource as $item) { ?>
-        <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for([$item, 'module' => 'relation']) ?>">
+        <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd'; ?> related_obj_<?php echo $item->id; ?>" id="<?php echo url_for([$item, 'module' => 'relation']); ?>">
           <td>
-            <?php echo render_title($item->object) ?>
+            <?php echo render_title($item->object); ?>
           </td><td>
-            <?php echo render_value_inline($item->description) ?>
+            <?php echo render_value_inline($item->description); ?>
           </td><td>
-            <?php echo render_value_inline(Qubit::renderDateStartEnd($item->date, $item->startDate, $item->endDate)) ?>
+            <?php echo render_value_inline(Qubit::renderDateStartEnd($item->date, $item->startDate, $item->endDate)); ?>
           </td><td style="text-align: center">
-            <input class="multiDelete" name="deleteRelations[]" type="checkbox" value="<?php echo url_for([$item, 'module' => 'relation']) ?>"/>
+            <input class="multiDelete" name="deleteRelations[]" type="checkbox" value="<?php echo url_for([$item, 'module' => 'relation']); ?>"/>
           </td>
         </tr>
       <?php } ?>
@@ -87,35 +87,35 @@ Drupal.behaviors.relatedResource = {
     } }
 
 content
-) ?>
+); ?>
 
   <!-- NOTE dialog.js wraps this *entire* table in a YUI dialog -->
   <div class="date section" id="relatedResource">
 
-    <h3><?php echo __('Related resource') ?></h3>
+    <h3><?php echo __('Related resource'); ?></h3>
 
     <div>
 
       <div class="form-item">
         <?php echo $form->resource
           ->label(__('Title'))
-          ->renderLabel() ?>
-        <?php echo $form->resource->render(['class' => 'form-autocomplete']) ?>
-        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'autocomplete']) ?>"/>
+          ->renderLabel(); ?>
+        <?php echo $form->resource->render(['class' => 'form-autocomplete']); ?>
+        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'autocomplete']); ?>"/>
         <?php echo $form->resource
           ->help(__('Select the title from the drop-down menu; enter the identifier or the first few letters to narrow the choices. (ISDF 6.1)'))
-          ->renderHelp() ?>
+          ->renderHelp(); ?>
       </div>
 
       <?php echo $form->description
         ->label(__('Nature of relationship'))
-        ->renderRow() ?>
+        ->renderRow(); ?>
 
-      <?php echo $form->date->renderRow() ?>
+      <?php echo $form->date->renderRow(); ?>
 
-      <?php echo $form->startDate->renderRow() ?>
+      <?php echo $form->startDate->renderRow(); ?>
 
-      <?php echo $form->endDate->renderRow() ?>
+      <?php echo $form->endDate->renderRow(); ?>
 
     </div>
 

@@ -1,12 +1,12 @@
-<?php use_helper('Javascript') ?>
+<?php use_helper('Javascript'); ?>
 
 <h2>Site configuration</h2>
 
-<?php slot('before-content') ?>
-  <?php echo $form->renderGlobalErrors() ?>
-  <?php echo $form->renderFormTag(url_for(['module' => 'sfInstallPlugin', 'action' => 'configureSite'])) ?>
-  <?php echo $form->renderHiddenFields() ?>
-<?php end_slot() ?>
+<?php slot('before-content'); ?>
+  <?php echo $form->renderGlobalErrors(); ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'sfInstallPlugin', 'action' => 'configureSite'])); ?>
+  <?php echo $form->renderHiddenFields(); ?>
+<?php end_slot(); ?>
 
   <fieldset class="collapsible">
 
@@ -18,13 +18,13 @@
       </p>
     </div>
 
-    <?php echo $form->siteTitle->renderRow() ?>
+    <?php echo $form->siteTitle->renderRow(); ?>
 
-    <?php echo $form->siteDescription->renderRow() ?>
+    <?php echo $form->siteDescription->renderRow(); ?>
 
     <?php echo $form->siteBaseUrl
       ->label('Site base URL')
-      ->renderRow() ?>
+      ->renderRow(); ?>
 
     <div class="description">
       <p>
@@ -44,9 +44,9 @@
       </p>
     </div>
 
-    <?php echo $form->username->renderRow() ?>
+    <?php echo $form->username->renderRow(); ?>
 
-    <?php echo $form->email->label('E-mail address')->renderRow() ?>
+    <?php echo $form->email->label('E-mail address')->renderRow(); ?>
 
     <div>
 
@@ -63,24 +63,24 @@
           'confirmSuccess' => __('Yes'),
           'confirmFailure' => __('No'),
           'confirmTitle' => __('Passwords match:'),
-          'username' => '']]) ?>
+          'username' => '']]); ?>
       <?php echo javascript_tag(<<<EOF
 jQuery.extend(Drupal.settings, $settings);
 EOF
-) ?>
+); ?>
 
-      <?php echo $form->password->renderRow(['class' => 'password-field']) ?>
-      <?php echo $form->confirmPassword->renderRow(['class' => 'password-confirm']) ?>
+      <?php echo $form->password->renderRow(['class' => 'password-field']); ?>
+      <?php echo $form->confirmPassword->renderRow(['class' => 'password-confirm']); ?>
 
     </div>
 
   </fieldset>
 
-<?php slot('after-content') ?>
+<?php slot('after-content'); ?>
   <section class="actions">
     <ul>
       <li><input class="c-btn c-btn-submit" type="submit" value="Save and continue"/></li>
     </ul>
   </section>
   </form>
-<?php end_slot() ?>
+<?php end_slot(); ?>

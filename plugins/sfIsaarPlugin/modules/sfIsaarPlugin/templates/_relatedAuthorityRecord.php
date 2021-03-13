@@ -1,60 +1,60 @@
-<?php $sf_response->addJavaScript('date', 'last') ?>
-<?php $sf_response->addJavaScript('/vendor/yui/datasource/datasource-min', 'last') ?>
-<?php $sf_response->addJavaScript('/vendor/yui/container/container-min', 'last') ?>
-<?php $sf_response->addJavaScript('dialog', 'last') ?>
-<?php $sf_response->addJavaScript('multiDelete', 'last') ?>
+<?php $sf_response->addJavaScript('date', 'last'); ?>
+<?php $sf_response->addJavaScript('/vendor/yui/datasource/datasource-min', 'last'); ?>
+<?php $sf_response->addJavaScript('/vendor/yui/container/container-min', 'last'); ?>
+<?php $sf_response->addJavaScript('dialog', 'last'); ?>
+<?php $sf_response->addJavaScript('multiDelete', 'last'); ?>
 
-<?php use_helper('Javascript') ?>
+<?php use_helper('Javascript'); ?>
 
 <div class="section">
 
   <table id="relatedEntities" class="table table-bordered">
     <caption>
-      <?php echo __('Related corporate bodies, persons or families') ?>
+      <?php echo __('Related corporate bodies, persons or families'); ?>
     </caption><thead>
       <tr>
         <th style="width: 20%">
-          <?php echo __('Name') ?>
+          <?php echo __('Name'); ?>
         </th><th style="width: 15%">
-          <?php echo __('Category') ?>
+          <?php echo __('Category'); ?>
         </th><th style="width: 15%">
-          <?php echo __('Type') ?>
+          <?php echo __('Type'); ?>
         </th><th style="width: 15%">
-          <?php echo __('Dates') ?>
+          <?php echo __('Dates'); ?>
         </th><th style="width: 25%">
-          <?php echo __('Description') ?>
+          <?php echo __('Description'); ?>
         </th><th style="text-align: center; width: 10%">
         </th>
       </tr>
     </thead><tbody>
       <?php foreach ($resource->getActorRelations() as $item) { ?>
-        <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd' ?> related_obj_<?php echo $item->id ?>" id="<?php echo url_for([$item, 'module' => 'relation']) ?>">
+        <tr class="<?php echo 0 == @++$row % 2 ? 'even' : 'odd'; ?> related_obj_<?php echo $item->id; ?>" id="<?php echo url_for([$item, 'module' => 'relation']); ?>">
           <td>
             <?php if ($resource->id == $item->objectId) { ?>
-              <?php echo render_title($item->subject) ?>
+              <?php echo render_title($item->subject); ?>
             <?php } else { ?>
-              <?php echo render_title($item->object) ?>
+              <?php echo render_title($item->object); ?>
             <?php } ?>
           </td><td>
             <?php if ($item->type->parentId == QubitTerm::ROOT_ID) { ?>
-              <?php echo render_value_inline($item->type) ?>
+              <?php echo render_value_inline($item->type); ?>
             <?php } else { ?>
-              <?php echo render_title($item->type->parent) ?>
+              <?php echo render_title($item->type->parent); ?>
             <?php } ?>
           </td><td>
             <?php if ($item->type->parentId != QubitTerm::ROOT_ID) { ?>
               <?php if ($resource->id != $item->objectId) { ?>
-                <?php echo render_title($item->type).' '.render_title($resource) ?>
+                <?php echo render_title($item->type).' '.render_title($resource); ?>
               <?php } elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($item->type->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]))){ ?>
-                <?php echo render_title($converseTerms[0]->getOpposedObject($item->type)).' '.render_title($resource) ?>
+                <?php echo render_title($converseTerms[0]->getOpposedObject($item->type)).' '.render_title($resource); ?>
               <?php } ?>
             <?php } ?>
           </td><td>
-            <?php echo render_value_inline(Qubit::renderDateStartEnd($item->date, $item->startDate, $item->endDate)) ?>
+            <?php echo render_value_inline(Qubit::renderDateStartEnd($item->date, $item->startDate, $item->endDate)); ?>
           </td><td>
-            <?php echo render_value_inline($item->description) ?>
+            <?php echo render_value_inline($item->description); ?>
           </td><td style="text-align: center">
-            <input class="multiDelete" name="deleteRelations[]" type="checkbox" value="<?php echo url_for([$item, 'module' => 'relation']) ?>"/>
+            <input class="multiDelete" name="deleteRelations[]" type="checkbox" value="<?php echo url_for([$item, 'module' => 'relation']); ?>"/>
           </td>
         </tr>
       <?php } ?>
@@ -137,54 +137,54 @@ Drupal.behaviors.relatedAuthorityRecord = {
     } }
 
 content
-) ?>
+); ?>
 
   <!-- NOTE dialog.js wraps this *entire* table in a YUI dialog -->
   <div class="date section" id="actorRelation">
 
-    <h3><?php echo __('Related corporate body, person or family') ?></h3>
+    <h3><?php echo __('Related corporate body, person or family'); ?></h3>
 
     <div>
 
       <div class="form-item">
         <?php echo $form->resource
           ->label(__('Authorized form of name'))
-          ->renderLabel() ?>
-        <?php echo $form->resource->render(['class' => 'form-autocomplete']) ?>
-        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete']) ?>"/>
+          ->renderLabel(); ?>
+        <?php echo $form->resource->render(['class' => 'form-autocomplete']); ?>
+        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete']); ?>"/>
         <?php echo $form->resource
           ->help(__('"Record the authorized form of name and any relevant unique identifiers, including the authority record identifier, for the related entity." (ISAAR 5.3.1) Select the name from the drop-down menu; enter the first few letters to narrow the choices.'))
-          ->renderHelp() ?>
+          ->renderHelp(); ?>
       </div>
 
       <?php echo $form->type
         ->help(__('"Purpose: To identify the general category of relationship between the entity being described and another corporate body, person or family." (ISAAR 5.3.2). Select a category from the drop-down menu: hierarchical, temporal, family or associative.'))
         ->label(__('Category of relationship'))
-        ->renderRow() ?>
+        ->renderRow(); ?>
 
       <div class="form-item">
         <?php echo $form->subType
           ->label(__('Relationship type'))
-          ->renderLabel() ?>
-        <?php echo $form->subType->render(['class' => 'form-autocomplete', 'disabled' => 'true']) ?>
-        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::ACTOR_RELATION_TYPE_ID), 'module' => 'taxonomy']), 'addWords' => isset($resource->id) ? render_title($resource) : '']) ?>"/>
+          ->renderLabel(); ?>
+        <?php echo $form->subType->render(['class' => 'form-autocomplete', 'disabled' => 'true']); ?>
+        <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::ACTOR_RELATION_TYPE_ID), 'module' => 'taxonomy']), 'addWords' => isset($resource->id) ? render_title($resource) : '']); ?>"/>
         <?php echo $form->subType
           ->help(__('"Select a descriptive term from the drop-down menu to clarify the type of relationship between these two actors."'))
-          ->renderHelp() ?>
+          ->renderHelp(); ?>
       </div>
 
       <?php echo $form->description
         ->help(__('"Record a precise description of the nature of the relationship between the entity described in this authority record and the other related entity....Record in the Rules and/or conventions element (5.4.3) any classification scheme used as a source of controlled vocabulary terms to describe the relationship. A narrative description of the history and/or nature of the relationship may also be provided here." (ISAAR 5.3.3). Note that the text entered in this field will also appear in the related authority record.'))
         ->label(__('Description of relationship'))
-        ->renderRow() ?>
+        ->renderRow(); ?>
 
       <?php echo $form->date
         ->help(__('"Record when relevant the commencement date of the relationship or succession date and, when relevant, the cessation date of the relationship." (ISAAR 5.3.4) Enter the date as you would like it to appear in the show page for the authority record, using qualifiers and/or typographical symbols to express uncertainty if desired.'))
-        ->renderRow() ?>
+        ->renderRow(); ?>
 
-      <?php echo $form->startDate->renderRow() ?>
+      <?php echo $form->startDate->renderRow(); ?>
 
-      <?php echo $form->endDate->renderRow() ?>
+      <?php echo $form->endDate->renderRow(); ?>
 
     </div>
 

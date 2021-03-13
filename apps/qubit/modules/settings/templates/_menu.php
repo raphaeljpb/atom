@@ -11,7 +11,7 @@
             <?php echo link_to($node['label'], [
               'module' => $node['module'] ?? 'settings',
               'action' => $node['action']
-            ]) ?>
+            ]); ?>
           </td>
         </tr>
       <?php } ?>

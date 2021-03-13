@@ -1,5 +1,5 @@
 <div class="logo">
-  <?php echo image_tag('logo', ['id' => 'logo', 'alt' => 'Home']) ?>
+  <?php echo image_tag('logo', ['id' => 'logo', 'alt' => 'Home']); ?>
 </div>
 
 <h1>Installation</h1>

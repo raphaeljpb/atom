@@ -1,9 +1,9 @@
 <div id="homepage-hero" class="row">
 
-  <?php $cacheKey = 'homepage-nav-'.$sf_user->getCulture() ?>
+  <?php $cacheKey = 'homepage-nav-'.$sf_user->getCulture(); ?>
   <?php if (!cache($cacheKey)) { ?>
     <div class="span8" id="homepage-nav">
-      <p><?php echo __('Browse by') ?></p>
+      <p><?php echo __('Browse by'); ?></p>
       <ul>
         <?php $icons = [
           'browseInformationObjects' => '/images/icons-large/icon-archival.png',
@@ -12,23 +12,23 @@
           'browseSubjects' => '/images/icons-large/icon-subjects.png',
           'browseFunctions' => '/images/icons-large/icon-functions.png',
           'browsePlaces' => '/images/icons-large/icon-places.png',
-          'browseDigitalObjects' => '/images/icons-large/icon-media.png'] ?>
-        <?php $browseMenu = QubitMenu::getById(QubitMenu::BROWSE_ID) ?>
+          'browseDigitalObjects' => '/images/icons-large/icon-media.png']; ?>
+        <?php $browseMenu = QubitMenu::getById(QubitMenu::BROWSE_ID); ?>
         <?php if ($browseMenu->hasChildren()) { ?>
           <?php foreach ($browseMenu->getChildren() as $item) { ?>
             <li>
-              <a href="<?php echo url_for($item->getPath(['getUrl' => true, 'resolveAlias' => true])) ?>">
+              <a href="<?php echo url_for($item->getPath(['getUrl' => true, 'resolveAlias' => true])); ?>">
                 <?php if (isset($icons[$item->name])) { ?>
-                  <?php echo image_tag($icons[$item->name], ['width' => 42, 'height' => 42, 'alt' => '']) ?>
+                  <?php echo image_tag($icons[$item->name], ['width' => 42, 'height' => 42, 'alt' => '']); ?>
                 <?php } ?>
-                <?php echo esc_specialchars($item->getLabel(['cultureFallback' => true])) ?>
+                <?php echo esc_specialchars($item->getLabel(['cultureFallback' => true])); ?>
               </a>
             </li>
           <?php } ?>
         <?php } ?>
       </ul>
     </div>
-    <?php cache_save($cacheKey) ?>
+    <?php cache_save($cacheKey); ?>
   <?php } ?>
 
   <div class="span3" id="intro">
@@ -52,13 +52,13 @@
 <div id="homepage" class="row">
 
   <div class="span4">
-    <?php echo get_component('default', 'popular', ['limit' => 10, 'sf_cache_key' => $sf_user->getCulture()]) ?>
+    <?php echo get_component('default', 'popular', ['limit' => 10, 'sf_cache_key' => $sf_user->getCulture()]); ?>
   </div>
 
   <div class="span8" id="virtual-exhibit">
     <a href="http://scaa.usask.ca/gallery/northern/dommasch/">
       <h3>
-        <?php echo __('Virtual exhibits') ?><br />
+        <?php echo __('Virtual exhibits'); ?><br />
         <span class="title">Hans S. Dommasch: Canada North of 60</span>
         <span class="small">University of Saskatchewan Archives</span>
       </h3>

@@ -1,30 +1,30 @@
-<?php decorate_with('layout_1col.php') ?>
+<?php decorate_with('layout_1col.php'); ?>
 
-<?php slot('title') ?>
-  <h1><?php echo __('Visible elements') ?></h1>
-<?php end_slot() ?>
+<?php slot('title'); ?>
+  <h1><?php echo __('Visible elements'); ?></h1>
+<?php end_slot(); ?>
 
-<?php slot('content') ?>
+<?php slot('content'); ?>
 
-  <?php echo $form->renderGlobalErrors() ?>
+  <?php echo $form->renderGlobalErrors(); ?>
 
-  <?php echo $form->renderFormTag(url_for(['module' => 'settings', 'action' => 'visibleElements']), ['method' => 'post']) ?>
+  <?php echo $form->renderFormTag(url_for(['module' => 'settings', 'action' => 'visibleElements']), ['method' => 'post']); ?>
 
-    <?php echo $form->renderHiddenFields() ?>
+    <?php echo $form->renderHiddenFields(); ?>
 
     <div id="content">
 
       <fieldset class="collapsible collapsed">
-        <legend><?php echo __('Global') ?></legend>
+        <legend><?php echo __('Global'); ?></legend>
 
         <?php foreach ([
           'global_login_button' => __('Login button')] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
-            <?php echo $form[$key] ?>
+            <?php echo $form[$key]; ?>
             <?php echo $form[$key]
               ->label($value)
-              ->renderLabel() ?>
+              ->renderLabel(); ?>
           </div>
 
         <?php } ?>
@@ -32,7 +32,7 @@
       </fieldset>
 
       <fieldset class="collapsible collapsed">
-        <legend><?php echo __('ISAD template - area headings') ?></legend>
+        <legend><?php echo __('ISAD template - area headings'); ?></legend>
 
         <?php foreach ([
           'isad_identity_area' => __('Identity area'),
@@ -45,10 +45,10 @@
           'isad_description_control_area' => __('Description control area')] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
-            <?php echo $form[$key] ?>
+            <?php echo $form[$key]; ?>
             <?php echo $form[$key]
               ->label($value)
-              ->renderLabel() ?>
+              ->renderLabel(); ?>
           </div>
 
         <?php } ?>
@@ -57,7 +57,7 @@
 
       <fieldset class="collapsible collapsed">
 
-        <legend><?php echo __('ISAD template - elements') ?></legend>
+        <legend><?php echo __('ISAD template - elements'); ?></legend>
 
         <?php foreach ([
           'isad_archival_history' => __('Archival history'),
@@ -77,10 +77,10 @@
           'isad_control_archivists_notes' => __('Archivist\'s notes')] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
-            <?php echo $form[$key] ?>
+            <?php echo $form[$key]; ?>
             <?php echo $form[$key]
               ->label($value)
-              ->renderLabel() ?>
+              ->renderLabel(); ?>
           </div>
 
         <?php } ?>
@@ -89,7 +89,7 @@
 
 
       <fieldset class="collapsible collapsed">
-        <legend><?php echo __('RAD template - area headings') ?></legend>
+        <legend><?php echo __('RAD template - area headings'); ?></legend>
 
         <?php foreach ([
           'rad_title_responsibility_area' => __('Title and statement of responsibility area'),
@@ -105,10 +105,10 @@
           'rad_description_control_area' => __('Control area')] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
-            <?php echo $form[$key] ?>
+            <?php echo $form[$key]; ?>
             <?php echo $form[$key]
               ->label($value)
-              ->renderLabel() ?>
+              ->renderLabel(); ?>
           </div>
 
         <?php } ?>
@@ -117,7 +117,7 @@
 
       <fieldset class="collapsible collapsed">
 
-        <legend><?php echo __('RAD template - elements') ?></legend>
+        <legend><?php echo __('RAD template - elements'); ?></legend>
 
         <?php foreach ([
           'rad_archival_history' => __('Custodial history'),
@@ -137,10 +137,10 @@
           'rad_control_sources' => __('Sources')] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
-            <?php echo $form[$key] ?>
+            <?php echo $form[$key]; ?>
             <?php echo $form[$key]
               ->label($value)
-              ->renderLabel() ?>
+              ->renderLabel(); ?>
           </div>
 
         <?php } ?>
@@ -148,7 +148,7 @@
       </fieldset>
 
       <fieldset class="collapsible collapsed">
-        <legend><?php echo __('DACS template - area headings') ?></legend>
+        <legend><?php echo __('DACS template - area headings'); ?></legend>
 
         <?php foreach ([
           'dacs_identity_area' => __('Identity area'),
@@ -161,10 +161,10 @@
           'dacs_access_points_area' => __('Access points')] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
-            <?php echo $form[$key] ?>
+            <?php echo $form[$key]; ?>
             <?php echo $form[$key]
               ->label($value)
-              ->renderLabel() ?>
+              ->renderLabel(); ?>
           </div>
 
         <?php } ?>
@@ -173,16 +173,16 @@
 
       <fieldset class="collapsible collapsed">
 
-        <legend><?php echo __('DACS template - elements') ?></legend>
+        <legend><?php echo __('DACS template - elements'); ?></legend>
 
         <?php foreach ([
           'dacs_physical_access' => __('Physical access')] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
-            <?php echo $form[$key] ?>
+            <?php echo $form[$key]; ?>
             <?php echo $form[$key]
               ->label($value)
-              ->renderLabel() ?>
+              ->renderLabel(); ?>
           </div>
 
         <?php } ?>
@@ -191,11 +191,11 @@
 
       <fieldset class="collapsible collapsed">
 
-        <legend><?php echo __('%1% metadata area', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]) ?></legend>
+        <legend><?php echo __('%1% metadata area', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]); ?></legend>
 
         <fieldset class="collapsible collapsed">
 
-          <legend><?php echo __('Original file') ?></legend>
+          <legend><?php echo __('Original file'); ?></legend>
 
           <?php foreach ([
             'digital_object_preservation_system_original_file_name' => __('File name'),
@@ -208,10 +208,10 @@
             'digital_object_preservation_system_original_permissions' => __('Permissions')] as $key => $value) { ?>
 
             <div class="form-item form-item-checkbox">
-              <?php echo $form[$key] ?>
+              <?php echo $form[$key]; ?>
               <?php echo $form[$key]
                 ->label($value)
-                ->renderLabel() ?>
+                ->renderLabel(); ?>
             </div>
 
           <?php } ?>
@@ -220,7 +220,7 @@
 
         <fieldset class="collapsible collapsed">
 
-          <legend><?php echo __('Preservation copy') ?></legend>
+          <legend><?php echo __('Preservation copy'); ?></legend>
 
           <?php foreach ([
             'digital_object_preservation_system_preservation_file_name' => __('File name'),
@@ -229,10 +229,10 @@
             'digital_object_preservation_system_preservation_permissions' => __('Permissions')] as $key => $value) { ?>
 
             <div class="form-item form-item-checkbox">
-              <?php echo $form[$key] ?>
+              <?php echo $form[$key]; ?>
               <?php echo $form[$key]
                 ->label($value)
-                ->renderLabel() ?>
+                ->renderLabel(); ?>
             </div>
 
           <?php } ?>
@@ -241,7 +241,7 @@
 
         <fieldset class="collapsible collapsed">
 
-          <legend><?php echo __('Master file') ?></legend>
+          <legend><?php echo __('Master file'); ?></legend>
 
           <?php foreach ([
             'digital_object_url' => __('URL'),
@@ -254,10 +254,10 @@
             'digital_object_permissions' => _('Permissions')] as $key => $value) { ?>
 
             <div class="form-item form-item-checkbox">
-              <?php echo $form[$key] ?>
+              <?php echo $form[$key]; ?>
               <?php echo $form[$key]
                 ->label($value)
-                ->renderLabel() ?>
+                ->renderLabel(); ?>
             </div>
 
           <?php } ?>
@@ -266,7 +266,7 @@
 
         <fieldset class="collapsible collapsed">
 
-          <legend><?php echo __('Reference copy') ?></legend>
+          <legend><?php echo __('Reference copy'); ?></legend>
 
           <?php foreach ([
             'digital_object_reference_file_name' => __('File name'),
@@ -277,10 +277,10 @@
             'digital_object_reference_permissions' => _('Permissions')] as $key => $value) { ?>
 
             <div class="form-item form-item-checkbox">
-              <?php echo $form[$key] ?>
+              <?php echo $form[$key]; ?>
               <?php echo $form[$key]
                 ->label($value)
-                ->renderLabel() ?>
+                ->renderLabel(); ?>
             </div>
 
           <?php } ?>
@@ -289,7 +289,7 @@
 
         <fieldset class="collapsible collapsed">
 
-          <legend><?php echo __('Thumbnail copy') ?></legend>
+          <legend><?php echo __('Thumbnail copy'); ?></legend>
 
           <?php foreach ([
             'digital_object_thumbnail_file_name' => __('File name'),
@@ -300,10 +300,10 @@
             'digital_object_thumbnail_permissions' => _('Permissions')] as $key => $value) { ?>
 
             <div class="form-item form-item-checkbox">
-              <?php echo $form[$key] ?>
+              <?php echo $form[$key]; ?>
               <?php echo $form[$key]
                 ->label($value)
-                ->renderLabel() ?>
+                ->renderLabel(); ?>
             </div>
 
           <?php } ?>
@@ -314,13 +314,13 @@
 
       <fieldset class="collapsible collapsed">
 
-        <legend><?php echo __('Physical storage') ?></legend>
+        <legend><?php echo __('Physical storage'); ?></legend>
 
         <div class="form-item form-item-checkbox">
-          <?php echo $form['physical_storage'] ?>
+          <?php echo $form['physical_storage']; ?>
           <?php echo $form['physical_storage']
             ->label('Physical storage')
-            ->renderLabel() ?>
+            ->renderLabel(); ?>
         </div>
 
       </fieldset>
@@ -329,11 +329,11 @@
 
     <section class="actions">
       <ul>
-        <li><?php echo link_to(__('Cancel'), '@homepage', ['class' => 'c-btn']) ?></li>
-        <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/></li>
+        <li><?php echo link_to(__('Cancel'), '@homepage', ['class' => 'c-btn']); ?></li>
+        <li><input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save'); ?>"/></li>
       </ul>
     </section>
 
   </form>
 
-<?php end_slot() ?>
+<?php end_slot(); ?>

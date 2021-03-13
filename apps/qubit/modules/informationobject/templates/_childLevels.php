@@ -1,18 +1,18 @@
 <div class="section">
 
-  <h3><?php echo __('Add new child levels') ?></h3>
+  <h3><?php echo __('Add new child levels'); ?></h3>
 
   <table class="table table-bordered multiRow" id="childsTable">
     <thead>
       <tr>
         <th style="width: 15%">
-          <?php echo __('Identifier') ?>
+          <?php echo __('Identifier'); ?>
         </th><th style="width: 15%">
-          <?php echo __('Level') ?>
+          <?php echo __('Level'); ?>
         </th><th style="width: 50%">
-          <?php echo __('Title') ?>
+          <?php echo __('Title'); ?>
         </th><th style="width: 20%">
-          <?php echo __('Date') ?>
+          <?php echo __('Date'); ?>
         </th>
       </tr>
     </thead><tbody>
@@ -23,7 +23,7 @@
           <select name="updateChildLevels[0][levelOfDescription]" id="updateChildLevels_0_levelOfDescription">
             <option value="">&nbsp;</option>
             <?php foreach (QubitTerm::getLevelsOfDescription() as $item) { ?>
-              <option value="<?php echo $item->id ?>"><?php echo $item->__toString() ?></option>
+              <option value="<?php echo $item->id; ?>"><?php echo $item->__toString(); ?></option>
             <?php } ?>
           </select>
         </td><td>
@@ -38,7 +38,7 @@
 
     <tfoot>
       <tr>
-        <td colspan="5"><a href="#" class="multiRowAddButton"><?php echo __('Add new') ?></a></td>
+        <td colspan="5"><a href="#" class="multiRowAddButton"><?php echo __('Add new'); ?></a></td>
       </tr>
     </tfoot>
 
@@ -46,7 +46,7 @@
 
   <?php if (isset($help)) { ?>
     <div class="description">
-      <?php echo $sf_data->getRaw('help') ?>
+      <?php echo $sf_data->getRaw('help'); ?>
     </div>
   <?php } ?>
 

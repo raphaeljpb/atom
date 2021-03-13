@@ -2,7 +2,7 @@
   <div class="messages error">
     <ul>
       <?php foreach ($errorSchema as $error) { ?>
-        <li><?php echo $error ?></li>
+        <li><?php echo $error; ?></li>
       <?php } ?>
     </ul>
   </div>

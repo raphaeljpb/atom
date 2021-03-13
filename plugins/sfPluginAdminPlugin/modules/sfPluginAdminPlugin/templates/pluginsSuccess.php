@@ -1,20 +1,20 @@
-<h1><?php echo __('List plugins') ?></h1>
+<h1><?php echo __('List plugins'); ?></h1>
 
-<?php echo $form->renderGlobalErrors() ?>
+<?php echo $form->renderGlobalErrors(); ?>
 
-<?php echo $form->renderFormTag(url_for(['module' => 'sfPluginAdminPlugin', 'action' => 'plugins'])) ?>
+<?php echo $form->renderFormTag(url_for(['module' => 'sfPluginAdminPlugin', 'action' => 'plugins'])); ?>
 
-  <?php echo $form->renderHiddenFields() ?>
+  <?php echo $form->renderHiddenFields(); ?>
 
   <table class="table table-bordered sticky-enabled">
     <thead>
       <tr>
         <th>
-          <?php echo __('Name') ?>
+          <?php echo __('Name'); ?>
         </th><th>
-          <?php echo __('Version') ?>
+          <?php echo __('Version'); ?>
         </th><th>
-          <?php echo __('Enabled') ?>
+          <?php echo __('Enabled'); ?>
         </th>
       </tr>
     </thead><tbody>
@@ -22,14 +22,14 @@
         <tr>
           <td>
             <?php if (file_exists($plugin->getRootDir().'/images/image.png')) { ?>
-              <?php echo image_tag('/plugins/'.$name.'/images/image', ['alt' => $name]) ?>
+              <?php echo image_tag('/plugins/'.$name.'/images/image', ['alt' => $name]); ?>
             <?php } ?>
-            <p class="plugin-name"><?php echo $name ?></p>
+            <p class="plugin-name"><?php echo $name; ?></p>
             <div class="plugin-description">
-              <?php echo $plugin::$summary ?>
+              <?php echo $plugin::$summary; ?>
             </div>
           </td><td>
-            <?php echo $plugin::$version ?>
+            <?php echo $plugin::$version; ?>
           </td><td align="center">
             <input
               <?php if ($form->isBound() && in_array($name, $form->getValue('enabled'))
@@ -44,7 +44,7 @@
                         || ($name == 'sfModsPlugin' && $defaultTemplate == 'mods')) { ?>
                 disabled="disabled"
               <?php } ?>
-              name="enabled[]" type="checkbox" value="<?php echo $name ?>"
+              name="enabled[]" type="checkbox" value="<?php echo $name; ?>"
           </td>
         </tr>
       <?php } ?>
@@ -53,7 +53,7 @@
 
   <section class="actions">
     <ul>
-      <input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save') ?>"/>
+      <input class="c-btn c-btn-submit" type="submit" value="<?php echo __('Save'); ?>"/>
     </ul>
   </section>
 

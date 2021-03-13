@@ -1,22 +1,22 @@
 <div id="search-form-wrapper">
 
-  <form action="<?php echo url_for(['module' => 'informationobject', 'action' => 'browse']) ?>" data-autocomplete="<?php echo url_for(['module' => 'search', 'action' => 'autocomplete']) ?>">
+  <form action="<?php echo url_for(['module' => 'informationobject', 'action' => 'browse']); ?>" data-autocomplete="<?php echo url_for(['module' => 'search', 'action' => 'autocomplete']); ?>">
 
     <input type="hidden" name="topLod" value="0"/>
 
     <div class="input-append">
 
       <?php if (isset($repository)) { ?>
-        <input type="text" name="query"<?php if (isset($sf_request->query)) echo ' class="focused"' ?> value="<?php echo $sf_request->query ?>" placeholder="<?php echo __('Search %1%', ['%1%' => strip_markdown($repository)]) ?>"/>
+        <input type="text" name="query"<?php if (isset($sf_request->query)) echo ' class="focused"'; ?> value="<?php echo $sf_request->query; ?>" placeholder="<?php echo __('Search %1%', ['%1%' => strip_markdown($repository)]); ?>"/>
       <?php } else { ?>
-        <input type="text" name="query"<?php if (isset($sf_request->query)) echo ' class="focused"' ?> value="<?php echo $sf_request->query ?>" placeholder="<?php echo __('Search') ?>"/>
+        <input type="text" name="query"<?php if (isset($sf_request->query)) echo ' class="focused"'; ?> value="<?php echo $sf_request->query; ?>" placeholder="<?php echo __('Search'); ?>"/>
       <?php } ?>
 
       <div class="btn-group">
         <button class="btn dropdown-toggle" data-toggle="dropdown">
           <span class="caret"></span>
         </button>
-        <?php $cacheKey = 'search-box-nav-'.$sf_user->getCulture() ?>
+        <?php $cacheKey = 'search-box-nav-'.$sf_user->getCulture(); ?>
         <?php if (!cache($cacheKey)) { ?>
           <ul class="dropdown-menu pull-right">
             <?php $icons = [
@@ -26,29 +26,29 @@
               'browseSubjects' => '/images/icons-large/icon-subjects.png',
               'browseFunctions' => '/images/icons-large/icon-functions.png',
               'browsePlaces' => '/images/icons-large/icon-places.png',
-              'browseDigitalObjects' => '/images/icons-large/icon-media.png'] ?>
-            <?php $browseMenu = QubitMenu::getById(QubitMenu::BROWSE_ID) ?>
+              'browseDigitalObjects' => '/images/icons-large/icon-media.png']; ?>
+            <?php $browseMenu = QubitMenu::getById(QubitMenu::BROWSE_ID); ?>
             <?php if ($browseMenu->hasChildren()) { ?>
               <?php foreach ($browseMenu->getChildren() as $item) { ?>
                 <li>
-                  <a href="<?php echo url_for($item->getPath(['getUrl' => true, 'resolveAlias' => true])) ?>">
+                  <a href="<?php echo url_for($item->getPath(['getUrl' => true, 'resolveAlias' => true])); ?>">
                     <?php if (isset($icons[$item->name])) { ?>
-                      <?php echo image_tag($icons[$item->name], ['width' => 42, 'height' => 42, 'alt' => '']) ?>
+                      <?php echo image_tag($icons[$item->name], ['width' => 42, 'height' => 42, 'alt' => '']); ?>
                     <?php } ?>
-                    <?php echo esc_entities($item->getLabel(['cultureFallback' => true])) ?>
+                    <?php echo esc_entities($item->getLabel(['cultureFallback' => true])); ?>
                   </a>
                 </li>
               <?php } ?>
             <?php } ?>
             <li class="divider"></li>
             <li class="advanced-search">
-              <a href="<?php echo url_for(['module' => 'informationobject', 'action' => 'browse', 'showAdvanced' => true, 'topLod' => false]) ?>">
+              <a href="<?php echo url_for(['module' => 'informationobject', 'action' => 'browse', 'showAdvanced' => true, 'topLod' => false]); ?>">
                 <i class="icon-zoom-in"></i>
-                <?php echo __('Advanced search') ?>
+                <?php echo __('Advanced search'); ?>
               </a>
             </li>
           </ul>
-          <?php cache_save($cacheKey) ?>
+          <?php cache_save($cacheKey); ?>
         <?php } ?>
       </div>
 
@@ -61,19 +61,19 @@
         <div>
           <label>
             <?php if (isset($repository)) { ?>
-              <input name="repos" type="radio" value data-placeholder="<?php echo __('Search') ?>">
+              <input name="repos" type="radio" value data-placeholder="<?php echo __('Search'); ?>">
             <?php } else { ?>
-              <input name="repos" type="radio" value checked="checked" data-placeholder="<?php echo __('Search') ?>">
+              <input name="repos" type="radio" value checked="checked" data-placeholder="<?php echo __('Search'); ?>">
             <?php } ?>
-            <?php echo __('Global search') ?>
+            <?php echo __('Global search'); ?>
           </label>
         </div>
 
         <?php if (isset($repository)) { ?>
           <div>
             <label>
-              <input name="repos" checked="checked" type="radio" value="<?php echo $repository->id ?>"/>
-              <?php echo __('Search <span>%1%</span>', ['%1%' => render_title($repository)]) ?>
+              <input name="repos" checked="checked" type="radio" value="<?php echo $repository->id; ?>"/>
+              <?php echo __('Search <span>%1%</span>', ['%1%' => render_title($repository)]); ?>
             </label>
           </div>
         <?php } ?>
@@ -81,8 +81,8 @@
         <?php if (isset($altRepository)) { ?>
           <div>
             <label>
-              <input name="repos" type="radio" value="<?php echo $altRepository->id ?>"/>
-              <?php echo __('Search <span>%1%</span>', ['%1%' => render_title($altRepository)]) ?>
+              <input name="repos" type="radio" value="<?php echo $altRepository->id; ?>"/>
+              <?php echo __('Search <span>%1%</span>', ['%1%' => render_title($altRepository)]); ?>
             </label>
           </div>
         <?php } ?>
@@ -90,8 +90,8 @@
       <?php } ?>
 
       <div class="search-realm-advanced">
-        <a href="<?php echo url_for(['module' => 'informationobject', 'action' => 'browse', 'showAdvanced' => true, 'topLod' => false]) ?>">
-          <?php echo __('Advanced search') ?>&nbsp;&raquo;
+        <a href="<?php echo url_for(['module' => 'informationobject', 'action' => 'browse', 'showAdvanced' => true, 'topLod' => false]); ?>">
+          <?php echo __('Advanced search'); ?>&nbsp;&raquo;
         </a>
       </div>
 

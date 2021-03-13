@@ -73,55 +73,55 @@ Drupal.behaviors.event = {
     } }
 
 content
-) ?>
+); ?>
 
 <!-- NOTE dialog.js wraps this *entire* table in a YUI dialog -->
 <div class="date section" id="updateEvent">
 
-  <h3><?php echo __('Event') ?></h3>
+  <h3><?php echo __('Event'); ?></h3>
 
   <div class="form-item">
 
     <?php echo $form->actor
       ->label(__('Actor name'))
-      ->renderLabel() ?>
-    <?php echo $form->actor->render(['class' => 'form-autocomplete']) ?>
+      ->renderLabel(); ?>
+    <?php echo $form->actor->render(['class' => 'form-autocomplete']); ?>
 
     <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')) { ?>
-      <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'actor', 'action' => 'add']) ?> #authorizedFormOfName"/>
+      <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'actor', 'action' => 'add']); ?> #authorizedFormOfName"/>
     <?php } ?>
 
-    <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete']) ?>"/>
-    <?php echo $form->actor->renderHelp() ?>
+    <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete']); ?>"/>
+    <?php echo $form->actor->renderHelp(); ?>
 
   </div>
 
   <?php echo $form->type
     ->label(__('Event type'))
-    ->renderRow() ?>
+    ->renderRow(); ?>
 
   <div class="form-item form-item-place">
 
-    <?php echo $form->place->renderLabel() ?>
-    <?php echo $form->place->render(['class' => 'form-autocomplete']) ?>
+    <?php echo $form->place->renderLabel(); ?>
+    <?php echo $form->place->render(['class' => 'form-autocomplete']); ?>
 
     <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')) { ?>
-      <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?> #name"/>
+      <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]); ?> #name"/>
     <?php } ?>
 
-    <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]) ?>"/>
-    <?php echo $form->place->renderHelp() ?>
+    <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]); ?>"/>
+    <?php echo $form->place->renderHelp(); ?>
 
   </div>
 
-  <?php echo $form->date->renderRow() ?>
+  <?php echo $form->date->renderRow(); ?>
 
-  <?php echo $form->startDate->renderRow() ?>
+  <?php echo $form->startDate->renderRow(); ?>
 
-  <?php echo $form->endDate->renderRow() ?>
+  <?php echo $form->endDate->renderRow(); ?>
 
   <?php echo $form->description
     ->label(__('Event note'))
-    ->renderRow() ?>
+    ->renderRow(); ?>
 
 </div>
