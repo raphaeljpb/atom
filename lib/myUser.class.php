@@ -250,7 +250,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
     $credentials = $this->getModuleSecurityValue($action, 'credentials');
 
     // Allow access if action isn't secured or user has appropriate credentials
-    return (!$this->getModuleSecurityValue($action, 'is_secure', false) || $this->hasCredential($credentials));
+    return !$this->getModuleSecurityValue($action, 'is_secure', false) || $this->hasCredential($credentials);
   }
 
   /**

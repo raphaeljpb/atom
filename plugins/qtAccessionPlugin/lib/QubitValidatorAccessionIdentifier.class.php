@@ -30,7 +30,7 @@ class QubitValidatorAccessionIdentifier extends sfValidatorBase
       $criteria->add(QubitAccession::ID, $byResource->id, Criteria::NOT_EQUAL);
     }
 
-    return (0 == count(QubitAccession::get($criteria)));
+    return 0 == count(QubitAccession::get($criteria));
   }
 
   protected function configure($options = [], $messages = [])

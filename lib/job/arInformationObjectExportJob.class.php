@@ -152,9 +152,9 @@ class arInformationObjectExportJob extends arExportJob
   {
     // If params['levels'] is empty all levels are allowed, otherwise check
     // that passed $levelId is in the list of selected levels
-    return (
+    return
       empty($this->params['levels'])
       || array_key_exists($levelId, $this->params['levels'])
-    );
+    ;
   }
 }

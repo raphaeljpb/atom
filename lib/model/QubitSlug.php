@@ -151,11 +151,11 @@ class QubitSlug extends BaseSlug
   public static function getRfc3987Set()
   {
     // From RFC 3987 IRI allowed chars. Not guaranteed to match \p{L}\p{Nd}.
-    return ('\x{00A0}-\x{D7FF}'.'\x{F900}-\x{FDCF}'.'\x{FDF0}-\x{FFEF}'.
-            '\x{10000}-\x{1FFFD}'.'\x{20000}-\x{2FFFD}'.'\x{30000}-\x{3FFFD}'.
-            '\x{40000}-\x{4FFFD}'.'\x{50000}-\x{5FFFD}'.'\x{60000}-\x{6FFFD}'.
-            '\x{70000}-\x{7FFFD}'.'\x{80000}-\x{8FFFD}'.'\x{90000}-\x{9FFFD}'.
-            '\x{A0000}-\x{AFFFD}'.'\x{B0000}-\x{BFFFD}'.'\x{C0000}-\x{CFFFD}'.
-            '\x{D0000}-\x{DFFFD}'.'\x{E0000}-\x{EFFFD}');
+    return '\x{00A0}-\x{D7FF}'.'\x{F900}-\x{FDCF}'.'\x{FDF0}-\x{FFEF}'.
+      '\x{10000}-\x{1FFFD}'.'\x{20000}-\x{2FFFD}'.'\x{30000}-\x{3FFFD}'.
+      '\x{40000}-\x{4FFFD}'.'\x{50000}-\x{5FFFD}'.'\x{60000}-\x{6FFFD}'.
+      '\x{70000}-\x{7FFFD}'.'\x{80000}-\x{8FFFD}'.'\x{90000}-\x{9FFFD}'.
+      '\x{A0000}-\x{AFFFD}'.'\x{B0000}-\x{BFFFD}'.'\x{C0000}-\x{CFFFD}'.
+      '\x{D0000}-\x{DFFFD}'.'\x{E0000}-\x{EFFFD}';
   }
 }

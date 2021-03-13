@@ -1707,7 +1707,7 @@ class QubitDigitalObject extends BaseDigitalObject
   {
     $isCompoundObjectProp = QubitProperty::getOneByObjectIdAndName($this->id, 'is_compound_object');
 
-    return (null !== $isCompoundObjectProp && '1' == $isCompoundObjectProp->getValue(['sourceCulture' => true]));
+    return null !== $isCompoundObjectProp && '1' == $isCompoundObjectProp->getValue(['sourceCulture' => true]);
   }
 
   /**
@@ -3262,7 +3262,7 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       $files = scandir($dir);
 
-      return (2 >= count($files)); // Always have "." and ".." dirs
+      return 2 >= count($files); // Always have "." and ".." dirs
     }
   }
 

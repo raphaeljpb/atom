@@ -206,18 +206,18 @@ class QubitMenu extends BaseMenu
     // when uploading digital object
     if ($currentModule == 'digitalobject' && $currentAction == 'edit')
     {
-      return ($this->getPath() == 'informationobject/list');
+      return $this->getPath() == 'informationobject/list';
     }
     // And even more hacks
     elseif (in_array($currentModule, ['sfIsadPlugin', 'sfRadPlugin', 'sfDcPlugin', 'sfModsPlugin', 'arDacsPlugin']))
     {
-      return ($this->getPath() == 'informationobject/list');
+      return $this->getPath() == 'informationobject/list';
     }
 
     // son of hack
     if (in_array($currentModule, ['term', 'taxonomy']))
     {
-      return ($this->getPath() == 'taxonomy/list');
+      return $this->getPath() == 'taxonomy/list';
     }
 
     // If passed $url matches the url for this menu AND is not the base url

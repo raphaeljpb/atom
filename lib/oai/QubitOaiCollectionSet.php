@@ -35,7 +35,7 @@ class QubitOaiCollectionSet implements QubitOaiSet
   public function contains($record) {
     $lft = $record->getLft();
 
-    return ($this->collection['lft'] <= $lft and $this->collection['rgt'] > $lft);
+    return $this->collection['lft'] <= $lft and $this->collection['rgt'] > $lft;
   }
 
   public function setSpec() {

@@ -128,7 +128,7 @@ class DigitalObjectMetadataComponent extends sfComponent
 
   protected function isEmpty($value)
   {
-    return (null === $value || '' === (string) $value);
+    return null === $value || '' === (string) $value;
   }
 
   protected function setMasterFileShowProperties()
@@ -319,7 +319,7 @@ class DigitalObjectMetadataComponent extends sfComponent
       check_field_visibility('app_element_visibility_digital_object_preservation_system_original_permissions')
     );
 
-    return (
+    return
       $this->showOriginalFileName
       || $this->showOriginalFormatName
       || $this->showOriginalFormatVersion
@@ -327,7 +327,7 @@ class DigitalObjectMetadataComponent extends sfComponent
       || $this->showOriginalFormatRegistryName
       || $this->showOriginalFileSize
       || $this->showOriginalFileIngestedAt
-    );
+    ;
   }
 
   protected function setPreservationCopyShowProperties()
@@ -352,11 +352,11 @@ class DigitalObjectMetadataComponent extends sfComponent
       check_field_visibility('app_element_visibility_digital_object_preservation_system_preservation_permissions')
     );
 
-    return (
+    return
       $this->showPreservationCopyFileName
       || $this->showPreservationCopyFileSize
       || $this->showPreservationCopyNormalizedAt
-    );
+    ;
   }
 
   protected function localizeUTCDateTime($dateTime)

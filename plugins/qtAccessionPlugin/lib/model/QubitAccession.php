@@ -75,7 +75,7 @@ class QubitAccession extends BaseAccession
   {
     $setting = QubitSetting::getByName('accession_mask_enabled');
 
-    return (null === $setting || boolval($setting->getValue(['sourceCulture' => true])));
+    return null === $setting || boolval($setting->getValue(['sourceCulture' => true]));
   }
 
   public static function nextAccessionNumber()
