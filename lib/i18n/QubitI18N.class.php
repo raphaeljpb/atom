@@ -50,7 +50,7 @@ class QubitI18N
       $i18n = new sfI18N($configuration, $cache, ['culture' => $langCode]);
 
       // Mark untranslated messages
-      $i18n->getMessageFormat()->setUntranslatedPS(['[T]','[/T]']);
+      $i18n->getMessageFormat()->setUntranslatedPS(['[T]', '[/T]']);
 
       // Update the value of this language in the dictionary
       $value = $i18n->__($string);

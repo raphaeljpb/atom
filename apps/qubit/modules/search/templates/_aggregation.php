@@ -14,7 +14,7 @@
       <?php if ($name !== 'languages') { ?>
         <li <?php if (!isset($filters[$name])) echo 'class="active"'; ?>>
           <?php echo link_to(__('All'),
-            [$name => null,'page' => null] +
+            [$name => null, 'page' => null] +
             $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(), ['title' => __('All')]); ?>
         </li>
       <?php } ?>

@@ -218,7 +218,7 @@ class sfWebBrowser
     $browser = $this->adapter->call($this, $uri, $method, $parameters, $headers);
 
     // redirect support
-    if ((in_array($browser->getResponseCode(), [301, 307]) && in_array($method, ['GET', 'HEAD'])) || in_array($browser->getResponseCode(), [302,303]))
+    if ((in_array($browser->getResponseCode(), [301, 307]) && in_array($method, ['GET', 'HEAD'])) || in_array($browser->getResponseCode(), [302, 303]))
     {
       $this->call($browser->getResponseHeader('Location'), 'GET', [], $headers);
     }
