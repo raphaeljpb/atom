@@ -12,6 +12,7 @@
  *
  * @package    lib.model
  */
-class QubitClipboardSaveItem extends BaseClipboardSaveItem {
+class QubitClipboardSaveItem extends BaseClipboardSaveItem
+{
 
 } // QubitClipboardSaveItem

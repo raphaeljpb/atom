@@ -12,6 +12,7 @@
  *
  * @package    lib.model
  */
-class QubitRelationI18n extends BaseRelationI18n {
+class QubitRelationI18n extends BaseRelationI18n
+{
 
 } // QubitRelationI18n

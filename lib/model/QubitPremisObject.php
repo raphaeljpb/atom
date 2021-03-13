@@ -12,6 +12,7 @@
  *
  * @package    lib.model
  */
-class QubitPremisObject extends BasePremisObject {
+class QubitPremisObject extends BasePremisObject
+{
 
 } // QubitPremisObject

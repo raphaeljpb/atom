@@ -12,6 +12,7 @@
  *
  * @package    lib.model
  */
-class QubitAuditLog extends BaseAuditLog {
+class QubitAuditLog extends BaseAuditLog
+{
 
 } // QubitAuditLog

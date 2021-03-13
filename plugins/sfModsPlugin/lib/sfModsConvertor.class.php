@@ -1,6 +1,7 @@
 <?php
 
-class sfModsConvertor extends QubitSaxParser {
+class sfModsConvertor extends QubitSaxParser
+{
 
   protected $resource;
 
