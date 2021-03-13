@@ -9,10 +9,8 @@
  */
 class sfPluginAdminPluginConfiguration extends sfPluginConfiguration
 {
-  public static
-    $pluginNames;
-  public static
-    $loadPlugins = true;
+  public static $pluginNames;
+  public static $loadPlugins = true;
 
   /**
    * @see sfPluginConfiguration

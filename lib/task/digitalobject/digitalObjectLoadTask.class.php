@@ -26,8 +26,7 @@
  */
 class digitalObjectLoadTask extends sfBaseTask
 {
-  protected static
-    $count = 0;
+  protected static $count = 0;
 
   private $curObjNum = 0;
   private $totalObjCount = 0;

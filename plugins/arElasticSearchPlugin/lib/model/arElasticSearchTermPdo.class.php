@@ -25,18 +25,13 @@
  */
 class arElasticSearchTermPdo
 {
-  public
-    $i18ns;
+  public $i18ns;
 
-  protected
-    $data = array();
+  protected $data = array();
 
-  protected static
-    $conn;
-  protected static
-    $lookups;
-  protected static
-    $statements;
+  protected static $conn;
+  protected static $lookups;
+  protected static $statements;
 
   /**
    * METHODS

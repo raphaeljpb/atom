@@ -30,13 +30,11 @@
 class SettingsSiteInformationAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'siteTitle',
       'siteDescription',
       'siteBaseUrl');
-  public static
-    $I18N = array(
+  public static $I18N = array(
       'siteTitle',
       'siteDescription',
       'siteBaseUrl');

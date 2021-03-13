@@ -20,8 +20,7 @@
 class SettingsIdentifierAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'accession_mask_enabled',
       'accession_mask',
       'accession_counter',

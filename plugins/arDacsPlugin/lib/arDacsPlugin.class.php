@@ -20,8 +20,7 @@
 class arDacsPlugin extends sfIsadPlugin
 {
   // sfIsadPlugin is not using properties
-  protected
-    $property;
+  protected $property;
 
   public function __get($name)
   {

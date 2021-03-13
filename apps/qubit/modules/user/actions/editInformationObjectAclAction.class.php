@@ -19,8 +19,7 @@
 
 class UserEditInformationObjectAclAction extends DefaultEditAction
 {
-  public static
-    $NAMES = array();
+  public static $NAMES = array();
 
   protected function earlyExecute()
   {

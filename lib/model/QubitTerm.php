@@ -28,369 +28,369 @@
 class QubitTerm extends BaseTerm
 {
   public $disableNestedSetUpdating = false;
-  const
+  public const
 
     // ROOT term id
     ROOT_ID = 110;
-  const
+  public const
 
     
     // Event type taxonomy
     CREATION_ID = 111;
-  const
+  public const
 
     
     CUSTODY_ID = 113;
-  const
+  public const
 
     
     PUBLICATION_ID = 114;
-  const
+  public const
 
     
     CONTRIBUTION_ID = 115;
-  const
+  public const
 
     
     COLLECTION_ID = 117;
-  const
+  public const
 
     
     ACCUMULATION_ID = 118;
-  const
+  public const
 
     
     // Note type taxonomy
     TITLE_NOTE_ID = 119;
-  const
+  public const
 
     
     PUBLICATION_NOTE_ID = 120;
-  const
+  public const
 
     
     SOURCE_NOTE_ID = 121;
-  const
+  public const
 
     
     SCOPE_NOTE_ID = 122;
-  const
+  public const
 
     
     DISPLAY_NOTE_ID = 123;
-  const
+  public const
 
     
     ARCHIVIST_NOTE_ID = 124;
-  const
+  public const
 
     
     GENERAL_NOTE_ID = 125;
-  const
+  public const
 
     
     OTHER_DESCRIPTIVE_DATA_ID = 126;
-  const
+  public const
 
     
     MAINTENANCE_NOTE_ID = 127;
-  const
+  public const
 
     
     // Collection type taxonomy
     ARCHIVAL_MATERIAL_ID = 128;
-  const
+  public const
 
     
     PUBLISHED_MATERIAL_ID = 129;
-  const
+  public const
 
     
     ARTEFACT_MATERIAL_ID = 130;
-  const
+  public const
 
     
     // Actor type taxonomy
     CORPORATE_BODY_ID = 131;
-  const
+  public const
 
     
     PERSON_ID = 132;
-  const
+  public const
 
     
     FAMILY_ID = 133;
-  const
+  public const
 
     
     // Other name type taxonomy
     FAMILY_NAME_FIRST_NAME_ID = 134;
-  const
+  public const
 
     
     // Media type taxonomy
     AUDIO_ID = 135;
-  const
+  public const
 
     
     IMAGE_ID = 136;
-  const
+  public const
 
     
     TEXT_ID = 137;
-  const
+  public const
 
     
     VIDEO_ID = 138;
-  const
+  public const
 
     
     OTHER_ID = 139;
-  const
+  public const
 
     
     // Digital object usage taxonomy
     MASTER_ID = 140;
-  const
+  public const
 
     
     REFERENCE_ID = 141;
-  const
+  public const
 
     
     THUMBNAIL_ID = 142;
-  const
+  public const
 
     
     COMPOUND_ID = 143;
-  const
+  public const
 
     
     // Physical object type taxonomy
     LOCATION_ID = 144;
-  const
+  public const
 
     
     CONTAINER_ID = 145;
-  const
+  public const
 
     
     ARTEFACT_ID = 146;
-  const
+  public const
 
     
     // Relation type taxonomy
     HAS_PHYSICAL_OBJECT_ID = 147;
-  const
+  public const
 
     
     // Actor name type taxonomy
     PARALLEL_FORM_OF_NAME_ID = 148;
-  const
+  public const
 
     
     OTHER_FORM_OF_NAME_ID = 149;
-  const
+  public const
 
     
     // Actor relation type taxonomy
     HIERARCHICAL_RELATION_ID = 150;
-  const
+  public const
 
     
     TEMPORAL_RELATION_ID = 151;
-  const
+  public const
 
     
     FAMILY_RELATION_ID = 152;
-  const
+  public const
 
     
     ASSOCIATIVE_RELATION_ID = 153;
-  const
+  public const
 
     
     // Actor relation note taxonomy
     RELATION_NOTE_DESCRIPTION_ID = 154;
-  const
+  public const
 
     
     RELATION_NOTE_DATE_ID = 155;
-  const
+  public const
 
     
     // Term relation taxonomy
     ALTERNATIVE_LABEL_ID = 156;
-  const
+  public const
 
     
     TERM_RELATION_ASSOCIATIVE_ID = 157;
-  const
+  public const
 
     
     // Status type taxonomy
     STATUS_TYPE_PUBLICATION_ID = 158;
-  const
+  public const
 
     
     // Publication status taxonomy
     PUBLICATION_STATUS_DRAFT_ID = 159;
-  const
+  public const
 
     
     PUBLICATION_STATUS_PUBLISHED_ID = 160;
-  const
+  public const
 
     
     // Name access point
     NAME_ACCESS_POINT_ID = 161;
-  const
+  public const
 
     
     // Function relation type taxonomy
     ISDF_HIERARCHICAL_RELATION_ID = 162;
-  const
+  public const
 
     
     ISDF_TEMPORAL_RELATION_ID = 163;
-  const
+  public const
 
     
     ISDF_ASSOCIATIVE_RELATION_ID = 164;
-  const
+  public const
 
     
     // ISAAR standardized form name
     STANDARDIZED_FORM_OF_NAME_ID = 165;
-  const
+  public const
 
     
     // Digital object usage taxonomy (addition)
     EXTERNAL_URI_ID = 166;
-  const
+  public const
 
     
     // Relation types
     ACCESSION_ID = 167;
-  const
+  public const
 
     
     RIGHT_ID = 168;
-  const
+  public const
 
     
     DONOR_ID = 169;
-  const
+  public const
 
     
     // Rights basis
     RIGHT_BASIS_COPYRIGHT_ID = 170;
-  const
+  public const
 
     
     RIGHT_BASIS_LICENSE_ID = 171;
-  const
+  public const
 
     
     RIGHT_BASIS_STATUTE_ID = 172;
-  const
+  public const
 
     
     RIGHT_BASIS_POLICY_ID = 173;
-  const
+  public const
 
     
     // Language note
     LANGUAGE_NOTE_ID = 174;
-  const
+  public const
 
     
     // Accrual relation type
     ACCRUAL_ID = 175;
-  const
+  public const
 
     
     // Relation type
     RELATED_MATERIAL_DESCRIPTIONS_ID = 176;
-  const
+  public const
 
     
     // Converse term relation
     CONVERSE_TERM_ID = 177;
-  const
+  public const
 
     
     // AIP relation
     AIP_RELATION_ID = 178;
-  const
+  public const
 
     
     // AIP types
     ARTWORK_COMPONENT_ID = 179;
-  const
+  public const
 
     
     ARTWORK_MATERIAL_ID = 180;
-  const
+  public const
 
     
     SUPPORTING_DOCUMENTATION_ID = 181;
-  const
+  public const
 
     
     SUPPORTING_TECHNOLOGY_ID = 182;
-  const
+  public const
 
     
     // Job statuses
     JOB_STATUS_IN_PROGRESS_ID = 183;
-  const
+  public const
 
     
     JOB_STATUS_COMPLETED_ID = 184;
-  const
+  public const
 
     
     JOB_STATUS_ERROR_ID = 185;
-  const
+  public const
 
     
     // Digital object usage taxonomy (addition)
     OFFLINE_ID = 186;
-  const
+  public const
 
     
     // Relation type taxonomy
     MAINTAINING_REPOSITORY_RELATION_ID = 187;
-  const
+  public const
 
     
     ACTOR_OCCUPATION_NOTE_ID = 188;
-  const
+  public const
 
     
     // User action taxonomy
     USER_ACTION_CREATION_ID = 189;
-  const
+  public const
 
     
     USER_ACTION_MODIFICATION_ID = 190;
-  const
+  public const
 
     
     // Digital object usage taxonomy (addition)
     EXTERNAL_FILE_ID = 191;
-  const
+  public const
 
     
     // Accession alternative identifier taxonomy
     ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID = 192;
-  const
+  public const
 
     
     // Accession event type: physical transfer
     ACCESSION_EVENT_PHYSICAL_TRANSFER_ID = 193;
-  const
+  public const
 
     
     // Accession event note

@@ -19,12 +19,10 @@
 
 class sfEacPlugin implements ArrayAccess
 {
-  protected
-    $resource;
+  protected $resource;
 
   // Arrays not allowed in class constants
-  protected static
-    $from6392 = array(
+  protected static $from6392 = array(
 
       // :r !curl http://loc.gov/standards/iso639-2/ISO-639-2_utf-8.txt
       // 2>/dev/null | sed -n "s/\([^|]\+\)|[^|]*|\([^|]\+\)|\([^|]*\).*/'\1'

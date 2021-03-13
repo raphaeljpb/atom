@@ -27,12 +27,9 @@
  */
 class QubitCsvImport
 {
-  protected
-    $errors = null;
-  protected
-    $rootObject = null;
-  protected
-    $parent = null;
+  protected $errors = null;
+  protected $rootObject = null;
+  protected $parent = null;
 
   public $indexDuringImport = false;
   public $doCsvTransform = false;

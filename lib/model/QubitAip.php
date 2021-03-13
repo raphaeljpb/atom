@@ -26,8 +26,7 @@
 class QubitAip extends BaseAip
 {
   // Flag for updating search index on save
-  public
-    $indexOnSave = true;
+  public $indexOnSave = true;
 
   /**
    * Additional save functionality (e.g. update search index)

@@ -22,7 +22,7 @@
  */
 class SearchIndexAction extends DefaultBrowseAction
 {
-  const INDEX_TYPE = 'QubitInformationObject';
+  public const INDEX_TYPE = 'QubitInformationObject';
 
   public function execute($request)
   {

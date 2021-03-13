@@ -19,30 +19,18 @@
  */
 class sfWebBrowser
 {
-  protected
-    $defaultHeaders          = array();
-  protected
-    $stack                   = array();
-  protected
-    $stackPosition           = -1;
-  protected
-    $responseHeaders         = array();
-  protected
-    $responseCode            = '';
-  protected
-    $responseMessage         = '';
-  protected
-    $responseText            = '';
-  protected
-    $responseDom             = null;
-  protected
-    $responseDomCssSelector  = null;
-  protected
-    $responseXml             = null;
-  protected
-    $fields                  = array();
-  protected
-    $urlInfo                 = array();
+  protected $defaultHeaders          = array();
+  protected $stack                   = array();
+  protected $stackPosition           = -1;
+  protected $responseHeaders         = array();
+  protected $responseCode            = '';
+  protected $responseMessage         = '';
+  protected $responseText            = '';
+  protected $responseDom             = null;
+  protected $responseDomCssSelector  = null;
+  protected $responseXml             = null;
+  protected $fields                  = array();
+  protected $urlInfo                 = array();
 
   public function __construct($defaultHeaders = array(), $adapterClass = null, $adapterOptions = array())
   {

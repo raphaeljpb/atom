@@ -27,8 +27,7 @@
 
 class sfModsPlugin implements ArrayAccess
 {
-  protected
-    $resource;
+  protected $resource;
 
   public function __construct($resource)
   {

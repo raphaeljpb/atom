@@ -20,26 +20,16 @@
 class sfImageMagickAdapter
 {
 
-  protected
-    $sourceWidth;
-  protected
-    $sourceHeight;
-  protected
-    $sourceMime;
-  protected
-    $maxWidth;
-  protected
-    $maxHeight;
-  protected
-    $scale;
-  protected
-    $inflate;
-  protected
-    $quality;
-  protected
-    $source;
-  protected
-    $magickCommands;
+  protected $sourceWidth;
+  protected $sourceHeight;
+  protected $sourceMime;
+  protected $maxWidth;
+  protected $maxHeight;
+  protected $scale;
+  protected $inflate;
+  protected $quality;
+  protected $source;
+  protected $magickCommands;
 
   /**
    * Mime types this adapter supports

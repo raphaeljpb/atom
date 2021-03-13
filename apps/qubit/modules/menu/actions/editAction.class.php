@@ -26,8 +26,7 @@
  */
 class MenuEditAction extends sfAction
 {
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'name',
       'label',
       'parentId',

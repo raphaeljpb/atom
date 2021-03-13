@@ -19,10 +19,8 @@
 
 class arGearman
 {
-  protected static
-    $configPath = 'config/gearman.yml';
-  protected static
-    $config = null;
+  protected static $configPath = 'config/gearman.yml';
+  protected static $config = null;
 
   public static function getConfiguration()
   {
@@ -142,7 +140,7 @@ class arGearmanConfigHandler extends sfYamlConfigHandler
   /**
    * @see sfConfigHandler
    */
-  static public function getConfiguration(array $configFiles)
+  public static function getConfiguration(array $configFiles)
   {
     return self::replaceConstants(self::flattenConfigurationWithEnvironment(self::parseYamls($configFiles)));
   }

@@ -27,7 +27,7 @@
 
 class arInformationObjectXmlExportJob extends arInformationObjectExportJob
 {
-  const XML_STANDARD = 'ead';
+  public const XML_STANDARD = 'ead';
 
   protected $xmlCachingEnabled = false;
 

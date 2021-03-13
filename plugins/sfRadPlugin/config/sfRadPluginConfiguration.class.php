@@ -19,10 +19,8 @@
 
 class sfRadPluginConfiguration extends sfPluginConfiguration
 {
-  public static
-    $summary = 'Metadata standard plugin.  Enables data-entry and display using Rules for Archival Description (RAD).';
-  public static
-    $version = '1.0.0';
+  public static $summary = 'Metadata standard plugin.  Enables data-entry and display using Rules for Archival Description (RAD).';
+  public static $version = '1.0.0';
 
   /**
    * @see sfPluginConfiguration

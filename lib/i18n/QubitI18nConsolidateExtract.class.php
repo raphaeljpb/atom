@@ -27,10 +27,8 @@
  */
 class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
 {
-  protected
-    $messageSource = array();
-  protected
-    $sourceFiles = array();
+  protected $messageSource = array();
+  protected $sourceFiles = array();
 
   /**
    * Override sfI18nApplicationExtract::configure() so we extract from plugin

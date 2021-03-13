@@ -26,9 +26,9 @@
  */
 class QubitAcl
 {
-  const GRANT = 2;
-  const INHERIT = 1;
-  const DENY  = 0;
+  public const GRANT = 2;
+  public const INHERIT = 1;
+  public const DENY  = 0;
 
   public static $ACTIONS = array(
     'read' => 'Read',
@@ -45,12 +45,9 @@ class QubitAcl
   // Always authorize against parent resource when creating a new resource
   protected static $_parentAuthActions = ['create'];
 
-  protected
-    $_roles = array();
-  protected
-    $_resources = array();
-  protected
-    $_user;
+  protected $_roles = array();
+  protected $_resources = array();
+  protected $_user;
 
   public function __construct($user = null)
   {

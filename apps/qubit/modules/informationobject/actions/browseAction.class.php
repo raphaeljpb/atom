@@ -25,11 +25,10 @@
  */
 class InformationObjectBrowseAction extends DefaultBrowseAction
 {
-  const INDEX_TYPE = 'QubitInformationObject';
+  public const INDEX_TYPE = 'QubitInformationObject';
 
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'copyrightStatus',
       'onlyMedia',
       'levels',
@@ -42,8 +41,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
       'rangeType',
       'findingAidStatus'
     );
-  public static
-    $FILTERTAGS = array(
+  public static $FILTERTAGS = array(
       'repos'            => array('model' => 'QubitRepository'),
       'collection'       => array('model' => 'QubitInformationObject'),
       'creators'         => array('model' => 'QubitActor'),
@@ -60,8 +58,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
       'findingAidStatus' => array(),
       'ancestor'         => array('model' => 'QubitInformationObject')
     );
-  public static
-    $AGGS = array(
+  public static $AGGS = array(
       'languages' =>
         array('type' => 'term',
               'field' => 'i18n.languages',

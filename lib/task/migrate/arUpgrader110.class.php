@@ -25,9 +25,9 @@
  */
 class arUpgrader110
 {
-  const
+  public const
     MILESTONE = '1.1';
-  const
+  public const
     INIT_VERSION = 62;
 
   public function up($version, $configuration, $options)

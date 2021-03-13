@@ -28,13 +28,13 @@
 class arRepositoryThemeCropValidatedFile extends sfValidatedFile
 {
   // Max dimensions in pixels
-  const
+  public const
     LOGO_MAX_WIDTH = 270;
-  const
+  public const
     LOGO_MAX_HEIGHT = 270;
-  const
+  public const
     BANNER_MAX_WIDTH = 800;
-  const
+  public const
     BANNER_MAX_HEIGHT = 300;
 
   public function save($file = null, $fileMode = 0666, $create = true, $dirMode = 0777)

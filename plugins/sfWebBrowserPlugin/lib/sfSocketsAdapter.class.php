@@ -19,12 +19,9 @@
  */
 class sfSocketsAdapter
 {
-  protected
-    $options             = array();
-  protected
-    $adapterErrorMessage = null;
-  protected
-    $browser             = null;
+  protected $options             = array();
+  protected $adapterErrorMessage = null;
+  protected $browser             = null;
 
   public function __construct($options = array())
   {

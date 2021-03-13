@@ -19,10 +19,8 @@
 
 class arOaiPluginConfiguration extends sfPluginConfiguration
 {
-  public static
-    $summary = 'OAI plugin.';
-  public static
-    $version = '1.0.0';
+  public static $summary = 'OAI plugin.';
+  public static $version = '1.0.0';
 
   public function initialize()
   {

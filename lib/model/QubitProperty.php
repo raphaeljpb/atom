@@ -29,10 +29,8 @@
 class QubitProperty extends BaseProperty
 {
   // Flag for updating search index on save or delete
-  public
-    $indexOnSave = true;
-  public
-    $indexOnDelete = true;
+  public $indexOnSave = true;
+  public $indexOnDelete = true;
 
   public function __toString()
   {

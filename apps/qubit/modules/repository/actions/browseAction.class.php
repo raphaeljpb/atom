@@ -25,11 +25,10 @@
  */
 class RepositoryBrowseAction extends DefaultBrowseAction
 {
-  const INDEX_TYPE = 'QubitRepository';
+  public const INDEX_TYPE = 'QubitRepository';
 
   // Arrays not allowed in class constants
-  public static
-    $AGGS = array(
+  public static $AGGS = array(
       'languages' =>
         array('type' => 'term',
               'field' => 'i18n.languages',

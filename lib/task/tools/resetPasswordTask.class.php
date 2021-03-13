@@ -82,7 +82,7 @@ EOF;
     }
   }
 
-  function generatePassword($length = 8)
+  public function generatePassword($length = 8)
   {
     // Start with a blank password
     $password = "";

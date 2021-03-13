@@ -26,10 +26,8 @@
 
 class arCasPluginConfiguration extends sfPluginConfiguration
 {
-  public static
-    $summary = 'CAS authentication plugin.';
-  public static
-    $version = '1.0.0';
+  public static $summary = 'CAS authentication plugin.';
+  public static $version = '1.0.0';
 
   /**
    * @see sfPluginConfiguration

@@ -27,8 +27,7 @@
 class sfIsaarPluginEditAction extends ActorEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'authorizedFormOfName',
       'corporateBodyIdentifiers',
       'datesOfExistence',

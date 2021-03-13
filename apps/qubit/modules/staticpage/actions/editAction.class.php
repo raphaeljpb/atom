@@ -19,8 +19,7 @@
 
 class StaticPageEditAction extends DefaultEditAction
 {
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'title',
       'slug',
       'content');

@@ -26,14 +26,14 @@
  */
 class QubitAclGroup extends BaseAclGroup implements Zend_Acl_Role_Interface
 {
-  const ROOT_ID          = 1;
-  const ANONYMOUS_ID     = 98;
-  const AUTHENTICATED_ID = 99;
-  const ADMINISTRATOR_ID = 100;
-  const ADMIN_ID         = 100;
-  const EDITOR_ID        = 101;
-  const CONTRIBUTOR_ID   = 102;
-  const TRANSLATOR_ID    = 103;
+  public const ROOT_ID          = 1;
+  public const ANONYMOUS_ID     = 98;
+  public const AUTHENTICATED_ID = 99;
+  public const ADMINISTRATOR_ID = 100;
+  public const ADMIN_ID         = 100;
+  public const EDITOR_ID        = 101;
+  public const CONTRIBUTOR_ID   = 102;
+  public const TRANSLATOR_ID    = 103;
 
   public function __toString()
   {

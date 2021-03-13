@@ -20,8 +20,7 @@
 class AclGroupEditAction extends sfAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'name',
       'description',
       'translate');

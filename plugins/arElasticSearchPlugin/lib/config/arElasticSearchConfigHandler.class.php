@@ -49,7 +49,7 @@ class arElasticSearchConfigHandler extends sfYamlConfigHandler
   /**
    * @see sfConfigHandler
    */
-  static public function getConfiguration(array $configFiles)
+  public static function getConfiguration(array $configFiles)
   {
     return self::replaceConstants(self::flattenConfigurationWithEnvironment(self::parseYamls($configFiles)));
   }

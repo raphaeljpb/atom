@@ -31,7 +31,7 @@ class QubitPhysicalObjectCsvHoldingsReport
   protected $ormClasses;
   protected $typeMap;
 
-  static $headerRow = [
+  public static $headerRow = [
     'physicalObjectName',
     'physicalObjectLocation',
     'physicalObjectType',
@@ -42,7 +42,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     'holdingSlug',
   ];
 
-  static $defaultTypeMap = [
+  public static $defaultTypeMap = [
     'description' => 'QubitInformationObject',
     'accession' => 'QubitAccession',
   ];

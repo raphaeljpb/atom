@@ -75,7 +75,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
   /**
    * Minimum version of Elasticsearch supported
    */
-  const MIN_VERSION = '1.3.0';
+  public const MIN_VERSION = '1.3.0';
 
   /**
    * Constructor

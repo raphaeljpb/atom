@@ -19,15 +19,11 @@
 
 class arElasticSearchInformationObject extends arElasticSearchModelBase
 {
-  protected static
-    $conn;
-  protected static
-    $statement;
-  protected static
-    $counter = 0;
+  protected static $conn;
+  protected static $statement;
+  protected static $counter = 0;
 
-  protected
-    $errors = array();
+  protected $errors = array();
 
   public function load()
   {

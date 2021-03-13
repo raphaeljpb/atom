@@ -29,8 +29,7 @@
 
 class SettingsPageElementsAction extends sfAction
 {
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'toggleDescription',
       'toggleLogo',
       'toggleTitle',

@@ -19,7 +19,7 @@
 
 abstract class arBaseTask extends sfBaseTask
 {
-  const MAX_LINE_SIZE = 2048;
+  public const MAX_LINE_SIZE = 2048;
 
   /**
    * @see sfCommandApplicationTask

@@ -26,17 +26,14 @@
  */
 class QubitMarkdown
 {
-  protected static
-    $instance = null;
-  protected static
-    $markdownMap = array(
+  protected static $instance = null;
+  protected static $markdownMap = array(
       'bolditalic' => '___',
       'italic' => '_',
       'bold' => '__',
     );
 
-  private
-    $enabled;
+  private $enabled;
 
   protected function __construct()
   {
@@ -50,7 +47,7 @@ class QubitMarkdown
     $this->parsedown = new ParsedownExtra();
   }
 
-  static public function getInstance()
+  public static function getInstance()
   {
     if (!isset(self::$instance))
     {

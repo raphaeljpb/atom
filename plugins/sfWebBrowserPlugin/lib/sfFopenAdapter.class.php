@@ -18,12 +18,9 @@
  */
 class sfFopenAdapter
 {
-  protected
-    $options             = array();
-  protected
-    $adapterErrorMessage = null;
-  protected
-    $browser             = null;
+  protected $options             = array();
+  protected $adapterErrorMessage = null;
+  protected $browser             = null;
     
   public function __construct($options = array())
   {
@@ -88,7 +85,7 @@ class sfFopenAdapter
    *
    * @see  http://php.net/set_error_handler
    */
-  function handleRuntimeError($errno, $errstr, $errfile = null, $errline = null, $errcontext = array())
+  public function handleRuntimeError($errno, $errstr, $errfile = null, $errline = null, $errcontext = array())
   {
      $error_types = array(
                 E_ERROR              => 'Error',

@@ -27,10 +27,8 @@
 
 class sfRadPlugin implements ArrayAccess
 {
-  protected
-    $resource;
-  protected
-    $property;
+  protected $resource;
+  protected $property;
 
   public function __construct($resource)
   {

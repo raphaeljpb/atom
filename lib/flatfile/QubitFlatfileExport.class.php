@@ -183,7 +183,7 @@ class QubitFlatfileExport
    *
    * @return void
    */
-  function overrideConfigData(&$config, $mixin)
+  public function overrideConfigData(&$config, $mixin)
   {
     foreach($mixin as $key => $value)
     {

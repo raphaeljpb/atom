@@ -19,8 +19,7 @@
 
 class RepositoryEditThemeAction extends sfAction
 {
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'backgroundColor',
       'banner',
       'banner_delete',

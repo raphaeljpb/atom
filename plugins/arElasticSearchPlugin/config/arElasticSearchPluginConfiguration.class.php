@@ -19,18 +19,12 @@
 
 class arElasticSearchPluginConfiguration extends sfPluginConfiguration
 {
-  public static
-    $summary = 'Search index plugin. Uses an ElasticSearch instance to provide advanced search features such as aggregations, fuzzy search, etc.';
-  public static
-    $version = '1.0.0';
-  public static
-    $configPath = 'config/search.yml';
-  public static
-    $config = null;
-  public static
-    $mappingPath = 'config/mapping.yml';
-  public static
-    $mapping = null;
+  public static $summary = 'Search index plugin. Uses an ElasticSearch instance to provide advanced search features such as aggregations, fuzzy search, etc.';
+  public static $version = '1.0.0';
+  public static $configPath = 'config/search.yml';
+  public static $config = null;
+  public static $mappingPath = 'config/mapping.yml';
+  public static $mapping = null;
 
   public function initialize()
   {

@@ -19,10 +19,8 @@
 
 class sfIsaarPluginConfiguration extends sfPluginConfiguration
 {
-  public static
-    $summary = 'Metadata standard plugin.  Enables data-entry and display using International Standard Archival Authority Record for Corporate Bodies, Persons and Families (ISAAR (CPF)).';
-  public static
-    $version = '1.0.0';
+  public static $summary = 'Metadata standard plugin.  Enables data-entry and display using International Standard Archival Authority Record for Corporate Bodies, Persons and Families (ISAAR (CPF)).';
+  public static $version = '1.0.0';
 
   /**
    * @see sfPluginConfiguration

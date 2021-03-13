@@ -27,7 +27,7 @@
 
 class arActorXmlExportJob extends arActorExportJob
 {
-  const XML_STANDARD = 'eac';
+  public const XML_STANDARD = 'eac';
 
   /**
    * Export search results as XML

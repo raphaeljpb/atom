@@ -19,11 +19,10 @@
 
 class TermIndexAction extends DefaultBrowseAction
 {
-  const INDEX_TYPE = 'QubitInformationObject';
+  public const INDEX_TYPE = 'QubitInformationObject';
 
   // Arrays not allowed in class constants
-  public static
-    $AGGS = array(
+  public static $AGGS = array(
       'languages' =>
         array('type'  => 'term',
               'field' => 'i18n.languages',

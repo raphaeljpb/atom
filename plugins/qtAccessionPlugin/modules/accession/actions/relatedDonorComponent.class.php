@@ -20,8 +20,7 @@
 class AccessionRelatedDonorComponent extends RelationEditComponent
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'authorizedFormOfName',
       'type',
 

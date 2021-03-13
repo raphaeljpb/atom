@@ -20,8 +20,7 @@
 class sfIsadPluginEventComponent extends InformationObjectEventComponent
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'date',
       'endDate',
       'startDate',

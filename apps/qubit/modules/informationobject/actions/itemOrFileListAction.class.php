@@ -28,8 +28,7 @@
 class InformationObjectItemOrFileListAction extends sfAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'sortBy',
       'includeThumbnails',
       'format'

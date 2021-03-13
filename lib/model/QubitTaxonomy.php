@@ -21,117 +21,116 @@ class QubitTaxonomy extends BaseTaxonomy
 {
   public $disableNestedSetUpdating = false;
 
-  const
+  public const
     ROOT_ID = 30;
-  const
+  public const
     DESCRIPTION_DETAIL_LEVEL_ID = 31;
-  const
+  public const
     ACTOR_ENTITY_TYPE_ID = 32;
-  const
+  public const
     DESCRIPTION_STATUS_ID = 33;
-  const
+  public const
     LEVEL_OF_DESCRIPTION_ID = 34;
-  const
+  public const
     SUBJECT_ID = 35;
-  const
+  public const
     ACTOR_NAME_TYPE_ID = 36;
-  const
+  public const
     NOTE_TYPE_ID = 37;
-  const
+  public const
     REPOSITORY_TYPE_ID = 38;
-  const
+  public const
     EVENT_TYPE_ID = 40;
-  const
+  public const
     QUBIT_SETTING_LABEL_ID = 41;
-  const
+  public const
     PLACE_ID = 42;
-  const
+  public const
     FUNCTION_ID = 43;
-  const
+  public const
     HISTORICAL_EVENT_ID = 44;
-  const
+  public const
     COLLECTION_TYPE_ID = 45;
-  const
+  public const
     MEDIA_TYPE_ID = 46;
-  const
+  public const
     DIGITAL_OBJECT_USAGE_ID = 47;
-  const
+  public const
     PHYSICAL_OBJECT_TYPE_ID = 48;
-  const
+  public const
     RELATION_TYPE_ID = 49;
-  const
+  public const
     MATERIAL_TYPE_ID = 50;
-  const
+  public const
     // Rules for Archival Description (RAD) taxonomies
     RAD_NOTE_ID = 51;
-  const
+  public const
     RAD_TITLE_NOTE_ID = 52;
-  const
+  public const
     MODS_RESOURCE_TYPE_ID = 53;
-  const
+  public const
     DC_TYPE_ID = 54;
-  const
+  public const
     ACTOR_RELATION_TYPE_ID = 55;
-  const
+  public const
     RELATION_NOTE_TYPE_ID = 56;
-  const
+  public const
     TERM_RELATION_TYPE_ID = 57;
-  const
+  public const
     STATUS_TYPE_ID = 59;
-  const
+  public const
     PUBLICATION_STATUS_ID = 60;
-  const
+  public const
     ISDF_RELATION_TYPE_ID = 61;
-  const
+  public const
     // Accession taxonomies
     ACCESSION_RESOURCE_TYPE_ID = 62;
-  const
+  public const
     ACCESSION_ACQUISITION_TYPE_ID = 63;
-  const
+  public const
     ACCESSION_PROCESSING_PRIORITY_ID = 64;
-  const
+  public const
     ACCESSION_PROCESSING_STATUS_ID = 65;
-  const
+  public const
     DEACCESSION_SCOPE_ID = 66;
-  const
+  public const
     // Right taxonomies
     RIGHT_ACT_ID = 67;
-  const
+  public const
     RIGHT_BASIS_ID = 68;
-  const
+  public const
     COPYRIGHT_STATUS_ID = 69;
-  const
+  public const
     // Metadata templates
     INFORMATION_OBJECT_TEMPLATE_ID = 70;
-  const
+  public const
     // Metadata templates
     AIP_TYPE_ID = 71;
-  const
+  public const
     THEMATIC_AREA_ID = 72;
-  const
+  public const
     GEOGRAPHIC_SUBREGION_ID = 73;
-  const
+  public const
     // DACS notes
     DACS_NOTE_ID = 74;
-  const
+  public const
     // PREMIS Rights Statues
     RIGHTS_STATUTES_ID = 75;
-  const
+  public const
     // Genre taxonomy
     GENRE_ID = 78;
-  const
+  public const
     JOB_STATUS_ID = 79;
-  const
+  public const
     ACTOR_OCCUPATION_ID = 80;
-  const
+  public const
     USER_ACTION_ID = 81;
-  const
+  public const
     ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID = 82;
-  const
+  public const
     ACCESSION_EVENT_TYPE_ID = 83;
 
-  public static
-    $lockedTaxonomies = array(
+  public static $lockedTaxonomies = array(
       self::QUBIT_SETTING_LABEL_ID,
       self::COLLECTION_TYPE_ID,
       self::DIGITAL_OBJECT_USAGE_ID,

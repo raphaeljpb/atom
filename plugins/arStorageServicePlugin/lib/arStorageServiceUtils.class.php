@@ -19,7 +19,7 @@
 
 class arStorageServiceUtils
 {
-  const STORAGE_SERVICE_PACKAGE_PATH = 'file';
+  public const STORAGE_SERVICE_PACKAGE_PATH = 'file';
 
   /**
    * Use phpcurl to request a URL and pass the header and stream back to

@@ -154,7 +154,7 @@ class InformationObjectCalculateDatesAction extends sfAction
     }
   }
 
-  static public function getDescendantDateTypes($resource)
+  public static function getDescendantDateTypes($resource)
   {
     $eventTypes = array();
 

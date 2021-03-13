@@ -19,8 +19,7 @@
 
 class sfDcPluginDcNamesComponent extends InformationObjectEventComponent
 {
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'actor',
       'type');
 

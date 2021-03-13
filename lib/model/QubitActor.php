@@ -25,15 +25,12 @@
  */
 class QubitActor extends BaseActor
 {
-  public
-    // Allow per-object disabling of nested set updating during bulk imports
-    $disableNestedSetUpdating = false;
-  public
-    
-    // Flag for updating search index on save
-    $indexOnSave = true;
+  // Allow per-object disabling of nested set updating during bulk imports
+    public $disableNestedSetUpdating = false;
+  // Flag for updating search index on save
+    public $indexOnSave = true;
 
-  const
+  public const
     ROOT_ID = 3;
 
   public function __toString()

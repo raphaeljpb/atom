@@ -27,20 +27,15 @@
  */
 class importDipObjectsTask extends arBaseTask
 {
-  protected
-    $conn;
-  protected
-    // Database connection
-    $dipDir;
-  protected
-    // Path to DIP
-    $columnNames = array();
-  protected
-    // Sequence of column names
-    $columnIndexes = array();
-  protected
-    // Index in CSV row for each column
-    $uniqueValueColumnName;   // Column name of unique identifier ("identifier" or "slug")
+  protected $conn;
+  // Database connection
+    protected $dipDir;
+  // Path to DIP
+    protected $columnNames = array();
+  // Sequence of column names
+    protected $columnIndexes = array();
+  // Index in CSV row for each column
+    protected $uniqueValueColumnName;   // Column name of unique identifier ("identifier" or "slug")
 
   /**
    * @see sfTask
@@ -291,7 +286,7 @@ EOF;
    *
    * @return void
    */
-  function getRowColumnValue($column, $row)
+  public function getRowColumnValue($column, $row)
   {
     // Return cached column index, if present
     if (isset($this->columnIndexes[$column]))

@@ -21,16 +21,11 @@ namespace AccessToMemory\test\mock;
 
 class QubitPhysicalObject
 {
-  public
-    $id;
-  public
-    $name;
-  public
-    $typeId;
-  public
-    $location;
-  public
-    $culture;
+  public $id;
+  public $name;
+  public $typeId;
+  public $location;
+  public $culture;
 
   public function save($dbcon = null)
   {

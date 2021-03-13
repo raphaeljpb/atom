@@ -26,9 +26,9 @@
  */
 class MigrateTask extends sfBaseTask
 {
-  const
+  public const
     FINAL_VERSION = 62;
-  const
+  public const
     NOTICE_FINAL_VERSION = <<<EOL
 
 Notice: This migration script will only migrate your data to version Release 1.1 v%s.
@@ -38,17 +38,12 @@ http://accesstomemory.org/wiki/index.php?title=Upgrading
 
 EOL;
 
-  protected
-    $data;
-  protected
-    $dataModified = false;
-  protected
-    $initialVersion;
-  protected
-    $targetVersion;
-  protected
-    // list of migratable releases
-    $validReleases = array(
+  protected $data;
+  protected $dataModified = false;
+  protected $initialVersion;
+  protected $targetVersion;
+  // list of migratable releases
+    protected $validReleases = array(
       '1.0.3',
       '1.0.4',
       '1.0.5',

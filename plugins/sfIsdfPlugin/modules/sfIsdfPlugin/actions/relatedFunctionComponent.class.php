@@ -20,8 +20,7 @@
 class sfIsdfPluginRelatedFunctionComponent extends RelationEditComponent
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'resource',
       'type',
       'description',

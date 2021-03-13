@@ -5,10 +5,8 @@
 
 class sfIsaarPlugin implements ArrayAccess
 {
-  protected
-    $resource;
-  protected
-    $maintenanceNote;
+  protected $resource;
+  protected $maintenanceNote;
 
   public function __construct(QubitActor $resource)
   {

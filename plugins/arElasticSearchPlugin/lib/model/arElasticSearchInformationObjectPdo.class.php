@@ -26,28 +26,18 @@
  */
 class arElasticSearchInformationObjectPdo
 {
-  public
-    $ancestors;
-  public
-    $doc;
-  public
-    $repository;
-  public
-    $sourceCulture;
-  public
-    $creators = array();
-  public
-    $inheritedCreators = array();
+  public $ancestors;
+  public $doc;
+  public $repository;
+  public $sourceCulture;
+  public $creators = array();
+  public $inheritedCreators = array();
 
-  protected
-    $data = array();
-  protected
-    $events;
+  protected $data = array();
+  protected $events;
 
-  protected static
-    $conn;
-  protected static
-    $statements;
+  protected static $conn;
+  protected static $statements;
 
   public function __construct($id, $options = array())
   {

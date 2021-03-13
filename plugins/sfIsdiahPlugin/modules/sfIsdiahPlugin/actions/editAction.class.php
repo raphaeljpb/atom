@@ -28,8 +28,7 @@
 class sfIsdiahPluginEditAction extends RepositoryEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'identifier',
       'authorizedFormOfName',
       'parallelName',

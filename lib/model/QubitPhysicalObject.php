@@ -19,10 +19,8 @@
 
 class QubitPhysicalObject extends BasePhysicalObject
 {
-  public
-    $disableNestedSetUpdating = false;
-  public
-    $indexOnSave              = false;
+  public $disableNestedSetUpdating = false;
+  public $indexOnSave              = false;
 
   /**
    * Call this function when casting object instance as type string

@@ -19,9 +19,7 @@
 
 class QubitMetadataRoute extends QubitRoute
 {
-  public static
-
-    $METADATA_PLUGINS = array(
+  public static $METADATA_PLUGINS = array(
       'isaar' => 'sfIsaarPlugin',
       'eac'   => 'sfEacPlugin',
       'ead'   => 'sfEadPlugin',
@@ -32,9 +30,7 @@ class QubitMetadataRoute extends QubitRoute
       'mods'  => 'sfModsPlugin',
       'dacs'  => 'arDacsPlugin',
       'isdf'  => 'sfIsdfPlugin');
-  public static
-
-    $DEFAULT_MODULES = array(
+  public static $DEFAULT_MODULES = array(
       'informationobject' => false,
       'term'              => 'term',
       'actor'             => 'sfIsaarPlugin',

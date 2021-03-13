@@ -26,21 +26,14 @@
  */
 class qtIsaarCsv extends sfIsaarPlugin
 {
-  protected
-    $resource;
-  protected
-    $isaar;
-  protected
-    $sourceId;
+  protected $resource;
+  protected $isaar;
+  protected $sourceId;
 
-  public static
-    $keymapSource;
-  public static
-    $keymapTarget = 'actor';
-  public static
-    $entityTypeLookup;
-  public static
-    $NAMES = array(
+  public static $keymapSource;
+  public static $keymapTarget = 'actor';
+  public static $entityTypeLookup;
+  public static $NAMES = array(
       'authorizedFormOfName',
       'datesOfExistence',
       'descriptionIdentifier',

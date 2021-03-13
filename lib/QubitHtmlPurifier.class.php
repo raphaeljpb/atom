@@ -19,11 +19,9 @@
 
 class QubitHtmlPurifier
 {
-  static protected
-    $instance = null;
+  protected static $instance = null;
 
-  private
-    $enabled;
+  private $enabled;
 
   protected function __construct()
   {
@@ -70,7 +68,7 @@ class QubitHtmlPurifier
     $this->purifier = new HTMLPurifier($config);
   }
 
-  static public function getInstance()
+  public static function getInstance()
   {
     if (!isset(self::$instance))
     {

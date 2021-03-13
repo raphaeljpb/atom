@@ -33,7 +33,7 @@ function getResultPath()
 
 class my_lime_test extends lime_test
 {
-  function diag($message, $adapter = '')
+  public function diag($message, $adapter = '')
   {
     if ($adapter)
     {

@@ -19,10 +19,8 @@
 
 class arDacsPluginConfiguration extends sfPluginConfiguration
 {
-  public static
-    $summary = 'Metadata standard plugin.  Enables data-entry and display using Describing Archives: A Content Standard (DACS).';
-  public static
-    $version = '1.0.0';
+  public static $summary = 'Metadata standard plugin.  Enables data-entry and display using Describing Archives: A Content Standard (DACS).';
+  public static $version = '1.0.0';
 
   /**
    * @see sfPluginConfiguration

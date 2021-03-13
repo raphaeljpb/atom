@@ -27,23 +27,20 @@ class arGenerateReportJob extends arBaseJob
   /**
    * @see arBaseJob::$requiredParameters
    */
-  protected
-    $extraRequiredParameters = array('objectId', 'reportType', 'reportTypeLabel', 'reportFormat');
+  protected $extraRequiredParameters = array('objectId', 'reportType', 'reportTypeLabel', 'reportFormat');
 
-  private
-    $resource = null;
+  private $resource = null;
 
-  const
+  public const
     itemOrFileTemplatePath = 'apps/qubit/modules/informationobject/templates/itemOrFileListSuccess.php';
-  const
+  public const
     storageLocationsTemplatePath = 'apps/qubit/modules/informationobject/templates/storageLocationsSuccess.php';
-  const
+  public const
     boxLabelTemplatePath = 'apps/qubit/modules/informationobject/templates/boxLabelSuccess.php';
-  const
+  public const
     reportsDir = 'downloads/reports';
 
-  private
-    $templatePaths = array(
+  private $templatePaths = array(
       'itemList' => self::itemOrFileTemplatePath,
       'fileList' => self::itemOrFileTemplatePath,
       'storageLocations' => self::storageLocationsTemplatePath,

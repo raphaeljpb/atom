@@ -20,26 +20,16 @@
 class sfGDAdapter
 {
 
-  protected
-    $sourceWidth;
-  protected
-    $sourceHeight;
-  protected
-    $sourceMime;
-  protected
-    $maxWidth;
-  protected
-    $maxHeight;
-  protected
-    $scale;
-  protected
-    $inflate;
-  protected
-    $quality;
-  protected
-    $source;
-  protected
-    $thumb;
+  protected $sourceWidth;
+  protected $sourceHeight;
+  protected $sourceMime;
+  protected $maxWidth;
+  protected $maxHeight;
+  protected $scale;
+  protected $inflate;
+  protected $quality;
+  protected $source;
+  protected $thumb;
 
   /**
    * List of accepted image types based on MIME

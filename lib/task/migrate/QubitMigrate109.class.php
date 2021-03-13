@@ -26,11 +26,11 @@
  */
 class QubitMigrate109 extends QubitMigrate
 {
-  const
+  public const
     MILESTONE = '1.0.9';
-  const
+  public const
     INIT_VERSION = 39;
-  const
+  public const
     FINAL_VERSION = 62;
 
   public function execute()

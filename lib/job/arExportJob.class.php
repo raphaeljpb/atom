@@ -28,7 +28,7 @@
 class arExportJob extends arBaseJob
 {
   // Log progress every n rows
-  const LOG_INTERVAL = 100;
+  public const LOG_INTERVAL = 100;
 
   // Child class should set this if creating user downloads
   protected $downloadFileExtension = null;

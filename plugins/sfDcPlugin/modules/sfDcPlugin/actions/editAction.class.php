@@ -28,8 +28,7 @@
 class sfDcPluginEditAction extends InformationObjectEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'accessConditions',
       'extentAndMedium',
       'identifier',

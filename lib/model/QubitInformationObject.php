@@ -30,16 +30,13 @@
  */
 class QubitInformationObject extends BaseInformationObject
 {
-  const
+  public const
     ROOT_ID = 1;
 
-  public
-    // Allow per-object disabling of nested set updating during bulk imports
-    $disableNestedSetUpdating = false;
-  public
-    
-    // Flag for updating search index on save
-    $indexOnSave = true;
+  // Allow per-object disabling of nested set updating during bulk imports
+    public $disableNestedSetUpdating = false;
+  // Flag for updating search index on save
+    public $indexOnSave = true;
 
   /**
    * When cast as a string, return i18n-ized object title with fallback to

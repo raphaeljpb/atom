@@ -20,8 +20,7 @@
 class DeaccessionEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'date',
       'description',
       'extent',

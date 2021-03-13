@@ -25,19 +25,19 @@ class SitemapWriterSection
   /**
    * Maximum number of items permitted in a Sitemap XML document.
    */
-  const MAX_ITEMS_SITEMAP = 50000;
+  public const MAX_ITEMS_SITEMAP = 50000;
 
   /**
    * Maximum size of a Sitemap XML document in bytes.
    * We are going to ignore this for now, hard to reach 50 MiB
    * with just 50K records, and gzipped.
    */
-  const MAX_SIZE_SITEMAP = 52428800;
+  public const MAX_SIZE_SITEMAP = 52428800;
 
   /**
    * The size of the batches that we command XmlWriter to write
    */
-  const BUFFER_LIMIT = 500;
+  public const BUFFER_LIMIT = 500;
 
   /**
    * Instance of XMLWriter

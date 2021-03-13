@@ -29,8 +29,7 @@
 class QubitEvent extends BaseEvent
 {
   // Flag for updating search index on save or delete
-  public
-    $indexOnSave = true;
+  public $indexOnSave = true;
 
   /**
    * Additional save functionality, e.g. update search index

@@ -513,7 +513,7 @@ class sfModsConvertor extends QubitSaxParser
     $this->importArrayOfTermNames(QubitTaxonomy::PLACE_ID, $this->places, $event->id);
   }
 
-  function importDigitalObjects($digitalObjects)
+  public function importDigitalObjects($digitalObjects)
   {
     // Create digital objects
     foreach ($digitalObjects as $digitalObject)

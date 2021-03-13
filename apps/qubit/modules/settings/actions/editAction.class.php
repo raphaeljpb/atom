@@ -20,8 +20,7 @@
 class SettingsEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $I18N = array();
+  public static $I18N = array();
 
   protected function earlyExecute()
   {

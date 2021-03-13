@@ -20,8 +20,7 @@
 class SettingsClipboardAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'clipboard_save_max_age',
       'clipboard_send_enabled',
       'clipboard_send_url',
@@ -29,8 +28,7 @@ class SettingsClipboardAction extends SettingsEditAction
       'clipboard_send_message_html',
       'clipboard_send_http_method',
       'clipboard_export_digitalobjects_enabled');
-  public static
-    $I18N = array(
+  public static $I18N = array(
       'clipboard_send_button_text',
       'clipboard_send_message_html'
     );

@@ -19,8 +19,7 @@
 
 class sfDcPluginDcDatesComponent extends InformationObjectEventComponent
 {
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'date',
       'endDate',
       'startDate');

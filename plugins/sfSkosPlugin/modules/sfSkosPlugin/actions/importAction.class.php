@@ -19,8 +19,7 @@
 
 class sfSkosPluginImportAction extends DefaultEditAction
 {
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'file',
       'taxonomy',
       'url');

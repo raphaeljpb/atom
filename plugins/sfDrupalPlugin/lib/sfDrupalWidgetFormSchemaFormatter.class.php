@@ -7,12 +7,9 @@ class sfDrupalWidgetFormSchemaFormatter extends sfWidgetFormSchemaFormatter
 {
   // Heredocs cannot be used to initialize class members,
   // http://php.net/manual/en/language.types.string.php#language.types.string.syntax.nowdoc
-  protected
-    $errorListFormatInARow = "<div class=\"messages error\">\n  <ul>\n    %errors%\n  </ul>\n</div>\n";
-  protected
-    $helpFormat = "<div class=\"description\">\n  %help%\n</div>\n";
-  protected
-    $name;
+  protected $errorListFormatInARow = "<div class=\"messages error\">\n  <ul>\n    %errors%\n  </ul>\n</div>\n";
+  protected $helpFormat = "<div class=\"description\">\n  %help%\n</div>\n";
+  protected $name;
 
   public function getRowFormat()
   {

@@ -19,10 +19,8 @@
 
 class sfIsadPluginConfiguration extends sfPluginConfiguration
 {
-  public static
-    $summary = 'Metadata standard plugin.  Enables data-entry and display using International Standard Archival Description (ISAD).';
-  public static
-    $version = '1.0.0';
+  public static $summary = 'Metadata standard plugin.  Enables data-entry and display using International Standard Archival Description (ISAD).';
+  public static $version = '1.0.0';
 
   /**
    * @see sfPluginConfiguration

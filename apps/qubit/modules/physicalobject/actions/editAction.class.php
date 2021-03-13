@@ -26,8 +26,7 @@
  */
 class PhysicalObjectEditAction extends DefaultEditAction
 {
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'location',
       'name',
       'type');

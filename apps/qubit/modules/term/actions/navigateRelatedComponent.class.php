@@ -20,14 +20,12 @@
 class TermNavigateRelatedComponent extends sfComponent
 {
   // Arrays not allowed in class constants
-  public static
-    $TAXONOMY_ES_FIELDS = array(
+  public static $TAXONOMY_ES_FIELDS = array(
       QubitTaxonomy::PLACE_ID   => 'places.id',
       QubitTaxonomy::SUBJECT_ID => 'subjects.id',
       QubitTaxonomy::GENRE_ID   => 'genres.id'
     );
-  public static
-    $TAXONOMY_ES_DIRECT_FIELDS = array(
+  public static $TAXONOMY_ES_DIRECT_FIELDS = array(
       QubitTaxonomy::PLACE_ID   => 'directPlaces',
       QubitTaxonomy::SUBJECT_ID => 'directSubjects',
       QubitTaxonomy::GENRE_ID   => 'directGenres'
@@ -45,7 +43,7 @@ class TermNavigateRelatedComponent extends sfComponent
     $this->relatedActorCount = self::getEsDocsRelatedToTerm('QubitActor', $this->resource)->getTotalHits();
   }
 
-  static function getEsDocsRelatedToTerm($relatedModelClass, $term, $options = [])
+  public static function getEsDocsRelatedToTerm($relatedModelClass, $term, $options = [])
   {
     if (!isset(self::$TAXONOMY_ES_FIELDS[$term->taxonomyId]))
     {
@@ -70,7 +68,7 @@ class TermNavigateRelatedComponent extends sfComponent
     return QubitSearch::getInstance()->index->getType($relatedModelClass)->search($search->getQuery(false));
   }
 
-  static function getEsDocsRelatedToTermCount($relatedModelClass, $termId, $search = null)
+  public static function getEsDocsRelatedToTermCount($relatedModelClass, $termId, $search = null)
   {
     $term = QubitTerm::getById($termId);
 

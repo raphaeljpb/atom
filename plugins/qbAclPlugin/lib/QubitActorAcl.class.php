@@ -40,8 +40,7 @@ class QubitActorAcl extends QubitAcl
     'readThumbnail' => 'Access thumbnail'
   );
 
-  protected static
-    $_digitalObjectActions = ['readMaster', 'readReference', 'readThumbnail'];
+  protected static $_digitalObjectActions = ['readMaster', 'readReference', 'readThumbnail'];
 
   /**
    * Do custom ACL checks for QubitActor resources

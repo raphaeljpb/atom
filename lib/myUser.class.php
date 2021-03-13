@@ -22,8 +22,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
   public $user = null;
 
   // Module-specific permissions get temporarily stored here for access checks
-  protected
-    $security = array();
+  protected $security = array();
 
   /**
    * Required for Zend_Acl_Role_Interface

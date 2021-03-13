@@ -20,8 +20,7 @@
 class ClipboardExportCheckAction extends sfAction
 {
   // Arrays not allowed in class constants
-  public static
-    $ALERT_TYPES = array(
+  public static $ALERT_TYPES = array(
       QubitTerm::JOB_STATUS_IN_PROGRESS_ID => 'info',
       QubitTerm::JOB_STATUS_COMPLETED_ID   => 'success',
       QubitTerm::JOB_STATUS_ERROR_ID       => 'error'

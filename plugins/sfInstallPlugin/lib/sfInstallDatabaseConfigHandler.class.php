@@ -19,8 +19,7 @@
 
 class sfInstallDatabaseConfigHandler extends sfDatabaseConfigHandler
 {
-  public static
-    $options;
+  public static $options;
 
   public static function getConfiguration(array $files)
   {

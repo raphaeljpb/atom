@@ -24,13 +24,10 @@
  */
 class sfEadPlugin
 {
-  public
-    $resource;
-  public
-    $siteBaseUrl;
+  public $resource;
+  public $siteBaseUrl;
 
-  public static
-    $ENCODING_MAP = array(
+  public static $ENCODING_MAP = array(
       'isad' => array(
         'relatedencoding'       => 'ISAD(G)v2',
         'eadid'                 => 'identifier',

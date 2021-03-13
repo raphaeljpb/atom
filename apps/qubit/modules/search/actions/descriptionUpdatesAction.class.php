@@ -26,8 +26,7 @@
  */
 class SearchDescriptionUpdatesAction extends sfAction
 {
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'className',
       'startDate',
       'endDate',

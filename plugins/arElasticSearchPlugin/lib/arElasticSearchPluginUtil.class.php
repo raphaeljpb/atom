@@ -28,7 +28,7 @@ class arElasticSearchPluginUtil
   /**
    * Scroll per-page limit to use for bulk queries
    */
-  const SCROLL_SIZE = 1000;
+  public const SCROLL_SIZE = 1000;
 
   public static function convertDate($date)
   {

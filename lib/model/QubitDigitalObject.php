@@ -26,35 +26,31 @@
  */
 class QubitDigitalObject extends BaseDigitalObject
 {
-  const
+  public const
 
     // Directory for generic icons
     GENERIC_ICON_DIR = 'generic-icons';
-  const
+  public const
 
     
     // Mime-type for thumbnails (including reference image)
     THUMB_MIME_TYPE = 'image/jpeg';
-  const
+  public const
 
     
     THUMB_EXTENSION = 'jpg';
 
   // Variables for save actions
-  public
-    $assets = array();
-  public
-    $indexOnSave = true;
-  public
-    // Flag for updating search index on save or delete
-    $createDerivatives = true;
+  public $assets = array();
+  public $indexOnSave = true;
+  // Flag for updating search index on save or delete
+    public $createDerivatives = true;
 
   /*
    * The following mime-type array is taken from the Gallery 2 project
    * http://gallery.menalto.com
    */
-  public static
-    $qubitMimeTypes = array(
+  public static $qubitMimeTypes = array(
 
       /* This data was lifted from Apache's mime.types listing. */
       '123' => 'application/vnd.lotus-1-2-3',
@@ -1053,20 +1049,17 @@ class QubitDigitalObject extends BaseDigitalObject
 
   // Temporary path for local copy of an external object (see importFromUri
   // method)
-  protected
-    $localPath;
+  protected $localPath;
 
   // List of web compatible image formats (supported in most major browsers)
-  protected static
-    $webCompatibleImageFormats = array(
+  protected static $webCompatibleImageFormats = array(
       'image/jpeg',
       'image/jpg',
       'image/jpe',
       'image/gif',
       'image/png');
-  protected static
-    // Qubit generic icon list
-    $qubitGenericThumbs = array(
+  // Qubit generic icon list
+    protected static $qubitGenericThumbs = array(
       'application/vnd.ms-excel'      => 'excel.png',
       'application/msword'            => 'word.png',
       'application/vnd.ms-powerpoint' => 'powerpoint.png',
@@ -1087,8 +1080,7 @@ class QubitDigitalObject extends BaseDigitalObject
       'image/jpe'                     => 'image.png',
       'image/gif'                     => 'image.png',
       'image/png'                     => 'image.png');
-  protected static
-    $qubitGenericReference = array(
+  protected static $qubitGenericReference = array(
       '*/*' => 'blank.png');
 
   public function __toString()

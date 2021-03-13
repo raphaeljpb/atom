@@ -19,8 +19,7 @@
 
 class UserEditTermAclAction extends DefaultEditAction
 {
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'taxonomy');
 
   protected function earlyExecute()

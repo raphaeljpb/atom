@@ -20,8 +20,7 @@
 class TermEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'code',
       'displayNote',
 
@@ -42,8 +41,7 @@ class TermEditAction extends DefaultEditAction
       'sourceNote',
       'useFor');
 
-  protected
-    $updatedLabel = false;
+  protected $updatedLabel = false;
 
   protected function earlyExecute()
   {

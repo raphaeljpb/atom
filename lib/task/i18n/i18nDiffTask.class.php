@@ -29,8 +29,8 @@
  */
 class i18nDiffTask extends sfBaseTask
 {
-  const FORMAT_CSV = 'csv';
-  const FORMAT_TAB = 'tab';
+  public const FORMAT_CSV = 'csv';
+  public const FORMAT_TAB = 'tab';
 
   /**
    * @see sfTask

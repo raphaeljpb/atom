@@ -19,30 +19,18 @@
 
 class QubitQuery implements ArrayAccess, Countable, Iterator
 {
-  protected
-    $parent = null;
-  protected
-    $criteria = null;
-  protected
-    $className = null;
-  protected
-    $options = null;
-  protected
-    $statement = null;
-  protected
-    $objects = null;
-  protected
-    $count = null;
-  protected
-    $offset = 0;
-  protected
-    $orderByName = null;
-  protected
-    $andSelf = null;
-  protected
-    $indexByName = null;
-  protected
-    $orderByNames = null;
+  protected $parent = null;
+  protected $criteria = null;
+  protected $className = null;
+  protected $options = null;
+  protected $statement = null;
+  protected $objects = null;
+  protected $count = null;
+  protected $offset = 0;
+  protected $orderByName = null;
+  protected $andSelf = null;
+  protected $indexByName = null;
+  protected $orderByNames = null;
 
   public static function create(array $options = array())
   {

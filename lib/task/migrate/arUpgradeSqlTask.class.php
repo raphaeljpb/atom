@@ -26,10 +26,8 @@
  */
 class QubitUpgradeSqlTask extends sfBaseTask
 {
-  protected
-    $initialVersion;
-  protected
-    $pluginsSetting;
+  protected $initialVersion;
+  protected $pluginsSetting;
 
   /**
    * @see sfBaseTask

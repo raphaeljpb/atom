@@ -210,7 +210,7 @@ class QubitFlatfileImport
    *
    * @return boolean
    */
-  function columnExists($column)
+  public function columnExists($column)
   {
     $columnIndex = array_search($column, $this->columnNames);
 
@@ -220,7 +220,7 @@ class QubitFlatfileImport
   /**
    * Get/set values in internal representation of current row
    */
-  function columnValue($column, $value =  false)
+  public function columnValue($column, $value =  false)
   {
     $columnIndex = array_search($column, $this->columnNames);
 
@@ -244,7 +244,7 @@ class QubitFlatfileImport
   /**
    * Copy one column value to another column in internal representation of current row
    */
-  function copy($sourceColumn, $destinationColumn)
+  public function copy($sourceColumn, $destinationColumn)
   {
     $this->columnValue($destinationColumn, $this->columnValue($sourceColumn));
   }

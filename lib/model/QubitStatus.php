@@ -20,8 +20,7 @@
 class QubitStatus extends BaseStatus
 {
   // Flag for updating search index on save or delete
-  public
-    $indexOnSave = true;
+  public $indexOnSave = true;
 
   public function __toString()
   {

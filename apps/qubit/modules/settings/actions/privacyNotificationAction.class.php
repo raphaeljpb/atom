@@ -20,12 +20,10 @@
 class SettingsPrivacyNotificationAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'privacy_notification_enabled',
       'privacy_notification');
-  public static
-    $I18N = array(
+  public static $I18N = array(
       'privacy_notification'
     );
 

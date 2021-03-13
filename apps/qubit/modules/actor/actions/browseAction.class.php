@@ -28,11 +28,10 @@
  */
 class ActorBrowseAction extends DefaultBrowseAction
 {
-  const INDEX_TYPE = 'QubitActor';
+  public const INDEX_TYPE = 'QubitActor';
 
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'repository',
       'hasDigitalObject',
       'entityType',
@@ -40,8 +39,7 @@ class ActorBrowseAction extends DefaultBrowseAction
       'relatedType',
       'relatedAuthority'
     );
-  public static
-    $FILTERTAGS = array(
+  public static $FILTERTAGS = array(
       'hasDigitalObject' => array(),
       'repository'       => array('model' => 'QubitRepository'),
       'entityType'       => array('model' => 'QubitTerm'),
@@ -52,8 +50,7 @@ class ActorBrowseAction extends DefaultBrowseAction
       'mediatypes'       => array('model' => 'QubitTerm'),
       'emptyField'       => array()
     );
-  public static
-    $AGGS = array(
+  public static $AGGS = array(
       'languages' =>
         array('type' => 'term',
               'field' => 'i18n.languages',

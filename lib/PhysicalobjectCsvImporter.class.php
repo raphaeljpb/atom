@@ -28,7 +28,7 @@ require_once __DIR__.'/../vendor/composer/autoload.php';
  */
 class PhysicalObjectCsvImporter
 {
-  static $columnMap = [
+  public static $columnMap = [
     'legacyId'         => 'legacyId',
     'name'             => 'name',
     'type'             => 'typeId',

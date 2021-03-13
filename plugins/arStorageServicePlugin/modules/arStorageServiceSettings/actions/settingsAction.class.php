@@ -20,8 +20,7 @@
 class arStorageServiceSettingsSettingsAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'storage_service_api_url',
       'storage_service_username',
       'storage_service_api_key',

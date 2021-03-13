@@ -19,15 +19,11 @@
 
 class QubitCsvTransform extends QubitFlatfileImport
 {
-  public
-    $setupLogic;
-  public
-    $transformLogic;
-  public
-    $rowsPerFile = 1000;
+  public $setupLogic;
+  public $transformLogic;
+  public $rowsPerFile = 1000;
 
-  private
-    $link;
+  private $link;
 
   public function __construct($options = array())
   {
@@ -96,7 +92,7 @@ class QubitCsvTransform extends QubitFlatfileImport
     }
   }
 
-  function writeHeadersOnFirstPass()
+  public function writeHeadersOnFirstPass()
   {
     // execute setup logic, if any
     if (isset($this->setupLogic))
@@ -111,7 +107,7 @@ class QubitCsvTransform extends QubitFlatfileImport
     }
   }
 
-  function initializeMySQLtemp()
+  public function initializeMySQLtemp()
   {
     // Possible future cleanup: use QubitPdo (might have to add a method to set QubitPdo's private $conn property)
     if (false === $link = mysqli_connect(getEnv('MYSQL_HOST'), getEnv('MYSQL_USER'), getEnv('MYSQL_PASSWORD'), getEnv('MYSQL_DB')))
@@ -139,7 +135,7 @@ class QubitCsvTransform extends QubitFlatfileImport
     }
   }
 
-  function addRowToMySQL($sortorder)
+  public function addRowToMySQL($sortorder)
   {
     $sql = "INSERT INTO import_descriptions
         (sortorder, data)
@@ -154,7 +150,7 @@ class QubitCsvTransform extends QubitFlatfileImport
     }
   }
 
-  function numberedFilePathVariation($filename, $number)
+  public function numberedFilePathVariation($filename, $number)
   {
     $parts     = pathinfo($filename);
     $base      = $parts['filename'];
@@ -162,7 +158,7 @@ class QubitCsvTransform extends QubitFlatfileImport
     return $path .'/'. $base .'_'. $number .'.'. $parts['extension'];
   }
 
-  function writeMySQLRowsToCsvFilePath($filepath)
+  public function writeMySQLRowsToCsvFilePath($filepath)
   {
     $chunk = 0;
     $startFile = $this->numberedFilePathVariation($filepath, $chunk);
@@ -204,7 +200,7 @@ class QubitCsvTransform extends QubitFlatfileImport
     }
   }
 
-  function levelOfDescriptionToSortorder($level)
+  public function levelOfDescriptionToSortorder($level)
   {
     return array_search(strtolower($level), $this->levelsOfDescription);
   }

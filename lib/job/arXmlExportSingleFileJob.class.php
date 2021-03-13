@@ -29,8 +29,7 @@ class arXmlExportSingleFileJob extends arBaseJob
   /**
    * @see arBaseJob::$requiredParameters
    */
-  protected
-    $extraRequiredParameters = array('objectId', 'format');
+  protected $extraRequiredParameters = array('objectId', 'format');
 
   protected $params = array();
 

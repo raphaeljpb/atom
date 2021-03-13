@@ -20,8 +20,7 @@
 class InformationObjectRenameAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'title',
       'slug',
       'filename');

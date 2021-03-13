@@ -26,21 +26,15 @@
  */
 class arElasticSearchActorPdo
 {
-  public
-//      $ancestors,
-    $i18ns;
+  //      $ancestors,
+    public $i18ns;
 
-  protected
-    $data = array();
+  protected $data = array();
 
-  protected static
-    $conn;
-  protected static
-    $lookups;
-  protected static
-    $statements;
-  protected static
-    $converseTermIds;
+  protected static $conn;
+  protected static $lookups;
+  protected static $statements;
+  protected static $converseTermIds;
 
   /**
    * METHODS

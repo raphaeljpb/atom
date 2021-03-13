@@ -20,8 +20,7 @@
 class ContactInformationEditComponent extends sfComponent
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'city',
       'contactPerson',
       'contactType',

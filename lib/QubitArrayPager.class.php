@@ -24,8 +24,7 @@
  */
 class QubitArrayPager extends sfPager
 {
-  protected
-    $hits;
+  protected $hits;
 
   public function __construct()
   {

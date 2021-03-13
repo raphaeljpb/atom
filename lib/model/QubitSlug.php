@@ -19,17 +19,17 @@
 
 class QubitSlug extends BaseSlug
 {
-  const
+  public const
     SLUG_BASIS_TITLE = 0;
-  const
+  public const
     SLUG_BASIS_REFERENCE_CODE = 1;
-  const
+  public const
     SLUG_BASIS_REFERENCE_CODE_NO_COUNTRY_REPO = 2;
-  const
+  public const
     SLUG_BASIS_IDENTIFIER = 3;
-  const
+  public const
     SLUG_RESTRICTIVE = 0;
-  const
+  public const
     SLUG_PERMISSIVE = 1;
 
   public static function random($length = 12)

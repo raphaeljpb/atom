@@ -20,8 +20,7 @@
 class SettingsDipUploadAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'stripExtensions');
 
   public function earlyExecute()

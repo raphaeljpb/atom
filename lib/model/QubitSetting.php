@@ -27,8 +27,7 @@
  */
 class QubitSetting extends BaseSetting
 {
-  public static
-    $premisAccessRightValueDefaults = array(
+  public static $premisAccessRightValueDefaults = array(
       'allow_master'          => 0,
       'allow_reference'       => 0,
       'allow_thumb'           => 0,
@@ -39,11 +38,10 @@ class QubitSetting extends BaseSetting
       'disallow_reference'    => 0,
       'disallow_thumb'        => 0
     );
-  public static
-    // List of scopes with translatable settings,
+  // List of scopes with translatable settings,
     // QubitI18nConsolidatedExtract checks this array to add those
     // settings value from /data/fixtures/settings.yml to the XLIFF files
-    $translatableScopes = array('ui_label');
+    public static $translatableScopes = array('ui_label');
 
   public function __toString()
   {
@@ -150,7 +148,7 @@ class QubitSetting extends BaseSetting
    *
    * @return QubitQuery collection of QubitSetting objects.
    */
-  static public function getLocalSettings()
+  public static function getLocalSettings()
   {
     $criteria = new Criteria;
     $criteria->add(QubitSetting::SCOPE, null, Criteria::ISNOTNULL);
@@ -164,7 +162,7 @@ class QubitSetting extends BaseSetting
    *
    * @param string $scope
    */
-  static public function getByScope($scope = null)
+  public static function getByScope($scope = null)
   {
     $criteria = new Criteria;
     if (null !== $scope)
@@ -184,7 +182,7 @@ class QubitSetting extends BaseSetting
    *
    * @return QubitSetting object.
    */
-  static public function getByName($name)
+  public static function getByName($name)
   {
     $criteria = new Criteria;
     $criteria->add(QubitSetting::NAME, $name);
@@ -197,7 +195,7 @@ class QubitSetting extends BaseSetting
    *
    * @return QubitSetting object.
    */
-  static public function getByNameAndScope($name, $scope)
+  public static function getByNameAndScope($name, $scope)
   {
     $criteria = new Criteria;
     $criteria->add(QubitSetting::NAME, $name);
@@ -211,7 +209,7 @@ class QubitSetting extends BaseSetting
    *
    * @return QubitSetting object.
    */
-  static public function findAndSave($name, $value, $options)
+  public static function findAndSave($name, $value, $options)
   {
     // Search for existing setting by name (optionally, scope)
     $criteria = new Criteria;
@@ -252,7 +250,7 @@ class QubitSetting extends BaseSetting
    * @param string $value object value
    * @param array  $options array of options
    */
-  static public function createNewSetting($name, $value, $options = array())
+  public static function createNewSetting($name, $value, $options = array())
   {
     $setting = new QubitSetting;
     $setting->setName($name);

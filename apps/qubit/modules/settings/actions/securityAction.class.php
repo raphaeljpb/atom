@@ -30,8 +30,7 @@
 class SettingsSecurityAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
-  public static
-    $NAMES = array(
+  public static $NAMES = array(
       'limit_admin_ip',
       'require_ssl_admin',
       'require_strong_passwords');

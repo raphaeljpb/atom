@@ -271,7 +271,7 @@ abstract class csvImportBaseTask extends arBaseTask
     }
   }
 
-  static function importAlternateFormsOfName($self)
+  public static function importAlternateFormsOfName($self)
   {
     $typeIds = array(
       'parallel'     => QubitTerm::PARALLEL_FORM_OF_NAME_ID,
@@ -304,7 +304,7 @@ abstract class csvImportBaseTask extends arBaseTask
   /**
    * Import physical objects
    */
-  static function importPhysicalObjects($self)
+  public static function importPhysicalObjects($self)
   {
     // Add physical objects
     if (isset($self->rowStatusVars['physicalObjectName']) &&
@@ -378,7 +378,7 @@ abstract class csvImportBaseTask extends arBaseTask
   /**
    * Import events
    */
-  static function importEvents(&$import)
+  public static function importEvents(&$import)
   {
     $events = array();
 
@@ -498,7 +498,7 @@ abstract class csvImportBaseTask extends arBaseTask
     }
   }
 
-  static function matchExistingEvent($objectId, $typeId, $actorName)
+  public static function matchExistingEvent($objectId, $typeId, $actorName)
   {
     // Check for a matching event to update
     $criteria = new Criteria;
@@ -533,7 +533,7 @@ abstract class csvImportBaseTask extends arBaseTask
     }
   }
 
-  static function setObjectPropertyToTermIdLookedUpFromTermNameArray(&$self, $property, $propertyDescription, $termName, $termNameArray)
+  public static function setObjectPropertyToTermIdLookedUpFromTermNameArray(&$self, $property, $propertyDescription, $termName, $termNameArray)
   {
     if ($termName)
     {
@@ -558,7 +558,7 @@ abstract class csvImportBaseTask extends arBaseTask
    *
    * @return int|bool  key for found search item or FALSE if not found
    */
-  static function arraySearchCaseInsensitive($search, $array)
+  public static function arraySearchCaseInsensitive($search, $array)
   {
     return array_search(strtolower($search), array_map('strtolower', $array));
   }
@@ -572,7 +572,7 @@ abstract class csvImportBaseTask extends arBaseTask
    *
    * @return void
    */
-  static function setAlternativeIdentifiers($io, $altIds, $altIdLabels)
+  public static function setAlternativeIdentifiers($io, $altIds, $altIdLabels)
   {
     if (count($altIdLabels) !== count($altIds))
     {
@@ -594,7 +594,7 @@ abstract class csvImportBaseTask extends arBaseTask
    *
    * @return array  array containing taxonomy terms
    */
-  static function refreshTaxonomyTerms($taxonomyId)
+  public static function refreshTaxonomyTerms($taxonomyId)
   {
     $result = QubitFlatfileImport::loadTermsFromTaxonomies(array($taxonomyId => 'terms'));
 

@@ -19,13 +19,11 @@
 
 class TermRelatedAuthoritiesAction extends TermIndexAction
 {
-  const INDEX_TYPE = 'QubitActor';
+  public const INDEX_TYPE = 'QubitActor';
 
   // Arrays not allowed in class constants
-  public static
-    $FILTERTAGS = array();
-  public static
-    $AGGS = array(
+  public static $FILTERTAGS = array();
+  public static $AGGS = array(
       'languages' =>
         array('type'  => 'term',
               'field' => 'i18n.languages',

@@ -41,7 +41,7 @@ class ApiInformationObjectsTreeAction extends QubitApiAction
     return $result;
   }
 
-  function getChildren($parentId)
+  public function getChildren($parentId)
   {
     $results = array();
 

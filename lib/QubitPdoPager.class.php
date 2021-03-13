@@ -19,14 +19,10 @@
 
 class QubitPdoPager extends sfPager
 {
-  protected
-    $nbResults = null;
-  protected
-    $rows = array();
-  protected
-    $sql = null;
-  protected
-    $countSql = null;
+  protected $nbResults = null;
+  protected $rows = array();
+  protected $sql = null;
+  protected $countSql = null;
 
   /**
    * @param string $sql        Main SQL query

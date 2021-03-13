@@ -42,7 +42,7 @@ class arInformationObjectExportJob extends arExportJob
    *
    * @return arElasticSearchPluginQuery  AtoM Elasticsearch query
    */
-  static public function findExportRecords($parameters)
+  public static function findExportRecords($parameters)
   {
     // Create ES query
     $query = new arElasticSearchPluginQuery(
@@ -78,7 +78,7 @@ class arInformationObjectExportJob extends arExportJob
   /**
    * Add clipboard search criteria to ES query
    */
-  static protected function addClipboardCriteria(&$search, $parameters)
+  protected static function addClipboardCriteria(&$search, $parameters)
   {
     $search->queryBool->addMust(
       new \Elastica\Query\Terms('slug', $parameters['params']['slugs'])
@@ -98,7 +98,7 @@ class arInformationObjectExportJob extends arExportJob
    *
    * @return arElasticSearchPluginQuery  AtoM Elasticsearch query
    */
-  static public function getCurrentArchivalStandard()
+  public static function getCurrentArchivalStandard()
   {
     if ('rad' == QubitSetting::getByNameAndScope('informationobject', 'default_template'))
     {

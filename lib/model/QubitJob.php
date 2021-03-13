@@ -26,8 +26,7 @@
 
 class QubitJob extends BaseJob
 {
-  private
-    $notes = array();
+  private $notes = array();
 
   public function __toString()
   {

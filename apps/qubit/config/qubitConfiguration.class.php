@@ -19,7 +19,7 @@
 
 class qubitConfiguration extends sfApplicationConfiguration
 {
-  const
+  public const
     // Required format: x.y.z
     VERSION = '2.6.0';
 

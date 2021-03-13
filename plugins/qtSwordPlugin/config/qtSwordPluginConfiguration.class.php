@@ -19,19 +19,15 @@
 
 class qtSwordPluginConfiguration extends sfPluginConfiguration
 {
-  public static
-    $summary = 'SWORD plugin.';
-  public static
-    $version = '1.0.0';
-  public static
-    // See http://www.swordapp.org/docs/sword-type-1.0.html
-    $packaging = array(
+  public static $summary = 'SWORD plugin.';
+  public static $version = '1.0.0';
+  // See http://www.swordapp.org/docs/sword-type-1.0.html
+    public static $packaging = array(
       // '1.0' => 'http://www.loc.gov/METS/'), // METS
       '1.0' => 'http://purl.org/net/sword-types/METSArchivematicaDIP');
-  public static
-    // METS
+  // METS
 
-    $mediaRanges = array(
+    public static $mediaRanges = array(
       'application/zip');
 
   public function initialize()

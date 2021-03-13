@@ -38,7 +38,7 @@ class arActorExportJob extends arExportJob
    *
    * @return \Elastica\Search ES search object
    */
-  static public function findExportRecords($parameters)
+  public static function findExportRecords($parameters)
   {
     $query = new arElasticSearchPluginQuery(
       arElasticSearchPluginUtil::SCROLL_SIZE
