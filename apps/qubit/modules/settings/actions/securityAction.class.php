@@ -28,9 +28,9 @@ class SettingsSecurityAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'limit_admin_ip',
-      'require_ssl_admin',
-      'require_strong_passwords', ];
+    'limit_admin_ip',
+    'require_ssl_admin',
+    'require_strong_passwords', ];
 
   public function earlyExecute()
   {

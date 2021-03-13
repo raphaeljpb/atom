@@ -34,11 +34,11 @@ class arGenerateReportJob extends arBaseJob
   private $resource = null;
 
   private $templatePaths = [
-      'itemList' => self::itemOrFileTemplatePath,
-      'fileList' => self::itemOrFileTemplatePath,
-      'storageLocations' => self::storageLocationsTemplatePath,
-      'boxLabel' => self::boxLabelTemplatePath,
-    ];
+    'itemList' => self::itemOrFileTemplatePath,
+    'fileList' => self::itemOrFileTemplatePath,
+    'storageLocations' => self::storageLocationsTemplatePath,
+    'boxLabel' => self::boxLabelTemplatePath,
+  ];
 
   public function runJob($parameters)
   {

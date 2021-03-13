@@ -21,25 +21,25 @@ class TermEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'code',
-      'displayNote',
+    'code',
+    'displayNote',
 
-      // This position is intentional because narrowTerms ->processField()
-      // and name ->processField() depends on the taxonomy value
-      'taxonomy',
+    // This position is intentional because narrowTerms ->processField()
+    // and name ->processField() depends on the taxonomy value
+    'taxonomy',
 
-      'name',
-      'narrowTerms',
-      'parent',
+    'name',
+    'narrowTerms',
+    'parent',
 
-      // Needs to go before selfReciprocal field
-      'converseTerm',
+    // Needs to go before selfReciprocal field
+    'converseTerm',
 
-      'relatedTerms',
-      'scopeNote',
-      'selfReciprocal',
-      'sourceNote',
-      'useFor', ];
+    'relatedTerms',
+    'scopeNote',
+    'selfReciprocal',
+    'sourceNote',
+    'useFor', ];
 
   protected $updatedLabel = false;
 

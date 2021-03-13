@@ -21,8 +21,8 @@ class UserPasswordEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'confirmPassword',
-      'password', ];
+    'confirmPassword',
+    'password', ];
 
   public function execute($request)
   {
@@ -80,7 +80,7 @@ class UserPasswordEditAction extends DefaultEditAction
           $this->form->setValidator('password', new QubitValidatorPassword(
             [],
             ['invalid' => $this->context->i18n->__('Your password is not strong enough.'),
-                  'min_length' => $this->context->i18n->__('Your password is not strong enough (too short).'), ]));
+              'min_length' => $this->context->i18n->__('Your password is not strong enough (too short).'), ]));
         }
         else
         {

@@ -27,15 +27,15 @@
 class SettingsPageElementsAction extends sfAction
 {
   public static $NAMES = [
-      'toggleDescription',
-      'toggleLogo',
-      'toggleTitle',
-      'toggleLanguageMenu',
-      'toggleIoSlider',
-      'toggleDigitalObjectMap',
-      'toggleCopyrightFilter',
-      'toggleMaterialFilter',
-    ];
+    'toggleDescription',
+    'toggleLogo',
+    'toggleTitle',
+    'toggleLanguageMenu',
+    'toggleIoSlider',
+    'toggleDigitalObjectMap',
+    'toggleCopyrightFilter',
+    'toggleMaterialFilter',
+  ];
 
   public function execute($request)
   {

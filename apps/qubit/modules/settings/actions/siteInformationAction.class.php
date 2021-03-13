@@ -28,13 +28,13 @@ class SettingsSiteInformationAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'siteTitle',
-      'siteDescription',
-      'siteBaseUrl', ];
+    'siteTitle',
+    'siteDescription',
+    'siteBaseUrl', ];
   public static $I18N = [
-      'siteTitle',
-      'siteDescription',
-      'siteBaseUrl', ];
+    'siteTitle',
+    'siteDescription',
+    'siteBaseUrl', ];
 
   public function earlyExecute()
   {

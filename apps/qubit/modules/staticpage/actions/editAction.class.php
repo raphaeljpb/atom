@@ -20,9 +20,9 @@
 class StaticPageEditAction extends DefaultEditAction
 {
   public static $NAMES = [
-      'title',
-      'slug',
-      'content', ];
+    'title',
+    'slug',
+    'content', ];
 
   public function execute($request)
   {

@@ -21,16 +21,16 @@ class expireDataTask extends arBaseTask
 {
   // Arrays not allowed in class constants
   public static $TYPE_SPECIFICATONS = [
-      'clipboard' => [
-        'name' => 'saved clipboard',
-        'plural_name' => 'saved clipboards',
-        'age_setting_name' => 'app_clipboard_save_max_age',
-      ],
-      'job' => [
-        'name' => 'job (and any related file)',
-        'plural_name' => 'jobs (and any related files)',
-      ],
-    ];
+    'clipboard' => [
+      'name' => 'saved clipboard',
+      'plural_name' => 'saved clipboards',
+      'age_setting_name' => 'app_clipboard_save_max_age',
+    ],
+    'job' => [
+      'name' => 'job (and any related file)',
+      'plural_name' => 'jobs (and any related files)',
+    ],
+  ];
 
   protected function configure()
   {

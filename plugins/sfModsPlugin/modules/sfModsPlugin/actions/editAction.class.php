@@ -26,18 +26,18 @@ class sfModsPluginEditAction extends InformationObjectEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'accessConditions',
-      'identifier',
-      'language',
-      'subjectAccessPoints',
-      'placeAccessPoints',
-      'nameAccessPoints',
-      'title',
-      'type',
-      'repository',
-      'scopeAndContent',
-      'displayStandard',
-      'displayStandardUpdateDescendants', ];
+    'accessConditions',
+    'identifier',
+    'language',
+    'subjectAccessPoints',
+    'placeAccessPoints',
+    'nameAccessPoints',
+    'title',
+    'type',
+    'repository',
+    'scopeAndContent',
+    'displayStandard',
+    'displayStandardUpdateDescendants', ];
 
   protected function earlyExecute()
   {

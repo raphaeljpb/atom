@@ -21,14 +21,14 @@ class SettingsTreeviewAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'type',
-      'showBrowseHierarchyPage',
-      'allowFullWidthTreeviewCollapse',
-      'ioSort',
-      'showIdentifier',
-      'showLevelOfDescription',
-      'showDates',
-      'fullItemsPerPage', ];
+    'type',
+    'showBrowseHierarchyPage',
+    'allowFullWidthTreeviewCollapse',
+    'ioSort',
+    'showIdentifier',
+    'showLevelOfDescription',
+    'showDates',
+    'fullItemsPerPage', ];
 
   public function execute($request)
   {

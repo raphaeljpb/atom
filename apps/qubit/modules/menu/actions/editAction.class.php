@@ -25,11 +25,11 @@
 class MenuEditAction extends sfAction
 {
   public static $NAMES = [
-      'name',
-      'label',
-      'parentId',
-      'path',
-      'description', ];
+    'name',
+    'label',
+    'parentId',
+    'path',
+    'description', ];
 
   public function processForm()
   {

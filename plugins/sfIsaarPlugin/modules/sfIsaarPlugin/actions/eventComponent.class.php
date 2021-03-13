@@ -21,12 +21,12 @@ class sfIsaarPluginEventComponent extends EventEditComponent
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'informationObject',
-      'type',
-      'resourceType',
-      'startDate',
-      'endDate',
-      'date', ];
+    'informationObject',
+    'type',
+    'resourceType',
+    'startDate',
+    'endDate',
+    'date', ];
 
   protected function addField($name)
   {

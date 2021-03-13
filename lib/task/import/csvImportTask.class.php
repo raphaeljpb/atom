@@ -94,11 +94,11 @@ EOF;
       !$options['no-confirmation']
       &&
       !$this->askConfirmation([
-          'WARNING: In round trip mode legacy IDs will be treated as internal IDs.',
-          'Please back-up your database manually before you proceed.',
-          '',
-          'Have you done a manual backup and wish to proceed? (y/N)',
-        ],
+        'WARNING: In round trip mode legacy IDs will be treated as internal IDs.',
+        'Please back-up your database manually before you proceed.',
+        '',
+        'Have you done a manual backup and wish to proceed? (y/N)',
+      ],
         'QUESTION_LARGE', false)
     )
     {

@@ -21,8 +21,8 @@ class ClipboardLoadAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'password',
-      'mode', ];
+    'password',
+    'mode', ];
 
   public function execute($request)
   {

@@ -80,19 +80,19 @@ class QubitTaxonomy extends BaseTaxonomy
   public $disableNestedSetUpdating = false;
 
   public static $lockedTaxonomies = [
-      self::QUBIT_SETTING_LABEL_ID,
-      self::COLLECTION_TYPE_ID,
-      self::DIGITAL_OBJECT_USAGE_ID,
-      self::MEDIA_TYPE_ID,
-      self::RELATION_TYPE_ID,
-      self::RELATION_NOTE_TYPE_ID,
-      self::TERM_RELATION_TYPE_ID,
-      self::ROOT_ID,
-      self::STATUS_TYPE_ID,
-      self::PUBLICATION_STATUS_ID,
-      self::ACTOR_NAME_TYPE_ID,
-      self::INFORMATION_OBJECT_TEMPLATE_ID,
-      self::JOB_STATUS_ID, ];
+    self::QUBIT_SETTING_LABEL_ID,
+    self::COLLECTION_TYPE_ID,
+    self::DIGITAL_OBJECT_USAGE_ID,
+    self::MEDIA_TYPE_ID,
+    self::RELATION_TYPE_ID,
+    self::RELATION_NOTE_TYPE_ID,
+    self::TERM_RELATION_TYPE_ID,
+    self::ROOT_ID,
+    self::STATUS_TYPE_ID,
+    self::PUBLICATION_STATUS_ID,
+    self::ACTOR_NAME_TYPE_ID,
+    self::INFORMATION_OBJECT_TEMPLATE_ID,
+    self::JOB_STATUS_ID, ];
 
   public function __construct($id = null)
   {

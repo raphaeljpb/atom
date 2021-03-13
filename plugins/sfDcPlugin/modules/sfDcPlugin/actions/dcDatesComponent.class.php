@@ -20,9 +20,9 @@
 class sfDcPluginDcDatesComponent extends InformationObjectEventComponent
 {
   public static $NAMES = [
-      'date',
-      'endDate',
-      'startDate', ];
+    'date',
+    'endDate',
+    'startDate', ];
 
   public function processForm()
   {

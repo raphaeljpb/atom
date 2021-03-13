@@ -21,8 +21,8 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'publicationStatus',
-      'updateDescendants', ];
+    'publicationStatus',
+    'updateDescendants', ];
 
   public function execute($request)
   {

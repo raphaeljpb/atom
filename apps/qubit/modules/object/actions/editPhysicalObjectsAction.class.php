@@ -25,14 +25,14 @@
 class ObjectEditPhysicalObjectsAction extends DefaultEditAction
 {
   public static $NAMES = [
-      'containers',
-      'location',
-      'name',
-      'type', ];
+    'containers',
+    'location',
+    'name',
+    'type', ];
   public static $MODEL_MODULE = [
-      'QubitInformationObject' => 'informationobject',
-      'QubitAccession' => 'accession',
-    ];
+    'QubitInformationObject' => 'informationobject',
+    'QubitAccession' => 'accession',
+  ];
 
   public function execute($request)
   {

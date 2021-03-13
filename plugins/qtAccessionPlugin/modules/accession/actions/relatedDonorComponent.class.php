@@ -21,28 +21,28 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'authorizedFormOfName',
-      'type',
+    'authorizedFormOfName',
+    'type',
 
-      // Must be processed before the contact information fields
-      // because sets $this->contactInformation property
-      'resource',
+    // Must be processed before the contact information fields
+    // because sets $this->contactInformation property
+    'resource',
 
-      // Contact information
-      'city',
-      'contactPerson',
-      'countryCode',
-      'email',
-      'postalCode',
-      'region',
-      'streetAddress',
-      'telephone',
-      'contactType',
-      'website',
-      'fax',
-      'latitude',
-      'longitude',
-      'note', ];
+    // Contact information
+    'city',
+    'contactPerson',
+    'countryCode',
+    'email',
+    'postalCode',
+    'region',
+    'streetAddress',
+    'telephone',
+    'contactType',
+    'website',
+    'fax',
+    'latitude',
+    'longitude',
+    'note', ];
 
   public function processForm()
   {

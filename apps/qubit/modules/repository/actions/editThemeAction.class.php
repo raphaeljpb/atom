@@ -20,12 +20,12 @@
 class RepositoryEditThemeAction extends sfAction
 {
   public static $NAMES = [
-      'backgroundColor',
-      'banner',
-      'banner_delete',
-      'htmlSnippet',
-      'logo',
-      'logo_delete', ];
+    'backgroundColor',
+    'banner',
+    'banner_delete',
+    'htmlSnippet',
+    'logo',
+    'logo_delete', ];
 
   public function processForm()
   {

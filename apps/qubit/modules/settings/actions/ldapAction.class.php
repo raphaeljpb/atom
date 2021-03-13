@@ -21,10 +21,10 @@ class SettingsLdapAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'ldapHost',
-      'ldapPort',
-      'ldapBaseDn',
-      'ldapBindAttribute', ];
+    'ldapHost',
+    'ldapPort',
+    'ldapBaseDn',
+    'ldapBindAttribute', ];
 
   public function execute($request)
   {

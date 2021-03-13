@@ -21,17 +21,17 @@ class SettingsIdentifierAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'accession_mask_enabled',
-      'accession_mask',
-      'accession_counter',
-      'identifier_mask_enabled',
-      'identifier_mask',
-      'identifier_counter',
-      'separator_character',
-      'inherit_code_informationobject',
-      'inherit_code_dc_xml',
-      'prevent_duplicate_actor_identifiers',
-    ];
+    'accession_mask_enabled',
+    'accession_mask',
+    'accession_counter',
+    'identifier_mask_enabled',
+    'identifier_mask',
+    'identifier_counter',
+    'separator_character',
+    'inherit_code_informationobject',
+    'inherit_code_dc_xml',
+    'prevent_duplicate_actor_identifiers',
+  ];
 
   public function execute($request)
   {

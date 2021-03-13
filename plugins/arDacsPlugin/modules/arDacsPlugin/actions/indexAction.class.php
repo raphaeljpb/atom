@@ -54,12 +54,12 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
 
       $validatorSchema->identifier = new sfValidatorString([
         'required' => true, ], [
-        'required' => $this->context->i18n->__('Identifier - This is a mandatory element.'), ]);
+          'required' => $this->context->i18n->__('Identifier - This is a mandatory element.'), ]);
       $values['identifier'] = $this->resource->identifier;
 
       $validatorSchema->repository = new QubitValidatorCountable([
         'required' => true, ], [
-        'required' => $this->context->i18n->__('Name and location of repository - This is a mandatory element.'), ]);
+          'required' => $this->context->i18n->__('Name and location of repository - This is a mandatory element.'), ]);
       if (null !== $repository = $this->resource->getRepository(['inherit' => true]))
       {
         $values['repository'] = $repository;
@@ -67,7 +67,7 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
 
       $validatorSchema->title = new sfValidatorString([
         'required' => true, ], [
-        'required' => $this->context->i18n->__('Title - This is a mandatory element.'), ]);
+          'required' => $this->context->i18n->__('Title - This is a mandatory element.'), ]);
       $values['title'] = $this->resource->getTitle(['cultureFallback' => true]);
 
       $validatorSchema->dateRange = new QubitValidatorDates([], [
@@ -76,17 +76,17 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
 
       $validatorSchema->dates = new QubitValidatorCountable([
         'required' => true, ], [
-        'required' => $this->context->i18n->__('Date(s) - This is a mandatory element.'), ]);
+          'required' => $this->context->i18n->__('Date(s) - This is a mandatory element.'), ]);
       $values['dates'] = $this->resource->getDates();
 
       $validatorSchema->extentAndMedium = new sfValidatorString([
         'required' => true, ], [
-        'required' => $this->context->i18n->__('Extent - This is a mandatory element.'), ]);
+          'required' => $this->context->i18n->__('Extent - This is a mandatory element.'), ]);
       $values['extentAndMedium'] = $this->resource->getExtentAndMedium(['cultureFallback' => true]);
 
       $validatorSchema->creators = new QubitValidatorCountable([
         'required' => true, ], [
-        'required' => $this->context->i18n->__('This archival description, or one of its higher levels, requires at least one creator.'), ]);
+          'required' => $this->context->i18n->__('This archival description, or one of its higher levels, requires at least one creator.'), ]);
       foreach ($this->resource->ancestors->andSelf()->orderBy('rgt') as $item)
       {
         $values['creators'] = $item->getCreators();
@@ -98,7 +98,7 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
 
       $validatorSchema->scopeAndContent = new sfValidatorString([
         'required' => true, ], [
-        'required' => $this->context->i18n->__('Scope and content - This is a mandatory element.'), ]);
+          'required' => $this->context->i18n->__('Scope and content - This is a mandatory element.'), ]);
       $values['scopeAndContent'] = $this->resource->getScopeAndContent(['cultureFallback' => true]);
 
       try

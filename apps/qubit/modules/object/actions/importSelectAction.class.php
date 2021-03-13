@@ -21,8 +21,8 @@ class ObjectImportSelectAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'repos',
-      'collection', ];
+    'repos',
+    'collection', ];
 
   public function execute($request)
   {
@@ -212,19 +212,19 @@ class ObjectImportSelectAction extends DefaultEditAction
     }
 
     $options = ['index' => ('on' == $request->getParameter('noIndex')) ? false : true,
-                     'doCsvTransform' => ('on' == $request->getParameter('doCsvTransform')) ? true : false,
-                     'skip-unmatched' => ('on' == $request->getParameter('skipUnmatched')) ? true : false,
-                     'skip-matched' => ('on' == $request->getParameter('skipMatched')) ? true : false,
-                     'parentId' => (isset($this->getRoute()->resource) ? $this->getRoute()->resource->id : null),
-                     'objectType' => $request->getParameter('objectType'),
-                     // Choose import type based on importType parameter
-                     // This decision used to be based in the file extension but some users
-                     // experienced problems when the extension was omitted
-                     'importType' => $importType,
-                     'update' => $request->getParameter('updateType'),
-                     'repositorySlug' => $this->repositorySlug,
-                     'collectionSlug' => $this->collectionSlug,
-                     'file' => $file, ];
+      'doCsvTransform' => ('on' == $request->getParameter('doCsvTransform')) ? true : false,
+      'skip-unmatched' => ('on' == $request->getParameter('skipUnmatched')) ? true : false,
+      'skip-matched' => ('on' == $request->getParameter('skipMatched')) ? true : false,
+      'parentId' => (isset($this->getRoute()->resource) ? $this->getRoute()->resource->id : null),
+      'objectType' => $request->getParameter('objectType'),
+      // Choose import type based on importType parameter
+      // This decision used to be based in the file extension but some users
+      // experienced problems when the extension was omitted
+      'importType' => $importType,
+      'update' => $request->getParameter('updateType'),
+      'repositorySlug' => $this->repositorySlug,
+      'collectionSlug' => $this->collectionSlug,
+      'file' => $file, ];
 
     try
     {

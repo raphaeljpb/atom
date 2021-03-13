@@ -21,9 +21,9 @@ class InformationObjectRenameAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'title',
-      'slug',
-      'filename', ];
+    'title',
+    'slug',
+    'filename', ];
 
   // Allow modification of title, slug, and digital object filename
   public function execute($request)

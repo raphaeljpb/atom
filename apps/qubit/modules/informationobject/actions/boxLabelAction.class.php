@@ -63,10 +63,10 @@ class InformationObjectBoxLabelAction extends sfAction
     sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
 
     $params = [
-        'objectId' => $this->resource->id,
-        'reportType' => 'boxLabel',
-        'reportTypeLabel' => $this->context->i18n->__('Box label'),
-        'reportFormat' => $this->form->format->getValue(),
+      'objectId' => $this->resource->id,
+      'reportType' => 'boxLabel',
+      'reportTypeLabel' => $this->context->i18n->__('Box label'),
+      'reportFormat' => $this->form->format->getValue(),
     ];
 
     QubitJob::runJob('arGenerateReportJob', $params);

@@ -21,11 +21,11 @@ class arStorageServiceSettingsSettingsAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'storage_service_api_url',
-      'storage_service_username',
-      'storage_service_api_key',
-      'download_aip_enabled',
-    ];
+    'storage_service_api_url',
+    'storage_service_username',
+    'storage_service_api_key',
+    'download_aip_enabled',
+  ];
 
   public function earlyExecute()
   {

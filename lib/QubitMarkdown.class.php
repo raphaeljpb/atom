@@ -26,10 +26,10 @@ class QubitMarkdown
 {
   protected static $instance = null;
   protected static $markdownMap = [
-      'bolditalic' => '___',
-      'italic' => '_',
-      'bold' => '__',
-    ];
+    'bolditalic' => '___',
+    'italic' => '_',
+    'bold' => '__',
+  ];
 
   private $enabled;
 

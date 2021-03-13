@@ -121,11 +121,11 @@ EOF;
       !$options['no-confirmation']
       &&
       !$this->askConfirmation([
-          'WARNING: Your database has not been backed up!',
-          'Please back-up your database manually before you proceed.',
-          'If this task fails you may lose your data.',
-          '',
-          'Have you done a manual backup and wish to proceed? (y/N)', ],
+        'WARNING: Your database has not been backed up!',
+        'Please back-up your database manually before you proceed.',
+        'If this task fails you may lose your data.',
+        '',
+        'Have you done a manual backup and wish to proceed? (y/N)', ],
         'QUESTION_LARGE', false)
     )
     {

@@ -21,12 +21,12 @@ class DeaccessionEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'date',
-      'description',
-      'extent',
-      'identifier',
-      'reason',
-      'scope', ];
+    'date',
+    'description',
+    'extent',
+    'identifier',
+    'reason',
+    'scope', ];
 
   public function earlyExecute()
   {

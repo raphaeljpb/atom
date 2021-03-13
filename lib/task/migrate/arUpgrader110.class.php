@@ -833,7 +833,7 @@ sql;
       'property',
       'status',
       'taxonomy',
-      ] as $item)
+    ] as $item)
     {
       // Copy column updated_at and drop it
       $sql = "UPDATE object, $item";

@@ -27,10 +27,10 @@ class InformationObjectItemOrFileListAction extends sfAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'sortBy',
-      'includeThumbnails',
-      'format',
-    ];
+    'sortBy',
+    'includeThumbnails',
+    'format',
+  ];
 
   public function execute($request)
   {
@@ -126,12 +126,12 @@ class InformationObjectItemOrFileListAction extends sfAction
     }
 
     $params = [
-        'objectId' => $this->resource->id,
-        'reportType' => $reportType,
-        'reportTypeLabel' => $this->type,
-        'sortBy' => $this->form->sortBy->getValue(),
-        'reportFormat' => $this->form->format->getValue(),
-        'includeThumbnails' => $includeThumbnails,
+      'objectId' => $this->resource->id,
+      'reportType' => $reportType,
+      'reportTypeLabel' => $this->type,
+      'sortBy' => $this->form->sortBy->getValue(),
+      'reportFormat' => $this->form->format->getValue(),
+      'includeThumbnails' => $includeThumbnails,
     ];
 
     QubitJob::runJob('arGenerateReportJob', $params);

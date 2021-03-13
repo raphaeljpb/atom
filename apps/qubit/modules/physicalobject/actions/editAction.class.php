@@ -25,9 +25,9 @@
 class PhysicalObjectEditAction extends DefaultEditAction
 {
   public static $NAMES = [
-      'location',
-      'name',
-      'type', ];
+    'location',
+    'name',
+    'type', ];
 
   public function execute($request)
   {

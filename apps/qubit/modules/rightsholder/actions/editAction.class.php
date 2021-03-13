@@ -21,7 +21,7 @@ class RightsHolderEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'authorizedFormOfName', ];
+    'authorizedFormOfName', ];
 
   public function execute($request)
   {

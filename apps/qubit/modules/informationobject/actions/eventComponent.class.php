@@ -26,13 +26,13 @@ class InformationObjectEventComponent extends EventEditComponent
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'actor',
-      'date',
-      'endDate',
-      'startDate',
-      'description',
-      'place',
-      'type', ];
+    'actor',
+    'date',
+    'endDate',
+    'startDate',
+    'description',
+    'place',
+    'type', ];
 
   protected function addField($name)
   {

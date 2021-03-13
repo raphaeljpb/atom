@@ -21,25 +21,25 @@ class sfIsdfPluginEditAction extends FunctionEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'type',
-      'authorizedFormOfName',
-      'parallelName',
-      'otherName',
-      'classification',
-      'dates',
-      'description',
-      'history',
-      'legislation',
-      'descriptionIdentifier',
-      'institutionIdentifier',
-      'rules',
-      'descriptionStatus',
-      'descriptionDetail',
-      'revisionHistory',
-      'language',
-      'script',
-      'sources',
-      'maintenanceNotes', ];
+    'type',
+    'authorizedFormOfName',
+    'parallelName',
+    'otherName',
+    'classification',
+    'dates',
+    'description',
+    'history',
+    'legislation',
+    'descriptionIdentifier',
+    'institutionIdentifier',
+    'rules',
+    'descriptionStatus',
+    'descriptionDetail',
+    'revisionHistory',
+    'language',
+    'script',
+    'sources',
+    'maintenanceNotes', ];
 
   protected function earlyExecute()
   {

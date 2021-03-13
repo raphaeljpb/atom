@@ -606,11 +606,11 @@ class QubitMigrate107 extends QubitMigrate
 
     // Add 'import digital objects' menu as child of 'import'
     $this->data['QubitMenu']['QubitMenu_mainmenu_import_digitalobjects'] = [
-        'parent_id' => 'QubitMenu_mainmenu_import',
-        'source_culture' => 'en',
-        'name' => 'import digital objects',
-        'path' => 'digitalobject/multiFileUpload',
-        'label' => ['en' => 'digital objects'],
+      'parent_id' => 'QubitMenu_mainmenu_import',
+      'source_culture' => 'en',
+      'name' => 'import digital objects',
+      'path' => 'digitalobject/multiFileUpload',
+      'label' => ['en' => 'digital objects'],
     ];
 
     // Remove previous OAI harvester menu
@@ -622,11 +622,11 @@ class QubitMigrate107 extends QubitMigrate
 
     // Add 'import OAI' menu as child of 'import'
     $this->data['QubitMenu']['QubitMenu_mainmenu_import_oai'] = [
-        'parent_id' => 'QubitMenu_mainmenu_import',
-        'source_culture' => 'en',
-        'name' => 'import oai',
-        'path' => 'oai/harvesterList',
-        'label' => ['en' => 'oai'],
+      'parent_id' => 'QubitMenu_mainmenu_import',
+      'source_culture' => 'en',
+      'name' => 'import oai',
+      'path' => 'oai/harvesterList',
+      'label' => ['en' => 'oai'],
     ];
 
     // Add user and group sub-menus

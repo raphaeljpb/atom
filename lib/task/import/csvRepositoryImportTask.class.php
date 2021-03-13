@@ -318,7 +318,7 @@ EOF;
         null,
         sfCommandOption::PARAMETER_OPTIONAL,
         'Set the upload limit for repositories getting imported (default: disable uploads)'),
-      ]
+    ]
     );
   }
 }

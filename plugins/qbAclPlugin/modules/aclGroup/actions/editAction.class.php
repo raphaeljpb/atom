@@ -21,9 +21,9 @@ class AclGroupEditAction extends sfAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'name',
-      'description',
-      'translate', ];
+    'name',
+    'description',
+    'translate', ];
 
   public function execute($request)
   {

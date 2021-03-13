@@ -496,7 +496,7 @@ class QubitFlatfileImport
 
     // Compare fields of the event in question with each associated event
     $fields = ['startDate', 'startTime', 'endDate', 'endTime', 'typeId', 'objectId', 'actorId', 'name',
-                    'description', 'date', 'culture', ];
+      'description', 'date', 'culture', ];
 
     foreach (QubitEvent::get($criteria) as $existingEvent)
     {

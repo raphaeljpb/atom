@@ -21,24 +21,24 @@ class AccessionEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'acquisitionType',
-      'appraisal',
-      'archivalHistory',
-      'creators',
-      'date',
-      'identifier',
-      'identifierAvailableCheckUrl',
-      'informationObjects',
-      'locationInformation',
-      'resourceType',
-      'physicalCharacteristics',
-      'processingNotes',
-      'processingPriority',
-      'processingStatus',
-      'receivedExtentUnits',
-      'scopeAndContent',
-      'sourceOfAcquisition',
-      'title', ];
+    'acquisitionType',
+    'appraisal',
+    'archivalHistory',
+    'creators',
+    'date',
+    'identifier',
+    'identifierAvailableCheckUrl',
+    'informationObjects',
+    'locationInformation',
+    'resourceType',
+    'physicalCharacteristics',
+    'processingNotes',
+    'processingPriority',
+    'processingStatus',
+    'receivedExtentUnits',
+    'scopeAndContent',
+    'sourceOfAcquisition',
+    'title', ];
 
   public function earlyExecute()
   {

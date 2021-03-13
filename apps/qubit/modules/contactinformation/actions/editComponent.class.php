@@ -21,21 +21,21 @@ class ContactInformationEditComponent extends sfComponent
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'city',
-      'contactPerson',
-      'contactType',
-      'countryCode',
-      'email',
-      'fax',
-      'latitude',
-      'longitude',
-      'note',
-      'region',
-      'postalCode',
-      'primaryContact',
-      'telephone',
-      'streetAddress',
-      'website', ];
+    'city',
+    'contactPerson',
+    'contactType',
+    'countryCode',
+    'email',
+    'fax',
+    'latitude',
+    'longitude',
+    'note',
+    'region',
+    'postalCode',
+    'primaryContact',
+    'telephone',
+    'streetAddress',
+    'website', ];
 
   public function processForm()
   {

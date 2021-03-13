@@ -34,9 +34,9 @@ class ReleaseTask extends sfBaseTask
       !$options['no-confirmation']
       &&
       !$this->askConfirmation([
-          'WARNING: Your changes in your local index and your working tree will',
-          'be lost, including ignored files. Are you sure you want to proceed? (y/N)',
-        ], 'QUESTION_LARGE', false)
+        'WARNING: Your changes in your local index and your working tree will',
+        'be lost, including ignored files. Are you sure you want to proceed? (y/N)',
+      ], 'QUESTION_LARGE', false)
     )
     {
       $this->logSection('release', 'Task aborted.');

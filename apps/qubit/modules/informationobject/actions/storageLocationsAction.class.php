@@ -62,10 +62,10 @@ class InformationObjectStorageLocationsAction extends sfAction
     sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
 
     $params = [
-        'objectId' => $this->resource->id,
-        'reportType' => 'storageLocations',
-        'reportTypeLabel' => $this->context->i18n->__('Physical storage locations'),
-        'reportFormat' => $this->form->format->getValue(),
+      'objectId' => $this->resource->id,
+      'reportType' => 'storageLocations',
+      'reportTypeLabel' => $this->context->i18n->__('Physical storage locations'),
+      'reportFormat' => $this->form->format->getValue(),
     ];
 
     QubitJob::runJob('arGenerateReportJob', $params);

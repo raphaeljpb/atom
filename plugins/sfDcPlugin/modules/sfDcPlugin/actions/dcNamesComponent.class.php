@@ -20,8 +20,8 @@
 class sfDcPluginDcNamesComponent extends InformationObjectEventComponent
 {
   public static $NAMES = [
-      'actor',
-      'type', ];
+    'actor',
+    'type', ];
 
   public function processForm()
   {

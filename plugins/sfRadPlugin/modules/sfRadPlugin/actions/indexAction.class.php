@@ -52,7 +52,7 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
 
       $validatorSchema->dates = new QubitValidatorCountable([
         'required' => true, ], [
-        'required' => $this->context->i18n->__('This archival description requires at least one date.'), ]);
+          'required' => $this->context->i18n->__('This archival description requires at least one date.'), ]);
       $values['dates'] = $this->resource->getDates();
 
       // Dates consistency
@@ -62,12 +62,12 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
 
       $validatorSchema->extentAndMedium = new sfValidatorString([
         'required' => true, ], [
-        'required' => $this->context->i18n->__('Physical description - This is a mandatory element.'), ]);
+          'required' => $this->context->i18n->__('Physical description - This is a mandatory element.'), ]);
       $values['extentAndMedium'] = $this->resource->getExtentAndMedium(['cultureFallback' => true]);
 
       $validatorSchema->title = new sfValidatorString([
         'required' => true, ], [
-        'required' => $this->context->i18n->__('Title - This is a mandatory element.'), ]);
+          'required' => $this->context->i18n->__('Title - This is a mandatory element.'), ]);
       $values['title'] = $this->resource->getTitle(['cultureFallback' => true]);
 
       $this->addField($validatorSchema, 'levelOfDescription');
@@ -87,7 +87,7 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
           case 'Architectural drawing':
             $validatorSchema->statementOfScaleArchitectural = new sfValidatorString([
               'required' => true, ], [
-              'required' => $this->context->i18n->__('Statement of scale (architectural) - This is a mandatory element for architectural drawing.'), ]);
+                'required' => $this->context->i18n->__('Statement of scale (architectural) - This is a mandatory element for architectural drawing.'), ]);
             $values['statementOfScaleArchitectural'] = $this->rad->statementOfScaleArchitectural;
 
             break;
@@ -95,17 +95,17 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
           case 'Cartographic material':
             $validatorSchema->statementOfCoordinates = new sfValidatorString([
               'required' => true, ], [
-              'required' => $this->context->i18n->__('Statement of coordinates (cartographic) - This is a mandatory element for cartographic material.'), ]);
+                'required' => $this->context->i18n->__('Statement of coordinates (cartographic) - This is a mandatory element for cartographic material.'), ]);
             $values['statementOfCoordinates'] = $this->rad->statementOfCoordinates;
 
             $validatorSchema->statementOfProjection = new sfValidatorString([
               'required' => true, ], [
-              'required' => $this->context->i18n->__('Statement of projection (cartographic) - This is a mandatory element for cartographic material.'), ]);
+                'required' => $this->context->i18n->__('Statement of projection (cartographic) - This is a mandatory element for cartographic material.'), ]);
             $values['statementOfProjection'] = $this->rad->statementOfProjection;
 
             $validatorSchema->statementOfScaleCartographic = new sfValidatorString([
               'required' => true, ], [
-              'required' => $this->context->i18n->__('Statement of scale (cartographic) - This is a mandatory element for cartographic material.'), ]);
+                'required' => $this->context->i18n->__('Statement of scale (cartographic) - This is a mandatory element for cartographic material.'), ]);
             $values['statementOfScaleCartographic'] = $this->rad->statementOfScaleCartographic;
 
             break;
@@ -113,7 +113,7 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
           case 'Philatelic record':
             $validatorSchema->issuingJurisdictionAndDenomination = new sfValidatorString([
               'required' => true, ], [
-              'required' => $this->context->i18n->__('Issuing jurisdiction and denomination (philatelic) - This is a mandatory element for philatelic record.'), ]);
+                'required' => $this->context->i18n->__('Issuing jurisdiction and denomination (philatelic) - This is a mandatory element for philatelic record.'), ]);
             $values['issuingJurisdictionAndDenomination'] = $this->rad->issuingJurisdictionAndDenomination;
 
             break;
@@ -146,7 +146,7 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
           case 'Subfonds':
             $validatorSchema->scopeAndContent = new sfValidatorString([
               'required' => true, ], [
-              'required' => $this->context->i18n->__('Scope and content - This is a mandatory element.'), ]);
+                'required' => $this->context->i18n->__('Scope and content - This is a mandatory element.'), ]);
             $values['scopeAndContent'] = $this->resource->getScopeAndContent(['cultureFallback' => true]);
 
             break;
@@ -168,7 +168,7 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
             {
               $validatorSchema->edition = new sfValidatorString([
                 'required' => true, ], [
-                'required' => $this->context->i18n->__('Edition statement - This is a mandatory element for published items if there are multiple editions.'), ]);
+                  'required' => $this->context->i18n->__('Edition statement - This is a mandatory element for published items if there are multiple editions.'), ]);
               $values['edition'] = $this->resource->getEdition(['cultureFallback' => true]);
             }
         }

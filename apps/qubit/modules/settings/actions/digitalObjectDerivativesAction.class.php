@@ -21,8 +21,8 @@ class SettingsDigitalObjectDerivativesAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'digital_object_derivatives_pdf_page_number',
-      'reference_image_maxwidth', ];
+    'digital_object_derivatives_pdf_page_number',
+    'reference_image_maxwidth', ];
 
   protected static $refImageMaxWidthMin = 100;
   protected static $refImageMaxWidthMax = 2000;

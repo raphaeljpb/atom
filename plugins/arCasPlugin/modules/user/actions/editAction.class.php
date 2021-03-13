@@ -21,11 +21,11 @@ class UserEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'active',
-      'groups',
-      'translate',
-      'restApiKey',
-      'oaiApiKey', ];
+    'active',
+    'groups',
+    'translate',
+    'restApiKey',
+    'oaiApiKey', ];
 
   public function execute($request)
   {

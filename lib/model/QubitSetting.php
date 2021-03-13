@@ -26,16 +26,16 @@
 class QubitSetting extends BaseSetting
 {
   public static $premisAccessRightValueDefaults = [
-      'allow_master' => 0,
-      'allow_reference' => 0,
-      'allow_thumb' => 0,
-      'conditional_master' => 0,
-      'conditional_reference' => 0,
-      'conditional_thumb' => 0,
-      'disallow_master' => 0,
-      'disallow_reference' => 0,
-      'disallow_thumb' => 0,
-    ];
+    'allow_master' => 0,
+    'allow_reference' => 0,
+    'allow_thumb' => 0,
+    'conditional_master' => 0,
+    'conditional_reference' => 0,
+    'conditional_thumb' => 0,
+    'disallow_master' => 0,
+    'disallow_reference' => 0,
+    'disallow_thumb' => 0,
+  ];
   // List of scopes with translatable settings,
     // QubitI18nConsolidatedExtract checks this array to add those
     // settings value from /data/fixtures/settings.yml to the XLIFF files

@@ -21,10 +21,10 @@ class sfIsadPluginEventComponent extends InformationObjectEventComponent
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'date',
-      'endDate',
-      'startDate',
-      'type', ];
+    'date',
+    'endDate',
+    'startDate',
+    'type', ];
 
   // TODO Refactor with parent::processForm()
   public function processForm()

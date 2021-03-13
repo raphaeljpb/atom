@@ -21,11 +21,11 @@ class sfIsdfPluginRelatedAuthorityRecordComponent extends RelationEditComponent
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'resource',
-      'description',
-      'startDate',
-      'endDate',
-      'date', ];
+    'resource',
+    'description',
+    'startDate',
+    'endDate',
+    'date', ];
 
   public function execute($request)
   {

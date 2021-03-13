@@ -25,14 +25,14 @@
 class SearchDescriptionUpdatesAction extends sfAction
 {
   public static $NAMES = [
-      'className',
-      'startDate',
-      'endDate',
-      'dateOf',
-      'publicationStatus',
-      'repository',
-      'user',
-    ];
+    'className',
+    'startDate',
+    'endDate',
+    'dateOf',
+    'publicationStatus',
+    'repository',
+    'user',
+  ];
 
   public function execute($request)
   {

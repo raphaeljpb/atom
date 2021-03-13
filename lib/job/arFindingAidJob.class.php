@@ -245,7 +245,7 @@ class arFindingAidJob extends arBaseJob
     $partialData = [
       'findingAid' => [
         'status' => self::GENERATED_STATUS,
-    ], ];
+      ], ];
 
     QubitSearch::getInstance()->partialUpdate($this->resource, $partialData);
 
@@ -281,7 +281,7 @@ class arFindingAidJob extends arBaseJob
       'findingAid' => [
         'transcript' => null,
         'status' => self::UPLOADED_STATUS,
-    ], ];
+      ], ];
 
     $this->info($this->i18n->__('Finding aid uploaded successfully: %1', ['%1' => $path]));
 
@@ -388,7 +388,7 @@ class arFindingAidJob extends arBaseJob
       'findingAid' => [
         'transcript' => null,
         'status' => null,
-    ], ];
+      ], ];
 
     QubitSearch::getInstance()->partialUpdate($this->resource, $partialData);
 

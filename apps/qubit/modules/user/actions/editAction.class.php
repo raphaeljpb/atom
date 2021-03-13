@@ -21,15 +21,15 @@ class UserEditAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'active',
-      'confirmPassword',
-      'email',
-      'groups',
-      'password',
-      'translate',
-      'username',
-      'restApiKey',
-      'oaiApiKey', ];
+    'active',
+    'confirmPassword',
+    'email',
+    'groups',
+    'password',
+    'translate',
+    'username',
+    'restApiKey',
+    'oaiApiKey', ];
 
   public function execute($request)
   {
@@ -174,7 +174,7 @@ class UserEditAction extends DefaultEditAction
           $this->form->setValidator('password', new QubitValidatorPassword(
             ['required' => !isset($this->getRoute()->resource)],
             ['invalid' => $this->context->i18n->__('Your password is not strong enough.'),
-                  'min_length' => $this->context->i18n->__('Your password is not strong enough (too short).'), ]));
+              'min_length' => $this->context->i18n->__('Your password is not strong enough (too short).'), ]));
         }
         else
         {

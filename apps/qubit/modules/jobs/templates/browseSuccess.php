@@ -49,7 +49,7 @@
 
           <?php if ($job->getObjectModule() && $job->getObjectSlug()) { ?>
             <a href="<?php echo url_for(['module' => $job->getObjectModule(),
-                    'slug' => $job->getObjectSlug(), ]); ?>" class="fa fa-share"></a>
+              'slug' => $job->getObjectSlug(), ]); ?>" class="fa fa-share"></a>
 
           <?php } ?>
         </td>

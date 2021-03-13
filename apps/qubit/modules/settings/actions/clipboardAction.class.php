@@ -21,17 +21,17 @@ class SettingsClipboardAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'clipboard_save_max_age',
-      'clipboard_send_enabled',
-      'clipboard_send_url',
-      'clipboard_send_button_text',
-      'clipboard_send_message_html',
-      'clipboard_send_http_method',
-      'clipboard_export_digitalobjects_enabled', ];
+    'clipboard_save_max_age',
+    'clipboard_send_enabled',
+    'clipboard_send_url',
+    'clipboard_send_button_text',
+    'clipboard_send_message_html',
+    'clipboard_send_http_method',
+    'clipboard_export_digitalobjects_enabled', ];
   public static $I18N = [
-      'clipboard_send_button_text',
-      'clipboard_send_message_html',
-    ];
+    'clipboard_send_button_text',
+    'clipboard_send_message_html',
+  ];
 
   public function earlyExecute()
   {

@@ -21,24 +21,24 @@ class RightEditAction extends sfAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'basis',
-      'endDate',
-      'startDate',
-      'rightsHolder',
-      'rightsNote',
-      'copyrightStatus',
-      'copyrightStatusDate',
-      'copyrightJurisdiction',
-      'copyrightNote',
-      'identifierType',
-      'identifierValue',
-      'identifierRole',
-      'licenseTerms',
-      'licenseNote',
-      'statuteJurisdiction',
-      'statuteCitation',
-      'statuteDeterminationDate',
-      'statuteNote', ];
+    'basis',
+    'endDate',
+    'startDate',
+    'rightsHolder',
+    'rightsNote',
+    'copyrightStatus',
+    'copyrightStatusDate',
+    'copyrightJurisdiction',
+    'copyrightNote',
+    'identifierType',
+    'identifierValue',
+    'identifierRole',
+    'licenseTerms',
+    'licenseNote',
+    'statuteJurisdiction',
+    'statuteCitation',
+    'statuteDeterminationDate',
+    'statuteNote', ];
 
   public function execute($request)
   {

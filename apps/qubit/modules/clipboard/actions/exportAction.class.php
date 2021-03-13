@@ -21,13 +21,13 @@ class ClipboardExportAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'levels',
-      'type',
-      'format',
-      'includeDescendants',
-      'includeAllLevels',
-      'includeDigitalObjects',
-      'includeDrafts', ];
+    'levels',
+    'type',
+    'format',
+    'includeDescendants',
+    'includeAllLevels',
+    'includeDigitalObjects',
+    'includeDrafts', ];
 
   private $choices = [];
 

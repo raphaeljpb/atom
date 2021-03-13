@@ -21,8 +21,8 @@ class InformationObjectReportsAction extends sfAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'report',
-    ];
+    'report',
+  ];
 
   public function execute($request)
   {

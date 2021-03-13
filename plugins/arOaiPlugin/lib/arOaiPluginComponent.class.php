@@ -118,10 +118,10 @@ abstract class arOaiPluginComponent extends sfComponent
     $this->recordsCount = count($this->publishedRecords);
     $resumptionCursor = $this->cursor + $options['limit'];
     $this->resumptionToken = base64_encode(json_encode(['from' => $this->from,
-                                                              'until' => $this->until,
-                                                              'cursor' => $resumptionCursor,
-                                                              'metadataPrefix' => $this->metadataPrefix,
-                                                              'set' => $this->set, ]));
+      'until' => $this->until,
+      'cursor' => $resumptionCursor,
+      'metadataPrefix' => $this->metadataPrefix,
+      'set' => $this->set, ]));
   }
 
   public function setRequestAttributes($request)
