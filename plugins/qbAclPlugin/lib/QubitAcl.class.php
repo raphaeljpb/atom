@@ -540,7 +540,7 @@ class QubitAcl
               // Stay within the query limit
               if ($criteria->getLimit() > 0)
               {
-                $sql .= ' LIMIT ' . $criteria->getLimit();
+                $sql .= ' LIMIT '.$criteria->getLimit();
               }
 
               $rows = QubitPdo::fetchAll($sql, [$repoId]);

@@ -92,14 +92,14 @@ class QubitFlatfileExport
   public function loadResourceSpecificConfiguration($resourceClass)
   {
     // Load type-specific base export configuration
-    $resourceTypeBaseConfigFile = $resourceClass .'.yml';
+    $resourceTypeBaseConfigFile = $resourceClass.'.yml';
     $config = self::loadResourceConfigFile($resourceTypeBaseConfigFile, 'base');
 
     if ($this->standard)
     {
       // Load archival standard-specific export configuration for type
       // (this can augment and/or override the base configuration)
-      $resourceTypeStandardConfigFile = $resourceClass .'-'. $this->standard .'.yml';
+      $resourceTypeStandardConfigFile = $resourceClass.'-'.$this->standard.'.yml';
       $standardConfig = self::loadResourceConfigFile($resourceTypeStandardConfigFile, 'archival standard');
 
       // Allow standard-specific export configuration to override base config
@@ -153,20 +153,20 @@ class QubitFlatfileExport
   public static function loadResourceConfigFile($file, $roleDescription)
   {
     // First try a custom version of resource-specific export configuration
-    $configFilePath = 'config/'. $file;
+    $configFilePath = 'config/'.$file;
 
     // If custom version doesn't exist, load built-in version
     if (!file_exists($configFilePath))
     {
       $configFileBasePath = 'lib/flatfile/config';
-      $configFilePath = $configFileBasePath .'/'. $file;
+      $configFilePath = $configFileBasePath.'/'.$file;
     }
 
     $config = sfYaml::load(realpath($configFilePath));
 
     if (gettype($config) != 'array')
     {
-      throw new sfException('Missing/malformed resource '. $roleDescription .' config: '. $configFilePath);
+      throw new sfException('Missing/malformed resource '.$roleDescription.' config: '.$configFilePath);
     }
 
     return $config;
@@ -284,9 +284,9 @@ class QubitFlatfileExport
 
       // Generate filename
       // Pad fileIndex with zeros so filenames can be sorted in creation order for imports
-      $filenamePrepend = ($this->standard !== null) ? $this->standard .'_' : '';
+      $filenamePrepend = ($this->standard !== null) ? $this->standard.'_' : '';
       $filename = sprintf('%s%s.csv', $filenamePrepend, str_pad($this->fileIndex, 10, '0', STR_PAD_LEFT));
-      $filePath = $this->path .'/'. $filename;
+      $filePath = $this->path.'/'.$filename;
     }
     else
     {
@@ -387,7 +387,7 @@ class QubitFlatfileExport
     // Prepare taxonomy cache map
     foreach ($map as $property => $taxonomy)
     {
-      $taxonomyCacheMap[$property] = constant('QubitTaxonomy::'. $taxonomy);
+      $taxonomyCacheMap[$property] = constant('QubitTaxonomy::'.$taxonomy);
     }
 
     if (count($taxonomyCacheMap))
@@ -510,7 +510,7 @@ class QubitFlatfileExport
       $siteUrl = rtrim(QubitSetting::getByName('siteBaseUrl'), '/ ');
 
       $this->setColumn(
-        'digitalObjectURI', $siteUrl . $digitalObject->getFullPath()
+        'digitalObjectURI', $siteUrl.$digitalObject->getFullPath()
       );
       $this->setColumn(
         'digitalObjectChecksum', $digitalObject->getChecksum()

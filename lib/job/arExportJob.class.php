@@ -66,8 +66,8 @@ class arExportJob extends arBaseJob
       if (!empty($errors))
       {
         $this->error(
-          $this->i18n->__('Failed to create ZIP file.') . ' : '
-          . implode(' : ', $errors)
+          $this->i18n->__('Failed to create ZIP file.').' : '
+          .implode(' : ', $errors)
         );
 
         return;
@@ -102,8 +102,8 @@ class arExportJob extends arBaseJob
     if (!is_null($this->downloadFileExtension))
     {
       $downloadFilePath = $this->getJobsDownloadDirectory()
-        . DIRECTORY_SEPARATOR
-        . $this->getJobDownloadFilename();
+        .DIRECTORY_SEPARATOR
+        .$this->getJobDownloadFilename();
     }
 
     return $downloadFilePath;
@@ -121,9 +121,9 @@ class arExportJob extends arBaseJob
 
     if (!is_null($this->downloadFileExtension))
     {
-      $relativeBaseDir = 'downloads' . DIRECTORY_SEPARATOR . 'jobs';
-      $downloadRelativeFilePath = $relativeBaseDir . DIRECTORY_SEPARATOR
-        . $this->getJobDownloadFilename();
+      $relativeBaseDir = 'downloads'.DIRECTORY_SEPARATOR.'jobs';
+      $downloadRelativeFilePath = $relativeBaseDir.DIRECTORY_SEPARATOR
+        .$this->getJobDownloadFilename();
     }
 
     return $downloadRelativeFilePath;
@@ -137,8 +137,8 @@ class arExportJob extends arBaseJob
    */
   public function getJobsDownloadDirectory()
   {
-    $path = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . 'downloads'
-      . DIRECTORY_SEPARATOR . 'jobs';
+    $path = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'downloads'
+      .DIRECTORY_SEPARATOR.'jobs';
 
     // Create the "downloads/jobs" directory if it doesn't exist already
     if (!is_dir($path))
@@ -163,12 +163,12 @@ class arExportJob extends arBaseJob
   protected function createJobTempDir()
   {
     $name = md5(
-      sfConfig::get('sf_root_dir') .
-      sfConfig::get('app_workers_key', '') .
-      $this->job->id .
+      sfConfig::get('sf_root_dir').
+      sfConfig::get('app_workers_key', '').
+      $this->job->id.
       date_timestamp_get()
     );
-    $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $name;
+    $path = sys_get_temp_dir().DIRECTORY_SEPARATOR.$name;
     mkdir($path);
 
     return $path;
@@ -219,7 +219,7 @@ class arExportJob extends arBaseJob
 
       try
       {
-        $zip->addFile($path . DIRECTORY_SEPARATOR . $file, $file);
+        $zip->addFile($path.DIRECTORY_SEPARATOR.$file, $file);
       }
       catch (Exception $e)
       {
@@ -292,7 +292,7 @@ class arExportJob extends arBaseJob
     }
 
     $filename = $this->getUniqueFilename($filepath);
-    $dest = $tempDir . DIRECTORY_SEPARATOR . $filename;
+    $dest = $tempDir.DIRECTORY_SEPARATOR.$filename;
 
     if (!copy($filepath, $dest))
     {
@@ -367,6 +367,6 @@ class arExportJob extends arBaseJob
 
   private function getJobDownloadFilename()
   {
-    return md5($this->job->id) .'.'. $this->downloadFileExtension;
+    return md5($this->job->id).'.'.$this->downloadFileExtension;
   }
 }

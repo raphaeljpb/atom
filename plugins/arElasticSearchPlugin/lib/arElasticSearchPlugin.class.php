@@ -274,7 +274,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
         // type's documents if not updating
         if (count($excludeTypes) && !$update)
         {
-          $this->index->getType('Qubit'. $camelizedTypeName)->deleteByQuery(new \Elastica\Query\MatchAll());
+          $this->index->getType('Qubit'.$camelizedTypeName)->deleteByQuery(new \Elastica\Query\MatchAll());
         }
 
         $class = new $className();
@@ -580,7 +580,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
     {
       if (!in_array(strtolower($typeName), $excludeTypes))
       {
-        $this->log(' - '. $typeName);
+        $this->log(' - '.$typeName);
         $typeCount++;
       }
     }

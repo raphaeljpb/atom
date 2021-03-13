@@ -57,8 +57,8 @@ class QubitApcUniversalClassLoader extends UniversalClassLoader
     public function findFile($class)
     {
         $functionPrefix = (extension_loaded('apcu')) ? 'apcu' : 'apc';
-        $fetchFunction = $functionPrefix .'_fetch';
-        $storeFunction = $functionPrefix .'_store';
+        $fetchFunction = $functionPrefix.'_fetch';
+        $storeFunction = $functionPrefix.'_store';
 
         if (false === $file = $fetchFunction($this->prefix.$class)) {
             $storeFunction($this->prefix.$class, $file = parent::findFile($class));

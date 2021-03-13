@@ -405,7 +405,7 @@ EOF;
             }
             else
             {
-              throw new sfException('Could not find information object matching slug "'. $self->rowStatusVars['qubitParentSlug'] .'"');
+              throw new sfException('Could not find information object matching slug "'.$self->rowStatusVars['qubitParentSlug'].'"');
             }
           }
         }
@@ -437,7 +437,7 @@ EOF;
           }
           else
           {
-            $self->logError('Could not parse date: ' . $data);
+            $self->logError('Could not parse date: '.$data);
           }
         }
       }

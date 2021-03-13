@@ -141,7 +141,7 @@ class QubitRepository extends BaseRepository
 
   public function getRelatedInformationObjectIds()
   {
-    $sql = "SELECT id FROM ". QubitInformationObject::TABLE_NAME ." WHERE repository_id=:repository_id";
+    $sql = "SELECT id FROM ".QubitInformationObject::TABLE_NAME." WHERE repository_id=:repository_id";
 
     $params = [':repository_id' => $this->id];
 
@@ -203,7 +203,7 @@ class QubitRepository extends BaseRepository
     if (!empty($ioIds))
     {
       // Remove associations between this repository and information objects
-      $sql = "UPDATE " . QubitInformationObject::TABLE_NAME . " \r
+      $sql = "UPDATE ".QubitInformationObject::TABLE_NAME." \r
               SET repository_id=NULL \r
               WHERE repository_id=:repository_id";
 

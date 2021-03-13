@@ -37,7 +37,7 @@ class RightManageAction extends sfAction
 
         $jobParams['name'] = $this->context->i18n->__('Inherit rights');
 
-        $desc = $this->context->i18n->__('Children inheriting rights from record: ') .
+        $desc = $this->context->i18n->__('Children inheriting rights from record: ').
                 $this->resource->getTitle(['cultureFallback' => true]);
 
         $jobParams['description'] = $desc;

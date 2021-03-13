@@ -33,7 +33,7 @@ class CasLoginAction extends sfAction
     // Redirect to module/action the user was trying to reach before being redirected
     // to CAS for authentication. We prefer a redirect to a forward so that the ticket
     // parameter is not accidentally exposed in the user's browser.
-    $redirectUrl = $request->getParameter('module') . '/' . $request->getParameter('action');
+    $redirectUrl = $request->getParameter('module').'/'.$request->getParameter('action');
     $this->redirect($redirectUrl);
   }
 }

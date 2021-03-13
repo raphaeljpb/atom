@@ -123,7 +123,7 @@ class QubitFlatfileImport
         }
         else
         {
-          throw new Exception('Option "'. $option .'" not allowed.');
+          throw new Exception('Option "'.$option.'" not allowed.');
         }
       }
     }
@@ -238,7 +238,7 @@ class QubitFlatfileImport
     }
     else
     {
-      throw new sfException('Missing column "'. $column .'".');
+      throw new sfException('Missing column "'.$column.'".');
     }
   }
 
@@ -320,7 +320,7 @@ class QubitFlatfileImport
    */
   public function appendWithLineBreakIfNeeded($oldContent, $newContent)
   {
-    return ($oldContent) ? $oldContent ."\n". $newContent : $newContent;
+    return ($oldContent) ? $oldContent."\n".$newContent : $newContent;
   }
 
   /**
@@ -346,7 +346,7 @@ class QubitFlatfileImport
 
         $output = $this->appendWithLineBreakIfNeeded(
           $output,
-          $prepend . $columnValue
+          $prepend.$columnValue
         );
       }
     }
@@ -418,7 +418,7 @@ class QubitFlatfileImport
     // disabling search indexing improves import speed
     $this->searchIndexingDisabled ? QubitSearch::disable() : QubitSearch::enable();
 
-    if ($skipRows) print "Skipped ". $skipRows ." rows...\n";
+    if ($skipRows) print "Skipped ".$skipRows." rows...\n";
 
     $timerStarted = false;
 
@@ -618,8 +618,8 @@ class QubitFlatfileImport
       $elapsedMinutes = round($elapsed / 60, 2);
       $averageTime = round($elapsed / $rowsProcessed, 2);
 
-      $output .= "\n". $rowsProcessed ." rows processed in ". $elapsedMinutes
-      . " minutes (". $averageTime ." second/row average, ". $memoryUsageMB ." MB used).\n";
+      $output .= "\n".$rowsProcessed." rows processed in ".$elapsedMinutes
+      ." minutes (".$averageTime." second/row average, ".$memoryUsageMB." MB used).\n";
     }
 
     return $output;
@@ -1572,12 +1572,12 @@ class QubitFlatfileImport
       }
       else
       {
-        throw new sfException('Could not find "'. $termName .'" in '. $description .' terms array.');
+        throw new sfException('Could not find "'.$termName.'" in '.$description.' terms array.');
       }
     }
     else
     {
-      throw new sfException('Could not find a way to handle '. $description .' value "'. $value .'".');
+      throw new sfException('Could not find a way to handle '.$description.' value "'.$value.'".');
     }
   }
 
@@ -1595,7 +1595,7 @@ class QubitFlatfileImport
     }
     else
     {
-      throw new sfException('Could not find object matching slug "'. $slug .'"');
+      throw new sfException('Could not find object matching slug "'.$slug.'"');
     }
   }
 
@@ -1685,12 +1685,12 @@ class QubitFlatfileImport
       if (empty($name))
       {
         // Increment label number if column already exists
-        while(in_array($baseLabel . $labelNumber, $this->columnNames))
+        while(in_array($baseLabel.$labelNumber, $this->columnNames))
         {
           $labelNumber++;
         }
 
-        $label = $baseLabel . $labelNumber;
+        $label = $baseLabel.$labelNumber;
         print $this->logError(sprintf("Named blank column %d in header row '%s'.", $index + 1, $label));
         $this->columnNames[$index] = $label;
       }

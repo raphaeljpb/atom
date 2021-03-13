@@ -289,7 +289,7 @@ function render_treeview_node($item, array $classes = [], array $options = [])
       $title = '';
       if ($item->identifier)
       {
-        $title = $item->identifier . "&nbsp;-&nbsp;";
+        $title = $item->identifier."&nbsp;-&nbsp;";
       }
       $title .= render_title($item);
 

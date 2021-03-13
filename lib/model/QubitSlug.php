@@ -81,7 +81,7 @@ class QubitSlug extends BaseSlug
         // Whitelist - ASCII A-Za-z0-9, unicode letters, - _ ~ : ; , = * @
         $asciiSet = 'a-zA-Z0-9';
         $extraSet = '\-_~\:;,=\*@';
-        $slug = preg_replace('/[^' . $asciiSet . self::getRfc3987Set() . $extraSet . ']+/u', '-', $slug);
+        $slug = preg_replace('/[^'.$asciiSet.self::getRfc3987Set().$extraSet.']+/u', '-', $slug);
         // Remove repeating dashes - replace with single dash.
         $slug = preg_replace('/-+/u', '-', $slug);
 

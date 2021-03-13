@@ -80,7 +80,7 @@ EOF;
   private function objectsIndexed($docType)
   {
     // Determine model class name from document type name
-    $docTypeModelClass = 'Qubit'. ucfirst($docType);
+    $docTypeModelClass = 'Qubit'.ucfirst($docType);
 
     return QubitSearch::getInstance()->index->getType($docTypeModelClass)->count();
   }
@@ -88,7 +88,7 @@ EOF;
   private function objectsAvailableToIndex($docType)
   {
     // Determine search model class name from document type name
-    $docTypeSearchModelClass = 'arElasticSearch'. ucwords($docType);
+    $docTypeSearchModelClass = 'arElasticSearch'.ucwords($docType);
 
     // Create search model instance for document type and load available data
     $docTypeInstance = new $docTypeSearchModelClass();

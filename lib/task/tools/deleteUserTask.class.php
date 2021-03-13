@@ -67,7 +67,7 @@ class deleteUserTask extends arBaseTask
     }
 
     $user->delete();
-    $this->logSection('delete-user', 'Deleted user "'. $arguments['username'] .'".');
+    $this->logSection('delete-user', 'Deleted user "'.$arguments['username'].'".');
   }
 
   protected function configure()
@@ -96,7 +96,7 @@ EOF;
   private function getConfirmation($username)
   {
     return $this->askConfirmation(
-      'WARNING: You are about to delete the user "'. $username .'". Are you sure?',
+      'WARNING: You are about to delete the user "'.$username.'". Are you sure?',
       'QUESTION_LARGE',
       false
     );

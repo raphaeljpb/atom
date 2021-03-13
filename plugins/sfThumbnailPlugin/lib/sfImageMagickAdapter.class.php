@@ -412,7 +412,7 @@ class sfImageMagickAdapter
 
   public static function getPdfinfoPageCount($filename)
   {
-    exec('pdfinfo '. escapeshellarg($filename), $stdout, $retval);
+    exec('pdfinfo '.escapeshellarg($filename), $stdout, $retval);
 
     if ($retval === 1)
     {

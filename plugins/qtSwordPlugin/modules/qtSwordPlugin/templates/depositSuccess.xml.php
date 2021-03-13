@@ -11,7 +11,7 @@
     $creationDate = $informationObject->createdAt instanceof DateTime ? $informationObject->createdAt->format('c') : format_date($informationObject->createdAt, 's')
   ?>
 
-  <id><?php echo $informationObject->id.' / ' . $creationDate ?></id>
+  <id><?php echo $informationObject->id.' / '.$creationDate ?></id>
 
   <updated><?php echo $creationDate ?></updated>
   <author>

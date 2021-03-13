@@ -50,7 +50,7 @@ class arOaiPluginIndexAction extends sfAction
 
     $appRoot = sfConfig::get('sf_root_dir');
 
-    include($appRoot .'/vendor/symfony/lib/helper/EscapingHelper.php');
+    include($appRoot.'/vendor/symfony/lib/helper/EscapingHelper.php');
 
     // If authentication is enabled, check API key in HTTP header
     $authenticationRequiredSetting = QubitSetting::getByName('oai_authentication_enabled');

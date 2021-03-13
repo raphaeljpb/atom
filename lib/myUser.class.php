@@ -240,7 +240,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
   public function checkModuleActionAccess($module, $action)
   {
     // Set security property to module's security configuration
-    $securityFilePath = 'modules/'. $module .'/config/security.yml';
+    $securityFilePath = 'modules/'.$module.'/config/security.yml';
     if ($file = sfContext::getInstance()->getConfigCache()->checkConfig($securityFilePath, true))
     {
       require($file);

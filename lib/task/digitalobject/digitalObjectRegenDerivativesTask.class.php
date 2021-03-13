@@ -197,7 +197,7 @@ EOF;
     if ($options['json'])
     {
       $ids = json_decode(file_get_contents($options['json']));
-      $query .= ' AND do.id IN (' . implode(', ', $ids) . ')';
+      $query .= ' AND do.id IN ('.implode(', ', $ids).')';
     }
 
     $query .= ' AND do.usage_id != '.QubitTerm::OFFLINE_ID;

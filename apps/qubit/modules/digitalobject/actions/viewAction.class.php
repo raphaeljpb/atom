@@ -91,7 +91,7 @@ class DigitalObjectViewAction extends sfAction
     if (false === filter_var($_SERVER['ATOM_XSENDFILE'], FILTER_VALIDATE_BOOLEAN))
     {
       $urlPath = preg_replace('\/?[^\/]+\.php$', '', $_SERVER['SCRIPT_NAME']);
-      $this->response->setHttpHeader('X-Accel-Redirect', $urlPath . '/private' . $this->resource->getFullPath());
+      $this->response->setHttpHeader('X-Accel-Redirect', $urlPath.'/private'.$this->resource->getFullPath());
     }
     else
     {

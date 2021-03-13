@@ -77,10 +77,10 @@ class eacExportTask extends exportBulkBaseTask
         }
         catch (Exception $e)
         {
-          $badXmlFilePath = sys_get_temp_dir() .'/'. $filename;
+          $badXmlFilePath = sys_get_temp_dir().'/'.$filename;
           file_put_contents($badXmlFilePath, $rawXml);
 
-          throw new sfException('Saved invalid generated XML to '. $badXmlFilePath);
+          throw new sfException('Saved invalid generated XML to '.$badXmlFilePath);
         }
 
         file_put_contents($filePath, $xml);

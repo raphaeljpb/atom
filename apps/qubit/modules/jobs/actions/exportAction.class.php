@@ -40,11 +40,11 @@ class JobsExportAction extends DefaultBrowseAction
       $jobs = QubitJob::getJobsByUser($user);
     }
 
-    $csvFilename = 'atom-job-history-' . strftime('%Y-%m-%d') . '.csv';
+    $csvFilename = 'atom-job-history-'.strftime('%Y-%m-%d').'.csv';
 
     $response = $this->getResponse();
     $response->setContentType('text/csv');
-    $response->setHttpHeader('Content-Disposition', 'attachment; filename="' . $csvFilename . '"');
+    $response->setHttpHeader('Content-Disposition', 'attachment; filename="'.$csvFilename.'"');
     $response->setContent($this->getCSVString($jobs));
 
     return sfView::NONE;

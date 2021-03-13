@@ -55,8 +55,8 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
     {
       // Show alert
       $message = $this->context->i18n->__(
-        "We've redirected you to the first page of results." .
-        " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
+        "We've redirected you to the first page of results.".
+        " To avoid using vast amounts of memory, AtoM limits pagination to %1% records.".
         " To view the last records in the current result set, try changing the sort direction.",
         ['%1%' => $maxResultWindow]
       );

@@ -89,14 +89,14 @@ class arFindingAidJob extends arBaseJob
   public static function getPossibleFilenames($id)
   {
     $filenames = [
-      $id . '.pdf',
-      $id . '.rtf'
+      $id.'.pdf',
+      $id.'.rtf'
     ];
 
     if (null !== $slug = QubitSlug::getByObjectId($id))
     {
-      $filenames[] = $slug->slug . '.pdf';
-      $filenames[] = $slug->slug . '.rtf';
+      $filenames[] = $slug->slug.'.pdf';
+      $filenames[] = $slug->slug.'.rtf';
     }
 
     return $filenames;
@@ -106,9 +106,9 @@ class arFindingAidJob extends arBaseJob
   {
     foreach (self::getPossibleFilenames($id) as $filename)
     {
-      $path = 'downloads' . DIRECTORY_SEPARATOR . $filename;
+      $path = 'downloads'.DIRECTORY_SEPARATOR.$filename;
 
-      if (file_exists(sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . $path))
+      if (file_exists(sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$path))
       {
         return $path;
       }
@@ -129,7 +129,7 @@ class arFindingAidJob extends arBaseJob
       $filename = $id;
     }
 
-    return 'downloads' . DIRECTORY_SEPARATOR . $filename . '.' . self::getFindingAidFormat();
+    return 'downloads'.DIRECTORY_SEPARATOR.$filename.'.'.self::getFindingAidFormat();
   }
 
   public static function getFindingAidFormat()
@@ -173,7 +173,7 @@ class arFindingAidJob extends arBaseJob
     // Call generate EAD task
     $slug = $this->resource->slug;
     $output = [];
-    exec(PHP_BINARY ." $appRoot/symfony export:bulk --single-slug=\"$slug\" $public $eadFilePath 2>&1", $output, $exitCode);
+    exec(PHP_BINARY." $appRoot/symfony export:bulk --single-slug=\"$slug\" $public $eadFilePath 2>&1", $output, $exitCode);
 
     if ($exitCode > 0)
     {
@@ -190,8 +190,8 @@ class arFindingAidJob extends arBaseJob
       $findingAidModel = $setting->getValue(['sourceCulture' => true]);
     }
 
-    $eadXslFilePath = $appRoot . '/lib/task/pdf/ead-pdf-' . $findingAidModel . '.xsl';
-    $saxonPath = $appRoot . '/lib/task/pdf/saxon9he.jar';
+    $eadXslFilePath = $appRoot.'/lib/task/pdf/ead-pdf-'.$findingAidModel.'.xsl';
+    $saxonPath = $appRoot.'/lib/task/pdf/saxon9he.jar';
 
     // Crank the XML through XSL stylesheet and fix header / fonds URL
     $eadFileString = file_get_contents($eadFilePath);
@@ -199,7 +199,7 @@ class arFindingAidJob extends arBaseJob
     file_put_contents($eadFilePath, $eadFileString);
 
     // Transform EAD file with Saxon
-    $pdfPath = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . self::getFindingAidPath($this->resource->id);
+    $pdfPath = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.self::getFindingAidPath($this->resource->id);
     $cmd = sprintf("java -jar '%s' -s:'%s' -xsl:'%s' -o:'%s' 2>&1", $saxonPath, $eadFilePath, $eadXslFilePath, $foFilePath);
     $this->info(sprintf('Running: %s', $cmd));
     $output = [];
@@ -288,7 +288,7 @@ class arFindingAidJob extends arBaseJob
     $this->info($this->i18n->__('Finding aid uploaded successfully: %1', ['%1' => $path]));
 
     // Extract finding aid transcript
-    $mimeType = 'application/' . self::getFindingAidFormat();
+    $mimeType = 'application/'.self::getFindingAidFormat();
 
     if (!QubitDigitalObject::canExtractText($mimeType))
     {
@@ -352,7 +352,7 @@ class arFindingAidJob extends arBaseJob
 
     foreach (self::getPossibleFilenames($this->resource->id) as $filename)
     {
-      $path = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . 'downloads' . DIRECTORY_SEPARATOR . $filename;
+      $path = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'downloads'.DIRECTORY_SEPARATOR.$filename;
 
       if (file_exists($path))
       {
@@ -419,7 +419,7 @@ class arFindingAidJob extends arBaseJob
   private function fixHeader($xmlString, $url = null)
   {
     // Apache FOP requires certain namespaces to be included in the XML in order to process it.
-    $xmlString = preg_replace('(<ead .*?>|<ead>)', '<ead xmlns:ns2="http://www.w3.org/1999/xlink" ' .
+    $xmlString = preg_replace('(<ead .*?>|<ead>)', '<ead xmlns:ns2="http://www.w3.org/1999/xlink" '.
         'xmlns="urn:isbn:1-931666-22-9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">', $xmlString, 1);
 
     // TODO: Use new base url functionality in AtoM instead of doing this kludge
@@ -428,7 +428,7 @@ class arFindingAidJob extends arBaseJob
       // Since we call the EAD generation from inside Symfony and not as part as a web request,
       // the url was returning symfony://weirdurlhere. We can get around this by passing the referring url into
       // the job as an option when the user clicks 'generate' and replace the url in the EAD manually.
-      $xmlString = preg_replace('/<eadid(.*?)url=\".*?\"(.*?)>/', '<eadid$1url="' . $url . '"$2>', $xmlString, 1);
+      $xmlString = preg_replace('/<eadid(.*?)url=\".*?\"(.*?)>/', '<eadid$1url="'.$url.'"$2>', $xmlString, 1);
     }
 
     return $xmlString;

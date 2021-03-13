@@ -54,7 +54,7 @@ class csvExportInformationObjectsTask extends exportBulkBaseTask
     $conn = $this->getDatabaseConnection();
     $rows = $conn->query($this->informationObjectQuerySql($options), PDO::FETCH_ASSOC);
 
-    print 'Exporting as '. strtoupper($options['standard']) .".\n";
+    print 'Exporting as '.strtoupper($options['standard']).".\n";
 
     // Instantiate CSV writer
     $writer = new csvInformationObjectExport(
@@ -85,7 +85,7 @@ class csvExportInformationObjectsTask extends exportBulkBaseTask
       $itemsExported++;
     }
 
-    print "\nExport complete (". $itemsExported ." descriptions exported).\n";
+    print "\nExport complete (".$itemsExported." descriptions exported).\n";
   }
 
   /**

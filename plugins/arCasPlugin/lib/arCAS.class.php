@@ -63,7 +63,7 @@ class arCAS
     $certPath = sfConfig::get('app_cas_server_cert', false);
     if (!strpos($certPath, '/') === 0)
     {
-      $certPath = sfConfig::get('sf_root_dir') . DIRECTORY_SEPARATOR . $certPath;
+      $certPath = sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.$certPath;
     }
     if (file_exists($certPath))
     {

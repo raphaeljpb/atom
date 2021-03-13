@@ -112,7 +112,7 @@ class arElasticSearchPluginUtil
 
     if (!isset($mappings[$indexType]))
     {
-      throw new sfException('Unrecognized index type: ' . $indexType);
+      throw new sfException('Unrecognized index type: '.$indexType);
     }
 
     $i18nIncludeInAll = null;
@@ -412,7 +412,7 @@ class arElasticSearchPluginUtil
         continue;
       }
 
-      $term = str_replace($char, '\\' . $char, $term);
+      $term = str_replace($char, '\\'.$char, $term);
     }
 
     return $term;

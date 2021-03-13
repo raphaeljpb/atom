@@ -179,7 +179,7 @@ abstract class csvImportBaseTask extends arBaseTask
 
     foreach ($typeIds as $typeName => $typeId)
     {
-      $columnName = $typeName .'FormsOfName';
+      $columnName = $typeName.'FormsOfName';
 
       if (!empty($self->arrayColumns[$columnName]))
       {
@@ -534,7 +534,7 @@ abstract class csvImportBaseTask extends arBaseTask
     {
       if ($options[$option] && !is_numeric($options[$option]))
       {
-        throw new sfException($option .' must be an integer');
+        throw new sfException($option.' must be an integer');
       }
     }
 
@@ -548,7 +548,7 @@ abstract class csvImportBaseTask extends arBaseTask
       print "WARNING: If you're importing multiple CSV files as part of the "
         ."same import it's advisable to use the source-name CLI option to "
         ."specify a source name (otherwise the filename will be used as a "
-        . "source name).\n";
+        ."source name).\n";
     }
 
     if ($options['limit'] && !$options['update'])

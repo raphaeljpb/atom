@@ -61,10 +61,10 @@ EOF;
     foreach ($jobs as $job)
     {
       print "$job->name\n";
-      print " Status: " . $job->getStatusString() . "\n";
-      print " Started: " . $job->getCreationDateString() . "\n";
-      print " Completed: " . $job->getCompletionDateString() . "\n";
-      print " User: " . QubitJob::getUserString($job) . "\n";
+      print " Status: ".$job->getStatusString()."\n";
+      print " Started: ".$job->getCreationDateString()."\n";
+      print " Completed: ".$job->getCompletionDateString()."\n";
+      print " User: ".QubitJob::getUserString($job)."\n";
 
       // Add notes (indented for readability)
       if (count($notes = $job->getNotes()) > 0)
@@ -73,7 +73,7 @@ EOF;
 
         foreach ($notes as $note)
         {
-          print $notesLabel . $note ."\n";
+          print $notesLabel.$note."\n";
           $notesLabel = "        ";
         }
       }

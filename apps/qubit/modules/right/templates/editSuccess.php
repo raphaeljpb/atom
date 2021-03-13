@@ -127,7 +127,7 @@
               }
               else
               {
-                $title = __('Granted right ') . ($i + 1);
+                $title = __('Granted right ').($i + 1);
               }
             ?>
             <legend><?php echo $title ?></legend>

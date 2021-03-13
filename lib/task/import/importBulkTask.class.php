@@ -109,7 +109,7 @@ EOF;
 
       if ($options['verbose'])
       {
-        print 'Importing: '. $file ."\n";
+        print 'Importing: '.$file."\n";
       }
 
       // Choose import type based on file extension, eg. csv, xml
@@ -135,8 +135,8 @@ EOF;
       if (isset($options['completed-dir']) && !empty($importer))
       {
         $path_info = pathinfo($file);
-        $move_source = $path_info['dirname'] .'/'. $path_info['basename'];
-        $move_destination = $options['completed-dir'] .'/'. $path_info['basename'];
+        $move_source = $path_info['dirname'].'/'.$path_info['basename'];
+        $move_destination = $options['completed-dir'].'/'.$path_info['basename'];
         rename($file, $move_destination);
       }
 
@@ -149,7 +149,7 @@ EOF;
       {
         foreach ($importer->getErrors() as $message)
         {
-          $this->log('('. $file .'): '. $message);
+          $this->log('('.$file.'): '.$message);
         }
       }
 
@@ -164,7 +164,7 @@ EOF;
       // Store details if output is specified
       if ($options['output'])
       {
-        $rows[] = [$file, $split . 's', memory_get_usage() . 'B'];
+        $rows[] = [$file, $split.'s', memory_get_usage().'B'];
       }
 
       if ($options['verbose'])
@@ -185,8 +185,8 @@ EOF;
       }
 
       fputcsv($fh, []); // Blank row to separate our summary info
-      fputcsv($fh, ['Total time elapsed:', $timer->elapsed() . 's']);
-      fputcsv($fh, ['Peak memory usage:', round(memory_get_peak_usage() / 1048576, 2) . 'MB']);
+      fputcsv($fh, ['Total time elapsed:', $timer->elapsed().'s']);
+      fputcsv($fh, ['Peak memory usage:', round(memory_get_peak_usage() / 1048576, 2).'MB']);
 
       fclose($fh);
     }

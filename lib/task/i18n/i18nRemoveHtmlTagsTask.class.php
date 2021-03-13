@@ -160,7 +160,7 @@ EOF;
 
       foreach($listNode->childNodes as $childNode)
       {
-        $paraText .= '* '. $childNode->textContent ."\n";
+        $paraText .= '* '.$childNode->textContent."\n";
       }
 
       // Set <p> element's text
@@ -241,7 +241,7 @@ EOF;
     {
       $paraNode = $paraList->item(0);
 
-      $paraText = "\n". $paraNode->textContent ."\n";
+      $paraText = "\n".$paraNode->textContent."\n";
       $newTextNode = $doc->createTextNode($paraText);
 
       $paraNode->parentNode->replaceChild($newTextNode, $paraNode);

@@ -178,7 +178,7 @@ class InformationObjectCalculateDatesAction extends sfAction
     }
     catch (Exception $e)
     {
-      $message = $this->i18n->__('Calculation failed') .': '. $this->i18n->__($e->getMessage());
+      $message = $this->i18n->__('Calculation failed').': '.$this->i18n->__($e->getMessage());
       $this->context->user->setFlash('error', $message);
     }
   }

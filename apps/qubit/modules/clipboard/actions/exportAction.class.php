@@ -232,8 +232,8 @@ class ClipboardExportAction extends DefaultEditAction
       {
         throw new sfException($this->context->i18n->__(
           'No records were exported for your current selection. Please'
-          . ' %open_link%refresh the page and choose different export options'
-          . ' %close_link%.',
+          .' %open_link%refresh the page and choose different export options'
+          .' %close_link%.',
           [
             '%open_link%' => '<a href="javascript:location.reload();">',
             '%close_link%' => '</a>',
@@ -264,7 +264,7 @@ class ClipboardExportAction extends DefaultEditAction
     {
       $responseData['success'] .= $this->context->i18n->__(
         'The %open_link%job management page%close_link% will show progress'
-        . ' and a download link when complete.',
+        .' and a download link when complete.',
         [
           '%open_link%' => sprintf(
             '<strong><a href="%s">',
@@ -281,7 +281,7 @@ class ClipboardExportAction extends DefaultEditAction
     {
       $responseData['success'] .= $this->context->i18n->__(
         'Please %open_link%refresh the page%close_link% to see progress and'
-        . ' a download link when complete.',
+        .' a download link when complete.',
         [
           '%open_link%' => '<strong><a href="javascript:location.reload();">',
           '%close_link%' => '</a></strong>'
@@ -292,8 +292,8 @@ class ClipboardExportAction extends DefaultEditAction
     $responseData['success'] .= '</p><p>';
     $responseData['success'] .= $this->context->i18n->__(
       '%open_strong_tag%Note:%close_strong_tag% AtoM may remove export'
-      . ' packages after aperiod of time to free up storage space. When'
-      . ' your export is ready you should download it as soon as possible.',
+      .' packages after aperiod of time to free up storage space. When'
+      .' your export is ready you should download it as soon as possible.',
       [
         '%open_strong_tag%' => '<strong>',
         '%close_strong_tag%' => '</strong>'
@@ -357,7 +357,7 @@ class ClipboardExportAction extends DefaultEditAction
 
           $this->helpMessages[] = __(
             'Choosing "Include descendants" will include all lower-level'
-            . ' records beneath those currently on the clipboard in the export.'
+            .' records beneath those currently on the clipboard in the export.'
           );
         }
 
@@ -408,11 +408,11 @@ class ClipboardExportAction extends DefaultEditAction
               ),
               'help' => __(
                 'If no levels are selected, the export will fail. You can use'
-                . ' the control (Mac ⌘) and/or shift keys to multi-select'
-                . ' values from the Levels of description menu. It is necessary'
-                . ' to include the level(s) above the desired export level, up'
-                . ' to and including the level contained in the clipboard.'
-                . ' Otherwise, no records will be included in the export.'
+                .' the control (Mac ⌘) and/or shift keys to multi-select'
+                .' values from the Levels of description menu. It is necessary'
+                .' to include the level(s) above the desired export level, up'
+                .' to and including the level contained in the clipboard.'
+                .' Otherwise, no records will be included in the export.'
               ),
               'choices' => $this->levelChoices,
               'multiple' => true
@@ -434,14 +434,14 @@ class ClipboardExportAction extends DefaultEditAction
           {
             $this->helpMessages[] = __(
               'It is not possible to select both digital objects and'
-              . ' descendants for export at the same time. Digital objects can'
-              . ' only be exported for records that are on the clipboard.'
+              .' descendants for export at the same time. Digital objects can'
+              .' only be exported for records that are on the clipboard.'
             );
           }
 
           $this->helpMessages[] = __(
             'Digital objects with restricted access or copyright will not'
-            . ' be exported.'
+            .' be exported.'
           );
 
           $this->form->setWidget(
@@ -473,9 +473,9 @@ class ClipboardExportAction extends DefaultEditAction
 
           $this->helpMessages[] = __(
             'Choosing "Include draft records" will include those marked with a'
-            . ' Draft publication status in the export. Note: if you do NOT'
-            . ' choose this option, any descendants of a draft record will also'
-            . ' be excluded, even if they are published.'
+            .' Draft publication status in the export. Note: if you do NOT'
+            .' choose this option, any descendants of a draft record will also'
+            .' be excluded, even if they are published.'
           );
           $this->form->setDefault('includeDrafts', true);
         }

@@ -84,8 +84,8 @@ EOF;
     {
       if (!$this->askConfirmation([
         'Please, confirm that you want to change',
-        'the publication status of "' . $resource->__toString() . '"',
-        'to "' . $publicationStatus . '" (y/N)'], 'QUESTION_LARGE', false))
+        'the publication status of "'.$resource->__toString().'"',
+        'to "'.$publicationStatus.'" (y/N)'], 'QUESTION_LARGE', false))
         {
           $this->logSection('tools', 'Bye!');
 

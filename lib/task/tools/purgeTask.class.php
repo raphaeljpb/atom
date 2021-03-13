@@ -61,7 +61,7 @@ class purgeTask extends sfBaseTask
       // attempt to provide default user admin name and email
       if ($_SERVER['HOME'])
       {
-        $gitConfigFile = $_SERVER['HOME'] .'/.gitconfig';
+        $gitConfigFile = $_SERVER['HOME'].'/.gitconfig';
         if (file_exists($gitConfigFile))
         {
           $gitConfig = parse_ini_file($gitConfigFile);

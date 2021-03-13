@@ -123,8 +123,8 @@ class QubitCsvTransform extends QubitFlatfileImport
   {
     $sql = "INSERT INTO import_descriptions
         (sortorder, data)
-        VALUES ('". mysqli_real_escape_string($this->link, $sortorder) ."',
-        '". mysqli_real_escape_string($this->link, serialize($this->status['row'])) ."')";
+        VALUES ('".mysqli_real_escape_string($this->link, $sortorder)."',
+        '".mysqli_real_escape_string($this->link, serialize($this->status['row']))."')";
 
     $result = mysqli_query($this->link, $sql);
 
@@ -140,7 +140,7 @@ class QubitCsvTransform extends QubitFlatfileImport
     $base = $parts['filename'];
     $path = $parts['dirname'];
 
-    return $path .'/'. $base .'_'. $number .'.'. $parts['extension'];
+    return $path.'/'.$base.'_'.$number.'.'.$parts['extension'];
   }
 
   public function writeMySQLRowsToCsvFilePath($filepath)
@@ -149,9 +149,9 @@ class QubitCsvTransform extends QubitFlatfileImport
     $startFile = $this->numberedFilePathVariation($filepath, $chunk);
     $fhOut = fopen($startFile, 'w');
 
-    if (!$fhOut) throw new sfException('Error writing to '. $startFile .'.');
+    if (!$fhOut) throw new sfException('Error writing to '.$startFile.'.');
 
-    print "Writing to ". $startFile ."...\n";
+    print "Writing to ".$startFile."...\n";
 
     fputcsv($fhOut, $this->columnNames); // write headers
 
@@ -171,7 +171,7 @@ class QubitCsvTransform extends QubitFlatfileImport
         $chunkFilePath = $this->numberedFilePathVariation($filepath, $chunk);
         $fhOut = fopen($chunkFilePath, 'w');
 
-        print "Writing to ". $chunkFilePath ."...\n";
+        print "Writing to ".$chunkFilePath."...\n";
 
         fputcsv($fhOut, $this->columnNames); // write headers
       }
@@ -201,7 +201,7 @@ class QubitCsvTransform extends QubitFlatfileImport
     {
       if (getEnv($var) === false)
       {
-        throw new sfException('You must set the '. $var .' environmental variable.');
+        throw new sfException('You must set the '.$var.' environmental variable.');
       }
     }
   }

@@ -156,7 +156,7 @@ EOF;
 
     print "\nAnalysis complete.";
 
-    print "\n\n". $rowCount ." rows, ". count($import->columnNames) ." columns.";
+    print "\n\n".$rowCount." rows, ".count($import->columnNames)." columns.";
 
     if (count($import->columnNames != count($nonEmptyColumns)))
     {
@@ -168,7 +168,7 @@ EOF;
       {
         if (!isset($nonEmptyColumns[$column]))
         {
-          print $column .' ';
+          print $column.' ';
           $emptyCount++;
         }
       }
@@ -183,7 +183,7 @@ EOF;
       $displayCount = 1;
       foreach($multiValueColumns as $column => $count)
       {
-        print $column .'('. $count .')';
+        print $column.'('.$count.')';
         print ($displayCount < count($multiValueColumns)) ? ', ' : '';
         $displayCount++;
       }
@@ -195,14 +195,14 @@ EOF;
       print "--------------\n\n";
       foreach($sampleColumnValues as $column => $values)
       {
-        print '  '. $column .":";
+        print '  '.$column.":";
         if (count($values))
         {
           $shownCount = 0;
           foreach($values as $value)
           {
             print ($shownCount) ? '    ' : ' ';
-            print $value ."\n";
+            print $value."\n";
             $shownCount++;
           }
         }

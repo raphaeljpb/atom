@@ -50,7 +50,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
     {
       // Return 400 response with error message
       $message = $this->context->i18n->__(
-        "Pagination limit reached. To avoid using vast amounts of memory," .
+        "Pagination limit reached. To avoid using vast amounts of memory,".
         " AtoM limits pagination to %1% records. Please, narrow down your results.",
         ['%1%' => $maxResultWindow]
       );
@@ -204,7 +204,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
       // Add thumbnail URL
       if (isset($doc['digitalObject']['thumbnailPath']))
       {
-        $this->addItemToArray($result, 'thumbnail_url', $this->siteBaseUrl . $doc['digitalObject']['thumbnailPath']);
+        $this->addItemToArray($result, 'thumbnail_url', $this->siteBaseUrl.$doc['digitalObject']['thumbnailPath']);
       }
 
       $results[] = $result;

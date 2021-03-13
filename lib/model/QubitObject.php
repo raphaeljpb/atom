@@ -301,8 +301,8 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
       throw new sfException('QubitObject->id must be set');
     }
 
-    $sth = $connection->prepare('UPDATE ' . self::TABLE_NAME
-      . ' SET ' . self::UPDATED_AT . ' = NOW() WHERE id = :id'
+    $sth = $connection->prepare('UPDATE '.self::TABLE_NAME
+      .' SET '.self::UPDATED_AT.' = NOW() WHERE id = :id'
     );
 
     return $sth->execute([':id' => $this->id]);
@@ -465,8 +465,8 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
 
       // Return the URL for the master digital object on the local filesystem
       return $request->getUriPrefix()
-        . $request->getRelativeUrlRoot()
-        . $digitalObject->getFullPath();
+        .$request->getRelativeUrlRoot()
+        .$digitalObject->getFullPath();
     }
   }
 

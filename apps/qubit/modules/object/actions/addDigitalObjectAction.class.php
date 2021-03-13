@@ -62,7 +62,7 @@ class ObjectAddDigitalObjectAction extends sfAction
 
       if (isset($this->resource->identifier))
       {
-        $this->resourceDescription .= $this->resource->identifier . ' - ';
+        $this->resourceDescription .= $this->resource->identifier.' - ';
       }
 
       $this->resourceDescription .= render_title(new sfIsadPlugin($this->resource));

@@ -59,7 +59,7 @@ class arRepositoryCsvExportJob extends arExportJob
 
     if (!empty($errors))
     {
-      $this->error($this->i18n->__('Failed to create ZIP file.') . ' : ' . implode(' : ', $errors));
+      $this->error($this->i18n->__('Failed to create ZIP file.').' : '.implode(' : ', $errors));
 
       return false;
     }

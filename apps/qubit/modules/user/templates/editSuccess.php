@@ -94,13 +94,13 @@ EOF
 
         <?php if ($restEnabled): ?>
           <?php echo $form->restApiKey
-            ->label(__('REST API access key'. ((isset($restApiKey)) ? ': <code>'. $restApiKey .'</code>' : '')))
+            ->label(__('REST API access key'.((isset($restApiKey)) ? ': <code>'.$restApiKey.'</code>' : '')))
             ->renderRow() ?>
         <?php endif; ?>
 
         <?php if ($oaiEnabled): ?>
           <?php echo $form->oaiApiKey
-            ->label(__('OAI-PMH API access key'. ((isset($oaiApiKey)) ? ': <code>'. $oaiApiKey .'</code>' : '')))
+            ->label(__('OAI-PMH API access key'.((isset($oaiApiKey)) ? ': <code>'.$oaiApiKey.'</code>' : '')))
             ->renderRow() ?>
         <?php endif; ?>
 

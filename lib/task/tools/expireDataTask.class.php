@@ -100,8 +100,8 @@ EOF;
     foreach (array_keys(self::$TYPE_SPECIFICATONS) as $dataType)
     {
       // Prepend with comma if not the first item
-      $description = ($description) ? $description .', ' : $description;
-      $description .= '"'. $dataType .'"';
+      $description = ($description) ? $description.', ' : $description;
+      $description .= '"'.$dataType.'"';
     }
 
     return $description;

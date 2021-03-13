@@ -143,7 +143,7 @@ class TermIndexAction extends DefaultBrowseAction
           if (1 < $this->listPager->getPage())
           {
             $url = url_for([$this->resource, 'module' => 'term', 'listPage' => $this->listPager->getPage() - 1, 'listLimit' => $request->listLimit]);
-            $link = '&laquo; ' . $this->context->i18n->__('Previous');
+            $link = '&laquo; '.$this->context->i18n->__('Previous');
 
             $previous = <<<EOF
 <li class="previous">
@@ -157,7 +157,7 @@ EOF;
           if ($this->listPager->getLastPage() > $this->listPager->getPage())
           {
             $url = url_for([$this->resource, 'module' => 'term', 'listPage' => $this->listPager->getPage() + 1, 'listLimit' => $request->listLimit]);
-            $link = $this->context->i18n->__('Next') . ' &raquo;';
+            $link = $this->context->i18n->__('Next').' &raquo;';
 
             $next = <<<EOF
 <li class="next">

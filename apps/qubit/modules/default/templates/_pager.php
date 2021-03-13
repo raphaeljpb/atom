@@ -16,13 +16,13 @@
 
           <?php if (1 < $pager->getPage()): ?>
             <li class="previous">
-              <?php echo link_to('&laquo; '. __('Previous'), ['page' => $pager->getPage() - 1] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
+              <?php echo link_to('&laquo; '.__('Previous'), ['page' => $pager->getPage() - 1] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
             </li>
           <?php endif; ?>
 
           <?php if ($pager->getLastPage() > $pager->getPage()): ?>
             <li class="next">
-              <?php echo link_to(__('Next'). ' &raquo;', ['page' => $pager->getPage() + 1] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
+              <?php echo link_to(__('Next').' &raquo;', ['page' => $pager->getPage() + 1] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
             </li>
           <?php endif; ?>
 
@@ -38,7 +38,7 @@
 
           <?php if (1 < $pager->getPage()): ?>
             <li class="previous">
-              <?php echo link_to('&laquo; '. __('Previous'), ['page' => $pager->getPage() - 1] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
+              <?php echo link_to('&laquo; '.__('Previous'), ['page' => $pager->getPage() - 1] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
             </li>
           <?php endif; ?>
 
@@ -77,7 +77,7 @@
 
           <?php if ($pager->getLastPage() > $pager->getPage()): ?>
             <li class="next">
-              <?php echo link_to(__('Next'). ' &raquo;', ['page' => $pager->getPage() + 1] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
+              <?php echo link_to(__('Next').' &raquo;', ['page' => $pager->getPage() + 1] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()) ?>
             </li>
           <?php endif; ?>
 

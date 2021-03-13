@@ -671,7 +671,7 @@ class QubitInformationObject extends BaseInformationObject
   {
     if ($this->getPublicationStatus()->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID && file_exists($this->pathToEadExport()))
     {
-      return sfConfig::get('app_siteBaseUrl') .'/'. $this->pathToEadExport();
+      return sfConfig::get('app_siteBaseUrl').'/'.$this->pathToEadExport();
     }
     else
     {
@@ -700,7 +700,7 @@ class QubitInformationObject extends BaseInformationObject
   {
     if ($this->getPublicationStatus()->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID && file_exists($this->pathToDcExport()))
     {
-      return sfConfig::get('app_siteBaseUrl') .'/'. $this->pathToDcExport();
+      return sfConfig::get('app_siteBaseUrl').'/'.$this->pathToDcExport();
     }
     else
     {
@@ -1678,7 +1678,7 @@ class QubitInformationObject extends BaseInformationObject
     // Add <p> tag content to amalgamated value
     foreach ($originalsNode->getElementsByTagName('p') as $pNode)
     {
-      $text .= trim($pNode->textContent) ."\n";
+      $text .= trim($pNode->textContent)."\n";
     }
 
     // Add <addressline> tag content to amalgamated value
@@ -1686,7 +1686,7 @@ class QubitInformationObject extends BaseInformationObject
     {
       foreach ($addressNode->getElementsByTagName('addressline') as $addressLineNode)
       {
-        $text .= trim($addressLineNode->textContent) ."\n";
+        $text .= trim($addressLineNode->textContent)."\n";
       }
     }
 
@@ -3100,7 +3100,7 @@ class QubitInformationObject extends BaseInformationObject
         foreach ($possibleNameFields as $fieldName => $fieldTypeId)
         {
           $fieldValue = '';
-          $nameNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/eventgrp/event/origination/". $fieldName);
+          $nameNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/eventgrp/event/origination/".$fieldName);
           foreach ($nameNodeList as $nameNode)
           {
             $fieldValue = $nameNode->nodeValue;

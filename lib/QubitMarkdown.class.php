@@ -162,7 +162,7 @@ class QubitMarkdown
           ? QubitMarkdown::$markdownMap[$node->getAttribute('render')]
           : QubitMarkdown::$markdownMap['italic'];
 
-        return $markdownSymbol . $node->nodeValue . $markdownSymbol;
+        return $markdownSymbol.$node->nodeValue.$markdownSymbol;
     }
   }
 

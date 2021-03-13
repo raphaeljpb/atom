@@ -38,7 +38,7 @@ class arMigration0140
    */
   public function up($configuration)
   {
-    if (false === QubitPdo::fetchOne("SHOW COLUMNS IN ". QubitJob::TABLE_NAME." LIKE ?", ['output']))
+    if (false === QubitPdo::fetchOne("SHOW COLUMNS IN ".QubitJob::TABLE_NAME." LIKE ?", ['output']))
     {
       QubitMigrate::addColumn(QubitJob::TABLE_NAME, 'output TEXT');
     }

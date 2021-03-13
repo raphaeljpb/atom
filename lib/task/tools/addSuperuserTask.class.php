@@ -58,7 +58,7 @@ class addSuperuserTask extends sfBaseTask
     {
       $defaultUser = 'admin';
       $usernamePrompt = 'Admin username';
-      $usernamePrompt .= ($defaultUser) ? ' ['. $defaultUser .']' : '';
+      $usernamePrompt .= ($defaultUser) ? ' ['.$defaultUser.']' : '';
       $usernamePrompt .= ': ';
       $username = readline($usernamePrompt);
       $username = ($username) ? $username : $defaultUser;
@@ -69,7 +69,7 @@ class addSuperuserTask extends sfBaseTask
     {
       $defaultEmail = 'admin@example.com';
       $emailPrompt = 'Admin email';
-      $emailPrompt .= ($defaultEmail) ? ' ['. $defaultEmail .']' : '';
+      $emailPrompt .= ($defaultEmail) ? ' ['.$defaultEmail.']' : '';
       $emailPrompt .= ': ';
       $email = readline($emailPrompt);
       $email = ($email) ? $email : $defaultEmail;

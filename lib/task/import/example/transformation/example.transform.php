@@ -10,9 +10,9 @@
  *
  */
 
-include(dirname(__FILE__) .'/lib/QubitCsvTransform.class.php');
+include(dirname(__FILE__).'/lib/QubitCsvTransform.class.php');
 
-include(dirname(__FILE__) .'/lib/QubitCsvTransformFactory.class.php');
+include(dirname(__FILE__).'/lib/QubitCsvTransformFactory.class.php');
 
 $addColumns = [
   'parentId',

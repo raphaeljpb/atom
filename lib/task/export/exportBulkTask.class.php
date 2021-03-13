@@ -81,7 +81,7 @@ class exportBulkTask extends exportBulkBaseTask
       }
       catch (Exception $e)
       {
-        throw new sfException('Invalid XML generated for object '. $row['id'] .'.');
+        throw new sfException('Invalid XML generated for object '.$row['id'].'.');
       }
 
       if (isset($options['single-slug']) && $options['format'] == 'ead')
@@ -114,7 +114,7 @@ class exportBulkTask extends exportBulkBaseTask
       }
     }
 
-    print "\nExport complete (". $itemsExported ." descriptions exported).\n";
+    print "\nExport complete (".$itemsExported." descriptions exported).\n";
   }
 
   /**

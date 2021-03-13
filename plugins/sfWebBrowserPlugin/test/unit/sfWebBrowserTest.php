@@ -377,7 +377,7 @@ foreach($adapter_list as $adapter)
     $t->pass('an exception is thrown when an adapter error occurs');
   }
 
-  $t->is($b->get($example_site_url . '/nonexistentpage.html')->responseIsError(), true, 'responseIsError() returns true when response is an error');
+  $t->is($b->get($example_site_url.'/nonexistentpage.html')->responseIsError(), true, 'responseIsError() returns true when response is an error');
   $t->is($b->get($example_site_url)->responseIsError(), false, 'responseIsError() returns false when response is not an error');
 
   /*******************/

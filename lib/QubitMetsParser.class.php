@@ -453,7 +453,7 @@ class QubitMetsParser
     if (!isset($amdSecId))
     {
       throw new sfException(
-        'AMD section was not found for object UUID: ' . $objectUuid
+        'AMD section was not found for object UUID: '.$objectUuid
       );
     }
 

@@ -127,7 +127,7 @@ class ContactInformationIndexAction extends sfAction
       // Add source culture field values
       foreach(['contactType', 'city', 'region', 'note'] as $propertyName)
       {
-        $propertyGetMethod = 'get'. ucwords($propertyName);
+        $propertyGetMethod = 'get'.ucwords($propertyName);
         $sourceCultureData['fields'][$propertyName] = $this->resource->$propertyGetMethod(['sourceCulture' => true]);
       }
 

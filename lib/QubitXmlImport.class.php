@@ -561,7 +561,7 @@ class QubitXmlImport
           }
           else
           {
-            $nodeValue .= "\n\n" . self::replaceLineBreaks($pNode, $methodMap);
+            $nodeValue .= "\n\n".self::replaceLineBreaks($pNode, $methodMap);
           }
         }
       }
@@ -874,7 +874,7 @@ class QubitXmlImport
               }
               else
               {
-                $nodeValue .= "\n\n" . self::normalizeNodeValue($item);
+                $nodeValue .= "\n\n".self::normalizeNodeValue($item);
               }
             }
 

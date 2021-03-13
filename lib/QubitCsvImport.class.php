@@ -215,16 +215,16 @@ class QubitCsvImport
     // build output filename and path. Take source dir and name and create a
     // parallel temp file based on that.
     $csvFilePath = pathinfo($csvFile);
-    $outputFileName = tempnam($csvFilePath['dirname'], $csvFilePath['filename'] . '-');
-    $logFileName = $outputFileName . '.log';
+    $outputFileName = tempnam($csvFilePath['dirname'], $csvFilePath['filename'].'-');
+    $logFileName = $outputFileName.'.log';
 
     // Example: ./transform_csv.py /tmp/original_file.csv /tmp/transformed_file.csv
-    $command = sprintf(sfConfig::get('app_csv_transform_script_name') . ' %s %s',
+    $command = sprintf(sfConfig::get('app_csv_transform_script_name').' %s %s',
       escapeshellarg($csvFile),
       escapeshellarg($outputFileName)) ;
 
     // Redirect stderr to stdout to logfile.
-    $command .= ' 2>&1 > ' . $logFileName;
+    $command .= ' 2>&1 > '.$logFileName;
 
     exec($command, $output, $exitCode);
 

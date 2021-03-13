@@ -30,7 +30,7 @@ class arWidgetFormSelectRadioOaiAdditionalSetEnable extends sfWidgetFormSelectRa
     {
       foreach(QubitOai::getAdditionalOaiSets() as $set)
       {
-        $setUrl = url_for('oai') .'?verb=ListRecords&metadataPrefix=oai_dc&set='. $set->setSpec();
+        $setUrl = url_for('oai').'?verb=ListRecords&metadataPrefix=oai_dc&set='.$set->setSpec();
         $output .= $this->renderContentTag('div', $this->renderContentTag('a', $set->getName(), ['href' => $setUrl]));
       }
     }

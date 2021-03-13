@@ -172,10 +172,10 @@ class sfEadPlugin
 
     if ($this->siteBaseUrl)
     {
-      return $this->siteBaseUrl .'/'. ltrim($do->getFullPath(), '/');
+      return $this->siteBaseUrl.'/'.ltrim($do->getFullPath(), '/');
     }
 
-    return $this->siteBaseUrl .'/'. $do->getFullPath();
+    return $this->siteBaseUrl.'/'.$do->getFullPath();
   }
 
   public function renderEadId()
@@ -238,7 +238,7 @@ class sfEadPlugin
       }
 
       // Append the slug
-      $url .= '/'. $this->resource->slug;
+      $url .= '/'.$this->resource->slug;
 
       return $url;
     }
@@ -261,7 +261,7 @@ class sfEadPlugin
 
     if ($dataData['month'])
     {
-      $dateOutput .= '-'. $dateData['month'] .'-';
+      $dateOutput .= '-'.$dateData['month'].'-';
 
       // if a month is specified, add day specification as well
       $dateOutput .= ($dateData['day']) ? $dateData['day'] : '01';
@@ -287,7 +287,7 @@ class sfEadPlugin
 
   public function renderEadDateFromEvent($eventType, $event)
   {
-    $output = '<date type="'. $eventType .'" ';
+    $output = '<date type="'.$eventType.'" ';
 
     // create normalized date/date range
     if ($event->startDate || $event->endDate)
@@ -302,9 +302,9 @@ class sfEadPlugin
     }
 
     // add normalized portion of date tag if it exists
-    $output .= (isset($normalized)) ? 'normal="'. $normalized .'" ' : '';
+    $output .= (isset($normalized)) ? 'normal="'.$normalized.'" ' : '';
 
-    $output .= '>'. $event->date .'</date>';
+    $output .= '>'.$event->date.'</date>';
 
     return $output;
   }
@@ -410,12 +410,12 @@ class sfEadPlugin
 
       if (!in_array($levelOfDescription, $eadLevels))
       {
-        $renderedLOD = 'otherlevel="' . $levelOfDescription . '" ';
+        $renderedLOD = 'otherlevel="'.$levelOfDescription.'" ';
         $levelOfDescription = $defaultLevel;
       }
     }
 
-    $renderedLOD .= 'level="' . $levelOfDescription . '"';
+    $renderedLOD .= 'level="'.$levelOfDescription.'"';
 
     return $renderedLOD;
   }

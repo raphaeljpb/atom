@@ -102,7 +102,7 @@ EOF;
       }
 
       $this->log("New ability: $ability");
-      $worker->addAbility(QubitJob::getJobPrefix() . $ability);
+      $worker->addAbility(QubitJob::getJobPrefix().$ability);
     }
 
     $worker->attachCallback(
@@ -113,7 +113,7 @@ EOF;
       Net_Gearman_Worker::JOB_FAIL);
 
     $this->log('Running worker...');
-    $this->log('PID ' . getmypid());
+    $this->log('PID '.getmypid());
 
     $counter = 0;
 

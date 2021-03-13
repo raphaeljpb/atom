@@ -228,7 +228,7 @@ class QubitSaxParser
     $executeMethod = null;
 
     // Determine if a method should be called
-    $tagMethod = $tag . $handlerMethodSuffix;
+    $tagMethod = $tag.$handlerMethodSuffix;
 
     if (method_exists($this, $tagMethod))
     {
@@ -236,7 +236,7 @@ class QubitSaxParser
     }
     elseif (method_exists($this, $defaultHandlerMethod))
     {
-      $executeMethod = $tag . $handlerMethodSuffix;
+      $executeMethod = $tag.$handlerMethodSuffix;
     }
 
     // call method and log that is has been called

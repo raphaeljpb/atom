@@ -518,12 +518,12 @@ class QubitMigrate
 
       if (isset($options['fk']['onDelete']))
       {
-        $sql .= ' ON DELETE ' . $options['fk']['onDelete'];
+        $sql .= ' ON DELETE '.$options['fk']['onDelete'];
       }
 
       if (isset($options['fk']['onUpdate']))
       {
-        $sql .= ' ON UPDATE ' . $options['fk']['onUpdate'];
+        $sql .= ' ON UPDATE '.$options['fk']['onUpdate'];
       }
 
       $queries[] = $sql;

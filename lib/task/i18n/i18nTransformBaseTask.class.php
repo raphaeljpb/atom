@@ -137,7 +137,7 @@ abstract class i18nTransformBaseTask extends arBaseTask
 
         if ($columnsChanged)
         {
-          $message .= ' ('. $columnsChanged . ' changes)';
+          $message .= ' ('.$columnsChanged.' changes)';
         }
 
         $this->logSection('i18n', $message);
@@ -146,12 +146,12 @@ abstract class i18nTransformBaseTask extends arBaseTask
     }
 
     // Report summary of processing
-    $message = 'Processed '. $rowCount .' rows.';
+    $message = 'Processed '.$rowCount.' rows.';
 
     if ($changedCount)
     {
-      $message .= ' Changed '. $changedCount .' rows';
-      $message .= ' ('. $columnsChangedCount .' field values changed).';
+      $message .= ' Changed '.$changedCount.' rows';
+      $message .= ' ('.$columnsChangedCount.' field values changed).';
     }
 
     $this->logSection('i18n', $message);
@@ -194,17 +194,17 @@ abstract class i18nTransformBaseTask extends arBaseTask
   {
     $values = [];
 
-    $query = 'UPDATE '. $table .' SET ';
+    $query = 'UPDATE '.$table.' SET ';
 
     foreach ($columnValues as $column => $value)
     {
       $query .= (count($values)) ? ', ' : '';
-      $query .= $column ."=?";
+      $query .= $column."=?";
 
       $values[] = $value;
     }
 
-    $query .= " WHERE id='". $id ."' AND culture='". $culture ."'";
+    $query .= " WHERE id='".$id."' AND culture='".$culture."'";
 
     if (count($values))
     {

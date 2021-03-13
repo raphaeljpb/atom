@@ -129,7 +129,7 @@ class sfCurlAdapter
     // Additional options
     foreach ($curl_options as $key => $value)
     {
-      $const = constant('CURLOPT_' . strtoupper($key));
+      $const = constant('CURLOPT_'.strtoupper($key));
       if(!is_null($const))
       {
         curl_setopt($this->curl, $const, $value);

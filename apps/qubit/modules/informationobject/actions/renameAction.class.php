@@ -48,7 +48,7 @@ class InformationObjectRenameAction extends DefaultEditAction
 
         if ((null !== $postedSlug) && $this->resource->slug != $postedSlug)
         {
-          $message .= ' '. __('Slug was adjusted to remove special characters or because it has already been used for another description.');
+          $message .= ' '.__('Slug was adjusted to remove special characters or because it has already been used for another description.');
         }
 
         $this->getUser()->setFlash('notice', $message);
@@ -126,14 +126,14 @@ class InformationObjectRenameAction extends DefaultEditAction
     {
       // Parse filename so special characters can be removed
       $fileParts = pathinfo($postedFilename);
-      $filename = QubitSlug::slugify($fileParts['filename']) .'.'. QubitSlug::slugify($fileParts['extension']);
+      $filename = QubitSlug::slugify($fileParts['filename']).'.'.QubitSlug::slugify($fileParts['extension']);
 
       $digitalObject = $this->resource->digitalObjectsRelatedByobjectId[0];
 
       // Rename master file
-      $basePath = sfConfig::get('sf_web_dir') . $digitalObject->path;
-      $oldFilePath = $basePath . DIRECTORY_SEPARATOR . $digitalObject->name;
-      $newFilePath = $basePath . DIRECTORY_SEPARATOR . $filename;
+      $basePath = sfConfig::get('sf_web_dir').$digitalObject->path;
+      $oldFilePath = $basePath.DIRECTORY_SEPARATOR.$digitalObject->name;
+      $newFilePath = $basePath.DIRECTORY_SEPARATOR.$filename;
       rename($oldFilePath, $newFilePath);
       chmod($newFilePath, 0644);
 

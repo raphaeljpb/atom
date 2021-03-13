@@ -132,7 +132,7 @@ class propelGenerateSlugsTask extends arBaseTask
 
       if (defined("$class::ROOT_ID"))
       {
-        $sql .= '  base.id != '. $class::ROOT_ID .' AND';
+        $sql .= '  base.id != '.$class::ROOT_ID.' AND';
       }
 
       $sql .= ' sl.id is NULL';

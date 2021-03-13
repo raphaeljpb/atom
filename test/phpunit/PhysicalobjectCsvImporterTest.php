@@ -50,11 +50,11 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
 
     // define virtual file system
     $directory = [
-      'unix.csv' => $this->csvHeader . "\n" . implode("\n", $this->csvData),
-      'windows.csv' => $this->csvHeader . "\r\n" .
-        implode("\r\n", $this->csvData) . "\r\n",
-      'noheader.csv' => implode("\n", $this->csvData) . "\n",
-      'duplicate.csv' => $this->csvHeader . "\n" . implode("\n",
+      'unix.csv' => $this->csvHeader."\n".implode("\n", $this->csvData),
+      'windows.csv' => $this->csvHeader."\r\n".
+        implode("\r\n", $this->csvData)."\r\n",
+      'noheader.csv' => implode("\n", $this->csvData)."\n",
+      'duplicate.csv' => $this->csvHeader."\n".implode("\n",
         $this->csvData + $this->csvData),
       'root.csv' => $this->csvData[0],
       'error.log' => '',
@@ -258,21 +258,21 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
   {
     $this->expectException(sfException::class);
     $importer = new PhysicalObjectCsvImporter($this->context, $this->vdbcon);
-    $importer->setFilename($this->vfs->url() . '/root.csv');
+    $importer->setFilename($this->vfs->url().'/root.csv');
   }
 
   public function testSetFilenameSuccess()
   {
     // Explicit method call
     $importer = new PhysicalObjectCsvImporter($this->context, $this->vdbcon);
-    $importer->setFilename($this->vfs->url() . '/unix.csv');
-    $this->assertSame($this->vfs->url() . '/unix.csv',
+    $importer->setFilename($this->vfs->url().'/unix.csv');
+    $this->assertSame($this->vfs->url().'/unix.csv',
       $importer->getFilename());
 
     // Magic __set
     $importer = new PhysicalObjectCsvImporter($this->context, $this->vdbcon);
-    $importer->setFilename($this->vfs->url() . '/windows.csv');
-    $this->assertSame($this->vfs->url() . '/windows.csv',
+    $importer->setFilename($this->vfs->url().'/windows.csv');
+    $this->assertSame($this->vfs->url().'/windows.csv',
       $importer->getFilename());
   }
 
@@ -403,7 +403,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
 
   public function testSourceNameDefaultsToFilename()
   {
-    $filename = $this->vfs->url() . '/unix.csv';
+    $filename = $this->vfs->url().'/unix.csv';
     $importer = new PhysicalObjectCsvImporter($this->context, $this->vdbcon);
     $importer->setFilename($filename);
 
@@ -431,7 +431,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
     $importer->setOffset(1);
     $importer->setOption('quiet', true);
 
-    $records = $importer->loadCsvData($this->vfs->url() . '/unix.csv');
+    $records = $importer->loadCsvData($this->vfs->url().'/unix.csv');
 
     $this->assertSame(explode(',', $this->csvHeader), $importer->getHeader());
     $this->assertSame($this->getCsvRowAsAssocArray(1), $records->fetchOne());
@@ -444,7 +444,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
     $importer->setHeader($this->csvHeader);
     $importer->setOption('quiet', true);
 
-    $records = $importer->loadCsvData($this->vfs->url() . '/noheader.csv');
+    $records = $importer->loadCsvData($this->vfs->url().'/noheader.csv');
 
     $this->assertSame(explode(',', $this->csvHeader), $importer->getHeader());
     $this->assertSame($this->getCsvRowAsAssocArray(0), $records->fetchOne());
@@ -578,7 +578,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
   {
     $importer = new PhysicalObjectCsvImporter($this->context, $this->vdbcon);
     $this->assertSame(
-      'Total import time: 0.00s' . PHP_EOL,
+      'Total import time: 0.00s'.PHP_EOL,
       $importer->reportTimes()
     );
   }

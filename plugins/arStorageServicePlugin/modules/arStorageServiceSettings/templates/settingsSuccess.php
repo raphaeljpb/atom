@@ -41,7 +41,7 @@
         <?php echo $form->storage_service_api_key
           ->label(__(
             'Storage Service API key, e.g.'
-            . '"2ef7bde608ce5404e97d5f042f95f89f1c232871"'
+            .'"2ef7bde608ce5404e97d5f042f95f89f1c232871"'
           ))
           ->renderRow() ?>
 
@@ -55,7 +55,7 @@
           ->label(__('Enable AIP download'))
           ->help(__(
             'Allow authorized users to download a linked AIP or AIP file from'
-            . ' the configured Archivematica Storage Service'
+            .' the configured Archivematica Storage Service'
           ))
           ->renderRow() ?>
 

@@ -263,7 +263,7 @@ class ObjectImportSelectAction extends DefaultEditAction
   {
     $validColumnCount = 0;
 
-    $exportTypeConfig = QubitFlatfileExport::loadResourceConfigFile($className .'.yml', $className);
+    $exportTypeConfig = QubitFlatfileExport::loadResourceConfigFile($className.'.yml', $className);
 
     // Get first row of possible CSV file
     $fh = fopen($fileName, 'rb');

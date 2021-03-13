@@ -469,7 +469,7 @@ EOF;
 
           if (!$pubStatusTermId)
           {
-            print "\nPublication status: '". $self->rowStatusVars['publicationStatus'] ."' is invalid. Using default.\n";
+            print "\nPublication status: '".$self->rowStatusVars['publicationStatus']."' is invalid. Using default.\n";
             $pubStatusTermId = $self->status['defaultStatusId'];
           }
         }
@@ -630,7 +630,7 @@ EOF;
                   }
                   else
                   {
-                    throw new sfException('Could not find term "'. $subject .'"');
+                    throw new sfException('Could not find term "'.$subject.'"');
                   }
                 }
               }
@@ -689,7 +689,7 @@ EOF;
 
               if (null === $accession = QubitAccession::getone($criteria))
               {
-                print "\nCreating accession # ". $accessionNumber ."\n";
+                print "\nCreating accession # ".$accessionNumber."\n";
 
                 // Create new accession
                 $accession = new QubitAccession();
@@ -707,7 +707,7 @@ EOF;
               $accessionId = $accessionMapEntry->target_id;
             }
 
-            print "\nAssociating accession # ". $accessionNumber ." with ". $self->object->title ."\n";
+            print "\nAssociating accession # ".$accessionNumber." with ".$self->object->title."\n";
 
             // Add relationship between information object and accession
             $self->createRelation($self->object->id, $accessionId, QubitTerm::ACCESSION_ID);
@@ -730,7 +730,7 @@ EOF;
           switch (strtolower($self->rowStatusVars['copyrightStatus']))
           {
             case 'under copyright':
-              print "Adding rights for ". $self->object->title ."...\n";
+              print "Adding rights for ".$self->object->title."...\n";
               $rightsHolderId = false;
               $rightsHolderNames = explode('|', $self->rowStatusVars['copyrightHolder']);
 
@@ -780,7 +780,7 @@ EOF;
 
                   if (!is_numeric($rightAndRelation['endDate']))
                   {
-                    throw new sfException('Copyright expiry '. $rightAndRelation['endDate']
+                    throw new sfException('Copyright expiry '.$rightAndRelation['endDate']
                       .' is invalid.');
                   }
                 }
@@ -848,7 +848,7 @@ EOF;
 
             default:
               throw new sfException('Copyright status "'
-                . $self->rowStatusVars['copyrightStatus']
+                .$self->rowStatusVars['copyrightStatus']
                 .'" not handled: adjust script or import data');
 
               break;
@@ -896,7 +896,7 @@ EOF;
     // Convert content with | characters to a bulleted list
     $import->contentFilterLogic = function ($text)
     {
-      return (substr_count($text, '|')) ? '* '. str_replace("|", "\n* ", $text) : $text;
+      return (substr_count($text, '|')) ? '* '.str_replace("|", "\n* ", $text) : $text;
     };
 
     $import->addColumnHandler('levelOfDescription', function ($self, $data)

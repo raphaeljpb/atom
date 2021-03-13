@@ -208,7 +208,7 @@ EOF;
       // Upgrades post to Release 1.3 (v92) are located under
       // task/migrate/migrations and named using the following format:
       // "arMigration%04d.class.php" (the first one is arMigration0093.class.php)
-      $version = $this->runMigrationsInDirectory($version, sfConfig::get('sf_lib_dir') . '/task/migrate/migrations',
+      $version = $this->runMigrationsInDirectory($version, sfConfig::get('sf_lib_dir').'/task/migrate/migrations',
                                       $previousMilestone, $currentMilestone);
     }
 
@@ -541,7 +541,7 @@ EOF;
       $n = 0;
       foreach (array_keys($themes) as $theme)
       {
-        print ++$n . ") $theme\n";
+        print ++$n.") $theme\n";
       }
 
       $choice = (int) readline('Select theme number: ');
@@ -568,10 +568,10 @@ EOF;
     $plugins = [];
     foreach ($pluginPaths as $name => $path)
     {
-      $className = $name . 'Configuration';
+      $className = $name.'Configuration';
 
       if (strpos($path, sfConfig::get('sf_plugins_dir')) === 0 &&
-          is_readable($classPath = $path . '/config/' . $className . '.class.php'))
+          is_readable($classPath = $path.'/config/'.$className.'.class.php'))
       {
         if ($themePluginsOnly)
         {

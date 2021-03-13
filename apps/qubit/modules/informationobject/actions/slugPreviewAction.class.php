@@ -60,7 +60,7 @@ class InformationObjectSlugPreviewAction extends sfAction
 
       // Padded text if slugified text slug is used by another resource
       $counter++;
-      $text = $originalText .'-' . $counter;
+      $text = $originalText.'-'.$counter;
 
       $slug = QubitSlug::getOne($criteria);
     }

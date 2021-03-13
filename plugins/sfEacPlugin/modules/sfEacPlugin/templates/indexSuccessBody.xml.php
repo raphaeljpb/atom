@@ -178,7 +178,7 @@
         <?php endif; ?>
 
         <?php if ($eac->biogHist): ?>
-          <biogHist id="<?php echo 'md5-' . md5(url_for([$resource, 'module' => 'actor'], true)) ?>"><?php echo $eac->biogHist ?></biogHist>
+          <biogHist id="<?php echo 'md5-'.md5(url_for([$resource, 'module' => 'actor'], true)) ?>"><?php echo $eac->biogHist ?></biogHist>
         <?php endif; ?>
 
         <?php if (count($occupations = $resource->getOccupations()) > 0): ?>

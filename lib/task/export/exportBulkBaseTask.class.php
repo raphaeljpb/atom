@@ -59,7 +59,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
 
   public static function captureResourceExportTemplateOutput($resource, $format, $options = [])
   {
-    $pluginName = 'sf'. ucfirst($format) .'Plugin';
+    $pluginName = 'sf'.ucfirst($format).'Plugin';
     $template = sprintf('plugins/%s/modules/%s/templates/indexSuccess.xml.php', $pluginName, $pluginName);
 
     switch($format)
@@ -104,7 +104,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
     if ($format == 'dc')
     {
       // Hack to get around issue with get_component helper run from worker (qubitConfiguration->getControllerDirs returns wrong dirs)
-      $output = '<?xml version="1.0" encoding="'.sfConfig::get('sf_charset', 'UTF-8')."\" ?>\n". $output;
+      $output = '<?xml version="1.0" encoding="'.sfConfig::get('sf_charset', 'UTF-8')."\" ?>\n".$output;
     }
     ob_end_clean();
 
@@ -142,7 +142,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
         throw new sfException('Slug '.$options['single-slug'].' not found.');
       }
 
-      $whereClause = 'i.lft >= '. $slug->lft .' AND i.rgt <='. $slug->rgt;
+      $whereClause = 'i.lft >= '.$slug->lft.' AND i.rgt <='.$slug->rgt;
     }
     else
     {
@@ -164,7 +164,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
     // Assemble full query
     $query = "SELECT * FROM information_object i
       INNER JOIN information_object_i18n i18n ON i.id=i18n.id
-      WHERE ". $whereClause;
+      WHERE ".$whereClause;
 
     // Order by place in hierarchy so parents are exported before children
     $query .= ' ORDER BY i.lft';
@@ -223,7 +223,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
 
     if (!in_array($format, $validFormats))
     {
-      throw new sfException('Invalid format. Allowed formats: '. join(', ', $validFormats));
+      throw new sfException('Invalid format. Allowed formats: '.join(', ', $validFormats));
     }
 
     return $format;

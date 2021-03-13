@@ -162,7 +162,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     $this->aip->save();
 
     sfContext::getInstance()->getLogger()->info(
-      'METSArchivematicaDIP - aipUUID: ' . $aipUUID
+      'METSArchivematicaDIP - aipUUID: '.$aipUUID
     );
   }
 
@@ -191,7 +191,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     $objectUUID = $this->mappings['uuidMapping'][$fileId];
 
     sfContext::getInstance()->getLogger()->info(
-      'METSArchivematicaDIP - objectUUID: ' . $objectUUID
+      'METSArchivematicaDIP - objectUUID: '.$objectUUID
     );
 
     // Add any descriptive metadata recorded in the METS file
@@ -361,7 +361,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     catch (sfException $e)
     {
       sfContext::getInstance()->getLogger()->err(
-        'METSArchivematicaDIP -             ' . $e->getMessage()
+        'METSArchivematicaDIP -             '.$e->getMessage()
       );
     }
 
@@ -468,7 +468,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
       {
         sfContext::getInstance()->getLogger()->info(
           'METSArchivematicaDIP -             Access copy cannot be found in'
-          . ' the DIP'
+          .' the DIP'
         );
 
         // Do not create information_objects for files without an access copy,

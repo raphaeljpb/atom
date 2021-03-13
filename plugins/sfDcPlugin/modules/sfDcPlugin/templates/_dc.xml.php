@@ -41,7 +41,7 @@
     <dc:format><?php echo esc_specialchars(strval($item)) ?></dc:format>
   <?php endforeach; ?>
 
-  <dc:identifier><?php echo esc_specialchars(sfConfig::get('app_siteBaseUrl') .'/'.$resource->slug) ?></dc:identifier>
+  <dc:identifier><?php echo esc_specialchars(sfConfig::get('app_siteBaseUrl').'/'.$resource->slug) ?></dc:identifier>
 
   <?php if (!empty($resource->identifier)): ?>
     <?php if (sfConfig::get('app_inherit_code_dc_xml', false)): ?>

@@ -1343,7 +1343,7 @@ class QubitDigitalObject extends BaseDigitalObject
       unlink($filePathName);
       rmdir($objectPath);
 
-      throw new sfException('Checksum values did not validate: '. $filePathName);
+      throw new sfException('Checksum values did not validate: '.$filePathName);
     }
 
     // set file permissions
@@ -1865,7 +1865,7 @@ class QubitDigitalObject extends BaseDigitalObject
         break;
     }
 
-    return self::GENERIC_ICON_DIR . '/' . $mediaTypeFilename;
+    return self::GENERIC_ICON_DIR.'/'.$mediaTypeFilename;
   }
 
   /**
@@ -2032,7 +2032,7 @@ class QubitDigitalObject extends BaseDigitalObject
       }
       else
       {
-        $command = 'identify '. $filename;
+        $command = 'identify '.$filename;
         exec($command, $output, $status);
         $pages = count($output);
       }

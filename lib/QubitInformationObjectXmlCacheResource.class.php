@@ -64,11 +64,11 @@ class QubitInformationObjectXmlCacheResource
     {
       $filename .= '_contents';
     }
-    $filename .= '.'. strtolower($format) .'.xml';
+    $filename .= '.'.strtolower($format).'.xml';
 
-    $exportsPath = 'downloads' . DIRECTORY_SEPARATOR . 'exports';
+    $exportsPath = 'downloads'.DIRECTORY_SEPARATOR.'exports';
 
-    return $exportsPath . DIRECTORY_SEPARATOR . strtolower($format) . DIRECTORY_SEPARATOR . $filename;
+    return $exportsPath.DIRECTORY_SEPARATOR.strtolower($format).DIRECTORY_SEPARATOR.$filename;
   }
 
   /**
@@ -82,7 +82,7 @@ class QubitInformationObjectXmlCacheResource
   {
     $path = self::getFilePath($this->resource->id, $format);
 
-    if (file_exists(sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . $path))
+    if (file_exists(sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$path))
     {
       return $path;
     }

@@ -66,7 +66,7 @@ class QubitUser extends BaseUser
     // Hash password first as SHA-1 (and salt) for backwards data compatibility
     $salt = md5(rand(100000, 999999).$this->getEmail());
     $this->setSalt($salt);
-    $sha1Hash = sha1($salt . $password);
+    $sha1Hash = sha1($salt.$password);
 
     // Re-hash using more secure algorithm
     $this->setPasswordHash(self::generatePasswordHash($sha1Hash));
@@ -160,7 +160,7 @@ class QubitUser extends BaseUser
 
       // Check password, hashed with salt using SHA-1, against stored hash
       // (hash algorithm, options, and salt get detected from stored hash)
-      if (password_verify(sha1($user->getSalt() . $password), $user->getPasswordHash()))
+      if (password_verify(sha1($user->getSalt().$password), $user->getPasswordHash()))
       {
         $validCreds = true;
       }

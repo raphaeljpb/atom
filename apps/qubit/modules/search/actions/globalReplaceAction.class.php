@@ -58,7 +58,7 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
 
         if (isset($request->allowRegex))
         {
-          $pattern = '/' . strtr($request->pattern, ['/' => '\/']) . '/';
+          $pattern = '/'.strtr($request->pattern, ['/' => '\/']).'/';
           if (!isset($request->caseSensitive)) $pattern .= 'i';
 
           $replacement = strtr($request->replacement, ['/' => '\/']);

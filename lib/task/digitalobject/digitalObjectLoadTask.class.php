@@ -139,12 +139,12 @@ class digitalObjectLoadTask extends sfBaseTask
     $this->curObjNum = 0;
 
     // Set up prepared query based on identifier type
-    $sql = 'SELECT io.id, do.id FROM ' . QubitInformationObject::TABLE_NAME . ' io ';
+    $sql = 'SELECT io.id, do.id FROM '.QubitInformationObject::TABLE_NAME.' io ';
     if ($idType == 'slug')
     {
-      $sql .= 'JOIN ' . QubitSlug::TABLE_NAME . ' slug ON slug.object_id = io.id ';
+      $sql .= 'JOIN '.QubitSlug::TABLE_NAME.' slug ON slug.object_id = io.id ';
     }
-    $sql .= 'LEFT JOIN ' . QubitDigitalObject::TABLE_NAME . ' do ON io.id = do.object_id';
+    $sql .= 'LEFT JOIN '.QubitDigitalObject::TABLE_NAME.' do ON io.id = do.object_id';
 
     if ($idType == 'id')
     {

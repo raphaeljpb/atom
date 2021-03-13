@@ -246,9 +246,9 @@ class arElasticSearchPluginQuery
     $queryBool = new \Elastica\Query\BoolQuery();
     $count = 0;
 
-    while (isset($params['sq' . $count]))
+    while (isset($params['sq'.$count]))
     {
-      $query = $params['sq' . $count];
+      $query = $params['sq'.$count];
 
       if (!empty($query))
       {

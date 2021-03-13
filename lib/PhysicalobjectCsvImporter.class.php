@@ -487,10 +487,10 @@ EOM;
     if (!$this->getOption('debug'))
     {
       return sprintf('Total import time: %01.2fs',
-        $this->getElapsedTime('total')) . PHP_EOL;
+        $this->getElapsedTime('total')).PHP_EOL;
     }
 
-    $msg = 'Elapsed times:' . PHP_EOL;
+    $msg = 'Elapsed times:'.PHP_EOL;
 
     $times = [
       [
@@ -536,12 +536,12 @@ EOM;
 
     foreach ($times as $val)
     {
-      $msg .= '  ' . sprintf($val[0], (float) $val[1]) . PHP_EOL;
+      $msg .= '  '.sprintf($val[0], (float) $val[1]).PHP_EOL;
     }
 
-    $msg .= '---------------------------------' . PHP_EOL;
+    $msg .= '---------------------------------'.PHP_EOL;
     $msg .= sprintf('Total import time:          %01.2fs',
-      $this->getElapsedTime('total')) . PHP_EOL;
+      $this->getElapsedTime('total')).PHP_EOL;
 
     return $msg;
   }
@@ -711,7 +711,7 @@ EOQ;
   {
     if (!$this->getOption('quiet'))
     {
-      echo $msg . PHP_EOL;
+      echo $msg.PHP_EOL;
     }
   }
 
@@ -720,7 +720,7 @@ EOQ;
     // Write to error log (but not STDERR) even in quiet mode
     if (!$this->getOption('quiet') || STDERR != $this->getErrorLogHandle())
     {
-      fwrite($this->getErrorLogHandle(), $msg . PHP_EOL);
+      fwrite($this->getErrorLogHandle(), $msg.PHP_EOL);
     }
   }
 

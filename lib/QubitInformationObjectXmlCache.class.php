@@ -73,7 +73,7 @@ class QubitInformationObjectXmlCache
 
     // Get not-root and published information objects (sorted by ID so optional
     // skip/limit will be consistent)
-    $sql = "SELECT i.id FROM ". QubitInformationObject::TABLE_NAME ." i \r
+    $sql = "SELECT i.id FROM ".QubitInformationObject::TABLE_NAME." i \r
       INNER JOIN status s ON i.id=s.object_id \r
       WHERE i.id != :root_id \r
       AND s.status_id=:status_id AND s.type_id=:type_id \r
@@ -134,15 +134,15 @@ class QubitInformationObjectXmlCache
    */
   protected function createExportDestinationDirs()
   {
-    $exportsPath = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . 'downloads' . DIRECTORY_SEPARATOR .'exports';
+    $exportsPath = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'downloads'.DIRECTORY_SEPARATOR.'exports';
 
-    $eadExportPath = $exportsPath . DIRECTORY_SEPARATOR .'ead';
+    $eadExportPath = $exportsPath.DIRECTORY_SEPARATOR.'ead';
     if (!is_dir($eadExportPath))
     {
       mkdir($eadExportPath, 0755, true);
     }
 
-    $dcExportPath = $exportsPath . DIRECTORY_SEPARATOR .'dc';
+    $dcExportPath = $exportsPath.DIRECTORY_SEPARATOR.'dc';
     if (!is_dir($dcExportPath))
     {
       mkdir($dcExportPath, 0755, true);

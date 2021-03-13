@@ -25,7 +25,7 @@ class arWidgetFormUploadQuota extends sfWidgetFormInput
 
     if ($uploadLimit === 0)
     {
-      return '<label>' . __('%1% upload is disabled', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]) . '</label>';
+      return '<label>'.__('%1% upload is disabled', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]).'</label>';
     }
     elseif ($uploadLimit === -1)
     {
@@ -38,7 +38,7 @@ class arWidgetFormUploadQuota extends sfWidgetFormInput
       return '<label>'.__('The uploads directory has not been created yet.').'</label>';
     }
 
-    return '<label>' . __('%1% used of %2%', [
+    return '<label>'.__('%1% used of %2%', [
       '%1%' => hr_filesize($size),
       '%2%' => $uploadLimit.' GB']).'</label>';
   }

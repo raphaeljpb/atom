@@ -111,7 +111,7 @@ EOF;
           );
 
           $whereClause = ($self->status['sourceName'] && $self->status['objectTable'] == 'keymap')
-            ? 'source_name = "'. $self->status['sourceName'] .'"'
+            ? 'source_name = "'.$self->status['sourceName'].'"'
             : false;
 
           $self->status['objectKeys'] = getNameIdArrayFromTable(
@@ -163,7 +163,7 @@ EOF;
             $self->status['goodObjects']++;
 
             $type = $self->columnValue($self->status['relationTypeColumn']);
-            print 'Relate '. $subjectId .' to '. $objectId .' as '. $type .".\n";
+            print 'Relate '.$subjectId.' to '.$objectId.' as '.$type.".\n";
 
             $typeId = array_search($type, $self->status['eventTypes'][$self->columnValue('culture')]);
 
@@ -188,23 +188,23 @@ EOF;
           else
           {
             $self->status['badObjects']++;
-            print 'ERROR: object '. $objectKey ." not found.\n";
+            print 'ERROR: object '.$objectKey." not found.\n";
           }
         }
         else
         {
           $self->status['badSubjects']++;
-          print 'ERROR: subject '. $subjectKey ." not found.\n";
+          print 'ERROR: subject '.$subjectKey." not found.\n";
         }
       },
 
       'completeLogic' => function (&$self)
       {
         print "Import complete.\n";
-        print "Good subjects: ". $self->status['goodSubjects'] ."\n";
-        print "Bad subjects:  ". $self->status['badSubjects'] ."\n";
-        print "Good objects:  ". $self->status['goodObjects'] ."\n";
-        print "Bad objects:   ". $self->status['badObjects'] ."\n";
+        print "Good subjects: ".$self->status['goodSubjects']."\n";
+        print "Bad subjects:  ".$self->status['badSubjects']."\n";
+        print "Good objects:  ".$self->status['goodObjects']."\n";
+        print "Bad objects:   ".$self->status['badObjects']."\n";
       }
     ]);
 
@@ -229,9 +229,9 @@ function getNameIdArrayFromTable(&$self, $tableName, $keyColumn, $idColumn, $whe
 {
   $names = [];
 
-  $query = "SELECT ". $keyColumn .", ". $idColumn ." FROM ". $tableName;
+  $query = "SELECT ".$keyColumn.", ".$idColumn." FROM ".$tableName;
 
-  $query .= ($whereClause) ? ' WHERE '. $whereClause : '';
+  $query .= ($whereClause) ? ' WHERE '.$whereClause : '';
 
   $statement = $self->sqlQuery($query);
 

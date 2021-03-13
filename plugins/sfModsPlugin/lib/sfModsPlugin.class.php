@@ -69,7 +69,7 @@ class sfModsPlugin implements ArrayAccess
 
       case 'uri':
 
-        return $this->baseUrl() .'/index.php/'. $this->resource->slug;
+        return $this->baseUrl().'/index.php/'.$this->resource->slug;
 
       case 'name':
         $name = [];
@@ -281,7 +281,7 @@ class sfModsPlugin implements ArrayAccess
   protected function baseUrl()
   {
     $baseUrl = QubitSetting::getByName('siteBaseUrl');
-    $baseUrl = ($baseUrl == null) ? 'http://'. gethostname() : $baseUrl;
+    $baseUrl = ($baseUrl == null) ? 'http://'.gethostname() : $baseUrl;
 
     return $baseUrl;
   }

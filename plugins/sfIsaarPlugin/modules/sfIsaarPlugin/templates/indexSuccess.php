@@ -151,9 +151,9 @@
           <?php echo render_show(__('Category of relationship'), render_value_inline($item->type->parent)) ?>
 
           <?php if ($resource->id != $item->objectId): ?>
-            <?php echo render_show(__('Type of relationship'), link_to(render_title($relatedEntity), [$relatedEntity, 'module' => ('QubitRepository' == $relatedEntity->className) ? 'repository' : 'actor']) .' '. render_value($item->type) .' '. render_value($resource->getAuthorizedFormOfName(['cultureFallback' => true]))) ?>
+            <?php echo render_show(__('Type of relationship'), link_to(render_title($relatedEntity), [$relatedEntity, 'module' => ('QubitRepository' == $relatedEntity->className) ? 'repository' : 'actor']).' '.render_value($item->type).' '.render_value($resource->getAuthorizedFormOfName(['cultureFallback' => true]))) ?>
           <?php elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($item->type->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]))): ?>
-            <?php echo render_show(__('Type of relationship'), link_to(render_title($relatedEntity), [$relatedEntity, 'module' => ('QubitRepository' == $relatedEntity->className) ? 'repository' : 'actor']) .' '. render_value($converseTerms[0]->getOpposedObject($item->type)) .' '. render_value($resource->getAuthorizedFormOfName(['cultureFallback' => true]))) ?>
+            <?php echo render_show(__('Type of relationship'), link_to(render_title($relatedEntity), [$relatedEntity, 'module' => ('QubitRepository' == $relatedEntity->className) ? 'repository' : 'actor']).' '.render_value($converseTerms[0]->getOpposedObject($item->type)).' '.render_value($resource->getAuthorizedFormOfName(['cultureFallback' => true]))) ?>
           <?php endif; ?>
         <?php endif; ?>
 

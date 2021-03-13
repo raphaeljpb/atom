@@ -185,7 +185,7 @@ class QubitPhysicalObjectCsvHoldingsReport
   public function export(Object $writer)
   {
     $sql = "SELECT p.id \r
-              FROM " . $this->ormClasses['physicalobject']::TABLE_NAME . " p \r
+              FROM ".$this->ormClasses['physicalobject']::TABLE_NAME." p \r
               INNER JOIN physical_object_i18n pi \r
               ON p.id=pi.id \r
               WHERE p.source_culture=pi.culture \r
@@ -247,8 +247,8 @@ class QubitPhysicalObjectCsvHoldingsReport
   {
     // Fetch physical object's holdings
     $sql = "SELECT r.object_id, o.class_name \r
-              FROM " . QubitRelation::TABLE_NAME . " r \r
-              INNER JOIN " . QubitObject::TABLE_NAME . " o \r
+              FROM ".QubitRelation::TABLE_NAME." r \r
+              INNER JOIN ".QubitObject::TABLE_NAME." o \r
               ON r.object_id=o.id \r
               WHERE r.subject_id=? \r
               AND r.type_id=?";

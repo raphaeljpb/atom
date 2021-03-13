@@ -39,7 +39,7 @@
 <?php
 
 // Template for new display table rows
-$editHtml = '<a href="#">' . image_tag('pencil', ['alt' => __('Edit'), 'style' => 'align: top']) . '</a>';
+$editHtml = '<a href="#">'.image_tag('pencil', ['alt' => __('Edit'), 'style' => 'align: top']).'</a>';
 
 $rowTemplate = json_encode(<<<value
 <tr id="{{$form->getWidgetSchema()->generateName('id')}}">

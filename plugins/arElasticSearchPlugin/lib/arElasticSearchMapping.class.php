@@ -161,7 +161,7 @@ class arElasticSearchMapping
   public static function getI18nFields($class)
   {
     // Use table maps to find existing i18n columns
-    $className = str_replace('Qubit', '', $class) . 'I18nTableMap';
+    $className = str_replace('Qubit', '', $class).'I18nTableMap';
 
     // Ignore models without i18n table that will include i18nExtra (donors)
     if (!class_exists($className))

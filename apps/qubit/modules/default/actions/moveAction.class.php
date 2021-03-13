@@ -84,9 +84,9 @@ class DefaultMoveAction extends sfAction
         sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
 
         $jobManageUrl = url_for(['module' => 'jobs', 'action' => 'browse']);
-        $jobManageLink = '<a href="'. $jobManageUrl . '">'. $this->context->i18n->__('job management') .'</a>';
+        $jobManageLink = '<a href="'.$jobManageUrl.'">'.$this->context->i18n->__('job management').'</a>';
 
-        $message = '<strong>'. $this->context->i18n->__('Move initiated.') .'</strong> ';
+        $message = '<strong>'.$this->context->i18n->__('Move initiated.').'</strong> ';
         $message .= $this->context->i18n->__("If job hasn't already completed, check %1% page to determine present status.", ['%1%' => $jobManageLink]);
         $this->getUser()->setFlash('notice', $message);
 
@@ -118,8 +118,8 @@ class DefaultMoveAction extends sfAction
     {
       // Show alert
       $message = $this->context->i18n->__(
-        "We've redirected you to the first page of results." .
-        " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
+        "We've redirected you to the first page of results.".
+        " To avoid using vast amounts of memory, AtoM limits pagination to %1% records.".
         " Please, narrow down your results.",
         ['%1%' => $maxResultWindow]
       );

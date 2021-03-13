@@ -84,15 +84,15 @@ class InformationObjectFullWidthTreeViewMoveAction extends sfAction
     {
       $this->response->setStatusCode(500);
 
-      return $this->renderText(json_encode(['error' => $i18n->__('Move failed: ') . $e->getMessage()]));
+      return $this->renderText(json_encode(['error' => $i18n->__('Move failed: ').$e->getMessage()]));
     }
 
     sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
 
     $jobManageUrl = url_for(['module' => 'jobs', 'action' => 'browse']);
-    $jobManageLink = '<a href="'. $jobManageUrl . '">'. $i18n->__('job management') .'</a>';
+    $jobManageLink = '<a href="'.$jobManageUrl.'">'.$i18n->__('job management').'</a>';
 
-    $message = '<strong>'. $i18n->__('Move initiated.') .'</strong> ';
+    $message = '<strong>'.$i18n->__('Move initiated.').'</strong> ';
     $message .= $i18n->__("Check the %1% page to determine present status. You can keep moving nodes if you don't reload the page. Once the page is reloaded, if a move job hasn't ended, your recent change(s) may not yet be displayed and new changes may fail. After the move job ends and the page is reloaded, the treeview will be back to a stable status.", ['%1%' => $jobManageLink]);
 
     $this->response->setStatusCode(201);

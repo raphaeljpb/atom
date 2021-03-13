@@ -42,7 +42,7 @@ class csvDigitalObjectPathsCheckTask extends arBaseTask
 
     $csvFilePathColumnName = ($options['csv-column-name']) ? $options['csv-column-name'] : 'digitalObjectPath';
 
-    $this->logSection('digital-object-path-check', 'Checking '. $csvFilePathColumnName .' column.');
+    $this->logSection('digital-object-path-check', 'Checking '.$csvFilePathColumnName.' column.');
 
     $this->printImageUsageInfo($arguments['path-to-images'], $arguments['path-to-csv-file'], $csvFilePathColumnName);
   }
@@ -175,7 +175,7 @@ EOF;
 
     foreach ($imageUses as $image => $uses)
     {
-      if (!file_exists($pathToImages .'/'. $image))
+      if (!file_exists($pathToImages.'/'.$image))
       {
         array_push($missingFiles, $image);
       }
@@ -188,11 +188,11 @@ EOF;
   {
     if (count($list))
     {
-      print $listHeader ."\n";
+      print $listHeader."\n";
 
       foreach($list as $item)
       {
-        print '* '. $item ."\n";
+        print '* '.$item."\n";
       }
 
       print "\n";

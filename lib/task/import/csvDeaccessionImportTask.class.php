@@ -110,7 +110,7 @@ EOF;
         }
         else
         {
-          $error = "Skipping. Match not found for accession number: ". $accessionIdentifier;
+          $error = "Skipping. Match not found for accession number: ".$accessionIdentifier;
           print $self->logError($error);
         }
       },
@@ -126,14 +126,14 @@ EOF;
         {
           // Try and find existing Deaccession
           $deaccessionQueryStatement = $self->sqlQuery(
-            "SELECT deaccession.id FROM deaccession" .
-            " JOIN deaccession_i18n ON deaccession_i18n.id = deaccession.id" .
-            " WHERE deaccession.identifier=?" .
-            " AND deaccession.date=?" .
-            " AND deaccession.scope_id=?" .
-            " AND deaccession_i18n.description=?" .
-            " AND deaccession_i18n.extent=?" .
-            " AND deaccession_i18n.reason=?" .
+            "SELECT deaccession.id FROM deaccession".
+            " JOIN deaccession_i18n ON deaccession_i18n.id = deaccession.id".
+            " WHERE deaccession.identifier=?".
+            " AND deaccession.date=?".
+            " AND deaccession.scope_id=?".
+            " AND deaccession_i18n.description=?".
+            " AND deaccession_i18n.extent=?".
+            " AND deaccession_i18n.reason=?".
             " AND deaccession.source_culture=?",
             $params = [$self->object->identifier,
               $self->object->date,
@@ -154,7 +154,7 @@ EOF;
         if (!$createDeaccession)
         {
           $self->object = null;
-          $error = "Skipping duplicate deaccession: ". $self->rowStatusVars['accessionNumber'];
+          $error = "Skipping duplicate deaccession: ".$self->rowStatusVars['accessionNumber'];
           print $self->logError($error);
         }
       },

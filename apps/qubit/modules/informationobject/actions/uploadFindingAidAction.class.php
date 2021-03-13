@@ -42,7 +42,7 @@ class InformationObjectUploadFindingAidAction extends sfAction
     }
 
     $this->format = arFindingAidJob::getFindingAidFormat();
-    $accept = 'application/' . $this->format;
+    $accept = 'application/'.$this->format;
     $mimeTypes = [$accept];
 
     // sfValidatorFile gets 'text/rtf' as the mime type of RTF files
@@ -72,7 +72,7 @@ class InformationObjectUploadFindingAidAction extends sfAction
 
       // Move temporary file before it's deleted at the end of the request
       Qubit::createDownloadsDirIfNeeded();
-      $path = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . arFindingAidJob::getFindingAidPath($this->resource->id);
+      $path = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.arFindingAidJob::getFindingAidPath($this->resource->id);
 
       if (!move_uploaded_file($file->getTempName(), $path))
       {

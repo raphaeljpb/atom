@@ -186,8 +186,8 @@ class SearchDescriptionUpdatesAction extends sfAction
     {
       // Show alert
       $message = $this->context->i18n->__(
-        "We've redirected you to the first page of results." .
-        " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
+        "We've redirected you to the first page of results.".
+        " To avoid using vast amounts of memory, AtoM limits pagination to %1% records.".
         " Please, narrow down your results.",
         ['%1%' => $maxResultWindow]
       );

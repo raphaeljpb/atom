@@ -50,7 +50,7 @@ class DefaultUpdateCheckComponent extends sfComponent
     $this->updateCheckData = [];
 
     // Absolute URL
-    $this->updateCheckData['address'] = $request->getUriPrefix() . $request->getScriptName() . $request->getPathInfo();
+    $this->updateCheckData['address'] = $request->getUriPrefix().$request->getScriptName().$request->getPathInfo();
 
     // Version (including db version)
     $this->updateCheckData['version'] = qubitConfiguration::VERSION.' - '.sfConfig::get('app_version');

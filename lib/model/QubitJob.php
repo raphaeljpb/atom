@@ -290,7 +290,7 @@ class QubitJob extends BaseJob
    */
   public static function runJob($jobName, $jobParams = [])
   {
-    if (!self::checkWorkerAvailable(self::getJobPrefix() . $jobName))
+    if (!self::checkWorkerAvailable(self::getJobPrefix().$jobName))
     {
       throw new Net_Gearman_Exception("No Gearman worker available that can handle the job $jobName.");
     }
@@ -348,7 +348,7 @@ class QubitJob extends BaseJob
 
     // Pass in the job id to the worker so it can update status
     $jobParams['id'] = $job->id;
-    $jobName = self::getJobPrefix() . $jobName; // Append prefix, see getJobPrefix() for details
+    $jobName = self::getJobPrefix().$jobName; // Append prefix, see getJobPrefix() for details
 
     // Submit a non-blocking task to Gearman
     $gmClient = new Net_Gearman_Client(arGearman::getServers());

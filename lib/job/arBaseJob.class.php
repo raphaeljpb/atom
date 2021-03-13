@@ -249,7 +249,7 @@ class arBaseJob extends Net_Gearman_Job_Common
   protected function canBeFullyExecuted()
   {
     // Add job names directly to the query to avoid params escaping
-    $jobNames = "('" . implode("','", $this->avoidParallelExecutionJobs) . "')";
+    $jobNames = "('".implode("','", $this->avoidParallelExecutionJobs)."')";
 
     // Select sensitive jobs running ordering by created_at
     $sql = "SELECT job.id FROM job

@@ -58,11 +58,11 @@ class importDipObjectsTask extends arBaseTask
     $undoLog = null;
     if (isset($options['undo-log-dir']))
     {
-      $undoLog = rtrim($options['undo-log-dir'], '/') .'/'. date('Y-m-d') .'-'. basename($this->dipDir) .'.log';
+      $undoLog = rtrim($options['undo-log-dir'], '/').'/'.date('Y-m-d').'-'.basename($this->dipDir).'.log';
     }
 
     // Set path to DIP objects
-    $objectsPath = rtrim($this->dipDir, '/') .'/objects';
+    $objectsPath = rtrim($this->dipDir, '/').'/objects';
     $this->logSection('dip-import', sprintf('Looking for objects in: %s', $this->dipDir));
 
     // Parse CSV file and import/audit objects
@@ -94,7 +94,7 @@ class importDipObjectsTask extends arBaseTask
       return $row[$columnIndex];
     }
 
-    throw new sfException('Missing column "'. $column .'".');
+    throw new sfException('Missing column "'.$column.'".');
   }
 
   /**
@@ -230,7 +230,7 @@ EOF;
     while ($row = fgetcsv($fh, 1000))
     {
       $filename = $this->getRowColumnValue('filename', $row);
-      $filepath = $objectsPath .'/'. $filename;
+      $filepath = $objectsPath.'/'.$filename;
 
       // Check if filename has been changed by Archivematica
       if (!file_exists($filepath))
@@ -431,7 +431,7 @@ EOF;
 
     if (!$statement->fetchColumn())
     {
-      $this->log("Missing ". $filename);
+      $this->log("Missing ".$filename);
     }
   }
 
@@ -474,14 +474,14 @@ EOF;
     // Add DIP UUID as aipUUID information object property
     if (null !== $dipUUID = $this->getUUID(basename($this->dipDir)))
     {
-      $this->log('Creating property: dip UUID '. $dipUUID);
+      $this->log('Creating property: dip UUID '.$dipUUID);
       $informationObject->addProperty('aipUUID', $dipUUID);
     }
 
     // Add object UUID as objectUUID information object property
     if (null !== $objectUUID = $this->getUUID(basename($filepath)))
     {
-      $this->log('Creating property: object UUID '. $objectUUID);
+      $this->log('Creating property: object UUID '.$objectUUID);
       $informationObject->addProperty('objectUUID', $objectUUID);
     }
 
@@ -490,7 +490,7 @@ EOF;
 
     if (isset($undoLog))
     {
-      $logLine = $informationObject->id ."\t". basename($this->dipDir) ."\t". $container ."\n";
+      $logLine = $informationObject->id."\t".basename($this->dipDir)."\t".$container."\n";
       file_put_contents($undoLog, $logLine, FILE_APPEND);
     }
   }
@@ -564,7 +564,7 @@ EOF;
     }
 
     // If UUIDs found, inform user and return first UUID found
-    $this->logSection('dip-import', 'UUID found: '. $matches[0][0] ." in ". $subject);
+    $this->logSection('dip-import', 'UUID found: '.$matches[0][0]." in ".$subject);
 
     return $matches[0][0];
   }

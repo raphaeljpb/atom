@@ -61,7 +61,7 @@ EOF;
    */
   protected function configure()
   {
-    $logFileDefault = sfConfig::get('sf_log_dir') . '/tools_run.log';
+    $logFileDefault = sfConfig::get('sf_log_dir').'/tools_run.log';
 
     $this->addOptions([
       new sfCommandOption('log', null, sfCommandOption::PARAMETER_NONE, 'Log execution of PHP file'),

@@ -59,7 +59,7 @@ class QubitCsvTransformFactory
 
   public function make()
   {
-    $tempCsvFile = sys_get_temp_dir() .'/'. $this->machineName .'_stage1.csv';
+    $tempCsvFile = sys_get_temp_dir().'/'.$this->machineName.'_stage1.csv';
 
     return new QubitCsvTransform([
 
@@ -112,7 +112,7 @@ class QubitCsvTransformFactory
 
         $fhIn = fopen($self->status['tempFile'], 'r');
 
-        if (!$fhIn) throw new sfException('Error reading '. $self->status['tempFile'] .'.');
+        if (!$fhIn) throw new sfException('Error reading '.$self->status['tempFile'].'.');
 
         $stage2 = new QubitCsvTransform([
 
@@ -143,7 +143,7 @@ class QubitCsvTransformFactory
 
             if ($ignore)
             {
-              print "Ignoring row ". $self->status['rows'] ."...\n";
+              print "Ignoring row ".$self->status['rows']."...\n";
 
               return;
             }
@@ -165,7 +165,7 @@ class QubitCsvTransformFactory
               else
               {
                 // ...otherwise if the parent key didn't exist, note that it's bad
-                print "Bad parent found: ". $keyOfRowParent ." (row ". ($self->getStatus('rows') + 1) .")\n";
+                print "Bad parent found: ".$keyOfRowParent." (row ".($self->getStatus('rows') + 1).")\n";
                 $self->status['badParents']++;
               }
             }
@@ -190,7 +190,7 @@ class QubitCsvTransformFactory
                 $self->addRowToMySQL($sortorder);
               } else {
                 $self->status['badLevelOfDescription']++;
-                print "Ignoring data with bad level of description: '". $self->columnValue('levelOfDescription') . "'.\n";
+                print "Ignoring data with bad level of description: '".$self->columnValue('levelOfDescription')."'.\n";
               }
             } else {
               $self->addRowToMySQL(0);
@@ -202,8 +202,8 @@ class QubitCsvTransformFactory
             $self->writeMySQLRowsToCsvFilePath($self->status['finalOutputFile']);
 
             print "Step 2 complete.\n";
-            print "Bad parents found: ". $self->status['badParents'] .".\n";
-            print "Bad level of description found: ". $self->status['badLevelOfDescription'] .".\n";
+            print "Bad parents found: ".$self->status['badParents'].".\n";
+            print "Bad level of description found: ".$self->status['badLevelOfDescription'].".\n";
           }
         ]);
 

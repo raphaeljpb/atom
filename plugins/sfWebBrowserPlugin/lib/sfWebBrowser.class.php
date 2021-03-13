@@ -110,7 +110,7 @@ class sfWebBrowser
   {
     if ($parameters)
     {
-      $uri .= ((false !== strpos($uri, '?')) ? '&' : '?') . http_build_query($parameters, '', '&');
+      $uri .= ((false !== strpos($uri, '?')) ? '&' : '?').http_build_query($parameters, '', '&');
     }
 
     return $this->call($uri, 'GET', [], $headers);
@@ -120,7 +120,7 @@ class sfWebBrowser
   {
     if ($parameters)
     {
-      $uri .= ((false !== strpos($uri, '?')) ? '&' : '?') . http_build_query($parameters, '', '&');
+      $uri .= ((false !== strpos($uri, '?')) ? '&' : '?').http_build_query($parameters, '', '&');
     }
 
     return $this->call($uri, 'HEAD', [], $headers);

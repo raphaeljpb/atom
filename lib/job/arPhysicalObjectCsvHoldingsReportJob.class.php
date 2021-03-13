@@ -50,7 +50,7 @@ class arPhysicalObjectCsvHoldingsReportJob extends arExportJob
 
     // Attempt export
     $tempPath = $this->createJobTempDir();
-    $exportFile = $tempPath . DIRECTORY_SEPARATOR . 'holdings.csv';
+    $exportFile = $tempPath.DIRECTORY_SEPARATOR.'holdings.csv';
 
     $report = new QubitPhysicalObjectCsvHoldingsReport($this->getReportOptions($parameters));
     $report->write($exportFile);
@@ -61,7 +61,7 @@ class arPhysicalObjectCsvHoldingsReportJob extends arExportJob
 
     if (!empty($errors))
     {
-      $this->error($this->i18n->__('Failed to create ZIP file.') . ' : ' . implode(' : ', $errors));
+      $this->error($this->i18n->__('Failed to create ZIP file.').' : '.implode(' : ', $errors));
 
       return false;
     }

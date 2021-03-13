@@ -54,7 +54,7 @@ class QubitPhysicalObject extends BasePhysicalObject
 
     if ($this->type)
     {
-      $label .= $this->type . ': ';
+      $label .= $this->type.': ';
     }
 
     $label .= $this->__toString();
@@ -66,7 +66,7 @@ class QubitPhysicalObject extends BasePhysicalObject
 
     if (0 < strlen($location))
     {
-      $label .= ' - ' . $location;
+      $label .= ' - '.$location;
     }
 
     return $label;
@@ -159,7 +159,7 @@ class QubitPhysicalObject extends BasePhysicalObject
 
     if (isset($options['partialMatch']) && 'begin' == $options['partialMatch'])
     {
-      $criteria->add(QubitPhysicalObjectI18n::NAME, $name . '%',
+      $criteria->add(QubitPhysicalObjectI18n::NAME, $name.'%',
         Criteria::LIKE);
     }
     else
@@ -383,9 +383,9 @@ SQL;
     $this->updateUpdatedAt($connection);
 
     // Update physical_object.type_id
-    $sth = $connection->prepare('UPDATE ' . self::TABLE_NAME
-      . ' SET ' . self::TYPE_ID
-      . ' = :typeId WHERE `id` = :id'
+    $sth = $connection->prepare('UPDATE '.self::TABLE_NAME
+      .' SET '.self::TYPE_ID
+      .' = :typeId WHERE `id` = :id'
     );
 
     $result = $sth->execute([
@@ -398,9 +398,9 @@ SQL;
     }
 
     // Update physical_object_i18n.location
-    $sth = $connection->prepare('UPDATE ' . QubitPhysicalObjectI18n::TABLE_NAME
-      . ' SET ' . QubitPhysicalObjectI18n::LOCATION
-      . ' = :location WHERE `id` = :id'
+    $sth = $connection->prepare('UPDATE '.QubitPhysicalObjectI18n::TABLE_NAME
+      .' SET '.QubitPhysicalObjectI18n::LOCATION
+      .' = :location WHERE `id` = :id'
     );
 
     $result = $sth->execute([

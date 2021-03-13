@@ -116,9 +116,9 @@ class Qubit
     }
 
     // Turn back to string removing time data
-    $dateString = $dateData['year'] .'-'
-      . $dateData['month'] .'-'
-      . $dateData['day'];
+    $dateString = $dateData['year'].'-'
+      .$dateData['month'].'-'
+      .$dateData['day'];
 
     // Format to pad with leading zeros
     $date = new DateTime($dateString);
@@ -405,7 +405,7 @@ class Qubit
     $uploadsPath = sfConfig::get('sf_upload_dir');
     $directories = [
       $uploadsPath,
-      $uploadsPath . DIRECTORY_SEPARATOR . 'tmp'
+      $uploadsPath.DIRECTORY_SEPARATOR.'tmp'
     ];
 
     foreach ($directories as $dirPath)
@@ -422,7 +422,7 @@ class Qubit
    */
   public static function createDownloadsDirIfNeeded()
   {
-    $downloadsPath = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . 'downloads';
+    $downloadsPath = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'downloads';
     if (!is_dir($downloadsPath))
     {
       mkdir($downloadsPath, 0755);
@@ -443,7 +443,7 @@ class Qubit
     {
       if ('%' == $match[1])
       {
-        return strftime('%'. $match[2]);
+        return strftime('%'.$match[2]);
       }
       elseif ('#' == $match[1])
       {
