@@ -8,8 +8,8 @@
       $sf_request->sort = $name.ucfirst($default);
     }
 
-    $up = "${name}Up";
-    $down = "${name}Down";
+    $up = "{$name}Up";
+    $down = "{$name}Down";
     $next = $sf_request->sort !== $up ? $up : $down;
 
   ?>

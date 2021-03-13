@@ -2857,7 +2857,7 @@ class QubitInformationObject extends BaseInformationObject
     {
       if (isset($repository->identifier))
       {
-        $identifier = "{$repository->identifier} ${identifier}";
+        $identifier = "{$repository->identifier} {$identifier}";
       }
 
       if (isset($repository))
@@ -2866,7 +2866,7 @@ class QubitInformationObject extends BaseInformationObject
 
         if (isset($countryCode))
         {
-          $identifier = "${countryCode} ${identifier}";
+          $identifier = "{$countryCode} {$identifier}";
         }
       }
     }
@@ -3182,7 +3182,7 @@ class QubitInformationObject extends BaseInformationObject
       return null; // Garbage date
     }
 
-    return "${year}-${month}-${day}";
+    return "{$year}-{$month}-{$day}";
   }
 
   /*

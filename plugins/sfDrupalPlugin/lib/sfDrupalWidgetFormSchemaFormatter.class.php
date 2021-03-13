@@ -31,7 +31,7 @@ return;
   {
     if (preg_match('/<input [^>]*type="checkbox"/', $field))
     {
-      return parent::formatRow(preg_replace('/<label[^>]*>/', "$0${field}", $label), null, $errors, $help, $hiddenFields);
+      return parent::formatRow(preg_replace('/<label[^>]*>/', "$0{$field}", $label), null, $errors, $help, $hiddenFields);
     }
 
     return parent::formatRow($label, $field, $errors, $help, $hiddenFields);

@@ -75,7 +75,7 @@ class sfIsdiahPluginEditAction extends RepositoryEditAction
       $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
-    $this->response->setTitle("${title} - {$this->response->getTitle()}");
+    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
 
     $this->contactInformationEditComponent->form->getWidgetSchema()->contactPerson->setHelp($this->context->i18n->__('See ISDIAH 5.2 for contact area information and examples.'));
     $this->contactInformationEditComponent->form->getWidgetSchema()->latitude->setHelp($this->context->i18n->__('Enter the digital latitude of the institution\'s physical location (rather than degrees, minutes and seconds), e.g. 49.459044'));

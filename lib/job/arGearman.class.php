@@ -102,7 +102,7 @@ class arGearman
         $type = trim($type);
         if (!array_key_exists($type, $config['worker_types']))
         {
-          throw new sfException("Invalid type specified: ${type} -- does it exist in the gearman config file?");
+          throw new sfException("Invalid type specified: {$type} -- does it exist in the gearman config file?");
         }
 
         $abilities = array_merge($abilities, $config['worker_types'][$type]);

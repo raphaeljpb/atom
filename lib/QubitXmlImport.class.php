@@ -242,7 +242,7 @@ class QubitXmlImport
         $this->rootObject = QubitTaxonomy::getById($options['taxonomy']);
         $importer = new sfSkosPlugin($options['taxonomy'], $options);
         // 'file' scheme required during SKOS file validation.
-        $importer->load(is_file($xmlFile) ? "file://${xmlFile}" : $xmlFile);
+        $importer->load(is_file($xmlFile) ? "file://{$xmlFile}" : $xmlFile);
         $importer->importGraph();
 
         return $this;

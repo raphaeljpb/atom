@@ -66,7 +66,7 @@ echo javascript_tag(<<<EOL
 Drupal.behaviors.dialog = {
   attach: function (context)
   {
-    Qubit.infoObjectDialog = new QubitAclDialog('addInformationObject', '${tableTemplate}', jQuery);
+    Qubit.infoObjectDialog = new QubitAclDialog('addInformationObject', '{$tableTemplate}', jQuery);
   }
 }
 EOL
@@ -104,7 +104,7 @@ EOL
 Drupal.behaviors.dialog2 = {
   attach: function (context)
   {
-    Qubit.repoDialog = new QubitAclDialog('addRepository', '${tableTemplate}', jQuery);
+    Qubit.repoDialog = new QubitAclDialog('addRepository', '{$tableTemplate}', jQuery);
   }
 }
 EOL

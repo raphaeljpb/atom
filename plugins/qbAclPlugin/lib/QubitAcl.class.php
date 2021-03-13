@@ -910,7 +910,7 @@ class QubitAcl
       if (1 == ($resource->rgt - $resource->lft))
       {
         $criterion = $criteria->getNewCriterion(
-          constant("${rootClass}::ID"),
+          constant("{$rootClass}::ID"),
           $resourceId,
           $allow ? Criteria::EQUAL : Criteria::NOT_EQUAL
         );
@@ -918,13 +918,13 @@ class QubitAcl
       else // Else, include object and all children
       {
         $criterion = $criteria->getNewCriterion(
-          constant("${rootClass}::LFT"),
+          constant("{$rootClass}::LFT"),
           $resource->lft,
           $allow ? Criteria::GREATER_EQUAL : Criteria::LESS_EQUAL
         );
 
         $criterion2 = $criteria->getNewCriterion(
-          constant("${rootClass}::RGT"),
+          constant("{$rootClass}::RGT"),
           $resource->rgt,
           $allow ? Criteria::LESS_EQUAL : Criteria::GREAT_EQUAL
         );

@@ -139,7 +139,7 @@ abstract class csvImportBaseTask extends arBaseTask
   {
     if (!is_readable($path))
     {
-      $this->log("Cannot read digital object path. Skipping creation of digital object (${path})");
+      $this->log("Cannot read digital object path. Skipping creation of digital object ({$path})");
 
       return;
     }
@@ -257,7 +257,7 @@ abstract class csvImportBaseTask extends arBaseTask
         // Create new physical object type if not found
         if (false === $physicalObjectTypeId)
         {
-          echo "\nTerm ${type} not found in physical object type taxonomy, creating it...\n";
+          echo "\nTerm {$type} not found in physical object type taxonomy, creating it...\n";
 
           $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID, $type, $self->columnValue('culture'));
           $self->status['physicalObjectTypes'] = self::refreshTaxonomyTerms(QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID);

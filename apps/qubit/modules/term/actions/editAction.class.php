@@ -121,7 +121,7 @@ class TermEditAction extends DefaultEditAction
       }
     }
 
-    $this->response->setTitle("${title} - {$this->response->getTitle()}");
+    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
   }
 
   protected function addField($name)

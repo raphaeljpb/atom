@@ -43,7 +43,7 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
       QubitTerm::FAMILY_ID => $this->context->i18n->__('Biographical sketch'),
     ];
 
-    $this->response->setTitle("${title} - {$this->response->getTitle()}");
+    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
 
     if (QubitAcl::check($this->resource, 'update'))
     {

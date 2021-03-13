@@ -23,8 +23,8 @@ $tableTemplate = <<<EOL
 <caption/>
 <thead>
 <tr>
-<th scope="col">${actionLabel}</th>
-<th scope="col">${permissionsLabel}</th>
+<th scope="col">{$actionLabel}</th>
+<th scope="col">{$permissionsLabel}</th>
 </tr>
 </thead>
 <tbody>
@@ -75,7 +75,7 @@ var handleSubmit = function() {
   }
   else if ('null' != actorInput.val())
   {
-    var newTable = '${tableTemplate}';
+    var newTable = '{$tableTemplate}';
 
     // Search and replace '{objectId}'
     while (0 <= newTable.indexOf('{objectId}'))

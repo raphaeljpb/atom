@@ -258,7 +258,7 @@ foreach ($adapter_list as $adapter)
     $resp = $b->get($dump_headers_url, [], $headers)->getResponseText();
     foreach ($headers as $field => $value)
     {
-      $t->like($resp, "/\\[${field}\\] => ${value}/", $msg.$field);
+      $t->like($resp, "/\\[{$field}\\] => {$value}/", $msg.$field);
     }
   }
   catch (Exception $e)
@@ -293,7 +293,7 @@ foreach ($adapter_list as $adapter)
   $target_headers = implode(',', $encodings);
   $t->like(
     $b->get($dump_headers_url, [], $headers)->getResponseText(),
-    "/${target_headers}/",
+    "/{$target_headers}/",
     'sfWebBrowser autosets accept-encoding headers depending on php capabilities');
 
   $encodings = [];
@@ -310,7 +310,7 @@ foreach ($adapter_list as $adapter)
   $target_headers = implode(',', $encodings);
   $t->like(
     $b->get($dump_headers_url, [], $headers)->getResponseText(),
-    "/${target_headers}/",
+    "/{$target_headers}/",
     'it is possible to set supplementary encodings');
 
   // History methods

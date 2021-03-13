@@ -116,7 +116,7 @@ class PhysicalObjectCsvImporter
         break;
 
       default:
-        throw new sfException("Unknown or inaccessible property \"${name}\"");
+        throw new sfException("Unknown or inaccessible property \"{$name}\"");
     }
   }
 
@@ -131,7 +131,7 @@ class PhysicalObjectCsvImporter
         break;
 
       default:
-        throw new sfException("Couldn't set unknown property \"${name}\"");
+        throw new sfException("Couldn't set unknown property \"{$name}\"");
     }
   }
 
@@ -159,12 +159,12 @@ class PhysicalObjectCsvImporter
 
     if (!file_exists($filename))
     {
-      throw new sfException("Can not find file ${filename}");
+      throw new sfException("Can not find file {$filename}");
     }
 
     if (!is_readable($filename))
     {
-      throw new sfException("Can not read ${filename}");
+      throw new sfException("Can not read {$filename}");
     }
 
     return $filename;
@@ -868,7 +868,7 @@ EOQ;
     if (null === $typeId = $lookupTable[$culture][$name])
     {
       $msg = <<<EOL
-Couldn't find physical object type "${name}" for culture "${culture}"
+Couldn't find physical object type "{$name}" for culture "{$culture}"
 EOL;
 
       throw new UnexpectedValueException($msg);

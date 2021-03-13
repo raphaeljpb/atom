@@ -251,7 +251,7 @@ EOF;
         }
         else
         {
-          throw new Exception("Error: Couldn't find file ${filepath}");
+          throw new Exception("Error: Couldn't find file {$filepath}");
         }
       }
 
@@ -321,7 +321,7 @@ EOF;
     foreach ($digitalObjects as $key => $item)
     {
       $opDescription = ($auditMode) ? 'Auditing' : 'Importing to';
-      $this->logSection('dip-import', sprintf("%s '${key}'...", $opDescription));
+      $this->logSection('dip-import', sprintf("%s '{$key}'...", $opDescription));
 
       if ($auditMode)
       {
@@ -389,7 +389,7 @@ EOF;
 
       if (null === $informationObject = QubitInformationObject::getOne($criteria))
       {
-        throw new Exception("Invalid information object identifier '${uniqueValue}'");
+        throw new Exception("Invalid information object identifier '{$uniqueValue}'");
       }
     }
     else
@@ -398,12 +398,12 @@ EOF;
 
       if (null === $slug = QubitSlug::getOne($criteria))
       {
-        throw new Exception("Invalid information object slug '${uniqueValue}'");
+        throw new Exception("Invalid information object slug '{$uniqueValue}'");
       }
 
       if (null === $informationObject = QubitInformationObject::getById($slug->objectId))
       {
-        throw new Exception("Missing information object for slug '${uniqueValue}'");
+        throw new Exception("Missing information object for slug '{$uniqueValue}'");
       }
     }
 
@@ -451,11 +451,11 @@ EOF;
     // Make sure file exists
     if (!file_exists($filepath))
     {
-      throw new Exception("Couldn't find file '${filepath}'");
+      throw new Exception("Couldn't find file '{$filepath}'");
     }
 
     // Create digital object
-    $this->log("Importing '${filepath}'");
+    $this->log("Importing '{$filepath}'");
 
     $do = new QubitDigitalObject();
     $do->usageId = QubitTerm::MASTER_ID;

@@ -52,10 +52,10 @@ class Qubit
     $trim = '[-\/]0+';
 
     // Trim trailing zero day and month
-    $pattern = "/0*(\\d+)(?:([-\\/])${natural}(?:([-\\/])${natural}
-      |${trim})
-      |([-\\/])${zero}${natural}
-      |${trim}${trim})/x";
+    $pattern = "/0*(\\d+)(?:([-\\/]){$natural}(?:([-\\/]){$natural}
+      |{$trim})
+      |([-\\/]){$zero}{$natural}
+      |{$trim}{$trim})/x";
 
     $replacement = '$1$2$3$4$5$6$7$8';
 
@@ -82,7 +82,7 @@ class Qubit
         return $start;
       }
 
-      return "${start} - ${end}";
+      return "{$start} - {$end}";
     }
   }
 
@@ -378,10 +378,10 @@ class Qubit
     do
     {
       $uniqueString = substr(md5(time().$file['name']), 0, 8);
-      $tmpFileName = "TMP${uniqueString}";
+      $tmpFileName = "TMP{$uniqueString}";
 
       // Add temp filename, preserving extension (if any)
-      $tmpFilePath = "${tmpDir}/${tmpFileName}${extension}";
+      $tmpFilePath = "{$tmpDir}/{$tmpFileName}{$extension}";
     }
     while (file_exists($tmpFilePath));
 

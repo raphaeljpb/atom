@@ -19,7 +19,7 @@
 
       <?php $i = 0; foreach ($resource->getDates() as $item) { ?>
 
-        <?php $form->getWidgetSchema()->setNameFormat("editDates[${i}][%s]"); ?>
+        <?php $form->getWidgetSchema()->setNameFormat("editDates[{$i}][%s]"); ?>
 
         <tr class="<?php echo 0 == $i % 2 ? 'even' : 'odd'; ?> related_obj_<?php echo $item->id; ?> date">
           <td>
@@ -41,7 +41,7 @@
         <?php ++$i; ?>
       <?php } ?>
 
-      <?php $form->getWidgetSchema()->setNameFormat("editDates[${i}][%s]"); ?>
+      <?php $form->getWidgetSchema()->setNameFormat("editDates[{$i}][%s]"); ?>
 
       <tr class="<?php echo 0 == $i % 2 ? 'even' : 'odd'; ?> date">
         <td>

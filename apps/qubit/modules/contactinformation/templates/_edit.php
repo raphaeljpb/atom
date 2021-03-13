@@ -49,7 +49,7 @@ $rowTemplate = json_encode(<<<value
   <td>
     {{$form->primaryContact->renderName()}}
   </td><td style="text-align: right">
-    ${editHtml} <button class="delete-small" name="delete" type="button"/>
+    {$editHtml} <button class="delete-small" name="delete" type="button"/>
   </td>
 </tr>
 
@@ -96,10 +96,10 @@ Drupal.behaviors.contactInformation = {
 
       var dialog = new QubitDialog('contactInformationRelation', {
         'displayTable': 'contactInformations',
-        'newRowTemplate': ${rowTemplate},
-        'submitText': '${submitText}',
-        'cancelText': '${cancelText}',
-        'addNewText': '${addNewText}',
+        'newRowTemplate': {$rowTemplate},
+        'submitText': '{$submitText}',
+        'cancelText': '{$cancelText}',
+        'addNewText': '{$addNewText}',
         'beforeOpeningLogic': beforeOpeningLogic });
 
       // Add edit button to rows
@@ -109,7 +109,7 @@ Drupal.behaviors.contactInformation = {
             dialog.open(this.id);
           })
         .find('td:last')
-        .prepend('${editHtml}');
+        .prepend('{$editHtml}');
     } }
 
 content

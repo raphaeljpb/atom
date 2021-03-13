@@ -118,7 +118,7 @@ class TermAutocompleteAction extends sfAction
       }
 
       $connection = Propel::getConnection();
-      $statement = $connection->prepare("(${s1}) UNION ALL (${s2}) ORDER BY name LIMIT :p4");
+      $statement = $connection->prepare("({$s1}) UNION ALL ({$s2}) ORDER BY name LIMIT :p4");
       $params = $this->context->routing->parse(Qubit::pathInfo($request->taxonomy));
 
       $statement->bindValue(':p1', $params['_sf_route']->resource->id);

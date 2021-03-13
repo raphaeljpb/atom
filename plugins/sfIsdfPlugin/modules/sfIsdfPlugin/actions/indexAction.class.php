@@ -30,7 +30,7 @@ class sfIsdfPluginIndexAction extends FunctionIndexAction
       $title = $this->context->i18n->__('Untitled');
     }
 
-    $this->response->setTitle("${title} - {$this->response->getTitle()}");
+    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
 
     if (QubitAcl::check($this->resource, 'update'))
     {

@@ -35,7 +35,7 @@ class sfIsadPluginIndexAction extends InformationObjectIndexAction
       $title = $this->context->i18n->__('Untitled');
     }
 
-    $this->response->setTitle("${title} - {$this->response->getTitle()}");
+    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
 
     // Function relations
     $criteria = new Criteria();

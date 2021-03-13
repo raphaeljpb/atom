@@ -213,7 +213,7 @@ EOF;
     }
 
     // Restore sql_mode
-    QubitPdo::modify("SET sql_mode='${sqlMode}'");
+    QubitPdo::modify("SET sql_mode='{$sqlMode}'");
 
     // Analyze tables:
     // - Performs and stores a key distribution analysis (if the table
@@ -461,14 +461,14 @@ EOF;
         if (($key = array_search($configPlugin, $configuredPlugins)) !== false)
         {
           // Confirmation
-          $question = "Plugin ${configPlugin} no longer exists. Remove it (Y/n)?";
+          $question = "Plugin {$configPlugin} no longer exists. Remove it (Y/n)?";
           if (!$options['no-confirmation'] && !$this->askConfirmation([$question], 'QUESTION_LARGE', true))
           {
             continue;
           }
 
           unset($configuredPlugins[$key]);
-          $this->logSection('upgrade-sql', "Removing plugin from settings: ${configPlugin}");
+          $this->logSection('upgrade-sql', "Removing plugin from settings: {$configPlugin}");
         }
       }
     }
@@ -519,7 +519,7 @@ EOF;
       $this->pluginsSetting->setValue(serialize($configuredPlugins), ['sourceCulture' => true]);
       $this->pluginsSetting->save();
 
-      $this->logSection('upgrade-sql', "AtoM theme changed to ${chosenTheme}.");
+      $this->logSection('upgrade-sql', "AtoM theme changed to {$chosenTheme}.");
     }
   }
 
@@ -544,7 +544,7 @@ EOF;
       $n = 0;
       foreach (array_keys($themes) as $theme)
       {
-        echo ++$n.") ${theme}\n";
+        echo ++$n.") {$theme}\n";
       }
 
       $choice = (int) readline('Select theme number: ');

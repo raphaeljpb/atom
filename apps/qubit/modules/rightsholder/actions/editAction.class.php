@@ -85,7 +85,7 @@ class RightsHolderEditAction extends DefaultEditAction
       $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
-    $this->response->setTitle("${title} - {$this->response->getTitle()}");
+    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
 
     $this->contactInformationEditComponent = new ContactInformationEditComponent($this->context, 'contactinformation', 'editContactInformation');
     $this->contactInformationEditComponent->resource = $this->resource;

@@ -217,7 +217,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
             ++$suffix;
           }
 
-          $this->slug = "${stem}-${suffix}";
+          $this->slug = "{$stem}-{$suffix}";
         }
       }
       while (isset($suffix));

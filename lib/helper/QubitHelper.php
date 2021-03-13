@@ -66,8 +66,8 @@ function render_field($field, $resource, array $options = [])
       }
 
       $div = <<<div
-<div class="default-translation"${dir}>
-  ${source}
+<div class="default-translation"{$dir}>
+  {$source}
 </div>
 
 div;
@@ -96,9 +96,9 @@ function render_show($label, $value, $options = [])
 
   return <<<contents
 <div class="field">
-  <h3>${label}</h3>
-  <div${fieldLabel}>
-    ${value}
+  <h3>{$label}</h3>
+  <div{$fieldLabel}>
+    {$value}
   </div>
 </div>
 
@@ -164,7 +164,7 @@ function add_paragraphs_and_linebreaks($value)
   $value = preg_replace('/(?:\r?\n){2,}/', '</p><p>', $value, -1, $count);
   if (0 < $count)
   {
-    $value = "<p>${value}</p>";
+    $value = "<p>{$value}</p>";
   }
 
   // Maintain linebreaks not surrounded by tags

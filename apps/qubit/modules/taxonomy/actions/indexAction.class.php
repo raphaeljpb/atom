@@ -256,9 +256,9 @@ class TaxonomyIndexAction extends sfAction
       $link = $this->context->i18n->__('Browse all terms');
       $response['more'] = <<<EOF
 <div class="more">
-  <a href="${url}">
+  <a href="{$url}">
     <i class="fa fa-search"></i>
-    ${link}
+    {$link}
   </a>
 </div>
 EOF;

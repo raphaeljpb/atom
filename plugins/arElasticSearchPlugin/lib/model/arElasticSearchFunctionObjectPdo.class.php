@@ -129,7 +129,7 @@ class arElasticSearchFunctionObjectPdo
 
     if (false === $this->data)
     {
-      throw new sfException("Couldn't find function (id: ${id})");
+      throw new sfException("Couldn't find function (id: {$id})");
     }
 
     self::$statements['function']->closeCursor();

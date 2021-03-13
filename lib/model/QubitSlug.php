@@ -98,7 +98,7 @@ class QubitSlug extends BaseSlug
         $slug = preg_replace('/[^0-9a-z]+/', '-', $slug);
     }
 
-    $slug = "-${slug}-";
+    $slug = "-{$slug}-";
 
     return trim($slug, '-');
   }

@@ -301,7 +301,7 @@ script;
     {
       $upperColumnName = strtoupper($column->getName());
       $consts[] = <<<consts
-    ${upperColumnName} = '{$this->getTable()->getName()}.${upperColumnName}'
+    {$upperColumnName} = '{$this->getTable()->getName()}.{$upperColumnName}'
 consts;
     }
     $consts = implode(",\n", $consts);
@@ -313,7 +313,7 @@ consts;
 
     TABLE_NAME = '{$this->getTable()->getName()}',
 
-${consts};
+{$consts};
 
 script;
   }
@@ -355,7 +355,7 @@ adds;
       $script .= <<<script
     parent::addSelectColumns(\$criteria);
 
-${adds}
+{$adds}
 
 
 script;
@@ -418,7 +418,7 @@ script;
     {
       $position = $primaryKey->getPosition() - 1;
       $keys[] = <<<keys
-    \$keys['{$this->getColumnVarName($primaryKey)}'] = \$row[${position}];
+    \$keys['{$this->getColumnVarName($primaryKey)}'] = \$row[{$position}];
 keys;
     }
     $keys = implode("\n", $keys);
@@ -435,7 +435,7 @@ keys;
   public static function getFromRow(array \$row)
   {
     \$keys = array();
-${keys}
+{$keys}
 
     \$key = serialize(\$keys);
     if (!isset(self::\${$this->getVarName(true)}[\$key]))
@@ -447,7 +447,7 @@ script;
     {
       $position = $this->classNameColumn->getPosition() - 1;
       $script .= <<<script
-      \${$this->getVarName()} = new \$row[${position}];
+      \${$this->getVarName()} = new \$row[{$position}];
 
 script;
     }
@@ -542,10 +542,10 @@ adds;
 
     $script .= <<<script
 
-  public static function {$this->getRetrieveMethodName()}(${args}, array \$options = array())
+  public static function {$this->getRetrieveMethodName()}({$args}, array \$options = array())
   {
     \$criteria = new Criteria;
-${adds}
+{$adds}
 
     if (1 == count(\$query = self::get(\$criteria, \$options)))
     {
@@ -646,7 +646,7 @@ script;
 
   public static function addRootsCriteria(Criteria \$criteria)
   {
-${adds}
+{$adds}
 
     return \$criteria;
   }
@@ -756,7 +756,7 @@ adds;
       }
 
       \$criteria = new Criteria;
-${adds}
+{$adds}
 
       call_user_func(array(get_class(\$this), 'addSelectColumns'), \$criteria);
 
@@ -970,8 +970,8 @@ script;
       $conds = [];
       foreach ($refFk->getLocalForeignMapping() as $localName => $foreignName)
       {
-        $args[] = "\$this->${foreignName}";
-        $conds[] = "!isset(\$this->${foreignName})";
+        $args[] = "\$this->{$foreignName}";
+        $conds[] = "!isset(\$this->{$foreignName})";
       }
       $args = implode(', ', $args);
       $conds = implode(' || ', $conds);
@@ -982,13 +982,13 @@ script;
     {
       if (!isset(\$this->refFkValues['{$this->getRefFkCollVarName($refFk)}']))
       {
-        if (${conds})
+        if ({$conds})
         {
           \$this->refFkValues['{$this->getRefFkCollVarName($refFk)}'] = QubitQuery::create();
         }
         else
         {
-          \$this->refFkValues['{$this->getRefFkCollVarName($refFk)}'] = self::get{$this->getRefFkPhpNameAffix($refFk, true)}ById(${args}, array('self' => \$this) + \$options);
+          \$this->refFkValues['{$this->getRefFkCollVarName($refFk)}'] = self::get{$this->getRefFkPhpNameAffix($refFk, true)}ById({$args}, array('self' => \$this) + \$options);
         }
       }
 
@@ -1429,7 +1429,7 @@ script;
 
     foreach (\$this->{$this->getRefFkCollVarName($this->i18nFk)} as \${$foreignPeerBuilder->getVarName()})
     {
-${sets}
+{$sets}
 
       \${$foreignPeerBuilder->getVarName()}->save(\$connection);
     }
@@ -1750,7 +1750,7 @@ adds;
       $script .= <<<script
 
     \$criteria = new Criteria;
-${adds}
+{$adds}
 
     self::doDelete(\$criteria, \$connection);
 
@@ -1797,7 +1797,7 @@ adds;
 
   public static function addJoin{$this->getFkPhpName($fk)}Criteria(Criteria \$criteria)
   {
-${adds}
+{$adds}
 
     return \$criteria;
   }
@@ -1823,9 +1823,9 @@ script;
     $adds = [];
     foreach ($refFk->getLocalForeignMapping() as $localName => $foreignName)
     {
-      $args[] = "$${foreignName}";
+      $args[] = "\${$foreignName}";
       $adds[] = <<<adds
-    \$criteria->add({$foreignPeerBuilder->getColumnConstant($refFk->getTable()->getColumn($localName))}, \$${foreignName});
+    \$criteria->add({$foreignPeerBuilder->getColumnConstant($refFk->getTable()->getColumn($localName))}, \${$foreignName});
 adds;
     }
     $args = implode(', ', $args);
@@ -1833,9 +1833,9 @@ adds;
 
     $script .= <<<script
 
-  public static function add{$this->getRefFkPhpNameAffix($refFk, true)}CriteriaById(Criteria \$criteria, ${args})
+  public static function add{$this->getRefFkPhpNameAffix($refFk, true)}CriteriaById(Criteria \$criteria, {$args})
   {
-${adds}
+{$adds}
 
     return \$criteria;
   }
@@ -1850,16 +1850,16 @@ script;
     $args = [];
     foreach ($refFk->getForeignColumns() as $foreignName)
     {
-      $args[] = "$${foreignName}";
+      $args[] = "\${$foreignName}";
     }
     $args = implode(', ', $args);
 
     $script .= <<<script
 
-  public static function get{$this->getRefFkPhpNameAffix($refFk, true)}ById(${args}, array \$options = array())
+  public static function get{$this->getRefFkPhpNameAffix($refFk, true)}ById({$args}, array \$options = array())
   {
     \$criteria = new Criteria;
-    self::add{$this->getRefFkPhpNameAffix($refFk, true)}CriteriaById(\$criteria, ${args});
+    self::add{$this->getRefFkPhpNameAffix($refFk, true)}CriteriaById(\$criteria, {$args});
 
     return {$foreignPeerBuilder->getPeerClassName()}::get(\$criteria, \$options);
   }
@@ -1872,7 +1872,7 @@ script;
     $args = [];
     foreach ($refFk->getForeignColumns() as $foreignName)
     {
-      $args[] = "\$this->${foreignName}";
+      $args[] = "\$this->{$foreignName}";
     }
     $args = implode(', ', $args);
 
@@ -1880,7 +1880,7 @@ script;
 
   public function add{$this->getRefFkPhpNameAffix($refFk, true)}Criteria(Criteria \$criteria)
   {
-    return self::add{$this->getRefFkPhpNameAffix($refFk, true)}CriteriaById(\$criteria, ${args});
+    return self::add{$this->getRefFkPhpNameAffix($refFk, true)}CriteriaById(\$criteria, {$args});
   }
 
 script;

@@ -31,7 +31,7 @@ class QubitGenerator extends sfPropelAdminGenerator
         $componentName = substr($componentName, $pos + 1);
       }
 
-      return "get_component('${moduleName}', '${componentName}', array('type' => 'edit', '{$this->getSingularName()}' => \${$this->getSingularName()}))";
+      return "get_component('{$moduleName}', '{$componentName}', array('type' => 'edit', '{$this->getSingularName()}' => \${$this->getSingularName()}))";
     }
 
     return parent::getColumnEditTag($column, $params);

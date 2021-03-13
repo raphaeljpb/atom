@@ -112,7 +112,7 @@ class QubitGrantedRight extends BaseGrantedRight
 
     if (null === $act)
     {
-      throw new sfException("Invalid Act specified for PREMIS rights: ${premisAccessRight}");
+      throw new sfException("Invalid Act specified for PREMIS rights: {$premisAccessRight}");
     }
 
     /**
@@ -152,7 +152,7 @@ class QubitGrantedRight extends BaseGrantedRight
 
     if (!array_key_exists($restrictionId, $mapConst))
     {
-      throw new sfException("Invalid restriction type in getRestrictionString: ${restrictionId}");
+      throw new sfException("Invalid restriction type in getRestrictionString: {$restrictionId}");
     }
 
     return $mapConst[$restrictionId];

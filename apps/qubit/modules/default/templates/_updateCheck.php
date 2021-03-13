@@ -11,11 +11,11 @@
     <?php echo javascript_include_tag('updateCheck'); ?>
 
     <?php echo javascript_tag(<<<EOF
-Qubit.updateCheck.url = '${updateCheckUrl}';
-Qubit.updateCheck.currentVersion = '${currentVersion}';
-Qubit.updateCheck.data = ${data};
-Qubit.updateCheck.notificationMessage = '${notificationMessage}';
-Qubit.updateCheck.cookiePath = '${cookiePath}';
+Qubit.updateCheck.url = '{$updateCheckUrl}';
+Qubit.updateCheck.currentVersion = '{$currentVersion}';
+Qubit.updateCheck.data = {$data};
+Qubit.updateCheck.notificationMessage = '{$notificationMessage}';
+Qubit.updateCheck.cookiePath = '{$cookiePath}';
 EOF
 ); ?>
 

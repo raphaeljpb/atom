@@ -75,5 +75,5 @@ foreach ($tests as $item)
 {
   list($given, $expected) = $item;
 
-  $t->is(Qubit::renderDate($given), $expected, "renderDate() renders date ${given} as ${expected}");
+  $t->is(Qubit::renderDate($given), $expected, "renderDate() renders date {$given} as {$expected}");
 }

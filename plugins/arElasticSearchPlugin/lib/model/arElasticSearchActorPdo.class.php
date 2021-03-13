@@ -363,7 +363,7 @@ class arElasticSearchActorPdo
 
     if (false === $this->data)
     {
-      throw new sfException("Couldn't find actor (id: ${id})");
+      throw new sfException("Couldn't find actor (id: {$id})");
     }
 
     self::$statements['actor']->closeCursor();

@@ -978,11 +978,11 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
     try
     {
       $search->index->getType('QubitTerm')->getDocument($item->id);
-      $t->pass("Term ${key} is indexed");
+      $t->pass("Term {$key} is indexed");
     }
     catch (Elastica\Exception\NotFoundException $e)
     {
-      $t->fail("Term ${key} was not indexed");
+      $t->fail("Term {$key} was not indexed");
     }
   }
 
@@ -1035,5 +1035,5 @@ foreach ($testingDataSets as $item)
 
   $result = $methodGetRootConcepts->invoke($importer);
 
-  $t->is(count($result), $totalConcepts, "Number of concepts found in ${item[name]} equals to ${totalConcepts}");
+  $t->is(count($result), $totalConcepts, "Number of concepts found in ${item[name]} equals to {$totalConcepts}");
 }

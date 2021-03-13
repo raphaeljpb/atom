@@ -53,7 +53,7 @@ $rowTemplate = json_encode(<<<value
   </td><td>
     {{$form->date->renderName()}}
   </td><td style="text-align: right">
-    ${editHtml} <button class="delete-small" name="delete" type="button"/>
+    {$editHtml} <button class="delete-small" name="delete" type="button"/>
   </td>
 </tr>
 
@@ -68,7 +68,7 @@ Drupal.behaviors.relatedAuthorityRecord = {
       var dialog = new QubitDialog('relatedEntity', {
         'displayTable': 'relatedEntityDisplay',
         'handleFieldRender': handleFieldRender,
-        'newRowTemplate': ${rowTemplate},
+        'newRowTemplate': {$rowTemplate},
         'relationTableMap': function (response)
           {
             response.resource = response.object;
@@ -83,7 +83,7 @@ Drupal.behaviors.relatedAuthorityRecord = {
             dialog.open(this.id);
           })
         .find('td:last')
-        .prepend('${editHtml}');
+        .prepend('{$editHtml}');
     } }
 
 content

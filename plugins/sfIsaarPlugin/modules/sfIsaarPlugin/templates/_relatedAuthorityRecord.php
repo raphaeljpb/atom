@@ -79,7 +79,7 @@ $rowTemplate = json_encode(<<<value
   </td><td>
     {{$form->description->renderName()}}
   </td><td style="text-align: right">
-    ${editHtml} <button class="delete-small" name="delete" type="button"/>
+    {$editHtml} <button class="delete-small" name="delete" type="button"/>
   </td>
 </tr>
 
@@ -111,17 +111,17 @@ Drupal.behaviors.relatedAuthorityRecord = {
       var dialog = new QubitDialog('actorRelation', {
         'displayTable': 'relatedEntities',
         'handleFieldRender': handleFieldRender,
-        'newRowTemplate': ${rowTemplate},
+        'newRowTemplate': {$rowTemplate},
         'relationTableMap': function (response)
           {
             response.resource = response.object;
-            if ('${url}' === response.resource)
+            if ('{$url}' === response.resource)
             {
               response.resource = response.subject;
               response.subType = response.converseSubType;
             }
 
-            response.actor = ' ${actorTitle}';
+            response.actor = ' {$actorTitle}';
 
             return response;
           } });
@@ -133,7 +133,7 @@ Drupal.behaviors.relatedAuthorityRecord = {
             dialog.open(this.id);
           })
         .find('td:last')
-        .prepend('${editHtml}');
+        .prepend('{$editHtml}');
     } }
 
 content

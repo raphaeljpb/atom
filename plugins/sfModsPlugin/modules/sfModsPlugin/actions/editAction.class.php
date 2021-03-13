@@ -56,7 +56,7 @@ class sfModsPluginEditAction extends InformationObjectEditAction
       $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
     }
 
-    $this->response->setTitle("${title} - {$this->response->getTitle()}");
+    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
 
     $this->eventComponent = new InformationObjectEventComponent($this->context, 'informationobject', 'event');
     $this->eventComponent->resource = $this->resource;

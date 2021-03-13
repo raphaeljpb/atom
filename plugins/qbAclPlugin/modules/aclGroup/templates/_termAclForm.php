@@ -130,7 +130,7 @@ echo javascript_tag(<<<EOL
 Drupal.behaviors.dialog = {
   attach: function (context)
   {
-    Qubit.taxonomyDialog = new QubitAclDialog('addTaxonomy', '${tableTemplate}', jQuery);
+    Qubit.taxonomyDialog = new QubitAclDialog('addTaxonomy', '{$tableTemplate}', jQuery);
   }
 }
 EOL

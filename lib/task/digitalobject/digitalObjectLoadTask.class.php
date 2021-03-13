@@ -109,14 +109,14 @@ class digitalObjectLoadTask extends sfBaseTask
 
       if (0 == strlen($id))
       {
-        $this->log("Row ${totalObjCount}: missing ${idType}");
+        $this->log("Row {$totalObjCount}: missing {$idType}");
 
         continue;
       }
 
       if (0 == strlen($filename))
       {
-        $this->log("Row ${totalObjCount}: missing filename");
+        $this->log("Row {$totalObjCount}: missing filename");
 
         continue;
       }
@@ -176,7 +176,7 @@ class digitalObjectLoadTask extends sfBaseTask
       $results = $ioQuery->fetch();
       if (!$results)
       {
-        $this->log("Couldn't find information object with ${idType}: ${key}");
+        $this->log("Couldn't find information object with {$idType}: {$key}");
 
         continue;
       }
@@ -198,7 +198,7 @@ class digitalObjectLoadTask extends sfBaseTask
           }
           else
           {
-            $this->log(sprintf("Couldn't read file '${digitalObjectName}'"));
+            $this->log(sprintf("Couldn't read file '{$digitalObjectName}'"));
             ++$this->skippedCount;
 
             continue;
@@ -214,7 +214,7 @@ class digitalObjectLoadTask extends sfBaseTask
         // Skip if this information object already has a digital object attached
         if (null !== $results[1])
         {
-          $this->log(sprintf("Information object ${idType}: %s already has a digital object. Skipping.", $key));
+          $this->log(sprintf("Information object {$idType}: %s already has a digital object. Skipping.", $key));
           ++$this->skippedCount;
 
           continue;
@@ -222,7 +222,7 @@ class digitalObjectLoadTask extends sfBaseTask
 
         if (!file_exists($path = self::getPath($item, $options)))
         {
-          $this->log(sprintf("Couldn't read file '${item}'"));
+          $this->log(sprintf("Couldn't read file '{$item}'"));
           ++$this->skippedCount;
 
           continue;
@@ -236,7 +236,7 @@ class digitalObjectLoadTask extends sfBaseTask
         {
           if (!file_exists($path = self::getPath($item, $options)))
           {
-            $this->log(sprintf("Couldn't read file '${item}'"));
+            $this->log(sprintf("Couldn't read file '{$item}'"));
             ++$this->skippedCount;
 
             continue;
@@ -339,7 +339,7 @@ EOF;
 
     if (!file_exists($path))
     {
-      $this->log("Couldn't read file '${path}'");
+      $this->log("Couldn't read file '{$path}'");
 
       return;
     }
