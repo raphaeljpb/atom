@@ -199,11 +199,11 @@ $mysql_config = [
         'debug' => [
           'realmemoryusage' => true,
           'details' => [
-            'time' => ['enabled' => true,],
-            'slow' => ['enabled' => true, 'threshold' => 0.1,],
-            'mem' => ['enabled' => true,],
-            'mempeak' => ['enabled' => true,],
-            'memdelta' => ['enabled' => true,],
+            'time' => ['enabled' => true],
+            'slow' => ['enabled' => true, 'threshold' => 0.1],
+            'mem' => ['enabled' => true],
+            'mempeak' => ['enabled' => true],
+            'memdelta' => ['enabled' => true],
           ],
         ],
       ],
