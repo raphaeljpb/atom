@@ -77,7 +77,7 @@ class sfGDAdapter
 
   public function loadFile($thumbnail, $image)
   {
-    $imgData = @GetImageSize($image);
+    $imgData = @getimagesize($image);
 
     if (!$imgData)
     {

@@ -94,7 +94,7 @@ class QubitCsvTransform extends QubitFlatfileImport
   public function initializeMySQLtemp()
   {
     // Possible future cleanup: use QubitPdo (might have to add a method to set QubitPdo's private $conn property)
-    if (false === $link = mysqli_connect(getEnv('MYSQL_HOST'), getEnv('MYSQL_USER'), getEnv('MYSQL_PASSWORD'), getEnv('MYSQL_DB')))
+    if (false === $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DB')))
     {
       throw new sfException('MySQL connection failed.');
     }
@@ -199,7 +199,7 @@ class QubitCsvTransform extends QubitFlatfileImport
 
     foreach(['MYSQL_HOST', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DB'] as $var)
     {
-      if (getEnv($var) === false)
+      if (getenv($var) === false)
       {
         throw new sfException('You must set the '.$var.' environmental variable.');
       }
