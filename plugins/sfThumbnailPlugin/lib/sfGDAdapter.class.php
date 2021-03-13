@@ -19,7 +19,6 @@
 
 class sfGDAdapter
 {
-
   protected $sourceWidth;
   protected $sourceHeight;
   protected $sourceMime;

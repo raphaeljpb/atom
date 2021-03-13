@@ -14,5 +14,4 @@
  */
 class QubitAuditLog extends BaseAuditLog
 {
-
 } // QubitAuditLog

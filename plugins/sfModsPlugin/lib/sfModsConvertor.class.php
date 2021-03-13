@@ -2,7 +2,6 @@
 
 class sfModsConvertor extends QubitSaxParser
 {
-
   protected $resource;
 
   // Name access point-related bookkeeping

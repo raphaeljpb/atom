@@ -14,5 +14,4 @@
  */
 class QubitClipboardSave extends BaseClipboardSave
 {
-
 } // QubitClipboardSave

@@ -19,7 +19,6 @@
 
 class sfImageMagickAdapter
 {
-
   protected $sourceWidth;
   protected $sourceHeight;
   protected $sourceMime;

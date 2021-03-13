@@ -14,5 +14,4 @@
  */
 class QubitPremisObject extends BasePremisObject
 {
-
 } // QubitPremisObject

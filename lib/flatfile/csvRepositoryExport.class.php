@@ -26,7 +26,6 @@
  */
 class csvRepositoryExport extends QubitFlatfileExport
 {
-
   public function __construct($destinationPath, $standard = null, $rowsPerFile = false)
   {
     parent::__construct($destinationPath, $standard, $rowsPerFile);

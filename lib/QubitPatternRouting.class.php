@@ -27,7 +27,6 @@
  */
 class QubitPatternRouting extends sfPatternRouting
 {
-
   /**
    * @see sfPatternRouting
    */

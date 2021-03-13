@@ -19,5 +19,4 @@
 
 class QubitRightsI18n extends BaseRightsI18n
 {
-
 }

@@ -14,5 +14,4 @@
  */
 class QubitRelationI18n extends BaseRelationI18n
 {
-
 } // QubitRelationI18n
