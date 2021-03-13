@@ -99,7 +99,7 @@ class PhysicalObjectCsvImporter
     $this->setOptions($options);
   }
 
-  public function setOrmClasses(Array $classes)
+  public function setOrmClasses(array $classes)
   {
     $this->ormClasses = $classes;
   }

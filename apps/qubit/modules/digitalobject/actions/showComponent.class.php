@@ -102,7 +102,7 @@ class DigitalObjectShowComponent extends sfComponent
   {
     $denyReason = '';
 
-    if ($this->resource->object instanceOf QubitActor)
+    if ($this->resource->object instanceof QubitActor)
     {
       return '';
     }
@@ -121,7 +121,7 @@ class DigitalObjectShowComponent extends sfComponent
     {
       case QubitTerm::IMAGE_ID:
 
-        if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceOf QubitInformationObject)
+        if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceof QubitInformationObject)
         {
           $this->showComponent = 'showCompound';
         }
@@ -148,7 +148,7 @@ class DigitalObjectShowComponent extends sfComponent
 
       case QubitTerm::TEXT_ID:
 
-        if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceOf QubitInformationObject)
+        if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceof QubitInformationObject)
         {
           $this->showComponent = 'showCompound';
         }

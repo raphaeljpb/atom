@@ -174,7 +174,7 @@ class DigitalObjectEditAction extends sfAction
 
         $this->resource->save();
 
-        if ($this->object instanceOf QubitInformationObject)
+        if ($this->object instanceof QubitInformationObject)
         {
           $this->object->updateXmlExports();
         }

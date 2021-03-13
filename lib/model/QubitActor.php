@@ -291,7 +291,7 @@ class QubitActor extends BaseActor
       $relation->delete();
     }
 
-    if (!($this instanceOf QubitRightsHolder || $this instanceOf QubitDonor))
+    if (!($this instanceof QubitRightsHolder || $this instanceof QubitDonor))
     {
       QubitSearch::getInstance()->delete($this);
     }

@@ -4,9 +4,9 @@
   <h1 class="multiline">
     <?php echo __('Edit %1%', array('%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject')))) ?>
 
-    <?php if ($resource->object instanceOf QubitInformationObject): ?>
+    <?php if ($resource->object instanceof QubitInformationObject): ?>
       <span class="sub"><?php echo render_title(QubitInformationObject::getStandardsBasedInstance($object)) ?></span>
-    <?php elseif ($resource->object instanceOf QubitActor): ?>
+    <?php elseif ($resource->object instanceof QubitActor): ?>
       <span class="sub"><?php echo render_title($object) ?></span>
     <?php endif; ?>
   </h1>

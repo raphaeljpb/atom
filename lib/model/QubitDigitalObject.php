@@ -1175,7 +1175,7 @@ class QubitDigitalObject extends BaseDigitalObject
     if (0 < count($this->assets) && $this->createDerivatives)
     {
       if (sfConfig::get('app_explode_multipage_files') && $this->getPageCount() > 1 &&
-        $this->getObject() instanceOf QubitInformationObject)
+        $this->getObject() instanceof QubitInformationObject)
       {
         // If DO is a compound object and attached to informationObject, then
         // create child objects and set to display as compound object (with pager)

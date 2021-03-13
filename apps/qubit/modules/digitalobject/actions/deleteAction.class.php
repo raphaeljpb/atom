@@ -63,7 +63,7 @@ class DigitalObjectDeleteAction extends sfAction
         $this->resource->delete();
         QubitSearch::getInstance()->update($this->object);
 
-        if ($this->object instanceOf QubitInformationObject)
+        if ($this->object instanceof QubitInformationObject)
         {
           $this->object->updateXmlExports();
         }
@@ -75,11 +75,11 @@ class DigitalObjectDeleteAction extends sfAction
         }
         else
         {
-          if ($this->object instanceOf QubitInformationObject)
+          if ($this->object instanceof QubitInformationObject)
           {
             $this->redirect(array($this->object, 'module' => 'informationobject'));
           }
-          elseif ($this->object instanceOf QubitActor)
+          elseif ($this->object instanceof QubitActor)
           {
             $this->redirect(array($this->object, 'module' => 'actor'));
           }

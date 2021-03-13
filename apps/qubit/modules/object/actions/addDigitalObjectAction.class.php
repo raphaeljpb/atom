@@ -54,7 +54,7 @@ class ObjectAddDigitalObjectAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Get repository to test upload limits
-    if ($this->resource instanceOf QubitInformationObject)
+    if ($this->resource instanceof QubitInformationObject)
     {
       $this->repository = $this->resource->getRepository(array('inherit' => true));
     }
@@ -119,7 +119,7 @@ class ObjectAddDigitalObjectAction extends sfAction
 
         $this->resource->save();
 
-        if ($this->resource instanceOf QubitInformationObject)
+        if ($this->resource instanceof QubitInformationObject)
         {
           $this->resource->updateXmlExports();
         }

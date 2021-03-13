@@ -29,8 +29,8 @@ class DigitalObjectMetadataComponent extends sfComponent
   public function execute($request)
   {
     // Check related object type to display IO properties in the template
-    $this->relatedToIo = $this->resource->object instanceOf QubitInformationObject;
-    $this->relatedToActor = $this->resource->object instanceOf QubitActor;
+    $this->relatedToIo = $this->resource->object instanceof QubitInformationObject;
+    $this->relatedToActor = $this->resource->object instanceof QubitActor;
 
     $this->user = $this->context->getUser();
     $this->storageServicePluginEnabled = (

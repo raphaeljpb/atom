@@ -905,7 +905,7 @@ class QubitXmlImport
       }
       else
       {
-        if (empty($methodMap['IgnoreChildElementText']) || !($child instanceOf DOMElement))
+        if (empty($methodMap['IgnoreChildElementText']) || !($child instanceof DOMElement))
         {
           $nodeValue .= preg_replace('/[\n\r\s]+/', ' ', $child->nodeValue);
         }

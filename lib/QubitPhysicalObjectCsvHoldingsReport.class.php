@@ -53,7 +53,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     'holdingType' => null,
   ];
 
-  public function __construct(Array $options = [])
+  public function __construct(array $options = [])
   {
     // Set options to defaults if unset and default is set
     foreach ($this->options as $name => $default)
@@ -75,7 +75,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     ]);
   }
 
-  public function setOptions(Array $options = null)
+  public function setOptions(array $options = null)
   {
     if (empty($options))
     {
@@ -160,12 +160,12 @@ class QubitPhysicalObjectCsvHoldingsReport
     $this->holdingType = $value;
   }
 
-  public function setOrmClasses(Array $classes)
+  public function setOrmClasses(array $classes)
   {
     $this->ormClasses = $classes;
   }
 
-  public function setTypeMap(Array $typeMap)
+  public function setTypeMap(array $typeMap)
   {
     $this->typeMap = $typeMap;
   }
@@ -206,7 +206,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     $this->writeRowIfNecessary($writer, $physObject, $holdingsData);
   }
 
-  public function writeRowIfNecessary(Object $writer, Object $physObject, Array $holdingsData)
+  public function writeRowIfNecessary(Object $writer, Object $physObject, array $holdingsData)
   {
     // Start row with physical object-related column values
     $row = [
@@ -233,7 +233,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     }
   }
 
-  public function addEmptyHoldingColumnsToRow(Array $row = [])
+  public function addEmptyHoldingColumnsToRow(array $row = [])
   {
     while (count($row) < count(self::$headerRow))
     {
@@ -260,7 +260,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     return $this->summarizeHoldingsData($rows);
   }
 
-  public function summarizeHoldingsData(Array $rows)
+  public function summarizeHoldingsData(array $rows)
   {
     $holdingsData = ['total' => count($rows), 'types' => []];
 
@@ -281,7 +281,7 @@ class QubitPhysicalObjectCsvHoldingsReport
     return $holdingsData;
   }
 
-  public function writePhysicalObjectAndHoldings(Object $writer, Array $row, Array $holdingsData)
+  public function writePhysicalObjectAndHoldings(Object $writer, array $row, array $holdingsData)
   {
     // If a specific holding type is selected remove data for other types
     foreach ($holdingsData['types'] as $className => $typeData)

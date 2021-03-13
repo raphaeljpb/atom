@@ -239,7 +239,7 @@ class QubitAcl
     }
 
     // HACKS for limiting term permissions by taxonomy
-    if ($resource instanceOf QubitTaxonomy && 'createTerm' == $action)
+    if ($resource instanceof QubitTaxonomy && 'createTerm' == $action)
     {
       $term = clone QubitTerm::getById(QubitTerm::ROOT_ID);
       $term->taxonomyId = $resource->id;
@@ -247,7 +247,7 @@ class QubitAcl
 
       $resource = $term;
     }
-    elseif ($resource instanceOf QubitTerm && array_key_exists('taxonomyId', $options))
+    elseif ($resource instanceof QubitTerm && array_key_exists('taxonomyId', $options))
     {
       // Create clone resource that we can assign to an arbitrary taxonomy
       $resource = clone $resource;

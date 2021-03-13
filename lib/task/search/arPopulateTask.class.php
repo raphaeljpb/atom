@@ -98,7 +98,7 @@ EOF;
     }
 
     // For information objects, allow optional skipping of descendants
-    if ($resource instanceOf QubitInformationObject)
+    if ($resource instanceof QubitInformationObject)
     {
       $options = array('updateDescendants' => !$options['ignore-descendants']);
       QubitSearch::getInstance()->update($resource, $options);

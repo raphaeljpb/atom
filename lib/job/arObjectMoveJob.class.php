@@ -54,7 +54,7 @@ class arObjectMoveJob extends arBaseJob
       }
 
       // In term treeview, root node links (href) to taxonomy, but it represents the term root object
-      if ($object instanceOf QubitTerm && $parent instanceof QubitTaxonomy)
+      if ($object instanceof QubitTerm && $parent instanceof QubitTaxonomy)
       {
         $newParentId = QubitTerm::ROOT_ID;
       }
