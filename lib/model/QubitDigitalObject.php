@@ -2046,7 +2046,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
     if ($pageCount)
     {
-      return (integer) $pageCount->getValue();
+      return (int) $pageCount->getValue();
     }
   }
   // TODO: add $options for filter

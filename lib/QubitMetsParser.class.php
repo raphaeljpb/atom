@@ -1351,14 +1351,14 @@ class QubitMetsParser
         return strtolower((string)$results[0]) == 'yes' ? true : false;
 
       case 'integer':
-        return (integer)$results[0];
+        return (int)$results[0];
 
       case 'firstInteger':
         foreach ($results as $item)
         {
           if (ctype_digit((string)$item))
           {
-            return (integer)$item;
+            return (int)$item;
           }
         }
 

@@ -38,7 +38,7 @@ class InformationObjectFindingAidLinkComponent extends sfComponent
 
     $i18n = $this->context->i18n;
 
-    switch ((integer)$this->resource->getFindingAidStatus())
+    switch ((int)$this->resource->getFindingAidStatus())
     {
       case arFindingAidJob::GENERATED_STATUS:
         $this->label = $i18n->__('Generated finding aid');

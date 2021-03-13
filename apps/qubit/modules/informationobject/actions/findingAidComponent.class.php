@@ -126,7 +126,7 @@ class InformationObjectFindingAidComponent extends sfComponent
       // Show status and download link
       $this->showStatus = $this->showDownload = true;
 
-      switch ((integer)$findingAidStatus)
+      switch ((int)$findingAidStatus)
       {
         case arFindingAidJob::GENERATED_STATUS:
           $this->status = $i18n->__('Generated');

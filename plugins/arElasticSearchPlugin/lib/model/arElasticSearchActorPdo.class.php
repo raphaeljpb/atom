@@ -141,7 +141,7 @@ class arElasticSearchActorPdo
 
     if (false !== $maintainingRepositoryId = $this->getMaintainingRepositoryId())
     {
-      $serialized['maintainingRepositoryId'] = (integer)$maintainingRepositoryId;
+      $serialized['maintainingRepositoryId'] = (int)$maintainingRepositoryId;
     }
 
     foreach ($this->getOccupations() as $occupation)
