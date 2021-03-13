@@ -185,7 +185,8 @@ EOF;
                            '%1%' => sfConfig::get('app_ui_label_actor'),
                            '%2%' => $identifier,
                          ]
-                       );
+                       )
+            ;
 
             if (sfConfig::get('app_prevent_duplicate_actor_identifiers', false))
             {

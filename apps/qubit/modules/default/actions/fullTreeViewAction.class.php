@@ -180,7 +180,8 @@ class DefaultFullTreeViewAction extends sfAction
     return QubitSearch::getInstance()
       ->index
       ->getType('QubitInformationObject')
-      ->search($query->getQuery(false, false));
+      ->search($query->getQuery(false, false))
+    ;
   }
 
   /**
@@ -243,7 +244,8 @@ class DefaultFullTreeViewAction extends sfAction
     return QubitSearch::getInstance()
       ->index
       ->getType('QubitInformationObject')
-      ->count($query->getQuery(false, false));
+      ->count($query->getQuery(false, false))
+    ;
   }
 
   /**

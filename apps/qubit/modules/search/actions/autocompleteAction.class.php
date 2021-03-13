@@ -72,12 +72,14 @@ class SearchAutocompleteAction extends sfAction
       $search = new \Elastica\Search($client);
       $search
         ->addIndex($index)
-        ->addType($index->getType($item['type']));
+        ->addType($index->getType($item['type']))
+      ;
 
       $query = new \Elastica\Query();
       $query
         ->setSize(3)
-        ->setSource($item['fields']);
+        ->setSource($item['fields'])
+      ;
 
       $queryBool = new \Elastica\Query\BoolQuery();
 

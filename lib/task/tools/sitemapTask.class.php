@@ -57,7 +57,8 @@ class sitemapTask extends sfBaseTask
       ->name('sitemap*.xml')
       ->name('sitemap*.xml.gz')
       ->maxdepth(0)
-      ->in($options['output-directory']);
+      ->in($options['output-directory'])
+    ;
     if (count($files) > 0)
     {
       if (!$options['no-confirmation'])

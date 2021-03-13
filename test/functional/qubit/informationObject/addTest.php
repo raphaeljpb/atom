@@ -25,7 +25,8 @@ $browser
 
   ->with('response')->begin()
   ->checkElement('body', '/Example fonds/')
-  ->end();
+  ->end()
+;
 
 $object = QubitObject::getById($browser->getRequest()->id);
 

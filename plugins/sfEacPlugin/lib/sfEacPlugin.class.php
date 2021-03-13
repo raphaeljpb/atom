@@ -476,7 +476,8 @@ return;
     require_once sfConfig::get('sf_root_dir').'/vendor/FluentDOM/FluentDOM.php';
 
     $fd = FluentDOM($doc)
-      ->namespaces(['eac' => 'urn:isbn:1-931666-33-4']);
+      ->namespaces(['eac' => 'urn:isbn:1-931666-33-4'])
+    ;
 
     $this->resource->sourceStandard = 'http://eac.staatsbibliothek-berlin.de/schema/cpf.xsd';
 
@@ -993,7 +994,8 @@ return;
   {
     $dates = [];
     $fd = FluentDOM($node)
-      ->namespaces(['eac' => 'urn:isbn:1-931666-33-4']);
+      ->namespaces(['eac' => 'urn:isbn:1-931666-33-4'])
+    ;
 
     if (0 < $fd->find('./eac:dateSet/eac:dateRange')->length)
     {
@@ -1020,7 +1022,8 @@ return;
   public static function parseDateRange($node)
   {
     $fd = FluentDOM($node)
-      ->namespaces(['eac' => 'urn:isbn:1-931666-33-4']);
+      ->namespaces(['eac' => 'urn:isbn:1-931666-33-4'])
+    ;
 
     $range = [$fd->find('eac:fromDate')->attr('standardDate'), $fd->find('eac:toDate')->attr('standardDate')];
 
@@ -1091,7 +1094,8 @@ str;
       ->replaceWith(function ($node)
         {
           return '* '.$node->textContent;
-        });
+        })
+    ;
 
     return $value->text();
   }

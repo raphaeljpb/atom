@@ -887,7 +887,8 @@ EOL;
     {
       $this->typeIdLookupTable = $this
         ->getPhysicalObjectTypeTaxonomy()
-        ->getTermNameToIdLookupTable($this->getDbConnection());
+        ->getTermNameToIdLookupTable($this->getDbConnection())
+      ;
 
       if (null === $this->typeIdLookupTable)
       {

@@ -18,4 +18,5 @@ $browser
   ->with('response')->begin()
   ->isStatusCode(200)
   ->checkElement('body', '/Untitled/')
-  ->end();
+  ->end()
+;

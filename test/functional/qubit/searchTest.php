@@ -14,7 +14,8 @@ $browser
 
   ->with('response')->begin()
   ->checkElement('body', '/testtitle/')
-  ->end();
+  ->end()
+;
 
 $informationObject->title = 'TesTTItLe';
 $informationObject->save();
@@ -24,7 +25,8 @@ $browser
 
   ->with('response')->begin()
   ->checkElement('body', '/TesTTItLe/')
-  ->end();
+  ->end()
+;
 
 // Issue 849
 $informationObject->title = 'testtitlé';
@@ -35,7 +37,8 @@ $browser
 
   ->with('response')->begin()
   ->checkElement('body', '/testtitlé/')
-  ->end();
+  ->end()
+;
 
 // Issue 848
 $informationObject->title = 'tEStTitLÉ';
@@ -46,7 +49,8 @@ $browser
 
   ->with('response')->begin()
   ->checkElement('body', '/tEStTitLÉ/')
-  ->end();
+  ->end()
+;
 
 $informationObject->delete();
 
@@ -55,4 +59,5 @@ $browser
 
   ->with('response')->begin()
   ->checkElement('body', '!/testtitle/')
-  ->end();
+  ->end()
+;

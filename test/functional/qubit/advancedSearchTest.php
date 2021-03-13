@@ -71,7 +71,8 @@ foreach ($cases as $key => $item)
     ->get(getUrl($tmp1, $tmp2, $item[0]))
     ->with('response')->begin()
     ->checkElement('#search-stats', $item[3] ? 1 : 0)
-    ->end();
+    ->end()
+  ;
 }
 
 function getUrl($startDate, $endDate, $title)

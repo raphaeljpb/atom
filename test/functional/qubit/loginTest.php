@@ -20,7 +20,8 @@ $browser
   ->with('request')->begin()
   ->isParameter('module', 'user')
   ->isParameter('action', 'login')
-  ->end();
+  ->end()
+;
 
 $browser->test()->ok($browser->getUser()->isAuthenticated(),
   'User is authenticated');
@@ -43,7 +44,8 @@ $browser
   ->with('request')->begin()
   ->isParameter('module', 'user')
   ->isParameter('action', 'logout')
-  ->end();
+  ->end()
+;
 
 $browser->test()->ok(!$browser->getUser()->isAuthenticated(),
   'User isn\'t authenticated');
@@ -58,7 +60,8 @@ $browser
   ->with('request')->begin()
   ->isParameter('module', 'user')
   ->isParameter('action', 'login')
-  ->end();
+  ->end()
+;
 
 $browser->test()->ok(!$browser->getUser()->isAuthenticated(),
   'User isn\'t authenticated');
@@ -76,7 +79,8 @@ $browser
   ->with('request')->begin()
   ->isParameter('module', 'user')
   ->isParameter('action', 'login')
-  ->end();
+  ->end()
+;
 
 $browser->test()->ok($browser->getUser()->isAuthenticated(),
   'User is authenticated');
@@ -94,7 +98,8 @@ $browser
   ->with('request')->begin()
   ->isParameter('module', 'user')
   ->isParameter('action', 'login')
-  ->end();
+  ->end()
+;
 
 $browser->test()->ok($browser->getUser()->isAuthenticated(),
   'User is authenticated');

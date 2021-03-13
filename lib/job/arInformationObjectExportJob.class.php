@@ -68,7 +68,8 @@ class arInformationObjectExportJob extends arExportJob
     return QubitSearch::getInstance()
       ->index
       ->getType('QubitInformationObject')
-      ->createSearch($query->getQuery(false, false));
+      ->createSearch($query->getQuery(false, false))
+    ;
   }
 
   /**

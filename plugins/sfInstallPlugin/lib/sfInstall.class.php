@@ -41,7 +41,8 @@ class sfInstall
     }
 
     $fd = FluentDOM($packageXmlPath)
-      ->namespaces(['p' => 'http://pear.php.net/dtd/package-2.0']);
+      ->namespaces(['p' => 'http://pear.php.net/dtd/package-2.0'])
+    ;
 
     // Check if a minimum PHP version is defined, and if it is less than our
     // current version
