@@ -152,7 +152,7 @@ class purgeTask extends sfBaseTask
     $this->name = 'purge';
     $this->briefDescription = 'Purge all data.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Purge all data.
 EOF;
   }

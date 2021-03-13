@@ -37,7 +37,7 @@ class arMigration0096
   public function up($configuration)
   {
     // Add table keymap
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 CREATE TABLE `access_log`
 (

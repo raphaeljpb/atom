@@ -122,7 +122,7 @@ class propelBuildNestedSetTask extends sfBaseTask
     $this->name = 'build-nested-set';
     $this->briefDescription = 'Build all nested set values.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Build nested set values. Optionally excluding tables (information_object, term, menu).
 EOF;
   }

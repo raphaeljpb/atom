@@ -29,7 +29,7 @@ class FixCodeTask extends sfBaseTask
 
     $this->name = '';
     $this->briefDescription = 'FIXME';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 FIXME
 EOF;
   }

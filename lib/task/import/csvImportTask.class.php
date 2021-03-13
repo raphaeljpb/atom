@@ -28,7 +28,7 @@ class csvImportTask extends csvImportBaseTask
     protected $name = 'import';
     protected $briefDescription = 'Import csv information object data';
 
-    protected $detailedDescription = <<<EOF
+    protected $detailedDescription = <<<'EOF'
 Import CSV data
 EOF;
 

@@ -31,7 +31,7 @@ class deleteDraftsTask extends sfBaseTask
     $this->namespace = 'tools';
     $this->name = 'delete-drafts';
     $this->briefDescription = 'Delete all information objects with publication status: DRAFT';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Delete all information objects with publication status: DRAFT
 EOF;
   }

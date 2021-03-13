@@ -32,7 +32,7 @@ class arMigration0185
   public function up($configuration)
   {
     // Add accession_event table
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 CREATE TABLE IF NOT EXISTS `accession_event`
 (

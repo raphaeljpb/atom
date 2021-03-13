@@ -66,7 +66,7 @@ class arSearchDocumentTask extends arBaseTask
     $this->namespace = 'search';
     $this->name = 'document';
     $this->briefDescription = 'Output search index document data corresponding to an AtoM resource';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
       Output search index document data corresponding to an AtoM resource
 EOF;
   }

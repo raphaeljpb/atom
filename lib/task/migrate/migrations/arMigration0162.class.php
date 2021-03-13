@@ -57,7 +57,7 @@ class arMigration0162
     }
 
     // Add table audit_log
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 CREATE TABLE `audit_log`
 (

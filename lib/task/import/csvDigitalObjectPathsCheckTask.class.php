@@ -63,7 +63,7 @@ class csvDigitalObjectPathsCheckTask extends arBaseTask
     $this->name = 'digital-object-path-check';
     $this->briefDescription = 'Check digital object paths in CSV data.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Compare digital object-related files in a directory to data in a CSV file's
 column (digitalObjectPath by default) and display a report.
 

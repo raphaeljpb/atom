@@ -102,7 +102,7 @@ class i18nRectifyTask extends sfBaseTask
     $this->name = 'rectify';
     $this->briefDescription = 'Copy i18n target messages from application source to plugin source. This prevents losing translated string in the fragmentation of application message source into multiple plugin message sources.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 FIXME
 EOF;
   }

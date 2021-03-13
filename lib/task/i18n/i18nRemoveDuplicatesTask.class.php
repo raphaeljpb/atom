@@ -116,7 +116,7 @@ class I18nRemoveDuplicatesTask extends sfBaseTask
     $this->name = 'remove-duplicates';
     $this->briefDescription = 'Delete duplicate source messages';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 FIXME
 EOF;
   }

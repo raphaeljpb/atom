@@ -28,7 +28,7 @@ class csvCustomImportTask extends csvImportBaseTask
     protected $name = 'custom-import';
     protected $briefDescription = 'Import csv data using custom criteria';
 
-    protected $detailedDescription = <<<EOF
+    protected $detailedDescription = <<<'EOF'
 Import CSV data using import logic defined in a file
 EOF;
 

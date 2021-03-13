@@ -36,7 +36,7 @@ class arMigration0143
    */
   public function up($configuration)
   {
-    $sql = <<<sql
+    $sql = <<<'sql'
 CREATE TABLE IF NOT EXISTS `premis_object`
 (
   `id` INTEGER  NOT NULL,

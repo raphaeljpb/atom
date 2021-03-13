@@ -147,7 +147,7 @@ class csvPhysicalobjectImportTask extends arBaseTask
     $this->namespace = 'csv';
     $this->name = 'physicalobject-import';
     $this->briefDescription = 'Import physical object CSV data.';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
       Import physical object CSV data
 EOF;
   }
@@ -207,7 +207,7 @@ EOF;
   {
     if ($options['skip-unmatched'] && !$options['update'])
     {
-      $msg = <<<EOM
+      $msg = <<<'EOM'
 The --skip-unmatched option can not be used without the --update option.
 EOM;
 

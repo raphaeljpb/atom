@@ -25,7 +25,7 @@
 class MigrateTask extends sfBaseTask
 {
   public const FINAL_VERSION = 62;
-  public const NOTICE_FINAL_VERSION = <<<EOL
+  public const NOTICE_FINAL_VERSION = <<<'EOL'
 
 Notice: This migration script will only migrate your data to version Release 1.1 v%s.
 To migrate to Release 1.2 or later, please see the upgrading documentation:
@@ -56,7 +56,7 @@ EOL;
     $this->namespace = 'propel';
     $this->name = 'migrate';
     $this->briefDescription = 'Migrate the database schema and existing data for compatibility with a newer version of Qubit.';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 The [propel:migrate|INFO] task modifies the given YAML dump file with changes to the data structure and fixtures in subsequent versions of the application:
 
   [./symfony propel:migrate qubit_data_1.0.8.yml|INFO]

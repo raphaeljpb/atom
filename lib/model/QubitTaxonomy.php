@@ -174,7 +174,7 @@ class QubitTaxonomy extends BaseTaxonomy
       $connection = Propel::getConnection();
     }
 
-    $sql = <<<SQL
+    $sql = <<<'SQL'
       SELECT
         term.id AS `id`,
         term.taxonomy_id AS `taxonomy_id`,

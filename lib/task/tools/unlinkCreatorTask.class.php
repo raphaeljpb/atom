@@ -39,7 +39,7 @@ class unlinkCreatorTask extends sfBaseTask
     $this->namespace = 'tools';
     $this->name = 'unlink-creators';
     $this->briefDescription = 'Unlink creators from descriptions so creator inheritance can be used.';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Unlink creators from descriptions so creator inheritance can be used.
 
 This Task will examine a description's creators and compare them to the

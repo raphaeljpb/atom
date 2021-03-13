@@ -75,7 +75,7 @@ class promoteUserToAdminTask extends sfBaseTask
     $this->name = 'promote-user-to-admin';
     $this->briefDescription = 'Promote user to admin.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Prompote existing user to admin.
 EOF;
   }

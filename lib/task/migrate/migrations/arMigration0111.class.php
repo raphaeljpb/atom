@@ -38,7 +38,7 @@ class arMigration0111
   public function up($configuration)
   {
     // Create job table
-    $sql = <<<sql
+    $sql = <<<'sql'
 CREATE TABLE IF NOT EXISTS `job` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,

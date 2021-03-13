@@ -26,7 +26,7 @@ $configuration = ProjectConfiguration::getApplicationConfiguration('qubit', 'tes
 sfContext::createInstance($configuration);
 
 // Really small vocabulary in Turtle
-$vocabSimple = <<<EOT
+$vocabSimple = <<<'EOT'
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 <http://example.com/foo>
@@ -40,7 +40,7 @@ $vocabSimple = <<<EOT
   skos:prefLabel "Bar ESPAÑOL"@es .
 EOT;
 
-$europeUnescoThesaurus = <<<EOT
+$europeUnescoThesaurus = <<<'EOT'
 <?xml version="1.0" encoding="utf-8" ?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns:skos="http://www.w3.org/2004/02/skos/core#"
@@ -729,7 +729,7 @@ $europeUnescoThesaurus = <<<EOT
 EOT;
 
 // CSS2 vocabulary in RDF/XML
-$vocabCSS2 = <<<EOT
+$vocabCSS2 = <<<'EOT'
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:doc="http://www.w3.org/2000/10/swap/pim/doc#" xmlns:rec="http://www.w3.org/2001/02pd/rec54#" xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:glos="http://www.w3.org/2003/03/glossary-project/schema#" xmlns:skos="http://www.w3.org/2004/02/skos/core#">
 <rdf:Description rdf:about="">

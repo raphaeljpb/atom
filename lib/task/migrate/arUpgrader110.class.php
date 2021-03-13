@@ -791,7 +791,7 @@ class arUpgrader110
     QubitPdo::modify('ALTER TABLE digital_object ADD `checksum_type` VARCHAR(50) AFTER `checksum`');
 
     // Create relation_i18n
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 CREATE TABLE `relation_i18n`
 (
@@ -851,7 +851,7 @@ sql;
     }
 
     // Add table keymap
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 CREATE TABLE `keymap`
 (
@@ -868,7 +868,7 @@ sql;
     QubitPdo::modify($sql);
 
     // Add rights and rights_i18n tables
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 CREATE TABLE `rights`
 (
@@ -934,7 +934,7 @@ sql;
     QubitPdo::modify($sql);
 
     // Add rights_holder table
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 CREATE TABLE `rights_holder`
 (
@@ -950,7 +950,7 @@ sql;
     QubitPdo::modify($sql);
 
     // Add qtAccessionPlugin SQL
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 SET FOREIGN_KEY_CHECKS = 0;
 

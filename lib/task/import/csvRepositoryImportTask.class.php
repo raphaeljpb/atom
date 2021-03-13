@@ -28,7 +28,7 @@ class csvRepositoryImportTask extends csvImportBaseTask
   protected $namespace = 'csv';
   protected $name = 'repository-import';
   protected $briefDescription = 'Import csv repository data';
-  protected $detailedDescription = <<<EOF
+  protected $detailedDescription = <<<'EOF'
 Import CSV data
 EOF;
 

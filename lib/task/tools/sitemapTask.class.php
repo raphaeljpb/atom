@@ -128,7 +128,7 @@ class sitemapTask extends sfBaseTask
     $this->name = 'sitemap';
     $this->briefDescription = 'Write a Sitemap XML file that lists the URLs of the site.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Write a Sitemap XML file that lists the URLs of the current site.
 
 By default, the sitemap is stored in the root directory. Its final location can

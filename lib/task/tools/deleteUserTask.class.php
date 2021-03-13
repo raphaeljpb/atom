@@ -85,7 +85,7 @@ class deleteUserTask extends arBaseTask
     $this->name = 'delete-user';
     $this->briefDescription = 'Delete a user.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Delete a user.
 EOF;
   }

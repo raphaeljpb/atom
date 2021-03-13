@@ -63,7 +63,7 @@ class importBulkTask extends arBaseTask
     $this->namespace = 'import';
     $this->name = 'bulk';
     $this->briefDescription = 'Bulk import multiple XML/CSV files at once';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Bulk import multiple XML/CSV files at once
 EOF;
   }

@@ -101,7 +101,7 @@ class atomPluginsTask extends sfBaseTask
     $this->name = 'atom-plugins';
     $this->briefDescription = 'Manage AtoM plugins.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Manage AtoM plugins stored in the database. Examples:
  - symfony atom-plugins add arFoobarPlugin
  - symfony atom-plugins delete arFoobarPlugin

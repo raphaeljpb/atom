@@ -70,7 +70,7 @@ class csvAuthorityRecordRelationImportTask extends csvImportBaseTask
     $this->namespace = 'csv';
     $this->name = 'authority-relation-import';
     $this->briefDescription = 'Import authority record relations using CSV data.';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
       Import authority record relations using CSV data
 EOF;
   }

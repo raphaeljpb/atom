@@ -62,7 +62,7 @@ class i18nConsolidateTask extends sfBaseTask
     $this->name = 'consolidate';
     $this->briefDescription = 'Combine all application messages into a single output (XLIFF)';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Combine all application messages into a single output (XLIFF) file for ease of
 use by translators.
 EOF;

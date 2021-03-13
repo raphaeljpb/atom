@@ -44,7 +44,7 @@ class arCacheDescriptionXmlTask extends arBaseTask
     $this->name = 'xml-representations';
 
     $this->briefDescription = 'Render all descriptions as XML and cache the results as files';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Render all descriptions as XML and cache the results as files
 EOF;
   }

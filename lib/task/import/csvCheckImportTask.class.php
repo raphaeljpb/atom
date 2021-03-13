@@ -28,7 +28,7 @@ class csvCheckImportTask extends csvImportBaseTask
     protected $name = 'check-import';
     protected $briefDescription = 'Check CSV data, providing diagnostic info';
 
-    protected $detailedDescription = <<<EOF
+    protected $detailedDescription = <<<'EOF'
 Check CSV data, providing information about it
 EOF;
 

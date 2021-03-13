@@ -67,7 +67,7 @@ class ActorMoveDescriptionRelationsTask extends arBaseTask
     $this->namespace = 'actor';
     $this->name = 'move-description-relations';
     $this->briefDescription = 'Move actor-description relations';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Move description relations from a source actor to a target actor,
 including all events and name access point relations.
 EOF;

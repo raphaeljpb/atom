@@ -30,7 +30,7 @@ class getVersionTask extends sfBaseTask
     $this->namespace = 'tools';
     $this->name = 'get-version';
     $this->briefDescription = 'Show current version (including release and database version)';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 FIXME
 EOF;
   }

@@ -278,7 +278,7 @@ class PhysicalObjectCsvImporter
 
     if (empty($columnNames))
     {
-      $msg = <<<EOM
+      $msg = <<<'EOM'
 Invalid header. Please provide a CSV delimited list of column names
 e.g. "name,location,type,culture".
 EOM;
@@ -555,7 +555,7 @@ EOM;
   {
     $timer = $this->startTimer('keymapSave');
 
-    $query = <<<EOQ
+    $query = <<<'EOQ'
 INSERT INTO keymap (`source_name`, `source_id`, `target_name`, `target_id`)
 VALUES (:sourceName, :sourceId, :targetName, :targetId);
 EOQ;

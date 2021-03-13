@@ -47,7 +47,7 @@ class arMigration0121
     QubitPdo::modify($sql);
 
     // Add new constraint
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 ALTER TABLE `event`
   ADD CONSTRAINT `event_FK_3`

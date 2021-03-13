@@ -116,7 +116,7 @@ class importDipObjectsTask extends arBaseTask
     $this->name = 'dip-objects';
     $this->briefDescription = 'Import digital objects from Archivematica DIP using CSV file';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Process a CSV file to import digital objects from an Archivematica DIP to
 existing information objects in AtoM.
 

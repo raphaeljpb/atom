@@ -28,7 +28,7 @@ class physicalObjectDeleteUnlinkedTask extends arBaseTask
   protected $name = 'delete-unlinked';
   protected $briefDescription = "Delete physical objects that aren't linked to descriptions";
 
-  protected $detailedDescription = <<<EOF
+  protected $detailedDescription = <<<'EOF'
 Delete physical objects that aren't linked to descriptions
 EOF;
 

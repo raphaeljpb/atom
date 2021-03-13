@@ -21,7 +21,7 @@ class SitemapStaticPageSet extends AbstractSitemapObjectSet
 {
   public function init()
   {
-    $query = <<<EOF
+    $query = <<<'EOF'
 SELECT S.slug, O.created_at, O.updated_at
 FROM static_page ST
 LEFT JOIN object O ON (ST.id = O.id)

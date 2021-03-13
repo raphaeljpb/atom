@@ -56,7 +56,7 @@ class I18nUpdateFixturesTask extends sfBaseTask
     $this->name = 'update-fixtures';
     $this->briefDescription = 'Reads XLIFF files from {{path}} and merges translations to database fixture files';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Reads XLIFF files from {{path}} and merges translations to database fixture files
 EOF;
   }

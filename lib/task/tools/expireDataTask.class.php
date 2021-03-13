@@ -54,7 +54,7 @@ class expireDataTask extends arBaseTask
     $this->namespace = 'tools';
     $this->name = 'expire-data';
     $this->briefDescription = 'Delete expired data';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Delete expired data (in entirety or by age)
 EOF;
   }

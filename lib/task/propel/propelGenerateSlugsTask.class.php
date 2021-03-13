@@ -214,7 +214,7 @@ class propelGenerateSlugsTask extends arBaseTask
     $this->name = 'generate-slugs';
     $this->briefDescription = 'Generate slugs for all slug-less objects.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Generate slugs for all slug-less objects.
 EOF;
   }

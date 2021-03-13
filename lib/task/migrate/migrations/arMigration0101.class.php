@@ -36,7 +36,7 @@ class arMigration0101
    */
   public function up($configuration)
   {
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 ALTER TABLE `access_log`
 DROP FOREIGN KEY `access_log_FK_1`;
@@ -45,7 +45,7 @@ sql;
 
     QubitPdo::modify($sql);
 
-        $sql = <<<sql
+        $sql = <<<'sql'
 
 ALTER TABLE `access_log`
 ADD CONSTRAINT `access_log_FK_1`

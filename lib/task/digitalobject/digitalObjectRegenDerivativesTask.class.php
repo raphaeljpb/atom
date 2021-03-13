@@ -109,7 +109,7 @@ class digitalObjectRegenDerivativesTask extends arBaseTask
     $this->namespace = 'digitalobject';
     $this->name = 'regen-derivatives';
     $this->briefDescription = 'Regenerates digital object derivative from master copy';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Regenerate digital object derivatives from master copy.
 EOF;
   }

@@ -27,7 +27,7 @@ class csvAccessionImportTask extends csvImportBaseTask
   protected $namespace = 'csv';
   protected $name = 'accession-import';
   protected $briefDescription = 'Import csv acession data';
-  protected $detailedDescription = <<<EOF
+  protected $detailedDescription = <<<'EOF'
 Import CSV accession data
 EOF;
 

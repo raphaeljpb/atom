@@ -28,7 +28,7 @@ class listJobsTask extends arBaseTask
     protected $name = 'list';
     protected $briefDescription = 'List AtoM jobs';
 
-    protected $detailedDescription = <<<EOF
+    protected $detailedDescription = <<<'EOF'
 List AtoM jobs. If no options are set it will list ALL the jobs.
 EOF;
 

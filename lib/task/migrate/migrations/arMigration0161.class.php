@@ -38,13 +38,13 @@ class arMigration0161
   {
     // Add RGT index to the information object table
     // if it's not already added
-    $sql = <<<sql
+    $sql = <<<'sql'
 SHOW INDEX FROM information_object WHERE Column_name = 'rgt';
 sql;
 
     if (0 == count(QubitPdo::fetchAll($sql)))
     {
-      $sql = <<<sql
+      $sql = <<<'sql'
 CREATE INDEX rgt ON information_object(rgt);
 sql;
 
@@ -53,13 +53,13 @@ sql;
 
     // Add PATH index to the digital object table
     // if it's not already added
-    $sql = <<<sql
+    $sql = <<<'sql'
 SHOW INDEX FROM digital_object WHERE Column_name = 'path';
 sql;
 
     if (0 == count(QubitPdo::fetchAll($sql)))
     {
-      $sql = <<<sql
+      $sql = <<<'sql'
 CREATE INDEX path ON digital_object (path);
 sql;
 

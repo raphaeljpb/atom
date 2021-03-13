@@ -61,7 +61,7 @@ class arSearchStatusTask extends arBaseTask
     $this->name = 'status';
 
     $this->briefDescription = 'Display search index status';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 The [search:status|INFO] task displays the status of search indexing for each document type.
 EOF;
   }

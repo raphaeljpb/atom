@@ -116,7 +116,7 @@ class addSuperuserTask extends sfBaseTask
     $this->name = 'add-superuser';
     $this->briefDescription = 'Add new superuser.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Add new superuser.
 EOF;
   }

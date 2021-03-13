@@ -27,7 +27,7 @@ class csvDeaccessionImportTask extends csvImportBaseTask
   protected $namespace = 'csv';
   protected $name = 'deaccession-import';
   protected $briefDescription = 'Import CSV deaccession data';
-  protected $detailedDescription = <<<EOF
+  protected $detailedDescription = <<<'EOF'
 Import CSV deaccession data
 EOF;
 

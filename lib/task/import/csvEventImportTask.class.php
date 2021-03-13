@@ -27,7 +27,7 @@ class csvEventRecordImportTask extends csvImportBaseTask
   protected $namespace = 'csv';
   protected $name = 'event-import';
   protected $briefDescription = 'Import csv event record data';
-  protected $detailedDescription = <<<EOF
+  protected $detailedDescription = <<<'EOF'
 Import CSV event record data
 EOF;
 

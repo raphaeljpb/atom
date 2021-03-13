@@ -67,7 +67,7 @@ class arSearchPopulateTask extends sfBaseTask
     $this->name = 'populate';
 
     $this->briefDescription = 'Populates the search index';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 The [search:populate|INFO] task empties, populates, and optimizes the index
 in the current project. It may take quite a while to run.
 

@@ -21,7 +21,7 @@ class SitemapInformationObjectSet extends AbstractSitemapObjectSet
 {
   public function init()
   {
-    $query = <<<EOF
+    $query = <<<'EOF'
 SELECT IO.level_of_description_id, IO.parent_id, S.slug, O.created_at, O.updated_at
 FROM information_object IO
 LEFT JOIN object O ON (IO.id = O.id)

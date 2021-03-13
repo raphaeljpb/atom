@@ -36,7 +36,7 @@ class findRepositoryLatLngTask extends sfBaseTask
     $this->namespace = 'tools';
     $this->name = 'find-repository-latlng';
     $this->briefDescription = 'Search for the lat/lng values of your contacts in Google Maps';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 This task won't overwrite existing values unless you use "--overwrite".
 EOF;
   }

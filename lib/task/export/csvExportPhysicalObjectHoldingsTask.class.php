@@ -66,7 +66,7 @@ class csvExportPhysicalObjectHoldingsTask extends arBaseTask
     $this->namespace = 'csv';
     $this->name = 'physicalstorage-holdings';
     $this->briefDescription = 'Export physical storage holdings report as CSV data.';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
       Export physical storage holdings report as CSV data
 
       Physical storage containing no holdings will be included unless the --omit-empty option is used.

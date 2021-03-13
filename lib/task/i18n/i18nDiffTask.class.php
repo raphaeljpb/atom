@@ -155,7 +155,7 @@ class i18nDiffTask extends sfBaseTask
     $this->name = 'diff';
     $this->briefDescription = 'Compares existing XLIFF strings to new i18n strings extracted from PHP files as per the i18n:extract task.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 The [i18n:diff|INFO] task compares existing XLIFF strings to new i18n strings
 extracted from PHP files for the given application and target culture:
 

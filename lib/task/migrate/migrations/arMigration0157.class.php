@@ -37,7 +37,7 @@ class arMigration0157
   public function up($configuration)
   {
     // Add table clipboard_save
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 CREATE TABLE `clipboard_save` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -53,7 +53,7 @@ sql;
     QubitPdo::modify($sql);
 
     // Add table clipboard_save_item
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 CREATE TABLE `clipboard_save_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

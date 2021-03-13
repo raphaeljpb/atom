@@ -147,7 +147,7 @@ class digitalObjectDeleteTask extends arBaseTask
     $this->name = 'delete';
     $this->briefDescription = 'Delete digital objects given an archival description slug.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Delete digital objects by slug. Slug must be an information object, or a
 repository.
 EOF;

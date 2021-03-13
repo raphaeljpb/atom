@@ -77,7 +77,7 @@ class deleteDescriptionTask extends arBaseTask
     $this->name = 'delete-description';
     $this->briefDescription = 'Delete description given its slug.';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Delete archival descriptions by slug.
 EOF;
   }

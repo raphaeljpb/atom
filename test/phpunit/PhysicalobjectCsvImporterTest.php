@@ -581,7 +581,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
     $importer = new PhysicalObjectCsvImporter($this->context, $this->vdbcon);
     $importer->setOption('debug', true);
 
-    $expectedOutput = <<<EOM
+    $expectedOutput = <<<'EOM'
 Elapsed times:
   Load CSV file:            0.00s
   Process row:              0.00s

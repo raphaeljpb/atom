@@ -27,7 +27,7 @@ class csvAuthorityRecordImportTask extends csvImportBaseTask
   protected $namespace = 'csv';
   protected $name = 'authority-import';
   protected $briefDescription = 'Import csv authority record data';
-  protected $detailedDescription = <<<EOF
+  protected $detailedDescription = <<<'EOF'
 Import CSV data
 EOF;
 

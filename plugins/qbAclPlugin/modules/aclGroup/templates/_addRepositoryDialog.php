@@ -43,7 +43,7 @@ foreach ($basicActions as $key => $item)
   $tableTemplate .= "</tr>\n";
 }
 
-$tableTemplate .= <<<EOL
+$tableTemplate .= <<<'EOL'
 </tbody>
 </table>
 </div>

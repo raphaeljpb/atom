@@ -305,7 +305,7 @@ class QubitPhysicalObject extends BasePhysicalObject
       throw new sfException('Invalid QubitPhysicalObject id');
     }
 
-    $sql = <<<SQL
+    $sql = <<<'SQL'
       SELECT
         id,
         subject_id,

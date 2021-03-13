@@ -421,7 +421,7 @@ foreach ($adapter_list as $adapter)
     'Soapaction' => 'http://www.abundanttech.com/WebServices/Population/getWorldPopulation',
     'Content-Type' => 'text/xml',
   ];
-  $requestBody = <<<EOT
+  $requestBody = <<<'EOT'
 <?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
@@ -438,7 +438,7 @@ EOT;
     'Soapaction' => 'http://www.abundanttech.com/WebServices/Population/getPopulation',
     'Content-Type' => 'text/xml',
   ];
-  $requestBody = <<<EOT
+  $requestBody = <<<'EOT'
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pop="http://www.abundanttech.com/WebServices/Population">
   <soapenv:Header/>
   <soapenv:Body>

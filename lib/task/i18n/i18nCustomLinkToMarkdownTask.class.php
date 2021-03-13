@@ -33,7 +33,7 @@ class i18nCustomLinkToMarkdownTask extends i18nTransformBaseTask
     $this->name = 'custom-link-to-markdown';
     $this->briefDescription = 'Convert custom link format to Markdown syntax in various i18n table fields';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Convert custom link format to Markdown syntax from inside information object, actor, note, repository, and rights i18n fields.
 EOF;
   }

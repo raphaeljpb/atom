@@ -21,7 +21,7 @@ class SitemapActorSet extends AbstractSitemapObjectSet
 {
   public function init()
   {
-    $query = <<<EOF
+    $query = <<<'EOF'
 SELECT A.parent_id, S.slug, O.created_at, O.updated_at
 FROM actor A
 LEFT JOIN object O ON (A.id = O.id)

@@ -79,7 +79,7 @@ class resetPasswordTask extends sfBaseTask
     $this->namespace = 'tools';
     $this->name = 'reset-password';
     $this->briefDescription = 'Generates or set a new password for a given username or e-mail address';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 FIXME
 EOF;
   }

@@ -36,7 +36,7 @@ class i18nRemoveHtmlTagsTask extends i18nTransformBaseTask
     $this->name = 'remove-html-tags';
     $this->briefDescription = 'Remove HTML tags from inside various i18n fields, and convert HTML entities';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Remove HTML tags from inside information object, actor, note, repository, and rights i18n fields.
 HTML character entities are also converted to their non-HTML representations.
 EOF;

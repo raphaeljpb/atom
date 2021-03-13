@@ -332,9 +332,9 @@ script;
 
   protected function addAddSelectColumns(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public static function addSelectColumns(Criteria \$criteria)
+  public static function addSelectColumns(Criteria $criteria)
   {
 
 script;
@@ -374,9 +374,9 @@ script;
 script;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-    return \$criteria;
+    return $criteria;
   }
 
 script;
@@ -500,11 +500,11 @@ script;
   // http://php.net/manual/en/language.oop5.late-static-bindings.php
   protected function addGetAll(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public static function getAll(array \$options = array())
+  public static function getAll(array $options = array())
   {
-    return self::get(new Criteria, \$options);
+    return self::get(new Criteria, $options);
   }
 
 script;
@@ -512,13 +512,13 @@ script;
 
   protected function addGetOne(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public static function getOne(Criteria \$criteria, array \$options = array())
+  public static function getOne(Criteria $criteria, array $options = array())
   {
-    \$criteria->setLimit(1);
+    $criteria->setLimit(1);
 
-    return self::get(\$criteria, \$options)->__get(0, array('defaultValue' => null));
+    return self::get($criteria, $options)->__get(0, array('defaultValue' => null));
   }
 
 script;
@@ -573,33 +573,33 @@ script;
 
   protected function addDoDelete(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public static function doDelete(Criteria \$criteria, \$connection = null)
+  public static function doDelete(Criteria $criteria, $connection = null)
   {
-    if (!isset(\$connection))
+    if (!isset($connection))
     {
-      \$connection = Propel::getConnection();
+      $connection = Propel::getConnection();
     }
 
-    \$affectedRows = 0;
+    $affectedRows = 0;
 
 script;
 
     if (!empty($this->emulateOnDeleteCascade))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-    \$affectedRows += self::doOnDeleteCascade(\$criteria, \$connection);
+    $affectedRows += self::doOnDeleteCascade($criteria, $connection);
 
 script;
     }
 
     if (!empty($this->emulateOnDeleteSetNull))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-    \$affectedRows += self::doOnDeleteSetNull(\$criteria, \$connection);
+    $affectedRows += self::doOnDeleteSetNull($criteria, $connection);
 
 script;
     }
@@ -658,15 +658,15 @@ script;
   {
     if (!isset($this->inheritanceFk))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
   protected
-    \$tables = array();
+    $tables = array();
 
 script;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
   public function __construct()
   {
@@ -675,7 +675,7 @@ script;
 
     if (isset($this->inheritanceFk))
     {
-      $script .= <<<script
+      $script .= <<<'script'
     parent::__construct();
 
 
@@ -709,11 +709,11 @@ script;
     // TODO Be more conservative about adding $refFkValues, and change the name
     if (!isset($this->inheritanceFk))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
   protected
-    \$values = array(),
-    \$refFkValues = array();
+    $values = array(),
+    $refFkValues = array();
 
 script;
     }
@@ -770,22 +770,22 @@ ${adds}
 script;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public function __isset(\$name)
+  public function __isset($name)
   {
-    \$args = func_get_args();
+    $args = func_get_args();
 
 
 script;
 
     if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n'))
     {
-      $script .= <<<script
-    \$options = array();
-    if (1 < count(\$args))
+      $script .= <<<'script'
+    $options = array();
+    if (1 < count($args))
     {
-      \$options = \$args[1];
+      $options = $args[1];
     }
 
 
@@ -808,23 +808,23 @@ script;
 
     if (!isset($this->inheritanceFk))
     {
-      $script .= <<<script
-    \$offset = 0;
-    foreach (\$this->tables as \$table)
+      $script .= <<<'script'
+    $offset = 0;
+    foreach ($this->tables as $table)
     {
-      foreach (\$table->getColumns() as \$column)
+      foreach ($table->getColumns() as $column)
       {
-        if (\$name == \$column->getPhpName())
+        if ($name == $column->getPhpName())
         {
-          return null !== \$this->rowOffsetGet(\$name, \$offset, \$options);
+          return null !== $this->rowOffsetGet($name, $offset, $options);
         }
 
-        if ("{\$name}Id" == \$column->getPhpName())
+        if ("{$name}Id" == $column->getPhpName())
         {
-          return null !== \$this->rowOffsetGet("{\$name}Id", \$offset, \$options);
+          return null !== $this->rowOffsetGet("{$name}Id", $offset, $options);
         }
 
-        \$offset++;
+        $offset++;
       }
     }
 
@@ -865,14 +865,14 @@ script;
 
     if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-    if ('ancestors' == \$name)
+    if ('ancestors' == $name)
     {
       return true;
     }
 
-    if ('descendants' == \$name)
+    if ('descendants' == $name)
     {
       return true;
     }
@@ -880,43 +880,43 @@ script;
 script;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-    throw new sfException("Unknown record property \\"\$name\\" on \\"".get_class(\$this).'"');
+    throw new sfException("Unknown record property \"$name\" on \"".get_class($this).'"');
   }
 
 script;
 
     if (!isset($this->inheritanceFk))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-  public function offsetExists(\$offset)
+  public function offsetExists($offset)
   {
-    \$args = func_get_args();
+    $args = func_get_args();
 
-    return call_user_func_array(array(\$this, '__isset'), \$args);
+    return call_user_func_array(array($this, '__isset'), $args);
   }
 
 script;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public function __get(\$name)
+  public function __get($name)
   {
-    \$args = func_get_args();
+    $args = func_get_args();
 
 
 script;
 
     if (!isset($this->inheritanceFk) || 0 < count($this->refFks) || $this->getTable()->getAttribute('isI18n') || isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
-      $script .= <<<script
-    \$options = array();
-    if (1 < count(\$args))
+      $script .= <<<'script'
+    $options = array();
+    if (1 < count($args))
     {
-      \$options = \$args[1];
+      $options = $args[1];
     }
 
 
@@ -939,25 +939,25 @@ script;
 
     if (!isset($this->inheritanceFk))
     {
-      $script .= <<<script
-    \$offset = 0;
-    foreach (\$this->tables as \$table)
+      $script .= <<<'script'
+    $offset = 0;
+    foreach ($this->tables as $table)
     {
-      foreach (\$table->getColumns() as \$column)
+      foreach ($table->getColumns() as $column)
       {
-        if (\$name == \$column->getPhpName())
+        if ($name == $column->getPhpName())
         {
-          return \$this->rowOffsetGet(\$name, \$offset, \$options);
+          return $this->rowOffsetGet($name, $offset, $options);
         }
 
-        if ("{\$name}Id" == \$column->getPhpName())
+        if ("{$name}Id" == $column->getPhpName())
         {
-          \$relatedTable = \$column->getTable()->getDatabaseMap()->getTable(\$column->getRelatedTableName());
+          $relatedTable = $column->getTable()->getDatabaseMap()->getTable($column->getRelatedTableName());
 
-          return call_user_func(array(\$relatedTable->getClassName(), 'getBy'.ucfirst(\$relatedTable->getColumn(\$column->getRelatedColumnName())->getPhpName())), \$this->rowOffsetGet("{\$name}Id", \$offset, \$options));
+          return call_user_func(array($relatedTable->getClassName(), 'getBy'.ucfirst($relatedTable->getColumn($column->getRelatedColumnName())->getPhpName())), $this->rowOffsetGet("{$name}Id", $offset, $options));
         }
 
-        \$offset++;
+        $offset++;
       }
     }
 
@@ -1020,67 +1020,67 @@ script;
 
     if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-    if ('ancestors' == \$name)
+    if ('ancestors' == $name)
     {
-      if (!isset(\$this->values['ancestors']))
+      if (!isset($this->values['ancestors']))
       {
-        if (\$this->new)
+        if ($this->new)
         {
-          \$this->values['ancestors'] = QubitQuery::create(array('self' => \$this) + \$options);
+          $this->values['ancestors'] = QubitQuery::create(array('self' => $this) + $options);
         }
         else
         {
-          \$criteria = new Criteria;
-          \$this->addAncestorsCriteria(\$criteria);
-          \$this->addOrderByPreorder(\$criteria);
-          \$this->values['ancestors'] = self::get(\$criteria, array('self' => \$this) + \$options);
+          $criteria = new Criteria;
+          $this->addAncestorsCriteria($criteria);
+          $this->addOrderByPreorder($criteria);
+          $this->values['ancestors'] = self::get($criteria, array('self' => $this) + $options);
         }
       }
 
-      return \$this->values['ancestors'];
+      return $this->values['ancestors'];
     }
 
-    if ('descendants' == \$name)
+    if ('descendants' == $name)
     {
-      if (!isset(\$this->values['descendants']))
+      if (!isset($this->values['descendants']))
       {
-        if (\$this->new)
+        if ($this->new)
         {
-          \$this->values['descendants'] = QubitQuery::create(array('self' => \$this) + \$options);
+          $this->values['descendants'] = QubitQuery::create(array('self' => $this) + $options);
         }
         else
         {
-          \$criteria = new Criteria;
-          \$this->addDescendantsCriteria(\$criteria);
-          \$this->addOrderByPreorder(\$criteria);
-          \$this->values['descendants'] = self::get(\$criteria, array('self' => \$this) + \$options);
+          $criteria = new Criteria;
+          $this->addDescendantsCriteria($criteria);
+          $this->addOrderByPreorder($criteria);
+          $this->values['descendants'] = self::get($criteria, array('self' => $this) + $options);
         }
       }
 
-      return \$this->values['descendants'];
+      return $this->values['descendants'];
     }
 
 script;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-    throw new sfException("Unknown record property \\"\$name\\" on \\"".get_class(\$this).'"');
+    throw new sfException("Unknown record property \"$name\" on \"".get_class($this).'"');
   }
 
 script;
 
     if (!isset($this->inheritanceFk))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-  public function offsetGet(\$offset)
+  public function offsetGet($offset)
   {
-    \$args = func_get_args();
+    $args = func_get_args();
 
-    return call_user_func_array(array(\$this, '__get'), \$args);
+    return call_user_func_array(array($this, '__get'), $args);
   }
 
 script;
@@ -1088,16 +1088,16 @@ script;
 
     if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n'))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-  public function __set(\$name, \$value)
+  public function __set($name, $value)
   {
-    \$args = func_get_args();
+    $args = func_get_args();
 
-    \$options = array();
-    if (2 < count(\$args))
+    $options = array();
+    if (2 < count($args))
     {
-      \$options = \$args[2];
+      $options = $args[2];
     }
 
 
@@ -1114,38 +1114,38 @@ script;
 
     if (!isset($this->inheritanceFk))
     {
-      $script .= <<<script
-    \$offset = 0;
-    foreach (\$this->tables as \$table)
+      $script .= <<<'script'
+    $offset = 0;
+    foreach ($this->tables as $table)
     {
-      foreach (\$table->getColumns() as \$column)
+      foreach ($table->getColumns() as $column)
       {
         // Foreign key column name
-        \$nameId = \$name.'Id';
+        $nameId = $name.'Id';
 
         // Set local column values
-        if (\$name === \$column->getPhpName())
+        if ($name === $column->getPhpName())
         {
-          \$this->values[\$name] = \$value;
+          $this->values[$name] = $value;
         }
 
         // If this is a foreign key column then get primary key from related table
-        else if (\$nameId === \$column->getPhpName())
+        else if ($nameId === $column->getPhpName())
         {
-          if(!empty(\$value))
+          if(!empty($value))
           {
-            \$relatedTable = \$column->getTable()->getDatabaseMap()->getTable(\$column->getRelatedTableName());
+            $relatedTable = $column->getTable()->getDatabaseMap()->getTable($column->getRelatedTableName());
 
-            \$this->values[\$nameId] = \$value->__get(\$relatedTable->getColumn(\$column->getRelatedColumnName())->getPhpName(), \$options);
+            $this->values[$nameId] = $value->__get($relatedTable->getColumn($column->getRelatedColumnName())->getPhpName(), $options);
           }
           else
           {
-            // If \$value is null, then don't try and fetch related object for primary key
-            \$this->values[\$nameId] = null;
+            // If $value is null, then don't try and fetch related object for primary key
+            $this->values[$nameId] = null;
           }
         }
 
-        \$offset++;
+        $offset++;
       }
     }
 
@@ -1163,9 +1163,9 @@ script;
 
     if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n'))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-    return \$this;
+    return $this;
   }
 
 script;
@@ -1173,13 +1173,13 @@ script;
 
     if (!isset($this->inheritanceFk))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-  public function offsetSet(\$offset, \$value)
+  public function offsetSet($offset, $value)
   {
-    \$args = func_get_args();
+    $args = func_get_args();
 
-    return call_user_func_array(array(\$this, '__set'), \$args);
+    return call_user_func_array(array($this, '__set'), $args);
   }
 
 script;
@@ -1187,9 +1187,9 @@ script;
 
     if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n'))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-  public function __unset(\$name)
+  public function __unset($name)
   {
 
 script;
@@ -1197,13 +1197,13 @@ script;
 
     if ($this->getTable()->getAttribute('isI18n'))
     {
-      $script .= <<<script
-    \$args = func_get_args();
+      $script .= <<<'script'
+    $args = func_get_args();
 
-    \$options = array();
-    if (1 < count(\$args))
+    $options = array();
+    if (1 < count($args))
     {
-      \$options = \$args[1];
+      $options = $args[1];
     }
 
 
@@ -1220,23 +1220,23 @@ script;
 
     if (!isset($this->inheritanceFk))
     {
-      $script .= <<<script
-    \$offset = 0;
-    foreach (\$this->tables as \$table)
+      $script .= <<<'script'
+    $offset = 0;
+    foreach ($this->tables as $table)
     {
-      foreach (\$table->getColumns() as \$column)
+      foreach ($table->getColumns() as $column)
       {
-        if (\$name == \$column->getPhpName())
+        if ($name == $column->getPhpName())
         {
-          \$this->values[\$name] = null;
+          $this->values[$name] = null;
         }
 
-        if ("{\$name}Id" == \$column->getPhpName())
+        if ("{$name}Id" == $column->getPhpName())
         {
-          \$this->values["{\$name}Id"] = null;
+          $this->values["{$name}Id"] = null;
         }
 
-        \$offset++;
+        $offset++;
       }
     }
 
@@ -1254,9 +1254,9 @@ script;
 
     if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n'))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-    return \$this;
+    return $this;
   }
 
 script;
@@ -1264,13 +1264,13 @@ script;
 
     if (!isset($this->inheritanceFk))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-  public function offsetUnset(\$offset)
+  public function offsetUnset($offset)
   {
-    \$args = func_get_args();
+    $args = func_get_args();
 
-    return call_user_func_array(array(\$this, '__unset'), \$args);
+    return call_user_func_array(array($this, '__unset'), $args);
   }
 
 script;
@@ -1278,7 +1278,7 @@ script;
 
     if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n'))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
   public function clear()
   {
@@ -1300,7 +1300,7 @@ script;
 
       if (isset($this->inheritanceFk))
       {
-        $script .= <<<script
+        $script .= <<<'script'
     return parent::clear();
   }
 
@@ -1309,10 +1309,10 @@ script;
 
       if (!isset($this->inheritanceFk))
       {
-        $script .= <<<script
-    \$this->row = \$this->values = array();
+        $script .= <<<'script'
+    $this->row = $this->values = array();
 
-    return \$this;
+    return $this;
   }
 
 script;
@@ -1322,20 +1322,20 @@ script;
 
   protected function addNew(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
   protected
-    \$new = true;
+    $new = true;
 
 script;
   }
 
   protected function addDeleted(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
   protected
-    \$deleted = false;
+    $deleted = false;
 
 script;
   }
@@ -1355,59 +1355,59 @@ script;
       return;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public function save(\$connection = null)
+  public function save($connection = null)
   {
 
 script;
 
     if (isset($this->inheritanceFk))
     {
-      $script .= <<<script
-    parent::save(\$connection);
+      $script .= <<<'script'
+    parent::save($connection);
 
 script;
     }
 
     if (!isset($this->inheritanceFk))
     {
-      $script .= <<<script
-    if (\$this->deleted)
+      $script .= <<<'script'
+    if ($this->deleted)
     {
       throw new PropelException('You cannot save an object that has been deleted.');
     }
 
-    if (\$this->new)
+    if ($this->new)
     {
-      \$this->insert(\$connection);
+      $this->insert($connection);
     }
     else
     {
-      \$this->update(\$connection);
+      $this->update($connection);
     }
 
-    \$offset = 0;
-    foreach (\$this->tables as \$table)
+    $offset = 0;
+    foreach ($this->tables as $table)
     {
-      foreach (\$table->getColumns() as \$column)
+      foreach ($table->getColumns() as $column)
       {
-        if (array_key_exists(\$column->getPhpName(), \$this->values))
+        if (array_key_exists($column->getPhpName(), $this->values))
         {
-          \$this->row[\$offset] = \$this->values[\$column->getPhpName()];
+          $this->row[$offset] = $this->values[$column->getPhpName()];
         }
 
-        if (\$this->new && \$column->isPrimaryKey())
+        if ($this->new && $column->isPrimaryKey())
         {
-          \$this->keys[\$column->getPhpName()] = \$this->values[\$column->getPhpName()];
+          $this->keys[$column->getPhpName()] = $this->values[$column->getPhpName()];
         }
 
-        \$offset++;
+        $offset++;
       }
     }
 
-    \$this->new = false;
-    \$this->values = array();
+    $this->new = false;
+    $this->values = array();
 
 script;
     }
@@ -1437,9 +1437,9 @@ ${sets}
 script;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-    return \$this;
+    return $this;
   }
 
 script;
@@ -1452,65 +1452,65 @@ script;
       return;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-  protected function param(\$column)
+  protected function param($column)
   {
-    \$value = \$this->values[\$column->getPhpName()];
+    $value = $this->values[$column->getPhpName()];
 
     // Convert to DateTime or SQL zero special case
-    if (isset(\$value) && \$column->isTemporal() && !\$value instanceof DateTime)
+    if (isset($value) && $column->isTemporal() && !$value instanceof DateTime)
     {
       // Year only: one or more digits.  Convert to SQL zero special case
-      if (preg_match('/^\\d+$/', \$value))
+      if (preg_match('/^\d+$/', $value))
       {
-        \$value .= '-0-0';
+        $value .= '-0-0';
       }
 
       // Year and month only: one or more digits, plus separator, plus
       // one or more digits.  Convert to SQL zero special case
-      else if (preg_match('/^\\d+[-\\/]\\d+$/', \$value))
+      else if (preg_match('/^\d+[-\/]\d+$/', $value))
       {
-        \$value .= '-0';
+        $value .= '-0';
       }
 
       // Convert to DateTime if not SQL zero special case: year plus
       // separator plus zero to twelve (possibly zero padded) plus
       // separator plus one or more zeros
-      if (!preg_match('/^\\d+[-\\/]0*(?:1[0-2]|\\d)[-\\/]0+$/', \$value))
+      if (!preg_match('/^\d+[-\/]0*(?:1[0-2]|\d)[-\/]0+$/', $value))
       {
         try
         {
-          \$value = new DateTime(\$value);
+          $value = new DateTime($value);
         }
-        catch (Exception \$e)
+        catch (Exception $e)
         {
           return null;
         }
       }
     }
 
-    return \$value;
+    return $value;
   }
 
-  protected function insert(\$connection = null)
+  protected function insert($connection = null)
   {
 script;
 
     if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-    \$this->updateNestedSet(\$connection);
+    $this->updateNestedSet($connection);
 
 script;
     }
 
     if (isset($this->inheritanceFk))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-    parent::insert(\$connection);
+    parent::insert($connection);
 
 script;
     }
@@ -1569,9 +1569,9 @@ script;
 script;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-    return \$this;
+    return $this;
   }
 
 script;
@@ -1584,41 +1584,41 @@ script;
       return;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-  protected function update(\$connection = null)
+  protected function update($connection = null)
   {
 script;
 
     // TODO Only update nested set if the self foreign key has changed
     if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
     // Update nested set keys only if parent id has changed
-    if (isset(\$this->values['parentId']))
+    if (isset($this->values['parentId']))
     {
       // Get the "original" parentId before any updates
-      \$offset = 0;
-      \$originalParentId = null;
-      foreach (\$this->tables as \$table)
+      $offset = 0;
+      $originalParentId = null;
+      foreach ($this->tables as $table)
       {
-        foreach (\$table->getColumns() as \$column)
+        foreach ($table->getColumns() as $column)
         {
-          if ('parentId' == \$column->getPhpName())
+          if ('parentId' == $column->getPhpName())
           {
-            \$originalParentId = \$this->row[\$offset];
+            $originalParentId = $this->row[$offset];
             break;
           }
-          \$offset++;
+          $offset++;
         }
       }
 
       // If updated value of parentId is different then original value,
       // update the nested set
-      if (\$originalParentId != \$this->values['parentId'])
+      if ($originalParentId != $this->values['parentId'])
       {
-        \$this->updateNestedSet(\$connection);
+        $this->updateNestedSet($connection);
       }
     }
 
@@ -1627,9 +1627,9 @@ script;
 
     if (isset($this->inheritanceFk))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-    parent::update(\$connection);
+    parent::update($connection);
 
 script;
     }
@@ -1685,9 +1685,9 @@ script;
 script;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-    return \$this;
+    return $this;
   }
 
 script;
@@ -1703,11 +1703,11 @@ script;
       return;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public function delete(\$connection = null)
+  public function delete($connection = null)
   {
-    if (\$this->deleted)
+    if ($this->deleted)
     {
       throw new PropelException('This object has already been deleted.');
     }
@@ -1716,12 +1716,12 @@ script;
 
     if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-    \$this->clear();
-    if (!property_exists(\$this, 'disableNestedSetUpdating') || \$this->disableNestedSetUpdating !== true)
+    $this->clear();
+    if (!property_exists($this, 'disableNestedSetUpdating') || $this->disableNestedSetUpdating !== true)
     {
-      \$this->deleteFromNestedSet(\$connection);
+      $this->deleteFromNestedSet($connection);
     }
 
 script;
@@ -1729,9 +1729,9 @@ script;
 
     if (isset($this->inheritanceFk))
     {
-      $script .= <<<script
+      $script .= <<<'script'
 
-    parent::delete(\$connection);
+    parent::delete($connection);
 
 script;
     }
@@ -1759,9 +1759,9 @@ ${adds}
 script;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-    return \$this;
+    return $this;
   }
 
 script;
@@ -2167,11 +2167,11 @@ script;
 
   protected function addIsInTree(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
   public function isInTree()
   {
-    return \$this->lft > 0 && \$this->rgt > \$this->lft;
+    return $this->lft > 0 && $this->rgt > $this->lft;
   }
 
 script;
@@ -2179,11 +2179,11 @@ script;
 
   protected function addIsRoot(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
   public function isRoot()
   {
-      return \$this->isInTree() && \$this->lft == 1;
+      return $this->isInTree() && $this->lft == 1;
   }
 
 script;
@@ -2191,11 +2191,11 @@ script;
 
   protected function addIsDescendantOf(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public function isDescendantOf(\$parent)
+  public function isDescendantOf($parent)
   {
-    return \$this->isInTree() && \$this->lft > \$parent->lft && \$this->rgt < \$parent->rgt;
+    return $this->isInTree() && $this->lft > $parent->lft && $this->rgt < $parent->rgt;
   }
 
 script;
@@ -2203,18 +2203,18 @@ script;
 
   protected function addMoveToFirstChildOf(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public function moveToFirstChildOf(\$parent, PropelPDO \$con = null)
+  public function moveToFirstChildOf($parent, PropelPDO $con = null)
   {
-    if (\$parent->isDescendantOf(\$this))
+    if ($parent->isDescendantOf($this))
     {
       throw new PropelException('Cannot move a node as child of one of its subtree nodes.');
     }
 
-    \$this->moveSubtreeTo(\$parent->lft + 1, \$con);
+    $this->moveSubtreeTo($parent->lft + 1, $con);
 
-    return \$this;
+    return $this;
   }
 
 script;
@@ -2222,18 +2222,18 @@ script;
 
   protected function addMoveToLastChildOf(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public function moveToLastChildOf(\$parent, PropelPDO \$con = null)
+  public function moveToLastChildOf($parent, PropelPDO $con = null)
   {
-    if (\$parent->isDescendantOf(\$this))
+    if ($parent->isDescendantOf($this))
     {
       throw new PropelException('Cannot move a node as child of one of its subtree nodes.');
     }
 
-    \$this->moveSubtreeTo(\$parent->rgt, \$con);
+    $this->moveSubtreeTo($parent->rgt, $con);
 
-    return \$this;
+    return $this;
   }
 
 script;
@@ -2241,28 +2241,28 @@ script;
 
   protected function addMoveToPrevSiblingOf(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public function moveToPrevSiblingOf(\$sibling, PropelPDO \$con = null)
+  public function moveToPrevSiblingOf($sibling, PropelPDO $con = null)
   {
-    if (!\$this->isInTree())
+    if (!$this->isInTree())
     {
       throw new PropelException('This object must be already in the tree to be moved. Use the insertAsPrevSiblingOf() instead.');
     }
 
-    if (\$sibling->isRoot())
+    if ($sibling->isRoot())
     {
       throw new PropelException('Cannot move to previous sibling of a root node.');
     }
 
-    if (\$sibling->isDescendantOf(\$this))
+    if ($sibling->isDescendantOf($this))
     {
       throw new PropelException('Cannot move a node as sibling of one of its subtree nodes.');
     }
 
-    \$this->moveSubtreeTo(\$sibling->lft, \$con);
+    $this->moveSubtreeTo($sibling->lft, $con);
 
-    return \$this;
+    return $this;
   }
 
 script;
@@ -2270,28 +2270,28 @@ script;
 
   protected function addMoveToNextSiblingOf(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public function moveToNextSiblingOf(\$sibling, PropelPDO \$con = null)
+  public function moveToNextSiblingOf($sibling, PropelPDO $con = null)
   {
-    if (!\$this->isInTree())
+    if (!$this->isInTree())
     {
       throw new PropelException('This object must be already in the tree to be moved. Use the insertAsPrevSiblingOf() instead.');
     }
 
-    if (\$sibling->isRoot())
+    if ($sibling->isRoot())
     {
       throw new PropelException('Cannot move to previous sibling of a root node.');
     }
 
-    if (\$sibling->isDescendantOf(\$this))
+    if ($sibling->isDescendantOf($this))
     {
       throw new PropelException('Cannot move a node as sibling of one of its subtree nodes.');
     }
 
-    \$this->moveSubtreeTo(\$sibling->rgt + 1, \$con);
+    $this->moveSubtreeTo($sibling->rgt + 1, $con);
 
-    return \$this;
+    return $this;
   }
 
 script;
@@ -2299,49 +2299,49 @@ script;
 
   protected function addMoveSubtreeTo(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 
-  protected function moveSubtreeTo(\$destLeft, PropelPDO \$con = null)
+  protected function moveSubtreeTo($destLeft, PropelPDO $con = null)
   {
-    \$left  = \$this->lft;
-    \$right = \$this->rgt;
+    $left  = $this->lft;
+    $right = $this->rgt;
 
-    \$treeSize = \$right - \$left +1;
+    $treeSize = $right - $left +1;
 
-    if (\$con === null)
+    if ($con === null)
     {
-      \$con = Propel::getConnection();
+      $con = Propel::getConnection();
     }
 
-    \$con->beginTransaction();
+    $con->beginTransaction();
 
     try
     {
       // make room next to the target for the subtree
-      self::shiftRLValues(\$treeSize, \$destLeft, null, \$con);
+      self::shiftRLValues($treeSize, $destLeft, null, $con);
 
-      if (\$left >= \$destLeft) // src was shifted too?
+      if ($left >= $destLeft) // src was shifted too?
       {
-        \$left += \$treeSize;
-        \$right += \$treeSize;
+        $left += $treeSize;
+        $right += $treeSize;
       }
 
       // move the subtree to the target
-      self::shiftRLValues(\$destLeft - \$left, \$left, \$right, \$con);
+      self::shiftRLValues($destLeft - $left, $left, $right, $con);
 
       // remove the empty room at the previous location of the subtree
-      self::shiftRLValues(-\$treeSize, \$right + 1, null, \$con);
+      self::shiftRLValues(-$treeSize, $right + 1, null, $con);
 
       // update all loaded nodes
-      // self::updateLoadedNodes(null, \$con);
+      // self::updateLoadedNodes(null, $con);
 
-      \$con->commit();
+      $con->commit();
     }
-    catch (PropelException \$e)
+    catch (PropelException $e)
     {
-      \$con->rollback();
+      $con->rollback();
 
-      throw \$e;
+      throw $e;
     }
   }
 
@@ -2407,18 +2407,18 @@ script;
       return;
     }
 
-    $script .= <<<script
+    $script .= <<<'script'
 
-  public function __call(\$name, \$args)
+  public function __call($name, $args)
   {
-    if ('get' == substr(\$name, 0, 3) || 'set' == substr(\$name, 0, 3))
+    if ('get' == substr($name, 0, 3) || 'set' == substr($name, 0, 3))
     {
-      \$args = array_merge(array(strtolower(substr(\$name, 3, 1)).substr(\$name, 4)), \$args);
+      $args = array_merge(array(strtolower(substr($name, 3, 1)).substr($name, 4)), $args);
 
-      return call_user_func_array(array(\$this, '__'.substr(\$name, 0, 3)), \$args);
+      return call_user_func_array(array($this, '__'.substr($name, 0, 3)), $args);
     }
 
-    throw new sfException('Call to undefined method '.get_class(\$this)."::\$name");
+    throw new sfException('Call to undefined method '.get_class($this)."::$name");
   }
 
 script;
@@ -2426,7 +2426,7 @@ script;
 
   protected function addClassClose(&$script)
   {
-    $script .= <<<script
+    $script .= <<<'script'
 }
 
 script;

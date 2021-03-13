@@ -28,7 +28,7 @@ class physicalObjectNormalizeTask extends arBaseTask
   protected $name = 'normalize';
   protected $briefDescription = 'Normalize physical object data';
 
-  protected $detailedDescription = <<<EOF
+  protected $detailedDescription = <<<'EOF'
 Normalize physical object data
 EOF;
 

@@ -28,7 +28,7 @@ class exportAuthorityRecordsTask extends exportBulkBaseTask
     protected $name = 'authority-export';
     protected $briefDescription = 'Export authority record data as CSV file(s)';
 
-    protected $detailedDescription = <<<EOF
+    protected $detailedDescription = <<<'EOF'
 Export authority record data as CSV file(s).
 EOF;
 

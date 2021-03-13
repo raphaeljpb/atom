@@ -298,7 +298,7 @@ class digitalObjectLoadTask extends sfBaseTask
     $this->name = 'load';
     $this->briefDescription = 'Load a csv list of digital objects';
 
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Load a csv list of digital objects
 EOF;
   }

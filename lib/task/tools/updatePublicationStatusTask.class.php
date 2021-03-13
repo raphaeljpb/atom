@@ -39,7 +39,7 @@ class updatePublicationStatusTask extends arBaseTask
     $this->namespace = 'tools';
     $this->name = 'update-publication-status';
     $this->briefDescription = 'Updates the publication status of a description';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 FIXME
 EOF;
   }

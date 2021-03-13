@@ -28,7 +28,7 @@ class clearJobsTask extends arBaseTask
     protected $name = 'clear';
     protected $briefDescription = 'Clear AtoM jobs';
 
-    protected $detailedDescription = <<<EOF
+    protected $detailedDescription = <<<'EOF'
 Clears jobs
 EOF;
 

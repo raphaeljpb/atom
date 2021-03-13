@@ -36,7 +36,7 @@ class arMigration0113
    */
   public function up($configuration)
   {
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 CREATE TABLE IF NOT EXISTS `granted_right`
 (

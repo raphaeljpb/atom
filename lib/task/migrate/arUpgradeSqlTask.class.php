@@ -35,7 +35,7 @@ class QubitUpgradeSqlTask extends sfBaseTask
     $this->namespace = 'tools';
     $this->name = 'upgrade-sql';
     $this->briefDescription = 'Migrate the database schema and existing data for compatibility with a newer version of Qubit.';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 The [tools:migrate|INFO] task modifies the SQL data structure for compatibility with later versions of the application:
 
   [./symfony tools:upgrade-sql|INFO]

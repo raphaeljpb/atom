@@ -50,7 +50,7 @@ class jobWorkerTask extends arBaseTask
     $this->namespace = 'jobs';
     $this->name = 'worker';
     $this->briefDescription = 'Gearman worker daemon';
-    $this->detailedDescription = <<<EOF
+    $this->detailedDescription = <<<'EOF'
 Usage: php symfony [jobs:worker|INFO] [--abilities="myAbility1, myAbility2, ..."][--types="general, sword, ..."]
 EOF;
   }

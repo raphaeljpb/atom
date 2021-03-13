@@ -37,7 +37,7 @@ class arMigration0108
   public function up($configuration)
   {
     // Create AIP table
-    $sql = <<<sql
+    $sql = <<<'sql'
 
 CREATE TABLE `aip`
 (

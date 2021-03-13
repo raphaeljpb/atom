@@ -28,7 +28,7 @@ class importDeleteTask extends arBaseTask
   protected $name = 'delete';
   protected $briefDescription = 'Delete data created by an import';
 
-  protected $detailedDescription = <<<EOF
+  protected $detailedDescription = <<<'EOF'
 Delete data created by the named import from the AtoM database
 EOF;
 
@@ -180,7 +180,7 @@ EOF;
   {
     // Get import rows from keymap table in reverse order, so objects imported
     // last are deleted first (LIFO) to avoid parent_id constraint violations
-    $sql = <<<EOL
+    $sql = <<<'EOL'
 SELECT target_id FROM keymap WHERE source_name=:name ORDER BY id DESC
 EOL;
 
@@ -261,7 +261,7 @@ EOL;
 
   private function deleteKeymapRow($importName, $objectId)
   {
-    $sql = <<<EOL
+    $sql = <<<'EOL'
 DELETE FROM keymap WHERE source_name=:name AND target_id=:id
 EOL;
 
