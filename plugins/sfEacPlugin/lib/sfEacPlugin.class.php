@@ -551,7 +551,7 @@ return;
     // TODO <date/>, <dateRange/>, <term/>
     $this->descriptionDetail = $fd->find('eac:control/eac:localControl[@localType="detailLevel"]/eac:term')->text();
 
-    $this->resource->revisionHistory = $fd->find('eac:control/eac:maintenanceHistory/eac:maintenanceEvent[@id="5.4.6"]/eac:eventDescription')->text();;
+    $this->resource->revisionHistory = $fd->find('eac:control/eac:maintenanceHistory/eac:maintenanceEvent[@id="5.4.6"]/eac:eventDescription')->text();
 
     $this->maintenanceHistory = $fd->find('eac:control/eac:maintenanceHistory/eac:maintenanceEvent[@id="5.4.9"]/eac:eventDescription');
 
