@@ -44,11 +44,11 @@
                 <li><?php echo link_to(__('Edit %1%', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]), [$resource->digitalObjectsRelatedByobjectId[0], 'module' => 'digitalobject', 'action' => 'edit']); ?></li>
               <?php } elseif (QubitDigitalObject::isUploadAllowed()){ ?>
                 <li><?php echo link_to(__('Link %1%', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]), [$resource, 'module' => 'object', 'action' => 'addDigitalObject']); ?></li>
-              <?php } // has digital object?>
+              <?php } // has digital object ?>
 
               <?php if ((null === $resource->repository || 0 != $resource->repository->uploadLimit) && QubitDigitalObject::isUploadAllowed()) { ?>
                 <li><?php echo link_to(__('Import digital objects'), [$resource, 'module' => 'informationobject', 'action' => 'multiFileUpload']); ?></li>
-              <?php } // upload quota is non-zero?>
+              <?php } // upload quota is non-zero ?>
 
               <li class="divider"></li>
 
@@ -66,7 +66,7 @@
           </div>
         </li>
 
-      <?php } // user has update permission?>
+      <?php } // user has update permission ?>
 
   </ul>
 </section>

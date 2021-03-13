@@ -180,7 +180,7 @@ class QubitFlatfileExport
    */
   public function overrideConfigData(&$config, $mixin)
   {
-    foreach($mixin as $key => $value)
+    foreach ($mixin as $key => $value)
     {
       if (!is_array($value))
       {
@@ -403,7 +403,7 @@ class QubitFlatfileExport
    */
   protected function cacheTaxonomiesAsProperties($map)
   {
-    foreach($map as $propertyName => $taxonomyId)
+    foreach ($map as $propertyName => $taxonomyId)
     {
       $this->cacheTaxonomyAsProperty($propertyName, $taxonomyId);
     }

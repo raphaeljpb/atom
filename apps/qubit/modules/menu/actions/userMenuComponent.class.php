@@ -71,13 +71,13 @@ class MenuUserMenuComponent extends sfComponent
     switch($name)
     {
       case 'login':
-        return  $this->context->getI18n()->__('Log in');
+        return $this->context->getI18n()->__('Log in');
 
       case 'logout':
-        return  $this->context->getI18n()->__('Log out');
+        return $this->context->getI18n()->__('Log out');
 
       case 'myProfile':
-        return  $this->context->getI18n()->__('Profile');
+        return $this->context->getI18n()->__('Profile');
     }
   }
 }

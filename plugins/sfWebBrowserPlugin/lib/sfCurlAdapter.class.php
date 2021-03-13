@@ -89,7 +89,7 @@ class sfCurlAdapter
     curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, false);
     curl_setopt($this->curl, CURLOPT_FRESH_CONNECT, true);
 
-    if(isset($curl_options['followlocation']))
+    if (isset($curl_options['followlocation']))
     {
       curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, (bool) $this->options['followlocation']);
       unset($curl_options['followlocation']);
@@ -129,7 +129,7 @@ class sfCurlAdapter
     foreach ($curl_options as $key => $value)
     {
       $const = constant('CURLOPT_'.strtoupper($key));
-      if(!is_null($const))
+      if (!is_null($const))
       {
         curl_setopt($this->curl, $const, $value);
       }
@@ -165,13 +165,13 @@ class sfCurlAdapter
     curl_setopt($this->curl, CURLOPT_HTTPHEADER, $request_headers);
 
     // encoding support
-    if(isset($headers['Accept-Encoding']))
+    if (isset($headers['Accept-Encoding']))
     {
       curl_setopt($this->curl, CURLOPT_ENCODING, $headers['Accept-Encoding']);
     }
 
     // timeout support
-    if(isset($this->options['Timeout']))
+    if (isset($this->options['Timeout']))
     {
       curl_setopt($this->curl, CURLOPT_TIMEOUT, $this->options['Timeout']);
     }
@@ -197,7 +197,7 @@ class sfCurlAdapter
             $parameters[$name] = '@'.realpath($value);
           }
         }
-        if($has_files)
+        if ($has_files)
         {
           curl_setopt($this->curl, CURLOPT_POSTFIELDS, $parameters);
         }

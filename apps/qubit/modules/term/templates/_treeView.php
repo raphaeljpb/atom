@@ -28,7 +28,7 @@
 
     <ul class="unstyled">
 
-      <?php // Ancestors?>
+      <?php // Ancestors ?>
       <?php foreach ($ancestors as $ancestor) { ?>
         <?php if (QubitTerm::ROOT_ID == $ancestor->id) continue; ?>
         <?php echo render_treeview_node(
@@ -37,10 +37,10 @@
           ['browser' => $browser, 'xhr-location' => url_for([$ancestor, 'module' => 'term', 'action' => 'treeView'])]); ?>
       <?php } ?>
 
-      <?php // Prev siblings (if there's no children)?>
+      <?php // Prev siblings (if there's no children) ?>
       <?php if (!isset($children)) { ?>
 
-        <?php // More button?>
+        <?php // More button ?>
         <?php if ($hasPrevSiblings) { ?>
           <?php echo render_treeview_node(
             null,
@@ -48,7 +48,7 @@
             ['browser' => $browser, 'xhr-location' => url_for([$prevSiblings[0], 'module' => 'term', 'action' => 'treeView'])]); ?>
         <?php } ?>
 
-        <?php // N prev items?>
+        <?php // N prev items ?>
         <?php if (isset($prevSiblings)) { ?>
           <?php foreach ($prevSiblings as $prev) { ?>
             <?php echo render_treeview_node(
@@ -60,13 +60,13 @@
 
       <?php } ?>
 
-      <?php // Current?>
+      <?php // Current ?>
       <?php echo render_treeview_node(
         $resource,
         ['ancestor' => $resource->hasChildren(), 'active' => $getChildrensAndShowActive],
         ['browser' => $browser, 'xhr-location' => url_for([$resource, 'module' => 'term', 'action' => 'treeView'])]); ?>
 
-      <?php // Children?>
+      <?php // Children ?>
       <?php if (isset($children)) { ?>
 
         <?php foreach ($children as $child) { ?>
@@ -76,7 +76,7 @@
             ['browser' => $browser, 'xhr-location' => url_for([$child, 'module' => 'term', 'action' => 'treeView'])]); ?>
         <?php } ?>
 
-        <?php // More button?>
+        <?php // More button ?>
         <?php $last = isset($child) ? $child : $resource; ?>
         <?php if ($hasNextSiblings) { ?>
           <?php echo render_treeview_node(
@@ -85,10 +85,10 @@
             ['browser' => $browser, 'xhr-location' => url_for([$child, 'module' => 'term', 'action' => 'treeView'])]); ?>
         <?php } ?>
 
-      <?php // Or siblings?>
+      <?php // Or siblings ?>
       <?php } elseif (isset($nextSiblings)){ ?>
 
-        <?php // N next items?>
+        <?php // N next items ?>
         <?php if (isset($nextSiblings)) { ?>
           <?php foreach ($nextSiblings as $next) { ?>
             <?php echo render_treeview_node(
@@ -98,7 +98,7 @@
           <?php } ?>
         <?php } ?>
 
-        <?php // More button?>
+        <?php // More button ?>
         <?php $last = isset($next) ? $next : $resource; ?>
         <?php if ($hasNextSiblings) { ?>
           <?php echo render_treeview_node(

@@ -62,7 +62,7 @@
   <?php echo render_show(__('Title'), render_value($resource->getTitle(['cultureFallback' => true]))); ?>
 
   <?php $actorsShown = []; ?>
-  <?php  foreach ($resource->getCreators() as $item) { ?>
+  <?php foreach ($resource->getCreators() as $item) { ?>
     <?php if (!isset($actorsShown[$item->id])) { ?>
       <div class="field">
         <h3><?php echo __('Creator'); ?></h3>
@@ -74,7 +74,7 @@
     <?php } ?>
   <?php } ?>
 
-  <?php  foreach ($resource->getPublishers() as $item) { ?>
+  <?php foreach ($resource->getPublishers() as $item) { ?>
     <div class="field">
       <h3><?php echo __('Publisher'); ?></h3>
       <div>
@@ -83,7 +83,7 @@
     </div>
   <?php } ?>
 
-  <?php  foreach ($resource->getContributors() as $item) { ?>
+  <?php foreach ($resource->getContributors() as $item) { ?>
     <div class="field">
       <h3><?php echo __('Contributor'); ?></h3>
       <div>

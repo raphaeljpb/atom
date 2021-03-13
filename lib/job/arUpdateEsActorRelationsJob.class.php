@@ -116,7 +116,7 @@ class arUpdateEsActorRelationsJob extends arBaseJob
     // Parse out unique actor IDs
     $actors = [];
 
-    foreach($relationData as $relation)
+    foreach ($relationData as $relation)
     {
       $actors[] = $relation['objectId'];
       $actors[] = $relation['subjectId'];

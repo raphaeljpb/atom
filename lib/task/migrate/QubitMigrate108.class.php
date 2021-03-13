@@ -24,12 +24,9 @@
  */
 class QubitMigrate108 extends QubitMigrate
 {
-  public const
-    MILESTONE = '1.0.8';
-  public const
-    INIT_VERSION = 0;
-  public const
-    FINAL_VERSION = 39;
+  public const MILESTONE = '1.0.8';
+  public const INIT_VERSION = 0;
+  public const FINAL_VERSION = 39;
 
   /**
    * Controller for calling methods to alter data.

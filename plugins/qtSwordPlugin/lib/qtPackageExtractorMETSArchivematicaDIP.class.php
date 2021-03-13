@@ -455,7 +455,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
 
     foreach ($files as $file)
     {
-      if(!isset($file['ID']))
+      if (!isset($file['ID']))
       {
         continue;
       }

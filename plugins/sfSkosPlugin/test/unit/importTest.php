@@ -858,8 +858,7 @@ function withTransaction($callback)
 
     return call_user_func($callback, $conn);
   }
-  finally
-  {
+  finally {
     $conn->rollBack();
   }
 }

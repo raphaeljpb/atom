@@ -28,8 +28,7 @@
  */
 class QubitInformationObject extends BaseInformationObject
 {
-  public const
-    ROOT_ID = 1;
+  public const ROOT_ID = 1;
 
   // Allow per-object disabling of nested set updating during bulk imports
     public $disableNestedSetUpdating = false;
@@ -1707,7 +1706,7 @@ class QubitInformationObject extends BaseInformationObject
       }
 
       // get all as language(s) of description
-      foreach($langNodeList as $langNode)
+      foreach ($langNodeList as $langNode)
       {
         if ($langCode = $langCodeConvertor->getID1($langNode->nodeValue, false))
         {
@@ -1724,7 +1723,7 @@ class QubitInformationObject extends BaseInformationObject
     $scriptNodeList = QubitXmlImport::queryDomNode($langusageNode, '/xml/langusage/language/@scriptcode');
 
     // get scripts (s) of description
-    foreach($scriptNodeList as $scriptNode)
+    foreach ($scriptNodeList as $scriptNode)
     {
       array_push($scriptsOfDescription, $scriptNode->nodeValue);
     }
@@ -1764,7 +1763,7 @@ class QubitInformationObject extends BaseInformationObject
     $scripts = [];
 
     // amalgamate language and script data
-    foreach($langNodeList as $langNode)
+    foreach ($langNodeList as $langNode)
     {
       if ($langNode->hasAttributes())
       {
@@ -1801,7 +1800,7 @@ class QubitInformationObject extends BaseInformationObject
 
     // get language and script note
     $noteContent = '';
-    foreach($langmaterialNode->childNodes as $child)
+    foreach ($langmaterialNode->childNodes as $child)
     {
       if ($child->nodeType == XML_TEXT_NODE)
       {
@@ -2068,7 +2067,7 @@ class QubitInformationObject extends BaseInformationObject
     {
       $termNames[$taxonomyId] = [];
       $terms = QubitTaxonomy::getTaxonomyTerms($taxonomyId);
-      foreach($terms as $term) {
+      foreach ($terms as $term) {
         $termNames[$taxonomyId][strtolower($term->name)] = $term->id;
       }
     }

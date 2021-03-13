@@ -289,11 +289,11 @@
                 <li><?php echo link_to(__('Edit %1%', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]), [$resource->digitalObjectsRelatedByobjectId[0], 'module' => 'digitalobject', 'action' => 'edit']); ?></li>
               <?php } elseif (QubitDigitalObject::isUploadAllowed()){ ?>
                 <li><?php echo link_to(__('Link %1%', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]), [$resource, 'module' => 'object', 'action' => 'addDigitalObject']); ?></li>
-              <?php } // has digital object?>
+              <?php } // has digital object ?>
             </ul>
           </div>
         </li>
-        <?php } // user has update permission?>
+        <?php } // user has update permission ?>
     </ul>
 
   </section>

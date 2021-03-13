@@ -19,39 +19,19 @@
 
 class QubitMenu extends BaseMenu
 {
-  public const
-
-    // Root menu
+  public const // Root menu
     ROOT_ID = 1;
-  public const
-
-    // 2nd generation constant ids
+  public const // 2nd generation constant ids
     MAIN_MENU_ID = 2;
-  public const
-
-    QUICK_LINKS_ID = 3;
-  public const
-
-    BROWSE_ID = 4;
-  public const
-
-    // 3rd generation constant ids
+  public const QUICK_LINKS_ID = 3;
+  public const BROWSE_ID = 4;
+  public const // 3rd generation constant ids
     ADD_EDIT_ID = 5;
-  public const
-
-    IMPORT_ID = 7;
-  public const
-
-    TRANSLATE_ID = 8;
-  public const
-
-    ADMIN_ID = 9;
-  public const
-
-    MANAGE_ID = 10;
-  public const
-
-    // 4rd generation constant ids
+  public const IMPORT_ID = 7;
+  public const TRANSLATE_ID = 8;
+  public const ADMIN_ID = 9;
+  public const MANAGE_ID = 10;
+  public const // 4rd generation constant ids
     TAXONOMY_ID = 6;
   public $disableNestedSetUpdating = false;
 

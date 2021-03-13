@@ -214,7 +214,7 @@ class DefaultBrowseAction extends sfAction
     $this->filterTags = $this::$FILTERTAGS;
 
     // Get model objects needed by filter tags
-    foreach($this->filterTags as $name => $config)
+    foreach ($this->filterTags as $name => $config)
     {
       if (isset($config['model']))
       {

@@ -34,13 +34,13 @@ class sfWebBrowser
 
   public function __construct($defaultHeaders = [], $adapterClass = null, $adapterOptions = [])
   {
-    if(!$adapterClass)
+    if (!$adapterClass)
     {
       if (function_exists('curl_init'))
       {
         $adapterClass = 'sfCurlAdapter';
       }
-      elseif(ini_get('allow_url_fopen') == 1)
+      elseif (ini_get('allow_url_fopen') == 1)
       {
         $adapterClass = 'sfFopenAdapter';
       }
@@ -196,12 +196,12 @@ class sfWebBrowser
       $this->urlInfo['port'] = 80;
     }
 
-    if(!isset($urlInfo['host']))
+    if (!isset($urlInfo['host']))
     {
       // relative link
       $uri = $this->urlInfo['scheme'].'://'.$this->urlInfo['host'].':'.$this->urlInfo['port'].'/'.$uri;
     }
-    elseif($urlInfo['scheme'] != 'http' && $urlInfo['scheme'] != 'https')
+    elseif ($urlInfo['scheme'] != 'http' && $urlInfo['scheme'] != 'https')
     {
       throw new Exception('sfWebBrowser handles only http and https requests');
     }
@@ -268,9 +268,9 @@ class sfWebBrowser
     // text link, the name being the text value
     if ($links = $xpath->query('//a[@href]'))
     {
-      foreach($links as $link)
+      foreach ($links as $link)
       {
-        if(preg_replace(['/\s{2,}/', '/\\r\\n|\\n|\\r/'], [' ', ''], $link->nodeValue) == $name)
+        if (preg_replace(['/\s{2,}/', '/\\r\\n|\\n|\\r/'], [' ', ''], $link->nodeValue) == $name)
         {
           return $this->get($link->getAttribute('href'));
         }
@@ -508,10 +508,10 @@ class sfWebBrowser
   public function setResponseHeaders($headers = [])
   {
     $header_array = [];
-    foreach($headers as $header)
+    foreach ($headers as $header)
     {
       $arr = explode(': ', $header);
-      if(isset($arr[1]))
+      if (isset($arr[1]))
       {
         $header_array[$this->normalizeHeaderName($arr[0])] = trim($arr[1]);
       }
@@ -532,7 +532,7 @@ class sfWebBrowser
   public function setResponseCode($firstLine)
   {
     preg_match('/\d{3}/', $firstLine, $matches);
-    if(isset($matches[0]))
+    if (isset($matches[0]))
     {
       $this->responseCode = $matches[0];
     }
@@ -606,7 +606,7 @@ class sfWebBrowser
    */
   public function getResponseDom()
   {
-    if(!$this->responseDom)
+    if (!$this->responseDom)
     {
       // for HTML/XML content, create a DOM object for the response content
       if (preg_match('/(x|ht)ml/i', $this->getResponseHeader('Content-Type')))
@@ -627,7 +627,7 @@ class sfWebBrowser
    */
   public function getResponseDomCssSelector()
   {
-    if(!$this->responseDomCssSelector)
+    if (!$this->responseDomCssSelector)
     {
       // for HTML/XML content, create a DOM object for the response content
       if (preg_match('/(x|ht)ml/i', $this->getResponseHeader('Content-Type')))
@@ -648,7 +648,7 @@ class sfWebBrowser
    */
   public function getResponseXML()
   {
-    if(!$this->responseXml)
+    if (!$this->responseXml)
     {
       // for HTML/XML content, create a DOM object for the response content
       if (preg_match('/(x|ht)ml/i', $this->getResponseHeader('Content-Type')))

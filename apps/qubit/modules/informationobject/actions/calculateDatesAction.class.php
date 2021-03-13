@@ -98,7 +98,7 @@ class InformationObjectCalculateDatesAction extends sfAction
 
     $eventData = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
-    foreach($eventData as $event)
+    foreach ($eventData as $event)
     {
       $eventTypeTerm = QubitTerm::getById($event['type_id']);
       $eventTypes[($event['type_id'])] = $eventTypeTerm->getName(['cultureFallback' => true]);
@@ -193,7 +193,7 @@ class InformationObjectCalculateDatesAction extends sfAction
     $criteria->add(QubitEvent::OBJECT_ID, $resource->id);
 
     // Assemble array of descriptions for any events containing date information
-    foreach(QubitEvent::get($criteria) as $event)
+    foreach (QubitEvent::get($criteria) as $event)
     {
       if ($this->eventHasDateAndDateRangeSet($event) && null !== $event->typeId && isset($validEventTypes[$event->typeId]))
       {

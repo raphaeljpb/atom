@@ -59,7 +59,7 @@ EOF;
     }
 
     $n = 0;
-    foreach($conn->query($sqlQuery, PDO::FETCH_ASSOC) as $row)
+    foreach ($conn->query($sqlQuery, PDO::FETCH_ASSOC) as $row)
     {
       $id = $row['object_id'];
       $resource = QubitInformationObject::getById($id);

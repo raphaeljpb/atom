@@ -183,7 +183,7 @@ abstract class csvImportBaseTask extends arBaseTask
       {
         $aliases = $self->rowStatusVars[$columnName];
 
-        foreach($aliases as $alias)
+        foreach ($aliases as $alias)
         {
           // Add other name
           $otherName = new QubitOtherName();
@@ -528,7 +528,7 @@ abstract class csvImportBaseTask extends arBaseTask
   {
     $numericOptions = ['rows-until-update', 'skip-rows'];
 
-    foreach($numericOptions as $option)
+    foreach ($numericOptions as $option)
     {
       if ($options[$option] && !is_numeric($options[$option]))
       {
@@ -594,7 +594,7 @@ abstract class csvImportBaseTask extends arBaseTask
    */
   protected function acceptsOption($name)
   {
-    foreach($this->getOptions() as $option)
+    foreach ($this->getOptions() as $option)
     {
       if ($name == $option->getName()) return true;
     }

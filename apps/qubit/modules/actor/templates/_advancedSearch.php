@@ -32,7 +32,7 @@
 
               <select class="field" name="sf<?php echo $key; ?>">
                 <option value=""<?php echo $item['field'] == '' ? ' selected="selected"' : ''; ?>><?php echo __('Any field'); ?></option>
-                <?php foreach($fieldOptions as $name => $label) { ?>
+                <?php foreach ($fieldOptions as $name => $label) { ?>
                   <option value="<?php echo $name; ?>"<?php echo $item['field'] == $name ? ' selected="selected"' : ''; ?>><?php echo $label; ?></option>
                 <?php } ?>
               </select>

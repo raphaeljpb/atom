@@ -608,7 +608,7 @@ class arElasticSearchPluginUtil
 
     foreach (QubitSetting::getByScope('element_visibility') as $setting)
     {
-      if(!(bool) $setting->getValue(['sourceCulture' => true]) && isset($relations[$setting->name])
+      if (!(bool) $setting->getValue(['sourceCulture' => true]) && isset($relations[$setting->name])
         && $relations[$setting->name] != '')
       {
         $hiddenFields[] = $relations[$setting->name];

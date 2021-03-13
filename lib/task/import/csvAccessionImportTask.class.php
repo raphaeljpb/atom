@@ -218,7 +218,7 @@ EOF;
           if (isset($self->rowStatusVars['creators'])
             && $self->rowStatusVars['creators'])
           {
-            foreach($self->rowStatusVars['creators'] as $creator)
+            foreach ($self->rowStatusVars['creators'] as $creator)
             {
               // Fetch/create actor
               $actor = $self->createOrFetchActor($creator);
@@ -361,7 +361,7 @@ EOF;
 
             // Set up creation of contact infomation
             $contactData = [];
-            foreach($columnToProperty as $column => $property)
+            foreach ($columnToProperty as $column => $property)
             {
               if (isset($self->rowStatusVars[$column]))
               {

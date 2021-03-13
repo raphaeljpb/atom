@@ -19,114 +19,64 @@
 
 class QubitTaxonomy extends BaseTaxonomy
 {
-  public const
-    ROOT_ID = 30;
-  public const
-    DESCRIPTION_DETAIL_LEVEL_ID = 31;
-  public const
-    ACTOR_ENTITY_TYPE_ID = 32;
-  public const
-    DESCRIPTION_STATUS_ID = 33;
-  public const
-    LEVEL_OF_DESCRIPTION_ID = 34;
-  public const
-    SUBJECT_ID = 35;
-  public const
-    ACTOR_NAME_TYPE_ID = 36;
-  public const
-    NOTE_TYPE_ID = 37;
-  public const
-    REPOSITORY_TYPE_ID = 38;
-  public const
-    EVENT_TYPE_ID = 40;
-  public const
-    QUBIT_SETTING_LABEL_ID = 41;
-  public const
-    PLACE_ID = 42;
-  public const
-    FUNCTION_ID = 43;
-  public const
-    HISTORICAL_EVENT_ID = 44;
-  public const
-    COLLECTION_TYPE_ID = 45;
-  public const
-    MEDIA_TYPE_ID = 46;
-  public const
-    DIGITAL_OBJECT_USAGE_ID = 47;
-  public const
-    PHYSICAL_OBJECT_TYPE_ID = 48;
-  public const
-    RELATION_TYPE_ID = 49;
-  public const
-    MATERIAL_TYPE_ID = 50;
-  public const
-    // Rules for Archival Description (RAD) taxonomies
+  public const ROOT_ID = 30;
+  public const DESCRIPTION_DETAIL_LEVEL_ID = 31;
+  public const ACTOR_ENTITY_TYPE_ID = 32;
+  public const DESCRIPTION_STATUS_ID = 33;
+  public const LEVEL_OF_DESCRIPTION_ID = 34;
+  public const SUBJECT_ID = 35;
+  public const ACTOR_NAME_TYPE_ID = 36;
+  public const NOTE_TYPE_ID = 37;
+  public const REPOSITORY_TYPE_ID = 38;
+  public const EVENT_TYPE_ID = 40;
+  public const QUBIT_SETTING_LABEL_ID = 41;
+  public const PLACE_ID = 42;
+  public const FUNCTION_ID = 43;
+  public const HISTORICAL_EVENT_ID = 44;
+  public const COLLECTION_TYPE_ID = 45;
+  public const MEDIA_TYPE_ID = 46;
+  public const DIGITAL_OBJECT_USAGE_ID = 47;
+  public const PHYSICAL_OBJECT_TYPE_ID = 48;
+  public const RELATION_TYPE_ID = 49;
+  public const MATERIAL_TYPE_ID = 50;
+  public const // Rules for Archival Description (RAD) taxonomies
     RAD_NOTE_ID = 51;
-  public const
-    RAD_TITLE_NOTE_ID = 52;
-  public const
-    MODS_RESOURCE_TYPE_ID = 53;
-  public const
-    DC_TYPE_ID = 54;
-  public const
-    ACTOR_RELATION_TYPE_ID = 55;
-  public const
-    RELATION_NOTE_TYPE_ID = 56;
-  public const
-    TERM_RELATION_TYPE_ID = 57;
-  public const
-    STATUS_TYPE_ID = 59;
-  public const
-    PUBLICATION_STATUS_ID = 60;
-  public const
-    ISDF_RELATION_TYPE_ID = 61;
-  public const
-    // Accession taxonomies
+  public const RAD_TITLE_NOTE_ID = 52;
+  public const MODS_RESOURCE_TYPE_ID = 53;
+  public const DC_TYPE_ID = 54;
+  public const ACTOR_RELATION_TYPE_ID = 55;
+  public const RELATION_NOTE_TYPE_ID = 56;
+  public const TERM_RELATION_TYPE_ID = 57;
+  public const STATUS_TYPE_ID = 59;
+  public const PUBLICATION_STATUS_ID = 60;
+  public const ISDF_RELATION_TYPE_ID = 61;
+  public const // Accession taxonomies
     ACCESSION_RESOURCE_TYPE_ID = 62;
-  public const
-    ACCESSION_ACQUISITION_TYPE_ID = 63;
-  public const
-    ACCESSION_PROCESSING_PRIORITY_ID = 64;
-  public const
-    ACCESSION_PROCESSING_STATUS_ID = 65;
-  public const
-    DEACCESSION_SCOPE_ID = 66;
-  public const
-    // Right taxonomies
+  public const ACCESSION_ACQUISITION_TYPE_ID = 63;
+  public const ACCESSION_PROCESSING_PRIORITY_ID = 64;
+  public const ACCESSION_PROCESSING_STATUS_ID = 65;
+  public const DEACCESSION_SCOPE_ID = 66;
+  public const // Right taxonomies
     RIGHT_ACT_ID = 67;
-  public const
-    RIGHT_BASIS_ID = 68;
-  public const
-    COPYRIGHT_STATUS_ID = 69;
-  public const
-    // Metadata templates
+  public const RIGHT_BASIS_ID = 68;
+  public const COPYRIGHT_STATUS_ID = 69;
+  public const // Metadata templates
     INFORMATION_OBJECT_TEMPLATE_ID = 70;
-  public const
-    // Metadata templates
+  public const // Metadata templates
     AIP_TYPE_ID = 71;
-  public const
-    THEMATIC_AREA_ID = 72;
-  public const
-    GEOGRAPHIC_SUBREGION_ID = 73;
-  public const
-    // DACS notes
+  public const THEMATIC_AREA_ID = 72;
+  public const GEOGRAPHIC_SUBREGION_ID = 73;
+  public const // DACS notes
     DACS_NOTE_ID = 74;
-  public const
-    // PREMIS Rights Statues
+  public const // PREMIS Rights Statues
     RIGHTS_STATUTES_ID = 75;
-  public const
-    // Genre taxonomy
+  public const // Genre taxonomy
     GENRE_ID = 78;
-  public const
-    JOB_STATUS_ID = 79;
-  public const
-    ACTOR_OCCUPATION_ID = 80;
-  public const
-    USER_ACTION_ID = 81;
-  public const
-    ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID = 82;
-  public const
-    ACCESSION_EVENT_TYPE_ID = 83;
+  public const JOB_STATUS_ID = 79;
+  public const ACTOR_OCCUPATION_ID = 80;
+  public const USER_ACTION_ID = 81;
+  public const ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID = 82;
+  public const ACCESSION_EVENT_TYPE_ID = 83;
   public $disableNestedSetUpdating = false;
 
   public static $lockedTaxonomies = [
@@ -243,7 +193,7 @@ SQL;
     $statement = $connection->prepare($sql);
     $statement->execute([$this->id]);
 
-    return  $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function getTermNameToIdLookupTable($connection = null)

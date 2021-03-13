@@ -1,6 +1,6 @@
 
 <?php if (0 < count($creators)) { ?>
-  <?php foreach($events as $date) { ?>
+  <?php foreach ($events as $date) { ?>
     <?php $creator = QubitActor::getById($date->actorId); ?>
 
     <?php if ($value = $creator->getHistory(['cultureFallback' => true])) { ?>

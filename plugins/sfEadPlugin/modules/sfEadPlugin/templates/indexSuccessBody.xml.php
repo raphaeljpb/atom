@@ -62,7 +62,7 @@
       <?php if (0 < strlen($languageOfDescription = $resource->getPropertyByName('languageOfDescription')->__toString())) { ?>
         <?php $langsOfDesc = unserialize($languageOfDescription); ?>
         <?php if (is_array($langsOfDesc)) { ?>
-          <?php foreach($langsOfDesc as $langcode) { ?>
+          <?php foreach ($langsOfDesc as $langcode) { ?>
             <?php if ($langcode != $exportLanguage) { ?>
               <language langcode="<?php echo strtolower($iso639convertor->getID2($langcode));?>"><?php echo format_language($langcode); ?></language>
             <?php } ?>
@@ -153,7 +153,7 @@
     'Rights' => 'rights'
   ];
 
-  foreach($radNotes as $name => $xmlType)
+  foreach ($radNotes as $name => $xmlType)
   {
     $noteTypeId = array_search($name, $termData['radNoteTypes']['en']);
 
@@ -302,7 +302,7 @@
     <?php $nestedRgt = []; ?>
     <?php foreach ($resource->getDescendantsForExport($options) as $descendant) { ?>
 
-      <?php // Close previous <c> tags when we pass the end of the child list?>
+      <?php // Close previous <c> tags when we pass the end of the child list ?>
       <?php $rgt = $descendant->rgt; ?>
       <?php while (count($nestedRgt) > 0 && $rgt > $nestedRgt[count($nestedRgt) - 1]) { ?>
         <?php array_pop($nestedRgt); ?>
@@ -449,7 +449,7 @@
         <?php } ?>
       <?php } ?>
 
-      <?php foreach($radNotes as $name => $xmlType) { ?>
+      <?php foreach ($radNotes as $name => $xmlType) { ?>
           <?php $noteTypeId = array_search($name, $termData['radNoteTypes']['en']); ?>
 
           <?php if (0 < count($notes = $descendant->getNotesByType(['noteTypeId' => $noteTypeId]))) { ?>
@@ -467,7 +467,7 @@
 
     <?php } ?>
 
-    <?php // Make sure all <c> tags are closed?>
+    <?php // Make sure all <c> tags are closed ?>
     <?php while (count($nestedRgt) > 0) { ?>
       <?php array_pop($nestedRgt); ?>
       </c>

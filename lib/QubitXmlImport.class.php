@@ -990,7 +990,7 @@ class QubitXmlImport
               {
                 if ($methodMap['Method'] === 'importOriginationEadData')
                 {
-                  foreach($result as $actorNode)
+                  foreach ($result as $actorNode)
                   {
                     $this->trackEvent($actorNode['actor'], $actorNode['node']);
                   }

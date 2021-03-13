@@ -110,7 +110,7 @@ class sfSocketsAdapter
 
     $start_body = false;
     $response_headers = [];
-    for($i = 0; $i < count($response_lines); ++$i)
+    for ($i = 0; $i < count($response_lines); ++$i)
     {
       // grab body
       if ($start_body == true)
@@ -139,7 +139,7 @@ class sfSocketsAdapter
 
     // grab status code
     preg_match('@(\d{3})@', $status_line, $status_code);
-    if(isset($status_code[1]))
+    if (isset($status_code[1]))
     {
       $browser->setResponseCode($status_code[1]);
     }

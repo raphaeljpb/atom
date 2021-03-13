@@ -19,7 +19,7 @@
 
     <ul class="unstyled">
 
-      <?php // Ancestors?>
+      <?php // Ancestors ?>
       <?php foreach ($ancestors as $ancestor) { ?>
         <?php if (QubitInformationObject::ROOT_ID == $ancestor->id) continue; ?>
         <?php echo render_treeview_node(
@@ -28,10 +28,10 @@
           ['xhr-location' => url_for([$ancestor, 'module' => 'informationobject', 'action' => 'treeView'])]); ?>
       <?php } ?>
 
-      <?php // Prev siblings (if there's no children)?>
+      <?php // Prev siblings (if there's no children) ?>
       <?php if (!isset($children)) { ?>
 
-        <?php // More button?>
+        <?php // More button ?>
         <?php if ($hasPrevSiblings) { ?>
           <?php echo render_treeview_node(
             null,
@@ -40,7 +40,7 @@
                   'numSiblingsLeft' => $siblingCountPrev]); ?>
         <?php } ?>
 
-        <?php // N prev items?>
+        <?php // N prev items ?>
         <?php if (isset($prevSiblings)) { ?>
           <?php foreach ($prevSiblings as $prev) { ?>
             <?php echo render_treeview_node(
@@ -52,13 +52,13 @@
 
       <?php } ?>
 
-      <?php // Current?>
+      <?php // Current ?>
       <?php echo render_treeview_node(
         $resource,
         ['ancestor' => $resource->hasChildren(), 'active' => true, 'root' => QubitInformationObject::ROOT_ID == $resource->parentId],
         ['xhr-location' => url_for([$resource, 'module' => 'informationobject', 'action' => 'treeView'])]); ?>
 
-      <?php // Children?>
+      <?php // Children ?>
       <?php if (isset($children)) { ?>
 
         <?php foreach ($children as $child) { ?>
@@ -68,7 +68,7 @@
             ['xhr-location' => url_for([$child, 'module' => 'informationobject', 'action' => 'treeView'])]); ?>
         <?php } ?>
 
-        <?php // More button?>
+        <?php // More button ?>
         <?php $last = isset($child) ? $child : $resource; ?>
         <?php if ($hasNextSiblings) { ?>
           <?php echo render_treeview_node(
@@ -78,10 +78,10 @@
                   'numSiblingsLeft' => $siblingCountNext]); ?>
         <?php } ?>
 
-      <?php // Or siblings?>
+      <?php // Or siblings ?>
       <?php } elseif (isset($nextSiblings)){ ?>
 
-        <?php // N next items?>
+        <?php // N next items ?>
         <?php foreach ($nextSiblings as $next) { ?>
           <?php echo render_treeview_node(
             $next,
@@ -89,7 +89,7 @@
             ['xhr-location' => url_for([$next, 'module' => 'informationobject', 'action' => 'treeView'])]); ?>
         <?php } ?>
 
-        <?php // More button?>
+        <?php // More button ?>
         <?php $last = isset($next) ? $next : $resource; ?>
         <?php if ($hasNextSiblings) { ?>
           <?php echo render_treeview_node(

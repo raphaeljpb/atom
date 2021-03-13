@@ -150,7 +150,7 @@ class sfEadPlugin
     $hasNonBlankNotes = false;
 
     $notes = $subject->getTerm()->getSourceNotes();
-    foreach($notes as $note)
+    foreach ($notes as $note)
     {
       if ($note != '')
       {

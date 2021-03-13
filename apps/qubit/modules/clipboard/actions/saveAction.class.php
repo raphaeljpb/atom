@@ -83,11 +83,11 @@ class ClipboardSaveAction extends sfAction
   {
     $validatedSlugs = [];
 
-    foreach($allSlugs as $type => $slugs)
+    foreach ($allSlugs as $type => $slugs)
     {
       $validatedSlugs[$type] = [];
 
-      foreach($slugs as $slug)
+      foreach ($slugs as $slug)
       {
         $sql = 'SELECT COUNT(s.id) FROM slug s
                 JOIN object o ON s.object_id = o.id
@@ -146,9 +146,9 @@ class ClipboardSaveAction extends sfAction
     $save->save();
 
     // Store clipboard items in database
-    foreach($validatedSlugs as $type => $slugs)
+    foreach ($validatedSlugs as $type => $slugs)
     {
-      foreach($slugs as $slug)
+      foreach ($slugs as $slug)
       {
         $item = new QubitClipboardSaveItem();
         $item->saveId = $save->id;

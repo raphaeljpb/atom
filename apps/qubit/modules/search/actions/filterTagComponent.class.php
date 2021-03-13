@@ -54,7 +54,7 @@ class SearchFilterTagComponent extends sfComponent
     {
       // Count how many params are set
       $setCount = 0;
-      foreach($this->options['params'] as $param)
+      foreach ($this->options['params'] as $param)
       {
         $setCount += !empty($this->getParams[$param]);
       }
@@ -82,7 +82,7 @@ class SearchFilterTagComponent extends sfComponent
   {
     if (!empty($this->options['params']))
     {
-      foreach($this->options['params'] as $param)
+      foreach ($this->options['params'] as $param)
       {
         unset($this->getParams[$param]);
       }

@@ -238,7 +238,7 @@ EOF;
 
         $this->search->queryBool->addMust($query);
 
-        if(isset($queryDirect))
+        if (isset($queryDirect))
         {
           $this->search->queryBool->addMust($queryDirect);
         }

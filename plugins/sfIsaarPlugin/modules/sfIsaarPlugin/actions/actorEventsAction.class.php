@@ -57,7 +57,7 @@ class sfIsaarPluginActorEventsAction extends sfAction
     sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
     sfContext::getInstance()->getConfiguration()->loadHelpers('Qubit');
 
-    foreach(QubitEvent::get($criteria) as $event)
+    foreach (QubitEvent::get($criteria) as $event)
     {
       $eventData = [
         'url' => url_for([$event, 'module' => 'event']),

@@ -24,10 +24,8 @@
  */
 class MigrateTask extends sfBaseTask
 {
-  public const
-    FINAL_VERSION = 62;
-  public const
-    NOTICE_FINAL_VERSION = <<<EOL
+  public const FINAL_VERSION = 62;
+  public const NOTICE_FINAL_VERSION = <<<EOL
 
 Notice: This migration script will only migrate your data to version Release 1.1 v%s.
 To migrate to Release 1.2 or later, please see the upgrading documentation:

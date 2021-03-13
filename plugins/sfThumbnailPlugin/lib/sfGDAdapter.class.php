@@ -86,7 +86,7 @@ class sfGDAdapter
     if (in_array($imgData['mime'], $this->imgTypes))
     {
       $loader = $this->imgLoaders[$imgData['mime']];
-      if(!function_exists($loader))
+      if (!function_exists($loader))
       {
         throw new Exception(sprintf('Function %s not available. Please enable the GD extension.', $loader));
       }
@@ -145,7 +145,7 @@ class sfGDAdapter
 
   public function save($thumbnail, $thumbDest, $targetMime = null)
   {
-    if($targetMime !== null)
+    if ($targetMime !== null)
     {
       $creator = $this->imgCreators[$targetMime];
     }

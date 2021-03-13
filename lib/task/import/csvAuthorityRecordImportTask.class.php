@@ -263,7 +263,7 @@ EOF;
           ];
 
           $hasContactInfo = false;
-          foreach(array_keys($self->rowStatusVars) as $name)
+          foreach (array_keys($self->rowStatusVars) as $name)
           {
             if (in_array($name, $contactVariables))
             {
@@ -277,7 +277,7 @@ EOF;
             $info = new QubitContactInformation();
             $info->actorId = $self->object->id;
 
-            foreach($contactVariables as $property)
+            foreach ($contactVariables as $property)
             {
               if ($self->rowStatusVars[$property])
               {

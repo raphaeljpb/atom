@@ -45,7 +45,7 @@
       <citation>http://ica-atom.org/doc/RS-2#5.4</citation>
     </localTypeDeclaration>
 
-    <?php if(!empty($resource->descriptionDetail)) { ?>
+    <?php if (!empty($resource->descriptionDetail)) { ?>
       <localControl localType="detailLevel">
         <term><?php echo esc_specialchars($resource->descriptionDetail); ?></term>
       </localControl>
@@ -167,7 +167,7 @@
           </mandate>
         <?php } ?>
 
-        <?php // The following $eac->* properties are magic and will always be set:?>
+        <?php // The following $eac->* properties are magic and will always be set: ?>
 
         <?php if ($eac->structureOrGenealogy) { ?>
           <structureOrGenealogy><?php echo $eac->structureOrGenealogy; ?></structureOrGenealogy>

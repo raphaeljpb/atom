@@ -156,7 +156,7 @@ EOF;
   {
     $unusedFiles = [];
 
-    foreach($imageFiles as $imageFile)
+    foreach ($imageFiles as $imageFile)
     {
       if (!isset($imageUses[$imageFile]))
       {
@@ -188,7 +188,7 @@ EOF;
     {
       echo $listHeader."\n";
 
-      foreach($list as $item)
+      foreach ($list as $item)
       {
         echo '* '.$item."\n";
       }

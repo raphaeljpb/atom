@@ -145,7 +145,7 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
     $options = ['search' => $this->search];
 
     // Allow for only searching for actors directly related to term
-    if(!empty($request->onlyDirect))
+    if (!empty($request->onlyDirect))
     {
       $options['direct'] = true;
     }

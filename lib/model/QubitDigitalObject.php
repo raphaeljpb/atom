@@ -24,17 +24,11 @@
  */
 class QubitDigitalObject extends BaseDigitalObject
 {
-  public const
-
-    // Directory for generic icons
+  public const // Directory for generic icons
     GENERIC_ICON_DIR = 'generic-icons';
-  public const
-
-    // Mime-type for thumbnails (including reference image)
+  public const // Mime-type for thumbnails (including reference image)
     THUMB_MIME_TYPE = 'image/jpeg';
-  public const
-
-    THUMB_EXTENSION = 'jpg';
+  public const THUMB_EXTENSION = 'jpg';
 
   // Variables for save actions
   public $assets = [];

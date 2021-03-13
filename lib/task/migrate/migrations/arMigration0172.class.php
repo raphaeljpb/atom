@@ -28,10 +28,8 @@
  */
 class arMigration0172
 {
-  public const
-    VERSION = 172;
-  public const
-    // The new database version
+  public const VERSION = 172;
+  public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
@@ -60,7 +58,7 @@ class arMigration0172
     ];
 
     // Increase size of culture-related columns
-    foreach($i18nTables as $table)
+    foreach ($i18nTables as $table)
     {
       // Increase size of i18n table's culture column
       $sql = 'ALTER TABLE `%s` CHANGE `culture` `culture` VARCHAR(16)';

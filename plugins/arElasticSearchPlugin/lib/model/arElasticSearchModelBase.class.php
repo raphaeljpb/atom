@@ -160,7 +160,7 @@ abstract class arElasticSearchModelBase
       $relatedTerms = [];
 
       // Iterate over each directly related term, adding all ancestors of each
-      foreach($termIds as $id)
+      foreach ($termIds as $id)
       {
         $relatedTerms = array_merge(
           $relatedTerms,

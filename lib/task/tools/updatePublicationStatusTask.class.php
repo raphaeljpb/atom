@@ -103,7 +103,7 @@ EOF;
       $criteria = new Criteria();
       $criteria->add(QubitInformationObject::REPOSITORY_ID, $resource->id);
 
-      foreach(QubitInformationObject::get($criteria) as $item)
+      foreach (QubitInformationObject::get($criteria) as $item)
       {
         self::updatePublicationStatus($item, $publicationStatus, $options);
       }

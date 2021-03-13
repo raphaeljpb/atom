@@ -25,10 +25,8 @@
  */
 class arMigration0177
 {
-  public const
-    VERSION = 177;
-  public const
-    // The new database version
+  public const VERSION = 177;
+  public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   /**
@@ -137,7 +135,7 @@ class arMigration0177
       'term_i18n'
     ];
 
-    foreach($i18nTables as $i18nTable)
+    foreach ($i18nTables as $i18nTable)
     {
       $baseTable = str_replace('_i18n', '', $i18nTable);
 

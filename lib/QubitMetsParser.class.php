@@ -57,7 +57,7 @@ class QubitMetsParser
 
     if (false !== $structMap && 0 < count($structMap))
     {
-      return  $structMap[0];
+      return $structMap[0];
     }
 
     // Then for physical
@@ -65,7 +65,7 @@ class QubitMetsParser
 
     if (false !== $structMap && 0 < count($structMap))
     {
-      return  $structMap[0];
+      return $structMap[0];
     }
   }
 

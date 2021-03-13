@@ -48,7 +48,7 @@ EOF;
     $multiValueColumns = [];
     $rowCount = 0;
 
-    foreach($filenames as $filename)
+    foreach ($filenames as $filename)
     {
       if (false === $fh = fopen($filename, 'rb'))
       {
@@ -70,7 +70,7 @@ EOF;
 
         'saveLogic' => function (&$self)
         {
-          foreach($self->status['row'] as $key => $value)
+          foreach ($self->status['row'] as $key => $value)
           {
             $value = $self->status['row'][$key];
             $column = $self->columnNames[$key];
@@ -125,7 +125,7 @@ EOF;
       $c = [];
 
       // Add values of both arrays if possible
-      foreach($a as $key => $value)
+      foreach ($a as $key => $value)
       {
         if (isset($b[$key]))
         {
@@ -136,7 +136,7 @@ EOF;
       }
 
       // Add values that only occur in array B
-      foreach($b as $key => $value)
+      foreach ($b as $key => $value)
       {
         if (!isset($a[$key]))
         {
@@ -161,7 +161,7 @@ EOF;
       echo "--------------\n\n";
 
       $emptyCount = 0;
-      foreach($import->columnNames as $column)
+      foreach ($import->columnNames as $column)
       {
         if (!isset($nonEmptyColumns[$column]))
         {
@@ -178,7 +178,7 @@ EOF;
       echo "-------------------\n\n";
 
       $displayCount = 1;
-      foreach($multiValueColumns as $column => $count)
+      foreach ($multiValueColumns as $column => $count)
       {
         echo $column.'('.$count.')';
         echo ($displayCount < count($multiValueColumns)) ? ', ' : '';
@@ -190,13 +190,13 @@ EOF;
     {
       echo "\n\nSample Values:\n";
       echo "--------------\n\n";
-      foreach($sampleColumnValues as $column => $values)
+      foreach ($sampleColumnValues as $column => $values)
       {
         echo '  '.$column.':';
         if (count($values))
         {
           $shownCount = 0;
-          foreach($values as $value)
+          foreach ($values as $value)
           {
             echo ($shownCount) ? '    ' : ' ';
             echo $value."\n";

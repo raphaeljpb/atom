@@ -294,7 +294,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
   {
     $termData = [];
 
-    foreach($terms as $term)
+    foreach ($terms as $term)
     {
       $termData[$term->id] = $term->name;
     }

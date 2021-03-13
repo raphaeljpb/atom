@@ -327,7 +327,7 @@ class ClipboardExportAction extends DefaultEditAction
         ));
         $choices = [];
         $choices['csv'] = $this->context->i18n->__('CSV');
-        if('repository' != $this->objectType)
+        if ('repository' != $this->objectType)
         {
           $choices['xml'] = $this->context->i18n->__('XML');
         }

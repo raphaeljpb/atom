@@ -56,7 +56,7 @@ class sfFopenAdapter
     // -- browser instance must be accessible from handleRuntimeError()
     $this->browser = $browser;
     set_error_handler([$this, 'handleRuntimeError'], E_WARNING);
-    if($handle = fopen($uri, 'r', false, $context))
+    if ($handle = fopen($uri, 'r', false, $context))
     {
       $response_headers = stream_get_meta_data($handle);
       $browser->setResponseCode(array_shift($response_headers['wrapper_data']));

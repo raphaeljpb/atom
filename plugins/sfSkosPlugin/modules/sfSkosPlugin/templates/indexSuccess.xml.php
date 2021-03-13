@@ -12,11 +12,11 @@
       <?php if (isset($i18n->name)) { ?>
         <dc:title xml:lang="<?php echo $i18n->culture; ?>"><?php echo $i18n->name; ?></dc:title>
       <?php } ?>
-    <?php } // i18ns?>
+    <?php } // i18ns ?>
 
-    <?php foreach($topLevelTerms as $term) { ?>
+    <?php foreach ($topLevelTerms as $term) { ?>
       <skos:hasTopConcept rdf:resource="<?php echo url_for([$term, 'module' => 'term'], true); ?>"/>
-    <?php } // topLevelTerms?>
+    <?php } // topLevelTerms ?>
 
   </skos:ConceptScheme>
 
@@ -48,8 +48,8 @@
             <?php if (isset($i18n->content)) { ?>
               <skos:scopeNote xml:lang="<?php echo $i18n->culture; ?>"><?php echo $i18n->content; ?></skos:scopeNote>
             <?php } ?>
-          <?php } // i18ns?>
-        <?php } // scopeNotes?>
+          <?php } // i18ns ?>
+        <?php } // scopeNotes ?>
       <?php } ?>
 
       <?php if (0 < count($sourceNotes = $term->getNotesByType(['noteTypeId' => QubitTerm::SOURCE_NOTE_ID]))) { ?>
@@ -58,8 +58,8 @@
             <?php if (isset($i18n->content)) { ?>
               <skos:note xml:lang="<?php echo $i18n->culture; ?>"><?php echo $i18n->content; ?></skos:note>
             <?php } ?>
-          <?php } // i18ns?>
-        <?php } // sourceNotes?>
+          <?php } // i18ns ?>
+        <?php } // sourceNotes ?>
       <?php } ?>
 
       <?php if (QubitTerm::ROOT_ID != $term->parentId) { ?>
@@ -70,10 +70,10 @@
 
       <?php foreach ($term->getChildren() as $child) { ?>
         <skos:narrower rdf:resource="<?php echo url_for([$child, 'module' => 'term'], true); ?>"/>
-      <?php } // children?>
+      <?php } // children ?>
 
       <?php if (0 < count($relations = QubitRelation::getBySubjectOrObjectId($term->id, ['typeId' => QubitTerm::TERM_RELATION_ASSOCIATIVE_ID]))) { ?>
-        <?php foreach($relations as $relation) { ?>
+        <?php foreach ($relations as $relation) { ?>
           <skos:related rdf:resource="<?php echo url_for([$relation->getOpposedObject($term->id), 'module' => 'term'], true); ?>"/>
         <?php } ?>
       <?php } ?>

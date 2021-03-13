@@ -726,7 +726,7 @@ class QubitFlatfileImport
   {
     $connection = Propel::getConnection();
     $statement = $connection->prepare($query);
-    for($index = 0; $index < count($params); ++$index)
+    for ($index = 0; $index < count($params); ++$index)
     {
       $statement->bindValue($index + 1, $params[$index]);
     }
@@ -1211,7 +1211,7 @@ class QubitFlatfileImport
     $rows = QubitPdo::fetchAll($query, [$taxonomyId, $culture], ['fetchMode' => PDO::FETCH_ASSOC]);
 
     // Check if each term in array exists.
-    foreach($names as $name)
+    foreach ($names as $name)
     {
       if (null !== $key = QubitFlatfileImport::getTermIndex($rows, $name))
       {
@@ -1379,7 +1379,7 @@ class QubitFlatfileImport
 
     $termArray = $this->createOrFetchTerm($taxonomyId, $names, $culture);
 
-    foreach($termArray as $term)
+    foreach ($termArray as $term)
     {
       self::createObjectTermRelation($this->object->id, $term->id);
     }
@@ -1649,7 +1649,7 @@ class QubitFlatfileImport
     $combined = [];
 
     // go through each array providesd
-    for($index = 0; $index < count($args); ++$index)
+    for ($index = 0; $index < count($args); ++$index)
     {
       // for each element of array, add to combined array if element isn't a dupe
       foreach ($args[$index] as $element)
@@ -1682,7 +1682,7 @@ class QubitFlatfileImport
       if (empty($name))
       {
         // Increment label number if column already exists
-        while(in_array($baseLabel.$labelNumber, $this->columnNames))
+        while (in_array($baseLabel.$labelNumber, $this->columnNames))
         {
           ++$labelNumber;
         }

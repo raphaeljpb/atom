@@ -62,7 +62,7 @@
       <div class="context-actions">
         <?php if (null !== $website = $primaryContact->getWebsite()) { ?>
           <?php if (null === parse_url($website, PHP_URL_SCHEME)) { ?>
-            <?php $website = 'http://'.$website; // Ensure scheme prefix for absolute url?>
+            <?php $website = 'http://'.$website; // Ensure scheme prefix for absolute url ?>
           <?php } ?>
 
           <a class="btn btn-small" href="<?php echo esc_entities($website); ?>"><?php echo __('Website'); ?></a>

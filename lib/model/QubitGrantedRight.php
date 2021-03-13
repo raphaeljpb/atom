@@ -19,12 +19,9 @@
 
 class QubitGrantedRight extends BaseGrantedRight
 {
-  public const
-    DENY_RIGHT = 0;
-  public const
-    GRANT_RIGHT = 1;
-  public const
-    CONDITIONAL_RIGHT = 2;
+  public const DENY_RIGHT = 0;
+  public const GRANT_RIGHT = 1;
+  public const CONDITIONAL_RIGHT = 2;
 
   /**
    * Initializes internal state of QubitGrantedRight object.

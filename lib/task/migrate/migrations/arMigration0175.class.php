@@ -25,10 +25,8 @@
  */
 class arMigration0175
 {
-  public const
-    VERSION = 175;
-  public const
-    // The new database version
+  public const VERSION = 175;
+  public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   /**
@@ -43,7 +41,7 @@ class arMigration0175
     QubitPdo::modify($sql);
 
     // Cycle through each user and re-hash stored SHA-1 hash (and salt)
-    foreach(QubitUser::getAll() as $user)
+    foreach (QubitUser::getAll() as $user)
     {
       $user->passwordHash = QubitUser::generatePasswordHash($user->passwordHash);
       $user->save();

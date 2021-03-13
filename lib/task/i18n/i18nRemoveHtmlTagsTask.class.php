@@ -156,7 +156,7 @@ EOF;
       // Assemble text representation of list
       $paraText = '';
 
-      foreach($listNode->childNodes as $childNode)
+      foreach ($listNode->childNodes as $childNode)
       {
         $paraText .= '* '.$childNode->textContent."\n";
       }

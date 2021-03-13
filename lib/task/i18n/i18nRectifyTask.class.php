@@ -69,7 +69,7 @@ class i18nRectifyTask extends sfBaseTask
 
       // If the current plugin source *doesn't* have a translation, then try
       // and get translated value from $currentMessages
-      foreach($messageSource->read() as $catalogue => $translations)
+      foreach ($messageSource->read() as $catalogue => $translations)
       {
         foreach ($translations as $key => &$value)
         {

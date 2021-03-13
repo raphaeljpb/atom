@@ -28,7 +28,7 @@ class arWidgetFormSelectRadioOaiAdditionalSetEnable extends sfWidgetFormSelectRa
     // If OAI additional sets are enabled, display a list of links to them
     if (isset($oaiAdditionalSetsEnabled) && intval($oaiAdditionalSetsEnabled->getValue(['sourceCulture' => true])))
     {
-      foreach(QubitOai::getAdditionalOaiSets() as $set)
+      foreach (QubitOai::getAdditionalOaiSets() as $set)
       {
         $setUrl = url_for('oai').'?verb=ListRecords&metadataPrefix=oai_dc&set='.$set->setSpec();
         $output .= $this->renderContentTag('div', $this->renderContentTag('a', $set->getName(), ['href' => $setUrl]));

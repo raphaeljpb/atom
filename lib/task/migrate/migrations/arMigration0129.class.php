@@ -25,10 +25,8 @@
  */
 class arMigration0129
 {
-  public const
-    VERSION = 129;
-  public const
-    // The new database version
+  public const VERSION = 129;
+  public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
@@ -40,7 +38,7 @@ class arMigration0129
     ];
 
     // Create RAD note types if they don't already exist
-    foreach($newRadNotes as $note)
+    foreach ($newRadNotes as $note)
     {
       $criteria = new Criteria();
       $criteria->add(QubitTerm::PARENT_ID, QubitTerm::ROOT_ID);

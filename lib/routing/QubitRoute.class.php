@@ -86,7 +86,7 @@ class QubitRoute extends sfRoute
         $url = str_replace($value, urlencode($tparams[$variable]), $url);
       }
 
-      if(!in_array($this->suffix, $this->options['segment_separators']))
+      if (!in_array($this->suffix, $this->options['segment_separators']))
       {
         $url .= $this->suffix;
       }

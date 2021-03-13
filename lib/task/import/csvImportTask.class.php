@@ -367,7 +367,7 @@ EOF;
           $translationTable = $dbMap->getTable(QubitInformationObjectI18n::TABLE_NAME);
           $columns = $translationTable->getColumns();
 
-          foreach($columns as $column)
+          foreach ($columns as $column)
           {
             array_push($translationObjectProperties, $column->getPhpName());
           }

@@ -431,7 +431,7 @@ return;
       case 'descriptionDetail':
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID) as $item)
         {
-          if($item == trim($value))
+          if ($item == trim($value))
           {
             $this->resource->descriptionDetailId = $item->id;
 
@@ -946,7 +946,7 @@ return;
         {
           foreach ($this->eventTypes as $item)
           {
-            if($item->__toString() == $xlinkRole)
+            if ($item->__toString() == $xlinkRole)
             {
               return $item->id;
             }
@@ -997,14 +997,14 @@ return;
 
     if (0 < $fd->find('./eac:dateSet/eac:dateRange')->length)
     {
-      foreach($fd->find('./eac:dateSet/eac:dateRange') as $node)
+      foreach ($fd->find('./eac:dateSet/eac:dateRange') as $node)
       {
         $dates[] = sfEacPlugin::parseDateRange($node);
       }
     }
     elseif ($fd->find('./eac:dateRange')->length)
     {
-      foreach($fd->find('./eac:dateRange') as $node)
+      foreach ($fd->find('./eac:dateRange') as $node)
       {
         $dates[] = sfEacPlugin::parseDateRange($node);
       }

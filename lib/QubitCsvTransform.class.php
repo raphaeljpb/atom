@@ -162,7 +162,7 @@ class QubitCsvTransform extends QubitFlatfileImport
 
     $currentRow = 1;
 
-    while($row = mysqli_fetch_assoc($result))
+    while ($row = mysqli_fetch_assoc($result))
     {
       // if starting a new chunk, write CSV headers
       if (($currentRow % $this->rowsPerFile) == 0)
@@ -197,7 +197,7 @@ class QubitCsvTransform extends QubitFlatfileImport
       throw new sfException('You must specifiy the output-file option.');
     }
 
-    foreach(['MYSQL_HOST', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DB'] as $var)
+    foreach (['MYSQL_HOST', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DB'] as $var)
     {
       if (getenv($var) === false)
       {

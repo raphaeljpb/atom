@@ -167,7 +167,7 @@ EOF;
 
       if (count($relations))
       {
-        foreach($relations as $relation)
+        foreach ($relations as $relation)
         {
           if (null !== QubitInformationObject::getById($relation->objectId))
           {

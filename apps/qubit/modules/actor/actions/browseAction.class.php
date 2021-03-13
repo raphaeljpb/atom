@@ -527,7 +527,7 @@ class ActorBrowseAction extends DefaultBrowseAction
     // Filter out results if a specific field isn't empty
     if (!empty($request->emptyField))
     {
-      foreach($this->getEsFields($request->emptyField) as $esField)
+      foreach ($this->getEsFields($request->emptyField) as $esField)
       {
         $this->search->queryBool->addMustNot(new \Elastica\Query\Exists($esField));
       }

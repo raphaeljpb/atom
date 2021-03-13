@@ -55,7 +55,7 @@ class digitalObjectRegenDerivativesTask extends arBaseTask
       $criteria->add(QubitDigitalObject::USAGE_ID, $usageId);
     }
 
-    foreach(QubitDigitalObject::get($criteria) as $derivative)
+    foreach (QubitDigitalObject::get($criteria) as $derivative)
     {
       $derivative->delete();
     }

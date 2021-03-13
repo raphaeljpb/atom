@@ -1,7 +1,7 @@
 <?php
 
 include dirname(__FILE__).'/../../../../test/bootstrap/unit.php';
-if(!isset($sf_symfony_lib_dir))
+if (!isset($sf_symfony_lib_dir))
 {
   $sf_symfony_lib_dir = $configuration->getSymfonyLibDir();
 }
@@ -65,7 +65,7 @@ class myTestWebBrowser extends sfWebBrowser
 }
 
 $t = new lime_test($nb_test_orig * count($adapter_list), new lime_output_color());
-foreach($adapter_list as $adapter)
+foreach ($adapter_list as $adapter)
 {
   $t->diag('Testing '.$adapter);
   $t->diag('');

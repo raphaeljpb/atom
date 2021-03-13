@@ -197,7 +197,7 @@ EOF;
     // Delete clipbooard saves and save items
     $deletedCount = 0;
 
-    foreach(QubitClipboardSave::get($criteria) as $save)
+    foreach (QubitClipboardSave::get($criteria) as $save)
     {
       $save->delete();
       ++$deletedCount;
@@ -219,7 +219,7 @@ EOF;
     // Delete jobs and save items
     $deletedCount = 0;
 
-    foreach(QubitJob::get($criteria) as $job)
+    foreach (QubitJob::get($criteria) as $job)
     {
       // Jobs generate finding aids, which we *don't* want to delete... finding
       // aids won't be deleted by this logic, however, because the job doesn't

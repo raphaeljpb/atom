@@ -28,7 +28,7 @@ class ApiInformationObjectsTreeAction extends QubitApiAction
 
     $inforationObjects = QubitInformationObject::get($criteria);
 
-    foreach($inforationObjects as $io)
+    foreach ($inforationObjects as $io)
     {
       $item = $this->informationObjectToArray($io);
 

@@ -240,7 +240,7 @@ function getNameIdArrayFromTable(&$self, $tableName, $keyColumn, $idColumn, $whe
 exit();
   }
 
-  while($subject = $statement->fetch(PDO::FETCH_OBJ))
+  while ($subject = $statement->fetch(PDO::FETCH_OBJ))
   {
     $names[$subject->$keyColumn] = $subject->$idColumn;
   }
