@@ -128,7 +128,7 @@ class arElasticSearchMapping
     // If no parameter is passed, $this->mapping will be used
     if (null === $mapping)
     {
-      $mapping = & $this->mapping;
+      $mapping = &$this->mapping;
     }
 
     foreach ($mapping as $key => &$value)
@@ -194,7 +194,7 @@ class arElasticSearchMapping
     // If no parameter is passed, $this->mapping will be used
     if (null === $mapping)
     {
-      $mapping = & $this->mapping;
+      $mapping = &$this->mapping;
     }
 
     foreach ($mapping as $key => &$value)
