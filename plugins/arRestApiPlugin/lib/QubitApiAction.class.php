@@ -84,7 +84,7 @@ class QubitApiAction extends sfAction
     return $this->renderText(arRestApiPluginUtils::arrayToJson($data));
   }
 
-  protected function prepareEsPagination(\Elastica\Query &$query, $limit = null)
+  protected function prepareEsPagination(Elastica\Query &$query, $limit = null)
   {
     $limit = empty($limit) ? sfConfig::get('app_hits_per_page', 10) : $limit;
     $limit = $this->request->getGetParameter('limit', $limit);
@@ -102,7 +102,7 @@ class QubitApiAction extends sfAction
     }
   }
 
-  protected function prepareEsSorting(\Elastica\Query &$query, $fields = [])
+  protected function prepareEsSorting(Elastica\Query &$query, $fields = [])
   {
     // Stop if preferred option is not set or $fields empty
     if (1 > count($fields) || !isset($this->request->sort))

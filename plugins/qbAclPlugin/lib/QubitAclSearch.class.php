@@ -33,7 +33,7 @@ class QubitAclSearch
    * @param  string         $action Action
    * @return \Elastica\Query Filtered query
    */
-  public static function filterByRepository(\Elastica\Query $query, $action)
+  public static function filterByRepository(Elastica\Query $query, $action)
   {
     $repositoryAccess = QubitAcl::getRepositoryAccess($action);
     if (1 == count($repositoryAccess))
@@ -83,7 +83,7 @@ class QubitAclSearch
    * @param  mixed          $root Root object for list
    * @return \Elastica\Query Filtered query
    */
-  public static function filterByResource(\Elastica\Query $query, $root)
+  public static function filterByResource(Elastica\Query $query, $root)
   {
     $user = sfContext::getInstance()->user;
 
@@ -166,7 +166,7 @@ class QubitAclSearch
    *
    * @param  \Elastica\Query\BoolQuery $queryBool Search query object
    */
-  public static function filterDrafts(\Elastica\Query\BoolQuery $queryBool)
+  public static function filterDrafts(Elastica\Query\BoolQuery $queryBool)
   {
     // Filter out 'draft' items by repository
     $repositoryViewDrafts = QubitAcl::getRepositoryAccess('viewDraft');
