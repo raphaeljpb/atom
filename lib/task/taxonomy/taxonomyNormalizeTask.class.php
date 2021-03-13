@@ -27,7 +27,7 @@ class taxonomyNormalizeTask extends arBaseTask
   protected function configure()
   {
     $this->addArguments([
-      new sfCommandArgument('taxonomy-name', sfCommandArgument::REQUIRED, 'The name of the taxonomy to normalize')
+      new sfCommandArgument('taxonomy-name', sfCommandArgument::REQUIRED, 'The name of the taxonomy to normalize'),
     ]);
 
     $this->addOptions([
@@ -50,7 +50,7 @@ class taxonomyNormalizeTask extends arBaseTask
         sfCommandOption::PARAMETER_OPTIONAL,
         'The name of the culture to normalize (defaults to "en")',
         'en'
-      )
+      ),
     ]);
 
     $this->namespace = 'taxonomy';

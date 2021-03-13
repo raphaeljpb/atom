@@ -56,7 +56,7 @@ class InformationObjectExportCsvAction extends sfAction
       // Do not add descendants in search results
       $options = [
         'params' => $getParameters,
-        'current-level-only' => true
+        'current-level-only' => true,
       ];
 
       QubitJob::runJob('arInformationObjectCsvExportJob', $options);

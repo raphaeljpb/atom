@@ -29,13 +29,13 @@ class QubitMetadataRoute extends QubitRoute
       'rad' => 'sfRadPlugin',
       'mods' => 'sfModsPlugin',
       'dacs' => 'arDacsPlugin',
-      'isdf' => 'sfIsdfPlugin'];
+      'isdf' => 'sfIsdfPlugin', ];
   public static $DEFAULT_MODULES = [
       'informationobject' => false,
       'term' => 'term',
       'actor' => 'sfIsaarPlugin',
       'repository' => 'sfIsdiahPlugin',
-      'function' => 'sfIsdfPlugin'];
+      'function' => 'sfIsdfPlugin', ];
 
   /**
    * Returns an array of parameters if the $url matches this route by looking up

@@ -29,7 +29,7 @@
         'confirmSuccess' => __('Yes'),
         'confirmFailure' => __('No'),
         'confirmTitle' => __('Passwords match:'),
-        'username' => '']]); ?>
+        'username' => '', ], ]); ?>
     <?php echo javascript_tag(<<<EOF
 jQuery.extend(Drupal.settings, $settings);
 EOF

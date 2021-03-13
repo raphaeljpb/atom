@@ -42,7 +42,7 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
       'fax',
       'latitude',
       'longitude',
-      'note'];
+      'note', ];
 
   public function processForm()
   {

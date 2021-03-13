@@ -202,7 +202,7 @@ class arGenerateReportJob extends arBaseJob
                    $creationDates->startDate, $creationDates->endDate) : '',
         'startDate' => isset($creationDates) ? $creationDates->startDate : null,
         'accessConditions' => $item->getAccessConditions(['cultureFallback' => true]),
-        'locations' => $this->getLocationString($item)
+        'locations' => $this->getLocationString($item),
       ];
     }
 

@@ -49,14 +49,14 @@ class csvDigitalObjectPathsCheckTask extends arBaseTask
   {
     $this->addArguments([
       new sfCommandArgument('path-to-images', sfCommandArgument::REQUIRED, 'Path to directory containing images.'),
-      new sfCommandArgument('path-to-csv-file', sfCommandArgument::REQUIRED, 'Path to CSV file.')
+      new sfCommandArgument('path-to-csv-file', sfCommandArgument::REQUIRED, 'Path to CSV file.'),
     ]);
 
     $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('csv-column-name', 'n', sfCommandOption::PARAMETER_OPTIONAL, 'CSV column name containing digital object paths', null)
+      new sfCommandOption('csv-column-name', 'n', sfCommandOption::PARAMETER_OPTIONAL, 'CSV column name containing digital object paths', null),
     ]);
 
     $this->namespace = 'csv';

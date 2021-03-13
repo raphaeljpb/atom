@@ -30,7 +30,7 @@ class SettingsIdentifierAction extends DefaultEditAction
       'separator_character',
       'inherit_code_informationobject',
       'inherit_code_dc_xml',
-      'prevent_duplicate_actor_identifiers'
+      'prevent_duplicate_actor_identifiers',
     ];
 
   public function execute($request)
@@ -90,7 +90,7 @@ class SettingsIdentifierAction extends DefaultEditAction
         $defaults = [
           'accession_mask_enabled' => 1,
           'inherit_code_dc_xml' => 0,
-          'prevent_duplicate_actor_identifiers' => 0
+          'prevent_duplicate_actor_identifiers' => 0,
         ];
 
         $default = (null !== $this->$name = QubitSetting::getByName($name))

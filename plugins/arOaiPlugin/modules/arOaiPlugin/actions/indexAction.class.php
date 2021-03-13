@@ -32,7 +32,7 @@ class arOaiPluginIndexAction extends sfAction
     'idDoesNotExist' => 'The value of the identifier argument is unknown or illegal in this repository.',
     'noRecordsMatch' => 'The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.',
     'noMetadataFormats' => 'There are no metadata formats available for the specified item.',
-    'noSetHierarchy' => 'The repository does not support sets.'
+    'noSetHierarchy' => 'The repository does not support sets.',
   ];
 
   public $oaiVerbArr = ['Identify', 'ListMetadataFormats', 'ListSets', 'ListRecords', 'ListIdentifiers', 'GetRecord'];

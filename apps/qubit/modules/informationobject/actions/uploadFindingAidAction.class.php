@@ -85,7 +85,7 @@ class InformationObjectUploadFindingAidAction extends sfAction
       $params = [
         'objectId' => $this->resource->id,
         'description' => $i18n->__('Uploading finding aid for: %1%', ['%1%' => $this->resource->getTitle(['cultureFallback' => true])]),
-        'uploadPath' => $path
+        'uploadPath' => $path,
       ];
 
       QubitJob::runJob('arFindingAidJob', $params);

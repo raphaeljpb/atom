@@ -37,7 +37,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     'endDate',
     'topLod',
     'rangeType',
-    'findingAidStatus'
+    'findingAidStatus',
   ];
   public static $FILTERTAGS = [
     'repos' => ['model' => 'QubitRepository'],
@@ -54,64 +54,64 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     'languages' => [],
     'dateRange' => ['params' => ['startDate', 'endDate'], 'operator' => 'or'],
     'findingAidStatus' => [],
-    'ancestor' => ['model' => 'QubitInformationObject']
+    'ancestor' => ['model' => 'QubitInformationObject'],
   ];
   public static $AGGS = [
     'languages' => [
       'type' => 'term',
       'field' => 'i18n.languages',
-      'size' => 10
+      'size' => 10,
     ],
     'levels' => [
       'type' => 'term',
       'field' => 'levelOfDescriptionId',
-      'size' => 10
+      'size' => 10,
     ],
     'mediatypes' => [
       'type' => 'term',
       'field' => 'digitalObject.mediaTypeId',
-      'size' => 10
+      'size' => 10,
     ],
     'digitalobjects' => [
       'type' => 'filter',
       'field' => ['hasDigitalObject' => true],
-      'populate' => false
+      'populate' => false,
     ],
     'repos' => [
       'type' => 'term',
       'field' => 'repository.id',
-      'size' => 10
+      'size' => 10,
     ],
     'places' => [
       'type' => 'term',
       'field' => 'places.id',
-      'size' => 10
+      'size' => 10,
     ],
     'subjects' => [
       'type' => 'term',
       'field' => 'subjects.id',
-      'size' => 10
+      'size' => 10,
     ],
     'genres' => [
       'type' => 'term',
       'field' => 'genres.id',
-      'size' => 10
+      'size' => 10,
     ],
     'creators' => [
       'type' => 'term',
       'field' => 'creators.id',
-      'size' => 10
+      'size' => 10,
     ],
     'names' => [
       'type' => 'term',
       'field' => 'names.id',
-      'size' => 10
+      'size' => 10,
     ],
     'collection' => [
       'type' => 'term',
       'field' => 'partOf.id',
-      'size' => 10
-    ]
+      'size' => 10,
+    ],
   ];
 
   public function execute($request)
@@ -303,7 +303,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         $choices = [
           '' => '',
           '1' => $this->context->i18n->__('Yes'),
-          '0' => $this->context->i18n->__('No')
+          '0' => $this->context->i18n->__('No'),
         ];
 
         $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
@@ -410,7 +410,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         $this->form->setWidget($name, new sfWidgetFormInput([], ['placeholder' => 'YYYY-MM-DD']));
         $this->form->setValidator($name, new sfValidatorDate([
           'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
-          'date_format_error' => 'YYYY-MM-DD']));
+          'date_format_error' => 'YYYY-MM-DD', ]));
 
         break;
 
@@ -420,7 +420,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
           'yes' => $this->context->i18n->__('Yes'),
           'no' => $this->context->i18n->__('No'),
           'generated' => $this->context->i18n->__('Generated'),
-          'uploaded' => $this->context->i18n->__('Uploaded')
+          'uploaded' => $this->context->i18n->__('Uploaded'),
         ];
 
         $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
@@ -566,7 +566,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         'yes' => $i18n->__('With finding aid'),
         'no' => $i18n->__('Without finding aid'),
         'generated' => $i18n->__('With generated finding aid'),
-        'uploaded' => $i18n->__('With uploaded finding aid')
+        'uploaded' => $i18n->__('With uploaded finding aid'),
       ];
 
       $this->setFilterTagLabel('findingAidStatus', $labels[$request->findingAidStatus]);

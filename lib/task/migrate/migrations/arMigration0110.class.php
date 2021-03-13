@@ -47,7 +47,7 @@ class arMigration0110
       ['en' => 'Citation'],
       ['en' => 'Alphanumeric designations'],
       ['en' => 'Variant title information'],
-      ['en' => 'Processing information']] as $termNames)
+      ['en' => 'Processing information'], ] as $termNames)
     {
       $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;

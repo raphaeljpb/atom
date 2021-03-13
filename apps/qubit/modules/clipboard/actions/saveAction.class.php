@@ -101,7 +101,7 @@ class ClipboardSaveAction extends sfAction
             'Qubit'.ucfirst($type),
             QubitInformationObject::ROOT_ID,
             QubitActor::ROOT_ID,
-            QubitRepository::ROOT_ID
+            QubitRepository::ROOT_ID,
           ]
         );
 

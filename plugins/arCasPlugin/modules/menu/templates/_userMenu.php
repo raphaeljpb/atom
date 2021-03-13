@@ -56,9 +56,9 @@
 
         <ul>
           <li><?php echo link_to($menuLabels['myProfile'], [
-            $sf_user->user, 'module' => 'user']); ?></li>
+            $sf_user->user, 'module' => 'user', ]); ?></li>
           <li><?php echo link_to($menuLabels['logout'], [
-            'module' => 'cas', 'action' => 'logout']); ?></li>
+            'module' => 'cas', 'action' => 'logout', ]); ?></li>
         </ul>
 
       </div>

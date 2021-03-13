@@ -49,25 +49,25 @@ class SearchAutocompleteAction extends sfAction
       [
         'type' => 'QubitInformationObject',
         'field' => sprintf('i18n.%s.title', $culture),
-        'fields' => ['slug', sprintf('i18n.%s.title', $culture), 'levelOfDescriptionId']],
+        'fields' => ['slug', sprintf('i18n.%s.title', $culture), 'levelOfDescriptionId'], ],
       [
         'type' => 'QubitRepository',
         'field' => sprintf('i18n.%s.authorizedFormOfName', $culture),
-        'fields' => ['slug', sprintf('i18n.%s.authorizedFormOfName', $culture)]],
+        'fields' => ['slug', sprintf('i18n.%s.authorizedFormOfName', $culture)], ],
       [
         'type' => 'QubitActor',
         'field' => sprintf('i18n.%s.authorizedFormOfName', $culture),
-        'fields' => ['slug', sprintf('i18n.%s.authorizedFormOfName', $culture)]],
+        'fields' => ['slug', sprintf('i18n.%s.authorizedFormOfName', $culture)], ],
       [
         'type' => 'QubitTerm',
         'field' => sprintf('i18n.%s.name', $culture),
         'fields' => ['slug', sprintf('i18n.%s.name', $culture)],
-        'term_filter' => ['taxonomyId' => QubitTaxonomy::PLACE_ID]],
+        'term_filter' => ['taxonomyId' => QubitTaxonomy::PLACE_ID], ],
       [
         'type' => 'QubitTerm',
         'field' => sprintf('i18n.%s.name', $culture),
         'fields' => ['slug', sprintf('i18n.%s.name', $culture)],
-        'term_filter' => ['taxonomyId' => QubitTaxonomy::SUBJECT_ID]]] as $item)
+        'term_filter' => ['taxonomyId' => QubitTaxonomy::SUBJECT_ID], ], ] as $item)
     {
       $search = new \Elastica\Search($client);
       $search

@@ -33,7 +33,7 @@ class digitalObjectDeleteTask extends arBaseTask
       'audio' => QubitTerm::AUDIO_ID,
       'image' => QubitTerm::IMAGE_ID,
       'text' => QubitTerm::TEXT_ID,
-      'video' => QubitTerm::VIDEO_ID
+      'video' => QubitTerm::VIDEO_ID,
     ];
 
     parent::execute($arguments, $options);
@@ -131,7 +131,7 @@ class digitalObjectDeleteTask extends arBaseTask
   protected function configure()
   {
     $this->addArguments([
-      new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Slug.')
+      new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Slug.'),
     ]);
 
     $this->addOptions([

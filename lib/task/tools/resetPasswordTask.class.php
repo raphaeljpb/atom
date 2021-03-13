@@ -66,7 +66,7 @@ class resetPasswordTask extends sfBaseTask
   {
     $this->addArguments([
       new sfCommandArgument('username', sfCommandArgument::REQUIRED, 'Username/E-Mail'),
-      new sfCommandArgument('password', sfCommandArgument::OPTIONAL, 'Password')
+      new sfCommandArgument('password', sfCommandArgument::OPTIONAL, 'Password'),
     ]);
 
     $this->addOptions([

@@ -8,7 +8,7 @@
     'showTreeview' => true,
     'search' => $search,
     'aggs' => $aggs,
-    'listPager' => $listPager]); ?>
+    'listPager' => $listPager, ]); ?>
 
 <?php end_slot(); ?>
 
@@ -70,7 +70,7 @@
           'options' => [
             'lastUpdated' => __('Date modified'),
             'alphabetic' => __('Name'),
-            'identifier' => __('Identifier')]]); ?>
+            'identifier' => __('Identifier'), ], ]); ?>
     </div>
 
   </section>
@@ -79,7 +79,7 @@
 
     <?php echo get_partial('term/directTerms', [
       'resource' => $resource,
-      'aggs' => $aggs]); ?>
+      'aggs' => $aggs, ]); ?>
 
     <?php if ($pager->getNbResults()) { ?>
 

@@ -68,7 +68,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
     if ($request->isMethod('post'))
     {
       $this->form->setValidators([
-        'enabled' => new sfValidatorChoice(['choices' => array_keys($this->plugins), 'empty_value' => [], 'multiple' => true])]);
+        'enabled' => new sfValidatorChoice(['choices' => array_keys($this->plugins), 'empty_value' => [], 'multiple' => true]), ]);
 
       $this->form->bind($request->getPostParameters());
 

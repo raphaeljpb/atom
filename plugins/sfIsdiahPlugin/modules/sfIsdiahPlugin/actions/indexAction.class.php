@@ -52,13 +52,13 @@ class sfIsdiahPluginIndexAction extends RepositoryIndexAction
       $values = [];
 
       $validatorSchema->authorizedFormOfName = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('%1%Authorized form of name%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-3#5.1.2">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-3#4.7">', '%4%' => '</a>'])]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('%1%Authorized form of name%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-3#5.1.2">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-3#4.7">', '%4%' => '</a>']), ]);
       $values['authorizedFormOfName'] = $this->resource->getAuthorizedFormOfName(['culltureFallback' => true]);
 
       $validatorSchema->identifier = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('%1%Identifier%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-3#5.1.1">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-3#4.7">', '%4%' => '</a>'])]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('%1%Identifier%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-3#5.1.1">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-3#4.7">', '%4%' => '</a>']), ]);
       $values['identifier'] = $this->resource->identifier;
 
       $validatorSchema->primaryContact = new sfValidatorAnd([
@@ -68,11 +68,11 @@ class sfIsdiahPluginIndexAction extends RepositoryIndexAction
           new sfValidatorSchema(['countryCode' => new sfValidatorString(['required' => true])], ['allow_extra_fields' => true]),
           new sfValidatorSchema(['postalCode' => new sfValidatorString(['required' => true])], ['allow_extra_fields' => true]),
           new sfValidatorSchema(['region' => new sfValidatorString(['required' => true])], ['allow_extra_fields' => true]),
-          new sfValidatorSchema(['streetAddress' => new sfValidatorString(['required' => true])], ['allow_extra_fields' => true])], [
-          'required' => true], [
-          'invalid' => $this->context->i18n->__('%1%Contact information%2% - You %3%must%4% at least include one of the following location or address fields: city, country, postal code, region or street address.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-3#5.2.1">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-3#4.7">', '%4%' => '</a>'])])], [
-        'required' => true], [
-        'required' => $this->context->i18n->__('%1%Contact information%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-3#5.2.1">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-3#4.7">', '%4%' => '</a>'])]);
+          new sfValidatorSchema(['streetAddress' => new sfValidatorString(['required' => true])], ['allow_extra_fields' => true]), ], [
+          'required' => true, ], [
+          'invalid' => $this->context->i18n->__('%1%Contact information%2% - You %3%must%4% at least include one of the following location or address fields: city, country, postal code, region or street address.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-3#5.2.1">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-3#4.7">', '%4%' => '</a>']), ]), ], [
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('%1%Contact information%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-3#5.2.1">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-3#4.7">', '%4%' => '</a>']), ]);
 
       if (null !== $this->resource->getPrimaryContact())
       {

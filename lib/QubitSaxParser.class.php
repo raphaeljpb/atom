@@ -105,7 +105,7 @@ class QubitSaxParser
     if (!$fp)
     {
       $this->error = [
-        'string' => 'Unable to open file'
+        'string' => 'Unable to open file',
       ];
 
       return false;
@@ -134,7 +134,7 @@ class QubitSaxParser
         'string' => xml_error_string($errorCode),
         'line' => xml_get_current_line_number($this->sax),
         'column' => xml_get_current_column_number($this->sax),
-        'byte' => xml_get_current_byte_index($this->sax)
+        'byte' => xml_get_current_byte_index($this->sax),
       ];
 
       $this->error['summary'] = sprintf(
@@ -273,7 +273,7 @@ class QubitSaxParser
       $ancestorData = [
         'tag' => $this->tag,
         'attr' => $this->currentAttr(),
-        'data' => $this->data
+        'data' => $this->data,
       ];
 
       array_push($this->ancestors, $ancestorData);

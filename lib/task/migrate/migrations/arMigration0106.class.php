@@ -54,20 +54,20 @@ class arMigration0106
       QubitTerm::HIERARCHICAL_RELATION_ID => [
         'is the superior of' => 'is the subordinate of',
         'controls' => 'is controlled by',
-        'is the owner of' => 'is owned by'],
+        'is the owner of' => 'is owned by', ],
       QubitTerm::TEMPORAL_RELATION_ID => [
-        'is the predecessor of' => 'is the successor of'],
+        'is the predecessor of' => 'is the successor of', ],
       QubitTerm::FAMILY_RELATION_ID => [
         'is the parent of' => 'is the child of',
         'is the sibling of' => 'itself',
         'is the spouse of' => 'itself',
         'is the cousin of' => 'itself',
-        'is the grandparent of' => 'is the grandchild of'],
+        'is the grandparent of' => 'is the grandchild of', ],
       QubitTerm::ASSOCIATIVE_RELATION_ID => [
         'is the provider of' => 'is the client of',
         'is the business partner of' => 'itself',
         'is the associate of' => 'itself',
-        'is the friend of' => 'itself']] as $parentId => $terms)
+        'is the friend of' => 'itself', ], ] as $parentId => $terms)
     {
       foreach ($terms as $termName => $converseTermName)
       {

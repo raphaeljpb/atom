@@ -38,7 +38,7 @@ class propelBuildNestedSetTask extends sfBaseTask
     $tables = [
       'information_object' => 'QubitInformationObject',
       'term' => 'QubitTerm',
-      'menu' => 'QubitMenu'
+      'menu' => 'QubitMenu',
     ];
 
     $excludeTables = [];
@@ -83,7 +83,7 @@ class propelBuildNestedSetTask extends sfBaseTask
       $rootNode = [
         'id' => $classname::ROOT_ID,
         'lft' => 1,
-        'rgt' => null
+        'rgt' => null,
       ];
 
       try

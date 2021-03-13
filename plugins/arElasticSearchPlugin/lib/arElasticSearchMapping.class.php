@@ -58,7 +58,7 @@ class arElasticSearchMapping
     'ru' => 'russian',
     'es' => 'spanish',
     'sv' => 'swedish',
-    'tr' => 'turkish'
+    'tr' => 'turkish',
   ];
 
   /**
@@ -298,7 +298,7 @@ class arElasticSearchMapping
                 'analyzer' => 'autocomplete',
                 'search_analyzer' => 'standard',
                 'store' => 'true',
-                'term_vector' => 'with_positions_offsets'];
+                'term_vector' => 'with_positions_offsets', ];
             }
           }
 
@@ -320,7 +320,7 @@ class arElasticSearchMapping
             'type' => 'object',
             'dynamic' => 'strict',
             'include_in_root' => true,
-            'properties' => $nestedI18nObjects]);
+            'properties' => $nestedI18nObjects, ]);
 
           break;
 
@@ -416,7 +416,7 @@ class arElasticSearchMapping
           'type' => 'object',
           'dynamic' => 'strict',
           'include_in_root' => true,
-          'properties' => $nestedI18nObjects]);
+          'properties' => $nestedI18nObjects, ]);
       }
 
       if (isset($mapping['_foreign_types']))
@@ -468,7 +468,7 @@ class arElasticSearchMapping
   {
     return [
       'type' => 'text',
-      'include_in_all' => true];
+      'include_in_all' => true, ];
   }
 
   protected function getNestedI18nObjects($languages, $nestedI18nFields)
@@ -491,7 +491,7 @@ class arElasticSearchMapping
         'type' => 'object',
         'dynamic' => 'strict',
         'include_in_parent' => false,
-        'properties' => $nestedI18nFields];
+        'properties' => $nestedI18nFields, ];
     }
 
     // Create a list of languages for aggregations

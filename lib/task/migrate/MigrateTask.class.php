@@ -45,7 +45,7 @@ EOL;
       '1.0.5',
       '1.0.6',
       '1.0.7',
-      '1.0.8'
+      '1.0.8',
     ];
 
   /**
@@ -63,13 +63,13 @@ The [propel:migrate|INFO] task modifies the given YAML dump file with changes to
 EOF;
 
     $this->addArguments([
-      new sfCommandArgument('datafile', sfCommandArgument::REQUIRED, 'The yaml data file containing the current site data')
+      new sfCommandArgument('datafile', sfCommandArgument::REQUIRED, 'The yaml data file containing the current site data'),
     ]);
 
     $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('target-version', 'T', sfCommandOption::PARAMETER_OPTIONAL, 'Specify the target version for the migrated data')
+      new sfCommandOption('target-version', 'T', sfCommandOption::PARAMETER_OPTIONAL, 'Specify the target version for the migrated data'),
     ]);
   }
 

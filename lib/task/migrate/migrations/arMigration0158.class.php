@@ -98,7 +98,7 @@ class arMigration0158
       'q_term',
       'q_term_i18n',
       'q_user',
-      'q_user_role_relation'
+      'q_user_role_relation',
     ];
 
     try

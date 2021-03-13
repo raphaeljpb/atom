@@ -38,7 +38,7 @@ class sfDcPluginEditAction extends InformationObjectEditAction
       'title',
       'type',
       'displayStandard',
-      'displayStandardUpdateDescendants'];
+      'displayStandardUpdateDescendants', ];
 
   protected function earlyExecute()
   {

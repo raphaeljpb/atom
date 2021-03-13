@@ -92,7 +92,7 @@ class QubitTaxonomy extends BaseTaxonomy
       self::PUBLICATION_STATUS_ID,
       self::ACTOR_NAME_TYPE_ID,
       self::INFORMATION_OBJECT_TEMPLATE_ID,
-      self::JOB_STATUS_ID];
+      self::JOB_STATUS_ID, ];
 
   public function __construct($id = null)
   {

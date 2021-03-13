@@ -77,7 +77,7 @@ class arUpgrader110
           'es' => 'Registros de adhesiones',
           'fr' => 'Registre des entrées',
           'pl' => 'Nabytki',
-          'sl' => 'Zapisi o prevzemu'] as $key => $value)
+          'sl' => 'Zapisi o prevzemu', ] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -108,7 +108,7 @@ class arUpgrader110
           'es' => 'Administrar',
           'fr' => 'Gérer',
           'pl' => 'Zarządzanie',
-          'sl' => 'Upravljaj'] as $key => $value)
+          'sl' => 'Upravljaj', ] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -144,7 +144,7 @@ class arUpgrader110
           'es' => 'Registros de adhesiones',
           'fr' => 'Registre des entrées',
           'pl' => 'Nabytki',
-          'sl' => 'Zapisi o prevzemu'] as $key => $value)
+          'sl' => 'Zapisi o prevzemu', ] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -174,7 +174,7 @@ class arUpgrader110
           'fr' => 'Donateurs',
           'nl' => 'Schenkers',
           'pl' => 'Przekazujący (materiały archiwalne)',
-          'sl' => 'Donatorji'] as $key => $value)
+          'sl' => 'Donatorji', ] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -204,7 +204,7 @@ class arUpgrader110
           'fr' => 'Détenteurs de droits',
           'nl' => 'Houders van rechten',
           'pl' => 'Posiadacze praw',
-          'sl' => 'Imetniki pravic'] as $key => $value)
+          'sl' => 'Imetniki pravic', ] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -262,7 +262,7 @@ class arUpgrader110
         foreach ([
           'Public transfer',
           'Private transfer',
-          'Acquisition type'] as $item)
+          'Acquisition type', ] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -284,7 +284,7 @@ class arUpgrader110
           'Deposit',
           'Gift',
           'Purchase',
-          'Transfer'] as $item)
+          'Transfer', ] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -305,7 +305,7 @@ class arUpgrader110
         foreach ([
           'High',
           'Medium',
-          'Low'] as $item)
+          'Low', ] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -326,7 +326,7 @@ class arUpgrader110
         foreach ([
           'Complete',
           'Incomplete',
-          'In-Progress'] as $item)
+          'In-Progress', ] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -346,7 +346,7 @@ class arUpgrader110
 
         foreach ([
           'Whole',
-          'Part'] as $item)
+          'Part', ] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -371,7 +371,7 @@ class arUpgrader110
           'Disseminate',
           'Migrate',
           'Modify',
-          'Replicate'] as $item)
+          'Replicate', ] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -394,7 +394,7 @@ class arUpgrader110
           'License',
           'Statute',
           'Policy',
-          'Donor'] as $item)
+          'Donor', ] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -415,7 +415,7 @@ class arUpgrader110
         foreach ([
           'Under copyright',
           'Public domain',
-          'Unknown'] as $item)
+          'Unknown', ] as $item)
         {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
@@ -526,7 +526,7 @@ class arUpgrader110
           'fr' => 'Thèmes',
           'nl' => 'Thema\'s',
           'pl' => 'Motywy',
-          'sl' => 'Teme'] as $key => $value)
+          'sl' => 'Teme', ] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -667,7 +667,7 @@ class arUpgrader110
           'fr' => 'Localisation physique',
           'nl' => 'Bergplaats',
           'pl' => 'Składowanie w ujęciu fizycznym',
-          'sl' => 'Fizična hramba'] as $key => $value)
+          'sl' => 'Fizična hramba', ] as $key => $value)
         {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
@@ -821,7 +821,7 @@ sql;
       'rights_i18n',
       'rights_actor_relation',
       'rights_term_relation',
-      'system_event'] as $item)
+      'system_event', ] as $item)
     {
       QubitMigrate::dropTable($item);
     }
@@ -832,7 +832,7 @@ sql;
       'other_name',
       'property',
       'status',
-      'taxonomy'
+      'taxonomy',
       ] as $item)
     {
       // Copy column updated_at and drop it

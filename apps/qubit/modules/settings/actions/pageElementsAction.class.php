@@ -34,7 +34,7 @@ class SettingsPageElementsAction extends sfAction
       'toggleIoSlider',
       'toggleDigitalObjectMap',
       'toggleCopyrightFilter',
-      'toggleMaterialFilter'
+      'toggleMaterialFilter',
     ];
 
   public function execute($request)

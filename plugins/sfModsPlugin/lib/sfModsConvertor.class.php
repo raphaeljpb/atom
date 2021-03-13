@@ -247,7 +247,7 @@ class sfModsConvertor extends QubitSaxParser
     $eventData = [
       'name' => $this->name,
       'role' => $this->role,
-      'type' => $this->entityType
+      'type' => $this->entityType,
     ];
 
     array_push($this->names, $eventData);
@@ -357,7 +357,7 @@ class sfModsConvertor extends QubitSaxParser
     {
       $this->digitalObjects[] = [
         'filename' => $pathParts['basename'],
-        'tempFile' => $tempFile
+        'tempFile' => $tempFile,
       ];
     }
   }
@@ -442,7 +442,7 @@ class sfModsConvertor extends QubitSaxParser
       'moving image' => 'Moving images',
       'three dimensional object' => 'Object',
       'software, multimedia' => 'Multiple media',
-      'mixed material' => 'Multiple media'
+      'mixed material' => 'Multiple media',
     ];
 
     $typeOfResourceTermNames = $gmdTermNames = [];

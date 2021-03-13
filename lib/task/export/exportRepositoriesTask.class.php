@@ -64,7 +64,7 @@ EOF;
     ]);
 
     $this->addArguments([
-      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'Filename for the CSV')
+      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'Filename for the CSV'),
     ]);
   }
 

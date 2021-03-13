@@ -491,42 +491,42 @@ EOM;
     $times = [
       [
         'Load CSV file:            %01.2fs',
-        $this->getElapsedTime('loadCsv')
+        $this->getElapsedTime('loadCsv'),
       ],
       [
         'Process row:              %01.2fs',
-        $this->getElapsedTime('processRow')
+        $this->getElapsedTime('processRow'),
       ],
       [
         'Save data:                %01.2fs',
-        $this->getElapsedTime('save')
+        $this->getElapsedTime('save'),
       ],
       [
         '  Match existing:         %01.2fs',
-        $this->getElapsedTime('matchExisting')
+        $this->getElapsedTime('matchExisting'),
       ],
       [
         '  Insert new rows:        %01.2fs',
-        $this->getElapsedTime('insertNew')
+        $this->getElapsedTime('insertNew'),
       ],
       [
         '  Update existing rows:   %01.2fs',
-        $this->getElapsedTime('updateExisting')],
+        $this->getElapsedTime('updateExisting'), ],
       [
         '    Save physical object: %01.2fs',
-        $this->getElapsedTime('physobjSave')
+        $this->getElapsedTime('physobjSave'),
       ],
       [
         '    Save keymap:          %01.2fs',
-        $this->getElapsedTime('keymapSave')
+        $this->getElapsedTime('keymapSave'),
       ],
       [
         '    Update IO relations:  %01.2fs',
-        $this->getElapsedTime('updateInfObjRelations')
+        $this->getElapsedTime('updateInfObjRelations'),
       ],
       [
         'Progress reporting:       %01.2fs',
-        $this->getElapsedTime('progress')
+        $this->getElapsedTime('progress'),
       ],
     ];
 
@@ -565,7 +565,7 @@ EOQ;
       ':sourceName' => $this->getOption('sourceName'),
       ':sourceId' => $csvdata['legacyId'],
       ':targetName' => 'physical_object',
-      ':targetId' => $objectId
+      ':targetId' => $objectId,
     ]);
 
     $timer->add();

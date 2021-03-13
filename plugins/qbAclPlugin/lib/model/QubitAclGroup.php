@@ -65,6 +65,6 @@ class QubitAclGroup extends BaseAclGroup implements Zend_Acl_Role_Interface
       self::ROOT_ID,
       self::ANONYMOUS_ID,
       self::AUTHENTICATED_ID,
-      self::ADMINISTRATOR_ID]);
+      self::ADMINISTRATOR_ID, ]);
   }
 }

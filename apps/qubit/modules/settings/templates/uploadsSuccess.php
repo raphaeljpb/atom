@@ -45,7 +45,7 @@
             ->label(
                 __('%1% upload limits',
                 [
-                  '%1%' => sfConfig::get('app_ui_label_repository')
+                  '%1%' => sfConfig::get('app_ui_label_repository'),
                 ]
               ))
               ->help(__(
@@ -73,7 +73,7 @@
                 .'&quot; allows unlimited uploads',
                 [
                   '%1%' => strtolower(sfConfig::get('app_ui_label_digitalobject')),
-                  '%2%' => strtolower(sfConfig::get('app_ui_label_repository'))
+                  '%2%' => strtolower(sfConfig::get('app_ui_label_repository')),
                 ]
               ))
             ->renderRow();

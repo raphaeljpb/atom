@@ -37,7 +37,7 @@
             null,
             ['more' => true],
             ['xhr-location' => url_for([$prevSiblings[0], 'module' => 'informationobject', 'action' => 'treeView']),
-                  'numSiblingsLeft' => $siblingCountPrev]); ?>
+                  'numSiblingsLeft' => $siblingCountPrev, ]); ?>
         <?php } ?>
 
         <?php // N prev items ?>
@@ -75,7 +75,7 @@
             null,
             ['more' => true],
             ['xhr-location' => url_for([$child, 'module' => 'informationobject', 'action' => 'treeView']),
-                  'numSiblingsLeft' => $siblingCountNext]); ?>
+                  'numSiblingsLeft' => $siblingCountNext, ]); ?>
         <?php } ?>
 
       <?php // Or siblings ?>
@@ -96,7 +96,7 @@
             null,
             ['more' => true],
             ['xhr-location' => url_for([$last, 'module' => 'informationobject', 'action' => 'treeView']),
-                  'numSiblingsLeft' => $siblingCountNext]); ?>
+                  'numSiblingsLeft' => $siblingCountNext, ]); ?>
         <?php } ?>
 
       <?php } ?>

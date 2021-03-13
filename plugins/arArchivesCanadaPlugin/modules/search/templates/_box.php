@@ -26,7 +26,7 @@
               'browseSubjects' => '/images/icons-large/icon-subjects.png',
               'browseFunctions' => '/images/icons-large/icon-functions.png',
               'browsePlaces' => '/images/icons-large/icon-places.png',
-              'browseDigitalObjects' => '/images/icons-large/icon-media.png']; ?>
+              'browseDigitalObjects' => '/images/icons-large/icon-media.png', ]; ?>
             <?php $browseMenu = QubitMenu::getById(QubitMenu::BROWSE_ID); ?>
             <?php if ($browseMenu->hasChildren()) { ?>
               <?php foreach ($browseMenu->getChildren() as $item) { ?>

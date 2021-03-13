@@ -71,7 +71,7 @@ class InformationObjectFullWidthTreeViewMoveAction extends sfAction
     $params = [
       'objectId' => $this->resource->id,
       'oldPosition' => $oldPosition,
-      'newPosition' => $newPosition
+      'newPosition' => $newPosition,
     ];
 
     // Catch no Gearman worker available exception

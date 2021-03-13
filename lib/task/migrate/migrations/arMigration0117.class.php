@@ -96,7 +96,7 @@ class arMigration0117
       ['en' => 'Scores'],
       ['en' => 'Sheet Music'],
       ['en' => 'Timetables'],
-      ['en' => 'Transcriptions']] as $termNames)
+      ['en' => 'Transcriptions'], ] as $termNames)
     {
       $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;

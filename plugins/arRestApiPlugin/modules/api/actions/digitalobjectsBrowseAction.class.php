@@ -53,7 +53,7 @@ class ApiDigitalObjectsBrowseAction extends QubitApiAction
         'name' => $do->name,
         'path' => $do->path,
         'byte_size' => intval($do->byteSize),
-        'mime_type' => $do->mimeType
+        'mime_type' => $do->mimeType,
       ];
 
       // Look up media type
@@ -68,7 +68,7 @@ class ApiDigitalObjectsBrowseAction extends QubitApiAction
       // Add related property data
       $propertyFields = [
         'objectUUID' => 'file_uuid',
-        'aipUUID' => 'aip_uuid'
+        'aipUUID' => 'aip_uuid',
       ];
 
       foreach ($propertyFields as $propertyName => $apiFieldLabel)
@@ -86,6 +86,6 @@ class ApiDigitalObjectsBrowseAction extends QubitApiAction
     return
       [
         'results' => $results,
-        'total' => $this->pager->getNbResults()];
+        'total' => $this->pager->getNbResults(), ];
   }
 }

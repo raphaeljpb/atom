@@ -406,7 +406,7 @@ class Qubit
     $uploadsPath = sfConfig::get('sf_upload_dir');
     $directories = [
       $uploadsPath,
-      $uploadsPath.DIRECTORY_SEPARATOR.'tmp'
+      $uploadsPath.DIRECTORY_SEPARATOR.'tmp',
     ];
 
     foreach ($directories as $dirPath)

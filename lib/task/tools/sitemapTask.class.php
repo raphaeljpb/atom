@@ -27,7 +27,7 @@ class sitemapTask extends sfBaseTask
    */
   private static $urls = [
     'Google' => 'http://www.google.com/webmasters/sitemaps/ping?sitemap=%s',
-    'Bing' => 'http://www.bing.com/webmaster/ping.aspx?siteMap=%s'
+    'Bing' => 'http://www.bing.com/webmaster/ping.aspx?siteMap=%s',
   ];
 
   public function execute($arguments = [], $options = [])

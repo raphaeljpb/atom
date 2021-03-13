@@ -396,7 +396,7 @@ class sfWebBrowser
       'uri' => $uri,
       'method' => $method,
       'parameters' => $parameters,
-      'headers' => $headers
+      'headers' => $headers,
     ];
     $this->stackPosition = count($this->stack) - 1;
 

@@ -241,6 +241,6 @@ class sfDcPlugin implements ArrayAccess
   {
     return [QubitTerm::getById(QubitTerm::CONTRIBUTION_ID),
       QubitTerm::getById(QubitTerm::CREATION_ID),
-      QubitTerm::getById(QubitTerm::PUBLICATION_ID)];
+      QubitTerm::getById(QubitTerm::PUBLICATION_ID), ];
   }
 }

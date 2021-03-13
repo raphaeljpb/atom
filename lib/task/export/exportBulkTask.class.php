@@ -122,7 +122,7 @@ class exportBulkTask extends exportBulkBaseTask
   {
     $this->addCommonArgumentsAndOptions();
     $this->addOptions([
-      new sfCommandOption('format', null, sfCommandOption::PARAMETER_OPTIONAL, 'XML format ("ead" or "mods")', 'ead')
+      new sfCommandOption('format', null, sfCommandOption::PARAMETER_OPTIONAL, 'XML format ("ead" or "mods")', 'ead'),
     ]);
   }
 }

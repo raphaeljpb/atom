@@ -55,11 +55,11 @@ class SettingsDefaultTemplateForm extends sfForm
     }
 
     $actorTemplates = [
-      'isaar' => $i18n->__('ISAAR(CPF), 2nd ed. International Council on Archives')
+      'isaar' => $i18n->__('ISAAR(CPF), 2nd ed. International Council on Archives'),
     ];
 
     $repositoryTemplates = [
-      'isdiah' => $i18n->__('ISDIAH, 1st ed. International Council on Archives')
+      'isdiah' => $i18n->__('ISDIAH, 1st ed. International Council on Archives'),
     ];
 
     // Build widgets
@@ -73,7 +73,7 @@ class SettingsDefaultTemplateForm extends sfForm
     $this->widgetSchema->setLabels([
       'informationobject' => sfConfig::get('app_ui_label_informationobject'),
       'actor' => sfConfig::get('app_ui_label_actor'),
-      'repository' => sfConfig::get('app_ui_label_repository')
+      'repository' => sfConfig::get('app_ui_label_repository'),
     ]);
 
     // Add helper text

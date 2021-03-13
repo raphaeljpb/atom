@@ -10,7 +10,7 @@
           <td>
             <?php echo link_to($node['label'], [
               'module' => $node['module'] ?? 'settings',
-              'action' => $node['action']
+              'action' => $node['action'],
             ]); ?>
           </td>
         </tr>

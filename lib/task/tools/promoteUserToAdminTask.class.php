@@ -62,7 +62,7 @@ class promoteUserToAdminTask extends sfBaseTask
   protected function configure()
   {
     $this->addArguments([
-      new sfCommandArgument('username', sfCommandArgument::REQUIRED, 'The username')
+      new sfCommandArgument('username', sfCommandArgument::REQUIRED, 'The username'),
     ]);
 
     $this->addOptions([

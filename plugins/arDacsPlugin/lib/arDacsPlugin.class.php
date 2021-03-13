@@ -64,7 +64,7 @@ class arDacsPlugin extends sfIsadPlugin
   {
     $types = [
       QubitTerm::getById(QubitTerm::CREATION_ID),
-      QubitTerm::getById(QubitTerm::PUBLICATION_ID)];
+      QubitTerm::getById(QubitTerm::PUBLICATION_ID), ];
 
     $criteria = new Criteria();
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);

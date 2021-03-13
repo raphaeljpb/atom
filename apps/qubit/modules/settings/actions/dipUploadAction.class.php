@@ -21,7 +21,7 @@ class SettingsDipUploadAction extends SettingsEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'stripExtensions'];
+      'stripExtensions', ];
 
   public function earlyExecute()
   {
@@ -30,7 +30,7 @@ class SettingsDipUploadAction extends SettingsEditAction
     $this->updateMessage = $this->i18n->__('DIP upload settings saved.');
 
     $this->settingDefaults = [
-      'stripExtensions' => '0'
+      'stripExtensions' => '0',
     ];
   }
 

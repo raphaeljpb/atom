@@ -14,7 +14,7 @@
     <div class="row">
       <div class="span6">
         <?php echo get_component('search', 'inlineSearch', [
-          'label' => __('Search rights holder')]); ?>
+          'label' => __('Search rights holder'), ]); ?>
       </div>
 
       <div class="pickers">
@@ -23,7 +23,7 @@
             'options' => [
               'lastUpdated' => __('Date modified'),
               'alphabetic' => __('Name'),
-              'identifier' => __('Identifier')]]); ?>
+              'identifier' => __('Identifier'), ], ]); ?>
       </div>
     </div>
   </section>

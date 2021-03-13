@@ -25,7 +25,7 @@ class FixCodeTask extends sfBaseTask
   protected function configure()
   {
     $this->addArguments([
-      new sfCommandArgument('path', sfCommandArgument::REQUIRED | sfCommandArgument::IS_ARRAY, 'FIXME')]);
+      new sfCommandArgument('path', sfCommandArgument::REQUIRED | sfCommandArgument::IS_ARRAY, 'FIXME'), ]);
 
     $this->name = '';
     $this->briefDescription = 'FIXME';

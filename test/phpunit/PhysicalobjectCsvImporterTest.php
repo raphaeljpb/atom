@@ -42,7 +42,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
       'fr' => [
         'boîte hollinger' => 1,
         'chemise' => 2,
-      ]
+      ],
     ];
 
     // define virtual file system
@@ -475,7 +475,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
       'name' => '',
       'type' => 'Boîte Hollinger',
       'location' => '',
-      'culture' => 'fr'
+      'culture' => 'fr',
     ]);
   }
 
@@ -490,7 +490,7 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
       'name' => 'MPATHG',
       'type' => 'Spam',
       'location' => 'Camelot',
-      'culture' => 'en'
+      'culture' => 'en',
     ]);
   }
 

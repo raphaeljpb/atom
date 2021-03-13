@@ -148,7 +148,7 @@ class i18nDiffTask extends sfBaseTask
 
     $this->addOptions([
       new sfCommandOption('file', 'f', sfCommandOption::PARAMETER_OPTIONAL, 'Specify a destination filename for writing output', 'stdout'),
-      new sfCommandOption('format', 'o', sfCommandOption::PARAMETER_OPTIONAL, 'Specify an output format (currently only supports csv & tab-delimited)', self::FORMAT_CSV)
+      new sfCommandOption('format', 'o', sfCommandOption::PARAMETER_OPTIONAL, 'Specify an output format (currently only supports csv & tab-delimited)', self::FORMAT_CSV),
     ]);
 
     $this->namespace = 'i18n';

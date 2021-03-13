@@ -24,7 +24,7 @@ class sfIsadPluginEventComponent extends InformationObjectEventComponent
       'date',
       'endDate',
       'startDate',
-      'type'];
+      'type', ];
 
   // TODO Refactor with parent::processForm()
   public function processForm()

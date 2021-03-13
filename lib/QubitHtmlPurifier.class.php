@@ -61,9 +61,9 @@ class QubitHtmlPurifier
       'tbody', 'thead', 'tfoot',
       'col', 'colgroup', 'caption',
       'b', 'i', 'tt',
-      'sub', 'sup', 'big', 'small', 'hr']));
+      'sub', 'sup', 'big', 'small', 'hr', ]));
     $config->set('HTML.AllowedAttributes', implode(',', [
-      'class', 'title', 'src', 'href']));
+      'class', 'title', 'src', 'href', ]));
 
     $this->purifier = new HTMLPurifier($config);
   }

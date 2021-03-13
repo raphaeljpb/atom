@@ -70,7 +70,7 @@ EOF;
     ]);
 
     $this->addArguments([
-      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The custom logic file (containing PHP logic).')
+      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The custom logic file (containing PHP logic).'),
     ]);
 
     // TODO: add capability to define ad-hoc arguments

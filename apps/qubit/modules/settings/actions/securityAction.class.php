@@ -30,7 +30,7 @@ class SettingsSecurityAction extends SettingsEditAction
   public static $NAMES = [
       'limit_admin_ip',
       'require_ssl_admin',
-      'require_strong_passwords'];
+      'require_strong_passwords', ];
 
   public function earlyExecute()
   {

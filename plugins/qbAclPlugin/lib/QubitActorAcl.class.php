@@ -35,7 +35,7 @@ class QubitActorAcl extends QubitAcl
     'publish' => 'Publish',
     'readMaster' => 'Access master',
     'readReference' => 'Access reference',
-    'readThumbnail' => 'Access thumbnail'
+    'readThumbnail' => 'Access thumbnail',
   ];
 
   protected static $_digitalObjectActions = ['readMaster', 'readReference', 'readThumbnail'];

@@ -22,7 +22,7 @@ class importBulkTask extends arBaseTask
   protected function configure()
   {
     $this->addArguments([
-      new sfCommandArgument('folder', sfCommandArgument::REQUIRED, 'The import folder or file')
+      new sfCommandArgument('folder', sfCommandArgument::REQUIRED, 'The import folder or file'),
     ]);
 
     $this->addOptions([

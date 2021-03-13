@@ -43,7 +43,7 @@ $preambleExceptions = '/'.implode('|', [
   preg_quote(SF_ROOT_DIR, '/').'\/symfony$',
   preg_quote(SF_ROOT_DIR, '/').'\/test\/bootstrap\/[^\/.]+\.php$',
   preg_quote(SF_ROOT_DIR, '/').'\/test\/functional\/qubit\/[^\/.]+\.php$',
-  preg_quote(SF_ROOT_DIR, '/').'\/web\/']).'/';
+  preg_quote(SF_ROOT_DIR, '/').'\/web\/', ]).'/';
 
 // Use this file's preamble
 global $preamble;

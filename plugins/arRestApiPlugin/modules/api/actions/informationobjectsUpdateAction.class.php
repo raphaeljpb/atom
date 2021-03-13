@@ -47,7 +47,7 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
 
     return [
       'id' => (int) $this->io->id,
-      'parent_id' => (int) $this->io->parentId];
+      'parent_id' => (int) $this->io->parentId, ];
   }
 
   protected function processField($field, $value)

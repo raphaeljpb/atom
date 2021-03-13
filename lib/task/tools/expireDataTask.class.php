@@ -24,12 +24,12 @@ class expireDataTask extends arBaseTask
       'clipboard' => [
         'name' => 'saved clipboard',
         'plural_name' => 'saved clipboards',
-        'age_setting_name' => 'app_clipboard_save_max_age'
+        'age_setting_name' => 'app_clipboard_save_max_age',
       ],
       'job' => [
         'name' => 'job (and any related file)',
-        'plural_name' => 'jobs (and any related files)'
-      ]
+        'plural_name' => 'jobs (and any related files)',
+      ],
     ];
 
   protected function configure()
@@ -40,7 +40,7 @@ class expireDataTask extends arBaseTask
     );
 
     $this->addArguments([
-      new sfCommandArgument('data-type', sfCommandArgument::REQUIRED, $dataTypeArgDescription)
+      new sfCommandArgument('data-type', sfCommandArgument::REQUIRED, $dataTypeArgDescription),
     ]);
 
     $this->addOptions([

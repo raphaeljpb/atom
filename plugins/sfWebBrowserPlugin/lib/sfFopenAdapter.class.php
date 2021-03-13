@@ -101,7 +101,7 @@ class sfFopenAdapter
                 E_USER_WARNING => 'User Warning',
                 E_USER_NOTICE => 'User Notice',
                 E_STRICT => 'Runtime Notice',
-                E_RECOVERABLE_ERROR => 'Catchable Fatal Error'
+                E_RECOVERABLE_ERROR => 'Catchable Fatal Error',
                 ];
 
     $msg = sprintf('%s : "%s" occured in %s on line %d',

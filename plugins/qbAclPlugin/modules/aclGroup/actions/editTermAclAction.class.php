@@ -25,7 +25,7 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
    * @var string
    */
   public static $NAMES = [
-    'taxonomy'
+    'taxonomy',
   ];
 
   public function execute($request)

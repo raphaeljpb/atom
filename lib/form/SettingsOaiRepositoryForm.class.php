@@ -39,7 +39,7 @@ class SettingsOaiRepositoryForm extends sfForm
       'oai_repository_identifier' => new sfWidgetFormInput([], ['class' => 'disabled', 'disabled' => true]),
       'sample_oai_identifier' => new sfWidgetFormInput([], ['class' => 'disabled', 'disabled' => true]),
       'resumption_token_limit' => new sfWidgetFormInput(),
-      'oai_additional_sets_enabled' => new arWidgetFormSelectRadioOaiAdditionalSetEnable(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio'])
+      'oai_additional_sets_enabled' => new arWidgetFormSelectRadioOaiAdditionalSetEnable(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']),
     ]);
 
     // Add labels
@@ -50,7 +50,7 @@ class SettingsOaiRepositoryForm extends sfForm
       'oai_repository_identifier' => $i18n->__('OAI repository identifier'),
       'sample_oai_identifier' => $i18n->__('Sample OAI identifier'),
       'resumption_token_limit' => $i18n->__('Resumption token limit'),
-      'oai_additional_sets_enabled' => $i18n->__('Enable additional OAI sets')
+      'oai_additional_sets_enabled' => $i18n->__('Enable additional OAI sets'),
     ]);
 
     // Add helper text
@@ -61,7 +61,7 @@ class SettingsOaiRepositoryForm extends sfForm
       'oai_repository_identifier' => $i18n->__('This is an auto-generated setting that produces an OAI compliant repository identifier, which includes the OAI repository code value if it is set'),
       'sample_oai_identifier' => $i18n->__('This is an example of the auto-generated, OAI compliant identifier which is created for each item in this particular OAI repository'),
       'resumption_token_limit' => $i18n->__('The number of entities to include in a single OAI response list before inserting a resumption token'),
-      'oai_additional_sets_enabled' => $i18n->__('If "no", just show one OAI set per collection')
+      'oai_additional_sets_enabled' => $i18n->__('If "no", just show one OAI set per collection'),
     ]);
 
     // Reference image max. width validator
@@ -69,12 +69,12 @@ class SettingsOaiRepositoryForm extends sfForm
       [
         'required' => true,
         'min' => self::$resumptionTokenMinLimit,
-        'max' => self::$resumptionTokenMaxLimit
+        'max' => self::$resumptionTokenMaxLimit,
       ],
       [
         'required' => $i18n->__('This field is required'),
         'min' => $i18n->__('This value must be at least %min%'),
-        'max' => $i18n->__('This value cannot be more than %max%')
+        'max' => $i18n->__('This value cannot be more than %max%'),
       ]
     );
 

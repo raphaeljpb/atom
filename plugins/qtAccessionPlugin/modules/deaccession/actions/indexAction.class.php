@@ -42,23 +42,23 @@ class DeaccessionIndexAction extends sfAction
       $values = [];
 
       $validatorSchema->identifier = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('Identifier - This is a mandatory element.')]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('Identifier - This is a mandatory element.'), ]);
       $values['identifier'] = $this->resource->identifier;
 
       $validatorSchema->date = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('Date of acquisition - This is a mandatory element.')]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('Date of acquisition - This is a mandatory element.'), ]);
       $values['date'] = $this->resource->date;
 
       $validatorSchema->scope = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('Scope - This is a mandatory element.')]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('Scope - This is a mandatory element.'), ]);
       $values['scope'] = $this->resource->scope;
 
       $validatorSchema->description = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('Description - This is a mandatory element.')]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('Description - This is a mandatory element.'), ]);
       $values['description'] = $this->resource->getDescription(['culltureFallback' => true]);
 
       try

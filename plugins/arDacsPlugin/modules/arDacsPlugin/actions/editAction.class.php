@@ -54,7 +54,7 @@ class arDacsPluginEditAction extends InformationObjectEditAction
       'title',
 
       // DACS, see arDacsPlugin
-      'technicalAccess'];
+      'technicalAccess', ];
 
   protected function earlyExecute()
   {

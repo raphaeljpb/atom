@@ -227,7 +227,7 @@ foreach ($adapter_list as $adapter)
   $b = new sfWebBrowser([], $adapter);
   $headers = [
     'Accept-language' => 'fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3',
-    'Accept' => 'text/xml'];
+    'Accept' => 'text/xml', ];
   $t->like(
     $b->get($dump_headers_url, [], $headers)->getResponseText(),
     '/fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3/',
@@ -419,7 +419,7 @@ foreach ($adapter_list as $adapter)
   $url = 'http://www.abundanttech.com/WebServices/Population/population.asmx';
   $headers = [
     'Soapaction' => 'http://www.abundanttech.com/WebServices/Population/getWorldPopulation',
-    'Content-Type' => 'text/xml'
+    'Content-Type' => 'text/xml',
   ];
   $requestBody = <<<EOT
 <?xml version="1.0" encoding="utf-8"?>
@@ -436,7 +436,7 @@ EOT;
   $url = 'http://www.abundanttech.com/WebServices/Population/population.asmx';
   $headers = [
     'Soapaction' => 'http://www.abundanttech.com/WebServices/Population/getPopulation',
-    'Content-Type' => 'text/xml'
+    'Content-Type' => 'text/xml',
   ];
   $requestBody = <<<EOT
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:pop="http://www.abundanttech.com/WebServices/Population">

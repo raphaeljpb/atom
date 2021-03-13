@@ -41,7 +41,7 @@ class arMigration0162
 
     $terms = [
       QubitTerm::USER_ACTION_CREATION_ID => 'Creation',
-      QubitTerm::USER_ACTION_MODIFICATION_ID => 'Modification'
+      QubitTerm::USER_ACTION_MODIFICATION_ID => 'Modification',
     ];
 
     foreach ($terms as $id => $name)

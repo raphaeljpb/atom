@@ -39,7 +39,7 @@ class sfIsdfPluginEditAction extends FunctionEditAction
       'language',
       'script',
       'sources',
-      'maintenanceNotes'];
+      'maintenanceNotes', ];
 
   protected function earlyExecute()
   {

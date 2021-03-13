@@ -42,8 +42,8 @@ class RightsHolderIndexAction extends sfAction
       $values = [];
 
       $validatorSchema->authorizedFormOfName = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('Authorized form of name - This is a mandatory element.')]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('Authorized form of name - This is a mandatory element.'), ]);
       $values['authorizedFormOfName'] = $this->resource->getAuthorizedFormOfName(['cultureFallback' => true]);
 
       try

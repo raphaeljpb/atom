@@ -211,7 +211,7 @@ class sfEacPlugin implements ArrayAccess
       'yid' => 'yi', // Yiddish
       'yor' => 'yo', // Yoruba
       'zha' => 'za', // Zhuang; Chuang
-      'zul' => 'zu']; // Zulu
+      'zul' => 'zu', ]; // Zulu
 
   public function __construct(QubitActor $resource)
   {

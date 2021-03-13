@@ -51,7 +51,7 @@ class arSearchDocumentTask extends arBaseTask
   protected function configure()
   {
     $this->addArguments([
-      new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Slug of resource')
+      new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Slug of resource'),
     ]);
 
     $this->addOptions([

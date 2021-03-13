@@ -46,7 +46,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
       '/vendor/symfony/lib/helper/I18NHelper.php',
       '/vendor/FreeBeerIso639Map.php',
       '/vendor/symfony/lib/helper/EscapingHelper.php',
-      '/lib/helper/QubitHelper.php'
+      '/lib/helper/QubitHelper.php',
     ];
 
     foreach ($includes as $include)
@@ -179,14 +179,14 @@ abstract class exportBulkBaseTask extends sfBaseTask
   protected function addCoreArgumentsAndOptions()
   {
     $this->addArguments([
-      new sfCommandArgument('path', sfCommandArgument::REQUIRED, 'The destination directory for export file(s).')
+      new sfCommandArgument('path', sfCommandArgument::REQUIRED, 'The destination directory for export file(s).'),
     ]);
 
     $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'qubit'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('items-until-update', null, sfCommandOption::PARAMETER_OPTIONAL, 'Indicate progress every n items.')
+      new sfCommandOption('items-until-update', null, sfCommandOption::PARAMETER_OPTIONAL, 'Indicate progress every n items.'),
     ]);
   }
 
@@ -198,7 +198,7 @@ abstract class exportBulkBaseTask extends sfBaseTask
       new sfCommandOption('criteria', null, sfCommandOption::PARAMETER_OPTIONAL, 'Export criteria'),
       new sfCommandOption('current-level-only', null, sfCommandOption::PARAMETER_NONE, 'Do not export child descriptions of exported items'),
       new sfCommandOption('single-slug', null, sfCommandOption::PARAMETER_OPTIONAL, 'Export a single fonds or collection based on slug'),
-      new sfCommandOption('public', null, sfCommandOption::PARAMETER_NONE, 'Do not export draft physical locations or child descriptions')
+      new sfCommandOption('public', null, sfCommandOption::PARAMETER_NONE, 'Do not export draft physical locations or child descriptions'),
     ]);
   }
 

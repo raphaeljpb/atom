@@ -60,7 +60,7 @@ class RepositoryUploadLimitComponent extends sfComponent
     $this->usageBarPixels = 0;
     $this->usageBarColors = [
       'default' => '#390',
-      'warning' => '#C33'
+      'warning' => '#C33',
     ];
 
     // Hide edit component for ajax response

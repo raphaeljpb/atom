@@ -39,7 +39,7 @@ class TermEditAction extends DefaultEditAction
       'scopeNote',
       'selfReciprocal',
       'sourceNote',
-      'useFor'];
+      'useFor', ];
 
   protected $updatedLabel = false;
 
@@ -599,7 +599,7 @@ class TermEditAction extends DefaultEditAction
     $jobOptions = [
       'ioIds' => $ioIds,
       'updateIos' => true,
-      'updateDescendants' => false
+      'updateDescendants' => false,
     ];
     QubitJob::runJob('arUpdateEsIoDocumentsJob', $jobOptions);
 

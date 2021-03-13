@@ -100,7 +100,7 @@ abstract class arOaiPluginComponent extends sfComponent
       'from' => $this->from,
       'until' => $this->until,
       'offset' => $this->cursor,
-      'limit' => QubitSetting::getByName('resumption_token_limit')->__toString()];
+      'limit' => QubitSetting::getByName('resumption_token_limit')->__toString(), ];
 
     // Get set if one has been named
     if ($this->set != '')
@@ -121,7 +121,7 @@ abstract class arOaiPluginComponent extends sfComponent
                                                               'until' => $this->until,
                                                               'cursor' => $resumptionCursor,
                                                               'metadataPrefix' => $this->metadataPrefix,
-                                                              'set' => $this->set]));
+                                                              'set' => $this->set, ]));
   }
 
   public function setRequestAttributes($request)

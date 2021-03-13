@@ -352,7 +352,7 @@ class QubitMigrate109 extends QubitMigrate
         'object_id' => $row['subject_id'],
         'type_id' => $row['type_id'],
         'source_culture' => $eqTerm['source_culture'],
-        'name' => $eqTerm['name']
+        'name' => $eqTerm['name'],
       ];
 
       $this->data['QubitOtherName'][rand()] = $otherName;
@@ -449,7 +449,7 @@ class QubitMigrate109 extends QubitMigrate
     {
       $this->data['QubitSetting']['QubitSetting_checkForUpdates'] = [
         'name' => 'check_for_updates',
-        'value' => 1
+        'value' => 1,
       ];
     }
 
@@ -485,7 +485,7 @@ class QubitMigrate109 extends QubitMigrate
       'isaar' => 'ISAAR(CPF) 2nd edition',
       'isdiah' => 'ICA-ISDIAH 1st edition',
       'mods' => 'MODS version 3.3',
-      'rad' => 'RAD version Jul2008'
+      'rad' => 'RAD version Jul2008',
     ];
 
     foreach ($this->data['QubitSetting'] as $key => $row)
@@ -550,7 +550,7 @@ class QubitMigrate109 extends QubitMigrate
     {
       $this->data['QubitSetting']['QubitSetting_explodeMultipageFiles'] = [
         'name' => 'explode_multipage_files',
-        'value' => 0
+        'value' => 0,
       ];
     }
 
@@ -568,7 +568,7 @@ class QubitMigrate109 extends QubitMigrate
     {
       $this->data['QubitSetting']['QubitSetting_showTooltips'] = [
         'name' => 'show_tooltips',
-        'value' => 1
+        'value' => 1,
       ];
     }
 
@@ -592,7 +592,7 @@ class QubitMigrate109 extends QubitMigrate
         'en' => 'Function',
         'es' => 'Función',
         'fr' => 'Fonction',
-        'pt' => 'Funçao']];
+        'pt' => 'Funçao', ], ];
 
     return $this;
   }
@@ -610,7 +610,7 @@ class QubitMigrate109 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'descriptionUpdates',
       'label' => ['en' => 'Description updates'],
-      'path' => 'search/descriptionUpdates'];
+      'path' => 'search/descriptionUpdates', ];
 
     return $this;
   }
@@ -625,7 +625,7 @@ class QubitMigrate109 extends QubitMigrate
     $this->data['QubitSetting']['QubitSetting_default_pub_status'] = [
       'name' => 'defaultPubStatus',
       'editable' => 1,
-      'value' => '<?php echo QubitTerm::PUBLICATION_STATUS_DRAFT_ID."\n" ?>'
+      'value' => '<?php echo QubitTerm::PUBLICATION_STATUS_DRAFT_ID."\n" ?>',
     ];
 
     return $this;
@@ -835,7 +835,7 @@ class QubitMigrate109 extends QubitMigrate
       'ISDF_ASSOCIATIVE_RELATION_ID',
       // ISAAR standardized form name
       'STANDARDIZED_FORM_OF_NAME_ID',
-      'EXTERNAL_URI_ID'
+      'EXTERNAL_URI_ID',
     ];
 
     // Restack array with Constant values at top
@@ -899,7 +899,7 @@ class QubitMigrate109 extends QubitMigrate
       'QubitOaiRepository',
       'QubitOaiHarvest',
       'QubitProperty',
-      'QubitSetting'
+      'QubitSetting',
     ];
 
     $originalData = $this->data;

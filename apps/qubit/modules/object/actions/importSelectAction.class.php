@@ -22,7 +22,7 @@ class ObjectImportSelectAction extends DefaultEditAction
   // Arrays not allowed in class constants
   public static $NAMES = [
       'repos',
-      'collection'];
+      'collection', ];
 
   public function execute($request)
   {
@@ -224,7 +224,7 @@ class ObjectImportSelectAction extends DefaultEditAction
                      'update' => $request->getParameter('updateType'),
                      'repositorySlug' => $this->repositorySlug,
                      'collectionSlug' => $this->collectionSlug,
-                     'file' => $file];
+                     'file' => $file, ];
 
     try
     {
@@ -233,7 +233,7 @@ class ObjectImportSelectAction extends DefaultEditAction
       $this->getUser()->setFlash('notice', $this->context->i18n->__('Import file initiated. Check %1%job %2%%3% to view the status of the import.', [
         '%1%' => sprintf('<a href="%s">', $this->context->routing->generate(null, ['module' => 'jobs', 'action' => 'report', 'id' => $job->id])),
         '%2%' => $job->id,
-        '%3%' => '</a>'
+        '%3%' => '</a>',
       ]), ['persist' => false]);
     }
     catch (sfException $e)

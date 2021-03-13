@@ -100,7 +100,7 @@ class eacExportTask extends exportBulkBaseTask
   protected function configure()
   {
     $this->addArguments([
-      new sfCommandArgument('path', sfCommandArgument::REQUIRED, 'The destination path for export file(s).')
+      new sfCommandArgument('path', sfCommandArgument::REQUIRED, 'The destination path for export file(s).'),
     ]);
 
     $this->addOptions([
@@ -108,7 +108,7 @@ class eacExportTask extends exportBulkBaseTask
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('items-until-update', null, sfCommandOption::PARAMETER_OPTIONAL, 'Indicate progress every n items.'),
-      new sfCommandOption('criteria', null, sfCommandOption::PARAMETER_OPTIONAL, 'Export criteria')
+      new sfCommandOption('criteria', null, sfCommandOption::PARAMETER_OPTIONAL, 'Export criteria'),
     ]);
   }
 }

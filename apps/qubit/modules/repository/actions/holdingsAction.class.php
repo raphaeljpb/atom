@@ -56,7 +56,7 @@ class RepositoryHoldingsAction extends sfAction
       $doc = $item->getData();
       $results[] = [
         'url' => url_for(['module' => 'informationobject', 'slug' => $doc['slug']]),
-        'title' => render_value_inline(get_search_i18n($doc, 'title', ['allowEmpty' => false, 'culture' => $culture, 'cultureFallback' => true]))
+        'title' => render_value_inline(get_search_i18n($doc, 'title', ['allowEmpty' => false, 'culture' => $culture, 'cultureFallback' => true])),
       ];
     }
 
@@ -65,7 +65,7 @@ class RepositoryHoldingsAction extends sfAction
       'start' => $pager->getFirstIndice(),
       'end' => $pager->getLastIndice(),
       'currentPage' => $pager->getPage(),
-      'lastPage' => $pager->getLastPage()
+      'lastPage' => $pager->getLastPage(),
     ];
 
     return $this->renderText(json_encode($data));

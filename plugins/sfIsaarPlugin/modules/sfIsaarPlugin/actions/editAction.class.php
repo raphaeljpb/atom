@@ -52,7 +52,7 @@ class sfIsaarPluginEditAction extends ActorEditAction
       'script',
       'sources',
       'standardizedName',
-      'subjectAccessPoints'];
+      'subjectAccessPoints', ];
 
   protected function earlyExecute()
   {

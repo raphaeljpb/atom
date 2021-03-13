@@ -37,7 +37,7 @@ class arCacheDescriptionXmlTask extends arBaseTask
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('skip', null, sfCommandOption::PARAMETER_OPTIONAL, 'Number of information objects to skip', 0),
       new sfCommandOption('limit', null, sfCommandOption::PARAMETER_OPTIONAL, 'Number of information objects to export', null),
-      new sfCommandOption('format', null, sfCommandOption::PARAMETER_OPTIONAL, 'Format to export ("ead" or "dc")', null)
+      new sfCommandOption('format', null, sfCommandOption::PARAMETER_OPTIONAL, 'Format to export ("ead" or "dc")', null),
     ]);
 
     $this->namespace = 'cache';

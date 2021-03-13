@@ -498,7 +498,7 @@ class QubitInformationObject extends BaseInformationObject
 
     return [
       'data' => QubitInformationObject::get($criteria),
-      'remaining' => $remaining
+      'remaining' => $remaining,
     ];
   }
 
@@ -623,7 +623,7 @@ class QubitInformationObject extends BaseInformationObject
       // Export top-level parent as EAD
       $params = [
         'objectId' => $this->getCollectionRoot()->id,
-        'format' => 'ead'
+        'format' => 'ead',
       ];
       QubitJob::runJob('arXmlExportSingleFileJob', $params);
     }
@@ -639,7 +639,7 @@ class QubitInformationObject extends BaseInformationObject
       // Export as DC
       $params = [
         'objectId' => $this->id,
-        'format' => 'dc'
+        'format' => 'dc',
       ];
       QubitJob::runJob('arXmlExportSingleFileJob', $params);
     }
@@ -790,7 +790,7 @@ class QubitInformationObject extends BaseInformationObject
     return [
       'data' => QubitInformationObject::get($criteria),
       'count' => $count,
-      'remaining' => $remaining
+      'remaining' => $remaining,
     ];
   }
 
@@ -972,7 +972,7 @@ class QubitInformationObject extends BaseInformationObject
 
     $criteria->addMultipleJoin([
       [QubitEvent::ID, QubitEventI18n::ID],
-      [QubitEvent::SOURCE_CULTURE, QubitEventI18n::CULTURE]],
+      [QubitEvent::SOURCE_CULTURE, QubitEventI18n::CULTURE], ],
       Criteria::LEFT_JOIN);
 
     $criteria->add($criteria->getNewCriterion(QubitEvent::END_DATE, null, Criteria::ISNOTNULL)
@@ -1848,7 +1848,7 @@ class QubitInformationObject extends BaseInformationObject
       'persname' => QubitTerm::PERSON_ID,
       'corpname' => QubitTerm::CORPORATE_BODY_ID,
       'famname' => QubitTerm::FAMILY_ID,
-      'name' => null
+      'name' => null,
     ];
 
     foreach ($entityTypes as $type => $typeId)
@@ -3072,7 +3072,7 @@ class QubitInformationObject extends BaseInformationObject
           'name' => QubitTerm::PERSON_ID,
           'persname' => QubitTerm::PERSON_ID,
           'famname' => QubitTerm::FAMILY_ID,
-          'corpname' => QubitTerm::CORPORATE_BODY_ID
+          'corpname' => QubitTerm::CORPORATE_BODY_ID,
         ];
 
         $typeId = QubitTerm::PERSON_ID;
@@ -3105,7 +3105,7 @@ class QubitInformationObject extends BaseInformationObject
         $eventSpec = [
           'event_type_id' => QubitTerm::CREATION_ID,
           'entity_type_id' => $typeId,
-          'history' => $history
+          'history' => $history,
         ];
 
         if ($date)

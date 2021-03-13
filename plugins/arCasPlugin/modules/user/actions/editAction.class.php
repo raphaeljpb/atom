@@ -25,7 +25,7 @@ class UserEditAction extends DefaultEditAction
       'groups',
       'translate',
       'restApiKey',
-      'oaiApiKey'];
+      'oaiApiKey', ];
 
   public function execute($request)
   {
@@ -190,7 +190,7 @@ class UserEditAction extends DefaultEditAction
         $choices = [
           '' => $this->context->i18n->__('-- Select action --'),
           'generate' => $this->context->i18n->__('(Re)generate API key'),
-          'delete' => $this->context->i18n->__('Delete API key')
+          'delete' => $this->context->i18n->__('Delete API key'),
         ];
 
         $this->form->setValidator($name, new sfValidatorString());

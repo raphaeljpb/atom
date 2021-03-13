@@ -182,7 +182,7 @@
 
   <?php echo get_component('informationobject', 'creatorDetail', [
     'resource' => $resource,
-    'creatorHistoryLabels' => $creatorHistoryLabels]); ?>
+    'creatorHistoryLabels' => $creatorHistoryLabels, ]); ?>
 
   <?php if (check_field_visibility('app_element_visibility_rad_archival_history')) { ?>
     <?php echo render_show(__('Custodial history'), render_value($resource->getArchivalHistory(['cultureFallback' => true])), ['fieldLabel' => 'custodialHistory']); ?>

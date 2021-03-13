@@ -63,7 +63,7 @@ class sfIsaarPluginActorEventsAction extends sfAction
         'url' => url_for([$event, 'module' => 'event']),
         'title' => render_title($event->object),
         'type' => render_value_inline($event->type),
-        'date' => render_value_inline(Qubit::renderDateStartEnd($event->date, $event->startDate, $event->endDate))
+        'date' => render_value_inline(Qubit::renderDateStartEnd($event->date, $event->startDate, $event->endDate)),
       ];
 
       array_push($events, $eventData);

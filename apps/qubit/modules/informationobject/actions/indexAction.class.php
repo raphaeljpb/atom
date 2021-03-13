@@ -130,7 +130,7 @@ class InformationObjectIndexAction extends sfAction
 
         $validatorSchema->levelOfDescription = new QubitValidatorForbiddenValues([
           'forbidden_values' => $forbiddenValues,
-          'required' => true]);
+          'required' => true, ]);
 
         break;
     }

@@ -172,7 +172,7 @@ abstract class csvImportBaseTask extends arBaseTask
     $typeIds = [
       'parallel' => QubitTerm::PARALLEL_FORM_OF_NAME_ID,
       'standardized' => QubitTerm::STANDARDIZED_FORM_OF_NAME_ID,
-      'other' => QubitTerm::OTHER_FORM_OF_NAME_ID
+      'other' => QubitTerm::OTHER_FORM_OF_NAME_ID,
     ];
 
     foreach ($typeIds as $typeName => $typeId)
@@ -288,7 +288,7 @@ abstract class csvImportBaseTask extends arBaseTask
         'endDate' => 'creatorDatesEnd',
         'description' => 'creatorDateNotes',
         'type' => '-',
-        'place' => '-'],
+        'place' => '-', ],
       '2.2' => [
         'actorName' => 'creators',
         'actorHistory' => 'creatorHistories',
@@ -297,7 +297,7 @@ abstract class csvImportBaseTask extends arBaseTask
         'endDate' => 'creationDatesEnd',
         'description' => 'creationDateNotes',
         'type' => 'creationDatesType',
-        'place' => '-'],
+        'place' => '-', ],
       '2.3' => [
         'actorName' => 'eventActors',
         'actorHistory' => 'eventActorHistories',
@@ -306,7 +306,7 @@ abstract class csvImportBaseTask extends arBaseTask
         'endDate' => 'eventEndDates',
         'description' => 'eventDescriptions',
         'type' => 'eventTypes',
-        'place' => 'eventPlaces']] as $version => $propertyColumns)
+        'place' => 'eventPlaces', ], ] as $version => $propertyColumns)
     {
       // Get event data if one of the columns is populated in the current index
       $index = 0;
@@ -503,7 +503,7 @@ abstract class csvImportBaseTask extends arBaseTask
   protected function configure()
   {
     $this->addArguments([
-      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The input file (csv format).')
+      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The input file (csv format).'),
     ]);
 
     $this->addOptions([
@@ -512,7 +512,7 @@ abstract class csvImportBaseTask extends arBaseTask
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('rows-until-update', null, sfCommandOption::PARAMETER_OPTIONAL, 'Output total rows imported every n rows.'),
       new sfCommandOption('skip-rows', null, sfCommandOption::PARAMETER_OPTIONAL, 'Skip n rows before importing.'),
-      new sfCommandOption('error-log', null, sfCommandOption::PARAMETER_OPTIONAL, 'File to log errors to.')
+      new sfCommandOption('error-log', null, sfCommandOption::PARAMETER_OPTIONAL, 'File to log errors to.'),
     ]);
   }
 

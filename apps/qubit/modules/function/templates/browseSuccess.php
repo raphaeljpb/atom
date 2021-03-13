@@ -15,7 +15,7 @@
     <div class="row">
       <div class="span6">
         <?php echo get_component('search', 'inlineSearch', [
-          'label' => __('Search %1%', ['%1%' => strtolower(sfConfig::get('app_ui_label_function'))])]); ?>
+          'label' => __('Search %1%', ['%1%' => strtolower(sfConfig::get('app_ui_label_function'))]), ]); ?>
       </div>
 
       <div class="pickers">
@@ -24,7 +24,7 @@
             'options' => [
               'lastUpdated' => __('Date modified'),
               'alphabetic' => __('Name'),
-              'identifier' => __('Identifier')]]); ?>
+              'identifier' => __('Identifier'), ], ]); ?>
       </div>
     </div>
   </section>

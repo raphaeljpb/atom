@@ -37,7 +37,7 @@ class arMigration0188
       'name' => 'formatName',
       'version' => 'formatVersion',
       'registryName' => 'formatRegistryName',
-      'registryKey' => 'formatRegistryKey'
+      'registryKey' => 'formatRegistryKey',
     ];
 
     // Criteria for getting all the QubitProperty objects with format metadata

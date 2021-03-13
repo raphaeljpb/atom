@@ -49,7 +49,7 @@
 
           <?php if ($job->getObjectModule() && $job->getObjectSlug()) { ?>
             <a href="<?php echo url_for(['module' => $job->getObjectModule(),
-                    'slug' => $job->getObjectSlug()]); ?>" class="fa fa-share"></a>
+                    'slug' => $job->getObjectSlug(), ]); ?>" class="fa fa-share"></a>
 
           <?php } ?>
         </td>
@@ -103,7 +103,7 @@
     <li>
       <?php $autoRefreshIcons = sprintf('c-btn fa %s', $autoRefresh ? 'fa-check-circle-o' : 'fa-circle-o'); ?>
       <?php echo link_to(__(' Auto refresh'), ['module' => 'jobs', 'action' => 'browse',
-        'autoRefresh' => !$autoRefresh] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(),
+        'autoRefresh' => !$autoRefresh, ] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll(),
         ['class' => $autoRefreshIcons]); ?>
     </li>
     <?php if ($jobs->count()) { ?>

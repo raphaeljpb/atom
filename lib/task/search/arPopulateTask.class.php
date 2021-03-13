@@ -61,7 +61,7 @@ class arSearchPopulateTask extends sfBaseTask
       new sfCommandOption('ignore-descendants', null, sfCommandOption::PARAMETER_NONE, "Don't index resource's descendants (applies to --slug option only)."),
       new sfCommandOption('exclude-types', null, sfCommandOption::PARAMETER_OPTIONAL, 'Exclude document type(s) (command-separated) from indexing'),
       new sfCommandOption('show-types', null, sfCommandOption::PARAMETER_NONE, 'Show available document type(s), that can be excluded, before indexing'),
-      new sfCommandOption('update', null, sfCommandOption::PARAMETER_NONE, "Don't delete existing records before indexing.")]);
+      new sfCommandOption('update', null, sfCommandOption::PARAMETER_NONE, "Don't delete existing records before indexing."), ]);
 
     $this->namespace = 'search';
     $this->name = 'populate';

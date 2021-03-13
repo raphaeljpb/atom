@@ -46,7 +46,7 @@ class arMigration0173
       'dacs_materials_area',
       'dacs_notes_area',
       'dacs_control_area',
-      'dacs_access_points_area'
+      'dacs_access_points_area',
     ];
 
     foreach ($dacsVisibilitySettingNames as $settingName)

@@ -72,7 +72,7 @@ EOF;
       new sfCommandOption('import-definition', null, sfCommandOption::PARAMETER_REQUIRED, 'PHP file defining and returning an import object.'),
       new sfCommandOption('output-file', null, sfCommandOption::PARAMETER_OPTIONAL, 'Optional output file parameter which can be referenced by import definition logic.'),
       new sfCommandOption('source-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'Source name to use when inserting keymap entries.'),
-      new sfCommandOption('ignore-bad-lod', null, sfCommandOption::PARAMETER_NONE, 'Add rows with an unrecognized level of description to end of file, instead of dropping them.')
+      new sfCommandOption('ignore-bad-lod', null, sfCommandOption::PARAMETER_NONE, 'Add rows with an unrecognized level of description to end of file, instead of dropping them.'),
     ]);
   }
 }

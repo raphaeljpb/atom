@@ -89,7 +89,7 @@ class arCalculateDescendantDatesJob extends arBaseJob
     $params = [
       ':lft' => $io->lft,
       ':rgt' => $io->rgt,
-      ':eventType' => $event->typeId
+      ':eventType' => $event->typeId,
     ];
 
     $eventData = QubitPdo::fetchOne($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);

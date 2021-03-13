@@ -30,21 +30,21 @@ class SettingsFindingAidForm extends sfForm
     $this->setWidgets([
       'finding_aid_format' => new sfWidgetFormSelect(['choices' => ['pdf' => 'PDF', 'rtf' => 'RTF']]),
       'finding_aid_model' => new sfWidgetFormSelect(['choices' => ['inventory-summary' => 'Inventory summary', 'full-details' => 'Full details']]),
-      'public_finding_aid' => new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio'])
+      'public_finding_aid' => new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']),
     ]);
 
     // Add labels
     $this->widgetSchema->setLabels([
       'finding_aid_format' => $i18n->__('Finding Aid format'),
       'finding_aid_model' => $i18n->__('Finding Aid model'),
-      'public_finding_aid' => $i18n->__('Generate Finding Aid as public user')
+      'public_finding_aid' => $i18n->__('Generate Finding Aid as public user'),
     ]);
 
     // Add helper text
     $this->widgetSchema->setHelps([
       'finding_aid_format' => '',
       'finding_aid_model' => $i18n->__('Finding Aid model: \'Inventory summary\' will include only key details for lower-level descriptions (file, item, part) in a table. \'Full details\' includes full lower-level descriptions in the same format used throughout the finding aid.'),
-      'public_finding_aid' => ''
+      'public_finding_aid' => '',
     ]);
 
     $this->validatorSchema['finding_aid_format'] = new sfValidatorString(['required' => false]);

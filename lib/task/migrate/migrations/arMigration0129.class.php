@@ -34,7 +34,7 @@ class arMigration0129
     $newRadNotes = [
       'Signatures note',
       'Cast note',
-      'Credits note'
+      'Credits note',
     ];
 
     // Create RAD note types if they don't already exist

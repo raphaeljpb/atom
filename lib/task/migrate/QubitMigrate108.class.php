@@ -314,38 +314,38 @@ class QubitMigrate108 extends QubitMigrate
         'de' => 'Funktion',
         'en' => 'Function',
         'es' => 'Funcion',
-        'fr' => 'Fonction'
-      ]
+        'fr' => 'Fonction',
+      ],
     ];
     $this->data['QubitTerm']['QubitTerm_function_Subfunction'] = [
       'taxonomy_id' => '<?php echo QubitTaxonomy::FUNCTION_ID."\n" ?>',
       'parent_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'Subfunction']
+      'name' => ['en' => 'Subfunction'],
     ];
     $this->data['QubitTerm']['QubitTerm_function_Business_process'] = [
       'taxonomy_id' => '<?php echo QubitTaxonomy::FUNCTION_ID."\n" ?>',
       'parent_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'Business process']
+      'name' => ['en' => 'Business process'],
     ];
     $this->data['QubitTerm']['QubitTerm_function_Activity'] = [
       'taxonomy_id' => '<?php echo QubitTaxonomy::FUNCTION_ID."\n" ?>',
       'parent_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'Activity']
+      'name' => ['en' => 'Activity'],
     ];
     $this->data['QubitTerm']['QubitTerm_function_Task'] = [
       'taxonomy_id' => '<?php echo QubitTaxonomy::FUNCTION_ID."\n" ?>',
       'parent_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'Task']
+      'name' => ['en' => 'Task'],
     ];
     $this->data['QubitTerm']['QubitTerm_function_Transaction'] = [
       'taxonomy_id' => '<?php echo QubitTaxonomy::FUNCTION_ID."\n" ?>',
       'parent_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'Transaction']
+      'name' => ['en' => 'Transaction'],
     ];
 
     return $this;
@@ -388,7 +388,7 @@ class QubitMigrate108 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'functions',
       'label' => ['en' => 'Functions'],
-      'path' => 'function/list'
+      'path' => 'function/list',
     ];
 
     return $this;
@@ -409,8 +409,8 @@ class QubitMigrate108 extends QubitMigrate
         'en' => 'ISDF Relation Type',
       ],
       'note' => [
-        'en' => 'Function-to-function relationship categories defined by the ICA ISDF specification, 1st Edition, Section 5.3.3, \'Category of relationship\'.'
-      ]
+        'en' => 'Function-to-function relationship categories defined by the ICA ISDF specification, 1st Edition, Section 5.3.3, \'Category of relationship\'.',
+      ],
     ];
 
     // Add related terms
@@ -420,8 +420,8 @@ class QubitMigrate108 extends QubitMigrate
       'parent_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => [
-        'en' => 'hierarchical'
-      ]
+        'en' => 'hierarchical',
+      ],
     ];
     $this->data['QubitTerm']['QubitTerm_isdf_relationship_temporal'] = [
       'id' => '<?php echo QubitTerm::ISDF_TEMPORAL_RELATION_ID."\n" ?>',
@@ -429,8 +429,8 @@ class QubitMigrate108 extends QubitMigrate
       'parent_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => [
-        'en' => 'temporal'
-      ]
+        'en' => 'temporal',
+      ],
     ];
     $this->data['QubitTerm']['QubitTerm_isdf_relationship_associative'] = [
       'id' => '<?php echo QubitTerm::ISDF_ASSOCIATIVE_RELATION_ID."\n" ?>',
@@ -438,8 +438,8 @@ class QubitMigrate108 extends QubitMigrate
       'parent_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => [
-        'en' => 'associative'
-      ]
+        'en' => 'associative',
+      ],
     ];
 
     return $this;
@@ -458,7 +458,7 @@ class QubitMigrate108 extends QubitMigrate
       {
         $this->data['QubitObjectTermRelation'][rand()] = [
           'object_id' => $key,
-          'term_id' => $row['type_id']
+          'term_id' => $row['type_id'],
         ];
       }
 
@@ -500,7 +500,7 @@ class QubitMigrate108 extends QubitMigrate
         'it' => 'ISDF Tipi di Funzion',
         'nl' => 'ISDF Functie Soorten',
         'pt' => 'ISDF Tipos de Funções',
-        'sl' => 'ISDF Tip Funkcija'
+        'sl' => 'ISDF Tip Funkcija',
       ];
     }
   }
@@ -574,7 +574,7 @@ class QubitMigrate108 extends QubitMigrate
         'name' => 'groups',
         'path' => 'aclGroup/list',
         'source_culture' => 'en',
-        'label' => ['en' => 'Groups']
+        'label' => ['en' => 'Groups'],
       ];
     }
 
@@ -641,8 +641,8 @@ class QubitMigrate108 extends QubitMigrate
         'source_culture' => 'en',
         'label' => [
           'en' => 'Profile',
-          'fr' => 'Profil'
-        ]
+          'fr' => 'Profil',
+        ],
       ];
 
       $this->data['QubitMenu']['QubitMenu_mainmenu_admin_users_infoObjectAcl'] = [
@@ -651,8 +651,8 @@ class QubitMigrate108 extends QubitMigrate
         'path' => 'user/showInformationObjectAcl?id=%currentId%',
         'source_culture' => 'en',
         'label' => [
-          'en' => 'Information object permissions'
-        ]
+          'en' => 'Information object permissions',
+        ],
       ];
     }
 
@@ -682,7 +682,7 @@ class QubitMigrate108 extends QubitMigrate
     $this->data['QubitAclPermission']['QubitAclPermission_translator_translate'] = [
       'group_id' => '<?php echo QubitAclGroup::TRANSLATOR_ID."\n" ?>',
       'action' => 'translate',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
   }
 
@@ -738,19 +738,19 @@ class QubitMigrate108 extends QubitMigrate
       'group_id' => '<?php echo QubitAclGroup::EDITOR_ID."\n" ?>',
       'object_id' => '<?php echo QubitActor::ROOT_ID."\n" ?>',
       'action' => 'create',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
     $this->data['QubitAclPermission']['QubitAclPermission_'.rand()] = [
       'group_id' => '<?php echo QubitAclGroup::EDITOR_ID."\n" ?>',
       'object_id' => '<?php echo QubitActor::ROOT_ID."\n" ?>',
       'action' => 'update',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
     $this->data['QubitAclPermission']['QubitAclPermission_'.rand()] = [
       'group_id' => '<?php echo QubitAclGroup::EDITOR_ID."\n" ?>',
       'object_id' => '<?php echo QubitActor::ROOT_ID."\n" ?>',
       'action' => 'delete',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
 
     // Contributor permissions (grant create & update)
@@ -758,13 +758,13 @@ class QubitMigrate108 extends QubitMigrate
       'group_id' => '<?php echo QubitAclGroup::CONTRIBUTOR_ID."\n" ?>',
       'object_id' => '<?php echo QubitActor::ROOT_ID."\n" ?>',
       'action' => 'create',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
     $this->data['QubitAclPermission']['QubitAclPermission_'.rand()] = [
       'group_id' => '<?php echo QubitAclGroup::CONTRIBUTOR_ID."\n" ?>',
       'object_id' => '<?php echo QubitActor::ROOT_ID."\n" ?>',
       'action' => 'update',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
 
     return $this;
@@ -784,7 +784,7 @@ class QubitMigrate108 extends QubitMigrate
         'name' => 'userActorAcl',
         'path' => 'user/showActorAcl?id=%currentId%',
         'source_culture' => 'en',
-        'label' => ['en' => 'Actor permissions']
+        'label' => ['en' => 'Actor permissions'],
       ];
     }
 
@@ -824,8 +824,8 @@ class QubitMigrate108 extends QubitMigrate
         'source_culture' => 'en',
         'label' => [
           'en' => 'Profile',
-          'fr' => 'Profil'
-        ]
+          'fr' => 'Profil',
+        ],
       ];
 
       $this->data['QubitMenu']['QubitMenu_mainmenu_admin_groups_infoObjectAcl'] = [
@@ -834,8 +834,8 @@ class QubitMigrate108 extends QubitMigrate
         'path' => 'aclGroup/showInformationObjectAcl?id=%currentId%',
         'source_culture' => 'en',
         'label' => [
-          'en' => 'Information object permissions'
-        ]
+          'en' => 'Information object permissions',
+        ],
       ];
 
       $this->data['QubitMenu']['QubitMenu_mainmenu_admin_groups_actorAcl'] = [
@@ -843,7 +843,7 @@ class QubitMigrate108 extends QubitMigrate
         'name' => 'groupActorAcl',
         'path' => 'aclGroup/showActorAcl?id=%currentId%',
         'source_culture' => 'en',
-        'label' => ['en' => 'Actor permissions']
+        'label' => ['en' => 'Actor permissions'],
       ];
     }
 
@@ -865,7 +865,7 @@ class QubitMigrate108 extends QubitMigrate
       'name' => [
         'es' => 'URI externo',
         'en' => 'External URI',
-      ]
+      ],
     ];
 
     return $this;
@@ -883,7 +883,7 @@ class QubitMigrate108 extends QubitMigrate
       'group_id' => '<?php echo QubitAclGroup::ANONYMOUS_ID."\n" ?>',
       'object_id' => '<?php echo QubitInformationObject::ROOT_ID."\n" ?>',
       'action' => 'readReference',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
 
     // Authenticated - grant readReference
@@ -891,7 +891,7 @@ class QubitMigrate108 extends QubitMigrate
       'group_id' => '<?php echo QubitAclGroup::AUTHENTICATED_ID."\n" ?>',
       'object_id' => '<?php echo QubitInformationObject::ROOT_ID."\n" ?>',
       'action' => 'readReference',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
 
     // Editor - grant readMaster
@@ -899,7 +899,7 @@ class QubitMigrate108 extends QubitMigrate
       'group_id' => '<?php echo QubitAclGroup::EDITOR_ID."\n" ?>',
       'object_id' => '<?php echo QubitInformationObject::ROOT_ID."\n" ?>',
       'action' => 'readMaster',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
 
     // Contributor - grant readMaster
@@ -907,7 +907,7 @@ class QubitMigrate108 extends QubitMigrate
       'group_id' => '<?php echo QubitAclGroup::CONTRIBUTOR_ID."\n" ?>',
       'object_id' => '<?php echo QubitInformationObject::ROOT_ID."\n" ?>',
       'action' => 'readMaster',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
 
     return $this;
@@ -929,8 +929,8 @@ class QubitMigrate108 extends QubitMigrate
         'path' => 'user/showTermAcl?id=%currentId%',
         'source_culture' => 'en',
         'label' => [
-          'en' => 'Taxonomy permissions'
-        ]
+          'en' => 'Taxonomy permissions',
+        ],
       ];
     }
 
@@ -943,8 +943,8 @@ class QubitMigrate108 extends QubitMigrate
         'path' => 'aclGroup/showTermAcl?id=%currentId%',
         'source_culture' => 'en',
         'label' => [
-          'en' => 'Taxonomy permissions'
-        ]
+          'en' => 'Taxonomy permissions',
+        ],
       ];
     }
 
@@ -1012,7 +1012,7 @@ class QubitMigrate108 extends QubitMigrate
     // Define single "allow all" rule
     $this->data['QubitAclPermission']['QubitAclPermission_admin_all'] = [
       'group_id' => '<?php echo QubitAclGroup::ADMINISTRATOR_ID."\n" ?>',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
 
     return $this;
@@ -1038,12 +1038,12 @@ class QubitMigrate108 extends QubitMigrate
     $this->data['QubitAclPermission']['QubitAclPermission_authenticated_read_all'] = [
       'group_id' => '<?php echo QubitAclGroup::AUTHENTICATED_ID."\n" ?>',
       'action' => 'read',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
     $this->data['QubitAclPermission']['QubitAclPermission_anonymous_read_all'] = [
       'group_id' => '<?php echo QubitAclGroup::ANONYMOUS_ID."\n" ?>',
       'action' => 'read',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
 
     return $this;
@@ -1061,13 +1061,13 @@ class QubitMigrate108 extends QubitMigrate
       'group_id' => '<?php echo QubitAclGroup::EDITOR_ID."\n" ?>',
       'object_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
       'action' => 'update',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
     $this->data['QubitAclPermission']['QubitAclPermission_editor_term_delete'] = [
       'group_id' => '<?php echo QubitAclGroup::EDITOR_ID."\n" ?>',
       'object_id' => '<?php echo QubitTerm::ROOT_ID."\n" ?>',
       'action' => 'delete',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
 
     // Editor - grant createTerm permission for all taxonomies
@@ -1075,7 +1075,7 @@ class QubitMigrate108 extends QubitMigrate
       'group_id' => '<?php echo QubitAclGroup::EDITOR_ID."\n" ?>',
       'object_id' => '<?php echo QubitTaxonomy::ROOT_ID."\n" ?>',
       'action' => 'createTerm',
-      'grant_deny' => 1
+      'grant_deny' => 1,
     ];
 
     return $this;
@@ -1102,7 +1102,7 @@ class QubitMigrate108 extends QubitMigrate
         'it' => 'aggiungi',
         'nl' => 'toevoegen',
         'pt' => 'adicionar',
-        'sl' => 'uporabniški'
+        'sl' => 'uporabniški',
       ];
 
       // Switch from linking list pages to linking create pages
@@ -1225,8 +1225,8 @@ class QubitMigrate108 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'browse',
       'label' => [
-        'en' => 'Browse'
-      ]
+        'en' => 'Browse',
+      ],
     ];
 
     if ($addEditKey = $this->getRowKey('QubitMenu', 'id', '<?php echo QubitMenu::ADD_EDIT_ID."\n" ?>'))
@@ -1244,9 +1244,9 @@ class QubitMigrate108 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'browseInformationObjects',
       'label' => [
-        'en' => 'Information objects'
+        'en' => 'Information objects',
       ],
-      'path' => 'informationobject/browse'
+      'path' => 'informationobject/browse',
     ];
 
     $this->data['QubitMenu']['QubitMenu_browse_actors'] = [
@@ -1254,9 +1254,9 @@ class QubitMigrate108 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'browseActors',
       'label' => [
-        'en' => 'Actors'
+        'en' => 'Actors',
       ],
-      'path' => 'actor/browse'
+      'path' => 'actor/browse',
     ];
 
     $this->data['QubitMenu']['QubitMenu_browse_repositories'] = [
@@ -1264,7 +1264,7 @@ class QubitMigrate108 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'browseRepositories',
       'label' => [
-        'en' => 'Repositories'
+        'en' => 'Repositories',
       ],
       'path' => 'repository/browse',
     ];
@@ -1274,7 +1274,7 @@ class QubitMigrate108 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'browseFunctions',
       'label' => [
-        'en' => 'Functions'
+        'en' => 'Functions',
       ],
       'path' => 'function/browse',
     ];
@@ -1284,9 +1284,9 @@ class QubitMigrate108 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'browseSubjects',
       'label' => [
-        'en' => 'Subjects'
+        'en' => 'Subjects',
       ],
-      'path' => 'term/browseTaxonomy?id=<?php echo QubitTaxonomy::SUBJECT_ID ?>'
+      'path' => 'term/browseTaxonomy?id=<?php echo QubitTaxonomy::SUBJECT_ID ?>',
     ];
 
     $this->data['QubitMenu']['QubitMenu_browse_places'] = [
@@ -1294,9 +1294,9 @@ class QubitMigrate108 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'browsePlaces',
       'label' => [
-        'en' => 'Places'
+        'en' => 'Places',
       ],
-      'path' => 'term/browseTaxonomy?id=<?php echo QubitTaxonomy::PLACE_ID ?>'
+      'path' => 'term/browseTaxonomy?id=<?php echo QubitTaxonomy::PLACE_ID ?>',
     ];
 
     $this->data['QubitMenu']['QubitMenu_browse_digital_objects'] = [
@@ -1304,9 +1304,9 @@ class QubitMigrate108 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'browseDigitalObjects',
       'label' => [
-        'en' => 'Digital objects'
+        'en' => 'Digital objects',
       ],
-      'path' => 'digitalobject/list'
+      'path' => 'digitalobject/list',
     ];
 
     return $this;
@@ -1328,8 +1328,8 @@ class QubitMigrate108 extends QubitMigrate
         'id' => '<?php echo QubitTerm::COMPOUND_ID."\n" ?>',
         'source_culture' => 'en',
         'name' => [
-          'en' => 'Compound representation'
-        ]
+          'en' => 'Compound representation',
+        ],
       ];
     }
 
@@ -1632,7 +1632,7 @@ class QubitMigrate108 extends QubitMigrate
       'ISDF_TEMPORAL_RELATION_ID',
       'ISDF_ASSOCIATIVE_RELATION_ID',
       // ISAAR standardized form name
-      'STANDARDIZED_FORM_OF_NAME_ID'
+      'STANDARDIZED_FORM_OF_NAME_ID',
     ];
 
     // Restack array with Constant values at top
@@ -1696,7 +1696,7 @@ class QubitMigrate108 extends QubitMigrate
       'QubitOaiRepository',
       'QubitOaiHarvest',
       'QubitProperty',
-      'QubitSetting'
+      'QubitSetting',
     ];
 
     $originalData = $this->data;

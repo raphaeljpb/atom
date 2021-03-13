@@ -39,7 +39,7 @@ class InformationObjectAutocompleteAction extends sfAction
     $this->query->setSort([
       'levelOfDescriptionId' => 'asc',
       'identifier.untouched' => 'asc',
-      'i18n.'.$culture.'.title.alphasort' => 'asc']);
+      'i18n.'.$culture.'.title.alphasort' => 'asc', ]);
 
     $this->queryBool = new \Elastica\Query\BoolQuery();
 
@@ -60,7 +60,7 @@ class InformationObjectAutocompleteAction extends sfAction
         $this->query->setSort([
           'levelOfDescriptionId' => 'asc',
           'referenceCode.untouched' => 'asc',
-          'i18n.'.$culture.'.title.alphasort' => 'asc']);
+          'i18n.'.$culture.'.title.alphasort' => 'asc', ]);
       }
       else
       {

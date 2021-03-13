@@ -50,7 +50,7 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
         'typeId' => $identifier->typeId,
         'hasNote' => !empty($identifier->getNote(['cultureFallback' => true])),
         'note' => $identifier->getNote(),
-        'object' => $identifier
+        'object' => $identifier,
       ];
     }
   }

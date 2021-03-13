@@ -8,7 +8,7 @@
     'showTreeview' => $addBrowseElements,
     'search' => $search,
     'aggs' => $aggs,
-    'listPager' => $listPager]); ?>
+    'listPager' => $listPager, ]); ?>
 
 <?php end_slot(); ?>
 
@@ -70,7 +70,7 @@
             'lastUpdated' => __('Date modified'),
             'alphabetic' => __('Title'),
             'referenceCode' => __('Reference code'),
-            'date' => __('Start date')]]); ?>
+            'date' => __('Start date'), ], ]); ?>
       </div>
     </section>
 
@@ -78,7 +78,7 @@
 
       <?php echo get_partial('term/directTerms', [
         'resource' => $resource,
-        'aggs' => $aggs]); ?>
+        'aggs' => $aggs, ]); ?>
 
       <?php echo get_partial('search/searchResults', ['pager' => $pager, 'culture' => $culture]); ?>
 

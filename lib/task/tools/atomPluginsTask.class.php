@@ -87,14 +87,14 @@ class atomPluginsTask extends sfBaseTask
   {
     $this->addArguments([
       new sfCommandArgument('action', sfCommandArgument::REQUIRED, 'The action (add, delete or list).'),
-      new sfCommandArgument('plugin', sfCommandArgument::OPTIONAL, 'The plugin name.')
+      new sfCommandArgument('plugin', sfCommandArgument::OPTIONAL, 'The plugin name.'),
     ]);
 
     $this->addOptions([
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('action', null, sfCommandOption::PARAMETER_REQUIRED, 'Desired action')
+      new sfCommandOption('action', null, sfCommandOption::PARAMETER_REQUIRED, 'Desired action'),
     ]);
 
     $this->namespace = 'tools';

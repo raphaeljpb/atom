@@ -5,7 +5,7 @@
     '%1%' => $resource->uploadLimit,
     '%2%' => url_for([$resource, 'module' => 'repository']),
     '%3%' => $resource->__toString(),
-    '%4%' => $resource->getDiskUsage(['units' => 'G'])]); ?>
+    '%4%' => $resource->getDiskUsage(['units' => 'G']), ]); ?>
 </div>
 
 <div>

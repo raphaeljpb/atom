@@ -49,7 +49,7 @@ class qtIsaarCsv extends sfIsaarPlugin
       'scripts',
       'sources',
       //'standardizedNames'
-      'uniqueId'
+      'uniqueId',
     ];
   protected $resource;
   protected $isaar;

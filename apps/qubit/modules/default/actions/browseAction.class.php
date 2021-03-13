@@ -181,7 +181,7 @@ class DefaultBrowseAction extends sfAction
         $uniqueTerm = [
           'key' => 'unique_language',
           'display' => $i18n->__('Unique records'),
-          'doc_count' => $count];
+          'doc_count' => $count, ];
 
         // Add unique term at the biginning of the array
         // only when there are other terms

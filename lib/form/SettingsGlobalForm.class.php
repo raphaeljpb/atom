@@ -106,12 +106,12 @@ class SettingsGlobalForm extends sfForm
       [
         'required' => true,
         'min' => self::$hitsPerPageMin,
-        'max' => self::$hitsPerPageMax
+        'max' => self::$hitsPerPageMax,
       ],
       [
         'required' => $this->i18n->__('This field is required'),
         'min' => $this->i18n->__('You must show at least %min% hits per page'),
-        'max' => $this->i18n->__('You cannot show more than %max% hits per page')
+        'max' => $this->i18n->__('You cannot show more than %max% hits per page'),
       ]
     );
 

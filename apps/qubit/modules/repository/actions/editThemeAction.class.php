@@ -25,7 +25,7 @@ class RepositoryEditThemeAction extends sfAction
       'banner_delete',
       'htmlSnippet',
       'logo',
-      'logo_delete'];
+      'logo_delete', ];
 
   public function processForm()
   {
@@ -134,18 +134,18 @@ class RepositoryEditThemeAction extends sfAction
           // Crop image, it is synchronous but it should be fast
           'validated_file_class' => 'arRepositoryThemeCropValidatedFile',
           'path' => $this->resource->getUploadsPath(true),
-          'required' => false]));
+          'required' => false, ]));
 
         $this->form->setWidget($name, new arWidgetFormInputFileEditable([
           'label' => $this->context->i18n->__('Banner'),
           'help' => $this->context->i18n->__('Requirements: PNG format, 256K max. size.<br />Recommended dimensions of %1%x%2%px, it will be cropped if ImageMagick is installed.',
             [
               '%1%' => arRepositoryThemeCropValidatedFile::BANNER_MAX_WIDTH,
-              '%2%' => arRepositoryThemeCropValidatedFile::BANNER_MAX_HEIGHT]),
+              '%2%' => arRepositoryThemeCropValidatedFile::BANNER_MAX_HEIGHT, ]),
           'file_src' => $this->existsBanner ? public_path($this->resource->getBannerPath()) : false,
           'edit_mode' => true,
           'is_image' => true,
-          'with_delete' => $this->existsBanner]));
+          'with_delete' => $this->existsBanner, ]));
 
         break;
 
@@ -167,18 +167,18 @@ class RepositoryEditThemeAction extends sfAction
           // Crop image, it is synchronous but it should be fast
           'validated_file_class' => 'arRepositoryThemeCropValidatedFile',
           'path' => $this->resource->getUploadsPath(true),
-          'required' => false]));
+          'required' => false, ]));
 
         $this->form->setWidget($name, new arWidgetFormInputFileEditable([
           'label' => $this->context->i18n->__('Logo'),
           'help' => $this->context->i18n->__('Requirements: PNG format, 256K max. size.<br />Recommended dimensions of %1%x%2%px, it will be cropped if ImageMagick is installed.',
             [
               '%1%' => arRepositoryThemeCropValidatedFile::LOGO_MAX_WIDTH,
-              '%2%' => arRepositoryThemeCropValidatedFile::LOGO_MAX_HEIGHT]),
+              '%2%' => arRepositoryThemeCropValidatedFile::LOGO_MAX_HEIGHT, ]),
           'file_src' => $this->existsLogo ? public_path($this->resource->getLogoPath()) : false,
           'edit_mode' => true,
           'is_image' => true,
-          'with_delete' => $this->existsLogo]));
+          'with_delete' => $this->existsLogo, ]));
 
         break;
 

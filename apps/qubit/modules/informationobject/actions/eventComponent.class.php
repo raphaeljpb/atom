@@ -32,7 +32,7 @@ class InformationObjectEventComponent extends EventEditComponent
       'startDate',
       'description',
       'place',
-      'type'];
+      'type', ];
 
   protected function addField($name)
   {

@@ -73,7 +73,7 @@ class arMigration0098
         AND t1.id != ?;', QubitActor::TABLE_NAME, QubitObject::TABLE_NAME);
 
       QubitPdo::modify($sql, [QubitRepository::ROOT_ID,
-        $repository->id, QubitRepository::ROOT_ID]);
+        $repository->id, QubitRepository::ROOT_ID, ]);
     }
 
     // Add menu nodes for repository permissions

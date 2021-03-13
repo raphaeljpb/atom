@@ -38,7 +38,7 @@ class RightEditAction extends sfAction
       'statuteJurisdiction',
       'statuteCitation',
       'statuteDeterminationDate',
-      'statuteNote'];
+      'statuteNote', ];
 
   public function execute($request)
   {

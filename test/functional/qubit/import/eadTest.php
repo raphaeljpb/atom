@@ -22,7 +22,7 @@ class Browser extends sfBrowser
         'name' => basename($path),
         'size' => $size,
         'tmp_name' => $path,
-        'type' => ''];
+        'type' => '', ];
     }
 
     return $this;

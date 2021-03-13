@@ -152,7 +152,7 @@ EOF;
           'v',
           sfCommandOption::PARAMETER_NONE,
           'More verbose output to aid in debugging'
-        )
+        ),
       ]
     );
 

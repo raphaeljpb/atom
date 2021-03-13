@@ -21,7 +21,7 @@ class AclGroupEditInformationObjectAclAction extends AclGroupEditDefaultAclActio
 {
   public static $NAMES = [
     'informationObject',
-    'repository'
+    'repository',
   ];
 
   public function execute($request)

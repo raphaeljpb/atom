@@ -54,7 +54,7 @@ EOF;
 
     // Load taxonomies into variables to avoid use of magic numbers
     $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
-      QubitTaxonomy::EVENT_TYPE_ID => 'eventTypes'
+      QubitTaxonomy::EVENT_TYPE_ID => 'eventTypes',
     ]);
 
     $subjectTable = 'actor_i18n';
@@ -91,7 +91,7 @@ EOF;
         'goodSubjects' => 0,
         'badSubjects' => 0,
         'goodObjects' => 0,
-        'badObjects' => 0
+        'badObjects' => 0,
       ],
 
       'errorLog' => $options['error-log'],
@@ -203,7 +203,7 @@ EOF;
         echo 'Bad subjects:  '.$self->status['badSubjects']."\n";
         echo 'Good objects:  '.$self->status['goodObjects']."\n";
         echo 'Bad objects:   '.$self->status['badObjects']."\n";
-      }
+      },
     ]);
 
     $import->csv($fh, $skipRows);
@@ -218,7 +218,7 @@ EOF;
 
     $this->addOptions([
       new sfCommandOption('event-types', null, sfCommandOption::PARAMETER_OPTIONAL, 'Event type terms to create, if they do not yet exist, before import.'),
-      new sfCommandOption('source-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'Source name to use when inserting keymap entries.')
+      new sfCommandOption('source-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'Source name to use when inserting keymap entries.'),
     ]);
   }
 }

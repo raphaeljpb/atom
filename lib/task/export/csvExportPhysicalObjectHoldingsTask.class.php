@@ -45,7 +45,7 @@ class csvExportPhysicalObjectHoldingsTask extends arBaseTask
   protected function configure()
   {
     $this->addArguments([
-      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'Output filename')
+      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'Output filename'),
     ]);
 
     $this->addOptions([

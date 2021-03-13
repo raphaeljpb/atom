@@ -52,7 +52,7 @@ class arRestApiPluginFilter extends sfFilter
 
     $responseData = [
       'id' => $e->getId(),
-      'message' => $e->getMessage()
+      'message' => $e->getMessage(),
     ];
 
     $response->setContent($response->getContent().arRestApiPluginUtils::arrayToJson($responseData));

@@ -90,7 +90,7 @@ class sfInstall
       sfConfig::get('sf_data_dir'),
       sfConfig::get('sf_log_dir'),
       sfConfig::get('sf_upload_dir'),
-      sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'downloads'
+      sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'downloads',
     ];
 
     foreach ($pathsToCheck as $path)
@@ -443,7 +443,7 @@ class sfInstall
       'sfIsdiahPlugin',
       'sfModsPlugin',
       'sfRadPlugin',
-      'sfSkosPlugin']);
+      'sfSkosPlugin', ]);
     $object->save();
 
     $dispatcher = sfContext::getInstance()->getEventDispatcher();
@@ -466,7 +466,7 @@ class sfInstall
         'conditional_thumb' => 1,
         'disallow_master' => 0,
         'disallow_reference' => 0,
-        'disallow_thumb' => 0
+        'disallow_thumb' => 0,
       ];
     }
     $setting = new QubitSetting();

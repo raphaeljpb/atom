@@ -29,7 +29,7 @@ class UserEditAction extends DefaultEditAction
       'translate',
       'username',
       'restApiKey',
-      'oaiApiKey'];
+      'oaiApiKey', ];
 
   public function execute($request)
   {
@@ -174,7 +174,7 @@ class UserEditAction extends DefaultEditAction
           $this->form->setValidator('password', new QubitValidatorPassword(
             ['required' => !isset($this->getRoute()->resource)],
             ['invalid' => $this->context->i18n->__('Your password is not strong enough.'),
-                  'min_length' => $this->context->i18n->__('Your password is not strong enough (too short).')]));
+                  'min_length' => $this->context->i18n->__('Your password is not strong enough (too short).'), ]));
         }
         else
         {
@@ -263,7 +263,7 @@ class UserEditAction extends DefaultEditAction
         $choices = [
           '' => $this->context->i18n->__('-- Select action --'),
           'generate' => $this->context->i18n->__('(Re)generate API key'),
-          'delete' => $this->context->i18n->__('Delete API key')
+          'delete' => $this->context->i18n->__('Delete API key'),
         ];
 
         $this->form->setValidator($name, new sfValidatorString());

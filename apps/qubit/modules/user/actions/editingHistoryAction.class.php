@@ -42,7 +42,7 @@ class UserEditingHistoryAction extends sfAction
     $data = [
       'results' => $this->summarizeCurrentPage($pager),
       'items' => $pager->getNbResults(),
-      'pages' => $pager->getLastPage()
+      'pages' => $pager->getLastPage(),
     ];
 
     return $this->renderText(json_encode($data));
@@ -81,7 +81,7 @@ class UserEditingHistoryAction extends sfAction
         'createdAt' => $dateFormatter->format($modification->createdAt, 'f'),
         'title' => $io->getTitle(['cultureFallback' => true]),
         'slug' => $io->slug,
-        'actionType' => QubitTerm::getById($modification->actionTypeId)->name
+        'actionType' => QubitTerm::getById($modification->actionTypeId)->name,
       ];
 
       array_push($results, $result);

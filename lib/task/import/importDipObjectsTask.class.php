@@ -109,7 +109,7 @@ class importDipObjectsTask extends arBaseTask
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('undo-log-dir', null, sfCommandOption::PARAMETER_OPTIONAL, 'Directory to write undo logs to', false),
-      new sfCommandOption('audit', null, sfCommandOption::PARAMETER_NONE, 'Audit mode')
+      new sfCommandOption('audit', null, sfCommandOption::PARAMETER_NONE, 'Audit mode'),
     ]);
 
     $this->namespace = 'import';

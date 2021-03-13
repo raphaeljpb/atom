@@ -35,7 +35,7 @@ class ActorBrowseAction extends DefaultBrowseAction
     'entityType',
     'emptyField',
     'relatedType',
-    'relatedAuthority'
+    'relatedAuthority',
   ];
   public static $FILTERTAGS = [
     'hasDigitalObject' => [],
@@ -46,44 +46,44 @@ class ActorBrowseAction extends DefaultBrowseAction
     'place' => ['model' => 'QubitTerm'],
     'subject' => ['model' => 'QubitTerm'],
     'mediatypes' => ['model' => 'QubitTerm'],
-    'emptyField' => []
+    'emptyField' => [],
   ];
   public static $AGGS = [
     'languages' => [
       'type' => 'term',
       'field' => 'i18n.languages',
-      'size' => 10
+      'size' => 10,
     ],
     'mediatypes' => [
       'type' => 'term',
       'field' => 'digitalObject.mediaTypeId',
-      'size' => 10
+      'size' => 10,
     ],
     'entityType' => [
       'type' => 'term',
       'field' => 'entityTypeId',
-      'size' => 10
+      'size' => 10,
     ],
     'repository' => [
       'type' => 'term',
       'field' => 'maintainingRepositoryId',
-      'size' => 10
+      'size' => 10,
     ],
     'occupation' => [
       'type' => 'term',
       'field' => 'occupations.id',
-      'size' => 10
+      'size' => 10,
     ],
     'place' => [
       'type' => 'term',
       'field' => 'places.id',
-      'size' => 10
+      'size' => 10,
     ],
     'subject' => [
       'type' => 'term',
       'field' => 'subjects.id',
-      'size' => 10
-    ]
+      'size' => 10,
+    ],
   ];
 
   /**
@@ -168,7 +168,7 @@ class ActorBrowseAction extends DefaultBrowseAction
       'descriptionIdentifier' => $this->i18n->__('Authority record identifier'),
       'institutionResponsibleIdentifier' => $this->i18n->__('Institution identifier'),
       'sources' => $this->i18n->__('Sources'),
-      'maintenanceNotes' => $this->i18n->__('Maintenance notes')
+      'maintenanceNotes' => $this->i18n->__('Maintenance notes'),
     ];
 
     // If a global search has been requested, translate that into an advanced search
@@ -263,7 +263,7 @@ class ActorBrowseAction extends DefaultBrowseAction
         $choices = [
           '' => '',
           '1' => $this->context->i18n->__('Yes'),
-          '0' => $this->context->i18n->__('No')
+          '0' => $this->context->i18n->__('No'),
         ];
 
         $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));

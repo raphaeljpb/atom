@@ -20,7 +20,7 @@
 class UserEditTermAclAction extends DefaultEditAction
 {
   public static $NAMES = [
-      'taxonomy'];
+      'taxonomy', ];
 
   public function execute($request)
   {

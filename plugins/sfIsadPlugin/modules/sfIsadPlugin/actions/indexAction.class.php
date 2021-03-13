@@ -49,7 +49,7 @@ class sfIsadPluginIndexAction extends InformationObjectIndexAction
       null => $this->context->i18n->__('Administrative / Biographical history'),
       QubitTerm::CORPORATE_BODY_ID => $this->context->i18n->__('Administrative history'),
       QubitTerm::PERSON_ID => $this->context->i18n->__('Biographical history'),
-      QubitTerm::FAMILY_ID => $this->context->i18n->__('Biographical history')
+      QubitTerm::FAMILY_ID => $this->context->i18n->__('Biographical history'),
     ];
 
     if (QubitAcl::check($this->resource, 'update'))
@@ -58,8 +58,8 @@ class sfIsadPluginIndexAction extends InformationObjectIndexAction
       $values = [];
 
       $validatorSchema->creators = new QubitValidatorCountable([
-        'required' => true], [
-        'required' => $this->context->i18n->__('This archival description, or one of its higher levels, %1%requires%2% at least one %3%creator%4%.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#3.2.1">', '%4%' => '</a>'])]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('This archival description, or one of its higher levels, %1%requires%2% at least one %3%creator%4%.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#3.2.1">', '%4%' => '</a>']), ]);
 
       foreach ($this->resource->ancestors->andSelf()->orderBy('rgt') as $item)
       {
@@ -71,22 +71,22 @@ class sfIsadPluginIndexAction extends InformationObjectIndexAction
       }
 
       $validatorSchema->dateRange = new QubitValidatorDates([], [
-        'invalid' => $this->context->i18n->__('%1%Date(s)%2% - are not consistent with %3%higher levels%2%.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.3">', '%2%' => '</a>', '%3%' => '<a href="%ancestor%">'])]);
+        'invalid' => $this->context->i18n->__('%1%Date(s)%2% - are not consistent with %3%higher levels%2%.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.3">', '%2%' => '</a>', '%3%' => '<a href="%ancestor%">']), ]);
       $values['dateRange'] = $this->resource;
 
       $validatorSchema->dates = new QubitValidatorCountable([
-        'required' => true], [
-        'required' => $this->context->i18n->__('%1%Date(s)%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.3">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%4%' => '</a>'])]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('%1%Date(s)%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.3">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%4%' => '</a>']), ]);
       $values['dates'] = $this->resource->getDates();
 
       $validatorSchema->extentAndMedium = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('%1%Extent and medium%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.5">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%4%' => '</a>'])]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('%1%Extent and medium%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.5">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%4%' => '</a>']), ]);
       $values['extentAndMedium'] = $this->resource->getExtentAndMedium(['cultureFallback' => true]);
 
       $validatorSchema->identifier = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('%1%Identifier%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.1">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%4%' => '</a>'])]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('%1%Identifier%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.1">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%4%' => '</a>']), ]);
       $values['identifier'] = $this->resource->identifier;
 
       $this->addField($validatorSchema, 'levelOfDescription');
@@ -99,8 +99,8 @@ class sfIsadPluginIndexAction extends InformationObjectIndexAction
       }
 
       $validatorSchema->title = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('%1%Title%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.2">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%4%' => '</a>'])]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('%1%Title%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.2">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%4%' => '</a>']), ]);
       $values['title'] = $this->resource->getTitle(['cultureFallback' => true]);
 
       try

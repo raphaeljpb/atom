@@ -18,7 +18,7 @@
         <legend><?php echo __('Global'); ?></legend>
 
         <?php foreach ([
-          'global_login_button' => __('Login button')] as $key => $value) { ?>
+          'global_login_button' => __('Login button'), ] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
             <?php echo $form[$key]; ?>
@@ -42,7 +42,7 @@
           'isad_allied_materials_area' => __('Allied materials area'),
           'isad_notes_area' => __('Notes area'),
           'isad_access_points_area' => __('Access points'),
-          'isad_description_control_area' => __('Description control area')] as $key => $value) { ?>
+          'isad_description_control_area' => __('Description control area'), ] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
             <?php echo $form[$key]; ?>
@@ -74,7 +74,7 @@
           'isad_control_languages' => __('Language(s)'),
           'isad_control_scripts' => __('Script(s)'),
           'isad_control_sources' => __('Sources'),
-          'isad_control_archivists_notes' => __('Archivist\'s notes')] as $key => $value) { ?>
+          'isad_control_archivists_notes' => __('Archivist\'s notes'), ] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
             <?php echo $form[$key]; ?>
@@ -102,7 +102,7 @@
           'rad_notes_area' => __('Notes area'),
           'rad_standard_number_area' => __('Standard number area'),
           'rad_access_points_area' => __('Access points'),
-          'rad_description_control_area' => __('Control area')] as $key => $value) { ?>
+          'rad_description_control_area' => __('Control area'), ] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
             <?php echo $form[$key]; ?>
@@ -134,7 +134,7 @@
           'rad_control_dates' => __('Dates of creation, revision and deletion'),
           'rad_control_language' => __('Language'),
           'rad_control_script' => __('Script'),
-          'rad_control_sources' => __('Sources')] as $key => $value) { ?>
+          'rad_control_sources' => __('Sources'), ] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
             <?php echo $form[$key]; ?>
@@ -158,7 +158,7 @@
           'dacs_materials_area' => __('Related materials area'),
           'dacs_notes_area' => __('Notes area'),
           'dacs_control_area' => __('Description control area'),
-          'dacs_access_points_area' => __('Access points')] as $key => $value) { ?>
+          'dacs_access_points_area' => __('Access points'), ] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
             <?php echo $form[$key]; ?>
@@ -176,7 +176,7 @@
         <legend><?php echo __('DACS template - elements'); ?></legend>
 
         <?php foreach ([
-          'dacs_physical_access' => __('Physical access')] as $key => $value) { ?>
+          'dacs_physical_access' => __('Physical access'), ] as $key => $value) { ?>
 
           <div class="form-item form-item-checkbox">
             <?php echo $form[$key]; ?>
@@ -205,7 +205,7 @@
             'digital_object_preservation_system_original_format_registry_name' => __('Format registry name'),
             'digital_object_preservation_system_original_file_size' => __('File size'),
             'digital_object_preservation_system_original_ingested' => __('Ingested'),
-            'digital_object_preservation_system_original_permissions' => __('Permissions')] as $key => $value) { ?>
+            'digital_object_preservation_system_original_permissions' => __('Permissions'), ] as $key => $value) { ?>
 
             <div class="form-item form-item-checkbox">
               <?php echo $form[$key]; ?>
@@ -226,7 +226,7 @@
             'digital_object_preservation_system_preservation_file_name' => __('File name'),
             'digital_object_preservation_system_preservation_file_size' => __('File size'),
             'digital_object_preservation_system_preservation_normalized' => __('Normalized'),
-            'digital_object_preservation_system_preservation_permissions' => __('Permissions')] as $key => $value) { ?>
+            'digital_object_preservation_system_preservation_permissions' => __('Permissions'), ] as $key => $value) { ?>
 
             <div class="form-item form-item-checkbox">
               <?php echo $form[$key]; ?>
@@ -251,7 +251,7 @@
             'digital_object_mime_type' => __('MIME type'),
             'digital_object_file_size' => __('File size'),
             'digital_object_uploaded' => __('Uploaded'),
-            'digital_object_permissions' => _('Permissions')] as $key => $value) { ?>
+            'digital_object_permissions' => _('Permissions'), ] as $key => $value) { ?>
 
             <div class="form-item form-item-checkbox">
               <?php echo $form[$key]; ?>
@@ -274,7 +274,7 @@
             'digital_object_reference_mime_type' => __('MIME type'),
             'digital_object_reference_file_size' => __('File size'),
             'digital_object_reference_uploaded' => __('Uploaded'),
-            'digital_object_reference_permissions' => _('Permissions')] as $key => $value) { ?>
+            'digital_object_reference_permissions' => _('Permissions'), ] as $key => $value) { ?>
 
             <div class="form-item form-item-checkbox">
               <?php echo $form[$key]; ?>
@@ -297,7 +297,7 @@
             'digital_object_thumbnail_mime_type' => __('MIME type'),
             'digital_object_thumbnail_file_size' => __('File size'),
             'digital_object_thumbnail_uploaded' => __('Uploaded'),
-            'digital_object_thumbnail_permissions' => _('Permissions')] as $key => $value) { ?>
+            'digital_object_thumbnail_permissions' => _('Permissions'), ] as $key => $value) { ?>
 
             <div class="form-item form-item-checkbox">
               <?php echo $form[$key]; ?>

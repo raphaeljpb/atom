@@ -62,7 +62,7 @@ EOF;
       QubitTaxonomy::ACCESSION_PROCESSING_PRIORITY_ID => 'processingPriority',
       QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID => 'alternativeIdentifierTypes',
       QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID => 'physicalObjectTypes',
-      QubitTaxonomy::ACCESSION_EVENT_TYPE_ID => 'accessionEventTypes'
+      QubitTaxonomy::ACCESSION_EVENT_TYPE_ID => 'accessionEventTypes',
     ]);
 
     // Define import
@@ -87,7 +87,7 @@ EOF;
         'processingPriority' => $termData['processingPriority'],
         'alternativeIdentifierTypes' => $termData['alternativeIdentifierTypes'],
         'accessionEventTypes' => $termData['accessionEventTypes'],
-        'assignId' => $options['assign-id']
+        'assignId' => $options['assign-id'],
       ],
 
       'standardColumns' => [
@@ -99,7 +99,7 @@ EOF;
         'receivedExtentUnits',
         'scopeAndContent',
         'sourceOfAcquisition',
-        'title'
+        'title',
       ],
 
       'arrayColumns' => [
@@ -132,11 +132,11 @@ EOF;
         'creationDatesStart' => '|',
         'creationDatesEnd' => '|',
         'creationDateNotes' => '|',
-        'creationDatesType' => '|'
+        'creationDatesType' => '|',
       ],
 
       'columnMap' => [
-        'physicalCondition' => 'physicalCharacteristics'
+        'physicalCondition' => 'physicalCharacteristics',
       ],
 
       // These values get stored to the rowStatusVars array
@@ -159,7 +159,7 @@ EOF;
         'donorContactPerson',
         'donorEmail',
         'donorNote',
-        'qubitParentSlug'
+        'qubitParentSlug',
       ],
 
       // Import logic to load accession
@@ -356,7 +356,7 @@ EOF;
               'donorRegion' => 'region',
               'donorPostalCode' => 'postalCode',
               'donorNote' => 'note',
-              'donorContactPerson' => 'contactPerson'
+              'donorContactPerson' => 'contactPerson',
             ];
 
             // Set up creation of contact infomation
@@ -419,7 +419,7 @@ EOF;
         {
           QubitSearch::getInstance()->update($self->object);
         }
-      }
+      },
     ]);
 
     $import->addColumnHandler('acquisitionDate', function ($self, $data)
@@ -541,7 +541,7 @@ EOF;
         null,
         sfCommandOption::PARAMETER_NONE,
         'Assign identifier, based on mask and counter, if no accession number specified in row.'
-      )
+      ),
     ]);
   }
 }

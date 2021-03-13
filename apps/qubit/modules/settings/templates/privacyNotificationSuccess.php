@@ -35,7 +35,7 @@
             'name' => 'privacy_notification',
             'label' => __('Privacy Notification Message'),
             'settings' => $settings,
-            'form' => $form]); ?>
+            'form' => $form, ]); ?>
 
       </fieldset>
 

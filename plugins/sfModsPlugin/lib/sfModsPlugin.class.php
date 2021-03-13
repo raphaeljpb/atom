@@ -98,7 +98,7 @@ class sfModsPlugin implements ArrayAccess
           'philatelic record' => 'still image',
           'sound recording' => 'sound recording',
           'technical drawing' => 'still image',
-          'textual record' => 'text'
+          'textual record' => 'text',
         ];
 
         // Real MODS resource types

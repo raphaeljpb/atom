@@ -75,7 +75,7 @@ class DefaultMoveAction extends sfAction
 
         $params = [
           'objectId' => $this->resource->id,
-          'parentId' => $parent->id
+          'parentId' => $parent->id,
         ];
 
         QubitJob::runJob('arObjectMoveJob', $params);
@@ -142,7 +142,7 @@ class DefaultMoveAction extends sfAction
       $fields = [
         'identifier' => 1,
         'referenceCode' => 1,
-        sprintf('i18n.%s.title', sfContext::getInstance()->user->getCulture()) => 1];
+        sprintf('i18n.%s.title', sfContext::getInstance()->user->getCulture()) => 1, ];
       $this->queryBool->addMust(
         arElasticSearchPluginUtil::generateBoolQueryString($request->query, $fields)
       );

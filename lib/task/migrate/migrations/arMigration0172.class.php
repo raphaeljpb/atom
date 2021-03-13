@@ -54,7 +54,7 @@ class arMigration0172
       'setting_i18n',
       'static_page_i18n',
       'taxonomy_i18n',
-      'term_i18n'
+      'term_i18n',
     ];
 
     // Increase size of culture-related columns

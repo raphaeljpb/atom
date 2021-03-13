@@ -31,7 +31,7 @@ class SearchDescriptionUpdatesAction extends sfAction
       'dateOf',
       'publicationStatus',
       'repository',
-      'user'
+      'user',
     ];
 
   public function execute($request)
@@ -59,7 +59,7 @@ class SearchDescriptionUpdatesAction extends sfAction
       'dateOf' => 'CREATED_AT',
       'publicationStatus' => 'all',
       'repository' => null,
-      'user' => null
+      'user' => null,
     ];
 
     $this->form->bind($request->getGetParameters() + $defaults);
@@ -220,7 +220,7 @@ class SearchDescriptionUpdatesAction extends sfAction
           'QubitActor' => sfConfig::get('app_ui_label_actor'),
           'QubitRepository' => sfConfig::get('app_ui_label_repository'),
           'QubitTerm' => sfConfig::get('app_ui_label_term'),
-          'QubitFunctionObject' => sfConfig::get('app_ui_label_function')];
+          'QubitFunctionObject' => sfConfig::get('app_ui_label_function'), ];
 
         $this->form->setValidator($name, new sfValidatorString());
         $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
@@ -243,7 +243,7 @@ class SearchDescriptionUpdatesAction extends sfAction
         $choices = [
           'CREATED_AT' => $this->context->i18n->__('Creation'),
           'UPDATED_AT' => $this->context->i18n->__('Revision'),
-          'both' => $this->context->i18n->__('Both')
+          'both' => $this->context->i18n->__('Both'),
         ];
 
         $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
@@ -255,7 +255,7 @@ class SearchDescriptionUpdatesAction extends sfAction
         $choices = [
           QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID => QubitTerm::getById(QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)->name,
           QubitTerm::PUBLICATION_STATUS_DRAFT_ID => QubitTerm::getById(QubitTerm::PUBLICATION_STATUS_DRAFT_ID)->name,
-          'all' => $this->context->i18n->__('All')
+          'all' => $this->context->i18n->__('All'),
         ];
 
         $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));

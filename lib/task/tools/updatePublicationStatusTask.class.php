@@ -23,7 +23,7 @@ class updatePublicationStatusTask extends arBaseTask
   {
     $this->addArguments([
       new sfCommandArgument('publicationStatus', sfCommandArgument::REQUIRED, 'Desired publication status'),
-      new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Resource slug')
+      new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Resource slug'),
     ]);
 
     $this->addOptions([
@@ -33,7 +33,7 @@ class updatePublicationStatusTask extends arBaseTask
       new sfCommandOption('force', 'f', sfCommandOption::PARAMETER_NONE, 'Force update of descendants', null),
       new sfCommandOption('ignore-descendants', 'i', sfCommandOption::PARAMETER_NONE, 'Don\'t update descendants', null),
       new sfCommandOption('no-confirm', 'y', sfCommandOption::PARAMETER_NONE, 'No confirmation message', null),
-      new sfCommandOption('repo', 'r', sfCommandOption::PARAMETER_NONE, 'Update all description in given repository', null)
+      new sfCommandOption('repo', 'r', sfCommandOption::PARAMETER_NONE, 'Update all description in given repository', null),
     ]);
 
     $this->namespace = 'tools';
@@ -85,7 +85,7 @@ EOF;
       if (!$this->askConfirmation([
         'Please, confirm that you want to change',
         'the publication status of "'.$resource->__toString().'"',
-        'to "'.$publicationStatus.'" (y/N)'], 'QUESTION_LARGE', false))
+        'to "'.$publicationStatus.'" (y/N)', ], 'QUESTION_LARGE', false))
         {
           $this->logSection('tools', 'Bye!');
 

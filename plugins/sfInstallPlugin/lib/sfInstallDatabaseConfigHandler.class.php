@@ -31,9 +31,9 @@ class sfInstallDatabaseConfigHandler extends sfDatabaseConfigHandler
           'param' => [
             'encoding' => 'utf8mb4',
             'persistent' => true,
-            'pooling' => true
-          ]
-        ]
+            'pooling' => true,
+          ],
+        ],
       ],
       'dev' => [
         'propel' => [
@@ -46,19 +46,19 @@ class sfInstallDatabaseConfigHandler extends sfDatabaseConfigHandler
                 'slow' => ['enabled' => true, 'threshold' => 0.1],
                 'mem' => ['enabled' => true],
                 'mempeak' => ['enabled' => true],
-                'memdelta' => ['enabled' => true]
-              ]
-            ]
-          ]
-        ]
+                'memdelta' => ['enabled' => true],
+              ],
+            ],
+          ],
+        ],
       ],
       'test' => [
         'propel' => [
           'param' => [
-            'classname' => 'DebugPDO'
-          ]
-        ]
-      ]
+            'classname' => 'DebugPDO',
+          ],
+        ],
+      ],
     ];
 
     // DSN config

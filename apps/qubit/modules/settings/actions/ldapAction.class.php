@@ -24,7 +24,7 @@ class SettingsLdapAction extends DefaultEditAction
       'ldapHost',
       'ldapPort',
       'ldapBaseDn',
-      'ldapBindAttribute'];
+      'ldapBindAttribute', ];
 
   public function execute($request)
   {
@@ -62,7 +62,7 @@ class SettingsLdapAction extends DefaultEditAction
         {
           $defaults = [
             'ldapPort' => '389',
-            'ldapBindAttribute' => 'uid'
+            'ldapBindAttribute' => 'uid',
           ];
 
           $default = (isset($defaults[$name])) ? $defaults[$name] : '';

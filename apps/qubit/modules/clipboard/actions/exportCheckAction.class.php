@@ -23,7 +23,7 @@ class ClipboardExportCheckAction extends sfAction
   public static $ALERT_TYPES = [
       QubitTerm::JOB_STATUS_IN_PROGRESS_ID => 'info',
       QubitTerm::JOB_STATUS_COMPLETED_ID => 'success',
-      QubitTerm::JOB_STATUS_ERROR_ID => 'error'
+      QubitTerm::JOB_STATUS_ERROR_ID => 'error',
     ];
 
   public function execute($request)
@@ -58,7 +58,7 @@ class ClipboardExportCheckAction extends sfAction
         [
           '%1%' => (string) $job,
           '%2%' => $job->getCreationDateString(),
-          '%3%' => $job->getStatusString()
+          '%3%' => $job->getStatusString(),
         ]
       );
 
@@ -69,7 +69,7 @@ class ClipboardExportCheckAction extends sfAction
           [
             '%1%' => sprintf('<a href="%s">', sfConfig::get('app_siteBaseUrl').'/'.$job->downloadPath),
             '%2%' => '</a>',
-            '%3%' => hr_filesize(filesize($job->downloadPath))
+            '%3%' => hr_filesize(filesize($job->downloadPath)),
           ]
         );
       }
@@ -78,7 +78,7 @@ class ClipboardExportCheckAction extends sfAction
         $message .= ' '.$this->context->i18n->__('%1%Refresh the page%2% for progress updates.',
           [
             '%1%' => '<a href="javascript:location.reload();">',
-            '%2%' => '</a>'
+            '%2%' => '</a>',
           ]
         );
       }

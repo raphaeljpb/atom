@@ -31,7 +31,7 @@
           'fields' => [
             'allLabels' => __('All labels'),
             'preferredLabel' => __('Preferred label'),
-            'useForLabels' => __('"Use for" labels')]]); ?>
+            'useForLabels' => __('"Use for" labels'), ], ]); ?>
       </div>
 
       <div class="pickers">
@@ -39,7 +39,7 @@
           [
             'options' => [
               'lastUpdated' => __('Date modified'),
-              'alphabetic' => __('Name')]]); ?>
+              'alphabetic' => __('Name'), ], ]); ?>
       </div>
     </div>
   </section>

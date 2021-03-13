@@ -257,7 +257,7 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
           $translations[$values['en']] = [
             $target,
             null,
-            str_replace(sfConfig::get('sf_web_dir'), 'https://github.com/artefactual/atom/blob/master', $file)];
+            str_replace(sfConfig::get('sf_web_dir'), 'https://github.com/artefactual/atom/blob/master', $file), ];
         }
       }
     }

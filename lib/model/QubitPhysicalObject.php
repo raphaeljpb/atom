@@ -216,7 +216,7 @@ class QubitPhysicalObject extends BasePhysicalObject
         ':id' => $physObj->id,
         ':typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID,
         ':lft' => $collection->lft,
-        ':rgt' => $collection->rgt
+        ':rgt' => $collection->rgt,
       ];
 
       if (QubitPdo::fetchOne($sql, $params))

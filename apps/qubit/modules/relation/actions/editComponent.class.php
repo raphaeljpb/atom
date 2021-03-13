@@ -128,7 +128,7 @@ class RelationEditComponent extends sfComponent
 
       case 'resource':
         $this->form->setValidator('resource', new QubitValidatorForbiddenValues([
-          'forbidden_values' => [$this->context->routing->generate(null, $this->resource)]]));
+          'forbidden_values' => [$this->context->routing->generate(null, $this->resource)], ]));
         $this->form->setWidget('resource', new sfWidgetFormSelect(['choices' => []]));
 
         break;

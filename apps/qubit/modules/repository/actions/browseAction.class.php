@@ -30,33 +30,33 @@ class RepositoryBrowseAction extends DefaultBrowseAction
     'languages' => [
       'type' => 'term',
       'field' => 'i18n.languages',
-      'size' => 10
+      'size' => 10,
     ],
     'types' => [
       'type' => 'term',
       'field' => 'types',
-      'size' => 10
+      'size' => 10,
     ],
     'regions' => [
       'type' => 'term',
       'field' => 'contactInformations.i18n.%s.region.untouched',
-      'size' => 10
+      'size' => 10,
     ],
     'geographicSubregions' => [
       'type' => 'term',
       'field' => 'geographicSubregions',
-      'size' => 10
+      'size' => 10,
     ],
     'locality' => [
       'type' => 'term',
       'field' => 'contactInformations.i18n.%s.city.untouched',
-      'size' => 10
+      'size' => 10,
     ],
     'thematicAreas' => [
       'type' => 'term',
       'field' => 'thematicAreas',
-      'size' => 10
-    ]
+      'size' => 10,
+    ],
   ];
 
   public function execute($request)

@@ -6,7 +6,7 @@
       'iconOnly' => true,
       'link' => public_path($representation->getFullPath()),
       'resource' => $representation,
-      'usageType' => QubitTerm::THUMBNAIL_ID]); ?>
+      'usageType' => QubitTerm::THUMBNAIL_ID, ]); ?>
 
   </div>
 

@@ -56,7 +56,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
         'format_registry_key' => 'formatRegistryKey',
         'format_registry_name' => 'formatRegistryName',
         'relative_path_within_aip' => 'relativePathWithinAip',
-        'aip_name' => 'aipName'
+        'aip_name' => 'aipName',
       ];
 
       foreach ($props as $pkey => $pval)

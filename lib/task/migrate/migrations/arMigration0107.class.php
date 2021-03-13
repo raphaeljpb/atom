@@ -55,7 +55,7 @@ class arMigration0107
       'isad_allied_materials_area',
       'isad_notes_area',
       'isad_access_points_area',
-      'isad_description_control_area'];
+      'isad_description_control_area', ];
 
     // Add visibility settings
     foreach ($elements as $item)

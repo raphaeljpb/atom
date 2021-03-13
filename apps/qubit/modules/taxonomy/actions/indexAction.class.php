@@ -247,7 +247,7 @@ class TaxonomyIndexAction extends sfAction
           'url' => url_for(['module' => 'term', 'slug' => $data['slug']]),
           'title' => render_title(get_search_i18n($data, 'name')),
           'identifier' => '',
-          'level' => ''];
+          'level' => '', ];
 
         $response['results'][] = $result;
       }

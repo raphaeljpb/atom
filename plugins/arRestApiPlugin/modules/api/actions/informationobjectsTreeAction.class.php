@@ -72,7 +72,7 @@ class ApiInformationObjectsTreeAction extends QubitApiAction
     $ioData = [
       'title' => $io->title,
       'identifier' => $io->identifier,
-      'slug' => $io->slug
+      'slug' => $io->slug,
     ];
 
     if (null !== $io->getLevelOfDescription())

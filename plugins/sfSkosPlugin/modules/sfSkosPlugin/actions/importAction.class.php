@@ -22,7 +22,7 @@ class sfSkosPluginImportAction extends DefaultEditAction
   public static $NAMES = [
       'file',
       'taxonomy',
-      'url'];
+      'url', ];
 
   public function execute($request)
   {
@@ -52,7 +52,7 @@ class sfSkosPluginImportAction extends DefaultEditAction
         $this->getUser()->setFlash('notice', $this->context->i18n->__('Import file initiated. Check %1%job %2%%3% to view the status of the import.', [
           '%1%' => sprintf('<a href="%s">', $this->context->routing->generate(null, ['module' => 'jobs', 'action' => 'report', 'id' => $job->id])),
           '%2%' => $job->id,
-          '%3%' => '</a>'
+          '%3%' => '</a>',
         ]));
 
         $this->redirect(['module' => 'sfSkosPlugin', 'action' => 'import']);
@@ -144,7 +144,7 @@ class sfSkosPluginImportAction extends DefaultEditAction
     $payload = [
       'importType' => 'skos',
       'taxonomyId' => $taxonomyId,
-      'parentId' => $parentId];
+      'parentId' => $parentId, ];
 
     // We know at this point that we have either a file or a remote resource
     if (null !== $this->form->getValue('file'))

@@ -6,7 +6,7 @@
       [
         'resource' => $right->object,
         'inherit' => $item != $resource ? $item : null,
-        'relatedObject' => $resource]); ?>
+        'relatedObject' => $resource, ]); ?>
 
   <?php } ?>
 
@@ -18,7 +18,7 @@
       [
         'resource' => $item->object,
         'inherit' => 0 == count($resource->getRights()) ? $resource : null,
-        'relatedObject' => $resource]); ?>
+        'relatedObject' => $resource, ]); ?>
 
   <?php } ?>
 

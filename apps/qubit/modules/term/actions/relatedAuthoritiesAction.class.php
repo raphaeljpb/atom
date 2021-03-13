@@ -27,28 +27,28 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
     'languages' => [
       'type' => 'term',
       'field' => 'i18n.languages',
-      'size' => 10
+      'size' => 10,
     ],
     'occupations' => [
       'type' => 'term',
       'field' => 'occupations.id',
-      'size' => 10
+      'size' => 10,
     ],
     'places' => [
       'type' => 'term',
       'field' => 'places.id',
-      'size' => 10
+      'size' => 10,
     ],
     'subjects' => [
       'type' => 'term',
       'field' => 'subjects.id',
-      'size' => 10
+      'size' => 10,
     ],
     'direct' => [
       'type' => 'filter',
       'field' => '',
-      'populate' => false
-    ]
+      'populate' => false,
+    ],
   ];
 
   public function execute($request)

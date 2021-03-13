@@ -60,7 +60,7 @@ EOF;
       QubitTaxonomy::ACTOR_ENTITY_TYPE_ID => 'actorTypes',
       QubitTaxonomy::ACTOR_RELATION_TYPE_ID => 'actorRelationTypes',
       QubitTaxonomy::DESCRIPTION_STATUS_ID => 'descriptionStatusTypes',
-      QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID => 'detailLevelTypes'
+      QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID => 'detailLevelTypes',
     ]);
 
     // Define import
@@ -85,7 +85,7 @@ EOF;
         'descriptionStatusTypes' => $termData['descriptionStatusTypes'],
         'detailLevelTypes' => $termData['detailLevelTypes'],
         'aliases' => $aliases,
-        'actorNames' => []
+        'actorNames' => [],
       ],
 
       // Import columns that map directory to QubitActor properties
@@ -103,7 +103,7 @@ EOF;
         'descriptionIdentifier',
         'rules',
         'revisionHistory',
-        'sources'
+        'sources',
       ],
 
       // Import columns that should be redirected to QubitActor
@@ -123,14 +123,14 @@ EOF;
       // ),
 
       'columnMap' => [
-        'institutionIdentifier' => 'institutionResponsibleIdentifier'
+        'institutionIdentifier' => 'institutionResponsibleIdentifier',
       ],
 
       // Import columns that can be added as QubitNote objects
       'noteMap' => [
         'maintenanceNotes' => [
-          'typeId' => array_search('Maintenance note', $termData['noteTypes']['en'])
-        ]
+          'typeId' => array_search('Maintenance note', $termData['noteTypes']['en']),
+        ],
       ],
 
       // These values get stored to the rowStatusVars array
@@ -152,7 +152,7 @@ EOF;
         'subjectAccessPoints',
         'digitalObjectPath',
         'digitalObjectURI',
-        'digitalObjectChecksum'
+        'digitalObjectChecksum',
       ],
 
       // These values get exploded and stored to the rowStatusVars array
@@ -160,7 +160,7 @@ EOF;
         'parallelFormsOfName' => '|',
         'standardizedFormsOfName' => '|',
         'otherFormsOfName' => '|',
-        'script' => '|'
+        'script' => '|',
       ],
 
       'updatePreparationLogic' => function (&$self)
@@ -183,7 +183,7 @@ EOF;
                          '%1% identifier "%2%" not unique.',
                          [
                            '%1%' => sfConfig::get('app_ui_label_actor'),
-                           '%2%' => $identifier
+                           '%2%' => $identifier,
                          ]
                        );
 
@@ -259,7 +259,7 @@ EOF;
             'telephone',
             'postalCode',
             'streetAddress',
-            'region'
+            'region',
           ];
 
           $hasContactInfo = false;
@@ -370,7 +370,7 @@ EOF;
             QubitSearch::getInstance()->update($self->object);
           }
         }
-      }
+      },
     ]);
 
     // Allow search indexing to be enabled via a CLI option

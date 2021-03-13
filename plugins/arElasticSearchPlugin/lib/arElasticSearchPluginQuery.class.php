@@ -270,7 +270,7 @@ class arElasticSearchPluginQuery
         $this->criteria[] = [
           'query' => $query,
           'field' => $field,
-          'operator' => $operator];
+          'operator' => $operator, ];
       }
 
       ++$count;
@@ -342,7 +342,7 @@ class arElasticSearchPluginQuery
       case 'creator':
         $fields = [
           'creators.i18n.%s.authorizedFormOfName' => 1,
-          'inheritedCreators.i18n.%s.authorizedFormOfName' => 1
+          'inheritedCreators.i18n.%s.authorizedFormOfName' => 1,
         ];
 
         break;
@@ -350,7 +350,7 @@ class arElasticSearchPluginQuery
       case 'place':
         $fields = [
           'places.i18n.%s.name' => 1,
-          'places.useFor.i18n.%s.name' => 1
+          'places.useFor.i18n.%s.name' => 1,
         ];
 
         break;

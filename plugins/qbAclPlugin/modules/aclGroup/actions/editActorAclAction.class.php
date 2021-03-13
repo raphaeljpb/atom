@@ -20,7 +20,7 @@
 class AclGroupEditActorAclAction extends AclGroupEditDefaultAclAction
 {
   public static $NAMES = [
-    'actor'
+    'actor',
   ];
 
   public function execute($request)

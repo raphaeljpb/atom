@@ -29,7 +29,7 @@ class InformationObjectItemOrFileListAction extends sfAction
   public static $NAMES = [
       'sortBy',
       'includeThumbnails',
-      'format'
+      'format',
     ];
 
   public function execute($request)
@@ -72,7 +72,7 @@ class InformationObjectItemOrFileListAction extends sfAction
         $choices = [
           'referenceCode' => $this->context->i18n->__('Reference code'),
           'title' => $this->context->i18n->__('Title'),
-          'startDate' => $this->context->i18n->__('Date (based on start date)')
+          'startDate' => $this->context->i18n->__('Date (based on start date)'),
         ];
 
         if ($this->getUser()->isAuthenticated())
@@ -84,22 +84,22 @@ class InformationObjectItemOrFileListAction extends sfAction
         $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
         $this->form->setWidget($name, new sfWidgetFormChoice([
           'expanded' => true,
-          'choices' => $choices]));
+          'choices' => $choices, ]));
 
         break;
 
       case 'includeThumbnails':
         $choices = [
-          '1' => $this->context->i18n->__('Yes')];
+          '1' => $this->context->i18n->__('Yes'), ];
 
         $this->form->setValidator($name, new sfValidatorChoice([
           'choices' => array_keys($choices),
-          'multiple' => true]));
+          'multiple' => true, ]));
 
         $this->form->setWidget($name, new sfWidgetFormChoice([
           'expanded' => true,
           'multiple' => true,
-          'choices' => $choices]));
+          'choices' => $choices, ]));
 
         break;
 
@@ -131,7 +131,7 @@ class InformationObjectItemOrFileListAction extends sfAction
         'reportTypeLabel' => $this->type,
         'sortBy' => $this->form->sortBy->getValue(),
         'reportFormat' => $this->form->format->getValue(),
-        'includeThumbnails' => $includeThumbnails
+        'includeThumbnails' => $includeThumbnails,
     ];
 
     QubitJob::runJob('arGenerateReportJob', $params);

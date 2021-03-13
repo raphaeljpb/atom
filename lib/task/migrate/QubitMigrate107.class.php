@@ -98,33 +98,33 @@ class QubitMigrate107 extends QubitMigrate
       'QubitAclGroup_anonymous' => [
         'id' => '<?php echo QubitAclGroup::ANONYMOUS_ID."\n" ?>',
         'parent_id' => 'QubitAclGroup_ROOT',
-        'name' => ['en' => 'anonymous']
+        'name' => ['en' => 'anonymous'],
       ],
       'QubitAclGroup_authenticated' => [
         'id' => '<?php echo QubitAclGroup::AUTHENTICATED_ID."\n" ?>',
         'parent_id' => 'QubitAclGroup_anonymous',
-        'name' => ['en' => 'authenticated']
+        'name' => ['en' => 'authenticated'],
       ],
       'QubitAclGroup_administrator' => [
         'id' => '<?php echo QubitAclGroup::ADMINISTRATOR_ID."\n" ?>',
         'parent_id' => 'QubitAclGroup_authenticated',
-        'name' => ['en' => 'administrator']
+        'name' => ['en' => 'administrator'],
       ],
       'QubitAclGroup_editor' => [
         'id' => '<?php echo QubitAclGroup::EDITOR_ID."\n" ?>',
         'parent_id' => 'QubitAclGroup_authenticated',
-        'name' => ['en' => 'editor']
+        'name' => ['en' => 'editor'],
       ],
       'QubitAclGroup_contributor' => [
         'id' => '<?php echo QubitAclGroup::CONTRIBUTOR_ID."\n" ?>',
         'parent_id' => 'QubitAclGroup_authenticated',
-        'name' => ['en' => 'contributor']
+        'name' => ['en' => 'contributor'],
       ],
       'QubitAclGroup_translator' => [
         'id' => '<?php echo QubitAclGroup::TRANSLATOR_ID."\n" ?>',
         'parent_id' => 'QubitAclGroup_authenticated',
-        'name' => ['en' => 'translator']
-      ]
+        'name' => ['en' => 'translator'],
+      ],
     ];
 
     return $this;
@@ -135,28 +135,28 @@ class QubitMigrate107 extends QubitMigrate
     $this->data['QubitAclAction'] = [
       'QubitAclAction_create' => [
         'id' => '<?php echo QubitAclAction::CREATE_ID."\n" ?>',
-        'name' => ['en' => 'create']
+        'name' => ['en' => 'create'],
       ],
       'QubitAclAction_read' => [
         'id' => '<?php echo QubitAclAction::READ_ID."\n" ?>',
-        'name' => ['en' => 'read']
+        'name' => ['en' => 'read'],
       ],
       'QubitAclAction_update' => [
         'id' => '<?php echo QubitAclAction::UPDATE_ID."\n" ?>',
-        'name' => ['en' => 'update']
+        'name' => ['en' => 'update'],
       ],
       'QubitAclAction_delete' => [
         'id' => '<?php echo QubitAclAction::DELETE_ID."\n" ?>',
-        'name' => ['en' => 'delete']
+        'name' => ['en' => 'delete'],
       ],
       'QubitAclAction_view_draft' => [
         'id' => '<?php echo QubitAclAction::VIEW_DRAFT_ID."\n" ?>',
-        'name' => ['en' => 'view draft']
+        'name' => ['en' => 'view draft'],
       ],
       'QubitAclAction_publish' => [
         'id' => '<?php echo QubitAclAction::PUBLISH_ID."\n" ?>',
-        'name' => ['en' => 'publish']
-      ]
+        'name' => ['en' => 'publish'],
+      ],
     ];
 
     return $this;
@@ -290,7 +290,7 @@ class QubitMigrate107 extends QubitMigrate
         'object_id' => '<?php echo QubitInformationObject::ROOT_ID."\n" ?>',
         'action_id' => '<?php echo QubitAclAction::VIEW_DRAFT_ID."\n" ?>',
         'grant_deny' => '1',
-      ]
+      ],
     ];
 
     return $this;
@@ -308,7 +308,7 @@ class QubitMigrate107 extends QubitMigrate
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::ACTOR_RELATION_TYPE_ID."\n" ?>',
       'name' => ['en' => 'Actor Relation Type'],
-      'note' => ['en' => 'Actor-to-Actor relationship categories defined by the ICA ISAAR (CPF) specification, 2nd Edition, Section 5.3.2, \'Category of relationship\'.']
+      'note' => ['en' => 'Actor-to-Actor relationship categories defined by the ICA ISAAR (CPF) specification, 2nd Edition, Section 5.3.2, \'Category of relationship\'.'],
     ];
 
     // Add related terms
@@ -316,25 +316,25 @@ class QubitMigrate107 extends QubitMigrate
       'taxonomy_id' => 'QubitTaxonomy_actor_relation_type',
       'id' => '<?php echo QubitTerm::HIERARCHICAL_RELATION_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'hierarchical']
+      'name' => ['en' => 'hierarchical'],
     ];
     $this->data['QubitTerm']['QubitTerm_actor_relationship_temporal'] = [
       'taxonomy_id' => 'QubitTaxonomy_actor_relation_type',
       'id' => '<?php echo QubitTerm::TEMPORAL_RELATION_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'temporal']
+      'name' => ['en' => 'temporal'],
     ];
     $this->data['QubitTerm']['QubitTerm_actor_relationship_family'] = [
       'taxonomy_id' => 'QubitTaxonomy_actor_relation_type',
       'id' => '<?php echo QubitTerm::FAMILY_RELATION_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'family']
+      'name' => ['en' => 'family'],
     ];
     $this->data['QubitTerm']['QubitTerm_actor_relationship_associative'] = [
       'taxonomy_id' => 'QubitTaxonomy_actor_relation_type',
       'id' => '<?php echo QubitTerm::ASSOCIATIVE_RELATION_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'associative']
+      'name' => ['en' => 'associative'],
     ];
 
     return $this;
@@ -351,7 +351,7 @@ class QubitMigrate107 extends QubitMigrate
     $this->data['QubitTaxonomy']['QubitTaxonomy_actor_relation_note_type'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::RELATION_NOTE_TYPE_ID."\n" ?>',
-      'name' => ['en' => 'Relation Note Types']
+      'name' => ['en' => 'Relation Note Types'],
     ];
 
     // Add related terms
@@ -359,13 +359,13 @@ class QubitMigrate107 extends QubitMigrate
       'taxonomy_id' => 'QubitTaxonomy_actor_relation_note_type',
       'id' => '<?php echo QubitTerm::RELATION_NOTE_DESCRIPTION_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'description']
+      'name' => ['en' => 'description'],
     ];
     $this->data['QubitTerm']['QubitTerm_actor_relation_date'] = [
       'taxonomy_id' => 'QubitTaxonomy_actor_relation_note_type',
       'id' => '<?php echo QubitTerm::RELATION_NOTE_DATE_DISPLAY_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'date display']
+      'name' => ['en' => 'date display'],
     ];
 
     return $this;
@@ -382,7 +382,7 @@ class QubitMigrate107 extends QubitMigrate
     $this->data['QubitTaxonomy']['QubitTaxonomy_term_relation'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::TERM_RELATION_TYPE_ID."\n" ?>',
-      'name' => ['en' => 'Term relation types']
+      'name' => ['en' => 'Term relation types'],
     ];
 
     // Add related terms
@@ -390,13 +390,13 @@ class QubitMigrate107 extends QubitMigrate
       'taxonomy_id' => 'QubitTaxonomy_term_relation',
       'id' => '<?php echo QubitTerm::TERM_RELATION_EQUIVALENCE_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'equivalence']
+      'name' => ['en' => 'equivalence'],
     ];
     $this->data['QubitTerm']['QubitTerm_term_relation_date'] = [
       'taxonomy_id' => 'QubitTaxonomy_term_relation',
       'id' => '<?php echo QubitTerm::TERM_RELATION_ASSOCIATIVE_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'associative']
+      'name' => ['en' => 'associative'],
     ];
 
     return $this;
@@ -413,13 +413,13 @@ class QubitMigrate107 extends QubitMigrate
     $this->data['QubitTaxonomy']['QubitTaxonomy_status_types'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::STATUS_TYPE_ID."\n" ?>',
-      'name' => ['en' => 'Status types']
+      'name' => ['en' => 'Status types'],
     ];
 
     $this->data['QubitTaxonomy']['QubitTaxonomy_publication_status'] = [
       'source_culture' => 'en',
       'id' => '<?php echo QubitTaxonomy::PUBLICATION_STATUS_ID."\n" ?>',
-      'name' => ['en' => 'Publication status']
+      'name' => ['en' => 'Publication status'],
     ];
 
     // Add related terms
@@ -427,21 +427,21 @@ class QubitMigrate107 extends QubitMigrate
       'taxonomy_id' => '<?php echo QubitTaxonomy::STATUS_TYPE_ID."\n" ?>',
       'id' => '<?php echo QubitTerm::STATUS_TYPE_PUBLICATION_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'publication']
+      'name' => ['en' => 'publication'],
     ];
 
     $this->data['QubitTerm']['QubitTerm_publication_status_draft'] = [
       'taxonomy_id' => '<?php echo QubitTaxonomy::PUBLICATION_STATUS_ID."\n" ?>',
       'id' => '<?php echo QubitTerm::PUBLICATION_STATUS_DRAFT_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['de' => 'Entwurf', 'en' => 'draft', 'es' => 'Minuta', 'fr' => 'Ébauche', 'it' => 'Bozza', 'nl' => 'Klad', 'pt' => 'Preliminar', 'sl' => 'Osnutek']
+      'name' => ['de' => 'Entwurf', 'en' => 'draft', 'es' => 'Minuta', 'fr' => 'Ébauche', 'it' => 'Bozza', 'nl' => 'Klad', 'pt' => 'Preliminar', 'sl' => 'Osnutek'],
     ];
 
     $this->data['QubitTerm']['QubitTerm_publication_status_published'] = [
       'taxonomy_id' => '<?php echo QubitTaxonomy::PUBLICATION_STATUS_ID."\n" ?>',
       'id' => '<?php echo QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID."\n" ?>',
       'source_culture' => 'en',
-      'name' => ['en' => 'published']
+      'name' => ['en' => 'published'],
     ];
 
     return $this;
@@ -519,7 +519,7 @@ class QubitMigrate107 extends QubitMigrate
 
       $this->data['QubitAclUserGroup'][$newKey] = [
         'user_id' => $userRoleRelation['user_id'],
-        'group_id' => $groupId
+        'group_id' => $groupId,
       ];
     }
   }
@@ -581,8 +581,8 @@ class QubitMigrate107 extends QubitMigrate
         'source_culture' => 'en',
         'name' => 'import',
         'path' => 'object/importSelect',
-        'label' => ['en' => 'Import', 'es' => 'importar', 'fa' => 'وارد كردن', 'fr' => 'importer', 'it' => 'importa', 'nl' => 'import', 'pt' => 'importar', 'sl' => 'uvoz']
-      ]
+        'label' => ['en' => 'Import', 'es' => 'importar', 'fa' => 'وارد كردن', 'fr' => 'importer', 'it' => 'importa', 'nl' => 'import', 'pt' => 'importar', 'sl' => 'uvoz'],
+      ],
     ];
 
     // Attempt to insert 'import' menu before 'admin' menu
@@ -601,7 +601,7 @@ class QubitMigrate107 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'import xml',
       'path' => 'object/importSelect',
-      'label' => ['en' => 'xml']
+      'label' => ['en' => 'xml'],
     ];
 
     // Add 'import digital objects' menu as child of 'import'
@@ -610,7 +610,7 @@ class QubitMigrate107 extends QubitMigrate
         'source_culture' => 'en',
         'name' => 'import digital objects',
         'path' => 'digitalobject/multiFileUpload',
-        'label' => ['en' => 'digital objects']
+        'label' => ['en' => 'digital objects'],
     ];
 
     // Remove previous OAI harvester menu
@@ -626,7 +626,7 @@ class QubitMigrate107 extends QubitMigrate
         'source_culture' => 'en',
         'name' => 'import oai',
         'path' => 'oai/harvesterList',
-        'label' => ['en' => 'oai']
+        'label' => ['en' => 'oai'],
     ];
 
     // Add user and group sub-menus
@@ -637,14 +637,14 @@ class QubitMigrate107 extends QubitMigrate
         'source_culture' => 'en',
         'name' => 'users',
         'path' => 'user/list',
-        'label' => ['en' => 'users']
+        'label' => ['en' => 'users'],
       ];
       $this->data['QubitMenu']['QubitMenu_mainmenu_admin_users_groups'] = [
         'parent_id' => $userMenuKey,
         'source_culture' => 'en',
         'name' => 'groups',
         'path' => 'aclGroup/list',
-        'label' => ['en' => 'groups']
+        'label' => ['en' => 'groups'],
       ];
     }
 
@@ -891,7 +891,7 @@ class QubitMigrate107 extends QubitMigrate
       'name' => 'sort_treeview_informationobject',
       'editable' => 1,
       'deleteable' => 0,
-      'value' => ['en' => 'none']
+      'value' => ['en' => 'none'],
     ];
 
     return $this;
@@ -930,7 +930,7 @@ class QubitMigrate107 extends QubitMigrate
     $this->data['QubitStatus']['QubitStatus_root_status'] = [
       'object_id' => '<?php echo QubitInformationObject::ROOT_ID."\n" ?>',
       'type_id' => '<?php echo QubitTerm::STATUS_TYPE_PUBLICATION_ID."\n" ?>',
-      'status_id' => '<?php echo QubitTerm::PUBLICATION_STATUS_DRAFT_ID."\n" ?>'
+      'status_id' => '<?php echo QubitTerm::PUBLICATION_STATUS_DRAFT_ID."\n" ?>',
     ];
 
     // Identify QubitInformationObject Root
@@ -946,7 +946,7 @@ class QubitMigrate107 extends QubitMigrate
         $this->data['QubitStatus']['QubitStatus_publication_'.$key] = [
           'object_id' => $key,
           'type_id' => '<?php echo QubitTerm::STATUS_TYPE_PUBLICATION_ID."\n" ?>',
-          'status_id' => '<?php echo QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID."\n" ?>'
+          'status_id' => '<?php echo QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID."\n" ?>',
         ];
       }
     }
@@ -988,8 +988,8 @@ class QubitMigrate107 extends QubitMigrate
         'it' => 'punti di accesso per nome',
         'nl' => 'naam ontsluitingsterm',
         'pt' => 'ponto de acesso - nome',
-        'sl' => 'ime vhodne točke'
-      ]
+        'sl' => 'ime vhodne točke',
+      ],
     ];
 
     // Migrate existing name access points (event type = 'subject') to
@@ -1012,7 +1012,7 @@ class QubitMigrate107 extends QubitMigrate
           $this->data['QubitRelation']['QubitRelation_'.$newKey] = [
             'subject_id' => $event['information_object_id'],
             'object_id' => $event['actor_id'],
-            'type_id' => '<?php echo QubitTerm::NAME_ACCESS_POINT_ID."\n" ?>'
+            'type_id' => '<?php echo QubitTerm::NAME_ACCESS_POINT_ID."\n" ?>',
           ];
         }
 
@@ -1128,7 +1128,7 @@ class QubitMigrate107 extends QubitMigrate
       'PUBLICATION_STATUS_DRAFT_ID',
       'PUBLICATION_STATUS_PUBLISHED_ID',
       // Name access point
-      'NAME_ACCESS_POINT_ID'
+      'NAME_ACCESS_POINT_ID',
     ];
 
     // Restack array with Constant values at top
@@ -1190,7 +1190,7 @@ class QubitMigrate107 extends QubitMigrate
       'QubitAclGroup',
       'QubitAclUserGroup',
       'QubitAclAction',
-      'QubitAclPermission'
+      'QubitAclPermission',
     ];
 
     $originalData = $this->data;

@@ -69,7 +69,7 @@ class csvPhysicalobjectImportTask extends arBaseTask
   {
     $this->addArguments([
       new sfCommandArgument('filename', sfCommandArgument::REQUIRED,
-        'The input file name (csv format).')
+        'The input file name (csv format).'),
     ]);
 
     $this->addOptions([
@@ -179,7 +179,7 @@ EOF;
       'quiet' => 'quiet',
       'rows-until-update' => 'progressFrequency',
       'source-name' => 'sourceName',
-      'update' => 'updateExisting'
+      'update' => 'updateExisting',
     ];
 
     foreach ($keymap as $oldkey => $newkey)

@@ -294,7 +294,7 @@ class QubitMigrate
 
           $columns[] = [
             'table' => $tableName,
-            'column' => $columnKey];
+            'column' => $columnKey, ];
         }
       }
     }
@@ -365,7 +365,7 @@ class QubitMigrate
         QubitPdo::modify(
           "UPDATE $item[table] SET $item[column] = ? WHERE $item[column] = ?", [
             $last,
-            $id]);
+            $id, ]);
       }
 
       $connection->exec('SET FOREIGN_KEY_CHECKS = 1');
@@ -413,7 +413,7 @@ class QubitMigrate
         QubitPdo::modify(
           "UPDATE $item[table] SET $item[column] = ? WHERE $item[column] = ?", [
             $last,
-            $id]);
+            $id, ]);
       }
 
       $connection->exec('SET FOREIGN_KEY_CHECKS = 1');
@@ -461,7 +461,7 @@ class QubitMigrate
         QubitPdo::modify(
           "UPDATE $item[table] SET $item[column] = ? WHERE $item[column] = ?", [
             $last,
-            $id]);
+            $id, ]);
       }
 
       self::updateAutoNumeric();
@@ -702,7 +702,7 @@ class QubitMigrate
 
         // Build array of existing cultures, so we don't stomp user values
         $selectStmt->execute([
-          $columns[$colname]['en']]);
+          $columns[$colname]['en'], ]);
 
         while ($item = $selectStmt->fetch(PDO::FETCH_OBJ))
         {
@@ -730,7 +730,7 @@ class QubitMigrate
               $insertStmt->execute([
                 $value,
                 $id,
-                $culture]);
+                $culture, ]);
             }
             catch (PDOException $e)
             {

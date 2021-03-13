@@ -496,7 +496,7 @@ class QubitFlatfileImport
 
     // Compare fields of the event in question with each associated event
     $fields = ['startDate', 'startTime', 'endDate', 'endTime', 'typeId', 'objectId', 'actorId', 'name',
-                    'description', 'date', 'culture'];
+                    'description', 'date', 'culture', ];
 
     foreach (QubitEvent::get($criteria) as $existingEvent)
     {
@@ -1175,7 +1175,7 @@ class QubitFlatfileImport
       'countryCode',
       'fax',
       'note',
-      'contactPerson'
+      'contactPerson',
     ];
 
     $this->setPropertiesFromArray($info, $options, $allowedProperties);
@@ -1450,7 +1450,7 @@ class QubitFlatfileImport
       'actId',
       'copyrightStatusId',
       'restriction',
-      'endDate'
+      'endDate',
     ];
 
     $this->setPropertiesFromArray($right, $options, $allowedProperties);

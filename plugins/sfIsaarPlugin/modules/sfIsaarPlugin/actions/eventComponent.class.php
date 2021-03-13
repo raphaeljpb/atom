@@ -26,7 +26,7 @@ class sfIsaarPluginEventComponent extends EventEditComponent
       'resourceType',
       'startDate',
       'endDate',
-      'date'];
+      'date', ];
 
   protected function addField($name)
   {

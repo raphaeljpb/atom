@@ -40,60 +40,60 @@ class arRestApiPluginConfiguration extends sfPluginConfiguration
 
     $this->addRoute('GET', '/api', [
       'module' => 'api',
-      'action' => 'index']);
+      'action' => 'index', ]);
 
     // Taxonomies and terms.
     $this->addRoute('GET', '/api/taxonomies/:id', [
       'module' => 'api',
       'action' => 'taxonomiesBrowse',
-      'params' => ['id' => self::REGEX_ID]]);
+      'params' => ['id' => self::REGEX_ID], ]);
 
     // Information objects.
     $this->addRoute('GET', '/api/informationobjects', [
       'module' => 'api',
-      'action' => 'informationobjectsBrowse']);
+      'action' => 'informationobjectsBrowse', ]);
 
     $this->addRoute('GET', '/api/informationobjects/:slug', [
       'module' => 'api',
       'action' => 'informationobjectsRead',
-      'params' => ['slug' => self::REGEX_SLUG]]);
+      'params' => ['slug' => self::REGEX_SLUG], ]);
 
     $this->addRoute('GET', '/api/informationobjects/:slug/digitalobject', [
       'module' => 'api',
       'action' => 'informationobjectsDownloadDigitalObject',
-      'params' => ['slug' => self::REGEX_SLUG]]);
+      'params' => ['slug' => self::REGEX_SLUG], ]);
 
     $this->addRoute('GET', '/api/informationobjects/tree/:parent_slug', [
       'module' => 'api',
       'action' => 'informationobjectsTree',
-      'params' => ['parent_slug' => self::REGEX_SLUG]]);
+      'params' => ['parent_slug' => self::REGEX_SLUG], ]);
 
     $this->addRoute('PUT', '/api/informationobjects/:slug', [
       'module' => 'api',
       'action' => 'informationobjectsUpdate',
-      'params' => ['slug' => self::REGEX_SLUG]]);
+      'params' => ['slug' => self::REGEX_SLUG], ]);
 
     $this->addRoute('DELETE', '/api/informationobjects/:slug', [
       'module' => 'api',
       'action' => 'informationobjectsDelete',
-      'params' => ['slug' => self::REGEX_SLUG]]);
+      'params' => ['slug' => self::REGEX_SLUG], ]);
 
     $this->addRoute('POST', '/api/informationobjects', [
       'module' => 'api',
-      'action' => 'informationobjectsCreate']);
+      'action' => 'informationobjectsCreate', ]);
 
     // Digital objects.
     $this->addRoute('GET', '/api/digitalobjects', [
       'module' => 'api',
-      'action' => 'digitalobjectsBrowse']);
+      'action' => 'digitalobjectsBrowse', ]);
 
     $this->addRoute('POST', '/api/digitalobjects', [
       'module' => 'api',
-      'action' => 'digitalobjectsCreate']);
+      'action' => 'digitalobjectsCreate', ]);
 
     $this->addRoute('*', '/api/*', [
       'module' => 'api',
-      'action' => 'endpointNotFound']);
+      'action' => 'endpointNotFound', ]);
   }
 
   /**

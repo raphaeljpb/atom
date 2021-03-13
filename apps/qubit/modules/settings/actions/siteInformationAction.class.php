@@ -30,11 +30,11 @@ class SettingsSiteInformationAction extends SettingsEditAction
   public static $NAMES = [
       'siteTitle',
       'siteDescription',
-      'siteBaseUrl'];
+      'siteBaseUrl', ];
   public static $I18N = [
       'siteTitle',
       'siteDescription',
-      'siteBaseUrl'];
+      'siteBaseUrl', ];
 
   public function earlyExecute()
   {

@@ -54,7 +54,7 @@ class arStorageServiceSettingsSettingsAction extends SettingsEditAction
       case 'download_aip_enabled':
         $options = [
           '0' => $this->i18n->__('Disabled'),
-          '1' => $this->i18n->__('Enabled')
+          '1' => $this->i18n->__('Enabled'),
         ];
 
         $this->form->setValidator($name, new sfValidatorString(

@@ -35,7 +35,7 @@ class ContactInformationEditComponent extends sfComponent
       'primaryContact',
       'telephone',
       'streetAddress',
-      'website'];
+      'website', ];
 
   public function processForm()
   {

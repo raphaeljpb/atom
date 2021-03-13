@@ -40,7 +40,7 @@ class MenuMainMenuComponent extends sfComponent
     $groupsAllowedToAddContent = [
       QubitAclGroup::CONTRIBUTOR_ID,
       QubitAclGroup::EDITOR_ID,
-      QubitAclGroup::ADMINISTRATOR_ID
+      QubitAclGroup::ADMINISTRATOR_ID,
     ];
 
     // Add, if applicable, menu for adding content

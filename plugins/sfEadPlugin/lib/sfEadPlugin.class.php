@@ -60,7 +60,7 @@ class sfEadPlugin
         'langmaterial' => '3.4.3',
         'note' => '3.6.1',
         'bioghist' => '3.2.2',
-        'origination' => '3.2.1'],
+        'origination' => '3.2.1', ],
       'rad' => [
         'relatedencoding' => 'RAD',
         'eadid' => 'identifier',
@@ -128,7 +128,7 @@ class sfEadPlugin
         'nameDefault' => '1.4D',
         'nameManufacturer' => '1.4G',
         'geogDefault' => '1.4C',
-        'geogManufacturer' => '1.4G']];
+        'geogManufacturer' => '1.4G', ], ];
 
   public function __construct($resource)
   {
@@ -384,7 +384,7 @@ class sfEadPlugin
       'recordgrp' => ['record-group', 'record group', 'recordgroup'],
       'subfonds' => ['sous fonds', 'sous-fonds', 'sousfonds', 'sub-fonds', 'sub fonds'],
       'subgrp' => ['subgroup', 'sub-group', 'sub group'],
-      'subseries' => ['sub-series', 'sub series']
+      'subseries' => ['sub-series', 'sub series'],
     ];
     $defaultLevel = 'otherlevel';
     $renderedLOD = '';

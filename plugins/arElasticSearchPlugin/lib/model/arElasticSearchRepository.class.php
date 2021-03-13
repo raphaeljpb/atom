@@ -69,7 +69,7 @@ class arElasticSearchRepository extends arElasticSearchModelBase
       [
         QubitTaxonomy::REPOSITORY_TYPE_ID,
         QubitTaxonomy::THEMATIC_AREA_ID,
-        QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID
+        QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID,
       ]
     );
 

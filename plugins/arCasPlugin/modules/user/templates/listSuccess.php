@@ -5,7 +5,7 @@
     <div class="span6">
       <?php echo get_component('search', 'inlineSearch', [
         'label' => __('Search users'),
-        'route' => url_for(['module' => 'user', 'action' => 'list'])]); ?>
+        'route' => url_for(['module' => 'user', 'action' => 'list']), ]); ?>
     </div>
   </div>
 </section>

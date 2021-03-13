@@ -28,24 +28,24 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
     $rows = [
       [
         'object_id' => 111111,
-        'class_name' => 'QubitInformationObject'
+        'class_name' => 'QubitInformationObject',
       ],
       [
         'object_id' => 222222,
-        'class_name' => 'QubitInformationObject'
+        'class_name' => 'QubitInformationObject',
       ],
       [
         'object_id' => 516,
-        'class_name' => 'QubitAccession'
+        'class_name' => 'QubitAccession',
       ],
       [
         'object_id' => 533,
-        'class_name' => 'QubitAccession'
-      ]
+        'class_name' => 'QubitAccession',
+      ],
     ];
 
     return [
-      [$rows]
+      [$rows],
     ];
   }
 
@@ -56,17 +56,17 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
       'types' => [
         \AccessToMemory\test\mock\QubitInformationObject::class => [
           'total' => 2,
-          'holdings' => [111111, 222222]
+          'holdings' => [111111, 222222],
         ],
         \AccessToMemory\test\mock\QubitAccession::class => [
           'total' => 2,
-          'holdings' => [444, 555]
-        ]
-      ]
+          'holdings' => [444, 555],
+        ],
+      ],
     ];
 
     return [
-      [$holdingsData]
+      [$holdingsData],
     ];
   }
 
@@ -77,13 +77,13 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
       'types' => [
         \AccessToMemory\test\mock\QubitInformationObject::class => [
           'total' => 2,
-          'holdings' => [111111, 222222]
-        ]
-      ]
+          'holdings' => [111111, 222222],
+        ],
+      ],
     ];
 
     return [
-      [$holdingsData]
+      [$holdingsData],
     ];
   }
 

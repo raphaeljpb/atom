@@ -382,7 +382,7 @@ class arElasticSearchActorPdo
 
     self::$statements['maintainingRepository']->execute([
       ':object_id' => $this->id,
-      ':type_id' => QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID]);
+      ':type_id' => QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID, ]);
 
     return self::$statements['maintainingRepository']->fetchColumn();
   }
@@ -407,7 +407,7 @@ class arElasticSearchActorPdo
     self::$statements['occupations']->execute([
       ':type_id' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID,
       ':object_id' => $this->id,
-      ':taxonomy_id' => QubitTaxonomy::ACTOR_OCCUPATION_ID]);
+      ':taxonomy_id' => QubitTaxonomy::ACTOR_OCCUPATION_ID, ]);
 
     return self::$statements['occupations']->fetchAll(PDO::FETCH_OBJ);
   }

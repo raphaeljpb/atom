@@ -55,7 +55,7 @@ class DigitalObjectEditAction extends sfAction
     // Get representations
     $this->representations = [
       QubitTerm::REFERENCE_ID => $this->resource->getChildByUsageId(QubitTerm::REFERENCE_ID),
-      QubitTerm::THUMBNAIL_ID => $this->resource->getChildByUsageId(QubitTerm::THUMBNAIL_ID)];
+      QubitTerm::THUMBNAIL_ID => $this->resource->getChildByUsageId(QubitTerm::THUMBNAIL_ID), ];
 
     $this->addFormFields();
 
@@ -208,7 +208,7 @@ class DigitalObjectEditAction extends sfAction
       $this->form->setWidget('displayAsCompound', new sfWidgetFormSelectRadio(
         ['choices' => [
           '1' => $this->context->i18n->__('Yes'),
-          '0' => $this->context->i18n->__('No')]]));
+          '0' => $this->context->i18n->__('No'), ]]));
 
       // Set "displayAsCompound" value from QubitProperty
       $criteria = new Criteria();

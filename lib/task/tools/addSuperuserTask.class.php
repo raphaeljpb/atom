@@ -100,7 +100,7 @@ class addSuperuserTask extends sfBaseTask
   protected function configure()
   {
     $this->addArguments([
-      new sfCommandArgument('username', sfCommandArgument::OPTIONAL, 'The username to create.')
+      new sfCommandArgument('username', sfCommandArgument::OPTIONAL, 'The username to create.'),
     ]);
 
     $this->addOptions([
@@ -109,7 +109,7 @@ class addSuperuserTask extends sfBaseTask
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('email', null, sfCommandOption::PARAMETER_OPTIONAL, 'Desired user email address'),
       new sfCommandOption('password', null, sfCommandOption::PARAMETER_OPTIONAL, 'Desired user password'),
-      new sfCommandOption('demo', null, sfCommandOption::PARAMETER_NONE, 'Use default demo values')
+      new sfCommandOption('demo', null, sfCommandOption::PARAMETER_NONE, 'Use default demo values'),
     ]);
 
     $this->namespace = 'tools';

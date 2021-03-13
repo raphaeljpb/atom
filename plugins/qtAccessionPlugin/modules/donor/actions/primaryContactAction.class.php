@@ -51,7 +51,7 @@ class DonorPrimaryContactAction extends sfAction
       'fax',
       'latitude',
       'longitude',
-      'note'] as $field)
+      'note', ] as $field)
     {
       if (isset($primaryContactInformation->$field))
       {

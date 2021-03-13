@@ -34,11 +34,11 @@ class MenuUserMenuComponent extends sfComponent
 
     $this->form->setValidator('email', new sfValidatorEmail(['required' => true], [
       'required' => $this->context->i18n->__('You must enter your email address'),
-      'invalid' => $this->context->i18n->__('This isn\'t a valid email address')]));
+      'invalid' => $this->context->i18n->__('This isn\'t a valid email address'), ]));
     $this->form->setWidget('email', new sfWidgetFormInput());
 
     $this->form->setValidator('password', new sfValidatorString(['required' => true], [
-      'required' => $this->context->i18n->__('You must enter your password')]));
+      'required' => $this->context->i18n->__('You must enter your password'), ]));
     $this->form->setWidget('password', new sfWidgetFormInputPassword());
 
     $this->showLogin = false;
@@ -51,7 +51,7 @@ class MenuUserMenuComponent extends sfComponent
 
       $this->menuLabels = [
         'logout' => $this->getMenuLabel('logout'),
-        'myProfile' => $this->getMenuLabel('myProfile')
+        'myProfile' => $this->getMenuLabel('myProfile'),
       ];
     }
     elseif (check_field_visibility('app_element_visibility_global_login_button'))

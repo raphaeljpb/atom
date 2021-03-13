@@ -55,7 +55,7 @@ class AccessionBrowseAction extends sfAction
       'lastUpdated' => $this->context->i18n->__('Date modified'),
       'accessionNumber' => $this->context->i18n->__('Accession number'),
       'title' => $this->context->i18n->__('Title'),
-      'acquisitionDate' => $this->context->i18n->__('Acquisition date')];
+      'acquisitionDate' => $this->context->i18n->__('Acquisition date'), ];
 
     if (!isset($request->sort))
     {
@@ -120,7 +120,7 @@ class AccessionBrowseAction extends sfAction
         'accessionEvents.type.i18n.%s.name' => 1,
         'accessionEvents.notes.i18n.%s.content' => 1,
         'donors.contactInformations.contactPerson' => 1,
-        'accessionEvents.dateString' => 1
+        'accessionEvents.dateString' => 1,
       ];
 
       $this->queryBool->addMust(

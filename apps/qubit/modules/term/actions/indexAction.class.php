@@ -26,28 +26,28 @@ class TermIndexAction extends DefaultBrowseAction
     'languages' => [
       'type' => 'term',
       'field' => 'i18n.languages',
-      'size' => 10
+      'size' => 10,
     ],
     'places' => [
       'type' => 'term',
       'field' => 'places.id',
-      'size' => 10
+      'size' => 10,
     ],
     'subjects' => [
       'type' => 'term',
       'field' => 'subjects.id',
-      'size' => 10
+      'size' => 10,
     ],
     'genres' => [
       'type' => 'term',
       'field' => 'genres.id',
-      'size' => 10
+      'size' => 10,
     ],
     'direct' => [
       'type' => 'filter',
       'field' => '',
-      'populate' => false
-    ]
+      'populate' => false,
+    ],
   ];
 
   public function checkForRepeatedNames($validator, $value)
@@ -136,7 +136,7 @@ class TermIndexAction extends DefaultBrowseAction
 
           $result = [
             'url' => url_for(['module' => 'term', 'slug' => $data['slug']]),
-            'title' => render_title(get_search_i18n($data, 'name'))];
+            'title' => render_title(get_search_i18n($data, 'name')), ];
 
           $response['results'][] = $result;
         }

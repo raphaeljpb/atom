@@ -32,7 +32,7 @@ EOF;
     $this->rec = $this->conn->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
     $this->rec->setFetchMode(PDO::FETCH_INTO, new SitemapActorUrl($this->config));
     $this->rec->execute([
-      QubitActor::ROOT_ID]);
+      QubitActor::ROOT_ID, ]);
   }
 }
 

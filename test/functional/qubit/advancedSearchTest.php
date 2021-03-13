@@ -40,7 +40,7 @@ $cases = [
   ['Foobar20-'.$rand,  '2010-01-01', '2020-00-00', true,  ['t3']],         // Case 20
   ['Foobar21-'.$rand,  '2015-03-03', '2020-00-00', true, ['t4']],        // Case 21
   ['Foobar22-'.$rand,  '2020-00-00', '2025-00-00', false, ['t4']],        // Case 22
-  ['Foobar23-'.$rand,  '2010-01-01', '2010-12-31', true,  ['t4']]];        // Case 23
+  ['Foobar23-'.$rand,  '2010-01-01', '2010-12-31', true,  ['t4']], ];        // Case 23
 
 // Create information objects
 foreach ($cases as $item)

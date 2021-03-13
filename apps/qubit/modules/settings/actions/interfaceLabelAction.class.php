@@ -29,7 +29,7 @@ class SettingsInterfaceLabelAction extends sfAction
   public function execute($request)
   {
     $this->uiLabelForm = new SettingsGenericForm([], [
-      'settings' => QubitSetting::getByScope('ui_label'), 'scope' => 'ui_label', 'fieldsRequired' => false]);
+      'settings' => QubitSetting::getByScope('ui_label'), 'scope' => 'ui_label', 'fieldsRequired' => false, ]);
 
     // Handle POST data (form submit)
     if ($request->isMethod('post'))

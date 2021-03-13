@@ -38,7 +38,7 @@ class AccessionEditAction extends DefaultEditAction
       'receivedExtentUnits',
       'scopeAndContent',
       'sourceOfAcquisition',
-      'title'];
+      'title', ];
 
   public function earlyExecute()
   {
@@ -257,7 +257,7 @@ class AccessionEditAction extends DefaultEditAction
         $this->form->setWidget('date', new sfWidgetFormInput());
         $this->form->setValidator('date', new sfValidatorDate([
           'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
-          'date_format_error' => 'YYYY-MM-DD']));
+          'date_format_error' => 'YYYY-MM-DD', ]));
 
         break;
 

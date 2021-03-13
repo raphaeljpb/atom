@@ -16,20 +16,20 @@ include dirname(__FILE__).'/lib/QubitCsvTransformFactory.class.php';
 
 $addColumns = [
   'parentId',
-  'generalNote'
+  'generalNote',
 ];
 
 $renameColumns = [
   'ID' => 'legacyId',
   'TITLE' => 'title',
-  'LEVEL' => 'levelOfDescription'
+  'LEVEL' => 'levelOfDescription',
 ];
 
 $transformLogic = function (&$self)
 {
   $self->amalgamateColumns([
     'NOTES',
-    'More:' => 'MORE NOTES'
+    'More:' => 'MORE NOTES',
   ], 'generalNote');
 };
 
@@ -63,7 +63,7 @@ $setup = new QubitCsvTransformFactory([
   'renameColumns' => $renameColumns,
   'transformLogic' => $transformLogic,
   'parentKeyLogic' => $parentKeyLogic,
-  'rowParentKeyLookupLogic' => $rowParentKeyLookupLogic
+  'rowParentKeyLookupLogic' => $rowParentKeyLookupLogic,
 ]);
 
 return $setup->make();

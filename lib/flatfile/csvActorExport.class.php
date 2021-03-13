@@ -110,7 +110,7 @@ class csvActorExport extends QubitFlatfileExport
         'date' => $relation->date,
         'startDate' => $relation->startDate,
         'endDate' => $relation->endDate,
-        'culture' => $resource->culture
+        'culture' => $resource->culture,
       ];
     }
 
@@ -165,7 +165,7 @@ class csvActorExport extends QubitFlatfileExport
       $actorOccupations[] = (string) $occupation->term;
 
       $note = $occupation->getNotesByType([
-        'noteTypeId' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID
+        'noteTypeId' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID,
       ])->offsetGet(0);
 
       if (isset($note))

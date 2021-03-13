@@ -212,6 +212,6 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
     return
       [
         'total' => $resultSet->getTotalHits(),
-        'results' => $results];
+        'results' => $results, ];
   }
 }

@@ -231,7 +231,7 @@ class QubitTerm extends BaseTerm
       QubitTerm::JOB_STATUS_ERROR_ID,
       QubitTerm::ACTOR_OCCUPATION_NOTE_ID,
       QubitTerm::ACCESSION_EVENT_PHYSICAL_TRANSFER_ID,
-      QubitTerm::ACCESSION_EVENT_NOTE_ID]);
+      QubitTerm::ACCESSION_EVENT_NOTE_ID, ]);
   }
 
   public function save($connection = null)

@@ -55,7 +55,7 @@
         <?php } ?>
 
         <?php echo link_to(render_title(get_search_i18n($doc, 'authorizedFormOfName', ['allowEmpty' => false,
-                           'culture' => $selectedCulture])), ['module' => 'repository', 'slug' => $doc['slug']]); ?>
+                           'culture' => $selectedCulture, ])), ['module' => 'repository', 'slug' => $doc['slug']]); ?>
       </td>
 
       <td>

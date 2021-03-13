@@ -88,7 +88,7 @@ class digitalObjectRegenDerivativesTask extends arBaseTask
     // Validate "type" options
     $this->validTypes = [
       'reference',
-      'thumbnail'
+      'thumbnail',
     ];
 
     $this->addOptions([
@@ -139,7 +139,7 @@ EOF;
       'audio' => QubitTerm::AUDIO_ID,
       'image' => QubitTerm::IMAGE_ID,
       'text' => QubitTerm::TEXT_ID,
-      'video' => QubitTerm::VIDEO_ID
+      'video' => QubitTerm::VIDEO_ID,
     ];
     if ($options['media-type'] && !array_key_exists($options['media-type'], $validMediaTypes))
     {

@@ -63,7 +63,7 @@ class SettingsFindingAidAction extends sfAction
     $this->findingAidForm->setDefaults([
       'finding_aid_format' => (isset($findingAidFormat)) ? $findingAidFormat->getValue(['sourceCulture' => true]) : 'pdf',
       'finding_aid_model' => (isset($findingAidModel)) ? $findingAidModel->getValue(['sourceCulture' => true]) : 'inventory-summary',
-      'public_finding_aid' => (isset($publicFindingAid)) ? $publicFindingAid->getValue(['sourceCulture' => true]) : 1
+      'public_finding_aid' => (isset($publicFindingAid)) ? $publicFindingAid->getValue(['sourceCulture' => true]) : 1,
     ]);
   }
 

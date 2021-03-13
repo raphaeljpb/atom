@@ -71,7 +71,7 @@ class SearchIndexAction extends DefaultBrowseAction
         'url' => url_for(['module' => 'informationobject', 'slug' => $data['slug']]),
         'title' => render_title(get_search_i18n($data, 'title', ['allowEmpty' => false])),
         'identifier' => isset($data['identifier']) && !empty($data['identifier']) ? render_value_inline($data['identifier']).' - ' : '',
-        'level' => null !== $levelOfDescription ? render_value_inline($levelOfDescription) : ''];
+        'level' => null !== $levelOfDescription ? render_value_inline($levelOfDescription) : '', ];
 
       $response['results'][] = $result;
     }

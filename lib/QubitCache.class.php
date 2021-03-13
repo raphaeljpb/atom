@@ -51,7 +51,7 @@ class QubitCache
           {
             $servers[] = [
               'host' => $item[0]['host'],
-              'port' => $item[1]['port']
+              'port' => $item[1]['port'],
             ];
           }
 

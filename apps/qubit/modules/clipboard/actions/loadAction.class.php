@@ -22,7 +22,7 @@ class ClipboardLoadAction extends DefaultEditAction
   // Arrays not allowed in class constants
   public static $NAMES = [
       'password',
-      'mode'];
+      'mode', ];
 
   public function execute($request)
   {
@@ -66,7 +66,7 @@ class ClipboardLoadAction extends DefaultEditAction
     $clipboard = [
       'informationObject' => [],
       'actor' => [],
-      'repository' => []
+      'repository' => [],
     ];
     $addedCount = 0;
 
@@ -117,7 +117,7 @@ class ClipboardLoadAction extends DefaultEditAction
         $this->form->setValidator('mode', new sfValidatorString());
         $choices = [
           'merge' => $this->context->i18n->__('Merge saved clipboard with existing clipboard results'),
-          'replace' => $this->context->i18n->__('Replace existing clipboard results with saved clipboard')
+          'replace' => $this->context->i18n->__('Replace existing clipboard results with saved clipboard'),
         ];
         $this->form->setWidget('mode', new sfWidgetFormSelect(['choices' => $choices]));
 

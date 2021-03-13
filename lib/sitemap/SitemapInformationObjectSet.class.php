@@ -34,7 +34,7 @@ EOF;
     $this->rec->setFetchMode(PDO::FETCH_INTO, new SitemapInformationObjectUrl($this->config));
     $this->rec->execute([
       QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID,
-      QubitInformationObject::ROOT_ID]);
+      QubitInformationObject::ROOT_ID, ]);
   }
 }
 

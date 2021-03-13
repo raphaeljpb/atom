@@ -10,7 +10,7 @@
     <div class="row">
       <div class="span6">
         <?php echo get_component('search', 'inlineSearch', [
-          'label' => __('Search physical objects')]); ?>
+          'label' => __('Search physical objects'), ]); ?>
       </div>
     </div>
   </section>

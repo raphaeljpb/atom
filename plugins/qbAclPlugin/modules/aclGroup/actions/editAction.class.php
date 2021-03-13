@@ -23,7 +23,7 @@ class AclGroupEditAction extends sfAction
   public static $NAMES = [
       'name',
       'description',
-      'translate'];
+      'translate', ];
 
   public function execute($request)
   {

@@ -54,7 +54,7 @@ class AccessionEventsComponent extends sfComponent
         'agent' => $event->getAgent(),
         'object' => $event,
         'note' => $note,
-        'accessionId' => $this->resource->id
+        'accessionId' => $this->resource->id,
       ];
     }
   }

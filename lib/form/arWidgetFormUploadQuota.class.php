@@ -40,7 +40,7 @@ class arWidgetFormUploadQuota extends sfWidgetFormInput
 
     return '<label>'.__('%1% used of %2%', [
       '%1%' => hr_filesize($size),
-      '%2%' => $uploadLimit.' GB']).'</label>';
+      '%2%' => $uploadLimit.' GB', ]).'</label>';
   }
 
   protected function configure($options = [], $attributes = [])

@@ -42,7 +42,7 @@ class QubitCsvTransformFactory
       'parentKeyLogic',
       'rowParentKeyLookupLogic',
       'setupLogic',
-      'transformLogic'
+      'transformLogic',
     ];
 
     QubitFlatfileImport::setPropertiesFromArray(
@@ -73,7 +73,7 @@ class QubitCsvTransformFactory
         'tempFile' => $tempCsvFile,
         'outFh' => fopen($tempCsvFile, 'w'),
         'parentKeyLogic' => $this->parentKeyLogic,
-        'rowParentKeyLookupLogic' => $this->rowParentKeyLookupLogic
+        'rowParentKeyLookupLogic' => $this->rowParentKeyLookupLogic,
       ],
 
       'setupLogic' => $this->setupLogic,
@@ -126,7 +126,7 @@ class QubitCsvTransformFactory
             'tempFile' => $self->status['tempFile'],
             'badLevelOfDescription' => 0,
             'rowParentKeyLookupLogic' => $self->status['rowParentKeyLookupLogic'],
-            'ignoreBadLod' => $self->status['ignoreBadLod']
+            'ignoreBadLod' => $self->status['ignoreBadLod'],
           ],
 
           'errorLog' => $self->errorLog,
@@ -202,12 +202,12 @@ class QubitCsvTransformFactory
             echo "Step 2 complete.\n";
             echo 'Bad parents found: '.$self->status['badParents'].".\n";
             echo 'Bad level of description found: '.$self->status['badLevelOfDescription'].".\n";
-          }
+          },
         ]);
 
         $stage2->initializeMySQLtemp();
         $stage2->csv($fhIn);
-      }
+      },
     ]);
   }
 }

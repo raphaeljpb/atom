@@ -25,74 +25,74 @@ class SettingsMenuComponent extends sfComponent
     $this->nodes = [
       [
         'label' => $i18n->__('Clipboard'),
-        'action' => 'clipboard'
+        'action' => 'clipboard',
       ],
       [
         'label' => $i18n->__('Default page elements'),
-        'action' => 'pageElements'
+        'action' => 'pageElements',
       ],
       [
         'label' => $i18n->__('Default template'),
-        'action' => 'template'
+        'action' => 'template',
       ],
       [
         'label' => $i18n->__('Digital object derivatives'),
-        'action' => 'digitalObjectDerivatives'
+        'action' => 'digitalObjectDerivatives',
       ],
       [
         'label' => $i18n->__('DIP upload'),
-        'action' => 'dipUpload'
+        'action' => 'dipUpload',
       ],
       [
         'label' => $i18n->__('Finding Aid'),
-        'action' => 'findingAid'
+        'action' => 'findingAid',
       ],
       [
         'label' => $i18n->__('Global'),
-        'action' => 'global'
+        'action' => 'global',
       ],
       [
         'label' => $i18n->__('I18n languages'),
-        'action' => 'language'
+        'action' => 'language',
       ],
       [
         'label' => $i18n->__('Identifiers'),
-        'action' => 'identifier'
+        'action' => 'identifier',
       ],
       [
         'label' => $i18n->__('Inventory'),
-        'action' => 'inventory'
+        'action' => 'inventory',
       ],
       // Only show LDAP authentication settings if LDAP authentication's used
       [
         'label' => $i18n->__('LDAP Authentication'),
         'action' => 'ldap',
-        'hide' => !($this->context->user instanceof ldapUser)
+        'hide' => !($this->context->user instanceof ldapUser),
       ],
       [
         'label' => $i18n->__('Markdown'),
-        'action' => 'markdown'
+        'action' => 'markdown',
       ],
       [
         'label' => $i18n->__('OAI repository'),
         'action' => 'oai',
-        'hide' => !$this->context->getConfiguration()->isPluginEnabled('arOaiPlugin')
+        'hide' => !$this->context->getConfiguration()->isPluginEnabled('arOaiPlugin'),
       ],
       [
         'label' => $i18n->__('Permissions'),
-        'action' => 'permissions'
+        'action' => 'permissions',
       ],
       [
         'label' => $i18n->__('Privacy Notification'),
-        'action' => 'privacyNotification'
+        'action' => 'privacyNotification',
       ],
       [
         'label' => $i18n->__('Security'),
-        'action' => 'security'
+        'action' => 'security',
       ],
       [
         'label' => $i18n->__('Site information'),
-        'action' => 'siteInformation'
+        'action' => 'siteInformation',
       ],
       [
         'label' => $i18n->__('Storage service'),
@@ -100,19 +100,19 @@ class SettingsMenuComponent extends sfComponent
         'action' => 'settings',
         'hide' => !$this->context->getConfiguration()->isPluginEnabled(
           'arStorageServicePlugin'
-        )
+        ),
       ],
       [
         'label' => $i18n->__('Treeview'),
-        'action' => 'treeview'
+        'action' => 'treeview',
       ],
       [
         'label' => $i18n->__('Uploads'),
-        'action' => 'uploads'
+        'action' => 'uploads',
       ],
       [
         'label' => $i18n->__('User interface labels'),
-        'action' => 'interfaceLabel'
+        'action' => 'interfaceLabel',
       ],
     ];
 

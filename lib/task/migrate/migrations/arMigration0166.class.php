@@ -55,7 +55,7 @@ class arMigration0166
         'settings',
         'staticPagesMenu',
         'taxonomies',
-        'users'
+        'users',
       ],
       'byId' => [
         QubitMenu::ROOT_ID,
@@ -65,8 +65,8 @@ class arMigration0166
         QubitMenu::MANAGE_ID,
         QubitMenu::QUICK_LINKS_ID,
         QubitMenu::ADD_EDIT_ID,
-        QubitMenu::ADMIN_ID
-      ]
+        QubitMenu::ADMIN_ID,
+      ],
     ];
 
     if (null === QubitSetting::getByName('menu_locking_info'))

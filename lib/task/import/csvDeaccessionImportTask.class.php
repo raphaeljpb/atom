@@ -139,7 +139,7 @@ EOF;
               $self->object->description,
               $self->object->extent,
               $self->object->reason,
-              $self->object->culture]
+              $self->object->culture, ]
           );
           $deaccessionResult = $deaccessionQueryStatement->fetch(PDO::FETCH_OBJ);
 
@@ -164,7 +164,7 @@ EOF;
         {
           $self->object->save();
         }
-      }
+      },
     ]);
 
     $import->addColumnHandler('scope', function ($self, $data)

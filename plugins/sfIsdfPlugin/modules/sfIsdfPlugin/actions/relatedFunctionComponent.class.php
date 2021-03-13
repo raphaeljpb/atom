@@ -26,7 +26,7 @@ class sfIsdfPluginRelatedFunctionComponent extends RelationEditComponent
       'description',
       'startDate',
       'endDate',
-      'date'];
+      'date', ];
 
   public function execute($request)
   {

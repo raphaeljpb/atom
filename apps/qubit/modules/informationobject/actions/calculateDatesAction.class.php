@@ -93,7 +93,7 @@ class InformationObjectCalculateDatesAction extends sfAction
 
     $params = [
       ':lft' => $resource->lft,
-      ':rgt' => $resource->rgt
+      ':rgt' => $resource->rgt,
     ];
 
     $eventData = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
@@ -164,7 +164,7 @@ class InformationObjectCalculateDatesAction extends sfAction
     $params = [
       'objectId' => $this->resource->id,
       'eventId' => $this->eventId,
-      'eventTypeId' => $this->eventTypeId
+      'eventTypeId' => $this->eventTypeId,
     ];
 
     // Catch no Gearman worker available exception

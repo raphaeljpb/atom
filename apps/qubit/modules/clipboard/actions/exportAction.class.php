@@ -27,7 +27,7 @@ class ClipboardExportAction extends DefaultEditAction
       'includeDescendants',
       'includeAllLevels',
       'includeDigitalObjects',
-      'includeDrafts'];
+      'includeDrafts', ];
 
   private $choices = [];
 
@@ -165,7 +165,7 @@ class ClipboardExportAction extends DefaultEditAction
       'current-level-only' => !$this->descendantsIncluded,
       'public' => !$this->draftsIncluded,
       'objectType' => $this->objectType,
-      'levels' => $levelsOfDescription
+      'levels' => $levelsOfDescription,
     ];
 
     $msg = ('xml' == $this->formatType) ? 'XML export' : 'CSV export';
@@ -176,7 +176,7 @@ class ClipboardExportAction extends DefaultEditAction
       $options['name'] = $this->context->i18n->__('%1% and %2%',
         [
           '%1%' => sfConfig::get('app_ui_label_digitalobject'),
-          '%2%' => $options['name']
+          '%2%' => $options['name'],
         ]
       );
       $options['includeDigitalObjects'] = true;
@@ -211,7 +211,7 @@ class ClipboardExportAction extends DefaultEditAction
     $this->typeChoices = [
       'informationObject' => sfConfig::get('app_ui_label_informationobject'),
       'actor' => sfConfig::get('app_ui_label_actor'),
-      'repository' => sfConfig::get('app_ui_label_repository')
+      'repository' => sfConfig::get('app_ui_label_repository'),
     ];
 
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
@@ -270,10 +270,10 @@ class ClipboardExportAction extends DefaultEditAction
             '<strong><a href="%s">',
             $this->context->routing->generate(null, [
               'module' => 'jobs',
-              'action' => 'browse'
+              'action' => 'browse',
             ])
           ),
-          '%close_link%' => '</a></strong>'
+          '%close_link%' => '</a></strong>',
         ]
       );
     }
@@ -284,7 +284,7 @@ class ClipboardExportAction extends DefaultEditAction
         .' a download link when complete.',
         [
           '%open_link%' => '<strong><a href="javascript:location.reload();">',
-          '%close_link%' => '</a></strong>'
+          '%close_link%' => '</a></strong>',
         ]
       );
     }
@@ -296,7 +296,7 @@ class ClipboardExportAction extends DefaultEditAction
       .' your export is ready you should download it as soon as possible.',
       [
         '%open_strong_tag%' => '<strong>',
-        '%close_strong_tag%' => '</strong>'
+        '%close_strong_tag%' => '</strong>',
       ]
     );
     $responseData['success'] .= '</p>';
@@ -370,7 +370,7 @@ class ClipboardExportAction extends DefaultEditAction
           $this->form->setWidget(
             'includeAllLevels',
             new sfWidgetFormInputCheckbox([
-              'label' => __('Include all descendant levels of description')
+              'label' => __('Include all descendant levels of description'),
             ]
           ));
           $this->form->setDefault('includeAllLevels', true);
@@ -411,10 +411,10 @@ class ClipboardExportAction extends DefaultEditAction
                 .' Otherwise, no records will be included in the export.'
               ),
               'choices' => $this->levelChoices,
-              'multiple' => true
+              'multiple' => true,
             ],
             [
-              'size' => $size
+              'size' => $size,
             ]
           ));
         }

@@ -39,7 +39,7 @@ class InformationObjectSlugPreviewAction extends sfAction
 
     $response = [
       'slug' => $availableSlug,
-      'padded' => $availableSlug != QubitSlug::slugify($this->request->getParameter('text'))
+      'padded' => $availableSlug != QubitSlug::slugify($this->request->getParameter('text')),
     ];
 
     $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');

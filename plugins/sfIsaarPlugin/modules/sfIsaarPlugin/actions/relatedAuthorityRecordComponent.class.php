@@ -27,7 +27,7 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
       'description',
       'startDate',
       'endDate',
-      'date'];
+      'date', ];
 
   public function processForm()
   {

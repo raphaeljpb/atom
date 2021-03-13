@@ -41,7 +41,7 @@
                   'name' => 'siteTitle',
                   'label' => null,
                   'settings' => $settings,
-                  'form' => $form]); ?>
+                  'form' => $form, ]); ?>
             </td>
           </tr>
           <tr>
@@ -55,7 +55,7 @@
                   'name' => 'siteDescription',
                   'label' => null,
                   'settings' => $settings,
-                  'form' => $form]); ?>
+                  'form' => $form, ]); ?>
             </td>
           </tr>
           <tr>
@@ -70,7 +70,7 @@
                   'name' => 'siteBaseUrl',
                   'label' => null,
                   'settings' => $settings,
-                  'form' => $form]); ?>
+                  'form' => $form, ]); ?>
             </td>
           </tr>
         </tbody>

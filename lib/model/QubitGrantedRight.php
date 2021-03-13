@@ -143,7 +143,7 @@ class QubitGrantedRight extends BaseGrantedRight
     $mapConst = [
       self::DENY_RIGHT => 'Disallow',
       self::GRANT_RIGHT => 'Allow',
-      self::CONDITIONAL_RIGHT => 'Conditional'
+      self::CONDITIONAL_RIGHT => 'Conditional',
     ];
 
     if (!array_key_exists($restrictionId, $mapConst))
@@ -197,7 +197,7 @@ class QubitGrantedRight extends BaseGrantedRight
     $groupIds = [
       QubitAclGroup::AUTHENTICATED_ID,
       QubitAclGroup::ADMINISTRATOR_ID,
-      QubitAclGroup::ANONYMOUS_ID
+      QubitAclGroup::ANONYMOUS_ID,
     ];
 
     if ($id == QubitInformationObject::ROOT_ID)

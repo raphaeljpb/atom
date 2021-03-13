@@ -34,7 +34,7 @@ class QubitSetting extends BaseSetting
       'conditional_thumb' => 0,
       'disallow_master' => 0,
       'disallow_reference' => 0,
-      'disallow_thumb' => 0
+      'disallow_thumb' => 0,
     ];
   // List of scopes with translatable settings,
     // QubitI18nConsolidatedExtract checks this array to add those

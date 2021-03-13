@@ -291,7 +291,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
     $this->log(vsprintf('Index populated with %s documents in %s seconds.',
       [
         $total,
-        $timer->elapsed()]));
+        $timer->elapsed(), ]));
 
     if (!$showErrors)
     {

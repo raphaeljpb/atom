@@ -23,7 +23,7 @@ class InformationObjectRenameAction extends DefaultEditAction
   public static $NAMES = [
       'title',
       'slug',
-      'filename'];
+      'filename', ];
 
   // Allow modification of title, slug, and digital object filename
   public function execute($request)

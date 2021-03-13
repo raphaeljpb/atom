@@ -40,7 +40,7 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
       null => $this->context->i18n->__('Administrative history / Biographical sketch'),
       QubitTerm::CORPORATE_BODY_ID => $this->context->i18n->__('Administrative history'),
       QubitTerm::PERSON_ID => $this->context->i18n->__('Biographical sketch'),
-      QubitTerm::FAMILY_ID => $this->context->i18n->__('Biographical sketch')
+      QubitTerm::FAMILY_ID => $this->context->i18n->__('Biographical sketch'),
     ];
 
     $this->response->setTitle("$title - {$this->response->getTitle()}");
@@ -51,23 +51,23 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
       $values = [];
 
       $validatorSchema->dates = new QubitValidatorCountable([
-        'required' => true], [
-        'required' => $this->context->i18n->__('This archival description requires at least one date.')]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('This archival description requires at least one date.'), ]);
       $values['dates'] = $this->resource->getDates();
 
       // Dates consistency
       $validatorSchema->dateRange = new QubitValidatorDates([], [
-        'invalid' => $this->context->i18n->__('Date(s) - are not consistent with %1%higher levels%2%.', ['%1%' => '<a href="%ancestor%">', '%2%' => '</a>'])]);
+        'invalid' => $this->context->i18n->__('Date(s) - are not consistent with %1%higher levels%2%.', ['%1%' => '<a href="%ancestor%">', '%2%' => '</a>']), ]);
       $values['dateRange'] = $this->resource;
 
       $validatorSchema->extentAndMedium = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('Physical description - This is a mandatory element.')]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('Physical description - This is a mandatory element.'), ]);
       $values['extentAndMedium'] = $this->resource->getExtentAndMedium(['cultureFallback' => true]);
 
       $validatorSchema->title = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('Title - This is a mandatory element.')]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('Title - This is a mandatory element.'), ]);
       $values['title'] = $this->resource->getTitle(['cultureFallback' => true]);
 
       $this->addField($validatorSchema, 'levelOfDescription');
@@ -86,34 +86,34 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
         {
           case 'Architectural drawing':
             $validatorSchema->statementOfScaleArchitectural = new sfValidatorString([
-              'required' => true], [
-              'required' => $this->context->i18n->__('Statement of scale (architectural) - This is a mandatory element for architectural drawing.')]);
+              'required' => true, ], [
+              'required' => $this->context->i18n->__('Statement of scale (architectural) - This is a mandatory element for architectural drawing.'), ]);
             $values['statementOfScaleArchitectural'] = $this->rad->statementOfScaleArchitectural;
 
             break;
 
           case 'Cartographic material':
             $validatorSchema->statementOfCoordinates = new sfValidatorString([
-              'required' => true], [
-              'required' => $this->context->i18n->__('Statement of coordinates (cartographic) - This is a mandatory element for cartographic material.')]);
+              'required' => true, ], [
+              'required' => $this->context->i18n->__('Statement of coordinates (cartographic) - This is a mandatory element for cartographic material.'), ]);
             $values['statementOfCoordinates'] = $this->rad->statementOfCoordinates;
 
             $validatorSchema->statementOfProjection = new sfValidatorString([
-              'required' => true], [
-              'required' => $this->context->i18n->__('Statement of projection (cartographic) - This is a mandatory element for cartographic material.')]);
+              'required' => true, ], [
+              'required' => $this->context->i18n->__('Statement of projection (cartographic) - This is a mandatory element for cartographic material.'), ]);
             $values['statementOfProjection'] = $this->rad->statementOfProjection;
 
             $validatorSchema->statementOfScaleCartographic = new sfValidatorString([
-              'required' => true], [
-              'required' => $this->context->i18n->__('Statement of scale (cartographic) - This is a mandatory element for cartographic material.')]);
+              'required' => true, ], [
+              'required' => $this->context->i18n->__('Statement of scale (cartographic) - This is a mandatory element for cartographic material.'), ]);
             $values['statementOfScaleCartographic'] = $this->rad->statementOfScaleCartographic;
 
             break;
 
           case 'Philatelic record':
             $validatorSchema->issuingJurisdictionAndDenomination = new sfValidatorString([
-              'required' => true], [
-              'required' => $this->context->i18n->__('Issuing jurisdiction and denomination (philatelic) - This is a mandatory element for philatelic record.')]);
+              'required' => true, ], [
+              'required' => $this->context->i18n->__('Issuing jurisdiction and denomination (philatelic) - This is a mandatory element for philatelic record.'), ]);
             $values['issuingJurisdictionAndDenomination'] = $this->rad->issuingJurisdictionAndDenomination;
 
             break;
@@ -145,8 +145,8 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
           case 'Subseries':
           case 'Subfonds':
             $validatorSchema->scopeAndContent = new sfValidatorString([
-              'required' => true], [
-              'required' => $this->context->i18n->__('Scope and content - This is a mandatory element.')]);
+              'required' => true, ], [
+              'required' => $this->context->i18n->__('Scope and content - This is a mandatory element.'), ]);
             $values['scopeAndContent'] = $this->resource->getScopeAndContent(['cultureFallback' => true]);
 
             break;
@@ -167,8 +167,8 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
             if ($isPublication)
             {
               $validatorSchema->edition = new sfValidatorString([
-                'required' => true], [
-                'required' => $this->context->i18n->__('Edition statement - This is a mandatory element for published items if there are multiple editions.')]);
+                'required' => true, ], [
+                'required' => $this->context->i18n->__('Edition statement - This is a mandatory element for published items if there are multiple editions.'), ]);
               $values['edition'] = $this->resource->getEdition(['cultureFallback' => true]);
             }
         }

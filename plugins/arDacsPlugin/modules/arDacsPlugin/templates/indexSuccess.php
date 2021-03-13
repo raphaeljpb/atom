@@ -86,7 +86,7 @@
 
   <?php echo get_component('informationobject', 'creatorDetail', [
     'resource' => $resource,
-    'creatorHistoryLabels' => $creatorHistoryLabels]); ?>
+    'creatorHistoryLabels' => $creatorHistoryLabels, ]); ?>
 
   <?php foreach ($functionRelations as $item) { ?>
     <div class="field">

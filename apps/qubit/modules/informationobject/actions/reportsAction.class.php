@@ -21,7 +21,7 @@ class InformationObjectReportsAction extends sfAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'report'
+      'report',
     ];
 
   public function execute($request)
@@ -30,7 +30,7 @@ class InformationObjectReportsAction extends sfAction
       'fileList' => $this->context->i18n->__('File list'),
       'itemList' => $this->context->i18n->__('Item list'),
       'storageLocations' => $this->context->i18n->__('Physical storage locations'),
-      'boxLabel' => $this->context->i18n->__('Box label')
+      'boxLabel' => $this->context->i18n->__('Box label'),
     ];
 
     $this->resource = $this->getRoute()->resource;
@@ -96,7 +96,7 @@ class InformationObjectReportsAction extends sfAction
           $this->form->setValidator($name, new sfValidatorChoice(['choices' => $available_routes]));
           $this->form->setWidget($name, new sfWidgetFormChoice([
             'expanded' => true,
-            'choices' => $choices]));
+            'choices' => $choices, ]));
         }
 
         break;

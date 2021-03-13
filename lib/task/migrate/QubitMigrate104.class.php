@@ -199,19 +199,19 @@ class QubitMigrate104 extends QubitMigrate
   protected function alterQubitMenus()
   {
     $this->data['QubitMenu']['QubitMenu_root'] = [
-      'id' => '<?php echo QubitMenu::ROOT_ID."\n" ?>'
+      'id' => '<?php echo QubitMenu::ROOT_ID."\n" ?>',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu'] = [
       'id' => '<?php echo QubitMenu::MAIN_MENU_ID."\n" ?>',
       'parent_id' => 'QubitMenu_root',
       'source_culture' => 'en',
-      'name' => 'Main menu'
+      'name' => 'Main menu',
     ];
     $this->data['QubitMenu']['QubitMenu_quicklinks'] = [
       'id' => '<?php echo QubitMenu::QUICK_LINKS_ID."\n" ?>',
       'parent_id' => 'QubitMenu_root',
       'source_culture' => 'en',
-      'name' => 'Quick links'
+      'name' => 'Quick links',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_addedit'] = [
       'id' => '<?php echo QubitMenu::ADD_EDIT_ID."\n" ?>',
@@ -219,7 +219,7 @@ class QubitMigrate104 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'add/edit',
       'label' => ['de' => 'Hinzufügen/Bearbeiten', 'en' => 'add/edit', 'es' => 'agregar/editar', 'fa' => 'افزودن/ويرايش', 'fr' => 'ajouter/modifier', 'it' => 'aggiungi/modifica', 'nl' => 'toevoegen/wijzigen', 'pt' => 'adicionar/editar', 'sl' => 'uporabniški vmesnik'],
-      'path' => 'informationobject/list'
+      'path' => 'informationobject/list',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_importexport'] = [
       'id' => '<?php echo QubitMenu::IMPORT_EXPORT_ID."\n" ?>',
@@ -227,7 +227,7 @@ class QubitMigrate104 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'import/export',
       'label' => ['en' => 'import/export', 'es' => 'importar/exportar', 'fa' => 'وارد كردن/صادر كردن', 'fr' => 'importer/exporter', 'it' => 'importa/esporta', 'nl' => 'import/export', 'pt' => 'importar/exportar', 'sl' => 'uvoz/izvoz'],
-      'path' => 'object/importexport'
+      'path' => 'object/importexport',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_translate'] = [
       'id' => '<?php echo QubitMenu::TRANSLATE_ID."\n" ?>',
@@ -235,7 +235,7 @@ class QubitMigrate104 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'translate',
       'label' => ['de' => 'Übersetzen', 'en' => 'translate', 'es' => 'traducir', 'fa' => 'ترجمه', 'fr' => 'traduire', 'it' => 'traduci', 'nl' => 'vertalen', 'pt' => 'traduzir', 'sl' => 'prevedi'],
-      'path' => 'i18n/listUserInterfaceTranslation'
+      'path' => 'i18n/listUserInterfaceTranslation',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_admin'] = [
       'id' => '<?php echo QubitMenu::ADMIN_ID."\n" ?>',
@@ -243,126 +243,126 @@ class QubitMigrate104 extends QubitMigrate
       'source_culture' => 'en',
       'name' => 'admin',
       'label' => ['de' => 'Administrator', 'en' => 'admin', 'es' => 'administrador', 'fa' => 'مدير', 'fr' => 'administrer', 'it' => 'amministra',  'sl' => 'administrator'],
-      'path' => 'user/list'
+      'path' => 'user/list',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_addedit_informationobject'] = [
       'parent_id' => 'QubitMenu_mainmenu_addedit',
       'source_culture' => 'en',
       'name' => 'information object',
       'label' => ['en' => 'information object', 'fr' => 'objet d\'information', 'it' => 'oggetto informativo', 'nl' => 'information object', 'pt' => 'objeto informacional', 'sl' => 'informacijski objekt'],
-      'path' => 'informationobject/list'
+      'path' => 'informationobject/list',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_addedit_actor'] = [
       'parent_id' => 'QubitMenu_mainmenu_addedit',
       'source_culture' => 'en',
       'name' => 'actor',
       'label' => ['en' => 'person/organization', 'fr' => 'personne/organisation', 'it' => 'persona/organizzazione', 'nl' => 'persoon/organisatie', 'pt' => 'pessoa/organização', 'sl' => 'oseba/organizacija'],
-      'path' => 'actor/list'
+      'path' => 'actor/list',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_addedit_repository'] = [
       'parent_id' => 'QubitMenu_mainmenu_addedit',
       'source_culture' => 'en',
       'name' => 'repository',
       'label' => ['en' => 'repository', 'fr' => 'service d\'archives', 'it' => 'soggetto conservatore', 'nl' => 'depot', 'pt' => 'repositório', 'sl' => 'skladišče'],
-      'path' => 'repository/list'
+      'path' => 'repository/list',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_addedit_term'] = [
       'parent_id' => 'QubitMenu_mainmenu_addedit',
       'source_culture' => 'en',
       'name' => 'term',
       'label' => ['en' => 'term', 'fr' => 'terme', 'it' => 'termine', 'nl' => 'term', 'pt' => 'termo', 'sl' => 'izraz'],
-      'path' => 'term/list'
+      'path' => 'term/list',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_importexport_importexport'] = [
       'parent_id' => 'QubitMenu_mainmenu_importexport',
       'source_culture' => 'en',
       'name' => 'import/export',
       'label' => ['en' => 'import/export', 'es' => 'importar/exportar', 'fa' => 'وارد كردن/صادر كردن', 'fr' => 'importer/exporter', 'it' => 'importa/esporta', 'nl' => 'import/export', 'pt' => 'importar/exportar', 'sl' => 'uvoz/izvoz'],
-      'path' => 'object/importexport'
+      'path' => 'object/importexport',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_translate_userinterface'] = [
       'parent_id' => 'QubitMenu_mainmenu_translate',
       'source_culture' => 'en',
       'name' => 'user interface',
       'label' => ['en' => 'user interface', 'es' => 'interfaz del usuario', 'fa' => 'رابط كاربر', 'fr' => 'interface utilisateur', 'it' => 'interfaccia utente', 'nl' => 'gebruikersinterface', 'pt' => 'interface de usuário', 'sl' => 'uporabniški vmesnik'],
-      'path' => 'i18n/listUserInterfaceTranslation'
+      'path' => 'i18n/listUserInterfaceTranslation',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_translate_defaultcontent'] = [
       'parent_id' => 'QubitMenu_mainmenu_translate',
       'source_culture' => 'en',
       'name' => 'default content',
       'label' => ['de' => 'Vorgegebener Inhalt', 'en' => 'default content', 'es' => 'contenidos por defecto', 'fa' => 'محتواي پيش فرض', 'fr' => 'contenu par défaut', 'it' => 'contenuto predefinito', 'nl' => 'standaard inhoud', 'pt' => 'conteúdo padrão', 'sl' => 'prednastavljena vsebina'],
-      'path' => 'i18n/listDefaultContentTranslation'
+      'path' => 'i18n/listDefaultContentTranslation',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_admin_users'] = [
       'parent_id' => 'QubitMenu_mainmenu_admin',
       'source_culture' => 'en',
       'name' => 'users',
       'label' => ['en' => 'users', 'es' => 'usuarios', 'fa' => 'كاربران', 'fr' => 'utilisateurs', 'it' => 'utenti', 'nl' => 'gebruikers', 'pt' => 'usuários', 'sl' => 'uporabniki'],
-      'path' => 'user/list'
+      'path' => 'user/list',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_admin_staticpages'] = [
       'parent_id' => 'QubitMenu_mainmenu_admin',
       'source_culture' => 'en',
       'name' => 'static pages',
       'label' => ['en' => 'static pages', 'es' => 'páginas estáticas', 'fa' => 'صفحات ايستا', 'fr' => 'pages statiques', 'it' => 'pagine statiche', 'nl' => 'statische pagina\'s', 'pt' => 'páginas estáticas', 'sl' => 'statična stran'],
-      'path' => 'staticpage/list'
+      'path' => 'staticpage/list',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_admin_settings'] = [
       'parent_id' => 'QubitMenu_mainmenu_admin',
       'source_culture' => 'en',
       'name' => 'settings',
       'label' => ['de' => 'Einstellungen', 'en' => 'settings', 'es' => 'configuración', 'fa' => 'تنظيمات', 'fr' => 'paramètres', 'it' => 'impostazioni', 'nl' => 'instellingen', 'pt' => 'configurações', 'sl' => 'nastavitve'],
-      'path' => 'settings/list'
+      'path' => 'settings/list',
     ];
     $this->data['QubitMenu']['QubitMenu_mainmenu_admin_menu'] = [
       'parent_id' => 'QubitMenu_mainmenu_admin',
       'source_culture' => 'en',
       'name' => 'menu',
       'label' => ['en' => 'menu'],
-      'path' => 'menu/list'
+      'path' => 'menu/list',
     ];
     $this->data['QubitMenu']['QubitMenu_quicklinks_home'] = [
       'parent_id' => 'QubitMenu_quicklinks',
       'source_culture' => 'en',
       'name' => 'home',
       'label' => ['en' => 'home', 'es' => 'inicio', 'fa' => 'صفحه اصلي', 'fr' => 'accueil', 'it' => 'pagina iniziale', 'nl' => 'home', 'pt' => 'inicio', 'sl' => 'domov'],
-      'path' => ''
+      'path' => '',
     ];
     $this->data['QubitMenu']['QubitMenu_quicklinks_about'] = [
       'parent_id' => 'QubitMenu_quicklinks',
       'source_culture' => 'en',
       'name' => 'about',
       'label' => ['de' => 'Über', 'en' => 'about', 'es' => 'acerca', 'fa' => 'درباره ما', 'fr' => 'à propos', 'it' => 'informazioni su', 'nl' => 'over', 'pt' => 'sobre', 'sl' => 'o tem'],
-      'path' => 'staticpage/static?permalink=about'
+      'path' => 'staticpage/static?permalink=about',
     ];
     $this->data['QubitMenu']['QubitMenu_quicklinks_help'] = [
       'parent_id' => 'QubitMenu_quicklinks',
       'source_culture' => 'en',
       'name' => 'help',
       'label' => ['de' => 'Hilfe', 'en' => 'help', 'es' => 'ayuda', 'fa' => 'راهنما', 'fr' => 'aide', 'it' => 'aiuto', 'nl' => 'help', 'pt' => 'ajuda', 'sl' => 'pomoč'],
-      'path' => 'http://accesstomemory.org'
+      'path' => 'http://accesstomemory.org',
     ];
     $this->data['QubitMenu']['QubitMenu_quicklinks_myProfile'] = [
       'parent_id' => 'QubitMenu_quicklinks',
       'source_culture' => 'en',
       'name' => 'my profile',
       'label' => ['en' => 'my profile'],
-      'path' => '%profile%'
+      'path' => '%profile%',
     ];
     $this->data['QubitMenu']['QubitMenu_quicklinks_login'] = [
       'parent_id' => 'QubitMenu_quicklinks',
       'source_culture' => 'en',
       'name' => 'log in',
       'label' => ['en' => 'log in', 'es' => 'iniciar sesión', 'fa' => 'ورود به سيستم', 'fr' => 'ouverture de session', 'it' => 'accesso', 'nl' => 'inloggen', 'pt' => 'entrar', 'sl' => 'prijava'],
-      'path' => 'user/login'
+      'path' => 'user/login',
     ];
     $this->data['QubitMenu']['QubitMenu_quicklinks_logout'] = [
       'parent_id' => 'QubitMenu_quicklinks',
       'source_culture' => 'en',
       'name' => 'logout',
       'label' => ['en' => 'log out', 'es' => 'cerrar sesión', 'fa' => 'خروج', 'fr' => 'fermeture de session', 'it' => 'esci', 'nl' => 'uitloggen', 'pt' => 'sair', 'sl' => 'izhod'],
-      'path' => 'user/logout'
+      'path' => 'user/logout',
     ];
 
     return $this;
@@ -386,7 +386,7 @@ class QubitMigrate104 extends QubitMigrate
         'class_name' => 'QubitTerm',
         'id' => '<?php echo QubitTerm::OTHER_DESCRIPTIVE_DATA_ID."\n" ?>',
         'source_culture' => 'en',
-        'name' => ['en' => 'Other Descriptive Data']
+        'name' => ['en' => 'Other Descriptive Data'],
       ];
     }
 
@@ -402,7 +402,7 @@ class QubitMigrate104 extends QubitMigrate
         'class_name' => 'QubitTerm',
         'id' => '<?php echo QubitTerm::ARCHIVIST_NOTE_ID."\n" ?>',
         'source_culture' => 'en',
-        'name' => ['en' => 'Archivist\'s note', 'fr' => 'Note de l\'archiviste', 'it' => 'Nota dell\'archivista', 'nl' => 'Verantwoording', 'pt' => 'Nota do arquivista', 'sl' => 'Opombe arhivista']
+        'name' => ['en' => 'Archivist\'s note', 'fr' => 'Note de l\'archiviste', 'it' => 'Nota dell\'archivista', 'nl' => 'Verantwoording', 'pt' => 'Nota do arquivista', 'sl' => 'Opombe arhivista'],
       ];
     }
 
@@ -418,7 +418,7 @@ class QubitMigrate104 extends QubitMigrate
         'class_name' => 'QubitTerm',
         'id' => '<?php echo QubitTerm::GENERAL_NOTE_ID."\n" ?>',
         'source_culture' => 'en',
-        'name' => ['en' => 'General note', 'fr' => 'Note générale', 'it' => 'Nota generale', 'nl' => 'Algemene aantekening', 'pt' => 'Nota geral', 'sl' => 'Splošne opombe']
+        'name' => ['en' => 'General note', 'fr' => 'Note générale', 'it' => 'Nota generale', 'nl' => 'Algemene aantekening', 'pt' => 'Nota geral', 'sl' => 'Splošne opombe'],
       ];
     }
 
@@ -435,8 +435,8 @@ class QubitMigrate104 extends QubitMigrate
       'id' => '<?php echo QubitTerm::COMPOUND_ID."\n" ?>',
       'source_culture' => 'en',
       'name' => [
-        'en' => 'Compound representation'
-      ]
+        'en' => 'Compound representation',
+      ],
     ];
 
     return $this;
@@ -535,7 +535,7 @@ class QubitMigrate104 extends QubitMigrate
       'CONTAINER_ID',
       'ARTEFACT_ID',
     //Relation Type taxonomy
-      'HAS_PHYSICAL_OBJECT_ID'
+      'HAS_PHYSICAL_OBJECT_ID',
     ];
 
     // Restack array with Constant values at top
@@ -590,7 +590,7 @@ class QubitMigrate104 extends QubitMigrate
       'QubitObjectTermRelation',
       'QubitRelation',
       'QubitProperty',
-      'QubitNote'
+      'QubitNote',
     ];
 
     $originalData = $this->data;

@@ -62,7 +62,7 @@ class deleteDescriptionTask extends arBaseTask
   {
     $this->addArguments([
       new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Description slug to delete. '.
-                            'Note: if --repository is set, this is instead a repository slug whose descriptions we will target for deletion.')
+                            'Note: if --repository is set, this is instead a repository slug whose descriptions we will target for deletion.'),
     ]);
 
     $this->addOptions([

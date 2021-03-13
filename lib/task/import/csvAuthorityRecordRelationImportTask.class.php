@@ -49,7 +49,7 @@ class csvAuthorityRecordRelationImportTask extends csvImportBaseTask
   protected function configure()
   {
     $this->addArguments([
-      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'Output filename')
+      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'Output filename'),
     ]);
 
     $this->addOptions([
@@ -103,7 +103,7 @@ EOF;
         'description',
         'date',
         'startDate',
-        'endDate'
+        'endDate',
       ],
 
       'saveLogic' => function ($self)
@@ -144,7 +144,7 @@ EOF;
             $this->importRow($sourceActor->id, $targetActor->id, $relationTypeId);
           }
         }
-      }
+      },
     ]);
 
     // Allow search indexing to be enabled via a CLI option
@@ -235,13 +235,13 @@ EOF;
     $params = [
       ':subject_id' => $sourceActorId,
       ':object_id' => $targetActorId,
-      ':type_id' => $relationTypeId
+      ':type_id' => $relationTypeId,
     ];
 
     $paramsVariant = [
       ':subject_id' => $targetActorId,
       ':object_id' => $sourceActorId,
-      ':type_id' => $relationTypeId
+      ':type_id' => $relationTypeId,
     ];
 
     if ($relationId = QubitPdo::fetchColumn($sql, $params))

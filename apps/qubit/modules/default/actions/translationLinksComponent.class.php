@@ -125,7 +125,7 @@ class DefaultTranslationLinksComponent extends sfComponent
 
       $this->translations[$langCode] = [
         'name' => $name,
-        'language' => ucfirst($langName)
+        'language' => ucfirst($langName),
       ];
     }
   }

@@ -51,7 +51,7 @@ class InformationObjectDeleteFindingAidAction extends sfAction
         $params = [
           'objectId' => $this->resource->id,
           'description' => $i18n->__('Deleting finding aid for: %1%', ['%1%' => $this->resource->getTitle(['cultureFallback' => true])]),
-          'delete' => true
+          'delete' => true,
         ];
 
         QubitJob::runJob('arFindingAidJob', $params);

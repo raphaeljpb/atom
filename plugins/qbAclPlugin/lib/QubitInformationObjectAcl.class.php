@@ -35,7 +35,7 @@ class QubitInformationObjectAcl extends QubitAcl
     'publish' => 'Publish',
     'readMaster' => 'Access master',
     'readReference' => 'Access reference',
-    'readThumbnail' => 'Access thumbnail'
+    'readThumbnail' => 'Access thumbnail',
   ];
 
   // For information objects check parent authorization for create OR publish

@@ -132,7 +132,7 @@ class arMigration0177
       'setting_i18n',
       'static_page_i18n',
       'taxonomy_i18n',
-      'term_i18n'
+      'term_i18n',
     ];
 
     foreach ($i18nTables as $i18nTable)
@@ -170,7 +170,7 @@ class arMigration0177
       $sql = 'UPDATE slug SET slug=:slug WHERE id=:id';
       QubitPdo::modify($sql, [
         ':slug' => QubitSlug::getUnique(),
-        ':id' => $slug->id
+        ':id' => $slug->id,
       ]);
     }
 

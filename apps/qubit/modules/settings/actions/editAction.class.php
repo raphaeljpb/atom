@@ -44,7 +44,7 @@ class SettingsEditAction extends DefaultEditAction
 
         $this->redirect([
           'module' => $this->getContext()->getModuleName(),
-          'action' => $this->getContext()->getActionName()
+          'action' => $this->getContext()->getActionName(),
         ]);
       }
     }

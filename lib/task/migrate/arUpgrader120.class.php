@@ -150,7 +150,7 @@ class arUpgrader120
             QubitPdo::modify($sql, [
               "%p[$name] == %k[$name]",
               serialize([$name => $slug->slug]),
-              $item->id]);
+              $item->id, ]);
           }
         }
 
@@ -161,55 +161,55 @@ class arUpgrader120
         // TEXT
         $textColumns = [
           'actor' => [
-            'corporate_body_identifiers', 'description_identifier', 'source_standard'],
+            'corporate_body_identifiers', 'description_identifier', 'source_standard', ],
           'actor_i18n' => [
-            'authorized_form_of_name', 'dates_of_existence', 'institution_responsible_identifier'],
+            'authorized_form_of_name', 'dates_of_existence', 'institution_responsible_identifier', ],
           'contact_information' => [
-            'contact_person', 'website'],
+            'contact_person', 'website', ],
           'contact_information_i18n' => [
-            'contact_type', 'city', 'region'],
+            'contact_type', 'city', 'region', ],
           'event_i18n' => [
-            'name', 'date'],
+            'name', 'date', ],
           'function' => [
-            'description_identifier', 'source_standard'],
+            'description_identifier', 'source_standard', ],
           'function_i18n' => [
-            'authorized_form_of_name', 'classification', 'dates'],
+            'authorized_form_of_name', 'classification', 'dates', ],
           'information_object' => [
-            'identifier', 'description_identifier', 'source_standard'],
+            'identifier', 'description_identifier', 'source_standard', ],
           'information_object_i18n' => [
-            'title', 'alternate_title', 'edition', 'institution_responsible_identifier'],
+            'title', 'alternate_title', 'edition', 'institution_responsible_identifier', ],
           'note' => [
-            'scope'],
+            'scope', ],
           'oai_harvest' => [
-            'set'],
+            'set', ],
           'oai_repository' => [
-            'name', 'uri'],
+            'name', 'uri', ],
           'other_name_i18n' => [
-            'name', 'note'],
+            'name', 'note', ],
           'physical_object_i18n' => [
-            'name'],
+            'name', ],
           'property' => [
-            'scope', 'name'],
+            'scope', 'name', ],
           'property_i18n' => [
-            'value'],
+            'value', ],
           'relation_i18n' => [
-            'date'],
+            'date', ],
           'repository' => [
-            'identifier', 'desc_identifier'],
+            'identifier', 'desc_identifier', ],
           'repository_i18n' => [
-            'desc_institution_identifier'],
+            'desc_institution_identifier', ],
           'rights' => [
-            'copyright_jurisdiction'],
+            'copyright_jurisdiction', ],
           'static_page_i18n' => [
-            'title'],
+            'title', ],
           'taxonomy' => [
-            'usage'],
+            'usage', ],
           'taxonomy_i18n' => [
-            'name'],
+            'name', ],
           'term' => [
-            'code'],
+            'code', ],
           'term_i18n' => [
-            'name']
+            'name', ],
         ];
 
         // Convert varchar columns to text
@@ -225,7 +225,7 @@ class arUpgrader120
         // TEXT NOT NULL
         $textNotNullColumns = [
           'digital_object' => [
-            'name', 'path']
+            'name', 'path', ],
         ];
 
         foreach ($textNotNullColumns as $tablename => $cols)
@@ -354,7 +354,7 @@ class arUpgrader120
           'digital_object_mime_type',
           'digital_object_file_size',
           'digital_object_uploaded',
-          'physical_storage'];
+          'physical_storage', ];
 
         // Add visibility settings
         foreach ($elements as $item)

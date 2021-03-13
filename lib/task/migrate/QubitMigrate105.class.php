@@ -75,7 +75,7 @@ class QubitMigrate105 extends QubitMigrate
         'source_culture' => 'en',
         'name' => 'recent updates',
         'label' => ['en' => 'recent updates'],
-        'path' => 'search/recentUpdates'
+        'path' => 'search/recentUpdates',
       ];
     }
 
@@ -87,7 +87,7 @@ class QubitMigrate105 extends QubitMigrate
         'source_culture' => 'en',
         'name' => 'harvester',
         'label' => ['en' => 'Harvester'],
-        'path' => 'oai/harvesterList'
+        'path' => 'oai/harvesterList',
       ];
     }
 
@@ -99,7 +99,7 @@ class QubitMigrate105 extends QubitMigrate
         'source_culture' => 'en',
         'name' => 'plugins',
         'label' => ['en' => 'Plugins'],
-        'path' => 'sfPluginAdminPlugin/index'
+        'path' => 'sfPluginAdminPlugin/index',
       ];
     }
 
@@ -111,7 +111,7 @@ class QubitMigrate105 extends QubitMigrate
         'source_culture' => 'en',
         'name' => 'themes',
         'label' => ['en' => 'Themes'],
-        'path' => 'sfThemePlugin/index'
+        'path' => 'sfThemePlugin/index',
       ];
     }
 
@@ -146,7 +146,7 @@ class QubitMigrate105 extends QubitMigrate
     {
       $this->data['QubitSetting']['QubitSetting_toggleDescription'] = [
         'name' => 'toggleDescription',
-        'value' => 1
+        'value' => 1,
       ];
     }
 
@@ -154,7 +154,7 @@ class QubitMigrate105 extends QubitMigrate
     {
       $this->data['QubitSetting']['QubitSetting_toggleLogo'] = [
         'name' => 'toggleLogo',
-        'value' => 1
+        'value' => 1,
       ];
     }
 
@@ -162,7 +162,7 @@ class QubitMigrate105 extends QubitMigrate
     {
       $this->data['QubitSetting']['QubitSetting_toggleTitle'] = [
         'name' => 'toggleTitle',
-        'value' => 1
+        'value' => 1,
       ];
     }
 
@@ -223,7 +223,7 @@ class QubitMigrate105 extends QubitMigrate
         'class_name' => 'QubitTerm',
         'id' => '<?php echo QubitTerm::PARALLEL_FORM_OF_NAME_ID."\n" ?>',
         'source_culture' => 'en',
-        'name' => ['en' => 'Parallel form', 'es' => 'Forma paralela', 'fr' => 'Forme parall̬le', 'it' => 'Forma parallela', 'nl' => 'Parallelle naam', 'pt' => 'Forma paralela', 'sl' => 'Vzporedna oblika']
+        'name' => ['en' => 'Parallel form', 'es' => 'Forma paralela', 'fr' => 'Forme parall̬le', 'it' => 'Forma parallela', 'nl' => 'Parallelle naam', 'pt' => 'Forma paralela', 'sl' => 'Vzporedna oblika'],
       ];
     }
 
@@ -240,7 +240,7 @@ class QubitMigrate105 extends QubitMigrate
         'class_name' => 'QubitTerm',
         'id' => '<?php echo QubitTerm::OTHER_FORM_OF_NAME_ID."\n" ?>',
         'source_culture' => 'en',
-        'name' => ['en' => 'Other name', 'es' => 'Outra forma do nome', 'fr' => 'Autre nom', 'it' => 'Altro nome', 'nl' => 'Andere naam', 'pt' => 'Outra forma do nome', 'sl' => 'Drugo ime']
+        'name' => ['en' => 'Other name', 'es' => 'Outra forma do nome', 'fr' => 'Autre nom', 'it' => 'Altro nome', 'nl' => 'Andere naam', 'pt' => 'Outra forma do nome', 'sl' => 'Drugo ime'],
       ];
     }
 
@@ -315,7 +315,7 @@ class QubitMigrate105 extends QubitMigrate
       'HAS_PHYSICAL_OBJECT_ID',
       //Actor name type taxonomy
       'PARALLEL_FORM_OF_NAME_ID',
-      'OTHER_FORM_OF_NAME_ID'
+      'OTHER_FORM_OF_NAME_ID',
     ];
 
     // Restack array with Constant values at top
@@ -370,7 +370,7 @@ class QubitMigrate105 extends QubitMigrate
       'QubitObjectTermRelation',
       'QubitRelation',
       'QubitProperty',
-      'QubitNote'
+      'QubitNote',
     ];
 
     $originalData = $this->data;

@@ -393,7 +393,7 @@ class DefaultFullTreeViewAction extends sfAction
 
     // Define allowed sort fields
     $allowedSorts = [
-      'title' => sprintf('i18n.%s.title.alphasort', $this->culture)
+      'title' => sprintf('i18n.%s.title.alphasort', $this->culture),
     ];
 
     if (

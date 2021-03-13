@@ -163,7 +163,7 @@ class QubitRepository extends BaseRepository
       $jobOptions = [
         'ioIds' => $ioIds,
         'updateIos' => true,
-        'updateDescendants' => true
+        'updateDescendants' => true,
       ];
       QubitJob::runJob('arUpdateEsIoDocumentsJob', $jobOptions);
 

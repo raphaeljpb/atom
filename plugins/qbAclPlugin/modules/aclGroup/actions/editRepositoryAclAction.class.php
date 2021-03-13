@@ -20,7 +20,7 @@
 class AclGroupEditRepositoryAclAction extends AclGroupEditDefaultAclAction
 {
   public static $NAMES = [
-    'repository'
+    'repository',
   ];
 
   public function execute($request)

@@ -1034,7 +1034,7 @@ class QubitDigitalObject extends BaseDigitalObject
       'pcd' => 'image/x-photo-cd',
       'jpgcmyk' => 'image/jpeg-cmyk',
       'tifcmyk' => 'image/tiff-cmyk',
-      'tgz' => 'application/x-compressed'];
+      'tgz' => 'application/x-compressed', ];
 
   // Temporary path for local copy of an external object (see importFromUri
   // method)
@@ -1046,7 +1046,7 @@ class QubitDigitalObject extends BaseDigitalObject
       'image/jpg',
       'image/jpe',
       'image/gif',
-      'image/png'];
+      'image/png', ];
   // Qubit generic icon list
     protected static $qubitGenericThumbs = [
       'application/vnd.ms-excel' => 'excel.png',
@@ -1068,9 +1068,9 @@ class QubitDigitalObject extends BaseDigitalObject
       'image/jpg' => 'image.png',
       'image/jpe' => 'image.png',
       'image/gif' => 'image.png',
-      'image/png' => 'image.png'];
+      'image/png' => 'image.png', ];
   protected static $qubitGenericReference = [
-      '*/*' => 'blank.png'];
+      '*/*' => 'blank.png', ];
 
   public function __toString()
   {
@@ -1986,7 +1986,7 @@ class QubitDigitalObject extends BaseDigitalObject
           QubitTerm::EXTERNAL_URI_ID,
           QubitTerm::EXTERNAL_FILE_ID,
           QubitTerm::MASTER_ID,
-          QubitTerm::REFERENCE_ID
+          QubitTerm::REFERENCE_ID,
         ]))
         {
           $this->createAudioDerivative(QubitTerm::REFERENCE_ID, $connection);
@@ -3355,7 +3355,7 @@ class QubitDigitalObject extends BaseDigitalObject
         $object->id,
         QubitTerm::RIGHT_ID,
         QubitGrantedRight::CONDITIONAL_RIGHT,
-        QubitTerm::RIGHT_BASIS_COPYRIGHT_ID]);
+        QubitTerm::RIGHT_BASIS_COPYRIGHT_ID, ]);
 
     if (false === $r || !isset($r->has))
     {

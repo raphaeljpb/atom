@@ -166,7 +166,7 @@ class QubitAccession extends BaseAccession
 
     $criteria->addMultipleJoin([
       [QubitEvent::ID, QubitEventI18n::ID],
-      [QubitEvent::SOURCE_CULTURE, QubitEventI18n::CULTURE]],
+      [QubitEvent::SOURCE_CULTURE, QubitEventI18n::CULTURE], ],
       Criteria::LEFT_JOIN);
 
     $criteria->add($criteria->getNewCriterion(QubitEvent::END_DATE, null, Criteria::ISNOTNULL)

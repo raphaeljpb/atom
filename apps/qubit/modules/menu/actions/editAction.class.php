@@ -29,7 +29,7 @@ class MenuEditAction extends sfAction
       'label',
       'parentId',
       'path',
-      'description'];
+      'description', ];
 
   public function processForm()
   {

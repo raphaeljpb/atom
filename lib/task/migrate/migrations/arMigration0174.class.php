@@ -38,7 +38,7 @@ class arMigration0174
   {
     $settings = [
       'fullTreeviewCollapseOpenedButtonText' => 'Hide hierarchy',
-      'fullTreeviewCollapseClosedButtonText' => 'Show hierarchy'
+      'fullTreeviewCollapseClosedButtonText' => 'Show hierarchy',
     ];
 
     foreach ($settings as $settingName => $settingValue)

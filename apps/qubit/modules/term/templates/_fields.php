@@ -55,7 +55,7 @@
     <?php if (QubitTerm::ROOT_ID != $resource->parent->id) { ?>
       <?php echo render_show(
                    render_title($resource), __('BT %1%', [
-                     '%1%' => link_to(render_title($resource->parent), [$resource->parent, 'module' => 'term'])])); ?>
+                     '%1%' => link_to(render_title($resource->parent), [$resource->parent, 'module' => 'term']), ])); ?>
     <?php } ?>
 
     <div class="field">

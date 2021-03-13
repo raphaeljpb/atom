@@ -1006,18 +1006,18 @@ $testingDataSets = [
   [
     'name' => 'vocabCSS2',
     'data' => $vocabCSS2,
-    'totalConcepts' => 20
+    'totalConcepts' => 20,
   ],
   [
     'name' => 'vocabSimple',
     'data' => $vocabSimple,
-    'totalConcepts' => 22
+    'totalConcepts' => 22,
   ],
   [
     'name' => 'europeUnescoThesaurus',
     'data' => $europeUnescoThesaurus,
-    'totalConcepts' => 100
-  ]
+    'totalConcepts' => 100,
+  ],
 ];
 
 $importer = new sfSkosPlugin(QubitTaxonomy::PLACE_ID);

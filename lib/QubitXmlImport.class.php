@@ -165,7 +165,7 @@ class QubitXmlImport
       'mods' => 'mods',
       'ead' => 'ead',
       'add' => 'alouette',
-      'http://www.w3.org/2004/02/skos/core#' => 'skos'
+      'http://www.w3.org/2004/02/skos/core#' => 'skos',
     ];
 
     // determine what kind of schema we're trying to import
@@ -836,7 +836,7 @@ class QubitXmlImport
 
               $options = [
                 'type' => $importDOM->xpath->query('@type', $item)->item(0)->nodeValue,
-                'label' => $importDOM->xpath->query('@label', $item)->item(0)->nodeValue
+                'label' => $importDOM->xpath->query('@label', $item)->item(0)->nodeValue,
               ];
 
               if ($this->collectionRoot)
@@ -956,7 +956,7 @@ class QubitXmlImport
                 QubitTaxonomy::NOTE_TYPE_ID => 'noteTypes',
                 QubitTaxonomy::RAD_NOTE_ID => 'radNoteTypes',
                 QubitTaxonomy::RAD_TITLE_NOTE_ID => 'titleNoteTypes',
-                QubitTaxonomy::DACS_NOTE_ID => 'dacsSpecializedNotesTypes'
+                QubitTaxonomy::DACS_NOTE_ID => 'dacsSpecializedNotesTypes',
               ]);
 
               $titleVariationNoteTypeId = array_search('Variations in title', $termData['titleNoteTypes']['en']);

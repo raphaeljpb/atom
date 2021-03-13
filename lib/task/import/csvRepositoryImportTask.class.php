@@ -63,7 +63,7 @@ EOF;
     // Load taxonomies into variables to avoid use of magic numbers
     $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
       QubitTaxonomy::DESCRIPTION_STATUS_ID => 'descriptionStatusTypes',
-      QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID => 'levelOfDetailTypes'
+      QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID => 'levelOfDetailTypes',
     ]);
 
     // Define import
@@ -86,7 +86,7 @@ EOF;
         'options' => $options,
         'sourceName' => $sourceName,
         'descriptionStatusTypes' => $termData['descriptionStatusTypes'],
-        'levelOfDetailTypes' => $termData['levelOfDetailTypes']
+        'levelOfDetailTypes' => $termData['levelOfDetailTypes'],
       ],
 
       // Import columns that map directory to QubitRepository properties
@@ -108,7 +108,7 @@ EOF;
         'researchServices',
         'reproductionServices',
         'publicFacilities',
-        'culture'
+        'culture',
       ],
 
       'columnMap' => [
@@ -116,29 +116,29 @@ EOF;
         'institutionIdentifier' => 'descInstitutionIdentifier',
         'descriptionRules' => 'descRules',
         'descriptionRevisionHistory' => 'descRevisionHistory',
-        'descriptionSources' => 'descSources'
+        'descriptionSources' => 'descSources',
       ],
 
       // Import columns that map to taxonomy terms
       'termRelations' => [
         'geographicSubregions' => QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID,
         'thematicAreas' => QubitTaxonomy::THEMATIC_AREA_ID,
-        'types' => QubitTaxonomy::REPOSITORY_TYPE_ID
+        'types' => QubitTaxonomy::REPOSITORY_TYPE_ID,
       ],
 
       // Import columns that can be added as QubitNote objects
       'noteMap' => [
-        'maintenanceNote' => ['typeId' => QubitTerm::MAINTENANCE_NOTE_ID]
+        'maintenanceNote' => ['typeId' => QubitTerm::MAINTENANCE_NOTE_ID],
       ],
 
       // Import columns with values that should be serialized/added as a language property
       'languageMap' => [
-        'language' => 'language'
+        'language' => 'language',
       ],
 
       // Import columns with values that should be serialized/added as a script property
       'scriptMap' => [
-        'script' => 'script'
+        'script' => 'script',
       ],
 
       // These values get stored to the rowStatusVars array
@@ -156,14 +156,14 @@ EOF;
         'notes',
         'descriptionStatus',
         'levelOfDetail',
-        'legacyId'
+        'legacyId',
       ],
 
       // These values get exploded and stored to the rowStatusVars array
       'arrayColumns' => [
         'parallelFormsOfName' => '|',
         'otherFormsOfName' => '|',
-        'script' => '|'
+        'script' => '|',
       ],
 
       // Import logic to execute before saving QubitRepository
@@ -262,7 +262,7 @@ EOF;
         {
           QubitSearch::getInstance()->update($self->object);
         }
-      }
+      },
     ]);
 
     // Allow search indexing to be enabled via a CLI option
@@ -317,7 +317,7 @@ EOF;
         'upload-limit',
         null,
         sfCommandOption::PARAMETER_OPTIONAL,
-        'Set the upload limit for repositories getting imported (default: disable uploads)')
+        'Set the upload limit for repositories getting imported (default: disable uploads)'),
       ]
     );
   }

@@ -42,7 +42,7 @@ class BrowseHierarchyDataAction extends DefaultFullTreeViewAction
       'orderColumn' => 'title',
       'memorySort' => true,
       'skip' => $request->skip,
-      'limit' => $request->nodeLimit
+      'limit' => $request->nodeLimit,
     ];
 
     // Load the children of the root node (top-level descriptions)

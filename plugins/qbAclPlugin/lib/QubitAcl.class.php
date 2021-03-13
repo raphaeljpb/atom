@@ -33,7 +33,7 @@ class QubitAcl
     'create' => 'Create',
     'update' => 'Update',
     'delete' => 'Delete',
-    'translate' => 'Translate'
+    'translate' => 'Translate',
   ];
 
   public $acl;
@@ -813,7 +813,7 @@ class QubitAcl
             $roleId,
             $permission->objectId,
             $permission->action,
-            new QubitAclConditionalAssert($permission)
+            new QubitAclConditionalAssert($permission),
           ]);
         }
         else
@@ -821,7 +821,7 @@ class QubitAcl
           call_user_func_array([$this->acl, $aclMethod], [
             $roleId,
             $permission->objectId,
-            $permission->action]
+            $permission->action, ]
           );
         }
       }

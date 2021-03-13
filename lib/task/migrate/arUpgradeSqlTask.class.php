@@ -42,7 +42,7 @@ The [tools:migrate|INFO] task modifies the SQL data structure for compatibility 
 EOF;
 
     $this->addArguments([
-      new sfCommandArgument('target', sfCommandArgument::OPTIONAL, 'Target version')
+      new sfCommandArgument('target', sfCommandArgument::OPTIONAL, 'Target version'),
     ]);
 
     $this->addOptions([
@@ -110,7 +110,7 @@ EOF;
         '',
         'Please use the propel:migrate task for upgrading',
         'from Qubit releases prior to Release 1.1',
-        ''],
+        '', ],
         'ERROR');
 
       return 1;
@@ -125,7 +125,7 @@ EOF;
           'Please back-up your database manually before you proceed.',
           'If this task fails you may lose your data.',
           '',
-          'Have you done a manual backup and wish to proceed? (y/N)'],
+          'Have you done a manual backup and wish to proceed? (y/N)', ],
         'QUESTION_LARGE', false)
     )
     {
@@ -303,7 +303,7 @@ EOF;
   {
     $params = [
       'host' => 'localhost',
-      'port' => '3307'];
+      'port' => '3307', ];
 
     // Require a prefix
     if (!preg_match('/^(\w+):/', $dsn, $matches))

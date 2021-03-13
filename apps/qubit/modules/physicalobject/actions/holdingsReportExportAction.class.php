@@ -74,7 +74,7 @@ class PhysicalObjectHoldingsReportExportAction extends sfAction
       '%1%' => '<strong>',
       '%2%' => '</strong>',
       '%3%' => sprintf('<a href="%s">', $jobAdminUrl),
-      '%4%' => '</a>'
+      '%4%' => '</a>',
     ];
 
     $message = $this->context->i18n->__(

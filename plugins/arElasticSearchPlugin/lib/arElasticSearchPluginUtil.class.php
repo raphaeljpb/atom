@@ -577,7 +577,7 @@ class arElasticSearchPluginUtil
             'isad_control_languages' => '',
             'isad_control_scripts' => '',
             'isad_control_sources' => 'i18n.%s.sources',
-            'isad_control_archivists_notes' => ''];
+            'isad_control_archivists_notes' => '', ];
 
           break;
 
@@ -596,7 +596,7 @@ class arElasticSearchPluginUtil
             'rad_control_dates' => 'i18n.%s.revisionHistory',
             'rad_control_language' => '',
             'rad_control_script' => '',
-            'rad_control_sources' => 'i18n.%s.sources'];
+            'rad_control_sources' => 'i18n.%s.sources', ];
 
           break;
         // TODO: Other templates (dacs, dc, isaar, etc)

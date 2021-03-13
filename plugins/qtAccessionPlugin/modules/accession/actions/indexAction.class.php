@@ -42,20 +42,20 @@ class AccessionIndexAction extends sfAction
       $values = [];
 
       $validatorSchema->date = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('Acquisition date - This is a mandatory element.')]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('Acquisition date - This is a mandatory element.'), ]);
       $values['date'] = $this->resource->date;
 
       $validatorSchema->sourceOfAcquisition = new sfValidatorString([
-        'required' => true], [
-        'required' => $this->context->i18n->__('Source of acquisition - This is a mandatory element.')]);
+        'required' => true, ], [
+        'required' => $this->context->i18n->__('Source of acquisition - This is a mandatory element.'), ]);
       $values['sourceOfAcquisition'] = $this->resource->getSourceOfAcquisition(['culltureFallback' => true]);
 
       // Only require location information if there are no linked physical objects
       $locationRequired = 0 == count($this->resource->getPhysicalObjects());
       $validatorSchema->locationInformation = new sfValidatorString([
-        'required' => $locationRequired], [
-        'required' => $this->context->i18n->__('Location information - This is a mandatory element.')]);
+        'required' => $locationRequired, ], [
+        'required' => $this->context->i18n->__('Location information - This is a mandatory element.'), ]);
       $values['locationInformation'] = $this->resource->getLocationInformation(['culltureFallback' => true]);
 
       try

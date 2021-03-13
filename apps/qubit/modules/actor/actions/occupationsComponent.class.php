@@ -79,7 +79,7 @@ class ActorOccupationsComponent extends sfComponent
         {
           // Check existing note
           $note = $relation->getNotesByType([
-            'noteTypeId' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID
+            'noteTypeId' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID,
           ])->offsetGet(0);
 
           if (!isset($note) && strlen($item['content']) > 0)

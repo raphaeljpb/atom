@@ -30,7 +30,7 @@ class arInheritRightsJob extends arBaseJob
   protected $extraRequiredParameters = [
     'overwrite_or_combine', // Values: overwrite, combine
     'all_or_digital_only',  // Values: all, digital_only
-    'objectId'
+    'objectId',
   ];
 
   public function runJob($parameters)

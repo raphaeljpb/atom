@@ -278,7 +278,7 @@ class digitalObjectLoadTask extends sfBaseTask
   protected function configure()
   {
     $this->addArguments([
-      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The input file (csv format).')
+      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'The input file (csv format).'),
     ]);
 
     $this->addOptions([

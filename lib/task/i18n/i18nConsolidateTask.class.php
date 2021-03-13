@@ -50,7 +50,7 @@ class i18nConsolidateTask extends sfBaseTask
   {
     $this->addArguments([
       new sfCommandArgument('culture', sfCommandArgument::REQUIRED, 'Message culture'),
-      new sfCommandArgument('target', sfCommandArgument::REQUIRED, 'Target directory')
+      new sfCommandArgument('target', sfCommandArgument::REQUIRED, 'Target directory'),
     ]);
 
     $this->addOptions([

@@ -85,7 +85,7 @@ EOF;
       QubitTaxonomy::MATERIAL_TYPE_ID => 'materialTypes',
       QubitTaxonomy::RIGHT_ACT_ID => 'copyrightActTypes',
       QubitTaxonomy::COPYRIGHT_STATUS_ID => 'copyrightStatusTypes',
-      QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID => 'physicalObjectTypes'
+      QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID => 'physicalObjectTypes',
     ]);
 
     if (
@@ -97,7 +97,7 @@ EOF;
           'WARNING: In round trip mode legacy IDs will be treated as internal IDs.',
           'Please back-up your database manually before you proceed.',
           '',
-          'Have you done a manual backup and wish to proceed? (y/N)'
+          'Have you done a manual backup and wish to proceed? (y/N)',
         ],
         'QUESTION_LARGE', false)
     )
@@ -165,7 +165,7 @@ EOF;
         'rules',
         'scopeAndContent',
         'sources',
-        'title'
+        'title',
       ],
 
       // Import columns that should be redirected to QubitInformationObject
@@ -186,7 +186,7 @@ EOF;
 
       'columnMap' => [
         'radEdition' => 'edition',
-        'institutionIdentifier' => 'institutionResponsibleIdentifier'
+        'institutionIdentifier' => 'institutionResponsibleIdentifier',
       ],
 
       // Import columns that can be added using the
@@ -206,89 +206,89 @@ EOF;
         'radOtherTitleInformationOfPublishersSeries' => 'otherTitleInformationOfPublishersSeries',
         'radStatementOfResponsibilityRelatingToPublishersSeries' => 'statementOfResponsibilityRelatingToPublishersSeries',
         'radNumberingWithinPublishersSeries' => 'numberingWithinPublishersSeries',
-        'radStandardNumber' => 'standardNumber'
+        'radStandardNumber' => 'standardNumber',
       ],
 
       // Import columns that can be added as QubitNote objects
       'noteMap' => [
         'languageNote' => [
-          'typeId' => array_search('Language note', $termData['noteTypes']['en'])
+          'typeId' => array_search('Language note', $termData['noteTypes']['en']),
         ],
         'publicationNote' => [
-          'typeId' => array_search('Publication note', $termData['noteTypes']['en'])
+          'typeId' => array_search('Publication note', $termData['noteTypes']['en']),
         ],
         'generalNote' => [
-          'typeId' => array_search('General note', $termData['noteTypes']['en'])
+          'typeId' => array_search('General note', $termData['noteTypes']['en']),
         ],
         'archivistNote' => [
-          'typeId' => array_search("Archivist's note", $termData['noteTypes']['en'])
+          'typeId' => array_search("Archivist's note", $termData['noteTypes']['en']),
         ],
         'radNoteCast' => [
-          'typeId' => array_search('Cast note', $termData['radNoteTypes']['en'])
+          'typeId' => array_search('Cast note', $termData['radNoteTypes']['en']),
         ],
         'radNoteCredits' => [
-          'typeId' => array_search('Credits note', $termData['radNoteTypes']['en'])
+          'typeId' => array_search('Credits note', $termData['radNoteTypes']['en']),
         ],
         'radNoteSignaturesInscriptions' => [
-          'typeId' => array_search('Signatures note', $termData['radNoteTypes']['en'])
+          'typeId' => array_search('Signatures note', $termData['radNoteTypes']['en']),
         ],
         'radNoteConservation' => [
-          'typeId' => array_search('Conservation', $termData['radNoteTypes']['en'])
+          'typeId' => array_search('Conservation', $termData['radNoteTypes']['en']),
         ],
         'radNoteGeneral' => [
-          'typeId' => array_search('General note', $termData['noteTypes']['en'])
+          'typeId' => array_search('General note', $termData['noteTypes']['en']),
         ],
         'radNotePhysicalDescription' => [
-          'typeId' => array_search('Physical description', $termData['radNoteTypes']['en'])
+          'typeId' => array_search('Physical description', $termData['radNoteTypes']['en']),
         ],
         'radNotePublishersSeries' => [
-          'typeId' => array_search("Publisher's series", $termData['radNoteTypes']['en'])
+          'typeId' => array_search("Publisher's series", $termData['radNoteTypes']['en']),
         ],
         'radNoteRights' => [
-          'typeId' => array_search('Rights', $termData['radNoteTypes']['en'])
+          'typeId' => array_search('Rights', $termData['radNoteTypes']['en']),
         ],
         'radNoteAccompanyingMaterial' => [
-          'typeId' => array_search('Accompanying material', $termData['radNoteTypes']['en'])
+          'typeId' => array_search('Accompanying material', $termData['radNoteTypes']['en']),
         ],
         'radNoteAlphaNumericDesignation' => [
-          'typeId' => array_search('Alpha-numeric designations', $termData['radNoteTypes']['en'])
+          'typeId' => array_search('Alpha-numeric designations', $termData['radNoteTypes']['en']),
         ],
         'radNoteEdition' => [
-          'typeId' => array_search('Edition', $termData['radNoteTypes']['en'])
+          'typeId' => array_search('Edition', $termData['radNoteTypes']['en']),
         ],
         'radTitleStatementOfResponsibilityNote' => [
-          'typeId' => array_search('Statements of responsibility', $termData['titleNoteTypes']['en'])
+          'typeId' => array_search('Statements of responsibility', $termData['titleNoteTypes']['en']),
         ],
         'radTitleParallelTitles' => [
-          'typeId' => array_search('Parallel titles and other title information', $termData['titleNoteTypes']['en'])
+          'typeId' => array_search('Parallel titles and other title information', $termData['titleNoteTypes']['en']),
         ],
         'radTitleSourceOfTitleProper' => [
-          'typeId' => array_search('Source of title proper', $termData['titleNoteTypes']['en'])
+          'typeId' => array_search('Source of title proper', $termData['titleNoteTypes']['en']),
         ],
         'radTitleVariationsInTitle' => [
-          'typeId' => array_search('Variations in title', $termData['titleNoteTypes']['en'])
+          'typeId' => array_search('Variations in title', $termData['titleNoteTypes']['en']),
         ],
         'radTitleAttributionsAndConjectures' => [
-          'typeId' => array_search('Attributions and conjectures', $termData['titleNoteTypes']['en'])
+          'typeId' => array_search('Attributions and conjectures', $termData['titleNoteTypes']['en']),
         ],
         'radTitleContinues' => [
-          'typeId' => array_search('Continuation of title', $termData['titleNoteTypes']['en'])
+          'typeId' => array_search('Continuation of title', $termData['titleNoteTypes']['en']),
         ],
         'radTitleNoteContinuationOfTitle' => [
-          'typeId' => array_search('Continuation of title', $termData['titleNoteTypes']['en'])
-        ]
+          'typeId' => array_search('Continuation of title', $termData['titleNoteTypes']['en']),
+        ],
       ],
 
       // Import columns with values that should be serialized/added as a language property
       'languageMap' => [
         'language' => 'language',
-        'languageOfDescription' => 'languageOfDescription'
+        'languageOfDescription' => 'languageOfDescription',
       ],
 
       // Import columns with values that should be serialized/added as a script property
       'scriptMap' => [
         'script' => 'script',
-        'scriptOfDescription' => 'scriptOfDescription'
+        'scriptOfDescription' => 'scriptOfDescription',
       ],
 
       // These values get stored to the rowStatusVars array
@@ -309,7 +309,7 @@ EOF;
         'physicalStorageLocation',
         'digitalObjectPath',
         'digitalObjectURI',
-        'digitalObjectChecksum'
+        'digitalObjectChecksum',
       ],
 
       // These values get exploded and stored to the rowStatusVars array
@@ -345,7 +345,7 @@ EOF;
         'creationDates' => '|',
         'creationDatesStart' => '|',
         'creationDatesEnd' => '|',
-        'creationDateNotes' => '|'
+        'creationDateNotes' => '|',
       ],
 
       'updatePreparationLogic' => function (&$self)
@@ -566,7 +566,7 @@ EOF;
         $accessPointColumns = [
           'subjectAccessPoints' => QubitTaxonomy::SUBJECT_ID,
           'placeAccessPoints' => QubitTaxonomy::PLACE_ID,
-          'genreAccessPoints' => QubitTaxonomy::GENRE_ID
+          'genreAccessPoints' => QubitTaxonomy::GENRE_ID,
         ];
 
         foreach ($accessPointColumns as $columnName => $taxonomyId)
@@ -763,7 +763,7 @@ EOF;
                   'copyrightStatusId' => array_search(
                     'Under copyright',
                     $self->getStatus('copyrightStatusTypes')
-                  )
+                  ),
                 ];
 
                 if (isset($endDates))
@@ -808,7 +808,7 @@ EOF;
                 'copyrightStatusId' => array_search(
                   'Unknown',
                   $self->getStatus('copyrightStatusTypes')
-                )
+                ),
               ];
 
               if ($self->rowStatusVars['copyrightExpires'])
@@ -831,7 +831,7 @@ EOF;
                 'copyrightStatusId' => array_search(
                   'Public domain',
                   $self->getStatus('copyrightStatusTypes')
-                )
+                ),
               ];
 
               if ($self->rowStatusVars['copyrightExpires'])
@@ -880,7 +880,7 @@ EOF;
 
         // Reduce memory usage
         Qubit::clearClassCaches();
-      }
+      },
     ]);
 
     $import->searchIndexingDisabled = ($options['index']) ? false : true;
@@ -1031,7 +1031,7 @@ EOF;
         null,
         sfCommandOption::PARAMETER_NONE,
         'Do not ask for confirmation'
-      )
+      ),
     ]);
   }
 

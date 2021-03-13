@@ -83,7 +83,7 @@ class QubitMenu extends BaseMenu
       '%profile%' => sfContext::getInstance()->routing->generate(null, ['module' => 'user', 'slug' => sfContext::getInstance()->user->getUserSlug()]),
       '%currentId%' => sfContext::getInstance()->request->id,
       '%currentSlug%' => $currentSlug,
-      '%currentRealm%' => $currentRealm
+      '%currentRealm%' => $currentRealm,
     ];
 
     $path = parent::offsetGet('path', $options);
@@ -370,7 +370,7 @@ class QubitMenu extends BaseMenu
           'name' => $menu->getName(['cultureFallback' => true]),
           'label' => $menu->getLabel(['cultureFallback' => true]),
           'depth' => $depth,
-          'protected' => ($menu->isProtected()) ? true : false
+          'protected' => ($menu->isProtected()) ? true : false,
         ];
       }
     }

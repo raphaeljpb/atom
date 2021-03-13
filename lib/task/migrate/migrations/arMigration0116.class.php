@@ -33,7 +33,7 @@ class arMigration0116
   {
     $termNames = [
       'sound recording - musical' => 'sound recording-musical',
-      'sound recording - nonmusical' => 'sound recording-nonmusical'
+      'sound recording - nonmusical' => 'sound recording-nonmusical',
     ];
 
     foreach ($termNames as $oldName => $newName)

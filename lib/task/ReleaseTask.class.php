@@ -17,7 +17,7 @@ class ReleaseTask extends sfBaseTask
   {
     $this->addArguments([
       new sfCommandArgument('version', sfCommandArgument::REQUIRED, 'FIXME'),
-      new sfCommandArgument('stability', sfCommandArgument::REQUIRED, 'FIXME')]);
+      new sfCommandArgument('stability', sfCommandArgument::REQUIRED, 'FIXME'), ]);
 
     $this->addOptions([
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),

@@ -22,7 +22,7 @@ class StaticPageEditAction extends DefaultEditAction
   public static $NAMES = [
       'title',
       'slug',
-      'content'];
+      'content', ];
 
   public function execute($request)
   {

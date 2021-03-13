@@ -230,7 +230,7 @@ EOF;
       $params = [
         ':type_id' => $physicalObject->type_id,
         ':name' => $physicalObject->name,
-        ':location' => $physicalObject->location
+        ':location' => $physicalObject->location,
       ];
 
       $this->findAndMarkDuplicates($sql, $params, $physicalObject->id, $dryRun);

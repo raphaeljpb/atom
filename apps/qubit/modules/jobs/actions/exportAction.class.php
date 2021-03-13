@@ -56,7 +56,7 @@ class JobsExportAction extends DefaultBrowseAction
   private function getCSVString($jobs)
   {
     $output = [
-      ['startDate', 'endDate', 'jobName', 'jobStatus', 'jobInfo', 'jobUser']
+      ['startDate', 'endDate', 'jobName', 'jobStatus', 'jobInfo', 'jobUser'],
     ];
 
     foreach ($jobs as $job)
@@ -92,7 +92,7 @@ class JobsExportAction extends DefaultBrowseAction
         $job->name,
         $job->getStatusString(),
         $notesString,
-        $name
+        $name,
       ];
     }
 

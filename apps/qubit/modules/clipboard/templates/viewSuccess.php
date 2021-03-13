@@ -29,7 +29,7 @@
         <?php echo get_partial('default/genericPicker', [
           'options' => $uiLabels,
           'label' => __('Entity type'),
-          'param' => 'type']); ?>
+          'param' => 'type', ]); ?>
 
         <?php if ($pager->getNbResults()) { ?>
           <?php echo get_partial('default/sortPickers', ['options' => $sortOptions]); ?>

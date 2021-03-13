@@ -43,7 +43,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
     $ancestors = [[
       'id' => QubitInformationObject::ROOT_ID,
       'identifier' => null,
-      'repository_id' => null
+      'repository_id' => null,
     ]];
 
     // Recursively descend down hierarchy
@@ -77,7 +77,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
         $ancestors = array_merge($node->getAncestors(), [[
           'id' => $node->id,
           'identifier' => $node->identifier,
-          'repository_id' => $node->repository_id
+          'repository_id' => $node->repository_id,
         ]]);
         $repository = $node->getRepository();
         $inheritedCreators = array_merge($node->inheritedCreators, $node->creators);
@@ -94,7 +94,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
         $this->recursivelyAddInformationObjects($item->id, $totalRows, [
           'ancestors' => $ancestors,
           'repository' => $repository,
-          'inheritedCreators' => $inheritedCreators
+          'inheritedCreators' => $inheritedCreators,
         ]);
       }
     }
@@ -137,7 +137,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
     $jobOptions = [
       'ioIds' => [$object->id],
       'updateIos' => false,
-      'updateDescendants' => true
+      'updateDescendants' => true,
     ];
     QubitJob::runJob('arUpdateEsIoDocumentsJob', $jobOptions);
 

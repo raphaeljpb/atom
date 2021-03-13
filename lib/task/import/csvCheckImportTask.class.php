@@ -65,7 +65,7 @@ EOF;
           'sampleColumnValues' => $sampleColumnValues,
           'multiValueColumns' => [],
           'sampleOnlyMultivalueColumns' => false,
-          'numberOfSampleValues' => 1
+          'numberOfSampleValues' => 1,
         ],
 
         'saveLogic' => function (&$self)
@@ -109,7 +109,7 @@ EOF;
                   : 1;
             }
           }
-        }
+        },
       ]);
 
       $import->csv($fh, $skipRows);

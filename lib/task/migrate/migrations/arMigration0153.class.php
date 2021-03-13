@@ -42,7 +42,7 @@ class arMigration0153
     $terms = [
       QubitTerm::JOB_STATUS_IN_PROGRESS_ID => 'In progress',
       QubitTerm::JOB_STATUS_COMPLETED_ID => 'Completed',
-      QubitTerm::JOB_STATUS_ERROR_ID => 'Error'
+      QubitTerm::JOB_STATUS_ERROR_ID => 'Error',
     ];
 
     foreach ($terms as $id => $name)

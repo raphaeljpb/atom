@@ -356,7 +356,7 @@ class arElasticSearchInformationObjectPdo
 
     self::$statements['actorRelation']->execute([
       ':resourceId' => $this->__get('id'),
-      ':typeId' => QubitTerm::NAME_ACCESS_POINT_ID]);
+      ':typeId' => QubitTerm::NAME_ACCESS_POINT_ID, ]);
 
     foreach (self::$statements['actorRelation']->fetchAll(PDO::FETCH_OBJ) as $item)
     {
@@ -449,7 +449,7 @@ class arElasticSearchInformationObjectPdo
     }
 
     self::$statements['rights']->execute([
-      $this->__get('id')]);
+      $this->__get('id'), ]);
 
     return self::$statements['rights']->fetchAll(PDO::FETCH_CLASS);
   }
@@ -560,7 +560,7 @@ class arElasticSearchInformationObjectPdo
     // fields without using scripts in partial updates.
     $serialized['findingAid'] = [
       'transcript' => null,
-      'status' => null
+      'status' => null,
     ];
 
     $serialized['id'] = $this->id;
@@ -692,7 +692,7 @@ class arElasticSearchInformationObjectPdo
         QubitTaxonomy::MATERIAL_TYPE_ID,
         QubitTaxonomy::PLACE_ID,
         QubitTaxonomy::SUBJECT_ID,
-        QubitTaxonomy::GENRE_ID
+        QubitTaxonomy::GENRE_ID,
       ]
     );
 
@@ -758,7 +758,7 @@ class arElasticSearchInformationObjectPdo
           $node->id,
           ['QubitActor'],
           ['fields' => ['authorized_form_of_name']]
-        )
+        ),
       ];
 
       // Add other names, parallel names, and standardized names
@@ -1009,7 +1009,7 @@ class arElasticSearchInformationObjectPdo
 
     self::$statements['alternativeIdentifiers']->execute([
       $this->__get('id'),
-      'alternativeIdentifiers']);
+      'alternativeIdentifiers', ]);
 
     $alternativeIdentifiers = [];
     foreach (self::$statements['alternativeIdentifiers']->fetchAll() as $item)

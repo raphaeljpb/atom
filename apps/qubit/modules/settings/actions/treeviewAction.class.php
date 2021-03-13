@@ -28,7 +28,7 @@ class SettingsTreeviewAction extends DefaultEditAction
       'showIdentifier',
       'showLevelOfDescription',
       'showDates',
-      'fullItemsPerPage'];
+      'fullItemsPerPage', ];
 
   public function execute($request)
   {
@@ -65,7 +65,7 @@ class SettingsTreeviewAction extends DefaultEditAction
         $default = 'sidebar';
         $options = [
           'sidebar' => $this->i18n->__('Sidebar'),
-          'fullWidth' => $this->i18n->__('Full width')];
+          'fullWidth' => $this->i18n->__('Full width'), ];
 
         $this->addSettingRadioButtonsField($this->typeSetting, $name, $default, $options);
 
@@ -76,7 +76,7 @@ class SettingsTreeviewAction extends DefaultEditAction
         $default = 'no';
         $options = [
           'no' => $this->i18n->__('No'),
-          'yes' => $this->i18n->__('Yes')];
+          'yes' => $this->i18n->__('Yes'), ];
 
         $this->addSettingRadioButtonsField($this->showBrowseHierarchyPageSetting, $name, $default, $options);
 
@@ -87,7 +87,7 @@ class SettingsTreeviewAction extends DefaultEditAction
         $default = 'no';
         $options = [
           'no' => $this->i18n->__('No'),
-          'yes' => $this->i18n->__('Yes')];
+          'yes' => $this->i18n->__('Yes'), ];
 
         $this->addSettingRadioButtonsField($this->allowFullWidthTreeviewCollapse, $name, $default, $options);
 
@@ -99,7 +99,7 @@ class SettingsTreeviewAction extends DefaultEditAction
         $options = [
           'none' => $this->i18n->__('Manual'),
           'title' => $this->i18n->__('Title'),
-          'identifierTitle' => $this->i18n->__('Identifier - Title')];
+          'identifierTitle' => $this->i18n->__('Identifier - Title'), ];
 
         $this->addSettingRadioButtonsField($this->ioSortSetting, $name, $default, $options);
 
@@ -111,7 +111,7 @@ class SettingsTreeviewAction extends DefaultEditAction
         $options = [
           'no' => $this->i18n->__('No'),
           'identifier' => $this->i18n->__('Identifier'),
-          'referenceCode' => $this->i18n->__('Inherit reference code')];
+          'referenceCode' => $this->i18n->__('Inherit reference code'), ];
 
         $this->addSettingRadioButtonsField($this->showIdentifierSetting, $name, $default, $options);
 
@@ -122,7 +122,7 @@ class SettingsTreeviewAction extends DefaultEditAction
         $default = 'yes';
         $options = [
           'no' => $this->i18n->__('No'),
-          'yes' => $this->i18n->__('Yes')];
+          'yes' => $this->i18n->__('Yes'), ];
 
         $this->addSettingRadioButtonsField($this->showLevelOfDescriptionSetting, $name, $default, $options);
 
@@ -133,7 +133,7 @@ class SettingsTreeviewAction extends DefaultEditAction
         $default = 'no';
         $options = [
           'no' => $this->i18n->__('No'),
-          'yes' => $this->i18n->__('Yes')];
+          'yes' => $this->i18n->__('Yes'), ];
 
         $this->addSettingRadioButtonsField($this->showDatesSetting, $name, $default, $options);
 
@@ -152,7 +152,7 @@ class SettingsTreeviewAction extends DefaultEditAction
         $this->form->setValidator($name, new sfValidatorInteger(
           [
             'min' => 10,
-            'max' => sfConfig::get('app_treeview_items_per_page_max', 10000)
+            'max' => sfConfig::get('app_treeview_items_per_page_max', 10000),
           ]
         ));
         $this->form->setWidget($name, new sfWidgetFormInput());

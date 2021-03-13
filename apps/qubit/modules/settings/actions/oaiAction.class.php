@@ -80,7 +80,7 @@ class SettingsOaiAction extends sfAction
       'oai_admin_emails' => $oaiAdminEmails,
       'sample_oai_identifier' => $sampleOaiIdentifier,
       'resumption_token_limit' => (isset($resumptionTokenLimit)) ? $resumptionTokenLimit->getValue(['sourceCulture' => true]) : null,
-      'oai_additional_sets_enabled' => (isset($oaiAdditionalSetsEnabled)) ? intval($oaiAdditionalSetsEnabled->getValue(['sourceCulture' => true])) : 0
+      'oai_additional_sets_enabled' => (isset($oaiAdditionalSetsEnabled)) ? intval($oaiAdditionalSetsEnabled->getValue(['sourceCulture' => true])) : 0,
     ]);
   }
 

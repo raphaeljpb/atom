@@ -196,7 +196,7 @@ class QubitActor extends BaseActor
         $jobOptions = [
           'ioIds' => $creationIoIds,
           'updateIos' => true,
-          'updateDescendants' => true
+          'updateDescendants' => true,
         ];
         QubitJob::runJob('arUpdateEsIoDocumentsJob', $jobOptions);
       }
@@ -206,7 +206,7 @@ class QubitActor extends BaseActor
         $jobOptions = [
           'ioIds' => $otherIoIds,
           'updateIos' => true,
-          'updateDescendants' => false
+          'updateDescendants' => false,
         ];
         QubitJob::runJob('arUpdateEsIoDocumentsJob', $jobOptions);
       }

@@ -21,7 +21,7 @@ class SettingsInventoryAction extends DefaultEditAction
 {
   // Arrays not allowed in class constants
   public static $NAMES = [
-      'levels'];
+      'levels', ];
 
   public function execute($request)
   {

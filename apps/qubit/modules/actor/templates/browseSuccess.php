@@ -42,49 +42,49 @@
           'label' => __('Language'),
           'name' => 'languages',
           'aggs' => $aggs,
-          'filters' => $search->filters]); ?>
+          'filters' => $search->filters, ]); ?>
 
         <?php echo get_partial('search/aggregation', [
           'id' => '#facet-entitytype',
           'label' => __('Entity type'),
           'name' => 'entityType',
           'aggs' => $aggs,
-          'filters' => $search->filters]); ?>
+          'filters' => $search->filters, ]); ?>
 
         <?php echo get_partial('search/aggregation', [
           'id' => '#facet-maintainingrepository',
           'label' => __('Maintained by'),
           'name' => 'repository',
           'aggs' => $aggs,
-          'filters' => $search->filters]); ?>
+          'filters' => $search->filters, ]); ?>
 
         <?php echo get_partial('search/aggregation', [
           'id' => '#facet-occupation',
           'label' => __('Occupation'),
           'name' => 'occupation',
           'aggs' => $aggs,
-          'filters' => $search->filters]); ?>
+          'filters' => $search->filters, ]); ?>
 
         <?php echo get_partial('search/aggregation', [
           'id' => '#facet-places',
           'label' => sfConfig::get('app_ui_label_place'),
           'name' => 'place',
           'aggs' => $aggs,
-          'filters' => $search->filters]); ?>
+          'filters' => $search->filters, ]); ?>
 
         <?php echo get_partial('search/aggregation', [
           'id' => '#facet-subjects',
           'label' => sfConfig::get('app_ui_label_subject'),
           'name' => 'subject',
           'aggs' => $aggs,
-          'filters' => $search->filters]); ?>
+          'filters' => $search->filters, ]); ?>
 
         <?php echo get_partial('search/aggregation', [
           'id' => '#facet-mediaTypes',
           'label' => sfConfig::get('app_ui_label_mediatype'),
           'name' => 'mediatypes',
           'aggs' => $aggs,
-          'filters' => $search->filters]); ?>
+          'filters' => $search->filters, ]); ?>
 
       </div>
 
@@ -102,7 +102,7 @@
     <div class="row">
       <div class="span5">
         <?php echo get_component('search', 'inlineSearch', [
-          'label' => __('Search %1%', ['%1%' => strtolower(sfConfig::get('app_ui_label_actor'))])]); ?>
+          'label' => __('Search %1%', ['%1%' => strtolower(sfConfig::get('app_ui_label_actor'))]), ]); ?>
       </div>
     </div>
 
@@ -131,7 +131,7 @@
             'options' => [
               'lastUpdated' => __('Date modified'),
               'alphabetic' => __('Name'),
-              'identifier' => __('Identifier')]]); ?>
+              'identifier' => __('Identifier'), ], ]); ?>
       </div>
 
     </section>

@@ -88,7 +88,7 @@ class arFindingAidJob extends arBaseJob
   {
     $filenames = [
       $id.'.pdf',
-      $id.'.rtf'
+      $id.'.rtf',
     ];
 
     if (null !== $slug = QubitSlug::getByObjectId($id))
@@ -244,8 +244,8 @@ class arFindingAidJob extends arBaseJob
     // Update ES document with finding aid status
     $partialData = [
       'findingAid' => [
-        'status' => self::GENERATED_STATUS
-    ]];
+        'status' => self::GENERATED_STATUS,
+    ], ];
 
     QubitSearch::getInstance()->partialUpdate($this->resource, $partialData);
 
@@ -280,8 +280,8 @@ class arFindingAidJob extends arBaseJob
     $partialData = [
       'findingAid' => [
         'transcript' => null,
-        'status' => self::UPLOADED_STATUS
-    ]];
+        'status' => self::UPLOADED_STATUS,
+    ], ];
 
     $this->info($this->i18n->__('Finding aid uploaded successfully: %1', ['%1' => $path]));
 
@@ -387,8 +387,8 @@ class arFindingAidJob extends arBaseJob
     $partialData = [
       'findingAid' => [
         'transcript' => null,
-        'status' => null
-    ]];
+        'status' => null,
+    ], ];
 
     QubitSearch::getInstance()->partialUpdate($this->resource, $partialData);
 

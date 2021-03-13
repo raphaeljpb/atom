@@ -17,7 +17,7 @@
         'ancestor' => $resource->id,
         'topLod' => false,
         'view' => 'card',
-        'onlyMedia' => true]); ?>"><?php echo __('Show all'); ?></a>
+        'onlyMedia' => true, ]); ?>"><?php echo __('Show all'); ?></a>
     </div>
   <?php } ?>
 

@@ -59,7 +59,7 @@ class SettingsUploadsAction extends SettingsEditAction
         ));
         $this->form->setWidget($name, new sfWidgetFormSelectRadio(
           ['choices' => [
-            0 => $this->i18n->__('Disabled'), 1 => $this->i18n->__('Enabled')
+            0 => $this->i18n->__('Disabled'), 1 => $this->i18n->__('Enabled'),
           ]],
           ['class' => 'radio']
         ));
@@ -72,7 +72,7 @@ class SettingsUploadsAction extends SettingsEditAction
         ));
         $this->form->setWidget($name, new sfWidgetFormSelectRadio(
           ['choices' => [
-            0 => $this->i18n->__('No'), 1 => $this->i18n->__('Yes')
+            0 => $this->i18n->__('No'), 1 => $this->i18n->__('Yes'),
           ]],
           ['class' => 'radio']
         ));

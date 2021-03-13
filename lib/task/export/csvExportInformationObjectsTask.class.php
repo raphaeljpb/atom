@@ -93,10 +93,10 @@ class csvExportInformationObjectsTask extends exportBulkBaseTask
   {
     $this->addCommonArgumentsAndOptions();
     $this->addOptions([
-      new sfCommandOption('standard', null, sfCommandOption::PARAMETER_OPTIONAL, 'Description format ("isad" or "rad")', 'isad')
+      new sfCommandOption('standard', null, sfCommandOption::PARAMETER_OPTIONAL, 'Description format ("isad" or "rad")', 'isad'),
     ]);
     $this->addOptions([
-      new sfCommandOption('rows-per-file', null, sfCommandOption::PARAMETER_OPTIONAL, 'Rows per file (disregarded if writing to a file, not a directory)', false)
+      new sfCommandOption('rows-per-file', null, sfCommandOption::PARAMETER_OPTIONAL, 'Rows per file (disregarded if writing to a file, not a directory)', false),
     ]);
   }
 }

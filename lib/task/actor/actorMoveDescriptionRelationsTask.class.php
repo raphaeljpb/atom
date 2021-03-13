@@ -115,7 +115,7 @@ EOF;
         AND object.class_name='QubitInformationObject'";
       $params = [
         ':sourceId' => $source->id,
-        ':typeId' => QubitTerm::NAME_ACCESS_POINT_ID
+        ':typeId' => QubitTerm::NAME_ACCESS_POINT_ID,
       ];
       $relatedIoIds = QubitPdo::fetchAll(
         $sql,
@@ -143,7 +143,7 @@ EOF;
     $params = [
       ':targetId' => $target->id,
       ':sourceId' => $source->id,
-      ':typeId' => QubitTerm::NAME_ACCESS_POINT_ID
+      ':typeId' => QubitTerm::NAME_ACCESS_POINT_ID,
     ];
     $updatedCount += QubitPdo::modify($sql, $params);
 

@@ -63,13 +63,13 @@ class csvExportTermUsageTask extends exportBulkBaseTask
     $this->addCoreArgumentsAndOptions();
 
     $this->addOptions([
-      new sfCommandOption('taxonomy-id', null, sfCommandOption::PARAMETER_OPTIONAL, 'ID of taxonomy')
+      new sfCommandOption('taxonomy-id', null, sfCommandOption::PARAMETER_OPTIONAL, 'ID of taxonomy'),
     ]);
     $this->addOptions([
-      new sfCommandOption('taxonomy-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'Name of taxonomy')
+      new sfCommandOption('taxonomy-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'Name of taxonomy'),
     ]);
     $this->addOptions([
-      new sfCommandOption('taxonomy-name-culture', null, sfCommandOption::PARAMETER_OPTIONAL, 'Culture to use for taxonomy name lookup')
+      new sfCommandOption('taxonomy-name-culture', null, sfCommandOption::PARAMETER_OPTIONAL, 'Culture to use for taxonomy name lookup'),
     ]);
   }
 
