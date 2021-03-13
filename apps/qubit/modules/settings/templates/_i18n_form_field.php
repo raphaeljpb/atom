@@ -1,9 +1,9 @@
 <?php if (!empty($label)) { ?>
-  <?php echo $form->$name
+  <?php echo $form->{$name}
     ->renderLabel($label); ?>
 <?php } ?>
 
-<?php if (strlen($error = $form->$name->renderError())) { ?>
+<?php if (strlen($error = $form->{$name}->renderError())) { ?>
   <?php echo $error; ?>
 <?php } ?>
 
@@ -11,4 +11,4 @@
   <div class="default-translation"><?php echo $sourceCultureHelper; ?></div>
 <?php } ?>
 
-<?php echo $form->$name->render(); ?>
+<?php echo $form->{$name}->render(); ?>

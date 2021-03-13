@@ -101,7 +101,7 @@ class PhysicalObjectCsvImporter
     switch ($name)
     {
       case 'context':
-        return $this->$name;
+        return $this->{$name};
 
         break;
 
@@ -126,7 +126,7 @@ class PhysicalObjectCsvImporter
     {
       case 'dbcon':
       case 'typeIdLookupTable':
-        $this->$name = $value;
+        $this->{$name} = $value;
 
         break;
 

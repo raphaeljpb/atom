@@ -142,7 +142,7 @@ class sfEadPlugin
 
   public function __get($name)
   {
-    return $this->resource->$name;
+    return $this->resource->{$name};
   }
 
   public function subjectHasNonBlankSourceNotes(&$subject)

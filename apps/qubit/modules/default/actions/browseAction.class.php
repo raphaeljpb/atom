@@ -218,7 +218,7 @@ class DefaultBrowseAction extends sfAction
     {
       if (isset($config['model']))
       {
-        $this->filterTags[$name]['object'] = $config['model']::getById($request->$name);
+        $this->filterTags[$name]['object'] = $config['model']::getById($request->{$name});
       }
     }
   }

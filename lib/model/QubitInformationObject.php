@@ -2074,7 +2074,7 @@ class QubitInformationObject extends BaseInformationObject
 
     if (isset($termNames[$taxonomyId][strtolower($name)]))
     {
-      $this->$property = $termNames[$taxonomyId][strtolower($name)];
+      $this->{$property} = $termNames[$taxonomyId][strtolower($name)];
     }
   }
 
@@ -2975,14 +2975,14 @@ class QubitInformationObject extends BaseInformationObject
 
     foreach ($relations as $relation)
     {
-      if ($relation->$relatedBy instanceof QubitActor)
+      if ($relation->{$relatedBy} instanceof QubitActor)
       {
-        foreach ($relation->$relatedBy->actorI18ns as $actorI18n)
+        foreach ($relation->{$relatedBy}->actorI18ns as $actorI18n)
         {
           if (isset($actorI18n->authorizedFormOfName) &&
             $name == $actorI18n->authorizedFormOfName)
           {
-            return $relation->$relatedBy;
+            return $relation->{$relatedBy};
           }
         }
       }

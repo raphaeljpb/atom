@@ -328,7 +328,7 @@ EOF;
     {
       if (!empty($this->import->columnValue($property)))
       {
-        $relation->$property = $this->import->columnValue($property);
+        $relation->{$property} = $this->import->columnValue($property);
       }
     }
   }

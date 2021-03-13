@@ -242,7 +242,7 @@ EOF;
               }
               else
               {
-                $contactInfo->$field = $self->rowStatusVars[$field];
+                $contactInfo->{$field} = $self->rowStatusVars[$field];
               }
             }
           }

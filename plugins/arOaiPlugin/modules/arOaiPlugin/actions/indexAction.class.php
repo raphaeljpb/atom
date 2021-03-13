@@ -223,13 +223,13 @@ class arOaiPluginIndexAction extends sfAction
 
     foreach ($settableAttributes as $attribute)
     {
-      if ($resumptionToken->$attribute)
+      if ($resumptionToken->{$attribute})
       {
         // We set each attribute both on the request and on our attributes list.
         // The attributes list is checked by QubitOai::checkBadArgument, while
         // $request is used by the call to arOaiPluginComponent.
-        $attributes[$attribute] = $resumptionToken->$attribute;
-        $request->$attribute = $resumptionToken->$attribute;
+        $attributes[$attribute] = $resumptionToken->{$attribute};
+        $request->{$attribute} = $resumptionToken->{$attribute};
       }
     }
   }

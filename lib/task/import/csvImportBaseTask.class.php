@@ -435,7 +435,7 @@ abstract class csvImportBaseTask extends arBaseTask
     {
       if (isset($self->object) && is_object($self->object))
       {
-        $self->object->$property = $self->translateNameToTermId(
+        $self->object->{$property} = $self->translateNameToTermId(
           $propertyDescription,
           $termName,
           [],

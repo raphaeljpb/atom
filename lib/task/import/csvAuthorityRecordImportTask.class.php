@@ -281,7 +281,7 @@ EOF;
             {
               if ($self->rowStatusVars[$property])
               {
-                $info->$property = $self->rowStatusVars[$property];
+                $info->{$property} = $self->rowStatusVars[$property];
               }
             }
 

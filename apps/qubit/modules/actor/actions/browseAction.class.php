@@ -339,7 +339,7 @@ class ActorBrowseAction extends DefaultBrowseAction
 
         if (!empty($this->relatedAuthority))
         {
-          $defaultChoices = [$request->$name => $this->relatedAuthority->getAuthorizedFormOfName(['cultureFallback' => true])];
+          $defaultChoices = [$request->{$name} => $this->relatedAuthority->getAuthorizedFormOfName(['cultureFallback' => true])];
         }
 
         $this->form->setValidator($name, new sfValidatorString());

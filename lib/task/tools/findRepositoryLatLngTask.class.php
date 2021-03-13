@@ -62,9 +62,9 @@ EOF;
 
       foreach (['streetAddress', 'city', 'region', 'postalCode', 'countryCode'] as $field)
       {
-        if (isset($item->$field) && !empty($item->$field))
+        if (isset($item->{$field}) && !empty($item->{$field}))
         {
-          $address[] = $item->$field;
+          $address[] = $item->{$field};
         }
       }
 

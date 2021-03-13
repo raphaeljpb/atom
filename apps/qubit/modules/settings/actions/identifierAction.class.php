@@ -69,8 +69,8 @@ class SettingsIdentifierAction extends DefaultEditAction
       case 'identifier_counter':
       case 'separator_character':
         // Determine default value
-        $default = (null !== $this->$name = QubitSetting::getByName($name))
-          ? $this->$name->getValue(['sourceCulture' => true])
+        $default = (null !== $this->{$name} = QubitSetting::getByName($name))
+          ? $this->{$name}->getValue(['sourceCulture' => true])
           : '';
 
         // Set default, validator, and widget
@@ -93,8 +93,8 @@ class SettingsIdentifierAction extends DefaultEditAction
           'prevent_duplicate_actor_identifiers' => 0,
         ];
 
-        $default = (null !== $this->$name = QubitSetting::getByName($name))
-          ? $this->$name->getValue(['sourceCulture' => true])
+        $default = (null !== $this->{$name} = QubitSetting::getByName($name))
+          ? $this->{$name}->getValue(['sourceCulture' => true])
           : $defaults[$name];
 
         // Set default, validator, and widget
@@ -121,13 +121,13 @@ class SettingsIdentifierAction extends DefaultEditAction
       case 'inherit_code_informationobject':
       case 'inherit_code_dc_xml':
       case 'prevent_duplicate_actor_identifiers':
-        if (null === $this->$name)
+        if (null === $this->{$name})
         {
-          $this->$name = new QubitSetting();
-          $this->$name->name = $name;
+          $this->{$name} = new QubitSetting();
+          $this->{$name}->name = $name;
         }
-        $this->$name->setValue($field->getValue(), ['sourceCulture' => true]);
-        $this->$name->save();
+        $this->{$name}->setValue($field->getValue(), ['sourceCulture' => true]);
+        $this->{$name}->save();
 
         break;
     }

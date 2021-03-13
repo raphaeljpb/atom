@@ -59,7 +59,7 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
       case 'parent_id':
       case 'title':
         $field = lcfirst(sfInflector::camelize($field));
-        $this->io->$field = $value;
+        $this->io->{$field} = $value;
 
         break;
 

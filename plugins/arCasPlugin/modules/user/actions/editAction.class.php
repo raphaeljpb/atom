@@ -200,7 +200,7 @@ class UserEditAction extends DefaultEditAction
         $apiKey = QubitProperty::getOneByObjectIdAndName($this->resource->id, sfInflector::camelize($name));
         if (null != $apiKey)
         {
-          $this->$name = $apiKey->value;
+          $this->{$name} = $apiKey->value;
         }
 
         // Expose whether or not API is enabled

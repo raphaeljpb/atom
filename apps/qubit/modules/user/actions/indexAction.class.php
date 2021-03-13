@@ -35,7 +35,7 @@ class UserIndexAction extends sfAction
 
       if (null != $apiKeyProperty)
       {
-        $this->$key = $apiKeyProperty->value;
+        $this->{$key} = $apiKeyProperty->value;
       }
     }
 

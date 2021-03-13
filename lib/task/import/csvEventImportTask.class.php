@@ -242,7 +242,7 @@ exit();
 
   while ($subject = $statement->fetch(PDO::FETCH_OBJ))
   {
-    $names[$subject->$keyColumn] = $subject->$idColumn;
+    $names[$subject->{$keyColumn}] = $subject->{$idColumn};
   }
 
   return $names;

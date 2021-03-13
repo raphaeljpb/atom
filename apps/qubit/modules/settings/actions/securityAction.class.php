@@ -52,7 +52,7 @@ class SettingsSecurityAction extends SettingsEditAction
         $this->form->setWidget($name, new sfWidgetFormInput());
         $this->form->setValidator($name, new sfValidatorString(['required' => false]));
         $labelText = $this->i18n->__('Limit administrator functionality to one or more IP addresses, separated by semicolons.');
-        $this->form->getWidgetSchema()->$name->setLabel($labelText);
+        $this->form->getWidgetSchema()->{$name}->setLabel($labelText);
 
         break;
 
@@ -60,7 +60,7 @@ class SettingsSecurityAction extends SettingsEditAction
         $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
         $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
         $labelText = $this->i18n->__('Require SSL for all administrator functionality');
-        $this->form->getWidgetSchema()->$name->setLabel($labelText);
+        $this->form->getWidgetSchema()->{$name}->setLabel($labelText);
 
         break;
 
@@ -68,7 +68,7 @@ class SettingsSecurityAction extends SettingsEditAction
         $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
         $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
         $labelText = $this->i18n->__('Require strong passwords');
-        $this->form->getWidgetSchema()->$name->setLabel($labelText);
+        $this->form->getWidgetSchema()->{$name}->setLabel($labelText);
 
         break;
     }

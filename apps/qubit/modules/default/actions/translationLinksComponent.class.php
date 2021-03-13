@@ -119,7 +119,7 @@ class DefaultTranslationLinksComponent extends sfComponent
         continue;
       }
 
-      $name = isset($propertyName) && isset($i18n->$propertyName) ? $i18n->$propertyName : $sourceCultureProperty;
+      $name = isset($propertyName) && isset($i18n->{$propertyName}) ? $i18n->{$propertyName} : $sourceCultureProperty;
       $langCode = $i18n->culture;
       $langName = format_language($langCode);
 

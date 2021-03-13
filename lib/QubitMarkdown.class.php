@@ -95,7 +95,7 @@ class QubitMarkdown
     }
 
     $this->parsedown->setSafeMode($safeMode);
-    $content = $this->parsedown->$method($content);
+    $content = $this->parsedown->{$method}($content);
 
     return $content;
   }

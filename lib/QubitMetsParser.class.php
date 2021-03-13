@@ -742,7 +742,7 @@ class QubitMetsParser
       $value = $this->getFieldValue($this->document, $options['xpath'], $options['type']);
       if (!empty($value))
       {
-        $premisObject->$fieldName = $value;
+        $premisObject->{$fieldName} = $value;
       }
     }
 

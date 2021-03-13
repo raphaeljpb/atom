@@ -498,7 +498,7 @@ class ClipboardExportAction extends DefaultEditAction
 
       case 'type':
       case 'format':
-        $this->$name = $this->form->getValue($name);
+        $this->{$name} = $this->form->getValue($name);
 
         break;
 

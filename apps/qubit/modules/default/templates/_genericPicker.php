@@ -8,9 +8,9 @@
       <div class="dropdown-selected">
         <?php $options = $sf_data->getRaw('options'); ?>
         <?php $param = $sf_data->getRaw('param'); ?>
-        <?php if (isset($sf_request->$param, $options[$sf_request->$param])) { ?>
-          <span><?php echo $options[$sf_request->$param]; ?></span>
-          <?php unset($options[$sf_request->$param]); ?>
+        <?php if (isset($sf_request->{$param}, $options[$sf_request->{$param}])) { ?>
+          <span><?php echo $options[$sf_request->{$param}]; ?></span>
+          <?php unset($options[$sf_request->{$param}]); ?>
         <?php } else { ?>
           <span><?php echo array_shift($options); ?></span>
         <?php } ?>

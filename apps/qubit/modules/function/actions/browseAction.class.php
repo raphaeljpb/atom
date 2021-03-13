@@ -80,17 +80,17 @@ class FunctionBrowseAction extends sfAction
     switch ($request->sort)
     {
       case 'identifier':
-        $criteria->$sortFunction(QubitFunctionObject::DESCRIPTION_IDENTIFIER);
+        $criteria->{$sortFunction}(QubitFunctionObject::DESCRIPTION_IDENTIFIER);
         // And then back to authorized form of name
         // no break
       case 'alphabetic':
-        $criteria->$sortFunction('authorized_form_of_name');
+        $criteria->{$sortFunction}('authorized_form_of_name');
 
         break;
 
       case 'lastUpdated':
       default:
-        $criteria->$sortFunction(QubitObject::UPDATED_AT);
+        $criteria->{$sortFunction}(QubitObject::UPDATED_AT);
 
         break;
     }

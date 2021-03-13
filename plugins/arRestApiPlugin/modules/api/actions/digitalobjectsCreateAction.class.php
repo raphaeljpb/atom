@@ -61,7 +61,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
 
       foreach ($props as $pkey => $pval)
       {
-        if (empty($payload->$pkey))
+        if (empty($payload->{$pkey}))
         {
           continue;
         }
@@ -69,7 +69,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
         $property = new QubitProperty();
         $property->objectId = $this->do->objectId;
         $property->name = $pval;
-        $property->value = $payload->$pkey;
+        $property->value = $payload->{$pkey};
         $property->save();
       }
     }
@@ -90,7 +90,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
       case 'byte_size':
       case 'parent_id':
         $field = lcfirst(sfInflector::camelize($field));
-        $this->do->$field = $value;
+        $this->do->{$field} = $value;
 
         break;
 

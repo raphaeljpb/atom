@@ -245,11 +245,11 @@ class DigitalObjectEditAction extends sfAction
 
         if (-1 < $maxUploadSize)
         {
-          $this->form->getWidgetSchema()->$repName->setHelp($this->context->i18n->__('Max. size ~%1%', ['%1%' => hr_filesize($maxUploadSize)]));
+          $this->form->getWidgetSchema()->{$repName}->setHelp($this->context->i18n->__('Max. size ~%1%', ['%1%' => hr_filesize($maxUploadSize)]));
         }
         else
         {
-          $this->form->getWidgetSchema()->$repName->setHelp('');
+          $this->form->getWidgetSchema()->{$repName}->setHelp('');
         }
 
         // Add "auto-generate" checkbox

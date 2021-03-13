@@ -82,7 +82,7 @@ EOF;
 
       // Expire data and report results
       $methodName = sprintf('%sExpireData', $dataType);
-      $deletedCount = $this->$methodName($options);
+      $deletedCount = $this->{$methodName}($options);
 
       $this->logSection(
         'expire-data',

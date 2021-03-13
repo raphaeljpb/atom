@@ -86,8 +86,8 @@
   $counter = 0;
   $counterVar = 'counter';
 
-  $creators = $$resourceVar->getCreators();
-  $events = $$resourceVar->getActorEvents(['eventTypeId' => QubitTerm::CREATION_ID]);
+  $creators = ${$resourceVar}->getCreators();
+  $events = ${$resourceVar}->getActorEvents(['eventTypeId' => QubitTerm::CREATION_ID]);
 
   $topLevelDid = true;
 
@@ -312,8 +312,8 @@
 
       <?php
         $resourceVar = 'descendant';
-        $creators = $$resourceVar->getCreators();
-        $events = $$resourceVar->getActorEvents(['eventTypeId' => QubitTerm::CREATION_ID]);
+        $creators = ${$resourceVar}->getCreators();
+        $events = ${$resourceVar}->getActorEvents(['eventTypeId' => QubitTerm::CREATION_ID]);
 
         include 'indexSuccessBodyDidElement.xml.php';
 

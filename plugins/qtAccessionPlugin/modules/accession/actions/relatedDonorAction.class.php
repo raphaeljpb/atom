@@ -39,9 +39,9 @@ class AccessionRelatedDonorAction extends RelationIndexAction
         'longitude',
         'note', ] as $field)
       {
-        if (isset($contact->$field))
+        if (isset($contact->{$field}))
         {
-          $value[$field] = $contact->$field;
+          $value[$field] = $contact->{$field};
         }
       }
     }

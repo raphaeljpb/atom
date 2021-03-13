@@ -117,7 +117,7 @@ class QubitFlatfileImport
         );
         if ($settingAllowed)
         {
-          $object->$option = $value;
+          $object->{$option} = $value;
         }
         else
         {
@@ -271,9 +271,9 @@ class QubitFlatfileImport
   {
     // attempting to directly call an object property that's a
     // closure results in "Fatal error: Call to undefined method"
-    if ($this->$property)
+    if ($this->{$property})
     {
-      call_user_func_array($this->$property, [&$this]);
+      call_user_func_array($this->{$property}, [&$this]);
     }
   }
 
@@ -507,11 +507,11 @@ class QubitFlatfileImport
         // Use special logic when comparing dates, see dateStringsEqual for details.
         if (false !== strpos(strtolower($field), 'date'))
         {
-          $match = $match && $this->dateStringsEqual($existingEvent->$field, $event->$field);
+          $match = $match && $this->dateStringsEqual($existingEvent->{$field}, $event->{$field});
         }
         else
         {
-          $match = $match && $existingEvent->$field === $event->$field;
+          $match = $match && $existingEvent->{$field} === $event->{$field};
         }
 
         // Event fields differ, don't bother checking other fields since these aren't equal
