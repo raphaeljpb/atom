@@ -145,9 +145,7 @@ class QubitAccession extends BaseAccession
       $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor', $options);
     }
 
-    $actors = QubitActor::get($criteria);
-
-    return $actors;
+    return QubitActor::get($criteria);
   }
 
   /**

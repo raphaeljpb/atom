@@ -1630,9 +1630,7 @@ class QubitDigitalObject extends BaseDigitalObject
     $criteria->add(QubitDigitalObject::PARENT_ID, $this->id);
     $criteria->add(QubitDigitalObject::USAGE_ID, $usageId);
 
-    $result = QubitDigitalObject::getOne($criteria);
-
-    return $result;
+    return QubitDigitalObject::getOne($criteria);
   }
 
   /**
@@ -1649,9 +1647,7 @@ class QubitDigitalObject extends BaseDigitalObject
     $criteria->add(QubitDigitalObject::PATH, $path);
     $criteria->add(QubitDigitalObject::NAME, $name);
 
-    $result = QubitDigitalObject::getOne($criteria);
-
-    return $result;
+    return QubitDigitalObject::getOne($criteria);
   }
 
   /**
@@ -2290,9 +2286,7 @@ class QubitDigitalObject extends BaseDigitalObject
   public function createThumbnail($connection = null)
   {
     // Create a thumbnail
-    $derivative = $this->createImageDerivative(QubitTerm::THUMBNAIL_ID, $connection);
-
-    return $derivative;
+    return $this->createImageDerivative(QubitTerm::THUMBNAIL_ID, $connection);
   }
 
   /**
@@ -2305,9 +2299,7 @@ class QubitDigitalObject extends BaseDigitalObject
   public function createReferenceImage($connection = null)
   {
     // Create derivative
-    $derivative = $this->createImageDerivative(QubitTerm::REFERENCE_ID, $connection);
-
-    return $derivative;
+    return $this->createImageDerivative(QubitTerm::REFERENCE_ID, $connection);
   }
 
   public function getLocalPath()

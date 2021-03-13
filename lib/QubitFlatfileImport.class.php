@@ -367,9 +367,8 @@ class QubitFlatfileImport
   {
     $str = str_replace(' ', '_', $str);
     $str = sfInflector::camelize($str);
-    $str = lcfirst($str);
 
-    return $str;
+    return lcfirst($str);
   }
 
   /**
@@ -1539,9 +1538,7 @@ class QubitFlatfileImport
 
       if (in_array($termName, $terms))
       {
-        $termId = array_search($termName, $terms);
-
-        return $termId;
+        return array_search($termName, $terms);
       }
 
         throw new sfException('Could not find "'.$termName.'" in '.$description.' terms array.');

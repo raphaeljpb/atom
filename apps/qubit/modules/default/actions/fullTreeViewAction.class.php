@@ -53,9 +53,8 @@ class DefaultFullTreeViewAction extends sfAction
   {
     // Get child data
     $results = $this->findChildren($informationObjectId, $options);
-    $data = $this->formatResultsData($results, $options);
 
-    return $data;
+    return $this->formatResultsData($results, $options);
   }
 
   /**
@@ -432,9 +431,7 @@ class DefaultFullTreeViewAction extends sfAction
     $text = $this->addDates($text, $record);
 
     // Prepend "(Draft) " to draft descriptions
-    $text = $this->addDraftText($text, $record);
-
-    return $text;
+    return $this->addDraftText($text, $record);
   }
 
   /**

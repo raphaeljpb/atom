@@ -168,8 +168,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
     }
 
     self::$statement->execute([$parentId]);
-    $children = self::$statement->fetchAll(PDO::FETCH_OBJ);
 
-    return $children;
+    return self::$statement->fetchAll(PDO::FETCH_OBJ);
   }
 }
