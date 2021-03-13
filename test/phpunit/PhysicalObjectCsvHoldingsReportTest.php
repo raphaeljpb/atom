@@ -10,7 +10,7 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
    * Fixtures
    **************************************************************************/
 
-  public function setUp() : void
+  public function setUp(): void
   {
     $this->ormClasses = [
       'informationObject' => \AccessToMemory\test\mock\QubitInformationObject::class,
