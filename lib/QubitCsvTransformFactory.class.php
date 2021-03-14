@@ -30,6 +30,7 @@ class QubitCsvTransformFactory
   public $setupLogic;
   public $transformLogic;
   public $preserveOrder;
+  public $convertWindowsEncoding;
 
   public function __construct($options = array())
   {
@@ -44,7 +45,8 @@ class QubitCsvTransformFactory
       'rowParentKeyLookupLogic',
       'setupLogic',
       'transformLogic',
-      'preserveOrder'
+      'preserveOrder',
+      'convertWindowsEncoding'
     );
 
     QubitFlatfileImport::setPropertiesFromArray(
@@ -79,6 +81,8 @@ class QubitCsvTransformFactory
         'rowParentKeyLookupLogic' => $this->rowParentKeyLookupLogic,
         'preserveOrder'           => $this->preserveOrder
       ),
+
+      'convertWindowsEncoding' => true,
 
       'setupLogic' => $this->setupLogic,
 
@@ -132,8 +136,10 @@ class QubitCsvTransformFactory
             'badLevelOfDescription'   => 0,
             'rowParentKeyLookupLogic' => $self->status['rowParentKeyLookupLogic'],
             'ignoreBadLod'            => $self->status['ignoreBadLod'],
-            'preserveOrder'           => $self->status['preserveOrder']
+            'preserveOrder'           => $self->status['preserveOrder'],
           ),
+
+          'convertWindowsEncoding'  => $self->convertWindowsEncoding,
 
           'errorLog' => $self->errorLog,
 

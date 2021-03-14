@@ -22,7 +22,8 @@ class QubitCsvTransform extends QubitFlatfileImport
   public
     $setupLogic,
     $transformLogic,
-    $rowsPerFile = 1000;
+    $rowsPerFile = 1000,
+    $convertWindowsEncoding = false;
 
   private
     $link;
@@ -143,7 +144,11 @@ class QubitCsvTransform extends QubitFlatfileImport
     $row = $this->status['row'];
     foreach ($row as $index => $value)
     {
-      $normalized = self::normalizeString($value);
+      $normalized = $value;
+      if ($this->convertWindowsEncoding)
+      {
+        $normalized = mb_convert_encoding($value, 'UTF-8', 'Windows-1252');
+      }
 
       if (strlen($normalized) != strlen($value))
       {
@@ -151,7 +156,7 @@ class QubitCsvTransform extends QubitFlatfileImport
         $idColumnIndex = array_search('legacyId', $this->status['row']);
         $id = $this->status['row'][$idColumnIndex];
 
-        $error = "Character in %s couldn't be converted to ISO 8859-1 "
+        $error = "Character in %s couldn't be converted to UTF-8 "
           . "(legacy ID %d, strlen difference of %d)\n";
 
         print sprintf(
@@ -162,7 +167,7 @@ class QubitCsvTransform extends QubitFlatfileImport
         );
       }
 
-      $row[$index] = self::normalizeString($value);
+      $row[$index] = $normalized;
     }
 
     $sql = "INSERT INTO import_descriptions
@@ -176,32 +181,6 @@ class QubitCsvTransform extends QubitFlatfileImport
     {
       throw new sfException('Failed to create MySQL DB row:' . mysqli_error($this->link));
     }
-  }
-
-  public static function normalizeString($string)
-  {
-    // Normalize smart quotes, etc.
-    $search = [chr(145),
-                chr(146),
-                chr(147),
-                chr(148),
-                chr(151),
-              ];
-
-    $replace = ["'",
-                 "'",
-                 '"',
-                 '"',
-                 '-',
-               ];
-
-    $normalizedString = str_replace($search, $replace, $string);
-
-    // Attempt to convert other characters into ISO-8859-1 (ignoring anything
-    // that can't be transliterated)
-    $normalizedString = iconv('UTF-8', 'UTF-8//IGNORE', $normalizedString);
-
-    return $normalizedString;
   }
 
   function numberedFilePathVariation($filename, $number)
