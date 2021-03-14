@@ -198,7 +198,7 @@ EOF;
               throw new sfException($error);
             }
 
-              echo $self->logError($error);
+            echo $self->logError($error);
           }
 
           if (

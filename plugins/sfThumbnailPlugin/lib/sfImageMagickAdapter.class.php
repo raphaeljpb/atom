@@ -188,12 +188,12 @@ class sfImageMagickAdapter
         throw new Exception('Image could not be identified.');
       }
 
-        // get image data via identify
-        list($img, $type, $dimen) = explode(' ', $stdout[0]);
-        list($width, $height) = explode('x', $dimen);
+      // get image data via identify
+      list($img, $type, $dimen) = explode(' ', $stdout[0]);
+      list($width, $height) = explode('x', $dimen);
 
-        $this->sourceWidth = $width;
-        $this->sourceHeight = $height;
+      $this->sourceWidth = $width;
+      $this->sourceHeight = $height;
     }
     else
     {
@@ -340,7 +340,7 @@ class sfImageMagickAdapter
           $this->image = $thumbDest;
         }
 
-          break;
+        break;
     } // end switch
 
     $command .= ' -thumbnail ';

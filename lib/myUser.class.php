@@ -34,7 +34,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
       return $this->getUserID();
     }
 
-      return QubitAclGroup::ANONYMOUS_ID;
+    return QubitAclGroup::ANONYMOUS_ID;
   }
 
   public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = [])
@@ -167,7 +167,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
       return [QubitAclGroup::getById(QubitAclGroup::ANONYMOUS_ID)];
     }
 
-      return $this->user->getAclGroups();
+    return $this->user->getAclGroups();
   }
 
   public function hasGroup($checkGroups)
@@ -211,7 +211,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
       return $groups;
     }
 
-      return QubitAclGroup::getById(QubitAclGroup::ANONYMOUS_ID);
+    return QubitAclGroup::getById(QubitAclGroup::ANONYMOUS_ID);
   }
 
   /**

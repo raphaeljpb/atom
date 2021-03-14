@@ -461,10 +461,10 @@ class arElasticSearchPluginQuery
           return $queryBool;
         }
 
-          $query = new \Elastica\Query\Term();
-          $query->setTerm('copyrightStatusId', $value);
+        $query = new \Elastica\Query\Term();
+        $query->setTerm('copyrightStatusId', $value);
 
-          return $query;
+        return $query;
 
       case 'onlyMedia':
         $query = new \Elastica\Query\Term();

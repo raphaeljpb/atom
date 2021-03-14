@@ -395,7 +395,7 @@ class sfWebBrowser
       return $this->post($url, $arguments);
     }
 
-      return $this->get($url, $arguments);
+    return $this->get($url, $arguments);
   }
 
   /**

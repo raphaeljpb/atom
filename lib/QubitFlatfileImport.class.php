@@ -182,7 +182,7 @@ class QubitFlatfileImport
       return trim(call_user_func_array($this->contentFilterLogic, [$text]));
     }
 
-      return trim($text);
+    return trim($text);
   }
 
   /**
@@ -228,7 +228,7 @@ class QubitFlatfileImport
         return trim($this->status['row'][$columnIndex]);
       }
 
-        $this->status['row'][$columnIndex] = $value;
+      $this->status['row'][$columnIndex] = $value;
     }
     else
     {
@@ -944,7 +944,7 @@ class QubitFlatfileImport
       return QubitPhysicalObject::getById($result->id);
     }
 
-      return $this->createPhysicalObject($name, $location, $typeId);
+    return $this->createPhysicalObject($name, $location, $typeId);
   }
 
   /**
@@ -968,7 +968,7 @@ class QubitFlatfileImport
       return QubitRepository::getById($result->id);
     }
 
-      return QubitFlatfileImport::createRepository($name);
+    return QubitFlatfileImport::createRepository($name);
   }
 
   /**
@@ -1131,7 +1131,7 @@ class QubitFlatfileImport
       return QubitContactInformation::getById($result->id);
     }
 
-      return $this->createContactInformation($actorId, $options);
+    return $this->createContactInformation($actorId, $options);
   }
 
   /**
@@ -1541,7 +1541,7 @@ class QubitFlatfileImport
         return array_search($termName, $terms);
       }
 
-        throw new sfException('Could not find "'.$termName.'" in '.$description.' terms array.');
+      throw new sfException('Could not find "'.$termName.'" in '.$description.' terms array.');
     }
     else
     {
@@ -1562,7 +1562,7 @@ class QubitFlatfileImport
       return $result->object_id;
     }
 
-      throw new sfException('Could not find object matching slug "'.$slug.'"');
+    throw new sfException('Could not find object matching slug "'.$slug.'"');
   }
 
   /**

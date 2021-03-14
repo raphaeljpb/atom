@@ -194,8 +194,7 @@ EOF;
           // If there are creators on the ancestors but they don't match:
           //   -- stop looking cause it does not matter what is above this node
           //   -- do not delete any creators because they do not match current ancestor.
-
-            break;
+          break;
         }
         // If there are creators on the ancestors but they don't match:
         //   -- stop looking cause it does not matter what is above this node

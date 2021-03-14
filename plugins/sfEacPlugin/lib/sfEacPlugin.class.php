@@ -962,13 +962,13 @@ return;
           return $term->id;
         }
 
-          $term = new QubitTerm();
-          $term->taxonomyId = QubitTaxonomy::EVENT_TYPE_ID;
-          $term->parentId = QubitTerm::ROOT_ID;
-          $term->name = $resourceRelationType;
-          $term->save();
+        $term = new QubitTerm();
+        $term->taxonomyId = QubitTaxonomy::EVENT_TYPE_ID;
+        $term->parentId = QubitTerm::ROOT_ID;
+        $term->name = $resourceRelationType;
+        $term->save();
 
-          return $term->id;
+        return $term->id;
 
       case 'subjectOf':
         return;

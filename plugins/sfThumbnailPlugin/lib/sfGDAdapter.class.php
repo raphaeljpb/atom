@@ -110,7 +110,7 @@ class sfGDAdapter
       return true;
     }
 
-      throw new Exception(sprintf('Image MIME type %s not supported', $imgData['mime']));
+    throw new Exception(sprintf('Image MIME type %s not supported', $imgData['mime']));
   }
 
   public function loadData($thumbnail, $image, $mime)
@@ -136,7 +136,7 @@ class sfGDAdapter
       return true;
     }
 
-      throw new Exception(sprintf('Image MIME type %s not supported', $mime));
+    throw new Exception(sprintf('Image MIME type %s not supported', $mime));
   }
 
   public function save($thumbnail, $thumbDest, $targetMime = null)

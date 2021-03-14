@@ -1259,10 +1259,10 @@ class QubitXmlImport
         return false;
       }
 
-        $this->errors[] = $this->i18n->__('Deleting and replacing record: %title%', ['%title%' => $title]);
-        call_user_func([$matchResource, $deleteFunctionName]);
+      $this->errors[] = $this->i18n->__('Deleting and replacing record: %title%', ['%title%' => $title]);
+      call_user_func([$matchResource, $deleteFunctionName]);
 
-        return true;
+      return true;
     }
 
     // Match not found when not updating and skipping matches

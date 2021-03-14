@@ -46,6 +46,6 @@ class QubitSslRequirementFilter extends sfFilter
       return $context->getController()->redirect($secure_url);
     }
 
-      $filterChain->execute();
+    $filterChain->execute();
   }
 }

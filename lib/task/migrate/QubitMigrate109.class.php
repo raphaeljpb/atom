@@ -661,7 +661,7 @@ class QubitMigrate109 extends QubitMigrate
             break;
           }
 
-            array_unshift($keys, $parentKey);
+          array_unshift($keys, $parentKey);
         }
 
         // Duplicate ancestor's publication status

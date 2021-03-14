@@ -453,12 +453,12 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
       return $digitalObject->path;
     }
 
-      $request = sfContext::getInstance()->getRequest();
+    $request = sfContext::getInstance()->getRequest();
 
-      // Return the URL for the master digital object on the local filesystem
-      return $request->getUriPrefix()
-        .$request->getRelativeUrlRoot()
-        .$digitalObject->getFullPath();
+    // Return the URL for the master digital object on the local filesystem
+    return $request->getUriPrefix()
+      .$request->getRelativeUrlRoot()
+      .$digitalObject->getFullPath();
   }
 
   /**

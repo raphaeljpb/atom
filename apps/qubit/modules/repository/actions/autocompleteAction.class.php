@@ -53,27 +53,27 @@ class RepositoryAutocompleteAction extends sfAction
         return sfView::NONE;
       }
 
-        while ($repo = array_shift($repositoryAccess))
+      while ($repo = array_shift($repositoryAccess))
+      {
+        if ('*' != $repo['id'])
         {
-          if ('*' != $repo['id'])
+          $repositoryList[] = $repo['id'];
+        }
+        else
+        {
+          if (QubitAcl::DENY == $repo['access'])
           {
-            $repositoryList[] = $repo['id'];
+            // Require repositories to be specifically allowed (all others
+            // prohibited)
+            $criteria->add(QubitRepository::ID, $repositoryList + ['null'], Criteria::IN);
           }
           else
           {
-            if (QubitAcl::DENY == $repo['access'])
-            {
-              // Require repositories to be specifically allowed (all others
-              // prohibited)
-              $criteria->add(QubitRepository::ID, $repositoryList + ['null'], Criteria::IN);
-            }
-            else
-            {
-              // Prohibit specified repositories (all others allowed)
-              $criteria->add(QubitRepository::ID, $repositoryList, Criteria::NOT_IN);
-            }
+            // Prohibit specified repositories (all others allowed)
+            $criteria->add(QubitRepository::ID, $repositoryList, Criteria::NOT_IN);
           }
         }
+      }
     }
 
     $this->repositories = QubitRepository::get($criteria);

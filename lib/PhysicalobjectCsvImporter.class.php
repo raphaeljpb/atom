@@ -600,7 +600,7 @@ EOQ;
       return [$matches->current()];
     }
 
-      return $this->handleMultipleMatches($data['name'], $matches);
+    return $this->handleMultipleMatches($data['name'], $matches);
   }
 
   public function handleMultipleMatches($name, $matches)

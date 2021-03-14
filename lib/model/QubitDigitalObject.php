@@ -1499,9 +1499,9 @@ class QubitDigitalObject extends BaseDigitalObject
       return $this->getPath().$this->getName();
     }
 
-      // For remote resources 'path' contains the complete URL and concatenating
-      // 'name' is not desirable
-      return $this->getPath();
+    // For remote resources 'path' contains the complete URL and concatenating
+    // 'name' is not desirable
+    return $this->getPath();
   }
 
   /**
@@ -1517,7 +1517,7 @@ class QubitDigitalObject extends BaseDigitalObject
       return $this->getPath();
     }
 
-      return public_path($this->getFullPath(), true);
+    return public_path($this->getFullPath(), true);
   }
 
   /**
@@ -1667,7 +1667,7 @@ class QubitDigitalObject extends BaseDigitalObject
       return $this;
     }
 
-      return $this->getChildByUsageId($usageId);
+    return $this->getChildByUsageId($usageId);
   }
 
   /**
@@ -1761,12 +1761,12 @@ class QubitDigitalObject extends BaseDigitalObject
       return '/'.QubitSetting::getByName('upload_dir')->__toString().'/r/'.$repoDir.'/'.$checksum[0].'/'.$checksum[1].'/'.$checksum[2].'/'.$checksum;
     }
 
-      if (!isset($this->parent))
-      {
-        throw new sfException('Got an orphaned derivative.');
-      }
+    if (!isset($this->parent))
+    {
+      throw new sfException('Got an orphaned derivative.');
+    }
 
-      return rtrim($this->parent->getPath(), '/');
+    return rtrim($this->parent->getPath(), '/');
   }
 
   /**
@@ -2267,7 +2267,7 @@ class QubitDigitalObject extends BaseDigitalObject
       return -1;
     }
 
-      return min($settings);
+    return min($settings);
   }
 
   /*
@@ -2623,7 +2623,7 @@ class QubitDigitalObject extends BaseDigitalObject
       return true;
     }
 
-      return false;
+    return false;
   }
 
   public static function isAudioFile($filename)
@@ -2634,7 +2634,7 @@ class QubitDigitalObject extends BaseDigitalObject
       return true;
     }
 
-      return false;
+    return false;
   }
 
   /*
@@ -2921,7 +2921,7 @@ class QubitDigitalObject extends BaseDigitalObject
       return true;
     }
 
-      return false;
+    return false;
   }
 
   /**

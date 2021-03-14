@@ -43,7 +43,7 @@ $parentKeyLogic = function (&$self) {
     return $self->columnValue('title');
   }
 
-    return false;
+  return false;
 };
 
 $rowParentKeyLookupLogic = function (&$self) {

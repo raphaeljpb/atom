@@ -262,7 +262,7 @@ EOF;
           continue;
         }
 
-          $skip = false;
+        $skip = false;
       }
 
       $this->logSection('digital object', sprintf('Regenerating derivatives for %s... (%ss)',

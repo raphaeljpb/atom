@@ -453,10 +453,10 @@ class QubitActor extends BaseActor
       return $primaryContact;
     }
 
-      $criteria = new Criteria();
-      $criteria->add(QubitContactInformation::ACTOR_ID, $this->id);
+    $criteria = new Criteria();
+    $criteria->add(QubitContactInformation::ACTOR_ID, $this->id);
 
-      return QubitContactInformation::getOne($criteria);
+    return QubitContactInformation::getOne($criteria);
   }
 
   public function setSubjectHitCount($count)

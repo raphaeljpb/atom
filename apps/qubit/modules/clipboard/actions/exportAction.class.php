@@ -517,7 +517,7 @@ class ClipboardExportAction extends DefaultEditAction
           return 'arInformationObjectCsvExportJob';
         }
 
-          return 'arInformationObjectXmlExportJob';
+        return 'arInformationObjectXmlExportJob';
 
       case 'actor':
         if ('csv' == $this->formatType)
@@ -525,7 +525,7 @@ class ClipboardExportAction extends DefaultEditAction
           return 'arActorCsvExportJob';
         }
 
-          return 'arActorXmlExportJob';
+        return 'arActorXmlExportJob';
 
       case 'repository':
         return 'arRepositoryCsvExportJob';

@@ -575,7 +575,7 @@ class arUpgrader110
                 continue;
               }
 
-                $repoName = $repository->slug;
+              $repoName = $repository->slug;
             }
 
             $repoName = $repository->slug;

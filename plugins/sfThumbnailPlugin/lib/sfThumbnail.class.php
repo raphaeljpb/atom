@@ -105,7 +105,7 @@ class sfThumbnail
           if (!filesize($this->tempFile)) {
             throw new Exception('downloaded file is empty');
           }
-            $image = $this->tempFile;
+          $image = $this->tempFile;
         }
         catch (Exception $e)
         {

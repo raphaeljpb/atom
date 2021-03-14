@@ -195,91 +195,91 @@ EOF;
 
         return $this->renderText(json_encode($response));
       }
+
       // Not XHR requests
+      switch ($this->resource->taxonomyId)
+      {
+        case QubitTaxonomy::PLACE_ID:
+          $query = new \Elastica\Query\Terms('places.id', [$this->resource->id]);
+          $this::$AGGS['direct']['field'] = ['directPlaces' => $this->resource->id];
 
-        switch ($this->resource->taxonomyId)
-        {
-          case QubitTaxonomy::PLACE_ID:
-            $query = new \Elastica\Query\Terms('places.id', [$this->resource->id]);
-            $this::$AGGS['direct']['field'] = ['directPlaces' => $this->resource->id];
+          if (isset($request->onlyDirect))
+          {
+            $queryDirect = new \Elastica\Query\Terms('directPlaces', [$this->resource->id]);
+          }
 
-            if (isset($request->onlyDirect))
-            {
-              $queryDirect = new \Elastica\Query\Terms('directPlaces', [$this->resource->id]);
-            }
+          break;
 
-            break;
+        case QubitTaxonomy::SUBJECT_ID:
+          $query = new \Elastica\Query\Terms('subjects.id', [$this->resource->id]);
+          $this::$AGGS['direct']['field'] = ['directSubjects' => $this->resource->id];
 
-          case QubitTaxonomy::SUBJECT_ID:
-            $query = new \Elastica\Query\Terms('subjects.id', [$this->resource->id]);
-            $this::$AGGS['direct']['field'] = ['directSubjects' => $this->resource->id];
+          if (isset($request->onlyDirect))
+          {
+            $queryDirect = new \Elastica\Query\Terms('directSubjects', [$this->resource->id]);
+          }
 
-            if (isset($request->onlyDirect))
-            {
-              $queryDirect = new \Elastica\Query\Terms('directSubjects', [$this->resource->id]);
-            }
+          break;
 
-            break;
+        case QubitTaxonomy::GENRE_ID:
+          $query = new \Elastica\Query\Terms('genres.id', [$this->resource->id]);
+          $this::$AGGS['direct']['field'] = ['directGenres' => $this->resource->id];
 
-          case QubitTaxonomy::GENRE_ID:
-            $query = new \Elastica\Query\Terms('genres.id', [$this->resource->id]);
-            $this::$AGGS['direct']['field'] = ['directGenres' => $this->resource->id];
+          if (isset($request->onlyDirect))
+          {
+            $queryDirect = new \Elastica\Query\Terms('directGenres', [$this->resource->id]);
+          }
 
-            if (isset($request->onlyDirect))
-            {
-              $queryDirect = new \Elastica\Query\Terms('directGenres', [$this->resource->id]);
-            }
+          break;
+      }
 
-            break;
-        }
+      parent::execute($request);
 
-        parent::execute($request);
+      $this->search->queryBool->addMust($query);
 
-        $this->search->queryBool->addMust($query);
+      if (isset($queryDirect))
+      {
+        $this->search->queryBool->addMust($queryDirect);
+      }
 
-        if (isset($queryDirect))
-        {
-          $this->search->queryBool->addMust($queryDirect);
-        }
+      switch ($request->sort)
+      {
+        case 'referenceCode':
+          $this->search->query->setSort(['referenceCode.untouched' => $request->sortDir]);
 
-        switch ($request->sort)
-        {
-          case 'referenceCode':
-            $this->search->query->setSort(['referenceCode.untouched' => $request->sortDir]);
+          break;
 
-            break;
+        case 'alphabetic':
+          $field = sprintf('i18n.%s.title.alphasort', $this->culture);
+          $this->search->query->setSort([$field => $request->sortDir]);
 
-          case 'alphabetic':
-            $field = sprintf('i18n.%s.title.alphasort', $this->culture);
-            $this->search->query->setSort([$field => $request->sortDir]);
+          break;
 
-            break;
+        case 'date':
+          $this->search->query->setSort(['startDateSort' => $request->sortDir]);
 
-          case 'date':
-            $this->search->query->setSort(['startDateSort' => $request->sortDir]);
+          break;
 
-            break;
+        case 'lastUpdated':
+        default:
+          $this->search->query->setSort(['updatedAt' => $request->sortDir]);
+      }
 
-          case 'lastUpdated':
-          default:
-            $this->search->query->setSort(['updatedAt' => $request->sortDir]);
-        }
+      QubitAclSearch::filterDrafts($this->search->queryBool);
+      $this->search->query->setQuery($this->search->queryBool);
 
-        QubitAclSearch::filterDrafts($this->search->queryBool);
-        $this->search->query->setQuery($this->search->queryBool);
+      $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($this->search->query);
 
-        $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($this->search->query);
+      // Page results
+      $this->pager = new QubitSearchPager($resultSet);
+      $this->pager->setPage($request->page ? $request->page : 1);
+      $this->pager->setMaxPerPage($this->limit);
+      $this->pager->init();
 
-        // Page results
-        $this->pager = new QubitSearchPager($resultSet);
-        $this->pager->setPage($request->page ? $request->page : 1);
-        $this->pager->setMaxPerPage($this->limit);
-        $this->pager->init();
+      $this->populateAggs($resultSet);
 
-        $this->populateAggs($resultSet);
-
-        // Load list terms
-        $this->loadListTerms($request);
+      // Load list terms
+      $this->loadListTerms($request);
     }
   }
 

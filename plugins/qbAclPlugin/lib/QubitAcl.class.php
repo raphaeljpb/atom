@@ -138,7 +138,7 @@ class QubitAcl
           return true;
         }
 
-          continue;
+        continue;
       }
 
       // OR condition, first "true" result returns
@@ -224,22 +224,21 @@ class QubitAcl
       }
 
       // Add repository access if there is no pre-existing rule for that repo
-
-        $preExistingRule = false;
-        foreach ($repositoryAccess as $rule)
+      $preExistingRule = false;
+      foreach ($repositoryAccess as $rule)
+      {
+        if ($repository->id == $rule['id'])
         {
-          if ($repository->id == $rule['id'])
-          {
-            $preExistingRule = true;
+          $preExistingRule = true;
 
-            break;
-          }
+          break;
         }
+      }
 
-        if (!$preExistingRule)
-        {
-          $repositoryAccess[] = ['id' => $repository->id, 'access' => $access];
-        }
+      if (!$preExistingRule)
+      {
+        $repositoryAccess[] = ['id' => $repository->id, 'access' => $access];
+      }
     }
 
     return $repositoryAccess;

@@ -536,7 +536,7 @@ class QubitInformationObject extends BaseInformationObject
       return $this->getRepository()->getCountry();
     }
 
-      return null;
+    return null;
   }
 
   /**
@@ -664,7 +664,7 @@ class QubitInformationObject extends BaseInformationObject
       return sfConfig::get('app_siteBaseUrl').'/'.$this->pathToEadExport();
     }
 
-      return sfContext::getInstance()->routing->generate(null, [$this, 'module' => 'sfEadPlugin', 'sf_format' => 'xml']);
+    return sfContext::getInstance()->routing->generate(null, [$this, 'module' => 'sfEadPlugin', 'sf_format' => 'xml']);
   }
 
   /**
@@ -694,7 +694,7 @@ class QubitInformationObject extends BaseInformationObject
       return sfConfig::get('app_siteBaseUrl').'/'.$this->pathToDcExport();
     }
 
-      return sfContext::getInstance()->routing->generate(null, [$this, 'module' => 'sfDcPlugin', 'sf_format' => 'xml']);
+    return sfContext::getInstance()->routing->generate(null, [$this, 'module' => 'sfDcPlugin', 'sf_format' => 'xml']);
   }
 
   /**
@@ -1238,7 +1238,7 @@ class QubitInformationObject extends BaseInformationObject
       return $creatorNameString;
     }
 
-      return null;
+    return null;
   }
 
   public function getCreatorsHistoryString($options = [])
@@ -1256,7 +1256,7 @@ class QubitInformationObject extends BaseInformationObject
       return $creatorHistoryString;
     }
 
-      return null;
+    return null;
   }
 
   public function getDatesString($options = [])
@@ -1274,7 +1274,7 @@ class QubitInformationObject extends BaseInformationObject
       return $datesString;
     }
 
-      return null;
+    return null;
   }
 
   public function getAccessPointsString($typeId, $options = [])
