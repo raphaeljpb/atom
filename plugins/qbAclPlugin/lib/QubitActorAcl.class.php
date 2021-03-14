@@ -53,8 +53,7 @@ class QubitActorAcl extends QubitAcl
   public static function isAllowed($user, $resource, $action, $options = [])
   {
     // Do custom ACL checks for digital object actions
-    if (in_array($action, self::$_digitalObjectActions))
-    {
+    if (in_array($action, self::$_digitalObjectActions)) {
       return self::isDigitalObjectActionAllowed(
         $user, $resource, $action, $options
       );
@@ -77,17 +76,14 @@ class QubitActorAcl extends QubitAcl
    */
   private function isDigitalObjectActionAllowed(
     $user, $resource, $action, $options = []
-  )
-  {
+  ) {
     // All users can access actor reference representations and thumbnails
-    if (in_array($action, ['readReference', 'readThumbnail']))
-    {
+    if (in_array($action, ['readReference', 'readThumbnail'])) {
       return true;
     }
 
     // All users are authorized to read text (PDF) masters
-    if ('readMaster' == $action && $resource->hasTextDigitalObject())
-    {
+    if ('readMaster' == $action && $resource->hasTextDigitalObject()) {
       return true;
     }
 

@@ -29,17 +29,14 @@ class InformationObjectDescriptionHeaderComponent extends sfComponent
     $string = '';
 
     // Add level of description, if set and not hidden
-    if (!$this->hideLevelOfDescription)
-    {
-      if (isset($this->resource->levelOfDescription))
-      {
+    if (!$this->hideLevelOfDescription) {
+      if (isset($this->resource->levelOfDescription)) {
         $string .= $this->resource->levelOfDescription->__toString();
       }
     }
 
     // Add identifier, if set
-    if (isset($this->resource->identifier))
-    {
+    if (isset($this->resource->identifier)) {
       $string .= (!empty($string)) ? ' ' : '';
       $string .= $this->resource->identifier;
     }

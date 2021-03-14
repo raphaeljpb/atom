@@ -90,8 +90,7 @@ class DefaultFullTreeViewAction extends sfAction
   {
     $result = $this->getElasticSearchResult($informationObjectId);
 
-    if (null === $result)
-    {
+    if (null === $result) {
       return null;
     }
 
@@ -112,15 +111,13 @@ class DefaultFullTreeViewAction extends sfAction
   protected function getCollectionRootId()
   {
     // If $this->ancestorIds is empty, something went wrong
-    if (empty($this->ancestorIds))
-    {
+    if (empty($this->ancestorIds)) {
       return null;
     }
 
     // If the parent of $this->resource is the root node, then this resource is
     // the collection root
-    if ($this->ancestorIds == [QubitInformationObject::ROOT_ID])
-    {
+    if ($this->ancestorIds == [QubitInformationObject::ROOT_ID]) {
       return $this->resource->id;
     }
 
@@ -148,8 +145,7 @@ class DefaultFullTreeViewAction extends sfAction
     $query->queryBool->addMust($term);
 
     // Filter drafts
-    if (!$this->getUser()->isAuthenticated())
-    {
+    if (!$this->getUser()->isAuthenticated()) {
       $query->queryBool->addMust(
         new \Elastica\Query\Term(
           ['publicationStatusId' => QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID]
@@ -200,8 +196,7 @@ class DefaultFullTreeViewAction extends sfAction
     );
 
     // If the information object is a draft, no results are returned
-    if (0 === $results->count())
-    {
+    if (0 === $results->count()) {
       return null;
     }
 
@@ -259,16 +254,14 @@ class DefaultFullTreeViewAction extends sfAction
   {
     $data = [];
 
-    foreach ($results as $result)
-    {
+    foreach ($results as $result) {
       // Append node to $data array
       $data[] = $this->formatResultData($result, $options);
     }
 
     // If $option['memorySort'] is true, order data in-memory by "text"
     // attribute of each node
-    if (isset($options['memorySort']) && $options['memorySort'])
-    {
+    if (isset($options['memorySort']) && $options['memorySort']) {
       $this->memorySort($data);
     }
 
@@ -293,15 +286,13 @@ class DefaultFullTreeViewAction extends sfAction
     $node['text'] = $this->getNodeText($data);
 
     // Set some special flags on our currently selected node
-    if ($result->getId() == $this->resource->id)
-    {
+    if ($result->getId() == $this->resource->id) {
       $node['state'] = ['opened' => true, 'selected' => true];
       $node['li_attr'] = ['selected_on_load' => true];
     }
 
     // Set root item's parent to hash symbol for jstree compatibility
-    if (QubitInformationObject::ROOT_ID == $data['parentId'])
-    {
+    if (QubitInformationObject::ROOT_ID == $data['parentId']) {
       $node['icon'] = 'fa fa-archive';
     }
 
@@ -313,8 +304,7 @@ class DefaultFullTreeViewAction extends sfAction
     );
 
     // If node has children
-    if ($this->countChildren($node['id']) > 0)
-    {
+    if ($this->countChildren($node['id']) > 0) {
       // Set children to default of true for lazy loading
       $node['children'] = true;
 
@@ -322,8 +312,7 @@ class DefaultFullTreeViewAction extends sfAction
       if (
         isset($options['recursive']) && $options['recursive']
         && in_array($node['id'], $this->ancestorIds)
-      )
-      {
+      ) {
         $children = $this->getChildren($node['id'], $options);
 
         $node['children'] = $children['nodes'];
@@ -346,13 +335,11 @@ class DefaultFullTreeViewAction extends sfAction
     // Get default limit from config
     $limit = sfConfig::get('app_treeview_full_items_per_page', 50);
 
-    if (isset($options['limit']) && intval($options['limit']) > 0)
-    {
+    if (isset($options['limit']) && intval($options['limit']) > 0) {
       $limit = intval($options['limit']);
 
       // Don't allow a limit greater than the max value
-      if ($limit > sfConfig::get('app_treeview_items_per_page_max', 10000))
-      {
+      if ($limit > sfConfig::get('app_treeview_items_per_page_max', 10000)) {
         $limit = sfConfig::get('app_treeview_items_per_page_max', 10000);
       }
     }
@@ -371,8 +358,7 @@ class DefaultFullTreeViewAction extends sfAction
   {
     $skip = 0;
 
-    if (isset($options['skip']) && intval($options['skip']) > 0)
-    {
+    if (isset($options['skip']) && intval($options['skip']) > 0) {
       $skip = intval($options['skip']);
     }
 
@@ -398,8 +384,7 @@ class DefaultFullTreeViewAction extends sfAction
     if (
       isset($options['orderColumn'])
       && in_array($options['orderColumn'], $allowedSorts)
-    )
-    {
+    ) {
       $sortField = $options['orderColumn'];
     }
 
@@ -468,28 +453,24 @@ class DefaultFullTreeViewAction extends sfAction
     $identifer = null;
 
     // If show identifier setting is "no" return the input text unaltered
-    if ('no' === $this->showIdentifier)
-    {
+    if ('no' === $this->showIdentifier) {
       return $text;
     }
 
     // If show identifier setting is "identifier", use the local identifier
-    if ('identifier' == $this->showIdentifier && isset($record['identifier']))
-    {
+    if ('identifier' == $this->showIdentifier && isset($record['identifier'])) {
       $identifier = $record['identifier'];
     }
 
     // If show identifier setting is "reference code", use it
     if (
       'referenceCode' === $this->showIdentifier
-      && isset($record['referenceCode']))
-    {
+      && isset($record['referenceCode'])) {
       $identifier = $record['referenceCode'];
     }
 
     // If $identifier has a value, prepend it to the input text
-    if (!empty($identifier))
-    {
+    if (!empty($identifier)) {
       return sprintf('%s - %s', $identifier, $text);
     }
 
@@ -508,8 +489,7 @@ class DefaultFullTreeViewAction extends sfAction
   {
     if ('yes' === sfConfig::get('app_treeview_show_level_of_description', 'yes')
       && !empty($record['levelOfDescriptionId'])
-    )
-    {
+    ) {
       return sprintf(
         '[%s] %s',
         render_value_inline(
@@ -538,14 +518,12 @@ class DefaultFullTreeViewAction extends sfAction
     if (
       'yes' === sfConfig::get('app_treeview_show_dates', 'no')
       && isset($record['dates'])
-    )
-    {
+    ) {
       $dates = render_search_result_date($record['dates']);
     }
 
     // Append dates to text
-    if (!empty($dates))
-    {
+    if (!empty($dates)) {
       $text .= ", {$dates}";
     }
 
@@ -565,8 +543,7 @@ class DefaultFullTreeViewAction extends sfAction
     if (
       isset($record['publicationStatusId'])
       && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $record['publicationStatusId']
-    )
-    {
+    ) {
       // Prepend "(Draft) " to draft records
       $text = sprintf(
         '(%s) %s',
@@ -587,8 +564,7 @@ class DefaultFullTreeViewAction extends sfAction
   {
     $titles = [];
 
-    foreach ($data as $key => $node)
-    {
+    foreach ($data as $key => $node) {
       $titles[$key] = $node['text'];
     }
 

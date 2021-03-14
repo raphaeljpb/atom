@@ -44,8 +44,7 @@ class arMigration0095
     // Retrieve QubitSetting object
     $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, 'plugins');
-    if (null === $setting = QubitSetting::getOne($criteria))
-    {
+    if (null === $setting = QubitSetting::getOne($criteria)) {
       return false;
     }
 

@@ -25,8 +25,7 @@ class AccessionAddInformationObjectAction extends sfAction
 
     $this->resource = $this->getRoute()->resource;
 
-    if (!QubitAcl::check(QubitInformationObject::getRoot(), 'update'))
-    {
+    if (!QubitAcl::check(QubitInformationObject::getRoot(), 'update')) {
       QubitAcl::forwardUnauthorized();
     }
 
@@ -42,8 +41,7 @@ class AccessionAddInformationObjectAction extends sfAction
     $informationObject->appraisal = $this->resource->appraisal;
 
     // Copy (not link) rights
-    foreach (QubitRelation::getRelationsBySubjectId($this->resource->id, ['typeId' => QubitTerm::RIGHT_ID]) as $item)
-    {
+    foreach (QubitRelation::getRelationsBySubjectId($this->resource->id, ['typeId' => QubitTerm::RIGHT_ID]) as $item) {
       $sourceRights = $item->object;
 
       $newRights = $sourceRights->copy();
@@ -56,8 +54,7 @@ class AccessionAddInformationObjectAction extends sfAction
     }
 
     // Populate creators (from QubitRelation to QubitEvent)
-    foreach (QubitRelation::getRelationsByObjectId($this->resource->id, ['typeId' => QubitTerm::CREATION_ID]) as $item)
-    {
+    foreach (QubitRelation::getRelationsByObjectId($this->resource->id, ['typeId' => QubitTerm::CREATION_ID]) as $item) {
       $event = new QubitEvent();
       $event->actor = $item->subject;
       $event->typeId = QubitTerm::CREATION_ID;
@@ -66,8 +63,7 @@ class AccessionAddInformationObjectAction extends sfAction
     }
 
     // Populate dates
-    foreach ($this->resource->getDates() as $accessionEvent)
-    {
+    foreach ($this->resource->getDates() as $accessionEvent) {
       $event = new QubitEvent();
       $event->date = $accessionEvent->date;
       $event->startDate = $accessionEvent->startDate;

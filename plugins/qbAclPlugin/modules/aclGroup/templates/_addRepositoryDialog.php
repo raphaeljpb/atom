@@ -31,8 +31,7 @@ $tableTemplate = <<<EOL
 EOL;
 
 $row = 0;
-foreach ($basicActions as $key => $item)
-{
+foreach ($basicActions as $key => $item) {
   $tableTemplate .= '<tr class="'.((0 == ++$row % 2) ? 'even' : 'odd').'">';
   $tableTemplate .= '<td>'.__($item).'</th>';
   $tableTemplate .= '<td><ul class="radio inline">';

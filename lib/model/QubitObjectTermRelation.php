@@ -30,15 +30,12 @@ class QubitObjectTermRelation extends BaseObjectTermRelation
 
     parent::save($connection);
 
-    if ($this->indexOnSave)
-    {
-      if ($this->objectId != $cleanObjectId && null !== QubitObject::getById($cleanObjectId))
-      {
+    if ($this->indexOnSave) {
+      if ($this->objectId != $cleanObjectId && null !== QubitObject::getById($cleanObjectId)) {
         QubitSearch::getInstance()->update(QubitObject::getById($cleanObjectId));
       }
 
-      if ($this->object instanceof QubitInformationObject)
-      {
+      if ($this->object instanceof QubitInformationObject) {
         QubitSearch::getInstance()->update($this->object);
       }
     }
@@ -50,8 +47,7 @@ class QubitObjectTermRelation extends BaseObjectTermRelation
   {
     parent::delete($connection);
 
-    if ($this->indexObjectOnDelete && $this->getObject() instanceof QubitInformationObject)
-    {
+    if ($this->indexObjectOnDelete && $this->getObject() instanceof QubitInformationObject) {
       QubitSearch::getInstance()->update($this->getObject());
     }
   }

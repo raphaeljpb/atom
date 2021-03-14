@@ -31,21 +31,18 @@ class InformationObjectIndexAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that this isn't the root
-    if (!isset($this->resource->parent))
-    {
+    if (!isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'read'))
-    {
+    if (!QubitAcl::check($this->resource, 'read')) {
       QubitAcl::forwardToSecureAction();
     }
 
     $this->dispatcher->notify(new sfEvent($this, 'access_log.view', ['object' => $this->resource]));
 
-    if ('fullWidth' == sfConfig::get('app_treeview_type__source', 'sidebar'))
-    {
+    if ('fullWidth' == sfConfig::get('app_treeview_type__source', 'sidebar')) {
       $this->getResponse()->addStylesheet('fullWidthTreeView', 'last');
       $this->getResponse()->addStylesheet('/vendor/jstree/themes/default/style.min.css', 'last');
       $this->getResponse()->addJavascript('treeviewTypes', 'last');
@@ -59,8 +56,7 @@ class InformationObjectIndexAction extends sfAction
     }
 
     $scopeAndContent = $this->resource->getScopeAndContent(['cultureFallback' => true]);
-    if (!empty($scopeAndContent))
-    {
+    if (!empty($scopeAndContent)) {
       $this->getContext()->getConfiguration()->loadHelpers(['Text', 'Qubit']);
       $this->response->addMeta('description', truncate_text(strip_markdown($scopeAndContent), 150));
     }
@@ -70,16 +66,12 @@ class InformationObjectIndexAction extends sfAction
 
   protected function addField($validatorSchema, $name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'levelOfDescription':
         $forbiddenValues = [];
-        foreach ($this->resource->ancestors->orderBy('rgt') as $item)
-        {
-          if (isset($item->levelOfDescription))
-          {
-            switch ($item->levelOfDescription->getName(['sourceCulture' => true]))
-            {
+        foreach ($this->resource->ancestors->orderBy('rgt') as $item) {
+          if (isset($item->levelOfDescription)) {
+            switch ($item->levelOfDescription->getName(['sourceCulture' => true])) {
               case 'Item':
                 $forbiddenValues[] = 'Item';
 

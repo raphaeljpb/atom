@@ -22,8 +22,7 @@ class EventEditComponent extends sfComponent
   public function processForm()
   {
     $params = [$this->request->editEvent];
-    if (isset($this->request->editEvents))
-    {
+    if (isset($this->request->editEvents)) {
       // If dialog JavaScript did it's work, then use array of parameters
       $params = $this->request->editEvents;
     }
@@ -31,59 +30,45 @@ class EventEditComponent extends sfComponent
     // Events should index the related resource only when
     // they are managed from the actors form.
     $indexOnSave = false;
-    if ($this->resource instanceof QubitActor)
-    {
+    if ($this->resource instanceof QubitActor) {
       $indexOnSave = true;
     }
 
-    foreach ($params as $item)
-    {
+    foreach ($params as $item) {
       // Continue only if user typed something
-      foreach ($item as $value)
-      {
-        if (0 < strlen($value))
-        {
+      foreach ($item as $value) {
+        if (0 < strlen($value)) {
           break;
         }
       }
 
-      if (1 > strlen($value))
-      {
+      if (1 > strlen($value)) {
         continue;
       }
 
       $this->form->bind($item);
-      if ($this->form->isValid())
-      {
-        if (isset($item['id']))
-        {
+      if ($this->form->isValid()) {
+        if (isset($item['id'])) {
           $params = $this->context->routing->parse(Qubit::pathInfo($item['id']));
 
           // Do not add exiting events to the eventsRelatedByobjectId or events
           // array, as they could be deleted before saving the resource
           $this->event = $params['_sf_route']->resource;
-        }
-        elseif ($this->resource instanceof QubitActor)
-        {
+        } elseif ($this->resource instanceof QubitActor) {
           $this->resource->events[] = $this->event = new QubitEvent();
-        }
-        else
-        {
+        } else {
           $this->resource->eventsRelatedByobjectId[] = $this->event = new QubitEvent();
         }
 
-        foreach ($this->form as $field)
-        {
-          if (isset($item[$field->getName()]))
-          {
+        foreach ($this->form as $field) {
+          if (isset($item[$field->getName()])) {
             $this->processField($field);
           }
         }
 
         // Save existing events as they are not attached
         // to the eventsRelatedByobjectId or events array
-        if (isset($this->event->id))
-        {
+        if (isset($this->event->id)) {
           $this->event->indexOnSave = $indexOnSave;
           $this->event->save();
         }
@@ -91,15 +76,12 @@ class EventEditComponent extends sfComponent
     }
 
     // Stop here if duplicating
-    if (isset($this->request->sourceId))
-    {
+    if (isset($this->request->sourceId)) {
       return;
     }
 
-    if (isset($this->request->deleteEvents))
-    {
-      foreach ($this->request->deleteEvents as $item)
-      {
+    if (isset($this->request->deleteEvents)) {
+      foreach ($this->request->deleteEvents as $item) {
         $params = $this->context->routing->parse(Qubit::pathInfo($item));
         $event = $params['_sf_route']->resource;
         $event->indexOnSave = $indexOnSave;
@@ -114,16 +96,14 @@ class EventEditComponent extends sfComponent
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
     $this->form->getWidgetSchema()->setNameFormat('editEvent[%s]');
 
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->addField($name);
     }
   }
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'date':
         $this->form->setValidator('date', new sfValidatorString());
         $this->form->setWidget('date', new sfWidgetFormInput());
@@ -153,17 +133,14 @@ class EventEditComponent extends sfComponent
       case 'type':
         // Event types, Dublin Core is restricted
         $eventTypes = QubitTaxonomy::getTermsById(QubitTaxonomy::EVENT_TYPE_ID);
-        if ('sfDcPlugin' == $this->request->module)
-        {
+        if ('sfDcPlugin' == $this->request->module) {
           $eventTypes = sfDcPlugin::eventTypes();
         }
 
         $choices = [];
-        foreach ($eventTypes as $item)
-        {
+        foreach ($eventTypes as $item) {
           // Default event type is creation
-          if (QubitTerm::CREATION_ID == $item->id)
-          {
+          if (QubitTerm::CREATION_ID == $item->id) {
             $this->form->setDefault('type', $this->context->routing->generate(null, [$item, 'module' => 'term']));
           }
 
@@ -179,15 +156,13 @@ class EventEditComponent extends sfComponent
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'type':
       case 'resourceType':
         unset($this->event[$field->getName()]);
 
         $value = $this->form->getValue($field->getName());
-        if (isset($value))
-        {
+        if (isset($value)) {
           $params = $this->context->routing->parse(Qubit::pathInfo($value));
           $this->event[$field->getName()] = $params['_sf_route']->resource;
         }
@@ -197,12 +172,9 @@ class EventEditComponent extends sfComponent
       case 'startDate':
       case 'endDate':
         $value = $this->form->getValue($field->getName());
-        if (isset($value) && preg_match('/^\d{8}\z/', trim($value), $matches))
-        {
+        if (isset($value) && preg_match('/^\d{8}\z/', trim($value), $matches)) {
           $value = substr($matches[0], 0, 4).'-'.substr($matches[0], 4, 2).'-'.substr($matches[0], 6, 2);
-        }
-        elseif (isset($value) && preg_match('/^\d{6}\z/', trim($value), $matches))
-        {
+        } elseif (isset($value) && preg_match('/^\d{6}\z/', trim($value), $matches)) {
           $value = substr($matches[0], 0, 4).'-'.substr($matches[0], 4, 2);
         }
 

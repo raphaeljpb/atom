@@ -5,8 +5,7 @@ class BrowseHierarchyAction extends sfAction
   public function execute($request)
   {
     // Check user authorization
-    if ('no' === sfConfig::get('app_treeview_show_browse_hierarchy_page', 'no'))
-    {
+    if ('no' === sfConfig::get('app_treeview_show_browse_hierarchy_page', 'no')) {
       QubitAcl::forwardUnauthorized();
     }
 

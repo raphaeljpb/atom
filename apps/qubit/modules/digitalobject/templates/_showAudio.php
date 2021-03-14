@@ -14,7 +14,7 @@
     <?php echo link_to(__('Download audio'), $link, ['class' => 'download']); ?>
   <?php } ?>
 
-<?php } elseif (QubitTerm::THUMBNAIL_ID == $usageType && isset($link)){ ?>
+<?php } elseif (QubitTerm::THUMBNAIL_ID == $usageType && isset($link)) { ?>
 
   <?php if ($iconOnly) { ?>
 

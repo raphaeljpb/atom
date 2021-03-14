@@ -53,14 +53,10 @@ class sfThumbnail
    */
   public function __construct($maxWidth = null, $maxHeight = null, $scale = true, $inflate = true, $quality = 75, $adapterClass = null, $adapterOptions = [])
   {
-    if (!$adapterClass)
-    {
-      if (extension_loaded('gd'))
-      {
+    if (!$adapterClass) {
+      if (extension_loaded('gd')) {
         $adapterClass = 'sfGDAdapter';
-      }
-      else
-      {
+      } else {
         $adapterClass = 'sfImageMagickAdapter';
       }
     }
@@ -84,10 +80,8 @@ class sfThumbnail
    */
   public function loadFile($image)
   {
-    if (preg_match('/http(s)?:\//i', $image))
-    {
-      if (class_exists('sfWebBrowser'))
-      {
+    if (preg_match('/http(s)?:\//i', $image)) {
+      if (class_exists('sfWebBrowser')) {
         if (!is_null($this->tempFile)) {
           unlink($this->tempFile);
         }
@@ -95,8 +89,7 @@ class sfThumbnail
 
         $b = new sfWebBrowser();
 
-        try
-        {
+        try {
           $b->get($image);
           if (200 != $b->getResponseCode()) {
             throw new Exception(sprintf('%s returned error code %s', $image, $b->getResponseCode()));
@@ -106,21 +99,14 @@ class sfThumbnail
             throw new Exception('downloaded file is empty');
           }
           $image = $this->tempFile;
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
           throw new Exception('Source image is a URL but it cannot be used because '.$e->getMessage());
         }
-      }
-      else
-      {
+      } else {
         throw new Exception('Source image is a URL but sfWebBrowserPlugin is not installed');
       }
-    }
-    else
-    {
-      if (!is_readable($image))
-      {
+    } else {
+      if (!is_readable($image)) {
         throw new Exception(sprintf('The file "%s" is not readable.', $image));
       }
     }
@@ -234,41 +220,31 @@ class sfThumbnail
    */
   public function initThumb($sourceWidth, $sourceHeight, $maxWidth, $maxHeight, $scale, $inflate)
   {
-    if ($maxWidth > 0)
-    {
+    if ($maxWidth > 0) {
       $ratioWidth = $maxWidth / $sourceWidth;
     }
-    if ($maxHeight > 0)
-    {
+    if ($maxHeight > 0) {
       $ratioHeight = $maxHeight / $sourceHeight;
     }
 
-    if ($scale)
-    {
-      if ($maxWidth && $maxHeight)
-      {
+    if ($scale) {
+      if ($maxWidth && $maxHeight) {
         $ratio = ($ratioWidth < $ratioHeight) ? $ratioWidth : $ratioHeight;
       }
-      if ($maxWidth xor $maxHeight)
-      {
+      if ($maxWidth xor $maxHeight) {
         $ratio = (isset($ratioWidth)) ? $ratioWidth : $ratioHeight;
       }
-      if ((!$maxWidth && !$maxHeight) || (!$inflate && $ratio > 1))
-      {
+      if ((!$maxWidth && !$maxHeight) || (!$inflate && $ratio > 1)) {
         $ratio = 1;
       }
 
       $this->thumbWidth = floor($ratio * $sourceWidth);
       $this->thumbHeight = ceil($ratio * $sourceHeight);
-    }
-    else
-    {
-      if (!isset($ratioWidth) || (!$inflate && $ratioWidth > 1))
-      {
+    } else {
+      if (!isset($ratioWidth) || (!$inflate && $ratioWidth > 1)) {
         $ratioWidth = 1;
       }
-      if (!isset($ratioHeight) || (!$inflate && $ratioHeight > 1))
-      {
+      if (!isset($ratioHeight) || (!$inflate && $ratioHeight > 1)) {
         $ratioHeight = 1;
       }
       $this->thumbWidth = floor($ratioWidth * $sourceWidth);

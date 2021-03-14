@@ -41,8 +41,7 @@ class i18nDiffTask extends sfBaseTask
   {
     $output = '';
 
-    if ('stdout' != strtolower($options['file']))
-    {
+    if ('stdout' != strtolower($options['file'])) {
       $this->logSection('i18n', sprintf('Diff i18n strings for the "%s" application', $arguments['application']));
     }
 
@@ -57,8 +56,7 @@ class i18nDiffTask extends sfBaseTask
     $extract = new sfI18nApplicationExtract($this->i18n, $arguments['culture']);
     $extract->extract();
 
-    if ('stdout' != strtolower($options['file']))
-    {
+    if ('stdout' != strtolower($options['file'])) {
       $this->logSection('i18n', sprintf('found "%d" new i18n strings', count($extract->getNewMessages())));
       $this->logSection('i18n', sprintf('found "%d" old i18n strings', count($extract->getOldMessages())));
     }
@@ -67,31 +65,26 @@ class i18nDiffTask extends sfBaseTask
     $rows[0] = ['Action', 'Source', 'Target'];
 
     // Old messages
-    foreach ($this->getOldTranslations($extract) as $source => $target)
-    {
+    foreach ($this->getOldTranslations($extract) as $source => $target) {
       $rows[] = ['Removed', $source, $target];
     }
 
     // New messages
-    foreach ($extract->getNewMessages() as $message)
-    {
+    foreach ($extract->getNewMessages() as $message) {
       $rows[] = ['Added', $message];
     }
 
     // Choose output format
-    switch (strtolower($options['format']))
-    {
+    switch (strtolower($options['format'])) {
       case 'csv':
-        foreach ($rows as $row)
-        {
+        foreach ($rows as $row) {
           $output .= '"'.implode('","', array_map('addslashes', $row))."\"\n";
         }
 
         break;
 
       case 'tab':
-        foreach ($rows as $row)
-        {
+        foreach ($rows as $row) {
           $output .= implode("\t", $row)."\n";
         }
 
@@ -99,15 +92,12 @@ class i18nDiffTask extends sfBaseTask
     }
 
     // Output file
-    if ('stdout' != strtolower($options['file']))
-    {
+    if ('stdout' != strtolower($options['file'])) {
       echo "\n".$options['file'];
       // Remove '=' if using -f="file.csv" notation
       $filename = ('=' == substr($options['file'], 0, 1)) ? substr($options['file'], 1) : $options['file'];
       file_put_contents($filename, $output);
-    }
-    else
-    {
+    } else {
       echo $output;
     }
   }
@@ -123,16 +113,13 @@ class i18nDiffTask extends sfBaseTask
   {
     $oldMessages = array_diff($extract->getCurrentMessages(), $extract->getAllSeenMessages());
 
-    foreach ($this->i18n->getMessageSource()->read() as $catalogue => $translations)
-    {
-      foreach ($translations as $key => $value)
-      {
+    foreach ($this->i18n->getMessageSource()->read() as $catalogue => $translations) {
+      foreach ($translations as $key => $value) {
         $allTranslations[$key] = $value[0];
       }
     }
 
-    foreach ($oldMessages as $message)
-    {
+    foreach ($oldMessages as $message) {
       $oldTranslations[$message] = $allTranslations[$message];
     }
 

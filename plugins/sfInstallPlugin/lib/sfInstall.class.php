@@ -35,8 +35,7 @@ class sfInstall
 
     // Check if any dependencies are defined
     $packageXmlPath = sfConfig::get('sf_config_dir').'/package.xml';
-    if (!file_exists($packageXmlPath))
-    {
+    if (!file_exists($packageXmlPath)) {
       return $dependencies;
     }
 
@@ -48,20 +47,16 @@ class sfInstall
     // current version
     $nodes = $fd->find('p:dependencies/p:required/p:php/p:min');
 
-    if (count($nodes))
-    {
+    if (count($nodes)) {
       $min = $nodes[0]->textContent;
 
-      if (0 > version_compare(PHP_VERSION, $min))
-      {
+      if (0 > version_compare(PHP_VERSION, $min)) {
         $dependencies['php']['min'] = $min;
       }
     }
 
-    foreach ($fd->find('p:dependencies/*/p:extension/p:name') as $node)
-    {
-      if (!extension_loaded($node->textContent))
-      {
+    foreach ($fd->find('p:dependencies/*/p:extension/p:name') as $node) {
+      if (!extension_loaded($node->textContent)) {
         $dependencies['extensions'][] = $node->textContent;
       }
     }
@@ -74,8 +69,7 @@ class sfInstall
     // TODO This is a late night hack.  It should probably get moved into its
     // own check
     // Copied from sfFileLogger::initialize()
-    if (!is_dir(sfConfig::get('sf_log_dir')))
-    {
+    if (!is_dir(sfConfig::get('sf_log_dir'))) {
       mkdir(sfConfig::get('sf_log_dir'), 0777, true);
     }
 
@@ -94,18 +88,14 @@ class sfInstall
       sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'downloads',
     ];
 
-    foreach ($pathsToCheck as $path)
-    {
+    foreach ($pathsToCheck as $path) {
       // TODO sfFinder::in() does not include the argument path
-      if (!is_writable($path))
-      {
+      if (!is_writable($path)) {
         $writablePaths[] = $path;
       }
 
-      foreach ($finder->in($path) as $path)
-      {
-        if (!is_writable($path))
-        {
+      foreach ($finder->in($path) as $path) {
+        if (!is_writable($path)) {
           $writablePaths[] = $path;
         }
       }
@@ -128,16 +118,13 @@ class sfInstall
     $databasesYmlPaths[] = $databasesYmlPath.'.tmpl';
     $databasesYmlPaths[] = sfConfig::get('sf_lib_dir').'/task/generator/skeleton/project/config/databases.yml';
 
-    foreach ($databasesYmlPaths as $path)
-    {
-      if (false !== $databasesYmlContents = file_get_contents($path))
-      {
+    foreach ($databasesYmlPaths as $path) {
+      if (false !== $databasesYmlContents = file_get_contents($path)) {
         break;
       }
     }
 
-    if (false === file_put_contents($databasesYmlPath, $databasesYmlContents))
-    {
+    if (false === file_put_contents($databasesYmlPath, $databasesYmlContents)) {
       $databasesYml['notWritable'] = 'notWritable';
     }
 
@@ -158,16 +145,13 @@ class sfInstall
     $propelIniPaths[] = $propelIniPath.'.tmpl';
     $propelIniPaths[] = sfConfig::get('sf_lib_dir').'/task/generator/skeleton/project/config/propel.ini';
 
-    foreach ($propelIniPaths as $path)
-    {
-      if (false !== $propelIniContents = file_get_contents($path))
-      {
+    foreach ($propelIniPaths as $path) {
+      if (false !== $propelIniContents = file_get_contents($path)) {
         break;
       }
     }
 
-    if (false === file_put_contents($propelIniPath, $propelIniContents))
-    {
+    if (false === file_put_contents($propelIniPath, $propelIniContents)) {
       $propelIni['notWritable'] = 'notWritable';
     }
 
@@ -197,18 +181,15 @@ class sfInstall
     $settingsYmlPaths[] = $settingsYmlPath.'.tmpl';
     $settingsYmlPaths[] = sfConfig::get('sf_lib_dir').'/task/generator/skeleton/app/app/config/settings.yml';
 
-    foreach ($settingsYmlPaths as $path)
-    {
-      if (false !== $settingsYmlContents = file_get_contents($path))
-      {
+    foreach ($settingsYmlPaths as $path) {
+      if (false !== $settingsYmlContents = file_get_contents($path)) {
         break;
       }
     }
 
     $settingsYmlContents = sfInstall::setNoScriptName($noScriptName, $settingsYmlContents);
 
-    if (false === file_put_contents($settingsYmlPath, $settingsYmlContents))
-    {
+    if (false === file_put_contents($settingsYmlPath, $settingsYmlContents)) {
       $settingsYml['notWritable'] = 'notWritable';
     }
 
@@ -233,12 +214,10 @@ class sfInstall
     // files, which override the AtoM config files that get written to the cache
     // folder during install. This prevents the i18n and Qubit helpers being
     // loaded (from apps/qubit/config/settings.yml) triggering the i18n errors.
-    if (function_exists('opcache_reset'))
-    {
+    if (function_exists('opcache_reset')) {
       opcache_reset();
     }
-    if (function_exists('apcu_clear_cache'))
-    {
+    if (function_exists('apcu_clear_cache')) {
       apcu_clear_cache();
     }
 
@@ -257,8 +236,7 @@ class sfInstall
 
     // Convert memoryLimit to float or integer value in units of MB
     // See http://ca.php.net/manual/en/faq.using.php#faq.using.shorthandbytes
-    switch (strtolower(substr($memoryLimit, -1)))
-    {
+    switch (strtolower(substr($memoryLimit, -1))) {
       case 'k':
         $memoryLimit = round(intval(substr($memoryLimit, 0, -1)) / 1024, 3);
 
@@ -279,8 +257,7 @@ class sfInstall
         $memoryLimit = round(intval($memoryLimit) / 1048576, 3);
     }
 
-    if ($memoryLimit < self::$MINIMUM_MEMORY_LIMIT_MB)
-    {
+    if ($memoryLimit < self::$MINIMUM_MEMORY_LIMIT_MB) {
       return $memoryLimit;
     }
   }
@@ -296,8 +273,7 @@ class sfInstall
     file_put_contents($configFile, $configHandler->execute(ProjectConfiguration::getActive()->getConfigPaths('config/databases.yml')));
 
     // Invalidate cache
-    if (function_exists('opcache_invalidate'))
-    {
+    if (function_exists('opcache_invalidate')) {
       $e = opcache_invalidate($configFile, true);
     }
 
@@ -306,12 +282,9 @@ class sfInstall
     // TODO Currently need to reload after configuring the database
     $databaseManager->loadConfiguration();
 
-    try
-    {
+    try {
       sfContext::getInstance()->getDatabaseConnection('propel');
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $database[] = $e;
     }
 
@@ -324,21 +297,15 @@ class sfInstall
     $defaults = sfConfig::get('sf_plugins_dir').'/arElasticSearchPlugin/config/search.yml';
     $config = arElasticSearchConfigHandler::getConfiguration([$defaults]);
 
-    if (isset($options['searchHost']))
-    {
+    if (isset($options['searchHost'])) {
       $config['server']['host'] = $options['searchHost'];
-    }
-    else
-    {
+    } else {
       $config['server']['host'] = 'localhost';
     }
 
-    if (isset($options['searchPort']))
-    {
+    if (isset($options['searchPort'])) {
       $config['server']['port'] = $options['searchPort'];
-    }
-    else
-    {
+    } else {
       $config['server']['port'] = '9200';
     }
 
@@ -350,35 +317,28 @@ class sfInstall
     ob_start();
     curl_exec($curl);
     $response = json_decode(ob_get_clean());
-    if (0 < curl_errno($curl))
-    {
+    if (0 < curl_errno($curl)) {
       $errors[] = sprintf("Can't connect to the server (%s).", curl_error($curl));
     }
 
-    if (0 < count($errors))
-    {
+    if (0 < count($errors)) {
       return $errors;
     }
 
     $curlHttpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     curl_close($curl);
 
-    if (200 !== $curlHttpCode)
-    {
+    if (200 !== $curlHttpCode) {
       $errors[] = 'Elasticsearch error: '.$curlHttpCode;
     }
 
-    if (0 < count($errors))
-    {
+    if (0 < count($errors)) {
       return $errors;
     }
 
-    if (isset($options['searchIndex']))
-    {
+    if (isset($options['searchIndex'])) {
       $config['index']['name'] = $options['searchIndex'];
-    }
-    else
-    {
+    } else {
       $config['index']['name'] = 'atom';
     }
 
@@ -386,8 +346,7 @@ class sfInstall
     $env['all'] = $config;
 
     $location = sfConfig::get('sf_config_dir').'/search.yml';
-    if (false === file_put_contents($location, sfYaml::dump($env, 9)))
-    {
+    if (false === file_put_contents($location, sfYaml::dump($env, 9))) {
       $errors[] = "Can't write configuration file ".$location;
     }
 
@@ -456,8 +415,7 @@ class sfInstall
     $loadData->run();
 
     $premisAccessRightValues = [];
-    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
-    {
+    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item) {
       $premisAccessRightValues[$item->slug] = [
         'allow_master' => 1,
         'allow_reference' => 1,
@@ -478,15 +436,13 @@ class sfInstall
 
     $accessDisallowWarning = sfContext::getInstance()->i18n->__('Access to this record is restricted because it contains personal or confidential information. Please contact the Reference Archivist for more information on accessing this record.');
     $accessConditionalWarning = sfContext::getInstance()->i18n->__('This record has not yet been reviewed for personal or confidential information. Please contact the Reference Archivist to request access and initiate an access review.');
-    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
-    {
+    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item) {
       $setting = new QubitSetting();
       $setting->name = "{$item->slug}_disallow";
       $setting->scope = 'access_statement';
       $setting->setValue($accessDisallowWarning, ['culture' => 'en']);
 
-      foreach (QubitI18N::getTranslations($accessDisallowWarning) as $langCode => $message)
-      {
+      foreach (QubitI18N::getTranslations($accessDisallowWarning) as $langCode => $message) {
         $setting->setValue($message, ['culture' => $langCode]);
       }
 
@@ -497,8 +453,7 @@ class sfInstall
       $setting->scope = 'access_statement';
       $setting->setValue($accessConditionalWarning, ['culture' => 'en']);
 
-      foreach (QubitI18N::getTranslations($accessConditionalWarning) as $langCode => $message)
-      {
+      foreach (QubitI18N::getTranslations($accessConditionalWarning) as $langCode => $message) {
         $setting->setValue($message, ['culture' => $langCode]);
       }
 
@@ -517,15 +472,13 @@ class sfInstall
 
   public static function addSymlinks()
   {
-    if (!function_exists('symlink'))
-    {
+    if (!function_exists('symlink')) {
       return;
     }
 
     $symlinks = ['sf' => sfConfig::get('sf_root_dir').'/vendor/symfony/data/web/sf'];
 
-    foreach ($symlinks as $name => $path)
-    {
+    foreach ($symlinks as $name => $path) {
       symlink($path, $name);
     }
 
@@ -550,19 +503,15 @@ class sfInstall
     $request = sfContext::getInstance()->request;
     $browser = new sfWebBrowser();
 
-    try
-    {
-      if (true !== $browser->get($request->getUriPrefix().$url)->responseIsError())
-      {
+    try {
+      if (true !== $browser->get($request->getUriPrefix().$url)->responseIsError()) {
         // Successful response (e.g. 200, 201, etc.)
         return $browser->getResponseText();
       }
 
       // Error response (e.g. 404, 500, etc.)
       return false;
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       // Adapter error [curl,fopen,fsockopen] (e.g. Host not found)
       return false;
     }

@@ -28,20 +28,16 @@ class sfSkosPluginIndexAction extends sfAction
   {
     $resource = $this->getRoute()->resource;
 
-    if (!isset($resource))
-    {
+    if (!isset($resource)) {
       $this->forward404();
     }
 
-    if ('QubitTerm' == $resource->className)
-    {
+    if ('QubitTerm' == $resource->className) {
       $this->selectedTerm = QubitTerm::getById($resource->id);
       $this->terms = $this->selectedTerm->descendants->andSelf()->orderBy('lft');
       $this->taxonomy = $this->selectedTerm->taxonomy;
       $this->topLevelTerms = [$this->selectedTerm];
-    }
-    else
-    {
+    } else {
       $this->terms = QubitTaxonomy::getTaxonomyTerms($resource->id);
       $this->taxonomy = QubitTaxonomy::getById($resource->id);
       $this->topLevelTerms = QubitTaxonomy::getTaxonomyTerms($resource->id, ['level' => 'top']);

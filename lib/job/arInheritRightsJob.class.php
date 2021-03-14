@@ -38,8 +38,7 @@ class arInheritRightsJob extends arBaseJob
     $io = QubitInformationObject::getById($parameters['objectId']);
 
     // Check that object exists and that it is not the root
-    if (!isset($io) || !isset($io->parent))
-    {
+    if (!isset($io) || !isset($io->parent)) {
       $this->error($this->i18n->__('Could not find an information object with id: %1', ['%1' => $parameters['objectId']]));
 
       return false;
@@ -48,11 +47,9 @@ class arInheritRightsJob extends arBaseJob
     // Info object IDs to recalculate rights based on PREMIS
     $idsToUpdate = [];
 
-    foreach ($io->descendants as $descendant)
-    {
+    foreach ($io->descendants as $descendant) {
       // If digital only and descendant isn't a digital object, skip
-      if ('digital_only' === $parameters['all_or_digital_only'] && null === $descendant->getDigitalObject())
-      {
+      if ('digital_only' === $parameters['all_or_digital_only'] && null === $descendant->getDigitalObject()) {
         $this->info($this->i18n->__('Skipping descendant %1', ['%1' => $descendant->getId()]));
 
         continue;
@@ -61,18 +58,15 @@ class arInheritRightsJob extends arBaseJob
       $idsToUpdate[] = $descendant->id;
 
       // Delete existing rights if overwriting rights
-      if ('overwrite' === $parameters['overwrite_or_combine'])
-      {
+      if ('overwrite' === $parameters['overwrite_or_combine']) {
         // The object property of the relation($item) is the right
-        foreach ($descendant->getRights() as $item)
-        {
+        foreach ($descendant->getRights() as $item) {
           $item->object->delete();
         }
       }
 
       // Lastly, copy all rights from $io to $descendants
-      foreach ($io->getRights() as $parentRelation)
-      {
+      foreach ($io->getRights() as $parentRelation) {
         $rights = $parentRelation->object;
 
         // Duplicate the right

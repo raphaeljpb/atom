@@ -46,7 +46,7 @@
 
             <?php echo $form->file->renderRow(); ?>
 
-          <?php } elseif (0 == $repository->uploadLimit){ ?>
+          <?php } elseif (0 == $repository->uploadLimit) { ?>
 
             <div class="messages warning">
               <?php echo __('Uploads for <a href="%1%">%2%</a> are disabled', [

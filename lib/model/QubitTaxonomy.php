@@ -98,16 +98,14 @@ class QubitTaxonomy extends BaseTaxonomy
   {
     parent::__construct();
 
-    if (!empty($id))
-    {
+    if (!empty($id)) {
       $this->id = $id;
     }
   }
 
   public function __toString()
   {
-    if (!$this->getName())
-    {
+    if (!$this->getName()) {
       return (string) $this->getName(['sourceCulture' => true]);
     }
 
@@ -145,8 +143,7 @@ class QubitTaxonomy extends BaseTaxonomy
     $criteria->add(QubitTerm::TAXONOMY_ID, $taxonomyId);
 
     // Only include top-level terms if option is set
-    if (isset($options['level']) && 'top' == $options['level'])
-    {
+    if (isset($options['level']) && 'top' == $options['level']) {
       $criteria->add(QubitTerm::PARENT_ID, QubitTerm::ROOT_ID);
     }
 
@@ -166,13 +163,11 @@ class QubitTaxonomy extends BaseTaxonomy
    */
   public function getTermsAsArray($connection = null)
   {
-    if (empty($this->id))
-    {
+    if (empty($this->id)) {
       throw new sfException('Invalid taxonomy id');
     }
 
-    if (!isset($connection))
-    {
+    if (!isset($connection)) {
       $connection = Propel::getConnection();
     }
 
@@ -202,13 +197,11 @@ SQL;
   {
     $terms = $this->getTermsAsArray($connection);
 
-    if (!is_array($terms) || 0 == count($terms))
-    {
+    if (!is_array($terms) || 0 == count($terms)) {
       return;
     }
 
-    foreach ($terms as $term)
-    {
+    foreach ($terms as $term) {
       // Trim and lowercase values for lookup
       $term = array_map(function ($str) {
         return trim(strtolower($str));
@@ -222,8 +215,7 @@ SQL;
 
   protected function insert($connection = null)
   {
-    if (!isset($this->slug))
-    {
+    if (!isset($this->slug)) {
       $this->slug = QubitSlug::slugify($this->__get('name', ['sourceCulture' => true]));
     }
 

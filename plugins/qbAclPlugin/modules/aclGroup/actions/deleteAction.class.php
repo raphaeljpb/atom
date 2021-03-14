@@ -26,23 +26,19 @@ class AclGroupDeleteAction extends sfAction
     $this->group = QubitAclGroup::getById($request->id);
 
     // Check that object exists
-    if (!isset($this->group))
-    {
+    if (!isset($this->group)) {
       $this->forward404();
     }
 
     // Check permissions
-    if ($this->group->isProtected() || !QubitAcl::check($this->group, 'delete'))
-    {
+    if ($this->group->isProtected() || !QubitAcl::check($this->group, 'delete')) {
       QubitAcl::forwardUnauthorized();
     }
 
-    if ($request->isMethod('delete'))
-    {
+    if ($request->isMethod('delete')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->group->delete();
 
         $this->redirect(['module' => 'aclGroup', 'action' => 'list']);

@@ -46,12 +46,10 @@ EOF;
     parent::execute($arguments, $options);
 
     // Offer to abort if not using --force or --dry-run options
-    if (!$options['force'] && !$options['dry-run'])
-    {
+    if (!$options['force'] && !$options['dry-run']) {
       $confirmation = $this->askConfirmation("Are you sure you'd like to normalize physical object data?");
 
-      if (!$confirmation)
-      {
+      if (!$confirmation) {
         $this->log('Aborted.');
 
         exit();
@@ -62,8 +60,7 @@ EOF;
     QubitSearch::disable();
 
     // Remind user they are in dry run mode
-    if ($options['dry-run'])
-    {
+    if ($options['dry-run']) {
       $this->log('*** DRY RUN (no changes will be made to the database) ***');
     }
 
@@ -76,14 +73,11 @@ EOF;
     // Check for duplicate physical objects and normalize relations
     $this->log('Detecting duplicates and updating relations to duplicates...');
 
-    if ($options['name-only'])
-    {
+    if ($options['name-only']) {
       $this->log('(Using physical object name only as the basis for duplicate detection.)');
 
       $this->checkAllPhysicalObjectsByNameOnlyAndNormalizeRelations($options['dry-run']);
-    }
-    else
-    {
+    } else {
       $this->log('(Using physical object name, location, and type as the basis for duplicate detection.)');
 
       $this->checkPhysicalObjectsWithLocationsAndNormalizeRelations($options['dry-run']);
@@ -95,19 +89,16 @@ EOF;
     // Delete duplicate physical objects if not conducting a dry run
     $this->log('Deleting duplicates...');
 
-    foreach ($this->toDelete as $id)
-    {
+    foreach ($this->toDelete as $id) {
       // Delete duplicates
       $po = QubitPhysicalObject::getById($id);
 
       // Show details of each individual physical object being deleted, if in verbose mode
-      if ($options['verbose'])
-      {
+      if ($options['verbose']) {
         $this->log(sprintf(' - %s', $this->describePhysicalObject($po)));
       }
 
-      if (!$options['dry-run'])
-      {
+      if (!$options['dry-run']) {
         $po->delete();
       }
     }
@@ -115,13 +106,10 @@ EOF;
     $this->log(sprintf(' - %d duplicates deleted', count($this->toDelete)));
 
     // Display post-normalization counts of physical objects and corresponding relations
-    if (!$options['dry-run'])
-    {
+    if (!$options['dry-run']) {
       $physicalObjectsCountAfter = $this->getPhysicalObjectCount();
       $relationsCountAfter = $this->getPhysicalObjectRelationCount();
-    }
-    else
-    {
+    } else {
       // Simulate results during dry run
       $physicalObjectsCountAfter = $physicalObjectsCountBefore - count($this->toDelete);
       $relationsCountAfter = $relationsCountBefore;
@@ -131,12 +119,9 @@ EOF;
 
     // Make sure that new counts make sense
     if ($relationsCountBefore == $relationsCountAfter
-      && (count($this->toDelete) + $physicalObjectsCountAfter) == $physicalObjectsCountBefore)
-    {
+      && (count($this->toDelete) + $physicalObjectsCountAfter) == $physicalObjectsCountBefore) {
       $this->log('Normalization completed successfully.');
-    }
-    else
-    {
+    } else {
       $this->log('Eror: final physical object count is unexpected.');
     }
 
@@ -194,10 +179,8 @@ EOF;
     $sql = $this->sqlForPhysicalObjectsBySourceCulture();
     $sql .= ' WHERE pi.name IS NOT NULL';
 
-    foreach (QubitPdo::fetchAll($sql) as $physicalObject)
-    {
-      if (in_array($physicalObject->id, $this->toDelete))
-      {
+    foreach (QubitPdo::fetchAll($sql) as $physicalObject) {
+      if (in_array($physicalObject->id, $this->toDelete)) {
         // Ignore physical objects already marked for deletion
         continue;
       }
@@ -218,10 +201,8 @@ EOF;
     $sql = $this->sqlForPhysicalObjectsBySourceCulture();
     $sql .= ' WHERE pi.name IS NOT NULL AND pi.location IS NOT NULL';
 
-    foreach (QubitPdo::fetchAll($sql) as $physicalObject)
-    {
-      if (in_array($physicalObject->id, $this->toDelete))
-      {
+    foreach (QubitPdo::fetchAll($sql) as $physicalObject) {
+      if (in_array($physicalObject->id, $this->toDelete)) {
         // Ignore physical objects already marked for deletion
         continue;
       }
@@ -246,10 +227,8 @@ EOF;
     $sql = $this->sqlForPhysicalObjectsBySourceCulture();
     $sql .= ' WHERE pi.name IS NOT NULL AND pi.location IS NULL';
 
-    foreach (QubitPdo::fetchAll($sql) as $physicalObject)
-    {
-      if (in_array($physicalObject->id, $this->toDelete))
-      {
+    foreach (QubitPdo::fetchAll($sql) as $physicalObject) {
+      if (in_array($physicalObject->id, $this->toDelete)) {
         // Ignore physical objects already marked for deletion
         continue;
       }
@@ -266,16 +245,13 @@ EOF;
 
   private function findAndMarkDuplicates($sql, $params, $physicalObjectId, $dryRun)
   {
-    foreach (QubitPdo::fetchAll($sql, $params) as $duplicate)
-    {
-      if ($duplicate->id == $physicalObjectId)
-      {
+    foreach (QubitPdo::fetchAll($sql, $params) as $duplicate) {
+      if ($duplicate->id == $physicalObjectId) {
         // Ignore current physical object
         continue;
       }
 
-      if (in_array($duplicate->id, $this->toDelete))
-      {
+      if (in_array($duplicate->id, $this->toDelete)) {
         // Ignore physical objects already marked for deletion
         continue;
       }
@@ -283,10 +259,8 @@ EOF;
       // Get relations to physical objects
       $relations = QubitRelation::getRelationsBySubjectId($duplicate->id, ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
 
-      foreach ($relations as $relation)
-      {
-        if (!$dryRun)
-        {
+      foreach ($relations as $relation) {
+        if (!$dryRun) {
           // Update relation to use current physical object
           $relation->indexOnSave = false;
           $relation->subjectId = $physicalObjectId;
@@ -307,8 +281,7 @@ EOF;
 
     $description = sprintf("Name: '%s'", $po->getName(['cultureFallback' => true]));
 
-    if (!empty($location = $po->getLocation(['cultureFallback' => true])))
-    {
+    if (!empty($location = $po->getLocation(['cultureFallback' => true]))) {
       $description .= sprintf(", Location: '%s'", $location);
     }
 

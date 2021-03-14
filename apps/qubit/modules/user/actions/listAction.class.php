@@ -21,20 +21,17 @@ class UserListAction extends sfAction
 {
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
-    if (!isset($request->filter))
-    {
+    if (!isset($request->filter)) {
       $request->filter = 'onlyActive';
     }
 
     $criteria = new Criteria();
 
-    if (isset($request->subquery))
-    {
+    if (isset($request->subquery)) {
       // Search over username or email
       $c1 = $criteria->getNewCriterion(QubitUser::USERNAME, "%{$request->subquery}%", Criteria::LIKE);
       $c2 = $criteria->getNewCriterion(QubitUser::EMAIL, "%{$request->subquery}%", Criteria::LIKE);
@@ -44,8 +41,7 @@ class UserListAction extends sfAction
 
     $criteria->addAscendingOrderByColumn(QubitUser::USERNAME);
 
-    switch ($request->filter)
-    {
+    switch ($request->filter) {
       case 'onlyInactive':
         $criteria->add(QubitUser::ACTIVE, 0);
 

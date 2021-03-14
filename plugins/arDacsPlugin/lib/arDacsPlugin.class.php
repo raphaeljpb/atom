@@ -27,13 +27,11 @@ class arDacsPlugin extends sfIsadPlugin
     $args = func_get_args();
 
     $options = [];
-    if (1 < count($args))
-    {
+    if (1 < count($args)) {
       $options = $args[1];
     }
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'technicalAccess':
         return $this->property('technicalAccess')->__get('value', $options);
 
@@ -46,8 +44,7 @@ class arDacsPlugin extends sfIsadPlugin
 
   public function __set($name, $value)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'technicalAccess':
         $this->property('technicalAccess')->value = $value;
 
@@ -70,10 +67,8 @@ class arDacsPlugin extends sfIsadPlugin
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
     $criteria->add(QubitTermI18n::NAME, ['Broadcasting', 'Record-keeping activity'], Criteria::IN);
     $criteria->add(QubitTermI18n::CULTURE, 'en');
-    if (null !== $terms = QubitTerm::get($criteria))
-    {
-      foreach ($terms as $item)
-      {
+    if (null !== $terms = QubitTerm::get($criteria)) {
+      foreach ($terms as $item) {
         $types[] = $item;
       }
     }
@@ -83,18 +78,14 @@ class arDacsPlugin extends sfIsadPlugin
 
   protected function property($name)
   {
-    if (!isset($this->property[$name]))
-    {
+    if (!isset($this->property[$name])) {
       $criteria = new Criteria();
       $this->resource->addPropertysCriteria($criteria);
       $criteria->add(QubitProperty::NAME, $name);
 
-      if (1 == count($query = QubitProperty::get($criteria)))
-      {
+      if (1 == count($query = QubitProperty::get($criteria))) {
         $this->property[$name] = $query[0];
-      }
-      else
-      {
+      } else {
         $this->property[$name] = new QubitProperty();
         $this->property[$name]->name = $name;
 

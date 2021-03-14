@@ -53,13 +53,11 @@ class QubitGrantedRight extends BaseGrantedRight
    */
   public static function checkPremis($id, $action, &$denyReason = null)
   {
-    if (!isset($id))
-    {
+    if (!isset($id)) {
       throw new sfException('QubitInformationObject id not set in checkPremis call.');
     }
 
-    if (sfContext::getInstance()->getUser()->isAuthenticated() || !QubitGrantedRight::hasGrantedRights($id))
-    {
+    if (sfContext::getInstance()->getUser()->isAuthenticated() || !QubitGrantedRight::hasGrantedRights($id)) {
       // PREMIS rules apply to unauthenticated users only.
       // Also, don't bother checking if no granted rights exist here.
       return true;
@@ -67,8 +65,7 @@ class QubitGrantedRight extends BaseGrantedRight
 
     // TODO: Make 'readThumb' 'readThumbnail' across all the code to make it consistent
     // between the PREMIS action settings and regular db ACL settings
-    if ('readThumbnail' === $action)
-    {
+    if ('readThumbnail' === $action) {
       $action = 'readThumb';
     }
 
@@ -94,8 +91,7 @@ class QubitGrantedRight extends BaseGrantedRight
     $c->add(QubitRelation::TYPE_ID, QubitTerm::RIGHT_ID);
     $c->addJoin(QubitRelation::OBJECT_ID, QubitGrantedRight::RIGHTS_ID);
 
-    if ($actId)
-    {
+    if ($actId) {
       $c->add(QubitGrantedRight::ACT_ID, $actId);
     }
 
@@ -110,8 +106,7 @@ class QubitGrantedRight extends BaseGrantedRight
     $premisAccessRight = QubitSetting::getByName('premisAccessRight');
     $act = QubitTaxonomy::getBySlug($premisAccessRight->getValue(['sourceCulture' => true]));
 
-    if (null === $act)
-    {
+    if (null === $act) {
       throw new sfException("Invalid Act specified for PREMIS rights: {$premisAccessRight}");
     }
 
@@ -150,8 +145,7 @@ class QubitGrantedRight extends BaseGrantedRight
       self::CONDITIONAL_RIGHT => 'Conditional',
     ];
 
-    if (!array_key_exists($restrictionId, $mapConst))
-    {
+    if (!array_key_exists($restrictionId, $mapConst)) {
       throw new sfException("Invalid restriction type in getRestrictionString: {$restrictionId}");
     }
 
@@ -208,8 +202,7 @@ class QubitGrantedRight extends BaseGrantedRight
       QubitAclGroup::ANONYMOUS_ID,
     ];
 
-    if (QubitInformationObject::ROOT_ID == $id)
-    {
+    if (QubitInformationObject::ROOT_ID == $id) {
       throw new sfException('Cannot call checkPremisRightsAgainstGroups with ROOT_ID');
     }
 
@@ -218,20 +211,16 @@ class QubitGrantedRight extends BaseGrantedRight
 
     // Check the $grantedRights of the information object against the global
     // PREMIS rights for $action.
-    foreach ($grantedRights as $right)
-    {
-      if ($right->actId != $actId)
-      {
+    foreach ($grantedRights as $right) {
+      if ($right->actId != $actId) {
         continue;
       }
 
-      if (empty($right->rights) || empty($right->rights->basisId))
-      {
+      if (empty($right->rights) || empty($right->rights->basisId)) {
         continue;
       }
 
-      switch ($right->restriction)
-      {
+      switch ($right->restriction) {
         case QubitGrantedRight::DENY_RIGHT:
           $restriction = 'disallow';
 
@@ -256,13 +245,10 @@ class QubitGrantedRight extends BaseGrantedRight
       $basisSlug = $right->rights->basis->slug;
       if (empty($premisPerms[$basisSlug])
           || empty($premisPerms[$basisSlug]["{$restriction}_{$usage}"])
-          || !$premisPerms[$basisSlug]["{$restriction}_{$usage}"])
-      {
-        if (($key = array_search(QubitAclGroup::ANONYMOUS_ID, $groupIds)) !== false)
-        {
+          || !$premisPerms[$basisSlug]["{$restriction}_{$usage}"]) {
+        if (($key = array_search(QubitAclGroup::ANONYMOUS_ID, $groupIds)) !== false) {
           unset($groupIds[$key]);
-          if (null !== $denyReason)
-          {
+          if (null !== $denyReason) {
             $denyReason = self::getAccessWarning($basisSlug, $restriction);
           }
         }
@@ -276,17 +262,13 @@ class QubitGrantedRight extends BaseGrantedRight
 
   private static function getAccessWarning($basisSlug, $restriction)
   {
-    if ('conditional' === $restriction)
-    {
+    if ('conditional' === $restriction) {
       $setting = QubitSetting::getByNameAndScope("{$basisSlug}_conditional", 'access_statement');
-    }
-    else
-    {
+    } else {
       $setting = QubitSetting::getByNameAndScope("{$basisSlug}_disallow", 'access_statement');
     }
 
-    if (null === $setting)
-    {
+    if (null === $setting) {
       return false;
     }
 

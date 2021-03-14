@@ -47,8 +47,7 @@ class DigitalObjectShowCompoundComponent extends sfComponent
     $this->leftObject = $results[0];
 
     $this->rightObject = null;
-    if (1 < count($results))
-    {
+    if (1 < count($results)) {
       $this->rightObject = $results[1];
     }
   }

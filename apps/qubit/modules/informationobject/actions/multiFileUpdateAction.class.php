@@ -27,44 +27,34 @@ class InformationObjectMultiFileUpdateAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'update'))
-    {
+    if (!QubitAcl::check($this->resource, 'update')) {
       QubitAcl::forwardUnauthorized();
     }
 
     // Check that object exists and that it is not the root
-    if (!isset($this->resource) || !isset($this->resource->parent))
-    {
+    if (!isset($this->resource) || !isset($this->resource->parent)) {
       $this->forward404();
     }
 
-    if (isset($request->items))
-    {
-      if (false === $this->items = explode(',', $request->items))
-      {
+    if (isset($request->items)) {
+      if (false === $this->items = explode(',', $request->items)) {
         $this->forward404();
       }
 
-      foreach ($this->items as $slug)
-      {
-        if (null !== $io = QubitInformationObject::getBySlug($slug))
-        {
-          if (!QubitAcl::check($io, 'update'))
-          {
+      foreach ($this->items as $slug) {
+        if (null !== $io = QubitInformationObject::getBySlug($slug)) {
+          if (!QubitAcl::check($io, 'update')) {
             continue;
           }
 
           // Child IOs should not be root and should be direct descendants of resource.
-          if (!isset($io->parent) || $io->parentId !== $this->resource->id)
-          {
+          if (!isset($io->parent) || $io->parentId !== $this->resource->id) {
             continue;
           }
 
           $this->informationObjectList[$slug] = $io;
           $this->informationObjectOrignalTitles[$slug] = $io->title;
-        }
-        else
-        {
+        } else {
           continue;
         }
       }
@@ -74,15 +64,13 @@ class InformationObjectMultiFileUpdateAction extends sfAction
       ['informationObjects' => $this->informationObjectList]);
 
     // Handle POST data (form submit)
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->digitalObjectTitleForm->bind($request->titles);
 
-        if ($this->digitalObjectTitleForm->isValid())
-        {
-          $this->updateDigitalObjectTitles();
-          $this->redirect([$this->resource, 'module' => 'informationobject']);
-        }
+      if ($this->digitalObjectTitleForm->isValid()) {
+        $this->updateDigitalObjectTitles();
+        $this->redirect([$this->resource, 'module' => 'informationobject']);
+      }
     }
 
     $this->populateDigitalObjectTitleForm();
@@ -93,8 +81,7 @@ class InformationObjectMultiFileUpdateAction extends sfAction
    */
   protected function populateDigitalObjectTitleForm()
   {
-    foreach ($this->digitalObjectTitleForm->getInformationObjects() as $io)
-    {
+    foreach ($this->digitalObjectTitleForm->getInformationObjects() as $io) {
       $this->digitalObjectTitleForm->setDefault($io->id, $io->getTitle(['cultureFallback' => true]));
     }
   }
@@ -106,13 +93,10 @@ class InformationObjectMultiFileUpdateAction extends sfAction
    */
   protected function updateDigitalObjectTitles()
   {
-    foreach ($this->digitalObjectTitleForm->getInformationObjects() as $informationObject)
-    {
-      if (null !== $title = $this->digitalObjectTitleForm->getValue($informationObject->id))
-      {
+    foreach ($this->digitalObjectTitleForm->getInformationObjects() as $informationObject) {
+      if (null !== $title = $this->digitalObjectTitleForm->getValue($informationObject->id)) {
         // Test if title changed.
-        if ($this->informationObjectOrignalTitles[$informationObject->id] !== $title)
-        {
+        if ($this->informationObjectOrignalTitles[$informationObject->id] !== $title) {
           $informationObject->title = $title;
           $informationObject->save();
         }

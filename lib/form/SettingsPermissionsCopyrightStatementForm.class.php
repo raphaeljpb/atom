@@ -28,11 +28,9 @@ class SettingsPermissionsCopyrightStatementForm extends sfForm
     $this->setValidator('copyrightStatementEnabled', new sfValidatorInteger(['required' => false]));
 
     $default = false;
-    if (null !== $setting = QubitSetting::getByName('digitalobject_copyright_statement_enabled'))
-    {
+    if (null !== $setting = QubitSetting::getByName('digitalobject_copyright_statement_enabled')) {
       $value = $setting->getValue(['sourceCulture' => true]);
-      if (!empty($value))
-      {
+      if (!empty($value)) {
         $default = $value;
       }
     }
@@ -40,8 +38,7 @@ class SettingsPermissionsCopyrightStatementForm extends sfForm
 
     $this->setWidget('copyrightStatement', new sfWidgetFormTextArea([], ['rows' => 4]));
     $this->setValidator('copyrightStatement', new sfValidatorString());
-    if (null !== $setting = QubitSetting::getByName('digitalobject_copyright_statement'))
-    {
+    if (null !== $setting = QubitSetting::getByName('digitalobject_copyright_statement')) {
       $this->setDefault('copyrightStatement', $setting->getValue());
     }
   }

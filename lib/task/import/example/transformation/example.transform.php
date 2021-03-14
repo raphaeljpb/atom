@@ -25,8 +25,7 @@ $renameColumns = [
   'LEVEL' => 'levelOfDescription',
 ];
 
-$transformLogic = function (&$self)
-{
+$transformLogic = function (&$self) {
   $self->amalgamateColumns([
     'NOTES',
     'More:' => 'MORE NOTES',
@@ -50,8 +49,7 @@ $rowParentKeyLookupLogic = function (&$self) {
   // if row has a parent, figure out the key for it and return it... otherwise
   // return false
   $parentKey = trim($self->columnValue('PARENT'));
-  if ($parentKey)
-  {
+  if ($parentKey) {
     return $parentKey;
   }
 };

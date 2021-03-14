@@ -22,14 +22,12 @@ class InformationObjectFindingAidLinkComponent extends sfComponent
   public function execute($request)
   {
     // Get finding aid path and status from top-level
-    if (QubitInformationObject::ROOT_ID != $this->resource->parentId)
-    {
+    if (QubitInformationObject::ROOT_ID != $this->resource->parentId) {
       $this->resource = $this->resource->getCollectionRoot();
     }
 
     $this->path = arFindingAidJob::getFindingAidPathForDownload($this->resource->id);
-    if (!isset($this->path))
-    {
+    if (!isset($this->path)) {
       return sfView::NONE;
     }
 
@@ -38,8 +36,7 @@ class InformationObjectFindingAidLinkComponent extends sfComponent
 
     $i18n = $this->context->i18n;
 
-    switch ((int) $this->resource->getFindingAidStatus())
-    {
+    switch ((int) $this->resource->getFindingAidStatus()) {
       case arFindingAidJob::GENERATED_STATUS:
         $this->label = $i18n->__('Generated finding aid');
 

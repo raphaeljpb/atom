@@ -100,8 +100,7 @@ class QubitSaxParser
   {
     $fp = fopen($file, 'r');
 
-    if (!$fp)
-    {
+    if (!$fp) {
       $this->error = [
         'string' => 'Unable to open file',
       ];
@@ -112,10 +111,8 @@ class QubitSaxParser
     $success = true;
 
     // Parse in chunks to preserve memory
-    while ($data = fread($fp, 4096))
-    {
-      if (!xml_parse($this->sax, $data, feof($fp)))
-      {
+    while ($data = fread($fp, 4096)) {
+      if (!xml_parse($this->sax, $data, feof($fp))) {
         $success = false;
 
         break;
@@ -123,8 +120,7 @@ class QubitSaxParser
     }
     fclose($fp);
 
-    if (!$success)
-    {
+    if (!$success) {
       $errorCode = xml_get_error_code($this->sax);
 
       $this->error = [
@@ -145,8 +141,7 @@ class QubitSaxParser
       );
     }
 
-    if ($freeAfterParse)
-    {
+    if ($freeAfterParse) {
       xml_parser_free($this->sax);
     }
 
@@ -223,18 +218,14 @@ class QubitSaxParser
     // Determine if a method should be called
     $tagMethod = $tag.$handlerMethodSuffix;
 
-    if (method_exists($this, $tagMethod))
-    {
+    if (method_exists($this, $tagMethod)) {
       $executeMethod = $tagMethod;
-    }
-    elseif (method_exists($this, $defaultHandlerMethod))
-    {
+    } elseif (method_exists($this, $defaultHandlerMethod)) {
       $executeMethod = $tag.$handlerMethodSuffix;
     }
 
     // call method and log that is has been called
-    if (isset($executeMethod))
-    {
+    if (isset($executeMethod)) {
       $this->logTriggeredHandler($executeMethod);
       call_user_func([$this, $executeMethod]);
     }
@@ -247,8 +238,7 @@ class QubitSaxParser
    */
   protected function logTriggeredHandler($method)
   {
-    if (!in_array($method, $this->triggeredHandlers))
-    {
+    if (!in_array($method, $this->triggeredHandlers)) {
       $this->triggeredHandlers[] = $method;
     }
   }
@@ -259,8 +249,7 @@ class QubitSaxParser
   protected function storeAncestorIfNesting()
   {
     // If we're one level deeper than last start tag, store ancestor
-    if ($this->level > $this->lastTagStartLevel)
-    {
+    if ($this->level > $this->lastTagStartLevel) {
       $ancestorData = [
         'tag' => $this->tag,
         'attr' => $this->currentAttr(),
@@ -281,11 +270,9 @@ class QubitSaxParser
    */
   protected function tagDataInternalHandler($sax, $data)
   {
-    if (isset($this->data))
-    {
+    if (isset($this->data)) {
       $this->data .= $data;
-    }
-    else {
+    } else {
       $this->data = $data;
     }
   }
@@ -308,8 +295,7 @@ class QubitSaxParser
     --$this->level;
 
     // If we're one level less deep than last end tag, dump ancestor
-    if ($this->level < $this->lastTagEndLevel)
-    {
+    if ($this->level < $this->lastTagEndLevel) {
       array_pop($this->ancestors);
     }
     $this->lastTagEndLevel = $this->level;
@@ -391,8 +377,7 @@ class QubitSaxParser
   {
     $path = [];
 
-    foreach ($this->ancestors as $ancestor)
-    {
+    foreach ($this->ancestors as $ancestor) {
       array_push($path, $ancestor['tag']);
     }
 
@@ -426,10 +411,8 @@ class QubitSaxParser
   {
     $handlers = [];
 
-    foreach (get_class_methods(get_class($this)) as $method)
-    {
-      if ($this->methodIsHandler($method))
-      {
+    foreach (get_class_methods(get_class($this)) as $method) {
+      if ($this->methodIsHandler($method)) {
         $handlers[] = $method;
       }
     }
@@ -477,17 +460,14 @@ class QubitSaxParser
    */
   protected function methodIsHandler($method)
   {
-    if ('startTagHandler' == $method || 'endTagHandler' == $method)
-    {
+    if ('startTagHandler' == $method || 'endTagHandler' == $method) {
       return true;
     }
 
-    if ('TagInit' === substr($method, -strlen('TagInit')))
-    {
+    if ('TagInit' === substr($method, -strlen('TagInit'))) {
       return true;
     }
-    if ('Tag' === substr($method, -strlen('Tag')))
-    {
+    if ('Tag' === substr($method, -strlen('Tag'))) {
       return true;
     }
 

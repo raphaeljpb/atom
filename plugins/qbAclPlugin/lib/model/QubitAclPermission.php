@@ -27,21 +27,17 @@ class QubitAclPermission extends BaseAclPermission
       ($userId == $this->userId || $user->hasGroup($this->groupId))
       && $objectId == $this->objectId
       && $actionId == $this->actionId
-      && $this->evaluateConditional($parameters))
-    {
+      && $this->evaluateConditional($parameters)) {
       return $this->grantDeny;
     }
   }
 
   public function setRepository($repository)
   {
-    if ($repository instanceof QubitRepository)
-    {
+    if ($repository instanceof QubitRepository) {
       $this->setConstants(['repository' => $repository->slug]);
       $this->conditional = '%p[repository] == %k[repository]';
-    }
-    elseif (null === $repository)
-    {
+    } elseif (null === $repository) {
       $this->setConstants(['repository' => null]);
       $this->conditional = null;
     }
@@ -51,13 +47,10 @@ class QubitAclPermission extends BaseAclPermission
 
   public function setTaxonomy($taxonomy)
   {
-    if ($taxonomy instanceof QubitTaxonomy)
-    {
+    if ($taxonomy instanceof QubitTaxonomy) {
       $this->setConstants(['taxonomy' => $taxonomy->slug]);
       $this->conditional = '%p[taxonomy] == %k[taxonomy]';
-    }
-    elseif (null === $taxonomy)
-    {
+    } elseif (null === $taxonomy) {
       $this->setConstants(['taxonomy' => null]);
       $this->conditional = null;
     }
@@ -67,8 +60,7 @@ class QubitAclPermission extends BaseAclPermission
 
   public function getRepository()
   {
-    if (null !== $repository = $this->getConstants(['name' => 'repository']))
-    {
+    if (null !== $repository = $this->getConstants(['name' => 'repository'])) {
       $criteria = new Criteria();
       $criteria->add(QubitSlug::SLUG, $repository);
       $criteria->addJoin(QubitSlug::OBJECT_ID, QubitObject::ID);
@@ -81,19 +73,14 @@ class QubitAclPermission extends BaseAclPermission
   {
     $value = null;
 
-    if (null !== $constants = parent::__get('constants', $options))
-    {
+    if (null !== $constants = parent::__get('constants', $options)) {
       $value = unserialize($constants);
     }
 
-    if (isset($options['name']))
-    {
-      if (isset($value[$options['name']]))
-      {
+    if (isset($options['name'])) {
+      if (isset($value[$options['name']])) {
         $value = $value[$options['name']];
-      }
-      else
-      {
+      } else {
         return; // Return null if key 'name' not set
       }
     }
@@ -103,22 +90,16 @@ class QubitAclPermission extends BaseAclPermission
 
   public function setConstants($value, $options = [])
   {
-    if (is_array($value))
-    {
+    if (is_array($value)) {
       $constants = [];
-      if (parent::__isset('constants', $options))
-      {
+      if (parent::__isset('constants', $options)) {
         $constants = unserialize(parent::__get('constants', $options));
       }
 
-      foreach ($value as $key => $val)
-      {
-        if (null !== $val)
-        {
+      foreach ($value as $key => $val) {
+        if (null !== $val) {
           $constants[$key] = $val;
-        }
-        elseif (isset($constants[$key]))
-        {
+        } elseif (isset($constants[$key])) {
           unset($constants[$key]); // Remove key if value is null
         }
       }
@@ -126,12 +107,9 @@ class QubitAclPermission extends BaseAclPermission
       $value = $constants;
     }
 
-    if (is_array($value) && 0 < count($value))
-    {
+    if (is_array($value) && 0 < count($value)) {
       parent::__set('constants', serialize($value), $options);
-    }
-    else
-    {
+    } else {
       parent::__set('constants', null, $options);
     }
 
@@ -141,26 +119,19 @@ class QubitAclPermission extends BaseAclPermission
   public function evaluateConditional($parameters)
   {
     // If no conditional specified, than always return true
-    if (0 == strlen($conditional = $this->conditional))
-    {
+    if (0 == strlen($conditional = $this->conditional)) {
       return true;
     }
 
     $constants = unserialize($this->constants);
 
     // Substitute constants
-    if (preg_match_all('/%k\[(\w+)\]/', $conditional, $matches))
-    {
-      foreach ($matches[1] as $match)
-      {
-        if (isset($constants[$match]))
-        {
-          if (is_string($constants[$match]))
-          {
+    if (preg_match_all('/%k\[(\w+)\]/', $conditional, $matches)) {
+      foreach ($matches[1] as $match) {
+        if (isset($constants[$match])) {
+          if (is_string($constants[$match])) {
             $conditional = str_replace('%k['.$match.']', '\''.$constants[$match].'\'', $conditional);
-          }
-          elseif (is_array($constants[$match]))
-          {
+          } elseif (is_array($constants[$match])) {
             $conditional = str_replace('%k['.$match.']', '$constants[$match]', $conditional);
           }
         }
@@ -168,18 +139,13 @@ class QubitAclPermission extends BaseAclPermission
     }
 
     // Substitute parameters
-    if (preg_match_all('/%p\[(\w+)\]/', $conditional, $matches))
-    {
-      foreach ($matches[1] as $key)
-      {
-        if (array_key_exists($key, $parameters))
-        {
+    if (preg_match_all('/%p\[(\w+)\]/', $conditional, $matches)) {
+      foreach ($matches[1] as $key) {
+        if (array_key_exists($key, $parameters)) {
           // For null parameters always grant and never deny privileges
           // e.g. creating a new info object: $repositoryId is null
-          if (null === $parameters[$key])
-          {
-            if (0 == $this->grantDeny)
-            {
+          if (null === $parameters[$key]) {
+            if (0 == $this->grantDeny) {
               return false;
             }
 
@@ -189,13 +155,10 @@ class QubitAclPermission extends BaseAclPermission
           $conditional = str_replace('%p['.$key.']', '\''.$parameters[$key].'\'', $conditional);
 
           // If any conditional evaluates false then return false
-          if (!eval('return ('.$conditional.');'))
-          {
+          if (!eval('return ('.$conditional.');')) {
             return false;
           }
-        }
-        else
-        {
+        } else {
           continue; // Don't evaluate if paramater not passed
         }
       }
@@ -211,8 +174,7 @@ class QubitAclPermission extends BaseAclPermission
    */
   public function renderAccess()
   {
-    switch ($this->grantDeny)
-    {
+    switch ($this->grantDeny) {
       case 1:
         $access = 'Grant';
 

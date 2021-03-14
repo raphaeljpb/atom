@@ -24,14 +24,12 @@ class InformationObjectBoxLabelAction extends sfAction
     $this->resource = $this->getRoute()->resource;
     $this->type = $this->context->i18n->__('Box label');
 
-    if (!isset($this->resource))
-    {
+    if (!isset($this->resource)) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'read'))
-    {
+    if (!QubitAcl::check($this->resource, 'read')) {
       QubitAcl::forwardUnauthorized();
     }
 
@@ -44,12 +42,10 @@ class InformationObjectBoxLabelAction extends sfAction
     $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
     $this->form->setWidget($name, new sfWidgetFormChoice(['expanded' => true, 'choices' => $choices]));
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->initiateReportGeneration();
         $this->redirect([$this->resource, 'module' => 'informationobject']);
       }

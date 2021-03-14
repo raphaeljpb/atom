@@ -71,8 +71,7 @@ $tests = [
   ['1992-12-16', '1992-12-16'],
 ];
 
-foreach ($tests as $item)
-{
+foreach ($tests as $item) {
   list($given, $expected) = $item;
 
   $t->is(Qubit::renderDate($given), $expected, "renderDate() renders date {$given} as {$expected}");

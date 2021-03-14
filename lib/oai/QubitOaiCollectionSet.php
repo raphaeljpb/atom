@@ -26,25 +26,30 @@ class QubitOaiCollectionSet implements QubitOaiSet
 {
   private $collection;
 
-  public function __construct($collection) {
+  public function __construct($collection)
+  {
     $this->collection = $collection;
   }
 
-  public function contains($record) {
+  public function contains($record)
+  {
     $lft = $record->getLft();
 
     return $this->collection['lft'] <= $lft and $this->collection['rgt'] > $lft;
   }
 
-  public function setSpec() {
+  public function setSpec()
+  {
     return $this->collection->getOaiIdentifier();
   }
 
-  public function getName() {
+  public function getName()
+  {
     return new sfIsadPlugin($this->collection);
   }
 
-  public function apply($criteria) {
+  public function apply($criteria)
+  {
     $criteria->add(QubitInformationObject::PARENT_ID, null, Criteria::ISNOTNULL);
 
     $criteria->add(QubitInformationObject::LFT, $this->collection['lft'], Criteria::GREATER_EQUAL);

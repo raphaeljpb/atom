@@ -23,7 +23,7 @@
             ['alt' => isset($doc['digitalObject']['digitalObjectAltText']) ? $doc['digitalObject']['digitalObjectAltText'] : truncate_text(strip_markdown($title), 100)]),
             ['module' => 'informationobject', 'slug' => $doc['slug']]); ?>
 
-        <?php } elseif (isset($doc['digitalObject']) && !empty($doc['digitalObject']['mediaTypeId'])){ ?>
+        <?php } elseif (isset($doc['digitalObject']) && !empty($doc['digitalObject']['mediaTypeId'])) { ?>
 
           <?php echo link_to(image_tag(QubitDigitalObject::getGenericIconPathByMediaTypeId($doc['digitalObject']['mediaTypeId']),
             ['alt' => isset($doc['digitalObject']['digitalObjectAltText']) ? $doc['digitalObject']['digitalObjectAltText'] : truncate_text(strip_markdown($title), 100)]),

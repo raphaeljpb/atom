@@ -113,8 +113,7 @@ class SitemapWriter
     $set->setConfig($this->config);
     $set->init();
 
-    foreach ($set as $item)
-    {
+    foreach ($set as $item) {
       $this->getSitemap()->add($item);
     }
     $this->sitemap->flush();
@@ -122,13 +121,11 @@ class SitemapWriter
 
   public function end()
   {
-    if ($this->ended)
-    {
+    if ($this->ended) {
       return;
     }
 
-    if (null !== $this->sitemap)
-    {
+    if (null !== $this->sitemap) {
       $this->sitemap->end();
     }
 
@@ -150,12 +147,9 @@ class SitemapWriter
    */
   private function getSitemap()
   {
-    if (is_null($this->sitemap))
-    {
+    if (is_null($this->sitemap)) {
       $this->addSitemap();
-    }
-    elseif ($this->sitemap->isFull())
-    {
+    } elseif ($this->sitemap->isFull()) {
       $this->sitemap->end();
       $this->addSitemap();
     }

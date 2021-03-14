@@ -29,39 +29,33 @@ class JobsBrowseAction extends DefaultBrowseAction
     $this->user = $this->context->user;
 
     $this->autoRefresh = false;
-    if (isset($request->autoRefresh))
-    {
+    if (isset($request->autoRefresh)) {
       $this->autoRefresh = $request->autoRefresh;
     }
 
     $this->refreshInterval = 10000;
     $this->filter = $request->filter;
 
-    if (!$this->user || !$this->user->isAuthenticated())
-    {
+    if (!$this->user || !$this->user->isAuthenticated()) {
       QubitAcl::forwardUnauthorized();
     }
 
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
-    if (!isset($this->filter))
-    {
+    if (!isset($this->filter)) {
       $this->filter = 'all';
     }
 
     $criteria = new Criteria();
 
     // Filter out the history of other users' jobs if not an administrator.
-    if (!$this->user->isAdministrator())
-    {
+    if (!$this->user->isAdministrator()) {
       $criteria->add(QubitJob::USER_ID, $this->user->getUserID());
     }
 
-    if ('active' === $this->filter)
-    {
+    if ('active' === $this->filter) {
       $criteria->add(QubitJob::STATUS_ID, QubitTerm::JOB_STATUS_IN_PROGRESS_ID);
     }
 

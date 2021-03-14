@@ -40,8 +40,7 @@ class arMigration0115
   {
     $menu = QubitMenu::getByName('settings');
 
-    if (isset($menu))
-    {
+    if (isset($menu)) {
       $menu->setPath('settings/global');
       $menu->save();
     }

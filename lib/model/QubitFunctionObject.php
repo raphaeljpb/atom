@@ -22,8 +22,7 @@ class QubitFunctionObject extends BaseFunctionObject
   public function __toString()
   {
     $string = $this->authorizedFormOfName;
-    if (!isset($string))
-    {
+    if (!isset($string)) {
       $string = $this->getAuthorizedFormOfName(['sourceCulture' => true]);
     }
 
@@ -35,29 +34,24 @@ class QubitFunctionObject extends BaseFunctionObject
     $args = func_get_args();
 
     $options = [];
-    if (1 < count($args))
-    {
+    if (1 < count($args)) {
       $options = $args[1];
     }
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'language':
       case 'script':
-        if (!isset($this->values[$name]))
-        {
+        if (!isset($this->values[$name])) {
           $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
-          if (1 == count($query = QubitProperty::get($criteria)))
-          {
+          if (1 == count($query = QubitProperty::get($criteria))) {
             $this->values[$name] = $query[0];
           }
         }
 
-        if (isset($this->values[$name]) && null !== $value = unserialize($this->values[$name]->__get('value', $options + ['sourceCulture' => true])))
-        {
+        if (isset($this->values[$name]) && null !== $value = unserialize($this->values[$name]->__get('value', $options + ['sourceCulture' => true]))) {
           return $value;
         }
 
@@ -72,27 +66,21 @@ class QubitFunctionObject extends BaseFunctionObject
     $args = func_get_args();
 
     $options = [];
-    if (2 < count($args))
-    {
+    if (2 < count($args)) {
       $options = $args[2];
     }
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'language':
       case 'script':
-        if (!isset($this->values[$name]))
-        {
+        if (!isset($this->values[$name])) {
           $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
-          if (1 == count($query = QubitProperty::get($criteria)))
-          {
+          if (1 == count($query = QubitProperty::get($criteria))) {
             $this->values[$name] = $query[0];
-          }
-          else
-          {
+          } else {
             $this->values[$name] = new QubitProperty();
             $this->values[$name]->name = $name;
             $this->propertys[] = $this->values[$name];
@@ -117,12 +105,10 @@ class QubitFunctionObject extends BaseFunctionObject
   public function getLabel()
   {
     $label = null;
-    if (null !== $this->descriptionIdentifier)
-    {
+    if (null !== $this->descriptionIdentifier) {
       $label .= $this->descriptionIdentifier;
     }
-    if (null !== $value = $this->getAuthorizedFormOfName(['cultureFallback' => true]))
-    {
+    if (null !== $value = $this->getAuthorizedFormOfName(['cultureFallback' => true])) {
       $label = (0 < strlen($label)) ? $label.' - '.$value : $value;
     }
 
@@ -131,8 +117,7 @@ class QubitFunctionObject extends BaseFunctionObject
 
   protected function insert($connection = null)
   {
-    if (!isset($this->slug))
-    {
+    if (!isset($this->slug)) {
       $this->slug = QubitSlug::slugify($this->__get('authorizedFormOfName', ['sourceCulture' => true]));
     }
 

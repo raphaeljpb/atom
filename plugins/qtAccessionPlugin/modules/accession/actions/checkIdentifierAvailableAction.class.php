@@ -22,8 +22,7 @@ class AccessionCheckIdentifierAvailableAction extends sfAction
   public function execute($request)
   {
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'create') && !QubitAcl::check($this->resource, 'update'))
-    {
+    if (!QubitAcl::check($this->resource, 'create') && !QubitAcl::check($this->resource, 'update')) {
       $this->getResponse()->setStatusCode(401);
 
       return sfView::NONE;
@@ -43,35 +42,28 @@ class AccessionCheckIdentifierAvailableAction extends sfAction
 
   private function validateAccessionIdentifier($identifier, $accessionId = null)
   {
-    if (!empty($accessionId))
-    {
+    if (!empty($accessionId)) {
       // Attempt to load existing accession
       $resource = QubitAccession::getById($accessionId);
 
       // Indicate bad request if accession doesn't exist
-      if (null === $resource)
-      {
+      if (null === $resource) {
         $this->getResponse()->setStatusCode(400);
 
         return false;
       }
-    }
-    else
-    {
+    } else {
       // Create new accession so validator can be run
       $resource = new QubitAccession();
     }
 
     $validator = new QubitValidatorAccessionIdentifier(['required' => true, 'resource' => $resource]);
 
-    try
-    {
+    try {
       $validator->clean($identifier);
 
       return true;
-    }
-    catch (sfValidatorError $e)
-    {
+    } catch (sfValidatorError $e) {
       return false;
     }
   }

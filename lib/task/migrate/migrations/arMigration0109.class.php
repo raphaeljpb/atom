@@ -82,8 +82,7 @@ class arMigration0109
       ['en' => 'Science and Technology',               'fr' => 'Sciences et technologie'],
       ['en' => 'Social Organizations and Activities',  'fr' => 'Vie sociale'],
       ['en' => 'Transportation',                       'fr' => 'Transport'],
-      ['en' => 'Travel and Exploration',               'fr' => 'Voyages et exploration'], ] as $termNames)
-    {
+      ['en' => 'Travel and Exploration',               'fr' => 'Voyages et exploration'], ] as $termNames) {
       $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::THEMATIC_AREA_ID;

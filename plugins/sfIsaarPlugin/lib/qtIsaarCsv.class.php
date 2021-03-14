@@ -63,10 +63,8 @@ class qtIsaarCsv extends sfIsaarPlugin
 
   public function __get($name)
   {
-    if (in_array($name, self::$NAMES))
-    {
-      switch ($name)
-      {
+    if (in_array($name, self::$NAMES)) {
+      switch ($name) {
         case 'maintenanceNotes':
           return $this->isaar->maintenanceNotes = $value;
 
@@ -81,14 +79,11 @@ class qtIsaarCsv extends sfIsaarPlugin
 
   public function __set($name, $value)
   {
-    if (in_array($name, self::$NAMES))
-    {
-      switch ($name)
-      {
+    if (in_array($name, self::$NAMES)) {
+      switch ($name) {
         case 'entityType':
           $value = strtolower($value);
-          if (isset(self::$entityTypeLookup[$value]))
-          {
+          if (isset(self::$entityTypeLookup[$value])) {
             $this->resource->entityTypeId = self::$entityTypeLookup[$value];
           }
 

@@ -25,12 +25,10 @@ class UserEditRepositoryAclAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->resource->save();
@@ -44,12 +42,9 @@ class UserEditRepositoryAclAction extends DefaultEditAction
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
-    }
-    else
-    {
+    } else {
       $this->forward404();
     }
 
@@ -65,17 +60,12 @@ class UserEditRepositoryAclAction extends DefaultEditAction
     $c1->addOr($c2);
     $criteria->add($c1);
 
-    if (null !== $permissions = QubitAclPermission::get($criteria))
-    {
-      foreach ($permissions as $item)
-      {
+    if (null !== $permissions = QubitAclPermission::get($criteria)) {
+      foreach ($permissions as $item) {
         // In this context permissions for all objects (null) and root repository object are equivalent
-        if (null === $item->objectId)
-        {
+        if (null === $item->objectId) {
           $this->repositories[QubitRepository::ROOT_ID][$item->action] = $item;
-        }
-        else
-        {
+        } else {
           $this->repositories[$item->objectId][$item->action] = $item;
         }
       }
@@ -88,17 +78,14 @@ class UserEditRepositoryAclAction extends DefaultEditAction
 
   protected function processForm()
   {
-    foreach ($this->request->acl as $key => $value)
-    {
+    foreach ($this->request->acl as $key => $value) {
       // If key has an underscore, then we are creating a new permission
-      if (1 == preg_match('/([\w]+)_(.*)/', $key, $matches))
-      {
+      if (1 == preg_match('/([\w]+)_(.*)/', $key, $matches)) {
         list($action, $uri) = array_slice($matches, 1, 2);
         $params = $this->context->routing->parse(Qubit::pathInfo($uri));
         $resource = $params['_sf_route']->resource;
 
-        if (QubitAcl::INHERIT != $value && isset(QubitAcl::$ACTIONS[$action]))
-        {
+        if (QubitAcl::INHERIT != $value && isset(QubitAcl::$ACTIONS[$action])) {
           $aclPermission = new QubitAclPermission();
           $aclPermission->action = $action;
           $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
@@ -109,14 +96,10 @@ class UserEditRepositoryAclAction extends DefaultEditAction
       }
 
       // Otherwise, update an existing permission
-      elseif (null !== $aclPermission = QubitAclPermission::getById($key))
-      {
-        if (QubitAcl::INHERIT == $value)
-        {
+      elseif (null !== $aclPermission = QubitAclPermission::getById($key)) {
+        if (QubitAcl::INHERIT == $value) {
           $aclPermission->delete();
-        }
-        else
-        {
+        } else {
           $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
           $this->resource->aclPermissions[] = $aclPermission;
         }

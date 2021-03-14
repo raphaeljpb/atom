@@ -51,8 +51,7 @@ class qubitConfiguration extends sfApplicationConfiguration
    */
   public function initialize()
   {
-    if (false !== $readOnly = getenv('ATOM_READ_ONLY'))
-    {
+    if (false !== $readOnly = getenv('ATOM_READ_ONLY')) {
       sfConfig::set('app_read_only', filter_var($readOnly, FILTER_VALIDATE_BOOLEAN));
     }
 
@@ -67,14 +66,12 @@ class qubitConfiguration extends sfApplicationConfiguration
    */
   public function getControllerDirs($moduleName)
   {
-    if (!isset($this->cache['getControllerDirs'][$moduleName]))
-    {
+    if (!isset($this->cache['getControllerDirs'][$moduleName])) {
       $this->cache['getControllerDirs'][$moduleName] = [];
 
       // HACK Currently plugins only override application templates, not the
       // other way around
-      foreach ($this->getPluginSubPaths('/modules/'.$moduleName.'/actions') as $dir)
-      {
+      foreach ($this->getPluginSubPaths('/modules/'.$moduleName.'/actions') as $dir) {
         $this->cache['getControllerDirs'][$moduleName][$dir] = false; // plugins
       }
 
@@ -148,14 +145,12 @@ class qubitConfiguration extends sfApplicationConfiguration
     // some reason :-/
     if (
       'config/settings.yml' == $configFile
-      && isset($config[$env]['.settings'][$varname]))
-    {
+      && isset($config[$env]['.settings'][$varname])) {
       return $config[$env]['.settings'][$varname];
     }
 
     // Get a value from non "settings.yml" config files
-    if (isset($config[$env][$varname]))
-    {
+    if (isset($config[$env][$varname])) {
       return $config[$env][$varname];
     }
 

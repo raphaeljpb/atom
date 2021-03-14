@@ -22,21 +22,17 @@ class QubitSessionStorage extends sfSessionStorage
   public function initialize($options = null)
   {
     // http://trac.symfony-project.org/ticket/5683
-    if (!isset($options['session_cookie_path']))
-    {
+    if (!isset($options['session_cookie_path'])) {
       $options['session_cookie_path'] = sfContext::getInstance()->request->getRelativeUrlRoot();
-      if (1 > strlen($options['session_cookie_path']))
-      {
+      if (1 > strlen($options['session_cookie_path'])) {
         $options['session_cookie_path'] = '/';
       }
     }
 
     // Ignore session_cookie_secure if we are not using HTTPS
-    if (isset($options['session_cookie_secure']) && true === $options['session_cookie_secure'])
-    {
+    if (isset($options['session_cookie_secure']) && true === $options['session_cookie_secure']) {
       $request = sfContext::getInstance()->getRequest();
-      if (!$request->isSecure())
-      {
+      if (!$request->isSecure()) {
         unset($options['session_cookie_secure']);
       }
     }
@@ -52,8 +48,7 @@ class QubitSessionStorage extends sfSessionStorage
     // In GET requests that perform login, the previous session needs to be destroyed before
     // calling session_regenerate_id(true) to fix this problem
     if (!self::$sessionIdRegenerated && $destroy && self::$sessionStarted
-      && 'GET' == sfContext::getInstance()->request->getMethod())
-    {
+      && 'GET' == sfContext::getInstance()->request->getMethod()) {
       session_destroy();
     }
 

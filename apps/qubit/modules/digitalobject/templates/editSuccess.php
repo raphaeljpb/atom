@@ -6,7 +6,7 @@
 
     <?php if ($resource->object instanceof QubitInformationObject) { ?>
       <span class="sub"><?php echo render_title(QubitInformationObject::getStandardsBasedInstance($object)); ?></span>
-    <?php } elseif ($resource->object instanceof QubitActor){ ?>
+    <?php } elseif ($resource->object instanceof QubitActor) { ?>
       <span class="sub"><?php echo render_title($object); ?></span>
     <?php } ?>
   </h1>

@@ -61,8 +61,7 @@ sql;
 
     // Create job menu item under manage->jobs
     $jobs = QubitMenu::getByName('jobs');
-    if (null === $jobs)
-    {
+    if (null === $jobs) {
       $node = new QubitMenu();
       $node->parentId = QubitMenu::MANAGE_ID;
       $node->name = 'jobs';

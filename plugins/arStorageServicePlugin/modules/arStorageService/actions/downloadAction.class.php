@@ -26,41 +26,29 @@ class arStorageServiceDownloadAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that object exists and that it is not the root
-    if (!isset($this->resource))
-    {
+    if (!isset($this->resource)) {
       $this->forward404();
     }
 
-    try
-    {
+    try {
       $status = $this->downloadAip($request);
-    }
-    catch (QubitApi404Exception $e)
-    {
+    } catch (QubitApi404Exception $e) {
       $this->response->setStatusCode(404, $e->getMessage());
 
       throw $e;
-    }
-    catch (QubitApiNotAuthorizedException $e)
-    {
+    } catch (QubitApiNotAuthorizedException $e) {
       $this->response->setStatusCode(401, $e->getMessage());
 
       throw $e;
-    }
-    catch (QubitApiForbiddenException $e)
-    {
+    } catch (QubitApiForbiddenException $e) {
       $this->response->setStatusCode(403, $e->getMessage());
 
       throw $e;
-    }
-    catch (QubitApiBadRequestException $e)
-    {
+    } catch (QubitApiBadRequestException $e) {
       $this->response->setStatusCode(400, $e->getMessage());
 
       throw $e;
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $this->response->setStatusCode(500, $e->getMessage());
 
       throw $e;
@@ -78,18 +66,15 @@ class arStorageServiceDownloadAction extends sfAction
    */
   protected function downloadAip($request)
   {
-    if (!arStorageServiceUtils::getAipDownloadEnabled())
-    {
+    if (!arStorageServiceUtils::getAipDownloadEnabled()) {
       throw new QubitApiForbiddenException('AIP Download disabled');
     }
 
-    if (null === $aipUUID = $this->resource->object->aipUUID)
-    {
+    if (null === $aipUUID = $this->resource->object->aipUUID) {
       throw new QubitApiBadRequestException('Missing parameter: aipuuid');
     }
 
-    if (null === $baseUrl = QubitSetting::getByName('storage_service_api_url'))
-    {
+    if (null === $baseUrl = QubitSetting::getByName('storage_service_api_url')) {
       throw new QubitApiBadRequestException('Missing setting: storage_service_api_url');
     }
 
@@ -100,8 +85,7 @@ class arStorageServiceDownloadAction extends sfAction
     );
 
     // Check return status from Storage Service
-    if (200 !== $status = arStorageServiceUtils::getFileFromStorageService($url))
-    {
+    if (200 !== $status = arStorageServiceUtils::getFileFromStorageService($url)) {
       sfContext::getInstance()->getLogger()->err(sprintf('Storage Service download returned status: %s; %s', $status, $url));
       $ex = arStorageServiceUtils::getStorageServiceException($status);
 

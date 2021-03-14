@@ -13,8 +13,7 @@ class sfTranslatePluginTranslateComponent extends sfComponent
   public function execute($request)
   {
     $this->messages = $request->getAttribute('messages');
-    if (empty($this->messages))
-    {
+    if (empty($this->messages)) {
       return sfView::NONE;
     }
 

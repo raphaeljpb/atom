@@ -15,26 +15,20 @@ class sfIsaarPlugin implements ArrayAccess
     $args = func_get_args();
 
     $options = [];
-    if (1 < count($args))
-    {
+    if (1 < count($args)) {
       $options = $args[1];
     }
 
-    switch ($name)
-    {
+    switch ($name) {
       case '_maintenanceNote':
-        if (!isset($this->maintenanceNote))
-        {
+        if (!isset($this->maintenanceNote)) {
           $criteria = new Criteria();
           $criteria->add(QubitNote::OBJECT_ID, $this->resource->id);
           $criteria->add(QubitNote::TYPE_ID, QubitTerm::MAINTENANCE_NOTE_ID);
 
-          if (1 == count($query = QubitNote::get($criteria)))
-          {
+          if (1 == count($query = QubitNote::get($criteria))) {
             $this->maintenanceNote = $query[0];
-          }
-          else
-          {
+          } else {
             $this->maintenanceNote = new QubitNote();
             $this->maintenanceNote->typeId = QubitTerm::MAINTENANCE_NOTE_ID;
 
@@ -54,8 +48,7 @@ class sfIsaarPlugin implements ArrayAccess
 
   public function __set($name, $value)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'maintenanceNotes':
         $this->_maintenanceNote->content = $value;
 

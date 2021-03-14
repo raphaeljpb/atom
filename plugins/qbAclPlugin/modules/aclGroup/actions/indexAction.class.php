@@ -22,8 +22,7 @@ class AclGroupIndexAction extends sfAction
   public function execute($request)
   {
     $this->group = QubitAclGroup::getById($request->id);
-    if (!isset($this->group))
-    {
+    if (!isset($this->group)) {
       $this->forward404();
     }
 
@@ -33,14 +32,12 @@ class AclGroupIndexAction extends sfAction
     $criteria->add(QubitAclPermission::GRANT_DENY, 1);
 
     $this->translate = 'No';
-    if (null !== QubitAclPermission::getOne($criteria))
-    {
+    if (null !== QubitAclPermission::getOne($criteria)) {
       $this->translate = 'Yes';
     }
 
     // Require administrator credentials
-    if (!QubitAcl::check($this->group, 'read'))
-    {
+    if (!QubitAcl::check($this->group, 'read')) {
       $this->redirect('admin/secure');
     }
   }

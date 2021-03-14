@@ -73,29 +73,24 @@ EOF;
     // Search for xliff files
     $files = sfFinder::type('file')->name($options['filename'])->in($arguments['path']);
 
-    if (0 == count($files))
-    {
+    if (0 == count($files)) {
       $this->logSection('i18n', 'No valid files found.  Please check path and filename');
 
       return;
     }
 
     // Extract translation strings
-    foreach ($files as $file)
-    {
+    foreach ($files as $file) {
       $culture = self::getTargetCulture($file);
       $xliff = new sfMessageSource_XLIFF(substr($file, 0, strrpos('/')));
 
-      if (!($messages = $xliff->loadData($file)))
-      {
+      if (!($messages = $xliff->loadData($file))) {
         continue;
       }
 
       // Build list of translations, keyed on source value
-      foreach ($messages as $source => $message)
-      {
-        if (0 < strlen($message[0]))
-        {
+      foreach ($messages as $source => $message) {
+        if (0 < strlen($message[0])) {
           $translations[$source][$culture] = trim($message[0]);
         }
       }
@@ -112,31 +107,24 @@ EOF;
     $fixturesDirs = array_merge([sfConfig::get('sf_data_dir').'/fixtures'], $this->configuration->getPluginSubPaths('/data/fixtures'));
     $files = sfFinder::type('file')->name('*.yml')->in($fixturesDirs);
 
-    if (0 == count($files))
-    {
+    if (0 == count($files)) {
       $this->logSection('i18n', 'Error: Couldn\'t find any fixture files to write.');
 
       return;
     }
 
     // Merge translations to YAML files in data/fixtures
-    foreach ($files as $file)
-    {
+    foreach ($files as $file) {
       $modified = false;
       $yaml = new sfYaml();
       $fixtures = $yaml->load($file);
 
       // Descend through fixtures hierarchy
-      foreach ($fixtures as $classname => &$fixture)
-      {
-        foreach ($fixture as $key => &$columns)
-        {
-          foreach ($columns as $column => &$value)
-          {
-            if (is_array($value) && isset($value['en']))
-            {
-              if (isset($translations[$value['en']]))
-              {
+      foreach ($fixtures as $classname => &$fixture) {
+        foreach ($fixture as $key => &$columns) {
+          foreach ($columns as $column => &$value) {
+            if (is_array($value) && isset($value['en'])) {
+              if (isset($translations[$value['en']])) {
                 $value = array_merge($value, $translations[$value['en']]);
 
                 // Sort keys alphabetically
@@ -149,14 +137,12 @@ EOF;
         }
       }
 
-      if ($modified)
-      {
+      if ($modified) {
         $this->logSection('i18n', sprintf('Updating %s...', $file));
 
         $contents = $yaml->dump($fixtures, 4);
 
-        if (0 < strlen($contents))
-        {
+        if (0 < strlen($contents)) {
           file_put_contents($file, $contents);
         }
       }
@@ -168,8 +154,7 @@ EOF;
   protected static function getTargetCulture($filename)
   {
     libxml_use_internal_errors(true);
-    if (!$xml = simplexml_load_file($filename))
-    {
+    if (!$xml = simplexml_load_file($filename)) {
       return;
     }
     libxml_use_internal_errors(false);
@@ -179,12 +164,9 @@ EOF;
     // It looks like Transifex leaves the target-language property emtpy, is
     // that intentional? For now, I'm going to extract the target based in the
     // path of the file.
-    if (empty($code))
-    {
-      if (1 === preg_match('/\\/(?P<code>[a-zA-Z_@]+)\\/messages\\.xml$/m', $filename, $matches))
-      {
-        if (isset($matches['code']))
-        {
+    if (empty($code)) {
+      if (1 === preg_match('/\\/(?P<code>[a-zA-Z_@]+)\\/messages\\.xml$/m', $filename, $matches)) {
+        if (isset($matches['code'])) {
           $code = $matches['code'];
         }
       }

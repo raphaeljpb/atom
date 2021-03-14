@@ -46,15 +46,12 @@ class propelBuildNestedSetTask extends sfBaseTask
 
     $excludeTables = [];
 
-    if (!empty($options['exclude-tables']))
-    {
+    if (!empty($options['exclude-tables'])) {
       $excludeTables = array_map('trim', explode(',', $options['exclude-tables']));
     }
 
-    foreach ($tables as $table => $classname)
-    {
-      if (in_array($table, $excludeTables))
-      {
+    foreach ($tables as $table => $classname) {
+      if (in_array($table, $excludeTables)) {
         $this->logSection('propel', 'Skip nested set build for '.$table.'.');
 
         continue;
@@ -71,14 +68,10 @@ class propelBuildNestedSetTask extends sfBaseTask
       $this->children = [];
 
       // Build hash of child rows keyed on parent_id
-      foreach ($this->conn->query($sql, PDO::FETCH_ASSOC) as $item)
-      {
-        if (isset($this->children[$item['parent_id']]))
-        {
+      foreach ($this->conn->query($sql, PDO::FETCH_ASSOC) as $item) {
+        if (isset($this->children[$item['parent_id']])) {
           array_push($this->children[$item['parent_id']], $item['id']);
-        }
-        else
-        {
+        } else {
           $this->children[$item['parent_id']] = [$item['id']];
         }
       }
@@ -89,12 +82,9 @@ class propelBuildNestedSetTask extends sfBaseTask
         'rgt' => null,
       ];
 
-      try
-      {
+      try {
         self::recursivelyUpdateTree($rootNode, $classname);
-      }
-      catch (PDOException $e)
-      {
+      } catch (PDOException $e) {
         $this->conn->rollback();
 
         throw new sfException($e);
@@ -135,12 +125,10 @@ EOF;
     $width = 2;
     $lft = $node['lft'];
 
-    if (isset($this->children[$node['id']]))
-    {
+    if (isset($this->children[$node['id']])) {
       ++$lft;
 
-      foreach ($this->children[$node['id']] as $id)
-      {
+      foreach ($this->children[$node['id']] as $id) {
         $child = ['id' => $id, 'lft' => $lft, 'rgt' => null];
 
         // Update children first

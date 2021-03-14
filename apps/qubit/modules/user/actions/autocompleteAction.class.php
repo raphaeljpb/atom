@@ -26,21 +26,16 @@ class UserAutocompleteAction extends sfAction
 {
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page', 10);
     }
 
     $criteria = new Criteria();
 
-    if (isset($request->query))
-    {
-      if (sfConfig::get('app_markdown_enabled', true))
-      {
+    if (isset($request->query)) {
+      if (sfConfig::get('app_markdown_enabled', true)) {
         $criteria->add(QubitUser::USERNAME, "%{$request->query}%", Criteria::LIKE);
-      }
-      else
-      {
+      } else {
         $criteria->add(QubitUser::USERNAME, "{$request->query}%", Criteria::LIKE);
       }
     }

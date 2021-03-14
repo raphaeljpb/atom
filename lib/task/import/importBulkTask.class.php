@@ -75,24 +75,19 @@ EOF;
     // Overall timing
     $timer = new QubitTimer();
 
-    if (empty($arguments['folder']) || !file_exists($arguments['folder']))
-    {
+    if (empty($arguments['folder']) || !file_exists($arguments['folder'])) {
       throw new sfException('You must specify a valid import folder or file');
     }
 
     // Set indexing preference
-    if (!$options['index'])
-    {
+    if (!$options['index']) {
       QubitSearch::disable();
     }
 
-    if (is_dir($arguments['folder']))
-    {
+    if (is_dir($arguments['folder'])) {
       // Recurse into the import folder
       $files = $this->dir_tree(rtrim($arguments['folder'], '/'));
-    }
-    else
-    {
+    } else {
       $files = [$arguments['folder']];
     }
 
@@ -102,53 +97,42 @@ EOF;
     $count = 0;
     $total = count($files);
 
-    foreach ($files as $file)
-    {
+    foreach ($files as $file) {
       $start = microtime(true);
       $importer = null;
 
-      if ($options['verbose'])
-      {
+      if ($options['verbose']) {
         echo 'Importing: '.$file."\n";
       }
 
       // Choose import type based on file extension, eg. csv, xml
-      if ('csv' == pathinfo($file, PATHINFO_EXTENSION))
-      {
+      if ('csv' == pathinfo($file, PATHINFO_EXTENSION)) {
         $importer = new QubitCsvImport();
         $importer->indexDuringImport = $options['index'];
         $importer->import($file, $options);
-      }
-      elseif ('xml' == pathinfo($file, PATHINFO_EXTENSION))
-      {
+      } elseif ('xml' == pathinfo($file, PATHINFO_EXTENSION)) {
         $importer = new QubitXmlImport();
         $importer->includeClassesAndHelpers();
         $options['strictXmlParsing'] = false;
         $importer->import($file, $options);
-      }
-      else
-      {
+      } else {
         // Move on to the next file
         continue;
       }
 
-      if (isset($options['completed-dir']) && !empty($importer))
-      {
+      if (isset($options['completed-dir']) && !empty($importer)) {
         $path_info = pathinfo($file);
         $move_source = $path_info['dirname'].'/'.$path_info['basename'];
         $move_destination = $options['completed-dir'].'/'.$path_info['basename'];
         rename($file, $move_destination);
       }
 
-      if (!$options['verbose'])
-      {
+      if (!$options['verbose']) {
         echo '.';
       }
 
-      if ($importer->hasErrors())
-      {
-        foreach ($importer->getErrors() as $message)
-        {
+      if ($importer->hasErrors()) {
+        foreach ($importer->getErrors() as $message) {
           $this->log('('.$file.'): '.$message);
         }
       }
@@ -162,25 +146,21 @@ EOF;
       $split = round(microtime(true) - $start, 2);
 
       // Store details if output is specified
-      if ($options['output'])
-      {
+      if ($options['output']) {
         $rows[] = [$file, $split.'s', memory_get_usage().'B'];
       }
 
-      if ($options['verbose'])
-      {
+      if ($options['verbose']) {
         $this->log(basename($file).' imported ('.round($split, 2).' s) ('.$count.'/'.$total.')');
       }
     }
 
     // Create/open output file if specified
-    if ($options['output'])
-    {
+    if ($options['output']) {
       $fh = fopen($options['output'], 'w+');
 
       fputcsv($fh, ['File', 'Time elapsed (secs)', 'Memory used']);
-      foreach ($rows as $row)
-      {
+      foreach ($rows as $row) {
         fputcsv($fh, $row);
       }
 
@@ -192,8 +172,7 @@ EOF;
     }
 
     // Optimize index if enabled
-    if (!$options['noindex'])
-    {
+    if (!$options['noindex']) {
       QubitSearch::getInstance()->optimize();
     }
 
@@ -205,26 +184,19 @@ EOF;
     $path = [];
     $stack[] = $dir;
 
-    while ($stack)
-    {
+    while ($stack) {
       $thisdir = array_pop($stack);
 
-      if ($dircont = scandir($thisdir))
-      {
+      if ($dircont = scandir($thisdir)) {
         $i = 0;
 
-        while (isset($dircont[$i]))
-        {
-          if ('.' !== $dircont[$i] && '..' !== $dircont[$i] && !preg_match('/^\..*/', $dircont[$i]))
-          {
+        while (isset($dircont[$i])) {
+          if ('.' !== $dircont[$i] && '..' !== $dircont[$i] && !preg_match('/^\..*/', $dircont[$i])) {
             $current_file = "{$thisdir}/{$dircont[$i]}";
 
-            if (is_file($current_file))
-            {
+            if (is_file($current_file)) {
               $path[] = "{$thisdir}/{$dircont[$i]}";
-            }
-            elseif (is_dir($current_file))
-            {
+            } elseif (is_dir($current_file)) {
               $stack[] = $current_file;
             }
           }

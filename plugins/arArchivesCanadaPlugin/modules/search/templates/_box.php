@@ -7,9 +7,13 @@
     <div class="input-append">
 
       <?php if (isset($repository)) { ?>
-        <input type="text" name="query"<?php if (isset($sf_request->query)) echo ' class="focused"'; ?> value="<?php echo $sf_request->query; ?>" placeholder="<?php echo __('Search %1%', ['%1%' => strip_markdown($repository)]); ?>"/>
+        <input type="text" name="query"<?php if (isset($sf_request->query)) {
+  echo ' class="focused"';
+} ?> value="<?php echo $sf_request->query; ?>" placeholder="<?php echo __('Search %1%', ['%1%' => strip_markdown($repository)]); ?>"/>
       <?php } else { ?>
-        <input type="text" name="query"<?php if (isset($sf_request->query)) echo ' class="focused"'; ?> value="<?php echo $sf_request->query; ?>" placeholder="<?php echo __('Search'); ?>"/>
+        <input type="text" name="query"<?php if (isset($sf_request->query)) {
+  echo ' class="focused"';
+} ?> value="<?php echo $sf_request->query; ?>" placeholder="<?php echo __('Search'); ?>"/>
       <?php } ?>
 
       <div class="btn-group">

@@ -31,8 +31,7 @@ class arMigration0125
 
   public function up($configuration)
   {
-    if (null === QubitMenu::getByName('staticPagesMenu'))
-    {
+    if (null === QubitMenu::getByName('staticPagesMenu')) {
       $node = new QubitMenu();
       $node->parentId = QubitMenu::ROOT_ID;
       $node->name = 'staticPagesMenu';

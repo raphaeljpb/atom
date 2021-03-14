@@ -26,33 +26,27 @@ class TermDeleteAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that this isn't the root
-    if (!isset($this->resource->parent))
-    {
+    if (!isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Don't delete protected terms
-    if (QubitTerm::isProtected($this->resource->id))
-    {
+    if (QubitTerm::isProtected($this->resource->id)) {
       $this->forward('admin', 'termPermission');
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'delete'))
-    {
+    if (!QubitAcl::check($this->resource, 'delete')) {
       QubitAcl::forwardUnauthorized();
     }
 
-    if ($request->isMethod('delete'))
-    {
+    if ($request->isMethod('delete')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->resource->deleteFullHierarchy();
 
-        if (isset($this->resource->taxonomy))
-        {
+        if (isset($this->resource->taxonomy)) {
           $this->redirect([$this->resource->taxonomy, 'module' => 'taxonomy']);
         }
 

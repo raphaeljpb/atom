@@ -48,15 +48,12 @@ class sfInstallPluginConfigureDatabaseAction extends sfAction
     $this->form->setValidator('databaseUsername', new sfValidatorString());
     $this->form->setWidget('databaseUsername', new sfWidgetFormInput());
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->database = sfInstall::configureDatabase($this->form->getValues());
-        if (count($this->database) < 1)
-        {
+        if (count($this->database) < 1) {
           $symlinks = sfInstall::addSymlinks();
 
           $this->redirect(['module' => 'sfInstallPlugin', 'action' => 'insertSql']);

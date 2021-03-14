@@ -1,8 +1,7 @@
 <?php
 
 include dirname(__FILE__).'/../../../../test/bootstrap/unit.php';
-if (!isset($sf_symfony_lib_dir))
-{
+if (!isset($sf_symfony_lib_dir)) {
   $sf_symfony_lib_dir = $configuration->getSymfonyLibDir();
 }
 
@@ -64,8 +63,7 @@ class myTestWebBrowser extends sfWebBrowser
 }
 
 $t = new lime_test($nb_test_orig * count($adapter_list), new lime_output_color());
-foreach ($adapter_list as $adapter)
-{
+foreach ($adapter_list as $adapter) {
   $t->diag('Testing '.$adapter);
   $t->diag('');
 
@@ -96,13 +94,10 @@ foreach ($adapter_list as $adapter)
   $t->diag('Exceptions');
   $b = new sfWebBrowser([], $adapter);
 
-  try
-  {
+  try {
     $b->get('htp://askeet');
     $t->fail('get() throws an exception when passed an uri which is neither http nor https');
-  }
-  catch (Exception $e)
-  {
+  } catch (Exception $e) {
     $t->pass('get() throws an exception when passed an uri which is neither http nor https');
   }
 
@@ -156,18 +151,14 @@ foreach ($adapter_list as $adapter)
   $t->isa_ok($b->getResponseXml(), 'SimpleXMLElement', 'getResponseXml() returns the response as a SimpleXML Element');
   $b->get('http://www.w3.org/StyleSheets/home.css');
 
-  try
-  {
+  try {
     $b->getResponseXml();
     $t->fail('Incorrect XML throws an exception');
-  }
-  catch (Exception $e)
-  {
+  } catch (Exception $e) {
     $t->pass('Incorrect XML throws an exception');
   }
 
-  try
-  {
+  try {
     // Absolute and relative URls
 
     $t->diag('Absolute and relative URls');
@@ -186,9 +177,7 @@ foreach ($adapter_list as $adapter)
     $t->like($b->click('askeet')->getResponseText(), '/<h1>featured questions<\/h1>/', 'click() clicks on an image if it finds the argument in the alt');
     $t->like($b->click('search it', ['search' => 'foo'])->getResponseText(), '/<h1>questions matching "foo"<\/h1>/', 'click() clicks on a form input');
     $t->like($b->setField('search', 'bar')->click('search it')->getResponseText(), '/<h1>questions matching "bar"<\/h1>/', 'setField() fills a form input');
-  }
-  catch (Exception $e)
-  {
+  } catch (Exception $e) {
     $t->fail(sprintf('%s : skipping askeet related tests', $e->getMessage()));
   }
 
@@ -237,32 +226,25 @@ foreach ($adapter_list as $adapter)
     'post() can pass request headers with the third argument');
   $msg = 'get() can pass request headers not common that are defined uppercase in RFC 2616';
 
-  try
-  {
+  try {
     $t->like(
       $b->get($dump_headers_url, [], ['TE' => 'trailers, deflate;q=0.5'])->getResponseText(),
       '/\\[TE\\] => trailers, deflate;q=0.5/',
       $msg);
-  }
-  catch (Exception $e)
-  {
+  } catch (Exception $e) {
     $t->fail($msg);
   }
 
   $msg = 'get() can pass request headers not common that are IE7 dependent: see http://www.w3.org/2006/http-header, now: ';
   $field = '';
 
-  try
-  {
+  try {
     $headers = ['UA-CPU' => 'x86', 'UA-OS' => 'MacOS', 'UA-Color' => 'color16', 'UA-Pixels' => '240x320'];
     $resp = $b->get($dump_headers_url, [], $headers)->getResponseText();
-    foreach ($headers as $field => $value)
-    {
+    foreach ($headers as $field => $value) {
       $t->like($resp, "/\\[{$field}\\] => {$value}/", $msg.$field);
     }
-  }
-  catch (Exception $e)
-  {
+  } catch (Exception $e) {
     $t->fail($msg.field.' - header refused');
   }
 
@@ -282,12 +264,10 @@ foreach ($adapter_list as $adapter)
     'getResponseText() can decode deflate encoded response body');
 
   $encodings = [];
-  if (function_exists('gzuncompress'))
-  {
+  if (function_exists('gzuncompress')) {
     $encodings[] = 'deflate';
   }
-  if (function_exists('gzinflate'))
-  {
+  if (function_exists('gzinflate')) {
     $encodings[] = 'gzip';
   }
   $target_headers = implode(',', $encodings);
@@ -297,12 +277,10 @@ foreach ($adapter_list as $adapter)
     'sfWebBrowser autosets accept-encoding headers depending on php capabilities');
 
   $encodings = [];
-  if (function_exists('gzinflate'))
-  {
+  if (function_exists('gzinflate')) {
     $encodings[] = 'gzip';
   }
-  if (function_exists('gzuncompress'))
-  {
+  if (function_exists('gzuncompress')) {
     $encodings[] = 'deflate';
   }
   $headers = ['accept-encoding' => 'bzip2'];
@@ -330,13 +308,10 @@ foreach ($adapter_list as $adapter)
 
   $t->diag('Error management');
 
-  try
-  {
+  try {
     $b->get('http://nonexistent');
     $t->fail('an exception is thrown when an adapter error occurs');
-  }
-  catch (Exception $e)
-  {
+  } catch (Exception $e) {
     $t->pass('an exception is thrown when an adapter error occurs');
   }
 
@@ -348,13 +323,10 @@ foreach ($adapter_list as $adapter)
   $t->diag('Browser restart');
   $b->restart();
 
-  try
-  {
+  try {
     $b->reload();
     $t->fail('restart() reinitializes the browser history');
-  }
-  catch (Exception $e)
-  {
+  } catch (Exception $e) {
     $t->pass('restart() reinitializes the browser history');
   }
   $t->is($b->getResponseText(), '', 'restart() reinitializes the response');
@@ -376,8 +348,7 @@ foreach ($adapter_list as $adapter)
   // Cookies
 
   $t->diag('Cookies');
-  if ('sfCurlAdapter' == $adapter)
-  {
+  if ('sfCurlAdapter' == $adapter) {
     $b = new sfWebBrowser([], $adapter, [
       'cookies' => true,
       'cookies_file' => $cookies_file,
@@ -391,24 +362,19 @@ foreach ($adapter_list as $adapter)
 
     rmdir($cookies_dir);
     rmdir(dirname(__FILE__).'/../data');
-  }
-  else
-  {
+  } else {
     $t->todo('Cookies can be added to the request (sfCurlAdapter only for now)');
   }
 
   // File Uploads
 
   $t->diag('File uploads');
-  if ('sfCurlAdapter' == $adapter)
-  {
+  if ('sfCurlAdapter' == $adapter) {
     $b->post($dump_headers_url, [
       'test_file' => realpath(__FILE__),
     ]);
     $t->like($b->getResponseText(), '/\[test_file\]/', 'The request can upload a file');
-  }
-  else
-  {
+  } else {
     $t->todo('The request can upload a file (sfCurlAdapter only for now)');
   }
 

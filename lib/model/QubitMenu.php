@@ -59,20 +59,13 @@ class QubitMenu extends BaseMenu
     // 'currentRealm' is used by menu items on the Institutional Block as part of the
     // enable_institutional_scoping feature. Try using search-realm if available, else
     // try resource->id from sf_route, else try repos param on request.
-    if (null !== sfContext::getInstance()->user->getAttribute('search-realm'))
-    {
+    if (null !== sfContext::getInstance()->user->getAttribute('search-realm')) {
       $currentRealm = sfContext::getInstance()->user->getAttribute('search-realm');
-    }
-    elseif (isset(sfContext::getInstance()->request->getAttribute('sf_route')->resource->id))
-    {
+    } elseif (isset(sfContext::getInstance()->request->getAttribute('sf_route')->resource->id)) {
       $currentRealm = sfContext::getInstance()->request->getAttribute('sf_route')->resource->id;
-    }
-    elseif (null !== sfContext::getInstance()->request->getParameter('repos'))
-    {
+    } elseif (null !== sfContext::getInstance()->request->getParameter('repos')) {
       $currentRealm = sfContext::getInstance()->request->getParameter('repos');
-    }
-    else
-    {
+    } else {
       $currentRealm = null;
     }
 
@@ -88,27 +81,20 @@ class QubitMenu extends BaseMenu
 
     $path = parent::offsetGet('path', $options);
 
-    if (isset($options['resolveAlias']) && $options['resolveAlias'])
-    {
-      foreach ($aliases as $alias => $target)
-      {
-        if (false !== strpos($path, $alias))
-        {
+    if (isset($options['resolveAlias']) && $options['resolveAlias']) {
+      foreach ($aliases as $alias => $target) {
+        if (false !== strpos($path, $alias)) {
           $path = str_replace($alias, $target, $path);
         }
       }
     }
 
-    if (isset($options['getUrl']) && true == $options['getUrl'])
-    {
+    if (isset($options['getUrl']) && true == $options['getUrl']) {
       // Catch any exceptions thrown from url_for() to prevent ugly errors when
       // admin puts in a bad route
-      try
-      {
+      try {
         $url = url_for($path);
-      }
-      catch (Exception $e)
-      {
+      } catch (Exception $e) {
         // if exception caught then return a blank route (home page)
         $url = url_for('');
       }
@@ -126,16 +112,14 @@ class QubitMenu extends BaseMenu
    */
   public function isProtected()
   {
-    if (!isset($this->id))
-    {
+    if (!isset($this->id)) {
       return false;
     }
 
     $lockInfo = unserialize(sfConfig::get('app_menu_locking_info', []));
 
     // If lock info isn't empty and the menu's ID or name indicates it should be locked, then lock it
-    if (count($lockInfo) && (in_array($this->id, $lockInfo['byId']) || in_array($this->name, $lockInfo['byName'])))
-    {
+    if (count($lockInfo) && (in_array($this->id, $lockInfo['byId']) || in_array($this->name, $lockInfo['byName']))) {
       return true;
     }
 
@@ -173,39 +157,33 @@ class QubitMenu extends BaseMenu
 
     // Yucky Hack: Don't display "static" menu as selected when displaying
     // an action from staticpage module (See FIXME below)
-    if ('staticpage' == $currentModule && in_array($currentAction, ['edit', 'index', 'list', 'static']))
-    {
+    if ('staticpage' == $currentModule && in_array($currentAction, ['edit', 'index', 'list', 'static'])) {
       return false;
     }
     // Yucky Hack, Part Deux: Don't display any active menu options when
     // displaying search results
-    if ('search' == $currentModule && 'search' == $currentAction)
-    {
+    if ('search' == $currentModule && 'search' == $currentAction) {
       return false;
     }
     // 'Hacks 3: Return of the Hack' Select the 'archival description' button
     // when uploading digital object
-    if ('digitalobject' == $currentModule && 'edit' == $currentAction)
-    {
+    if ('digitalobject' == $currentModule && 'edit' == $currentAction) {
       return 'informationobject/list' == $this->getPath();
     }
     // And even more hacks
-    if (in_array($currentModule, ['sfIsadPlugin', 'sfRadPlugin', 'sfDcPlugin', 'sfModsPlugin', 'arDacsPlugin']))
-    {
+    if (in_array($currentModule, ['sfIsadPlugin', 'sfRadPlugin', 'sfDcPlugin', 'sfModsPlugin', 'arDacsPlugin'])) {
       return 'informationobject/list' == $this->getPath();
     }
 
     // son of hack
-    if (in_array($currentModule, ['term', 'taxonomy']))
-    {
+    if (in_array($currentModule, ['term', 'taxonomy'])) {
       return 'taxonomy/list' == $this->getPath();
     }
 
     // If passed $url matches the url for this menu AND is not the base url
     // for the application (url_for()), return true
     $menuUrl = $this->getPath(['getUrl' => true, 'resolveAlias' => true]);
-    if ($menuUrl == $currentUrl && $currentUrl != url_for(''))
-    {
+    if ($menuUrl == $currentUrl && $currentUrl != url_for('')) {
       $isSelected = true;
     }
 
@@ -216,10 +194,8 @@ class QubitMenu extends BaseMenu
 
     // if 'module/action' is returned from getPath, then test if module matches
     // current module
-    if (preg_match('|^([a-zA-Z]+)/(.+)|', $this->getPath(), $matches))
-    {
-      if ($matches[1] == $currentModule && $matches[2] == $currentAction)
-      {
+    if (preg_match('|^([a-zA-Z]+)/(.+)|', $this->getPath(), $matches)) {
+      if ($matches[1] == $currentModule && $matches[2] == $currentAction) {
         $isSelected = true;
       }
     }
@@ -234,10 +210,8 @@ class QubitMenu extends BaseMenu
    */
   public function isDescendantSelected()
   {
-    foreach ($this->getDescendants() as $menu)
-    {
-      if ($menu->isSelected())
-      {
+    foreach ($this->getDescendants() as $menu) {
+      if ($menu->isSelected()) {
         return true;
       }
     }
@@ -269,8 +243,7 @@ class QubitMenu extends BaseMenu
    */
   public function moveBeforeById($referenceMenuId)
   {
-    if (null !== $prev = QubitMenu::getById($referenceMenuId))
-    {
+    if (null !== $prev = QubitMenu::getById($referenceMenuId)) {
       $this->moveToPrevSiblingOf($prev);
     }
 
@@ -287,8 +260,7 @@ class QubitMenu extends BaseMenu
    */
   public function moveAfterById($referenceMenuId)
   {
-    if (null !== $next = QubitMenu::getById($referenceMenuId))
-    {
+    if (null !== $next = QubitMenu::getById($referenceMenuId)) {
       $this->moveToNextSiblingOf($next);
     }
 
@@ -307,8 +279,7 @@ class QubitMenu extends BaseMenu
   public static function getTreeById($id, $options = [])
   {
     // Attempt to grab topMenu object via id
-    if (null === $topMenu = QubitMenu::getById($id))
-    {
+    if (null === $topMenu = QubitMenu::getById($id)) {
       return false;
     }
 
@@ -329,8 +300,7 @@ class QubitMenu extends BaseMenu
   {
     $maxDepth = 0;
 
-    if (isset($options['maxDepth']) && is_int($options['maxDepth']))
-    {
+    if (isset($options['maxDepth']) && is_int($options['maxDepth'])) {
       $maxDepth = ($options['maxDepth'] > 0) ? $options['maxDepth'] : 0;
     }
 
@@ -344,19 +314,13 @@ class QubitMenu extends BaseMenu
     // labouriously calculate depth of current menu from top of hierarchy by
     // looping through results and tracking "ancestors"
     $ancestors = [$topMenu->id];
-    foreach ($menus as $menu)
-    {
+    foreach ($menus as $menu) {
       $thisParentId = $menu->getParentId();
-      if ($ancestors[count($ancestors) - 1] != $thisParentId)
-      {
-        if (!in_array($thisParentId, $ancestors))
-        {
+      if ($ancestors[count($ancestors) - 1] != $thisParentId) {
+        if (!in_array($thisParentId, $ancestors)) {
           array_push($ancestors, $thisParentId);
-        }
-        else
-        {
-          while ($ancestors[count($ancestors) - 1] != $thisParentId)
-          {
+        } else {
+          while ($ancestors[count($ancestors) - 1] != $thisParentId) {
             array_pop($ancestors);
           }
         }
@@ -364,8 +328,7 @@ class QubitMenu extends BaseMenu
 
       // Limit depth of descendants to $maxDepth
       $depth = count($ancestors);
-      if (0 == $maxDepth || $depth <= $maxDepth)
-      {
+      if (0 == $maxDepth || $depth <= $maxDepth) {
         $menuTree[] = [
           'id' => $menu->id,
           'parentId' => $menu->getParentId(),
@@ -397,20 +360,17 @@ class QubitMenu extends BaseMenu
   {
     // Set current depth if not defined yet
     // We're using it to track the depth of the recursion
-    if (!isset($options['current-depth']))
-    {
+    if (!isset($options['current-depth'])) {
       $options['current-depth'] = 0;
     }
 
     // An array of <li/> elements for the list
     $li = [];
 
-    foreach ($parent->getChildren() as $child)
-    {
+    foreach ($parent->getChildren() as $child) {
       // Skip this menu and children if marked "hidden"
       if (isset($options['overrideVisibility'][$child->getName()])
-        && !$options['overrideVisibility'][$child->getName()])
-      {
+        && !$options['overrideVisibility'][$child->getName()]) {
         continue;
       }
 
@@ -426,15 +386,13 @@ class QubitMenu extends BaseMenu
       $action = $routeProperties['parameters']['action'];
 
       // Skip menu item if user doesn't have access to action due to security.yml rules
-      if (!sfContext::getInstance()->getUser()->checkModuleActionAccess($module, $action))
-      {
+      if (!sfContext::getInstance()->getUser()->checkModuleActionAccess($module, $action)) {
         continue;
       }
 
       $anchorLabel = $child->getLabel(['cultureFallback' => true]);
       $anchorOptions = [];
-      if ($continueHierarchy)
-      {
+      if ($continueHierarchy) {
         $anchorLabel .= ' <b class="caret"></b>';
         $anchorOptions['class'] = 'dropdown-toggle';
         $anchorOptions['data-toggle'] = 'dropdown';
@@ -445,29 +403,24 @@ class QubitMenu extends BaseMenu
 
       // An array of CSS classes for the li element
       $class = [];
-      if ($child->isSelected() || $child->isDescendantSelected())
-      {
+      if ($child->isSelected() || $child->isDescendantSelected()) {
         $class[] = 'active';
       }
 
-      if ($continueHierarchy)
-      {
+      if ($continueHierarchy) {
         // Nested nodes
         $a .= self::displayHierarchyAsList($child, $depth, array_merge($options, ['ulWrap' => true, 'ulClass' => 'dropdown-menu', 'current-depth' => ($depth + 1)]));
 
         // We need this class for the <li> element
         $class[] = 'dropdown';
-      }
-      else
-      {
+      } else {
         // Add .leaf to the <li> element of orphan nodes
         $class[] = 'leaf';
       }
 
       // Build string of classes for the class property of the <li> element
       $class = implode(' ', $class);
-      if (0 < strlen($class))
-      {
+      if (0 < strlen($class)) {
         $class = ' class="'.$class.'"';
       }
 
@@ -477,10 +430,8 @@ class QubitMenu extends BaseMenu
       $li[] = '<li'.$class.$id.'>'.$a.'</li>';
     }
 
-    if (isset($options['ulWrap']))
-    {
-      if (!empty($options['ulClass']))
-      {
+    if (isset($options['ulWrap'])) {
+      if (!empty($options['ulClass'])) {
         return '<ul class="'.$options['ulClass'].'">'.implode($li).'</ul>';
       }
 

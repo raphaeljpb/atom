@@ -43,8 +43,7 @@ class arMigration0134
 
     // Fixes for the changes incorrectly applied in arMigration0113.
     $sql = "SHOW COLUMNS FROM `rights` LIKE 'act_id';";
-    if (false !== QubitPdo::fetchOne($sql))
-    {
+    if (false !== QubitPdo::fetchOne($sql)) {
       //
       // Get rid of act_id for once!
       //
@@ -114,19 +113,15 @@ class arMigration0134
     // Query 3: set the column `rights`.`statute_citation_id`
     $sql3 = 'UPDATE `rights`, `rights_i18n` SET `rights`.`statute_citation_id` = ? WHERE `rights`.`id` = `rights_i18n`.`id` AND `rights_i18n`.`statute_citation` = ? AND `rights_i18n`.`culture` = ?';
     $stmt3 = QubitPdo::prepare($sql3);
-    if ($stmt1->execute([$defaultCulture]))
-    {
-      while ($row = $stmt1->fetch())
-      {
+    if ($stmt1->execute([$defaultCulture])) {
+      while ($row = $stmt1->fetch()) {
         // Create new term
         $term = new QubitTerm();
         $term->parentId = QubitTerm::ROOT_ID;
         $term->taxonomyId = QubitTaxonomy::RIGHTS_STATUTES_ID;
         $term->setName($row['statute_citation'], ['culture' => $defaultCulture]);
-        if ($stmt2->execute([$row['id'], $defaultCulture]))
-        {
-          while ($i18nRow = $stmt2->fetch())
-          {
+        if ($stmt2->execute([$row['id'], $defaultCulture])) {
+          while ($i18nRow = $stmt2->fetch()) {
             $term->setName($i18nRow['statute_citation'], ['culture' => $i18nRow['culture']]);
           }
         }

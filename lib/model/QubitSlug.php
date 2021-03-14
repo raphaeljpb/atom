@@ -38,15 +38,12 @@ class QubitSlug extends BaseSlug
     $numBlocks = ceil($length / $blockLength);
 
     $slug = '';
-    for ($i = 0; $i < $numBlocks; ++$i)
-    {
-      for ($j = 0; $j < $blockLength; ++$j)
-      {
+    for ($i = 0; $i < $numBlocks; ++$i) {
+      for ($j = 0; $j < $blockLength; ++$j) {
         $slug .= $alphabet[mt_rand(0, $alphabetSize - 1)];
       }
 
-      if ($i != $numBlocks - 1)
-      {
+      if ($i != $numBlocks - 1) {
         $slug .= $separator;
       }
     }
@@ -67,8 +64,7 @@ class QubitSlug extends BaseSlug
     // 0, 1, or null
     $slugCreation = (null === $creationType) ? sfConfig::get('app_permissive_slug_creation', QubitSlug::SLUG_RESTRICTIVE) : $creationType;
 
-    switch ($slugCreation)
-    {
+    switch ($slugCreation) {
       case QubitSlug::SLUG_PERMISSIVE:
         // Remove apostrophes
         $slug = preg_replace('/\'/', '', $slug);
@@ -85,8 +81,7 @@ class QubitSlug extends BaseSlug
       default:
         // Handle exotic characters gracefully.
         // TRANSLIT doesn't work in musl's iconv, see #9855.
-        if ((false !== $result = iconv('utf-8', 'ascii//TRANSLIT', $slug)) || (false !== $result = iconv('utf-8', 'ascii', $slug)))
-        {
+        if ((false !== $result = iconv('utf-8', 'ascii//TRANSLIT', $slug)) || (false !== $result = iconv('utf-8', 'ascii', $slug))) {
           $slug = $result;
         }
 
@@ -105,15 +100,13 @@ class QubitSlug extends BaseSlug
 
   public static function getUnique($connection = null)
   {
-    if (!isset($connection))
-    {
+    if (!isset($connection)) {
       $connection = Propel::getConnection();
     }
 
     // Try a max of 10 times before giving up (avoid infinite loops when
     // possible slugs exhausted)
-    for ($i = 0; $i < 10; ++$i)
-    {
+    for ($i = 0; $i < 10; ++$i) {
       $slug = self::random();
 
       $statement = $connection->prepare('
@@ -122,8 +115,7 @@ class QubitSlug extends BaseSlug
         WHERE '.QubitSlug::SLUG.' = ?;');
       $statement->execute([$slug]);
 
-      if (0 == $statement->fetchColumn(0))
-      {
+      if (0 == $statement->fetchColumn(0)) {
         return $slug;
       }
     }
@@ -134,8 +126,7 @@ class QubitSlug extends BaseSlug
     $criteria = new Criteria();
     $criteria->add(QubitSlug::OBJECT_ID, $id);
 
-    if (1 == count($query = self::get($criteria, $options)))
-    {
+    if (1 == count($query = self::get($criteria, $options))) {
       return $query[0];
     }
   }

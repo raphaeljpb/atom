@@ -88,16 +88,14 @@ sql;
     $premisAccessRight = QubitSetting::getByName('premisAccessRight');
     $premisAccessRightValues = QubitSetting::getByName('premisAccessRightValues');
 
-    if (null === $premisAccessRight)
-    {
+    if (null === $premisAccessRight) {
       $s = new QubitSetting();
       $s->setName('premisAccessRight');
       $s->setValue('disseminate');
       $s->save();
     }
 
-    if (null === $premisAccessRightValues)
-    {
+    if (null === $premisAccessRightValues) {
       $s = new QubitSetting();
       $s->setName('premisAccessRightValues');
       $s->setValue('a:9:{s:12:"allow_master";s:1:"1";s:15:"allow_reference";s:1:"1";s:11:"allow_thumb";s:1:"1";s:18:"conditional_master";s:1:"0";s:21:"conditional_reference";s:1:"1";s:17:"conditional_thumb";s:1:"1";s:15:"disallow_master";s:1:"0";s:18:"disallow_reference";s:1:"0";s:14:"disallow_thumb";s:1:"0";}');
@@ -108,8 +106,7 @@ sql;
     $disallowWarning = QubitSetting::getByName('access_disallow_warning');
     $conditionalWarning = QubitSetting::getByName('access_conditional_warning');
 
-    if (null === $disallowWarning)
-    {
+    if (null === $disallowWarning) {
       $s = new QubitSetting();
       $s->setScope('ui_label');
       $s->setName('access_disallow_warning');
@@ -117,8 +114,7 @@ sql;
       $s->save();
     }
 
-    if (null === $conditionalWarning)
-    {
+    if (null === $conditionalWarning) {
       $s = new QubitSetting();
       $s->setScope('ui_label');
       $s->setName('access_conditional_warning');
@@ -138,14 +134,12 @@ sql;
     ';
 
     $permissionCount = QubitPdo::fetchColumn($sqlCount, [QubitAclGroup::ANONYMOUS_ID]);
-    if (0 == $permissionCount)
-    {
+    if (0 == $permissionCount) {
       QubitPdo::prepareAndExecute($sqlInsert, [QubitAclGroup::ANONYMOUS_ID, QubitInformationObject::ROOT_ID]);
     }
 
     $permissionCount = QubitPdo::fetchColumn($sqlCount, [QubitAclGroup::AUTHENTICATED_ID]);
-    if (0 == $permissionCount)
-    {
+    if (0 == $permissionCount) {
       QubitPdo::prepareAndExecute($sqlInsert, [QubitAclGroup::AUTHENTICATED_ID, QubitInformationObject::ROOT_ID]);
     }
 

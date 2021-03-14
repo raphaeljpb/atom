@@ -26,12 +26,10 @@ class UserEditTermAclAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->resource->save();
@@ -45,18 +43,14 @@ class UserEditTermAclAction extends DefaultEditAction
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
-    }
-    else
-    {
+    } else {
       $this->forward404();
     }
 
     $this->permissions = [];
-    if (isset($this->resource->id))
-    {
+    if (isset($this->resource->id)) {
       // Get info object permissions for this group
       $criteria = new Criteria();
       $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
@@ -69,8 +63,7 @@ class UserEditTermAclAction extends DefaultEditAction
       $criteria->addAscendingOrderByColumn(QubitAclPermission::CONSTANTS);
       $criteria->addAscendingOrderByColumn(QubitAclPermission::OBJECT_ID);
 
-      if (0 < count($permissions = QubitAclPermission::get($criteria)))
-      {
+      if (0 < count($permissions = QubitAclPermission::get($criteria))) {
         $this->permissions = $permissions;
       }
     }
@@ -78,14 +71,12 @@ class UserEditTermAclAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'taxonomy':
         $choices = [];
         $choices[null] = null;
 
-        foreach (QubitTaxonomy::getEditableTaxonomies() as $item)
-        {
+        foreach (QubitTaxonomy::getEditableTaxonomies() as $item) {
           $choices[$this->context->routing->generate(null, [$item, 'module' => 'taxonomy'])] = $item;
         }
 
@@ -99,23 +90,19 @@ class UserEditTermAclAction extends DefaultEditAction
 
   protected function processForm()
   {
-    foreach ($this->request->acl as $key => $value)
-    {
+    foreach ($this->request->acl as $key => $value) {
       // If key has an underscore, then we are creating a new permission
-      if (1 == preg_match('/([\w]+)_(.*)/', $key, $matches))
-      {
+      if (1 == preg_match('/([\w]+)_(.*)/', $key, $matches)) {
         list($action, $uri) = array_slice($matches, 1, 2);
         $params = $this->context->routing->parse(Qubit::pathInfo($uri));
         $resource = $params['_sf_route']->resource;
 
-        if (QubitAcl::INHERIT != $value && isset(QubitAcl::$ACTIONS[$action]))
-        {
+        if (QubitAcl::INHERIT != $value && isset(QubitAcl::$ACTIONS[$action])) {
           $aclPermission = new QubitAclPermission();
           $aclPermission->action = $action;
           $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
 
-          switch ($resource->className)
-          {
+          switch ($resource->className) {
             case 'QubitTaxonomy':
               // Taxonomy specific rules
               $aclPermission->objectId = QubitTerm::ROOT_ID;
@@ -132,14 +119,10 @@ class UserEditTermAclAction extends DefaultEditAction
       }
 
       // Otherwise, update an existing permission
-      elseif (null !== $aclPermission = QubitAclPermission::getById($key))
-      {
-        if (QubitAcl::INHERIT == $value)
-        {
+      elseif (null !== $aclPermission = QubitAclPermission::getById($key)) {
+        if (QubitAcl::INHERIT == $value) {
           $aclPermission->delete();
-        }
-        else
-        {
+        } else {
           $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
 
           $this->resource->aclPermissions[] = $aclPermission;

@@ -52,8 +52,7 @@ class SettingsClipboardAction extends SettingsEditAction
   protected function addField($name)
   {
     // Set form field format
-    switch ($name)
-    {
+    switch ($name) {
       case 'clipboard_save_max_age':
       case 'clipboard_send_url':
       case 'clipboard_send_button_text':
@@ -66,12 +65,9 @@ class SettingsClipboardAction extends SettingsEditAction
       case 'clipboard_send_enabled':
       case 'clipboard_send_http_method':
       case 'clipboard_export_digitalobjects_enabled':
-        if ('clipboard_send_enabled' == $name || 'clipboard_export_digitalobjects_enabled' == $name)
-        {
+        if ('clipboard_send_enabled' == $name || 'clipboard_export_digitalobjects_enabled' == $name) {
           $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
-        }
-        else
-        {
+        } else {
           $options = ['POST' => 'POST', 'GET' => 'GET'];
         }
 

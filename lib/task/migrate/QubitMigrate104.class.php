@@ -70,8 +70,7 @@ class QubitMigrate104 extends QubitMigrate
   protected function alterQubitInformationObjects()
   {
     // Initialize oai_identifier auto-increment column with root Info Object
-    if ($rootInfoObjectKey = $this->getRowKey('QubitInformationObject', 'lft', '1'))
-    {
+    if ($rootInfoObjectKey = $this->getRowKey('QubitInformationObject', 'lft', '1')) {
       $this->data['QubitInformationObject'][$rootInfoObjectKey]['oai_local_identifier'] = '10001';
     }
 
@@ -86,10 +85,8 @@ class QubitMigrate104 extends QubitMigrate
   protected function alterQubitRoles()
   {
     // Add constant ids for Qubit Roles
-    foreach ($this->data['QubitRole'] as $key => $role)
-    {
-      switch($role['name'])
-      {
+    foreach ($this->data['QubitRole'] as $key => $role) {
+      switch ($role['name']) {
         case 'administrator':
           $this->data['QubitRole'][$key]['id'] = '<?php echo QubitRole::ADMINISTRATOR_ID."\n" ?>';
 
@@ -149,19 +146,15 @@ class QubitMigrate104 extends QubitMigrate
 
     // Replace full, localized language names with two letter ISO code for
     // enabled language settings
-    foreach ($this->data['QubitSetting'] as $key => $setting)
-    {
-      if ('i18n_languages' == $setting['scope'])
-      {
+    foreach ($this->data['QubitSetting'] as $key => $setting) {
+      if ('i18n_languages' == $setting['scope']) {
         $this->data['QubitSetting'][$key]['value'] = ['en' => $setting['name']];
       }
     }
 
     // Update version number
-    if ($settingVersionKey = $this->getRowKey('QubitSetting', 'name', 'version'))
-    {
-      foreach ($this->data['QubitSetting'][$settingVersionKey]['value'] as $culture => $value)
-      {
+    if ($settingVersionKey = $this->getRowKey('QubitSetting', 'name', 'version')) {
+      foreach ($this->data['QubitSetting'][$settingVersionKey]['value'] as $culture => $value) {
         $this->data['QubitSetting'][$settingVersionKey]['value'][$culture] = str_replace('1.0.4', '1.0.5', $value);
       }
     }
@@ -177,12 +170,9 @@ class QubitMigrate104 extends QubitMigrate
   protected function alterQubitStaticPages()
   {
     // Update version number
-    foreach ($this->data['QubitStaticPage'] as $key => $page)
-    {
-      if ('homepage' == $page['permalink'] || 'about' == $page['permalink'])
-      {
-        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x)
-        {
+    foreach ($this->data['QubitStaticPage'] as $key => $page) {
+      if ('homepage' == $page['permalink'] || 'about' == $page['permalink']) {
+        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x) {
           $x = str_replace('1.0.4', '1.0.5', $x);
         });
       }
@@ -379,8 +369,7 @@ class QubitMigrate104 extends QubitMigrate
     $taxonomyNoteTypeKey = $this->getRowKey('QubitTaxonomy', 'id', '<?php echo QubitTaxonomy::NOTE_TYPE_ID."\n" ?>');
 
     // Add "Other Descriptive Data" note type
-    if ($taxonomyNoteTypeKey)
-    {
+    if ($taxonomyNoteTypeKey) {
       $this->data['QubitTerm']['QubitTerm_odd'] = [
         'taxonomy_id' => $taxonomyNoteTypeKey,
         'class_name' => 'QubitTerm',
@@ -391,12 +380,9 @@ class QubitMigrate104 extends QubitMigrate
     }
 
     // Give archivist's note a constant id
-    if ($archivistsNoteKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Archivist\'s note']))
-    {
+    if ($archivistsNoteKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Archivist\'s note'])) {
       $this->data['QubitTerm'][$archivistsNoteKey]['id'] = '<?php echo QubitTerm::ARCHIVIST_NOTE_ID."\n" ?>';
-    }
-    elseif ($taxonomyNoteTypeKey)
-    {
+    } elseif ($taxonomyNoteTypeKey) {
       $this->data['QubitTerm']['QubitTerm_archivist_note'] = [
         'taxonomy_id' => $taxonomyNoteTypeKey,
         'class_name' => 'QubitTerm',
@@ -407,12 +393,9 @@ class QubitMigrate104 extends QubitMigrate
     }
 
     // Give general note a constant id
-    if ($generalNoteKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'General note']))
-    {
+    if ($generalNoteKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'General note'])) {
       $this->data['QubitTerm'][$generalNoteKey]['id'] = '<?php echo QubitTerm::GENERAL_NOTE_ID."\n" ?>';
-    }
-    elseif ($taxonomyNoteTypeKey)
-    {
+    } elseif ($taxonomyNoteTypeKey) {
       $this->data['QubitTerm']['QubitTerm_general_note'] = [
         'taxonomy_id' => $taxonomyNoteTypeKey,
         'class_name' => 'QubitTerm',
@@ -423,8 +406,7 @@ class QubitMigrate104 extends QubitMigrate
     }
 
     // Remove Finding Aids Term
-    if ($findingAidTermKey = $this->getRowKey('QubitTerm', 'id', '<?php echo QubitTerm::FINDING_AIDS_ID."\n" ?>'))
-    {
+    if ($findingAidTermKey = $this->getRowKey('QubitTerm', 'id', '<?php echo QubitTerm::FINDING_AIDS_ID."\n" ?>')) {
       unset($this->data['QubitTerm'][$findingAidTermKey]);
     }
 
@@ -452,25 +434,20 @@ class QubitMigrate104 extends QubitMigrate
   {
     $newList = [];
     $highLft = 0;
-    foreach ($this->data['QubitInformationObject'] as $key => $row)
-    {
+    foreach ($this->data['QubitInformationObject'] as $key => $row) {
       // If this left value is higher than any previous value, then just add
       // current row to the end of $newList
-      if ($row['lft'] > $highLft)
-      {
+      if ($row['lft'] > $highLft) {
         $newList[$key] = $row;
         $highLft = $row['lft'];
       }
 
       // Else, find the right place in $newList to insert the current row
       // (sorted by lft values)
-      else
-      {
+      else {
         $i = 0;
-        foreach ($newList as $newKey => $newRow)
-        {
-          if ($newRow['lft'] > $row['lft'])
-          {
+        foreach ($newList as $newKey => $newRow) {
+          if ($newRow['lft'] > $row['lft']) {
             QubitMigrate::array_insert($newList, $i, [$key => $row]);
 
             break;
@@ -540,12 +517,9 @@ class QubitMigrate104 extends QubitMigrate
 
     // Restack array with Constant values at top
     $qubitTermArray = $this->data['QubitTerm'];
-    foreach ($qubitTermConstantIds as $key => $constantName)
-    {
-      foreach ($qubitTermArray as $key => $term)
-      {
-        if ($term['id'] == '<?php echo QubitTerm::'.$constantName.'."\n" ?>')
-        {
+    foreach ($qubitTermConstantIds as $key => $constantName) {
+      foreach ($qubitTermArray as $key => $term) {
+        if ($term['id'] == '<?php echo QubitTerm::'.$constantName.'."\n" ?>') {
           $newTermArray[$key] = $term;
           unset($qubitTermArray[$key]);
 
@@ -555,8 +529,7 @@ class QubitMigrate104 extends QubitMigrate
     }
 
     // Append remaining (variable id) terms to the end of the new array
-    foreach ($qubitTermArray as $key => $term)
-    {
+    foreach ($qubitTermArray as $key => $term) {
       $newTermArray[$key] = $term;
     }
 
@@ -595,10 +568,8 @@ class QubitMigrate104 extends QubitMigrate
 
     $originalData = $this->data;
 
-    foreach ($ormSortOrder as $i => $className)
-    {
-      if (isset($originalData[$className]))
-      {
+    foreach ($ormSortOrder as $i => $className) {
+      if (isset($originalData[$className])) {
         $sortedData[$className] = $originalData[$className];
         unset($originalData[$className]);
       }
@@ -606,10 +577,8 @@ class QubitMigrate104 extends QubitMigrate
 
     // If their are classes in the original data that are not listed in the
     // ormSortOrder array then tack them on to the end of the sorted data
-    if (count($originalData))
-    {
-      foreach ($originalData as $className => $classData)
-      {
+    if (count($originalData)) {
+      foreach ($originalData as $className => $classData) {
         $sortedData[$className] = $classData;
       }
     }

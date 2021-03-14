@@ -24,30 +24,24 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
     $this->do = new QubitDigitalObject();
     $this->do->parentId = null;
 
-    foreach ($payload as $field => $value)
-    {
+    foreach ($payload as $field => $value) {
       $this->processField($field, $value);
     }
 
-    if (empty($payload->mime_type) && !empty($payload->path))
-    {
+    if (empty($payload->mime_type) && !empty($payload->path)) {
       // Attempt to determine MIME type if unspecified
       $mimeType = QubitDigitalObject::deriveMimeType($payload->path);
       $this->do->mimeType = $mimeType;
     }
 
-    if (empty($payload->media_type))
-    {
+    if (empty($payload->media_type)) {
       $this->do->mediaTypeId = QubitTerm::OTHER_ID;
-    }
-    elseif (!empty($this->do->mimeType) && 'unknown' != $this->do->mimeType)
-    {
+    } elseif (!empty($this->do->mimeType) && 'unknown' != $this->do->mimeType) {
       $this->do->setDefaultMediaType();
     }
 
     // Associate properties with information object
-    if (!empty($this->do->objectId))
-    {
+    if (!empty($this->do->objectId)) {
       $props = [
         'file_uuid' => 'objectUUID',
         'aip_uuid' => 'aipUUID',
@@ -59,10 +53,8 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
         'aip_name' => 'aipName',
       ];
 
-      foreach ($props as $pkey => $pval)
-      {
-        if (empty($payload->{$pkey}))
-        {
+      foreach ($props as $pkey => $pval) {
+        if (empty($payload->{$pkey})) {
           continue;
         }
 
@@ -83,8 +75,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
 
   protected function processField($field, $value)
   {
-    switch ($field)
-    {
+    switch ($field) {
       case 'name':
       case 'path':
       case 'byte_size':
@@ -101,8 +92,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
 
         $slug = QubitSlug::getOne($criteria);
 
-        if (null !== $slug)
-        {
+        if (null !== $slug) {
           $this->do->objectId = $slug->objectId;
         }
 
@@ -124,14 +114,12 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
         break;
 
       case 'media_type':
-        if (!empty($value))
-        {
+        if (!empty($value)) {
           $criteria = new Criteria();
           $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
           $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MEDIA_TYPE_ID);
           $criteria->add(QubitTermI18n::NAME, $value);
-          if (null !== $typeTerm = QubitTerm::getOne($criteria))
-          {
+          if (null !== $typeTerm = QubitTerm::getOne($criteria)) {
             $this->do->mediaType = $typeTerm;
           }
         }

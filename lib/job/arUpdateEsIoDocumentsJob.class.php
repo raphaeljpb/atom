@@ -29,23 +29,17 @@ class arUpdateEsIoDocumentsJob extends arBaseJob
 
   public function runJob($parameters)
   {
-    if (empty($parameters['ioIds']) || (!$parameters['updateIos'] && !$parameters['updateDescendants']))
-    {
+    if (empty($parameters['ioIds']) || (!$parameters['updateIos'] && !$parameters['updateDescendants'])) {
       $this->error($this->i18n->__('Called arUpdateEsIoDocumentsJob without specifying what needs to be updated.'));
 
       return false;
     }
 
-    if ($parameters['updateIos'] && $parameters['updateDescendants'])
-    {
+    if ($parameters['updateIos'] && $parameters['updateDescendants']) {
       $message = $this->i18n->__('Updating %1 description(s) and their descendants.', ['%1' => count($parameters['ioIds'])]);
-    }
-    elseif ($parameters['updateIos'])
-    {
+    } elseif ($parameters['updateIos']) {
       $message = $this->i18n->__('Updating %1 description(s).', ['%1' => count($parameters['ioIds'])]);
-    }
-    else
-    {
+    } else {
       $message = $this->i18n->__('Updating descendants of %1 description(s).', ['%1' => count($parameters['ioIds'])]);
     }
 
@@ -53,10 +47,8 @@ class arUpdateEsIoDocumentsJob extends arBaseJob
     $this->info($message);
 
     $count = 0;
-    foreach ($parameters['ioIds'] as $id)
-    {
-      if (null === $object = QubitInformationObject::getById($id))
-      {
+    foreach ($parameters['ioIds'] as $id) {
+      if (null === $object = QubitInformationObject::getById($id)) {
         $this->info($this->i18n->__('Invalid archival description id: %1', ['%1' => $id]));
 
         continue;
@@ -65,18 +57,13 @@ class arUpdateEsIoDocumentsJob extends arBaseJob
       // Don't count invalid description ids
       ++$count;
 
-      if ($parameters['updateIos'] && $parameters['updateDescendants'])
-      {
+      if ($parameters['updateIos'] && $parameters['updateDescendants']) {
         arElasticSearchInformationObject::update($object, ['updateDescendants' => true]);
         $message = $this->i18n->__('Updated %1 description(s) and their descendants.', ['%1' => $count]);
-      }
-      elseif ($parameters['updateIos'])
-      {
+      } elseif ($parameters['updateIos']) {
         arElasticSearchInformationObject::update($object);
         $message = $this->i18n->__('Updated %1 description(s).', ['%1' => $count]);
-      }
-      else
-      {
+      } else {
         arElasticSearchInformationObject::updateDescendants($object);
         $message = $this->i18n->__('Updating descendant of %1 description(s).', ['%1' => $count]);
       }
@@ -85,15 +72,13 @@ class arUpdateEsIoDocumentsJob extends arBaseJob
       Qubit::clearClassCaches();
 
       // Status update every 100 descriptions
-      if (0 == $count % 100)
-      {
+      if (0 == $count % 100) {
         $this->info($message);
       }
     }
 
     // Final status update, if total count is not a multiple of 100
-    if (0 != $count % 100)
-    {
+    if (0 != $count % 100) {
       $this->info($message);
     }
 

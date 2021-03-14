@@ -24,13 +24,11 @@ class arJobLogger extends sfLogger
     $this->dispatcher = $dispatcher;
     $this->options = $options;
 
-    if (isset($this->options['level']))
-    {
+    if (isset($this->options['level'])) {
       $this->setLogLevel($this->options['level']);
     }
 
-    if (!isset($this->options['job']))
-    {
+    if (!isset($this->options['job'])) {
       throw new sfException('Missing job parameter');
     }
 

@@ -50,16 +50,13 @@ class UserEditingHistoryAction extends sfAction
 
   private function abortInvalidRequests()
   {
-    if (!isset($this->resource))
-    {
+    if (!isset($this->resource)) {
       $this->forward404();
     }
 
     // Except for administrators, only allow users to see their own profile
-    if (!$this->context->user->isAdministrator())
-    {
-      if ($this->resource->id != $this->context->user->getAttribute('user_id'))
-      {
+    if (!$this->context->user->isAdministrator()) {
+      if ($this->resource->id != $this->context->user->getAttribute('user_id')) {
         $this->redirect('admin/secure');
       }
     }
@@ -73,8 +70,7 @@ class UserEditingHistoryAction extends sfAction
     // Summarize page results
     $results = [];
 
-    foreach ($pager->getResults() as $modification)
-    {
+    foreach ($pager->getResults() as $modification) {
       $io = QubitInformationObject::getById($modification->objectId);
 
       $result = [

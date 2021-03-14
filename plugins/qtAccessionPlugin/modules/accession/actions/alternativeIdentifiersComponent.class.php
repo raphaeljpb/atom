@@ -26,8 +26,7 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID);
 
     $this->identifierTypes = [];
-    foreach (QubitTerm::get($criteria) as $term)
-    {
+    foreach (QubitTerm::get($criteria) as $term) {
       $this->identifierTypes[$term->id] = $term->getName(['cultureFallback' => true]);
     }
 
@@ -42,8 +41,7 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
     // Summarize/cache existing alternative identifier data
     $this->alternativeIdentifierData = [];
 
-    foreach ($this->resource->getAlternativeIdentifiers() as $identifier)
-    {
+    foreach ($this->resource->getAlternativeIdentifiers() as $identifier) {
       $this->alternativeIdentifierData[] = [
         'id' => $identifier->id,
         'value' => $identifier->getName(['sourceCulture' => true]),
@@ -59,24 +57,18 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
   {
     $finalAlternativeIdentifiers = [];
 
-    if (is_array($this->request->alternativeIdentifiers))
-    {
-      foreach ($this->request->alternativeIdentifiers as $item)
-      {
+    if (is_array($this->request->alternativeIdentifiers)) {
+      foreach ($this->request->alternativeIdentifiers as $item) {
         // Continue only if both fields are populated
-        if (1 > strlen($item['identifierType']) || 1 > strlen($item['identifier']))
-        {
+        if (1 > strlen($item['identifierType']) || 1 > strlen($item['identifier'])) {
           continue;
         }
 
-        if (!empty($item['id']))
-        {
+        if (!empty($item['id'])) {
           $finalAlternativeIdentifiers[] = $item['id'];
 
           $otherName = QubitOtherName::getById($item['id']);
-        }
-        else
-        {
+        } else {
           $otherName = new QubitOtherName();
         }
 
@@ -89,10 +81,8 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
     }
 
     // Delete the old alternative identifiers if they don't appear in the table (removed by multiRow.js)
-    foreach ($this->alternativeIdentifierData as $identifier)
-    {
-      if (false === array_search($identifier['id'], $finalAlternativeIdentifiers))
-      {
+    foreach ($this->alternativeIdentifierData as $identifier) {
+      if (false === array_search($identifier['id'], $finalAlternativeIdentifiers)) {
         $identifier['object']->delete();
       }
     }
@@ -100,8 +90,7 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
     case 'identifierType':
         $this->form->setValidator($name, new sfValidatorInteger());
         $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $this->identifierTypes]));

@@ -46,12 +46,10 @@ class digitalObjectExtractTextTask extends sfBaseTask
     $query = 'SELECT id FROM digital_object WHERE parent_id IS NULL AND mime_type = \'application/pdf\'';
 
     // Do work
-    foreach (QubitPdo::fetchAll($query) as $item)
-    {
+    foreach (QubitPdo::fetchAll($query) as $item) {
       $do = QubitDigitalObject::getById($item->id);
 
-      if (null == $do)
-      {
+      if (null == $do) {
         continue;
       }
 

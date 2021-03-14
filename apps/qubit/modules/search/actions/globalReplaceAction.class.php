@@ -27,18 +27,15 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
 
     $this->title = $this->context->i18n->__('Global search/replace');
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       // Make sure we have required information for search/replace
-      if (empty($request->pattern) || empty($request->replacement))
-      {
+      if (empty($request->pattern) || empty($request->replacement)) {
         $this->error = $this->context->i18n->__('Both source and replacement fields are required.');
 
         return;
       }
       // Make sure we have confirmed the action
-      if (!isset($request->confirm))
-      {
+      if (!isset($request->confirm)) {
         $this->title = $this->context->i18n->__('Are you sure you want to replace "%1%" with "%2%" in %3%?', ['%1%' => $request->pattern, '%2%' => $request->replacement, '%3%' => sfInflector::humanize(sfInflector::underscore($request->column))]);
 
         return;
@@ -46,31 +43,26 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
 
       // Process replacement on each IO
       // NB: could this be made faster by reading a batch of IDs?
-      foreach ($this->pager->hits as $hit)
-      {
+      foreach ($this->pager->hits as $hit) {
         $io = QubitInformationObject::getById($hit->getDocument()->id);
 
         // Omit iteration if the column does not exist
-        if (!$io->__isset($request->column))
-        {
+        if (!$io->__isset($request->column)) {
           continue;
         }
 
-        if (isset($request->allowRegex))
-        {
+        if (isset($request->allowRegex)) {
           $pattern = '/'.strtr($request->pattern, ['/' => '\/']).'/';
-          if (!isset($request->caseSensitive)) $pattern .= 'i';
+          if (!isset($request->caseSensitive)) {
+            $pattern .= 'i';
+          }
 
           $replacement = strtr($request->replacement, ['/' => '\/']);
 
           $replaced = preg_replace($pattern, $replacement, $io->__get($request->column));
-        }
-        elseif (isset($request->caseSensitive))
-        {
+        } elseif (isset($request->caseSensitive)) {
           $replaced = str_replace($request->pattern, $request->replacement, $io->__get($request->column));
-        }
-        else
-        {
+        } else {
           $replaced = str_ireplace($request->pattern, $request->replacement, $io->__get($request->column));
         }
 
@@ -91,10 +83,8 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
     // Information object attribute (db column) to perform s/r on
     $map = new InformationObjectI18nTableMap();
 
-    foreach ($map->getColumns() as $col)
-    {
-      if (!$col->isPrimaryKey() && !$col->isForeignKey())
-      {
+    foreach ($map->getColumns() as $col) {
+      if (!$col->isPrimaryKey() && !$col->isForeignKey()) {
         $col_name = $col->getPhpName();
         $choices[$col_name] = sfInflector::humanize(sfInflector::underscore($col_name));
       }
@@ -117,8 +107,7 @@ class SearchGlobalReplaceAction extends SearchAdvancedAction
     $this->form->setValidator('allowRegex', new sfValidatorBoolean());
     $this->form->setWidget('allowRegex', new sfWidgetFormInputCheckbox());
 
-    if ($this->request->isMethod('post') && !isset($this->request->confirm) && !empty($this->request->pattern) && !empty($this->request->replacement))
-    {
+    if ($this->request->isMethod('post') && !isset($this->request->confirm) && !empty($this->request->pattern) && !empty($this->request->replacement)) {
       $this->form->setValidator('confirm', new sfValidatorBoolean());
       $this->form->setWidget('confirm', new sfWidgetFormInputHidden([], ['value' => true]));
     }

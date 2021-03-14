@@ -38,8 +38,7 @@ class arMigration0156
    */
   public function up($configuration)
   {
-    if ($baseUrl = QubitSetting::getByName('siteBaseUrl'))
-    {
+    if ($baseUrl = QubitSetting::getByName('siteBaseUrl')) {
       $baseUrl->scope = null;
       $baseUrl->save();
     }

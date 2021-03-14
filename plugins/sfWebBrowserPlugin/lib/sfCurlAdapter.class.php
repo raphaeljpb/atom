@@ -38,8 +38,7 @@ class sfCurlAdapter
    */
   public function __construct($options = [])
   {
-    if (!extension_loaded('curl'))
-    {
+    if (!extension_loaded('curl')) {
       throw new Exception('Curl extension not loaded');
     }
 
@@ -49,30 +48,21 @@ class sfCurlAdapter
     $this->curl = curl_init();
 
     // cookies
-    if (isset($curl_options['cookies']))
-    {
-      if (isset($curl_options['cookies_file']))
-      {
+    if (isset($curl_options['cookies'])) {
+      if (isset($curl_options['cookies_file'])) {
         $cookie_file = $curl_options['cookies_file'];
         unset($curl_options['cookies_file']);
-      }
-      else
-      {
+      } else {
         $cookie_file = sfConfig::get('sf_data_dir').'/sfWebBrowserPlugin/sfCurlAdapter/cookies.txt';
       }
-      if (isset($curl_options['cookies_dir']))
-      {
+      if (isset($curl_options['cookies_dir'])) {
         $cookie_dir = $curl_options['cookies_dir'];
         unset($curl_options['cookies_dir']);
-      }
-      else
-      {
+      } else {
         $cookie_dir = sfConfig::get('sf_data_dir').'/sfWebBrowserPlugin/sfCurlAdapter';
       }
-      if (!is_dir($cookie_dir))
-      {
-        if (!mkdir($cookie_dir, 0777, true))
-        {
+      if (!is_dir($cookie_dir)) {
+        if (!mkdir($cookie_dir, 0777, true)) {
           throw new Exception(sprintf('Could not create directory "%s"', $cookie_dir));
         }
       }
@@ -89,35 +79,30 @@ class sfCurlAdapter
     curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, false);
     curl_setopt($this->curl, CURLOPT_FRESH_CONNECT, true);
 
-    if (isset($curl_options['followlocation']))
-    {
+    if (isset($curl_options['followlocation'])) {
       curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, (bool) $this->options['followlocation']);
       unset($curl_options['followlocation']);
     }
 
     // activate ssl certificate verification?
-    if (isset($curl_options['ssl_verify_host']))
-    {
+    if (isset($curl_options['ssl_verify_host'])) {
       curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, (bool) $this->options['ssl_verify_host']);
       unset($curl_options['ssl_verify_host']);
     }
 
-    if (isset($curl_options['ssl_verify']))
-    {
+    if (isset($curl_options['ssl_verify'])) {
       curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, (bool) $this->options['ssl_verify']);
       unset($curl_options['ssl_verify']);
     }
 
     // verbose execution?
-    if (isset($curl_options['verbose']))
-    {
+    if (isset($curl_options['verbose'])) {
       curl_setopt($this->curl, CURLOPT_NOPROGRESS, false);
       curl_setopt($this->curl, CURLOPT_VERBOSE, true);
       unset($curl_options['cookies']);
     }
 
-    if (isset($curl_options['verbose_log']))
-    {
+    if (isset($curl_options['verbose_log'])) {
       $log_file = sfConfig::get('sf_log_dir').'/sfCurlAdapter_verbose.log';
       curl_setopt($this->curl, CURLOPT_VERBOSE, true);
       $this->fh = fopen($log_file, 'a+b');
@@ -126,11 +111,9 @@ class sfCurlAdapter
     }
 
     // Additional options
-    foreach ($curl_options as $key => $value)
-    {
+    foreach ($curl_options as $key => $value) {
       $const = constant('CURLOPT_'.strtoupper($key));
-      if (!is_null($const))
-      {
+      if (!is_null($const)) {
         curl_setopt($this->curl, $const, $value);
       }
     }
@@ -170,44 +153,33 @@ class sfCurlAdapter
     curl_setopt($this->curl, CURLOPT_HTTPHEADER, $request_headers);
 
     // encoding support
-    if (isset($headers['Accept-Encoding']))
-    {
+    if (isset($headers['Accept-Encoding'])) {
       curl_setopt($this->curl, CURLOPT_ENCODING, $headers['Accept-Encoding']);
     }
 
     // timeout support
-    if (isset($this->options['Timeout']))
-    {
+    if (isset($this->options['Timeout'])) {
       curl_setopt($this->curl, CURLOPT_TIMEOUT, $this->options['Timeout']);
     }
 
-    if (!empty($parameters))
-    {
-      if (!is_array($parameters))
-      {
+    if (!empty($parameters)) {
+      if (!is_array($parameters)) {
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $parameters);
-      }
-      else
-      {
+      } else {
         // multipart posts (file upload support)
         $has_files = false;
-        foreach ($parameters as $name => $value)
-        {
+        foreach ($parameters as $name => $value) {
           if (is_array($value)) {
             continue;
           }
-          if (is_file($value))
-          {
+          if (is_file($value)) {
             $has_files = true;
             $parameters[$name] = '@'.realpath($value);
           }
         }
-        if ($has_files)
-        {
+        if ($has_files) {
           curl_setopt($this->curl, CURLOPT_POSTFIELDS, $parameters);
-        }
-        else
-        {
+        } else {
           curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($parameters, '', '&'));
         }
       }
@@ -218,8 +190,7 @@ class sfCurlAdapter
 
     $response = curl_exec($this->curl);
 
-    if (curl_errno($this->curl))
-    {
+    if (curl_errno($this->curl)) {
       throw new Exception(curl_error($this->curl), curl_errno($this->curl));
     }
 

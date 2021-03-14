@@ -35,15 +35,13 @@ class DigitalObjectShowTextComponent extends sfComponent
     $this->representation = $this->resource->getRepresentationByUsage($this->usageType);
 
     // If we can't find a representation for this object, try their parent
-    if (!$this->representation && ($parent = $this->resource->parent))
-    {
+    if (!$this->representation && ($parent = $this->resource->parent)) {
       $this->representation = $parent->getRepresentationByUsage($this->usageType);
     }
 
     // If representation is not a valid digital object, return a generic icon
-    if (!$this->representation)
-    {
-       $this->representation = QubitDigitalObject::getGenericRepresentation($this->resource->mimeType, $this->usageType);
+    if (!$this->representation) {
+      $this->representation = QubitDigitalObject::getGenericRepresentation($this->resource->mimeType, $this->usageType);
     }
   }
 }

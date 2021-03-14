@@ -88,7 +88,7 @@
   <?php } ?>
 
   <?php foreach (${$resourceVar}->getDates() as $date) { ?>
-    <unitdate <?php if (null !== $date->getActor() || null !== $date->getPlace()) { ?> <?php echo 'id="atom_'.$date->id.'_event"'; ?> <?php } ?> <?php if (QubitTerm::CREATION_ID != $date->typeId) { ?><?php if ($type = $date->getType()->__toString()) { ?><?php echo 'datechar="'.strtolower($type).'" '; ?><?php } ?><?php } else { ?><?php $type = null; ?><?php } ?><?php if ($startdate = $date->getStartDate()) { ?><?php echo 'normal="'; ?><?php echo Qubit::renderDate($startdate); ?><?php if (0 < strlen($enddate = $date->getEndDate())) { ?><?php echo '/'; ?><?php echo Qubit::renderDate($enddate); ?><?php } ?><?php echo '"'; ?><?php } ?> <?php if (0 < strlen($encoding = $ead->getMetadataParameter('unitdate'.strtolower($type)))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } elseif (0 < strlen($encoding = $ead->getMetadataParameter('unitdateDefault'))){ ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?>><?php echo escape_dc(esc_specialchars(Qubit::renderDateStartEnd($date->getDate(['cultureFallback' => true]), $date->startDate, $date->endDate))); ?></unitdate>
+    <unitdate <?php if (null !== $date->getActor() || null !== $date->getPlace()) { ?> <?php echo 'id="atom_'.$date->id.'_event"'; ?> <?php } ?> <?php if (QubitTerm::CREATION_ID != $date->typeId) { ?><?php if ($type = $date->getType()->__toString()) { ?><?php echo 'datechar="'.strtolower($type).'" '; ?><?php } ?><?php } else { ?><?php $type = null; ?><?php } ?><?php if ($startdate = $date->getStartDate()) { ?><?php echo 'normal="'; ?><?php echo Qubit::renderDate($startdate); ?><?php if (0 < strlen($enddate = $date->getEndDate())) { ?><?php echo '/'; ?><?php echo Qubit::renderDate($enddate); ?><?php } ?><?php echo '"'; ?><?php } ?> <?php if (0 < strlen($encoding = $ead->getMetadataParameter('unitdate'.strtolower($type)))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } elseif (0 < strlen($encoding = $ead->getMetadataParameter('unitdateDefault'))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?>><?php echo escape_dc(esc_specialchars(Qubit::renderDateStartEnd($date->getDate(['cultureFallback' => true]), $date->startDate, $date->endDate))); ?></unitdate>
   <?php } ?>
 
   <?php if (0 < strlen($value = ${$resourceVar}->getExtentAndMedium(['cultureFallback' => true]))) { ?>
@@ -184,7 +184,7 @@
     <?php if (QubitTerm::OFFLINE_ID != $digitalObject->usageId) { ?>
       <?php if (QubitAcl::check(${$resourceVar}, 'readMaster') && 0 < strlen($url = QubitTerm::EXTERNAL_URI_ID == $digitalObject->usageId ? $digitalObject->getPath() : $ead->getAssetPath($digitalObject))) { ?>
         <dao linktype="simple" href="<?php echo $url; ?>" role="master" actuate="onrequest" show="embed"/>
-      <?php } elseif (null !== $digitalObject->reference && QubitAcl::check(${$resourceVar}, 'readReference') && 0 < strlen($url = $ead->getAssetPath($digitalObject, true))){ ?>
+      <?php } elseif (null !== $digitalObject->reference && QubitAcl::check(${$resourceVar}, 'readReference') && 0 < strlen($url = $ead->getAssetPath($digitalObject, true))) { ?>
         <dao linktype="simple" href="<?php echo $url; ?>" role="reference" actuate="onrequest" show="embed"/>
       <?php } ?>
     <?php } ?>

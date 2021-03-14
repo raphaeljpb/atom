@@ -28,8 +28,7 @@ class ClipboardLoadAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if (!$request->isMethod('post'))
-    {
+    if (!$request->isMethod('post')) {
       return;
     }
 
@@ -37,8 +36,7 @@ class ClipboardLoadAction extends DefaultEditAction
 
     $this->form->bind($request->getPostParameters());
 
-    if (!$this->form->isValid())
-    {
+    if (!$this->form->isValid()) {
       $this->response->setStatusCode(400);
       $message = $this->context->i18n->__('Incorrect clipboard ID and/or action.');
 
@@ -51,8 +49,7 @@ class ClipboardLoadAction extends DefaultEditAction
     $criteria->add(QubitClipboardSave::PASSWORD, $this->password);
     $save = QubitClipboardSave::getOne($criteria);
 
-    if (!isset($save))
-    {
+    if (!isset($save)) {
       $this->response->setStatusCode(404);
       $message = $this->context->i18n->__('Clipboard ID not found.');
 
@@ -70,25 +67,20 @@ class ClipboardLoadAction extends DefaultEditAction
     ];
     $addedCount = 0;
 
-    foreach ($items as $item)
-    {
+    foreach ($items as $item) {
       // Add slug to clipboard if the object exists and the user can read it
       $object = QubitObject::getBySlug($item->slug);
 
-      if (isset($object) && QubitAcl::check($object, 'read'))
-      {
+      if (isset($object) && QubitAcl::check($object, 'read')) {
         $type = lcfirst(str_replace('Qubit', '', $item->itemClassName));
         array_push($clipboard[$type], $item->slug);
         ++$addedCount;
       }
     }
 
-    if ('replace' == $this->mode)
-    {
+    if ('replace' == $this->mode) {
       $actionDescription = $this->context->i18n->__('added');
-    }
-    else
-    {
+    } else {
       $actionDescription = $this->context->i18n->__('merged with current clipboard');
     }
 
@@ -104,8 +96,7 @@ class ClipboardLoadAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'password':
         $this->form->setValidator('password', new sfValidatorString(['required' => true]));
         $this->form->setWidget('password', new sfWidgetFormInput());
@@ -127,8 +118,7 @@ class ClipboardLoadAction extends DefaultEditAction
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'password':
         $this->password = $this->form->getValue($field->getName());
 

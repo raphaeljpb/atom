@@ -22,8 +22,7 @@ class QubitValidatorMenuName extends sfValidatorBase
   public static function nameCanBeUsed($name, $menu = null)
   {
     // Only do this check for new menu items or menu items that can be renamed
-    if ($menu->isProtected())
-    {
+    if ($menu->isProtected()) {
       return true;
     }
 
@@ -46,8 +45,7 @@ class QubitValidatorMenuName extends sfValidatorBase
   protected function doClean($value)
   {
     // Before allowing use of proposed identifier, make sure it's available for use
-    if (self::nameCanBeUsed($value, $this->getOption('resource')))
-    {
+    if (self::nameCanBeUsed($value, $this->getOption('resource'))) {
       return $value;
     }
 

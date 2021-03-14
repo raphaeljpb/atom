@@ -44,8 +44,7 @@ class arMigration0160
 
     $menu = QubitMenu::getOne($criteria);
 
-    if (null !== $menu)
-    {
+    if (null !== $menu) {
       $menu->path = 'taxonomy/index?id=42';
       $menu->save();
     }
@@ -56,8 +55,7 @@ class arMigration0160
 
     $menu = QubitMenu::getOne($criteria);
 
-    if (null !== $menu)
-    {
+    if (null !== $menu) {
       $menu->path = 'taxonomy/index?id=35';
       $menu->save();
     }

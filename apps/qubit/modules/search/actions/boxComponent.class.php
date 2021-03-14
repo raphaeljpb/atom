@@ -22,8 +22,7 @@ class SearchBoxComponent extends sfComponent
   public function execute($request)
   {
     // if the institutional scoping setting is on, search is always global.
-    if (sfConfig::get('app_enable_institutional_scoping'))
-    {
+    if (sfConfig::get('app_enable_institutional_scoping')) {
       $this->repository = null;
       $this->altRepository = null;
 
@@ -32,22 +31,16 @@ class SearchBoxComponent extends sfComponent
 
     // Check if the user is browsing a repo
     $route = $request->getAttribute('sf_route');
-    if (isset($route->resource))
-    {
-      if ($route->resource instanceof QubitRepository)
-      {
+    if (isset($route->resource)) {
+      if ($route->resource instanceof QubitRepository) {
         $this->repository = $route->resource;
-      }
-      elseif ($route->resource instanceof QubitInformationObject)
-      {
+      } elseif ($route->resource instanceof QubitInformationObject) {
         $this->repository = $route->resource->getRepository(['inherit' => true]);
       }
     }
 
-    if (null !== $realmId = $this->context->user->getAttribute('search-realm'))
-    {
-      if (isset($this->repository) && $realmId == $this->repository->id)
-      {
+    if (null !== $realmId = $this->context->user->getAttribute('search-realm')) {
+      if (isset($this->repository) && $realmId == $this->repository->id) {
         return;
       }
 

@@ -47,10 +47,8 @@ class arElasticSearchPluginQuery
    */
   public function addAggs($aggs)
   {
-    foreach ($aggs as $name => $item)
-    {
-      switch ($item['type'])
-      {
+    foreach ($aggs as $name => $item) {
+      switch ($item['type']) {
         case 'term':
           $agg = new \Elastica\Aggregation\Terms($name);
           $agg->setField($item['field']);
@@ -65,8 +63,7 @@ class arElasticSearchPluginQuery
       }
 
       // Sets the amount of terms to be returned
-      if (isset($item['size']))
-      {
+      if (isset($item['size'])) {
         $agg->setSize($item['size']);
       }
 
@@ -86,8 +83,7 @@ class arElasticSearchPluginQuery
 
     // Filter languages only if the languages aggregation
     // is being used and languages is set in the request
-    if (isset($aggs['languages'], $params['languages']))
-    {
+    if (isset($aggs['languages'], $params['languages'])) {
       $this->filters['languages'] = $params['languages'];
       $term = new \Elastica\Query\Term([$aggs['languages']['field'] => $params['languages']]);
 
@@ -95,14 +91,12 @@ class arElasticSearchPluginQuery
     }
 
     // Add agg selections as search criteria
-    foreach ($params as $param => $value)
-    {
+    foreach ($params as $param => $value) {
       if ('languages' == $param
         || !array_key_exists($param, $aggs)
         || ('repos' == $param && (!ctype_digit($value)
         || null === QubitRepository::getById($value)))
-        || 1 === preg_match('/^[\s\t\r\n]*$/', $value))
-      {
+        || 1 === preg_match('/^[\s\t\r\n]*$/', $value)) {
         continue;
       }
 
@@ -111,8 +105,7 @@ class arElasticSearchPluginQuery
       $query = new \Elastica\Query\Term([$aggs[$param]['field'] => $value]);
 
       // Collection agg must select all descendants and itself
-      if ('collection' == $param)
-      {
+      if ('collection' == $param) {
         $collection = QubitInformationObject::getById($value);
 
         $querySelf = new \Elastica\Query\Match();
@@ -139,39 +132,33 @@ class arElasticSearchPluginQuery
   public function addAdvancedSearchFilters($fieldNames, $params, $archivalStandard)
   {
     // Build query with the boolean criteria
-    if (null !== $criteria = $this->parseQuery($params, $archivalStandard))
-    {
+    if (null !== $criteria = $this->parseQuery($params, $archivalStandard)) {
       $this->queryBool->addMust($criteria);
     }
 
     // Process advanced search form fields
     // Some of them have the same name as a aggregation, this creates query
     // duplication but allows as to keep aggs and adv. search form syncronized
-    foreach ($fieldNames as $name)
-    {
+    foreach ($fieldNames as $name) {
       if (isset($params[$name]) && strlen(trim($params[$name])) > 0
-        && (null !== $criteria = $this->fieldCriteria($name, $params[$name])))
-      {
+        && (null !== $criteria = $this->fieldCriteria($name, $params[$name]))) {
         $this->queryBool->addMust($criteria);
       }
     }
 
-    if (null !== $criteria = $this->getDateRangeQuery($params))
-    {
+    if (null !== $criteria = $this->getDateRangeQuery($params)) {
       $this->queryBool->addMust($criteria);
     }
 
     // Default to show only top level descriptions
-    if ('isaar' != $archivalStandard && (!isset($params['topLod']) || filter_var($params['topLod'], FILTER_VALIDATE_BOOLEAN)))
-    {
+    if ('isaar' != $archivalStandard && (!isset($params['topLod']) || filter_var($params['topLod'], FILTER_VALIDATE_BOOLEAN))) {
       $this->queryBool->addMust(new \Elastica\Query\Term(['parentId' => QubitInformationObject::ROOT_ID]));
     }
 
     // Show descriptions related to an actor by an event type,
     // this parameters come from the actor related IOs lists
     if (isset($params['actorId']) && ctype_digit($params['actorId'])
-      && isset($params['eventTypeId']) && ctype_digit($params['eventTypeId']))
-    {
+      && isset($params['eventTypeId']) && ctype_digit($params['eventTypeId'])) {
       $queryBool = new \Elastica\Query\BoolQuery();
       $queryBool->addMust(new \Elastica\Query\Term(['dates.actorId' => $params['actorId']]));
       $queryBool->addMust(new \Elastica\Query\Term(['dates.typeId' => $params['eventTypeId']]));
@@ -186,8 +173,7 @@ class arElasticSearchPluginQuery
     }
 
     // Show descendants from resource
-    if (isset($params['ancestor']) && ctype_digit($params['ancestor']))
-    {
+    if (isset($params['ancestor']) && ctype_digit($params['ancestor'])) {
       $this->queryBool->addMust(new \Elastica\Query\Term(['ancestors' => $params['ancestor']]));
     }
   }
@@ -202,13 +188,11 @@ class arElasticSearchPluginQuery
    */
   public function getQuery($allowEmpty = false, $filterDrafts = false)
   {
-    if (!$allowEmpty && 1 > count($this->queryBool->getParams()))
-    {
+    if (!$allowEmpty && 1 > count($this->queryBool->getParams())) {
       $this->queryBool->addMust(new \Elastica\Query\MatchAll());
     }
 
-    if ($filterDrafts)
-    {
+    if ($filterDrafts) {
       QubitAclSearch::filterDrafts($this->queryBool);
     }
 
@@ -245,21 +229,17 @@ class arElasticSearchPluginQuery
     $queryBool = new \Elastica\Query\BoolQuery();
     $count = 0;
 
-    while (isset($params['sq'.$count]))
-    {
+    while (isset($params['sq'.$count])) {
       $query = $params['sq'.$count];
 
-      if (!empty($query))
-      {
+      if (!empty($query)) {
         $field = '_all';
-        if (!empty($params['sf'.$count]))
-        {
+        if (!empty($params['sf'.$count])) {
           $field = $params['sf'.$count];
         }
 
         $operator = 'and';
-        if (!empty($params['so'.$count]))
-        {
+        if (!empty($params['so'.$count])) {
           $operator = $params['so'.$count];
         }
 
@@ -275,8 +255,7 @@ class arElasticSearchPluginQuery
       ++$count;
     }
 
-    if (0 == count($queryBool->getParams()))
-    {
+    if (0 == count($queryBool->getParams())) {
       return;
     }
 
@@ -285,8 +264,7 @@ class arElasticSearchPluginQuery
 
   protected function queryField($field, $query, $archivalStandard)
   {
-    switch ($field)
-    {
+    switch ($field) {
       case 'identifier':
       case 'referenceCode':
       case 'descriptionIdentifier':
@@ -314,8 +292,7 @@ class arElasticSearchPluginQuery
 
         // Check archival history visibility
         if (('rad' == $archivalStandard && !check_field_visibility('app_element_visibility_rad_archival_history'))
-          || ('isad' == $archivalStandard && !check_field_visibility('app_element_visibility_isad_archival_history')))
-        {
+          || ('isad' == $archivalStandard && !check_field_visibility('app_element_visibility_isad_archival_history'))) {
           return;
         }
 
@@ -401,8 +378,7 @@ class arElasticSearchPluginQuery
 
   protected function addToQueryBool(&$queryBool, $operator, $queryField)
   {
-      switch ($operator)
-      {
+    switch ($operator) {
         case 'not':
           $queryBool->addMustNot($queryField);
 
@@ -430,8 +406,7 @@ class arElasticSearchPluginQuery
 
   protected function fieldCriteria($name, $value)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'copyrightStatus':
         // Get unknown copyright status term
         $criteria = new Criteria();
@@ -443,8 +418,7 @@ class arElasticSearchPluginQuery
         // If the user selected "Unknown copyright" make sure that we are
         // matching documents that either (1) copyright status is unknown or
         // (2) copyright status is not set.
-        if (isset($term) && $term->id == $value)
-        {
+        if (isset($term) && $term->id == $value) {
           // Query for documents without copyright status
           $exists = new \Elastica\Query\Exists('copyrightStatusId');
           $queryBoolMissing = new \Elastica\Query\BoolQuery();
@@ -479,8 +453,7 @@ class arElasticSearchPluginQuery
         return $query;
 
       case 'findingAidStatus':
-        switch ($value)
-        {
+        switch ($value) {
           case 'yes':
             $query = new \Elastica\Query\Exists('findingAid.status');
 
@@ -518,27 +491,23 @@ class arElasticSearchPluginQuery
    */
   protected function getDateRangeQuery($params)
   {
-    if (empty($params['startDate']) && empty($params['endDate']))
-    {
+    if (empty($params['startDate']) && empty($params['endDate'])) {
       return;
     }
 
     // Process date range, defaults to inclusive
     $type = $params['rangeType'];
-    if (empty($type))
-    {
+    if (empty($type)) {
       $type = 'inclusive';
     }
 
     $query = new \Elastica\Query\BoolQuery();
     $range = [];
 
-    if (!empty($params['startDate']))
-    {
+    if (!empty($params['startDate'])) {
       $range['gte'] = $params['startDate'];
 
-      if ('inclusive' == $type)
-      {
+      if ('inclusive' == $type) {
         // Start date before range and end date missing
         $queryBool = new \Elastica\Query\BoolQuery();
         $start = new \Elastica\Query\Range('dates.startDate', ['lt' => $params['startDate']]);
@@ -550,12 +519,10 @@ class arElasticSearchPluginQuery
       }
     }
 
-    if (!empty($params['endDate']))
-    {
+    if (!empty($params['endDate'])) {
       $range['lte'] = $params['endDate'];
 
-      if ('inclusive' == $type)
-      {
+      if ('inclusive' == $type) {
         // End date after range and start date missing
         $queryBool = new \Elastica\Query\BoolQuery();
         $end = new \Elastica\Query\Range('dates.endDate', ['gt' => $params['endDate']]);
@@ -567,8 +534,7 @@ class arElasticSearchPluginQuery
       }
     }
 
-    if (!empty($params['startDate']) && !empty($params['endDate']) && 'inclusive' == $type)
-    {
+    if (!empty($params['startDate']) && !empty($params['endDate']) && 'inclusive' == $type) {
       // Start date before range and end date after range
       $queryBool = new \Elastica\Query\BoolQuery();
       $queryBool->addMust(new \Elastica\Query\Range('dates.startDate', ['lt' => $params['startDate']]));
@@ -577,14 +543,11 @@ class arElasticSearchPluginQuery
       $query->addShould($queryBool);
     }
 
-    if ('inclusive' == $type)
-    {
+    if ('inclusive' == $type) {
       // Any event date inside the range
       $query->addShould(new \Elastica\Query\Range('dates.startDate', $range));
       $query->addShould(new \Elastica\Query\Range('dates.endDate', $range));
-    }
-    else
-    {
+    } else {
       // Both event dates inside the range
       $query->addMust(new \Elastica\Query\Range('dates.startDate', $range));
       $query->addMust(new \Elastica\Query\Range('dates.endDate', $range));

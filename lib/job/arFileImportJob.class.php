@@ -29,25 +29,19 @@ class arFileImportJob extends arBaseJob
    */
   public function runJob($parameters)
   {
-    if (isset($parameters['file']))
-    {
+    if (isset($parameters['file'])) {
       $this->info($this->i18n->__('Importing %1 file: %2.', ['%1' => strtoupper($parameters['importType']), '%2' => $parameters['file']['name']]));
-    }
-    else
-    {
+    } else {
       $this->info($this->i18n->__('Importing %1.', ['%1' => strtoupper($parameters['importType'])]));
     }
 
     // Set indexing preference.
-    if (isset($parameters['index']) && false === $parameters['index'])
-    {
+    if (isset($parameters['index']) && false === $parameters['index']) {
       QubitSearch::disable();
     }
 
-    try
-    {
-      switch ($parameters['importType'])
-      {
+    try {
+      switch ($parameters['importType']) {
         case 'csv':
           $importer = new QubitCsvImport();
 
@@ -83,25 +77,20 @@ class arFileImportJob extends arBaseJob
 
           break;
       }
-    }
-    catch (sfException $e)
-    {
+    } catch (sfException $e) {
       $this->error($e->getMessage());
 
       return false;
     }
 
-    if ($importer->hasErrors())
-    {
-      foreach ($importer->getErrors() as $error)
-      {
+    if ($importer->hasErrors()) {
+      foreach ($importer->getErrors() as $error) {
         $this->info($error);
       }
     }
 
     // Try to remove tmp file from uploads/tmp.
-    if (isset($parameters['file']) && false === unlink($parameters['file']['tmp_name']))
-    {
+    if (isset($parameters['file']) && false === unlink($parameters['file']['tmp_name'])) {
       // Issue warning if unable to delete but do not show job as failed because of this.
       $this->error($this->i18n->__('Failed to delete temporary file %1 -- please check your folder permissions.', ['%1' => $parameters['file']['tmp_name']]));
     }
@@ -124,15 +113,12 @@ class arFileImportJob extends arBaseJob
    */
   private function setCsvImportParams(&$importer, $parameters)
   {
-    foreach ($parameters as $key => $value)
-    {
-      if (empty($value))
-      {
+    foreach ($parameters as $key => $value) {
+      if (empty($value)) {
         continue;
       }
 
-      switch ($key)
-      {
+      switch ($key) {
         case 'doCsvTransform':
           $this->info($this->i18n->__('Applying transformation to CSV file.'));
           $importer->doCsvTransform = $parameters['doCsvTransform'];
@@ -140,8 +126,7 @@ class arFileImportJob extends arBaseJob
           break;
 
         case 'index':
-          if ('event' != $parameters['objectType'])
-          {
+          if ('event' != $parameters['objectType']) {
             $this->info($this->i18n->__('Indexing imported records.'));
             $importer->indexDuringImport = $parameters['index'];
           }
@@ -203,15 +188,12 @@ class arFileImportJob extends arBaseJob
 
     $options['strictXmlParsing'] = false;
 
-    foreach ($parameters as $key => $value)
-    {
-      if (empty($value))
-      {
+    foreach ($parameters as $key => $value) {
+      if (empty($value)) {
         continue;
       }
 
-      switch ($key)
-      {
+      switch ($key) {
         case 'index':
           $this->info($this->i18n->__('Indexing imported records.'));
           $options['index'] = $parameters['index'];
@@ -232,8 +214,7 @@ class arFileImportJob extends arBaseJob
 
         case 'update':
           $this->info($this->i18n->__('Update type: %1', ['%1' => $parameters['update']]));
-          if ('import-as-new' != $parameters['update'])
-          {
+          if ('import-as-new' != $parameters['update']) {
             $options['update'] = $parameters['update'];
           }
 

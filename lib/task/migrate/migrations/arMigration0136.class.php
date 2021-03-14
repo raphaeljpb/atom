@@ -39,13 +39,11 @@ class arMigration0136
     // available in the RIGHTS_BASIS_ID taxonomy. By default, we populate alz
     // the statements like the used to be before, making sure that all the
     // translations are also migrated.
-    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
-    {
+    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item) {
       $setting = new QubitSetting();
       $setting->name = "{$item->slug}_disallow";
       $setting->scope = 'access_statement';
-      foreach ($accessDisallowWarningI18nValues as $langCode => $value)
-      {
+      foreach ($accessDisallowWarningI18nValues as $langCode => $value) {
         $setting->setValue($value, ['culture' => $langCode]);
       }
       $setting->save();
@@ -53,19 +51,16 @@ class arMigration0136
       $setting = new QubitSetting();
       $setting->name = "{$item->slug}_conditional";
       $setting->scope = 'access_statement';
-      foreach ($accessConditionalWarningI18nValues as $langCode => $value)
-      {
+      foreach ($accessConditionalWarningI18nValues as $langCode => $value) {
         $setting->setValue($value, ['culture' => $langCode]);
       }
       $setting->save();
     }
 
     // Delete UI labels access_disallow_warning and access_conditional_warning
-    foreach (['access_disallow_warning', 'access_conditional_warning'] as $item)
-    {
+    foreach (['access_disallow_warning', 'access_conditional_warning'] as $item) {
       $setting = QubitSetting::getByNameAndScope($item, 'ui_label');
-      if (null !== $setting)
-      {
+      if (null !== $setting) {
         $setting->delete();
       }
     }
@@ -84,10 +79,8 @@ class arMigration0136
   {
     $values = [];
     $sql = 'SELECT `setting_i18n`.`value`, `setting_i18n`.`culture` FROM `setting` LEFT JOIN `setting_i18n` ON (`setting`.`id` = `setting_i18n`.`id`) WHERE `setting`.`name` = ? AND `setting`.`scope` = ?;';
-    foreach (QubitPdo::fetchAll($sql, [$name, $scope]) as $item)
-    {
-      if (empty($item->value))
-      {
+    foreach (QubitPdo::fetchAll($sql, [$name, $scope]) as $item) {
+      if (empty($item->value)) {
         continue;
       }
 

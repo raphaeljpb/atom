@@ -26,10 +26,8 @@ class InformationObjectNotesComponent extends sfComponent
 
     $this->addField('content');
 
-    if (isset($options['type']))
-    {
-      switch ($options['type'])
-      {
+    if (isset($options['type'])) {
+      switch ($options['type']) {
         case 'radTitleNotes':
           $this->hiddenType = false;
           $this->taxonomyId = QubitTaxonomy::RAD_TITLE_NOTE_ID;
@@ -140,12 +138,9 @@ class InformationObjectNotesComponent extends sfComponent
       // Ignore notes where the desired translation is not available
       $culture = sfContext::getInstance()->getUser()->getCulture();
       $this->notes = [];
-      if (isset($this->allNotes))
-      {
-        foreach ($this->allNotes as $note)
-        {
-          if (0 < strlen($note->getContent(['culture' => $culture])) || 0 < strlen($note->getContent(['sourceCulture' => true])))
-          {
+      if (isset($this->allNotes)) {
+        foreach ($this->allNotes as $note) {
+          if (0 < strlen($note->getContent(['culture' => $culture])) || 0 < strlen($note->getContent(['sourceCulture' => true]))) {
             $this->notes[] = $note;
           }
         }
@@ -156,17 +151,14 @@ class InformationObjectNotesComponent extends sfComponent
   public function processForm()
   {
     $params = [];
-    if (isset($this->request->{$this->arrayName}))
-    {
+    if (isset($this->request->{$this->arrayName})) {
       $params = $this->request->{$this->arrayName};
     }
 
     $finalNotes = [];
-    foreach ($params as $item)
-    {
+    foreach ($params as $item) {
       $this->note = null;
-      if (isset($item['id']))
-      {
+      if (isset($item['id'])) {
         $this->note = QubitNote::getById($item['id']);
 
         // Store notes that haven't been deleted by multiRow.js
@@ -174,27 +166,22 @@ class InformationObjectNotesComponent extends sfComponent
       }
 
       // Continue only if user typed something
-      if (1 > strlen($item['content']))
-      {
+      if (1 > strlen($item['content'])) {
         // TODO: if the user is in translation mode and nothing is typed,
         // the type changes won't be saved
         continue;
       }
 
       $this->form->bind($item);
-      if ($this->form->isValid())
-      {
-        if (is_null($this->note))
-        {
+      if ($this->form->isValid()) {
+        if (is_null($this->note)) {
           $this->resource->notes[] = $this->note = new QubitNote();
         }
 
-        if (isset($item['type']))
-        {
+        if (isset($item['type'])) {
           $this->note['typeId'] = $item['type'];
         }
-        if (isset($item['content']))
-        {
+        if (isset($item['content'])) {
           $this->note['content'] = $item['content'];
         }
 
@@ -204,18 +191,15 @@ class InformationObjectNotesComponent extends sfComponent
         // We also do an additional check against resource id and note objectId; if they do
         // not match, we're in duplicate record mode and want to avoid modifying the original
         // record's notes.
-        if (isset($item['id']) && $this->note->objectId == $this->resource->id)
-        {
+        if (isset($item['id']) && $this->note->objectId == $this->resource->id) {
           $this->note->save();
         }
       }
     }
 
     // Delete the old notes if they don't appear in the table (removed by multiRow.js)
-    foreach ($this->notes as $item)
-    {
-      if (false === array_search($item->id, $finalNotes))
-      {
+    foreach ($this->notes as $item) {
+      if (false === array_search($item->id, $finalNotes)) {
         $item->delete();
       }
     }
@@ -223,8 +207,7 @@ class InformationObjectNotesComponent extends sfComponent
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'content':
         $this->form->setValidator('content', new sfValidatorString());
         $this->form->setWidget('content', new sfWidgetFormTextarea());
@@ -233,8 +216,7 @@ class InformationObjectNotesComponent extends sfComponent
 
       case 'type':
         $choices = [];
-        foreach (QubitTerm::getOptionsForSelectList($this->taxonomyId) as $value => $label)
-        {
+        foreach (QubitTerm::getOptionsForSelectList($this->taxonomyId) as $value => $label) {
           $choices[$value] = htmlentities($label, ENT_QUOTES, sfConfig::get('sf_charset'));
         }
 

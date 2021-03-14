@@ -57,12 +57,9 @@ class QubitPdoPager extends sfPager
    */
   public function init()
   {
-    if (0 == $this->getPage() || 0 == $this->getMaxPerPage())
-    {
+    if (0 == $this->getPage() || 0 == $this->getMaxPerPage()) {
       $this->setLastPage(0);
-    }
-    else
-    {
+    } else {
       $this->setLastPage(ceil($this->getNbResults() / $this->getMaxPerPage()));
     }
   }

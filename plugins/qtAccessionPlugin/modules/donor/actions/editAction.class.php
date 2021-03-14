@@ -27,12 +27,10 @@ class DonorEditAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->contactInformationEditComponent->processForm();
 
         $this->processForm();
@@ -50,13 +48,11 @@ class DonorEditAction extends DefaultEditAction
 
     $this->resource = new QubitDonor();
 
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
 
       // Check user authorization
-      if (!QubitAcl::check($this->resource, 'update'))
-      {
+      if (!QubitAcl::check($this->resource, 'update')) {
         QubitAcl::forwardUnauthorized();
       }
 
@@ -64,21 +60,16 @@ class DonorEditAction extends DefaultEditAction
       $this->form->setDefault('serialNumber', $this->resource->serialNumber);
       $this->form->setValidator('serialNumber', new sfValidatorInteger());
       $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
-    }
-    else
-    {
+    } else {
       // Check user authorization
-      if (!QubitAcl::check($this->resource, 'create'))
-      {
+      if (!QubitAcl::check($this->resource, 'create')) {
         QubitAcl::forwardUnauthorized();
       }
     }
 
     $title = $this->context->i18n->__('Add new donor');
-    if (isset($this->getRoute()->resource))
-    {
-      if (1 > strlen($title = $this->resource->__toString()))
-      {
+    if (isset($this->getRoute()->resource)) {
+      if (1 > strlen($title = $this->resource->__toString())) {
         $title = $this->context->i18n->__('Untitled');
       }
 
@@ -94,8 +85,7 @@ class DonorEditAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'authorizedFormOfName':
         $this->form->setDefault('authorizedFormOfName', $this->resource->authorizedFormOfName);
         $this->form->setValidator('authorizedFormOfName', new sfValidatorString());

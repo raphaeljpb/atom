@@ -39,23 +39,18 @@ class QubitMessageSource_XLIFF extends sfMessageSource_XLIFF
   public function save($catalogue = 'messages')
   {
     $messages = $this->untranslated;
-    if (count($messages) <= 0)
-    {
+    if (count($messages) <= 0) {
       return false;
     }
 
     $variants = $this->getVariants($catalogue);
-    if ($variants)
-    {
+    if ($variants) {
       list($variant, $filename) = $variants;
-    }
-    else
-    {
+    } else {
       list($variant, $filename) = $this->createMessageTemplate($catalogue);
     }
 
-    if (false == is_writable($filename))
-    {
+    if (false == is_writable($filename)) {
       throw new sfException(sprintf('Unable to save to file %s, file must be writable.', $filename));
     }
 
@@ -69,8 +64,7 @@ class QubitMessageSource_XLIFF extends sfMessageSource_XLIFF
     $body = $xpath->query('//body')->item(0);
 
     // For each message add it to the XML file using DOM
-    foreach ($messages as $message)
-    {
+    foreach ($messages as $message) {
       $unit = $dom->createElement('trans-unit');
 
       // Set the ID using the SHA1 checksum of its source
@@ -98,8 +92,7 @@ class QubitMessageSource_XLIFF extends sfMessageSource_XLIFF
 
     // save it and clear the cache for this variant
     $dom->save($filename);
-    if ($this->cache)
-    {
+    if ($this->cache) {
       $this->cache->remove($variant.':'.$this->culture);
     }
 

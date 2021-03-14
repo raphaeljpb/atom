@@ -26,16 +26,14 @@ class DigitalObjectImageflowComponent extends sfComponent
 {
   public function execute($request)
   {
-    if (!sfConfig::get('app_toggleIoSlider'))
-    {
+    if (!sfConfig::get('app_toggleIoSlider')) {
       return sfView::NONE;
     }
 
     $this->thumbnails = [];
 
     // Set limit (null for no limit)
-    if (!isset($request->showFullImageflow) || 'true' != $request->showFullImageflow)
-    {
+    if (!isset($request->showFullImageflow) || 'true' != $request->showFullImageflow) {
       $this->limit = sfConfig::get('app_hits_per_page', 10);
     }
 
@@ -51,41 +49,32 @@ class DigitalObjectImageflowComponent extends sfComponent
       QubitInformationObject::RGT, $this->resource->rgt, Criteria::LESS_THAN
     );
 
-    if (isset($this->limit))
-    {
+    if (isset($this->limit)) {
       $criteria->setLimit($this->limit);
     }
 
     // Hide drafts
     $criteria = QubitAcl::addFilterDraftsCriteria($criteria);
 
-    foreach (QubitDigitalObject::get($criteria) as $item)
-    {
-      if (QubitTerm::OFFLINE_ID == $item->usageId)
-      {
+    foreach (QubitDigitalObject::get($criteria) as $item) {
+      if (QubitTerm::OFFLINE_ID == $item->usageId) {
         $thumbnail = QubitDigitalObject::getGenericRepresentation(
           $item->mimeType, QubitTerm::THUMBNAIL_ID
         );
 
         $thumbnail->setParent($item);
-      }
-      else
-      {
+      } else {
         // Ensure the user has permissions to see a thumbnail
-        if (!QubitAcl::check($item->object, 'readThumbnail'))
-        {
+        if (!QubitAcl::check($item->object, 'readThumbnail')) {
           $thumbnail = QubitDigitalObject::getGenericRepresentation(
             $item->mimeType, QubitTerm::THUMBNAIL_ID
           );
 
           $thumbnail->setParent($item);
-        }
-        else
-        {
+        } else {
           $thumbnail = $item->getRepresentationByUsage(QubitTerm::THUMBNAIL_ID);
 
-          if (!$thumbnail)
-          {
+          if (!$thumbnail) {
             $thumbnail = QubitDigitalObject::getGenericRepresentation(
               $item->mimeType, QubitTerm::THUMBNAIL_ID
             );
@@ -101,8 +90,7 @@ class DigitalObjectImageflowComponent extends sfComponent
     // Get total number of descendant digital objects
     $this->total = $this->getDescendantDigitalObjectCount();
 
-    if (0 === count($this->thumbnails))
-    {
+    if (0 === count($this->thumbnails)) {
       return sfView::NONE;
     }
   }

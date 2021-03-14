@@ -32,11 +32,9 @@ class purgeTask extends sfBaseTask
    */
   public function execute($arguments = [], $options = [])
   {
-    if (!$options['demo'] && !function_exists('readline'))
-    {
+    if (!$options['demo'] && !function_exists('readline')) {
       $needed = ['title', 'description', 'url', 'email', 'username', 'password'];
-      if (!array_key_exists($needed, $options))
-      {
+      if (!array_key_exists($needed, $options)) {
         throw new Exception('At least one of the following command line '.
           'options is missing: title, description, url, email, username '.
           'and/or password.');
@@ -47,8 +45,7 @@ class purgeTask extends sfBaseTask
     $insertSql->setCommandApplication($this->commandApplication);
     $insertSql->setConfiguration($this->configuration);
 
-    if ($options['demo'])
-    {
+    if ($options['demo']) {
       $this->setDemoOptions($options);
     }
 
@@ -57,14 +54,11 @@ class purgeTask extends sfBaseTask
 
     $insertSql->run($insertSqlArguments, $insertSqlOptions);
 
-    if ($options['use-gitconfig'])
-    {
+    if ($options['use-gitconfig']) {
       // attempt to provide default user admin name and email
-      if ($_SERVER['HOME'])
-      {
+      if ($_SERVER['HOME']) {
         $gitConfigFile = $_SERVER['HOME'].'/.gitconfig';
-        if (file_exists($gitConfigFile))
-        {
+        if (file_exists($gitConfigFile)) {
           $gitConfig = parse_ini_file($gitConfigFile);
 
           $defaultUser = strtolower(strtok($gitConfig['name'], ' '));
@@ -95,24 +89,21 @@ class purgeTask extends sfBaseTask
 
     // set, or prompt for, site title configuration information
     $siteTitle = (isset($options['title'])) ? $options['title'] : '';
-    if (!$siteTitle)
-    {
+    if (!$siteTitle) {
       $siteTitle = readline('Site title [Qubit]: ');
       $siteTitle = (!empty($siteTitle)) ? $siteTitle : 'Qubit';
     }
 
     // set, or prompt for, site description information
     $siteDescription = (isset($options['description'])) ? $options['description'] : '';
-    if (!$siteDescription)
-    {
+    if (!$siteDescription) {
       $siteDescription = readline('Site description [Test site]: ');
       $siteDescription = (!empty($siteDescription)) ? $siteDescription : 'Test site';
     }
 
     // set, or prompt for, site base URL
     $siteBaseUrl = (isset($options['url'])) ? $options['url'] : '';
-    if (!$siteBaseUrl)
-    {
+    if (!$siteBaseUrl) {
       $siteBaseUrl = readline('Site base URL [http://127.0.0.1]: ');
       $siteBaseUrl = (!empty($siteBaseUrl)) ? $siteBaseUrl : 'http://127.0.0.1';
     }
@@ -202,19 +193,16 @@ EOF;
     // parse_url may return false for badly malformed URLs, but it shouldn't be used solely
     // to validate them. We're mainly using it here to determine if http:// or https:// is
     // part of the URL.
-    if (false === $urlParts = parse_url($url))
-    {
+    if (false === $urlParts = parse_url($url)) {
       throw $invalidUrl;
     }
 
     // FILTER_VALIDATE_URL always returns false if no scheme is specified, default to http://
-    if (!isset($urlParts['scheme']))
-    {
+    if (!isset($urlParts['scheme'])) {
       $url = 'http://'.$url;
     }
 
-    if (false === filter_var($url, FILTER_VALIDATE_URL))
-    {
+    if (false === filter_var($url, FILTER_VALIDATE_URL)) {
       throw $invalidUrl;
     }
   }

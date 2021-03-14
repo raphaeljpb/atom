@@ -30,18 +30,15 @@ class arUpgrader110
     // This upgrader class is a port of QubitMigrate110
     // updateSchema() introduces the SQL schema changes that did not
     // fit in any existing db upgrade method
-    if (self::INIT_VERSION == $version)
-    {
+    if (self::INIT_VERSION == $version) {
       $this->updateSchema($configuration);
     }
 
-    if ($options['verbose'])
-    {
+    if ($options['verbose']) {
       echo "up({$version})\n";
     }
 
-    switch ($version)
-    {
+    switch ($version) {
       // Add accession module menu entry, internal taxonomies,
       // terms and settings
       case 62:
@@ -60,8 +57,7 @@ class arUpgrader110
         $setting->save();
 
         // Update add button, accession is now the default action
-        if (null !== $node = QubitMenu::getByName('add'))
-        {
+        if (null !== $node = QubitMenu::getByName('add')) {
           $node->path = 'accession/add';
           $node->save();
         }
@@ -77,8 +73,7 @@ class arUpgrader110
           'es' => 'Registros de adhesiones',
           'fr' => 'Registre des entrées',
           'pl' => 'Nabytki',
-          'sl' => 'Zapisi o prevzemu', ] as $key => $value)
-        {
+          'sl' => 'Zapisi o prevzemu', ] as $key => $value) {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label = $value;
@@ -89,8 +84,7 @@ class arUpgrader110
         $node->save();
 
         // Introduce it before "addInformationObject"
-        if (null !== $target = QubitMenu::getByName('addInformationObject'))
-        {
+        if (null !== $target = QubitMenu::getByName('addInformationObject')) {
           $node->moveToPrevSiblingOf($target);
         }
 
@@ -108,8 +102,7 @@ class arUpgrader110
           'es' => 'Administrar',
           'fr' => 'Gérer',
           'pl' => 'Zarządzanie',
-          'sl' => 'Upravljaj', ] as $key => $value)
-        {
+          'sl' => 'Upravljaj', ] as $key => $value) {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label = $value;
@@ -120,14 +113,12 @@ class arUpgrader110
         $node->save();
 
         // Introduce it after "add"
-        if (null !== $target = QubitMenu::getByName('add'))
-        {
+        if (null !== $target = QubitMenu::getByName('add')) {
           $node->moveToNextSiblingOf($target);
         }
 
         // Move taxonomies under "Manage"
-        if (null !== $node = QubitMenu::getByName('taxonomies'))
-        {
+        if (null !== $node = QubitMenu::getByName('taxonomies')) {
           $node->parentId = QubitMenu::MANAGE_ID;
           $node->save();
         }
@@ -144,8 +135,7 @@ class arUpgrader110
           'es' => 'Registros de adhesiones',
           'fr' => 'Registre des entrées',
           'pl' => 'Nabytki',
-          'sl' => 'Zapisi o prevzemu', ] as $key => $value)
-        {
+          'sl' => 'Zapisi o prevzemu', ] as $key => $value) {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label = $value;
@@ -156,8 +146,7 @@ class arUpgrader110
         $node->save();
 
         // Introduce it before "taxonomies"
-        if (null !== $target = QubitMenu::getByName('taxonomies'))
-        {
+        if (null !== $target = QubitMenu::getByName('taxonomies')) {
           $node->moveToPrevSiblingOf($target);
         }
 
@@ -174,8 +163,7 @@ class arUpgrader110
           'fr' => 'Donateurs',
           'nl' => 'Schenkers',
           'pl' => 'Przekazujący (materiały archiwalne)',
-          'sl' => 'Donatorji', ] as $key => $value)
-        {
+          'sl' => 'Donatorji', ] as $key => $value) {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label = $value;
@@ -186,8 +174,7 @@ class arUpgrader110
         $node->save();
 
         // Introduce it after "accessions"
-        if (null !== $target = QubitMenu::getByName('accessions'))
-        {
+        if (null !== $target = QubitMenu::getByName('accessions')) {
           $node->moveToNextSiblingOf($target);
         }
 
@@ -204,8 +191,7 @@ class arUpgrader110
           'fr' => 'Détenteurs de droits',
           'nl' => 'Houders van rechten',
           'pl' => 'Posiadacze praw',
-          'sl' => 'Imetniki pravic', ] as $key => $value)
-        {
+          'sl' => 'Imetniki pravic', ] as $key => $value) {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label = $value;
@@ -216,8 +202,7 @@ class arUpgrader110
         $node->save();
 
         // Introduce it after "donors"
-        if (null !== $target = QubitMenu::getByName('donors'))
-        {
+        if (null !== $target = QubitMenu::getByName('donors')) {
           $node->moveToNextSiblingOf($target);
         }
 
@@ -262,8 +247,7 @@ class arUpgrader110
         foreach ([
           'Public transfer',
           'Private transfer',
-          'Acquisition type', ] as $item)
-        {
+          'Acquisition type', ] as $item) {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID;
@@ -284,8 +268,7 @@ class arUpgrader110
           'Deposit',
           'Gift',
           'Purchase',
-          'Transfer', ] as $item)
-        {
+          'Transfer', ] as $item) {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID;
@@ -305,8 +288,7 @@ class arUpgrader110
         foreach ([
           'High',
           'Medium',
-          'Low', ] as $item)
-        {
+          'Low', ] as $item) {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::ACCESSION_PROCESSING_PRIORITY_ID;
@@ -326,8 +308,7 @@ class arUpgrader110
         foreach ([
           'Complete',
           'Incomplete',
-          'In-Progress', ] as $item)
-        {
+          'In-Progress', ] as $item) {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::ACCESSION_PROCESSING_STATUS_ID;
@@ -346,8 +327,7 @@ class arUpgrader110
 
         foreach ([
           'Whole',
-          'Part', ] as $item)
-        {
+          'Part', ] as $item) {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::DEACCESSION_SCOPE_ID;
@@ -371,8 +351,7 @@ class arUpgrader110
           'Disseminate',
           'Migrate',
           'Modify',
-          'Replicate', ] as $item)
-        {
+          'Replicate', ] as $item) {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::RIGHT_ACT_ID;
@@ -394,8 +373,7 @@ class arUpgrader110
           'License',
           'Statute',
           'Policy',
-          'Donor', ] as $item)
-        {
+          'Donor', ] as $item) {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::RIGHT_BASIS_ID;
@@ -415,8 +393,7 @@ class arUpgrader110
         foreach ([
           'Under copyright',
           'Public domain',
-          'Unknown', ] as $item)
-        {
+          'Unknown', ] as $item) {
           $term = new QubitTerm();
           $term->parentId = QubitTerm::ROOT_ID;
           $term->taxonomyId = QubitTaxonomy::COPYRIGHT_STATUS_ID;
@@ -432,19 +409,16 @@ class arUpgrader110
           QubitTerm::RELATION_NOTE_DATE_ID,
           QubitTerm::RELATION_NOTE_DESCRIPTION_ID);
         $stmt = QubitPdo::prepareAndExecute($sql);
-        while ($row = $stmt->fetch(PDO::FETCH_NUM))
-        {
+        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
           $note = QubitNote::getById($row[0]);
 
-          if (null === $relation = QubitRelation::getById($note->objectId))
-          {
-           continue;
+          if (null === $relation = QubitRelation::getById($note->objectId)) {
+            continue;
           }
 
           $relation->sourceCulture = $note->sourceCulture;
 
-          switch ($note->typeId)
-          {
+          switch ($note->typeId) {
             case QubitTerm::RELATION_NOTE_DATE_ID:
               $relation->date = $note->getContent(['sourceCulture' => true]);
 
@@ -526,8 +500,7 @@ class arUpgrader110
           'fr' => 'Thèmes',
           'nl' => 'Thema\'s',
           'pl' => 'Motywy',
-          'sl' => 'Teme', ] as $key => $value)
-        {
+          'sl' => 'Teme', ] as $key => $value) {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label = $value;
@@ -538,8 +511,7 @@ class arUpgrader110
         $node->save();
 
         // Introduce it before "plugins"
-        if (null !== $target = QubitMenu::getByName('plugins'))
-        {
+        if (null !== $target = QubitMenu::getByName('plugins')) {
           $node->moveToPrevSiblingOf($target);
         }
 
@@ -551,8 +523,7 @@ class arUpgrader110
         break;
       // Move digital objects to repository specific paths like r9503
       case 70:
-        if (!file_exists(sfConfig::get('sf_upload_dir').'/r'))
-        {
+        if (!file_exists(sfConfig::get('sf_upload_dir').'/r')) {
           mkdir(sfConfig::get('sf_upload_dir').'/r', 0775);
         }
 
@@ -560,18 +531,14 @@ class arUpgrader110
                 FROM digital_object
                 WHERE information_object_id IS NOT NULL';
 
-        foreach (QubitPdo::fetchAll($sql) as $item)
-        {
+        foreach (QubitPdo::fetchAll($sql) as $item) {
           $io = QubitInformationObject::getById($item->information_object_id);
 
           // Build repository dirname
-          if (null !== $repository = $io->getRepository(['inherit' => true]))
-          {
-            if (!isset($repository->slug))
-            {
+          if (null !== $repository = $io->getRepository(['inherit' => true])) {
+            if (!isset($repository->slug)) {
               $slug = $this->getUniqueSlug($repository->getAuthorizedFormOfName(['sourceCulture' => true]));
-              if (!isset($slug) || 0 == strlen($slug))
-              {
+              if (!isset($slug) || 0 == strlen($slug)) {
                 continue;
               }
 
@@ -579,9 +546,7 @@ class arUpgrader110
             }
 
             $repoName = $repository->slug;
-          }
-          else
-          {
+          } else {
             $repoName = 'null';
           }
 
@@ -592,42 +557,33 @@ class arUpgrader110
           $c1->addOr($c2);
           $criteria->add($c1);
           $criteria->addAscendingOrderByColumn(QubitDigitalObject::USAGE_ID);
-          foreach (QubitDigitalObject::get($criteria) as $digitalObject)
-          {
+          foreach (QubitDigitalObject::get($criteria) as $digitalObject) {
             // Don't try to move remote assets
-            if (QubitTerm::EXTERNAL_URI_ID == $digitalObject->usageId)
-            {
+            if (QubitTerm::EXTERNAL_URI_ID == $digitalObject->usageId) {
               continue;
             }
 
             $oldPath = $digitalObject->path;
 
             // Build new path
-            if (preg_match('|\d/\d/\d{3,}/$|', $oldPath, $matches))
-            {
+            if (preg_match('|\d/\d/\d{3,}/$|', $oldPath, $matches)) {
               $newPath = '/uploads/r/'.$repoName.'/'.$matches[0];
-            }
-            else
-            {
+            } else {
               continue;
             }
 
             // Create new directories
-            if (!file_exists(sfConfig::get('sf_web_dir').$newPath))
-            {
-              if (!mkdir(sfConfig::get('sf_web_dir').$newPath, 0775, true))
-              {
+            if (!file_exists(sfConfig::get('sf_web_dir').$newPath)) {
+              if (!mkdir(sfConfig::get('sf_web_dir').$newPath, 0775, true)) {
                 continue;
               }
             }
 
             // Move files
-            if (file_exists(sfConfig::get('sf_web_dir').$oldPath))
-            {
+            if (file_exists(sfConfig::get('sf_web_dir').$oldPath)) {
               if (!rename(
                 sfConfig::get('sf_web_dir').$oldPath.$digitalObject->name,
-                sfConfig::get('sf_web_dir').$newPath.$digitalObject->name))
-              {
+                sfConfig::get('sf_web_dir').$newPath.$digitalObject->name)) {
                 continue; // If rename fails, don't update path
               }
             }
@@ -665,8 +621,7 @@ class arUpgrader110
           'fr' => 'Localisation physique',
           'nl' => 'Bergplaats',
           'pl' => 'Składowanie w ujęciu fizycznym',
-          'sl' => 'Fizična hramba', ] as $key => $value)
-        {
+          'sl' => 'Fizična hramba', ] as $key => $value) {
           $nodeI18n = new QubitMenuI18n();
           $nodeI18n->culture = $key;
           $nodeI18n->label = $value;
@@ -677,24 +632,21 @@ class arUpgrader110
         $node->save();
 
         // Introduce it after "donors"
-        if (null !== $target = QubitMenu::getByName('donors'))
-        {
+        if (null !== $target = QubitMenu::getByName('donors')) {
           $node->moveToNextSiblingOf($target);
         }
 
         break;
       // Migrate to sfCaribou theme to users that are currently using sfClassic
       case 73:
-        if (null !== $setting = QubitSetting::getByName('plugins'))
-        {
+        if (null !== $setting = QubitSetting::getByName('plugins')) {
           $plugin = 'sfClassicPlugin';
           $replacement = 'qtTrilliumPlugin';
 
           $settings = unserialize($setting->getValue(['sourceCulture' => true]));
 
           // Find plugin
-          if (-1 < ($index = array_search($plugin, $settings)))
-          {
+          if (-1 < ($index = array_search($plugin, $settings))) {
             // Replace
             $settings[$index] = $replacement;
 
@@ -719,17 +671,14 @@ class arUpgrader110
                         status.object_id = information_object.id AND
                         status.type_id = '.QubitTerm::STATUS_TYPE_PUBLICATION_ID.')';
         $stmt = QubitPdo::prepareAndExecute($sql);
-        while ($row = $stmt->fetch(PDO::FETCH_NUM))
-        {
+        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
           $item = QubitInformationObject::getById($row[0]);
 
           // Ascend up object hierarchy until a publication status is found
           // right up to the root object if necessary (which is set to 'draft' by default)
-          foreach ($item->ancestors->orderBy('rgt') as $ancestor)
-          {
+          foreach ($item->ancestors->orderBy('rgt') as $ancestor) {
             $status = $ancestor->getPublicationStatus();
-            if (isset($status) && null !== $status->statusId)
-            {
+            if (isset($status) && null !== $status->statusId) {
               $item->setPublicationStatus($status->statusId);
               $item->save();
 
@@ -819,8 +768,7 @@ sql;
       'rights_i18n',
       'rights_actor_relation',
       'rights_term_relation',
-      'system_event', ] as $item)
-    {
+      'system_event', ] as $item) {
       QubitMigrate::dropTable($item);
     }
 
@@ -831,8 +779,7 @@ sql;
       'property',
       'status',
       'taxonomy',
-    ] as $item)
-    {
+    ] as $item) {
       // Copy column updated_at and drop it
       $sql = "UPDATE object, {$item}";
       $sql .= " SET object.updated_at = {$item}.updated_at";

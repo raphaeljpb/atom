@@ -27,15 +27,13 @@ class QubitHtmlPurifier
   {
     $this->enabled = sfConfig::get('app_htmlpurifier_enabled', true);
 
-    if (!$this->enabled)
-    {
+    if (!$this->enabled) {
       return;
     }
 
     // Prepare htmlpurifier cache directory
     $purifierCacheDirectory = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'htmlpurifier';
-    if (!file_exists($purifierCacheDirectory))
-    {
+    if (!file_exists($purifierCacheDirectory)) {
       mkdir($purifierCacheDirectory, 0770, true);
     }
 
@@ -70,8 +68,7 @@ class QubitHtmlPurifier
 
   public static function getInstance()
   {
-    if (!isset(self::$instance))
-    {
+    if (!isset(self::$instance)) {
       self::$instance = new QubitHtmlPurifier();
     }
 
@@ -80,8 +77,7 @@ class QubitHtmlPurifier
 
   public function purify($content)
   {
-    if (!$this->enabled)
-    {
+    if (!$this->enabled) {
       return $content;
     }
 

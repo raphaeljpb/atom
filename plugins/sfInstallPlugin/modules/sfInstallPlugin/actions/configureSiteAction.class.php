@@ -47,12 +47,10 @@ class sfInstallPluginConfigureSiteAction extends sfAction
 
     $this->form->getValidatorSchema()->setPostValidator(new sfValidatorSchemaCompare('password', '==', 'confirmPassword'));
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $setting = new QubitSetting();
         $setting->name = 'siteTitle';
         $setting->value = $this->form->getValue('siteTitle');

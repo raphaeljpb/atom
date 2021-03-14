@@ -24,8 +24,7 @@ class QubitNote extends BaseNote
 
   public function __toString()
   {
-    if (null === $content = $this->getContent())
-    {
+    if (null === $content = $this->getContent()) {
       $content = $this->getContent(['sourceCulture' => true]);
     }
 
@@ -39,15 +38,12 @@ class QubitNote extends BaseNote
 
     parent::save($connection);
 
-    if ($this->indexOnSave)
-    {
-      if ($this->objectId != $cleanObjectId && null !== QubitInformationObject::getById($cleanObjectId))
-      {
+    if ($this->indexOnSave) {
+      if ($this->objectId != $cleanObjectId && null !== QubitInformationObject::getById($cleanObjectId)) {
         QubitSearch::getInstance()->update(QubitInformationObject::getById($cleanObjectId));
       }
 
-      if ($this->object instanceof QubitInformationObject)
-      {
+      if ($this->object instanceof QubitInformationObject) {
         QubitSearch::getInstance()->update($this->object);
       }
     }
@@ -59,8 +55,7 @@ class QubitNote extends BaseNote
   {
     parent::delete($connection);
 
-    if ($this->getObject() instanceof QubitInformationObject)
-    {
+    if ($this->getObject() instanceof QubitInformationObject) {
       QubitSearch::getInstance()->update($this->getObject());
     }
   }

@@ -30,8 +30,7 @@ $tableTemplate = <<<EOL
 <tbody>
 EOL;
 
-foreach ($basicActions as $key => $item)
-{
+foreach ($basicActions as $key => $item) {
   $tableTemplate .= '<tr>';
   $tableTemplate .= '<td>'.__($item).'</th>';
   $tableTemplate .= '<td><ul class="radio inline">';

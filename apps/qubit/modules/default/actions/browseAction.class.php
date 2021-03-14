@@ -22,60 +22,48 @@ class DefaultBrowseAction extends sfAction
   public function execute($request)
   {
     // Force subclassing
-    if ('default' == $this->context->getModuleName() && 'browse' == $this->context->getActionName())
-    {
+    if ('default' == $this->context->getModuleName() && 'browse' == $this->context->getActionName()) {
       $this->forward404();
     }
 
     // If we're searching, by default sort by relevance
-    if (array_key_exists('query', $request->getGetParameters()))
-    {
+    if (array_key_exists('query', $request->getGetParameters())) {
       $sortSetting = 'relevance';
-    }
-    elseif ($this->getUser()->isAuthenticated())
-    {
+    } elseif ($this->getUser()->isAuthenticated()) {
       $sortSetting = sfConfig::get('app_sort_browser_user');
-    }
-    else
-    {
+    } else {
       $sortSetting = sfConfig::get('app_sort_browser_anonymous');
     }
 
-    if (!isset($request->sort))
-    {
+    if (!isset($request->sort)) {
       $request->sort = $sortSetting;
     }
 
     // Default sort direction
     $sortDir = 'asc';
-    if (in_array($request->sort, ['lastUpdated', 'relevance', 'endDate']))
-    {
+    if (in_array($request->sort, ['lastUpdated', 'relevance', 'endDate'])) {
       $sortDir = 'desc';
     }
 
     // Set default sort direction in request if not present or not valid
-    if (!isset($request->sortDir) || !in_array($request->sortDir, ['asc', 'desc']))
-    {
+    if (!isset($request->sortDir) || !in_array($request->sortDir, ['asc', 'desc'])) {
       $request->sortDir = $sortDir;
     }
 
     $this->limit = sfConfig::get('app_hits_per_page');
-    if (isset($request->limit) && ctype_digit($request->limit))
-    {
+    if (isset($request->limit) && ctype_digit($request->limit)) {
       $this->limit = $request->limit;
     }
 
     $skip = 0;
-    if (isset($request->page) && ctype_digit($request->page))
-    {
+    if (isset($request->page) && ctype_digit($request->page)) {
       $skip = ($request->page - 1) * $this->limit;
     }
 
     // Avoid pagination over ES' max result window config (default: 10000)
     $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
 
-    if ((int) $this->limit + (int) $skip > $maxResultWindow)
-    {
+    if ((int) $this->limit + (int) $skip > $maxResultWindow) {
       // Show alert
       $message = $this->context->i18n->__(
         "We've redirected you to the first page of results.".
@@ -93,10 +81,8 @@ class DefaultBrowseAction extends sfAction
 
     $this->search = new arElasticSearchPluginQuery($this->limit, $skip);
 
-    if (property_exists($this, 'AGGS'))
-    {
-      if (!isset($this->getParameters))
-      {
+    if (property_exists($this, 'AGGS')) {
+      if (!isset($this->getParameters)) {
         $this->getParameters = $request->getGetParameters();
       }
 
@@ -104,12 +90,9 @@ class DefaultBrowseAction extends sfAction
       $this->search->addAggFilters($this::$AGGS, $this->getParameters);
     }
 
-    if (isset($this->search->filters['languages']))
-    {
+    if (isset($this->search->filters['languages'])) {
       $this->selectedCulture = $this->search->filters['languages'];
-    }
-    else
-    {
+    } else {
       $this->selectedCulture = $this->context->user->getCulture();
     }
   }
@@ -119,43 +102,35 @@ class DefaultBrowseAction extends sfAction
     $this->aggs = [];
 
     // Stop if no aggregations available
-    if (!$resultSet->hasAggregations())
-    {
+    if (!$resultSet->hasAggregations()) {
       return;
     }
 
-    foreach ($resultSet->getAggregations() as $name => $agg)
-    {
-      if (isset($this::$AGGS[$name]['populate']) && !$this::$AGGS[$name]['populate'])
-      {
+    foreach ($resultSet->getAggregations() as $name => $agg) {
+      if (isset($this::$AGGS[$name]['populate']) && !$this::$AGGS[$name]['populate']) {
         $this->aggs[$name] = $agg;
 
         continue;
       }
 
       // Pass if the aggregation is empty
-      if (!isset($agg['buckets']) || 0 == count($agg['buckets']))
-      {
+      if (!isset($agg['buckets']) || 0 == count($agg['buckets'])) {
         continue;
       }
 
       $this->aggs[$name] = $this->populateAgg($name, $agg['buckets']);
 
       // Get unique descriptions count for languages aggregation
-      if ('languages' == $name)
-      {
+      if ('languages' == $name) {
         // If the query is being filtered by language we need to execute
         // the same query again without language clause to get the count
-        if (isset($this->search->filters['languages']))
-        {
+        if (isset($this->search->filters['languages'])) {
           // Find an remove language clause from the query
           $queryParams = $this->search->query->toArray();
           $mustClauses = [];
 
-          foreach ($queryParams['query']['bool']['must'] as $mustClause)
-          {
-            if (isset($mustClause['term']['i18n.languages']))
-            {
+          foreach ($queryParams['query']['bool']['must'] as $mustClause) {
+            if (isset($mustClause['term']['i18n.languages'])) {
               continue;
             }
 
@@ -171,8 +146,7 @@ class DefaultBrowseAction extends sfAction
           $count = $resultSetWithoutLanguageFilter->getTotalHits();
         }
         // Without language filter the count equals the number of hits
-        else
-        {
+        else {
           $count = $resultSet->getTotalHits();
         }
 
@@ -185,8 +159,7 @@ class DefaultBrowseAction extends sfAction
 
         // Add unique term at the biginning of the array
         // only when there are other terms
-        if (!empty($this->aggs[$name]))
-        {
+        if (!empty($this->aggs[$name])) {
           $this->aggs[$name] = array_merge([$uniqueTerm], $this->aggs[$name]);
         }
       }
@@ -195,11 +168,9 @@ class DefaultBrowseAction extends sfAction
 
   protected function populateAgg($name, $buckets)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'languages':
-        foreach ($buckets as $key => $bucket)
-        {
+        foreach ($buckets as $key => $bucket) {
           $buckets[$key]['display'] = ucfirst(sfCultureInfo::getInstance(sfContext::getInstance()->user->getCulture())->getLanguage($bucket['key']));
         }
 
@@ -214,10 +185,8 @@ class DefaultBrowseAction extends sfAction
     $this->filterTags = $this::$FILTERTAGS;
 
     // Get model objects needed by filter tags
-    foreach ($this->filterTags as $name => $config)
-    {
-      if (isset($config['model']))
-      {
+    foreach ($this->filterTags as $name => $config) {
+      if (isset($config['model'])) {
         $this->filterTags[$name]['object'] = $config['model']::getById($request->{$name});
       }
     }
@@ -241,10 +210,8 @@ class DefaultBrowseAction extends sfAction
 
     // Keep control of what is added to avoid
     // Cross-Site Scripting vulnerability.
-    foreach ($request->getGetParameters() as $key => $value)
-    {
-      if (!in_array($key, $allowed) || in_array($key, $ignored))
-      {
+    foreach ($request->getGetParameters() as $key => $value) {
+      if (!in_array($key, $allowed) || in_array($key, $ignored)) {
         continue;
       }
 

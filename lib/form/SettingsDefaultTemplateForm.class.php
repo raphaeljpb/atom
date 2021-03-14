@@ -33,24 +33,19 @@ class SettingsDefaultTemplateForm extends sfForm
 
     $informationObjectTemplates = [];
 
-    if ($configuration->isPluginEnabled('sfIsadPlugin'))
-    {
+    if ($configuration->isPluginEnabled('sfIsadPlugin')) {
       $informationObjectTemplates['isad'] = $i18n->__('ISAD(G), 2nd ed. International Council on Archives');
     }
-    if ($configuration->isPluginEnabled('sfDcPlugin'))
-    {
+    if ($configuration->isPluginEnabled('sfDcPlugin')) {
       $informationObjectTemplates['dc'] = $i18n->__('Dublin Core, Version 1.1. Dublin Core Metadata Initiative');
     }
-    if ($configuration->isPluginEnabled('sfModsPlugin'))
-    {
+    if ($configuration->isPluginEnabled('sfModsPlugin')) {
       $informationObjectTemplates['mods'] = $i18n->__('MODS, Version 3.3. U.S. Library of Congress');
     }
-    if ($configuration->isPluginEnabled('sfRadPlugin'))
-    {
+    if ($configuration->isPluginEnabled('sfRadPlugin')) {
       $informationObjectTemplates['rad'] = $i18n->__('RAD, July 2008 version. Canadian Council of Archives');
     }
-    if ($configuration->isPluginEnabled('arDacsPlugin'))
-    {
+    if ($configuration->isPluginEnabled('arDacsPlugin')) {
       $informationObjectTemplates['dacs'] = $i18n->__('DACS, 2nd ed. Society of American Archivists');
     }
 

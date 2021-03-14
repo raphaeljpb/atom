@@ -39,8 +39,7 @@ class ReleaseTask extends sfBaseTask
         'WARNING: Your changes in your local index and your working tree will',
         'be lost, including ignored files. Are you sure you want to proceed? (y/N)',
       ], 'QUESTION_LARGE', false)
-    )
-    {
+    ) {
       $this->logSection('release', 'Task aborted.');
 
       return 1;
@@ -54,8 +53,7 @@ class ReleaseTask extends sfBaseTask
 
     $name = $xpath->evaluate('string(p:name)', $doc->documentElement);
 
-    if (!$xpath->evaluate('boolean(p:date)', $doc->documentElement))
-    {
+    if (!$xpath->evaluate('boolean(p:date)', $doc->documentElement)) {
       $dateNode = $doc->createElement('date', date('Y-m-d'));
 
       // Date element must immediately precede the optional time element or the
@@ -64,37 +62,32 @@ class ReleaseTask extends sfBaseTask
       $doc->documentElement->insertBefore($dateNode, $timeOrVersionNode);
     }
 
-    if (!$xpath->evaluate('boolean(p:version/p:release)', $doc->documentElement))
-    {
+    if (!$xpath->evaluate('boolean(p:version/p:release)', $doc->documentElement)) {
       $releaseNode = $doc->createElement('release', $arguments['version']);
 
       $apiNode = $xpath->query('p:version/p:api', $doc->documentElement)->item(0);
       $apiNode->parentNode->insertBefore($releaseNode, $apiNode);
     }
 
-    if (null === $stabilityNode = $xpath->query('p:stability', $doc->documentElement)->item(0))
-    {
+    if (null === $stabilityNode = $xpath->query('p:stability', $doc->documentElement)->item(0)) {
       $stabilityNode = $doc->createElement('stability');
 
       $licenseNode = $xpath->query('p:license', $doc->documentElement)->item(0);
       $doc->documentElement->insertBefore($stabilityNode, $licenseNode);
     }
 
-    if (null === $apiNode = $xpath->query('p:api', $stabilityNode)->item(0))
-    {
+    if (null === $apiNode = $xpath->query('p:api', $stabilityNode)->item(0)) {
       $apiNode = $doc->createElement('api', $arguments['stability']);
       $stabilityNode->appendChild($apiNode);
     }
 
-    if (!$xpath->evaluate('boolean(p:release)', $stabilityNode))
-    {
+    if (!$xpath->evaluate('boolean(p:release)', $stabilityNode)) {
       $releaseNode = $doc->createElement('release', $arguments['stability']);
       $stabilityNode->insertBefore($releaseNode, $apiNode);
     }
 
     // add class files
-    if (null === $dirNode = $xpath->query('p:contents/p:dir', $doc->documentElement)->item(0))
-    {
+    if (null === $dirNode = $xpath->query('p:contents/p:dir', $doc->documentElement)->item(0)) {
       $dirNode = $doc->createElement('dir');
       $dirNode->setAttribute('name', '/');
 
@@ -103,14 +96,12 @@ class ReleaseTask extends sfBaseTask
     }
 
     $patternNodes = [];
-    foreach ($xpath->query('p:contents//p:file', $doc->documentElement) as $patternNode)
-    {
+    foreach ($xpath->query('p:contents//p:file', $doc->documentElement) as $patternNode) {
       // Globs like //foo/... must be matched against paths with a leading
       // slash, while globs like foo/... must be matched against paths without
       // a leading slash.  Consequently, prefix all globs with slash, if
       // necessary, and always match against paths with a leading slash.
-      if (0 != strncmp($glob = $patternNode->getAttribute('name'), '/', 1))
-      {
+      if (0 != strncmp($glob = $patternNode->getAttribute('name'), '/', 1)) {
         $glob = '/'.$glob;
       }
 
@@ -122,32 +113,25 @@ class ReleaseTask extends sfBaseTask
 
     // FIXME: Switch back to SvnFinder when it supports externals
     $finder = new sfFinder();
-    foreach ($finder->in(sfConfig::get('sf_root_dir')) as $path)
-    {
-      if (0 == strncmp($path, sfConfig::get('sf_root_dir'), $len = strlen(sfConfig::get('sf_root_dir'))))
-      {
+    foreach ($finder->in(sfConfig::get('sf_root_dir')) as $path) {
+      if (0 == strncmp($path, sfConfig::get('sf_root_dir'), $len = strlen(sfConfig::get('sf_root_dir')))) {
         $path = substr($path, $len);
       }
 
       unset($fileNode);
-      foreach ($patternNodes as $pattern => $patternNode)
-      {
-        if (preg_match('/^'.str_replace('/', '\\/', $pattern).'$/', $path) > 0)
-        {
-          if (!isset($fileNode))
-          {
+      foreach ($patternNodes as $pattern => $patternNode) {
+        if (preg_match('/^'.str_replace('/', '\\/', $pattern).'$/', $path) > 0) {
+          if (!isset($fileNode)) {
             $fileNode = $doc->createElement('file');
           }
 
-          foreach ($patternNode->attributes as $attrNode)
-          {
+          foreach ($patternNode->attributes as $attrNode) {
             $fileNode->setAttributeNode(clone $attrNode);
           }
         }
       }
 
-      if (isset($fileNode))
-      {
+      if (isset($fileNode)) {
         $fileNode->setAttribute('name', ltrim($path, '/'));
         $dirNode->appendChild($fileNode);
       }
@@ -163,10 +147,8 @@ class ReleaseTask extends sfBaseTask
     $pattern = '';
 
     // PREG_SPLIT_NO_EMPTY is a possibly unnecessary optimization
-    foreach (preg_split('/(\*|\/\/|\?)/', $glob, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE) as $token)
-    {
-      switch ($token)
-      {
+    foreach (preg_split('/(\*|\/\/|\?)/', $glob, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE) as $token) {
+      switch ($token) {
         case '*':
           $pattern .= '[^/]*';
 

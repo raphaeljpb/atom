@@ -25,18 +25,15 @@ class AclGroupIndexActorAclAction extends sfAction
     $this->forward404Unless($this->group);
 
     // Check authorization
-    if (!QubitAcl::check($this->group, 'read'))
-    {
+    if (!QubitAcl::check($this->group, 'read')) {
       $this->redirect('admin/secure');
     }
 
     // Add roles
     $this->roles = [];
-    foreach ($this->group->getAncestorsAndSelfForAcl() as $group)
-    {
+    foreach ($this->group->getAncestorsAndSelfForAcl() as $group) {
       // Omit ROOT group
-      if (1 < $group->id)
-      {
+      if (1 < $group->id) {
         $this->roles[] = $group->id;
       }
     }
@@ -57,10 +54,8 @@ class AclGroupIndexActorAclAction extends sfAction
 
     // Build ACL
     $this->acl = [];
-    if (0 < count($permissions = QubitAclPermission::get($criteria)))
-    {
-      foreach ($permissions as $permission)
-      {
+    if (0 < count($permissions = QubitAclPermission::get($criteria))) {
+      foreach ($permissions as $permission) {
         // In this context permissions for all objects (null) and root actor
         // object are equivalent
         $objectId = (QubitActor::ROOT_ID != $permission->objectId) ? $permission->objectId : null;

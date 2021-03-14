@@ -21,8 +21,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
 {
   protected function post($request, $payload)
   {
-    if (QubitInformationObject::ROOT_ID === (int) $request->id)
-    {
+    if (QubitInformationObject::ROOT_ID === (int) $request->id) {
       throw new QubitApiForbiddenException();
     }
 
@@ -30,8 +29,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
     $this->io->parentId = QubitInformationObject::ROOT_ID;
     $this->io->setPublicationStatusByName('Published');
 
-    foreach ($payload as $field => $value)
-    {
+    foreach ($payload as $field => $value) {
       $this->processField($field, $value);
     }
 
@@ -47,8 +45,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
 
   protected function processField($field, $value)
   {
-    switch ($field)
-    {
+    switch ($field) {
       case 'identifier':
       case 'level_of_description_id':
       case 'parent_id':
@@ -65,8 +62,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
 
         $slug = QubitSlug::getOne($criteria);
 
-        if (null !== $slug)
-        {
+        if (null !== $slug) {
           $this->io->parentId = $slug->objectId;
         }
 
@@ -94,19 +90,15 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
 
       case 'names':
         // Multi-value not supported yet!
-        if (is_array($value))
-        {
+        if (is_array($value)) {
           $value = array_pop($value);
         }
-        if (empty($value) || empty($value->type_id))
-        {
+        if (empty($value) || empty($value->type_id)) {
           break;
         }
         $event = false;
-        if ('PUT' === $this->request->getMethod())
-        {
-          foreach ($this->io->getActorEvents() as $item)
-          {
+        if ('PUT' === $this->request->getMethod()) {
+          foreach ($this->io->getActorEvents() as $item) {
             $event = $item;
 
             break;
@@ -114,8 +106,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
         }
 
         // The user passed a name but not the ID so I'll create
-        if (isset($value->authorized_form_of_name) && !isset($value->actor_id))
-        {
+        if (isset($value->authorized_form_of_name) && !isset($value->actor_id)) {
           $actor = new QubitActor();
           $actor->authorizedFormOfName = $value->authorized_form_of_name;
           $actor->save();
@@ -123,14 +114,11 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
           $value->actor_id = $actor->id;
         }
 
-        if (false !== $event)
-        {
+        if (false !== $event) {
           $event->typeId = $value->type_id;
           $event->actorId = $value->actor_id;
           $event->save();
-        }
-        else
-        {
+        } else {
           $event = new QubitEvent();
           $event->typeId = $value->type_id;
           $event->actorId = $value->actor_id;
@@ -142,34 +130,27 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
 
       case 'dates':
         // Multi-value not supported yet!
-        if (is_array($value))
-        {
+        if (is_array($value)) {
           $value = array_pop($value);
         }
-        if (empty($value))
-        {
+        if (empty($value)) {
           break;
         }
         $event = false;
-        if ('PUT' === $this->request->getMethod())
-        {
-          foreach ($this->io->getDates() as $item)
-          {
+        if ('PUT' === $this->request->getMethod()) {
+          foreach ($this->io->getDates() as $item) {
             $event = $item;
 
             break;
           }
         }
 
-        if (false !== $event)
-        {
+        if (false !== $event) {
           $event->startDate = $value->start_date;
           $event->endDate = $value->end_date;
           $event->date = $value->date;
           $event->save();
-        }
-        else
-        {
+        } else {
           $event = new QubitEvent();
           $event->startDate = $value->start_date;
           $event->endDate = $value->end_date;
@@ -183,44 +164,35 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
 
       case 'notes':
         // Multi-value not supported yet!
-        if (is_array($value))
-        {
+        if (is_array($value)) {
           $value = array_pop($value);
         }
-        if (empty($value))
-        {
+        if (empty($value)) {
           break;
         }
         $note = false;
-        if ('PUT' === $this->request->getMethod())
-        {
-          foreach ($this->io->getNotes() as $item)
-          {
+        if ('PUT' === $this->request->getMethod()) {
+          foreach ($this->io->getNotes() as $item) {
             $note = $item;
 
             break;
           }
         }
 
-        if (!empty($value->type))
-        {
+        if (!empty($value->type)) {
           $combinedNoteTypeData = $this->getNoteTypeData() + $this->getRadNoteTypeData();
           $noteTypeId = array_search($value->type, $combinedNoteTypeData);
         }
 
-        if (false !== $note)
-        {
+        if (false !== $note) {
           $note->setContent($value->content);
 
-          if (!empty($noteTypeId))
-          {
+          if (!empty($noteTypeId)) {
             $note->setTypeId($noteTypeId);
           }
 
           $note->save();
-        }
-        else
-        {
+        } else {
           $note = new QubitNote();
 
           $note->setScope('QubitInformationObject');
@@ -236,28 +208,22 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
 
       case 'types':
         // Multi-value not supported yet!
-        if (is_array($value))
-        {
+        if (is_array($value)) {
           $value = array_pop($value);
         }
-        if (empty($value))
-        {
+        if (empty($value)) {
           break;
         }
         $relation = false;
-        foreach ($this->io->getTermRelations(QubitTaxonomy::DC_TYPE_ID) as $item)
-        {
+        foreach ($this->io->getTermRelations(QubitTaxonomy::DC_TYPE_ID) as $item) {
           $relation = $item;
 
           break;
         }
-        if (false !== $relation)
-        {
+        if (false !== $relation) {
           $relation->termId = $value->id;
           $relation->save();
-        }
-        else
-        {
+        } else {
           $relation = new QubitObjectTermRelation();
           $relation->termId = $value->id;
 
@@ -271,8 +237,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
         $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
         $criteria->add(QubitTermI18n::NAME, $value, Criteria::LIKE);
-        if (null !== $term = QubitTerm::getOne($criteria))
-        {
+        if (null !== $term = QubitTerm::getOne($criteria)) {
           $this->io->levelOfDescriptionId = $term->id;
         }
 
@@ -294,8 +259,7 @@ class ApiInformationObjectsCreateAction extends QubitApiAction
   {
     $termData = [];
 
-    foreach ($terms as $term)
-    {
+    foreach ($terms as $term) {
       $termData[$term->id] = $term->name;
     }
 

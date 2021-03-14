@@ -41,15 +41,12 @@ class sfInstallPluginConfigureSearchAction extends sfAction
     $this->form->setValidator('searchIndex', new sfValidatorString(['required' => true]));
     $this->form->setWidget('searchIndex', new sfWidgetFormInput());
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->errors = sfInstall::configureSearch($this->form->getValues());
-        if (count($this->errors) < 1)
-        {
+        if (count($this->errors) < 1) {
           $symlinks = sfInstall::addSymlinks();
 
           $this->redirect(['module' => 'sfInstallPlugin', 'action' => 'loadData']);

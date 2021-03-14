@@ -152,7 +152,7 @@
 
           <?php if ($resource->id != $item->objectId) { ?>
             <?php echo render_show(__('Type of relationship'), link_to(render_title($relatedEntity), [$relatedEntity, 'module' => ('QubitRepository' == $relatedEntity->className) ? 'repository' : 'actor']).' '.render_value($item->type).' '.render_value($resource->getAuthorizedFormOfName(['cultureFallback' => true]))); ?>
-          <?php } elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($item->type->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]))){ ?>
+          <?php } elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($item->type->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]))) { ?>
             <?php echo render_show(__('Type of relationship'), link_to(render_title($relatedEntity), [$relatedEntity, 'module' => ('QubitRepository' == $relatedEntity->className) ? 'repository' : 'actor']).' '.render_value($converseTerms[0]->getOpposedObject($item->type)).' '.render_value($resource->getAuthorizedFormOfName(['cultureFallback' => true]))); ?>
           <?php } ?>
         <?php } ?>
@@ -287,7 +287,7 @@
             <ul class="dropdown-menu">
               <?php if (0 < count($resource->digitalObjectsRelatedByobjectId) && QubitDigitalObject::isUploadAllowed()) { ?>
                 <li><?php echo link_to(__('Edit %1%', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]), [$resource->digitalObjectsRelatedByobjectId[0], 'module' => 'digitalobject', 'action' => 'edit']); ?></li>
-              <?php } elseif (QubitDigitalObject::isUploadAllowed()){ ?>
+              <?php } elseif (QubitDigitalObject::isUploadAllowed()) { ?>
                 <li><?php echo link_to(__('Link %1%', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]), [$resource, 'module' => 'object', 'action' => 'addDigitalObject']); ?></li>
               <?php } ?>
             </ul>

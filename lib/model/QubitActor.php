@@ -25,17 +25,16 @@ class QubitActor extends BaseActor
 {
   public const ROOT_ID = 3;
   // Allow per-object disabling of nested set updating during bulk imports
-    public $disableNestedSetUpdating = false;
+  public $disableNestedSetUpdating = false;
   // Flag for updating search index on save
-    public $indexOnSave = true;
+  public $indexOnSave = true;
 
   protected $SubjectHitCount;
 
   public function __toString()
   {
     $string = $this->authorizedFormOfName;
-    if (!isset($string))
-    {
+    if (!isset($string)) {
       $string = $this->getAuthorizedFormOfName(['sourceCulture' => true]);
     }
 
@@ -47,29 +46,24 @@ class QubitActor extends BaseActor
     $args = func_get_args();
 
     $options = [];
-    if (1 < count($args))
-    {
+    if (1 < count($args)) {
       $options = $args[1];
     }
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'language':
       case 'script':
-        if (!isset($this->values[$name]))
-        {
+        if (!isset($this->values[$name])) {
           $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
-          if (1 == count($query = QubitProperty::get($criteria)))
-          {
+          if (1 == count($query = QubitProperty::get($criteria))) {
             $this->values[$name] = $query[0];
           }
         }
 
-        if (isset($this->values[$name]) && null !== $value = unserialize($this->values[$name]->__get('value', $options + ['sourceCulture' => true])))
-        {
+        if (isset($this->values[$name]) && null !== $value = unserialize($this->values[$name]->__get('value', $options + ['sourceCulture' => true]))) {
           return $value;
         }
 
@@ -84,27 +78,21 @@ class QubitActor extends BaseActor
     $args = func_get_args();
 
     $options = [];
-    if (2 < count($args))
-    {
+    if (2 < count($args)) {
       $options = $args[2];
     }
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'language':
       case 'script':
-        if (!isset($this->values[$name]))
-        {
+        if (!isset($this->values[$name])) {
           $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
-          if (1 == count($query = QubitProperty::get($criteria)))
-          {
+          if (1 == count($query = QubitProperty::get($criteria))) {
             $this->values[$name] = $query[0];
-          }
-          else
-          {
+          } else {
             $this->values[$name] = new QubitProperty();
             $this->values[$name]->name = $name;
             $this->propertys[] = $this->values[$name];
@@ -121,27 +109,22 @@ class QubitActor extends BaseActor
 
   public function save($connection = null)
   {
-    if ($this->indexOnSave && 'QubitActor' == $this->className)
-    {
+    if ($this->indexOnSave && 'QubitActor' == $this->className) {
       // Take note of which actors are related to the actor about to be updated
       $previouslyRelatedActorIds = !empty($this->id)
         ? arUpdateEsActorRelationsJob::previousRelationActorIds($this->id)
         : [];
     }
 
-    if (QubitActor::ROOT_ID != $this->id && !isset($this->parentId) && 'QubitActor' == $this->className)
-    {
+    if (QubitActor::ROOT_ID != $this->id && !isset($this->parentId) && 'QubitActor' == $this->className) {
       $this->parentId = QubitActor::ROOT_ID;
-    }
-    elseif (QubitRepository::ROOT_ID != $this->id && !isset($this->parentId) && 'QubitRepository' == $this->className)
-    {
+    } elseif (QubitRepository::ROOT_ID != $this->id && !isset($this->parentId) && 'QubitRepository' == $this->className) {
       $this->parentId = QubitRepository::ROOT_ID;
     }
 
     // Save new digital objects
     // TODO Allow adding additional digital objects as derivatives
-    foreach ($this->digitalObjectsRelatedByobjectId as $item)
-    {
+    foreach ($this->digitalObjectsRelatedByobjectId as $item) {
       $item->indexOnSave = false;
 
       // TODO Needed if $this is new, should be transparent
@@ -158,26 +141,19 @@ class QubitActor extends BaseActor
     $env = $context->getConfiguration()->getEnvironment();
 
     // Save related event objects
-    foreach ($this->events as $event)
-    {
+    foreach ($this->events as $event) {
       $event->indexOnSave = false;
 
       // Update search index for related info object, update them
       // in QubitEvent synchronously in CLI tasks and jobs
-      if (in_array($env, ['cli', 'worker']))
-      {
+      if (in_array($env, ['cli', 'worker'])) {
         $event->indexOnSave = true;
-      }
-      elseif (isset($event->objectId))
-      {
+      } elseif (isset($event->objectId)) {
         // Otherwise, do not update in QubitEvent,
         // but save ids to update asynchronously
-        if (isset($event->typeId) && QubitTerm::CREATION_ID == $event->typeId)
-        {
+        if (isset($event->typeId) && QubitTerm::CREATION_ID == $event->typeId) {
           $creationIoIds[] = $event->objectId;
-        }
-        else
-        {
+        } else {
           $otherIoIds[] = $event->objectId;
         }
       }
@@ -189,10 +165,8 @@ class QubitActor extends BaseActor
     // Update asynchronously the saved IOs ids, two jobs may
     // be launched in here as creation events require updating
     // the descendants but other events don't.
-    if ($this->indexOnSave && (count($creationIoIds) > 0 || count($otherIoIds) > 0))
-    {
-      if (count($creationIoIds) > 0)
-      {
+    if ($this->indexOnSave && (count($creationIoIds) > 0 || count($otherIoIds) > 0)) {
+      if (count($creationIoIds) > 0) {
         $jobOptions = [
           'ioIds' => $creationIoIds,
           'updateIos' => true,
@@ -201,8 +175,7 @@ class QubitActor extends BaseActor
         QubitJob::runJob('arUpdateEsIoDocumentsJob', $jobOptions);
       }
 
-      if (count($otherIoIds) > 0)
-      {
+      if (count($otherIoIds) > 0) {
         $jobOptions = [
           'ioIds' => $otherIoIds,
           'updateIos' => true,
@@ -218,16 +191,14 @@ class QubitActor extends BaseActor
     }
 
     // Save related contact information objects
-    foreach ($this->contactInformations as $item)
-    {
+    foreach ($this->contactInformations as $item) {
       $item->actor = $this;
       $item->save();
     }
 
     // Repositories are updated in the save function for QubitRepository class
     // in order to get the i18n values updated in the search index
-    if ('QubitActor' == $this->className)
-    {
+    if ('QubitActor' == $this->className) {
       QubitSearch::getInstance()->update($this);
 
       // Update, in Elasticsearch, the actors previously or currently related to the actor
@@ -240,8 +211,7 @@ class QubitActor extends BaseActor
 
   public function delete($connection = null)
   {
-    if ('QubitActor' == $this->className)
-    {
+    if ('QubitActor' == $this->className) {
       // Take note of which actors are related to the actor about to be updated
       $previouslyRelatedActorIds = arUpdateEsActorRelationsJob::relationActorIds($this->id);
 
@@ -250,39 +220,31 @@ class QubitActor extends BaseActor
     }
 
     // Delete related digitalObjects
-    foreach ($this->digitalObjectsRelatedByobjectId as $digitalObject)
-    {
+    foreach ($this->digitalObjectsRelatedByobjectId as $digitalObject) {
       // Set IO to null to avoid ES document update
       $digitalObject->objectId = null;
       $digitalObject->delete();
     }
 
-    foreach ($this->events as $item)
-    {
-      if (isset($item->object, $item->type))
-      {
+    foreach ($this->events as $item) {
+      if (isset($item->object, $item->type)) {
         unset($item->actor);
 
         $item->save();
-      }
-      else
-      {
+      } else {
         $item->delete();
       }
     }
 
-    foreach (QubitRelation::getBySubjectOrObjectId($this->id) as $relation)
-    {
+    foreach (QubitRelation::getBySubjectOrObjectId($this->id) as $relation) {
       $relation->delete();
     }
 
-    if (!($this instanceof QubitRightsHolder || $this instanceof QubitDonor))
-    {
+    if (!($this instanceof QubitRightsHolder || $this instanceof QubitDonor)) {
       QubitSearch::getInstance()->delete($this);
     }
 
-    if ('QubitActor' == $this->className)
-    {
+    if ('QubitActor' == $this->className) {
       $this->updateRelations($previouslyRelatedActorIds);
     }
 
@@ -322,11 +284,9 @@ class QubitActor extends BaseActor
   {
     $actors = self::getAllExceptUsers($options);
 
-    foreach ($actors as $actor)
-    {
+    foreach ($actors as $actor) {
       // Don't display actors with no name
-      if ($name = $actor->getAuthorizedFormOfName($options))
-      {
+      if ($name = $actor->getAuthorizedFormOfName($options)) {
         $selectOptions[$actor->id] = $name;
       }
     }
@@ -361,8 +321,7 @@ class QubitActor extends BaseActor
    */
   public static function getOnlyActors($criteria = null, $options = [])
   {
-    if (is_null($criteria))
-    {
+    if (is_null($criteria)) {
       $criteria = new Criteria();
     }
 
@@ -375,14 +334,12 @@ class QubitActor extends BaseActor
   {
     $actors = self::getOnlyActors();
     $allActorNames = [];
-    foreach ($actors as $actor)
-    {
+    foreach ($actors as $actor) {
       $actorId = $actor->id;
       $allActorNames[] = ['actorId' => $actorId, 'nameId' => null, 'name' => $actor->getAuthorizedFormOfName()];
       $actorNames = [];
       $actorNames = $actor->getOtherNames();
-      foreach ($actorNames as $name)
-      {
+      foreach ($actorNames as $name) {
         $allActorNames[] = ['actorId' => $actorId, 'nameId' => $name->id, 'name' => $name.' ('.$name->getType().')'];
       }
     }
@@ -410,12 +367,10 @@ class QubitActor extends BaseActor
   {
     $criteria = new Criteria();
     $criteria->add(QubitProperty::OBJECT_ID, $this->id);
-    if ($name)
-    {
+    if ($name) {
       $criteria->add(QubitProperty::NAME, $name);
     }
-    if ($scope)
-    {
+    if ($scope) {
       $criteria->add(QubitProperty::SCOPE, $scope);
     }
 
@@ -448,8 +403,7 @@ class QubitActor extends BaseActor
     $criteria->add(QubitContactInformation::PRIMARY_CONTACT, true);
     $primaryContact = QubitContactInformation::getOne($criteria);
 
-    if ($primaryContact)
-    {
+    if ($primaryContact) {
       return $primaryContact;
     }
 
@@ -498,8 +452,7 @@ class QubitActor extends BaseActor
     $criteria = new Criteria();
     $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->id);
 
-    if ('all' != $taxonomyId)
-    {
+    if ('all' != $taxonomyId) {
       $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTERM::ID);
       $criteria->add(QubitTerm::TAXONOMY_ID, $taxonomyId);
     }
@@ -548,18 +501,15 @@ class QubitActor extends BaseActor
     $criteria->addJoin(QubitActor::ID, QubitActorI18n::ID);
     $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, $name);
 
-    if (isset($options['culture']))
-    {
+    if (isset($options['culture'])) {
       $criteria->addAnd(QubitActorI18n::CULTURE, $options['culture']);
     }
 
-    if (isset($options['history']))
-    {
+    if (isset($options['history'])) {
       $criteria->addAnd(QubitActorI18n::HISTORY, $options['history']);
     }
 
-    if (isset($options['repositoryId']))
-    {
+    if (isset($options['repositoryId'])) {
       $criteria->addJoin(QubitActor::ID, QubitRelation::OBJECT_ID);
       $criteria->add(QubitRelation::TYPE_ID, QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID);
       $criteria->add(QubitRelation::SUBJECT_ID, $options['repositoryId']);
@@ -571,12 +521,10 @@ class QubitActor extends BaseActor
   public function getLabel()
   {
     $label = null;
-    if (null !== $this->descriptionIdentifier)
-    {
+    if (null !== $this->descriptionIdentifier) {
       $label .= $this->descriptionIdentifier;
     }
-    if (null !== $value = $this->getAuthorizedFormOfName(['cultureFallback' => true]))
-    {
+    if (null !== $value = $this->getAuthorizedFormOfName(['cultureFallback' => true])) {
       $label = (0 < strlen($label)) ? $label.' - '.$value : $value;
     }
 
@@ -599,8 +547,7 @@ class QubitActor extends BaseActor
     $criteria->add(QubitRelation::OBJECT_ID, $this->id);
     $criteria->add(QubitRelation::TYPE_ID, QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID);
 
-    if (null !== $relation = QubitRelation::getOne($criteria))
-    {
+    if (null !== $relation = QubitRelation::getOne($criteria)) {
       return $relation->subject;
     }
   }
@@ -612,25 +559,20 @@ class QubitActor extends BaseActor
     $criteria->add(QubitRelation::TYPE_ID, QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID);
     $relation = QubitRelation::getOne($criteria);
 
-    if (!isset($repository))
-    {
-      if (isset($relation))
-      {
+    if (!isset($repository)) {
+      if (isset($relation)) {
         $relation->delete();
       }
 
       return;
     }
 
-    if (!isset($relation))
-    {
+    if (!isset($relation)) {
       $relation = new QubitRelation();
       $relation->typeId = QubitTerm::MAINTAINING_REPOSITORY_RELATION_ID;
       $relation->subjectId = $repository->id;
       $this->relationsRelatedByobjectId[] = $relation;
-    }
-    else
-    {
+    } else {
       $relation->subjectId = $repository->id;
       $relation->save();
     }
@@ -672,10 +614,8 @@ class QubitActor extends BaseActor
     $culture = (isset($options['culture'])) ? $options['culture'] : sfContext::getInstance()->user->getCulture();
     $criteria->add(QubitTermI18n::CULTURE, $culture);
 
-    if (null === $term = QubitTerm::getOne($criteria))
-    {
-      if (!QubitAcl::check(QubitTaxonomy::getById($options['taxonomyId']), 'createTerm'))
-      {
+    if (null === $term = QubitTerm::getOne($criteria)) {
+      if (!QubitAcl::check(QubitTaxonomy::getById($options['taxonomyId']), 'createTerm')) {
         return;
       }
       $term = QubitFlatfileImport::createTerm($options['taxonomyId'], $name, $culture);
@@ -701,16 +641,12 @@ class QubitActor extends BaseActor
    */
   public function importDigitalObjectFromUri($uris, &$errors)
   {
-    if (is_array($uris) && 1 < count($uris))
-    {
+    if (is_array($uris) && 1 < count($uris)) {
       // Get publication status from current object
       $pubStatus = null;
-      if (isset($this->statuss) && 0 < count($this->statuss))
-      {
-        foreach ($this->statuss as $status)
-        {
-          if (QubitTerm::STATUS_TYPE_PUBLICATION_ID == $status->typeId)
-          {
+      if (isset($this->statuss) && 0 < count($this->statuss)) {
+        foreach ($this->statuss as $status) {
+          if (QubitTerm::STATUS_TYPE_PUBLICATION_ID == $status->typeId) {
             $pubStatus = $status->statusId;
 
             break;
@@ -718,19 +654,15 @@ class QubitActor extends BaseActor
         }
       }
 
-      foreach ($uris as $uri)
-      {
+      foreach ($uris as $uri) {
         $actor = new QubitActor();
 
         $digitalObject = new QubitDigitalObject();
         $digitalObject->usageId = QubitTerm::MASTER_ID;
 
-        try
-        {
+        try {
           $digitalObject->importFromUri($uri);
-        }
-        catch (sfException $e)
-        {
+        } catch (sfException $e) {
           $errors[] = sfContext::getInstance()->i18n->__('Encountered error fetching external resource: '.$uri);
 
           continue;
@@ -741,24 +673,18 @@ class QubitActor extends BaseActor
 
         $this->informationObjectsRelatedByparentId[] = $infoObject;
       }
-    }
-    else
-    {
+    } else {
       $digitalObject = new QubitDigitalObject();
       $digitalObject->usageId = QubitTerm::MASTER_ID;
 
-      if (is_array($uris))
-      {
+      if (is_array($uris)) {
         $uris = array_shift($uris);
       }
 
-      try
-      {
+      try {
         $digitalObject->importFromUri($uris);
         $this->digitalObjectsRelatedByobjectId[] = $digitalObject;
-      }
-      catch (sfException $e)
-      {
+      } catch (sfException $e) {
         $errors[] = sfContext::getInstance()->i18n->__('Encountered error fetching external resource: '.$uris);
       }
     }
@@ -787,8 +713,7 @@ class QubitActor extends BaseActor
 
   protected function insert($connection = null)
   {
-    if (!isset($this->slug))
-    {
+    if (!isset($this->slug)) {
       $this->slug = QubitSlug::slugify($this->__get('authorizedFormOfName', ['sourceCulture' => true]));
     }
 
@@ -797,17 +722,12 @@ class QubitActor extends BaseActor
 
   private function updateRelations($actorIds)
   {
-    if (!empty($actorIds))
-    {
+    if (!empty($actorIds)) {
       // Update, in Elasticsearch, relations of actors previously related to actor
-      if (!in_array(sfContext::getInstance()->getConfiguration()->getEnvironment(), ['cli', 'worker']))
-      {
+      if (!in_array(sfContext::getInstance()->getConfiguration()->getEnvironment(), ['cli', 'worker'])) {
         QubitJob::runJob('arUpdateEsActorRelationsJob', ['actorIds' => $actorIds]);
-      }
-      else
-      {
-        foreach ($actorIds as $actorId)
-        {
+      } else {
+        foreach ($actorIds as $actorId) {
           $actor = QubitActor::getById($actorId);
           arUpdateEsActorRelationsJob::updateActorRelationships($actor);
           Qubit::clearClassCaches();

@@ -37,8 +37,7 @@ class SearchDescriptionUpdatesAction extends sfAction
   public function execute($request)
   {
     // Store user and user URL for convenience
-    if (!empty($userUrl = $request->getGetParameter('user')))
-    {
+    if (!empty($userUrl = $request->getGetParameter('user'))) {
       $params = $this->context->routing->parse($userUrl);
       $this->user = $params['_sf_route']->resource;
     }
@@ -47,8 +46,7 @@ class SearchDescriptionUpdatesAction extends sfAction
     $this->form = new sfForm([], [], false);
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->addField($name);
     }
 
@@ -64,8 +62,7 @@ class SearchDescriptionUpdatesAction extends sfAction
 
     $this->form->bind($request->getGetParameters() + $defaults);
 
-    if ($this->form->isValid())
-    {
+    if ($this->form->isValid()) {
       $this->className = $this->form->getValue('className');
       $nameColumnDisplay = $this->className == ('QubitInformationObject') ? 'Title' : 'Name';
       $this->nameColumnDisplay = $this->context->i18n->__($nameColumnDisplay);
@@ -82,17 +79,14 @@ class SearchDescriptionUpdatesAction extends sfAction
     $criteria->addJoin(QubitAuditLog::OBJECT_ID, QubitInformationObject::ID);
 
     // Add publication status filtering, if specified
-    if ('all' != $this->form->getValue('publicationStatus'))
-    {
+    if ('all' != $this->form->getValue('publicationStatus')) {
       $criteria->addJoin(QubitAuditLog::OBJECT_ID, QubitStatus::OBJECT_ID);
       $criteria->add(QubitStatus::STATUS_ID, $this->form->getValue('publicationStatus'));
     }
 
     // Add user action type filtering, if specified
-    if ('both' != $this->form->getValue('dateOf'))
-    {
-      switch($this->form->getValue('dateOf'))
-      {
+    if ('both' != $this->form->getValue('dateOf')) {
+      switch ($this->form->getValue('dateOf')) {
         case 'CREATED_AT':
           $criteria->add(QubitAuditLog::ACTION_TYPE_ID, QubitTerm::USER_ACTION_CREATION_ID);
 
@@ -106,14 +100,12 @@ class SearchDescriptionUpdatesAction extends sfAction
     }
 
     // Add repository restriction, if specified
-    if (null !== $this->form->getValue('repository'))
-    {
+    if (null !== $this->form->getValue('repository')) {
       $criteria->add(QubitInformationObject::REPOSITORY_ID, $this->form->getValue('repository'));
     }
 
     // Add user restriction, if specified
-    if (isset($this->user) && $this->user instanceof QubitUser)
-    {
+    if (isset($this->user) && $this->user instanceof QubitUser) {
       $criteria->add(QubitAuditLog::USER_ID, $this->user->getId());
     }
 
@@ -141,22 +133,18 @@ class SearchDescriptionUpdatesAction extends sfAction
 
   public function doSearch()
   {
-    if ('QubitInformationObject' == $this->className && sfConfig::get('app_audit_log_enabled', false))
-    {
+    if ('QubitInformationObject' == $this->className && sfConfig::get('app_audit_log_enabled', false)) {
       return $this->doAuditLogSearch();
     }
 
     $queryBool = new \Elastica\Query\BoolQuery();
 
-    if ('QubitInformationObject' == $this->className)
-    {
-      if ('all' != $this->form->getValue('publicationStatus'))
-      {
+    if ('QubitInformationObject' == $this->className) {
+      if ('all' != $this->form->getValue('publicationStatus')) {
         $queryBool->addMust(new \Elastica\Query\Term(['publicationStatusId' => $this->form->getValue('publicationStatus')]));
       }
 
-      if (null !== $this->form->getValue('repository'))
-      {
+      if (null !== $this->form->getValue('repository')) {
         $queryBool->addMust(new \Elastica\Query\Term(['repository.id' => $this->form->getValue('repository')]));
       }
     }
@@ -166,22 +154,19 @@ class SearchDescriptionUpdatesAction extends sfAction
     $query = new \Elastica\Query($queryBool);
 
     $limit = sfConfig::get('app_hits_per_page', 10);
-    if (isset($this->request->limit) && ctype_digit($this->request->limit))
-    {
+    if (isset($this->request->limit) && ctype_digit($this->request->limit)) {
       $limit = $this->request->limit;
     }
 
     $page = 1;
-    if (isset($this->request->page) && ctype_digit($this->request->page))
-    {
+    if (isset($this->request->page) && ctype_digit($this->request->page)) {
       $page = $this->request->page;
     }
 
     // Avoid pagination over ES' max result window config (default: 10000)
     $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
 
-    if ((int) $limit * $page > $maxResultWindow)
-    {
+    if ((int) $limit * $page > $maxResultWindow) {
       // Show alert
       $message = $this->context->i18n->__(
         "We've redirected you to the first page of results.".
@@ -212,8 +197,7 @@ class SearchDescriptionUpdatesAction extends sfAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'className':
         $choices = [
           'QubitInformationObject' => sfConfig::get('app_ui_label_informationobject'),
@@ -277,16 +261,12 @@ class SearchDescriptionUpdatesAction extends sfAction
 
         $cache = QubitCache::getInstance();
         $cacheKey = 'search:list-of-repositories:'.$this->context->user->getCulture();
-        if ($cache->has($cacheKey))
-        {
+        if ($cache->has($cacheKey)) {
           $choices = $cache->get($cacheKey);
-        }
-        else
-        {
+        } else {
           $choices = [];
           $choices[null] = null;
-          foreach (QubitRepository::get($criteria) as $repository)
-          {
+          foreach (QubitRepository::get($criteria) as $repository) {
             $choices[$repository->id] = $repository->__toString();
           }
 
@@ -308,8 +288,7 @@ class SearchDescriptionUpdatesAction extends sfAction
 
   private function addDateRangeQuery($queryBool, $dateOf)
   {
-    switch ($dateOf)
-    {
+    switch ($dateOf) {
       case 'CREATED_AT':
         $this->addDateRangeQueryClause($queryBool, 'createdAt', $this->form->getValue('startDate'), $this->form->getValue('endDate'));
 
@@ -340,13 +319,11 @@ class SearchDescriptionUpdatesAction extends sfAction
 
   private function addDateRangeQueryClause($queryBool, $field, $startDate, $endDate)
   {
-    if (null !== $startDate)
-    {
+    if (null !== $startDate) {
       $queryBool->addMust(new \Elastica\Query\Range($field, ['gte' => $startDate]));
     }
 
-    if (null !== $endDate)
-    {
+    if (null !== $endDate) {
       $queryBool->addMust(new \Elastica\Query\Range($field, ['lte' => $endDate]));
     }
   }

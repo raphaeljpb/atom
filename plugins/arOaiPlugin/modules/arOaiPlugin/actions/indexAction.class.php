@@ -58,11 +58,9 @@ class arOaiPluginIndexAction extends sfAction
     // is an old name but we still check for backward compatibility.
     $requestOaiApiKey = Qubit::getHttpHeader(['OAI-API-Key', 'X-OAI-API-Key']);
 
-    if (!empty($requestOaiApiKey) || null !== $authenticationRequiredSetting && $authenticationRequiredSetting->value)
-    {
+    if (!empty($requestOaiApiKey) || null !== $authenticationRequiredSetting && $authenticationRequiredSetting->value) {
       // Require user have valid API key to access OAI data
-      if (empty($requestOaiApiKey))
-      {
+      if (empty($requestOaiApiKey)) {
         return QubitAcl::forwardUnauthorized(true);
       }
 
@@ -70,8 +68,7 @@ class arOaiPluginIndexAction extends sfAction
       $criteria->add(QubitProperty::NAME, 'oaiApiKey');
       $criteria->add(QubitPropertyI18n::VALUE, $requestOaiApiKey);
 
-      if (null == $oaiApiKeyProperty = QubitProperty::getOne($criteria))
-      {
+      if (null == $oaiApiKeyProperty = QubitProperty::getOne($criteria)) {
         return QubitAcl::forwardUnauthorized(true);
       }
 
@@ -91,16 +88,13 @@ class arOaiPluginIndexAction extends sfAction
 
     $this->attributesKeys = array_keys($this->attributes);
     $this->requestAttributes = '';
-    foreach ($this->attributesKeys as $key)
-    {
+    foreach ($this->attributesKeys as $key) {
       $this->requestAttributes .= ' '.$key.'="'.esc_specialchars($this->attributes[$key]).'"';
     }
 
     // Validate that verb is valid
-    if (isset($this->request->verb))
-    {
-      if (!in_array($this->request->verb, $this->oaiVerbArr))
-      {
+    if (isset($this->request->verb)) {
+      if (!in_array($this->request->verb, $this->oaiVerbArr)) {
         $request->setParameter('errorCode', 'badVerb');
         $request->setParameter('errorMsg', 'Value of the verb argument is not a legal OAI-PMH verb, the verb argument is missing, or the verb argument is repeated.');
 
@@ -110,8 +104,7 @@ class arOaiPluginIndexAction extends sfAction
       // Validate that attributes are valid
       $allowedKeys = sfConfig::get('mod_aroaiplugin_'.$this->request->verb.'Allowed');
       $mandatoryKeys = sfConfig::get('mod_aroaiplugin_'.$this->request->verb.'Mandatory');
-      if (!QubitOai::checkBadArgument($this->attributesKeys, $allowedKeys, $mandatoryKeys))
-      {
+      if (!QubitOai::checkBadArgument($this->attributesKeys, $allowedKeys, $mandatoryKeys)) {
         $request->setParameter('errorCode', 'badArgument');
         $request->setParameter('errorMsg', 'The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax.');
 
@@ -120,8 +113,7 @@ class arOaiPluginIndexAction extends sfAction
 
       // For now, if there is a metadataPrefix requested other than oai_dc, fail the request
       $metadataPrefix = $this->request->metadataPrefix;
-      if ('' != $metadataPrefix && !QubitOai::checkValidMetadataFormat($metadataPrefix))
-      {
+      if ('' != $metadataPrefix && !QubitOai::checkValidMetadataFormat($metadataPrefix)) {
         $request->setParameter('errorCode', 'cannotDisseminateFormat');
         $request->setParameter('errorMsg', 'The metadata format identified by the value given for the metadataPrefix argument is not supported by the item or by the repository.');
 
@@ -129,8 +121,7 @@ class arOaiPluginIndexAction extends sfAction
       }
 
       // If the 'set' parameter is provided, load sets and make sure it refers to an existing set
-      if ($this->request->set && !QubitOai::getMatchingOaiSet($this->request->set))
-      {
+      if ($this->request->set && !QubitOai::getMatchingOaiSet($this->request->set)) {
         $request->setParameter('errorCode', 'badArgument');
         $request->setParameter('errorMsg', 'The requested OAI set is not known by this repository.');
 
@@ -138,8 +129,7 @@ class arOaiPluginIndexAction extends sfAction
       }
 
       // If 'identifier' parameter is provided
-      if ($this->request->identifier)
-      {
+      if ($this->request->identifier) {
         // Make sure it refers to an existing record, that it's
         // not the root nor draft and check ACL.
         $resource = QubitInformationObject::getRecordByOaiID(
@@ -151,8 +141,7 @@ class arOaiPluginIndexAction extends sfAction
           || !isset($resource->parent)
           || QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID != $resource->getPublicationStatus()->statusId
           || !QubitAcl::check($resource, 'read')
-        )
-        {
+        ) {
           $request->setParameter('errorCode', 'idDoesNotExist');
           $request->setParameter('errorMsg', 'The value of the identifier argument is unknown or illegal in this repository.');
 
@@ -160,8 +149,7 @@ class arOaiPluginIndexAction extends sfAction
         }
       }
 
-      switch ($this->request->verb)
-      {
+      switch ($this->request->verb) {
         case 'Identify':
           $this->verb = 'identify';
 
@@ -195,34 +183,28 @@ class arOaiPluginIndexAction extends sfAction
         default:
           $this->verb = 'badVerb';
       }
-    }
-    else
-    {
+    } else {
       $this->verb = 'badVerb';
     }
   }
 
   private function applyResumptionToken($request, &$attributes)
   {
-    if (!isset($request->resumptionToken))
-    {
+    if (!isset($request->resumptionToken)) {
       return;
     }
 
     $resumptionTokenJson = base64_decode($request->resumptionToken);
     $resumptionToken = $resumptionTokenJson ? json_decode($resumptionTokenJson) : false;
 
-    if (false === $resumptionToken)
-    {
+    if (false === $resumptionToken) {
       $this->sendResumptionTokenError($request);
     }
 
     $settableAttributes = ['from', 'until', 'cursor', 'set', 'metadataPrefix'];
 
-    foreach ($settableAttributes as $attribute)
-    {
-      if ($resumptionToken->{$attribute})
-      {
+    foreach ($settableAttributes as $attribute) {
+      if ($resumptionToken->{$attribute}) {
         // We set each attribute both on the request and on our attributes list.
         // The attributes list is checked by QubitOai::checkBadArgument, while
         // $request is used by the call to arOaiPluginComponent.

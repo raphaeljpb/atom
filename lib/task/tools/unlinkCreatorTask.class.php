@@ -52,8 +52,7 @@ EOF;
 
   protected function execute($arguments = [], $options = [])
   {
-    if ($options['creator-slug'] && $options['description-slug'])
-    {
+    if ($options['creator-slug'] && $options['description-slug']) {
       throw new Exception('Creator and description filters cannot be set at the same time. '.
                           'Remove one and try again.');
     }
@@ -74,33 +73,28 @@ EOF;
   private function getCriteria($options = [])
   {
     // Get actor records from slug if supplied.
-    if ($options['creator-slug'])
-    {
+    if ($options['creator-slug']) {
       $criteria = new Criteria();
       $criteria->addJoin(QubitActor::ID, QubitSlug::OBJECT_ID);
       $criteria->add(QubitSlug::SLUG, $options['creator-slug']);
       $this->actor = QubitActor::getOne($criteria);
-      if (null === $this->actor)
-      {
+      if (null === $this->actor) {
         throw new Exception('Actor slug supplied but not found');
       }
     }
 
     // Get IO from slug if supplied.
-    if ($options['description-slug'])
-    {
+    if ($options['description-slug']) {
       $criteria = new Criteria();
       $criteria->addJoin(QubitInformationObject::ID, QubitSlug::OBJECT_ID);
       $criteria->add(QubitSlug::SLUG, $options['description-slug']);
       $io = QubitInformationObject::getOne($criteria);
-      if (null === $io)
-      {
+      if (null === $io) {
         throw new Exception('Description slug supplied but not found');
       }
       // If IO supplied get list of descendant IO's, including self.
       // We need ALL descendants because we are fixing all Creators for this IO.
-      foreach ($io->descendants->andSelf()->orderBy('lft') as $item)
-      {
+      foreach ($io->descendants->andSelf()->orderBy('lft') as $item) {
         $ioList[] = $item->id;
       }
     }
@@ -112,13 +106,11 @@ EOF;
     $criteria->addGroupByColumn(QubitInformationObject::ID);
 
     // limit to a specific actor
-    if (null !== $this->actor)
-    {
+    if (null !== $this->actor) {
       $criteria->add(QubitActor::ID, $this->actor->id, Criteria::EQUAL);
     }
     // limit to specific information object hierarchy
-    if (null !== $io)
-    {
+    if (null !== $io) {
       $criteria->add(QubitInformationObject::ID, $ioList, Criteria::IN);
     }
 
@@ -135,8 +127,7 @@ EOF;
   {
     // Loop over hierarchy of this Information Object from the top down.
     // Higher levels of IO must be corrected before lower nodes.
-    foreach (QubitInformationObject::get($criteria)->orderBy('lft') as $io)
-    {
+    foreach (QubitInformationObject::get($criteria)->orderBy('lft') as $io) {
       $deleteCreators = false;
       $creatorIds = [];
       $ancestorCreatorIds = [];
@@ -144,30 +135,25 @@ EOF;
       $this->logSection('Description', sprintf('%s %d', $io->slug, $io->id));
 
       $creators = $io->getCreators();
-      foreach ($creators as $creator)
-      {
+      foreach ($creators as $creator) {
         $creatorIds[] = $creator->id;
       }
 
       // Nothing to do if this is the top level record or if no creators on this IO.
-      if (QubitInformationObject::ROOT_ID == $io->parentId || 0 == count($creatorIds))
-      {
+      if (QubitInformationObject::ROOT_ID == $io->parentId || 0 == count($creatorIds)) {
         continue;
       }
 
       // If an actor was specified as params, that is the only actor we can remove.
       // If > 1 actor on this IO, we can't remove only one or the inheritance
       // will not work properly so if this is case - skip.
-      if (null !== $this->actor && 1 < count($creatorIds))
-      {
+      if (null !== $this->actor && 1 < count($creatorIds)) {
         continue;
       }
       // Get all ancestors of this IO and iterate from bottom up.
-      foreach ($io->ancestors->andSelf()->orderBy('rgt') as $ancestor)
-      {
+      foreach ($io->ancestors->andSelf()->orderBy('rgt') as $ancestor) {
         // if this ancestor is the root IO or self, skip it.
-        if (QubitInformationObject::ROOT_ID == $ancestor->id || $ancestor->id == $io->id)
-        {
+        if (QubitInformationObject::ROOT_ID == $ancestor->id || $ancestor->id == $io->id) {
           continue;
         }
 
@@ -175,18 +161,15 @@ EOF;
         $this->logSection('Ancestor', sprintf('%s', $ancestor->slug));
 
         // Creator list must match exactly. Test count, and if equal, then look closer
-        if (count($ancestorCreators) == count($creators))
-        {
-          foreach ($ancestorCreators as $ancestorCreator)
-          {
+        if (count($ancestorCreators) == count($creators)) {
+          foreach ($ancestorCreators as $ancestorCreator) {
             // Build ID array
             $ancestorCreatorIds[] = $ancestorCreator->id;
           }
 
           $diff = array_diff($creatorIds, $ancestorCreatorIds);
           // if the creator lists match exactly, then delete and inherit from ancestor.
-          if (0 == count($diff))
-          {
+          if (0 == count($diff)) {
             $deleteCreators = true;
 
             break;
@@ -199,14 +182,12 @@ EOF;
         // If there are creators on the ancestors but they don't match:
         //   -- stop looking cause it does not matter what is above this node
         //   -- do not delete any creators because they do not match current ancestor.
-        if (0 < count($ancestorCreators))
-        {
+        if (0 < count($ancestorCreators)) {
           break;
         }
       }
 
-      if ($deleteCreators)
-      {
+      if ($deleteCreators) {
         self::removeCreator($io, $creatorIds);
       }
     }
@@ -221,10 +202,8 @@ EOF;
   private function removeCreator($infoObj = null, $creatorIds)
   {
     // This will unlink this Actor from all creation events on this IO.
-    foreach ($infoObj->getActorEvents(['eventTypeId' => QubitTerm::CREATION_ID]) as $event)
-    {
-      if (in_array($event->actor->id, $creatorIds))
-      {
+    foreach ($infoObj->getActorEvents(['eventTypeId' => QubitTerm::CREATION_ID]) as $event) {
+      if (in_array($event->actor->id, $creatorIds)) {
         $this->logSection('Unlink', sprintf('%s', $event->actor->slug));
         $event->indexOnSave = true;
         unset($event->actor);
@@ -233,8 +212,7 @@ EOF;
         if (null == $event->getPlace()->name && null == $event->date
             && null == $event->name && null == $event->description
             && null == $event->startDate && null == $event->endDate
-            && null == $event->startTime && null == $event->endTime)
-        {
+            && null == $event->startTime && null == $event->endTime) {
           $event->delete();
         }
       }

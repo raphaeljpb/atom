@@ -34,8 +34,7 @@ class arMigration0189
     // Get menu locking configuration
     $setting = QubitSetting::getByName('menu_locking_info');
 
-    if (!empty($setting))
-    {
+    if (!empty($setting)) {
       $lockedMenus = unserialize($setting->value);
 
       // Unset privacy menu if it's set

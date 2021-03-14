@@ -61,10 +61,8 @@ class sfIsaarPluginEditAction extends ActorEditAction
     $this->isaar = new sfIsaarPlugin($this->resource);
 
     $title = $this->context->i18n->__('Add new authority record');
-    if (isset($this->getRoute()->resource))
-    {
-      if (1 > strlen($title = $this->resource))
-      {
+    if (isset($this->getRoute()->resource)) {
+      if (1 > strlen($title = $this->resource)) {
         $title = $this->context->i18n->__('Untitled');
       }
 
@@ -88,8 +86,7 @@ class sfIsaarPluginEditAction extends ActorEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'maintenanceNotes':
         $this->form->setDefault('maintenanceNotes', $this->isaar->maintenanceNotes);
         $this->form->setValidator('maintenanceNotes', new sfValidatorString());
@@ -98,15 +95,12 @@ class sfIsaarPluginEditAction extends ActorEditAction
         break;
 
       case 'descriptionIdentifier':
-        if (sfConfig::get('app_prevent_duplicate_actor_identifiers', false))
-        {
+        if (sfConfig::get('app_prevent_duplicate_actor_identifiers', false)) {
           $this->form->setDefault($name, $this->resource[$name]);
           $identifierValidator = new QubitValidatorActorDescriptionIdentifier(['resource' => $this->resource]);
           $this->form->setValidator($name, $identifierValidator);
           $this->form->setWidget($name, new sfWidgetFormInput());
-        }
-        else
-        {
+        } else {
           return parent::addField($name);
         }
 
@@ -119,8 +113,7 @@ class sfIsaarPluginEditAction extends ActorEditAction
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'maintenanceNotes':
         $this->isaar->maintenanceNotes = $this->form->getValue('maintenanceNotes');
 

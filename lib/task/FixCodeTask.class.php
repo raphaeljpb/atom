@@ -42,8 +42,7 @@ EOF;
    */
   protected function execute($arguments = [], $options = [])
   {
-    foreach ($arguments['path'] as $filePath)
-    {
+    foreach ($arguments['path'] as $filePath) {
       $fileContents = file_get_contents($filePath);
 
       // Remove byte order marks
@@ -93,8 +92,7 @@ EOF;
       $fileContents = preg_replace('/([^\w])TRUE([^\w])/', '\1true\2', $fileContents);
       $fileContents = preg_replace('/([^\w])NULL([^\w])/', '\1null\2', $fileContents);
 
-      if (!file_put_contents($filePath, $fileContents))
-      {
+      if (!file_put_contents($filePath, $fileContents)) {
         throw new Exception('FIXME');
       }
     }

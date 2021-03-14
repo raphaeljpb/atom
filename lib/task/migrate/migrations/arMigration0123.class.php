@@ -45,8 +45,7 @@ class arMigration0123
     $criteria->add(QubitTermI18n::CULTURE, 'en');
     $criteria->add(QubitTermI18n::NAME, 'General note');
 
-    if (null !== $term = QubitTerm::getOne($criteria))
-    {
+    if (null !== $term = QubitTerm::getOne($criteria)) {
       // Get all RAD General notes
       QubitPdo::prepareAndExecute('UPDATE note SET type_id=? WHERE type_id=?',
                                   [QubitTerm::GENERAL_NOTE_ID, $term->id]);

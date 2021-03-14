@@ -42,8 +42,7 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
     // Load user using username or, if one doesn't exist, create it.
     $criteria = new Criteria();
     $criteria->add(QubitUser::USERNAME, $username);
-    if (null === $user = QubitUser::getOne($criteria))
-    {
+    if (null === $user = QubitUser::getOne($criteria)) {
       $user = new QubitUser();
       $user->username = $username;
       $user->save();
@@ -52,8 +51,7 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
     // Parse CAS attributes into group memberships. If enabled, we perform this
     // check each time a user authenticates so that changes made on the CAS
     // server are applied in AtoM on the next login.
-    if (true == sfConfig::get('app_cas_set_groups_from_attributes', false))
-    {
+    if (true == sfConfig::get('app_cas_set_groups_from_attributes', false)) {
       $attributes = phpCAS::getAttributes();
       $this->setGroupsFromCasAttributes($user, $attributes);
     }
@@ -86,8 +84,7 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
     // attribute doesn't exist or is null, log the error and return.
     $attributeKey = sfConfig::get('app_cas_attribute_key');
 
-    if (!array_key_exists($attributeKey, $attributes))
-    {
+    if (!array_key_exists($attributeKey, $attributes)) {
       sfContext::getInstance()->getLogger()->err('Key not found in CAS attributes');
 
       return;
@@ -95,8 +92,7 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
 
     $attributeToCheck = $attributes[$attributeKey];
 
-    if (null === $attributeToCheck)
-    {
+    if (null === $attributeToCheck) {
       sfContext::getInstance()->getLogger()->err('CAS attribute used for setting AtoM group membership is null');
 
       return;
@@ -104,8 +100,7 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
 
     // The value for a given CAS attribute can be an array or a string. If it's
     // a string, we convert into an array to simplify the checking routine.
-    if (!is_array($attributeToCheck))
-    {
+    if (!is_array($attributeToCheck)) {
       $attributeToCheck = [$attributeToCheck];
     }
 
@@ -114,21 +109,17 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
     // that are appropriately configured in app_cas_user_groups.
     $criteria = new Criteria();
     $criteria->add(QubitAclUserGroup::USER_ID, $user->id);
-    foreach (QubitAclUserGroup::get($criteria) as $item)
-    {
+    foreach (QubitAclUserGroup::get($criteria) as $item) {
       $item->delete();
     }
 
     // Add the user to AclUserGroups based on the presence of expected CAS
     // attribute values as set in app_cas_user_groups.
     $userGroups = sfConfig::get('app_cas_user_groups');
-    foreach ($userGroups as $item)
-    {
-      if (null !== $group = QubitAclGroup::getById($item['group_id']))
-      {
+    foreach ($userGroups as $item) {
+      if (null !== $group = QubitAclGroup::getById($item['group_id'])) {
         $expectedValue = $item['attribute_value'];
-        if (in_array($expectedValue, $attributeToCheck))
-        {
+        if (in_array($expectedValue, $attributeToCheck)) {
           $userGroup = new QubitAclUserGroup();
           $userGroup->userId = $user->id;
           $userGroup->groupId = $group->id;

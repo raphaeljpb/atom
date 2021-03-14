@@ -26,8 +26,7 @@ class sfModsPluginIndexAction extends InformationObjectIndexAction
 {
   public function execute($request)
   {
-    if ('xml' === $request->getRequestFormat())
-    {
+    if ('xml' === $request->getRequestFormat()) {
       sfConfig::set('sf_escaping_strategy', false);
     }
 
@@ -35,8 +34,7 @@ class sfModsPluginIndexAction extends InformationObjectIndexAction
 
     $this->mods = new sfModsPlugin($this->resource);
 
-    if (1 > strlen($title = $this->resource->__toString()))
-    {
+    if (1 > strlen($title = $this->resource->__toString())) {
       $title = $this->context->i18n->__('Untitled');
     }
 

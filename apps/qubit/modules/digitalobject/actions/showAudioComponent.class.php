@@ -35,22 +35,18 @@ class DigitalObjectShowAudioComponent extends sfComponent
     $this->representation = $this->resource->getRepresentationByUsage($this->usageType);
 
     // If we can't find a representation for this object, try their parent
-    if (!$this->representation && ($parent = $this->resource->parent))
-    {
+    if (!$this->representation && ($parent = $this->resource->parent)) {
       $this->representation = $parent->getRepresentationByUsage($this->usageType);
     }
 
     // Set up display of video in mediaelement
-    if ($this->representation)
-    {
+    if ($this->representation) {
       $this->showMediaPlayer = true;
 
       $this->response->addJavaScript('/vendor/mediaelement/mediaelement-and-player.min.js', 'last');
       $this->response->addJavaScript('mediaelement', 'last');
       $this->response->addStyleSheet('/vendor/mediaelement/mediaelementplayer.min.css');
-    }
-    else
-    {
+    } else {
       $this->showMediaPlayer = false;
 
       $this->representation = QubitDigitalObject::getGenericRepresentation($this->resource->mimeType, $this->usageType);

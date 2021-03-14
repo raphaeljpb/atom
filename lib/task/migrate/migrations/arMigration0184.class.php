@@ -70,8 +70,7 @@ class arMigration0184
     ];
 
     $setting = QubitSetting::getByName('menu_locking_info');
-    if (isset($setting))
-    {
+    if (isset($setting)) {
       $setting->value = serialize($lockedMenus);
       $setting->save();
     }

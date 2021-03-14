@@ -32,34 +32,26 @@ class ObjectAddDigitalObjectAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Get repository to test upload limits
-    if ($this->resource instanceof QubitInformationObject)
-    {
+    if ($this->resource instanceof QubitInformationObject) {
       $this->repository = $this->resource->getRepository(['inherit' => true]);
-    }
-    elseif ($this->resource instanceof QubitActor)
-    {
+    } elseif ($this->resource instanceof QubitActor) {
       $this->repository = $this->resource->getMaintainingRepository();
     }
 
     // Check that object exists and that it is not the root
-    if (!isset($this->resource) || !isset($this->resource->parent))
-    {
+    if (!isset($this->resource) || !isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Assemble resource description
     sfContext::getInstance()->getConfiguration()->loadHelpers(['Qubit']);
 
-    if ($this->resource instanceof QubitActor)
-    {
-       $this->resourceDescription = render_title($this->resource);
-    }
-    elseif ($this->resource instanceof QubitInformationObject)
-    {
+    if ($this->resource instanceof QubitActor) {
+      $this->resourceDescription = render_title($this->resource);
+    } elseif ($this->resource instanceof QubitInformationObject) {
       $this->resourceDescription = '';
 
-      if (isset($this->resource->identifier))
-      {
+      if (isset($this->resource->identifier)) {
         $this->resourceDescription .= $this->resource->identifier.' - ';
       }
 
@@ -67,20 +59,17 @@ class ObjectAddDigitalObjectAction extends sfAction
     }
 
     // Check if already exists a digital object
-    if (null !== $digitalObject = $this->resource->getDigitalObject())
-    {
+    if (null !== $digitalObject = $this->resource->getDigitalObject()) {
       $this->redirect([$digitalObject, 'module' => 'digitalobject', 'action' => 'edit']);
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'update'))
-    {
+    if (!QubitAcl::check($this->resource, 'update')) {
       QubitAcl::forwardUnauthorized();
     }
 
     // Check if uploads are allowed
-    if (!QubitDigitalObject::isUploadAllowed())
-    {
+    if (!QubitDigitalObject::isUploadAllowed()) {
       QubitAcl::forwardToSecureAction();
     }
 
@@ -88,17 +77,14 @@ class ObjectAddDigitalObjectAction extends sfAction
     $this->addFields($request);
 
     // Process form
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters(), $request->getFiles());
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->resource->save();
 
-        if ($this->resource instanceof QubitInformationObject)
-        {
+        if ($this->resource instanceof QubitInformationObject) {
           $this->resource->updateXmlExports();
         }
         $this->redirect([$this->resource, 'module' => 'object']);
@@ -116,22 +102,16 @@ class ObjectAddDigitalObjectAction extends sfAction
   {
     $digitalObject = new QubitDigitalObject();
 
-    if (null !== $this->form->getValue('file'))
-    {
+    if (null !== $this->form->getValue('file')) {
       $name = $this->form->getValue('file')->getOriginalName();
       $content = file_get_contents($this->form->getValue('file')->getTempName());
       $digitalObject->assets[] = new QubitAsset($name, $content);
       $digitalObject->usageId = QubitTerm::MASTER_ID;
-    }
-    elseif (null !== $this->form->getValue('url'))
-    {
+    } elseif (null !== $this->form->getValue('url')) {
       // Catch errors trying to download remote resource
-      try
-      {
+      try {
         $digitalObject->importFromURI($this->form->getValue('url'));
-      }
-      catch (sfException $e)
-      {
+      } catch (sfException $e) {
         // Log download exception
         $this->logMessage($e->getMessage, 'err');
       }
@@ -143,16 +123,14 @@ class ObjectAddDigitalObjectAction extends sfAction
   protected function addFields($request)
   {
     // Single upload
-    if (0 < count($request->getFiles()))
-    {
+    if (0 < count($request->getFiles())) {
       $this->form->setValidator('file', new sfValidatorFile());
     }
 
     $this->form->setWidget('file', new sfWidgetFormInputFile());
 
     // URL
-    if (isset($request->url) && 'http://' != $request->url)
-    {
+    if (isset($request->url) && 'http://' != $request->url) {
       $this->form->setValidator('url', new QubitValidatorUrl());
     }
 

@@ -37,14 +37,13 @@ class QubitSetting extends BaseSetting
     'disallow_thumb' => 0,
   ];
   // List of scopes with translatable settings,
-    // QubitI18nConsolidatedExtract checks this array to add those
-    // settings value from /data/fixtures/settings.yml to the XLIFF files
-    public static $translatableScopes = ['ui_label'];
+  // QubitI18nConsolidatedExtract checks this array to add those
+  // settings value from /data/fixtures/settings.yml to the XLIFF files
+  public static $translatableScopes = ['ui_label'];
 
   public function __toString()
   {
-    if (null == $value = $this->value)
-    {
+    if (null == $value = $this->value) {
       $value = $this->getValue(['sourceCulture' => true]);
     }
 
@@ -84,22 +83,17 @@ class QubitSetting extends BaseSetting
     $settings = $i18nLanguages = [];
     $culture = sfContext::getInstance()->user->getCulture();
 
-    foreach (QubitPdo::fetchAll($sql, [$culture]) as $qubitSetting)
-    {
-      if ($qubitSetting->scope)
-      {
+    foreach (QubitPdo::fetchAll($sql, [$culture]) as $qubitSetting) {
+      if ($qubitSetting->scope) {
         // Collect enabled languages into a single setting
-        if ('i18n_languages' == $qubitSetting->scope)
-        {
+        if ('i18n_languages' == $qubitSetting->scope) {
           $i18nLanguages[] = $qubitSetting->value_source;
 
           continue;
         }
 
         $key = 'app_'.$qubitSetting->scope.'_'.$qubitSetting->name;
-      }
-      else
-      {
+      } else {
         $key = 'app_'.$qubitSetting->name;
       }
 
@@ -116,8 +110,7 @@ class QubitSetting extends BaseSetting
   public function getCulture(array $options = [])
   {
     // get culture based on i18n fallback criteria
-    if ($settingI18n = QubitSettingI18n::getByIdAndCulture($this->id, sfContext::getInstance()->user->getCulture()))
-    {
+    if ($settingI18n = QubitSettingI18n::getByIdAndCulture($this->id, sfContext::getInstance()->user->getCulture())) {
       return $settingI18n->getCulture();
     }
   }
@@ -133,8 +126,7 @@ class QubitSetting extends BaseSetting
    */
   public function getSourceCultureHelper($culture)
   {
-    if (strlen($sourceCultureValue = $this->getValue(['sourceCulture' => true])) > 0 && $culture != $this->getSourceCulture())
-    {
+    if (strlen($sourceCultureValue = $this->getValue(['sourceCulture' => true])) > 0 && $culture != $this->getSourceCulture()) {
       return $sourceCultureValue;
     }
 
@@ -164,12 +156,9 @@ class QubitSetting extends BaseSetting
   public static function getByScope($scope = null)
   {
     $criteria = new Criteria();
-    if (null !== $scope)
-    {
+    if (null !== $scope) {
       $criteria->add(QubitSetting::SCOPE, $scope);
-    }
-    else
-    {
+    } else {
       $criteria->add(QubitSetting::SCOPE, null, Criteria::ISNULL);
     }
 
@@ -223,27 +212,23 @@ class QubitSetting extends BaseSetting
     $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, $name);
 
-    if (isset($options['scope']))
-    {
+    if (isset($options['scope'])) {
       $criteria->add(QubitSetting::SCOPE, $options['scope']);
     }
 
     // If setting doesn't already exist, create a new one if
     // $options['createNew'] is true
-    if (null === ($setting = QubitSetting::getOne($criteria)) && true === $options['createNew'])
-    {
+    if (null === ($setting = QubitSetting::getOne($criteria)) && true === $options['createNew']) {
       $setting = new QubitSetting();
       $setting->setName($name);
 
-      if (isset($options['scope']))
-      {
+      if (isset($options['scope'])) {
         $setting->setScope($options['scope']);
       }
     }
 
     // Set value and save setting
-    if (null !== $setting)
-    {
+    if (null !== $setting) {
       $setting->setValue($value, $options);
       $setting->save();
     }
@@ -264,34 +249,29 @@ class QubitSetting extends BaseSetting
     $setting->setName($name);
     $setting->setValue($value);
 
-    if (isset($options['scope']))
-    {
+    if (isset($options['scope'])) {
       $setting->setScope($options['scope']);
     }
 
     // Default "editable" to true, unless forced to false
     $setting->setEditable(1);
-    if (isset($options['editable']) && false == $options['editable'])
-    {
+    if (isset($options['editable']) && false == $options['editable']) {
       $setting->setEditable(0);
     }
 
     // Default "deleteable" to true, unless forced to false
     $setting->setDeleteable(1);
-    if (isset($options['deleteable']) && false == $options['deleteable'])
-    {
+    if (isset($options['deleteable']) && false == $options['deleteable']) {
       $setting->setDeleteable(0);
     }
 
     // Set the source culture option
-    if (isset($options['sourceCulture']))
-    {
+    if (isset($options['sourceCulture'])) {
       $setting->setSourceCulture($options['sourceCulture']);
     }
 
     // Set the culture option
-    if (isset($options['culture']))
-    {
+    if (isset($options['culture'])) {
       $setting->setCulture($options['culture']);
     }
 

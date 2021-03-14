@@ -31,8 +31,7 @@ class arMigration0131
 
   public function up($configuration)
   {
-    if (null === QubitSetting::getByName('stripExtensions'))
-    {
+    if (null === QubitSetting::getByName('stripExtensions')) {
       $setting = new QubitSetting();
       $setting->name = 'stripExtensions';
       $setting->value = 0;

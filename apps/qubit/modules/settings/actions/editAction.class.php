@@ -27,18 +27,15 @@ class SettingsEditAction extends DefaultEditAction
     parent::execute($request);
 
     // Handle posted data
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         QubitCache::getInstance()->removePattern('settings:i18n:*');
 
-        if (!empty($this->updateMessage))
-        {
+        if (!empty($this->updateMessage)) {
           $this->getUser()->setFlash('notice', $this->updateMessage);
         }
 
@@ -50,8 +47,7 @@ class SettingsEditAction extends DefaultEditAction
     }
 
     // Set form field defaults
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->setFormFieldDefault($name);
     }
   }
@@ -63,8 +59,7 @@ class SettingsEditAction extends DefaultEditAction
     $this->i18n = sfContext::getInstance()->i18n;
 
     // Load setting for each field name
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->settings[$name] = (null !== ${$name} = QubitSetting::getByName($name)) ? ${$name} : new QubitSetting();
     }
   }
@@ -93,10 +88,8 @@ class SettingsEditAction extends DefaultEditAction
   {
     $name = $field->getName();
 
-    if (in_array($name, $this::$NAMES))
-    {
-      if (null === $this->settings[$name]->id)
-      {
+    if (in_array($name, $this::$NAMES)) {
+      if (null === $this->settings[$name]->id) {
         $this->settings[$name]->name = $name;
         $this->settings[$name]->culture = $this->culture;
       }
@@ -104,12 +97,9 @@ class SettingsEditAction extends DefaultEditAction
       $settingSetOptions = (in_array($name, $this::$I18N)) ? ['culture' => $this->culture] : ['sourceCulture' => true];
 
       // Checkbox submissions get handled differently
-      if ($field->getWidget() instanceof sfWidgetFormInputCheckbox)
-      {
+      if ($field->getWidget() instanceof sfWidgetFormInputCheckbox) {
         $value = isset($this->request[$name]) ? $field->getValue() : '';
-      }
-      else
-      {
+      } else {
         $value = $field->getValue();
       }
 

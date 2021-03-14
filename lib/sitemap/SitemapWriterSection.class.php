@@ -117,8 +117,7 @@ class SitemapWriterSection
 
   public function add(AbstractSitemapUrl $item)
   {
-    if (self::BUFFER_LIMIT > 0 && self::BUFFER_LIMIT === $this->bufferSize)
-    {
+    if (self::BUFFER_LIMIT > 0 && self::BUFFER_LIMIT === $this->bufferSize) {
       $this->flush();
     }
 
@@ -141,8 +140,7 @@ class SitemapWriterSection
 
   public function flush()
   {
-    if (0 === $this->bufferSize)
-    {
+    if (0 === $this->bufferSize) {
       return;
     }
 
@@ -154,8 +152,7 @@ class SitemapWriterSection
 
   public function end()
   {
-    if ($this->ended)
-    {
+    if ($this->ended) {
       return;
     }
 
@@ -164,8 +161,7 @@ class SitemapWriterSection
     $this->writer->endElement(); // </sitemap>
     $this->writer->endDocument();
 
-    if ($this->compress && Qubit::gzipFile($this->file))
-    {
+    if ($this->compress && Qubit::gzipFile($this->file)) {
       unlink($this->file);
     }
 

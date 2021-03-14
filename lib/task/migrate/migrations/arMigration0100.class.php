@@ -39,8 +39,7 @@ class arMigration0100
   public function up($configuration)
   {
     // Enable arDacsPlugin
-    if (null !== $setting = QubitSetting::getByName('plugins'))
-    {
+    if (null !== $setting = QubitSetting::getByName('plugins')) {
       $settings = unserialize($setting->getValue(['sourceCulture' => true]));
       $settings[] = 'arDacsPlugin';
 

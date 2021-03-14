@@ -50,18 +50,15 @@ class arInformationObjectCsvExportJob extends arInformationObjectExportJob
   protected function exportResource($resource, $path)
   {
     // Don't export resource if this level of description is not allowed
-    if (!$this->isAllowedLevelId($resource->levelOfDescriptionId))
-    {
+    if (!$this->isAllowedLevelId($resource->levelOfDescriptionId)) {
       return;
     }
 
     $this->exportDataAndDigitalObject($resource, $path);
 
     // Export descendants if option was selected
-    if (!$this->params['current-level-only'])
-    {
-      foreach ($resource->getDescendantsForExport($options) as $item)
-      {
+    if (!$this->params['current-level-only']) {
+      foreach ($resource->getDescendantsForExport($options) as $item) {
         $this->exportDataAndDigitalObject($item, $path);
       }
     }

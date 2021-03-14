@@ -25,12 +25,9 @@ class RepositoryAutocompleteAction extends sfAction
     $criteria->addJoin(QubitActor::ID, QubitActorI18n::ID);
     $criteria->add(QubitActor::PARENT_ID, QubitRepository::ROOT_ID);
 
-    if (sfConfig::get('app_markdown_enabled', true))
-    {
+    if (sfConfig::get('app_markdown_enabled', true)) {
       $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "%{$request->query}%", Criteria::LIKE);
-    }
-    else
-    {
+    } else {
       $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "{$request->query}%", Criteria::LIKE);
     }
 
@@ -42,33 +39,24 @@ class RepositoryAutocompleteAction extends sfAction
 
     // Filter "denied" repositories if list for repository autocomplete on
     // information object form
-    if (isset($request->aclAction))
-    {
+    if (isset($request->aclAction)) {
       $repositoryList = [];
       $repositoryAccess = QubitAcl::getRepositoryAccess($request->aclAction);
 
       // If all repositories are denied, no response
-      if (1 == count($repositoryAccess) && QubitAcl::DENY == $repositoryAccess[0]['access'])
-      {
+      if (1 == count($repositoryAccess) && QubitAcl::DENY == $repositoryAccess[0]['access']) {
         return sfView::NONE;
       }
 
-      while ($repo = array_shift($repositoryAccess))
-      {
-        if ('*' != $repo['id'])
-        {
+      while ($repo = array_shift($repositoryAccess)) {
+        if ('*' != $repo['id']) {
           $repositoryList[] = $repo['id'];
-        }
-        else
-        {
-          if (QubitAcl::DENY == $repo['access'])
-          {
+        } else {
+          if (QubitAcl::DENY == $repo['access']) {
             // Require repositories to be specifically allowed (all others
             // prohibited)
             $criteria->add(QubitRepository::ID, $repositoryList + ['null'], Criteria::IN);
-          }
-          else
-          {
+          } else {
             // Prohibit specified repositories (all others allowed)
             $criteria->add(QubitRepository::ID, $repositoryList, Criteria::NOT_IN);
           }

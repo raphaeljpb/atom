@@ -28,11 +28,9 @@ class SettingsPermissionsPreservationSystemAccessStatementForm extends sfForm
     $this->setValidator('preservationSystemAccessStatementEnabled', new sfValidatorInteger(['required' => false]));
 
     $default = false;
-    if (null !== $setting = QubitSetting::getByName('digitalobject_preservation_system_access_statement_enabled'))
-    {
+    if (null !== $setting = QubitSetting::getByName('digitalobject_preservation_system_access_statement_enabled')) {
       $value = $setting->getValue(['sourceCulture' => true]);
-      if (!empty($value))
-      {
+      if (!empty($value)) {
         $default = $value;
       }
     }
@@ -40,8 +38,7 @@ class SettingsPermissionsPreservationSystemAccessStatementForm extends sfForm
 
     $this->setWidget('preservationSystemAccessStatement', new sfWidgetFormTextArea([], ['rows' => 4]));
     $this->setValidator('preservationSystemAccessStatement', new sfValidatorString());
-    if (null !== $setting = QubitSetting::getByName('digitalobject_preservation_system_access_statement'))
-    {
+    if (null !== $setting = QubitSetting::getByName('digitalobject_preservation_system_access_statement')) {
       $this->setDefault('preservationSystemAccessStatement', $setting->getValue());
     }
   }

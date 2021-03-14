@@ -28,8 +28,7 @@ class QubitAccessLog extends BaseAccessLog
     $sql .= ' GROUP BY (object_id)';
     $sql .= ' ORDER BY count DESC';
 
-    if (isset($options['limit']))
-    {
+    if (isset($options['limit'])) {
       $sql .= ' LIMIT :skip, :max';
     }
 
@@ -40,8 +39,7 @@ class QubitAccessLog extends BaseAccessLog
 
     $stmt->bindValue(':draft', QubitTerm::PUBLICATION_STATUS_DRAFT_ID, PDO::PARAM_INT);
 
-    if (isset($options['limit']))
-    {
+    if (isset($options['limit'])) {
       $stmt->bindValue(':skip', 0, PDO::PARAM_INT);
       $stmt->bindValue(':max', (int) $options['limit'], PDO::PARAM_INT);
     }

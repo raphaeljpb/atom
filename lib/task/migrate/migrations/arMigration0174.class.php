@@ -43,10 +43,8 @@ class arMigration0174
       'fullTreeviewCollapseClosedButtonText' => 'Show hierarchy',
     ];
 
-    foreach ($settings as $settingName => $settingValue)
-    {
-      if (null === QubitSetting::getByName($settingName))
-      {
+    foreach ($settings as $settingName => $settingValue) {
+      if (null === QubitSetting::getByName($settingName)) {
         $setting = new QubitSetting();
         $setting->name = $settingName;
         $setting->scope = 'ui_label';

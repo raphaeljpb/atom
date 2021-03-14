@@ -36,8 +36,7 @@ class csvExportTermUsageTask extends exportBulkBaseTask
    */
   public function execute($arguments = [], $options = [])
   {
-    if (isset($options['items-until-update']) && !ctype_digit($options['items-until-update']))
-    {
+    if (isset($options['items-until-update']) && !ctype_digit($options['items-until-update'])) {
       throw new sfException('items-until-update must be a number');
     }
 
@@ -48,12 +47,9 @@ class csvExportTermUsageTask extends exportBulkBaseTask
     $this->exportFileReplacePrompt($arguments['path']);
     $itemsExported = $this->exportToCsv($this->determineTaxonomyId($options), $arguments['path'], $options['items-until-update']);
 
-    if ($itemsExported)
-    {
+    if ($itemsExported) {
       $this->log(sprintf("\nExport complete (%d terms exported).", $itemsExported));
-    }
-    else
-    {
+    } else {
       $this->log('No term usages found to export.');
     }
   }
@@ -78,20 +74,17 @@ class csvExportTermUsageTask extends exportBulkBaseTask
 
   private function determineTaxonomyId($options)
   {
-    if (ctype_digit($options['taxonomy-id']))
-    {
+    if (ctype_digit($options['taxonomy-id'])) {
       $criteria = new Criteria();
       $criteria->add(QubitTaxonomy::ID, $options['taxonomy-id']);
 
-      if (null === QubitTaxonomy::getOne($criteria))
-      {
+      if (null === QubitTaxonomy::getOne($criteria)) {
         throw new sfException('Invalid taxonomy-id.');
       }
 
       return $options['taxonomy-id'];
     }
-    if (isset($options['taxonomy-name']))
-    {
+    if (isset($options['taxonomy-name'])) {
       $culture = (isset($options['taxonomy-name-culture'])) ? $options['taxonomy-name-culture'] : 'en';
 
       $criteria = new Criteria();
@@ -99,8 +92,7 @@ class csvExportTermUsageTask extends exportBulkBaseTask
       $criteria->add(QubitTaxonomyI18n::NAME, $options['taxonomy-name']);
       $criteria->add(QubitTaxonomyI18n::CULTURE, $culture);
 
-      if (null === $taxonomy = QubitTaxonomyI18n::getOne($criteria))
-      {
+      if (null === $taxonomy = QubitTaxonomyI18n::getOne($criteria)) {
         throw new sfException('Invalid taxonomy-name and/or taxonomy-name-culture.');
       }
 
@@ -112,10 +104,8 @@ class csvExportTermUsageTask extends exportBulkBaseTask
 
   private function exportFileReplacePrompt($exportPath)
   {
-    if (file_exists($exportPath))
-    {
-      if ('y' != strtolower(readline('The export file already exists. Do you want to replace it? [y/n*] ')))
-      {
+    if (file_exists($exportPath)) {
+      if ('y' != strtolower(readline('The export file already exists. Do you want to replace it? [y/n*] '))) {
         throw new sfException('Export file already exists: aborting.');
       }
 
@@ -140,14 +130,12 @@ class csvExportTermUsageTask extends exportBulkBaseTask
 
     $result = QubitPdo::prepareAndExecute($sql, [$taxonomyId]);
 
-    if ($result->rowCount())
-    {
+    if ($result->rowCount()) {
       // Instantiate CSV writer using "usage" column ordering
       $writer = new QubitFlatfileExport($exportPath, 'usage');
       $writer->loadResourceSpecificConfiguration('QubitTerm');
 
-      while ($row = $result->fetch(PDO::FETCH_OBJ))
-      {
+      while ($row = $result->fetch(PDO::FETCH_OBJ)) {
         $resource = QubitTerm::getById($row->id);
         $writer->setColumn('name', $resource->getName(['cultureFallback' => true]));
         $writer->setColumn('use_count', $row->use_count);

@@ -50,8 +50,7 @@ class SettingsSiteInformationAction extends SettingsEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'siteTitle':
         $this->form->setWidget($name, new sfWidgetFormInput());
         $this->form->setValidator($name, new sfValidatorString(['required' => false]));

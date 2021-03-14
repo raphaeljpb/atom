@@ -44,12 +44,10 @@ class arMigration0154
       ['identifier_counter', 0],
     ];
 
-    foreach ($identifierSettings as $setting)
-    {
+    foreach ($identifierSettings as $setting) {
       list($name, $val) = $setting;
 
-      if (null === QubitSetting::getByName($name))
-      {
+      if (null === QubitSetting::getByName($name)) {
         $setting = new QubitSetting();
         $setting->name = $name;
         $setting->value = $val;

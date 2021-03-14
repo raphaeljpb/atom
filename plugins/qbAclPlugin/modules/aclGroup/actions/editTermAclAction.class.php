@@ -33,8 +33,7 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
     parent::execute($request);
 
     $this->permissions = [];
-    if (null != $this->resource->id)
-    {
+    if (null != $this->resource->id) {
       // Get term permissions for this group
       $criteria = new Criteria();
       $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
@@ -47,8 +46,7 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
       $criteria->addAscendingOrderByColumn(QubitAclPermission::CONSTANTS);
       $criteria->addAscendingOrderByColumn(QubitAclPermission::OBJECT_ID);
 
-      if (0 < count($permissions = QubitAclPermission::get($criteria)))
-      {
+      if (0 < count($permissions = QubitAclPermission::get($criteria))) {
         $this->permissions = $permissions;
       }
     }
@@ -57,12 +55,10 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
     $this->basicActions = QubitAcl::$ACTIONS;
     unset($this->basicActions['read'], $this->basicActions['translate']);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
         $this->redirect([$this->resource, 'module' => 'aclGroup', 'action' => 'indexTermAcl']);
       }
@@ -71,14 +67,12 @@ class AclGroupEditTermAclAction extends AclGroupEditDefaultAclAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'taxonomy':
         $choices = [];
         $choices[null] = null;
 
-        foreach (QubitTaxonomy::getEditableTaxonomies() as $taxonomy)
-        {
+        foreach (QubitTaxonomy::getEditableTaxonomies() as $taxonomy) {
           $choices[$this->context->routing->generate(null, [$taxonomy, 'module' => 'taxonomy'])] = $taxonomy;
         }
 

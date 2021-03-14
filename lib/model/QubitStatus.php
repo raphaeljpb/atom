@@ -34,15 +34,12 @@ class QubitStatus extends BaseStatus
 
     parent::save($connection);
 
-    if ($this->indexOnSave)
-    {
-      if ($this->objectId != $cleanObjectId && null !== QubitInformationObject::getById($cleanObjectId))
-      {
+    if ($this->indexOnSave) {
+      if ($this->objectId != $cleanObjectId && null !== QubitInformationObject::getById($cleanObjectId)) {
         QubitSearch::getInstance()->update(QubitInformationObject::getById($cleanObjectId));
       }
 
-      if ($this->object instanceof QubitInformationObject)
-      {
+      if ($this->object instanceof QubitInformationObject) {
         QubitSearch::getInstance()->update($this->object);
       }
     }
@@ -54,8 +51,7 @@ class QubitStatus extends BaseStatus
   {
     parent::delete($connection);
 
-    if ($this->getObject() instanceof QubitInformationObject)
-    {
+    if ($this->getObject() instanceof QubitInformationObject) {
       QubitSearch::getInstance()->update($this->getObject());
     }
   }

@@ -37,12 +37,10 @@ class I18nRemoveDuplicatesTask extends sfBaseTask
 
     // Loop through plugins
     $pluginNames = sfFinder::type('dir')->maxdepth(0)->relative()->not_name('.')->in(sfConfig::get('sf_plugins_dir'));
-    foreach ($pluginNames as $pluginName)
-    {
+    foreach ($pluginNames as $pluginName) {
       $this->logSection('i18n', sprintf('Removing %s duplicates', $pluginName));
 
-      foreach (sfFinder::type('files')->in(sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/i18n') as $file)
-      {
+      foreach (sfFinder::type('files')->in(sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/i18n') as $file) {
         self::deleteDuplicateSource($file);
       }
     }
@@ -60,23 +58,18 @@ class I18nRemoveDuplicatesTask extends sfBaseTask
 
     $xpath = new DOMXPath($doc);
 
-    foreach ($xpath->query('//trans-unit') as $unit)
-    {
-      foreach ($xpath->query('./target', $unit) as $target)
-      {
+    foreach ($xpath->query('//trans-unit') as $unit) {
+      foreach ($xpath->query('./target', $unit) as $target) {
         break; // Only one target
       }
 
-      foreach ($xpath->query('./source', $unit) as $source)
-      {
+      foreach ($xpath->query('./source', $unit) as $source) {
         // If this is a duplicate source key, then delete it
-        if (isset($sourceStrings[$source->nodeValue]))
-        {
+        if (isset($sourceStrings[$source->nodeValue])) {
           // If original target string is null, but *this* node has a valid
           // translation
           if (0 == strlen($sourceStrings[$source->nodeValue]->nodeValue)
-            && 0 < strlen($target->nodeValue))
-          {
+            && 0 < strlen($target->nodeValue)) {
             // Copy this translated string to the trans-unit node we are keeping
             $sourceStrings[$source->nodeValue]->nodeValue = $target->nodeValue;
           }
@@ -84,9 +77,7 @@ class I18nRemoveDuplicatesTask extends sfBaseTask
           // Remove duplicate
           $unit->parentNode->removeChild($unit);
           $modified = true;
-        }
-        else
-        {
+        } else {
           $sourceStrings[$source->nodeValue] = $target;
         }
 
@@ -95,8 +86,7 @@ class I18nRemoveDuplicatesTask extends sfBaseTask
     }
 
     // Update xliff file if modified
-    if ($modified)
-    {
+    if ($modified) {
       $fileNode = $xpath->query('//file')->item(0);
       $fileNode->setAttribute('date', @date('Y-m-d\TH:i:s\Z'));
 

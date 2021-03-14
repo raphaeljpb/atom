@@ -24,21 +24,25 @@
  */
 class QubitOaiTopLevelSet implements QubitOaiSet
 {
-  public function contains($record) {
+  public function contains($record)
+  {
     /* Allow the collection set to take responsibility for records to preserve
      * the current behaviour. */
     return false;
   }
 
-  public function setSpec() {
+  public function setSpec()
+  {
     return 'oai:virtual:top-level-records';
   }
 
-  public function getName() {
+  public function getName()
+  {
     return 'Top-level collection record set';
   }
 
-  public function apply($criteria) {
+  public function apply($criteria)
+  {
     $criteria->add(QubitInformationObject::PARENT_ID, QubitInformationObject::ROOT_ID);
   }
 }

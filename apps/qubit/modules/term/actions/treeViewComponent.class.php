@@ -27,8 +27,7 @@ class TermTreeViewComponent extends sfComponent
     $numberOfPreviousOrNextSiblings = 4;
     $this->getChildrensAndShowActive = true;
 
-    if ($this->resource instanceof QubitTaxonomy)
-    {
+    if ($this->resource instanceof QubitTaxonomy) {
       $criteria = new Criteria();
       $criteria->add(QubitTerm::TAXONOMY_ID, $this->resource->id);
       $criteria->add(QubitTerm::PARENT_ID, QubitTerm::ROOT_ID);
@@ -43,8 +42,7 @@ class TermTreeViewComponent extends sfComponent
       $this->getChildrensAndShowActive = false;
     }
 
-    if (isset($this->resource))
-    {
+    if (isset($this->resource)) {
       $this->ancestors = $this->resource->getAncestors()->orderBy('lft');
 
       $this->browser = isset($this->browser) && true === $this->browser;
@@ -53,19 +51,16 @@ class TermTreeViewComponent extends sfComponent
       $this->hasNextSiblings = false;
 
       // Child descriptions
-      if ($this->getChildrensAndShowActive && $this->resource->hasChildren())
-      {
+      if ($this->getChildrensAndShowActive && $this->resource->hasChildren()) {
         list($this->children, $this->hasNextSiblings) = $this->resource->getTreeViewChildren(['numberOfPreviousOrNextSiblings' => $numberOfPreviousOrNextSiblings]);
       }
       // Show siblings if there's no children
-      else
-      {
+      else {
         // Previous siblings
         // Get an extra sibling just to know if the + button is necessary
         $this->prevSiblings = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous']);
         $this->hasPrevSiblings = count($this->prevSiblings) > $numberOfPreviousOrNextSiblings;
-        if ($this->hasPrevSiblings)
-        {
+        if ($this->hasPrevSiblings) {
           array_pop($this->prevSiblings);
         }
 
@@ -75,8 +70,7 @@ class TermTreeViewComponent extends sfComponent
         // Next siblings, same logic than above with the + button
         $this->nextSiblings = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'next']);
         $this->hasNextSiblings = count($this->nextSiblings) > $numberOfPreviousOrNextSiblings;
-        if ($this->hasNextSiblings)
-        {
+        if ($this->hasNextSiblings) {
           array_pop($this->nextSiblings);
         }
       }

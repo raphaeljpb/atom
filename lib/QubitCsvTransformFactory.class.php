@@ -51,8 +51,7 @@ class QubitCsvTransformFactory
       $allowedProperties
     );
 
-    if (!$this->machineName)
-    {
+    if (!$this->machineName) {
       throw new sfException('The machineName property is required.');
     }
   }
@@ -84,34 +83,31 @@ class QubitCsvTransformFactory
 
       'renameColumns' => $this->renameColumns,
 
-      'saveLogic' => function (&$self)
-      {
+      'saveLogic' => function (&$self) {
         $self->writeHeadersOnFirstPass();
 
-        if (isset($self->status['parentKeyLogic']))
-        {
+        if (isset($self->status['parentKeyLogic'])) {
           $parentKey = trim($self->status['parentKeyLogic']($self));
-          if ($parentKey)
-          {
+          if ($parentKey) {
             $self->status['parentKeys'][$parentKey] = $self->columnValue('legacyId');
           }
         }
 
-        if (isset($self->transformLogic))
-        {
+        if (isset($self->transformLogic)) {
           $self->executeClosurePropertyIfSet('transformLogic');
         }
 
         fputcsv($self->status['outFh'], $self->status['row']);
       },
 
-      'completeLogic' => function (&$self)
-      {
+      'completeLogic' => function (&$self) {
         echo "Step 1 complete.\n";
 
         $fhIn = fopen($self->status['tempFile'], 'r');
 
-        if (!$fhIn) throw new sfException('Error reading '.$self->status['tempFile'].'.');
+        if (!$fhIn) {
+          throw new sfException('Error reading '.$self->status['tempFile'].'.');
+        }
 
         $stage2 = new QubitCsvTransform([
           'skipOptionsAndEnvironmentCheck' => true,
@@ -131,37 +127,29 @@ class QubitCsvTransformFactory
 
           'errorLog' => $self->errorLog,
 
-          'saveLogic' => function (&$self)
-          {
+          'saveLogic' => function (&$self) {
             // Ignore row if ignore check is present and returns true
             $ignore = isset($self->status['ignoreRowCheckLogic']) && $self->status['ignoreRowCheckLogic']($self);
 
             // Ingore row if already ignoring or if present in list of rows to ignore
             $ignore = ($ignore) ? true : in_array($self->status['rows'], $self->status['ignoreRows']);
 
-            if ($ignore)
-            {
+            if ($ignore) {
               echo 'Ignoring row '.$self->status['rows']."...\n";
 
               return;
             }
 
-            if (isset($self->status['rowParentKeyLookupLogic']))
-            {
+            if (isset($self->status['rowParentKeyLookupLogic'])) {
               $keyOfRowParent = trim($self->status['rowParentKeyLookupLogic']($self));
 
               // if this row has a parent key and a calculated parent key exists, set
               // the "parentId" column
-              if ($keyOfRowParent && isset($self->status['parentKeys'][$keyOfRowParent]))
-              {
+              if ($keyOfRowParent && isset($self->status['parentKeys'][$keyOfRowParent])) {
                 $self->columnValue('parentId', $self->status['parentKeys'][$keyOfRowParent]);
-              }
-              elseif ($keyOfRowParent)
-              {
+              } elseif ($keyOfRowParent) {
                 $self->columnValue('parentId', $keyOfRowParent);
-              }
-              else
-              {
+              } else {
                 // ...otherwise if the parent key didn't exist, note that it's bad
                 echo 'Bad parent found: '.$keyOfRowParent.' (row '.($self->getStatus('rows') + 1).")\n";
                 ++$self->status['badParents'];
@@ -170,21 +158,17 @@ class QubitCsvTransformFactory
 
             $levelOfDescriptionAvailable = is_numeric(array_search('levelOfDescription', $self->columnNames));
 
-            if ($levelOfDescriptionAvailable)
-            {
-             // print "Found a level of description...\n";
+            if ($levelOfDescriptionAvailable) {
+              // print "Found a level of description...\n";
 
               $sortorder = $self->levelOfDescriptionToSortorder($self->columnValue('levelOfDescription'));
 
-              if (is_numeric($sortorder))
-              {
-              //  print "Description sort order is ". $sortorder .".\n";
+              if (is_numeric($sortorder)) {
+                //  print "Description sort order is ". $sortorder .".\n";
                 $self->addRowToMySQL($sortorder);
-              }
-              elseif (isset($self->status['ignoreBadLod']) && $self->status['ignoreBadLod'])
-              {
+              } elseif (isset($self->status['ignoreBadLod']) && $self->status['ignoreBadLod']) {
                 $sortorder = count($self->levelsOfDescription);
-              //  print "Description sort order is ". $sortorder .".\n";
+                //  print "Description sort order is ". $sortorder .".\n";
                 $self->addRowToMySQL($sortorder);
               } else {
                 ++$self->status['badLevelOfDescription'];
@@ -195,8 +179,7 @@ class QubitCsvTransformFactory
             }
           },
 
-          'completeLogic' => function (&$self)
-          {
+          'completeLogic' => function (&$self) {
             $self->writeMySQLRowsToCsvFilePath($self->status['finalOutputFile']);
 
             echo "Step 2 complete.\n";

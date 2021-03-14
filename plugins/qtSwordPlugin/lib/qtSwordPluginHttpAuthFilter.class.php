@@ -21,10 +21,8 @@ class qtSwordPluginHttpAuthFilter extends sfFilter
 {
   public function execute($filterChain)
   {
-    if ($this->isFirstCall())
-    {
-      if (!isset($_SERVER['PHP_AUTH_USER']))
-      {
+    if ($this->isFirstCall()) {
+      if (!isset($_SERVER['PHP_AUTH_USER'])) {
         $this->sendHeaders();
 
         exit;
@@ -32,8 +30,7 @@ class qtSwordPluginHttpAuthFilter extends sfFilter
 
       $authenticated = sfContext::getInstance()->user->authenticateWithBasicAuth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
-      if (!$authenticated)
-      {
+      if (!$authenticated) {
         $this->sendHeaders();
 
         return;

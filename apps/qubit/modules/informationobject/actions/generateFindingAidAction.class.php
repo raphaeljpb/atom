@@ -24,20 +24,17 @@ class InformationObjectGenerateFindingAidAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that object exists and that it is not the root
-    if (!isset($this->resource) || !isset($this->resource->parent))
-    {
+    if (!isset($this->resource) || !isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'update'))
-    {
+    if (!QubitAcl::check($this->resource, 'update')) {
       QubitAcl::forwardUnauthorized();
     }
 
     // Check if a finding aid file already exists
-    if (null !== arFindingAidJob::getFindingAidPathForDownload($this->resource->id))
-    {
+    if (null !== arFindingAidJob::getFindingAidPathForDownload($this->resource->id)) {
       $this->redirect([$this->resource, 'module' => 'informationobject']);
     }
 

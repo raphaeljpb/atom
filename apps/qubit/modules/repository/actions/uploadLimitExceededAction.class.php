@@ -28,8 +28,7 @@ class RepositoryUploadLimitExceededAction extends sfAction
   {
     $this->resource = null;
 
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
     }
   }

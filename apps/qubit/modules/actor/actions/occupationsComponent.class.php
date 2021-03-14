@@ -37,27 +37,22 @@ class ActorOccupationsComponent extends sfComponent
   {
     $finalOccupations = [];
 
-    if (is_array($this->request->occupations))
-    {
-      foreach ($this->request->occupations as $item)
-      {
+    if (is_array($this->request->occupations)) {
+      foreach ($this->request->occupations as $item) {
         // Continue only if occupation field is populated
-        if (strlen($item['occupation']) < 1)
-        {
+        if (strlen($item['occupation']) < 1) {
           continue;
         }
 
         $relation = null;
-        if (isset($item['id']))
-        {
+        if (isset($item['id'])) {
           $relation = QubitObjectTermRelation::getById($item['id']);
 
           // Store occupations that haven't been deleted by multiRow.js
           $finalOccupations[] = $relation->id;
         }
 
-        if (is_null($relation))
-        {
+        if (is_null($relation)) {
           $relation = new QubitObjectTermRelation();
           $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
         }
@@ -66,8 +61,7 @@ class ActorOccupationsComponent extends sfComponent
         $relation->term = $params['_sf_route']->resource;
 
         // Attach note to new relations if populated
-        if (!isset($item['id']) && strlen($item['content']) > 0)
-        {
+        if (!isset($item['id']) && strlen($item['content']) > 0) {
           $relation->notes[] = $note = new QubitNote();
           $note->typeId = QubitTerm::ACTOR_OCCUPATION_NOTE_ID;
           $note->content = $item['content'];
@@ -75,36 +69,28 @@ class ActorOccupationsComponent extends sfComponent
 
         // Save the old relations, because adding an existing relation with
         // "$this->resource->objectTermRelations[] =" overrides the unsaved changes
-        if (isset($item['id']))
-        {
+        if (isset($item['id'])) {
           // Check existing note
           $note = $relation->getNotesByType([
             'noteTypeId' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID,
           ])->offsetGet(0);
 
-          if (!isset($note) && strlen($item['content']) > 0)
-          {
+          if (!isset($note) && strlen($item['content']) > 0) {
             // Add new note
             $relation->notes[] = $note = new QubitNote();
             $note->typeId = QubitTerm::ACTOR_OCCUPATION_NOTE_ID;
             $note->content = $item['note'];
-          }
-          elseif (isset($note) && strlen($item['content']) > 0)
-          {
+          } elseif (isset($note) && strlen($item['content']) > 0) {
             // Update note
             $note->content = $item['content'];
             $note->save();
-          }
-          elseif (isset($note) && strlen($item['content']) < 1)
-          {
+          } elseif (isset($note) && strlen($item['content']) < 1) {
             $deleteNote = true;
 
             // Check other cultures
-            foreach ($note->noteI18ns as $i18n)
-            {
+            foreach ($note->noteI18ns as $i18n) {
               // If there is a content in other culture do not delete the note, just update
-              if ($i18n->culture !== $this->context->user->getCulture() && !empty($i18n->content))
-              {
+              if ($i18n->culture !== $this->context->user->getCulture() && !empty($i18n->content)) {
                 $note->content = $item['content'];
                 $note->save();
 
@@ -115,8 +101,7 @@ class ActorOccupationsComponent extends sfComponent
             }
 
             // Delete note without content in any culture
-            if ($deleteNote)
-            {
+            if ($deleteNote) {
               $note->delete();
             }
           }
@@ -127,10 +112,8 @@ class ActorOccupationsComponent extends sfComponent
     }
 
     // Delete the old relations if they don't appear in the table (removed by multiRow.js)
-    foreach ($this->occupations as $item)
-    {
-      if (false === array_search($item->id, $finalOccupations))
-      {
+    foreach ($this->occupations as $item) {
+      if (false === array_search($item->id, $finalOccupations)) {
         $item->delete();
       }
     }

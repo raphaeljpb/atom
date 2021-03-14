@@ -33,8 +33,7 @@ class TermNavigateRelatedComponent extends sfComponent
 
   public function execute($request)
   {
-    if (!isset(self::$TAXONOMY_ES_FIELDS[$this->resource->taxonomyId]))
-    {
+    if (!isset(self::$TAXONOMY_ES_FIELDS[$this->resource->taxonomyId])) {
       return sfView::NONE;
     }
 
@@ -45,8 +44,7 @@ class TermNavigateRelatedComponent extends sfComponent
 
   public static function getEsDocsRelatedToTerm($relatedModelClass, $term, $options = [])
   {
-    if (!isset(self::$TAXONOMY_ES_FIELDS[$term->taxonomyId]))
-    {
+    if (!isset(self::$TAXONOMY_ES_FIELDS[$term->taxonomyId])) {
       throw new sfException('Unsupported taxonomy.');
     }
 
@@ -60,8 +58,7 @@ class TermNavigateRelatedComponent extends sfComponent
     $search->query->setQuery($search->queryBool->addMust($query));
 
     // Filter out drafts if querying descriptions
-    if ('QubitInformationObject' == $relatedModelClass)
-    {
+    if ('QubitInformationObject' == $relatedModelClass) {
       QubitAclSearch::filterDrafts($search->queryBool);
     }
 

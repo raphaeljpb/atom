@@ -61,8 +61,7 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
     DefaultBrowseAction::execute($request);
 
     // Disallow access to locked taxonomies
-    if (in_array($this->resource->taxonomyId, QubitTaxonomy::$lockedTaxonomies))
-    {
+    if (in_array($this->resource->taxonomyId, QubitTaxonomy::$lockedTaxonomies)) {
       $this->getResponse()->setStatusCode(403);
 
       return sfView::NONE;
@@ -94,8 +93,7 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
 
   protected function populateAgg($name, $buckets)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'occupations':
       case 'places':
       case 'subjects':
@@ -103,8 +101,7 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
         $criteria = new Criteria();
         $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
 
-        foreach (QubitTerm::get($criteria) as $item)
-        {
+        foreach (QubitTerm::get($criteria) as $item) {
           $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
         }
 
@@ -119,8 +116,7 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
 
   protected function setSort($request)
   {
-    switch ($request->sort)
-    {
+    switch ($request->sort) {
       case 'alphabetic':
         $field = sprintf('i18n.%s.authorizedFormOfName.alphasort', $this->selectedCulture);
         $this->search->query->setSort([$field => $request->sortDir]);
@@ -145,8 +141,7 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
     $options = ['search' => $this->search];
 
     // Allow for only searching for actors directly related to term
-    if (!empty($request->onlyDirect))
-    {
+    if (!empty($request->onlyDirect)) {
       $options['direct'] = true;
     }
 

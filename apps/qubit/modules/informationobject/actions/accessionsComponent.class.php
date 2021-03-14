@@ -21,8 +21,7 @@ class InformationObjectAccessionsComponent extends sfComponent
 {
   public function execute($request)
   {
-    if (!$this->getUser()->isAuthenticated())
-    {
+    if (!$this->getUser()->isAuthenticated()) {
       return sfView::NONE;
     }
 

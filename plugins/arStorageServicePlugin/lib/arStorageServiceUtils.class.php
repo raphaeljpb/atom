@@ -37,15 +37,15 @@ class arStorageServiceUtils
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 500);
     curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($ch, $data) {
-        echo $data;
+      echo $data;
 
-        return strlen($data);
+      return strlen($data);
     });
 
     curl_setopt($ch, CURLOPT_HEADERFUNCTION, function ($ch, $header) {
-        header($header);
+      header($header);
 
-        return strlen($header);
+      return strlen($header);
     });
 
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); // Storage service redirects
@@ -75,16 +75,14 @@ class arStorageServiceUtils
     $configuration = ProjectConfiguration::getActive();
 
     if ($configuration->isPluginEnabled('arStorageServicePlugin')
-      && null !== $setting = QubitSetting::getByName('download_aip_enabled'))
-    {
+      && null !== $setting = QubitSetting::getByName('download_aip_enabled')) {
       return boolval($setting->getValue(['sourceCulture' => true]));
     }
   }
 
   public static function getStorageServiceException($status)
   {
-    switch ($status)
-    {
+    switch ($status) {
       case '400':
         return new QubitApiBadRequestException('Storage service bad request');
 

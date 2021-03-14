@@ -33,8 +33,7 @@ class AclGroupEditInformationObjectAclAction extends AclGroupEditDefaultAclActio
     $this->informationObjects = [];
     $this->root = [];
 
-    if (null != $this->resource->id)
-    {
+    if (null != $this->resource->id) {
       // Get info object permissions for this resource
       $criteria = new Criteria();
       $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
@@ -47,20 +46,13 @@ class AclGroupEditInformationObjectAclAction extends AclGroupEditDefaultAclActio
       $criteria->addAscendingOrderByColumn(QubitAclPermission::CONSTANTS);
       $criteria->addAscendingOrderByColumn(QubitAclPermission::OBJECT_ID);
 
-      if (0 < count($permissions = QubitAclPermission::get($criteria)))
-      {
-        foreach ($permissions as $p)
-        {
-          if (null != ($repository = $p->getConstants(['name' => 'repository'])))
-          {
+      if (0 < count($permissions = QubitAclPermission::get($criteria))) {
+        foreach ($permissions as $p) {
+          if (null != ($repository = $p->getConstants(['name' => 'repository']))) {
             $this->repositories[$repository][$p->action] = $p;
-          }
-          elseif (null != $p->objectId && QubitInformationObject::ROOT_ID != $p->objectId)
-          {
+          } elseif (null != $p->objectId && QubitInformationObject::ROOT_ID != $p->objectId) {
             $this->informationObjects[$p->objectId][$p->action] = $p;
-          }
-          else
-          {
+          } else {
             $this->root[$p->action] = $p;
           }
         }
@@ -71,12 +63,10 @@ class AclGroupEditInformationObjectAclAction extends AclGroupEditDefaultAclActio
     $this->basicActions = QubitInformationObjectAcl::$ACTIONS;
     unset($this->basicActions['translate']);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
         $this->redirect([$this->resource, 'module' => 'aclGroup', 'action' => 'indexInformationObjectAcl']);
       }

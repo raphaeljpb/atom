@@ -26,8 +26,7 @@ class arElasticSearchDonor extends arElasticSearchModelBase
     $serialized['id'] = $object->id;
     $serialized['slug'] = $object->slug;
 
-    foreach ($object->contactInformations as $contactInformation)
-    {
+    foreach ($object->contactInformations as $contactInformation) {
       $serialized['contactInformations'][] = arElasticSearchContactInformation::serialize($contactInformation);
     }
 

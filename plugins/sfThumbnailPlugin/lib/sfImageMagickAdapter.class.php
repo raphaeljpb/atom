@@ -139,14 +139,12 @@ class sfImageMagickAdapter
     $this->magickCommands['identify'] = isset($options['identify']) ? escapeshellcmd($options['identify']) : 'identify';
 
     exec($this->magickCommands['convert'], $stdout);
-    if (false === strpos($stdout[0], 'ImageMagick'))
-    {
+    if (false === strpos($stdout[0], 'ImageMagick')) {
       throw new Exception(sprintf('ImageMagick convert command not found'));
     }
 
     exec($this->magickCommands['identify'], $stdout);
-    if (false === strpos($stdout[0], 'ImageMagick'))
-    {
+    if (false === strpos($stdout[0], 'ImageMagick')) {
       throw new Exception(sprintf('ImageMagick identify command not found'));
     }
 
@@ -176,15 +174,13 @@ class sfImageMagickAdapter
     // try and use getimagesize()
     // on failure, use identify instead
     $imgData = @getimagesize($image);
-    if (!$imgData)
-    {
+    if (!$imgData) {
       // Get MIME from php finfo and save to sourceMime property.
       // 'sourceMime' needs to be set before running getExtract.
       $this->sourceMime = $this->getMimeType($image);
       $extract = $this->getExtract($image);
       exec($this->magickCommands['identify'].' '.escapeshellarg($image).$extract, $stdout, $retval);
-      if (1 === $retval)
-      {
+      if (1 === $retval) {
         throw new Exception('Image could not be identified.');
       }
 
@@ -194,9 +190,7 @@ class sfImageMagickAdapter
 
       $this->sourceWidth = $width;
       $this->sourceHeight = $height;
-    }
-    else
-    {
+    } else {
       // use image data from getimagesize()
       $this->sourceWidth = $imgData[0];
       $this->sourceHeight = $imgData[1];
@@ -242,24 +236,17 @@ class sfImageMagickAdapter
     $height = $this->sourceHeight;
     $x = $y = 0;
 
-    switch (@$this->options['method'])
-    {
+    switch (@$this->options['method']) {
       case 'shave_all':
         $proportion['source'] = $width / $height;
         $proportion['thumb'] = $thumbnail->getThumbWidth() / $thumbnail->getThumbHeight();
 
-        if ($proportion['source'] > 1 && $proportion['thumb'] < 1)
-        {
+        if ($proportion['source'] > 1 && $proportion['thumb'] < 1) {
           $x = ($width - $height * $proportion['thumb']) / 2;
-        }
-        else
-        {
-          if ($proportion['source'] > $proportion['thumb'])
-          {
+        } else {
+          if ($proportion['source'] > $proportion['thumb']) {
             $x = ($width - $height * $proportion['thumb']) / 2;
-          }
-          else
-          {
+          } else {
             $y = ($height - $width / $proportion['thumb']) / 2;
           }
         }
@@ -269,19 +256,15 @@ class sfImageMagickAdapter
         break;
 
       case 'shave_bottom':
-        if ($width > $height)
-        {
+        if ($width > $height) {
           $x = ceil(($width - $height) / 2);
           $width = $height;
-        }
-        elseif ($height > $width)
-        {
+        } elseif ($height > $width) {
           $y = 0;
           $height = $width;
         }
 
-        if (is_null($thumbDest))
-        {
+        if (is_null($thumbDest)) {
           $command = sprintf(
             " -crop %dx%d+%d+%d %s '-' | %s",
             $width, $height,
@@ -291,9 +274,7 @@ class sfImageMagickAdapter
           );
 
           $this->image = '-';
-        }
-        else
-        {
+        } else {
           $command = sprintf(
             ' -crop %dx%d+%d+%d %s %s && %s',
             $width, $height,
@@ -309,14 +290,15 @@ class sfImageMagickAdapter
 
       case 'custom':
         $coords = $this->options['coords'];
-        if (empty($coords)) break;
+        if (empty($coords)) {
+          break;
+        }
         $x = $coords['x1'];
         $y = $coords['y1'];
         $width = $coords['x2'] - $coords['x1'];
         $height = $coords['y2'] - $coords['y1'];
 
-        if (is_null($thumbDest))
-        {
+        if (is_null($thumbDest)) {
           $command = sprintf(
             " -crop %dx%d+%d+%d %s '-' | %s",
             $width, $height,
@@ -326,9 +308,7 @@ class sfImageMagickAdapter
           );
 
           $this->image = '-';
-        }
-        else
-        {
+        } else {
           $command = sprintf(
             ' -crop %dx%d+%d+%d %s %s && %s',
             $width, $height,
@@ -347,19 +327,16 @@ class sfImageMagickAdapter
     $command .= $thumbnail->getThumbWidth().'x'.$thumbnail->getThumbHeight();
 
     // See Qubit issue 2380
-    if ('application/pdf' == $this->getSourceMime())
-    {
+    if ('application/pdf' == $this->getSourceMime()) {
       $command .= ' -background white -flatten ';
     }
 
     // absolute sizing
-    if (!$this->scale)
-    {
+    if (!$this->scale) {
       $command .= '!';
     }
 
-    if ($this->quality && 'image/jpeg' == $targetMime)
-    {
+    if ($this->quality && 'image/jpeg' == $targetMime) {
       $command .= ' -quality '.$this->quality.'% ';
     }
 
@@ -375,8 +352,7 @@ class sfImageMagickAdapter
 
   public function freeSource()
   {
-    if (is_resource($this->source))
-    {
+    if (is_resource($this->source)) {
       fclose($this->source);
     }
   }
@@ -399,8 +375,7 @@ class sfImageMagickAdapter
   public static function getPdfPageCount($filename)
   {
     // Default to 1 if pdfinfo not installed
-    if (!sfImageMagickAdapter::pdfinfoToolAvailable())
-    {
+    if (!sfImageMagickAdapter::pdfinfoToolAvailable()) {
       return 1;
     }
 
@@ -411,16 +386,13 @@ class sfImageMagickAdapter
   {
     exec('pdfinfo '.escapeshellarg($filename), $stdout, $retval);
 
-    if (1 === $retval)
-    {
+    if (1 === $retval) {
       throw new Exception('PDF could not be analyzed.');
     }
 
     // Parse page number from output
-    foreach ($stdout as $line)
-    {
-      if (1 === preg_match('/Pages:\s*(\d+)/i', $line, $matches))
-      {
+    foreach ($stdout as $line) {
+      if (1 === preg_match('/Pages:\s*(\d+)/i', $line, $matches)) {
         return intval($matches[1]);
       }
     }
@@ -438,15 +410,13 @@ class sfImageMagickAdapter
     $extension = pathinfo($image, PATHINFO_EXTENSION);
 
     // If processing a PDF, attempt to use pdfinfo as it's faster
-    if ('application/pdf' == $this->getSourceMime())
-    {
+    if ('application/pdf' == $this->getSourceMime()) {
       return sfImageMagickAdapter::getPdfPageCount($image);
     }
 
     $command = $this->magickCommands['identify'].' -format %n '.escapeshellarg($image);
     exec($command, $stdout, $retval);
-    if (1 === $retval)
-    {
+    if (1 === $retval) {
       throw new Exception('Image could not be identified.');
     }
 
@@ -456,31 +426,25 @@ class sfImageMagickAdapter
   private function getExtract($image, array $options = [])
   {
     $extract = '';
-    if (empty($this->options['extract']) && !is_int($this->options['extract']))
-    {
+    if (empty($this->options['extract']) && !is_int($this->options['extract'])) {
       return $extract;
     }
 
     // Make sure that we are no trying to extract a page that is out of the
     // range. If so, we'll extract the last page of the document.
-    try
-    {
+    try {
       $count = $this->getCount($image);
-      if ($count > 0 && $count < $this->options['extract'])
-      {
+      if ($count > 0 && $count < $this->options['extract']) {
         $this->options['extract'] = $count;
       }
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       // It defaults to the first page
       $this->options['extract'] = 0;
     }
 
     // ImageMagick's initial element index is zero
     $n = $this->options['extract'];
-    if ($n > 0)
-    {
+    if ($n > 0) {
       --$n;
     }
 

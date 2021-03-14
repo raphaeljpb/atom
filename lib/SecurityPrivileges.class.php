@@ -21,8 +21,7 @@ class SecurityPrivileges
 {
   public static function editCredentials($user, $object)
   {
-    switch (strtolower($object))
-    {
+    switch (strtolower($object)) {
       case 'informationobject':
         return $user->hasCredential(['administrator', 'editor', 'contributor', 'translator'], false);
 

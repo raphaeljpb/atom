@@ -40,8 +40,7 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
     // expected.
     $dirs = [sfConfig::get('sf_app_i18n_dir')];
     $plugins = sfFinder::type('dir')->name('i18n')->maxdepth(1)->not_name('.')->in(sfConfig::get('sf_plugins_dir'));
-    foreach ($plugins as $plugin)
-    {
+    foreach ($plugins as $plugin) {
       $dirs[] = $plugin;
     }
 
@@ -65,8 +64,7 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
 
     // Extract from modules
     $modules = sfFinder::type('dir')->maxdepth(0)->in(sfConfig::get('sf_app_module_dir'));
-    foreach ($modules as $module)
-    {
+    foreach ($modules as $module) {
       $this->extractFromPhpFiles([
         $module.'/actions',
         $module.'/lib',
@@ -76,11 +74,9 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
 
     // Extract plugin strings
     $plugins = sfFinder::type('dir')->maxdepth(0)->not_name('.')->in(sfConfig::get('sf_plugins_dir'));
-    foreach ($plugins as $plugin)
-    {
+    foreach ($plugins as $plugin) {
       // XLIFFs
-      foreach (sfFinder::type('dir')->maxdepth(0)->in($plugin.'/modules') as $piModule)
-      {
+      foreach (sfFinder::type('dir')->maxdepth(0)->in($plugin.'/modules') as $piModule) {
         $this->extractFromPhpFiles([
           $piModule.'/actions',
           $piModule.'/lib',
@@ -100,27 +96,22 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
     $translates = [];
 
     // Get messages from the current message source
-    foreach ($this->i18n->getMessageSource()->read() as $catalogue => $translations)
-    {
-      foreach ($translations as $key => $values)
-      {
+    foreach ($this->i18n->getMessageSource()->read() as $catalogue => $translations) {
+      foreach ($translations as $key => $values) {
         $messages[] = $key;
 
         // build associative array containing translated values
-        if (!isset($translates[$key]) || 0 == strlen($translates[$key][0]))
-        {
+        if (!isset($translates[$key]) || 0 == strlen($translates[$key][0])) {
           $translates[$key] = $values;
         }
       }
     }
 
     // Get messages from data/fixtures
-    foreach ($this->getTranslationsFromYaml(sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'fixtures') as $key => $values)
-    {
+    foreach ($this->getTranslationsFromYaml(sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'fixtures') as $key => $values) {
       $messages[] = $key;
 
-      if (!isset($translates[$key]) || 0 == strlen($translates[$key][0]))
-      {
+      if (!isset($translates[$key]) || 0 == strlen($translates[$key][0])) {
         $translates[$key] = $values;
       }
     }
@@ -130,8 +121,7 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
     sort($messages);
 
     // Add sources to XLIFF file
-    foreach ($messages as $message)
-    {
+    foreach ($messages as $message) {
       $this->messagesTarget->append($message);
     }
 
@@ -139,12 +129,10 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
     $this->messagesTarget->save();
 
     // Now save translated strings
-    foreach ($translates as $key => $item)
-    {
+    foreach ($translates as $key => $item) {
       // Track source file for message in comments
       $comment = $item[2];
-      if (isset($this->sourceFiles[$key]))
-      {
+      if (isset($this->sourceFiles[$key])) {
         $comment = $this->sourceFiles[$key];
       }
 
@@ -165,16 +153,13 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
 
     $files = sfFinder::type('file')->name('*.php');
     $messages = [];
-    foreach ($files->in($dir) as $file)
-    {
+    foreach ($files->in($dir) as $file) {
       $extracted = $phpExtractor->extract(file_get_contents($file));
       $messages = array_merge($messages, $extracted);
 
       // Track source file for all messages
-      foreach ($extracted as $message)
-      {
-        if (!isset($this->sourceFiles[$message]))
-        {
+      foreach ($extracted as $message) {
+        if (!isset($this->sourceFiles[$message])) {
           // Link to file in googlecode repository
           $this->sourceFiles[$message] = str_replace(sfConfig::get('sf_web_dir'), 'https://github.com/artefactual/atom/blob/master', $file);
         }
@@ -194,34 +179,28 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
     // Search for YAML files
     $files = sfFinder::type('file')->name('*.yml')->in($dir);
 
-    if (0 == count($files))
-    {
+    if (0 == count($files)) {
       $this->logSection('i18n', 'Warning: Couldn\'t find any fixture files.');
 
       return;
     }
 
     $translations = [];
-    foreach ($files as $file)
-    {
+    foreach ($files as $file) {
       $yaml = new sfYaml();
       $fixtures = $yaml->load($file);
 
-      if (null == $fixtures)
-      {
+      if (null == $fixtures) {
         continue;
       }
 
       // Descend through fixtures hierarchy
-      foreach ($fixtures as $classname => $fixture)
-      {
-        foreach ($fixture as $key => $item)
-        {
+      foreach ($fixtures as $classname => $fixture) {
+        foreach ($fixture as $key => $item) {
           $values = null;
 
           // translated column varies by object type
-          switch ($classname)
-          {
+          switch ($classname) {
             case 'QubitAclGroup':
             case 'QubitTaxonomy':
             case 'QubitTerm':
@@ -235,8 +214,7 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
               break;
 
             case 'QubitSetting':
-              if (in_array($item['scope'], QubitSetting::$translatableScopes))
-              {
+              if (in_array($item['scope'], QubitSetting::$translatableScopes)) {
                 $values = $item['value'];
               }
 
@@ -244,14 +222,12 @@ class QubitI18nConsolidatedExtract extends sfI18nApplicationExtract
           }
 
           // Ignore non-i18n values
-          if (!isset($values) || !is_array($values) || !isset($values['en']))
-          {
+          if (!isset($values) || !is_array($values) || !isset($values['en'])) {
             continue;
           }
 
           $target = null;
-          if (isset($values[$this->culture]))
-          {
+          if (isset($values[$this->culture])) {
             $target = $values[$this->culture];
           }
 

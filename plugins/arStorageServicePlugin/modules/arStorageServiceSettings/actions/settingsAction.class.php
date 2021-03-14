@@ -41,8 +41,7 @@ class arStorageServiceSettingsSettingsAction extends SettingsEditAction
   protected function addField($name)
   {
     // Set form field format
-    switch ($name)
-    {
+    switch ($name) {
       case 'storage_service_api_url':
       case 'storage_service_username':
       case 'storage_service_api_key':

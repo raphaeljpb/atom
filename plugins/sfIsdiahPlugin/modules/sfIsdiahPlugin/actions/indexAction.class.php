@@ -31,14 +31,12 @@ class sfIsdiahPluginIndexAction extends RepositoryIndexAction
     $this->isdiah = new sfIsdiahPlugin($this->resource);
 
     if (null !== $this->resource->id
-      && sfConfig::get('app_enable_institutional_scoping'))
-    {
+      && sfConfig::get('app_enable_institutional_scoping')) {
       // Add repo to the user session as realm
       $this->context->user->setAttribute('search-realm', $this->resource->id);
     }
 
-    if (1 > strlen($title = $this->resource->__toString()))
-    {
+    if (1 > strlen($title = $this->resource->__toString())) {
       $title = $this->context->i18n->__('Untitled');
     }
 
@@ -46,8 +44,7 @@ class sfIsdiahPluginIndexAction extends RepositoryIndexAction
 
     $this->htmlSnippet = $this->getPurifiedHtmlSnippet();
 
-    if (QubitAcl::check($this->resource, 'update'))
-    {
+    if (QubitAcl::check($this->resource, 'update')) {
       $validatorSchema = new sfValidatorSchema();
       $values = [];
 
@@ -74,8 +71,7 @@ class sfIsdiahPluginIndexAction extends RepositoryIndexAction
                 'required' => true, ], [
                   'required' => $this->context->i18n->__('%1%Contact information%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-3#5.2.1">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-3#4.7">', '%4%' => '</a>']), ]);
 
-      if (null !== $this->resource->getPrimaryContact())
-      {
+      if (null !== $this->resource->getPrimaryContact()) {
         $values['primaryContact']['city'] = $this->resource->getPrimaryContact()->getCity(['culltureFallback' => true]);
         $values['primaryContact']['countryCode'] = $this->resource->getPrimaryContact()->countryCode;
         $values['primaryContact']['postalCode'] = $this->resource->getPrimaryContact()->postalCode;
@@ -83,20 +79,15 @@ class sfIsdiahPluginIndexAction extends RepositoryIndexAction
         $values['primaryContact']['streetAddress'] = $this->resource->getPrimaryContact()->streetAddress;
       }
 
-      try
-      {
+      try {
         $validatorSchema->clean($values);
-      }
-      catch (sfValidatorErrorSchema $e)
-      {
+      } catch (sfValidatorErrorSchema $e) {
         $this->errorSchema = $e;
       }
     }
 
-    if (null !== $contact = $this->resource->getPrimaryContact())
-    {
-      if (isset($contact->latitude, $contact->longitude))
-      {
+    if (null !== $contact = $this->resource->getPrimaryContact()) {
+      if (isset($contact->latitude, $contact->longitude)) {
         $this->latitude = $contact->latitude;
         $this->longitude = $contact->longitude;
       }
@@ -108,13 +99,11 @@ class sfIsdiahPluginIndexAction extends RepositoryIndexAction
     $cacheKey = 'repository:htmlsnippet:'.$this->resource->id;
     $cache = QubitCache::getInstance();
 
-    if (null === $cache)
-    {
+    if (null === $cache) {
       return;
     }
 
-    if ($cache->has($cacheKey))
-    {
+    if ($cache->has($cacheKey)) {
       return $cache->get($cacheKey);
     }
 

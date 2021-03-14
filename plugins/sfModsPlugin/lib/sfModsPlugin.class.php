@@ -37,15 +37,13 @@ class sfModsPlugin implements ArrayAccess
     $string = '';
 
     // Add title if set
-    if (0 < strlen($title = $this->resource->__toString()))
-    {
+    if (0 < strlen($title = $this->resource->__toString())) {
       $string .= $title;
     }
 
     // Add publication status
     $publicationStatus = $this->resource->getPublicationStatus();
-    if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId)
-    {
+    if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId) {
       $string .= (!empty($string)) ? ' ' : '';
       $string .= "({$publicationStatus->status->__toString()})";
     }
@@ -55,8 +53,7 @@ class sfModsPlugin implements ArrayAccess
 
   public function __get($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'identifier':
         return $this->resource->referenceCode;
 
@@ -68,10 +65,8 @@ class sfModsPlugin implements ArrayAccess
 
       case 'name':
         $name = [];
-        foreach ($this->resource->getActorEvents() as $item)
-        {
-          if (isset($item->actor))
-          {
+        foreach ($this->resource->getActorEvents() as $item) {
+          if (isset($item->actor)) {
             $name[] = $item;
           }
         }
@@ -102,18 +97,15 @@ class sfModsPlugin implements ArrayAccess
         ];
 
         // Real MODS resource types
-        foreach ($this->resource->getTermRelations(QubitTaxonomy::MODS_RESOURCE_TYPE_ID) as $relation)
-        {
+        foreach ($this->resource->getTermRelations(QubitTaxonomy::MODS_RESOURCE_TYPE_ID) as $relation) {
           $typeOfResources[] = $relation->term->getName(['culture' => 'en']);
         }
 
         // Translated RAD material types
-        foreach ($this->resource->getTermRelations(QubitTaxonomy::MATERIAL_TYPE_ID) as $relation)
-        {
+        foreach ($this->resource->getTermRelations(QubitTaxonomy::MATERIAL_TYPE_ID) as $relation) {
           $gmd = trim(strtolower($relation->term->getName(['culture' => 'en'])));
 
-          if (isset($map[$gmd]))
-          {
+          if (isset($map[$gmd])) {
             $typeOfResources[] = $map[$gmd];
           }
         }
@@ -124,8 +116,7 @@ class sfModsPlugin implements ArrayAccess
       case 'genres':
         $genres = [];
 
-        foreach ($this->resource->getTermRelations(QubitTaxonomy::GENRE_ID) as $relation)
-        {
+        foreach ($this->resource->getTermRelations(QubitTaxonomy::GENRE_ID) as $relation) {
           array_push($genres, $relation->term->getName(['cultureFallback' => true]));
         }
 
@@ -155,13 +146,11 @@ class sfModsPlugin implements ArrayAccess
   {
     $string = '';
 
-    if (isset($this->resource->levelOfDescription))
-    {
+    if (isset($this->resource->levelOfDescription)) {
       $string .= $this->resource->levelOfDescription->__toString();
     }
 
-    if (isset($this->resource->identifier))
-    {
+    if (isset($this->resource->identifier)) {
       $string .= (!empty($string)) ? ' ' : '';
       $string .= $this->resource->identifier;
     }
@@ -178,8 +167,7 @@ class sfModsPlugin implements ArrayAccess
 
   public function getDateTagNameForEventType($typeId)
   {
-    switch ($typeId)
-    {
+    switch ($typeId) {
       case QubitTerm::CREATION_ID:
         return 'dateCreated';
 
@@ -193,10 +181,8 @@ class sfModsPlugin implements ArrayAccess
 
   public function getMatchingRadNotesByName($noteTypeName)
   {
-    foreach (QubitTerm::getRADNotes() as $term)
-    {
-      if ($term->getName() == $noteTypeName)
-      {
+    foreach (QubitTerm::getRADNotes() as $term) {
+      if ($term->getName() == $noteTypeName) {
         return $this->getNoteTexts($term->id);
       }
     }
@@ -207,8 +193,7 @@ class sfModsPlugin implements ArrayAccess
     $notes = [];
 
     $noteData = $this->resource->getNotesByType(['noteTypeId' => $noteTypeId]);
-    foreach ($noteData as $note)
-    {
+    foreach ($noteData as $note) {
       array_push($notes, $note->getContent(['cultureFallback' => true]));
     }
 
@@ -223,8 +208,7 @@ class sfModsPlugin implements ArrayAccess
     $criteria->addJoin(QubitTermI18n::ID, QubitTerm::ID);
     $criteria->add(QubitTermI18n::NAME, $termName);
 
-    if ($term = QubitTerm::getOne($criteria))
-    {
+    if ($term = QubitTerm::getOne($criteria)) {
       return $term->id;
     }
 

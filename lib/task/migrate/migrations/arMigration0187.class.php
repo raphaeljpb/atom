@@ -70,10 +70,8 @@ class arMigration0187
       'digital_object_preservation_system_preservation_permissions',
     ];
 
-    foreach ($settingNames as $settingName)
-    {
-      if (null === $setting = QubitSetting::getByNameAndScope($settingName, $SCOPE))
-      {
+    foreach ($settingNames as $settingName) {
+      if (null === $setting = QubitSetting::getByNameAndScope($settingName, $SCOPE)) {
         $setting = new QubitSetting();
         $setting->name = $settingName;
         $setting->setValue($VALUE, ['sourceCulture' => true]);

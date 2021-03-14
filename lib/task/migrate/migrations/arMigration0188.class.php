@@ -51,18 +51,13 @@ class arMigration0188
     //   1. Unserialize their value
     //   2. Create new properties using the updated names
     //   3. Delete the existing property
-    foreach (QubitProperty::get($criteria) as $property)
-    {
-      if (null !== $value = $property->getValue(['sourceCulture' => true]))
-      {
+    foreach (QubitProperty::get($criteria) as $property) {
+      if (null !== $value = $property->getValue(['sourceCulture' => true])) {
         $data = unserialize($value);
-        if (is_array($data))
-        {
+        if (is_array($data)) {
           $objectId = $property->getObject()->id;
-          foreach ($propertyNamesMap as $oldName => $newName)
-          {
-            if (array_key_exists($oldName, $data))
-            {
+          foreach ($propertyNamesMap as $oldName => $newName) {
+            if (array_key_exists($oldName, $data)) {
               QubitProperty::addUnique(
                 $objectId,
                 $newName,

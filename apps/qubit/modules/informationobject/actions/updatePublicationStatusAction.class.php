@@ -28,20 +28,17 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ('POST' == $this->request->getMethod())
-    {
+    if ('POST' == $this->request->getMethod()) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         // Update resource synchronously
         $publicationStatusId = $this->form->getValue('publicationStatus');
         $this->resource->setPublicationStatus($publicationStatusId);
         $this->resource->save();
 
         // Update descendants using job scheduler
-        if (filter_var($this->form->getValue('updateDescendants'), FILTER_VALIDATE_BOOLEAN))
-        {
+        if (filter_var($this->form->getValue('updateDescendants'), FILTER_VALIDATE_BOOLEAN)) {
           $options = ['objectId' => $this->resource->id, 'publicationStatusId' => $publicationStatusId];
           QubitJob::runJob('arUpdatePublicationStatusJob', $options);
 
@@ -66,38 +63,31 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that object exists and that it is not the root
-    if (!isset($this->resource) || !isset($this->resource->parent))
-    {
+    if (!isset($this->resource) || !isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'publish'))
-    {
+    if (!QubitAcl::check($this->resource, 'publish')) {
       QubitAcl::forwardUnauthorized();
     }
   }
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'publicationStatus':
         $publicationStatus = $this->resource->getStatus(['typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID]);
-        if (isset($publicationStatus))
-        {
+        if (isset($publicationStatus)) {
           $this->form->setDefault('publicationStatus', $publicationStatus->statusId);
-        }
-        else
-        {
+        } else {
           $this->form->setDefault('publicationStatus', sfConfig::get('app_defaultPubStatus'));
         }
 
         $this->form->setValidator('publicationStatus', new sfValidatorString());
 
         $choices = [];
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::PUBLICATION_STATUS_ID) as $item)
-        {
+        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::PUBLICATION_STATUS_ID) as $item) {
           $choices[$item->id] = $item;
         }
 

@@ -28,13 +28,10 @@ class arArchivesCanadaPluginConfiguration extends sfPluginConfiguration
 
     // Runtime less interpreter will be loaded if debug mode is enabled
     // Remember to avoid localStorage caching when dev machine is not localhost
-    if ($context->getConfiguration()->isDebug())
-    {
+    if ($context->getConfiguration()->isDebug()) {
       $context->response->addJavaScript('/vendor/less.js', 'last');
       $context->response->addStylesheet('/plugins/arArchivesCanadaPlugin/css/main.less', 'last', ['rel' => 'stylesheet/less', 'type' => 'text/css', 'media' => 'all']);
-    }
-    else
-    {
+    } else {
       $context->response->addStylesheet('/plugins/arArchivesCanadaPlugin/css/min.css', 'last', ['media' => 'all']);
     }
   }

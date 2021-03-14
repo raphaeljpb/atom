@@ -24,23 +24,16 @@ class ClipboardSaveAction extends sfAction
     $slugs = $request->getPostParameter('slugs', []);
     $failMessage = $this->context->i18n->__('Clipboard ID generation failure.');
 
-    if (empty($slugs) || (empty($slugs['informationObject']) && empty($slugs['actor']) && empty($slugs['repository'])))
-    {
+    if (empty($slugs) || (empty($slugs['informationObject']) && empty($slugs['actor']) && empty($slugs['repository']))) {
       $this->response->setStatusCode(400);
       $responseData = ['error' => $failMessage.' '.$this->context->i18n->__('No items in clipboard to save.')];
-    }
-    elseif (null === $validatedSlugs = $this->validateSlugs($slugs))
-    {
+    } elseif (null === $validatedSlugs = $this->validateSlugs($slugs)) {
       $this->response->setStatusCode(400);
       $responseData = ['error' => $failMessage.' '.$this->context->i18n->__('No items found.')];
-    }
-    elseif (null === $password = $this->getUniquePassword())
-    {
+    } elseif (null === $password = $this->getUniquePassword()) {
       $this->response->setStatusCode(500);
       $responseData = ['error' => $failMessage.' '.$this->context->i18n->__('Please try again.')];
-    }
-    else
-    {
+    } else {
       $this->saveClipboard($validatedSlugs, $password);
 
       $itemsCount = count($validatedSlugs['informationObject']) +
@@ -63,8 +56,7 @@ class ClipboardSaveAction extends sfAction
   {
     // Try a max of 100 times before giving up (avoid infinite loops when
     // possible passwords exhausted)
-    for ($i = 0; $i < 100; ++$i)
-    {
+    for ($i = 0; $i < 100; ++$i) {
       $password = $this->generatePassword();
 
       $criteria = new Criteria();
@@ -72,8 +64,7 @@ class ClipboardSaveAction extends sfAction
 
       $result = QubitClipboardSave::getOne($criteria);
 
-      if (null === $result)
-      {
+      if (null === $result) {
         return $password;
       }
     }
@@ -83,12 +74,10 @@ class ClipboardSaveAction extends sfAction
   {
     $validatedSlugs = [];
 
-    foreach ($allSlugs as $type => $slugs)
-    {
+    foreach ($allSlugs as $type => $slugs) {
       $validatedSlugs[$type] = [];
 
-      foreach ($slugs as $slug)
-      {
+      foreach ($slugs as $slug) {
         $sql = 'SELECT COUNT(s.id) FROM slug s
                 JOIN object o ON s.object_id = o.id
                 WHERE s.slug = ? AND o.class_name = ?
@@ -105,8 +94,7 @@ class ClipboardSaveAction extends sfAction
           ]
         );
 
-        if (1 == $count)
-        {
+        if (1 == $count) {
           $validatedSlugs[$type][] = $slug;
         }
       }
@@ -116,8 +104,7 @@ class ClipboardSaveAction extends sfAction
       !empty($validatedSlugs['informationObject'])
       || !empty($validatedSlugs['actor'])
       || !empty($validatedSlugs['repository'])
-    )
-    {
+    ) {
       return $validatedSlugs;
     }
   }
@@ -129,8 +116,7 @@ class ClipboardSaveAction extends sfAction
     $alphabetSize = strlen($alphabet);
 
     $password = '';
-    for ($i = 0; $i < $passwordLength; ++$i)
-    {
+    for ($i = 0; $i < $passwordLength; ++$i) {
       $password .= $alphabet[mt_rand(0, $alphabetSize - 1)];
     }
 
@@ -146,10 +132,8 @@ class ClipboardSaveAction extends sfAction
     $save->save();
 
     // Store clipboard items in database
-    foreach ($validatedSlugs as $type => $slugs)
-    {
-      foreach ($slugs as $slug)
-      {
+    foreach ($validatedSlugs as $type => $slugs) {
+      foreach ($slugs as $slug) {
         $item = new QubitClipboardSaveItem();
         $item->saveId = $save->id;
         $item->itemClassName = 'Qubit'.ucfirst($type);

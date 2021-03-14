@@ -81,8 +81,7 @@ class QubitMigrate107 extends QubitMigrate
 
   protected function addInformationObjectRootId()
   {
-    if (null !== ($rootInformationObjectKey = $this->getRowKey('QubitInformationObject', 'lft', '1')))
-    {
+    if (null !== ($rootInformationObjectKey = $this->getRowKey('QubitInformationObject', 'lft', '1'))) {
       $this->data['QubitInformationObject'][$rootInformationObjectKey]['id'] = '<?php echo QubitInformationObject::ROOT_ID."\n" ?>';
     }
 
@@ -466,10 +465,8 @@ class QubitMigrate107 extends QubitMigrate
     ];
 
     // Assign root term as parent for orphan terms
-    foreach ($this->data['QubitTerm'] as $key => $term)
-    {
-      if (isset($term['parent_id']) || (isset($term['id']) && '<?php echo QubitTerm::ROOT_ID."\n" ?>' == $term['id']))
-      {
+    foreach ($this->data['QubitTerm'] as $key => $term) {
+      if (isset($term['parent_id']) || (isset($term['id']) && '<?php echo QubitTerm::ROOT_ID."\n" ?>' == $term['id'])) {
         continue;
       }
 
@@ -481,18 +478,13 @@ class QubitMigrate107 extends QubitMigrate
 
   protected function copyUserRoleRelationToAclUserGroup()
   {
-    foreach ($this->data['QubitUserRoleRelation'] as $userRoleRelation)
-    {
+    foreach ($this->data['QubitUserRoleRelation'] as $userRoleRelation) {
       $role = $this->data['QubitRole'][$userRoleRelation['role_id']];
 
-      if (1 === preg_match('/QubitRole::([A-Z_]+)/', $role['id'], $matches))
-      {
+      if (1 === preg_match('/QubitRole::([A-Z_]+)/', $role['id'], $matches)) {
         $groupId = '<?php echo QubitAclGroup::'.$matches[1].'."\n" ?>';
-      }
-      else
-      {
-        switch ($role['name'])
-        {
+      } else {
+        switch ($role['name']) {
           case 'administrator':
             $groupId = '<?php echo QubitAclGroup::ADMINISTRATOR_ID."\n" ?>';
 
@@ -533,15 +525,12 @@ class QubitMigrate107 extends QubitMigrate
   {
     // Convert legacy dates (which represented years only) from e.g.
     // '1910-01-01' -> '1910-00-00'
-    foreach ($this->data['QubitEvent'] as $key => $event)
-    {
-      if (isset($event['start_date']) && preg_match('/(\d{4})-01-01/', $event['start_date']))
-      {
+    foreach ($this->data['QubitEvent'] as $key => $event) {
+      if (isset($event['start_date']) && preg_match('/(\d{4})-01-01/', $event['start_date'])) {
         $this->data['QubitEvent'][$key]['start_date'] = substr($event['start_date'], 0, 4).'-00-00';
       }
 
-      if (isset($event['end_date']) && preg_match('/(\d{4})-01-01/', $event['end_date']))
-      {
+      if (isset($event['end_date']) && preg_match('/(\d{4})-01-01/', $event['end_date'])) {
         $this->data['QubitEvent'][$key]['end_date'] = substr($event['end_date'], 0, 4).'-00-00';
       }
     }
@@ -560,16 +549,14 @@ class QubitMigrate107 extends QubitMigrate
     // difficult to just rename because both the mainmenu and the submenu share the 'import/export' name in 1.0.7
     // so, remove both and add a new 'import' mainmenu and 'import xml' sub-menu
     $importExportMenuKey = $this->getRowKey('QubitMenu', 'name', 'import/export');
-    if ($importExportMenuKey)
-    {
+    if ($importExportMenuKey) {
       $this->data['QubitMenu'] = QubitMigrate::cascadeDelete($this->data['QubitMenu'], $importExportMenuKey);
     }
 
     // Remove "upload" menu
     // some 1.0.8-dev sites had "upload" menus so add this remove just to be sure
     $uploadMenuKey = $this->getRowKey('QubitMenu', 'name', 'upload');
-    if ($uploadMenuKey)
-    {
+    if ($uploadMenuKey) {
       $this->data['QubitMenu'] = QubitMigrate::cascadeDelete($this->data['QubitMenu'], $uploadMenuKey);
     }
 
@@ -586,12 +573,9 @@ class QubitMigrate107 extends QubitMigrate
     ];
 
     // Attempt to insert 'import' menu before 'admin' menu
-    if ($adminMenuKey = $this->getRowKey('QubitMenu', 'id', '<?php echo QubitMenu::ADMIN_ID."\n" ?>'))
-    {
+    if ($adminMenuKey = $this->getRowKey('QubitMenu', 'id', '<?php echo QubitMenu::ADMIN_ID."\n" ?>')) {
       QubitMigrate::insertBeforeNestedSet($this->data['QubitMenu'], $adminMenuKey, $importMenu);
-    }
-    else
-    {
+    } else {
       array_merge($this->data['QubitMenu'], $importMenu);
     }
 
@@ -615,8 +599,7 @@ class QubitMigrate107 extends QubitMigrate
 
     // Remove previous OAI harvester menu
     $harvesterKey = $this->getRowKey('QubitMenu', 'name', 'harvester');
-    if ($harvesterKey)
-    {
+    if ($harvesterKey) {
       $this->data['QubitMenu'] = QubitMigrate::cascadeDelete($this->data['QubitMenu'], $harvesterKey);
     }
 
@@ -630,8 +613,7 @@ class QubitMigrate107 extends QubitMigrate
     ];
 
     // Add user and group sub-menus
-    if (null !== ($userMenuKey = ($this->getRowKey('QubitMenu', 'name', 'users'))))
-    {
+    if (null !== ($userMenuKey = ($this->getRowKey('QubitMenu', 'name', 'users')))) {
       $this->data['QubitMenu']['QubitMenu_mainmenu_admin_users_users'] = [
         'parent_id' => $userMenuKey,
         'source_culture' => 'en',
@@ -649,57 +631,47 @@ class QubitMigrate107 extends QubitMigrate
     }
 
     // Update path for home page
-    if (null !== ($menuKey = ($this->getRowKey('QubitMenu', 'name', 'home'))))
-    {
+    if (null !== ($menuKey = ($this->getRowKey('QubitMenu', 'name', 'home')))) {
       $this->data['QubitMenu'][$menuKey]['path'] = 'staticpage/static?permalink=homepage';
     }
 
     // Pluralize English 'Add/Edit' menu options for Qubit
     $menuOption = $this->getRowKey('QubitMenu', 'label', ['en' => 'Information object']);
-    if ($menuOption)
-    {
+    if ($menuOption) {
       $this->data['QubitMenu'][$menuOption]['label']['en'] = 'Information objects';
     }
     $menuOption = $this->getRowKey('QubitMenu', 'label', ['en' => 'Person/organization']);
-    if ($menuOption)
-    {
+    if ($menuOption) {
       $this->data['QubitMenu'][$menuOption]['label']['en'] = 'Persons/organizations';
     }
     $menuOption = $this->getRowKey('QubitMenu', 'label', ['en' => 'Repository']);
-    if ($menuOption)
-    {
+    if ($menuOption) {
       $this->data['QubitMenu'][$menuOption]['label']['en'] = 'Repositories';
     }
     $menuOption = $this->getRowKey('QubitMenu', 'label', ['en' => 'Term']);
-    if ($menuOption)
-    {
+    if ($menuOption) {
       $this->data['QubitMenu'][$menuOption]['label']['en'] = 'Terms';
     }
     // Pluralize English 'Add/Edit' menu options for ICA-AtoM variations
     $menuOption = $this->getRowKey('QubitMenu', 'label', ['en' => 'Archival description']);
-    if ($menuOption)
-    {
+    if ($menuOption) {
       $this->data['QubitMenu'][$menuOption]['label']['en'] = 'Archival descriptions';
     }
     $menuOption = $this->getRowKey('QubitMenu', 'label', ['en' => 'Authority record']);
-    if ($menuOption)
-    {
+    if ($menuOption) {
       $this->data['QubitMenu'][$menuOption]['label']['en'] = 'Authority records';
     }
     $menuOption = $this->getRowKey('QubitMenu', 'label', ['en' => 'Archival institution']);
-    if ($menuOption)
-    {
+    if ($menuOption) {
       $this->data['QubitMenu'][$menuOption]['label']['en'] = 'Archival institutions';
     }
     // Pluralize English 'Add/Edit' menu options for DCB variations
     $menuOption = $this->getRowKey('QubitMenu', 'label', ['en' => 'resource']);
-    if ($menuOption)
-    {
+    if ($menuOption) {
       $this->data['QubitMenu'][$menuOption]['label']['en'] = 'resources';
     }
     $menuOption = $this->getRowKey('QubitMenu', 'label', ['en' => 'organization']);
-    if ($menuOption)
-    {
+    if ($menuOption) {
       $this->data['QubitMenu'][$menuOption]['label']['en'] = 'organizations';
     }
 
@@ -716,10 +688,8 @@ class QubitMigrate107 extends QubitMigrate
     // Collate language & script properties into serialized array
     // and change name while were at it
     $tmp = [];
-    foreach ($this->data['QubitProperty'] as $key => $value)
-    {
-      switch ($value['name'])
-      {
+    foreach ($this->data['QubitProperty'] as $key => $value) {
+      switch ($value['name']) {
         case 'information_object_language':
         case 'information_object_script':
         case 'language_of_information_object_description':
@@ -730,16 +700,13 @@ class QubitMigrate107 extends QubitMigrate
       }
     }
 
-    foreach ($tmp as $id => $value)
-    {
-      foreach ($value as $name => $value)
-      {
+    foreach ($tmp as $id => $value) {
+      foreach ($value as $name => $value) {
         $key = 'QubitProperty_'.rand();
         $this->data['QubitProperty'][$key] = [];
         $this->data['QubitProperty'][$key]['object_id'] = $id;
 
-        switch ($name)
-        {
+        switch ($name) {
           case 'information_object_language':
             $this->data['QubitProperty'][$key]['name'] = 'language';
 
@@ -767,15 +734,13 @@ class QubitMigrate107 extends QubitMigrate
 
     // Move 'display_as_compound_object' property from information object to
     // digital object, and change name & scope while we're at it
-    while ($key = $this->getRowKey('QubitProperty', 'name', 'display_as_compound_object'))
-    {
+    while ($key = $this->getRowKey('QubitProperty', 'name', 'display_as_compound_object')) {
       $this->data['QubitProperty'][$key]['name'] = 'displayAsCompound';
 
       // Get rid of 'scope', in this case it's repeating data we already have
       unset($this->data['QubitProperty'][$key]['scope']);
 
-      if ($digitalObjectKey = $this->getRowKey('QubitDigitalObject', 'information_object_id', $this->data['QubitProperty'][$key]['object_id']))
-      {
+      if ($digitalObjectKey = $this->getRowKey('QubitDigitalObject', 'information_object_id', $this->data['QubitProperty'][$key]['object_id'])) {
         $this->data['QubitProperty'][$key]['object_id'] = $digitalObjectKey;
       }
     }
@@ -789,100 +754,81 @@ class QubitMigrate107 extends QubitMigrate
   protected function alterQubitSettings()
   {
     // Update version number
-    if ($settingVersionKey = $this->getRowKey('QubitSetting', 'name', 'version'))
-    {
-      foreach ($this->data['QubitSetting'][$settingVersionKey]['value'] as $culture => $value)
-      {
+    if ($settingVersionKey = $this->getRowKey('QubitSetting', 'name', 'version')) {
+      foreach ($this->data['QubitSetting'][$settingVersionKey]['value'] as $culture => $value) {
         $this->data['QubitSetting'][$settingVersionKey]['value'][$culture] = str_replace('1.0.7', '1.0.8', $value);
       }
     }
 
     // Pluralize English UI Labels for Qubit
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'information object']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'information objects';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'person/organization']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'persons/organizations';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'creator']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'creators';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'repository']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'repositories';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'term']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'terms';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'subject']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'subjects';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'collection']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'collections';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'place']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'places';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'name']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'names';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'digital object']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'digital objects';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'media type']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'media types';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'material type']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'material types';
     }
     // Pluralize English UI Labels for ICA-AtoM variations
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'archival description']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'archival descriptions';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'authority record']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'authority records';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'archival institution']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'archival institutions';
     }
     // Pluralize English UI Labels for DCB variations
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'resource']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'resources';
     }
     $uiLabel = $this->getRowKey('QubitSetting', 'value', ['en' => 'organization']);
-    if ($uiLabel)
-    {
+    if ($uiLabel) {
       $this->data['QubitSetting'][$uiLabel]['value']['en'] = 'organizations';
     }
 
@@ -905,12 +851,9 @@ class QubitMigrate107 extends QubitMigrate
   protected function alterQubitStaticPages()
   {
     // Update version number
-    foreach ($this->data['QubitStaticPage'] as $key => $page)
-    {
-      if ('homepage' == $page['permalink'] || 'about' == $page['permalink'])
-      {
-        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x)
-        {
+    foreach ($this->data['QubitStaticPage'] as $key => $page) {
+      if ('homepage' == $page['permalink'] || 'about' == $page['permalink']) {
+        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x) {
           $x = str_replace('1.0.7', '1.0.8', $x);
         });
       }
@@ -936,13 +879,11 @@ class QubitMigrate107 extends QubitMigrate
     // Identify QubitInformationObject Root
     $rootKey = $this->getRowKey('QubitInformationObject', 'lft', '1');
 
-    foreach ($this->data['QubitInformationObject'] as $key => $item)
-    {
+    foreach ($this->data['QubitInformationObject'] as $key => $item) {
       // Assume all pre-existing information objects are published
       // Publication status is inherited by descendants so we only need to set it for
       // collection roots and orphans
-      if (isset($item['parent_id']) && $item['parent_id'] == $rootKey)
-      {
+      if (isset($item['parent_id']) && $item['parent_id'] == $rootKey) {
         $this->data['QubitStatus']['QubitStatus_publication_'.$key] = [
           'object_id' => $key,
           'type_id' => '<?php echo QubitTerm::STATUS_TYPE_PUBLICATION_ID."\n" ?>',
@@ -963,13 +904,11 @@ class QubitMigrate107 extends QubitMigrate
   {
     // Remove hyphen from English ('en') Level Of Description terms to make them EAD DTD compliant for XML import/export
     $termSubfondsKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Sub-fonds']);
-    if ($termSubfondsKey)
-    {
+    if ($termSubfondsKey) {
       $this->data['QubitTerm'][$termSubfondsKey]['name']['en'] = 'Subfonds';
     }
     $termSubseriesKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Sub-series']);
-    if ($termSubseriesKey)
-    {
+    if ($termSubseriesKey) {
       $this->data['QubitTerm'][$termSubseriesKey]['name']['en'] = 'Subseries';
     }
 
@@ -994,20 +933,15 @@ class QubitMigrate107 extends QubitMigrate
 
     // Migrate existing name access points (event type = 'subject') to
     // QubitRelation table
-    if ($termKey = $this->getTermKey('<?php echo QubitTerm::SUBJECT_ID."\n" ?>'))
-    {
-      while ($key = $this->getRowKey('QubitEvent', 'type_id', $termKey))
-      {
+    if ($termKey = $this->getTermKey('<?php echo QubitTerm::SUBJECT_ID."\n" ?>')) {
+      while ($key = $this->getRowKey('QubitEvent', 'type_id', $termKey)) {
         $event = $this->data['QubitEvent'][$key];
 
-        if (isset($event['actor_id']))
-        {
+        if (isset($event['actor_id'])) {
           // Get a random, unique key
-          do
-          {
+          do {
             $newKey = rand();
-          }
-          while (isset($this->data['QubitRelation'][$newKey]));
+          } while (isset($this->data['QubitRelation'][$newKey]));
 
           $this->data['QubitRelation']['QubitRelation_'.$newKey] = [
             'subject_id' => $event['information_object_id'],
@@ -1017,8 +951,7 @@ class QubitMigrate107 extends QubitMigrate
         }
 
         // Delete QubitObjectTermRelations linked to QubitEvent
-        while ($otrKey = $this->getRowKey('QubitObjectTermRelation', 'object_id', $key))
-        {
+        while ($otrKey = $this->getRowKey('QubitObjectTermRelation', 'object_id', $key)) {
           unset($this->data['QubitObjectTermRelation'][$otrKey]);
         }
 
@@ -1028,11 +961,9 @@ class QubitMigrate107 extends QubitMigrate
     }
 
     // Remove the "SUBJECT_ID" event type term
-    if ($subjectTermKey = $this->getTermKey('<?php echo QubitTerm::SUBJECT_ID."\n" ?>'))
-    {
+    if ($subjectTermKey = $this->getTermKey('<?php echo QubitTerm::SUBJECT_ID."\n" ?>')) {
       // Remove the related QubitNote defining the possessive declension
-      while ($key = $this->getRowKey('QubitNote', 'object_id', $subjectTermKey))
-      {
+      while ($key = $this->getRowKey('QubitNote', 'object_id', $subjectTermKey)) {
         unset($this->data['QubitNote'][$key]);
       }
 
@@ -1133,12 +1064,9 @@ class QubitMigrate107 extends QubitMigrate
 
     // Restack array with Constant values at top
     $qubitTermArray = $this->data['QubitTerm'];
-    foreach ($qubitTermConstantIds as $key => $constantName)
-    {
-      foreach ($qubitTermArray as $key => $item)
-      {
-        if (isset($item['id']) && $item['id'] == '<?php echo QubitTerm::'.$constantName.'."\n" ?>')
-        {
+    foreach ($qubitTermConstantIds as $key => $constantName) {
+      foreach ($qubitTermArray as $key => $item) {
+        if (isset($item['id']) && $item['id'] == '<?php echo QubitTerm::'.$constantName.'."\n" ?>') {
           $newTermArray[$key] = $item;
           unset($qubitTermArray[$key]);
 
@@ -1151,8 +1079,7 @@ class QubitMigrate107 extends QubitMigrate
     QubitMigrate::sortByLft($qubitTermArray);
 
     // Append remaining (variable id) terms to the end of the new array
-    foreach ($qubitTermArray as $key => $term)
-    {
+    foreach ($qubitTermArray as $key => $term) {
       $newTermArray[$key] = $term;
     }
 
@@ -1195,10 +1122,8 @@ class QubitMigrate107 extends QubitMigrate
 
     $originalData = $this->data;
 
-    foreach ($ormSortOrder as $i => $className)
-    {
-      if (isset($originalData[$className]))
-      {
+    foreach ($ormSortOrder as $i => $className) {
+      if (isset($originalData[$className])) {
         $sortedData[$className] = $originalData[$className];
         unset($originalData[$className]);
       }
@@ -1206,10 +1131,8 @@ class QubitMigrate107 extends QubitMigrate
 
     // If their are classes in the original data that are not listed in the
     // ormSortOrder array then tack them on to the end of the sorted data
-    if (count($originalData))
-    {
-      foreach ($originalData as $className => $classData)
-      {
+    if (count($originalData)) {
+      foreach ($originalData as $className => $classData) {
         $sortedData[$className] = $classData;
       }
     }

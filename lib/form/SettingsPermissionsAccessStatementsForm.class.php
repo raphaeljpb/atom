@@ -25,16 +25,13 @@ class SettingsPermissionsAccessStatementsForm extends sfForm
 
     $this->settings = [];
 
-    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
-    {
-      foreach (["{$item->slug}_disallow", "{$item->slug}_conditional"] as $name)
-      {
+    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item) {
+      foreach (["{$item->slug}_disallow", "{$item->slug}_conditional"] as $name) {
         $this->setWidget($name, new sfWidgetFormTextarea());
         $this->setValidator($name, new sfValidatorString());
 
         $setting = $this->settings[$name] = $this->getSetting($name);
-        if (null !== $setting)
-        {
+        if (null !== $setting) {
           $this->setDefault($name, $setting->getValue());
         }
       }

@@ -63,10 +63,8 @@ class arDacsPluginEditAction extends InformationObjectEditAction
     $this->dacs = new arDacsPlugin($this->resource);
 
     $title = $this->context->i18n->__('Add new archival description');
-    if (isset($this->getRoute()->resource))
-    {
-      if (1 > strlen($title = $this->resource->__toString()))
-      {
+    if (isset($this->getRoute()->resource)) {
+      if (1 > strlen($title = $this->resource->__toString())) {
         $title = $this->context->i18n->__('Untitled');
       }
 
@@ -102,8 +100,7 @@ class arDacsPluginEditAction extends InformationObjectEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'creators':
         $criteria = new Criteria();
         $criteria->add(QubitEvent::OBJECT_ID, $this->resource->id);
@@ -111,8 +108,7 @@ class arDacsPluginEditAction extends InformationObjectEditAction
         $criteria->add(QubitEvent::TYPE_ID, QubitTerm::CREATION_ID);
 
         $value = $choices = [];
-        foreach ($this->events = QubitEvent::get($criteria) as $item)
-        {
+        foreach ($this->events = QubitEvent::get($criteria) as $item) {
           $choices[$value[] = $this->context->routing->generate(null, [$item->actor, 'module' => 'actor'])] = $item->actor;
         }
 
@@ -144,33 +140,26 @@ class arDacsPluginEditAction extends InformationObjectEditAction
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'creators':
         $value = $filtered = [];
-        foreach ($this->form->getValue('creators') as $item)
-        {
+        foreach ($this->form->getValue('creators') as $item) {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));
           $resource = $params['_sf_route']->resource;
           $value[$resource->id] = $filtered[$resource->id] = $resource;
         }
 
-        foreach ($this->events as $item)
-        {
-          if (isset($value[$item->actor->id]))
-          {
+        foreach ($this->events as $item) {
+          if (isset($value[$item->actor->id])) {
             unset($filtered[$item->actor->id]);
-          }
-          elseif (!isset($this->request->sourceId))
-          {
+          } elseif (!isset($this->request->sourceId)) {
             // Will be indexed when description is saved
             $item->indexOnSave = false;
             $item->delete();
           }
         }
 
-        foreach ($filtered as $item)
-        {
+        foreach ($filtered as $item) {
           $event = new QubitEvent();
           $event->actor = $item;
           $event->typeId = QubitTerm::CREATION_ID;

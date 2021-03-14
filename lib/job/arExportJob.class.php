@@ -46,8 +46,7 @@ class arExportJob extends arBaseJob
 
     $this->doExport($tempPath);
 
-    if (count($this->itemsExported) > 0)
-    {
+    if (count($this->itemsExported) > 0) {
       $this->info($this->i18n->__(
         'Exported %1 records.', ['%1' => $this->itemsExported]
       ));
@@ -60,8 +59,7 @@ class arExportJob extends arBaseJob
       // Create ZIP file and add metadata file(s) and digital objects
       $errors = $this->createZipForDownload($tempPath);
 
-      if (!empty($errors))
-      {
+      if (!empty($errors)) {
         $this->error(
           $this->i18n->__('Failed to create ZIP file.').' : '
           .implode(' : ', $errors)
@@ -72,9 +70,7 @@ class arExportJob extends arBaseJob
 
       $this->job->downloadPath = $this->getDownloadRelativeFilePath();
       $this->info($this->i18n->__('Export and archiving complete.'));
-    }
-    else
-    {
+    } else {
       $this->info($this->i18n->__('No relevant records were found to export.'));
     }
 
@@ -96,8 +92,7 @@ class arExportJob extends arBaseJob
   {
     $downloadFilePath = null;
 
-    if (!is_null($this->downloadFileExtension))
-    {
+    if (!is_null($this->downloadFileExtension)) {
       $downloadFilePath = $this->getJobsDownloadDirectory()
         .DIRECTORY_SEPARATOR
         .$this->getJobDownloadFilename();
@@ -116,8 +111,7 @@ class arExportJob extends arBaseJob
   {
     $downloadRelativeFilePath = null;
 
-    if (!is_null($this->downloadFileExtension))
-    {
+    if (!is_null($this->downloadFileExtension)) {
       $relativeBaseDir = 'downloads'.DIRECTORY_SEPARATOR.'jobs';
       $downloadRelativeFilePath = $relativeBaseDir.DIRECTORY_SEPARATOR
         .$this->getJobDownloadFilename();
@@ -138,8 +132,7 @@ class arExportJob extends arBaseJob
       .DIRECTORY_SEPARATOR.'jobs';
 
     // Create the "downloads/jobs" directory if it doesn't exist already
-    if (!is_dir($path))
-    {
+    if (!is_dir($path)) {
       mkdir($path, 0755, true);
     }
 
@@ -184,8 +177,7 @@ class arExportJob extends arBaseJob
   {
     $errors = [];
 
-    if (!is_writable($this->getJobsDownloadDirectory()))
-    {
+    if (!is_writable($this->getJobsDownloadDirectory())) {
       return [$this->i18n->__('Cannot write to directory')];
     }
 
@@ -193,8 +185,7 @@ class arExportJob extends arBaseJob
 
     if (!$zip->open(
       $this->getDownloadFilePath(), ZipArchive::CREATE | ZipArchive::OVERWRITE
-    ))
-    {
+    )) {
       return [$this->i18n->__('Cannot create zip file')];
     }
 
@@ -208,25 +199,17 @@ class arExportJob extends arBaseJob
 
   protected function addFilesToZip($path, &$zip, &$errors)
   {
-    foreach (scandir($path) as $file)
-    {
-      if (is_dir($file))
-      {
+    foreach (scandir($path) as $file) {
+      if (is_dir($file)) {
         continue;
       }
 
-      try
-      {
+      try {
         $zip->addFile($path.DIRECTORY_SEPARATOR.$file, $file);
-      }
-      catch (Exception $e)
-      {
-        if ($this->user->isAdministrator())
-        {
+      } catch (Exception $e) {
+        if ($this->user->isAdministrator()) {
           $errors[] = 'Exception: '.$e->getMessage();
-        }
-        else
-        {
+        } else {
           $errors[] = $this->i18n->__('Sorry, but there was an error retrieving
             a data file. This has stopped the export process. Please contact an
             administrator.');
@@ -249,8 +232,7 @@ class arExportJob extends arBaseJob
     if (
       !isset($this->params['includeDigitalObjects'])
       || !$this->params['includeDigitalObjects']
-    )
-    {
+    ) {
       return;
     }
 
@@ -261,14 +243,12 @@ class arExportJob extends arBaseJob
     if (
       null === $digitalObject
       || !$this->allowDigitalObjectExport($resource, $digitalObject)
-    )
-    {
+    ) {
       return false;
     }
 
     // Don't try to export an external digital object
-    if (!$digitalObject->isLocalFile())
-    {
+    if (!$digitalObject->isLocalFile()) {
       $this->info($this->i18n->__(
         'Skipping external digital object "%1%"',
         ['%1%' => $digitalObject->getPath()]
@@ -279,8 +259,7 @@ class arExportJob extends arBaseJob
 
     $filepath = $digitalObject->getAbsolutePath();
 
-    if (!file_exists($filepath))
-    {
+    if (!file_exists($filepath)) {
       $this->info($this->i18n->__(
         'Digital object "%1%" not found',
         ['%1%' => $filepath]
@@ -292,8 +271,7 @@ class arExportJob extends arBaseJob
     $filename = $this->getUniqueFilename($filepath);
     $dest = $tempDir.DIRECTORY_SEPARATOR.$filename;
 
-    if (!copy($filepath, $dest))
-    {
+    if (!copy($filepath, $dest)) {
       $this->info($this->i18n->__(
         'Failed to copy digital object "%1%" to "%2%"',
         ['%1%' => $filepath, '%2%' => $dest]
@@ -314,8 +292,7 @@ class arExportJob extends arBaseJob
       $digitalObject->masterAccessibleViaUrl()
       && QubitAcl::check($resource, 'readMaster')
       && !$digitalObject->hasConditionalCopyright()
-    )
-    {
+    ) {
       // Export is allowed
       return true;
     }
@@ -327,8 +304,7 @@ class arExportJob extends arBaseJob
   {
     $filename = basename($filepath);
 
-    if (!isset($this->filenames[$filename]))
-    {
+    if (!isset($this->filenames[$filename])) {
       // Filename not used yet - add to tracker
       $this->filenames[$filename] = 0;
 
@@ -351,8 +327,7 @@ class arExportJob extends arBaseJob
    */
   protected function logExportProgress()
   {
-    if (0 == $this->itemsExported % self::LOG_INTERVAL)
-    {
+    if (0 == $this->itemsExported % self::LOG_INTERVAL) {
       $this->info($this->i18n->__(
         'Exported %1 items...', ['%1' => $this->itemsExported])
       );

@@ -29,8 +29,7 @@ return;
 
   public function formatRow($label, $field, $errors = [], $help = '', $hiddenFields = null)
   {
-    if (preg_match('/<input [^>]*type="checkbox"/', $field))
-    {
+    if (preg_match('/<input [^>]*type="checkbox"/', $field)) {
       return parent::formatRow(preg_replace('/<label[^>]*>/', "$0{$field}", $label), null, $errors, $help, $hiddenFields);
     }
 
@@ -44,8 +43,7 @@ return;
     $label = parent::generateLabelName($name);
 
     $validatorSchema = $this->form->getValidatorSchema();
-    if (isset($validatorSchema[$name]) && $validatorSchema[$name]->getOption('required'))
-    {
+    if (isset($validatorSchema[$name]) && $validatorSchema[$name]->getOption('required')) {
       $label .= ' <span class="form-required" title="This field is required.">*</span>';
     }
 

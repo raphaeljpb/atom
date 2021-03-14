@@ -30,21 +30,18 @@ class atomPluginsTask extends sfBaseTask
     // Retrieve QubitSetting object
     $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, 'plugins');
-    if (null === $setting = QubitSetting::getOne($criteria))
-    {
+    if (null === $setting = QubitSetting::getOne($criteria)) {
       throw new sfException('Database entry could not be found.');
     }
 
     // Array of plugins
     $plugins = array_values(unserialize($setting->getValue(['sourceCulture' => true])));
 
-    if (in_array($arguments['action'], ['add', 'delete']) && !isset($arguments['plugin']))
-    {
+    if (in_array($arguments['action'], ['add', 'delete']) && !isset($arguments['plugin'])) {
       throw new sfException('Missing plugin name.');
     }
 
-    switch ($arguments['action'])
-    {
+    switch ($arguments['action']) {
       case 'add':
         $plugins[] = $arguments['plugin'];
 
@@ -55,12 +52,9 @@ class atomPluginsTask extends sfBaseTask
         break;
 
       case 'delete':
-        if (false !== $key = array_search($arguments['plugin'], $plugins))
-        {
+        if (false !== $key = array_search($arguments['plugin'], $plugins)) {
           unset($plugins[$key]);
-        }
-        else
-        {
+        } else {
           throw new sfException('Plugin could not be found.');
         }
 
@@ -71,8 +65,7 @@ class atomPluginsTask extends sfBaseTask
         break;
 
       case 'list':
-        foreach ($plugins as $plugin)
-        {
+        foreach ($plugins as $plugin) {
           echo $plugin."\n";
         }
 

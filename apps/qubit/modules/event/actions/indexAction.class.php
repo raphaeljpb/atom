@@ -21,8 +21,7 @@ class EventIndexAction extends sfAction
 {
   public function execute($request)
   {
-    if (!$this->getUser()->isAuthenticated())
-    {
+    if (!$this->getUser()->isAuthenticated()) {
       QubitAcl::forwardUnauthorized();
     }
 
@@ -30,39 +29,33 @@ class EventIndexAction extends sfAction
 
     $value = [];
 
-    if (isset($this->resource->actor))
-    {
+    if (isset($this->resource->actor)) {
       $value['actor'] = $this->context->routing->generate(null, [$this->resource->actor, 'module' => 'actor']);
       $value['actorDisplay'] = $this->resource->actor->getAuthorizedFormOfName(['cultureFallback' => true]);
     }
 
-    if (isset($this->resource->date))
-    {
+    if (isset($this->resource->date)) {
       $value['date'] = $this->resource->date;
     }
 
     $value['endDate'] = Qubit::renderDate($this->resource->endDate);
     $value['startDate'] = Qubit::renderDate($this->resource->startDate);
 
-    if (isset($this->resource->description))
-    {
+    if (isset($this->resource->description)) {
       $value['description'] = $this->resource->description;
     }
 
-    if (isset($this->resource->object))
-    {
+    if (isset($this->resource->object)) {
       $value['informationObject'] = $this->context->routing->generate(null, [$this->resource->object, 'module' => 'informationobject']);
     }
 
     $place = $this->resource->getPlace();
-    if (isset($place))
-    {
+    if (isset($place)) {
       $value['place'] = $this->context->routing->generate(null, [$place, 'module' => 'term']);
       $value['placeDisplay'] = $place->getName(['cultureFallback' => true]);
     }
 
-    if (isset($this->resource->type))
-    {
+    if (isset($this->resource->type)) {
       $value['type'] = $this->context->routing->generate(null, [$this->resource->type, 'module' => 'term']);
     }
 

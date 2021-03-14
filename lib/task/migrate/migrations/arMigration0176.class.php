@@ -59,15 +59,13 @@ class arMigration0176
       'description_detail_id' => 'function_object_FI_5',
     ];
 
-    foreach ($indexes as $columnName => $indexName)
-    {
+    foreach ($indexes as $columnName => $indexName) {
       // Get actual index name
       $sql = 'SHOW INDEX FROM function_object WHERE Column_name=:column_name;';
       $result = QubitPdo::fetchOne($sql, [':column_name' => $columnName]);
 
       // Stop if the index is missing
-      if (!$result || !$result->Key_name)
-      {
+      if (!$result || !$result->Key_name) {
         throw new Exception(sprintf(
           "Could not find index for '%s' column on 'function_object' table.",
           $columnName
@@ -75,8 +73,7 @@ class arMigration0176
       }
 
       // Skip if the index already has the expected name
-      if ($result->Key_name == $indexName)
-      {
+      if ($result->Key_name == $indexName) {
         continue;
       }
 

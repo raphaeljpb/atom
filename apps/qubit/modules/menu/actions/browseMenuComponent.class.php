@@ -30,8 +30,7 @@ class MenuBrowseMenuComponent extends sfComponent
     // Get menu objects
     $this->browseMenu = QubitMenu::getById(QubitMenu::BROWSE_ID);
 
-    if (!$this->browseMenu instanceof QubitMenu)
-    {
+    if (!$this->browseMenu instanceof QubitMenu) {
       return sfView::NONE;
     }
   }

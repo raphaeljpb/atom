@@ -20,7 +20,7 @@
               <strong>
                 <?php if ('' == $repository && '' == $objectId) { ?>
                   <em><?php echo __('All %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject'))]); ?></em>
-                <?php } elseif ('' != $repository){ ?>
+                <?php } elseif ('' != $repository) { ?>
                   <?php echo __('%1%: %2%', ['%1%' => sfConfig::get('app_ui_label_repository'), '%2%' => render_title(QubitRepository::getBySlug($repository))]); ?>
                 <?php } else { ?>
                   <?php echo render_title(QubitInformationObject::getById($objectId)); ?>

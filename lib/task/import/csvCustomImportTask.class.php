@@ -24,11 +24,11 @@
  */
 class csvCustomImportTask extends csvImportBaseTask
 {
-    protected $namespace = 'csv';
-    protected $name = 'custom-import';
-    protected $briefDescription = 'Import csv data using custom criteria';
+  protected $namespace = 'csv';
+  protected $name = 'custom-import';
+  protected $briefDescription = 'Import csv data using custom criteria';
 
-    protected $detailedDescription = <<<'EOF'
+  protected $detailedDescription = <<<'EOF'
 Import CSV data using import logic defined in a file
 EOF;
 
@@ -50,8 +50,7 @@ EOF;
       ? $options['source-name']
       : basename($arguments['filename']);
 
-    if (false === $fh = fopen($arguments['filename'], 'rb'))
-    {
+    if (false === $fh = fopen($arguments['filename'], 'rb')) {
       throw new sfException('You must specify a valid filename');
     }
 

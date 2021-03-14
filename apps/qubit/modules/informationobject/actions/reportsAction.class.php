@@ -36,23 +36,19 @@ class InformationObjectReportsAction extends sfAction
     $this->resource = $this->getRoute()->resource;
     $this->getExistingReports();
 
-    if (!isset($this->resource))
-    {
+    if (!isset($this->resource)) {
       $this->forward404();
     }
 
     $this->form = new sfForm();
 
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->addField($name);
     }
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->redirect($this->form->getValue('report'));
       }
     }
@@ -60,12 +56,10 @@ class InformationObjectReportsAction extends sfAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'report':
         // Hide if DC or MODS since they don't use such levels of description
-        if (!in_array($this->resource->sourceStandard, ['Dublin Core Simple version 1.1', 'MODS version 3.3']))
-        {
+        if (!in_array($this->resource->sourceStandard, ['Dublin Core Simple version 1.1', 'MODS version 3.3'])) {
           $choices = [];
 
           if ($this->resource->containsLevelOfDescription('File')) {
@@ -75,22 +69,18 @@ class InformationObjectReportsAction extends sfAction
           if ($this->resource->containsLevelOfDescription('Item')) {
             $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'itemOrFileList', 'type' => 'item'])] = $this->context->i18n->__('Item list');
           }
-        }
-        else
-        {
+        } else {
           $choices = [];
         }
 
-        if ($this->getUser()->isAuthenticated())
-        {
+        if ($this->getUser()->isAuthenticated()) {
           $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'storageLocations'])] = $this->context->i18n->__('Physical storage locations');
           $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'boxLabel'])] = $this->context->i18n->__('Box label');
         }
 
         $this->reportsAvailable = !empty($choices);
 
-        if ($this->reportsAvailable)
-        {
+        if ($this->reportsAvailable) {
           $available_routes = array_keys($choices);
           $this->form->setDefault($name, $available_routes[0]);
           $this->form->setValidator($name, new sfValidatorChoice(['choices' => $available_routes]));
@@ -109,17 +99,13 @@ class InformationObjectReportsAction extends sfAction
     $types = array_keys($this->typeLabels);
     $this->existingReports = [];
 
-    foreach ($types as $type)
-    {
-      foreach ($formats as $format)
-      {
+    foreach ($types as $type) {
+      foreach ($formats as $format) {
         $path = arGenerateReportJob::getFilename($this->resource, $format, $type);
 
-        if (file_exists($path))
-        {
+        if (file_exists($path)) {
           if (!sfContext::getInstance()->user->isAuthenticated()
-              && in_array($type, ['storageLocations', 'boxLabel']))
-          {
+              && in_array($type, ['storageLocations', 'boxLabel'])) {
             continue;
           }
 

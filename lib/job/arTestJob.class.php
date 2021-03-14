@@ -27,12 +27,9 @@ class arTestJob extends arBaseJob
   {
     $this->info($this->i18n->__('Got a test job! Id: %1', ['%1' => $this->job->id]));
 
-    if (isset($parameters['error']))
-    {
+    if (isset($parameters['error'])) {
       $this->job->setStatusError($this->i18n->__('The test worker broke!'));
-    }
-    else
-    {
+    } else {
       $this->job->setStatusCompleted();
     }
 

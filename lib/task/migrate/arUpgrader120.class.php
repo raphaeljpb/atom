@@ -27,13 +27,11 @@ class arUpgrader120
 
   public function up($version, $configuration, $options)
   {
-    if ($options['verbose'])
-    {
+    if ($options['verbose']) {
       echo "up({$version})\n";
     }
 
-    switch ($version)
-    {
+    switch ($version) {
       // Add setting for job_scheduling
       case 75:
         $setting = new QubitSetting();
@@ -118,18 +116,12 @@ class arUpgrader120
           FROM %s
           WHERE constants IS NOT NULL', QubitAclPermission::TABLE_NAME);
 
-        foreach (QubitPdo::fetchAll($sql) as $item)
-        {
-          if ('%p[repositoryId] == %k[repositoryId]' == $item->conditional)
-          {
+        foreach (QubitPdo::fetchAll($sql) as $item) {
+          if ('%p[repositoryId] == %k[repositoryId]' == $item->conditional) {
             $name = 'repository';
-          }
-          elseif ('%p[taxonomyId] == %k[taxonomyId]' == $item->conditional)
-          {
+          } elseif ('%p[taxonomyId] == %k[taxonomyId]' == $item->conditional) {
             $name = 'taxonomy';
-          }
-          else
-          {
+          } else {
             continue;
           }
 
@@ -140,8 +132,7 @@ class arUpgrader120
           $slug = QubitPdo::fetchOne($sql, [$arr[$name.'Id']]);
 
           // Update acl_permission values
-          if ($slug)
-          {
+          if ($slug) {
             $sql = sprintf('UPDATE %s SET
                 conditional = ?,
                 constants = ?
@@ -213,10 +204,8 @@ class arUpgrader120
         ];
 
         // Convert varchar columns to text
-        foreach ($textColumns as $tablename => $cols)
-        {
-          foreach ($cols as $col)
-          {
+        foreach ($textColumns as $tablename => $cols) {
+          foreach ($cols as $col) {
             $sql = sprintf('ALTER TABLE `%s` MODIFY `%s` VARCHAR(1024);', $tablename, $col);
             QubitPdo::modify($sql);
           }
@@ -228,10 +217,8 @@ class arUpgrader120
             'name', 'path', ],
         ];
 
-        foreach ($textNotNullColumns as $tablename => $cols)
-        {
-          foreach ($cols as $col)
-          {
+        foreach ($textNotNullColumns as $tablename => $cols) {
+          foreach ($cols as $col) {
             $sql = sprintf('ALTER TABLE `%s` MODIFY `%s` VARCHAR(1024) NOT NULL;', $tablename, $col);
             QubitPdo::modify($sql);
           }
@@ -275,8 +262,7 @@ class arUpgrader120
         $criteria->add(QubitTermI18n::CULTURE, 'en');
         $criteria->add(QubitTermI18n::NAME, 'Right');
 
-        if (null === QubitTerm::getOne($criteria))
-        {
+        if (null === QubitTerm::getOne($criteria)) {
           $term = new QubitTerm();
           $term->id = QubitTerm::RIGHT_ID;
           $term->parentId = QubitTerm::ROOT_ID;
@@ -294,8 +280,7 @@ class arUpgrader120
         $criteria->add(QubitTermI18n::CULTURE, 'en');
         $criteria->add(QubitTermI18n::NAME, 'Donor');
 
-        if (null === QubitTerm::getOne($criteria))
-        {
+        if (null === QubitTerm::getOne($criteria)) {
           $term = new QubitTerm();
           $term->id = QubitTerm::DONOR_ID;
           $term->parentId = QubitTerm::ROOT_ID;
@@ -357,8 +342,7 @@ class arUpgrader120
           'physical_storage', ];
 
         // Add visibility settings
-        foreach ($elements as $item)
-        {
+        foreach ($elements as $item) {
           $setting = new QubitSetting();
           $setting->name = $item;
           $setting->scope = 'element_visibility';
@@ -376,8 +360,7 @@ class arUpgrader120
         $node->save();
 
         // Introduce it after "globalReplace"
-        if (null !== $target = QubitMenu::getByName('globalReplace'))
-        {
+        if (null !== $target = QubitMenu::getByName('globalReplace')) {
           $node->moveToNextSiblingOf($target);
         }
 

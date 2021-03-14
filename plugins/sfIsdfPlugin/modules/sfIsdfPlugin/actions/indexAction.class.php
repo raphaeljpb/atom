@@ -25,15 +25,13 @@ class sfIsdfPluginIndexAction extends FunctionIndexAction
 
     $this->isdf = new sfIsdfPlugin($this->resource);
 
-    if (1 > strlen($title = $this->resource->__toString()))
-    {
+    if (1 > strlen($title = $this->resource->__toString())) {
       $title = $this->context->i18n->__('Untitled');
     }
 
     $this->response->setTitle("{$title} - {$this->response->getTitle()}");
 
-    if (QubitAcl::check($this->resource, 'update'))
-    {
+    if (QubitAcl::check($this->resource, 'update')) {
       $validatorSchema = new sfValidatorSchema();
       $values = [];
 
@@ -52,12 +50,9 @@ class sfIsdfPluginIndexAction extends FunctionIndexAction
           'required' => $this->context->i18n->__('%1%Description identifier%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-4#Function.2Factivity_description_identifier">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-4#Structure_and_use_4.7">', '%4%' => '</a>']), ]);
       $values['descriptionIdentifier'] = $this->resource->descriptionIdentifier;
 
-      try
-      {
+      try {
         $validatorSchema->clean($values);
-      }
-      catch (sfValidatorErrorSchema $e)
-      {
+      } catch (sfValidatorErrorSchema $e) {
         $this->errorSchema = $e;
       }
     }

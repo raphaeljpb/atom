@@ -36,8 +36,7 @@ class SettingsDipUploadAction extends SettingsEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'stripExtensions':
         $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
         $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));

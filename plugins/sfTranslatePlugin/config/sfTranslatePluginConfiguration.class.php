@@ -12,8 +12,7 @@ class sfTranslatePluginConfiguration extends sfPluginConfiguration
     $context = $event->getSubject();
 
     // Stop execution if user is not authenticated
-    if (!$context->user->isAuthenticated())
-    {
+    if (!$context->user->isAuthenticated()) {
       return;
     }
 

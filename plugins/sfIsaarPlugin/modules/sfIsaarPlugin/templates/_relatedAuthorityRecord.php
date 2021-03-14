@@ -45,7 +45,7 @@
             <?php if (QubitTerm::ROOT_ID != $item->type->parentId) { ?>
               <?php if ($resource->id != $item->objectId) { ?>
                 <?php echo render_title($item->type).' '.render_title($resource); ?>
-              <?php } elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($item->type->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]))){ ?>
+              <?php } elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($item->type->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]))) { ?>
                 <?php echo render_title($converseTerms[0]->getOpposedObject($item->type)).' '.render_title($resource); ?>
               <?php } ?>
             <?php } ?>

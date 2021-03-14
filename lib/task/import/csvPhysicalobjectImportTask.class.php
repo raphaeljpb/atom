@@ -43,14 +43,10 @@ class csvPhysicalobjectImportTask extends arBaseTask
     $this->log(sprintf('Importing physical object data from %s...'.PHP_EOL,
       $importer->getFilename()));
 
-    if (isset($options['skip-rows']) && $options['skip-rows'] > 0)
-    {
-      if (1 == $options['skip-rows'])
-      {
+    if (isset($options['skip-rows']) && $options['skip-rows'] > 0) {
+      if (1 == $options['skip-rows']) {
         $this->log('Skipping first row...');
-      }
-      else
-      {
+      } else {
         $this->log(sprintf('Skipping first %u rows...', $options['skip-rows']));
       }
     }
@@ -185,16 +181,13 @@ EOF;
       'update' => 'updateExisting',
     ];
 
-    foreach ($keymap as $oldkey => $newkey)
-    {
-      if (empty($options[$oldkey]))
-      {
+    foreach ($keymap as $oldkey => $newkey) {
+      if (empty($options[$oldkey])) {
         continue;
       }
 
       // Invert value of skip-unmatched
-      if ('skip-unmatched' == $oldkey)
-      {
+      if ('skip-unmatched' == $oldkey) {
         $opts[$newkey] = !$options[$oldkey];
 
         continue;
@@ -208,8 +201,7 @@ EOF;
 
   protected function validateOptions($options)
   {
-    if ($options['skip-unmatched'] && !$options['update'])
-    {
+    if ($options['skip-unmatched'] && !$options['update']) {
       $msg = <<<'EOM'
 The --skip-unmatched option can not be used without the --update option.
 EOM;

@@ -38,8 +38,7 @@ class arMigration0148
    */
   public function up($configuration)
   {
-    if (null === QubitMenu::getByName('importSkos'))
-    {
+    if (null === QubitMenu::getByName('importSkos')) {
       $node = new QubitMenu();
       $node->parentId = QubitMenu::IMPORT_ID;
       $node->name = 'importSkos';

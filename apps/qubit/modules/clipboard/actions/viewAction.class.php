@@ -23,15 +23,12 @@ class ClipboardViewAction extends DefaultBrowseAction
   {
     parent::execute($request);
 
-    if ('print' == $request->getGetParameter('media'))
-    {
+    if ('print' == $request->getGetParameter('media')) {
       $this->getResponse()->addStylesheet('print-preview', 'last');
 
       // Negate paging when printing
       $maxPerPage = arElasticSearchPluginConfiguration::getMaxResultWindow();
-    }
-    else
-    {
+    } else {
       $maxPerPage = $this->limit;
     }
 
@@ -41,18 +38,14 @@ class ClipboardViewAction extends DefaultBrowseAction
 
     $slugs = $request->getPostParameter('slugs', []);
 
-    if (empty($slugs))
-    {
+    if (empty($slugs)) {
       $resultSet = new \Elastica\ResultSet(new Elastica\Response(null), new Elastica\Query(), []);
-    }
-    else
-    {
+    } else {
       $this->search->queryBool->addMust(new \Elastica\Query\Terms('slug', $slugs));
       $this->setSortOptions();
       $this->setESSort($request);
 
-      if ('QubitInformationObject' == $this->entityType)
-      {
+      if ('QubitInformationObject' == $this->entityType) {
         QubitAclSearch::filterDrafts($this->search->queryBool);
       }
 
@@ -90,14 +83,12 @@ class ClipboardViewAction extends DefaultBrowseAction
     ];
 
     // IOs and Repos have identifier sort option in common
-    if (in_array($this->entityType, ['QubitInformationObject', 'QubitRepository']))
-    {
+    if (in_array($this->entityType, ['QubitInformationObject', 'QubitRepository'])) {
       $this->sortOptions['identifier'] = $this->context->i18n->__('Identifier');
     }
 
     // IO specific sort options
-    if ('QubitInformationObject' === $this->entityType)
-    {
+    if ('QubitInformationObject' === $this->entityType) {
       $this->sortOptions['alphabetic'] = $this->context->i18n->__('Title');
       $this->sortOptions['referenceCode'] = $this->context->i18n->__('Reference code');
       $this->sortOptions['startDate'] = $this->context->i18n->__('Start date');
@@ -117,8 +108,7 @@ class ClipboardViewAction extends DefaultBrowseAction
     // will default to sort by relevance since authority records don't have start dates to sort over.
     $request->sort = isset($this->sortOptions[$request->sort]) ? $request->sort : 'relevance';
 
-    switch ($request->sort)
-    {
+    switch ($request->sort) {
       // Sort by highest ES score
       case 'relevance':
         $this->search->query->addSort(['_score' => $request->sortDir]);

@@ -30,15 +30,13 @@ class sfDcPluginIndexAction extends InformationObjectIndexAction
 
     $this->dc = new sfDcPlugin($this->resource);
 
-    if (1 > strlen($title = $this->resource->__toString()))
-    {
+    if (1 > strlen($title = $this->resource->__toString())) {
       $title = $this->context->i18n->__('Untitled');
     }
 
     $this->response->setTitle("{$title} - {$this->response->getTitle()}");
 
-    if (QubitAcl::check($this->resource, 'update'))
-    {
+    if (QubitAcl::check($this->resource, 'update')) {
       $validatorSchema = new sfValidatorSchema();
       $values = [];
 
@@ -56,21 +54,16 @@ class sfDcPluginIndexAction extends InformationObjectIndexAction
         'required' => true, ], [
           'required' => $this->context->i18n->__('%1%Relation%2% (%3%isLocatedAt%4%) - This is a mandatory element for this resource or one of its higher descriptive levels (if part of a collection hierarchy).', ['%1%' => '<a href="http://dublincore.org/documents/dcmi-terms/#elements-relation">', '%2%' => '</a>', '%3%' => '<a href="http://dublincore.org/groups/collections/collection-application-profile/#colcldisLocatedAt">', '%4%' => '</a>']), ]);
 
-      foreach ($this->resource->ancestors->andSelf() as $item)
-      {
+      foreach ($this->resource->ancestors->andSelf() as $item) {
         $values['repository'] = $item->repository;
-        if (isset($values['repository']))
-        {
+        if (isset($values['repository'])) {
           break;
         }
       }
 
-      try
-      {
+      try {
         $validatorSchema->clean($values);
-      }
-      catch (sfValidatorErrorSchema $e)
-      {
+      } catch (sfValidatorErrorSchema $e) {
         $this->errorSchema = $e;
       }
     }

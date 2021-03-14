@@ -24,14 +24,12 @@ class InformationObjectDeleteFindingAidAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that object exists and that it is not the root
-    if (!isset($this->resource) || !isset($this->resource->parent))
-    {
+    if (!isset($this->resource) || !isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!$this->context->user->isAuthenticated())
-    {
+    if (!$this->context->user->isAuthenticated()) {
       QubitAcl::forwardUnauthorized();
     }
 
@@ -40,12 +38,10 @@ class InformationObjectDeleteFindingAidAction extends sfAction
     $parts = explode(DIRECTORY_SEPARATOR, $this->path);
     $this->filename = array_pop($parts);
 
-    if ($request->isMethod('delete'))
-    {
+    if ($request->isMethod('delete')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $i18n = $this->context->i18n;
 
         $params = [

@@ -22,34 +22,29 @@ class InformationObjectExportCsvAction extends sfAction
   // Export CSV representation of descriptions occurring in search/browse results
   public function execute($request)
   {
-    if ($this->context->user->isAuthenticated())
-    {
+    if ($this->context->user->isAuthenticated()) {
       // To keep the top level descriptions filter an agg in sync
       // the autocomplete value is converted to the resource id
       // before the agg filters are added to the query
       $getParameters = $request->getGetParameters();
-      if (isset($getParameters['collection']) && !ctype_digit($getParameters['collection']))
-      {
+      if (isset($getParameters['collection']) && !ctype_digit($getParameters['collection'])) {
         $params = sfContext::getInstance()->routing->parse(Qubit::pathInfo($getParameters['collection']));
         $collection = $params['_sf_route']->resource;
 
         unset($getParameters['collection']);
 
-        if ($collection instanceof QubitInformationObject)
-        {
+        if ($collection instanceof QubitInformationObject) {
           $getParameters['collection'] = $collection->id;
         }
       }
 
       // Add first criterion to the search box if it's over any field
-      if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->sq0) && !isset($request->sf0))
-      {
+      if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->sq0) && !isset($request->sf0)) {
         $getParameters['query'] = $request->sq0;
       }
 
       // And search box query as the first criterion
-      if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->query))
-      {
+      if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->query)) {
         $getParameters['sq0'] = $request->query;
       }
 
@@ -69,12 +64,9 @@ class InformationObjectExportCsvAction extends sfAction
     }
 
     // If referer URL is valid, redirect to it... otherwise, redirect to the information objects browse page)
-    if (true === filter_var($request->getHttpHeader('referer'), FILTER_VALIDATE_URL))
-    {
+    if (true === filter_var($request->getHttpHeader('referer'), FILTER_VALIDATE_URL)) {
       $this->redirect($request->getHttpHeader('referer'));
-    }
-    else
-    {
+    } else {
       $this->redirect($this->context->routing->generate(null, [null, 'module' => 'informationobject', 'action' => 'browse']));
     }
   }

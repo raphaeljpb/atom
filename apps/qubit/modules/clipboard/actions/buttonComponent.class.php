@@ -25,15 +25,12 @@ class ClipboardButtonComponent extends sfComponent
 
     $i18n = $this->context->i18n;
 
-    if ($this->wide)
-    {
+    if ($this->wide) {
       $this->class .= '-wide';
       $this->tooltip = false;
       $title = $i18n->__('Add');
       $altTitle = $i18n->__('Remove');
-    }
-    else
-    {
+    } else {
       $this->tooltip = true;
       $title = $i18n->__('Add to clipboard');
       $altTitle = $i18n->__('Remove from clipboard');
@@ -43,8 +40,7 @@ class ClipboardButtonComponent extends sfComponent
     $this->altTitle = $altTitle;
 
     // Mix in repository page specific styles
-    if (!empty($this->repositoryOrDigitalObjBrowse))
-    {
+    if (!empty($this->repositoryOrDigitalObjBrowse)) {
       $this->class .= ' repository-or-digital-obj-browse';
     }
   }

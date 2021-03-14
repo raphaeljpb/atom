@@ -32,8 +32,7 @@ class arMigration0141
 
   public function up($configuration)
   {
-    if (null !== $menu = QubitMenu::getByName('browseDigitalObjects'))
-    {
+    if (null !== $menu = QubitMenu::getByName('browseDigitalObjects')) {
       $menu->path = 'informationobject/browse?view=card&onlyMedia=1&topLod=0';
       $menu->save();
     }

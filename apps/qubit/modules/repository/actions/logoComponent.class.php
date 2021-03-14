@@ -24,19 +24,14 @@ class RepositoryLogoComponent extends sfComponent
 {
   public function execute($request)
   {
-    if (isset($request->getAttribute('sf_route')->resource))
-    {
+    if (isset($request->getAttribute('sf_route')->resource)) {
       $this->resource = $request->getAttribute('sf_route')->resource;
-    }
-    else
-    {
+    } else {
       return sfView::NONE;
     }
 
-    if ($this->resource instanceof QubitInformationObject)
-    {
-      if (null === $this->resource = $this->resource->getRepository(['inherit' => true]))
-      {
+    if ($this->resource instanceof QubitInformationObject) {
+      if (null === $this->resource = $this->resource->getRepository(['inherit' => true])) {
         return sfView::NONE;
       }
     }

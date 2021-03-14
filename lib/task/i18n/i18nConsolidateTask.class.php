@@ -33,8 +33,7 @@ class i18nConsolidateTask extends sfBaseTask
    */
   public function execute($arguments = [], $options = [])
   {
-    if (!file_exists($arguments['target']))
-    {
+    if (!file_exists($arguments['target'])) {
       throw new sfException('Target directory "'.$arguments['target'].'" doesn\t exist');
     }
 

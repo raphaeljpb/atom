@@ -30,8 +30,7 @@ class sfIsadPluginIndexAction extends InformationObjectIndexAction
 
     $this->isad = new sfIsadPlugin($this->resource);
 
-    if (1 > strlen($title = $this->resource->__toString()))
-    {
+    if (1 > strlen($title = $this->resource->__toString())) {
       $title = $this->context->i18n->__('Untitled');
     }
 
@@ -52,8 +51,7 @@ class sfIsadPluginIndexAction extends InformationObjectIndexAction
       QubitTerm::FAMILY_ID => $this->context->i18n->__('Biographical history'),
     ];
 
-    if (QubitAcl::check($this->resource, 'update'))
-    {
+    if (QubitAcl::check($this->resource, 'update')) {
       $validatorSchema = new sfValidatorSchema();
       $values = [];
 
@@ -61,11 +59,9 @@ class sfIsadPluginIndexAction extends InformationObjectIndexAction
         'required' => true, ], [
           'required' => $this->context->i18n->__('This archival description, or one of its higher levels, %1%requires%2% at least one %3%creator%4%.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#3.2.1">', '%4%' => '</a>']), ]);
 
-      foreach ($this->resource->ancestors->andSelf()->orderBy('rgt') as $item)
-      {
+      foreach ($this->resource->ancestors->andSelf()->orderBy('rgt') as $item) {
         $values['creators'] = $item->getCreators();
-        if (0 < count($values['creators']))
-        {
+        if (0 < count($values['creators'])) {
           break;
         }
       }
@@ -93,8 +89,7 @@ class sfIsadPluginIndexAction extends InformationObjectIndexAction
       $validatorSchema->levelOfDescription->setMessage('forbidden', $this->context->i18n->__('%1%Level of description%2% - Value "%value%" is not consistent with higher levels.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.4">', '%2%' => '</a>']));
       $validatorSchema->levelOfDescription->setMessage('required', $this->context->i18n->__('%1%Level of description%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.4">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%4%' => '</a>']));
 
-      if (isset($this->resource->levelOfDescription))
-      {
+      if (isset($this->resource->levelOfDescription)) {
         $values['levelOfDescription'] = $this->resource->levelOfDescription->getName(['sourceCulture' => true]);
       }
 
@@ -103,12 +98,9 @@ class sfIsadPluginIndexAction extends InformationObjectIndexAction
           'required' => $this->context->i18n->__('%1%Title%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-1#3.1.2">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-1#I.12">', '%4%' => '</a>']), ]);
       $values['title'] = $this->resource->getTitle(['cultureFallback' => true]);
 
-      try
-      {
+      try {
         $validatorSchema->clean($values);
-      }
-      catch (sfValidatorErrorSchema $e)
-      {
+      } catch (sfValidatorErrorSchema $e) {
         $this->errorSchema = $e;
       }
     }

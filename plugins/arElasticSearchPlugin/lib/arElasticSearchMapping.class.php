@@ -78,10 +78,8 @@ class arElasticSearchMapping
    */
   public function loadArray($mapping_array)
   {
-    if (is_array($mapping_array) && !empty($mapping_array))
-    {
-      if (count($mapping_array) > 1)
-      {
+    if (is_array($mapping_array) && !empty($mapping_array)) {
+      if (count($mapping_array) > 1) {
         throw new sfException('A mapping.yml must only contain 1 entry.');
       }
 
@@ -105,8 +103,7 @@ class arElasticSearchMapping
   {
     $mapping_array = sfYaml::load($file);
 
-    if (!is_array($mapping_array))
-    {
+    if (!is_array($mapping_array)) {
       return; // No defined schema here, skipping
     }
 
@@ -127,15 +124,12 @@ class arElasticSearchMapping
   public function cleanYamlShorthands(&$mapping = null)
   {
     // If no parameter is passed, $this->mapping will be used
-    if (null === $mapping)
-    {
+    if (null === $mapping) {
       $mapping = &$this->mapping;
     }
 
-    foreach ($mapping as $key => &$value)
-    {
-      switch ($key)
-      {
+    foreach ($mapping as $key => &$value) {
+      switch ($key) {
         case '_attributes':
         case '_foreign_types':
         case '_partial_foreign_types':
@@ -145,8 +139,7 @@ class arElasticSearchMapping
           break;
 
         default:
-          if (is_array($value))
-          {
+          if (is_array($value)) {
             $this->cleanYamlShorthands($value);
           }
 
@@ -165,18 +158,15 @@ class arElasticSearchMapping
     $className = str_replace('Qubit', '', $class).'I18nTableMap';
 
     // Ignore models without i18n table that will include i18nExtra (donors)
-    if (!class_exists($className))
-    {
+    if (!class_exists($className)) {
       return;
     }
 
     $map = new $className();
 
     $fields = [];
-    foreach ($map->getColumns() as $column)
-    {
-      if (!$column->isPrimaryKey() && !$column->isForeignKey())
-      {
+    foreach ($map->getColumns() as $column) {
+      if (!$column->isPrimaryKey() && !$column->isForeignKey()) {
         $colName = $column->getPhpName();
 
         $fields[] = $colName;
@@ -195,19 +185,16 @@ class arElasticSearchMapping
   protected function camelizeFieldNames(&$mapping = null)
   {
     // If no parameter is passed, $this->mapping will be used
-    if (null === $mapping)
-    {
+    if (null === $mapping) {
       $mapping = &$this->mapping;
     }
 
-    foreach ($mapping as $key => &$value)
-    {
+    foreach ($mapping as $key => &$value) {
       $camelized = lcfirst(sfInflector::camelize($key));
 
       // Rename only if the camelized version is different
       // Also, omit first recursion (type names)
-      if ($camelized != $key)
-      {
+      if ($camelized != $key) {
         // Create new item with the camelized version of the key
         $mapping[$camelized] = $value;
 
@@ -216,8 +203,7 @@ class arElasticSearchMapping
       }
 
       // Recurse this function over narrow items if available
-      if (isset($value['properties']))
-      {
+      if (isset($value['properties'])) {
         $this->camelizeFieldNames($value['properties']);
       }
     }
@@ -229,20 +215,17 @@ class arElasticSearchMapping
   protected function fixYamlShorthands()
   {
     // First, process special attributes
-    foreach ($this->mapping as $typeName => &$typeProperties)
-    {
+    foreach ($this->mapping as $typeName => &$typeProperties) {
       $this->processPropertyAttributes($typeName, $typeProperties);
     }
 
     // Next iteration to embed partial foreing types
-    foreach ($this->mapping as $typeName => &$typeProperties)
-    {
+    foreach ($this->mapping as $typeName => &$typeProperties) {
       $this->processPartialForeignTypes($typeProperties);
     }
 
     // Next iteration to embed nested types
-    foreach ($this->mapping as $typeName => &$typeProperties)
-    {
+    foreach ($this->mapping as $typeName => &$typeProperties) {
       $this->processForeignTypes($typeProperties);
     }
   }
@@ -255,22 +238,18 @@ class arElasticSearchMapping
   protected function processPropertyAttributes($typeName, array &$typeProperties)
   {
     // Stop execution if any special attribute was set
-    if (!isset($typeProperties['_attributes']))
-    {
+    if (!isset($typeProperties['_attributes'])) {
       return;
     }
 
     // Look for special attributes like i18n or timestamp and update the
     // mapping accordingly. For example, 'timestamp' adds the created_at
     // and updated_at fields each time is used.
-    foreach ($typeProperties['_attributes'] as $attributeName => $attributeValue)
-    {
-      switch ($attributeName)
-      {
+    foreach ($typeProperties['_attributes'] as $attributeName => $attributeValue) {
+      switch ($attributeName) {
         case 'i18n':
           $languages = sfConfig::get('app_i18n_languages');
-          if (1 > count($languages))
-          {
+          if (1 > count($languages)) {
             throw new sfException('No i18n_languages in database settings.');
           }
 
@@ -278,26 +257,20 @@ class arElasticSearchMapping
 
           // We are using the same mapping for all the i18n fields
           $nestedI18nFields = [];
-          foreach ($this->getI18nFields(lcfirst(sfInflector::camelize($typeName))) as $fieldName)
-          {
+          foreach ($this->getI18nFields(lcfirst(sfInflector::camelize($typeName))) as $fieldName) {
             $nestedI18nFields[$fieldName] = $this->getI18nFieldMapping($fieldName);
           }
 
-          if (isset($typeProperties['_attributes']['i18nExtra']))
-          {
-            foreach ($typeProperties['_attributes']['i18nExtra'] as $extraClass)
-            {
-              foreach ($this->getI18nFields(lcfirst(sfInflector::camelize($extraClass))) as $fieldName)
-              {
+          if (isset($typeProperties['_attributes']['i18nExtra'])) {
+            foreach ($typeProperties['_attributes']['i18nExtra'] as $extraClass) {
+              foreach ($this->getI18nFields(lcfirst(sfInflector::camelize($extraClass))) as $fieldName) {
                 $nestedI18nFields[$fieldName] = $this->getI18nFieldMapping($fieldName);
               }
             }
           }
 
-          if (isset($typeProperties['_attributes']['autocompleteFields']))
-          {
-            foreach ($typeProperties['_attributes']['autocompleteFields'] as $item)
-            {
+          if (isset($typeProperties['_attributes']['autocompleteFields'])) {
+            foreach ($typeProperties['_attributes']['autocompleteFields'] as $item) {
               $nestedI18nFields[$item]['fields']['autocomplete'] = [
                 'type' => 'text',
                 'analyzer' => 'autocomplete',
@@ -307,10 +280,8 @@ class arElasticSearchMapping
             }
           }
 
-          if (isset($typeProperties['_attributes']['rawFields']))
-          {
-            foreach ($typeProperties['_attributes']['rawFields'] as $item)
-            {
+          if (isset($typeProperties['_attributes']['rawFields'])) {
+            foreach ($typeProperties['_attributes']['rawFields'] as $item) {
               $nestedI18nFields[$item]['fields']['untouched'] = ['type' => 'keyword'];
             }
           }
@@ -344,18 +315,15 @@ class arElasticSearchMapping
   protected function processForeignTypes(array &$typeProperties)
   {
     // Stop execution if any foreign type was assigned
-    if (!isset($typeProperties['_foreign_types']))
-    {
+    if (!isset($typeProperties['_foreign_types'])) {
       return;
     }
 
-    foreach ($typeProperties['_foreign_types'] as $fieldName => $foreignTypeName)
-    {
+    foreach ($typeProperties['_foreign_types'] as $fieldName => $foreignTypeName) {
       $fieldNameCamelized = lcfirst(sfInflector::camelize($fieldName));
       $foreignTypeNameCamelized = lcfirst(sfInflector::camelize($foreignTypeName));
 
-      if (!isset($this->mapping[$foreignTypeNameCamelized]))
-      {
+      if (!isset($this->mapping[$foreignTypeNameCamelized])) {
         throw new sfException("{$foreignTypeName} could not be found within the mappings.");
       }
 
@@ -374,20 +342,16 @@ class arElasticSearchMapping
   protected function processPartialForeignTypes(array &$typeProperties)
   {
     // Stop execution if any partial foreign type was assigned
-    if (!isset($typeProperties['_partial_foreign_types']))
-    {
+    if (!isset($typeProperties['_partial_foreign_types'])) {
       return;
     }
 
-    foreach ($typeProperties['_partial_foreign_types'] as $fieldName => $mapping)
-    {
+    foreach ($typeProperties['_partial_foreign_types'] as $fieldName => $mapping) {
       $fieldNameCamelized = lcfirst(sfInflector::camelize($fieldName));
 
-      if (isset($mapping['_i18nFields']))
-      {
+      if (isset($mapping['_i18nFields'])) {
         $languages = sfConfig::get('app_i18n_languages');
-        if (1 > count($languages))
-        {
+        if (1 > count($languages)) {
           throw new sfException('The database settings do not contain any languages.');
         }
 
@@ -395,8 +359,7 @@ class arElasticSearchMapping
         $this->setIfNotSet($mapping['properties'], 'sourceCulture', ['type' => 'keyword', 'include_in_all' => false]);
 
         $nestedI18nFields = [];
-        foreach ($mapping['_i18nFields'] as $i18nFieldName)
-        {
+        foreach ($mapping['_i18nFields'] as $i18nFieldName) {
           $i18nFieldNameCamelized = lcfirst(sfInflector::camelize($i18nFieldName));
 
           // Create mapping for i18n field
@@ -404,10 +367,8 @@ class arElasticSearchMapping
         }
 
         // Add 'untouched' when _rawFields specified in _partial_foreign_types section
-        if (isset($mapping['_rawFields']))
-        {
-          foreach ($mapping['_rawFields'] as $item)
-          {
+        if (isset($mapping['_rawFields'])) {
+          foreach ($mapping['_rawFields'] as $item) {
             $nestedI18nFields[$item]['fields']['untouched'] = ['type' => 'keyword'];
           }
           unset($mapping['_rawFields']);
@@ -424,8 +385,7 @@ class arElasticSearchMapping
           'properties' => $nestedI18nObjects, ]);
       }
 
-      if (isset($mapping['_foreign_types']))
-      {
+      if (isset($mapping['_foreign_types'])) {
         $this->processForeignTypes($mapping);
       }
 
@@ -442,11 +402,9 @@ class arElasticSearchMapping
   protected function excludeNestedOnlyTypes()
   {
     // Iterate over types (actor, information_object, ...)
-    foreach ($this->mapping as $typeName => $typeProperties)
-    {
+    foreach ($this->mapping as $typeName => $typeProperties) {
       // Pass if nested_only is not set
-      if (!isset($typeProperties['_attributes']['nested_only']))
-      {
+      if (!isset($typeProperties['_attributes']['nested_only'])) {
         continue;
       }
 
@@ -463,8 +421,7 @@ class arElasticSearchMapping
    */
   protected function setIfNotSet(&$entry, $key, $value)
   {
-    if (!isset($entry[$key]))
-    {
+    if (!isset($entry[$key])) {
       $entry[$key] = $value;
     }
   }
@@ -479,13 +436,11 @@ class arElasticSearchMapping
   protected function getNestedI18nObjects($languages, $nestedI18nFields)
   {
     $mapping = [];
-    foreach ($languages as $culture)
-    {
+    foreach ($languages as $culture) {
       // Iterate each field and assign a custom standard analyzer (e.g.
       // std_french in search.yml) based in the language being used. The default
       // analyzer is standard, which does not provide a stopwords list.
-      foreach ($nestedI18nFields as $fn => &$fv)
-      {
+      foreach ($nestedI18nFields as $fn => &$fv) {
         $analyzer = isset(self::$analyzers[$culture]) ? self::$analyzers[$culture] : 'standard';
 
         $fv['analyzer'] = $analyzer;
@@ -516,13 +471,11 @@ class arElasticSearchMapping
    */
   protected function addSortFields($nestedI18nFields, $typeProperties)
   {
-    if (!isset($typeProperties['_attributes']['sortFields']))
-    {
+    if (!isset($typeProperties['_attributes']['sortFields'])) {
       return $nestedI18nFields;
     }
 
-    foreach ($typeProperties['_attributes']['sortFields'] as $item)
-    {
+    foreach ($typeProperties['_attributes']['sortFields'] as $item) {
       $nestedI18nFields[$item]['fields']['alphasort'] = [
         'type' => 'keyword',
         'normalizer' => 'alphasort',

@@ -89,8 +89,7 @@ EOF;
 
     $reportOptions['suppressEmpty'] = $options['omit-empty'];
 
-    if (!empty($type = strtolower($options['holding-type'])))
-    {
+    if (!empty($type = strtolower($options['holding-type']))) {
       $reportOptions['holdingType'] = ('none' == $type)
         ? $type
         : QubitPhysicalObjectCsvHoldingsReport::$defaultTypeMap[$options['holding-type']];
@@ -104,8 +103,7 @@ EOF;
     // Throw error if holding type isn't one of the allowed types
     $allowedValues = array_merge(array_keys(QubitPhysicalObjectCsvHoldingsReport::$defaultTypeMap), ['none']);
 
-    if (!empty($options['holding-type']) && !in_array($options['holding-type'], $allowedValues))
-    {
+    if (!empty($options['holding-type']) && !in_array($options['holding-type'], $allowedValues)) {
       $message = sprintf(
         'Invalid holding type "%s" (must be one of: %s).',
         $options['holding-type'],

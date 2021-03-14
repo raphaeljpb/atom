@@ -52,59 +52,47 @@ EOF;
     $criteria->add(QubitSlug::SLUG, $arguments['slug']);
     $criteria->addJoin(QubitSlug::OBJECT_ID, QubitObject::ID);
 
-    if (!$options['repo'])
-    {
+    if (!$options['repo']) {
       $resource = QubitInformationObject::get($criteria)->__get(0);
-    }
-    else
-    {
+    } else {
       $resource = QubitRepository::get($criteria)->__get(0);
     }
 
     $publicationStatus = QubitTerm::getById($this->getPublicationStatusIdByName($arguments['publicationStatus']));
 
     // Check if the resource exists
-    if (!isset($resource))
-    {
+    if (!isset($resource)) {
       throw new sfException('Resource not found');
     }
 
     // Check if the given status is correct and exists
-    if (!isset($publicationStatus))
-    {
+    if (!isset($publicationStatus)) {
       throw new sfException('Publication status not found');
     }
-    if (QubitTaxonomy::PUBLICATION_STATUS_ID != $publicationStatus->taxonomyId)
-    {
+    if (QubitTaxonomy::PUBLICATION_STATUS_ID != $publicationStatus->taxonomyId) {
       throw new sfException('Given term is not part of the publication status taxonomy');
     }
 
     // Final confirmation
-    if (!$options['no-confirm'])
-    {
+    if (!$options['no-confirm']) {
       if (!$this->askConfirmation([
         'Please, confirm that you want to change',
         'the publication status of "'.$resource->__toString().'"',
-        'to "'.$publicationStatus.'" (y/N)', ], 'QUESTION_LARGE', false))
-        {
-          $this->logSection('tools', 'Bye!');
+        'to "'.$publicationStatus.'" (y/N)', ], 'QUESTION_LARGE', false)) {
+        $this->logSection('tools', 'Bye!');
 
-          return 1;
-        }
+        return 1;
+      }
     }
 
     // Do work
-    if (!$options['repo'])
-    {
+    if (!$options['repo']) {
       self::updatePublicationStatus($resource, $publicationStatus, $options);
-    }
-    else
-    {
+    } else {
       $criteria = new Criteria();
       $criteria->add(QubitInformationObject::REPOSITORY_ID, $resource->id);
 
-      foreach (QubitInformationObject::get($criteria) as $item)
-      {
+      foreach (QubitInformationObject::get($criteria) as $item) {
         self::updatePublicationStatus($item, $publicationStatus, $options);
       }
     }
@@ -120,19 +108,15 @@ EOF;
     $resource->save();
 
     // Update pub status of descendants
-    if (!$options['ignore-descendants'])
-    {
-      foreach ($resource->descendants as $descendant)
-      {
-        if (null === $descendantPubStatus = $descendant->getPublicationStatus())
-        {
+    if (!$options['ignore-descendants']) {
+      foreach ($resource->descendants as $descendant) {
+        if (null === $descendantPubStatus = $descendant->getPublicationStatus()) {
           $descendantPubStatus = new QubitStatus();
           $descendantPubStatus->typeId = QubitTerm::STATUS_TYPE_PUBLICATION_ID;
           $descendantPubStatus->objectId = $descendant->id;
         }
 
-        if ($options['force'] || $publicationStatus->id != $descendantPubStatus->statusId)
-        {
+        if ($options['force'] || $publicationStatus->id != $descendantPubStatus->statusId) {
           $descendantPubStatus->statusId = $publicationStatus->id;
           $descendantPubStatus->save();
         }
@@ -150,8 +134,7 @@ EOF;
     ';
 
     $pubStatusId = QubitPdo::fetchColumn($sql, [QubitTaxonomy::PUBLICATION_STATUS_ID, $pubStatus]);
-    if (!$pubStatusId)
-    {
+    if (!$pubStatusId) {
       throw new sfException("Invalid publication status specified: {$pubStatus}");
     }
 

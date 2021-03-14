@@ -26,8 +26,7 @@ class AccessionDeleteAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'delete'))
-    {
+    if (!QubitAcl::check($this->resource, 'delete')) {
       QubitAcl::forwardUnauthorized();
     }
 
@@ -38,19 +37,15 @@ class AccessionDeleteAction extends sfAction
     $criteria->addJoin(QubitRelation::SUBJECT_ID, QubitAccession::ID);
     $this->accruals = QubitAccession::get($criteria);
 
-    if ($request->isMethod('delete'))
-    {
+    if ($request->isMethod('delete')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
-        foreach ($this->resource->deaccessions as $item)
-        {
+      if ($this->form->isValid()) {
+        foreach ($this->resource->deaccessions as $item) {
           $item->delete();
         }
 
-        foreach (QubitRelation::getBySubjectOrObjectId($this->resource->id) as $item)
-        {
+        foreach (QubitRelation::getBySubjectOrObjectId($this->resource->id) as $item) {
           $item->delete();
         }
 

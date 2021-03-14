@@ -21,13 +21,11 @@ class PhysicalObjectBrowseAction extends sfAction
 {
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
-    if (sfConfig::get('app_enable_institutional_scoping'))
-    {
+    if (sfConfig::get('app_enable_institutional_scoping')) {
       //remove search-realm
       $this->context->user->removeAttribute('search-realm');
     }
@@ -37,8 +35,7 @@ class PhysicalObjectBrowseAction extends sfAction
     // Do source culture fallback
     $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitPhysicalObject');
 
-    if (isset($request->subquery))
-    {
+    if (isset($request->subquery)) {
       // Get physical object data for culture
       $criteria->addJoin(QubitPhysicalObject::ID, QubitPhysicalObjectI18n::ID);
       $criteria->add(QubitPhysicalObjectI18n::CULTURE, $this->context->user->getCulture());
@@ -58,8 +55,7 @@ class PhysicalObjectBrowseAction extends sfAction
       $criteria->add($c1);
     }
 
-    switch ($request->sort)
-    {
+    switch ($request->sort) {
       case 'nameDown':
         $criteria->addDescendingOrderByColumn('name');
 

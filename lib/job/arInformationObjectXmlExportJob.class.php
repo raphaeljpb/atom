@@ -52,29 +52,24 @@ class arInformationObjectXmlExportJob extends arInformationObjectExportJob
   protected function exportResource($resource, $path)
   {
     // Don't export resource if this level of description is not allowed
-    if (!$this->isAllowedLevelId($resource->levelOfDescriptionId))
-    {
+    if (!$this->isAllowedLevelId($resource->levelOfDescriptionId)) {
       return;
     }
 
     // If XML caching is enabled then check for a cached XML document
-    if ($this->xmlCachingEnabled)
-    {
+    if ($this->xmlCachingEnabled) {
       $cachedXmlPath = QubitInformationObjectXmlCache::resourceExportFilePath(
         $resource, self::XML_STANDARD
       );
 
-      if (file_exists($cachedXmlPath))
-      {
+      if (file_exists($cachedXmlPath)) {
         $xml = file_get_contents($cachedXmlPath);
       }
     }
 
     // If no cached XML has been fetched then generate XML on the fly
-    if (empty($xml))
-    {
-      try
-      {
+    if (empty($xml)) {
+      try {
         // Print warnings/notices here too, as they are often important.
         $errLevel = error_reporting(E_ALL);
 
@@ -84,9 +79,7 @@ class arInformationObjectXmlExportJob extends arInformationObjectExportJob
         $xml = Qubit::tidyXml($rawXml);
 
         error_reporting($errLevel);
-      }
-      catch (Exception $e)
-      {
+      } catch (Exception $e) {
         throw new sfException($this->i18n->__(
           'Invalid XML generated for object %1%.', ['%1%' => $row['id']]
         ));
@@ -98,8 +91,7 @@ class arInformationObjectXmlExportJob extends arInformationObjectExportJob
     );
     $filePath = sprintf('%s/%s', $path, $filename);
 
-    if (false === file_put_contents($filePath, $xml))
-    {
+    if (false === file_put_contents($filePath, $xml)) {
       throw new sfException($this->i18n->__(
         'Cannot write to path: %1%', ['%1%' => $filePath]
       ));

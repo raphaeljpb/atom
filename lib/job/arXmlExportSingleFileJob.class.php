@@ -33,8 +33,7 @@ class arXmlExportSingleFileJob extends arBaseJob
   {
     $this->params = $parameters;
 
-    if (!is_numeric($this->params['objectId']))
-    {
+    if (!is_numeric($this->params['objectId'])) {
       $this->error($this->i18n->__('Object ID must be numberic.'));
 
       return false;
@@ -60,13 +59,11 @@ class arXmlExportSingleFileJob extends arBaseJob
   {
     $resource = QubitInformationObject::getById($this->params['objectId']);
 
-    if (null === $resource)
-    {
+    if (null === $resource) {
       throw new sfException($this->i18n->__('Information object %1% does not eist', ['%1%' => $this->params['objectId']]));
     }
 
-    try
-    {
+    try {
       // Print warnings/notices here too, as they are often important.
       $errLevel = error_reporting(E_ALL);
 
@@ -74,9 +71,7 @@ class arXmlExportSingleFileJob extends arBaseJob
       $cache->export($resource);
 
       error_reporting($errLevel);
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       throw new sfException($this->i18n->__('Invalid XML generated for information object %1%.', ['%1%' => $this->params['objectId']]));
     }
   }

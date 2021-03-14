@@ -27,22 +27,16 @@ class arRestApiPluginUtils
    */
   public static function convertDate($date, array $options = [])
   {
-    if (empty($date))
-    {
+    if (empty($date)) {
       return;
     }
 
-    if ($date instanceof DateTime)
-    {
+    if ($date instanceof DateTime) {
       $dt = $date;
-    }
-    elseif (is_int($date))
-    {
+    } elseif (is_int($date)) {
       $dt = new DateTime();
       $dt->setTimestamp($date);
-    }
-    else
-    {
+    } else {
       $dt = new DateTime();
 
       /*
@@ -57,8 +51,7 @@ class arRestApiPluginUtils
        * able to stop using this hack.
        *
        */
-      if ('Z' === substr($date, -1))
-      {
+      if ('Z' === substr($date, -1)) {
         $e = new DateTime();
         $date = substr($date, 0, -1).$e->format('O');
       }
@@ -82,8 +75,7 @@ class arRestApiPluginUtils
   {
     // Determine if JSON should be pretty printed
     $options = 0;
-    if (sfContext::getInstance()->getConfiguration()->isDebug() && defined('JSON_PRETTY_PRINT'))
-    {
+    if (sfContext::getInstance()->getConfiguration()->isDebug() && defined('JSON_PRETTY_PRINT')) {
       $options |= JSON_PRETTY_PRINT;
     }
 

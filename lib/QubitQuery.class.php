@@ -41,10 +41,8 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   public function __get($name)
   {
-    if ('transient' === $name)
-    {
-      if (!isset($this->objects))
-      {
+    if ('transient' === $name) {
+      if (!isset($this->objects)) {
         return [];
       }
 
@@ -53,27 +51,23 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
     list($objects, $sorted) = $this->getData($this);
 
-    if (isset($this->objects[$name]))
-    {
+    if (isset($this->objects[$name])) {
       return $this->objects[$name];
     }
   }
 
   public function __set($name, $value)
   {
-    if (null === $name)
-    {
+    if (null === $name) {
       $this->objects[] = $value;
     }
 
-    if (isset($this->indexByName))
-    {
+    if (isset($this->indexByName)) {
       $value[$this->indexByName] = $name;
       $this->objects[$name] = $value;
 
       // HACK
-      if (isset($this->parent))
-      {
+      if (isset($this->parent)) {
         $this->parent[] = $value;
       }
     }
@@ -205,10 +199,8 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
     // HACK Tell the caller whether we sorted according to the leaf
     $sorted = false;
 
-    if (!isset($this->statement))
-    {
-      foreach ($leaf->getOrderByNames() as $name)
-      {
+    if (!isset($this->statement)) {
+      foreach ($leaf->getOrderByNames() as $name) {
         $this->criteria->addAscendingOrderByColumn(constant($this->className.'::'.strtoupper($name)));
       }
       $sorted = true;
@@ -225,37 +217,28 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
     // HACK Tell the caller whether we sorted according to the leaf
     $sorted = false;
 
-    if (!isset($this->objects))
-    {
-      if (isset($this->parent))
-      {
+    if (!isset($this->objects)) {
+      if (isset($this->parent)) {
         list($this->objects, $sorted) = $this->parent->getData($leaf);
 
         // Possibly re-index
-        if (isset($this->indexByName))
-        {
+        if (isset($this->indexByName)) {
           $objects = [];
-          foreach ($this->objects as $object)
-          {
+          foreach ($this->objects as $object) {
             $objects[$object[$this->indexByName]] = $object;
           }
 
           $this->objects = $objects;
         }
-      }
-      else
-      {
+      } else {
         $this->objects = [];
         $sorted = true;
 
-        if (isset($this->criteria))
-        {
+        if (isset($this->criteria)) {
           list($this->statement, $sorted) = $this->getStatement($leaf);
 
-          while ($row = $this->statement->fetch())
-          {
-            if (isset($this->options['rows']) && $this->options['rows'])
-            {
+          while ($row = $this->statement->fetch()) {
+            if (isset($this->options['rows']) && $this->options['rows']) {
               $object = $row;
             } else {
               // $this->parent is unset, so we should have a className?
@@ -265,12 +248,9 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
             // TODO $this->parent is unset, so we probably do not have
             // $this->indexByName, but it would be nice to use the indexByName
             // of the leaf
-            if (isset($this->indexByName))
-            {
+            if (isset($this->indexByName)) {
               $this->objects[call_user_func([$object, 'get'.$this->indexByName])] = $object;
-            }
-            else
-            {
+            } else {
               $this->objects[] = $object;
             }
           }
@@ -278,19 +258,14 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
       }
 
       // Possibly add self
-      if (isset($this->andSelf))
-      {
-        if (count($this->objects) > 0)
-        {
+      if (isset($this->andSelf)) {
+        if (count($this->objects) > 0) {
           $sorted = false;
         }
 
-        if (isset($this->indexByName))
-        {
+        if (isset($this->indexByName)) {
           $this->objects[call_user_func([$this->andSelf, 'get'.$this->indexByName])] = $this->andSelf;
-        }
-        else
-        {
+        } else {
           $this->objects[] = $this->andSelf;
         }
       }
@@ -300,14 +275,10 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
       // refinement, we will be sorted at least according to our orderByName.
       // Indicate that we sorted according to the leaf, to save further
       // sorting by descendants.
-      if (isset($this->orderByName) && !$sorted)
-      {
-        if (isset($this->indexByName))
-        {
+      if (isset($this->orderByName) && !$sorted) {
+        if (isset($this->indexByName)) {
           $sorted = uasort($this->objects, [$leaf, 'sortCallback']);
-        }
-        else
-        {
+        } else {
           $sorted = usort($this->objects, [$leaf, 'sortCallback']);
         }
       }
@@ -318,28 +289,21 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   protected function getCount(QubitQuery $leaf)
   {
-    if (!isset($this->objects))
-    {
+    if (!isset($this->objects)) {
       $count = 0;
 
-      if (isset($this->parent))
-      {
+      if (isset($this->parent)) {
         $count = $this->parent->getCount($leaf);
-      }
-      elseif (isset($this->count))
-      {
+      } elseif (isset($this->count)) {
         $count = $this->count;
-      }
-      elseif (isset($this->criteria))
-      {
+      } elseif (isset($this->criteria)) {
         $countCriteria = clone $this->criteria;
         $this->count = intval(BasePeer::doCount($countCriteria)->fetchColumn(0));
 
         $count = $this->count;
       }
 
-      if (isset($this->andSelf))
-      {
+      if (isset($this->andSelf)) {
         ++$count;
       }
 
@@ -351,19 +315,14 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   protected function getOrderByNames()
   {
-    if (!isset($this->orderByNames))
-    {
-      if (isset($this->parent))
-      {
+    if (!isset($this->orderByNames)) {
+      if (isset($this->parent)) {
         $this->orderByNames = $this->parent->getOrderByNames();
-      }
-      else
-      {
+      } else {
         $this->orderByNames = [];
       }
 
-      if (isset($this->orderByName))
-      {
+      if (isset($this->orderByName)) {
         $this->orderByNames[] = $this->orderByName;
       }
     }
@@ -373,18 +332,15 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   protected function sortCallback($a, $b)
   {
-    foreach ($this->getOrderByNames() as $name)
-    {
+    foreach ($this->getOrderByNames() as $name) {
       $aGet = call_user_func([$a, 'get'.$name]);
       $bGet = call_user_func([$b, 'get'.$name]);
 
-      if ($aGet < $bGet)
-      {
+      if ($aGet < $bGet) {
         return -1;
       }
 
-      if ($aGet > $bGet)
-      {
+      if ($aGet > $bGet) {
         return 1;
       }
     }
@@ -392,14 +348,10 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   protected function getOptions()
   {
-    if (!isset($this->options))
-    {
-      if (isset($this->parent))
-      {
+    if (!isset($this->options)) {
+      if (isset($this->parent)) {
         $this->options = $this->parent->getOptions();
-      }
-      else
-      {
+      } else {
         $this->options = [];
       }
     }

@@ -21,25 +21,20 @@ class InformationObjectStylesheetComponent extends sfComponent
 {
   public function execute($request)
   {
-    if (sfConfig::get('app_enable_institutional_scoping') && sfContext::getInstance()->user->hasAttribute('search-realm'))
-    {
+    if (sfConfig::get('app_enable_institutional_scoping') && sfContext::getInstance()->user->hasAttribute('search-realm')) {
       $repository = QubitRepository::getById(sfContext::getInstance()->user->getAttribute('search-realm'));
-    }
-    else
-    {
+    } else {
       return sfView::NONE;
     }
 
-    if (null === $repository || null === $repository->backgroundColor)
-    {
+    if (null === $repository || null === $repository->backgroundColor) {
       return sfView::NONE;
     }
 
     // Get value
     $this->backgroundColor = $repository->backgroundColor->__toString();
 
-    if (0 == strlen($this->backgroundColor))
-    {
+    if (0 == strlen($this->backgroundColor)) {
       return sfView::NONE;
     }
   }

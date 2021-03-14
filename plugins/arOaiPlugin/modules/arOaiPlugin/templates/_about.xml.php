@@ -8,7 +8,7 @@
               <?php if (QubitTerm::MASTER_ID == $digitalObject->usageId && QubitAcl::check($record, 'readMaster')) { ?>
                 <?php $digitalObjectUrl = (string) QubitSetting::getByName('siteBaseUrl').$digitalObject->path.$digitalObject->name; ?>
                 <?php echo include_partial('getRecordAtomFeedEntry', ['object' => $digitalObject, 'url' => $digitalObjectUrl, 'usage' => 'master']); ?>
-              <?php } elseif (QubitTerm::EXTERNAL_URI_ID == $digitalObject->usageId){ ?>
+              <?php } elseif (QubitTerm::EXTERNAL_URI_ID == $digitalObject->usageId) { ?>
                 <?php echo include_partial('getRecordAtomFeedEntry', ['object' => $digitalObject, 'url' => $digitalObject->path, 'usage' => 'external']); ?>
               <?php } ?>
 

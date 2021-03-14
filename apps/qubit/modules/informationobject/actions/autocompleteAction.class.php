@@ -29,8 +29,7 @@ class InformationObjectAutocompleteAction extends sfAction
    */
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
@@ -45,17 +44,13 @@ class InformationObjectAutocompleteAction extends sfAction
 
     $this->queryBool = new \Elastica\Query\BoolQuery();
 
-    if (1 === preg_match('/^[\s\t\r\n]*$/', $request->query))
-    {
+    if (1 === preg_match('/^[\s\t\r\n]*$/', $request->query)) {
       $this->queryBool->addMust(new \Elastica\Query\MatchAll());
-    }
-    else
-    {
+    } else {
       $fields = ['i18n.'.$culture.'.title.autocomplete' => 1];
 
       // Search for referenceCode or identifier, and title
-      if (1 == sfConfig::get('app_inherit_code_informationobject', 1))
-      {
+      if (1 == sfConfig::get('app_inherit_code_informationobject', 1)) {
         $fields['referenceCode.autocomplete'] = 1;
 
         // Change sort order
@@ -63,9 +58,7 @@ class InformationObjectAutocompleteAction extends sfAction
           'levelOfDescriptionId' => 'asc',
           'referenceCode.untouched' => 'asc',
           'i18n.'.$culture.'.title.alphasort' => 'asc', ]);
-      }
-      else
-      {
+      } else {
         $fields['identifier'] = 1;
       }
 
@@ -75,8 +68,7 @@ class InformationObjectAutocompleteAction extends sfAction
     }
 
     // Filter results by parent
-    if (!empty($request->parent) && ctype_digit($request->parent))
-    {
+    if (!empty($request->parent) && ctype_digit($request->parent)) {
       $queryTerm = new \Elastica\Query\Term();
       $queryTerm->setTerm('parentId', $request->parent);
 
@@ -84,8 +76,7 @@ class InformationObjectAutocompleteAction extends sfAction
     }
 
     // Filter results by repository
-    if (!empty($request->repository) && ctype_digit($request->repository))
-    {
+    if (!empty($request->repository) && ctype_digit($request->repository)) {
       $queryTerm = new \Elastica\Query\Term();
       $queryTerm->setTerm('repository.id', $request->repository);
 
@@ -93,8 +84,7 @@ class InformationObjectAutocompleteAction extends sfAction
     }
 
     // Filter drafts
-    if (isset($request->filterDrafts) && $request->filterDrafts)
-    {
+    if (isset($request->filterDrafts) && $request->filterDrafts) {
       QubitAclSearch::filterDrafts($this->queryBool);
     }
 

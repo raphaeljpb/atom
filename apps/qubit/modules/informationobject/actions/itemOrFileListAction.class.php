@@ -38,24 +38,20 @@ class InformationObjectItemOrFileListAction extends sfAction
     $this->resource = $this->getRoute()->resource;
     $this->type = isset($request->type) ? ucfirst($request->type) : $this->context->i18n->__('Item');
 
-    if (!isset($this->resource))
-    {
+    if (!isset($this->resource)) {
       $this->forward404();
     }
 
     $this->form = new sfForm();
 
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->addField($name);
     }
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->initiateReportGeneration();
         $this->redirect([$this->resource, 'module' => 'informationobject']);
       }
@@ -66,8 +62,7 @@ class InformationObjectItemOrFileListAction extends sfAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'sortBy':
         $choices = [
           'referenceCode' => $this->context->i18n->__('Reference code'),
@@ -75,8 +70,7 @@ class InformationObjectItemOrFileListAction extends sfAction
           'startDate' => $this->context->i18n->__('Date (based on start date)'),
         ];
 
-        if ($this->getUser()->isAuthenticated())
-        {
+        if ($this->getUser()->isAuthenticated()) {
           $choices['locations'] = $this->context->i18n->__('Retrieval information');
         }
 
@@ -116,12 +110,9 @@ class InformationObjectItemOrFileListAction extends sfAction
     $reportType = (false === strpos(strtolower($this->type), 'item')) ? 'fileList' : 'itemList';
 
     if (is_array($this->form->includeThumbnails->getValue())
-        && '1' === array_pop($this->form->includeThumbnails->getValue()))
-    {
+        && '1' === array_pop($this->form->includeThumbnails->getValue())) {
       $includeThumbnails = true;
-    }
-    else
-    {
+    } else {
       $includeThumbnails = false;
     }
 

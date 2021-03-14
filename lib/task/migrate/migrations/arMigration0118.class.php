@@ -33,8 +33,7 @@ class arMigration0118
   {
     $useJobScheduler = QubitSetting::getByName('use_job_scheduler');
 
-    if (isset($useJobScheduler))
-    {
+    if (isset($useJobScheduler)) {
       $useJobScheduler->delete();
     }
 

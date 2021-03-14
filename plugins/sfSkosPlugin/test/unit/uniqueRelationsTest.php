@@ -54,12 +54,10 @@ $tests = [
   ],
 ];
 
-foreach ($tests as $item)
-{
+foreach ($tests as $item) {
   // Build
   $uniquer = new sfSkosUniqueRelations();
-  foreach ($item['relations'] as $rel)
-  {
+  foreach ($item['relations'] as $rel) {
     $uniquer->insert($rel[0], $rel[1]);
   }
 
@@ -72,8 +70,7 @@ foreach ($tests as $item)
 
   // Test that the object is iterable
   $index = 0;
-  foreach ($uniquer as $unique)
-  {
+  foreach ($uniquer as $unique) {
     ++$index;
   }
   $t->is($index, count($item['expected']));
@@ -91,10 +88,8 @@ $graph->parseFile($unescoThesaurus);
 $relations = new sfSkosUniqueRelations();
 $prefix = 'http://vocabularies.unesco.org/thesaurus/concept';
 $prefixLen = strlen($prefix);
-foreach ($graph->allOfType('skos:Concept') as $x)
-{
-  foreach ($x->allResources('skos:related') as $y)
-  {
+foreach ($graph->allOfType('skos:Concept') as $x) {
+  foreach ($x->allResources('skos:related') as $y) {
     $idX = substr($x->getUri(), $prefixLen);
     $idY = substr($y->getUri(), $prefixLen);
 
@@ -111,10 +106,8 @@ $tests = [
   1518 => [1480, 3602, 11264, 1516, 17061],
 ];
 
-foreach ($tests as $s => $p)
-{
-  foreach ($p as $pX)
-  {
+foreach ($tests as $s => $p) {
+  foreach ($p as $pX) {
     $rel = [$s, $pX];
     $matched = $relations->exists($rel[0], $rel[1]);
     $t->is($matched, true, sprintf('Relation %s => %s should be found', $rel[0], $rel[1]));

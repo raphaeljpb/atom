@@ -71,13 +71,10 @@ class QubitMigrate
   {
     $row = null;
 
-    if (isset($this->data[$classname][$keyOrId]))
-    {
+    if (isset($this->data[$classname][$keyOrId])) {
       $row = $this->data[$classname][$keyOrId];
       $row['_key'] = $keyOrId;
-    }
-    elseif ($key = $this->getRowKey($this->data[$classname], 'id', $keyOrId))
-    {
+    } elseif ($key = $this->getRowKey($this->data[$classname], 'id', $keyOrId)) {
       $row = $this->data[$classname][$key];
       $row['_key'] = $key;
     }
@@ -103,21 +100,16 @@ class QubitMigrate
    */
   public static function findRowKeyForColumnValue($searchRow, $searchColumn, $searchValue)
   {
-    foreach ($searchRow as $key => $columns)
-    {
-      if (is_array($searchValue))
-      {
+    foreach ($searchRow as $key => $columns) {
+      if (is_array($searchValue)) {
         // Try and match key/value pair passed in searchValue (e.g. the english
         // value for an i18n column)
         $searchKey = key($searchValue);
 
-        if (isset($columns[$searchColumn][$searchKey]) && $columns[$searchColumn][$searchKey] == $searchValue[$searchKey])
-        {
+        if (isset($columns[$searchColumn][$searchKey]) && $columns[$searchColumn][$searchKey] == $searchValue[$searchKey]) {
           return $key;
         }
-      }
-      elseif (isset($columns[$searchColumn]) && $columns[$searchColumn] == $searchValue)
-      {
+      } elseif (isset($columns[$searchColumn]) && $columns[$searchColumn] == $searchValue) {
         return $key;
       }
     }
@@ -153,10 +145,8 @@ class QubitMigrate
   public static function getArrayKeyIndex($arr, $findKey)
   {
     $index = 0;
-    foreach ($arr as $key => $value)
-    {
-      if ($key == $findKey)
-      {
+    foreach ($arr as $key => $value) {
+      if ($key == $findKey) {
         return $index;
       }
       ++$index;
@@ -174,25 +164,20 @@ class QubitMigrate
   {
     $newList = [];
     $highLft = 0;
-    foreach ($objectList as $key => $row)
-    {
+    foreach ($objectList as $key => $row) {
       // If this left value is higher than any previous value, or there is no
       // left value, then add the current row to the end of $newList
-      if (false === isset($row['lft']) || $row['lft'] > $highLft)
-      {
+      if (false === isset($row['lft']) || $row['lft'] > $highLft) {
         $newList[$key] = $row;
         $highLft = (isset($row['lft'])) ? $row['lft'] : $highLft;
       }
 
       // Else, find the right place in $newList to insert the current row
       // (sorted by lft values)
-      else
-      {
+      else {
         $i = 0;
-        foreach ($newList as $newKey => $newRow)
-        {
-          if ($newRow['lft'] > $row['lft'])
-          {
+        foreach ($newList as $newKey => $newRow) {
+          if ($newRow['lft'] > $row['lft']) {
             self::array_insert($newList, $i, [$key => $row]);
 
             break;
@@ -214,17 +199,13 @@ class QubitMigrate
   public static function cascadeDelete($objectList, $deleteObjectKey)
   {
     $deleteObjectId = null;
-    if (isset($objectList[$deleteObjectKey]['id']))
-    {
+    if (isset($objectList[$deleteObjectKey]['id'])) {
       $deleteObjectId = $objectList[$deleteObjectKey]['id'];
     }
 
-    foreach ($objectList as $key => $row)
-    {
-      if (isset($row['parent_id']))
-      {
-        if ($deleteObjectKey == $row['parent_id'] || (null !== $deleteObjectId && $deleteObjectId == $row['parent_id']))
-        {
+    foreach ($objectList as $key => $row) {
+      if (isset($row['parent_id'])) {
+        if ($deleteObjectKey == $row['parent_id'] || (null !== $deleteObjectId && $deleteObjectId == $row['parent_id'])) {
           $objectList = self::cascadeDelete($objectList, $key);
         }
       }
@@ -240,44 +221,35 @@ class QubitMigrate
     $finder = sfFinder::type('file')->name('*schema.yml')->prune('doctrine');
     $dirs = array_merge([sfConfig::get('sf_config_dir')], $configuration->getPluginSubPaths('/config'));
     $schemas = $finder->in($dirs);
-    if (!count($schemas))
-    {
+    if (!count($schemas)) {
       throw new sfCommandException('You must create a schema.yml file.');
     }
 
     $dbSchema = new sfPropelDatabaseSchema();
 
-    foreach ($schemas as $schema)
-    {
+    foreach ($schemas as $schema) {
       $schemaArray = sfYaml::load($schema);
 
-      if (!is_array($schemaArray))
-      {
+      if (!is_array($schemaArray)) {
         continue; // No defined schema here, skipping
       }
 
-      if (!isset($schemaArray['classes']))
-      {
+      if (!isset($schemaArray['classes'])) {
         // Old schema syntax: we convert it
         $schemaArray = $dbSchema->convertOldToNewYaml($schemaArray);
       }
 
-      foreach ($schemaArray['classes'] as $classKey => $class)
-      {
-        foreach ($class['columns'] as $columnKey => $column)
-        {
-          if ('id' == $columnKey)
-          {
+      foreach ($schemaArray['classes'] as $classKey => $class) {
+        foreach ($class['columns'] as $columnKey => $column) {
+          if ('id' == $columnKey) {
             continue;
           }
 
-          if ('integer' != $column['type'])
-          {
+          if ('integer' != $column['type']) {
             continue;
           }
 
-          if (!in_array($column['foreignTable'], $tables))
-          {
+          if (!in_array($column['foreignTable'], $tables)) {
             continue;
           }
 
@@ -287,8 +259,7 @@ class QubitMigrate
           // Ignore table if it's not available yet in the db
           $query = QubitPdo::prepare('SHOW TABLES LIKE :table');
           $query->bindParam(':table', $tableName, PDO::PARAM_STR);
-          if ($query->execute() && false === $query->fetch(PDO::FETCH_NUM))
-          {
+          if ($query->execute() && false === $query->fetch(PDO::FETCH_NUM)) {
             continue;
           }
 
@@ -299,10 +270,8 @@ class QubitMigrate
       }
     }
 
-    foreach ($tables as $item)
-    {
-      switch ($item)
-      {
+    foreach ($tables as $item) {
+      switch ($item) {
         case 'object':
           $columns[] = ['table' => 'object', 'column' => 'id'];
 
@@ -328,14 +297,12 @@ class QubitMigrate
 
   public static function bumpTerm($id, $configuration)
   {
-    if (!isset($configuration))
-    {
+    if (!isset($configuration)) {
       throw new sfException('Missing parameter');
     }
 
     // Stop execution if there is no record
-    if (null === QubitTerm::getById($id))
-    {
+    if (null === QubitTerm::getById($id)) {
       return;
     }
 
@@ -343,8 +310,7 @@ class QubitMigrate
 
     $connection->beginTransaction();
 
-    try
-    {
+    try {
       $connection->exec('SET FOREIGN_KEY_CHECKS = 0');
 
       // Get new autonumeric
@@ -352,13 +318,11 @@ class QubitMigrate
 
       $foreignKeys = self::findForeignKeys([QubitObject::TABLE_NAME, QubitTerm::TABLE_NAME], $configuration);
 
-      foreach ($foreignKeys as $item)
-      {
+      foreach ($foreignKeys as $item) {
         // From the list of columns that the codebase is giving us, it may happen that some of them are
         // not available yet in the database since we are still running the migration. If this is the case,
         // ignore it, otherwise the UPDATE will fail.
-        if (false === QubitPdo::fetchOne("SHOW COLUMNS FROM {$item['table']} LIKE ?", [$item['column']]))
-        {
+        if (false === QubitPdo::fetchOne("SHOW COLUMNS FROM {$item['table']} LIKE ?", [$item['column']])) {
           continue;
         }
 
@@ -371,9 +335,7 @@ class QubitMigrate
       $connection->exec('SET FOREIGN_KEY_CHECKS = 1');
 
       self::updateAutoNumeric();
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $connection->rollback();
 
       throw $e;
@@ -384,14 +346,12 @@ class QubitMigrate
 
   public static function bumpTaxonomy($id, $configuration)
   {
-    if (!isset($configuration))
-    {
+    if (!isset($configuration)) {
       throw new sfException('Missing parameter');
     }
 
     // Stop execution if there is no record
-    if (null === QubitTaxonomy::getById($id))
-    {
+    if (null === QubitTaxonomy::getById($id)) {
       return;
     }
 
@@ -399,8 +359,7 @@ class QubitMigrate
 
     $connection->beginTransaction();
 
-    try
-    {
+    try {
       $connection->exec('SET FOREIGN_KEY_CHECKS = 0');
 
       // Get new autonumeric
@@ -408,8 +367,7 @@ class QubitMigrate
 
       $foreignKeys = self::findForeignKeys([QubitObject::TABLE_NAME, QubitTaxonomy::TABLE_NAME], $configuration);
 
-      foreach ($foreignKeys as $item)
-      {
+      foreach ($foreignKeys as $item) {
         QubitPdo::modify(
           "UPDATE {$item['table']} SET {$item['column']} = ? WHERE {$item['column']} = ?", [
             $last,
@@ -419,9 +377,7 @@ class QubitMigrate
       $connection->exec('SET FOREIGN_KEY_CHECKS = 1');
 
       self::updateAutoNumeric();
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $connection->rollback();
 
       throw $e;
@@ -432,14 +388,12 @@ class QubitMigrate
 
   public static function bumpMenu($id, $configuration)
   {
-    if (!isset($configuration))
-    {
+    if (!isset($configuration)) {
       throw new sfException('Missing parameter');
     }
 
     // Stop execution if there is no record
-    if (null === QubitMenu::getById($id))
-    {
+    if (null === QubitMenu::getById($id)) {
       return;
     }
 
@@ -447,8 +401,7 @@ class QubitMigrate
 
     $connection->beginTransaction();
 
-    try
-    {
+    try {
       $connection->exec('SET FOREIGN_KEY_CHECKS = 0');
 
       // Get new autonumeric
@@ -456,8 +409,7 @@ class QubitMigrate
 
       $foreignKeys = self::findForeignKeys([QubitMenu::TABLE_NAME], $configuration);
 
-      foreach ($foreignKeys as $item)
-      {
+      foreach ($foreignKeys as $item) {
         QubitPdo::modify(
           "UPDATE {$item['table']} SET {$item['column']} = ? WHERE {$item['column']} = ?", [
             $last,
@@ -465,9 +417,7 @@ class QubitMigrate
       }
 
       self::updateAutoNumeric();
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $connection->rollback();
 
       throw $e;
@@ -486,16 +436,11 @@ class QubitMigrate
     $sql = "ALTER TABLE {$table} ADD {$column}";
 
     // Position of the new column
-    if (isset($options['after']))
-    {
+    if (isset($options['after'])) {
       $sql .= " AFTER {$options['after']}";
-    }
-    elseif (isset($options['before']))
-    {
+    } elseif (isset($options['before'])) {
       $sql .= " BEFORE {$options['before']}";
-    }
-    elseif (isset($options['first']))
-    {
+    } elseif (isset($options['first'])) {
       $sql .= ' FIRST';
     }
 
@@ -505,42 +450,34 @@ class QubitMigrate
     $column = array_shift(preg_split('/ /', $column));
 
     // Index
-    if (isset($options['idx']))
-    {
+    if (isset($options['idx'])) {
       $queries[] = "ALTER TABLE {$table} ADD INDEX ({$column});";
     }
 
     // Foreign key
-    if (isset($options['fk']))
-    {
+    if (isset($options['fk'])) {
       $sql = sprintf('ALTER TABLE %s ADD FOREIGN KEY (%s) REFERENCES %s (%s)',
         $table,
         $column,
         $options['fk']['referenceTable'],
         $options['fk']['referenceColumn']);
 
-      if (isset($options['fk']['onDelete']))
-      {
+      if (isset($options['fk']['onDelete'])) {
         $sql .= ' ON DELETE '.$options['fk']['onDelete'];
       }
 
-      if (isset($options['fk']['onUpdate']))
-      {
+      if (isset($options['fk']['onUpdate'])) {
         $sql .= ' ON UPDATE '.$options['fk']['onUpdate'];
       }
 
       $queries[] = $sql;
     }
 
-    try
-    {
-      foreach ($queries as $query)
-      {
+    try {
+      foreach ($queries as $query) {
         $connection->exec($query);
       }
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $connection->rollback();
 
       throw $e;
@@ -555,28 +492,22 @@ class QubitMigrate
 
     $connection->beginTransaction();
 
-    try
-    {
+    try {
       $stmt = $connection->prepare('SHOW CREATE TABLE '.$table);
       $stmt->execute();
 
       $data = $stmt->fetchAll();
 
-      foreach (explode("\n", $data[0][1]) as $line)
-      {
+      foreach (explode("\n", $data[0][1]) as $line) {
         $line = explode(' ', trim($line));
 
-        switch ($line[0])
-        {
+        switch ($line[0]) {
           // Indexes
           case 'KEY':
             // Build array with DROP INDEX commands
-            if ('(`'.$column.'`),' == $line[2])
-            {
+            if ('(`'.$column.'`),' == $line[2]) {
               $keys[] = 'DROP INDEX '.$line[1].' ON '.$table;
-            }
-            else
-            {
+            } else {
               continue 2;
             }
 
@@ -584,12 +515,9 @@ class QubitMigrate
           // Foreign keys
           case 'CONSTRAINT':
             // Build array with DROP FOREIGN KEY commands
-            if ('FOREIGN' == $line[2] && '(`'.$column.'`)' == $line[4])
-            {
+            if ('FOREIGN' == $line[2] && '(`'.$column.'`)' == $line[4]) {
               $foreignKeys[] = 'ALTER TABLE '.$table.' DROP FOREIGN KEY '.$line[1];
-            }
-            else
-            {
+            } else {
               continue 2;
             }
 
@@ -598,16 +526,13 @@ class QubitMigrate
       }
 
       // The order matters, foreign keys must be removed first
-      foreach (array_merge($foreignKeys, $keys) as $sqlCommand)
-      {
+      foreach (array_merge($foreignKeys, $keys) as $sqlCommand) {
         $connection->exec($sqlCommand);
       }
 
       // Drop column
       $connection->exec('ALTER TABLE `'.$table.'` DROP COLUMN `'.$column.'`');
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $connection->rollback();
 
       throw $e;
@@ -622,16 +547,13 @@ class QubitMigrate
 
     $connection->beginTransaction();
 
-    try
-    {
+    try {
       $connection->exec('SET FOREIGN_KEY_CHECKS = 0');
 
       $connection->exec("DROP TABLE IF EXISTS {$table}");
 
       $connection->exec('SET FOREIGN_KEY_CHECKS = 1');
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $connection->rollback();
 
       throw $e;
@@ -646,26 +568,21 @@ class QubitMigrate
 
     $fixtures = [];
 
-    foreach (sfFinder::type('file')->name('*.yml')->in(sfConfig::get('sf_data_dir').'/fixtures/') as $yaml)
-    {
-      foreach (sfYaml::load($yaml) as $classname => $data)
-      {
+    foreach (sfFinder::type('file')->name('*.yml')->in(sfConfig::get('sf_data_dir').'/fixtures/') as $yaml) {
+      foreach (sfYaml::load($yaml) as $classname => $data) {
         $fixtures[$classname] = $data;
       }
     }
 
-    foreach ($fixtures as $classname => $row)
-    {
+    foreach ($fixtures as $classname => $row) {
       // Don't overwrite static page text and make sure there's an I18n table
-      if ('QubitStaticPage' == $classname || !class_exists($classname.'I18n'))
-      {
+      if ('QubitStaticPage' == $classname || !class_exists($classname.'I18n')) {
         continue;
       }
 
       $table = constant($classname.'I18n::TABLE_NAME');
 
-      switch ($classname)
-      {
+      switch ($classname) {
         case 'QubitMenu':
           $colname = 'label';
 
@@ -690,13 +607,11 @@ class QubitMigrate
           AND source.{$colname} = ?";
       $selectStmt = $conn->prepare($query);
 
-      foreach ($row as $key => $columns)
-      {
+      foreach ($row as $key => $columns) {
         $id = null;
         $existingCultures = [];
 
-        if (!is_array($columns[$colname]) || !isset($columns['id']))
-        {
+        if (!is_array($columns[$colname]) || !isset($columns['id'])) {
           continue;
         }
 
@@ -704,36 +619,28 @@ class QubitMigrate
         $selectStmt->execute([
           $columns[$colname]['en'], ]);
 
-        while ($item = $selectStmt->fetch(PDO::FETCH_OBJ))
-        {
+        while ($item = $selectStmt->fetch(PDO::FETCH_OBJ)) {
           $existingCultures[] = $item->culture;
 
-          if (!isset($id))
-          {
+          if (!isset($id)) {
             $id = $item->id;
           }
         }
 
         // Get primary key for insert
-        foreach ($columns as $column => $values)
-        {
-          foreach ($values as $culture => $value)
-          {
-            if (in_array($culture, $existingCultures))
-            {
+        foreach ($columns as $column => $values) {
+          foreach ($values as $culture => $value) {
+            if (in_array($culture, $existingCultures)) {
               continue;
             }
 
             // Insert new culture values
-            try
-            {
+            try {
               $insertStmt->execute([
                 $value,
                 $id,
                 $culture, ]);
-            }
-            catch (PDOException $e)
-            {
+            } catch (PDOException $e) {
               // Ignore insert errors
               continue;
             }
@@ -745,8 +652,7 @@ class QubitMigrate
 
   public static function updateIndexes($indexes)
   {
-    foreach ($indexes as $data)
-    {
+    foreach ($indexes as $data) {
       // Get actual index name
       $sql = 'SHOW INDEX FROM %s WHERE Column_name=:column;';
       $result = QubitPdo::fetchOne(
@@ -755,8 +661,7 @@ class QubitMigrate
       );
 
       // Stop if the index is missing
-      if (!$result || !$result->Key_name)
-      {
+      if (!$result || !$result->Key_name) {
         throw new Exception(sprintf(
           "Could not find index for '%s' column on '%s' table.",
           $data['column'],
@@ -765,8 +670,7 @@ class QubitMigrate
       }
 
       // Skip if the index already has the expected name
-      if ($result->Key_name == $data['index'])
-      {
+      if ($result->Key_name == $data['index']) {
         continue;
       }
 
@@ -783,8 +687,7 @@ class QubitMigrate
   {
     $dbname = QubitPdo::fetchColumn('select database();');
 
-    foreach ($foreignKeys as $foreignKey)
-    {
+    foreach ($foreignKeys as $foreignKey) {
       // Get actual contraint name
       $sql = 'SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE ';
       $sql .= 'WHERE TABLE_NAME=:table AND COLUMN_NAME=:column ';
@@ -798,8 +701,7 @@ class QubitMigrate
       ]);
 
       // Stop if the foreign key is missing
-      if (!$oldConstraintName)
-      {
+      if (!$oldConstraintName) {
         throw new Exception(sprintf(
           "Could not find foreign key for '%s' column on '%s' table.",
           $foreignKey['column'],
@@ -808,15 +710,12 @@ class QubitMigrate
       }
 
       // Update/delete rows with foreign keys pointing to non existing rows
-      if ('ON DELETE SET NULL' == strtoupper(trim($foreignKey['onDelete'])))
-      {
+      if ('ON DELETE SET NULL' == strtoupper(trim($foreignKey['onDelete']))) {
         $sql = "UPDATE {$foreignKey['table']} tb1
                 LEFT JOIN {$foreignKey['refTable']} tb2
                 ON tb1.{$foreignKey['column']}=tb2.id
                 SET tb1.{$foreignKey['column']}=NULL";
-      }
-      else
-      {
+      } else {
         $sql = "DELETE tb1
                 FROM {$foreignKey['table']} tb1
                 LEFT JOIN {$foreignKey['refTable']} tb2
@@ -836,8 +735,7 @@ class QubitMigrate
         $oldConstraintName
       ));
 
-      try
-      {
+      try {
         $sql = 'ALTER TABLE %s ADD CONSTRAINT %s FOREIGN KEY (%s) ';
         $sql .= 'REFERENCES %s (id) %s;';
         QubitPdo::modify(sprintf(
@@ -848,9 +746,7 @@ class QubitMigrate
           $foreignKey['refTable'],
           $foreignKey['onDelete']
         ));
-      }
-      catch (Exception $e)
-      {
+      } catch (Exception $e) {
         throw new Exception(sprintf(
           "Could not alter foreign key for '%s' column on '%s' table.\n%s",
           $foreignKey['column'],
@@ -872,8 +768,7 @@ class QubitMigrate
    */
   protected function getRowKey($className, $searchColumn, $searchKey)
   {
-    if (isset($this->data[$className]))
-    {
+    if (isset($this->data[$className])) {
       return self::findRowKeyForColumnValue($this->data[$className], $searchColumn, $searchKey);
     }
   }
@@ -897,17 +792,13 @@ class QubitMigrate
   protected function deleteStubObjects()
   {
     // Delete "stub" QubitEvent objects that have no valid "event type"
-    if (isset($this->data['QubitEvent']))
-    {
-      foreach ($this->data['QubitEvent'] as $key => $row)
-      {
-        if (!isset($row['type_id']))
-        {
+    if (isset($this->data['QubitEvent'])) {
+      foreach ($this->data['QubitEvent'] as $key => $row) {
+        if (!isset($row['type_id'])) {
           unset($this->data['QubitEvent'][$key]);
 
           // Also delete related QubitObjectTermRelation object (if any)
-          while ($objectTermRelationKey = $this->getRowKey('QubitObjectTermRelation', 'object_id', $key))
-          {
+          while ($objectTermRelationKey = $this->getRowKey('QubitObjectTermRelation', 'object_id', $key)) {
             unset($this->data['QubitObjectTermRelation'][$objectTermRelationKey]);
           }
         }
@@ -915,24 +806,18 @@ class QubitMigrate
     }
 
     // Remove blank "stub" QubitObjectTermRelation objects
-    if (isset($this->data['QubitObjectTermRelation']))
-    {
-      foreach ($this->data['QubitObjectTermRelation'] as $key => $row)
-      {
-        if (!isset($row['object_id']) || !isset($row['term_id']))
-        {
+    if (isset($this->data['QubitObjectTermRelation'])) {
+      foreach ($this->data['QubitObjectTermRelation'] as $key => $row) {
+        if (!isset($row['object_id']) || !isset($row['term_id'])) {
           unset($this->data['QubitObjectTermRelation'][$key]);
         }
       }
     }
 
     // Remove blank "stub" QubitRelation objects
-    if (isset($this->data['QubitRelation']))
-    {
-      foreach ($this->data['QubitRelation'] as $key => $row)
-      {
-        if (!isset($row['object_id']) || !isset($row['subject_id']))
-        {
+    if (isset($this->data['QubitRelation'])) {
+      foreach ($this->data['QubitRelation'] as $key => $row) {
+        if (!isset($row['object_id']) || !isset($row['subject_id'])) {
           unset($this->data['QubitRelation'][$key]);
         }
       }
@@ -954,8 +839,7 @@ class QubitMigrate
   protected static function insertBeforeNestedSet(array &$originalData, $pivotKey, array $newData)
   {
     // If pivotKey doesn't exist, then just return a simple array merge
-    if (!isset($originalData[$pivotKey]))
-    {
+    if (!isset($originalData[$pivotKey])) {
       return array_merge($originalData, $newData);
     }
 
@@ -965,13 +849,10 @@ class QubitMigrate
 
     // Get index ($i) of pivot row and it's left value (if any)
     $i = 0;
-    foreach ($originalData as $key => $row)
-    {
-      if ($pivotKey == $key)
-      {
+    foreach ($originalData as $key => $row) {
+      if ($pivotKey == $key) {
         $pivotIndex = $i;
-        if (isset($originalData[$key]['lft']))
-        {
+        if (isset($originalData[$key]['lft'])) {
           $pivotLft = $originalData[$key]['lft'];
         }
 
@@ -981,27 +862,22 @@ class QubitMigrate
     }
 
     // If a left value was found, then set merged values for lft & rgt columns
-    if (null !== $pivotIndex)
-    {
+    if (null !== $pivotIndex) {
       // Loop through $newData and assign lft & rgt values
       $j = 0;
-      foreach ($newData as &$row)
-      {
+      foreach ($newData as &$row) {
         $row['lft'] = $pivotLft + ($j * 2);
         $row['rgt'] = $pivotLft + ($j * 2) + 1;
         ++$j;
       }
 
       // Bump existing lft & rgt values
-      foreach ($originalData as &$row)
-      {
-        if (isset($row['lft']) && $pivotLft <= $row['lft'])
-        {
+      foreach ($originalData as &$row) {
+        if (isset($row['lft']) && $pivotLft <= $row['lft']) {
           $row['lft'] += $width;
         }
 
-        if (isset($row['rgt']) && $pivotLft < $row['rgt'])
-        {
+        if (isset($row['rgt']) && $pivotLft < $row['rgt']) {
           $row['rgt'] += $width;
         }
       }

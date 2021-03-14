@@ -30,8 +30,7 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
 
     $this->rad = new sfRadPlugin($this->resource);
 
-    if (1 > strlen($title = $this->resource->__toString()))
-    {
+    if (1 > strlen($title = $this->resource->__toString())) {
       $title = $this->context->i18n->__('Untitled');
     }
 
@@ -45,8 +44,7 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
 
     $this->response->setTitle("{$title} - {$this->response->getTitle()}");
 
-    if (QubitAcl::check($this->resource, 'update'))
-    {
+    if (QubitAcl::check($this->resource, 'update')) {
       $validatorSchema = new sfValidatorSchema();
       $values = [];
 
@@ -74,16 +72,13 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
       $validatorSchema->levelOfDescription->setMessage('forbidden', $this->context->i18n->__('Level of description - Value "%value%" is not consistent with higher levels.'));
       $validatorSchema->levelOfDescription->setMessage('required', $this->context->i18n->__('Level of description - This is a mandatory element.'));
 
-      if (isset($this->resource->levelOfDescription))
-      {
+      if (isset($this->resource->levelOfDescription)) {
         $values['levelOfDescription'] = $this->resource->levelOfDescription->getName(['sourceCulture' => true]);
       }
 
       // Class of materials specific details
-      foreach ($this->resource->getMaterialTypes() as $materialType)
-      {
-        switch ($materialType->term->getName(['sourceCulture' => true]))
-        {
+      foreach ($this->resource->getMaterialTypes() as $materialType) {
+        switch ($materialType->term->getName(['sourceCulture' => true])) {
           case 'Architectural drawing':
             $validatorSchema->statementOfScaleArchitectural = new sfValidatorString([
               'required' => true, ], [
@@ -120,10 +115,8 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
         }
       }
 
-      if (isset($this->resource->levelOfDescription))
-      {
-        switch ($this->resource->levelOfDescription->getName(['sourceCulture' => true]))
-        {
+      if (isset($this->resource->levelOfDescription)) {
+        switch ($this->resource->levelOfDescription->getName(['sourceCulture' => true])) {
           // Only if top level of description
           /* Disable custodial history validation temporary (see issue 1984)
           case 'Series':
@@ -154,18 +147,15 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
           case 'Item':
             // No publication events?
             $isPublication = false;
-            foreach ($this->resource->eventsRelatedByobjectId as $item)
-            {
-              if (QubitTerm::PUBLICATION_ID == $item->typeId)
-              {
+            foreach ($this->resource->eventsRelatedByobjectId as $item) {
+              if (QubitTerm::PUBLICATION_ID == $item->typeId) {
                 $isPublication = true;
 
                 break;
               }
             }
 
-            if ($isPublication)
-            {
+            if ($isPublication) {
               $validatorSchema->edition = new sfValidatorString([
                 'required' => true, ], [
                   'required' => $this->context->i18n->__('Edition statement - This is a mandatory element for published items if there are multiple editions.'), ]);
@@ -174,12 +164,9 @@ class sfRadPluginIndexAction extends InformationObjectIndexAction
         }
       }
 
-      try
-      {
+      try {
         $validatorSchema->clean($values);
-      }
-      catch (sfValidatorErrorSchema $e)
-      {
+      } catch (sfValidatorErrorSchema $e) {
         $this->errorSchema = $e;
       }
     }

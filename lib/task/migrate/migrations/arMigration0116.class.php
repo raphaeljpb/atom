@@ -36,16 +36,14 @@ class arMigration0116
       'sound recording - nonmusical' => 'sound recording-nonmusical',
     ];
 
-    foreach ($termNames as $oldName => $newName)
-    {
+    foreach ($termNames as $oldName => $newName) {
       $criteria = new Criteria();
       $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
       $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MODS_RESOURCE_TYPE_ID);
       $criteria->add(QubitTermI18n::CULTURE, 'en');
       $criteria->add(QubitTermI18n::NAME, $oldName);
 
-      if (null !== $term = QubitTerm::getOne($criteria))
-      {
+      if (null !== $term = QubitTerm::getOne($criteria)) {
         $term->setName($newName, ['culture' => 'en']);
         $term->save();
       }

@@ -67,7 +67,6 @@ $testCases = [
   ],
 ];
 
-foreach ($testCases as $testCase)
-{
+foreach ($testCases as $testCase) {
   $t->is(Qubit::parseDate($testCase['input']), $testCase['output'], $testCase['description']);
 }

@@ -24,11 +24,11 @@
  */
 class csvImportTask extends csvImportBaseTask
 {
-    protected $namespace = 'csv';
-    protected $name = 'import';
-    protected $briefDescription = 'Import csv information object data';
+  protected $namespace = 'csv';
+  protected $name = 'import';
+  protected $briefDescription = 'Import csv information object data';
 
-    protected $detailedDescription = <<<'EOF'
+  protected $detailedDescription = <<<'EOF'
 Import CSV data
 EOF;
 
@@ -63,13 +63,11 @@ EOF;
 
     $this->validateOptions($options);
 
-    if (false === $fh = fopen($arguments['filename'], 'rb'))
-    {
+    if (false === $fh = fopen($arguments['filename'], 'rb')) {
       throw new sfException('You must specify a valid filename');
     }
 
-    if (!empty($options['user-id']) && (null !== $user = QubitUser::getById($options['user-id'])))
-    {
+    if (!empty($options['user-id']) && (null !== $user = QubitUser::getById($options['user-id']))) {
       $this->context->getUser()->signIn($user);
     }
 
@@ -101,8 +99,7 @@ EOF;
         'Have you done a manual backup and wish to proceed? (y/N)',
       ],
         'QUESTION_LARGE', false)
-    )
-    {
+    ) {
       $this->log('Task aborted.');
 
       return 1;
@@ -349,27 +346,23 @@ EOF;
         'creationDateNotes' => '|',
       ],
 
-      'updatePreparationLogic' => function (&$self)
-      {
+      'updatePreparationLogic' => function (&$self) {
         $this->deleteDigitalObjectIfUpdatingAndNotKeeping($self);
       },
 
       // Import logic to execute before saving information object
-      'preSaveLogic' => function (&$self)
-      {
+      'preSaveLogic' => function (&$self) {
         $notImportingTranslation = $self->object instanceof QubitInformationObject;
 
         // If importing a translation, warn of values in inappropriate columns and don't import related data
-        if (!$notImportingTranslation)
-        {
+        if (!$notImportingTranslation) {
           // Determine which possible columns are allowable
           $translationObjectProperties = [];
           $dbMap = Propel::getDatabaseMap(QubitInformationObjectI18n::DATABASE_NAME);
           $translationTable = $dbMap->getTable(QubitInformationObjectI18n::TABLE_NAME);
           $columns = $translationTable->getColumns();
 
-          foreach ($columns as $column)
-          {
+          foreach ($columns as $column) {
             array_push($translationObjectProperties, $column->getPhpName());
           }
 
@@ -377,17 +370,14 @@ EOF;
           $allowedColumns = ['legacyId'] + $translationObjectProperties;
           $ignoredColumns = [];
 
-          foreach ($self->rowStatusVars as $columnName => $value)
-          {
-            if (!empty($value) && false === array_search($columnName, $allowedColumns))
-            {
+          foreach ($self->rowStatusVars as $columnName => $value) {
+            if (!empty($value) && false === array_search($columnName, $allowedColumns)) {
               array_push($ignoredColumns, $columnName);
             }
           }
 
           // Show warning about ignored columns
-          if (count($ignoredColumns))
-          {
+          if (count($ignoredColumns)) {
             $errorMessage = 'Ignoring values in column(s) incompatible with translation rows: ';
             $errorMessage .= implode(' ', $ignoredColumns);
             echo $self->logError($errorMessage);
@@ -397,20 +387,17 @@ EOF;
         }
 
         // Set repository if not importing an QubitInformationObjectI18n translation row
-        if ($notImportingTranslation && isset($self->rowStatusVars['repository']) && $self->rowStatusVars['repository'])
-        {
+        if ($notImportingTranslation && isset($self->rowStatusVars['repository']) && $self->rowStatusVars['repository']) {
           $repository = $self->createOrFetchRepository($self->rowStatusVars['repository']);
           $self->object->repositoryId = $repository->id;
         }
 
         // Set level of detail
-        if (isset($self->rowStatusVars['levelOfDetail']) && 0 < strlen($self->rowStatusVars['levelOfDetail']))
-        {
+        if (isset($self->rowStatusVars['levelOfDetail']) && 0 < strlen($self->rowStatusVars['levelOfDetail'])) {
           $levelOfDetail = trim($self->rowStatusVars['levelOfDetail']);
 
           $levelOfDetailTermId = self::arraySearchCaseInsensitive($levelOfDetail, $self->status['levelOfDetailTypes'][$self->columnValue('culture')]);
-          if (false === $levelOfDetailTermId)
-          {
+          if (false === $levelOfDetailTermId) {
             echo "\nTerm {$levelOfDetail} not found in description details level taxonomy, creating it...\n";
 
             $newTerm = QubitFlatfileImport::createTerm(
@@ -428,8 +415,7 @@ EOF;
 
         // Add alternative identifiers
         if (array_key_exists('alternativeIdentifiers', $self->rowStatusVars)
-            && array_key_exists('alternativeIdentifierLabels', $self->rowStatusVars))
-        {
+            && array_key_exists('alternativeIdentifierLabels', $self->rowStatusVars)) {
           self::setAlternativeIdentifiers(
             $self->object,
             $self->rowStatusVars['alternativeIdentifiers'],
@@ -438,17 +424,13 @@ EOF;
         }
 
         // Set description status
-        if (isset($self->rowStatusVars['descriptionStatus']) && 0 < strlen($self->rowStatusVars['descriptionStatus']))
-        {
+        if (isset($self->rowStatusVars['descriptionStatus']) && 0 < strlen($self->rowStatusVars['descriptionStatus'])) {
           $descStatus = trim($self->rowStatusVars['descriptionStatus']);
           $statusTermId = self::arraySearchCaseInsensitive($descStatus, $self->status['descriptionStatusTypes'][$self->columnValue('culture')]);
 
-          if (false !== $statusTermId)
-          {
+          if (false !== $statusTermId) {
             $self->object->descriptionStatusId = $statusTermId;
-          }
-          else
-          {
+          } else {
             echo "\nTerm {$descStatus} not found in description status taxonomy, creating it...\n";
 
             $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::DESCRIPTION_STATUS_ID, $descStatus, $self->columnValue('culture'));
@@ -459,71 +441,53 @@ EOF;
         }
 
         // Set publication status
-        if (isset($self->rowStatusVars['publicationStatus']) && 0 < strlen($self->rowStatusVars['publicationStatus']))
-        {
+        if (isset($self->rowStatusVars['publicationStatus']) && 0 < strlen($self->rowStatusVars['publicationStatus'])) {
           $pubStatusTermId = self::arraySearchCaseInsensitive(
             $self->rowStatusVars['publicationStatus'],
             $self->status['pubStatusTypes'][trim($self->columnValue('culture'))]
           );
 
-          if (!$pubStatusTermId)
-          {
+          if (!$pubStatusTermId) {
             echo "\nPublication status: '".$self->rowStatusVars['publicationStatus']."' is invalid. Using default.\n";
             $pubStatusTermId = $self->status['defaultStatusId'];
           }
-        }
-        else
-        {
+        } else {
           $pubStatusTermId = $self->status['defaultStatusId'];
         }
 
         $self->object->setPublicationStatus($pubStatusTermId);
 
-        if (isset($self->rowStatusVars['qubitParentSlug']) && $self->rowStatusVars['qubitParentSlug'])
-        {
+        if (isset($self->rowStatusVars['qubitParentSlug']) && $self->rowStatusVars['qubitParentSlug']) {
           $parentId = $self->getIdCorrespondingToSlug($self->rowStatusVars['qubitParentSlug']);
-        }
-        else
-        {
-          if (!isset($self->rowStatusVars['parentId']) || !$self->rowStatusVars['parentId'])
-          {
+        } else {
+          if (!isset($self->rowStatusVars['parentId']) || !$self->rowStatusVars['parentId']) {
             // Don't overwrite valid parentId when importing an QubitInformationObjectI18n translation row
-            if ($notImportingTranslation && !isset($self->object->parentId))
-            {
+            if ($notImportingTranslation && !isset($self->object->parentId)) {
               $parentId = $self->status['defaultParentId'];
             }
-          }
-          else
-          {
+          } else {
             if ($mapEntry = $self->fetchKeymapEntryBySourceAndTargetName(
               $self->rowStatusVars['parentId'],
               $self->getStatus('sourceName'),
-              'information_object'))
-            {
+              'information_object')) {
               $parentId = $mapEntry->target_id;
-            }
-            elseif (null !== QubitInformationObject::getById($self->rowStatusVars['parentId']))
-            {
+            } elseif (null !== QubitInformationObject::getById($self->rowStatusVars['parentId'])) {
               $parentId = $self->rowStatusVars['parentId'];
-            }
-            else
-            {
+            } else {
               $error = sprintf('legacyId %s: could not find parentId %s in key_map table or existing data. Setting parent to root...',
                                $self->rowStatusVars['legacyId'], $self->rowStatusVars['parentId']);
 
               echo $self->logError($error);
 
               // Set parent if not importing an QubitInformationObjectI18n translation row
-              if ($notImportingTranslation)
-              {
+              if ($notImportingTranslation) {
                 $self->object->parentId = QubitInformationObject::ROOT_ID;
               }
             }
           }
         }
 
-        if (isset($parentId) && $notImportingTranslation)
-        {
+        if (isset($parentId) && $notImportingTranslation) {
           $self->object->parentId = $parentId;
         }
 
@@ -531,28 +495,23 @@ EOF;
       },
 
       // Import logic to execute after saving information object
-      'postSaveLogic' => function (&$self)
-      {
-        if (!$self->object->id)
-        {
+      'postSaveLogic' => function (&$self) {
+        if (!$self->object->id) {
           throw new sfException('Information object save failed');
         }
 
         // If importing a translation row, don't deal with related data
-        if ($self->object instanceof QubitInformationObjectI18n)
-        {
+        if ($self->object instanceof QubitInformationObjectI18n) {
           return;
         }
 
         // Add keymap entry if not in round trip mode
-        if (!$self->roundtrip)
-        {
+        if (!$self->roundtrip) {
           $self->createKeymapEntry($self->getStatus('sourceName'), $self->rowStatusVars['legacyId']);
         }
 
         // Inherit repository, instead of duplicating the association to it, if applicable
-        if ($self->object instanceof QubitInformationObject && $self->object->canInheritRepository($self->object->repositoryId))
-        {
+        if ($self->object instanceof QubitInformationObject && $self->object->canInheritRepository($self->object->repositoryId)) {
           // Use raw SQL since we don't want an entire save() here.
           $sql = 'UPDATE information_object SET repository_id = NULL WHERE id = ?';
           QubitPdo::prepareAndExecute($sql, [$self->object->id]);
@@ -570,26 +529,20 @@ EOF;
           'genreAccessPoints' => QubitTaxonomy::GENRE_ID,
         ];
 
-        foreach ($accessPointColumns as $columnName => $taxonomyId)
-        {
-          if (isset($self->rowStatusVars[$columnName]))
-          {
+        foreach ($accessPointColumns as $columnName => $taxonomyId) {
+          if (isset($self->rowStatusVars[$columnName])) {
             // Create/relate terms from array of term names.
             $self->createOrFetchTermAndAddRelation($taxonomyId, $self->rowStatusVars[$columnName]);
 
             $index = 0;
-            foreach ($self->rowStatusVars[$columnName] as $subject)
-            {
-              if ($subject)
-              {
+            foreach ($self->rowStatusVars[$columnName] as $subject) {
+              if ($subject) {
                 $scope = false;
-                if (isset($self->rowStatusVars['subjectAccessPointScopes'][$index]))
-                {
+                if (isset($self->rowStatusVars['subjectAccessPointScopes'][$index])) {
                   $scope = $self->rowStatusVars['subjectAccessPointScopes'][$index];
                 }
 
-                if ($scope)
-                {
+                if ($scope) {
                   // Get term ID
                   $query = "SELECT t.id FROM term t \r
                     INNER JOIN term_i18n i ON t.id=i.id \r
@@ -602,8 +555,7 @@ EOF;
 
                   $result = $statement->fetch(PDO::FETCH_OBJ);
 
-                  if ($result)
-                  {
+                  if ($result) {
                     $termId = $result->id;
 
                     // Check if a scope note already exists for this term
@@ -616,8 +568,7 @@ EOF;
 
                     $result = $statement->fetch(PDO::FETCH_OBJ);
 
-                    if (!$result)
-                    {
+                    if (!$result) {
                       // Add scope note if it doesn't exist
                       $note = new QubitNote();
                       $note->objectId = $termId;
@@ -626,9 +577,7 @@ EOF;
                       $note->scope = 'QubitTerm'; // Not sure if this is needed
                       $note->save();
                     }
-                  }
-                  else
-                  {
+                  } else {
                     throw new sfException('Could not find term "'.$subject.'"');
                   }
                 }
@@ -639,23 +588,18 @@ EOF;
         }
 
         // Add name access points
-        if (isset($self->rowStatusVars['nameAccessPoints']))
-        {
+        if (isset($self->rowStatusVars['nameAccessPoints'])) {
           // Add name access points
           $index = 0;
-          foreach ($self->rowStatusVars['nameAccessPoints'] as $name)
-          {
+          foreach ($self->rowStatusVars['nameAccessPoints'] as $name) {
             // Skip blank names
-            if ($name)
-            {
+            if ($name) {
               $actorOptions = [];
-              if (isset($self->rowStatusVars['nameAccessPointHistories'][$index]))
-              {
+              if (isset($self->rowStatusVars['nameAccessPointHistories'][$index])) {
                 $actorOptions['history'] = $self->rowStatusVars['nameAccessPointHistories'][$index];
               }
 
-              if (null !== $repo = $self->object->getRepository(['inherit' => true]))
-              {
+              if (null !== $repo = $self->object->getRepository(['inherit' => true])) {
                 $actorOptions['repositoryId'] = $repo->id;
               }
 
@@ -669,10 +613,8 @@ EOF;
 
         // Add accessions
         if (isset($self->rowStatusVars['accessionNumber'])
-            && count($self->rowStatusVars['accessionNumber']))
-        {
-          foreach ($self->rowStatusVars['accessionNumber'] as $accessionNumber)
-          {
+            && count($self->rowStatusVars['accessionNumber'])) {
+          foreach ($self->rowStatusVars['accessionNumber'] as $accessionNumber) {
             // Attempt to fetch keymap entry
             $accessionMapEntry = $self->fetchKeymapEntryBySourceAndTargetName(
               $accessionNumber,
@@ -681,13 +623,11 @@ EOF;
             );
 
             // If no entry found, create accession and entry
-            if (!$accessionMapEntry)
-            {
+            if (!$accessionMapEntry) {
               $criteria = new Criteria();
               $criteria->add(QubitAccession::IDENTIFIER, $accessionNumber);
 
-              if (null === $accession = QubitAccession::getone($criteria))
-              {
+              if (null === $accession = QubitAccession::getone($criteria)) {
                 echo "\nCreating accession # ".$accessionNumber."\n";
 
                 // Create new accession
@@ -700,9 +640,7 @@ EOF;
               }
 
               $accessionId = $accession->id;
-            }
-            else
-            {
+            } else {
               $accessionId = $accessionMapEntry->target_id;
             }
 
@@ -714,43 +652,34 @@ EOF;
         }
 
         // Add material-related term relation
-        if (isset($self->rowStatusVars['radGeneralMaterialDesignation']))
-        {
-          foreach ($self->rowStatusVars['radGeneralMaterialDesignation'] as $material)
-          {
+        if (isset($self->rowStatusVars['radGeneralMaterialDesignation'])) {
+          foreach ($self->rowStatusVars['radGeneralMaterialDesignation'] as $material) {
             $self->createObjectTermRelation($self->object->id, $material);
           }
         }
 
         // Add copyright info
         // TODO: handle this via a separate import
-        if (isset($self->rowStatusVars['copyrightStatus']) && $self->rowStatusVars['copyrightStatus'])
-        {
-          switch (strtolower($self->rowStatusVars['copyrightStatus']))
-          {
+        if (isset($self->rowStatusVars['copyrightStatus']) && $self->rowStatusVars['copyrightStatus']) {
+          switch (strtolower($self->rowStatusVars['copyrightStatus'])) {
             case 'under copyright':
               print 'Adding rights for '.$self->object->title."...\n";
               $rightsHolderId = false;
               $rightsHolderNames = explode('|', $self->rowStatusVars['copyrightHolder']);
 
-              if ($self->rowStatusVars['copyrightExpires'])
-              {
+              if ($self->rowStatusVars['copyrightExpires']) {
                 $endDates = explode('|', $self->rowStatusVars['copyrightExpires']);
               }
 
-              foreach ($rightsHolderNames as $index => $rightsHolderName)
-              {
+              foreach ($rightsHolderNames as $index => $rightsHolderName) {
                 $rightsHolderName = ($rightsHolderName) ? $rightsHolderName : 'Unknown';
                 $rightsHolder = $self->createOrFetchRightsHolder($rightsHolderName);
                 $rightsHolderId = $rightsHolder->id;
 
                 $rightsHolderName = trim(strtolower($rightsHolderName));
-                if ('city of vancouver' == $rightsHolderName || 0 === strpos($rightsHolderName, 'city of vancouver'))
-                {
+                if ('city of vancouver' == $rightsHolderName || 0 === strpos($rightsHolderName, 'city of vancouver')) {
                   $restriction = 1;
-                }
-                else
-                {
+                } else {
                   $restriction = 0;
                 }
 
@@ -767,8 +696,7 @@ EOF;
                   ),
                 ];
 
-                if (isset($endDates))
-                {
+                if (isset($endDates)) {
                   // If rightsholder/expiry dates and paired, use
                   // corresponding date, otherwise just use the
                   // first expiry date
@@ -777,15 +705,13 @@ EOF;
                       ? $endDates[$index]
                       : $endDates[0];
 
-                  if (!is_numeric($rightAndRelation['endDate']))
-                  {
+                  if (!is_numeric($rightAndRelation['endDate'])) {
                     throw new sfException('Copyright expiry '.$rightAndRelation['endDate']
                       .' is invalid.');
                   }
                 }
 
-                if ($rightsHolderId)
-                {
+                if ($rightsHolderId) {
                   $rightAndRelation['rightsHolderId'] = $rightsHolderId;
                 }
 
@@ -812,8 +738,7 @@ EOF;
                 ),
               ];
 
-              if ($self->rowStatusVars['copyrightExpires'])
-              {
+              if ($self->rowStatusVars['copyrightExpires']) {
                 $rightAndRelation['endDate'] = $self->rowStatusVars['copyrightExpires'];
               }
 
@@ -835,8 +760,7 @@ EOF;
                 ),
               ];
 
-              if ($self->rowStatusVars['copyrightExpires'])
-              {
+              if ($self->rowStatusVars['copyrightExpires']) {
                 $rightAndRelation['endDate'] = $self->rowStatusVars['copyrightExpires'];
               }
 
@@ -873,8 +797,7 @@ EOF;
         $this->importDigitalObject($self);
 
         // Re-index to add translations and related resources
-        if (!$self->searchIndexingDisabled)
-        {
+        if (!$self->searchIndexingDisabled) {
           $node = new arElasticSearchInformationObjectPdo($self->object->id);
           QubitSearch::getInstance()->addDocument($node->serialize(), 'QubitInformationObject');
         }
@@ -892,34 +815,26 @@ EOF;
     $import->setUpdateOptions($options);
 
     // Convert content with | characters to a bulleted list
-    $import->contentFilterLogic = function ($text)
-    {
+    $import->contentFilterLogic = function ($text) {
       return (substr_count($text, '|')) ? '* '.str_replace('|', "\n* ", $text) : $text;
     };
 
-    $import->addColumnHandler('levelOfDescription', function ($self, $data)
-    {
+    $import->addColumnHandler('levelOfDescription', function ($self, $data) {
       $self->object->setLevelOfDescriptionByName(trim($data));
     });
 
     // Map value to taxonomy term name and take note of taxonomy term's ID
-    $import->addColumnHandler('radGeneralMaterialDesignation', function ($self, $data)
-    {
-      if ($data)
-      {
+    $import->addColumnHandler('radGeneralMaterialDesignation', function ($self, $data) {
+      if ($data) {
         $data = array_map('trim', explode('|', $data));
 
-        foreach ($data as $value)
-        {
+        foreach ($data as $value) {
           $value = trim($value);
           $materialTypeId = self::arraySearchCaseInsensitive($value, $self->status['materialTypes'][$self->columnValue('culture')]);
 
-          if (false !== $materialTypeId)
-          {
+          if (false !== $materialTypeId) {
             $self->rowStatusVars['radGeneralMaterialDesignation'][] = $materialTypeId;
-          }
-          else
-          {
+          } else {
             echo "\nTerm {$value} not found in material type taxonomy, creating it...\n";
 
             $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::MATERIAL_TYPE_ID, $value, $self->columnValue('culture'));
@@ -934,8 +849,7 @@ EOF;
     $import->csv($fh, $skipRows);
 
     // Rebuild entire nested set for IOs
-    if (!$options['skip-nested-set-build'])
-    {
+    if (!$options['skip-nested-set-build']) {
       $this->updateIosNestedSet();
     }
   }
@@ -1047,29 +961,22 @@ EOF;
   private function getDefaultParentId($sourceName, $options)
   {
     // Allow default parent ID to be overridden by CLI options
-    if ($options['default-parent-slug'])
-    {
+    if ($options['default-parent-slug']) {
       $parentId = QubitFlatfileImport::getIdCorrespondingToSlug($options['default-parent-slug']);
 
-      if (!$options['quiet'])
-      {
+      if (!$options['quiet']) {
         $this->log("Parent ID of slug {$options['default-parent-slug']} is {$parentId}");
       }
-    }
-    elseif ($options['default-legacy-parent-id'])
-    {
+    } elseif ($options['default-legacy-parent-id']) {
       if (false === $keyMapEntry = QubitFlatfileImport::fetchKeymapEntryBySourceAndTargetName(
-          $options['default-legacy-parent-id'], $sourceName, 'information_object'))
-      {
+          $options['default-legacy-parent-id'], $sourceName, 'information_object')) {
         throw new sfException('Could not find keymap entry for default legacy parent ID '.
                               $options['default-legacy-parent-id']);
       }
 
       $parentId = $keyMapEntry->target_id;
       $this->log("Using default parent ID {$parentId} (legacy parent ID {$options['default-legacy-parent-id']})");
-    }
-    else
-    {
+    } else {
       $parentId = QubitInformationObject::ROOT_ID;
     }
 
@@ -1078,17 +985,13 @@ EOF;
 
   private function updateIosNestedSet($retryCount = 0)
   {
-    try
-    {
+    try {
       $nestedSetTask = new propelBuildNestedSetTask($this->dispatcher, $this->formatter);
       $nestedSetTask->setConfiguration($this->configuration);
       $nestedSetTask->run([], ['exclude-tables' => 'term,menu']);
-    }
-    catch (PDOException $e)
-    {
+    } catch (PDOException $e) {
       // Repeat on transaction deadlock (MySQL error code 1213)
-      if (1213 == $e->errorInfo[1] && $retryCount < 3)
-      {
+      if (1213 == $e->errorInfo[1] && $retryCount < 3) {
         $this->updateIosNestedSet(++$retryCount);
       }
 

@@ -31,21 +31,18 @@ class SettingsGlobalAction extends sfAction
     $this->globalForm = new SettingsGlobalForm();
 
     // Handle POST data (form submit)
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       QubitCache::getInstance()->removePattern('settings:i18n:*');
 
       // Global settings form submission
-      if (null !== $request->global_settings)
-      {
+      if (null !== $request->global_settings) {
         // Hack to populate "version" field so it displays
         // if validation fails. By default, their values are not included in
         // $request->parameterHolder (and thus are not bound) because their
         // <input> field is disabled.
         $version = (null !== $setting = QubitSetting::getByName('version')) ? $setting->getValue(['sourceCulture' => true]) : null;
         $this->globalForm->bind(array_merge($request->global_settings, ['version' => $version]));
-        if ($this->globalForm->isValid())
-        {
+        if ($this->globalForm->isValid()) {
           // Do update and redirect to avoid repeat submit wackiness
           $this->updateGlobalSettings();
 
@@ -67,8 +64,7 @@ class SettingsGlobalAction extends sfAction
   {
     // Get global settings
     $version = qubitConfiguration::VERSION;
-    if (null !== $setting = QubitSetting::getByName('version'))
-    {
+    if (null !== $setting = QubitSetting::getByName('version')) {
       $version .= ' - '.$setting->getValue(['sourceCulture' => true]);
     }
 
@@ -124,16 +120,14 @@ class SettingsGlobalAction extends sfAction
   {
     $thisForm = $this->globalForm;
 
-    if (null !== $generateReportsAsPubUser = $thisForm->getValue('generate_reports_as_pub_user'))
-    {
+    if (null !== $generateReportsAsPubUser = $thisForm->getValue('generate_reports_as_pub_user')) {
       $setting = QubitSetting::getByName('generate_reports_as_pub_user');
       $setting->setValue($generateReportsAsPubUser, ['sourceCulture' => true]);
       $setting->save();
     }
 
     // Check for updates
-    if (null !== $checkForUpdates = $thisForm->getValue('check_for_updates'))
-    {
+    if (null !== $checkForUpdates = $thisForm->getValue('check_for_updates')) {
       $setting = QubitSetting::getByName('check_for_updates');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
@@ -142,10 +136,8 @@ class SettingsGlobalAction extends sfAction
     }
 
     // Hits per page
-    if (null !== $hitsPerPage = $thisForm->getValue('hits_per_page'))
-    {
-      if (intval($hitsPerPage) && $hitsPerPage > 0)
-      {
+    if (null !== $hitsPerPage = $thisForm->getValue('hits_per_page')) {
+      if (intval($hitsPerPage) && $hitsPerPage > 0) {
         $setting = QubitSetting::getByName('hits_per_page');
 
         // Force sourceCulture update to prevent discrepency in settings between cultures
@@ -155,8 +147,7 @@ class SettingsGlobalAction extends sfAction
     }
 
     // Escape queries, add setting if it's not already created (to avoid adding it in a migration)
-    if (null === $setting = QubitSetting::getByName('escape_queries'))
-    {
+    if (null === $setting = QubitSetting::getByName('escape_queries')) {
       $setting = QubitSetting::createNewSetting('escape_queries', null);
     }
 
@@ -165,54 +156,48 @@ class SettingsGlobalAction extends sfAction
     $setting->save();
 
     // Sort Browser (for users)
-    if (null !== $sortBrowserUser = $thisForm->getValue('sort_browser_user'))
-    {
+    if (null !== $sortBrowserUser = $thisForm->getValue('sort_browser_user')) {
       $setting = QubitSetting::getByName('sort_browser_user');
 
-       // Force sourceCulture update to prevent discrepency in settings between cultures
+      // Force sourceCulture update to prevent discrepency in settings between cultures
       $setting->setValue($sortBrowserUser, ['sourceCulture' => true]);
       $setting->save();
     }
 
     // Sort Browser (for anonymous)
-    if (null !== $sortBrowserAnonymous = $thisForm->getValue('sort_browser_anonymous'))
-    {
+    if (null !== $sortBrowserAnonymous = $thisForm->getValue('sort_browser_anonymous')) {
       $setting = QubitSetting::getByName('sort_browser_anonymous');
 
-       // Force sourceCulture update to prevent discrepency in settings between cultures
+      // Force sourceCulture update to prevent discrepency in settings between cultures
       $setting->setValue($sortBrowserAnonymous, ['sourceCulture' => true]);
       $setting->save();
     }
 
     // Default repository browse page view
-    if (null !== $defaultRepositoryView = $thisForm->getValue('default_repository_browse_view'))
-    {
+    if (null !== $defaultRepositoryView = $thisForm->getValue('default_repository_browse_view')) {
       $setting = QubitSetting::getByName('default_repository_browse_view');
 
-       // Force sourceCulture update to prevent discrepency in settings between cultures
+      // Force sourceCulture update to prevent discrepency in settings between cultures
       $setting->setValue($defaultRepositoryView, ['sourceCulture' => true]);
       $setting->save();
     }
 
     // Default archival description browse page view
-    if (null !== $defaultArchivalDescriptionView = $thisForm->getValue('default_archival_description_browse_view'))
-    {
+    if (null !== $defaultArchivalDescriptionView = $thisForm->getValue('default_archival_description_browse_view')) {
       $setting = QubitSetting::getByName('default_archival_description_browse_view');
 
-       // Force sourceCulture update to prevent discrepency in settings between cultures
+      // Force sourceCulture update to prevent discrepency in settings between cultures
       $setting->setValue($defaultArchivalDescriptionView, ['sourceCulture' => true]);
       $setting->save();
     }
 
     // Multi-repository radio button
-    if (null !== $multiRepositoryValue = $thisForm->getValue('multi_repository'))
-    {
+    if (null !== $multiRepositoryValue = $thisForm->getValue('multi_repository')) {
       $setting = QubitSetting::getByName('multi_repository');
 
       // Add setting if it's not already in the sampleData.yml file for
       // backwards compatiblity with v1.0.3 sampleData.yml file
-      if (null === $setting)
-      {
+      if (null === $setting) {
         $setting = QubitSetting::createNewSetting('multi_repository', null, ['deleteable' => false]);
       }
 
@@ -222,10 +207,8 @@ class SettingsGlobalAction extends sfAction
     }
 
     // Audit log enabled
-    if (null !== $auditLogEnabled = $thisForm->getValue('audit_log_enabled'))
-    {
-      if (null === $setting = QubitSetting::getByName('audit_log_enabled'))
-      {
+    if (null !== $auditLogEnabled = $thisForm->getValue('audit_log_enabled')) {
+      if (null === $setting = QubitSetting::getByName('audit_log_enabled')) {
         $setting = new QubitSetting();
         $setting->name = 'audit_log_enabled';
       }
@@ -235,8 +218,7 @@ class SettingsGlobalAction extends sfAction
       $setting->save();
     }
 
-    if (null !== $slugTypeInformationObject = $thisForm->getValue('slug_basis_informationobject'))
-    {
+    if (null !== $slugTypeInformationObject = $thisForm->getValue('slug_basis_informationobject')) {
       $setting = QubitSetting::getByName('slug_basis_informationobject');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
@@ -244,8 +226,7 @@ class SettingsGlobalAction extends sfAction
       $setting->save();
     }
 
-    if (null !== $permissiveSlugCreation = $thisForm->getValue('permissive_slug_creation'))
-    {
+    if (null !== $permissiveSlugCreation = $thisForm->getValue('permissive_slug_creation')) {
       $setting = QubitSetting::getByName('permissive_slug_creation');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
@@ -254,8 +235,7 @@ class SettingsGlobalAction extends sfAction
     }
 
     // Show tooltips
-    if (null !== $showTooltips = $thisForm->getValue('show_tooltips'))
-    {
+    if (null !== $showTooltips = $thisForm->getValue('show_tooltips')) {
       $setting = QubitSetting::getByName('show_tooltips');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
@@ -264,8 +244,7 @@ class SettingsGlobalAction extends sfAction
     }
 
     // Default publication status
-    if (null !== $defaultPubStatus = $thisForm->getValue('defaultPubStatus'))
-    {
+    if (null !== $defaultPubStatus = $thisForm->getValue('defaultPubStatus')) {
       $setting = QubitSetting::getByName('defaultPubStatus');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
@@ -274,10 +253,8 @@ class SettingsGlobalAction extends sfAction
     }
 
     // Total drafts notification enabled
-    if (null !== $draftNotificationEnabled = $thisForm->getValue('draft_notification_enabled'))
-    {
-      if (null === $setting = QubitSetting::getByName('draft_notification_enabled'))
-      {
+    if (null !== $draftNotificationEnabled = $thisForm->getValue('draft_notification_enabled')) {
+      if (null === $setting = QubitSetting::getByName('draft_notification_enabled')) {
         $setting = new QubitSetting();
         $setting->name = 'draft_notification_enabled';
       }
@@ -288,8 +265,7 @@ class SettingsGlobalAction extends sfAction
     }
 
     // SWORD deposit directory
-    if (null !== $swordDepositDir = $thisForm->getValue('sword_deposit_dir'))
-    {
+    if (null !== $swordDepositDir = $thisForm->getValue('sword_deposit_dir')) {
       $setting = QubitSetting::getByName('sword_deposit_dir');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
@@ -300,8 +276,7 @@ class SettingsGlobalAction extends sfAction
     // Google Maps Javascript API key
     $googleMapsApiKey = $thisForm->getValue('google_maps_api_key');
 
-    if (null === $setting = QubitSetting::getByName('google_maps_api_key'))
-    {
+    if (null === $setting = QubitSetting::getByName('google_maps_api_key')) {
       $setting = new QubitSetting();
       $setting->name = 'google_maps_api_key';
     }
@@ -311,8 +286,7 @@ class SettingsGlobalAction extends sfAction
     $setting->save();
 
     // Enable Institutional Scoping
-    if (null !== $enableInstitutionalScoping = $thisForm->getValue('enable_institutional_scoping'))
-    {
+    if (null !== $enableInstitutionalScoping = $thisForm->getValue('enable_institutional_scoping')) {
       $setting = QubitSetting::getByName('enable_institutional_scoping');
 
       // Force sourceCulture update to prevent discrepency in settings between cultures
@@ -323,8 +297,7 @@ class SettingsGlobalAction extends sfAction
     // Cache XML on save
     $cacheXmlOnSave = $thisForm->getValue('cache_xml_on_save');
 
-    if (null === $setting = QubitSetting::getByName('cache_xml_on_save'))
-    {
+    if (null === $setting = QubitSetting::getByName('cache_xml_on_save')) {
       $setting = new QubitSetting();
       $setting->name = 'cache_xml_on_save';
     }

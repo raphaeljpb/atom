@@ -38,8 +38,7 @@ class QubitJob extends BaseJob
   {
     parent::save($connection);
 
-    foreach ($this->notes as $note)
-    {
+    foreach ($this->notes as $note) {
       $note->save();
     }
   }
@@ -53,13 +52,11 @@ class QubitJob extends BaseJob
   {
     parent::delete($connection);
 
-    if (isset($job->downloadPath))
-    {
+    if (isset($job->downloadPath)) {
       unlink($job->downloadPath);
     }
 
-    foreach ($this->notes as $note)
-    {
+    foreach ($this->notes as $note) {
       $note->delete();
     }
   }
@@ -71,8 +68,7 @@ class QubitJob extends BaseJob
    */
   public function setStatusError($errorNote = null)
   {
-    if (null !== $errorNote)
-    {
+    if (null !== $errorNote) {
       $this->addNoteText($errorNote);
     }
 
@@ -127,8 +123,7 @@ class QubitJob extends BaseJob
     $i18n = sfContext::getInstance()->i18n;
     $unknown = $i18n->__('Unknown');
 
-    switch ($this->statusId)
-    {
+    switch ($this->statusId) {
       case QubitTerm::JOB_STATUS_COMPLETED_ID:
         return $i18n->__('Completed');
 
@@ -153,8 +148,7 @@ class QubitJob extends BaseJob
   public function getObjectModule()
   {
     $className = QubitPdo::fetchColumn('SELECT class_name FROM object WHERE id = ?', [$this->objectId]);
-    if (!$className)
-    {
+    if (!$className) {
       return null;
     }
 
@@ -181,8 +175,7 @@ class QubitJob extends BaseJob
     $note = new QubitNote();
     $note->content = $contents;
 
-    if (!isset($this->id))
-    {
+    if (!isset($this->id)) {
       throw new sfException('Tried to add a note to a job that is not saved yet');
     }
 
@@ -217,8 +210,7 @@ class QubitJob extends BaseJob
     $token = null;
     $tries = 0;
 
-    while (!isset($token) && $tries < 3)
-    {
+    while (!isset($token) && $tries < 3) {
       $tokenToCheck = bin2hex(openssl_random_pseudo_bytes(16));
 
       $sql = 'SELECT COUNT(p.id) FROM property p
@@ -226,18 +218,14 @@ class QubitJob extends BaseJob
               WHERE p.name = ? AND i18n.value = ?';
       $count = QubitPdo::fetchColumn($sql, ['userToken', $tokenToCheck]);
 
-      if ($count > 0)
-      {
+      if ($count > 0) {
         ++$tries;
-      }
-      else
-      {
+      } else {
         $token = $tokenToCheck;
       }
     }
 
-    if (!isset($token))
-    {
+    if (!isset($token)) {
       throw new sfException('Could not generate user token for the job.');
     }
 
@@ -266,8 +254,7 @@ class QubitJob extends BaseJob
 
     $jobId = QubitPdo::fetchColumn($sql, ['userToken', $token]);
 
-    if (false !== $jobId)
-    {
+    if (false !== $jobId) {
       return QubitJob::getById($jobId);
     }
   }
@@ -297,8 +284,7 @@ class QubitJob extends BaseJob
    */
   public static function runJob($jobName, $jobParams = [])
   {
-    if (!self::checkWorkerAvailable(self::getJobPrefix().$jobName))
-    {
+    if (!self::checkWorkerAvailable(self::getJobPrefix().$jobName)) {
       throw new Net_Gearman_Exception("No Gearman worker available that can handle the job {$jobName}.");
     }
 
@@ -306,8 +292,7 @@ class QubitJob extends BaseJob
 
     // You can specify 'name' => 'whatever' to make the name human friendly.
     // Default is we just use the job class name.
-    if (!isset($jobParams['name']))
-    {
+    if (!isset($jobParams['name'])) {
       $jobParams['name'] = $jobName;
     }
 
@@ -315,26 +300,22 @@ class QubitJob extends BaseJob
     $job->statusId = QubitTerm::JOB_STATUS_IN_PROGRESS_ID;
 
     $sfUser = sfContext::getInstance()->user;
-    if (null !== $sfUser && $sfUser->isAuthenticated())
-    {
+    if (null !== $sfUser && $sfUser->isAuthenticated()) {
       $job->userId = $sfUser->getUserID();
     }
 
-    if (isset($jobParams['objectId']))
-    {
+    if (isset($jobParams['objectId'])) {
       $job->objectId = $jobParams['objectId'];
     }
 
     $job->save();
 
     // Add summary info to the job
-    if (isset($jobParams['description']))
-    {
+    if (isset($jobParams['description'])) {
       $job->addNoteText($jobParams['description']);
     }
 
-    try
-    {
+    try {
       // Commit current database transaction before we dispatch the task to gearmand
       // so the resources modified are persisted before the assigned worker starts
       // processing the task. If we don't do this now the transaction will be committed
@@ -345,9 +326,7 @@ class QubitJob extends BaseJob
       // Start a new transaction as there might be more database work within the
       // current request, it's commited at the end in QubitTransactionFilter.
       $connection->beginTransaction();
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $connection->rollBack();
 
       throw $e;
@@ -385,8 +364,7 @@ class QubitJob extends BaseJob
    */
   public static function getUserString($job)
   {
-    if (isset($job->userId))
-    {
+    if (isset($job->userId)) {
       $user = QubitUser::getById($job->userId);
 
       return $user ? $user->__toString() : 'Deleted user';
@@ -414,8 +392,7 @@ class QubitJob extends BaseJob
     $manager = new Net_Gearman_Manager(arGearman::getServer(), 2);
     $status = $manager->status();
 
-    if (!array_key_exists($jobName, $status) || !$status[$jobName]['capable_workers'])
-    {
+    if (!array_key_exists($jobName, $status) || !$status[$jobName]['capable_workers']) {
       return false;
     }
 

@@ -47,49 +47,34 @@ abstract class arOaiPluginComponent extends sfComponent
   public function setUpdateParametersFromRequest($request)
   {
     // If limit dates are not supplied, define them as ''
-    if (!isset($request->from))
-    {
+    if (!isset($request->from)) {
       $this->from = '';
-    }
-    else
-    {
+    } else {
       $this->from = strtotime($request->from);
     }
 
-    if (!isset($request->until))
-    {
+    if (!isset($request->until)) {
       $this->until = '';
-    }
-    else
-    {
+    } else {
       $this->until = strtotime($request->until);
     }
 
-    if (!isset($request->set))
-    {
+    if (!isset($request->set)) {
       $this->set = '';
-    }
-    else
-    {
+    } else {
       $this->set = $request->set;
     }
 
-    if (!isset($request->metadataPrefix))
-    {
+    if (!isset($request->metadataPrefix)) {
       $this->metadataPrefix = 'oai_dc';
-    }
-    else
-    {
+    } else {
       $this->metadataPrefix = $request->metadataPrefix;
     }
 
     // If cursor not supplied, define as 0
-    if (!isset($request->cursor))
-    {
+    if (!isset($request->cursor)) {
       $this->cursor = 0;
-    }
-    else
-    {
+    } else {
       $this->cursor = $request->cursor;
     }
   }
@@ -103,8 +88,7 @@ abstract class arOaiPluginComponent extends sfComponent
       'limit' => QubitSetting::getByName('resumption_token_limit')->__toString(), ];
 
     // Get set if one has been named
-    if ('' != $this->set)
-    {
+    if ('' != $this->set) {
       $presetOptions['set'] = QubitOai::getMatchingOaiSet($this->set);
     }
 
@@ -129,8 +113,7 @@ abstract class arOaiPluginComponent extends sfComponent
     $this->attributes = $request->getGetParameters();
     $this->attributesKeys = array_keys($this->attributes);
     $this->requestAttributes = '';
-    foreach ($this->attributesKeys as $key)
-    {
+    foreach ($this->attributesKeys as $key) {
       $this->requestAttributes .= ' '.$key.'="'.$this->attributes[$key].'"';
     }
   }

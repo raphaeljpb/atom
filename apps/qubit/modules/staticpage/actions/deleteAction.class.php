@@ -26,24 +26,19 @@ class StaticPageDeleteAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check user authorization
-    if ($this->resource->isProtected())
-    {
+    if ($this->resource->isProtected()) {
       QubitAcl::forwardUnauthorized();
     }
 
-    if ($request->isMethod('delete'))
-    {
+    if ($request->isMethod('delete')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->resource->delete();
 
         // Invalidate static page content cache entry
-        if (null !== $cache = QubitCache::getInstance())
-        {
-          foreach (sfConfig::get('app_i18n_languages') as $culture)
-          {
+        if (null !== $cache = QubitCache::getInstance()) {
+          foreach (sfConfig::get('app_i18n_languages') as $culture) {
             $cacheKey = 'staticpage:'.$this->resource->id.':'.$culture;
             $cache->remove($cacheKey);
           }

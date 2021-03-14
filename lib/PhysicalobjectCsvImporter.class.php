@@ -75,8 +75,7 @@ class PhysicalObjectCsvImporter
   public function __construct(sfContext $context = null, $dbcon = null,
     $options = [])
   {
-    if (null === $context)
-    {
+    if (null === $context) {
       $context = new sfContext(ProjectConfiguration::getActive());
     }
 
@@ -98,8 +97,7 @@ class PhysicalObjectCsvImporter
 
   public function __get($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'context':
         return $this->{$name};
 
@@ -122,8 +120,7 @@ class PhysicalObjectCsvImporter
 
   public function __set($name, $value)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'dbcon':
       case 'typeIdLookupTable':
         $this->{$name} = $value;
@@ -152,18 +149,15 @@ class PhysicalObjectCsvImporter
 
   public function validateFilename($filename)
   {
-    if (empty($filename))
-    {
+    if (empty($filename)) {
       throw new sfException('Please specify a filename for import');
     }
 
-    if (!file_exists($filename))
-    {
+    if (!file_exists($filename)) {
       throw new sfException("Can not find file {$filename}");
     }
 
-    if (!is_readable($filename))
-    {
+    if (!is_readable($filename)) {
       throw new sfException("Can not read {$filename}");
     }
 
@@ -172,13 +166,11 @@ class PhysicalObjectCsvImporter
 
   public function setOptions(array $options = null)
   {
-    if (empty($options))
-    {
+    if (empty($options)) {
       return;
     }
 
-    foreach ($options as $name => $val)
-    {
+    foreach ($options as $name => $val) {
       $this->setOption($name, $val);
     }
   }
@@ -190,8 +182,7 @@ class PhysicalObjectCsvImporter
 
   public function setOption(string $name, $value)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'header':
         $this->setHeader($value);
 
@@ -225,12 +216,10 @@ class PhysicalObjectCsvImporter
 
   public function getOption(string $name)
   {
-    if (isset($this->options[$name]))
-    {
+    if (isset($this->options[$name])) {
       return $this->options[$name];
     }
-    if ('sourceName' == $name)
-    {
+    if ('sourceName' == $name) {
       return basename($this->filename);
     }
 
@@ -259,8 +248,7 @@ class PhysicalObjectCsvImporter
 
   public function setHeader(string $str = null)
   {
-    if (null === $str)
-    {
+    if (null === $str) {
       $this->options['header'] = null;
 
       return;
@@ -276,8 +264,7 @@ class PhysicalObjectCsvImporter
       return !empty($val);
     });
 
-    if (empty($columnNames))
-    {
+    if (empty($columnNames)) {
       $msg = <<<'EOM'
 Invalid header. Please provide a CSV delimited list of column names
 e.g. "name,location,type,culture".
@@ -287,10 +274,8 @@ EOM;
     }
 
     // Throw error on unknown column names
-    foreach ($columnNames as $name)
-    {
-      if (!array_key_exists($name, self::$columnMap))
-      {
+    foreach ($columnNames as $name) {
+      if (!array_key_exists($name, self::$columnMap)) {
         throw new sfException(sprintf('Column name "%s" in header is invalid',
           $name));
       }
@@ -301,12 +286,10 @@ EOM;
 
   public function getHeader()
   {
-    if (isset($this->options['header']))
-    {
+    if (isset($this->options['header'])) {
       return $this->options['header'];
     }
-    if (null !== $this->reader)
-    {
+    if (null !== $this->reader) {
       return $this->reader->getHeader();
     }
   }
@@ -325,24 +308,19 @@ EOM;
   {
     $timer = $this->startTimer('total');
 
-    if (null !== $filename)
-    {
+    if (null !== $filename) {
       $this->setFilename($filename);
     }
 
     $records = $this->loadCsvData($this->filename);
 
-    foreach ($records as $record)
-    {
+    foreach ($records as $record) {
       ++$this->offset;
 
-      try
-      {
+      try {
         $data = $this->processRow($record);
         $this->savePhysicalobjects($data);
-      }
-      catch (UnexpectedValueException $e)
-      {
+      } catch (UnexpectedValueException $e) {
         $this->logError(sprintf('Warning! skipped row [%u/%u]: %s',
           $this->offset, $this->rowsTotal, $e->getMessage()));
 
@@ -377,15 +355,13 @@ EOM;
   {
     $timer = $this->startTimer('processRow');
 
-    if (0 == strlen($data['name']) && 0 == strlen($data['location']))
-    {
+    if (0 == strlen($data['name']) && 0 == strlen($data['location'])) {
       throw new UnexpectedValueException('No name or location defined');
     }
 
     $culture = $this->getRecordCulture($data['culture']);
 
-    foreach (self::$columnMap as $oldkey => $newkey)
-    {
+    foreach (self::$columnMap as $oldkey => $newkey) {
       $prow[$newkey] = $this->processColumn($oldkey, $data[$oldkey], $culture);
     }
 
@@ -398,18 +374,15 @@ EOM;
   {
     $culture = trim($culture);
 
-    if (!empty($culture))
-    {
+    if (!empty($culture)) {
       return strtolower($culture);
     }
 
-    if (!empty($this->options['defaultCulture']))
-    {
+    if (!empty($this->options['defaultCulture'])) {
       return strtolower($this->options['defaultCulture']);
     }
 
-    if (!empty(sfConfig::get('default_culture')))
-    {
+    if (!empty(sfConfig::get('default_culture'))) {
       return strtolower(sfConfig::get('default_culture'));
     }
 
@@ -428,15 +401,13 @@ EOM;
     $matches = $this->matchExistingRecords($data);
     $timer->add();
 
-    if (null === $matches)
-    {
+    if (null === $matches) {
       $this->insertPhysicalObject($data);
 
       return;
     }
 
-    foreach ($matches as $item)
-    {
+    foreach ($matches as $item) {
       $timer = $this->startTimer('updateExisting');
       $this->updatePhysicalObject($item, $data);
       $timer->add();
@@ -450,13 +421,10 @@ EOM;
     $timer = $this->startTimer('progress');
     $freq = $this->getOption('progressFrequency');
 
-    if (1 == $freq)
-    {
-      if (0 == $this->matchedExisting)
-      {
+    if (1 == $freq) {
+      if (0 == $this->matchedExisting) {
         $msg = 'Row [%u/%u]: name "%s" imported (%01.2fs)';
-      }
-      else {
+      } else {
         $msg = 'Row [%u/%u]: Matched and updated name "%s" (%01.2fs)';
       }
 
@@ -466,9 +434,7 @@ EOM;
         $data['name'],
         $this->getElapsedTime('total')
       );
-    }
-    elseif ($freq > 1 && 0 == $count % $freq)
-    {
+    } elseif ($freq > 1 && 0 == $count % $freq) {
       $output = sprintf('Imported %u of %u rows (%01.2fs)...',
         $count, $this->rowsTotal, $this->getElapsedTime('total'));
     }
@@ -480,8 +446,7 @@ EOM;
 
   public function reportTimes()
   {
-    if (!$this->getOption('debug'))
-    {
+    if (!$this->getOption('debug')) {
       return sprintf('Total import time: %01.2fs',
         $this->getElapsedTime('total')).PHP_EOL;
     }
@@ -530,8 +495,7 @@ EOM;
       ],
     ];
 
-    foreach ($times as $val)
-    {
+    foreach ($times as $val) {
       $msg .= '  '.sprintf($val[0], (float) $val[1]).PHP_EOL;
     }
 
@@ -576,25 +540,21 @@ EOQ;
     $this->matchedExisting = 0;
     $options = ['culture' => $data['culture']];
 
-    if (!$this->getOption('updateExisting'))
-    {
+    if (!$this->getOption('updateExisting')) {
       return null;
     }
 
-    if ($this->getOption('partialMatches'))
-    {
+    if ($this->getOption('partialMatches')) {
       $options = $options + ['partialMatch' => 'begin'];
     }
 
     $matches = $this->ormClasses['physicalObject']::getByName(
       $data['name'], $options);
 
-    if (0 == count($matches))
-    {
+    if (0 == count($matches)) {
       return null;
     }
-    if (1 == count($matches))
-    {
+    if (1 == count($matches)) {
       $this->matchedExisting = 1;
 
       return [$matches->current()];
@@ -607,15 +567,13 @@ EOQ;
   {
     $this->matchedExisting = count($matches);
 
-    if ('skip' == $this->getOption('onMultiMatch'))
-    {
+    if ('skip' == $this->getOption('onMultiMatch')) {
       throw new UnexpectedValueException(sprintf(
         'name "%s" matched %u existing records', $name, $this->matchedExisting
       ));
     }
 
-    if ('first' == $this->getOption('onMultiMatch'))
-    {
+    if ('first' == $this->getOption('onMultiMatch')) {
       $matches = [$matches->current()];
     }
 
@@ -630,8 +588,7 @@ EOQ;
   {
     $timer = $this->startTimer('insertNew');
 
-    if (!$this->getOption('insertNew'))
-    {
+    if (!$this->getOption('insertNew')) {
       throw new UnexpectedValueException(sprintf(
         'Couldn\'t match name "%s"', $csvdata['name']
       ));
@@ -657,31 +614,26 @@ EOQ;
   {
     $updates = [];
 
-    if ($this->shouldUpdateDb($csvdata['typeId']))
-    {
+    if ($this->shouldUpdateDb($csvdata['typeId'])) {
       $updates['typeId'] = $csvdata['typeId'];
     }
 
-    if ($this->shouldUpdateDb($csvdata['location']))
-    {
+    if ($this->shouldUpdateDb($csvdata['location'])) {
       $updates['location'] = $csvdata['location'];
     }
 
     // Only do update if $updates array is populated
-    if (!empty($updates))
-    {
+    if (!empty($updates)) {
       $timer = $this->startTimer('physobjSave');
       $updated = $physobj->quickUpdate($updates, $this->getDbConnection());
       $timer->add();
 
-      if ($updated)
-      {
+      if ($updated) {
         $this->createKeymapEntry($physobj->id, $csvdata);
       }
     }
 
-    if ($this->shouldUpdateDb($csvdata['informationObjectIds']))
-    {
+    if ($this->shouldUpdateDb($csvdata['informationObjectIds'])) {
       $this->updateInfoObjRelations($physobj, $csvdata['informationObjectIds']);
     }
   }
@@ -693,8 +645,7 @@ EOQ;
     // Update the search index of related information objects
     $physobj->indexOnSave = $this->getOption('updateSearchIndex');
 
-    if (isset($updates['informationObjectIds']))
-    {
+    if (isset($updates['informationObjectIds'])) {
       $physobj->updateInfobjRelations($informationObjectIds);
     }
 
@@ -703,8 +654,7 @@ EOQ;
 
   protected function log($msg)
   {
-    if (!$this->getOption('quiet'))
-    {
+    if (!$this->getOption('quiet')) {
       echo $msg.PHP_EOL;
     }
   }
@@ -712,8 +662,7 @@ EOQ;
   protected function logError($msg)
   {
     // Write to error log (but not STDERR) even in quiet mode
-    if (!$this->getOption('quiet') || STDERR != $this->getErrorLogHandle())
-    {
+    if (!$this->getOption('quiet') || STDERR != $this->getErrorLogHandle()) {
       fwrite($this->getErrorLogHandle(), $msg.PHP_EOL);
     }
   }
@@ -726,8 +675,7 @@ EOQ;
 
   protected function getDbConnection()
   {
-    if (null === $this->dbcon)
-    {
+    if (null === $this->dbcon) {
       $this->dbcon = Propel::getConnection();
     }
 
@@ -736,13 +684,11 @@ EOQ;
 
   protected function getErrorLogHandle()
   {
-    if (null === $filename = $this->getOption('errorLog'))
-    {
+    if (null === $filename = $this->getOption('errorLog')) {
       return STDERR;
     }
 
-    if (!isset($this->errorLogHandle))
-    {
+    if (!isset($this->errorLogHandle)) {
       $this->errorLogHandle = fopen($filename, 'w');
     }
 
@@ -753,8 +699,7 @@ EOQ;
   {
     $reader = \League\Csv\Reader::createFromPath($filename, 'r');
 
-    if (!isset($this->options['header']))
-    {
+    if (!isset($this->options['header'])) {
       // Use first row of CSV file as header
       $reader->setHeaderOffset(0);
     }
@@ -764,12 +709,9 @@ EOQ;
 
   protected function getRecords($stmt)
   {
-    if (isset($this->options['header']))
-    {
+    if (isset($this->options['header'])) {
       $records = $stmt->process($this->reader, $this->options['header']);
-    }
-    else
-    {
+    } else {
       $records = $stmt->process($this->reader);
     }
 
@@ -778,8 +720,7 @@ EOQ;
 
   protected function processColumn($key, $val, $culture)
   {
-    switch ($key)
-    {
+    switch ($key) {
       case 'culture':
         $val = $culture;
 
@@ -801,8 +742,7 @@ EOQ;
 
     // I'm not using !empty() for this conditional because I want to return an
     // empty array when $val = array()
-    if ('' !== $val)
-    {
+    if ('' !== $val) {
       return $val;
     }
   }
@@ -811,18 +751,15 @@ EOQ;
   {
     $ids = [];
 
-    if (null === $str)
-    {
+    if (null === $str) {
       return $ids;
     }
 
-    foreach ($this->processMultiValueColumn($str) as $val)
-    {
+    foreach ($this->processMultiValueColumn($str) as $val) {
       $class = $this->ormClasses['informationObject'];
       $infobj = $class::getBySlug($val);
 
-      if (null === $infobj)
-      {
+      if (null === $infobj) {
         $this->logError(sprintf(
           'Notice on row [%u/%u]: Ignored unknown description slug "%s"',
           $this->offset, $this->rowsTotal, $val)
@@ -839,8 +776,7 @@ EOQ;
 
   protected function processMultiValueColumn(string $str)
   {
-    if ('' === trim($str))
-    {
+    if ('' === trim($str)) {
       return [];
     }
 
@@ -856,8 +792,7 @@ EOQ;
   protected function lookupTypeId($name, $culture)
   {
     // Allow typeId to be null
-    if ('' === trim($name))
-    {
+    if ('' === trim($name)) {
       return;
     }
 
@@ -865,8 +800,7 @@ EOQ;
     $name = trim(strtolower($name));
     $culture = trim(strtolower($culture));
 
-    if (null === $typeId = $lookupTable[$culture][$name])
-    {
+    if (null === $typeId = $lookupTable[$culture][$name]) {
       $msg = <<<EOL
 Couldn't find physical object type "{$name}" for culture "{$culture}"
 EOL;
@@ -879,15 +813,13 @@ EOL;
 
   protected function getTypeIdLookupTable()
   {
-    if (null === $this->typeIdLookupTable)
-    {
+    if (null === $this->typeIdLookupTable) {
       $this->typeIdLookupTable = $this
         ->getPhysicalObjectTypeTaxonomy()
         ->getTermNameToIdLookupTable($this->getDbConnection())
       ;
 
-      if (null === $this->typeIdLookupTable)
-      {
+      if (null === $this->typeIdLookupTable) {
         throw new sfException(
           'Couldn\'t load Physical object type terms from database');
       }
@@ -905,8 +837,7 @@ EOL;
   {
     // If $value is empty, we shouldn't overwrite the existing DB data, *unless*
     // overwriteWithEmpty option is true
-    if (empty($value) && !$this->getOption('overwriteWithEmpty'))
-    {
+    if (empty($value) && !$this->getOption('overwriteWithEmpty')) {
       return false;
     }
 
@@ -915,12 +846,9 @@ EOL;
 
   protected function startTimer($name)
   {
-    if (!isset($this->timers[$name]))
-    {
+    if (!isset($this->timers[$name])) {
       $this->timers[$name] = new QubitTimer();
-    }
-    else
-    {
+    } else {
       $this->timers[$name]->start();
     }
 
@@ -929,8 +857,7 @@ EOL;
 
   protected function getElapsedTime($name)
   {
-    if (!isset($this->timers[$name]))
-    {
+    if (!isset($this->timers[$name])) {
       return 0;
     }
 

@@ -3,8 +3,7 @@
   <?php
 
     // Set a default if it has been defined
-    if (empty($sf_request->sort) && !empty($default))
-    {
+    if (empty($sf_request->sort) && !empty($default)) {
       $sf_request->sort = $name.ucfirst($default);
     }
 
@@ -20,7 +19,7 @@
 
   <?php if ($up === $sf_request->sort) { ?>
     <?php echo image_tag('up.gif', ['alt' => __('Sort ascending')]); ?>
-  <?php } elseif ($down === $sf_request->sort){ ?>
+  <?php } elseif ($down === $sf_request->sort) { ?>
     <?php echo image_tag('down.gif', ['alt' => __('Sort descending')]); ?>
   <?php } ?>
 

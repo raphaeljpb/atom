@@ -42,22 +42,18 @@ class QubitWidgetFormInputMany extends sfWidgetFormInput
 
     $fieldname = $this->getOption('fieldname');
     $defaults = $this->getOption('defaults');
-    if ($defaults instanceof sfCallable)
-    {
+    if ($defaults instanceof sfCallable) {
       $defaults = $defaults->call();
     }
 
     // http://trac.symfony-project.org/ticket/7208
     $null = $this->renderTag('input', ['name' => $name, 'type' => 'hidden']);
 
-    if (is_array($defaults) && 0 < count($defaults))
-    {
+    if (is_array($defaults) && 0 < count($defaults)) {
       $inputStr .= '<ul class="multiInput" id="'.$name."\">\n";
-      foreach ($defaults as $key => $default)
-      {
+      foreach ($defaults as $key => $default) {
         $inputStr .= "\t<li>";
-        if (sfContext::getInstance()->user->getCulture() != $default->sourceCulture && 0 < strlen($source = $default->__get($fieldname, ['sourceCulture' => true])))
-        {
+        if (sfContext::getInstance()->user->getCulture() != $default->sourceCulture && 0 < strlen($source = $default->__get($fieldname, ['sourceCulture' => true]))) {
           $inputStr .= <<<EOF
       <div class="default-translation">
         {$source}

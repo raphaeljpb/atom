@@ -33,10 +33,8 @@ class MenuEditAction extends sfAction
 
   public function processForm()
   {
-    foreach ($this->form as $field)
-    {
-      if (isset($this->request[$field->getName()]))
-      {
+    foreach ($this->form as $field) {
+      if (isset($this->request[$field->getName()])) {
         $this->processField($field);
       }
     }
@@ -51,35 +49,29 @@ class MenuEditAction extends sfAction
 
     $this->menu = new QubitMenu();
 
-    if (isset($request->id))
-    {
+    if (isset($request->id)) {
       $this->menu = QubitMenu::getById($request->id);
 
-      if (!isset($this->menu))
-      {
+      if (!isset($this->menu)) {
         $this->forward404();
       }
     }
 
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->addField($name);
     }
 
     // Handle POST data (form submit)
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->menu->save();
 
         // Remove cache
-        if (null !== $this->context->getViewCacheManager())
-        {
+        if (null !== $this->context->getViewCacheManager()) {
           $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
           $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
         }
@@ -93,12 +85,10 @@ class MenuEditAction extends sfAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'name':
         // Don't allow locked menus to be renamed
-        if ($this->menu->isProtected())
-        {
+        if ($this->menu->isProtected()) {
           break;
         }
 
@@ -129,13 +119,11 @@ class MenuEditAction extends sfAction
 
         // Build an array of choices for "parentId" select box (with blank line)
         $choices = [1 => '[ '.$this->context->i18n->__('Top').' ]'];
-        foreach ($menuTree as $menu)
-        {
+        foreach ($menuTree as $menu) {
           $choices[$menu['id']] = str_repeat('-', $menu['depth']).' '.$menu['name'];
         }
 
-        if (null !== $this->menu->parentId)
-        {
+        if (null !== $this->menu->parentId) {
           $this->form->setDefault('parentId', $this->menu->parentId);
         }
 
@@ -155,11 +143,9 @@ class MenuEditAction extends sfAction
 
   protected function processField($field)
   {
-    switch ($name = $field->getName())
-    {
+    switch ($name = $field->getName()) {
       case 'parentId':
-        if (null == $this->menu['parentId'] = $this->form->getValue('parentId'))
-        {
+        if (null == $this->menu['parentId'] = $this->form->getValue('parentId')) {
           $this->menu['parentId'] = QubitMenu::ROOT_ID;
         }
 
@@ -167,8 +153,7 @@ class MenuEditAction extends sfAction
 
       default:
         // Don't allow locked menus to be renamed
-        if ('name' == $name && $this->menu->isProtected())
-        {
+        if ('name' == $name && $this->menu->isProtected()) {
           break;
         }
 

@@ -13,8 +13,7 @@ class sfInstallPluginConfiguration extends sfPluginConfiguration
 
     // Check $event->getSubject() is PropelException?
     if ('sfInstallPlugin' != $context->request->module
-      && !file_exists(sfConfig::get('sf_config_dir').'/config.php'))
-    {
+      && !file_exists(sfConfig::get('sf_config_dir').'/config.php')) {
       $context->controller->redirect(['module' => 'sfInstallPlugin', 'action' => 'index']);
     }
   }
@@ -23,14 +22,12 @@ class sfInstallPluginConfiguration extends sfPluginConfiguration
   {
     $controller = $event->getSubject();
 
-    if ('sfInstallPlugin' != $event->module)
-    {
+    if ('sfInstallPlugin' != $event->module) {
       return;
     }
 
     $credential = $controller->getActionStack()->getLastEntry()->getActionInstance()->getCredential();
-    if (sfContext::getInstance()->user->hasCredential($credential))
-    {
+    if (sfContext::getInstance()->user->hasCredential($credential)) {
       return;
     }
 
@@ -73,15 +70,11 @@ class sfInstallPluginConfiguration extends sfPluginConfiguration
     // erased.  To fix this, we must know the database username and password to
     // reconfigure it.  The currently configured database can be erased if it's
     // schema is incombatible, but this isn't a vulnerability
-    try
-    {
-      if (1 > count(QubitUser::get($criteria)))
-      {
+    try {
+      if (1 > count(QubitUser::get($criteria))) {
         return;
       }
-    }
-    catch (PropelException $e)
-    {
+    } catch (PropelException $e) {
       return;
     }
 

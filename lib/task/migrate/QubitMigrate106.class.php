@@ -228,14 +228,12 @@ class QubitMigrate106 extends QubitMigrate
   protected function alterQubitMenus()
   {
     // Remove themes menu
-    if ($themesMenuKey = $this->getRowKey('QubitMenu', 'name', 'themes'))
-    {
+    if ($themesMenuKey = $this->getRowKey('QubitMenu', 'name', 'themes')) {
       unset($this->data['QubitMenu'][$themesMenuKey]);
     }
 
     // Change name and label for plugins menu
-    if ($pluginsMenuKey = $this->getRowKey('QubitMenu', 'name', 'plugins'))
-    {
+    if ($pluginsMenuKey = $this->getRowKey('QubitMenu', 'name', 'plugins')) {
       $this->data['QubitMenu'][$pluginsMenuKey]['label']['en'] = 'Themes';
 
       // Add sub-menus for themes
@@ -256,8 +254,7 @@ class QubitMigrate106 extends QubitMigrate
     }
 
     // Move 'harvester' menu after 'themes' menu
-    if ($harvesterMenuKey = $this->getRowKey('QubitMenu', 'name', 'harvester'))
-    {
+    if ($harvesterMenuKey = $this->getRowKey('QubitMenu', 'name', 'harvester')) {
       $harvesterMenu = $this->data['QubitMenu'][$harvesterMenuKey];
       unset($this->data['QubitMenu'][$harvesterMenuKey]);
 
@@ -311,8 +308,7 @@ class QubitMigrate106 extends QubitMigrate
     ];
 
     // Add Source notes with no Term constant
-    if ($distributionTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Distribution']))
-    {
+    if ($distributionTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Distribution'])) {
       $this->data['QubitNote']['QubitNote_distributionSource'] = [
         'object_id' => $distributionTermKey,
         'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
@@ -320,8 +316,7 @@ class QubitMigrate106 extends QubitMigrate
         'content' => ['en' => 'Rules for Archival Description 1.4, 1.8B8'],
       ];
     }
-    if ($broadcastingTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Broadcasting']))
-    {
+    if ($broadcastingTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Broadcasting'])) {
       $this->data['QubitNote']['QubitNote_broadcastingSource'] = [
         'object_id' => $broadcastingTermKey,
         'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
@@ -329,8 +324,7 @@ class QubitMigrate106 extends QubitMigrate
         'content' => ['en' => 'Rules for Archival Description 8.4F'],
       ];
     }
-    if ($manufacturingTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Manufacturing']))
-    {
+    if ($manufacturingTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Manufacturing'])) {
       $this->data['QubitNote']['QubitNote_manufacturingSource'] = [
         'object_id' => $manufacturingTermKey,
         'type_id' => '<?php echo QubitTerm::SOURCE_NOTE_ID."\n" ?>',
@@ -350,37 +344,31 @@ class QubitMigrate106 extends QubitMigrate
   protected function alterQubitSettings()
   {
     // Rename "site_title" setting -> "siteTitle"
-    if ($siteTitleKey = $this->getRowKey('QubitSetting', 'name', 'site_title'))
-    {
+    if ($siteTitleKey = $this->getRowKey('QubitSetting', 'name', 'site_title')) {
       $this->data['QubitSetting'][$siteTitleKey]['name'] = 'siteTitle';
       unset($this->data['QubitSetting'][$siteTitleKey]['scope']);
 
       // Set required value 'site title' to 'ICA-AtoM' if it currently has no value
       $sourceCulture = $this->data['QubitSetting'][$siteTitleKey]['source_culture'];
-      if (!isset($this->data['QubitSetting'][$siteTitleKey]['value']) || 0 == strlen($this->data['QubitSetting'][$siteTitleKey]['value'][$sourceCulture]))
-      {
+      if (!isset($this->data['QubitSetting'][$siteTitleKey]['value']) || 0 == strlen($this->data['QubitSetting'][$siteTitleKey]['value'][$sourceCulture])) {
         $this->data['QubitSetting'][$siteTitleKey]['value'][$sourceCulture] = 'ICA-AtoM';
 
         // Hide the title if one was not previously set, to avoid theme conflicts
-        if ($toggleTitleKey = $this->getRowKey('QubitSetting', 'name', 'toggleTitle'))
-        {
+        if ($toggleTitleKey = $this->getRowKey('QubitSetting', 'name', 'toggleTitle')) {
           $this->data['QubitSetting'][$toggleTitleKey]['value'] = null;
         }
       }
     }
 
     // Rename "site_description" setting -> "siteDescription"
-    if ($siteDescKey = $this->getRowKey('QubitSetting', 'name', 'site_description'))
-    {
+    if ($siteDescKey = $this->getRowKey('QubitSetting', 'name', 'site_description')) {
       $this->data['QubitSetting'][$siteDescKey]['name'] = 'siteDescription';
       unset($this->data['QubitSetting'][$siteDescKey]['scope']);
     }
 
     // Update version number
-    if ($settingVersionKey = $this->getRowKey('QubitSetting', 'name', 'version'))
-    {
-      foreach ($this->data['QubitSetting'][$settingVersionKey]['value'] as $culture => $value)
-      {
+    if ($settingVersionKey = $this->getRowKey('QubitSetting', 'name', 'version')) {
+      foreach ($this->data['QubitSetting'][$settingVersionKey]['value'] as $culture => $value) {
         $this->data['QubitSetting'][$settingVersionKey]['value'][$culture] = str_replace('1.0.6', '1.0.7', $value);
       }
     }
@@ -396,12 +384,9 @@ class QubitMigrate106 extends QubitMigrate
   protected function alterQubitStaticPages()
   {
     // Update version number
-    foreach ($this->data['QubitStaticPage'] as $key => $page)
-    {
-      if ('homepage' == $page['permalink'] || 'about' == $page['permalink'])
-      {
-        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x)
-        {
+    foreach ($this->data['QubitStaticPage'] as $key => $page) {
+      if ('homepage' == $page['permalink'] || 'about' == $page['permalink']) {
+        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x) {
           $x = str_replace('1.0.6', '1.0.7', $x);
         });
       }
@@ -424,8 +409,7 @@ class QubitMigrate106 extends QubitMigrate
     $creationEventTypeKey = $this->getTermKey('<?php echo QubitTerm::CREATION_ID."\n" ?>');
 
     // Add 'Reproduction' term
-    if (false === $this->getRowKey('QubitTerm', 'name', ['en' => 'Reproduction']))
-    {
+    if (false === $this->getRowKey('QubitTerm', 'name', ['en' => 'Reproduction'])) {
       $this->data['QubitTerm']['QubitTerm_reproduction'] = [
         'taxonomy_id' => 'QubitTaxonomy_10',
         'source_culture' => 'en',
@@ -443,76 +427,64 @@ class QubitMigrate106 extends QubitMigrate
 
     // Delete author terms
     if (($authoringTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Authoring']))
-      && ($eventTypeTaxonomyKey == $this->data['QubitTerm'][$authoringTermKey]['taxonomy_id']))
-    {
+      && ($eventTypeTaxonomyKey == $this->data['QubitTerm'][$authoringTermKey]['taxonomy_id'])) {
       unset($this->data['QubitTerm'][$authoringTermKey]);
 
       // Delete related note
-      if ($authoringNoteKey = $this->getRowKey('QubitNote', 'object_id', $authoringTermKey))
-      {
+      if ($authoringNoteKey = $this->getRowKey('QubitNote', 'object_id', $authoringTermKey)) {
         unset($this->data['QubitNote'][$authoringNoteKey]);
       }
 
       // Reassign any 'Authoring' events to 'Creation' events
-      while ($authoringEventTypeKey = $this->getRowKey('QubitEvent', 'type_id', $authoringTermKey))
-      {
+      while ($authoringEventTypeKey = $this->getRowKey('QubitEvent', 'type_id', $authoringTermKey)) {
         $this->data['QubitEvent'][$authoringEventTypeKey]['type_id'] = $creationEventTypeKey;
       }
     }
 
     // Delete editing terms
     if (($editingTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Editing']))
-      && $eventTypeTaxonomyKey == $this->data['QubitTerm'][$editingTermKey]['taxonomy_id'])
-    {
+      && $eventTypeTaxonomyKey == $this->data['QubitTerm'][$editingTermKey]['taxonomy_id']) {
       unset($this->data['QubitTerm'][$editingTermKey]);
 
       // Delete related note
-      if ($editingNoteKey = $this->getRowKey('QubitNote', 'object_id', $editingTermKey))
-      {
+      if ($editingNoteKey = $this->getRowKey('QubitNote', 'object_id', $editingTermKey)) {
         unset($this->data['QubitNote'][$editingNoteKey]);
       }
 
       // Reassign any 'Editing' events to 'Creation' events
-      while ($editingEventTypeKey = $this->getRowKey('QubitEvent', 'type_id', $editingTermKey))
-      {
+      while ($editingEventTypeKey = $this->getRowKey('QubitEvent', 'type_id', $editingTermKey)) {
         $this->data['QubitEvent'][$editingEventTypeKey]['type_id'] = $creationEventTypeKey;
       }
     }
 
     // Delete translation terms
     if (($translationTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Translation']))
-      && $eventTypeTaxonomyKey == $this->data['QubitTerm'][$translationTermKey]['taxonomy_id'])
-    {
+      && $eventTypeTaxonomyKey == $this->data['QubitTerm'][$translationTermKey]['taxonomy_id']) {
       unset($this->data['QubitTerm'][$translationTermKey]);
 
       // Delete related note
-      if ($translationNoteKey = $this->getRowKey('QubitNote', 'object_id', $translationTermKey))
-      {
+      if ($translationNoteKey = $this->getRowKey('QubitNote', 'object_id', $translationTermKey)) {
         unset($this->data['QubitNote'][$translationNoteKey]);
       }
 
       // Reassign any 'Translation' events to 'Creation' events
-      while ($translationEventTypeKey = $this->getRowKey('QubitEvent', 'type_id', $translationTermKey))
-      {
+      while ($translationEventTypeKey = $this->getRowKey('QubitEvent', 'type_id', $translationTermKey)) {
         $this->data['QubitEvent'][$translationEventTypeKey]['type_id'] = $creationEventTypeKey;
       }
     }
 
     // Delete compilation terms
     if (($compilationTermKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Compilation']))
-      && $eventTypeTaxonomyKey == $this->data['QubitTerm'][$compilationTermKey]['taxonomy_id'])
-    {
+      && $eventTypeTaxonomyKey == $this->data['QubitTerm'][$compilationTermKey]['taxonomy_id']) {
       unset($this->data['QubitTerm'][$compilationTermKey]);
 
       // Delete related note
-      if ($compilationNoteKey = $this->getRowKey('QubitNote', 'object_id', $compilationTermKey))
-      {
+      if ($compilationNoteKey = $this->getRowKey('QubitNote', 'object_id', $compilationTermKey)) {
         unset($this->data['QubitNote'][$compilationNoteKey]);
       }
 
       // Reassign any 'Compilation' events to 'Creation' events
-      while ($compilationEventTypeKey = $this->getRowKey('QubitEvent', 'type_id', $compilationTermKey))
-      {
+      while ($compilationEventTypeKey = $this->getRowKey('QubitEvent', 'type_id', $compilationTermKey)) {
         $this->data['QubitEvent'][$compilationEventTypeKey]['type_id'] = $creationEventTypeKey;
       }
     }
@@ -593,12 +565,9 @@ class QubitMigrate106 extends QubitMigrate
 
     // Restack array with Constant values at top
     $qubitTermArray = $this->data['QubitTerm'];
-    foreach ($qubitTermConstantIds as $key => $constantName)
-    {
-      foreach ($qubitTermArray as $key => $term)
-      {
-        if (isset($term['id']) && '<?php echo QubitTerm::'.$constantName.'."\n" ?>' == $term['id'])
-        {
+    foreach ($qubitTermConstantIds as $key => $constantName) {
+      foreach ($qubitTermArray as $key => $term) {
+        if (isset($term['id']) && '<?php echo QubitTerm::'.$constantName.'."\n" ?>' == $term['id']) {
           $newTermArray[$key] = $term;
           unset($qubitTermArray[$key]);
 
@@ -608,8 +577,7 @@ class QubitMigrate106 extends QubitMigrate
     }
 
     // Append remaining (variable id) terms to the end of the new array
-    foreach ($qubitTermArray as $key => $term)
-    {
+    foreach ($qubitTermArray as $key => $term) {
       $newTermArray[$key] = $term;
     }
 
@@ -648,10 +616,8 @@ class QubitMigrate106 extends QubitMigrate
 
     $originalData = $this->data;
 
-    foreach ($ormSortOrder as $i => $className)
-    {
-      if (isset($originalData[$className]))
-      {
+    foreach ($ormSortOrder as $i => $className) {
+      if (isset($originalData[$className])) {
         $sortedData[$className] = $originalData[$className];
         unset($originalData[$className]);
       }
@@ -659,10 +625,8 @@ class QubitMigrate106 extends QubitMigrate
 
     // If their are classes in the original data that are not listed in the
     // ormSortOrder array then tack them on to the end of the sorted data
-    if (count($originalData))
-    {
-      foreach ($originalData as $className => $classData)
-      {
+    if (count($originalData)) {
+      foreach ($originalData as $className => $classData) {
         $sortedData[$className] = $classData;
       }
     }

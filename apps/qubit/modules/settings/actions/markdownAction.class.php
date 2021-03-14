@@ -26,12 +26,10 @@ class SettingsMarkdownAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         QubitCache::getInstance()->removePattern('settings:i18n:*');
@@ -50,12 +48,10 @@ class SettingsMarkdownAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'enabled':
         $default = 1;
-        if (null !== $this->settingEnabled = QubitSetting::getByName('markdown_enabled'))
-        {
+        if (null !== $this->settingEnabled = QubitSetting::getByName('markdown_enabled')) {
           $default = $this->settingEnabled->getValue(['sourceCulture' => true]);
         }
 
@@ -69,11 +65,9 @@ class SettingsMarkdownAction extends DefaultEditAction
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'enabled':
-        if (null === $this->settingEnabled)
-        {
+        if (null === $this->settingEnabled) {
           $this->settingEnabled = new QubitSetting();
           $this->settingEnabled->name = 'markdown_enabled';
           $this->settingEnabled->sourceCulture = 'en';

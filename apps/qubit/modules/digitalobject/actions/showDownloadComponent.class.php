@@ -31,8 +31,7 @@ class DigitalObjectShowDownloadComponent extends sfComponent
    */
   public function execute($request)
   {
-    switch($this->usageType)
-    {
+    switch ($this->usageType) {
       case QubitTerm::REFERENCE_ID:
         $this->representation = $this->resource->getRepresentationByUsage(QubitTerm::REFERENCE_ID);
 
@@ -49,8 +48,7 @@ class DigitalObjectShowDownloadComponent extends sfComponent
     }
 
     // If no representation found, then default to generic rep
-    if (!$this->representation)
-    {
+    if (!$this->representation) {
       $this->representation = QubitDigitalObject::getGenericRepresentation($this->resource->mimeType, $this->usageType);
     }
 
@@ -61,8 +59,7 @@ class DigitalObjectShowDownloadComponent extends sfComponent
         || QubitTerm::REFERENCE_ID == $this->usageType
       )
       && QubitTerm::OFFLINE_ID != $this->resource->usageId
-      && QubitAcl::check($this->resource->object, 'readMaster'))
-    {
+      && QubitAcl::check($this->resource->object, 'readMaster')) {
       $this->link = $this->resource->getPublicPath();
     }
   }

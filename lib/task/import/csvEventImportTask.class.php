@@ -47,8 +47,7 @@ EOF;
       ? $options['source-name']
       : false;
 
-    if (false === $fh = fopen($arguments['filename'], 'rb'))
-    {
+    if (false === $fh = fopen($arguments['filename'], 'rb')) {
       throw new sfException('You must specify a valid filename');
     }
 
@@ -99,10 +98,8 @@ EOF;
 
       'errorLog' => $options['error-log'],
 
-      'saveLogic' => function (&$self)
-      {
-        if (!$self->status['dataCached'])
-        {
+      'saveLogic' => function (&$self) {
+        if (!$self->status['dataCached']) {
           // Cache key -> id associations
           $self->status['subjectKeys'] = getNameIdArrayFromTable(
             $self,
@@ -129,38 +126,31 @@ EOF;
         // Attempt to use pre-cached actor ID
         $subjectKey = trim($self->columnValue($self->status['subjectValueColumn']));
         $subjectId = false;
-        if ($subjectKey)
-        {
-          if (isset($self->status['subjectKeys'][$subjectKey]))
-          {
+        if ($subjectKey) {
+          if (isset($self->status['subjectKeys'][$subjectKey])) {
             $subjectId = $self->status['subjectKeys'][$subjectKey];
           }
         }
 
         // If actor ID not found, create
-        if (!$subjectId)
-        {
+        if (!$subjectId) {
           // create actor
           $actor = $self->createOrFetchActor($subjectKey);
           $subjectId = $actor->id;
         }
 
-        if ($subjectId)
-        {
+        if ($subjectId) {
           ++$self->status['goodSubjects'];
 
           $objectKey = trim($self->columnValue($self->status['objectValueColumn']));
           $objectId = false;
-          if ($objectKey)
-          {
-            if (isset($self->status['objectKeys'][$objectKey]))
-            {
+          if ($objectKey) {
+            if (isset($self->status['objectKeys'][$objectKey])) {
               $objectId = $self->status['objectKeys'][$objectKey];
             }
           }
 
-          if ($objectId)
-          {
+          if ($objectId) {
             ++$self->status['goodObjects'];
 
             $type = $self->columnValue($self->status['relationTypeColumn']);
@@ -168,8 +158,7 @@ EOF;
 
             $typeId = array_search($type, $self->status['eventTypes'][$self->columnValue('culture')]);
 
-            if (!$typeId)
-            {
+            if (!$typeId) {
               echo "Term does not exist... adding.\n";
               $term = QubitFlatfileImport::createTerm(
                 QubitTaxonomy::EVENT_TYPE_ID,
@@ -185,22 +174,17 @@ EOF;
             $event->typeId = $typeId;
             $event->actorId = $subjectId;
             $event->save();
-          }
-          else
-          {
+          } else {
             ++$self->status['badObjects'];
             echo 'ERROR: object '.$objectKey." not found.\n";
           }
-        }
-        else
-        {
+        } else {
           ++$self->status['badSubjects'];
           echo 'ERROR: subject '.$subjectKey." not found.\n";
         }
       },
 
-      'completeLogic' => function (&$self)
-      {
+      'completeLogic' => function (&$self) {
         echo "Import complete.\n";
         echo 'Good subjects: '.$self->status['goodSubjects']."\n";
         echo 'Bad subjects:  '.$self->status['badSubjects']."\n";
@@ -236,15 +220,13 @@ function getNameIdArrayFromTable(&$self, $tableName, $keyColumn, $idColumn, $whe
 
   $statement = $self->sqlQuery($query);
 
-  if (!$statement)
-  {
+  if (!$statement) {
     echo 'DB error';
 
-exit();
+    exit();
   }
 
-  while ($subject = $statement->fetch(PDO::FETCH_OBJ))
-  {
+  while ($subject = $statement->fetch(PDO::FETCH_OBJ)) {
     $names[$subject->{$keyColumn}] = $subject->{$idColumn};
   }
 

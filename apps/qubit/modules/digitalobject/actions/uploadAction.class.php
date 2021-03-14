@@ -30,40 +30,33 @@ class DigitalObjectUploadAction extends sfAction
 
     $this->object = QubitObject::getBySlug($request->parentSlug);
 
-    if (!isset($this->object))
-    {
+    if (!isset($this->object)) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->object, 'update'))
-    {
+    if (!QubitAcl::check($this->object, 'update')) {
       throw new sfException();
     }
 
     // Check if uploads are allowed
-    if (!QubitDigitalObject::isUploadAllowed())
-    {
+    if (!QubitDigitalObject::isUploadAllowed()) {
       QubitAcl::forwardToSecureAction();
     }
 
     $repo = $this->object->getRepository(['inherit' => true]);
 
-    if (isset($repo))
-    {
+    if (isset($repo)) {
       $uploadLimit = $repo->uploadLimit;
-      if (0 < $uploadLimit)
-      {
+      if (0 < $uploadLimit) {
         $uploadLimit *= pow(10, 9); // Convert to bytes
       }
 
       $diskUsage = $repo->getDiskUsage();
     }
 
-    foreach ($_FILES as $file)
-    {
-      if (null != $repo && 0 <= $uploadLimit && $uploadLimit < $diskUsage + $file['size'])
-      {
+    foreach ($_FILES as $file) {
+      if (null != $repo && 0 <= $uploadLimit && $uploadLimit < $diskUsage + $file['size']) {
         $uploadFiles = ['error' => $this->context->i18n->__(
           '%1% upload limit of %2% GB exceeded for %3%', [
             '%1%' => sfConfig::get('app_ui_label_digitalobject'),
@@ -75,12 +68,9 @@ class DigitalObjectUploadAction extends sfAction
         continue;
       }
 
-      try
-      {
+      try {
         $file = Qubit::moveUploadFile($file);
-      }
-      catch (Exception $e)
-      {
+      } catch (Exception $e) {
         $uploadFile = ['error' => $e->getMessage()];
 
         continue;

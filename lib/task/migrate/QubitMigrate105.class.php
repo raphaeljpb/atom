@@ -68,8 +68,7 @@ class QubitMigrate105 extends QubitMigrate
   protected function alterQubitMenus()
   {
     // Add 'recent updates' menu
-    if (false === $this->getRowKey('QubitMenu', 'name', 'recent updates'))
-    {
+    if (false === $this->getRowKey('QubitMenu', 'name', 'recent updates')) {
       $this->data['QubitMenu']['QubitMenu_recent_updates'] = [
         'parent_id' => '<?php echo QubitMenu::ADD_EDIT_ID."\n" ?>',
         'source_culture' => 'en',
@@ -80,8 +79,7 @@ class QubitMigrate105 extends QubitMigrate
     }
 
     // Add 'harvester' menu
-    if (false === $this->getRowKey('QubitMenu', 'name', 'harvester'))
-    {
+    if (false === $this->getRowKey('QubitMenu', 'name', 'harvester')) {
       $this->data['QubitMenu']['QubitMenu_admin_oaiHarvester'] = [
         'parent_id' => '<?php echo QubitMenu::ADMIN_ID."\n" ?>',
         'source_culture' => 'en',
@@ -92,8 +90,7 @@ class QubitMigrate105 extends QubitMigrate
     }
 
     // Add 'plugins' menu
-    if (false === $this->getRowKey('QubitMenu', 'name', 'plugins'))
-    {
+    if (false === $this->getRowKey('QubitMenu', 'name', 'plugins')) {
       $this->data['QubitMenu']['QubitMenu_admin_plugins'] = [
         'parent_id' => '<?php echo QubitMenu::ADMIN_ID."\n" ?>',
         'source_culture' => 'en',
@@ -104,8 +101,7 @@ class QubitMigrate105 extends QubitMigrate
     }
 
     // Add 'themes' menu
-    if (false === $this->getRowKey('QubitMenu', 'name', 'themes'))
-    {
+    if (false === $this->getRowKey('QubitMenu', 'name', 'themes')) {
       $this->data['QubitMenu']['QubitMenu_admin_themes'] = [
         'parent_id' => '<?php echo QubitMenu::ADMIN_ID."\n" ?>',
         'source_culture' => 'en',
@@ -117,18 +113,14 @@ class QubitMigrate105 extends QubitMigrate
 
     // Remove "translate" menu
     $translateMenuKey = $this->getRowKey('QubitMenu', 'name', 'translate');
-    if ($translateMenuKey)
-    {
+    if ($translateMenuKey) {
       $this->data['QubitMenu'] = QubitMigrate::cascadeDelete($this->data['QubitMenu'], $translateMenuKey);
     }
 
     // Pluralize 'Menus' menu label
-    if (false !== $adminMenusMenuKey = $this->getRowKey('QubitMenu', 'label', ['en' => 'menu']))
-    {
+    if (false !== $adminMenusMenuKey = $this->getRowKey('QubitMenu', 'label', ['en' => 'menu'])) {
       $this->data['QubitMenu'][$adminMenusMenuKey]['label']['en'] = 'menus';
-    }
-    elseif (false !== $adminMenusMenuKey = $this->getRowKey('QubitMenu', 'label', ['en' => 'Menu']))
-    {
+    } elseif (false !== $adminMenusMenuKey = $this->getRowKey('QubitMenu', 'label', ['en' => 'Menu'])) {
       $this->data['QubitMenu'][$adminMenusMenuKey]['label']['en'] = 'Menus';
     }
 
@@ -142,24 +134,21 @@ class QubitMigrate105 extends QubitMigrate
    */
   protected function alterQubitSettings()
   {
-    if (false === $this->getRowKey('QubitSetting', 'name', 'toggleDescription'))
-    {
+    if (false === $this->getRowKey('QubitSetting', 'name', 'toggleDescription')) {
       $this->data['QubitSetting']['QubitSetting_toggleDescription'] = [
         'name' => 'toggleDescription',
         'value' => 1,
       ];
     }
 
-    if (false === $this->getRowKey('QubitSetting', 'name', 'toggleLogo'))
-    {
+    if (false === $this->getRowKey('QubitSetting', 'name', 'toggleLogo')) {
       $this->data['QubitSetting']['QubitSetting_toggleLogo'] = [
         'name' => 'toggleLogo',
         'value' => 1,
       ];
     }
 
-    if (false === $this->getRowKey('QubitSetting', 'name', 'toggleTitle'))
-    {
+    if (false === $this->getRowKey('QubitSetting', 'name', 'toggleTitle')) {
       $this->data['QubitSetting']['QubitSetting_toggleTitle'] = [
         'name' => 'toggleTitle',
         'value' => 1,
@@ -167,10 +156,8 @@ class QubitMigrate105 extends QubitMigrate
     }
 
     // Update version number
-    if ($settingVersionKey = $this->getRowKey('QubitSetting', 'name', 'version'))
-    {
-      foreach ($this->data['QubitSetting'][$settingVersionKey]['value'] as $culture => $value)
-      {
+    if ($settingVersionKey = $this->getRowKey('QubitSetting', 'name', 'version')) {
+      foreach ($this->data['QubitSetting'][$settingVersionKey]['value'] as $culture => $value) {
         $this->data['QubitSetting'][$settingVersionKey]['value'][$culture] = str_replace('1.0.5', '1.0.6', $value);
       }
     }
@@ -186,12 +173,9 @@ class QubitMigrate105 extends QubitMigrate
   protected function alterQubitStaticPages()
   {
     // Update version number
-    foreach ($this->data['QubitStaticPage'] as $key => $page)
-    {
-      if ('homepage' == $page['permalink'] || 'about' == $page['permalink'])
-      {
-        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x)
-        {
+    foreach ($this->data['QubitStaticPage'] as $key => $page) {
+      if ('homepage' == $page['permalink'] || 'about' == $page['permalink']) {
+        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x) {
           $x = str_replace('1.0.5', '1.0.6', $x);
         });
       }
@@ -212,12 +196,9 @@ class QubitMigrate105 extends QubitMigrate
 
     // Make "parallel form of name" a protected term
     $termParallelFormKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Parallel form']);
-    if ($termParallelFormKey)
-    {
+    if ($termParallelFormKey) {
       $this->data['QubitTerm'][$termParallelFormKey]['id'] = '<?php echo QubitTerm::PARALLEL_FORM_OF_NAME_ID."\n" ?>';
-    }
-    else
-    {
+    } else {
       $this->data['QubitTerm']['QubitTerm_parallel_form_of_name'] = [
         'taxonomy_id' => $taxonomyActorNameTypeKey,
         'class_name' => 'QubitTerm',
@@ -229,12 +210,9 @@ class QubitMigrate105 extends QubitMigrate
 
     // Make "other form of name" a protected term
     $termOtherFormKey = $this->getRowKey('QubitTerm', 'name', ['en' => 'Other name']);
-    if ($termParallelFormKey)
-    {
+    if ($termParallelFormKey) {
       $this->data['QubitTerm'][$termOtherFormKey]['id'] = '<?php echo QubitTerm::OTHER_FORM_OF_NAME_ID."\n" ?>';
-    }
-    else
-    {
+    } else {
       $this->data['QubitTerm']['QubitTerm_other_form_of_name'] = [
         'taxonomy_id' => $taxonomyActorNameTypeKey,
         'class_name' => 'QubitTerm',
@@ -320,12 +298,9 @@ class QubitMigrate105 extends QubitMigrate
 
     // Restack array with Constant values at top
     $qubitTermArray = $this->data['QubitTerm'];
-    foreach ($qubitTermConstantIds as $key => $constantName)
-    {
-      foreach ($qubitTermArray as $key => $term)
-      {
-        if (isset($term['id']) && '<?php echo QubitTerm::'.$constantName.'."\n" ?>' == $term['id'])
-        {
+    foreach ($qubitTermConstantIds as $key => $constantName) {
+      foreach ($qubitTermArray as $key => $term) {
+        if (isset($term['id']) && '<?php echo QubitTerm::'.$constantName.'."\n" ?>' == $term['id']) {
           $newTermArray[$key] = $term;
           unset($qubitTermArray[$key]);
 
@@ -335,8 +310,7 @@ class QubitMigrate105 extends QubitMigrate
     }
 
     // Append remaining (variable id) terms to the end of the new array
-    foreach ($qubitTermArray as $key => $term)
-    {
+    foreach ($qubitTermArray as $key => $term) {
       $newTermArray[$key] = $term;
     }
 
@@ -375,10 +349,8 @@ class QubitMigrate105 extends QubitMigrate
 
     $originalData = $this->data;
 
-    foreach ($ormSortOrder as $i => $className)
-    {
-      if (isset($originalData[$className]))
-      {
+    foreach ($ormSortOrder as $i => $className) {
+      if (isset($originalData[$className])) {
         $sortedData[$className] = $originalData[$className];
         unset($originalData[$className]);
       }
@@ -386,10 +358,8 @@ class QubitMigrate105 extends QubitMigrate
 
     // If their are classes in the original data that are not listed in the
     // ormSortOrder array then tack them on to the end of the sorted data
-    if (count($originalData))
-    {
-      foreach ($originalData as $className => $classData)
-      {
+    if (count($originalData)) {
+      foreach ($originalData as $className => $classData) {
         $sortedData[$className] = $classData;
       }
     }

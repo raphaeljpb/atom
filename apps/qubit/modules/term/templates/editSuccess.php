@@ -108,7 +108,7 @@
         <?php } else { ?>
           <?php if (isset($resource->taxonomy)) { ?>
             <li><?php echo link_to(__('Cancel'), [$resource->taxonomy, 'module' => 'taxonomy'], ['class' => 'c-btn']); ?></li>
-          <?php } elseif (isset($sf_request->taxonomy)){ ?>
+          <?php } elseif (isset($sf_request->taxonomy)) { ?>
             <li><?php echo link_to(__('Cancel'), !empty($parent) ? $parent : $sf_request->taxonomy, ['class' => 'c-btn']); ?></li>
           <?php } else { ?>
             <li><?php echo link_to(__('Cancel'), ['module' => 'taxonomy', 'action' => 'list'], ['class' => 'c-btn']); ?></li>

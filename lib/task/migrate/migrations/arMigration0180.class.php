@@ -38,8 +38,7 @@ class arMigration0180
    */
   public function up($configuration)
   {
-    if (null === QubitSetting::getByName('authority_record_relationships'))
-    {
+    if (null === QubitSetting::getByName('authority_record_relationships')) {
       $setting = new QubitSetting();
       $setting->name = 'authority_record_relationships';
       $setting->scope = 'ui_label';

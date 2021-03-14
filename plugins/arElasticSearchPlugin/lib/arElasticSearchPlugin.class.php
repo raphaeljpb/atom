@@ -95,8 +95,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
     $this->batchMode = true === $this->config['batch_mode'];
     $this->batchSize = $this->config['batch_size'];
 
-    if (isset($options['initialize']) && false === $options['initialize'])
-    {
+    if (isset($options['initialize']) && false === $options['initialize']) {
       return;
     }
 
@@ -105,8 +104,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
   public function __destruct()
   {
-    if (!$this->enabled)
-    {
+    if (!$this->enabled) {
       return;
     }
 
@@ -122,8 +120,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
       $finder->in(sfConfig::get('sf_config_dir')),
       $finder->in(ProjectConfiguration::getActive()->getPluginSubPaths('/config'))));
 
-    if (!count($files))
-    {
+    if (!count($files)) {
       throw new sfException('You must create a mapping.xml file.');
     }
 
@@ -146,12 +143,9 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
   public function flush()
   {
-    try
-    {
+    try {
       $this->index->delete();
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
     }
 
     $this->initialize();
@@ -165,17 +159,12 @@ class arElasticSearchPlugin extends QubitSearchEngine
    */
   public function flushBatch()
   {
-    if ($this->batchMode)
-    {
+    if ($this->batchMode) {
       // Batch add documents, if any
-      if (count($this->batchAddDocs) > 0)
-      {
-        try
-        {
+      if (count($this->batchAddDocs) > 0) {
+        try {
           $this->index->addDocuments($this->batchAddDocs);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
           // Clear batchAddDocs if something went wrong too
           $this->batchAddDocs = [];
 
@@ -186,14 +175,10 @@ class arElasticSearchPlugin extends QubitSearchEngine
       }
 
       // Batch delete documents, if any
-      if (count($this->batchDeleteDocs) > 0)
-      {
-        try
-        {
+      if (count($this->batchDeleteDocs) > 0) {
+        try {
           $this->index->deleteDocuments($this->batchDeleteDocs);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
           // Clear batchDeleteDocs if something went wrong too
           $this->batchDeleteDocs = [];
 
@@ -217,13 +202,10 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
     // Delete index and initialize again if all document types are to be
     // indexed and not updating
-    if (!count($excludeTypes) && !$update)
-    {
+    if (!count($excludeTypes) && !$update) {
       $this->flush();
       $this->log('Index erased.');
-    }
-    else
-    {
+    } else {
       // Initialize index if necessary
       $this->initialize();
 
@@ -241,12 +223,10 @@ class arElasticSearchPlugin extends QubitSearchEngine
     $indexingIos = !in_array('informationobject', $excludeTypes);
     $indexingActors = !in_array('actor', $excludeTypes);
 
-    if ($indexingIos || $indexingActors)
-    {
+    if ($indexingIos || $indexingActors) {
       $taxonomies = [QubitTaxonomy::SUBJECT_ID, QubitTaxonomy::PLACE_ID];
 
-      if ($indexingIos)
-      {
+      if ($indexingIos) {
         $taxonomies[] = QubitTaxonomy::GENRE_ID;
       }
 
@@ -264,17 +244,14 @@ class arElasticSearchPlugin extends QubitSearchEngine
     $errors = [];
     $showErrors = false;
 
-    foreach ($this->mappings as $typeName => $typeProperties)
-    {
-      if (!in_array(strtolower($typeName), $excludeTypes))
-      {
+    foreach ($this->mappings as $typeName => $typeProperties) {
+      if (!in_array(strtolower($typeName), $excludeTypes)) {
         $camelizedTypeName = sfInflector::camelize($typeName);
         $className = 'arElasticSearch'.$camelizedTypeName;
 
         // If excluding types then index as a whole hasn't been flushed: delete
         // type's documents if not updating
-        if (count($excludeTypes) && !$update)
-        {
+        if (count($excludeTypes) && !$update) {
           $this->index->getType('Qubit'.$camelizedTypeName)->deleteByQuery(new \Elastica\Query\MatchAll());
         }
 
@@ -282,8 +259,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
         $class->setTimer($timer);
 
         $typeErrors = $class->populate();
-        if (count($typeErrors) > 0)
-        {
+        if (count($typeErrors) > 0) {
           $showErrors = true;
           $errors = array_merge($errors, $typeErrors);
         }
@@ -297,15 +273,13 @@ class arElasticSearchPlugin extends QubitSearchEngine
         $total,
         $timer->elapsed(), ]));
 
-    if (!$showErrors)
-    {
+    if (!$showErrors) {
       return;
     }
 
     // Log errors
     $this->log('The following errors have been encountered:');
-    foreach ($errors as $error)
-    {
+    foreach ($errors as $error) {
       $this->log($error);
     }
     $this->log('Please, contact an administrator.');
@@ -334,8 +308,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
    */
   public function addDocument($data, $type)
   {
-    if (!isset($data['id']))
-    {
+    if (!isset($data['id'])) {
       throw new sfException('Failed to parse id field.');
     }
 
@@ -347,20 +320,16 @@ class arElasticSearchPlugin extends QubitSearchEngine
     $document = new \Elastica\Document($id, $data);
     $document->setType($type);
 
-    if ($this->batchMode)
-    {
+    if ($this->batchMode) {
       // Add this document to the batch add queue
       $this->batchAddDocs[] = $document;
 
       // If we have a full batch, send additions and deletions in bulk
-      if (count($this->batchAddDocs) >= $this->batchSize)
-      {
+      if (count($this->batchAddDocs) >= $this->batchSize) {
         $this->flushBatch();
         $this->index->refresh();
       }
-    }
-    else
-    {
+    } else {
       $this->index->getType($type)->addDocument($document);
     }
   }
@@ -377,24 +346,19 @@ class arElasticSearchPlugin extends QubitSearchEngine
    */
   public function partialUpdate($object, $data)
   {
-    if (!$this->enabled)
-    {
+    if (!$this->enabled) {
       return;
     }
 
-    if ($object instanceof QubitUser)
-    {
+    if ($object instanceof QubitUser) {
       return;
     }
 
     $document = new \Elastica\Document($object->id, $data);
 
-    try
-    {
+    try {
       $this->index->getType(get_class($object))->updateDocument($document);
-    }
-    catch (\Elastica\Exception\NotFoundException $e)
-    {
+    } catch (\Elastica\Exception\NotFoundException $e) {
       // Create document if it's not found
       $this->update($object);
     }
@@ -404,18 +368,15 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
   public function delete($object)
   {
-    if (!$this->enabled)
-    {
+    if (!$this->enabled) {
       return;
     }
 
-    if ($object instanceof QubitUser)
-    {
+    if ($object instanceof QubitUser) {
       return;
     }
 
-    if ($this->batchMode)
-    {
+    if ($this->batchMode) {
       // The document being deleted may not have been added to the index yet (if it's
       // still queued up in $this->batchAddDocs) so create a document object representing
       // the document to be deleted and add this document object to the batch delete
@@ -426,20 +387,14 @@ class arElasticSearchPlugin extends QubitSearchEngine
       $this->batchDeleteDocs[] = $document;
 
       // If we have a full batch, send additions and deletions in bulk
-      if (count($this->batchDeleteDocs) >= $this->batchSize)
-      {
+      if (count($this->batchDeleteDocs) >= $this->batchSize) {
         $this->flushBatch();
         $this->index->refresh();
       }
-    }
-    else
-    {
-      try
-      {
+    } else {
+      try {
         $this->index->getType(get_class($object))->deleteById($object->id);
-      }
-      catch (\Elastica\Exception\NotFoundException $e)
-      {
+      } catch (\Elastica\Exception\NotFoundException $e) {
         // Ignore
       }
     }
@@ -447,21 +402,18 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
   public function update($object, $options = [])
   {
-    if (!$this->enabled)
-    {
+    if (!$this->enabled) {
       return;
     }
 
-    if ($object instanceof QubitUser)
-    {
+    if ($object instanceof QubitUser) {
       return;
     }
 
     $className = 'arElasticSearch'.str_replace('Qubit', '', get_class($object));
 
     // Pass options only to information object update
-    if ($object instanceof QubitInformationObject)
-    {
+    if ($object instanceof QubitInformationObject) {
       call_user_func([$className, 'update'], $object, $options);
 
       return;
@@ -475,21 +427,15 @@ class arElasticSearchPlugin extends QubitSearchEngine
    */
   protected function initialize()
   {
-    try
-    {
+    try {
       $this->index->open();
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       // If the index has not been initialized, create it
-      if ($e instanceof \Elastica\Exception\ResponseException)
-      {
+      if ($e instanceof \Elastica\Exception\ResponseException) {
         // Based on the markdown_enabled setting, add a new filter to strip Markdown tags
         if (sfConfig::get('app_markdown_enabled', true)
-          && isset($this->config['index']['configuration']['analysis']['char_filter']['strip_md']))
-        {
-          foreach ($this->config['index']['configuration']['analysis']['analyzer'] as $key => $analyzer)
-          {
+          && isset($this->config['index']['configuration']['analysis']['char_filter']['strip_md'])) {
+          foreach ($this->config['index']['configuration']['analysis']['analyzer'] as $key => $analyzer) {
             $this->config['index']['configuration']['analysis']['analyzer'][$key]['char_filter'] = ['strip_md'];
           }
         }
@@ -502,8 +448,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
       $this->loadAndNormalizeMappings();
 
       // Iterate over types (actor, informationobject, ...)
-      foreach ($this->mappings as $typeName => $typeProperties)
-      {
+      foreach ($this->mappings as $typeName => $typeProperties) {
         $typeName = 'Qubit'.sfInflector::camelize($typeName);
 
         // Define mapping in elasticsearch
@@ -513,8 +458,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
         // Parse other parameters
         unset($typeProperties['properties']);
-        foreach ($typeProperties as $key => $value)
-        {
+        foreach ($typeProperties as $key => $value) {
           $mapping->setParam($key, $value);
         }
 
@@ -530,8 +474,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
   private function getVersion()
   {
     $data = $this->client->request('/')->getData();
-    if (null === $version = @$data['version']['number'])
-    {
+    if (null === $version = @$data['version']['number']) {
       throw new \Elastica\Exception\ResponseException('Unexpected response');
     }
 
@@ -545,15 +488,13 @@ class arElasticSearchPlugin extends QubitSearchEngine
   private function checkVersion()
   {
     // Avoid the check if the cache entry is still available
-    if ($this->cache->has('elasticsearch_version_ok'))
-    {
+    if ($this->cache->has('elasticsearch_version_ok')) {
       return;
     }
 
     // This is slow as it hits the server
     $version = $this->getVersion();
-    if (!version_compare($version, self::MIN_VERSION, '>='))
-    {
+    if (!version_compare($version, self::MIN_VERSION, '>=')) {
       $message = sprintf('The version of Elasticsearch that you are running is out of date (%s), and no longer compatible with this version of AtoM. Please upgrade to version %s or newer.', $version, self::MIN_VERSION);
 
       throw new \Elastica\Exception\ClientException($message);
@@ -566,8 +507,7 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
   private function loadAndNormalizeMappings()
   {
-    if (null === $this->mappings)
-    {
+    if (null === $this->mappings) {
       $mappings = self::loadMappings();
       $mappings->cleanYamlShorthands(); // Remove _attributes, _foreign_types, etc.
       $this->mappings = $mappings->asArray();
@@ -585,17 +525,14 @@ class arElasticSearchPlugin extends QubitSearchEngine
 
     $this->log('Types that will be indexed:');
 
-    foreach ($this->mappings as $typeName => $typeProperties)
-    {
-      if (!in_array(strtolower($typeName), $excludeTypes))
-      {
+    foreach ($this->mappings as $typeName => $typeProperties) {
+      if (!in_array(strtolower($typeName), $excludeTypes)) {
         $this->log(' - '.$typeName);
         ++$typeCount;
       }
     }
 
-    if (!$typeCount)
-    {
+    if (!$typeCount) {
       $this->log('   None');
     }
   }

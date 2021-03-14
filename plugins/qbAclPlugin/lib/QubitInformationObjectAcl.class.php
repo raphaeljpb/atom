@@ -55,14 +55,12 @@ class QubitInformationObjectAcl extends QubitAcl
    */
   public static function isAllowed($user, $resource, $action, $options = [])
   {
-    if ('read' == $action)
-    {
+    if ('read' == $action) {
       return self::isReadAllowed($user, $resource, $action, $options);
     }
 
     // Do custom ACL checks for digital object actions
-    if (in_array($action, self::$_digitalObjectActions))
-    {
+    if (in_array($action, self::$_digitalObjectActions)) {
       return self::isDigitalObjectActionAllowed(
         $user, $resource, $action, $options
       );
@@ -84,8 +82,7 @@ class QubitInformationObjectAcl extends QubitAcl
    */
   private static function isReadAllowed($user, $resource, $action, $options = [])
   {
-    if (null === $resource->getPublicationStatus())
-    {
+    if (null === $resource->getPublicationStatus()) {
       throw new sfException(
         'No publication status set for information object id: '.$resource->id
       );
@@ -96,8 +93,7 @@ class QubitInformationObjectAcl extends QubitAcl
     if (
       QubitTerm::PUBLICATION_STATUS_DRAFT_ID
       == $resource->getPublicationStatus()->statusId
-    )
-    {
+    ) {
       $instance = self::getInstance()->buildAcl($resource, $options);
 
       return
@@ -119,11 +115,9 @@ class QubitInformationObjectAcl extends QubitAcl
    */
   private static function isDigitalObjectActionAllowed(
     $user, $resource, $action, $options = []
-  )
-  {
+  ) {
     // All users are authorized to read text (PDF) masters
-    if ('readMaster' == $action && $resource->hasTextDigitalObject())
-    {
+    if ('readMaster' == $action && $resource->hasTextDigitalObject()) {
       return true;
     }
 

@@ -27,12 +27,9 @@ class InformationObjectContextMenuComponent extends sfComponent
 {
   public function execute($request)
   {
-    if (isset($request->getAttribute('sf_route')->resource))
-    {
+    if (isset($request->getAttribute('sf_route')->resource)) {
       $this->resource = $request->getAttribute('sf_route')->resource;
-    }
-    else
-    {
+    } else {
       return sfView::NONE;
     }
   }

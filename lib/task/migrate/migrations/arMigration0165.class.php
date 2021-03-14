@@ -32,8 +32,7 @@ class arMigration0165
   // Add Privacy static page links.
   public function up($configuration)
   {
-    if (null === $quickLinksMenu = QubitMenu::getByName('quickLinks'))
-    {
+    if (null === $quickLinksMenu = QubitMenu::getByName('quickLinks')) {
       $quickLinksMenu = new QubitMenu();
       $quickLinksMenu->parentId = QubitMenu::ROOT_ID;
       $quickLinksMenu->name = 'quickLinks';
@@ -42,8 +41,7 @@ class arMigration0165
       $quickLinksMenu->save();
     }
 
-    if (null === QubitMenu::getByName('privacy'))
-    {
+    if (null === QubitMenu::getByName('privacy')) {
       $menu = new QubitMenu();
       $menu->parentId = $quickLinksMenu->id;
       $menu->name = 'privacy';
@@ -54,8 +52,7 @@ class arMigration0165
     }
 
     // Add Privacy banner settings.
-    if (null === QubitSetting::getByName('privacy_notification_enabled'))
-    {
+    if (null === QubitSetting::getByName('privacy_notification_enabled')) {
       $setting = new QubitSetting();
       $setting->name = 'privacy_notification_enabled';
       $setting->value = 0;
@@ -64,8 +61,7 @@ class arMigration0165
       $setting->save();
     }
 
-    if (null === QubitSetting::getByName('privacy_notification'))
-    {
+    if (null === QubitSetting::getByName('privacy_notification')) {
       $privacy_statement = 'This website uses cookies to enhance your ability to browse and load content. [More Info.](/privacy)';
       $setting = new QubitSetting();
       $setting->name = 'privacy_notification';
@@ -82,8 +78,7 @@ class arMigration0165
     $criteria->add(QubitSlug::SLUG, 'privacy');
     $privacyPage = QubitStaticPage::getOne($criteria);
 
-    if (null === $privacyPage)
-    {
+    if (null === $privacyPage) {
       $privacyPage = new QubitStaticPage();
       $privacyPage->title = 'Privacy Policy';
       $privacyPage->slug = 'privacy';

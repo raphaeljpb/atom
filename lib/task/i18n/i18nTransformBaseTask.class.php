@@ -114,20 +114,17 @@ abstract class i18nTransformBaseTask extends arBaseTask
       QubitRepository::ROOT_ID,
     ]);
 
-    foreach (self::$tables as $tableName => $columns)
-    {
+    foreach (self::$tables as $tableName => $columns) {
       // Fetch all i18n rows
       $query = 'SELECT * FROM '.$tableName.' WHERE id NOT IN ('.$rootIds.')';
       $statement = QubitPdo::prepareAndExecute($query);
 
-      while ($row = $statement->fetch(PDO::FETCH_ASSOC))
-      {
+      while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
         // Process row in subclasses
         $columnsChanged = $this->processRow($row, $tableName, $columns);
 
         // Update total column values changed
-        if ($columnsChanged)
-        {
+        if ($columnsChanged) {
           ++$changedCount;
           $columnsChangedCount += $columnsChanged;
         }
@@ -135,8 +132,7 @@ abstract class i18nTransformBaseTask extends arBaseTask
         // Report progress
         $message = 'Processed '.$tableName.' row '.$row['id'].' ('.$row['culture'].')';
 
-        if ($columnsChanged)
-        {
+        if ($columnsChanged) {
           $message .= ' ('.$columnsChanged.' changes)';
         }
 
@@ -148,8 +144,7 @@ abstract class i18nTransformBaseTask extends arBaseTask
     // Report summary of processing
     $message = 'Processed '.$rowCount.' rows.';
 
-    if ($changedCount)
-    {
+    if ($changedCount) {
       $message .= ' Changed '.$changedCount.' rows';
       $message .= ' ('.$columnsChangedCount.' field values changed).';
     }
@@ -194,8 +189,7 @@ abstract class i18nTransformBaseTask extends arBaseTask
 
     $query = 'UPDATE '.$table.' SET ';
 
-    foreach ($columnValues as $column => $value)
-    {
+    foreach ($columnValues as $column => $value) {
       $query .= (count($values)) ? ', ' : '';
       $query .= $column.'=?';
 
@@ -204,8 +198,7 @@ abstract class i18nTransformBaseTask extends arBaseTask
 
     $query .= " WHERE id='".$id."' AND culture='".$culture."'";
 
-    if (count($values))
-    {
+    if (count($values)) {
       QubitPdo::prepareAndExecute($query, $values);
     }
   }

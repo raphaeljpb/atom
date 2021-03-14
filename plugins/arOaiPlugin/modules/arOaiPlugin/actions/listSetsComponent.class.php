@@ -39,8 +39,7 @@ class arOaiPluginlistSetsComponent extends arOaiPluginComponent
   private function getPagedOaiSets($request)
   {
     $options = ['filterDrafts' => true];
-    if (isset($this->cursor))
-    {
+    if (isset($this->cursor)) {
       $options['offset'] = $this->cursor;
     }
     $options['limit'] = QubitSetting::getByName('resumption_token_limit')->__toString();

@@ -851,26 +851,22 @@ function toDataScheme($string)
 
 function withTransaction($callback)
 {
-  try
-  {
+  try {
     $conn = Propel::getConnection();
     $conn->beginTransaction();
 
     return call_user_func($callback, $conn);
-  }
-  finally {
+  } finally {
     $conn->rollBack();
   }
 }
 
-withTransaction(function ($conn) use ($t, $vocabCSS2)
-{
+withTransaction(function ($conn) use ($t, $vocabCSS2) {
   // Make sure that Russian is not defined as a supported language
   $criteria = new Criteria();
   $criteria->add(QubitSetting::NAME, 'ru');
   $criteria->add(QubitSetting::SCOPE, 'i18n_languages');
-  if (null !== $term = QubitTerm::getOne($criteria))
-  {
+  if (null !== $term = QubitTerm::getOne($criteria)) {
     $term->delete();
   }
 
@@ -912,8 +908,7 @@ withTransaction(function ($conn) use ($t, $vocabCSS2)
   $t->is($errors[0], 'The following languages are used in the dataset imported but not supported by AtoM: ru', 'There is an error about Russian being not defined in AtoM');
 });
 
-withTransaction(function ($conn) use ($t, $vocabSimple)
-{
+withTransaction(function ($conn) use ($t, $vocabSimple) {
   // Count existing subjects that are children of the root term
   $criteria = new Criteria();
   $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::SUBJECT_ID);
@@ -935,10 +930,8 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
   $t->is($termCount1 + $conceptCount, $termCount2, 'Subject taxonomy contains the new concepts in the dataset');
 
   $match = null;
-  foreach ($terms as $item)
-  {
-    if ('Bar ESPAÑOL' == $item->getName(['culture' => 'es']))
-    {
+  foreach ($terms as $item) {
+    if ('Bar ESPAÑOL' == $item->getName(['culture' => 'es'])) {
       $match = $item;
 
       break;
@@ -947,8 +940,7 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
   $t->is(get_class($match), 'QubitTerm', 'Translations are properly imported too');
 });
 
-withTransaction(function ($conn) use ($t, $vocabSimple)
-{
+withTransaction(function ($conn) use ($t, $vocabSimple) {
   // Create subject parent term
   $parent = new QubitTerm();
   $parent->parentId = QubitTerm::ROOT_ID;
@@ -973,15 +965,11 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
   $search = QubitSearch::getInstance();
   $search->flushBatch();
 
-  foreach ($parent->getDescendants() as $key => $item)
-  {
-    try
-    {
+  foreach ($parent->getDescendants() as $key => $item) {
+    try {
       $search->index->getType('QubitTerm')->getDocument($item->id);
       $t->pass("Term {$key} is indexed");
-    }
-    catch (Elastica\Exception\NotFoundException $e)
-    {
+    } catch (Elastica\Exception\NotFoundException $e) {
       $t->fail("Term {$key} was not indexed");
     }
   }
@@ -1026,8 +1014,7 @@ $testingDataSets = [
 $importer = new sfSkosPlugin(QubitTaxonomy::PLACE_ID);
 $methodGetRootConcepts = getPrivateMethod($importer, 'getRootConcepts');
 
-foreach ($testingDataSets as $item)
-{
+foreach ($testingDataSets as $item) {
   $data = $item['data'];
   $totalConcepts = $item['totalConcepts'];
 

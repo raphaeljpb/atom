@@ -31,8 +31,7 @@ class arWebDebugPanel extends sfWebDebugPanel
   {
     $title = 'AtoM '.qubitConfiguration::VERSION;
 
-    if (null !== $rev = $this->getCurrentGitRevision())
-    {
+    if (null !== $rev = $this->getCurrentGitRevision()) {
       $title .= ' <strong>(git:'.$rev.')</strong>';
     }
 
@@ -53,22 +52,17 @@ class arWebDebugPanel extends sfWebDebugPanel
     $gitDirectory = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'.git'.DIRECTORY_SEPARATOR;
     $headFile = $gitDirectory.'HEAD';
     // Use at sign to avoid unnecessary warning
-    if (false !== $fd = @fopen($headFile, 'r'))
-    {
+    if (false !== $fd = @fopen($headFile, 'r')) {
       $line = fgets($fd);
       fclose($fd);
-    }
-    else
-    {
+    } else {
       return;
     }
 
     $refParts = preg_split("/[\\s\t]+/", $line, -1, PREG_SPLIT_NO_EMPTY);
-    if (2 == count($refParts))
-    {
+    if (2 == count($refParts)) {
       $ref = $gitDirectory.$refParts[1];
-      if (false !== $fd = fopen($ref, 'r'))
-      {
+      if (false !== $fd = fopen($ref, 'r')) {
         $hash = fgets($fd);
         fclose($fd);
 

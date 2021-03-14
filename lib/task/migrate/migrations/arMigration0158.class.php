@@ -103,17 +103,13 @@ class arMigration0158
       'q_user_role_relation',
     ];
 
-    try
-    {
+    try {
       QubitPdo::prepareAndExecute('SET foreign_key_checks = 0');
       QubitPdo::prepareAndExecute('DROP TABLE '.implode(', ', $tables));
       QubitPdo::prepareAndExecute('SET foreign_key_checks = 1');
-    }
-    catch (PDOException $e)
-    {
+    } catch (PDOException $e) {
       // Ignore SQL error if tables don't exist, otherwise re-throw exception.
-      if ('42S02' !== $e->getCode())
-      {
+      if ('42S02' !== $e->getCode()) {
         throw $e;
       }
     }

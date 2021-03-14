@@ -27,11 +27,11 @@ class importDipObjectsTask extends arBaseTask
 {
   protected $conn;
   // Database connection
-    protected $dipDir;
+  protected $dipDir;
   // Path to DIP
-    protected $columnNames = [];
+  protected $columnNames = [];
   // Sequence of column names
-    protected $columnIndexes = [];
+  protected $columnIndexes = [];
   // Index in CSV row for each column
     protected $uniqueValueColumnName;   // Column name of unique identifier ("identifier" or "slug")
 
@@ -57,8 +57,7 @@ class importDipObjectsTask extends arBaseTask
 
     // Set undo log filename, if undo log directory is specified
     $undoLog = null;
-    if (isset($options['undo-log-dir']))
-    {
+    if (isset($options['undo-log-dir'])) {
       $undoLog = rtrim($options['undo-log-dir'], '/').'/'.date('Y-m-d').'-'.basename($this->dipDir).'.log';
     }
 
@@ -83,14 +82,12 @@ class importDipObjectsTask extends arBaseTask
   public function getRowColumnValue($column, $row)
   {
     // Return cached column index, if present
-    if (isset($this->columnIndexes[$column]))
-    {
+    if (isset($this->columnIndexes[$column])) {
       return $row[($this->columnIndexes[$column])];
     }
 
     // Determine column index and cache
-    if (is_numeric($columnIndex = array_search($column, $this->columnNames)))
-    {
+    if (is_numeric($columnIndex = array_search($column, $this->columnNames))) {
       $this->columnIndexes[$column] = $columnIndex;
 
       return $row[$columnIndex];
@@ -165,14 +162,12 @@ EOF;
   protected function checkArgumentsAndOptions($arguments, $options)
   {
     // Make sure DIP directory exists
-    if (!is_dir($arguments['dip']))
-    {
+    if (!is_dir($arguments['dip'])) {
       throw new sfException('You must specify a DIP directory');
     }
 
     // If undo log directory specified, make sure it's a valid directory
-    if (!empty($options['undo-log-dir']) && !is_dir($options['undo-log-dir']))
-    {
+    if (!empty($options['undo-log-dir']) && !is_dir($options['undo-log-dir'])) {
       throw new sfException('Undo log directory does not exist.');
     }
   }
@@ -192,8 +187,7 @@ EOF;
     $csvFiles = sfFinder::type('file')->name('*.csv')->in($objectsPath);
 
     // Attempt to open the first CSV file found
-    if (0 == count($csvFiles) || false === $fh = fopen($csvFiles[0], 'rb'))
-    {
+    if (0 == count($csvFiles) || false === $fh = fopen($csvFiles[0], 'rb')) {
       throw new sfException('You must specify a DIP that contains a CSV file');
     }
 
@@ -228,45 +222,34 @@ EOF;
 
     // Build hash on information_object key, with value being an array if information
     // object has multiple digital objects attached
-    while ($row = fgetcsv($fh, 1000))
-    {
+    while ($row = fgetcsv($fh, 1000)) {
       $filename = $this->getRowColumnValue('filename', $row);
       $filepath = $objectsPath.'/'.$filename;
 
       // Check if filename has been changed by Archivematica
-      if (!file_exists($filepath))
-      {
+      if (!file_exists($filepath)) {
         $key = null;
 
         // Substitute original file extension (e.g. TIFF) with new DIP extension
         // (e.g. JPEG)
-        if (preg_match('/(.+)\.(\w{3})$/', $filename, $matches))
-        {
+        if (preg_match('/(.+)\.(\w{3})$/', $filename, $matches)) {
           $key = strtolower($matches[1]);
         }
 
-        if (isset($key, $filenames[$key]))
-        {
+        if (isset($key, $filenames[$key])) {
           $filepath = str_replace($filename, $filenames[$key], $filepath);
-        }
-        else
-        {
+        } else {
           throw new Exception("Error: Couldn't find file {$filepath}");
         }
       }
 
       $uniqueValue = $this->getRowColumnValue($this->uniqueValueColumnName, $row);
 
-      if (!isset($digitalObjects[$uniqueValue]))
-      {
+      if (!isset($digitalObjects[$uniqueValue])) {
         $digitalObjects[$uniqueValue] = $filepath;
-      }
-      elseif (!is_array($digitalObjects[$uniqueValue]))
-      {
+      } elseif (!is_array($digitalObjects[$uniqueValue])) {
         $digitalObjects[$uniqueValue] = [$digitalObjects[$uniqueValue], $filepath];
-      }
-      else
-      {
+      } else {
         $digitalObjects[$uniqueValue][] = $filepath;
       }
     }
@@ -289,14 +272,12 @@ EOF;
     // Make sure there isn't both an "identifier" and "slug" column in the CSV header row
     $identifierExists = in_array('identifier', $this->columnNames);
 
-    if ($identifierExists && in_array('slug', $this->columnNames))
-    {
+    if ($identifierExists && in_array('slug', $this->columnNames)) {
       throw new sfException('Error: CSV header row includes both an "identifier" column and a "slug" column. Please use only one of the two.');
     }
 
     // Make sure there is either an "identifier" or a "slug" column  in the CSV header row
-    if (!$identifierExists && !in_array('slug', $this->columnNames))
-    {
+    if (!$identifierExists && !in_array('slug', $this->columnNames)) {
       throw new sfException('Error: CSV header row must include either an "identifier" column or a "slug" column.');
     }
 
@@ -318,42 +299,30 @@ EOF;
     $count = 0;
 
     // Loop through $digitalObject hash and add digital objects to db
-    foreach ($digitalObjects as $key => $item)
-    {
+    foreach ($digitalObjects as $key => $item) {
       $opDescription = ($auditMode) ? 'Auditing' : 'Importing to';
       $this->logSection('dip-import', sprintf("%s '{$key}'...", $opDescription));
 
-      if ($auditMode)
-      {
-        if (!is_array($item))
-        {
+      if ($auditMode) {
+        if (!is_array($item)) {
           $this->auditDigitalObject($item);
           ++$count;
-        }
-        else
-        {
+        } else {
           // If more than one digital object linked to this information object
-          foreach ($item as $filepath)
-          {
+          foreach ($item as $filepath) {
             $this->auditDigitalObject($filepath);
             ++$count;
           }
         }
-      }
-      else
-      {
+      } else {
         $informationObject = $this->getInformationObjectUsingUniqueId($key);
 
-        if (!is_array($item))
-        {
+        if (!is_array($item)) {
           $this->addDigitalObject($informationObject, $item, $undoLog);
           ++$count;
-        }
-        else
-        {
+        } else {
           // If more than one digital object linked to this information object
-          foreach ($item as $filepath)
-          {
+          foreach ($item as $filepath) {
             // Create new information objects, to maintain one-to-one
             // relationship with digital objects
             $childInformationObject = new QubitInformationObject();
@@ -383,26 +352,20 @@ EOF;
   {
     $criteria = new Criteria();
 
-    if ('identifier' == $this->uniqueValueColumnName)
-    {
+    if ('identifier' == $this->uniqueValueColumnName) {
       $criteria->add(QubitInformationObject::IDENTIFIER, $uniqueValue);
 
-      if (null === $informationObject = QubitInformationObject::getOne($criteria))
-      {
+      if (null === $informationObject = QubitInformationObject::getOne($criteria)) {
         throw new Exception("Invalid information object identifier '{$uniqueValue}'");
       }
-    }
-    else
-    {
+    } else {
       $criteria->add(QubitSlug::SLUG, $uniqueValue);
 
-      if (null === $slug = QubitSlug::getOne($criteria))
-      {
+      if (null === $slug = QubitSlug::getOne($criteria)) {
         throw new Exception("Invalid information object slug '{$uniqueValue}'");
       }
 
-      if (null === $informationObject = QubitInformationObject::getById($slug->objectId))
-      {
+      if (null === $informationObject = QubitInformationObject::getById($slug->objectId)) {
         throw new Exception("Missing information object for slug '{$uniqueValue}'");
       }
     }
@@ -424,8 +387,7 @@ EOF;
 
     $statement = QubitFlatfileImport::sqlQuery($query, [$filename]);
 
-    if (!$statement->fetchColumn())
-    {
+    if (!$statement->fetchColumn()) {
       $this->log('Missing '.$filename);
     }
   }
@@ -441,16 +403,14 @@ EOF;
   protected function addDigitalObject($informationObject, $filepath, $undoLog = null, $container = false)
   {
     // Abort if a digital object already exists for this information object
-    if (null !== $informationObject->getDigitalObject())
-    {
+    if (null !== $informationObject->getDigitalObject()) {
       $this->log("A digital object is already attached to {$informationObject->identifier} (slug: {$informationObject->slug}). Skipping.");
 
       return;
     }
 
     // Make sure file exists
-    if (!file_exists($filepath))
-    {
+    if (!file_exists($filepath)) {
       throw new Exception("Couldn't find file '{$filepath}'");
     }
 
@@ -465,15 +425,13 @@ EOF;
     $informationObject->digitalObjectsRelatedByobjectId[] = $do;
 
     // Add DIP UUID as aipUUID information object property
-    if (null !== $dipUUID = $this->getUUID(basename($this->dipDir)))
-    {
+    if (null !== $dipUUID = $this->getUUID(basename($this->dipDir))) {
       $this->log('Creating property: dip UUID '.$dipUUID);
       $informationObject->addProperty('aipUUID', $dipUUID);
     }
 
     // Add object UUID as objectUUID information object property
-    if (null !== $objectUUID = $this->getUUID(basename($filepath)))
-    {
+    if (null !== $objectUUID = $this->getUUID(basename($filepath))) {
       $this->log('Creating property: object UUID '.$objectUUID);
       $informationObject->addProperty('objectUUID', $objectUUID);
     }
@@ -481,8 +439,7 @@ EOF;
     // Save and, optionally, log
     $informationObject->save($this->conn);
 
-    if (isset($undoLog))
-    {
+    if (isset($undoLog)) {
       $logLine = $informationObject->id."\t".basename($this->dipDir)."\t".$container."\n";
       file_put_contents($undoLog, $logLine, FILE_APPEND);
     }
@@ -506,24 +463,20 @@ EOF;
    */
   protected function createFilenameLookup($objectsPath)
   {
-    foreach (scandir($objectsPath) as $file)
-    {
-      if (is_dir($file))
-      {
+    foreach (scandir($objectsPath) as $file) {
+      if (is_dir($file)) {
         continue;
       }
 
       // Format should be UUID (37 hex chars or hyphen) + filename + '.jpg'
       $pattern = '/^[0-9a-f-]{37}(.+)\.(\w{3})$/';
 
-      if (!preg_match($pattern, strtolower($file), $matches))
-      {
+      if (!preg_match($pattern, strtolower($file), $matches)) {
         continue;
       }
 
       // Skip CSV manifest file
-      if ('csv' == $matches[2])
-      {
+      if ('csv' == $matches[2]) {
         continue;
       }
 
@@ -551,8 +504,7 @@ EOF;
     preg_match_all('/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/', $subject, $matches);
 
     // Return null if no UUIDs found
-    if (empty($matches[0]))
-    {
+    if (empty($matches[0])) {
       return null;
     }
 

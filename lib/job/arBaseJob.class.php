@@ -60,8 +60,7 @@ class arBaseJob extends Net_Gearman_Job_Common
     $this->checkRequiredParameters($parameters);
 
     // Instantiate QubitJob
-    if (null === $this->job = QubitJob::getById($parameters['id']))
-    {
+    if (null === $this->job = QubitJob::getById($parameters['id'])) {
       throw new Net_Gearman_Job_Exception('Called a Gearman worker with an invalid QubitJob id.');
     }
 
@@ -69,20 +68,16 @@ class arBaseJob extends Net_Gearman_Job_Common
 
     // Catch all possible exceptions in job execution and throw
     // Net_Gearman_Job_Exception to avoid breaking the worker
-    try
-    {
+    try {
       $this->info($this->i18n->__('Job started.'));
 
       // If this is a sensitive job
-      if (in_array(get_class($this), $this->avoidParallelExecutionJobs))
-      {
+      if (in_array(get_class($this), $this->avoidParallelExecutionJobs)) {
         // Wait until other sensitive jobs are finished by order
         $retries = 0;
-        while (!$this->canBeFullyExecuted())
-        {
+        while (!$this->canBeFullyExecuted()) {
           // Fail the job if we have reached the max. amount of retries
-          if ($retries++ == $this->maxRetries)
-          {
+          if ($retries++ == $this->maxRetries) {
             $this->error($this->i18n->__('Maximum retries reached (%1). Please, try to launch the job again when other sensitive jobs are finished or contact an administrator', ['%1' => $this->maxRetries]));
 
             return false;
@@ -103,8 +98,7 @@ class arBaseJob extends Net_Gearman_Job_Common
       $this->signIn();
 
       // Run un-authenticated job cleanup if this is an unauthenticated job.
-      if (!$this->user->isAuthenticated())
-      {
+      if (!$this->user->isAuthenticated()) {
         $this->deleteOldUnauthenticatedJobs();
       }
 
@@ -115,9 +109,7 @@ class arBaseJob extends Net_Gearman_Job_Common
       $this->signOut();
 
       $this->info($this->i18n->__('Job finished.'));
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       // TODO: Create undoJob() functions in subclasses for cleanups
 
       // Mark QubitJob as failed
@@ -133,15 +125,12 @@ class arBaseJob extends Net_Gearman_Job_Common
    */
   protected function checkRequiredParameters($parameters)
   {
-    if (isset($this->extraRequiredParameters))
-    {
+    if (isset($this->extraRequiredParameters)) {
       $this->requiredParameters = array_merge($this->requiredParameters, $this->extraRequiredParameters);
     }
 
-    foreach ($this->requiredParameters as $paramName)
-    {
-      if (!isset($parameters[$paramName]))
-      {
+    foreach ($this->requiredParameters as $paramName) {
+      if (!isset($parameters[$paramName])) {
         throw new Net_Gearman_Job_Exception("Required parameter not found for job: {$paramName}");
       }
     }
@@ -155,8 +144,7 @@ class arBaseJob extends Net_Gearman_Job_Common
    */
   protected function error($message)
   {
-    if (!isset($this->job) || !isset($this->job->name))
-    {
+    if (!isset($this->job) || !isset($this->job->name)) {
       throw new Net_Gearman_Job_Exception('Called arBaseJob::error() before QubitJob fetched.');
     }
 
@@ -172,8 +160,7 @@ class arBaseJob extends Net_Gearman_Job_Common
    */
   protected function info($message)
   {
-    if (!isset($this->job->name))
-    {
+    if (!isset($this->job->name)) {
       throw new Net_Gearman_Job_Exception('Called arBaseJob::info() before QubitJob fetched.');
     }
 
@@ -189,8 +176,7 @@ class arBaseJob extends Net_Gearman_Job_Common
     // Unauthenticated jobs were introduced in 2.4.x. If getById() is called
     // on an unauthenticated job it will return null since it will not have
     // a valid user associated with it. Only run signIn() for valid users.
-    if (null !== $user = QubitUser::getById($this->job->userId))
-    {
+    if (null !== $user = QubitUser::getById($this->job->userId)) {
       $this->user->signIn($user);
     }
   }
@@ -203,8 +189,7 @@ class arBaseJob extends Net_Gearman_Job_Common
     // Need to delete the ACL instance because we are in a gearman worker loop.
     // Calling destruct() forces a new QubitAcl instance for each job.
     QubitAcl::destruct();
-    if (null !== $user = QubitUser::getById($this->job->userId))
-    {
+    if (null !== $user = QubitUser::getById($this->job->userId)) {
       $this->user->signOut();
     }
   }
@@ -221,10 +206,8 @@ class arBaseJob extends Net_Gearman_Job_Common
     $criteria->add(QubitJob::CREATED_AT, $oldDate, Criteria::LESS_THAN);
     $criteria->add(QubitJob::USER_ID, null, Criteria::ISNULL);
 
-    foreach (QubitJob::get($criteria) as $job)
-    {
-      if (isset($job->downloadPath))
-      {
+    foreach (QubitJob::get($criteria) as $job) {
+      if (isset($job->downloadPath)) {
         unlink($job->downloadPath);
       }
       $job->delete();
@@ -253,8 +236,7 @@ class arBaseJob extends Net_Gearman_Job_Common
     $runningJobs = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
     // Edge case where the QubitJobs are cleared while this one is waiting
-    if (0 == count($runningJobs))
-    {
+    if (0 == count($runningJobs)) {
       throw new Net_Gearman_Job_Exception('There is not a running QubitJob in the database associated this job.');
     }
 

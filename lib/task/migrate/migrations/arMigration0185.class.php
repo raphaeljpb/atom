@@ -75,8 +75,7 @@ sql;
     QubitPdo::modify($sql);
 
     // Add accession event type taxonomy if it doesn't exist
-    if (null == QubitTaxonomy::getById(QubitTaxonomy::ACCESSION_EVENT_TYPE_ID))
-    {
+    if (null == QubitTaxonomy::getById(QubitTaxonomy::ACCESSION_EVENT_TYPE_ID)) {
       QubitMigrate::bumpTaxonomy(QubitTaxonomy::ACCESSION_EVENT_TYPE_ID, $configuration);
       $taxonomy = new QubitTaxonomy();
       $taxonomy->id = QubitTaxonomy::ACCESSION_EVENT_TYPE_ID;
@@ -94,8 +93,7 @@ sql;
               AND ti.culture='en'
               AND t.id=?";
 
-    if (null == QubitPdo::fetchOne($sql, [QubitTaxonomy::ACCESSION_EVENT_TYPE_ID, QubitTerm::ACCESSION_EVENT_PHYSICAL_TRANSFER_ID]))
-    {
+    if (null == QubitPdo::fetchOne($sql, [QubitTaxonomy::ACCESSION_EVENT_TYPE_ID, QubitTerm::ACCESSION_EVENT_PHYSICAL_TRANSFER_ID])) {
       // Add physical transfer accession event type term
       QubitMigrate::bumpTerm(QubitTerm::ACCESSION_EVENT_PHYSICAL_TRANSFER_ID, $configuration);
       $term = new QubitTerm();
@@ -115,8 +113,7 @@ sql;
               AND ti.culture='en'
               AND t.id=?";
 
-    if (null == QubitPdo::fetchOne($sql, [QubitTaxonomy::NOTE_TYPE_ID, QubitTerm::ACCESSION_EVENT_NOTE_ID]))
-    {
+    if (null == QubitPdo::fetchOne($sql, [QubitTaxonomy::NOTE_TYPE_ID, QubitTerm::ACCESSION_EVENT_NOTE_ID])) {
       // Add accession event note type term
       QubitMigrate::bumpTerm(QubitTerm::ACCESSION_EVENT_NOTE_ID, $configuration);
       $term = new QubitTerm();

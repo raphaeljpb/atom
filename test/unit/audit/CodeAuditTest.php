@@ -54,8 +54,7 @@ _readDir(SF_ROOT_DIR, $filePaths);
 global $t;
 $t = new lime_test(2 * count($filePaths), new lime_output_color());
 
-foreach ($filePaths as $filePath)
-{
+foreach ($filePaths as $filePath) {
   checkPreamble($filePath);
 }
 
@@ -105,10 +104,8 @@ function _readDir($dirPath, &$filePaths)
   // $match[2] is the kind field
   // $match[3] is the deleted field, if present
   preg_match_all('/\f\n([^\f\n]*)\n([^\f\n]*)\n(?:(?:[^\f\n]*){20}([^\f\n]*)\n)?/', file_get_contents("{$dirPath}/.svn/entries"), $matches, PREG_SET_ORDER);
-  foreach ($matches as $match)
-  {
-    switch ($match[2])
-    {
+  foreach ($matches as $match) {
+    switch ($match[2]) {
       case 'dir':
         _readDir($dirPath.'/'.$match[1], $filePaths);
 
@@ -131,8 +128,7 @@ function checkPreamble($filePath)
   global $t;
 
   global $preambleExceptions;
-  if (preg_match($preambleExceptions, $filePath))
-  {
+  if (preg_match($preambleExceptions, $filePath)) {
     $t->skip("{$filePath} preamble skipped");
 
     return;

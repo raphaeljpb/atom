@@ -28,12 +28,10 @@ class UserPasswordEditAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->resource->save();
@@ -52,16 +50,13 @@ class UserPasswordEditAction extends DefaultEditAction
       ['invalid' => $this->context->i18n->__('Your password confirmation did not match your password.')]));
 
     $this->resource = new QubitUser();
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
     }
 
     // Except for administrators, only allow users to reset their own password
-    if (!$this->context->user->isAdministrator())
-    {
-      if ($this->resource->id != $this->context->user->getAttribute('user_id'))
-      {
+    if (!$this->context->user->isAdministrator()) {
+      if ($this->resource->id != $this->context->user->getAttribute('user_id')) {
         QubitAcl::forwardToSecureAction();
       }
     }
@@ -69,21 +64,17 @@ class UserPasswordEditAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'password':
         $this->form->setDefault('password', null);
 
         // Use QubitValidatorPassword only when strong passwords are required
-        if (sfConfig::get('app_require_strong_passwords'))
-        {
+        if (sfConfig::get('app_require_strong_passwords')) {
           $this->form->setValidator('password', new QubitValidatorPassword(
             [],
             ['invalid' => $this->context->i18n->__('Your password is not strong enough.'),
               'min_length' => $this->context->i18n->__('Your password is not strong enough (too short).'), ]));
-        }
-        else
-        {
+        } else {
           $this->form->setValidator('password', new sfValidatorString(['required' => !isset($this->getRoute()->resource)]));
         }
 
@@ -101,15 +92,13 @@ class UserPasswordEditAction extends DefaultEditAction
 
   protected function processField($field)
   {
-    switch ($name = $field->getName())
-    {
+    switch ($name = $field->getName()) {
       case 'confirmPassword':
         // Don't do anything for confirmPassword
         break;
 
       case 'password':
-        if (0 < strlen(trim($this->form->getValue('password'))))
-        {
+        if (0 < strlen(trim($this->form->getValue('password')))) {
           $this->resource->setPassword($this->form->getValue('password'));
         }
 

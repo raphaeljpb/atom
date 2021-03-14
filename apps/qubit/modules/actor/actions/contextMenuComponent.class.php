@@ -39,8 +39,7 @@ class ActorContextMenuComponent extends sfComponent
     // Subject of
     $resultSet = ActorRelatedInformationObjectsAction::getRelatedInformationObjects($this->resource->id, $page, $limit);
 
-    if ($resultSet->getTotalHits() > 0)
-    {
+    if ($resultSet->getTotalHits() > 0) {
       $pager = new QubitSearchPager($resultSet);
       $pager->setPage($page);
       $pager->setMaxPerPage($limit);
@@ -54,12 +53,10 @@ class ActorContextMenuComponent extends sfComponent
     }
 
     // All event types
-    foreach (QubitTerm::getEventTypes() as $eventType)
-    {
+    foreach (QubitTerm::getEventTypes() as $eventType) {
       $resultSet = ActorRelatedInformationObjectsAction::getRelatedInformationObjects($this->resource->id, $page, $limit, $eventType->id);
 
-      if ($resultSet->getTotalHits() > 0)
-      {
+      if ($resultSet->getTotalHits() > 0) {
         $pager = new QubitSearchPager($resultSet);
         $pager->setPage($page);
         $pager->setMaxPerPage($limit);

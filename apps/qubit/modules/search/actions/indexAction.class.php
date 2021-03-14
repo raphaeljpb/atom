@@ -33,16 +33,14 @@ class SearchIndexAction extends DefaultBrowseAction
     );
 
     // Realm filter
-    if (isset($request->repos) && ctype_digit($request->repos))
-    {
+    if (isset($request->repos) && ctype_digit($request->repos)) {
       $this->search->queryBool->addMust(new \Elastica\Query\Term(['repository.id' => $request->repos]));
 
       // Store realm in user session
       $this->context->user->setAttribute('search-realm', $request->repos);
     }
 
-    if (isset($request->collection) && ctype_digit($request->collection))
-    {
+    if (isset($request->collection) && ctype_digit($request->collection)) {
       $this->search->queryBool->addMust(new \Elastica\Query\Term(['ancestors' => $request->collection]));
     }
 
@@ -52,8 +50,7 @@ class SearchIndexAction extends DefaultBrowseAction
     $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($this->search->query);
 
     $total = $resultSet->getTotalHits();
-    if (1 > $total)
-    {
+    if (1 > $total) {
       $this->forward404();
 
       return;
@@ -62,8 +59,7 @@ class SearchIndexAction extends DefaultBrowseAction
     sfContext::getInstance()->getConfiguration()->loadHelpers(['Url', 'Escaping', 'Qubit']);
 
     $response = ['results' => []];
-    foreach ($resultSet->getResults() as $item)
-    {
+    foreach ($resultSet->getResults() as $item) {
       $data = $item->getData();
       $levelOfDescription = QubitTerm::getById($data['levelOfDescriptionId']);
 
@@ -76,12 +72,9 @@ class SearchIndexAction extends DefaultBrowseAction
       $response['results'][] = $result;
     }
 
-    if (sfConfig::get('app_enable_institutional_scoping') && $this->context->user->hasAttribute('search-realm'))
-    {
+    if (sfConfig::get('app_enable_institutional_scoping') && $this->context->user->hasAttribute('search-realm')) {
       $url = url_for(['module' => 'informationobject', 'action' => 'browse', 'collection' => $request->collection, 'repos' => $this->context->user->getAttribute('search-realm'), 'query' => $request->query, 'topLod' => '0']);
-    }
-    else
-    {
+    } else {
       $url = url_for(['module' => 'informationobject', 'action' => 'browse', 'collection' => $request->collection, 'query' => $request->query, 'topLod' => '0']);
     }
 

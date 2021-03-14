@@ -23,11 +23,9 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   {
     $args = func_get_args();
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'slug':
-        if (!array_key_exists('slug', $this->values))
-        {
+        if (!array_key_exists('slug', $this->values)) {
           $connection = Propel::getConnection(QubitObject::DATABASE_NAME);
 
           $statement = $connection->prepare('
@@ -50,11 +48,9 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   {
     $args = func_get_args();
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'slug':
-        if (!array_key_exists('slug', $this->values))
-        {
+        if (!array_key_exists('slug', $this->values)) {
           $connection = Propel::getConnection(QubitObject::DATABASE_NAME);
 
           $statement = $connection->prepare('
@@ -77,8 +73,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   {
     $args = func_get_args();
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'slug':
         $this->values['slug'] = $value;
 
@@ -94,48 +89,42 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     parent::save($connection);
 
     // Save updated objectTermRelations
-    foreach ($this->objectTermRelationsRelatedByobjectId as $relation)
-    {
+    foreach ($this->objectTermRelationsRelatedByobjectId as $relation) {
       $relation->indexOnSave = false;
       $relation->object = $this;
       $relation->save();
     }
 
     // Save updated notes
-    foreach ($this->notes as $note)
-    {
+    foreach ($this->notes as $note) {
       $note->indexOnSave = false;
       $note->object = $this;
       $note->save();
     }
 
     // Save updated properties
-    foreach ($this->propertys as $property)
-    {
+    foreach ($this->propertys as $property) {
       $property->indexOnSave = false;
       $property->object = $this;
       $property->save();
     }
 
     // Save updated object relations
-    foreach ($this->relationsRelatedByobjectId->transient as $relation)
-    {
+    foreach ($this->relationsRelatedByobjectId->transient as $relation) {
       $relation->indexOnSave = false;
       $relation->object = $this;
       $relation->save();
     }
 
     // Save updated subject relations
-    foreach ($this->relationsRelatedBysubjectId->transient as $relation)
-    {
+    foreach ($this->relationsRelatedBysubjectId->transient as $relation) {
       $relation->indexOnSave = false;
       $relation->subject = $this;
       $relation->save();
     }
 
     // Save updated other namnes
-    foreach ($this->otherNames as $otherName)
-    {
+    foreach ($this->otherNames as $otherName) {
       $otherName->object = $this;
       $otherName->save();
     }
@@ -145,20 +134,17 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
 
   public function insertSlug($connection = null)
   {
-    if (!isset($connection))
-    {
+    if (!isset($connection)) {
       $connection = Propel::getConnection();
     }
 
-    if (isset($this->slug))
-    {
+    if (isset($this->slug)) {
       $statement = $connection->prepare('
         INSERT INTO '.QubitSlug::TABLE_NAME.' ('.QubitSlug::OBJECT_ID.', '.QubitSlug::SLUG.')
         VALUES (?, ?)');
 
       // Unless it is set, get random, digit and letter slug
-      if (1 > strlen($this->slug))
-      {
+      if (1 > strlen($this->slug)) {
         $statement->execute([$this->id, QubitSlug::getUnique($connection)]);
 
         return $this;
@@ -173,12 +159,9 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
       $triedQuery = false;
       $stem = $this->slug;
 
-      do
-      {
-        try
-        {
-          if ($this->checkIfSlugIsReserved())
-          {
+      do {
+        try {
+          if ($this->checkIfSlugIsReserved()) {
             throw new RuntimeException('Reserved slug');
           }
 
@@ -186,16 +169,13 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
           unset($suffix);
         }
         // Collision? Try next suffix
-        catch (Exception $e)
-        {
+        catch (Exception $e) {
           // If exception is unexpected re-throw it
-          if (!($e instanceof RuntimeException || $e instanceof PdoException))
-          {
+          if (!($e instanceof RuntimeException || $e instanceof PdoException)) {
             throw $e;
           }
 
-          if (!$triedQuery)
-          {
+          if (!$triedQuery) {
             $triedQuery = true;
 
             // Try getting value of last suffix for this slug in database to
@@ -203,24 +183,19 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
             $query = 'SELECT slug FROM slug WHERE slug LIKE \''.$stem.'-%\' ORDER BY id DESC LIMIT 1;';
             $stmt2 = $connection->query($query);
 
-            if ($lastSlugInSet = $stmt2->fetchColumn())
-            {
-              if (preg_match('/-(\d+)$/', $lastSlugInSet, $matches))
-              {
+            if ($lastSlugInSet = $stmt2->fetchColumn()) {
+              if (preg_match('/-(\d+)$/', $lastSlugInSet, $matches)) {
                 $suffix = intval($matches[1]) + 1;
               }
             }
-          }
-          else
-          {
+          } else {
             // Simple increment in case SQL query doesn't work for some reason
             ++$suffix;
           }
 
           $this->slug = "{$stem}-{$suffix}";
         }
-      }
-      while (isset($suffix));
+      } while (isset($suffix));
     }
 
     return $this;
@@ -244,8 +219,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
 
   public function delete($connection = null)
   {
-    if (!isset($connection))
-    {
+    if (!isset($connection)) {
       $connection = Propel::getConnection();
     }
 
@@ -256,10 +230,8 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     $statement->execute([$this->id]);
 
     // Delete other names
-    if (0 < count($this->otherNames))
-    {
-      foreach ($this->otherNames as $otherName)
-      {
+    if (0 < count($this->otherNames)) {
+      foreach ($this->otherNames as $otherName) {
         $otherName->delete();
       }
     }
@@ -286,13 +258,11 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
 
   public function updateUpdatedAt($connection = null)
   {
-    if (!isset($connection))
-    {
+    if (!isset($connection)) {
       $connection = Propel::getConnection();
     }
 
-    if (!isset($this->id))
-    {
+    if (!isset($this->id)) {
       throw new sfException('QubitObject->id must be set');
     }
 
@@ -309,8 +279,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   {
     $status = $this->getStatus(['typeId' => $options['typeId']]);
     // only create a new status object if type is not already set
-    if (null === $status)
-    {
+    if (null === $status) {
       $status = new QubitStatus();
       $status->setTypeId($options['typeId']);
     }
@@ -334,17 +303,14 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     $criteria = new Criteria();
     $criteria->addJoin(QubitNote::TYPE_ID, QubitTerm::ID);
     $criteria->add(QubitNote::OBJECT_ID, $this->id);
-    if (isset($options['noteTypeId']))
-    {
+    if (isset($options['noteTypeId'])) {
       $criteria->add(QubitNote::TYPE_ID, $options['noteTypeId']);
     }
-    if (isset($options['exclude']))
-    {
+    if (isset($options['exclude'])) {
       // Turn exclude string into an array
       $excludes = (is_array($options['exclude'])) ? $options['exclude'] : [$options['exclude']];
 
-      foreach ($excludes as $exclude)
-      {
+      foreach ($excludes as $exclude) {
         $criteria->addAnd(QubitNote::TYPE_ID, $exclude, Criteria::NOT_EQUAL);
       }
     }
@@ -357,8 +323,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     $criteria = new Criteria();
     $criteria->addJoin(QubitNote::TYPE_ID, QubitTerm::ID);
     $criteria->add(QubitNote::OBJECT_ID, $this->id);
-    if (isset($options['taxonomyId']))
-    {
+    if (isset($options['taxonomyId'])) {
       $criteria->add(QubitTerm::TAXONOMY_ID, $options['taxonomyId']);
     }
 
@@ -375,8 +340,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   {
     $digitalObjects = $this->digitalObjectsRelatedByobjectId;
 
-    if (count($digitalObjects) > 0)
-    {
+    if (count($digitalObjects) > 0) {
       return $digitalObjects[0];
     }
 
@@ -392,27 +356,23 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   {
     // Set digital object URL
     $do = $this->digitalObjectsRelatedByobjectId[0];
-    if (!isset($do))
-    {
+    if (!isset($do)) {
       return;
     }
 
-    if (!$do->masterAccessibleViaUrl())
-    {
+    if (!$do->masterAccessibleViaUrl()) {
       return;
     }
 
     $path = $do->getFullPath();
 
     // If path is external, it's absolute so return it
-    if (QubitTerm::EXTERNAL_URI_ID == $do->usageId)
-    {
+    if (QubitTerm::EXTERNAL_URI_ID == $do->usageId) {
       return $path;
     }
 
     if (!QubitAcl::check($this, 'readMaster') && null !== $do->reference
-        && QubitAcl::check($this, 'readReference'))
-    {
+        && QubitAcl::check($this, 'readReference')) {
       $path = $do->reference->getFullPath();
     }
 
@@ -430,25 +390,21 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     $digitalObject = $this->getDigitalObject();
 
     // If there are no digital objects linked to this actor, return null
-    if (null === $digitalObject)
-    {
+    if (null === $digitalObject) {
       return null;
     }
 
     // If the linked digital object isn't accessible via URL, return null
-    if (!$digitalObject->masterAccessibleViaUrl())
-    {
+    if (!$digitalObject->masterAccessibleViaUrl()) {
       return null;
     }
 
     // If the current user isn't authorized to read the master, return null
-    if (!QubitAcl::check($this, 'readMaster'))
-    {
+    if (!QubitAcl::check($this, 'readMaster')) {
       return null;
     }
 
-    if (QubitTerm::EXTERNAL_URI_ID == $digitalObject->usageId)
-    {
+    if (QubitTerm::EXTERNAL_URI_ID == $digitalObject->usageId) {
       // Return external digital object URL
       return $digitalObject->path;
     }
@@ -468,8 +424,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
    */
   public function getDigitalObjectChecksum()
   {
-    if (null !== $do = $this->getDigitalObject())
-    {
+    if (null !== $do = $this->getDigitalObject()) {
       return $do->getChecksum();
     }
   }
@@ -483,8 +438,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   {
     $digitalObject = $this->getDigitalObject();
 
-    if (null === $digitalObject)
-    {
+    if (null === $digitalObject) {
       return false;
     }
 
@@ -498,8 +452,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     $criteria = new Criteria();
     $criteria->add(QubitOtherName::OBJECT_ID, $this->id);
 
-    if (isset($options['typeId']))
-    {
+    if (isset($options['typeId'])) {
       $criteria->add(QubitOtherName::TYPE_ID, $options['typeId']);
     }
 
@@ -526,8 +479,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
    */
   public function getPropertyByName($name, $options = [])
   {
-    if (null === $property = QubitProperty::getOneByObjectIdAndName($this->id, $name, $options))
-    {
+    if (null === $property = QubitProperty::getOneByObjectIdAndName($this->id, $name, $options)) {
       $property = new QubitProperty();
     }
 
@@ -548,8 +500,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   {
     // Verify that $physicalObject is really a Physical Object and
     // Don't add an identical object -> physical object relationship
-    if ('QubitPhysicalObject' == get_class($physicalObject) && null === $this->getPhysicalObject($physicalObject->id))
-    {
+    if ('QubitPhysicalObject' == get_class($physicalObject) && null === $this->getPhysicalObject($physicalObject->id)) {
       $relation = new QubitRelation();
       $relation->setSubject($physicalObject);
       $relation->setTypeId(QubitTerm::HAS_PHYSICAL_OBJECT_ID);
@@ -594,8 +545,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   {
     $allowedModels = ['QubitInformationObject', 'QubitTerm'];
 
-    if (!in_array(get_class($this), $allowedModels))
-    {
+    if (!in_array(get_class($this), $allowedModels)) {
       throw new sfException(
         'deleteFullHierarchy() can only be called from QubitInformationObject and QubitTerm.'
       );
@@ -603,8 +553,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
 
     $n = 0;
 
-    foreach ($this->descendants->andSelf()->orderBy('rgt') as $item)
-    {
+    foreach ($this->descendants->andSelf()->orderBy('rgt') as $item) {
       // Avoid nested set update until the last deletion:
       // The queries used to update the nested may be time expensive as
       // they update all the resources above the deleted one, including
@@ -613,8 +562,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
       // the delta used to update the nested set values is calculated from
       // the resource's RGT - LFT difference. Running the deletion in a
       // transaction, the nested set can be updated only once at the end.
-      if ($this->id !== $item->id)
-      {
+      if ($this->id !== $item->id) {
         $item->disableNestedSetUpdating = true;
       }
 
@@ -637,8 +585,7 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
   protected function checkIfSlugIsReserved()
   {
     // Check if slug is used by a plugin that may not be enabled yet
-    if (in_array($this->slug, ['api', 'sword']))
-    {
+    if (in_array($this->slug, ['api', 'sword'])) {
       return true;
     }
 

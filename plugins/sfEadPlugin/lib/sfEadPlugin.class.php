@@ -150,10 +150,8 @@ class sfEadPlugin
     $hasNonBlankNotes = false;
 
     $notes = $subject->getTerm()->getSourceNotes();
-    foreach ($notes as $note)
-    {
-      if ('' != $note)
-      {
+    foreach ($notes as $note) {
+      if ('' != $note) {
         $hasNonBlankNotes = true;
       }
     }
@@ -163,13 +161,11 @@ class sfEadPlugin
 
   public function getAssetPath($do, $getReference = false)
   {
-    if ($getReference)
-    {
+    if ($getReference) {
       $do = $do->reference;
     }
 
-    if ($this->siteBaseUrl)
-    {
+    if ($this->siteBaseUrl) {
       return $this->siteBaseUrl.'/'.ltrim($do->getFullPath(), '/');
     }
 
@@ -180,21 +176,17 @@ class sfEadPlugin
   {
     $countryCode = $mainAgencyCode = '';
 
-    if (null !== $this->resource->getRepository(['inherit' => true]))
-    {
-      if (null !== $country = $this->resource->getRepository(['inherit' => true])->getCountryCode())
-      {
+    if (null !== $this->resource->getRepository(['inherit' => true])) {
+      if (null !== $country = $this->resource->getRepository(['inherit' => true])->getCountryCode()) {
         $countryCode = " countrycode=\"{$country}\"";
       }
 
-      if (null !== $agency = $this->resource->getRepository(['inherit' => true])->getIdentifier())
-      {
+      if (null !== $agency = $this->resource->getRepository(['inherit' => true])->getIdentifier()) {
         $mainAgencyCode = " mainagencycode=\"{$agency}\"";
       }
     }
 
-    if (null === $identifier = $this->resource->descriptionIdentifier)
-    {
+    if (null === $identifier = $this->resource->descriptionIdentifier) {
       $identifier = $this->resource->slug;
     }
 
@@ -218,8 +210,7 @@ class sfEadPlugin
     if (in_array(
       sfContext::getInstance()->getConfiguration()->getEnvironment(),
       ['cli', 'worker']
-    ))
-    {
+    )) {
       // Strip whitespace and "/" from the end of the Site Base URL
       $url = rtrim($this->siteBaseUrl, " \n\r\t\v\0/");
 
@@ -230,8 +221,7 @@ class sfEadPlugin
 
       // Add 'index.php' to the URL when "no_script_name" is not true in
       // production
-      if (empty($noScriptName))
-      {
+      if (empty($noScriptName)) {
         $url .= '/index.php';
       }
 
@@ -257,8 +247,7 @@ class sfEadPlugin
 
     $dateOutput = $dateData['year'];
 
-    if ($dataData['month'])
-    {
+    if ($dataData['month']) {
       $dateOutput .= '-'.$dateData['month'].'-';
 
       // if a month is specified, add day specification as well
@@ -275,8 +264,7 @@ class sfEadPlugin
 
     $parsedData['start'] = sfEadPlugin::renderEadDenormalizedDate($dates[0]);
 
-    if (count($dates) > 1)
-    {
+    if (count($dates) > 1) {
       $parsedData['end'] = sfEadPlugin::renderEadDenormalizedDate($dates[1]);
     }
 
@@ -288,12 +276,10 @@ class sfEadPlugin
     $output = '<date type="'.$eventType.'" ';
 
     // create normalized date/date range
-    if ($event->startDate || $event->endDate)
-    {
+    if ($event->startDate || $event->endDate) {
       $normalized = ($event->startDate) ? $this->renderEadNormalizedDate($event->startDate) : '';
 
-      if ($event->endDate)
-      {
+      if ($event->endDate) {
         $normalized .= ($event->startDate) ? '/' : '';
         $normalized .= $this->renderEadNormalizedDate($event->endDate);
       }
@@ -311,8 +297,7 @@ class sfEadPlugin
   {
     $metadataStandard = sfConfig::get('app_default_template_informationobject');
 
-    if (isset(self::$ENCODING_MAP[$metadataStandard][$param]))
-    {
+    if (isset(self::$ENCODING_MAP[$metadataStandard][$param])) {
       return self::$ENCODING_MAP[$metadataStandard][$param];
     }
 
@@ -321,8 +306,7 @@ class sfEadPlugin
 
   public function getEadContainerAttributes($physcalObject)
   {
-    switch ($physcalObject->type)
-    {
+    switch ($physcalObject->type) {
       case 'Cardboard box':
         $result = 'type="box" label="cardboard"';
 
@@ -352,21 +336,17 @@ class sfEadPlugin
 
   public static function getUnitidValue($resource)
   {
-    if (!isset($resource->identifier))
-    {
+    if (!isset($resource->identifier)) {
       return;
     }
 
-    if (!sfConfig::get('app_inherit_code_informationobject', false))
-    {
+    if (!sfConfig::get('app_inherit_code_informationobject', false)) {
       return $resource->identifier;
     }
 
     $identifier = [];
-    foreach ($resource->ancestors->andSelf()->orderBy('lft') as $item)
-    {
-      if (isset($item->identifier))
-      {
+    foreach ($resource->ancestors->andSelf()->orderBy('lft') as $item) {
+      if (isset($item->identifier)) {
         $identifier[] = $item->identifier;
       }
     }
@@ -393,24 +373,20 @@ class sfEadPlugin
     $renderedLOD = '';
     $levelOfDescription = $defaultLevel;
 
-    if ($resource->levelOfDescriptionId)
-    {
+    if ($resource->levelOfDescriptionId) {
       $levelOfDescription = strtolower($resource->getLevelOfDescription()->getName(['culture' => 'en']));
 
       // Check EAD levels variations
-      foreach ($variations as $eadLevel => $lods)
-      {
+      foreach ($variations as $eadLevel => $lods) {
         // Use EAD level if LOD is one of its variations
-        if (in_array($levelOfDescription, $lods))
-        {
+        if (in_array($levelOfDescription, $lods)) {
           $levelOfDescription = $eadLevel;
 
           break;
         }
       }
 
-      if (!in_array($levelOfDescription, $eadLevels))
-      {
+      if (!in_array($levelOfDescription, $eadLevels)) {
         $renderedLOD = 'otherlevel="'.$levelOfDescription.'" ';
         $levelOfDescription = $defaultLevel;
       }
@@ -440,10 +416,8 @@ class sfEadPlugin
     // <controlaccess> fields or not.
 
     $hasNonCreationActorEvents = false;
-    foreach ($io->getActorEvents() as $event)
-    {
-      if ('Creator' != $event->getType()->getRole())
-      {
+    foreach ($io->getActorEvents() as $event) {
+      if ('Creator' != $event->getType()->getRole()) {
         $hasNonCreationActorEvents = true;
 
         break;

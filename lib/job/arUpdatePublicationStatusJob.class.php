@@ -29,15 +29,13 @@ class arUpdatePublicationStatusJob extends arBaseJob
 
   public function runJob($parameters)
   {
-    if (null === $resource = QubitInformationObject::getById($parameters['objectId']))
-    {
+    if (null === $resource = QubitInformationObject::getById($parameters['objectId'])) {
       $this->error($this->i18n->__('Invalid description id: %1', ['%1' => $parameters['objectId']]));
 
       return false;
     }
 
-    if (null === $publicationStatus = QubitTerm::getById($parameters['publicationStatusId']))
-    {
+    if (null === $publicationStatus = QubitTerm::getById($parameters['publicationStatusId'])) {
       $this->error($this->i18n->__('Invalid publication status id: %1', ['%1' => $parameters['publicationStatusId']]));
 
       return false;
@@ -48,8 +46,7 @@ class arUpdatePublicationStatusJob extends arBaseJob
     $this->info($message);
 
     $descriptionsUpdated = 0;
-    foreach ($resource->descendants as $descendant)
-    {
+    foreach ($resource->descendants as $descendant) {
       $descendant->setPublicationStatus($publicationStatus->id);
       $descendant->save();
 

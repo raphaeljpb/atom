@@ -31,16 +31,11 @@ class InformationObjectCalculateDatesLinkComponent extends sfComponent
 
     $lastJobRan = QubitJob::getOne($criteria);
 
-    if (null === $lastJobRan)
-    {
+    if (null === $lastJobRan) {
       $this->lastRun = $i18n->__('Never');
-    }
-    elseif (QubitTerm::JOB_STATUS_IN_PROGRESS_ID == $lastJobRan->statusId)
-    {
+    } elseif (QubitTerm::JOB_STATUS_IN_PROGRESS_ID == $lastJobRan->statusId) {
       $this->lastRun = $i18n->__('In progress');
-    }
-    else
-    {
+    } else {
       $this->lastRun = $lastJobRan->completedAt;
     }
   }

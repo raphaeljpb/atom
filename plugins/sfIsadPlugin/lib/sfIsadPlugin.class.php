@@ -38,15 +38,13 @@ class sfIsadPlugin implements ArrayAccess
     $string = '';
 
     // Add title if set
-    if (0 < strlen($title = $this->resource->__toString()))
-    {
+    if (0 < strlen($title = $this->resource->__toString())) {
       $string .= $title;
     }
 
     // Add publication status
     $publicationStatus = $this->resource->getPublicationStatus();
-    if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId)
-    {
+    if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId) {
       $string .= (!empty($string)) ? ' ' : '';
       $string .= "({$publicationStatus->status->__toString()})";
     }
@@ -56,8 +54,7 @@ class sfIsadPlugin implements ArrayAccess
 
   public function __get($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'languageNotes':
         return $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
 
@@ -71,25 +68,21 @@ class sfIsadPlugin implements ArrayAccess
 
   public function __set($name, $value)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'languageNotes':
         $note = $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
         $missingNote = 0 === count($note);
 
-        if (0 == strlen($value))
-        {
+        if (0 == strlen($value)) {
           // Delete note if it's available
-          if (!$missingNote)
-          {
+          if (!$missingNote) {
             $note->delete();
           }
 
           break;
         }
 
-        if ($missingNote)
-        {
+        if ($missingNote) {
           $note = new QubitNote();
           $note->typeId = QubitTerm::LANGUAGE_NOTE_ID;
           $note->userId = sfContext::getInstance()->user->getAttribute('user_id');

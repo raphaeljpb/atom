@@ -26,8 +26,7 @@ class qtSwordPlugin
     $file = fopen($filename, 'w');
     $source = fopen('php://input', 'r');
 
-    while ($kb = fread($source, 1024))
-    {
+    while ($kb = fread($source, 1024)) {
       fwrite($file, $kb, 1024);
     }
 

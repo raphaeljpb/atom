@@ -22,8 +22,7 @@ class DefaultMoveAction extends sfAction
   public function execute($request)
   {
     // Default items per page
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
@@ -32,14 +31,12 @@ class DefaultMoveAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that the object exists and that it is not the root
-    if (!isset($this->resource) || !isset($this->resource->parent))
-    {
+    if (!isset($this->resource) || !isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Check authorization
-    if (!QubitAcl::check($this->resource, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID))
-    {
+    if (!QubitAcl::check($this->resource, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)) {
       QubitAcl::forwardUnauthorized();
     }
 
@@ -48,29 +45,21 @@ class DefaultMoveAction extends sfAction
     $this->form->setWidget('parent', new sfWidgetFormInputHidden());
 
     // Get parent from GET parameters
-    if (isset($request->parent))
-    {
+    if (isset($request->parent)) {
       $this->form->setDefault('parent', $request->parent);
-    }
-    else
-    {
+    } else {
       // Root is default parent
-      if ($this->resource instanceof QubitInformationObject)
-      {
+      if ($this->resource instanceof QubitInformationObject) {
         $this->form->setDefault('parent', QubitInformationObject::getById(QubitInformationObject::ROOT_ID)->slug);
-      }
-      elseif ($this->resource instanceof QubitTerm)
-      {
+      } elseif ($this->resource instanceof QubitTerm) {
         $this->form->setDefault('parent', QubitTerm::getById(QubitTerm::ROOT_ID)->slug);
       }
     }
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $parent = QubitObject::getBySlug($this->form->parent->getValue());
 
         $params = [
@@ -90,8 +79,7 @@ class DefaultMoveAction extends sfAction
         $message .= $this->context->i18n->__("If job hasn't already completed, check %1% page to determine present status.", ['%1%' => $jobManageLink]);
         $this->getUser()->setFlash('notice', $message);
 
-        if ($request->isXmlHttpRequest())
-        {
+        if ($request->isXmlHttpRequest()) {
           return $this->renderText('');
         }
       }
@@ -100,22 +88,19 @@ class DefaultMoveAction extends sfAction
     $this->parent = QubitObject::getBySlug($this->form->parent->getValue());
 
     $limit = sfConfig::get('app_hits_per_page', 10);
-    if (isset($request->limit) && ctype_digit($request->limit))
-    {
+    if (isset($request->limit) && ctype_digit($request->limit)) {
       $limit = $request->limit;
     }
 
     $page = 1;
-    if (isset($request->page) && ctype_digit($request->page))
-    {
+    if (isset($request->page) && ctype_digit($request->page)) {
       $page = $request->page;
     }
 
     // Avoid pagination over ES' max result window config (default: 10000)
     $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
 
-    if ((int) $limit * $page > $maxResultWindow)
-    {
+    if ((int) $limit * $page > $maxResultWindow) {
       // Show alert
       $message = $this->context->i18n->__(
         "We've redirected you to the first page of results.".
@@ -137,8 +122,7 @@ class DefaultMoveAction extends sfAction
 
     $this->queryBool = new \Elastica\Query\BoolQuery();
 
-    if (isset($request->query))
-    {
+    if (isset($request->query)) {
       $fields = [
         'identifier' => 1,
         'referenceCode' => 1,
@@ -146,9 +130,7 @@ class DefaultMoveAction extends sfAction
       $this->queryBool->addMust(
         arElasticSearchPluginUtil::generateBoolQueryString($request->query, $fields)
       );
-    }
-    else
-    {
+    } else {
       $query = new \Elastica\Query\Term();
       $query->setTerm('parentId', $this->parent->id);
       $this->queryBool->addMust($query);
@@ -156,12 +138,9 @@ class DefaultMoveAction extends sfAction
 
     $this->query->setQuery($this->queryBool);
 
-    if ($this->resource instanceof QubitInformationObject)
-    {
+    if ($this->resource instanceof QubitInformationObject) {
       $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($this->query);
-    }
-    elseif ($this->resource instanceof QubitTerm)
-    {
+    } elseif ($this->resource instanceof QubitTerm) {
       // TODO: Add parent_id for terms in ES, add move button
       $resultSet = QubitSearch::getInstance()->index->getType('QubitTerm')->search($this->query);
     }
@@ -173,8 +152,7 @@ class DefaultMoveAction extends sfAction
     $this->pager->init();
 
     $slugs = [];
-    foreach ($this->pager->getResults() as $hit)
-    {
+    foreach ($this->pager->getResults() as $hit) {
       $data = $hit->getData();
       $slugs[] = $data['slug'];
     }

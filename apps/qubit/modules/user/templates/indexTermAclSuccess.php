@@ -13,7 +13,7 @@
           <?php foreach ($roles as $item) { ?>
             <?php if (null !== $group = QubitAclGroup::getById($item)) { ?>
               <th><?php echo esc_entities($group->__toString()); ?></th>
-            <?php } elseif ($resource->username == $item){ ?>
+            <?php } elseif ($resource->username == $item) { ?>
               <th><?php echo $resource->username; ?></th>
             <?php } ?>
           <?php } ?>

@@ -31,8 +31,7 @@ class userAclMenuComponent extends sfComponent
     $criteria->add(QubitMenu::NAME, 'users');
 
     $this->userAclMenu = null;
-    if (null !== $menu = QubitMenu::getOne($criteria))
-    {
+    if (null !== $menu = QubitMenu::getOne($criteria)) {
       $this->userAclMenu = $menu;
     }
   }

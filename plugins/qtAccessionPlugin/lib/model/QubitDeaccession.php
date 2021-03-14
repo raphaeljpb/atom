@@ -38,8 +38,7 @@ class QubitDeaccession extends BaseDeaccession
 
   protected function insert($connection = null)
   {
-    if (!isset($this->slug))
-    {
+    if (!isset($this->slug)) {
       $this->slug = QubitSlug::slugify($this->__get('identifier', ['sourceCulture' => true]));
     }
 

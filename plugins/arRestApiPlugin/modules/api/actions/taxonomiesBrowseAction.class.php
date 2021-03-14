@@ -22,34 +22,25 @@ class ApiTaxonomiesBrowseAction extends QubitApiAction
   protected function get($request)
   {
     $taxonomy = QubitTaxonomy::getById($request->id);
-    if (null === $taxonomy)
-    {
+    if (null === $taxonomy) {
       throw new QubitApi404Exception('Taxonomy not found');
     }
 
     $terms = [];
-    foreach (QubitTaxonomy::getTaxonomyTerms($taxonomy->id) as $term)
-    {
+    foreach (QubitTaxonomy::getTaxonomyTerms($taxonomy->id) as $term) {
       $item = [];
 
-      if (isset($request->culture))
-      {
+      if (isset($request->culture)) {
         $name = $term->getName(['culture' => $request->culture, 'cultureFallback' => true]);
-      }
-      else
-      {
+      } else {
         $name = $term->getName(['cultureFallback' => true]);
       }
 
       $notes = [];
-      foreach ($term->getNotesByType($options = ['noteTypeId' => QubitTerm::SCOPE_NOTE_ID]) as $note)
-      {
-        if (isset($request->culture))
-        {
+      foreach ($term->getNotesByType($options = ['noteTypeId' => QubitTerm::SCOPE_NOTE_ID]) as $note) {
+        if (isset($request->culture)) {
           $notes[] = $note->getContent(['culture' => $request->culture, 'cultureFallback' => true]);
-        }
-        else
-        {
+        } else {
           $notes[] = $note->getContent(['cultureFallback' => true]);
         }
       }

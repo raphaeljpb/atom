@@ -29,10 +29,8 @@ class RepositoryEditThemeAction extends sfAction
 
   public function processForm()
   {
-    foreach ($this->form as $field)
-    {
-      if (isset($this->request[$field->getName()]))
-      {
+    foreach ($this->form as $field) {
+      if (isset($this->request[$field->getName()])) {
         $this->processField($field);
       }
     }
@@ -45,8 +43,7 @@ class RepositoryEditThemeAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'update'))
-    {
+    if (!QubitAcl::check($this->resource, 'update')) {
       QubitAcl::forwardUnauthorized();
     }
 
@@ -56,38 +53,31 @@ class RepositoryEditThemeAction extends sfAction
 
     $this->form = new sfForm();
 
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->addField($name);
     }
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters(), $request->getFiles());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         // Process logo and logo_delete together
-        if (null !== $this->form->getValue('logo_delete'))
-        {
+        if (null !== $this->form->getValue('logo_delete')) {
           unlink($this->resource->getLogoPath(true));
         }
-        if (null !== $logo = $this->form->getValue('logo'))
-        {
+        if (null !== $logo = $this->form->getValue('logo')) {
           // Call save() method found in sfValidatedFile
           // TODO: force conversion to png
           $logo->save($this->resource->getLogoPath(true));
         }
 
         // Process banner and banner_delete together
-        if (null !== $this->form->getValue('banner_delete'))
-        {
+        if (null !== $this->form->getValue('banner_delete')) {
           unlink($this->resource->getBannerPath(true));
         }
-        if (null !== $logo = $this->form->getValue('banner'))
-        {
+        if (null !== $logo = $this->form->getValue('banner')) {
           // Call save() method found in sfValidatedFile
           // TODO: force conversion to png
           $logo->save($this->resource->getBannerPath(true));
@@ -96,8 +86,7 @@ class RepositoryEditThemeAction extends sfAction
         $this->resource->save();
 
         // Invalidate cached htmlSnippet
-        if (!$this->new && null !== $cache = QubitCache::getInstance())
-        {
+        if (!$this->new && null !== $cache = QubitCache::getInstance()) {
           $cacheKey = 'repository:htmlsnippet:'.$this->resource->id;
           $cache->remove($cacheKey);
         }
@@ -109,8 +98,7 @@ class RepositoryEditThemeAction extends sfAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'backgroundColor':
         $this->form->setDefault('backgroundColor', $this->resource->backgroundColor);
         $this->form->setValidator('backgroundColor', new sfValidatorRegex(['pattern' => '/^#(?:[0-9a-fA-F]{3}){1,2}$/'], ['invalid' => $this->context->i18n->__('Only hexadecimal color value')]));
@@ -150,8 +138,7 @@ class RepositoryEditThemeAction extends sfAction
         break;
 
       case 'banner_delete':
-        if ($this->existsBanner)
-        {
+        if ($this->existsBanner) {
           $this->form->setValidator('banner_delete', new sfValidatorBoolean());
           $this->form->setWidget('banner_delete', new sfWidgetFormInputCheckbox());
         }
@@ -183,8 +170,7 @@ class RepositoryEditThemeAction extends sfAction
         break;
 
       case 'logo_delete':
-        if ($this->existsLogo)
-        {
+        if ($this->existsLogo) {
           $this->form->setValidator($name, new sfValidatorBoolean());
           $this->form->setWidget($name, new sfWidgetFormInputCheckbox());
         }
@@ -195,8 +181,7 @@ class RepositoryEditThemeAction extends sfAction
 
   protected function processField($field)
   {
-    switch ($name = $field->getName())
-    {
+    switch ($name = $field->getName()) {
       case 'backgroundColor':
         $this->resource->setBackgroundColor($this->form->getValue($field->getName()), ['sourceCulture' => true]);
 

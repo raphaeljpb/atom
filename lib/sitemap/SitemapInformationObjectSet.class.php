@@ -49,18 +49,15 @@ class SitemapInformationObjectUrl extends AbstractSitemapUrl
   {
     parent::__construct();
 
-    if (!isset($config['information_object_priorities']))
-    {
+    if (!isset($config['information_object_priorities'])) {
       return;
     }
 
-    foreach ($config['information_object_priorities'] as $item)
-    {
+    foreach ($config['information_object_priorities'] as $item) {
       $level = @$item[0]['level'];
       $priority = @$item[1]['priority'];
 
-      if (is_null($level) || is_null($priority))
-      {
+      if (is_null($level) || is_null($priority)) {
         continue;
       }
 
@@ -68,8 +65,7 @@ class SitemapInformationObjectUrl extends AbstractSitemapUrl
       $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
       $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
       $criteria->add(QubitTermI18n::NAME, $level);
-      if (null !== $term = QubitTerm::getOne($criteria))
-      {
+      if (null !== $term = QubitTerm::getOne($criteria)) {
         self::$priorities[(int) $term->id] = $priority;
       }
     }
@@ -77,14 +73,12 @@ class SitemapInformationObjectUrl extends AbstractSitemapUrl
 
   protected function getPriority()
   {
-    if (isset(self::$priorities[$this->level_of_description_id]))
-    {
+    if (isset(self::$priorities[$this->level_of_description_id])) {
       return self::$priorities[$this->level_of_description_id];
     }
 
     // We don't recognize the level of description but we know that it's a collection root
-    if (!empty($this->parent_id) && QubitInformationObject::ROOT_ID == $this->parent_id)
-    {
+    if (!empty($this->parent_id) && QubitInformationObject::ROOT_ID == $this->parent_id) {
       return '0.9';
     }
   }

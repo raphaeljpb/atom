@@ -22,21 +22,17 @@ class QubitCacheSessionStorage extends sfCacheSessionStorage
   public function initialize($options = null)
   {
     // http://trac.symfony-project.org/ticket/5683
-    if (!isset($options['session_cookie_path']))
-    {
+    if (!isset($options['session_cookie_path'])) {
       $options['session_cookie_path'] = sfContext::getInstance()->request->getRelativeUrlRoot();
-      if (1 > strlen($options['session_cookie_path']))
-      {
+      if (1 > strlen($options['session_cookie_path'])) {
         $options['session_cookie_path'] = '/';
       }
     }
 
     // Ignore session_cookie_secure if we are not using HTTPS
-    if (isset($options['session_cookie_secure']) && true === $options['session_cookie_secure'])
-    {
+    if (isset($options['session_cookie_secure']) && true === $options['session_cookie_secure']) {
       $request = sfContext::getInstance()->getRequest();
-      if (!$request->isSecure())
-      {
+      if (!$request->isSecure()) {
         unset($options['session_cookie_secure']);
       }
     }

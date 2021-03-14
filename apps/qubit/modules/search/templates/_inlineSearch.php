@@ -4,7 +4,7 @@
 
     <?php if (isset($sf_request->subqueryField) && 0 < strlen($sf_request->subqueryField)) { ?>
       <input type="hidden" name="subqueryField" id="subqueryField" value="<?php echo $sf_request->subqueryField; ?>" />
-    <?php } elseif (isset($fields)){ ?>
+    <?php } elseif (isset($fields)) { ?>
       <input type="hidden" name="subqueryField" id="subqueryField" value="<?php echo array_keys($sf_data->getRaw('fields'))[0]; ?>" />
     <?php } ?>
 

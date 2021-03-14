@@ -117,16 +117,13 @@
           <fieldset class="collapsible<?php echo $collapsed; ?>">
             <?php
               // build a title
-              if ($gr['act']->getValue() && null !== $gr['restriction']->getValue())
-              {
+              if ($gr['act']->getValue() && null !== $gr['restriction']->getValue()) {
                 $act = $this->context->routing->parse(Qubit::pathInfo($gr['act']->getValue()));
                 $act = $act['_sf_route']->resource;
                 $restriction = QubitGrantedRight::getRestrictionString($gr['restriction']->getValue());
 
                 $title = "{$act} {$restriction}";
-              }
-              else
-              {
+              } else {
                 $title = __('Granted right ').($i + 1);
               }
             ?>

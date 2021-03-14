@@ -24,14 +24,12 @@ class DonorPrimaryContactAction extends sfAction
     $resource = $this->getRoute()->resource;
 
     // Check user authorization
-    if (!QubitAcl::check($resource, 'read'))
-    {
+    if (!QubitAcl::check($resource, 'read')) {
       QubitAcl::forwardToSecureAction();
     }
 
     // Return 404 if the primary contact doesn't exist
-    if (null === $primaryContactInformation = $resource->getPrimaryContact())
-    {
+    if (null === $primaryContactInformation = $resource->getPrimaryContact()) {
       $this->forward404();
     }
 
@@ -51,14 +49,10 @@ class DonorPrimaryContactAction extends sfAction
       'fax',
       'latitude',
       'longitude',
-      'note', ] as $field)
-    {
-      if (isset($primaryContactInformation->{$field}))
-      {
+      'note', ] as $field) {
+      if (isset($primaryContactInformation->{$field})) {
         $data[$field] = $primaryContactInformation->{$field};
-      }
-      else
-      {
+      } else {
         $data[$field] = '';
       }
     }

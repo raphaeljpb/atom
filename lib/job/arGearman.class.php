@@ -24,23 +24,19 @@ class arGearman
 
   public static function getConfiguration()
   {
-    if (isset(self::$config))
-    {
+    if (isset(self::$config)) {
       return self::$config;
     }
 
     $appConfig = sfContext::getInstance()->getConfiguration();
 
-    if ($appConfig instanceof sfApplicationConfiguration)
-    {
+    if ($appConfig instanceof sfApplicationConfiguration) {
       // Use config cache in application context
       $configCache = $appConfig->getConfigCache();
       $configCache->registerConfigHandler(self::$configPath, 'arGearmanConfigHandler');
 
       self::$config = include $configCache->checkConfig(self::$configPath);
-    }
-    else
-    {
+    } else {
       // Live parsing (task context)
       $configPaths = $appConfig->getConfigPaths(self::$configPath);
 
@@ -54,8 +50,7 @@ class arGearman
   {
     $config = self::getConfiguration();
 
-    if (!isset($config['servers']))
-    {
+    if (!isset($config['servers'])) {
       throw new sfConfigurationException('No servers specified in gearman.yml');
     }
 
@@ -82,34 +77,27 @@ class arGearman
   {
     $config = self::getConfiguration();
 
-    if (!isset($config['worker_types']))
-    {
+    if (!isset($config['worker_types'])) {
       throw new sfConfigurationException('No abilities (worker_types) specified in gearman.yml');
     }
 
     $abilities = [];
 
-    if (isset($options['types']))
-    {
+    if (isset($options['types'])) {
       $types = $options['types'];
-      if (!is_array($types))
-      {
+      if (!is_array($types)) {
         $types = array_filter(explode(',', $options['types']));
       }
 
-      foreach ($types as $type)
-      {
+      foreach ($types as $type) {
         $type = trim($type);
-        if (!array_key_exists($type, $config['worker_types']))
-        {
+        if (!array_key_exists($type, $config['worker_types'])) {
           throw new sfException("Invalid type specified: {$type} -- does it exist in the gearman config file?");
         }
 
         $abilities = array_merge($abilities, $config['worker_types'][$type]);
       }
-    }
-    else
-    {
+    } else {
       $abilities = call_user_func_array('array_merge', $config['worker_types']);
     }
 

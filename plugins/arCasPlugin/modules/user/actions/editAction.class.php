@@ -31,14 +31,11 @@ class UserEditAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
-        if ($this->resource !== sfContext::getInstance()->getUser()->user)
-        {
+      if ($this->form->isValid()) {
+        if ($this->resource !== sfContext::getInstance()->getUser()->user) {
           $this->resource->active = 0;
         }
 
@@ -54,28 +51,23 @@ class UserEditAction extends DefaultEditAction
         $criteria->addAnd(QubitAclPermission::USER_ID, null, Criteria::ISNOTNULL);
         $criteria->add(QubitAclPermission::ACTION, 'translate');
 
-        if (null === $permission = QubitAclPermission::getOne($criteria))
-        {
+        if (null === $permission = QubitAclPermission::getOne($criteria)) {
           $permission = new QubitAclPermission();
           $permission->userId = $this->resource->id;
           $permission->action = 'translate';
           $permission->grantDeny = 1;
           $permission->conditional = 'in_array(%p[language], %k[languages])';
-        }
-        elseif (!is_array($languages))
-        {
+        } elseif (!is_array($languages)) {
           // If $languages is not an array, then remove the translate permission
           $permission->delete();
         }
 
-        if (is_array($languages))
-        {
+        if (is_array($languages)) {
           $permission->setConstants(['languages' => $languages]);
           $permission->save();
         }
 
-        if (null !== $this->context->getViewCacheManager())
-        {
+        if (null !== $this->context->getViewCacheManager()) {
           // We just need to remove the cache for this user but sf_cache_key
           // contents also the culture code, it worth the try? I don't think so
           $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
@@ -91,20 +83,17 @@ class UserEditAction extends DefaultEditAction
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     $this->resource = new QubitUser();
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
     }
 
     // HACK: because $this->user->getAclPermissions() is erroneously calling
     // QubitObject::getaclPermissionsById()
     $this->permissions = null;
-    if (isset($this->resource->id))
-    {
+    if (isset($this->resource->id)) {
       $permissions = QubitUser::getaclPermissionsById($this->resource->id, ['self' => $this])->orderBy('constants')->orderBy('object_id');
 
-      foreach ($permissions as $item)
-      {
+      foreach ($permissions as $item) {
         $repository = $item->getConstants(['name' => 'repository']);
         $this->permissions[$repository][$item->objectId][$item->action] = $item->grantDeny;
       }
@@ -117,15 +106,11 @@ class UserEditAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'active':
-        if (isset($this->resource->id))
-        {
+        if (isset($this->resource->id)) {
           $this->form->setDefault('active', (bool) $this->resource->active);
-        }
-        else
-        {
+        } else {
           $this->form->setDefault('active', true);
         }
 
@@ -138,16 +123,14 @@ class UserEditAction extends DefaultEditAction
         $values = [];
         $criteria = new Criteria();
         $criteria->add(QubitAclUserGroup::USER_ID, $this->resource->id);
-        foreach (QubitAclUserGroup::get($criteria) as $item)
-        {
+        foreach (QubitAclUserGroup::get($criteria) as $item) {
           $values[] = $item->groupId;
         }
 
         $choices = [];
         $criteria = new Criteria();
         $criteria->add(QubitAclGroup::ID, 99, Criteria::GREATER_THAN);
-        foreach (QubitAclGroup::get($criteria) as $item)
-        {
+        foreach (QubitAclGroup::get($criteria) as $item) {
           $choices[$item->id] = $item->getName(['cultureFallback' => true]);
         }
 
@@ -162,8 +145,7 @@ class UserEditAction extends DefaultEditAction
         $languages = $c->getLanguages();
         $choices = [];
 
-        foreach (sfConfig::get('app_i18n_languages') as $item)
-        {
+        foreach (sfConfig::get('app_i18n_languages') as $item) {
           $choices[$item] = $languages[$item];
         }
 
@@ -173,8 +155,7 @@ class UserEditAction extends DefaultEditAction
         $criteria->add(QubitAclPermission::ACTION, 'translate');
 
         $defaults = null;
-        if (null !== $permission = QubitAclPermission::getOne($criteria))
-        {
+        if (null !== $permission = QubitAclPermission::getOne($criteria)) {
           $defaults = $permission->getConstants(['name' => 'languages']);
         }
 
@@ -198,18 +179,14 @@ class UserEditAction extends DefaultEditAction
 
         // Expose API key value to template if one exists
         $apiKey = QubitProperty::getOneByObjectIdAndName($this->resource->id, sfInflector::camelize($name));
-        if (null != $apiKey)
-        {
+        if (null != $apiKey) {
           $this->{$name} = $apiKey->value;
         }
 
         // Expose whether or not API is enabled
-        if ('oaiApiKey' == $name)
-        {
+        if ('oaiApiKey' == $name) {
           $this->oaiEnabled = $this->context->getConfiguration()->isPluginEnabled('arOaiPlugin');
-        }
-        else
-        {
+        } else {
           $this->restEnabled = $this->context->getConfiguration()->isPluginEnabled('arRestApiPlugin');
         }
 
@@ -219,8 +196,7 @@ class UserEditAction extends DefaultEditAction
 
   protected function processField($field)
   {
-    switch ($name = $field->getName())
-    {
+    switch ($name = $field->getName()) {
       case 'active':
         $this->resource->active = $this->form->getValue('active') ? true : false;
 
@@ -229,34 +205,25 @@ class UserEditAction extends DefaultEditAction
       case 'groups':
         $newGroupIds = $formGroupIds = [];
 
-        if (null != ($groups = $this->form->getValue('groups')))
-        {
-          foreach ($groups as $item)
-          {
+        if (null != ($groups = $this->form->getValue('groups'))) {
+          foreach ($groups as $item) {
             $newGroupIds[$item] = $formGroupIds[$item] = $item;
           }
-        }
-        else
-        {
+        } else {
           $newGroupIds = $formGroupIds = [];
         }
 
         // Don't re-add existing groups + delete exiting groups that are no longer
         // in groups list
-        foreach ($this->resource->aclUserGroups as $item)
-        {
-          if (in_array($item->groupId, $formGroupIds))
-          {
+        foreach ($this->resource->aclUserGroups as $item) {
+          if (in_array($item->groupId, $formGroupIds)) {
             unset($newGroupIds[$item->groupId]);
-          }
-          else
-          {
+          } else {
             $item->delete();
           }
         }
 
-        foreach ($newGroupIds as $item)
-        {
+        foreach ($newGroupIds as $item) {
           $userGroup = new QubitAclUserGroup();
           $userGroup->groupId = $item;
 
@@ -270,12 +237,10 @@ class UserEditAction extends DefaultEditAction
         $keyAction = $this->form->getValue($name);
         $apiKey = QubitProperty::getOneByObjectIdAndName($this->resource->id, sfInflector::camelize($name));
 
-        switch ($keyAction)
-        {
+        switch ($keyAction) {
           case 'generate':
             // Create user OAI-PMH key property if it doesn't exist
-            if (null === $apiKey)
-            {
+            if (null === $apiKey) {
               $apiKey = new QubitProperty();
               $apiKey->name = sfInflector::camelize($name);
             }
@@ -283,12 +248,9 @@ class UserEditAction extends DefaultEditAction
             // Generate new OAI-PMH API key
             $apiKey->value = bin2hex(openssl_random_pseudo_bytes(8));
 
-            if (!isset($apiKey->id))
-            {
+            if (!isset($apiKey->id)) {
               $this->resource->propertys[] = $apiKey;
-            }
-            else
-            {
+            } else {
               $apiKey->save();
             }
 
@@ -296,8 +258,7 @@ class UserEditAction extends DefaultEditAction
 
           case 'delete':
             // Delete user OAI-PMH key property if it exists
-            if (null != $apiKey)
-            {
+            if (null != $apiKey) {
               $apiKey->delete();
             }
 

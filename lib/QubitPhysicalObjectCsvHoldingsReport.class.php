@@ -53,10 +53,8 @@ class QubitPhysicalObjectCsvHoldingsReport
   public function __construct(array $options = [])
   {
     // Set options to defaults if unset and default is set
-    foreach ($this->options as $name => $default)
-    {
-      if (null !== $default)
-      {
+    foreach ($this->options as $name => $default) {
+      if (null !== $default) {
         $options[$name] = (isset($options[$name])) ? $options[$name] : $default;
       }
     }
@@ -74,21 +72,18 @@ class QubitPhysicalObjectCsvHoldingsReport
 
   public function setOptions(array $options = null)
   {
-    if (empty($options))
-    {
+    if (empty($options)) {
       return;
     }
 
-    foreach ($options as $name => $value)
-    {
+    foreach ($options as $name => $value) {
       $this->setOption($name, $value);
     }
   }
 
   public function getOption(string $name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'suppressEmpty':
         return $this->getSuppressEmpty();
 
@@ -102,8 +97,7 @@ class QubitPhysicalObjectCsvHoldingsReport
 
   public function setOption(string $name, $value)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'suppressEmpty':
         $this->setSuppressEmpty($value);
 
@@ -126,8 +120,7 @@ class QubitPhysicalObjectCsvHoldingsReport
 
   public function setSuppressEmpty($value)
   {
-    if (!is_bool($value))
-    {
+    if (!is_bool($value)) {
       $message = sfContext::getInstance()->i18n->__('Suppress empty must be set to a boolean value.');
 
       throw new UnexpectedValueException($message);
@@ -145,8 +138,7 @@ class QubitPhysicalObjectCsvHoldingsReport
   {
     $value = ('none' == strtolower($value)) ? 'none' : $value;
 
-    if (!in_array($value, $this->allowedHoldingTypes()))
-    {
+    if (!in_array($value, $this->allowedHoldingTypes())) {
       $message = sprintf(
         sfContext::getInstance()->i18n->__('Invalid holding type "%s" (must be one of: %s).'),
         $value,
@@ -191,8 +183,7 @@ class QubitPhysicalObjectCsvHoldingsReport
 
     $physObjects = QubitPdo::fetchAll($sql, [], ['fetchMode' => PDO::FETCH_COLUMN]);
 
-    foreach ($physObjects as $id)
-    {
+    foreach ($physObjects as $id) {
       $physObject = $this->ormClasses['physicalobject']::getById($id);
       $this->exportPhysicalObjectAndHoldings($writer, $physObject);
     }
@@ -215,26 +206,21 @@ class QubitPhysicalObjectCsvHoldingsReport
 
     // Add single row or multiple rows depending on whether or not physical
     // object is empty
-    if (empty($holdingsData['total']))
-    {
-      if ($this->getSuppressEmpty())
-      {
+    if (empty($holdingsData['total'])) {
+      if ($this->getSuppressEmpty()) {
         return;
       }
 
       $row = $this->addEmptyHoldingColumnsToRow($row);
       $writer->insertOne($row);
-    }
-    elseif ('none' != $this->getHoldingType())
-    {
+    } elseif ('none' != $this->getHoldingType()) {
       $this->writePhysicalObjectAndHoldings($writer, $row, $holdingsData);
     }
   }
 
   public function addEmptyHoldingColumnsToRow(array $row = [])
   {
-    while (count($row) < count(self::$headerRow))
-    {
+    while (count($row) < count(self::$headerRow)) {
       $row[] = '';
     }
 
@@ -262,12 +248,10 @@ class QubitPhysicalObjectCsvHoldingsReport
   {
     $holdingsData = ['total' => count($rows), 'types' => []];
 
-    foreach ($rows as $row)
-    {
+    foreach ($rows as $row) {
       $className = $row['class_name'];
 
-      if (empty($holdingsData['types'][$className]))
-      {
+      if (empty($holdingsData['types'][$className])) {
         $holdingsData['types'][$className] = ['total' => 0, 'holdings' => []];
       }
 
@@ -282,26 +266,21 @@ class QubitPhysicalObjectCsvHoldingsReport
   public function writePhysicalObjectAndHoldings(object $writer, array $row, array $holdingsData)
   {
     // If a specific holding type is selected remove data for other types
-    foreach ($holdingsData['types'] as $className => $typeData)
-    {
-      if (!empty($this->getHoldingType()) && $this->getHoldingType() != $className)
-      {
+    foreach ($holdingsData['types'] as $className => $typeData) {
+      if (!empty($this->getHoldingType()) && $this->getHoldingType() != $className) {
         unset($holdingsData['types'][$className]);
       }
     }
 
     // Add CSV rows for each holding
-    foreach ($holdingsData['types'] as $className => $typeData)
-    {
-      foreach ($typeData['holdings'] as $holdingId)
-      {
+    foreach ($holdingsData['types'] as $className => $typeData) {
+      foreach ($typeData['holdings'] as $holdingId) {
         $resource = $className::getById($holdingId);
 
         $holdingRow = $row;
 
         $levelOfDescription = '';
-        if (substr_count(get_class($resource), 'InformationObject') && !empty($resource->getLevelOfDescription()))
-        {
+        if (substr_count(get_class($resource), 'InformationObject') && !empty($resource->getLevelOfDescription())) {
           $levelOfDescription = $resource->getLevelOfDescription()->getName(['cultureFallback' => true]);
         }
 

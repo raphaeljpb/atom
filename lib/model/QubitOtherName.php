@@ -21,8 +21,7 @@ class QubitOtherName extends BaseOtherName
 {
   public function __toString()
   {
-    if (!$this->getName())
-    {
+    if (!$this->getName()) {
       return (string) $this->getName(['sourceCulture' => true]);
     }
 
@@ -37,8 +36,7 @@ class QubitOtherName extends BaseOtherName
    */
   public static function deleteById($id, $connection = null)
   {
-    if (null !== $actorName = parent::getById($id))
-    {
+    if (null !== $actorName = parent::getById($id)) {
       $actorName->delete($connection);
     }
   }

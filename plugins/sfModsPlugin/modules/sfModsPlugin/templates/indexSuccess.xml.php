@@ -146,9 +146,9 @@
       <subject>
         <?php if (QubitTerm::PERSON_ID == $item->object->entityTypeId) { ?>
           <name type="personal"><?php echo escape_dc(esc_specialchars($item->object)); ?></name>
-        <?php } elseif (QubitTerm::FAMILY_ID == $item->object->entityTypeId){ ?>
+        <?php } elseif (QubitTerm::FAMILY_ID == $item->object->entityTypeId) { ?>
           <name type="family"><?php echo escape_dc(esc_specialchars($item->object)); ?></name>
-        <?php } elseif (QubitTerm::CORPORATE_BODY_ID == $item->object->entityTypeId){ ?>
+        <?php } elseif (QubitTerm::CORPORATE_BODY_ID == $item->object->entityTypeId) { ?>
           <name type="corporate"><?php echo escape_dc(esc_specialchars($item->object)); ?></name>
         <?php } else { ?>
           <name><?php echo escape_dc(esc_specialchars($item->object)); ?></name>

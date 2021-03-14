@@ -65,8 +65,7 @@ class arMigration0098
     $rows = QubitPdo::fetchAll($sql, ['QubitRepository', QubitRepository::ROOT_ID]);
 
     // Add parent to all existing repositories
-    foreach ($rows as $repository)
-    {
+    foreach ($rows as $repository) {
       $sql = sprintf('UPDATE %s t1
         LEFT JOIN %s t2
         ON t1.id = t2.id
@@ -79,8 +78,7 @@ class arMigration0098
     }
 
     // Add menu nodes for repository permissions
-    if (null !== $parentNode = QubitMenu::getByName('groups'))
-    {
+    if (null !== $parentNode = QubitMenu::getByName('groups')) {
       $menu = new QubitMenu();
       $menu->parentId = $parentNode->id;
       $menu->name = 'groupRepositoryAcl';
@@ -88,14 +86,11 @@ class arMigration0098
       $menu->sourceCulture = 'en';
       $menu->label = 'Archival institution permissions';
       $menu->save();
-    }
-    else
-    {
+    } else {
       $this->logSection('upgrade-sql', 'The group permissions menu node for repository could not be added.', null, 'ERROR');
     }
 
-    if (null !== $parentNode = QubitMenu::getByName('users'))
-    {
+    if (null !== $parentNode = QubitMenu::getByName('users')) {
       $menu = new QubitMenu();
       $menu->parentId = $parentNode->id;
       $menu->name = 'userRepositoryAcl';
@@ -103,9 +98,7 @@ class arMigration0098
       $menu->sourceCulture = 'en';
       $menu->label = 'Archival institution permissions';
       $menu->save();
-    }
-    else
-    {
+    } else {
       $this->logSection('upgrade-sql', 'The user permissions menu node for repository could not be added.', null, 'ERROR');
     }
 

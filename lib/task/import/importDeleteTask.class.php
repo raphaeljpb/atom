@@ -49,13 +49,11 @@ EOF;
 
     parent::execute($arguments, $options);
 
-    if ($options['logfile'])
-    {
+    if ($options['logfile']) {
       $this->registerFileLogger($options['logfile']);
     }
 
-    if ($options['verbose'])
-    {
+    if ($options['verbose']) {
       $this->verbose = true;
     }
 
@@ -65,8 +63,7 @@ EOF;
 
     $this->timer = new QubitTimer();
 
-    foreach ($this->objectIds as $id)
-    {
+    foreach ($this->objectIds as $id) {
       $this->deleteObject($id);
 
       $this->deleteKeymapRow($arguments['name'], $id);
@@ -85,19 +82,16 @@ EOF;
 
   public function logMsg($message, $priority = sfLogger::INFO, $timer = true)
   {
-    if (sfLogger::DEBUG == $priority)
-    {
+    if (sfLogger::DEBUG == $priority) {
       // If this is a debugging message, don't show it unless running in
       // "verbose" mode
-      if (!$this->verbose)
-      {
+      if (!$this->verbose) {
         return;
       }
     }
 
     // No timing output
-    if (!$timer || null == $this->timer)
-    {
+    if (!$timer || null == $this->timer) {
       parent::log($message);
 
       return;
@@ -191,8 +185,7 @@ EOL;
       $sql, [':name' => $name], ['fetchMode' => PDO::FETCH_COLUMN]
     );
 
-    if (count($results) < 1)
-    {
+    if (count($results) < 1) {
       throw new sfException(
         sprintf(
           'No data for import "%s" found in the keymap table', $name
@@ -219,8 +212,7 @@ EOL;
    */
   private function confirmDeletion($isForced)
   {
-    if ($isForced)
-    {
+    if ($isForced) {
       return;
     }
 
@@ -238,8 +230,7 @@ EOL;
       false
     );
 
-    if (!$confirmed)
-    {
+    if (!$confirmed) {
       $this->logMsg(sprintf('Task aborted!'));
 
       exit(0);
@@ -250,8 +241,7 @@ EOL;
   {
     $obj = QubitObject::getById($objectId);
 
-    if (null == $obj)
-    {
+    if (null == $obj) {
       throw sfException("Error: couldn\\'t get object id: {$objectId}");
     }
 

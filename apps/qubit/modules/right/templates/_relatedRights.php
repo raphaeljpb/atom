@@ -10,7 +10,7 @@
 
   <?php } ?>
 
-<?php } elseif ('QubitAccession' === $className){ ?>
+<?php } elseif ('QubitAccession' === $className) { ?>
 
   <?php foreach ($ancestor->getRights() as $item) { ?>
 

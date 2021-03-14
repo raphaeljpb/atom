@@ -31,8 +31,7 @@ class arMigration0137
 
   public function up($configuration)
   {
-    if (null === QubitMenu::getByName('clipboard'))
-    {
+    if (null === QubitMenu::getByName('clipboard')) {
       $clipboardMenu = new QubitMenu();
       $clipboardMenu->parentId = QubitMenu::ROOT_ID;
       $clipboardMenu->name = 'clipboard';
@@ -40,8 +39,7 @@ class arMigration0137
       $clipboardMenu->culture = 'en';
       $clipboardMenu->save();
 
-      if (null === QubitMenu::getByName('clearClipboard'))
-      {
+      if (null === QubitMenu::getByName('clearClipboard')) {
         $menu = new QubitMenu();
         $menu->parentId = $clipboardMenu->id;
         $menu->name = 'clearClipboard';
@@ -51,8 +49,7 @@ class arMigration0137
         $menu->save();
       }
 
-      if (null === QubitMenu::getByName('goToClipboard'))
-      {
+      if (null === QubitMenu::getByName('goToClipboard')) {
         $menu = new QubitMenu();
         $menu->parentId = $clipboardMenu->id;
         $menu->name = 'goToClipboard';

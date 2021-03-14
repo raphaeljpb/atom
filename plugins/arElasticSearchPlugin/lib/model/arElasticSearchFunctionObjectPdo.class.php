@@ -40,13 +40,11 @@ class arElasticSearchFunctionObjectPdo
    */
   public function __construct($id, $options = [])
   {
-    if (isset($options['conn']))
-    {
+    if (isset($options['conn'])) {
       self::$conn = $options['conn'];
     }
 
-    if (!isset(self::$conn))
-    {
+    if (!isset(self::$conn)) {
       self::$conn = Propel::getConnection();
     }
 
@@ -60,8 +58,7 @@ class arElasticSearchFunctionObjectPdo
 
   public function __get($name)
   {
-    if (isset($this->data[$name]))
-    {
+    if (isset($this->data[$name])) {
       return $this->data[$name];
     }
   }
@@ -82,14 +79,12 @@ class arElasticSearchFunctionObjectPdo
     $serialized['descriptionIdentifier'] = $this->description_identifier;
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item)
-    {
+    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item) {
       $serialized['otherNames'][] = arElasticSearchOtherName::serialize($item);
     }
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item)
-    {
+    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item) {
       $serialized['parallelNames'][] = arElasticSearchOtherName::serialize($item);
     }
 
@@ -104,8 +99,7 @@ class arElasticSearchFunctionObjectPdo
 
   protected function loadData($id)
   {
-    if (!isset(self::$statements['function']))
-    {
+    if (!isset(self::$statements['function'])) {
       $sql = 'SELECT
                 func.*,
                 slug.slug,
@@ -127,8 +121,7 @@ class arElasticSearchFunctionObjectPdo
     // Get first result
     $this->data = self::$statements['function']->fetch(PDO::FETCH_ASSOC);
 
-    if (false === $this->data)
-    {
+    if (false === $this->data) {
       throw new sfException("Couldn't find function (id: {$id})");
     }
 

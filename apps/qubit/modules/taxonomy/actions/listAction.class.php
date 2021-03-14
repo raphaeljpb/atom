@@ -21,8 +21,7 @@ class TaxonomyListAction extends sfAction
 {
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 

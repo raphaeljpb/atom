@@ -29,21 +29,18 @@ class InformationObjectListAction extends sfAction
    */
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
     $this->resource = QubitInformationObject::getById(QubitInformationObject::ROOT_ID);
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
     }
 
     $query = QubitSearch::getInstance()->addTerm($this->resource->id, 'parentId');
 
-    if (isset($request->query))
-    {
+    if (isset($request->query)) {
       $query = $request->query;
     }
 
@@ -56,8 +53,7 @@ class InformationObjectListAction extends sfAction
     $this->pager->setPage($request->page);
 
     $ids = [];
-    foreach ($this->pager->getResults() as $hit)
-    {
+    foreach ($this->pager->getResults() as $hit) {
       $ids[] = $hit->getDocument()->id;
     }
 

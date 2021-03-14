@@ -43,22 +43,18 @@ class QubitEvent extends BaseEvent
 
     parent::save($connection);
 
-    if ($this->indexOnSave)
-    {
+    if ($this->indexOnSave) {
       // Update IO descendants in creation events
       $options = [];
-      if (QubitTerm::CREATION_ID == $this->typeId)
-      {
+      if (QubitTerm::CREATION_ID == $this->typeId) {
         $options['updateDescendants'] = true;
       }
 
-      if ($this->objectId != $cleanObjectId && null !== QubitObject::getById($cleanObjectId))
-      {
+      if ($this->objectId != $cleanObjectId && null !== QubitObject::getById($cleanObjectId)) {
         QubitSearch::getInstance()->update(QubitObject::getById($cleanObjectId), $options);
       }
 
-      if (isset($this->object))
-      {
+      if (isset($this->object)) {
         QubitSearch::getInstance()->update($this->object, $options);
       }
     }
@@ -75,12 +71,10 @@ class QubitEvent extends BaseEvent
     parent::delete($connection);
 
     // Update object
-    if (isset($object) && $this->indexOnSave)
-    {
+    if (isset($object) && $this->indexOnSave) {
       // Update IO descendants in creation events
       $options = [];
-      if (QubitTerm::CREATION_ID == $this->typeId)
-      {
+      if (QubitTerm::CREATION_ID == $this->typeId) {
         $options['updateDescendants'] = true;
       }
 
@@ -96,8 +90,7 @@ class QubitEvent extends BaseEvent
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::PLACE_ID);
     $relation = QubitObjectTermRelation::get($criteria);
 
-    if (count($relation) > 0)
-    {
+    if (count($relation) > 0) {
       return $relation[0]->getTerm();
     }
 

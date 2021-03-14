@@ -59,14 +59,12 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
   public function recursivelyAddInformationObjects($parentId, $totalRows, $options = [])
   {
     // Loop through children and add to search index
-    foreach (self::getChildren($parentId) as $item)
-    {
+    foreach (self::getChildren($parentId) as $item) {
       $ancestors = $inheritedCreators = [];
       $repository = null;
       ++self::$counter;
 
-      try
-      {
+      try {
         $node = new arElasticSearchInformationObjectPdo($item->id, $options);
         $data = $node->serialize();
 
@@ -81,15 +79,12 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
         ]]);
         $repository = $node->getRepository();
         $inheritedCreators = array_merge($node->inheritedCreators, $node->creators);
-      }
-      catch (sfException $e)
-      {
+      } catch (sfException $e) {
         $this->errors[] = $e->getMessage();
       }
 
       // Descend hierarchy
-      if (1 < ($item->rgt - $item->lft))
-      {
+      if (1 < ($item->rgt - $item->lft)) {
         // Pass ancestors, repository and creators down to descendants
         $this->recursivelyAddInformationObjects($item->id, $totalRows, [
           'ancestors' => $ancestors,
@@ -107,8 +102,7 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
     QubitSearch::getInstance()->addDocument($node->serialize(), 'QubitInformationObject');
 
     // Update descendants if requested and they exists
-    if ($options['updateDescendants'] && $object->rgt - $object->lft > 1)
-    {
+    if ($options['updateDescendants'] && $object->rgt - $object->lft > 1) {
       self::updateDescendants($object);
     }
   }
@@ -118,10 +112,8 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
     // Update synchronously in CLI tasks and jobs
     $context = sfContext::getInstance();
     $env = $context->getConfiguration()->getEnvironment();
-    if (in_array($env, ['cli', 'worker']))
-    {
-      foreach (self::getChildren($object->id) as $child)
-      {
+    if (in_array($env, ['cli', 'worker'])) {
+      foreach (self::getChildren($object->id) as $child) {
         // TODO: Use partial updates to only get and add
         // the fields that are inherited from the ancestors.
         // Be aware that transient descendants are entirely
@@ -149,13 +141,11 @@ class arElasticSearchInformationObject extends arElasticSearchModelBase
 
   public static function getChildren($parentId)
   {
-    if (!isset(self::$conn))
-    {
+    if (!isset(self::$conn)) {
       self::$conn = Propel::getConnection();
     }
 
-    if (!isset(self::$statement))
-    {
+    if (!isset(self::$statement)) {
       $sql = 'SELECT
                   io.id,
                   io.lft,

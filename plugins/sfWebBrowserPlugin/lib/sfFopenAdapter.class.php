@@ -61,8 +61,7 @@ class sfFopenAdapter
     // -- browser instance must be accessible from handleRuntimeError()
     $this->browser = $browser;
     set_error_handler([$this, 'handleRuntimeError'], E_WARNING);
-    if ($handle = fopen($uri, 'r', false, $context))
-    {
+    if ($handle = fopen($uri, 'r', false, $context)) {
       $response_headers = stream_get_meta_data($handle);
       $browser->setResponseCode(array_shift($response_headers['wrapper_data']));
       $browser->setResponseHeaders($response_headers['wrapper_data']);
@@ -72,8 +71,7 @@ class sfFopenAdapter
 
     restore_error_handler();
 
-    if (true == $this->adapterErrorMessage)
-    {
+    if (true == $this->adapterErrorMessage) {
       $msg = $this->adapterErrorMessage;
       $this->adapterErrorMessage = null;
 
@@ -99,35 +97,32 @@ class sfFopenAdapter
    */
   public function handleRuntimeError($errno, $errstr, $errfile = null, $errline = null, $errcontext = [])
   {
-     $error_types = [
-       E_ERROR => 'Error',
-       E_WARNING => 'Warning',
-       E_PARSE => 'Parsing Error',
-       E_NOTICE => 'Notice',
-       E_CORE_ERROR => 'Core Error',
-       E_CORE_WARNING => 'Core Warning',
-       E_COMPILE_ERROR => 'Compile Error',
-       E_COMPILE_WARNING => 'Compile Warning',
-       E_USER_ERROR => 'User Error',
-       E_USER_WARNING => 'User Warning',
-       E_USER_NOTICE => 'User Notice',
-       E_STRICT => 'Runtime Notice',
-       E_RECOVERABLE_ERROR => 'Catchable Fatal Error',
-     ];
+    $error_types = [
+      E_ERROR => 'Error',
+      E_WARNING => 'Warning',
+      E_PARSE => 'Parsing Error',
+      E_NOTICE => 'Notice',
+      E_CORE_ERROR => 'Core Error',
+      E_CORE_WARNING => 'Core Warning',
+      E_COMPILE_ERROR => 'Compile Error',
+      E_COMPILE_WARNING => 'Compile Warning',
+      E_USER_ERROR => 'User Error',
+      E_USER_WARNING => 'User Warning',
+      E_USER_NOTICE => 'User Notice',
+      E_STRICT => 'Runtime Notice',
+      E_RECOVERABLE_ERROR => 'Catchable Fatal Error',
+    ];
 
     $msg = sprintf('%s : "%s" occured in %s on line %d',
                    $error_types[$errno], $errstr, $errfile, $errline);
 
     $matches = [];
-    if (preg_match('/HTTP\/\d\.\d (\d{3}) (.*)$/', $errstr, $matches))
-    {
+    if (preg_match('/HTTP\/\d\.\d (\d{3}) (.*)$/', $errstr, $matches)) {
       $this->browser->setResponseCode($matches[1]);
       $this->browser->setResponseMessage($matches[2]);
       $body = sprintf('The %s adapter cannot handle error responses body. Try using another adapter.', __CLASS__);
       $this->browser->setResponseText($body);
-    }
-    else
-    {
+    } else {
       $this->adapterErrorMessage = $msg;
     }
   }

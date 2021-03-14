@@ -64,14 +64,11 @@ class ProjectConfiguration extends sfProjectConfiguration
     $rootDir = sfConfig::get('sf_root_dir');
 
     // Use APC when available to cache the location of namespaced classes
-    if (extension_loaded('apcu') || extension_loaded('apc'))
-    {
+    if (extension_loaded('apcu') || extension_loaded('apc')) {
       // Use unique prefix to avoid cache clashing
       $prefix = sprintf('atom:%s:', md5($rootDir));
       $loader = new QubitApcUniversalClassLoader($prefix);
-    }
-    else
-    {
+    } else {
       $loader = new UniversalClassLoader();
     }
 

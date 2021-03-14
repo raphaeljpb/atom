@@ -23,20 +23,17 @@ class JobsReportAction extends DefaultBrowseAction
   {
     parent::execute($request);
 
-    if (!$this->context->user || !$this->context->user->isAuthenticated())
-    {
+    if (!$this->context->user || !$this->context->user->isAuthenticated()) {
       QubitAcl::forwardUnauthorized();
     }
 
-    if (!isset($request->id))
-    {
+    if (!isset($request->id)) {
       $this->forward404();
     }
 
     $this->job = QubitJob::getById($request->id);
 
-    if (!$this->job)
-    {
+    if (!$this->job) {
       $this->forward404();
     }
   }

@@ -34,12 +34,9 @@ class QubitSearchPager extends sfPager
   {
     $this->setNbResults($this->resultSet->getTotalHits());
 
-    if (0 == $this->getPage() || 0 == $this->getMaxPerPage())
-    {
+    if (0 == $this->getPage() || 0 == $this->getMaxPerPage()) {
       $this->setLastPage(0);
-    }
-    else
-    {
+    } else {
       $this->setLastPage(ceil($this->getNbResults() / $this->getMaxPerPage()));
     }
   }

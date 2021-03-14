@@ -45,8 +45,7 @@ class arMigration0153
       QubitTerm::JOB_STATUS_ERROR_ID => 'Error',
     ];
 
-    foreach ($terms as $id => $name)
-    {
+    foreach ($terms as $id => $name) {
       QubitMigrate::bumpTerm($id, $configuration);
       $term = new QubitTerm();
       $term->id = $id;

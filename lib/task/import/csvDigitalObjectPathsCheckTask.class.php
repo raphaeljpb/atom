@@ -28,13 +28,11 @@ class csvDigitalObjectPathsCheckTask extends arBaseTask
   {
     parent::execute($arguments, $options);
 
-    if (!is_dir($arguments['path-to-images']))
-    {
+    if (!is_dir($arguments['path-to-images'])) {
       throw new sfException("Images directory doesn't exist.");
     }
 
-    if (!file_exists($arguments['path-to-csv-file']))
-    {
+    if (!file_exists($arguments['path-to-csv-file'])) {
       throw new sfException("CSV file doesn't exist.");
     }
 
@@ -91,10 +89,8 @@ EOF;
     $pathToImages = realpath($pathToImages);
     $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($pathToImages));
 
-    foreach ($objects as $filePath => $object)
-    {
-      if (!is_dir($filePath))
-      {
+    foreach ($objects as $filePath => $object) {
+      if (!is_dir($filePath)) {
         // Remove absolute path leading to image directory
         $relativeFilePath = substr($filePath, strlen($pathToImages) + 1, strlen($filePath));
         array_push($imageFiles, $relativeFilePath);
@@ -112,13 +108,11 @@ EOF;
 
     // Determine column index number using specified name
     $header = fgetcsv($fh, 60000);
-    if (false === $imageColumnIndex = array_search($columnName, $header))
-    {
+    if (false === $imageColumnIndex = array_search($columnName, $header)) {
       throw new sfException('Column name not found in header.');
     }
 
-    while ($row = fgetcsv($fh, 60000))
-    {
+    while ($row = fgetcsv($fh, 60000)) {
       array_push($values, $row[$imageColumnIndex]);
     }
 
@@ -129,8 +123,7 @@ EOF;
   {
     $imageUses = [];
 
-    foreach ($columnValues as $columnValue)
-    {
+    foreach ($columnValues as $columnValue) {
       $imageUses[$columnValue] = (!isset($imageUses[$columnValue])) ? 1 : $imageUses[$columnValue] + 1;
     }
 
@@ -141,10 +134,8 @@ EOF;
   {
     $usedMoreThanOnce = [];
 
-    foreach ($imageUses as $image => $uses)
-    {
-      if ($uses > 1)
-      {
+    foreach ($imageUses as $image => $uses) {
+      if ($uses > 1) {
         array_push($usedMoreThanOnce, $image);
       }
     }
@@ -156,10 +147,8 @@ EOF;
   {
     $unusedFiles = [];
 
-    foreach ($imageFiles as $imageFile)
-    {
-      if (!isset($imageUses[$imageFile]))
-      {
+    foreach ($imageFiles as $imageFile) {
+      if (!isset($imageUses[$imageFile])) {
         array_push($unusedFiles, $imageFile);
       }
     }
@@ -171,10 +160,8 @@ EOF;
   {
     $missingFiles = [];
 
-    foreach ($imageUses as $image => $uses)
-    {
-      if (!file_exists($pathToImages.'/'.$image))
-      {
+    foreach ($imageUses as $image => $uses) {
+      if (!file_exists($pathToImages.'/'.$image)) {
         array_push($missingFiles, $image);
       }
     }
@@ -184,12 +171,10 @@ EOF;
 
   private function printListOfItemsIfNotEmpty($list, $listHeader)
   {
-    if (count($list))
-    {
+    if (count($list)) {
       echo $listHeader."\n";
 
-      foreach ($list as $item)
-      {
+      foreach ($list as $item) {
         echo '* '.$item."\n";
       }
 

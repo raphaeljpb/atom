@@ -36,16 +36,14 @@ class arRepositoryThemeCropValidatedFile extends sfValidatedFile
 
     // Check if mogrify is available in the system
     exec('which mogrify', $output, $status);
-    if (0 < $status)
-    {
+    if (0 < $status) {
       return $file;
     }
 
     // Figure out necessary dimensions from the filename
     $pathInfo = pathinfo($this->savedName);
 
-    switch ($pathInfo['filename'])
-    {
+    switch ($pathInfo['filename']) {
       case 'logo':
         $width = self::LOGO_MAX_WIDTH;
         $height = self::LOGO_MAX_HEIGHT;
@@ -60,8 +58,7 @@ class arRepositoryThemeCropValidatedFile extends sfValidatedFile
     }
 
     // Stop execution if dimensions were not set
-    if (!isset($width, $height))
-    {
+    if (!isset($width, $height)) {
       return $file;
     }
 

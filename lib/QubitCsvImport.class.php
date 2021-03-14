@@ -42,29 +42,24 @@ class QubitCsvImport
     $commandLimit = '';
     $exitCode = 0;
 
-    if (null === $csvOrigFileName)
-    {
+    if (null === $csvOrigFileName) {
       // WebUI passes a temp file name in $csvFile. e.g. /tmp/phpLjBIBv
       // If $csvOrigFileName is null, save $csvFile in keymap record
       $csvOrigFileName = basename($csvFile);
-    }
-    else
-    {
+    } else {
       // Use the orig file name when creating keymap record.
       $csvOrigFileName = basename($csvOrigFileName);
     }
 
     // Perform the transformation, if requested and correctly configured.
-    if ($this->doCsvTransform)
-    {
+    if ($this->doCsvTransform) {
       $transformedFile = $this->doTransform($csvFile);
     }
 
     // Find the proper task
     $sourceNameAllowed = true;
 
-    switch ($type)
-    {
+    switch ($type) {
       case 'accession':
         $taskClassName = 'csv:accession-import';
 
@@ -104,10 +99,8 @@ class QubitCsvImport
     // Figure out whether user option should be added to command
     $commandUser = ('csv:import' == $taskClassName) ? sprintf('--user-id="%s"', sfContext::getInstance()->getUser()->getUserId()) : '';
 
-    if ('' !== $this->updateType)
-    {
-      switch ($this->updateType)
-      {
+    if ('' !== $this->updateType) {
+      switch ($this->updateType) {
         case 'import-as-new':
           $commandSkipMatched = ($this->skipMatched) ? '--skip-matched' : '';
 
@@ -129,8 +122,7 @@ class QubitCsvImport
     }
 
     // Build command string.
-    if (isset($this->parent))
-    {
+    if (isset($this->parent)) {
       // Example: php symfony csv:import --default-parent-slug="$sourceName" /tmp/foobar
       $command = sprintf('php %s %s %s %s %s %s %s %s --quiet --source-name=%s --default-parent-slug=%s %s',
         escapeshellarg(sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'symfony'),
@@ -144,9 +136,7 @@ class QubitCsvImport
         escapeshellarg($csvOrigFileName),
         escapeshellarg($this->parent->slug),
         escapeshellarg($transformedFile ? $transformedFile : $csvFile));
-    }
-    else
-    {
+    } else {
       // Example: php symfony csv:import /tmp/foobar
       $commandTemplate = 'php %s %s %s %s %s %s %s --quiet %s ';
       $commandTemplate .= $sourceNameAllowed ? sprintf('--source-name=%s ', escapeshellarg($csvOrigFileName)) : '';
@@ -174,8 +164,7 @@ class QubitCsvImport
     exec($command, $output, $exitCode);
 
     // Throw exception if exit code is greater than zero.
-    if (0 < $exitCode)
-    {
+    if (0 < $exitCode) {
       $output = implode(array_filter($output), '; ');
 
       throw new sfException($output);
@@ -196,13 +185,11 @@ class QubitCsvImport
   public function doTransform($csvFile)
   {
     // ensure csv_transform_script_name is configured.
-    if (!sfConfig::get('app_csv_transform_script_name'))
-    {
+    if (!sfConfig::get('app_csv_transform_script_name')) {
       throw new sfException($this->i18n->__('Transform failed. Script not found. Please correct AtoM configuration (csv_transform_script_name)'));
     }
     // ensure we can find the uploaded source csv file.
-    if (!file_exists($csvFile))
-    {
+    if (!file_exists($csvFile)) {
       throw new sfException($this->i18n->__('Transform failed. Unable to locate file: %1', ['%1' => $csvFile]));
     }
 
@@ -222,10 +209,8 @@ class QubitCsvImport
 
     exec($command, $output, $exitCode);
 
-    if (0 < $exitCode)
-    {
-      if (!file_exists($logFileName))
-      {
+    if (0 < $exitCode) {
+      if (!file_exists($logFileName)) {
         // Can't find output file.
         throw new sfException($this->i18n->__('Transform failed: %1; Outputfile not found: %2', ['%1' => $exitCode, '%2' => $logFileName]));
       }
@@ -235,8 +220,7 @@ class QubitCsvImport
       throw new sfException($this->i18n->__('Transform failed: %1; %2', ['%1' => $exitCode, '%2' => htmlspecialchars(implode('; ', $outputLines))]));
     }
 
-    if (!file_exists($outputFileName))
-    {
+    if (!file_exists($outputFileName)) {
       throw new sfException($this->i18n->__('Transform failed: Unable to find transformed file: %1', ['%1' => $outputFileName]));
     }
 

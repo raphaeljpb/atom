@@ -28,12 +28,9 @@ class SearchErrorAction extends sfAction
     // Make sure that $this->reason does not disclose internal details as it
     // is going to be shown to public users.
 
-    if ($exception instanceof Elastica\Exception\ResponseException)
-    {
+    if ($exception instanceof Elastica\Exception\ResponseException) {
       $this->error = $exception->getResponse()->getError();
-    }
-    else
-    {
+    } else {
       $this->error = $exception->getMessage();
     }
 
@@ -44,8 +41,7 @@ class SearchErrorAction extends sfAction
     $this->logMessage($message, 'err');
 
     // $this->error is going to be shown in the template only in debug mode
-    if (!$context->getConfiguration()->isDebug())
-    {
+    if (!$context->getConfiguration()->isDebug()) {
       unset($this->error);
     }
   }

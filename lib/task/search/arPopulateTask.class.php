@@ -28,8 +28,7 @@ class arSearchPopulateTask extends sfBaseTask
     sfConfig::add(QubitSetting::getSettingsArray());
 
     // If show-types flag set, show types available to index
-    if (!empty($options['show-types']))
-    {
+    if (!empty($options['show-types'])) {
       $this->log(sprintf('Available document types that can be excluded: %s', implode(', ', $this->availableDocumentTypes())));
       $this->ask('Press the Enter key to continue indexing or CTRL-C to abort...');
     }
@@ -37,13 +36,10 @@ class arSearchPopulateTask extends sfBaseTask
     new sfDatabaseManager($this->configuration);
 
     // Index by slug, if specified, or all indexable resources except those with an excluded type
-    if ($options['slug'])
-    {
+    if ($options['slug']) {
       $logMessage = (false !== $this->attemptIndexBySlug($options)) ? 'Slug indexed.' : 'Slug not found.';
       $this->log($logMessage);
-    }
-    else
-    {
+    } else {
       $populateOptions = [];
       $populateOptions['excludeTypes'] = (!empty($options['exclude-types'])) ? explode(',', strtolower($options['exclude-types'])) : null;
       $populateOptions['update'] = $options['update'];
@@ -90,19 +86,15 @@ EOF;
   private function attemptIndexBySlug($options)
   {
     // Abort if resource doesn't exist for the provided slug
-    if (null == $resource = QubitObject::getBySlug($options['slug']))
-    {
+    if (null == $resource = QubitObject::getBySlug($options['slug'])) {
       return false;
     }
 
     // For information objects, allow optional skipping of descendants
-    if ($resource instanceof QubitInformationObject)
-    {
+    if ($resource instanceof QubitInformationObject) {
       $options = ['updateDescendants' => !$options['ignore-descendants']];
       QubitSearch::getInstance()->update($resource, $options);
-    }
-    else
-    {
+    } else {
       QubitSearch::getInstance()->update($resource);
     }
   }

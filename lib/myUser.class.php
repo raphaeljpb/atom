@@ -29,8 +29,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
    */
   public function getRoleId()
   {
-    if ($this->isAuthenticated())
-    {
+    if ($this->isAuthenticated()) {
       return $this->getUserID();
     }
 
@@ -43,36 +42,29 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
     parent::initialize($dispatcher, $storage, $options);
 
     // On timeout, remove *all* user credentials
-    if ($this->isTimedOut())
-    {
+    if ($this->isTimedOut()) {
       $this->signOut();
 
       return;
     }
 
-    if ($this->isAuthenticated())
-    {
-      try
-      {
+    if ($this->isAuthenticated()) {
+      try {
         $this->user = QubitUser::getById($this->getUserID());
-      }
-      catch (Exception $e)
-      {
+      } catch (Exception $e) {
         $this->user = null;
       }
 
       // If this user's account has been *deleted* or this user session is from a
       // different install of qubit on the same server (cross-site), then signout
       // user
-      if (null === $this->user || !$this->user->active)
-      {
+      if (null === $this->user || !$this->user->active) {
         $this->signOut();
       }
     }
 
     // Allow reverse proxies to pass a header to change culture
-    if (!empty($_SERVER['HTTP_X_ATOM_CULTURE']))
-    {
+    if (!empty($_SERVER['HTTP_X_ATOM_CULTURE'])) {
       $this->setCulture($_SERVER['HTTP_X_ATOM_CULTURE']);
     }
   }
@@ -82,8 +74,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
     $this->setAuthenticated(true);
     $this->user = $user;
 
-    foreach ($user->getAclGroups() as $group)
-    {
+    foreach ($user->getAclGroups() as $group) {
       $this->addCredential($group->getName(['culture' => 'en']));
     }
 
@@ -138,16 +129,14 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
   {
     $authenticated = false;
     // anonymous is not a real user
-    if ('anonymous' == $username)
-    {
+    if ('anonymous' == $username) {
       return false;
     }
 
     $user = QubitUser::checkCredentials($username, $password, $error);
 
     // user account exists?
-    if (null !== $user)
-    {
+    if (null !== $user) {
       $authenticated = true;
       $this->signIn($user);
     }
@@ -162,8 +151,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
 
   public function getAclGroups()
   {
-    if (!$this->isAuthenticated())
-    {
+    if (!$this->isAuthenticated()) {
       return [QubitAclGroup::getById(QubitAclGroup::ANONYMOUS_ID)];
     }
 
@@ -174,19 +162,14 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
   {
     $hasGroup = false;
 
-    if ($this->isAuthenticated())
-    {
+    if ($this->isAuthenticated()) {
       $hasGroup = $this->user->hasGroup($checkGroups);
-    }
-    else
-    {
-      if (!is_array($checkGroups))
-      {
+    } else {
+      if (!is_array($checkGroups)) {
         $checkGroups = [$checkGroups];
       }
 
-      if (in_array(QubitAclGroup::ANONYMOUS_ID, $checkGroups))
-      {
+      if (in_array(QubitAclGroup::ANONYMOUS_ID, $checkGroups)) {
         $hasGroup = true;
       }
     }
@@ -196,14 +179,11 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
 
   public function listGroups()
   {
-    if ($this->isAuthenticated())
-    {
+    if ($this->isAuthenticated()) {
       $groups = [QubitAclGroup::getById(QubitAclGroup::AUTHENTICATED_ID)];
 
-      if (null !== $this->user->aclUserGroups)
-      {
-        foreach ($this->user->aclUserGroups as $aclUserGroup)
-        {
+      if (null !== $this->user->aclUserGroups) {
+        foreach ($this->user->aclUserGroups as $aclUserGroup) {
           $groups[] = QubitAclGroup::getById($aclUserGroup->groupId);
         }
       }
@@ -233,8 +213,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
   {
     // Set security property to module's security configuration
     $securityFilePath = 'modules/'.$module.'/config/security.yml';
-    if ($file = sfContext::getInstance()->getConfigCache()->checkConfig($securityFilePath, true))
-    {
+    if ($file = sfContext::getInstance()->getConfigCache()->checkConfig($securityFilePath, true)) {
       require $file;
     }
 
@@ -262,14 +241,12 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
     $securitySetting = strtolower($securitySetting);
 
     // If a property's specifically set for the action, return it
-    if (isset($this->security[$action][$securitySetting]))
-    {
+    if (isset($this->security[$action][$securitySetting])) {
       return $this->security[$action][$securitySetting];
     }
 
     // If a property's set for all actions that don't override it, return it
-    if (isset($this->security['all'][$securitySetting]))
-    {
+    if (isset($this->security['all'][$securitySetting])) {
       return $this->security['all'][$securitySetting];
     }
 
@@ -290,8 +267,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
 
   public function isAuthenticated()
   {
-    if (sfConfig::get('app_read_only', false))
-    {
+    if (sfConfig::get('app_read_only', false)) {
       return false;
     }
 

@@ -28,14 +28,12 @@ class ApiInformationObjectsTreeAction extends QubitApiAction
 
     $inforationObjects = QubitInformationObject::get($criteria);
 
-    foreach ($inforationObjects as $io)
-    {
+    foreach ($inforationObjects as $io) {
       $item = $this->informationObjectToArray($io);
 
       $children = $this->getChildren($io->id);
 
-      if (count($children))
-      {
+      if (count($children)) {
         $item['children'] = $children;
       }
 
@@ -59,8 +57,7 @@ class ApiInformationObjectsTreeAction extends QubitApiAction
 
     $children = $this->getChildren($io->id);
 
-    if (count($children))
-    {
+    if (count($children)) {
       $result['children'] = $children;
     }
 
@@ -75,8 +72,7 @@ class ApiInformationObjectsTreeAction extends QubitApiAction
       'slug' => $io->slug,
     ];
 
-    if (null !== $io->getLevelOfDescription())
-    {
+    if (null !== $io->getLevelOfDescription()) {
       $ioData['level'] = $io->getLevelOfDescription()->getName(['culture' => 'en']);
     }
 

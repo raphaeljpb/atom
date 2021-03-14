@@ -37,8 +37,7 @@ class sfModsConvertor extends QubitSaxParser
   public function importDigitalObjects($digitalObjects)
   {
     // Create digital objects
-    foreach ($digitalObjects as $digitalObject)
-    {
+    foreach ($digitalObjects as $digitalObject) {
       // Import digital object
       $do = new QubitDigitalObject();
       $do->informationObjectId = $this->resource->id;
@@ -65,8 +64,7 @@ class sfModsConvertor extends QubitSaxParser
   protected function modsTag()
   {
     // Languages
-    if (count($this->languages))
-    {
+    if (count($this->languages)) {
       $this->resource->addProperty('language', serialize($this->languages));
     }
 
@@ -106,8 +104,7 @@ class sfModsConvertor extends QubitSaxParser
   // </title>
   protected function titleTag()
   {
-    if ($this->pathIncludes('mods/titleInfo'))
-    {
+    if ($this->pathIncludes('mods/titleInfo')) {
       $this->resource->title = $this->data();
     }
   }
@@ -115,8 +112,7 @@ class sfModsConvertor extends QubitSaxParser
   // </identifier type="local | uri | pid">
   protected function identifierTag()
   {
-    switch($this->attr('type'))
-    {
+    switch ($this->attr('type')) {
       case 'local':
         $this->resource->identifier = $this->data();
 
@@ -157,10 +153,11 @@ class sfModsConvertor extends QubitSaxParser
   // </note type="originalLocation | otherFormats | numbering | language | gmd">
   protected function noteTag()
   {
-    if ('mods' != $this->path()) return;
+    if ('mods' != $this->path()) {
+      return;
+    }
 
-    switch ($this->attr('type'))
-    {
+    switch ($this->attr('type')) {
       case 'originalLocation':
         $this->resource->locationOfOriginals = $this->data();
 
@@ -211,8 +208,7 @@ class sfModsConvertor extends QubitSaxParser
   // </accessCondition>
   protected function accessConditionTag()
   {
-    switch($this->attr('type'))
-    {
+    switch ($this->attr('type')) {
       case 'restriction on access':
         $this->resource->accessConditions = $this->data();
 
@@ -318,15 +314,13 @@ class sfModsConvertor extends QubitSaxParser
   // <relatedItem type="host">
   protected function relatedItemTag()
   {
-    if ('host' == $this->attr('type'))
-    {
+    if ('host' == $this->attr('type')) {
       // Lookup parent using identifier
       $criteria = new Criteria();
       $criteria->add(QubitInformationObject::IDENTIFIER, $this->attr('ID'));
       $resource = QubitInformationObject::getOne($criteria);
 
-      if (null !== $resource)
-      {
+      if (null !== $resource) {
         $this->resource->parentId = $resource->id;
       }
     }
@@ -349,12 +343,9 @@ class sfModsConvertor extends QubitSaxParser
     // Add temp file to digital object import queue
     $pathParts = pathinfo($this->data());
 
-    if (0 === filesize($tempFile))
-    {
+    if (0 === filesize($tempFile)) {
       sfContext::getInstance()->getLogger()->info('Digital object file is empty.');
-    }
-    else
-    {
+    } else {
       $this->digitalObjects[] = [
         'filename' => $pathParts['basename'],
         'tempFile' => $tempFile,
@@ -364,18 +355,15 @@ class sfModsConvertor extends QubitSaxParser
 
   protected function arrayPushIfValueNotEmpty(&$array, $value)
   {
-    if (0 < strlen(trim($value)))
-    {
+    if (0 < strlen(trim($value))) {
       array_push($array, $value);
     }
   }
 
   protected function importNotes($notes)
   {
-    foreach ($notes as $noteSpec)
-    {
-      if (!empty($noteSpec['content']))
-      {
+    foreach ($notes as $noteSpec) {
+      if (!empty($noteSpec['content'])) {
         $note = new QubitNote();
         $note->objectId = $this->resource->id;
         $note->typeId = $noteSpec['typeId'];
@@ -399,8 +387,7 @@ class sfModsConvertor extends QubitSaxParser
 
   protected function setOriginDateProperties()
   {
-    switch ($this->attr('point'))
-    {
+    switch ($this->attr('point')) {
       case 'start':
         $this->originDateStart = $this->data();
 
@@ -420,8 +407,7 @@ class sfModsConvertor extends QubitSaxParser
   {
     $sanitizedGenres = [];
 
-    foreach ($genres as $genre)
-    {
+    foreach ($genres as $genre) {
       $sanitizedGenres[] = trim(strtolower($genre));
     }
 
@@ -448,12 +434,10 @@ class sfModsConvertor extends QubitSaxParser
     $typeOfResourceTermNames = $gmdTermNames = [];
 
     // Only existing ones are added
-    foreach ($typeOfResources as $typeOfResource)
-    {
+    foreach ($typeOfResources as $typeOfResource) {
       $typeOfResource = trim(strtolower($typeOfResource));
 
-      if (isset($map[$typeOfResource]))
-      {
+      if (isset($map[$typeOfResource])) {
         // Add to type of resources
         $typeOfResourceTermNames[] = $typeOfResource;
 
@@ -471,8 +455,7 @@ class sfModsConvertor extends QubitSaxParser
   {
     $objectId = (is_null($objectId)) ? $this->resource->id : $objectId;
 
-    foreach ($termNames as $termName)
-    {
+    foreach ($termNames as $termName) {
       $term = QubitFlatfileImport::createOrFetchTerm($taxonomyId, $termName);
       QubitFlatfileImport::createObjectTermRelation($objectId, $term->id);
     }
@@ -480,8 +463,7 @@ class sfModsConvertor extends QubitSaxParser
 
   protected function importNameAccessPoints($nameData)
   {
-    foreach ($nameData as $name)
-    {
+    foreach ($nameData as $name) {
       $event = new QubitEvent();
       $event->objectId = $this->resource->id;
 
@@ -491,15 +473,13 @@ class sfModsConvertor extends QubitSaxParser
       $eventTypeTerm = QubitFlatfileImport::createOrFetchTerm(QubitTaxonomy::EVENT_TYPE_ID, $name['role']);
       $event->typeId = $eventTypeTerm->id;
 
-      if (!empty($name['name']))
-      {
+      if (!empty($name['name'])) {
         // Create actor
         $actor = QubitFlatfileImport::createOrFetchActor($name['name']);
         $event->actorId = $actor->id;
 
         // Create/fetch entity type term for actor, if any
-        if (!empty($name['type']))
-        {
+        if (!empty($name['type'])) {
           $entityTypeTerm = QubitFlatfileImport::createOrFetchTerm(QubitTaxonomy::ACTOR_ENTITY_TYPE_ID, $name['type']);
           $actor->entityTypeId = $entityTypeTerm->id;
           $actor->save();
@@ -519,20 +499,17 @@ class sfModsConvertor extends QubitSaxParser
     $event->typeId = (!empty($this->originTypeId)) ? $this->originTypeId : QubitTerm::CREATION_ID;
 
     // Set date, if set
-    if (!empty($this->originDate))
-    {
+    if (!empty($this->originDate)) {
       $event->date = $this->originDate;
     }
 
     // Set start date, if set (not yet supported by export)
-    if (!empty($this->originDateStart))
-    {
+    if (!empty($this->originDateStart)) {
       $event->startDate = $this->originDateStart;
     }
 
     // Set end date, if set (not yet supported by export)
-    if (!empty($this->originDateEnd))
-    {
+    if (!empty($this->originDateEnd)) {
       $event->endDate = $this->originDateEnd;
     }
 

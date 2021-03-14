@@ -27,8 +27,7 @@ class arElasticSearchOtherName extends arElasticSearchModelBase
     $serialized['i18n'] = self::serializeI18ns($object->id, ['QubitOtherName']);
 
     // Serialize type term
-    if (!empty($object->type_id))
-    {
+    if (!empty($object->type_id)) {
       $serialized['type'] = ['i18n' => arElasticSearchModelBase::serializeI18ns(
         $object->type_id,
         ['QubitTerm'],

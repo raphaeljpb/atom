@@ -31,16 +31,13 @@ class SettingsTemplateAction extends sfAction
     $this->defaultTemplateForm = new SettingsDefaultTemplateForm();
 
     // Handle POST data (form submit)
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       QubitCache::getInstance()->removePattern('settings:i18n:*');
 
       // Handle default template form submission
-      if (null !== $request->default_template)
-      {
+      if (null !== $request->default_template) {
         $this->defaultTemplateForm->bind($request->default_template);
-        if ($this->defaultTemplateForm->isValid())
-        {
+        if ($this->defaultTemplateForm->isValid()) {
           // Do update and redirect to avoid repeat submit wackiness
           $this->updateDefaultTemplateSettings($this->defaultTemplateForm);
 
@@ -83,20 +80,17 @@ class SettingsTemplateAction extends sfAction
    */
   protected function updateDefaultTemplateSettings($form)
   {
-    if (null !== $newValue = $form->getValue('informationobject'))
-    {
+    if (null !== $newValue = $form->getValue('informationobject')) {
       $setting = QubitSetting::findAndSave('informationobject', $newValue, [
         'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true, ]);
     }
 
-    if (null !== $newValue = $form->getValue('actor'))
-    {
+    if (null !== $newValue = $form->getValue('actor')) {
       $setting = QubitSetting::findAndSave('actor', $newValue, [
         'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true, ]);
     }
 
-    if (null !== $newValue = $form->getValue('repository'))
-    {
+    if (null !== $newValue = $form->getValue('repository')) {
       $setting = QubitSetting::findAndSave('repository', $newValue, [
         'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true, ]);
     }

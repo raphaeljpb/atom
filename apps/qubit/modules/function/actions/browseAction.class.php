@@ -25,60 +25,49 @@ class FunctionBrowseAction extends sfAction
 {
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
-    if (sfConfig::get('app_enable_institutional_scoping'))
-    {
+    if (sfConfig::get('app_enable_institutional_scoping')) {
       // remove search-realm
       $this->context->user->removeAttribute('search-realm');
     }
 
-    if (!isset($request->sort))
-    {
-      if ($this->getUser()->isAuthenticated())
-      {
+    if (!isset($request->sort)) {
+      if ($this->getUser()->isAuthenticated()) {
         $request->sort = sfConfig::get('app_sort_browser_user');
-      }
-      else
-      {
+      } else {
         $request->sort = sfConfig::get('app_sort_browser_anonymous');
       }
     }
 
     // Default sort direction
     $sortDir = 'asc';
-    if ('lastUpdated' == $request->sort)
-    {
+    if ('lastUpdated' == $request->sort) {
       $sortDir = 'desc';
     }
 
     // Set default sort direction in request if not present or not valid
-    if (!isset($request->sortDir) || !in_array($request->sortDir, ['asc', 'desc']))
-    {
+    if (!isset($request->sortDir) || !in_array($request->sortDir, ['asc', 'desc'])) {
       $request->sortDir = $sortDir;
     }
 
     // Determine sorting function based on sort direction
     $sortFunction = 'addAscendingOrderByColumn';
-    if ('desc' == $request->sortDir)
-    {
+    if ('desc' == $request->sortDir) {
       $sortFunction = 'addDescendingOrderByColumn';
     }
 
     $criteria = new Criteria();
 
-    if (isset($request->subquery))
-    {
+    if (isset($request->subquery)) {
       $criteria->addJoin(QubitFunctionObject::ID, QubitFunctionObjectI18n::ID);
       $criteria->add(QubitFunctionObjectI18n::CULTURE, $this->context->user->getCulture());
       $criteria->add(QubitFunctionObjectI18n::AUTHORIZED_FORM_OF_NAME, "%{$request->subquery}%", Criteria::LIKE);
     }
 
-    switch ($request->sort)
-    {
+    switch ($request->sort) {
       case 'identifier':
         $criteria->{$sortFunction}(QubitFunctionObject::DESCRIPTION_IDENTIFIER);
         // And then back to authorized form of name

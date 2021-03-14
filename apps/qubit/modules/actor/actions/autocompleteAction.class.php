@@ -21,8 +21,7 @@ class ActorAutocompleteAction extends sfAction
 {
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
@@ -38,19 +37,14 @@ class ActorAutocompleteAction extends sfAction
     // Sort alphabetically by name
     $criteria->addAscendingOrderByColumn('authorized_form_of_name');
 
-    if (isset($request->showOnlyActors) && 'true' == $request->showOnlyActors)
-    {
+    if (isset($request->showOnlyActors) && 'true' == $request->showOnlyActors) {
       $criteria->add(QubitObject::CLASS_NAME, 'QubitActor');
     }
 
-    if (isset($request->query))
-    {
-      if (sfConfig::get('app_markdown_enabled', true))
-      {
+    if (isset($request->query)) {
+      if (sfConfig::get('app_markdown_enabled', true)) {
         $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "%{$request->query}%", Criteria::LIKE);
-      }
-      else
-      {
+      } else {
         $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "{$request->query}%", Criteria::LIKE);
       }
     }
@@ -58,8 +52,7 @@ class ActorAutocompleteAction extends sfAction
     // Exclude the calling actor from the list
     $params = $this->context->routing->parse(Qubit::pathInfo($request->getReferer()));
     $resource = $params['_sf_route']->resource;
-    if (isset($resource->id))
-    {
+    if (isset($resource->id)) {
       $criteria->add(QubitActor::ID, $resource->id, Criteria::NOT_EQUAL);
     }
 

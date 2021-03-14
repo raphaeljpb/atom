@@ -40,10 +40,8 @@ class arMigration0099
   {
     foreach ([
       'taxonomies' => 'taxonomy/browse',
-      'browseDigitalObjects' => 'digitalobject/browse', ] as $key => $value)
-    {
-      if (null !== $menu = QubitMenu::getByName($key))
-      {
+      'browseDigitalObjects' => 'digitalobject/browse', ] as $key => $value) {
+      if (null !== $menu = QubitMenu::getByName($key)) {
         $menu->path = $value;
 
         $menu->save();

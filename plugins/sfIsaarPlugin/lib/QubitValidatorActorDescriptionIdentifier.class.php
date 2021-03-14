@@ -25,8 +25,7 @@ class QubitValidatorActorDescriptionIdentifier extends sfValidatorBase
     $criteria->add(QubitActor::DESCRIPTION_IDENTIFIER, $identifier);
 
     // If actor isn't new, exclude it in check to see if the identifier's already been used
-    if (null !== $byResource && isset($byResource->id))
-    {
+    if (null !== $byResource && isset($byResource->id)) {
       $criteria->add(QubitActor::ID, $byResource->id, Criteria::NOT_EQUAL);
     }
 
@@ -43,8 +42,7 @@ class QubitValidatorActorDescriptionIdentifier extends sfValidatorBase
   protected function doClean($value)
   {
     // Fail validation if identifier has been used by another actor
-    if (self::identifierUsedByAnotherActor($value, $this->getOption('resource')))
-    {
+    if (self::identifierUsedByAnotherActor($value, $this->getOption('resource'))) {
       $message = sfContext::getInstance()->i18n->__(
                    '%1%Authority record identifier%2% - value not unique.',
                    ['%1%' => '<a href="http://ica-atom.org/doc/RS-2#5.4.1">', '%2%' => '</a>']);

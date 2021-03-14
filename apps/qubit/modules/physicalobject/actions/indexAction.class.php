@@ -23,13 +23,11 @@ class PhysicalObjectIndexAction extends sfAction
   {
     $this->resource = $this->getRoute()->resource;
 
-    if (!isset($this->resource))
-    {
+    if (!isset($this->resource)) {
       $this->forward404();
     }
 
-    if (1 > strlen($title = $this->resource->__toString()))
-    {
+    if (1 > strlen($title = $this->resource->__toString())) {
       $title = $this->context->i18n->__('Untitled');
     }
 

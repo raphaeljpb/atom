@@ -32,8 +32,7 @@ class DigitalObjectEditAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that resource exists
-    if (!isset($this->resource))
-    {
+    if (!isset($this->resource)) {
       $this->forward404();
     }
 
@@ -41,14 +40,12 @@ class DigitalObjectEditAction extends sfAction
 
     // Check user authorization
     if (!QubitAcl::check($this->object, 'update')
-      && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID))
-    {
+      && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)) {
       QubitAcl::forwardUnauthorized();
     }
 
     // Check if uploads are allowed
-    if (!QubitDigitalObject::isUploadAllowed())
-    {
+    if (!QubitDigitalObject::isUploadAllowed()) {
       QubitAcl::forwardToSecureAction();
     }
 
@@ -60,17 +57,14 @@ class DigitalObjectEditAction extends sfAction
     $this->addFormFields();
 
     // Process forms
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters(), $request->getFiles());
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->resource->save();
 
-        if ($this->object instanceof QubitInformationObject)
-        {
+        if ($this->object instanceof QubitInformationObject) {
           $this->object->updateXmlExports();
         }
 
@@ -96,29 +90,22 @@ class DigitalObjectEditAction extends sfAction
 
     // Upload new representations
     $uploadedFiles = [];
-    foreach ($this->representations as $usageId => $representation)
-    {
-      if (null !== $uf = $this->form->getValue("repFile_{$usageId}"))
-      {
+    foreach ($this->representations as $usageId => $representation) {
+      if (null !== $uf = $this->form->getValue("repFile_{$usageId}")) {
         $uploadedFiles[$usageId] = $uf;
       }
     }
 
-    foreach ($uploadedFiles as $usageId => $uploadFile)
-    {
+    foreach ($uploadedFiles as $usageId => $uploadFile) {
       $content = file_get_contents($uploadFile->getTempName());
 
-      if (QubitDigitalObject::isImageFile($uploadFile->getOriginalName()))
-      {
+      if (QubitDigitalObject::isImageFile($uploadFile->getOriginalName())) {
         $tmpFile = Qubit::saveTemporaryFile($uploadFile->getOriginalName(), $content);
 
-        if (QubitTerm::REFERENCE_ID == $usageId)
-        {
+        if (QubitTerm::REFERENCE_ID == $usageId) {
           $maxwidth = (sfConfig::get('app_reference_image_maxwidth')) ? sfConfig::get('app_reference_image_maxwidth') : 480;
           $maxheight = null;
-        }
-        elseif (QubitTerm::THUMBNAIL_ID == $usageId)
-        {
+        } elseif (QubitTerm::THUMBNAIL_ID == $usageId) {
           list($maxwidth, $maxheight) = QubitDigitalObject::getImageMaxDimensions(QubitTerm::THUMBNAIL_ID);
         }
 
@@ -137,26 +124,22 @@ class DigitalObjectEditAction extends sfAction
     }
 
     // Generate new reference
-    if (null != $this->form->getValue('generateDerivative_'.QubitTerm::REFERENCE_ID))
-    {
+    if (null != $this->form->getValue('generateDerivative_'.QubitTerm::REFERENCE_ID)) {
       $this->resource->createReferenceImage();
     }
 
     // Generate new thumb
-    if (null != $this->form->getValue('generateDerivative_'.QubitTerm::THUMBNAIL_ID))
-    {
+    if (null != $this->form->getValue('generateDerivative_'.QubitTerm::THUMBNAIL_ID)) {
       $this->resource->createThumbnail();
     }
 
     // Store latitude and longitude as properties
-    foreach (['latitude', 'longitude'] as $geoPropertyField)
-    {
+    foreach (['latitude', 'longitude'] as $geoPropertyField) {
       // Create or update property
       $geoProperty = $this->resource->getPropertyByName($geoPropertyField);
 
       // Intialize property if new
-      if (empty($geoProperty->objectId))
-      {
+      if (empty($geoProperty->objectId)) {
         $geoProperty = new QubitProperty();
         $geoProperty->objectId = $this->resource->id;
         $geoProperty->editable = true;
@@ -175,8 +158,7 @@ class DigitalObjectEditAction extends sfAction
     $choices = [];
     $criteria = new Criteria();
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MEDIA_TYPE_ID);
-    foreach (QubitTerm::get($criteria) as $item)
-    {
+    foreach (QubitTerm::get($criteria) as $item) {
       $choices[$item->id] = $item->getName(['cultureFallback' => true]);
     }
 
@@ -189,12 +171,9 @@ class DigitalObjectEditAction extends sfAction
     // Only display "compound digital object" toggle if we have a child with a
     // digital object
     $this->showCompoundObjectToggle = false;
-    if ($this->object instanceof QubitInformationObject)
-    {
-      foreach ($this->object->getChildren() as $item)
-      {
-        if (null !== $item->getDigitalObject())
-        {
+    if ($this->object instanceof QubitInformationObject) {
+      foreach ($this->object->getChildren() as $item) {
+        if (null !== $item->getDigitalObject()) {
           $this->showCompoundObjectToggle = true;
 
           break;
@@ -202,8 +181,7 @@ class DigitalObjectEditAction extends sfAction
       }
     }
 
-    if ($this->showCompoundObjectToggle)
-    {
+    if ($this->showCompoundObjectToggle) {
       $this->form->setValidator('displayAsCompound', new sfValidatorBoolean());
       $this->form->setWidget('displayAsCompound', new sfWidgetFormSelectRadio(
         ['choices' => [
@@ -215,16 +193,14 @@ class DigitalObjectEditAction extends sfAction
       $criteria->add(QubitProperty::OBJECT_ID, $this->resource->id);
       $criteria->add(QubitProperty::NAME, 'displayAsCompound');
 
-      if (null != $compoundProperty = QubitProperty::getOne($criteria))
-      {
+      if (null != $compoundProperty = QubitProperty::getOne($criteria)) {
         $this->form->setDefault('displayAsCompound', $compoundProperty->getValue(['sourceCulture' => true]));
       }
     }
 
     $this->form->setValidator('digitalObjectAltText', new sfValidatorString());
     $this->form->setWidget('digitalObjectAltText', new sfWidgetFormTextarea());
-    if (null !== $this->digitalObjectAltText = $this->resource->getDigitalObjectAltText())
-    {
+    if (null !== $this->digitalObjectAltText = $this->resource->getDigitalObjectAltText()) {
       $this->form->setDefault('digitalObjectAltText', $this->digitalObjectAltText);
     }
 
@@ -233,22 +209,17 @@ class DigitalObjectEditAction extends sfAction
     ProjectConfiguration::getActive()->loadHelpers('Qubit');
 
     // If reference representation doesn't exist, include upload widget
-    foreach ($this->representations as $usageId => $representation)
-    {
-      if (null === $representation)
-      {
+    foreach ($this->representations as $usageId => $representation) {
+      if (null === $representation) {
         $repName = "repFile_{$usageId}";
         $derName = "generateDerivative_{$usageId}";
 
         $this->form->setValidator($repName, new sfValidatorFile());
         $this->form->setWidget($repName, new sfWidgetFormInputFile());
 
-        if (-1 < $maxUploadSize)
-        {
+        if (-1 < $maxUploadSize) {
           $this->form->getWidgetSchema()->{$repName}->setHelp($this->context->i18n->__('Max. size ~%1%', ['%1%' => hr_filesize($maxUploadSize)]));
-        }
-        else
-        {
+        } else {
           $this->form->getWidgetSchema()->{$repName}->setHelp('');
         }
 
@@ -259,14 +230,12 @@ class DigitalObjectEditAction extends sfAction
     }
 
     // Add latitude and longitude fields
-    foreach (['latitude', 'longitude'] as $geoPropertyField)
-    {
+    foreach (['latitude', 'longitude'] as $geoPropertyField) {
       $this->form->setValidator($geoPropertyField, new sfValidatorNumber());
       $this->form->setWidget($geoPropertyField, new sfWidgetFormInput());
 
       $fieldProperty = $this->resource->getPropertyByName($geoPropertyField);
-      if (isset($fieldProperty->value))
-      {
+      if (isset($fieldProperty->value)) {
         $this->form->setDefault($geoPropertyField, $fieldProperty->value);
       }
     }

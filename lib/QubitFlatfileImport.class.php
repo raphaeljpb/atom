@@ -71,8 +71,7 @@ class QubitFlatfileImport
   public function __construct($options = [])
   {
     // Replaceable logic to filter content before entering Qubit
-    $this->contentLogic = function ($text)
-    {
+    $this->contentLogic = function ($text) {
       return $text;
     };
 
@@ -103,22 +102,17 @@ class QubitFlatfileImport
   public function setPropertiesFromArray(&$object, $propertyArray, $allowedProperties, $ignore = [])
   {
     // set properties from options, halting upon invalid option
-    foreach ($propertyArray as $option => $value)
-    {
-      if (!in_array($option, $ignore))
-      {
+    foreach ($propertyArray as $option => $value) {
+      if (!in_array($option, $ignore)) {
         // if allowing all properties, inspect object to see if property is legitimate
         // otherwise use array of allowed properties
         $settingAllowed = (
           (true === $allowedProperties && property_exists(get_class($object), $option))
           || (is_array($allowedProperties) && in_array($option, $allowedProperties))
         );
-        if ($settingAllowed)
-        {
+        if ($settingAllowed) {
           $object->{$option} = $value;
-        }
-        else
-        {
+        } else {
           throw new Exception('Option "'.$option.'" not allowed.');
         }
       }
@@ -127,17 +121,14 @@ class QubitFlatfileImport
 
   public function setUpdateOptions($options)
   {
-    if ($options['limit'])
-    {
+    if ($options['limit']) {
       $this->limitToId = $this->getIdCorrespondingToSlug($options['limit']);
     }
 
     // Are there params set on --update flag?
-    if ($options['update'])
-    {
+    if ($options['update']) {
       // Parameters for --update are validated in csvImportBaseTask.class.php.
-      switch ($options['update'])
-      {
+      switch ($options['update']) {
         case 'delete-and-replace':
           // Delete any matching records, and re-import them (attach to existing entities if possible).
           $this->deleteAndReplace = true;
@@ -177,8 +168,7 @@ class QubitFlatfileImport
    */
   public function content($text)
   {
-    if ($this->contentFilterLogic)
-    {
+    if ($this->contentFilterLogic) {
       return trim(call_user_func_array($this->contentFilterLogic, [$text]));
     }
 
@@ -221,17 +211,13 @@ class QubitFlatfileImport
   {
     $columnIndex = array_search($column, $this->columnNames);
 
-    if (is_numeric($columnIndex))
-    {
-      if (false === $value)
-      {
+    if (is_numeric($columnIndex)) {
+      if (false === $value) {
         return trim($this->status['row'][$columnIndex]);
       }
 
       $this->status['row'][$columnIndex] = $value;
-    }
-    else
-    {
+    } else {
       throw new sfException('Missing column "'.$column.'".');
     }
   }
@@ -268,8 +254,7 @@ class QubitFlatfileImport
   {
     // attempting to directly call an object property that's a
     // closure results in "Fatal error: Call to undefined method"
-    if ($this->{$property})
-    {
+    if ($this->{$property}) {
       call_user_func_array($this->{$property}, [&$this]);
     }
   }
@@ -296,8 +281,7 @@ class QubitFlatfileImport
   {
     $message = ($includeCurrentRowNumber) ? sprintf("Row %d: %s\n", $this->getStatus('rows') + 1, $message) : $message;
 
-    if ($this->errorLog)
-    {
+    if ($this->errorLog) {
       file_put_contents($this->errorLog, $message, FILE_APPEND);
     }
 
@@ -330,12 +314,10 @@ class QubitFlatfileImport
   {
     $output = '';
 
-    foreach ($prefixesAndColumns as $prefix => $column)
-    {
+    foreach ($prefixesAndColumns as $prefix => $column) {
       $columnValue = $this->columnValue($column);
 
-      if ($columnValue)
-      {
+      if ($columnValue) {
         // numeric keys are considered prefixes
         $prepend = (!is_numeric($prefix)) ? $prefix : '';
 
@@ -347,8 +329,7 @@ class QubitFlatfileImport
     }
 
     // optional direct setting of column
-    if ($destinationColumn)
-    {
+    if ($destinationColumn) {
       $this->columnValue($destinationColumn, $output);
     }
 
@@ -384,8 +365,7 @@ class QubitFlatfileImport
     $this->status['skippedRows'] = $skipRows;
     $this->columnNames = fgetcsv($fh, 60000);
 
-    if (false === $this->columnNames)
-    {
+    if (false === $this->columnNames) {
       throw new sfException('Could not read initial row. File could be empty.');
     }
 
@@ -393,16 +373,13 @@ class QubitFlatfileImport
     $this->handleColumnRenaming();
 
     // add virtual columns (for column amalgamation, etc.)
-    foreach ($this->addColumns as $column)
-    {
+    foreach ($this->addColumns as $column) {
       $this->columnNames[] = $column;
     }
 
     // warn if column names contain whitespace
-    foreach ($this->columnNames as $column)
-    {
-      if ($column != trim($column))
-      {
+    foreach ($this->columnNames as $column) {
+      if ($column != trim($column)) {
         echo $this->logError(sprintf("WARNING: Column '%s' has whitespace before or after its name.", $column));
       }
     }
@@ -410,25 +387,23 @@ class QubitFlatfileImport
     // disabling search indexing improves import speed
     $this->searchIndexingDisabled ? QubitSearch::disable() : QubitSearch::enable();
 
-    if ($skipRows) print 'Skipped '.$skipRows." rows...\n";
+    if ($skipRows) {
+      echo 'Skipped '.$skipRows." rows...\n";
+    }
 
     $timerStarted = false;
 
     // import each row
-    while ($item = fgetcsv($fh, 60000))
-    {
-      if ($this->status['rows'] >= $skipRows)
-      {
+    while ($item = fgetcsv($fh, 60000)) {
+      if ($this->status['rows'] >= $skipRows) {
         // Skip blank rows, but keep track of rows parsed
-        if (!$this->rowContainsData($item))
-        {
+        if (!$this->rowContainsData($item)) {
           ++$this->status['rows'];
 
           continue;
         }
 
-        if (!$timerStarted)
-        {
+        if (!$timerStarted) {
           $this->startTimer();
           $timerStarted = true;
         }
@@ -437,30 +412,24 @@ class QubitFlatfileImport
 
         ++$this->status['rows'];
 
-        if ($this->displayProgress)
-        {
+        if ($this->displayProgress) {
           echo $this->renderProgressDescription();
         }
-      }
-      else
-      {
+      } else {
         ++$this->status['rows'];
       }
     }
 
-    if ($timerStarted)
-    {
+    if ($timerStarted) {
       $this->stopTimer();
     }
 
-    if ($this->status['duplicates'])
-    {
+    if ($this->status['duplicates']) {
       $msg = sprintf('Duplicates found: %d', $this->status['duplicates']);
       echo $this->logError($msg, false);
     }
 
-    if ($this->status['updated'])
-    {
+    if ($this->status['updated']) {
       $msg = sprintf('Updated: %d', $this->status['updated']);
       echo $this->logError($msg, false);
     }
@@ -478,8 +447,7 @@ class QubitFlatfileImport
    */
   public function hasDuplicateEvent($event)
   {
-    if (!isset($this->object->id))
-    {
+    if (!isset($this->object->id)) {
       return;
     }
 
@@ -494,32 +462,25 @@ class QubitFlatfileImport
     $fields = ['startDate', 'startTime', 'endDate', 'endTime', 'typeId', 'objectId', 'actorId', 'name',
       'description', 'date', 'culture', ];
 
-    foreach (QubitEvent::get($criteria) as $existingEvent)
-    {
+    foreach (QubitEvent::get($criteria) as $existingEvent) {
       $match = true;
 
-      foreach ($fields as $field)
-      {
+      foreach ($fields as $field) {
         // Use special logic when comparing dates, see dateStringsEqual for details.
-        if (false !== strpos(strtolower($field), 'date'))
-        {
+        if (false !== strpos(strtolower($field), 'date')) {
           $match = $match && $this->dateStringsEqual($existingEvent->{$field}, $event->{$field});
-        }
-        else
-        {
+        } else {
           $match = $match && $existingEvent->{$field} === $event->{$field};
         }
 
         // Event fields differ, don't bother checking other fields since these aren't equal
-        if (!$match)
-        {
+        if (!$match) {
           break;
         }
       }
 
       // All fields matched, found duplicate.
-      if ($match)
-      {
+      if ($match) {
         return true;
       }
     }
@@ -542,32 +503,24 @@ class QubitFlatfileImport
     $this->handleCulture();
     $this->rowProcessingBeforeObjectCreation($row); // Set row status variables that are based on column values
 
-    if (isset($this->className))
-    {
+    if (isset($this->className)) {
       $skipRowProcessing = $this->fetchOrCreateObjectByClass();
 
-      if (property_exists(get_class($this->object), 'disableNestedSetUpdating'))
-      {
+      if (property_exists(get_class($this->object), 'disableNestedSetUpdating')) {
         $this->object->disableNestedSetUpdating = $this->disableNestedSetUpdating;
       }
-    }
-    else
-    {
+    } else {
       // Execute ad-hoc row initialization logic (which can make objects, load them, etc.)
       $this->executeClosurePropertyIfSet('rowInitLogic');
     }
 
-    if (!$skipRowProcessing)
-    {
+    if (!$skipRowProcessing) {
       $this->rowProcessingBeforeSave($row); // Set fields in object and execute custom column handlers
       $this->executeClosurePropertyIfSet('preSaveLogic');
 
-      if (isset($this->className))
-      {
+      if (isset($this->className)) {
         $this->object->save();
-      }
-      else
-      {
+      } else {
         // execute row completion logic
         $this->executeClosurePropertyIfSet('saveLogic');
       }
@@ -597,14 +550,15 @@ class QubitFlatfileImport
     // return empty string if no intermittant progress display
     if (!isset($this->rowsUntilProgressDisplay)
       || !$this->rowsUntilProgressDisplay
-    ) return $output;
+    ) {
+      return $output;
+    }
     // row count isn't incremented until after this is displayed, so add one to reflect reality
     $rowsProcessed = $this->getStatus('rows') - $this->getStatus('skippedRows');
     $memoryUsageMB = round(memory_get_usage() / (1024 * 1024), 2);
 
     // if this show should be displayed, display it
-    if (!($rowsProcessed % $this->rowsUntilProgressDisplay))
-    {
+    if (!($rowsProcessed % $this->rowsUntilProgressDisplay)) {
       $elapsed = $this->getTimeElapsed();
       $elapsedMinutes = round($elapsed / 60, 2);
       $averageTime = round($elapsed / $rowsProcessed, 2);
@@ -641,8 +595,7 @@ class QubitFlatfileImport
    */
   public function addColumnHandlers($columns, $handler)
   {
-    foreach ($columns as $column)
-    {
+    foreach ($columns as $column) {
       $this->addColumnHandler($column, $handler);
     }
   }
@@ -656,23 +609,16 @@ class QubitFlatfileImport
    */
   public function mappedColumnHandler($mapDefinition, $value)
   {
-    if (isset($this->object) && is_object($this->object))
-    {
-      if (is_array($mapDefinition))
-      {
+    if (isset($this->object) && is_object($this->object)) {
+      if (is_array($mapDefinition)) {
         // tranform value is logic provided to do so
-        if (is_callable($mapDefinition['transformationLogic']))
-        {
+        if (is_callable($mapDefinition['transformationLogic'])) {
           $this->object->{$mapDefinition['column']} =
             $this->content($mapDefinition['transformationLogic']($this, $value));
-        }
-        else
-        {
+        } else {
           $this->object->{$mapDefinition['column']} = $this->content($value);
         }
-      }
-      else
-      {
+      } else {
         $this->object->{$mapDefinition} = $this->content($value);
       }
     }
@@ -688,8 +634,7 @@ class QubitFlatfileImport
    */
   public function arrayColumnHandler($column, $delimiter, $value)
   {
-    if ($value)
-    {
+    if ($value) {
       $this->rowStatusVars[$column] = array_map('trim', explode($delimiter, $value));
     }
   }
@@ -712,8 +657,7 @@ class QubitFlatfileImport
   {
     $connection = Propel::getConnection();
     $statement = $connection->prepare($query);
-    for ($index = 0; $index < count($params); ++$index)
-    {
+    for ($index = 0; $index < count($params); ++$index) {
       $statement->bindValue($index + 1, $params[$index]);
     }
     $statement->execute();
@@ -734,22 +678,19 @@ class QubitFlatfileImport
   public function createOrUpdateNotes($typeId, $textArray, $transformationLogic = false)
   {
     // If importing a translation row we currently don't handle notes
-    if (!defined(get_class($this->object).'::SOURCE_CULTURE'))
-    {
+    if (!defined(get_class($this->object).'::SOURCE_CULTURE')) {
       return;
     }
 
     $noteIds = [];
 
     // I18n row handler
-    if ($this->columnValue('culture') != $this->object->sourceCulture)
-    {
+    if ($this->columnValue('culture') != $this->object->sourceCulture) {
       $query = 'SELECT id FROM note WHERE object_id = ? AND type_id = ?;';
 
       $statement = self::sqlQuery($query, [$this->object->id, $typeId]);
 
-      while ($noteId = $statement->fetchColumn())
-      {
+      while ($noteId = $statement->fetchColumn()) {
         $noteIds[] = $noteId;
       }
     }
@@ -759,23 +700,19 @@ class QubitFlatfileImport
     // checked as they are added.
     $existingNotes = $this->getExistingNotes($this->object->id, $typeId, $this->columnValue('culture'));
 
-    foreach ($textArray as $i => $text)
-    {
+    foreach ($textArray as $i => $text) {
       $options = [];
 
-      if ($transformationLogic)
-      {
+      if ($transformationLogic) {
         $options['transformationLogic'] = $transformationLogic;
       }
 
-      if (isset($noteIds[$i]))
-      {
+      if (isset($noteIds[$i])) {
         $options['noteId'] = $noteIds[$i];
       }
 
       // checkNoteExists will prevent note duplication.
-      if (!$this->checkNoteExists($existingNotes, $this->content($text)))
-      {
+      if (!$this->checkNoteExists($existingNotes, $this->content($text))) {
         $this->createOrUpdateNote($typeId, $text, $options);
       }
     }
@@ -796,23 +733,19 @@ class QubitFlatfileImport
     // Trim whitespace
     $text = trim($text);
 
-    if (isset($options['noteId']))
-    {
+    if (isset($options['noteId'])) {
       // Clearing the cache seems to prevent a weird issue with trying to save
       // a cached version of the note? In any case, it makes it work (!?)
       QubitNote::clearCache();
 
       $note = QubitNote::getById($options['noteId']);
-    }
-    else
-    {
+    } else {
       $note = new QubitNote();
       $note->objectId = $this->object->id;
       $note->typeId = $typeId;
     }
 
-    if (isset($options['transformationLogic']))
-    {
+    if (isset($options['transformationLogic'])) {
       $transformer = $options['transformationLogic'];
       $text = $transformer($this, $text);
     }
@@ -833,22 +766,18 @@ class QubitFlatfileImport
    */
   public function createOrUpdateEvent($typeId, $options = [])
   {
-    if (isset($options['eventId']))
-    {
+    if (isset($options['eventId'])) {
       // Adding new i18n values to an existing event
       $event = QubitEvent::getById($options['eventId']);
       unset($options['eventId']);
-    }
-    else
-    {
+    } else {
       // Create new event
       $event = new QubitEvent();
       $event->objectId = $this->object->id;
       $event->typeId = $typeId;
     }
 
-    if (null === $event)
-    {
+    if (null === $event) {
       // Couldn't find or create event
       return;
     }
@@ -859,39 +788,29 @@ class QubitFlatfileImport
     $this->setPropertiesFromArray($event, $options, $allowedProperties, $ignoreOptions);
 
     // Save actor history in untitled actor if there is actorHistory without actorName
-    if (isset($options['actorHistory']) && !isset($options['actorName']))
-    {
+    if (isset($options['actorHistory']) && !isset($options['actorName'])) {
       $options['actorName'] = '';
     }
 
-    if (isset($options['actorName']))
-    {
-      if (isset($event->actorId))
-      {
+    if (isset($options['actorName'])) {
+      if (isset($event->actorId)) {
         // Update i18n values
         $event->actor->authorizedFormOfName = $options['actorName'];
-        if (isset($options['actorHistory']))
-        {
+        if (isset($options['actorHistory'])) {
           $event->actor->history = $options['actorHistory'];
         }
 
         $event->actor->save();
-      }
-      else
-      {
+      } else {
         // Link actor
         $actorOptions = [];
-        if (isset($options['actorHistory']))
-        {
+        if (isset($options['actorHistory'])) {
           $actorOptions['history'] = $options['actorHistory'];
         }
 
-        if ($this->object instanceof QubitInformationObject)
-        {
+        if ($this->object instanceof QubitInformationObject) {
           $actor = $this->createOrFetchAndUpdateActorForIo($options['actorName'], $actorOptions);
-        }
-        else
-        {
+        } else {
           $actor = $this->createOrFetchActor($options['actorName'], $actorOptions);
         }
 
@@ -899,8 +818,7 @@ class QubitFlatfileImport
       }
     }
 
-    if ($this->matchAndUpdate && $this->hasDuplicateEvent($event))
-    {
+    if ($this->matchAndUpdate && $this->hasDuplicateEvent($event)) {
       return; // Skip creating / updating events if this exact one already exists.
     }
 
@@ -908,11 +826,9 @@ class QubitFlatfileImport
     $event->save();
 
     // Add relation with place
-    if (isset($options['place']))
-    {
+    if (isset($options['place'])) {
       $culture = 'en';
-      if (isset($options['culture']))
-      {
+      if (isset($options['culture'])) {
         $culture = $options['culture'];
       }
 
@@ -939,8 +855,7 @@ class QubitFlatfileImport
     $statement = QubitFlatfileImport::sqlQuery($query, [$name, $location, $typeId]);
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
-    if ($result)
-    {
+    if ($result) {
       return QubitPhysicalObject::getById($result->id);
     }
 
@@ -963,8 +878,7 @@ class QubitFlatfileImport
     $statement = QubitFlatfileImport::sqlQuery($query, [$name]);
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
-    if ($result && strlen($name) > 0)
-    {
+    if ($result && strlen($name) > 0) {
       return QubitRepository::getById($result->id);
     }
 
@@ -986,34 +900,29 @@ class QubitFlatfileImport
   {
     // Create new actor if there is no match by
     // auth. form of name (do not match untitled actors)
-    if (empty($name) || null === $actor = QubitActor::getByAuthorizedFormOfName($name))
-    {
+    if (empty($name) || null === $actor = QubitActor::getByAuthorizedFormOfName($name)) {
       return $this->createActor($name, $options);
     }
 
     // Return first matching actor if the actor history is empty on the import
-    if (empty($options['history']))
-    {
+    if (empty($options['history'])) {
       return $actor;
     }
 
     // Check for a match with the same auth. form of name and history
-    if (null !== $actor = QubitActor::getByAuthorizedFormOfName($name, ['history' => $options['history']]))
-    {
+    if (null !== $actor = QubitActor::getByAuthorizedFormOfName($name, ['history' => $options['history']])) {
       return $actor;
     }
 
     // Importing to an IO without repository or in a repo not maintaining an actor match
     if (!isset($this->object->repository)
-      || null === $actor = QubitActor::getByAuthorizedFormOfName($name, ['repositoryId' => $this->object->repository->id]))
-    {
+      || null === $actor = QubitActor::getByAuthorizedFormOfName($name, ['repositoryId' => $this->object->repository->id])) {
       // Create a new one with the new history
       return $this->createActor($name, $options);
     }
 
     // Change actor history when updating a match in the same repo
-    if ($this->matchAndUpdate)
-    {
+    if ($this->matchAndUpdate) {
       $actor->history = $options['history'];
       $actor->save();
 
@@ -1036,8 +945,7 @@ class QubitFlatfileImport
   {
     // Get actor or create a new one (don't match untitled actors).
     // If the actor exists the data is not overwritten
-    if ('' == $name || null === $actor = QubitActor::getByAuthorizedFormOfName($name))
-    {
+    if ('' == $name || null === $actor = QubitActor::getByAuthorizedFormOfName($name)) {
       $actor = QubitFlatfileImport::createActor($name, $options);
     }
 
@@ -1063,14 +971,11 @@ class QubitFlatfileImport
 
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
-    if (!$result)
-    {
+    if (!$result) {
       $rightsHolder = new QubitRightsHolder();
       $rightsHolder->authorizedFormOfName = $name;
       $rightsHolder->save();
-    }
-    else
-    {
+    } else {
       $rightsHolder = QubitRightsHolder::getById($result->id);
     }
 
@@ -1096,14 +1001,11 @@ class QubitFlatfileImport
 
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
-    if (!$result)
-    {
+    if (!$result) {
       $donor = new QubitDonor();
       $donor->authorizedFormOfName = $name;
       $donor->save();
-    }
-    else
-    {
+    } else {
       $donor = QubitDonor::getById($result->id);
     }
 
@@ -1126,8 +1028,7 @@ class QubitFlatfileImport
     $statement = QubitFlatfileImport::sqlQuery($query, [$actorId]);
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
-    if ($result)
-    {
+    if ($result) {
       return QubitContactInformation::getById($result->id);
     }
 
@@ -1180,8 +1081,7 @@ class QubitFlatfileImport
    */
   public static function createOrFetchTerm($taxonomyId, $names, $culture = 'en')
   {
-    if (!is_array($names))
-    {
+    if (!is_array($names)) {
       $notArray = true;
       $names = [$names];
     }
@@ -1193,22 +1093,17 @@ class QubitFlatfileImport
     $rows = QubitPdo::fetchAll($query, [$taxonomyId, $culture], ['fetchMode' => PDO::FETCH_ASSOC]);
 
     // Check if each term in array exists.
-    foreach ($names as $name)
-    {
-      if (null !== $key = QubitFlatfileImport::getTermIndex($rows, $name))
-      {
+    foreach ($names as $name) {
+      if (null !== $key = QubitFlatfileImport::getTermIndex($rows, $name)) {
         $terms[] = QubitTerm::getById($rows[$key]['id']);
-      }
-      elseif (!isset($termsCreated) || !in_array($name, $termsCreated))
-      {
+      } elseif (!isset($termsCreated) || !in_array($name, $termsCreated)) {
         $terms[] = QubitFlatfileImport::createTerm($taxonomyId, $name, $culture);
         // Don't create duplicates
         $termsCreated[] = $name;
       }
     }
 
-    if (isset($notArray))
-    {
+    if (isset($notArray)) {
       return $terms[0];
     }
 
@@ -1251,8 +1146,7 @@ class QubitFlatfileImport
     $object->name = $name;
     $object->typeId = $typeId;
 
-    if ($location)
-    {
+    if ($location) {
       $object->location = $location;
     }
 
@@ -1289,8 +1183,7 @@ class QubitFlatfileImport
   public function createRelation($subjectId, $objectId, $typeId)
   {
     // Prevent duplicate relations.
-    if ($this->relationExists($subjectId, $objectId))
-    {
+    if ($this->relationExists($subjectId, $objectId)) {
       return;
     }
 
@@ -1315,8 +1208,7 @@ class QubitFlatfileImport
   public static function createObjectTermRelation($objectId, $termId)
   {
     // Prevent duplicate object-term relations.
-    if (self::objectTermRelationExists($objectId, $termId))
-    {
+    if (self::objectTermRelationExists($objectId, $termId)) {
       return;
     }
 
@@ -1360,8 +1252,7 @@ class QubitFlatfileImport
 
     $termArray = $this->createOrFetchTerm($taxonomyId, $names, $culture);
 
-    foreach ($termArray as $term)
-    {
+    foreach ($termArray as $term) {
       self::createObjectTermRelation($this->object->id, $term->id);
     }
 
@@ -1398,11 +1289,9 @@ class QubitFlatfileImport
   {
     $taxonomyTerms = [];
 
-    foreach ($taxonomies as $taxonomyId => $varName)
-    {
+    foreach ($taxonomies as $taxonomyId => $varName) {
       $taxonomyTerms[$varName] = [];
-      foreach (QubitFlatfileImport::getTaxonomyTerms($taxonomyId) as $term)
-      {
+      foreach (QubitFlatfileImport::getTaxonomyTerms($taxonomyId) as $term) {
         $taxonomyTerms[$varName][$term->culture][$term->id] = $term->name;
       }
     }
@@ -1478,8 +1367,7 @@ class QubitFlatfileImport
   public function createKeymapEntry($sourceName, $sourceId, $object = null)
   {
     // Default to imported object
-    if (null == $object)
-    {
+    if (null == $object) {
       $object = $this->object;
     }
 
@@ -1532,19 +1420,15 @@ class QubitFlatfileImport
    */
   public function translateNameToTermId($description, $value, $valueToTermNameMap, $terms)
   {
-    if (isset($valueToTermNameMap[$value]) || 0 == count($valueToTermNameMap))
-    {
+    if (isset($valueToTermNameMap[$value]) || 0 == count($valueToTermNameMap)) {
       $termName = (count($valueToTermNameMap)) ? $valueToTermNameMap[$value] : $value;
 
-      if (in_array($termName, $terms))
-      {
+      if (in_array($termName, $terms)) {
         return array_search($termName, $terms);
       }
 
       throw new sfException('Could not find "'.$termName.'" in '.$description.' terms array.');
-    }
-    else
-    {
+    } else {
       throw new sfException('Could not find a way to handle '.$description.' value "'.$value.'".');
     }
   }
@@ -1557,8 +1441,7 @@ class QubitFlatfileImport
 
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
-    if ($result)
-    {
+    if ($result) {
       return $result->object_id;
     }
 
@@ -1576,12 +1459,10 @@ class QubitFlatfileImport
   {
     $countries = sfCultureInfo::getInstance()->getCountries();
 
-    if (isset($countries[strtoupper($value)]))
-    {
+    if (isset($countries[strtoupper($value)])) {
       return $value; // Value was a country code
     }
-    if ($countryCode = array_search($value, $countries))
-    {
+    if ($countryCode = array_search($value, $countries)) {
       return $countryCode; // Value was a country name
     }
   }
@@ -1614,12 +1495,12 @@ class QubitFlatfileImport
     $combined = [];
 
     // go through each array providesd
-    for ($index = 0; $index < count($args); ++$index)
-    {
+    for ($index = 0; $index < count($args); ++$index) {
       // for each element of array, add to combined array if element isn't a dupe
-      foreach ($args[$index] as $element)
-      {
-        if (!in_array($element, $combined)) array_push($combined, $element);
+      foreach ($args[$index] as $element) {
+        if (!in_array($element, $combined)) {
+          array_push($combined, $element);
+        }
       }
     }
 
@@ -1640,13 +1521,10 @@ class QubitFlatfileImport
     // Assign names to unnamed columns
     $baseLabel = 'Untitled';
     $labelNumber = 1;
-    foreach ($this->columnNames as $index => $name)
-    {
-      if (empty($name))
-      {
+    foreach ($this->columnNames as $index => $name) {
+      if (empty($name)) {
         // Increment label number if column already exists
-        while (in_array($baseLabel.$labelNumber, $this->columnNames))
-        {
+        while (in_array($baseLabel.$labelNumber, $this->columnNames)) {
           ++$labelNumber;
         }
 
@@ -1662,12 +1540,9 @@ class QubitFlatfileImport
    */
   protected function handleColumnRenaming()
   {
-    if (isset($this->renameColumns))
-    {
-      foreach ($this->renameColumns as $sourceColumn => $newName)
-      {
-        if (is_numeric($position = array_search($sourceColumn, $this->columnNames)))
-        {
+    if (isset($this->renameColumns)) {
+      foreach ($this->renameColumns as $sourceColumn => $newName) {
+        if (is_numeric($position = array_search($sourceColumn, $this->columnNames))) {
           $this->columnNames[$position] = $newName;
         }
       }
@@ -1683,22 +1558,18 @@ class QubitFlatfileImport
   protected function rowProcessingBeforeObjectCreation($row)
   {
     // process import columns that don't produce child data
-    $this->forEachRowColumn($row, function (&$self, $index, $columnName, $value)
-    {
+    $this->forEachRowColumn($row, function (&$self, $index, $columnName, $value) {
       // Trim whitespace
       $value = trim($value);
 
       if (
         isset($self->columnNames[$index])
         && in_array($self->columnNames[$index], $self->variableColumns)
-      )
-      {
+      ) {
         $self->rowStatusVars[$self->columnNames[$index]] = $value;
-      }
-      elseif (
+      } elseif (
         isset($self->columnNames[$index], $self->arrayColumns[($self->columnNames[$index])])
-      )
-      {
+      ) {
         $self->arrayColumnHandler($columnName, $self->arrayColumns[$columnName], $value);
       }
     });
@@ -1713,14 +1584,12 @@ class QubitFlatfileImport
   protected function rowProcessingBeforeSave($row)
   {
     // process import columns that don't produce child data
-    $this->forEachRowColumn($row, function (&$self, $index, $columnName, $value)
-    {
+    $this->forEachRowColumn($row, function (&$self, $index, $columnName, $value) {
       // Trim whitespace
       $value = trim($value);
 
       // if column maps to an attribute, set the attribute
-      if (isset($self->columnMap, $self->columnMap[$columnName]))
-      {
+      if (isset($self->columnMap, $self->columnMap[$columnName])) {
         $self->mappedColumnHandler($self->columnMap[$columnName], $value);
       }
       // if column maps to a property, set the property
@@ -1728,33 +1597,27 @@ class QubitFlatfileImport
         isset($self->propertyMap, $self->propertyMap[$columnName])
 
         && $value
-      )
-      {
+      ) {
         // Ignore property coluns if importing a translation
-        if (!substr_count(get_class($self->object), 'I18n'))
-        {
+        if (!substr_count(get_class($self->object), 'I18n')) {
           $self->object->addProperty(
             $self->propertyMap[$columnName],
             $self->content($value)
           );
         }
-      }
-      elseif (
+      } elseif (
         isset($self->columnNames[$index], $self->handlers[($self->columnNames[$index])])
-      )
-      {
+      ) {
         // otherwise, if column is data and a handler for it is set, use it
         call_user_func_array(
           $self->handlers[$columnName],
           [$self, $value]
         );
-      }
-      elseif (
+      } elseif (
         isset($self->columnNames[$index])
         && in_array($self->columnNames[$index], $self->standardColumns)
         && $value
-      )
-      {
+      ) {
         // otherwise, if column is data and it's a standard column, use it
         $self->object->{$self->columnNames[$index]} = $self->content($value);
       }
@@ -1769,20 +1632,17 @@ class QubitFlatfileImport
    */
   protected function rowProcessingAfterSave($row)
   {
-    $this->forEachRowColumn($row, function (&$self, $index, $columnName, $value)
-    {
+    $this->forEachRowColumn($row, function (&$self, $index, $columnName, $value) {
       // Trim whitespace
       $value = trim($value);
 
       // Create/relate terms from array of term names.
-      if (isset($self->termRelations, $self->termRelations[$columnName]) && $value)
-      {
+      if (isset($self->termRelations, $self->termRelations[$columnName]) && $value) {
         $self->createOrFetchTermAndAddRelation($self->termRelations[$columnName], explode('|', $value));
       }
 
       // Create/update notes
-      if (isset($self->noteMap, $self->noteMap[$columnName]) && $value)
-      {
+      if (isset($self->noteMap, $self->noteMap[$columnName]) && $value) {
         // otherwise, if maps to a note, create it
         $transformationLogic = (isset($self->noteMap[$columnName]['transformationLogic']))
           ? $self->noteMap[$columnName]['transformationLogic']
@@ -1795,14 +1655,12 @@ class QubitFlatfileImport
       }
 
       // Add language properties
-      if (isset($self->languageMap, $self->languageMap[$columnName]) && $value)
-      {
+      if (isset($self->languageMap, $self->languageMap[$columnName]) && $value) {
         $self->storeLanguageSerializedProperty($self->languageMap[$columnName], explode('|', $value));
       }
 
       // Add script properties
-      if (isset($self->scriptMap, $self->scriptMap[$columnName]) && $value)
-      {
+      if (isset($self->scriptMap, $self->scriptMap[$columnName]) && $value) {
         $self->storeScriptSerializedProperty($self->scriptMap[$columnName], explode('|', $value));
       }
     });
@@ -1820,8 +1678,7 @@ class QubitFlatfileImport
    */
   protected function forEachRowColumn($row, $logic)
   {
-    for ($index = 0; $index < count($row); ++$index)
-    {
+    for ($index = 0; $index < count($row); ++$index) {
       // determine what type of data should be in this column
       $columnName = $this->columnNames[$index];
 
@@ -1843,19 +1700,16 @@ class QubitFlatfileImport
   {
     $BOM = "\xEF\xBB\xBF";
 
-    if (false === $data = fread($fh, strlen($BOM)))
-    {
+    if (false === $data = fread($fh, strlen($BOM))) {
       throw new sfException('Failed to read from CSV file in handleByteOrderMark.');
     }
 
-    if (0 === strncmp($data, $BOM, 3))
-    {
+    if (0 === strncmp($data, $BOM, 3)) {
       return; // Just eat the BOM and move on from this file position
     }
 
     // No BOM, rewind the file handle position
-    if (false === rewind($fh))
-    {
+    if (false === rewind($fh)) {
       throw new sfException('Rewinding file position failed in handleByteOrderMark.');
     }
   }
@@ -1884,21 +1738,18 @@ class QubitFlatfileImport
   private function handleCulture()
   {
     // Add blank culture field if not present in import
-    if (!in_array('culture', $this->columnNames))
-    {
+    if (!in_array('culture', $this->columnNames)) {
       $this->columnNames[] = 'culture';
       $this->addColumns[] = 'culture';
     }
 
     // Default culture to English
-    if (0 == strlen($this->columnValue('culture')))
-    {
+    if (0 == strlen($this->columnValue('culture'))) {
       $this->columnValue('culture', 'en');
     }
 
     // Set current culture to culture specified in CSV row.
-    if (isset($this->context) && 'sfContext' == get_class($this->context))
-    {
+    if (isset($this->context) && 'sfContext' == get_class($this->context)) {
       $this->context->getUser()->setCulture($this->columnValue('culture'));
     }
   }
@@ -1908,10 +1759,8 @@ class QubitFlatfileImport
    */
   private function handleVirtualCols()
   {
-    foreach (array_keys($this->columnNames) as $key)
-    {
-      if (!isset($this->status['row'][$key]))
-      {
+    foreach (array_keys($this->columnNames) as $key) {
+      if (!isset($this->status['row'][$key])) {
         $this->status['row'][$key] = '';
       }
     }
@@ -1935,9 +1784,8 @@ class QubitFlatfileImport
 
     // If our database added -00-00 onto the date, add it onto the csv date as well if applicable,
     // so we can compare e.g.: '2000-00-00' vs. '2000'
-    if ($suffix === substr($dbDate, -strlen($suffix)) && 1 === preg_match('/^\d{4}$/', $csvDate))
-    {
-        $csvDate .= $suffix;
+    if ($suffix === substr($dbDate, -strlen($suffix)) && 1 === preg_match('/^\d{4}$/', $csvDate)) {
+      $csvDate .= $suffix;
     }
 
     return $csvDate === $dbDate;
@@ -1945,8 +1793,7 @@ class QubitFlatfileImport
 
   private function fetchOrCreateObjectByClass()
   {
-    switch ($this->className)
-    {
+    switch ($this->className) {
       case 'QubitInformationObject':
         return $this->handleInformationObjectRow();
 
@@ -1970,16 +1817,12 @@ class QubitFlatfileImport
   {
     // Default behavior: if --update isn't set, just create a new information object, don't do
     // any matching against existing information objects.
-    if (!$this->isUpdating() && !$this->skipMatched)
-    {
+    if (!$this->isUpdating() && !$this->skipMatched) {
       // Allow translations to be imported
-      if (!empty($this->status['lastLegacyId']) && $this->columnValue('legacyId') == $this->status['lastLegacyId'])
-      {
+      if (!empty($this->status['lastLegacyId']) && $this->columnValue('legacyId') == $this->status['lastLegacyId']) {
         $this->object = new QubitInformationObjectI18n();
         $this->object->id = $this->status['lastId'];
-      }
-      else
-      {
+      } else {
         $this->object = new QubitInformationObject();
       }
 
@@ -1989,17 +1832,13 @@ class QubitFlatfileImport
     $legacyId = $this->columnExists('legacyId') ? trim($this->columnValue('legacyId')) : null;
 
     // Allow roundtripping (treating legacyId as an existing AtoM ID)
-    if ($this->roundtrip && null === $this->object)
-    {
+    if ($this->roundtrip && null === $this->object) {
       $this->object = QubitInformationObject::getById($legacyId);
-    }
-    else
-    {
+    } else {
       // Try to match on legacyId in keymap
       $this->setInformationObjectByKeymap($legacyId);
 
-      if (null === $this->object)
-      {
+      if (null === $this->object) {
         // No match found in keymap, try to match on title, repository and identifier.
         $this->setInformationObjectByFields();
       }
@@ -2007,23 +1846,19 @@ class QubitFlatfileImport
 
     $this->checkInformationObjectMatchLimit(); // Handle --limit option.
 
-    if (null === $this->object)
-    {
+    if (null === $this->object) {
       // Still no match found, create IO if not roundtripping or if --skip-unmatched is not set in options.
       return $this->createNewInformationObject();
     }
 
-    if ($this->object->sourceCulture == $this->columnValue('culture'))
-    {
+    if ($this->object->sourceCulture == $this->columnValue('culture')) {
       $msg = sprintf('Matching description found, %s; row (id: %s, culture: %s, legacyId: %s)...',
                       $this->getActionDescription(), $this->object->id, $this->object->sourceCulture, $legacyId);
 
-      if ($this->isUpdating())
-      {
+      if ($this->isUpdating()) {
         ++$this->status['updated'];
 
-        if ($this->deleteAndReplace)
-        {
+        if ($this->deleteAndReplace) {
           // This must be called before updatePreparationLogic, or else duplicate information object
           // entries may appear in ElasticSearch.
           $this->handleDeleteAndReplace();
@@ -2032,9 +1867,7 @@ class QubitFlatfileImport
         // Execute ad-hoc row pre-update logic (remove related data, etc.)
         $this->executeClosurePropertyIfSet('updatePreparationLogic');
         $skipRowProcessing = false;
-      }
-      else
-      {
+      } else {
         ++$this->status['duplicates'];
         $skipRowProcessing = true;
       }
@@ -2052,12 +1885,10 @@ class QubitFlatfileImport
    */
   private function getActionDescription()
   {
-    if ($this->deleteAndReplace)
-    {
+    if ($this->deleteAndReplace) {
       return 'updating using delete and replace';
     }
-    if ($this->matchAndUpdate)
-    {
+    if ($this->matchAndUpdate) {
       return 'updating in place';
     }
 
@@ -2084,8 +1915,7 @@ class QubitFlatfileImport
    */
   private function createNewInformationObject()
   {
-    if ($this->skipUnmatched || $this->roundtrip)
-    {
+    if ($this->skipUnmatched || $this->roundtrip) {
       $msg = sprintf('Unable to match row. Skipping record: %s (id: %s)',
                       $this->columnExists('title') ? trim($this->columnValue('title')) : '',
                       $this->columnExists('identifier') ? trim($this->columnValue('identifier')) : '');
@@ -2109,16 +1939,13 @@ class QubitFlatfileImport
    */
   private function checkInformationObjectMatchLimit()
   {
-    if (!$this->object || !$this->limitToId)
-    {
+    if (!$this->object || !$this->limitToId) {
       return;
     }
 
-    if (null !== $repo = $this->object->getRepository(['inherit' => true]))
-    {
+    if (null !== $repo = $this->object->getRepository(['inherit' => true])) {
       // This matching information object is under the repository specified in --limit, don't touch object.
-      if ($this->limitToId == $repo->id)
-      {
+      if ($this->limitToId == $repo->id) {
         return;
       }
     }
@@ -2126,8 +1953,7 @@ class QubitFlatfileImport
     $collectionRoot = $this->object->getCollectionRoot();
 
     // This matching information object is under the TLD specified in --limit, don't touch object.
-    if ($collectionRoot && $this->limitToId == $collectionRoot->id)
-    {
+    if ($collectionRoot && $this->limitToId == $collectionRoot->id) {
       return;
     }
 
@@ -2139,8 +1965,7 @@ class QubitFlatfileImport
    */
   private function setInformationObjectByFields()
   {
-    if ($this->columnExists('identifier') && $this->columnExists('title') && $this->columnExists('repository'))
-    {
+    if ($this->columnExists('identifier') && $this->columnExists('title') && $this->columnExists('repository')) {
       $objectId = QubitInformationObject::getByTitleIdentifierAndRepo(
         $this->columnValue('identifier'),
         $this->columnValue('title'),
@@ -2153,8 +1978,7 @@ class QubitFlatfileImport
 
   private function setInformationObjectByKeymap($legacyId)
   {
-    if (!$legacyId)
-    {
+    if (!$legacyId) {
       return;
     }
 
@@ -2164,16 +1988,14 @@ class QubitFlatfileImport
       'information_object'
     );
 
-    if (!$mapEntry)
-    {
+    if (!$mapEntry) {
       return;
     }
 
     $this->object = QubitInformationObject::getById($mapEntry->target_id);
 
     // Remove keymap entry if it doesn't point to a valid QubitInformationObject.
-    if (null === $this->object)
-    {
+    if (null === $this->object) {
       self::sqlQuery('DELETE FROM keymap WHERE id=?', [$mapEntry->id]);
     }
   }
@@ -2186,8 +2008,7 @@ class QubitFlatfileImport
   private function handleRepositoryAndActorRow()
   {
     // Not updating and not skipping matches: create a new record without checking
-    if (!$this->isUpdating() && !$this->skipMatched)
-    {
+    if (!$this->isUpdating() && !$this->skipMatched) {
       $this->object = new $this->className();
 
       return false;
@@ -2204,8 +2025,7 @@ class QubitFlatfileImport
     $result = $statement->fetch(PDO::FETCH_OBJ);
 
     // Not updating, skipping matches and match found: mark as duplicate and skip
-    if (!$this->isUpdating() && $this->skipMatched && $result)
-    {
+    if (!$this->isUpdating() && $this->skipMatched && $result) {
       $msg = sprintf('Matching record found for "%s", skipping.',
                       $this->columnValue('authorizedFormOfName'));
       echo $this->logError($msg);
@@ -2217,8 +2037,7 @@ class QubitFlatfileImport
     }
 
     // Updating, skipping unmatched and match not found: skip
-    if ($this->isUpdating() && $this->skipUnmatched && !$result)
-    {
+    if ($this->isUpdating() && $this->skipUnmatched && !$result) {
       $msg = sprintf('No match found for record "%s", skipping.',
                       $this->columnValue('authorizedFormOfName'));
       echo $this->logError($msg);
@@ -2229,16 +2048,13 @@ class QubitFlatfileImport
     }
 
     // Updating and match found
-    if ($this->isUpdating() && $result)
-    {
+    if ($this->isUpdating() && $result) {
       // Limited to the actors maintained by a determined repository
-      if ('QubitActor' === $this->className && $this->limitToId)
-      {
+      if ('QubitActor' === $this->className && $this->limitToId) {
         $query = 'SELECT id FROM relation WHERE subject_id = ? AND object_id = ?;';
         $statement = QubitFlatfileImport::sqlQuery($query, [$this->limitToId, $result->id]);
 
-        if (false === $statement->fetch(PDO::FETCH_OBJ))
-        {
+        if (false === $statement->fetch(PDO::FETCH_OBJ)) {
           $msg = sprintf('Match found outside the repository limit for record "%s", skipping.',
                           $this->columnValue('authorizedFormOfName'));
           echo $this->logError($msg);
@@ -2261,8 +2077,7 @@ class QubitFlatfileImport
       $this->executeClosurePropertyIfSet('updatePreparationLogic');
 
       // Match and update: update current object
-      if ($this->matchAndUpdate)
-      {
+      if ($this->matchAndUpdate) {
         return false;
       }
 
@@ -2303,8 +2118,7 @@ class QubitFlatfileImport
 
     $statement = self::sqlQuery($query, [$objectId, $typeId,  $culture]);
 
-    foreach ($statement->fetchAll(PDO::FETCH_OBJ) as $row)
-    {
+    foreach ($statement->fetchAll(PDO::FETCH_OBJ) as $row) {
       $existingNotes[] = $row->content;
     }
 
@@ -2324,10 +2138,8 @@ class QubitFlatfileImport
   private function checkNoteExists(&$existingNotes, $content)
   {
     // Try to match this note against list of notes from the database for this object.
-    foreach ($existingNotes as $note)
-    {
-      if ($content == $note)
-      {
+    foreach ($existingNotes as $note) {
+      if ($content == $note) {
         return true;
       }
     }
@@ -2350,8 +2162,7 @@ class QubitFlatfileImport
   private static function getTermIndex($rows, $name)
   {
     foreach ($rows as $index => $row) {
-      if ($row['name'] == $name)
-      {
+      if ($row['name'] == $name) {
         return $index;
       }
     }
@@ -2372,13 +2183,11 @@ class QubitFlatfileImport
     $actor->parentId = QubitActor::ROOT_ID;
     $actor->authorizedFormOfName = $name;
 
-    if (isset($options['history']))
-    {
+    if (isset($options['history'])) {
       $actor->history = $options['history'];
     }
 
-    if (isset($options['entityTypeId']))
-    {
+    if (isset($options['entityTypeId'])) {
       $actor->entityTypeId = $options['entityTypeId'];
     }
 
@@ -2415,11 +2224,9 @@ class QubitFlatfileImport
   private function storeSerializedPropertyUsingControlledVocabulary($propertyName, $values, $vocabulary)
   {
     // Validate and normalize values
-    foreach ($values as $valueIndex => $value)
-    {
+    foreach ($values as $valueIndex => $value) {
       // Fail on invalid value (normalizing by case when checking value validity)
-      if (false === $vocabularyIndex = array_search(strtolower($value), array_map('strtolower', $vocabulary)))
-      {
+      if (false === $vocabularyIndex = array_search(strtolower($value), array_map('strtolower', $vocabulary))) {
         throw new sfException(sprintf('Invalid %s: %s', $propertyName, $value));
       }
 
@@ -2432,8 +2239,7 @@ class QubitFlatfileImport
     $criteria->add(QubitProperty::NAME, $propertyName);
 
     // Get property if it exists
-    if (null === $property = QubitProperty::getOne($criteria))
-    {
+    if (null === $property = QubitProperty::getOne($criteria)) {
       // Create property manually rather than using addProperty model methods
       // as they are implemented inconsistently
       $property = new QubitProperty();

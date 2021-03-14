@@ -27,16 +27,13 @@ class SettingsInventoryAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
-        if (null !== $this->settingLevels->value)
-        {
+        if (null !== $this->settingLevels->value) {
           $this->settingLevels->save();
         }
 
@@ -53,8 +50,7 @@ class SettingsInventoryAction extends DefaultEditAction
   protected function earlyExecute()
   {
     $this->settingLevels = QubitSetting::getByName('inventory_levels');
-    if (null === $this->settingLevels)
-    {
+    if (null === $this->settingLevels) {
       $this->settingLevels = new QubitSetting();
       $this->settingLevels->name = 'inventory_levels';
     }
@@ -62,16 +58,12 @@ class SettingsInventoryAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'levels':
         $value = unserialize($this->settingLevels->getValue());
-        if (false !== $value)
-        {
-          foreach ($value as $key => $item)
-          {
-            if (null === QubitTerm::getById($item))
-            {
+        if (false !== $value) {
+          foreach ($value as $key => $item) {
+            if (null === QubitTerm::getById($item)) {
               $this->unknownValueDetected = true;
               unset($value[$key]);
             }
@@ -83,14 +75,12 @@ class SettingsInventoryAction extends DefaultEditAction
         $this->form->setValidator('levels', new sfValidatorPass());
 
         $choices = [];
-        foreach (QubitTerm::getLevelsOfDescription() as $item)
-        {
+        foreach (QubitTerm::getLevelsOfDescription() as $item) {
           $choices[$item->id] = $item->__toString();
         }
 
         $size = count($choices);
-        if (0 === $size)
-        {
+        if (0 === $size) {
           $size = 4;
         }
 
@@ -102,12 +92,10 @@ class SettingsInventoryAction extends DefaultEditAction
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'levels':
         $levels = $this->form->getValue('levels');
-        if (empty($levels))
-        {
+        if (empty($levels)) {
           $levels = [];
         }
         $this->settingLevels->value = serialize($levels);

@@ -29,8 +29,7 @@ class deleteUserTask extends arBaseTask
     parent::execute($arguments, $options);
 
     // Abort if deletion isn't forced or confirmed
-    if (!$options['force'] && !$this->getConfirmation($arguments['username']))
-    {
+    if (!$options['force'] && !$this->getConfirmation($arguments['username'])) {
       $this->logSection('delete-user', 'Aborted.');
 
       return;
@@ -39,27 +38,23 @@ class deleteUserTask extends arBaseTask
     // Attempt to find user, exiting if the user doesn't exist
     $criteria = new Criteria();
     $criteria->add(QubitUser::USERNAME, $arguments['username']);
-    if (null === $user = QubitUser::getOne($criteria))
-    {
+    if (null === $user = QubitUser::getOne($criteria)) {
       throw new Exception('Unknown user.');
     }
 
     // If user is an administrator, abort if the user is the only administrator
-    if ($user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID))
-    {
+    if ($user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID)) {
       $criteria = new Criteria();
       $criteria->add(QubitAclUserGroup::GROUP_ID, QubitAclGroup::ADMINISTRATOR_ID);
       $adminCount = count(QubitAclUserGroup::get($criteria));
 
-      if (1 == $adminCount)
-      {
+      if (1 == $adminCount) {
         throw new Exception('This is the only administrator: deletion aborted.');
       }
     }
 
     // If notes are associated with user, abort unless "--update-notes" flag is set
-    if (count($user->getNotes()) && !$options['update-notes'])
-    {
+    if (count($user->getNotes()) && !$options['update-notes']) {
       throw new Exception('Deleting user would disassociate notes created by the user: deletion aborted (use --update-notes flag to force).');
     }
 

@@ -35,16 +35,14 @@ class QubitAsset
     $args = func_get_args();
 
     // File path passed
-    if (1 == func_num_args())
-    {
+    if (1 == func_num_args()) {
       $path_parts = pathinfo($args[0]);
 
       $this->name = $path_parts['basename'];
       $this->path = $args[0];
     }
     // File name and contents passed
-    elseif (2 == func_num_args())
-    {
+    elseif (2 == func_num_args()) {
       $this->name = $args[0];
       $this->contents = $args[1];
     }
@@ -83,13 +81,11 @@ class QubitAsset
 
   public function setChecksum($value, $options)
   {
-    if (isset($options['algorithm']))
-    {
+    if (isset($options['algorithm'])) {
       $this->setChecksumAlgorithm($options['algorithm']);
     }
 
-    if (0 < strlen($value) && !isset($this->checksumAlgorithm))
-    {
+    if (0 < strlen($value) && !isset($this->checksumAlgorithm)) {
       throw new Exception('You cannot set a checksum without specifiying an algorithm.');
     }
 
@@ -117,19 +113,15 @@ class QubitAsset
 
   public function generateChecksum($algorithm)
   {
-    if (!in_array($algorithm, hash_algos()))
-    {
+    if (!in_array($algorithm, hash_algos())) {
       throw new Exception('Invalid checksum algorithm');
     }
 
     $this->checksumAlgorithm = $algorithm;
 
-    if (isset($this->contents))
-    {
+    if (isset($this->contents)) {
       $this->checksum = hash($algorithm, $this->contents);
-    }
-    elseif (isset($this->path))
-    {
+    } elseif (isset($this->path)) {
       $this->checksum = hash_file($algorithm, $this->path);
     }
 

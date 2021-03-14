@@ -33,17 +33,14 @@ class PhysicalObjectEditAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->resource->save();
 
-        if (null !== $next = $this->form->getValue('next'))
-        {
+        if (null !== $next = $this->form->getValue('next')) {
           $this->redirect($next);
         }
 
@@ -55,16 +52,13 @@ class PhysicalObjectEditAction extends DefaultEditAction
   protected function earlyExecute()
   {
     $this->resource = new QubitPhysicalObject();
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
     }
 
     $title = $this->context->i18n->__('Add new physical storage');
-    if (isset($this->getRoute()->resource))
-    {
-      if (1 > strlen($title = $this->resource->__toString()))
-      {
+    if (isset($this->getRoute()->resource)) {
+      if (1 > strlen($title = $this->resource->__toString())) {
         $title = $this->context->i18n->__('Untitled');
       }
 
@@ -76,8 +70,7 @@ class PhysicalObjectEditAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'location':
       case 'name':
         $this->form->setDefault($name, $this->resource[$name]);
@@ -100,8 +93,7 @@ class PhysicalObjectEditAction extends DefaultEditAction
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'type':
         unset($this->resource->type);
 

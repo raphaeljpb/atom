@@ -21,29 +21,23 @@ class SearchInlineSearchComponent extends sfComponent
 {
   public function execute($request)
   {
-    if (!isset($this->route))
-    {
+    if (!isset($this->route)) {
       $params = ['module' => $request->module, 'action' => $request->action];
 
-      if (isset($request->view))
-      {
+      if (isset($request->view)) {
         $params['view'] = $request->view;
       }
 
       $this->route = $this->context->routing->generate(null, $params);
     }
 
-    if (isset($request->subquery))
-    {
+    if (isset($request->subquery)) {
       $params = $request->getGetParameters();
       unset($params['subquery']);
 
-      if (isset($this->route))
-      {
+      if (isset($this->route)) {
         $this->cleanRoute = $this->route;
-      }
-      else
-      {
+      } else {
         $this->cleanRoute = $this->context->routing->generate(null, ['module' => $request->module, 'action' => $request->action] + $params);
       }
     }

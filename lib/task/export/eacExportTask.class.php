@@ -54,13 +54,11 @@ class eacExportTask extends exportBulkBaseTask
               JOIN object o ON a.id = o.id
               WHERE a.id != ? AND o.class_name = ?';
 
-    if ($options['criteria'])
-    {
+    if ($options['criteria']) {
       $query .= ' AND '.$options['criteria'];
     }
 
-    foreach (QubitPdo::fetchAll($query, [QubitActor::ROOT_ID, 'QubitActor']) as $row)
-    {
+    foreach (QubitPdo::fetchAll($query, [QubitActor::ROOT_ID, 'QubitActor']) as $row) {
       // Fetch description then assocated actors
       $resource = QubitActor::getById($row->id);
 
@@ -68,16 +66,12 @@ class eacExportTask extends exportBulkBaseTask
       $filePath = sprintf('%s/%s', $arguments['path'], $filename);
 
       // Only export actor the first time it's encountered in a description
-      if (!file_exists($filePath))
-      {
+      if (!file_exists($filePath)) {
         $rawXml = $this->captureResourceExportTemplateOutput($resource, 'eac');
 
-        try
-        {
+        try {
           $xml = Qubit::tidyXml($rawXml);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
           $badXmlFilePath = sys_get_temp_dir().'/'.$filename;
           file_put_contents($badXmlFilePath, $rawXml);
 
@@ -87,9 +81,7 @@ class eacExportTask extends exportBulkBaseTask
         file_put_contents($filePath, $xml);
         $this->indicateProgress($options['items-until-update']);
         ++$itemsExported;
-      }
-      else
-      {
+      } else {
         $this->log("{$filePath} already exists, skipping...");
       }
     }

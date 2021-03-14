@@ -35,21 +35,18 @@ class DigitalObjectViewAction extends sfAction
     $this->digitalObjectId = $this->resource->id;
 
     // Resource Found?
-    if (null === $this->resource)
-    {
+    if (null === $this->resource) {
       $this->forward404();
     }
 
     list($obj, $action) = $this->getObjAndAction();
 
     // If access is denied, forward user to a 404 "Not found" page
-    if (!QubitAcl::check($obj, $action))
-    {
+    if (!QubitAcl::check($obj, $action)) {
       $this->forward404();
     }
 
-    if ($this->needsPopup($action))
-    {
+    if ($this->needsPopup($action)) {
       $this->resource = $this->resource->object;
 
       $this->accessToken = bin2hex(random_bytes(32)); // URL friendly
@@ -72,8 +69,7 @@ class DigitalObjectViewAction extends sfAction
   {
     // Only if the user is reading the master digital object, and the resource
     // has a PREMIS conditional copyright restriction
-    if ('readMaster' != $action || !$this->resource->hasConditionalCopyright())
-    {
+    if ('readMaster' != $action || !$this->resource->hasConditionalCopyright()) {
       return false;
     }
 
@@ -86,13 +82,10 @@ class DigitalObjectViewAction extends sfAction
     $this->response->setContentType($this->resource->mimeType);
 
     // Using X-Accel-Redirect (Nginx) unless ATOM_XSENDFILE is set
-    if (false === filter_var($_SERVER['ATOM_XSENDFILE'], FILTER_VALIDATE_BOOLEAN))
-    {
+    if (false === filter_var($_SERVER['ATOM_XSENDFILE'], FILTER_VALIDATE_BOOLEAN)) {
       $urlPath = preg_replace('\/?[^\/]+\.php$', '', $_SERVER['SCRIPT_NAME']);
       $this->response->setHttpHeader('X-Accel-Redirect', $urlPath.'/private'.$this->resource->getFullPath());
-    }
-    else
-    {
+    } else {
       $this->response->setHttpHeader('X-Sendfile', sprintf('%s/%s',
         sfConfig::get('sf_root_dir'),
         $this->resource->getFullPath()));
@@ -101,8 +94,7 @@ class DigitalObjectViewAction extends sfAction
 
   private function getObjAndAction()
   {
-    switch ($this->resource->usageId)
-    {
+    switch ($this->resource->usageId) {
       case QubitTerm::MASTER_ID:
         $action = 'readMaster';
         $obj = $this->resource->object;
@@ -133,13 +125,11 @@ class DigitalObjectViewAction extends sfAction
     $providedToken = $this->request->token;
     $internalToken = $this->context->user->getAttribute("token-{$this->digitalObjectId}", null, 'symfony/user/sfUser/copyrightStatementTmpAccess');
 
-    if (empty($providedToken) || empty($internalToken))
-    {
+    if (empty($providedToken) || empty($internalToken)) {
       return false;
     }
 
-    if ($providedToken !== $internalToken)
-    {
+    if ($providedToken !== $internalToken) {
       return false;
     }
 

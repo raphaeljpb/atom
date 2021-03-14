@@ -45,27 +45,21 @@ class digitalObjectLoadTask extends sfBaseTask
 
     sfConfig::set('app_upload_dir', self::getUploadDir($options));
 
-    if (false === $fh = fopen($arguments['filename'], 'rb'))
-    {
+    if (false === $fh = fopen($arguments['filename'], 'rb')) {
       throw new sfException('You must specify a valid filename');
     }
 
-    if (isset($options['limit']) && !is_numeric($options['limit']))
-    {
+    if (isset($options['limit']) && !is_numeric($options['limit'])) {
       throw new sfException('Limit must be a number');
     }
 
-    if ($options['replace'] && $options['attach-only'])
-    {
+    if ($options['replace'] && $options['attach-only']) {
       throw new sfException('Cannot use option "--attach-only" with "--replace".');
     }
 
-    if ($options['index'])
-    {
+    if ($options['index']) {
       QubitSearch::enable();
-    }
-    else
-    {
+    } else {
       QubitSearch::disable();
     }
 
@@ -77,60 +71,48 @@ class digitalObjectLoadTask extends sfBaseTask
     // Get header (first) row
     $header = fgetcsv($fh, 1000);
 
-    if ((!in_array('information_object_id', $header) && !in_array('identifier', $header) && !in_array('slug', $header)) || !in_array('filename', $header))
-    {
+    if ((!in_array('information_object_id', $header) && !in_array('identifier', $header) && !in_array('slug', $header)) || !in_array('filename', $header)) {
       throw new sfException('Import file must contain an \'information_object_id\', an \'identifier\' or a \'slug\' column, and a \'filename\' column');
     }
 
     $fileKey = array_search('filename', $header);
 
     // If information_object_id column is available, use it for id
-    if (false !== $idKey = array_search('information_object_id', $header))
-    {
+    if (false !== $idKey = array_search('information_object_id', $header)) {
       $idType = 'id';
     }
     // If no id, then lookup by identifier
-    elseif (false !== $idKey = array_search('identifier', $header))
-    {
+    elseif (false !== $idKey = array_search('identifier', $header)) {
       $idType = 'identifier';
     }
     // Lookup by slug
-    elseif (false !== $idKey = array_search('slug', $header))
-    {
+    elseif (false !== $idKey = array_search('slug', $header)) {
       $idType = 'slug';
     }
 
     // Build hash on information_object.id, with array value if information
     // object has multiple digital objects attached
-    while ($item = fgetcsv($fh, 1000))
-    {
+    while ($item = fgetcsv($fh, 1000)) {
       $id = $item[$idKey];
       $filename = $item[$fileKey];
 
-      if (0 == strlen($id))
-      {
+      if (0 == strlen($id)) {
         $this->log("Row {$totalObjCount}: missing {$idType}");
 
         continue;
       }
 
-      if (0 == strlen($filename))
-      {
+      if (0 == strlen($filename)) {
         $this->log("Row {$totalObjCount}: missing filename");
 
         continue;
       }
 
-      if (!isset($digitalObjects[$id]))
-      {
+      if (!isset($digitalObjects[$id])) {
         $digitalObjects[$id] = $filename;
-      }
-      elseif (!is_array($digitalObjects[$id]))
-      {
+      } elseif (!is_array($digitalObjects[$id])) {
         $digitalObjects[$id] = [$digitalObjects[$id], $filename];
-      }
-      else
-      {
+      } else {
         $digitalObjects[$id][] = $filename;
       }
 
@@ -141,22 +123,16 @@ class digitalObjectLoadTask extends sfBaseTask
 
     // Set up prepared query based on identifier type
     $sql = 'SELECT io.id, do.id FROM '.QubitInformationObject::TABLE_NAME.' io ';
-    if ('slug' == $idType)
-    {
+    if ('slug' == $idType) {
       $sql .= 'JOIN '.QubitSlug::TABLE_NAME.' slug ON slug.object_id = io.id ';
     }
     $sql .= 'LEFT JOIN '.QubitDigitalObject::TABLE_NAME.' do ON io.id = do.object_id';
 
-    if ('id' == $idType)
-    {
+    if ('id' == $idType) {
       $sql .= ' WHERE io.id = ?';
-    }
-    elseif ('identifier' == $idType)
-    {
+    } elseif ('identifier' == $idType) {
       $sql .= ' WHERE io.identifier = ?';
-    }
-    else
-    {
+    } else {
       $sql .= ' WHERE slug.slug = ?';
     }
 
@@ -164,40 +140,31 @@ class digitalObjectLoadTask extends sfBaseTask
     $importedCount = 0;
 
     // Loop through $digitalObject hash and add digital objects to db
-    foreach ($digitalObjects as $key => $item)
-    {
+    foreach ($digitalObjects as $key => $item) {
       // Stop importing if we've reached the limit
-      if (isset($options['limit']) && ($importedCount >= $options['limit']))
-      {
+      if (isset($options['limit']) && ($importedCount >= $options['limit'])) {
         break;
       }
 
       $ioQuery->execute([$key]);
       $results = $ioQuery->fetch();
-      if (!$results)
-      {
+      if (!$results) {
         $this->log("Couldn't find information object with {$idType}: {$key}");
 
         continue;
       }
 
-      if ($options['replace'])
-      {
+      if ($options['replace']) {
         $digitalObjectName = !is_array($item) ? $item : end($item);
 
-        if (null !== $results[1])
-        {
-          if (file_exists($path = self::getPath($digitalObjectName, $options)))
-          {
+        if (null !== $results[1]) {
+          if (file_exists($path = self::getPath($digitalObjectName, $options))) {
             // get digital object and delete it.
-            if (null !== $do = QubitDigitalObject::getById($results[1]))
-            {
+            if (null !== $do = QubitDigitalObject::getById($results[1])) {
               $do->delete();
               ++$this->deletedCount;
             }
-          }
-          else
-          {
+          } else {
             $this->log(sprintf("Couldn't read file '{$digitalObjectName}'"));
             ++$this->skippedCount;
 
@@ -209,19 +176,16 @@ class digitalObjectLoadTask extends sfBaseTask
       // If attach-only is set, the task will attach the new DO via a new
       // information obj regardless of whether there is one vs more in the
       // import CSV.
-      elseif (!is_array($item) && !$options['attach-only'])
-      {
+      elseif (!is_array($item) && !$options['attach-only']) {
         // Skip if this information object already has a digital object attached
-        if (null !== $results[1])
-        {
+        if (null !== $results[1]) {
           $this->log(sprintf("Information object {$idType}: %s already has a digital object. Skipping.", $key));
           ++$this->skippedCount;
 
           continue;
         }
 
-        if (!file_exists($path = self::getPath($item, $options)))
-        {
+        if (!file_exists($path = self::getPath($item, $options))) {
           $this->log(sprintf("Couldn't read file '{$item}'"));
           ++$this->skippedCount;
 
@@ -229,13 +193,9 @@ class digitalObjectLoadTask extends sfBaseTask
         }
 
         self::addDigitalObject($results[0], $item, $options);
-      }
-      else
-      {
-        if (!is_array($item))
-        {
-          if (!file_exists($path = self::getPath($item, $options)))
-          {
+      } else {
+        if (!is_array($item)) {
+          if (!file_exists($path = self::getPath($item, $options))) {
             $this->log(sprintf("Couldn't read file '{$item}'"));
             ++$this->skippedCount;
 
@@ -243,14 +203,10 @@ class digitalObjectLoadTask extends sfBaseTask
           }
 
           self::attachDigitalObject($item, $results[0], $options);
-        }
-        else
-        {
+        } else {
           // If more than one digital object linked to this information object
-          for ($i = 0; $i < count($item); ++$i)
-          {
-            if (!file_exists($path = self::getPath($item[$i], $options)))
-            {
+          for ($i = 0; $i < count($item); ++$i) {
+            if (!file_exists($path = self::getPath($item[$i], $options))) {
               $this->log(sprintf("Couldn't read file '{$item[$i]}'"));
               ++$this->skippedCount;
 
@@ -269,8 +225,7 @@ class digitalObjectLoadTask extends sfBaseTask
     $this->logSection('digital-object', 'Successfully Loaded '.self::$count.' digital objects.');
 
     // Warn user to manually update search index
-    if (!$options['index'])
-    {
+    if (!$options['index']) {
       $this->logSection('digital-object', 'Please update the search index manually to reflect any changes');
     }
   }
@@ -321,8 +276,7 @@ EOF;
 
   protected function getPath($path, $options = [])
   {
-    if (isset($options['path']))
-    {
+    if (isset($options['path'])) {
       $path = $options['path'].$path;
     }
 
@@ -337,8 +291,7 @@ EOF;
 
     $filename = basename($path);
 
-    if (!file_exists($path))
-    {
+    if (!file_exists($path)) {
       $this->log("Couldn't read file '{$path}'");
 
       return;
@@ -348,8 +301,7 @@ EOF;
     $operation = $options['replace'] ? 'Replacing with' : 'Loading';
     $message = sprintf("%s '%s' (%d of %d remaining", $operation, $filename, $this->curObjNum, $remainingImportCount);
 
-    if (isset($options['limit']))
-    {
+    if (isset($options['limit'])) {
       $message .= sprintf(': limited to %d imports', $options['limit']);
     }
     $message .= ')';
@@ -360,15 +312,11 @@ EOF;
     $do = new QubitDigitalObject();
     $do->objectId = $objectId;
 
-    if ($options['link-source'])
-    {
-      if (false === $do->importFromFile($path))
-      {
+    if ($options['link-source']) {
+      if (false === $do->importFromFile($path)) {
         return;
       }
-    }
-    else
-    {
+    } else {
       $do->usageId = QubitTerm::MASTER_ID;
       $do->assets[] = new QubitAsset($path);
     }
@@ -387,8 +335,7 @@ EOF;
       WHERE stg.source_culture = i18n.culture
        AND stg.name = \'upload_dir\';';
 
-    if ($sth = $options['conn']->query($sql))
-    {
+    if ($sth = $options['conn']->query($sql)) {
       list($uploadDir) = $sth->fetch();
     }
 

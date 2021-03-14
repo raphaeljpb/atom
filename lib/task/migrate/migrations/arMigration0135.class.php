@@ -33,16 +33,14 @@ class arMigration0135
   {
     // Extract existing value of premisAccessRightValues
     $setting = QubitSetting::getByName('premisAccessRightValues');
-    if (null === $setting)
-    {
+    if (null === $setting) {
       throw new sfException('Setting premisAccessRightValues cannot be found');
     }
 
     // Convert premisAccessRightValues into a multidimensional array where each basis
     // has its own permissions (allow_master, allow_reference, allow_thumb, etc...)
     $premisAccessRightValues = [];
-    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
-    {
+    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item) {
       $premisAccessRightValues[$item->slug] = unserialize($setting->value);
     }
 

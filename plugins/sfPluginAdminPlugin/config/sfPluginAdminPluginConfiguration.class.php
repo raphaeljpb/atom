@@ -18,8 +18,7 @@ class sfPluginAdminPluginConfiguration extends sfPluginConfiguration
     // Project classes, e.g. QubitSetting, not loaded unless
     // sfApplicationConfiguration,
     // http://accesstomemory.org/wiki/index.php?title=Autoload#Plugins
-    if (!$this->configuration instanceof sfApplicationConfiguration)
-    {
+    if (!$this->configuration instanceof sfApplicationConfiguration) {
       return;
     }
 
@@ -37,10 +36,8 @@ class sfPluginAdminPluginConfiguration extends sfPluginConfiguration
     $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, 'plugins');
 
-    try
-    {
-      if (sfPluginAdminPluginConfiguration::$loadPlugins && 1 == count($query = QubitSetting::get($criteria)))
-      {
+    try {
+      if (sfPluginAdminPluginConfiguration::$loadPlugins && 1 == count($query = QubitSetting::get($criteria))) {
         // http://accesstomemory.org/wiki/index.php?title=Autoload
         $this->dispatcher->disconnect('autoload.filter_config', [$this->configuration, 'filterAutoloadConfig']);
 
@@ -59,10 +56,8 @@ class sfPluginAdminPluginConfiguration extends sfPluginConfiguration
         $pluginPaths = $this->configuration->getAllPluginPaths();
 
         // Ignore plugins configured in the db but not available (removed)
-        foreach (array_diff($pluginNames, array_keys($pluginPaths)) as $item)
-        {
-          if (false !== $pos = array_search($item, $pluginNames))
-          {
+        foreach (array_diff($pluginNames, array_keys($pluginPaths)) as $item) {
+          if (false !== $pos = array_search($item, $pluginNames)) {
             unset($pluginNames[$pos]);
 
             $this->dispatcher->notify(new sfEvent($this, 'application.log', [sprintf('The plugin "%s" does not exist.', $item)]));
@@ -71,21 +66,16 @@ class sfPluginAdminPluginConfiguration extends sfPluginConfiguration
 
         $this->configuration->enablePlugins($pluginNames);
 
-        foreach ($pluginNames as $name)
-        {
-          if (!isset($pluginPaths[$name]))
-          {
+        foreach ($pluginNames as $name) {
+          if (!isset($pluginPaths[$name])) {
             throw new InvalidArgumentException('The plugin "'.$name.'" does not exist.');
           }
 
           // Copied from sfProjectConfiguration::loadPlugins()
           $className = $name.'Configuration';
-          if (!is_readable($path = $pluginPaths[$name].'/config/'.$className.'.class.php'))
-          {
+          if (!is_readable($path = $pluginPaths[$name].'/config/'.$className.'.class.php')) {
             $configuration = new sfPluginConfigurationGeneric($this->configuration, $pluginPaths[$name], $name);
-          }
-          else
-          {
+          } else {
             require_once $path;
             $configuration = new $className($this->configuration, $pluginPaths[$name], $name);
           }
@@ -99,9 +89,7 @@ class sfPluginAdminPluginConfiguration extends sfPluginConfiguration
 
         $this->dispatcher->connect('autoload.filter_config', [$this->configuration, 'filterAutoloadConfig']);
       }
-    }
-    catch (PropelException $e)
-    {
+    } catch (PropelException $e) {
       // Silently swallow PropelException because we can't tell at this point
       // if we are in install, and install plugin can't listen for an exception
       // thrown at this point, is this the best solution?

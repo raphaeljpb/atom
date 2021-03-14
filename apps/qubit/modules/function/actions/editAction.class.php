@@ -28,11 +28,9 @@ class FunctionEditAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->resource->save();
@@ -49,13 +47,11 @@ class FunctionEditAction extends DefaultEditAction
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
     $this->resource = new QubitFunctionObject();
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
 
       // Check user authorization
-      if (!QubitAcl::check($this->resource, 'update') && !QubitAcl::check($this->resource, 'translate'))
-      {
+      if (!QubitAcl::check($this->resource, 'update') && !QubitAcl::check($this->resource, 'translate')) {
         QubitAcl::forwardUnauthorized();
       }
 
@@ -63,12 +59,9 @@ class FunctionEditAction extends DefaultEditAction
       $this->form->setDefault('serialNumber', $this->resource->serialNumber);
       $this->form->setValidator('serialNumber', new sfValidatorInteger());
       $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
-    }
-    else
-    {
+    } else {
       // Check authorization
-      if (!QubitAcl::check($this->parent, 'create'))
-      {
+      if (!QubitAcl::check($this->parent, 'create')) {
         QubitAcl::forwardUnauthorized();
       }
     }

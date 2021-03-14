@@ -53,8 +53,7 @@ class arMigration0177
       'right',
     ];
 
-    foreach ($oldTables as $table)
-    {
+    foreach ($oldTables as $table) {
       QubitPdo::modify(sprintf('DROP TABLE IF EXISTS `%s`;', $table));
     }
 
@@ -137,8 +136,7 @@ class arMigration0177
       'term_i18n',
     ];
 
-    foreach ($i18nTables as $i18nTable)
-    {
+    foreach ($i18nTables as $i18nTable) {
       $baseTable = str_replace('_i18n', '', $i18nTable);
 
       // Update possible NULL values added in between migrations.
@@ -167,8 +165,7 @@ class arMigration0177
     // - Modify column.
     $sql = 'SELECT id FROM slug WHERE slug IS NULL;';
 
-    foreach (QubitPdo::fetchAll($sql) as $slug)
-    {
+    foreach (QubitPdo::fetchAll($sql) as $slug) {
       $sql = 'UPDATE slug SET slug=:slug WHERE id=:id';
       QubitPdo::modify($sql, [
         ':slug' => QubitSlug::getUnique(),

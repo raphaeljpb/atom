@@ -43,8 +43,7 @@ EOF;
 
     $skipRows = ($options['skip-rows']) ? $options['skip-rows'] : 0;
 
-    if (false === $fh = fopen($arguments['filename'], 'rb'))
-    {
+    if (false === $fh = fopen($arguments['filename'], 'rb')) {
       throw new sfException('You must specify a valid filename');
     }
 
@@ -92,8 +91,7 @@ EOF;
       ],
 
       // Import logic to load deaccession
-      'rowInitLogic' => function (&$self)
-      {
+      'rowInitLogic' => function (&$self) {
         $accessionIdentifier = $self->rowStatusVars['accessionNumber'];
 
         // Look up Qubit ID of pre-created accession
@@ -104,27 +102,22 @@ EOF;
 
         $result = $accessionQueryStatement->fetch(PDO::FETCH_OBJ);
 
-        if ($result)
-        {
+        if ($result) {
           $self->object = new QubitDeaccession();
           $self->object->accessionId = $result->id;
-        }
-        else
-        {
+        } else {
           $error = 'Skipping. Match not found for accession number: '.$accessionIdentifier;
           echo $self->logError($error);
         }
       },
 
-      'preSaveLogic' => function (&$self)
-      {
+      'preSaveLogic' => function (&$self) {
         $ignoreDuplicates = ($self->status['options']['ignore-duplicates']) ? true : false;
 
         $createDeaccession = $ignoreDuplicates;
 
         // Check database if ignore-duplicates is NOT set
-        if (!$ignoreDuplicates)
-        {
+        if (!$ignoreDuplicates) {
           // Try and find existing Deaccession
           $deaccessionQueryStatement = $self->sqlQuery(
             'SELECT deaccession.id FROM deaccession'.
@@ -146,14 +139,12 @@ EOF;
           );
           $deaccessionResult = $deaccessionQueryStatement->fetch(PDO::FETCH_OBJ);
 
-          if (!$deaccessionResult)
-          {
+          if (!$deaccessionResult) {
             $createDeaccession = true;
           }
         }
 
-        if (!$createDeaccession)
-        {
+        if (!$createDeaccession) {
           $self->object = null;
           $error = 'Skipping duplicate deaccession: '.$self->rowStatusVars['accessionNumber'];
           echo $self->logError($error);
@@ -161,17 +152,14 @@ EOF;
       },
 
       // Import logic to save accession
-      'saveLogic' => function (&$self)
-      {
-        if ('QubitDeaccession' == get_class($self->object) && isset($self->object) && is_object($self->object))
-        {
+      'saveLogic' => function (&$self) {
+        if ('QubitDeaccession' == get_class($self->object) && isset($self->object) && is_object($self->object)) {
           $self->object->save();
         }
       },
     ]);
 
-    $import->addColumnHandler('scope', function ($self, $data)
-    {
+    $import->addColumnHandler('scope', function ($self, $data) {
       $this->setObjectPropertyToTermIdLookedUpFromTermNameArray(
         $self,
         'scopeId',

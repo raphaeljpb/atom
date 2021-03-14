@@ -24,14 +24,12 @@ class ActorIndexAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that this isn't the root
-    if (!isset($this->resource->parent))
-    {
+    if (!isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'read'))
-    {
+    if (!QubitAcl::check($this->resource, 'read')) {
       QubitAcl::forwardUnauthorized();
     }
 

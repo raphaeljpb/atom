@@ -25,10 +25,8 @@ class AclGroupIndexTermAclAction extends sfAction
     $this->forward404Unless($this->group);
 
     $this->groups = [];
-    foreach ($this->group->getAncestorsAndSelfForAcl() as $group)
-    {
-      if (QubitAclGroup::ROOT_ID < $group->id)
-      {
+    foreach ($this->group->getAncestorsAndSelfForAcl() as $group) {
+      if (QubitAclGroup::ROOT_ID < $group->id) {
         $this->groups[] = $group->id;
       }
     }
@@ -38,12 +36,9 @@ class AclGroupIndexTermAclAction extends sfAction
 
     // Get access control permissions
     $criteria = new Criteria();
-    if (1 == count($this->groups))
-    {
+    if (1 == count($this->groups)) {
       $criteria->add(QubitAclPermission::GROUP_ID, $this->groups[0]);
-    }
-    else
-    {
+    } else {
       $criteria->add(QubitAclPermission::GROUP_ID, $this->groups, Criteria::IN);
     }
 
@@ -63,17 +58,12 @@ class AclGroupIndexTermAclAction extends sfAction
 
     // Build ACL
     $this->acl = [];
-    if (0 < count($permissions = QubitAclPermission::get($criteria)))
-    {
-      foreach ($permissions as $permission)
-      {
-        if ('createTerm' != $permission->action)
-        {
+    if (0 < count($permissions = QubitAclPermission::get($criteria))) {
+      foreach ($permissions as $permission) {
+        if ('createTerm' != $permission->action) {
           $taxonomy = $permission->getConstants(['name' => 'taxonomy']);
           $action = $permission->action;
-        }
-        else
-        {
+        } else {
           // In this context permissions for all objects (null) and root object
           // are equivalent
           $taxonomy = (QubitTaxonomy::ROOT_ID != $permission->objectId) ? $permission->objectId : null;

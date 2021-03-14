@@ -40,8 +40,7 @@ class arMigration0112
   {
     $setting = QubitSetting::getByName('findingAidFormat');
 
-    if (!isset($setting))
-    {
+    if (!isset($setting)) {
       $setting = new QubitSetting();
     }
 

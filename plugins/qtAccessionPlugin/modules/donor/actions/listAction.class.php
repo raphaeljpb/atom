@@ -21,27 +21,22 @@ class DonorListAction extends sfAction
 {
   public function execute($request)
   {
-    if (!$this->context->user->hasCredential(['contributor', 'editor', 'administrator'], false))
-    {
+    if (!$this->context->user->hasCredential(['contributor', 'editor', 'administrator'], false)) {
       QubitAcl::forwardUnauthorized();
     }
 
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
     $criteria = new Criteria();
     $criteria->addDescendingOrderByColumn(QubitObject::UPDATED_AT);
 
-    if (isset($request->subquery))
-    {
+    if (isset($request->subquery)) {
       $criteria->addJoin(QubitDonor::ID, QubitActorI18n::ID);
       $criteria->add(QubitActorI18n::CULTURE, $this->context->user->getCulture());
       $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "%{$request->subquery}%", Criteria::LIKE);
-    }
-    else
-    {
+    } else {
       $this->redirect(['module' => 'donor', 'action' => 'browse']);
     }
 

@@ -38,17 +38,14 @@ class PhysicalObjectDeleteAction extends sfAction
     $this->form->setValidator('next', new sfValidatorString());
     $this->form->setWidget('next', new sfWidgetFormInputHidden());
 
-    if ($request->isMethod('delete'))
-    {
+    if ($request->isMethod('delete')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->resource->delete();
 
         $next = $this->form->getValue('next');
-        if (isset($next))
-        {
+        if (isset($next)) {
           $this->redirect($next);
         }
 

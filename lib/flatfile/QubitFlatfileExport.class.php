@@ -40,7 +40,7 @@ class QubitFlatfileExport
   protected $rowsPerFile = 1000;           // how many rows until creating new export file
 
   protected $separatorChar = '|';          // character to use when imploding arrays
-                                           // to a single value
+  // to a single value
 
   /*
    * Constructor
@@ -62,8 +62,7 @@ class QubitFlatfileExport
     $this->path = $destinationPath;
     $this->standard = $standard;
 
-    if (false !== $rowsPerFile)
-    {
+    if (false !== $rowsPerFile) {
       $this->rowsPerFile = $rowsPerFile;
     }
 
@@ -93,8 +92,7 @@ class QubitFlatfileExport
     $resourceTypeBaseConfigFile = $resourceClass.'.yml';
     $config = self::loadResourceConfigFile($resourceTypeBaseConfigFile, 'base');
 
-    if ($this->standard)
-    {
+    if ($this->standard) {
       // Load archival standard-specific export configuration for type
       // (this can augment and/or override the base configuration)
       $resourceTypeStandardConfigFile = $resourceClass.'-'.$this->standard.'.yml';
@@ -110,20 +108,17 @@ class QubitFlatfileExport
     $this->propertyMap = isset($config['property']) ? $config['property'] : [];
 
     // If column names/order aren't specified, derive them
-    if (null === $this->columnNames)
-    {
+    if (null === $this->columnNames) {
       // Add standard columns
       $this->columnNames = (null !== $this->standardColumns) ? $this->standardColumns : [];
 
       // Add from column map
-      if (null !== $this->columnMap)
-      {
+      if (null !== $this->columnMap) {
         $this->columnNames = array_merge($this->columnNames, array_values($this->columnMap));
       }
 
       // Add from property map
-      if (null !== $this->propertyMap)
-      {
+      if (null !== $this->propertyMap) {
         $this->columnNames = array_merge($this->columnNames, array_values($this->propertyMap));
       }
     }
@@ -154,16 +149,14 @@ class QubitFlatfileExport
     $configFilePath = 'config/'.$file;
 
     // If custom version doesn't exist, load built-in version
-    if (!file_exists($configFilePath))
-    {
+    if (!file_exists($configFilePath)) {
       $configFileBasePath = 'lib/flatfile/config';
       $configFilePath = $configFileBasePath.'/'.$file;
     }
 
     $config = sfYaml::load(realpath($configFilePath));
 
-    if ('array' != gettype($config))
-    {
+    if ('array' != gettype($config)) {
       throw new sfException('Missing/malformed resource '.$roleDescription.' config: '.$configFilePath);
     }
 
@@ -180,21 +173,16 @@ class QubitFlatfileExport
    */
   public function overrideConfigData(&$config, $mixin)
   {
-    foreach ($mixin as $key => $value)
-    {
-      if (!is_array($value))
-      {
+    foreach ($mixin as $key => $value) {
+      if (!is_array($value)) {
         $config[$key] = $value;
-      }
-      else
-      {
+      } else {
         // If config array being overridden is a sequential array,
         // replace all elements in the array (e.g. isad 'columnNames').
         // If config array being overridden is an associative array,
         // override elements are merged so do not use this logic
         // (e.g. rad 'map').
-        if ($config[$key] === array_values($config[$key]))
-        {
+        if ($config[$key] === array_values($config[$key])) {
           $config[$key] = [];
         }
 
@@ -220,8 +208,7 @@ class QubitFlatfileExport
     $columnIndex = array_search($column, $this->columnNames);
 
     // Ignore columns that aren't in the column headers
-    if (is_numeric($columnIndex))
-    {
+    if (is_numeric($columnIndex)) {
       // Set column, processing value beforehand
       $this->row[$columnIndex] = $this->content($value);
     }
@@ -237,13 +224,11 @@ class QubitFlatfileExport
   {
     $noteContent = [];
 
-    foreach ($this->resource->getNotesByType(['noteTypeId' => $noteTypeId]) as $note)
-    {
+    foreach ($this->resource->getNotesByType(['noteTypeId' => $noteTypeId]) as $note) {
       $noteContent[] = $note->content;
     }
 
-    if (count($noteContent))
-    {
+    if (count($noteContent)) {
       $this->setColumn($column, $noteContent);
     }
   }
@@ -255,8 +240,7 @@ class QubitFlatfileExport
    */
   public function exportResource(&$resource)
   {
-    if (!$this->configurationLoaded)
-    {
+    if (!$this->configurationLoaded) {
       $this->loadResourceSpecificConfiguration(get_class($resource));
     }
 
@@ -265,11 +249,9 @@ class QubitFlatfileExport
     // If writing to a directory, generate filename periodically to keep each
     // file's size small-ish, which makes importing the file easier in terms of
     // import time and memory usage.
-    if (is_dir($this->path))
-    {
+    if (is_dir($this->path)) {
       // Increase file index and delete file pointer if reader to start new file
-      if (!($this->rowsExported % $this->rowsPerFile))
-      {
+      if (!($this->rowsExported % $this->rowsPerFile)) {
         ++$this->fileIndex;
         unset($this->currentFileHandle);
       }
@@ -279,27 +261,22 @@ class QubitFlatfileExport
       $filenamePrepend = (null !== $this->standard) ? $this->standard.'_' : '';
       $filename = sprintf('%s%s.csv', $filenamePrepend, str_pad($this->fileIndex, 10, '0', STR_PAD_LEFT));
       $filePath = $this->path.'/'.$filename;
-    }
-    else
-    {
+    } else {
       $filePath = $this->path;
 
       // Replace file if it already exists, yet we haven't exported any rows
-      if (file_exists($filePath) && !$this->rowsExported)
-      {
+      if (file_exists($filePath) && !$this->rowsExported) {
         unlink($filePath);
       }
     }
 
     // If file doesn't yet exist, write headers
-    if (!file_exists($filePath))
-    {
+    if (!file_exists($filePath)) {
       $this->appendRowToCsvFile($filePath, $this->columnNames);
     }
 
     // Clear Qubit object cache periodically
-    if (($this->rowsExported % $this->rowsPerFile) == 0)
-    {
+    if (($this->rowsExported % $this->rowsPerFile) == 0) {
       Qubit::clearClassCaches();
     }
 
@@ -317,23 +294,16 @@ class QubitFlatfileExport
   public function prepareRowFromResource()
   {
     // Cycle through columns to populate row array
-    foreach ($this->columnNames as $index => $column)
-    {
+    foreach ($this->columnNames as $index => $column) {
       $value = $this->row[$index];
 
       // If row value hasn't been set to anything, attempt to get resource property
-      if (null === $value)
-      {
-        if (in_array($column, $this->standardColumns))
-        {
+      if (null === $value) {
+        if (in_array($column, $this->standardColumns)) {
           $value = $this->resource->{$column};
-        }
-        elseif (($sourceColumn = array_search($column, $this->columnMap)) !== false)
-        {
+        } elseif (($sourceColumn = array_search($column, $this->columnMap)) !== false) {
           $value = $this->resource->{$sourceColumn};
-        }
-        elseif (isset($this->propertyMap[$column]))
-        {
+        } elseif (isset($this->propertyMap[$column])) {
           $value = $this->resource->getPropertyByName($this->propertyMap[$column])->__toString();
         }
       }
@@ -375,13 +345,11 @@ class QubitFlatfileExport
     $taxonomyCacheMap = [];
 
     // Prepare taxonomy cache map
-    foreach ($map as $property => $taxonomy)
-    {
+    foreach ($map as $property => $taxonomy) {
       $taxonomyCacheMap[$property] = constant('QubitTaxonomy::'.$taxonomy);
     }
 
-    if (count($taxonomyCacheMap))
-    {
+    if (count($taxonomyCacheMap)) {
       $this->cacheTaxonomiesAsProperties($taxonomyCacheMap);
     }
   }
@@ -395,8 +363,7 @@ class QubitFlatfileExport
    */
   protected function cacheTaxonomiesAsProperties($map)
   {
-    foreach ($map as $propertyName => $taxonomyId)
-    {
+    foreach ($map as $propertyName => $taxonomyId) {
       $this->cacheTaxonomyAsProperty($propertyName, $taxonomyId);
     }
   }
@@ -425,8 +392,7 @@ class QubitFlatfileExport
   {
     $terms = [];
 
-    foreach (QubitFlatfileImport::getTaxonomyTerms($taxonomyId) as $term)
-    {
+    foreach (QubitFlatfileImport::getTaxonomyTerms($taxonomyId) as $term) {
       $terms[$term->culture][$term->id] = $term->name;
     }
 
@@ -442,8 +408,7 @@ class QubitFlatfileExport
    */
   protected function content($value)
   {
-    if (is_array($value))
-    {
+    if (is_array($value)) {
       // Remove empty strings from the array via array_filter too, to prevent superfluous separators
       return implode($this->separatorChar, array_filter($value, 'strlen'));
     }
@@ -459,8 +424,7 @@ class QubitFlatfileExport
    */
   protected function appendRowToCsvFile($filePath, $row)
   {
-    if (!isset($this->currentFileHandle))
-    {
+    if (!isset($this->currentFileHandle)) {
       $this->currentFileHandle = fopen($filePath, 'a');
     }
 
@@ -489,8 +453,7 @@ class QubitFlatfileExport
   {
     $digitalObject = $this->getAllowedDigitalObject();
 
-    if (!empty($digitalObject))
-    {
+    if (!empty($digitalObject)) {
       $siteUrl = rtrim(QubitSetting::getByName('siteBaseUrl'), '/ ');
 
       $this->setColumn(
@@ -499,9 +462,7 @@ class QubitFlatfileExport
       $this->setColumn(
         'digitalObjectChecksum', $digitalObject->getChecksum()
       );
-    }
-    else
-    {
+    } else {
       $this->setColumn('digitalObjectURI', '');
       $this->setColumn('digitalObjectChecksum', '');
     }
@@ -516,22 +477,19 @@ class QubitFlatfileExport
   {
     $digitalObject = $this->resource->getDigitalObject();
 
-    if (null === $digitalObject)
-    {
+    if (null === $digitalObject) {
       return null;
     }
 
     // If user can access the master DO, use the master DO metadata
-    if (QubitAcl::check($this->resource, 'readMaster', ['user' => $this->user]))
-    {
+    if (QubitAcl::check($this->resource, 'readMaster', ['user' => $this->user])) {
       return $digitalObject;
     }
 
     // If user can access the reference DO, use the reference DO metadata
     if (QubitAcl::check(
       $this->resource, 'readReference', ['user' => $this->user])
-    )
-    {
+    ) {
       return $digitalObject->reference;
     }
 

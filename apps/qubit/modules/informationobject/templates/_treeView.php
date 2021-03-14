@@ -20,11 +20,12 @@
     <ul class="unstyled">
 
       <?php foreach ($ancestors as $ancestor) { ?>
-        <?php if (QubitInformationObject::ROOT_ID == $ancestor->id) continue; ?>
-        <?php echo render_treeview_node(
-          $ancestor,
-          ['ancestor' => true, 'root' => QubitInformationObject::ROOT_ID == $ancestor->parentId],
-          ['xhr-location' => url_for([$ancestor, 'module' => 'informationobject', 'action' => 'treeView'])]); ?>
+        <?php if (QubitInformationObject::ROOT_ID != $ancestor->id) { ?>
+          <?php echo render_treeview_node(
+            $ancestor,
+            ['ancestor' => true, 'root' => QubitInformationObject::ROOT_ID == $ancestor->parentId],
+            ['xhr-location' => url_for([$ancestor, 'module' => 'informationobject', 'action' => 'treeView'])]); ?>
+        <?php } ?>
       <?php } ?>
 
       <?php if (!isset($children)) { ?>
@@ -71,7 +72,7 @@
               'numSiblingsLeft' => $siblingCountNext, ]); ?>
         <?php } ?>
 
-      <?php } elseif (isset($nextSiblings)){ ?>
+      <?php } elseif (isset($nextSiblings)) { ?>
 
         <?php foreach ($nextSiblings as $next) { ?>
           <?php echo render_treeview_node(

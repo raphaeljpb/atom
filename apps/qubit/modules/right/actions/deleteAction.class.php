@@ -26,17 +26,14 @@ class RightDeleteAction extends sfAction
     $this->relatedObject = $this->right->relationsRelatedByobjectId[0]->subject;
 
     // Check user authorization against the related object
-    if (!QubitAcl::check($this->relatedObject, 'delete'))
-    {
+    if (!QubitAcl::check($this->relatedObject, 'delete')) {
       QubitAcl::forwardUnauthorized();
     }
 
-    if ($request->isMethod('delete'))
-    {
+    if ($request->isMethod('delete')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->right->delete();
 
         return $this->redirect([$this->relatedObject]);

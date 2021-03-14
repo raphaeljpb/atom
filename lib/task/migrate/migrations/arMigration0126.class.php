@@ -32,8 +32,7 @@ class arMigration0126
   public function up($configuration)
   {
     $name = 'digital_object_derivatives_pdf_page_number';
-    if (null === QubitSetting::getByName($name))
-    {
+    if (null === QubitSetting::getByName($name)) {
       $setting = new QubitSetting();
       $setting->name = $name;
       $setting->value = 1;

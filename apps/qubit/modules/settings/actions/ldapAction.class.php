@@ -30,12 +30,10 @@ class SettingsLdapAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         QubitCache::getInstance()->removePattern('settings:i18n:*');
@@ -47,19 +45,15 @@ class SettingsLdapAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'ldapHost':
       case 'ldapPort':
       case 'ldapBaseDn':
       case 'ldapBindAttribute':
         // Determine and set field default value
-        if (null !== $this->{$name} = QubitSetting::getByName($name))
-        {
+        if (null !== $this->{$name} = QubitSetting::getByName($name)) {
           $default = $this->{$name}->getValue(['sourceCulture' => true]);
-        }
-        else
-        {
+        } else {
           $defaults = [
             'ldapPort' => '389',
             'ldapBindAttribute' => 'uid',
@@ -81,14 +75,12 @@ class SettingsLdapAction extends DefaultEditAction
 
   protected function processField($field)
   {
-    switch ($name = $field->getName())
-    {
+    switch ($name = $field->getName()) {
       case 'ldapHost':
       case 'ldapPort':
       case 'ldapBaseDn':
       case 'ldapBindAttribute':
-        if (null === $this->{$name})
-        {
+        if (null === $this->{$name}) {
           $this->{$name} = new QubitSetting();
           $this->{$name}->name = $name;
           $this->{$name}->scope = 'ldap';

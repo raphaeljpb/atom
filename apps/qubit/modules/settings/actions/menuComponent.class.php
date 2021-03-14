@@ -116,11 +116,9 @@ class SettingsMenuComponent extends sfComponent
       ],
     ];
 
-    foreach ($this->nodes as $i => &$node)
-    {
+    foreach ($this->nodes as $i => &$node) {
       // Remove hidden nodes
-      if (!empty($node['hide']) && true === $node['hide'])
-      {
+      if (!empty($node['hide']) && true === $node['hide']) {
         unset($this->nodes[$i]);
       }
 

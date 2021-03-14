@@ -23,20 +23,17 @@ class QubitRights extends BaseRights
   {
     $string = [];
 
-    if (isset($this->basis))
-    {
+    if (isset($this->basis)) {
       $string[] = $this->basis;
     }
 
-    if (isset($this->act))
-    {
+    if (isset($this->act)) {
       $string[] = $this->act;
     }
 
     $string = implode(' - ', $string);
 
-    if (null !== $date = Qubit::renderDateStartEnd(null, $this->startDate, $this->endDate))
-    {
+    if (null !== $date = Qubit::renderDateStartEnd(null, $this->startDate, $this->endDate)) {
       $string .= ' ('.$date.')';
     }
 
@@ -46,8 +43,7 @@ class QubitRights extends BaseRights
   public function delete($connection = null)
   {
     // Make sure that the associated QubitRelation object is removed before
-    foreach (QubitRelation::getRelationsByObjectId($this->id, ['typeId' => QubitTerm::RIGHT_ID]) as $item)
-    {
+    foreach (QubitRelation::getRelationsByObjectId($this->id, ['typeId' => QubitTerm::RIGHT_ID]) as $item) {
       $item->indexObjectOnDelete = false;
       $item->delete();
     }
@@ -62,10 +58,8 @@ class QubitRights extends BaseRights
 
   public function grantedRightsFindById($id)
   {
-    foreach ($this->grantedRights as $gr)
-    {
-      if ($gr->id === $id)
-      {
+    foreach ($this->grantedRights as $gr) {
+      if ($gr->id === $id) {
         return $gr;
       }
     }
@@ -78,10 +72,8 @@ class QubitRights extends BaseRights
     parent::save($connection);
 
     // Save updated grantedRights
-    foreach ($this->grantedRights as $grantedRight)
-    {
-      if (!$grantedRight->isDeleted())
-      {
+    foreach ($this->grantedRights as $grantedRight) {
+      if (!$grantedRight->isDeleted()) {
         $grantedRight->indexOnSave = false;
         $grantedRight->rights = $this;
         $grantedRight->save();
@@ -115,10 +107,8 @@ class QubitRights extends BaseRights
     $newRights->statuteNote = $this->statuteNote;
 
     // Other culture rows
-    foreach ($this->rightsI18ns as $sourceRightsI18n)
-    {
-      if (sfContext::getInstance()->user->getCulture() == $sourceRightsI18n->culture)
-      {
+    foreach ($this->rightsI18ns as $sourceRightsI18n) {
+      if (sfContext::getInstance()->user->getCulture() == $sourceRightsI18n->culture) {
         continue;
       }
 
@@ -138,8 +128,7 @@ class QubitRights extends BaseRights
     }
 
     // Copy granted rights
-    foreach ($this->grantedRights as $sourceGrantedRight)
-    {
+    foreach ($this->grantedRights as $sourceGrantedRight) {
       $newGrantedRight = new QubitGrantedRight();
       $newGrantedRight->act = $sourceGrantedRight->act;
       $newGrantedRight->restriction = $sourceGrantedRight->restriction;

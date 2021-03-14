@@ -42,19 +42,15 @@ class QubitOai
   public static function checkBadArgument($keys, $requestValidKeys, $mandatoryKeys)
   {
     // Check that only valid keys are present
-    foreach ($keys as $key)
-    {
-      if (!in_array($key, $requestValidKeys))
-      {
+    foreach ($keys as $key) {
+      if (!in_array($key, $requestValidKeys)) {
         return false;
       }
     }
 
     // Check that all mandatory keys are present
-    foreach ($mandatoryKeys as $mandatoryKey)
-    {
-      if (!in_array($mandatoryKey, $keys))
-      {
+    foreach ($mandatoryKeys as $mandatoryKey) {
+      if (!in_array($mandatoryKey, $keys)) {
         return false;
       }
     }
@@ -72,10 +68,8 @@ class QubitOai
    */
   public static function checkValidMetadataFormat($metadataFormat)
   {
-    foreach (self::getMetadataFormats() as $formatData)
-    {
-      if ($formatData['prefix'] === $metadataFormat)
-      {
+    foreach (self::getMetadataFormats() as $formatData) {
+      if ($formatData['prefix'] === $metadataFormat) {
         return true;
       }
     }
@@ -94,10 +88,8 @@ class QubitOai
   {
     $verb = ['verb'];
     $parametersKeys = array_diff(array_keys($parameters), $verb);
-    foreach ($parametersKeys as $key)
-    {
-      if (null == $parameters[$key])
-      {
+    foreach ($parametersKeys as $key) {
+      if (null == $parameters[$key]) {
         return true;
       }
     }
@@ -116,25 +108,21 @@ class QubitOai
   {
     // Ex. 2003-01-02T01:30:30Z or 2003-01-02
     $parts = explode('-', $date);
-    if (3 != count($parts))
-    {
+    if (3 != count($parts)) {
       return false;
     }
 
     // If time is part of the date then validate
-    if ($T_pos = strpos($parts[2], 'T'))
-    {
+    if ($T_pos = strpos($parts[2], 'T')) {
       $time = substr($parts[2], $T_pos);
       $parts[2] = substr($parts[2], 0, $T_pos);
-      if (!preg_match('/^T(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$/i', $time))
-      {
+      if (!preg_match('/^T(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$/i', $time)) {
         return false;
       }
     }
 
     // Parameters - Month, Day, Year
-    if (!@checkdate($parts[1], $parts[2], $parts[0]))
-    {
+    if (!@checkdate($parts[1], $parts[2], $parts[0])) {
       return false;
     }
 
@@ -151,8 +139,7 @@ class QubitOai
    */
   public static function isValidOaiKey($key)
   {
-    if (isset($validOaiKeyArr[$key]))
-    {
+    if (isset($validOaiKeyArr[$key])) {
       return true;
     }
 
@@ -168,8 +155,7 @@ class QubitOai
    */
   public static function getDate($date = '')
   {
-    if ('' == $date)
-    {
+    if ('' == $date) {
       return gmdate('Y-m-d\TH:i:s\Z');
     }
 
@@ -205,27 +191,21 @@ class QubitOai
 
     $oaiSets = [];
 
-    foreach ($collections as $collection)
-    {
+    foreach ($collections as $collection) {
       $oaiSets[] = new QubitOaiCollectionSet($collection);
     }
 
     $useAdditionalOaiSets = QubitSetting::getByName('oai_additional_sets_enabled');
 
     // If all collections have been returned and additional sets are enabled, add them
-    if (!$remaining && $useAdditionalOaiSets && $useAdditionalOaiSets->value)
-    {
+    if (!$remaining && $useAdditionalOaiSets && $useAdditionalOaiSets->value) {
       $additionalSetsToSkip = $options['offset'] - $collectionCount; // Skip additional sets within offset
 
-      foreach (QubitOai::$additionalOaiSets as $index => $oaiSet)
-      {
+      foreach (QubitOai::$additionalOaiSets as $index => $oaiSet) {
         // If paging isn't active or the current "page" isn't full (and this set shouldn't be skipped), add set
-        if (!$options['limit'] || (count($oaiSets) < $options['limit'] && $index >= $additionalSetsToSkip))
-        {
+        if (!$options['limit'] || (count($oaiSets) < $options['limit'] && $index >= $additionalSetsToSkip)) {
           $oaiSets[] = $oaiSet;
-        }
-        elseif (count($oaiSets) >= $options['limit'])
-        {
+        } elseif (count($oaiSets) >= $options['limit']) {
           // The "page" is full so add this set to the remaining count
           ++$remaining;
         }
@@ -268,20 +248,16 @@ class QubitOai
   public static function getMatchingOaiSet($setSpec)
   {
     // Check additional sets, if enabled
-    if (sfConfig::get('app_oai_oai_additional_sets_enabled__source', false))
-    {
-      foreach (QubitOai::$additionalOaiSets as $oaiSet)
-      {
-        if ($oaiSet->setSpec() == $setSpec)
-        {
+    if (sfConfig::get('app_oai_oai_additional_sets_enabled__source', false)) {
+      foreach (QubitOai::$additionalOaiSets as $oaiSet) {
+        if ($oaiSet->setSpec() == $setSpec) {
           return $oaiSet;
         }
       }
     }
 
     // Return information object with local identifier
-    if (null !== $result = QubitInformationObject::getRecordByOaiID(QubitOai::getOaiIdNumber($setSpec)))
-    {
+    if (null !== $result = QubitInformationObject::getRecordByOaiID(QubitOai::getOaiIdNumber($setSpec))) {
       return new QubitOaiCollectionSet($result);
     }
 
@@ -299,8 +275,7 @@ class QubitOai
   {
     $repositoryIdentifier = QubitOai::getOaiNamespaceIdentifier();
 
-    if ($repositoryCode = sfConfig::get('app_oai_oai_repository_code'))
-    {
+    if ($repositoryCode = sfConfig::get('app_oai_oai_repository_code')) {
       $repositoryIdentifier .= ':'.$repositoryCode;
     }
 
@@ -340,8 +315,7 @@ class QubitOai
     $dom->loadXML($xml);
 
     return true;
-    if ($dom->schemaValidate($xml))
-    {
+    if ($dom->schemaValidate($xml)) {
       return true;
     }
 
@@ -363,8 +337,7 @@ class QubitOai
     $oaiSimpleRes = $oaiSimple->xpath('//c:ListRecords/c:resumptionToken');
 
     $oaiSimpleRes = $oaiSimple->ListRecords->resumptionToken;
-    if ('' == $oaiSimpleRes)
-    {
+    if ('' == $oaiSimpleRes) {
       return false;
     }
 
@@ -409,8 +382,7 @@ class QubitOai
     $doc->libxmlerrors = libxml_get_errors();
 
     // If the document didn't parse correctly, stop right here
-    if (empty($doc->documentElement))
-    {
+    if (empty($doc->documentElement)) {
       return $doc;
     }
 
@@ -418,36 +390,30 @@ class QubitOai
     $re = '/xmlns:([^=]+)="([^"]+)"/';
     preg_match_all($re, $XMLString, $mat, PREG_SET_ORDER);
 
-    foreach ($mat as $xmlns)
-    {
+    foreach ($mat as $xmlns) {
       $pre = $xmlns[1];
       $uri = $xmlns[2];
 
       $doc->namespaces[$pre] = $uri;
 
-      if ('' == $pre)
-      {
+      if ('' == $pre) {
         $pre = 'noname';
       }
 
       $doc->xpath->registerNamespace($pre, $uri);
     }
 
-    if (!isset($doc->namespaces['']))
-    {
+    if (!isset($doc->namespaces[''])) {
       $doc->namespaces[''] = $doc->documentElement->lookupnamespaceURI(null);
     }
 
-    if ($xsi)
-    {
+    if ($xsi) {
       $doc->schemaLocations = [];
       $lst = $doc->xpath->query('//@$xsi:schemaLocation');
-      foreach ($lst as $el)
-      {
+      foreach ($lst as $el) {
         $re = "{[\\s\n\r]*([^\\s\n\r]+)[\\s\n\r]*([^\\s\n\r]+)}";
         preg_match_all($re, $el->nodeValue, $mat);
-        for ($i = 0; $i < count($mat[0]); ++$i)
-        {
+        for ($i = 0; $i < count($mat[0]); ++$i) {
           $value = $mat[2][$i];
           $doc->schemaLocations[$mat[1][$i]] = $value;
         }
@@ -466,8 +432,7 @@ class QubitOai
 
     // If the scheme is missing from a URL, parse_url() mistakenly interprets the host as the path.
     // Prepend a dummy scheme and re-parse, if this is the case.
-    if (!isset($parsedURL['scheme']))
-    {
+    if (!isset($parsedURL['scheme'])) {
       $parsedURL = parse_url('http://'.$URL);
     }
 

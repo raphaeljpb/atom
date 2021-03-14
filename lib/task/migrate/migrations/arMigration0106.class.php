@@ -69,17 +69,14 @@ class arMigration0106
         'is the provider of' => 'is the client of',
         'is the business partner of' => 'itself',
         'is the associate of' => 'itself',
-        'is the friend of' => 'itself', ], ] as $parentId => $terms)
-    {
-      foreach ($terms as $termName => $converseTermName)
-      {
+        'is the friend of' => 'itself', ], ] as $parentId => $terms) {
+      foreach ($terms as $termName => $converseTermName) {
         // Obtain/create object term
         $criteria = new Criteria();
         $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
         $criteria->add(QubitTermI18n::NAME, $termName);
 
-        if (null === $objectTerm = QubitTerm::getOne($criteria))
-        {
+        if (null === $objectTerm = QubitTerm::getOne($criteria)) {
           $objectTerm = new QubitTerm();
           $objectTerm->name = $termName;
           $objectTerm->culture = 'en';
@@ -90,19 +87,15 @@ class arMigration0106
         $objectTerm->taxonomyId = QubitTaxonomy::ACTOR_RELATION_TYPE_ID;
         $objectTerm->save();
 
-        if ('itself' == $converseTermName)
-        {
+        if ('itself' == $converseTermName) {
           $subjectTerm = $objectTerm;
-        }
-        else
-        {
+        } else {
           // Obtain/create subject term
           $criteria = new Criteria();
           $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
           $criteria->add(QubitTermI18n::NAME, $converseTermName);
 
-          if (null === $subjectTerm = QubitTerm::getOne($criteria))
-          {
+          if (null === $subjectTerm = QubitTerm::getOne($criteria)) {
             $subjectTerm = new QubitTerm();
             $subjectTerm->name = $converseTermName;
             $subjectTerm->culture = 'en';

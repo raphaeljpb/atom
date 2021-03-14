@@ -38,7 +38,7 @@
 
       <?php echo render_show(__('Copyright note'), render_value_inline($resource->getCopyrightNote(['cultureFallback' => true]))); ?>
 
-    <?php } elseif (QubitTerm::RIGHT_BASIS_LICENSE_ID == $resource->basisId){ ?>
+    <?php } elseif (QubitTerm::RIGHT_BASIS_LICENSE_ID == $resource->basisId) { ?>
 
       <?php echo render_show(__('License identifier'), render_value_inline($resource->getIdentifierValue(['cultureFallback' => true]))); ?>
 
@@ -46,7 +46,7 @@
 
       <?php echo render_show(__('License note'), render_value_inline($resource->getLicenseNote(['cultureFallback' => true]))); ?>
 
-    <?php } elseif (QubitTerm::RIGHT_BASIS_STATUTE_ID == $resource->basisId){ ?>
+    <?php } elseif (QubitTerm::RIGHT_BASIS_STATUTE_ID == $resource->basisId) { ?>
 
       <?php echo render_show(__('Statute jurisdiction'), render_value_inline($resource->getStatuteJurisdiction(['cultureFallback' => true]))); ?>
 

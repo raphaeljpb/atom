@@ -28,20 +28,16 @@ class StaticPageEditAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->resource->save();
 
         // Invalidate static page content cache entry
-        if (!$this->new && null !== $cache = QubitCache::getInstance())
-        {
-          foreach (sfConfig::get('app_i18n_languages') as $culture)
-          {
+        if (!$this->new && null !== $cache = QubitCache::getInstance()) {
+          foreach (sfConfig::get('app_i18n_languages') as $culture) {
             $cacheKey = 'staticpage:'.$this->resource->id.':'.$culture;
             $cache->remove($cacheKey);
           }
@@ -59,21 +55,17 @@ class StaticPageEditAction extends DefaultEditAction
     $this->resource = new QubitStaticPage();
     $title = $this->context->i18n->__('Add new page');
 
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
 
       $this->new = false;
 
-      if (1 > strlen($title = $this->resource->__toString()))
-      {
+      if (1 > strlen($title = $this->resource->__toString())) {
         $title = $this->context->i18n->__('Untitled');
       }
 
       $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
-    }
-    else
-    {
+    } else {
       $this->new = true;
     }
 
@@ -82,8 +74,7 @@ class StaticPageEditAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'content':
         $this->form->setDefault('content', $this->resource->content);
         $this->form->setValidator('content', new sfValidatorString());
@@ -110,11 +101,9 @@ class StaticPageEditAction extends DefaultEditAction
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'slug':
-        if (!$this->resource->isProtected())
-        {
+        if (!$this->resource->isProtected()) {
           $this->resource->slug = $this->form->getValue('slug');
         }
 

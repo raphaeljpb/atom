@@ -49,12 +49,9 @@ class QubitAcl
 
   public function __construct($user = null)
   {
-    if (null === $user)
-    {
+    if (null === $user) {
       $this->_user = sfContext::getInstance()->user;
-    }
-    else
-    {
+    } else {
       $this->_user = $user;
     }
 
@@ -64,8 +61,7 @@ class QubitAcl
 
   public static function getInstance()
   {
-    if (null === self::$_instance)
-    {
+    if (null === self::$_instance) {
       self::$_instance = new self();
     }
 
@@ -95,46 +91,37 @@ class QubitAcl
    */
   public static function check($resource, $actions, $options = [])
   {
-    if ($resource instanceof sfOutputEscaper)
-    {
+    if ($resource instanceof sfOutputEscaper) {
       $resource = sfOutputEscaper::unescape($resource);
     }
 
     $hasAccess = false;
 
     // Skip ACL checks for command-line tasks
-    if ('cli' == sfContext::getInstance()->getConfiguration()->getEnvironment())
-    {
+    if ('cli' == sfContext::getInstance()->getConfiguration()->getEnvironment()) {
       return true;
     }
 
-    if (!is_array($actions))
-    {
+    if (!is_array($actions)) {
       $actions = [$actions];
     }
 
     // Get the current user from sfContext, if a user is not explicitly set
-    if (isset($options['user']))
-    {
+    if (isset($options['user'])) {
       $user = $options['user'];
-    }
-    else
-    {
+    } else {
       $user = sfContext::getInstance()->user;
     }
 
     // Loop through actions and return on first "true" result (OR condition)
-    while ($action = array_shift($actions))
-    {
+    while ($action = array_shift($actions)) {
       // Short-circuit decision tree for 'translate', because we want
       // translate permissions to apply system-wide
       //
       // TODO: Get rid of this when we are using ACL system-wide
       //
-      if ('translate' == $action)
-      {
-        if (self::isAllowed($user, $resource, 'translate', $options))
-        {
+      if ('translate' == $action) {
+        if (self::isAllowed($user, $resource, 'translate', $options)) {
           return true;
         }
 
@@ -142,8 +129,7 @@ class QubitAcl
       }
 
       // OR condition, first "true" result returns
-      if ($hasAccess = self::checkAccessByClass($resource, $user, $action, $options))
-      {
+      if ($hasAccess = self::checkAccessByClass($resource, $user, $action, $options)) {
         return $hasAccess;
       }
     }
@@ -163,29 +149,24 @@ class QubitAcl
    */
   public static function isAllowed($role, $resource, $action, $options = [])
   {
-    if (!isset(class_implements($role)['Zend_Acl_Role_Interface']))
-    {
+    if (!isset(class_implements($role)['Zend_Acl_Role_Interface'])) {
       self::getInstance()->addRole($role);
     }
 
     // If resource is a new object (i.e. has no id yet) try authorizing against
     // its parent
-    if (is_object($resource) && !isset($resource->id))
-    {
+    if (is_object($resource) && !isset($resource->id)) {
       return self::authorizeAgainstParent($role, $resource, $action);
     }
 
     // HACKS for limiting term permissions by taxonomy
-    if ($resource instanceof QubitTaxonomy && 'createTerm' == $action)
-    {
+    if ($resource instanceof QubitTaxonomy && 'createTerm' == $action) {
       $term = clone QubitTerm::getById(QubitTerm::ROOT_ID);
       $term->taxonomyId = $resource->id;
       $action = 'create';
 
       $resource = $term;
-    }
-    elseif ($resource instanceof QubitTerm && array_key_exists('taxonomyId', $options))
-    {
+    } elseif ($resource instanceof QubitTerm && array_key_exists('taxonomyId', $options)) {
       // Create clone resource that we can assign to an arbitrary taxonomy
       $resource = clone $resource;
       $resource->taxonomyId = $options['taxonomyId'];
@@ -206,18 +187,15 @@ class QubitAcl
    */
   public static function addRepositoryAccess($repositoryAccess, $permissions)
   {
-    foreach ($permissions as $permission)
-    {
-      if (null === $permission->grantDeny)
-      {
+    foreach ($permissions as $permission) {
+      if (null === $permission->grantDeny) {
         continue;
       }
 
       $access = (1 == $permission->grantDeny) ? self::GRANT : self::DENY;
 
       // If no repository specified, then apply rule to all repositories
-      if (null === ($repository = $permission->getRepository()))
-      {
+      if (null === ($repository = $permission->getRepository())) {
         $repositoryAccess[] = ['id' => '*', 'access' => $access];
 
         break;
@@ -225,18 +203,15 @@ class QubitAcl
 
       // Add repository access if there is no pre-existing rule for that repo
       $preExistingRule = false;
-      foreach ($repositoryAccess as $rule)
-      {
-        if ($repository->id == $rule['id'])
-        {
+      foreach ($repositoryAccess as $rule) {
+        if ($repository->id == $rule['id']) {
           $preExistingRule = true;
 
           break;
         }
       }
 
-      if (!$preExistingRule)
-      {
+      if (!$preExistingRule) {
         $repositoryAccess[] = ['id' => $repository->id, 'access' => $access];
       }
     }
@@ -258,8 +233,7 @@ class QubitAcl
     $userGroupIds = [];
 
     // If user is logged in
-    if (sfContext::getInstance()->user->isAuthenticated())
-    {
+    if (sfContext::getInstance()->user->isAuthenticated()) {
       $userId = sfContext::getInstance()->user->getUserID();
 
       // Test user permissions
@@ -277,22 +251,17 @@ class QubitAcl
       $criteria->add($c1);
       $criteria->addDescendingOrderByColumn(QubitAclPermission::ID);
 
-      if (0 < count($permissions = QubitAclPermission::get($criteria)))
-      {
+      if (0 < count($permissions = QubitAclPermission::get($criteria))) {
         $repositoryAccess = self::addRepositoryAccess($repositoryAccess, $permissions);
       }
-    }
-    else
-    {
+    } else {
       // Add anonymous group if user is not logged in
       $userGroupIds[] = QubitAclGroup::ANONYMOUS_ID;
     }
 
-    if (0 == count($repositoryAccess) || '*' != $repositoryAccess[count($repositoryAccess) - 1]['id'])
-    {
+    if (0 == count($repositoryAccess) || '*' != $repositoryAccess[count($repositoryAccess) - 1]['id']) {
       // Test user group permissions
-      foreach (sfContext::getInstance()->user->listGroups() as $group)
-      {
+      foreach (sfContext::getInstance()->user->listGroups() as $group) {
         $userGroupIds[] = $group->id;
       }
 
@@ -308,15 +277,13 @@ class QubitAcl
       $criteria->add($c1);
       $criteria->addDescendingOrderByColumn(QubitAclPermission::ID);
 
-      if (0 < count($permissions = QubitAclPermission::get($criteria)))
-      {
+      if (0 < count($permissions = QubitAclPermission::get($criteria))) {
         $repositoryAccess = self::addRepositoryAccess($repositoryAccess, $permissions);
       }
     }
 
     // Default is to deny access if no permissions specified
-    if (0 == count($repositoryAccess) || '*' != $repositoryAccess[count($repositoryAccess) - 1]['id'])
-    {
+    if (0 == count($repositoryAccess) || '*' != $repositoryAccess[count($repositoryAccess) - 1]['id']) {
       $repositoryAccess[] = ['id' => '*', 'access' => self::DENY];
     }
 
@@ -325,10 +292,8 @@ class QubitAcl
     // ('1' => deny, '2' => allow, '*' => allow) -> (1' => deny, '*' => allow)
     $globalPermission = $repositoryAccess[count($repositoryAccess) - 1]['access'];
     $collapsedRules = [];
-    foreach ($repositoryAccess as $i => $val)
-    {
-      if ('*' == $val['id'] || $globalPermission != $val['access'])
-      {
+    foreach ($repositoryAccess as $i => $val) {
+      if ('*' == $val['id'] || $globalPermission != $val['access']) {
         $collapsedRules[] = $val;
       }
     }
@@ -340,17 +305,13 @@ class QubitAcl
   {
     sfContext::getInstance()->response->setStatuscode(403);
 
-    if ($headerOnly)
-    {
+    if ($headerOnly) {
       return sfView::HEADER_ONLY;
     }
 
-    if (!sfContext::getInstance()->user->isAuthenticated())
-    {
+    if (!sfContext::getInstance()->user->isAuthenticated()) {
       self::forwardToLoginAction();
-    }
-    else
-    {
+    } else {
       self::forwardToSecureAction();
     }
   }
@@ -399,15 +360,11 @@ class QubitAcl
   public static function getUserPermissionsByAction($user, $class, $action)
   {
     // Get user's groups
-    if ($user->isAuthenticated())
-    {
-      foreach ($user->listGroups() as $group)
-      {
+    if ($user->isAuthenticated()) {
+      foreach ($user->listGroups() as $group) {
         $userGroupIds[] = $group->id;
       }
-    }
-    else
-    {
+    } else {
       $userGroupIds = [QubitAclGroup::ANONYMOUS_ID];
     }
 
@@ -419,8 +376,7 @@ class QubitAcl
 
     // Find by group/user
     $c3 = $criteria->getNewCriterion(QubitAclPermission::GROUP_ID, $userGroupIds, Criteria::IN);
-    if ($user->isAuthenticated())
-    {
+    if ($user->isAuthenticated()) {
       $c4 = $criteria->getNewCriterion(QubitAclPermission::USER_ID, $user->getUserID());
       $c3->addOr($c4);
     }
@@ -446,8 +402,7 @@ class QubitAcl
 
     // Avoid to add criteria if not needed
     // Show ALL drafts and published descriptions (don't add to criteria)
-    if (true === $filterCriteria)
-    {
+    if (true === $filterCriteria) {
       return $criteria;
     }
 
@@ -460,8 +415,7 @@ class QubitAcl
 
     // Show a limited set of draft descriptions + all published descriptions
     // Otherwise, show only published descriptions
-    if (!is_bool($filterCriteria))
-    {
+    if (!is_bool($filterCriteria)) {
       $ct1->addOr($filterCriteria);
     }
 
@@ -482,12 +436,9 @@ class QubitAcl
     $user = sfContext::getInstance()->user;
     $rootClass = get_class($root);
 
-    if ('createTerm' != $action)
-    {
+    if ('createTerm' != $action) {
       $permissions = self::getUserPermissionsByAction($user, $rootClass, $action);
-    }
-    else
-    {
+    } else {
       $permissions = self::getUserPermissionsByAction($user, 'QubitTerm', 'create');
     }
 
@@ -495,35 +446,25 @@ class QubitAcl
     $allows = $bans = $ids = [];
     $forceBan = false;
 
-    if (0 < count($permissions))
-    {
-      foreach ($permissions as $permission)
-      {
-        switch ($action)
-        {
+    if (0 < count($permissions)) {
+      foreach ($permissions as $permission) {
+        switch ($action) {
           case 'createTerm':
-            if (null !== $slug = $permission->getConstants(['name' => 'taxonomy']))
-            {
+            if (null !== $slug = $permission->getConstants(['name' => 'taxonomy'])) {
               $criteria2 = new Criteria();
               $criteria2->add(QubitSlug::SLUG, $slug);
               $criteria2->addJoin(QubitSlug::OBJECT_ID, QubitTaxonomy::ID);
 
-              if (null !== $taxonomy = QubitTaxonomy::getOne($criteria2))
-              {
+              if (null !== $taxonomy = QubitTaxonomy::getOne($criteria2)) {
                 // Add id directly to the allows and bans arrays
                 // self::isAllowed gives unexpected results if there are more than one taxonomy rule
-                if (1 == $permission->grantDeny)
-                {
+                if (1 == $permission->grantDeny) {
                   $allows[] = $taxonomy->id;
-                }
-                else
-                {
+                } else {
                   $bans[] = $taxonomy->id;
                 }
               }
-            }
-            else
-            {
+            } else {
               // Grant or deny all if the permission hasn't taxonomy's constants
               return 1 == $permission->grantDeny;
             }
@@ -531,20 +472,17 @@ class QubitAcl
             break;
 
           case 'viewDraft':
-            if (null !== $repository = $permission->getConstants(['name' => 'repository']))
-            {
+            if (null !== $repository = $permission->getConstants(['name' => 'repository'])) {
               $repoId = QubitPdo::fetchColumn('SELECT object_id FROM slug WHERE slug=?', [$repository]);
               $sql = 'SELECT id FROM information_object WHERE repository_id=?';
 
               // Stay within the query limit
-              if ($criteria->getLimit() > 0)
-              {
+              if ($criteria->getLimit() > 0) {
                 $sql .= ' LIMIT '.$criteria->getLimit();
               }
 
               $rows = QubitPdo::fetchAll($sql, [$repoId]);
-              foreach ($rows as $row)
-              {
+              foreach ($rows as $row) {
                 $ids[] = $row->id;
               }
 
@@ -563,22 +501,17 @@ class QubitAcl
 
       $resourceCache = []; // Hydrating tons of ORM objects via getById() is very slow, cache results
 
-      foreach ($ids as $id)
-      {
-        if (array_key_exists($id, $resourceCache))
-        {
+      foreach ($ids as $id) {
+        if (array_key_exists($id, $resourceCache)) {
           continue;
         }
 
         $resource = call_user_func([$rootClass, 'getById'], $id);
         $resourceCache[$id] = $resource;
 
-        if (self::isAllowed($user, $resource, $action))
-        {
+        if (self::isAllowed($user, $resource, $action)) {
           $allows[] = $id;
-        }
-        else
-        {
+        } else {
           $bans[] = $id;
         }
       }
@@ -587,22 +520,17 @@ class QubitAcl
     $isAllowedActionOnRoot = QubitAcl::isAllowed($user, $root, $action);
 
     // Special cases - avoid adding unnecessary criteria
-    if (0 == count($allows) && !$isAllowedActionOnRoot)
-    {
+    if (0 == count($allows) && !$isAllowedActionOnRoot) {
       return false; // No allows, always false
     }
-    if (!$forceBan && 0 == count($bans) && $isAllowedActionOnRoot)
-    {
+    if (!$forceBan && 0 == count($bans) && $isAllowedActionOnRoot) {
       return true; // No bans, always true
     }
 
     // If more allows than bans, then add list of allowed resources. Otherwise, add list of banned resources.
-    if (count($allows) >= count($bans))
-    {
+    if (count($allows) >= count($bans)) {
       $criterion = self::getAllowedResourcesCriterion($criteria, $rootClass, $resourceCache, $allows, true);
-    }
-    else
-    {
+    } else {
       $criterion = self::getAllowedResourcesCriterion($criteria, $rootClass, $resourceCache, $bans, false);
     }
 
@@ -626,14 +554,12 @@ class QubitAcl
   {
     // If parent authorization is allowed for this $action type, then get the
     // parent object
-    if (in_array($action, self::$_parentAuthActions))
-    {
+    if (in_array($action, self::$_parentAuthActions)) {
       $parent = $resource->parent;
     }
 
     // If we don't have a valid parent for authorization, deny action
-    if (!isset($parent) || !isset($parent->id))
-    {
+    if (!isset($parent) || !isset($parent->id)) {
       return false;
     }
 
@@ -642,21 +568,15 @@ class QubitAcl
 
   protected function addRole($role)
   {
-    if (is_object($role))
-    {
-      if (!in_array($role->id, $this->_roles))
-      {
-        foreach ($role->getAncestorsAndSelfForAcl() as $ancestor)
-        {
-          if (!in_array($ancestor->id, $this->_roles))
-          {
+    if (is_object($role)) {
+      if (!in_array($role->id, $this->_roles)) {
+        foreach ($role->getAncestorsAndSelfForAcl() as $ancestor) {
+          if (!in_array($ancestor->id, $this->_roles)) {
             $this->acl->addRole($ancestor, $ancestor->parentId);
           }
         }
       }
-    }
-    elseif (!in_array($role, $this->_roles))
-    {
+    } elseif (!in_array($role, $this->_roles)) {
       $this->acl->addRole($role);
     }
 
@@ -666,41 +586,33 @@ class QubitAcl
   protected function buildUserRoleList($user)
   {
     // Don't add user twice
-    if (in_array($user->getUserID(), $this->_roles))
-    {
+    if (in_array($user->getUserID(), $this->_roles)) {
       return $this;
     }
 
     $parents = []; // Immediate parents of user role
 
-    if ($user->isAuthenticated())
-    {
+    if ($user->isAuthenticated()) {
       // Add authenticated group
       $this->acl->addRole(QubitAclGroup::getById(QubitAclGroup::AUTHENTICATED_ID));
       $this->_roles[] = QubitAclGroup::AUTHENTICATED_ID;
 
       // Add groups (if user belongs to any)
-      if (0 < count($aclUserGroups = $user->user->getAclUserGroups()))
-      {
-        foreach ($aclUserGroups as $aclUserGroup)
-        {
+      if (0 < count($aclUserGroups = $user->user->getAclUserGroups())) {
+        foreach ($aclUserGroups as $aclUserGroup) {
           $aclGroup = $aclUserGroup->group;
           $this->acl->addRole($aclGroup, $aclGroup->parent);
           $this->_roles[] = $aclGroup->id;
           $parents[] = $aclGroup->id;
         }
-      }
-      else
-      {
+      } else {
         $parents = QubitAclGroup::AUTHENTICATED_ID;
       }
 
       // Add user role
       $this->acl->addRole($user->getUserID(), $parents);
       $this->_roles[] = $user->getUserID();
-    }
-    else
-    {
+    } else {
       // Add anonymous role
       $this->acl->addRole(QubitAclGroup::getById(QubitAclGroup::ANONYMOUS_ID));
       $this->_roles[] = QubitAclGroup::ANONYMOUS_ID;
@@ -714,25 +626,19 @@ class QubitAcl
     $resourceId = (is_object($resource)) ? $resource->id : $resource;
 
     // Don't add same resource twice
-    if (in_array($resourceId, $this->_resources))
-    {
+    if (in_array($resourceId, $this->_resources)) {
       return $this;
     }
 
     // Add resource hierarchy
-    if (is_object($resource))
-    {
-      foreach ($resource->getAncestorsAndSelfForAcl() as $r)
-      {
-        if (!in_array($r->id, $this->_resources))
-        {
+    if (is_object($resource)) {
+      foreach ($resource->getAncestorsAndSelfForAcl() as $r) {
+        if (!in_array($r->id, $this->_resources)) {
           $this->acl->addResource($r->id, $r->parentId);
           $this->_resources[] = $r->id;
         }
       }
-    }
-    else
-    {
+    } else {
       $this->acl->addResource($resource);
       $this->_resources[] = $resourceId;
     }
@@ -744,28 +650,23 @@ class QubitAcl
   {
     $resources = $this->_resources;
 
-    if (null !== $resource)
-    {
+    if (null !== $resource) {
       $this->buildResourceList($resource, $options);
-    }
-    elseif (!isset($this->resources['null']))
-    {
+    } elseif (!isset($this->resources['null'])) {
       // Still test ACL against 'null' resource (requires permissions on null)
       $this->_resources['null'] = null;
     }
 
     // Only add permissions for resources that have not already been added
     $newResources = array_diff($this->_resources, $resources);
-    if ([] === $newResources)
-    {
+    if ([] === $newResources) {
       return $this;
     }
 
     // Add all permissions related to the current roles and resources
     $criteria = new Criteria();
     $c1 = $criteria->getNewCriterion(QubitAclPermission::GROUP_ID, $this->_roles, Criteria::IN);
-    if ($this->_user->isAuthenticated())
-    {
+    if ($this->_user->isAuthenticated()) {
       $c2 = $criteria->getNewCriterion(QubitAclPermission::USER_ID, $this->_user->getUserID());
       $c1->addOr($c2);
     }
@@ -775,24 +676,18 @@ class QubitAcl
     $c1->addAnd($c3);
     $criteria->add($c1);
 
-    if (0 < count($permissions = QubitAclPermission::get($criteria)))
-    {
-      foreach ($permissions as $permission)
-      {
+    if (0 < count($permissions = QubitAclPermission::get($criteria))) {
+      foreach ($permissions as $permission) {
         $aclMethod = (1 == $permission->grantDeny) ? 'allow' : 'deny';
 
-        if (isset($permission->userId))
-        {
+        if (isset($permission->userId)) {
           // Ignore permission belonging to other users, refs #7817
-          if ($permission->userId != $this->_user->getUserID())
-          {
+          if ($permission->userId != $this->_user->getUserID()) {
             continue;
           }
 
           $roleId = $permission->userId;
-        }
-        else
-        {
+        } else {
           $roleId = $permission->groupId;
         }
 
@@ -803,17 +698,14 @@ class QubitAcl
 
         // Test assertion for translate, update and any permission with a conditional
         if (
-          null != $permission->conditional || in_array($permission->action, ['update', 'translate']))
-        {
+          null != $permission->conditional || in_array($permission->action, ['update', 'translate'])) {
           call_user_func_array([$this->acl, $aclMethod], [
             $roleId,
             $permission->objectId,
             $permission->action,
             new QubitAclConditionalAssert($permission),
           ]);
-        }
-        else
-        {
+        } else {
           call_user_func_array([$this->acl, $aclMethod], [
             $roleId,
             $permission->objectId,
@@ -837,8 +729,7 @@ class QubitAcl
    */
   private static function checkAccessByClass($resource, $user, $action, $options)
   {
-    switch (get_class($resource))
-    {
+    switch (get_class($resource)) {
       // Allow access to editors and administrators
       case 'QubitAccession':
       case 'QubitDeaccession':
@@ -894,28 +785,21 @@ class QubitAcl
    */
   private static function getAllowedResourcesCriterion($criteria, $rootClass, $resourceCache, $resourceIds, $allow)
   {
-    while ($resourceId = array_shift($resourceIds))
-    {
-      if (array_key_exists($resourceId, $resourceCache))
-      {
+    while ($resourceId = array_shift($resourceIds)) {
+      if (array_key_exists($resourceId, $resourceCache)) {
         $resource = $resourceCache[$resourceId];
-      }
-      else
-      {
+      } else {
         $resource = call_user_func([$rootClass, 'getById'], $resourceId);
       }
 
       // If object has no children include it by id and carry on
-      if (1 == ($resource->rgt - $resource->lft))
-      {
+      if (1 == ($resource->rgt - $resource->lft)) {
         $criterion = $criteria->getNewCriterion(
           constant("{$rootClass}::ID"),
           $resourceId,
           $allow ? Criteria::EQUAL : Criteria::NOT_EQUAL
         );
-      }
-      else // Else, include object and all children
-      {
+      } else { // Else, include object and all children
         $criterion = $criteria->getNewCriterion(
           constant("{$rootClass}::LFT"),
           $resource->lft,

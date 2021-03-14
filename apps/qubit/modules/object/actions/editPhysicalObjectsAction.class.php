@@ -40,11 +40,9 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
 
     $this->relations = QubitRelation::getRelationsByObjectId($this->resource->id, ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->resource->save();
@@ -61,28 +59,24 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that resource is an allowed type
-    if (empty($this->moduleForAllowedResource()))
-    {
+    if (empty($this->moduleForAllowedResource())) {
       $this->forward404();
     }
 
     // Check that this isn't the root
-    if (property_exists($this->resource, 'parent') && !isset($this->resource->parent))
-    {
+    if (property_exists($this->resource, 'parent') && !isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID))
-    {
+    if (!QubitAcl::check($this->resource, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)) {
       QubitAcl::forwardUnauthorized();
     }
   }
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'containers':
         $this->form->setValidator('containers', new sfValidatorPass());
         $this->form->setWidget('containers', new sfWidgetFormSelect(['choices' => [], 'multiple' => true]));
@@ -109,14 +103,12 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
 
   protected function processForm()
   {
-    foreach ($this->form->getValue('containers') as $item)
-    {
+    foreach ($this->form->getValue('containers') as $item) {
       $params = $this->context->routing->parse(Qubit::pathInfo($item));
       $this->resource->addPhysicalObject($params['_sf_route']->resource);
     }
 
-    if (null !== $this->form->getValue('name') || null !== $this->form->getValue('location'))
-    {
+    if (null !== $this->form->getValue('name') || null !== $this->form->getValue('location')) {
       $physicalObject = new QubitPhysicalObject();
       $physicalObject->name = $this->form->getValue('name');
       $physicalObject->location = $this->form->getValue('location');
@@ -129,10 +121,8 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
       $this->resource->addPhysicalObject($physicalObject);
     }
 
-    if (isset($this->request->delete_relations))
-    {
-      foreach ($this->request->delete_relations as $item)
-      {
+    if (isset($this->request->delete_relations)) {
+      foreach ($this->request->delete_relations as $item) {
         $params = $this->context->routing->parse(Qubit::pathInfo($item));
         $params['_sf_route']->resource->delete();
       }

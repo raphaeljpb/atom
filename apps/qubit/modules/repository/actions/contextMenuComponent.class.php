@@ -23,8 +23,7 @@ class RepositoryContextMenuComponent extends sfComponent
   {
     $this->resource = $request->getAttribute('sf_route')->resource;
 
-    if (null === $this->resource)
-    {
+    if (null === $this->resource) {
       return sfView::NONE;
     }
 

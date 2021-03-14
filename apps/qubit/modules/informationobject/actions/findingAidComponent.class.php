@@ -22,8 +22,7 @@ class InformationObjectFindingAidComponent extends sfComponent
   public function execute($request)
   {
     // Get finding aid data from top-level
-    if (QubitInformationObject::ROOT_ID != $this->resource->parentId)
-    {
+    if (QubitInformationObject::ROOT_ID != $this->resource->parentId) {
       $this->resource = $this->resource->getCollectionRoot();
     }
 
@@ -32,10 +31,8 @@ class InformationObjectFindingAidComponent extends sfComponent
     $this->path = arFindingAidJob::getFindingAidPathForDownload($this->resource->id);
 
     // Public users can only see the download link if the file exists
-    if (!$this->getUser()->isAuthenticated())
-    {
-      if (isset($this->path))
-      {
+    if (!$this->getUser()->isAuthenticated()) {
+      if (isset($this->path)) {
         $this->showDownload = true;
 
         return;
@@ -48,24 +45,20 @@ class InformationObjectFindingAidComponent extends sfComponent
 
     // For auth. users, if no job has been executed,
     // show allowed actions or nothing
-    if (!isset($lastJobStatus))
-    {
+    if (!isset($lastJobStatus)) {
       // Edge case where the job status is missing but the file exists,
-      if (isset($this->path))
-      {
+      if (isset($this->path)) {
         $this->showDownload = true;
 
         // Check ACL to show delete option
-        if (QubitAcl::check($this->resource, 'update'))
-        {
+        if (QubitAcl::check($this->resource, 'update')) {
           $this->showDelete = true;
         }
 
         return;
       }
 
-      if (!$this->showActions())
-      {
+      if (!$this->showActions()) {
         return sfView::NONE;
       }
 
@@ -75,8 +68,7 @@ class InformationObjectFindingAidComponent extends sfComponent
     $i18n = $this->context->i18n;
 
     // If there is a job in progress, show only status
-    if (QubitTerm::JOB_STATUS_IN_PROGRESS_ID == $lastJobStatus)
-    {
+    if (QubitTerm::JOB_STATUS_IN_PROGRESS_ID == $lastJobStatus) {
       $this->showStatus = true;
       $this->status = $i18n->__('In progress');
 
@@ -84,8 +76,7 @@ class InformationObjectFindingAidComponent extends sfComponent
     }
 
     // If the last job failed, show error status and allowed actions
-    if (QubitTerm::JOB_STATUS_ERROR_ID == $lastJobStatus)
-    {
+    if (QubitTerm::JOB_STATUS_ERROR_ID == $lastJobStatus) {
       $this->showStatus = true;
       $this->showActions();
       $this->status = $i18n->__('Error');
@@ -94,16 +85,13 @@ class InformationObjectFindingAidComponent extends sfComponent
     }
 
     // If the last job completed, get finding aid status property
-    if (QubitTerm::JOB_STATUS_COMPLETED_ID == $lastJobStatus)
-    {
+    if (QubitTerm::JOB_STATUS_COMPLETED_ID == $lastJobStatus) {
       $findingAidStatus = $this->resource->getFindingAidStatus();
 
       // If the property is missing, the finding aid was deleted,
       // show allowed actions or nothing
-      if (!isset($findingAidStatus))
-      {
-        if (!$this->showActions())
-        {
+      if (!isset($findingAidStatus)) {
+        if (!$this->showActions()) {
           return sfView::NONE;
         }
 
@@ -112,8 +100,7 @@ class InformationObjectFindingAidComponent extends sfComponent
 
       // If the property is set but the file is missing,
       // show status and allowed actions
-      if (!isset($this->path))
-      {
+      if (!isset($this->path)) {
         $this->showStatus = true;
         $this->showActions();
         $this->status = $i18n->__('File missing');
@@ -124,8 +111,7 @@ class InformationObjectFindingAidComponent extends sfComponent
       // Show status and download link
       $this->showStatus = $this->showDownload = true;
 
-      switch ((int) $findingAidStatus)
-      {
+      switch ((int) $findingAidStatus) {
         case arFindingAidJob::GENERATED_STATUS:
           $this->status = $i18n->__('Generated');
 
@@ -141,8 +127,7 @@ class InformationObjectFindingAidComponent extends sfComponent
       }
 
       // Check ACL to show delete option
-      if (QubitAcl::check($this->resource, 'update'))
-      {
+      if (QubitAcl::check($this->resource, 'update')) {
         $this->showDelete = true;
       }
 
@@ -158,8 +143,7 @@ class InformationObjectFindingAidComponent extends sfComponent
   public function showActions()
   {
     // Actions only allowed for users with permissions
-    if (!QubitAcl::check($this->resource, 'update'))
-    {
+    if (!QubitAcl::check($this->resource, 'update')) {
       return false;
     }
 
@@ -170,8 +154,7 @@ class InformationObjectFindingAidComponent extends sfComponent
     // if the public finding aid setting is set to false
     $setting = QubitSetting::getByName('publicFindingAid');
     if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->resource->getPublicationStatus()->statusId
-      || (isset($setting) && !$setting->getValue(['sourceCulture' => true])))
-    {
+      || (isset($setting) && !$setting->getValue(['sourceCulture' => true]))) {
       $this->showGenerate = true;
     }
 

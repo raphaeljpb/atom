@@ -28,23 +28,20 @@ class sfIsaarPluginIndexAction extends ActorIndexAction
   {
     parent::execute($request);
 
-    if (sfConfig::get('app_enable_institutional_scoping'))
-    {
+    if (sfConfig::get('app_enable_institutional_scoping')) {
       // remove search-realm
       $this->context->user->removeAttribute('search-realm');
     }
 
     $this->isaar = new sfIsaarPlugin($this->resource);
 
-    if (1 > strlen($title = $this->resource->__toString()))
-    {
+    if (1 > strlen($title = $this->resource->__toString())) {
       $title = $this->context->i18n->__('Untitled');
     }
 
     $this->response->setTitle("{$title} - {$this->response->getTitle()}");
 
-    if (QubitAcl::check($this->resource, 'update'))
-    {
+    if (QubitAcl::check($this->resource, 'update')) {
       $validatorSchema = new sfValidatorSchema();
       $values = [];
 
@@ -72,12 +69,9 @@ class sfIsaarPluginIndexAction extends ActorIndexAction
           'required' => $this->context->i18n->__('%1%Type of entity%2% - This is a %3%mandatory%4% element.', ['%1%' => '<a href="http://ica-atom.org/doc/RS-2#5.1.1">', '%2%' => '</a>', '%3%' => '<a href="http://ica-atom.org/doc/RS-2#4.7">', '%4%' => '</a>']), ]);
       $values['entityType'] = $this->resource->entityType;
 
-      try
-      {
+      try {
         $validatorSchema->clean($values);
-      }
-      catch (sfValidatorErrorSchema $e)
-      {
+      } catch (sfValidatorErrorSchema $e) {
         $this->errorSchema = $e;
       }
     }

@@ -36,22 +36,19 @@ abstract class AbstractSitemapUrl
     $this->writer->text($baseUrl.$this->getLoc());
     $this->writer->endElement();
 
-    if (null !== $lastmod = $this->getLastmod())
-    {
+    if (null !== $lastmod = $this->getLastmod()) {
       $this->writer->startElement('lastmod');
       $this->writer->text($lastmod);
       $this->writer->endElement();
     }
 
-    if (null !== $changefreq = $this->getChangefreq())
-    {
+    if (null !== $changefreq = $this->getChangefreq()) {
       $this->writer->startElement('changefreq');
       $this->writer->text($changefreq);
       $this->writer->endElement();
     }
 
-    if (null !== $priority = $this->getPriority())
-    {
+    if (null !== $priority = $this->getPriority()) {
       $this->writer->startElement('priority');
       $this->writer->text($priority);
       $this->writer->endElement();
@@ -73,8 +70,7 @@ abstract class AbstractSitemapUrl
 
   protected function getLastmod()
   {
-    if (empty($this->updated_at))
-    {
+    if (empty($this->updated_at)) {
       return;
     }
 

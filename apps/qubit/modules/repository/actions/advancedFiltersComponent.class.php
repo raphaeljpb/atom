@@ -24,8 +24,7 @@ class RepositoryAdvancedFiltersComponent extends sfComponent
     // Store current params to add them as hidden inputs
     // in the form, to keep GET and POST params in sync
     $this->hiddenFields = [];
-    foreach ($request->getGetParameters() as $key => $value)
-    {
+    foreach ($request->getGetParameters() as $key => $value) {
       // Keep control of what is added to avoid
       // Cross-Site Scripting vulnerability. Only allow:
       // - Aggregations
@@ -38,8 +37,7 @@ class RepositoryAdvancedFiltersComponent extends sfComponent
         ['view', 'sort', 'subquery']
       );
       $ignored = ['thematicAreas', 'types', 'regions'];
-      if (!in_array($key, $allowed) || in_array($key, $ignored))
-      {
+      if (!in_array($key, $allowed) || in_array($key, $ignored)) {
         continue;
       }
 

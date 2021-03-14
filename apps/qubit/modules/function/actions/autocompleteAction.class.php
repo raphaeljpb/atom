@@ -26,8 +26,7 @@ class FunctionAutocompleteAction extends sfAction
 {
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
@@ -35,14 +34,10 @@ class FunctionAutocompleteAction extends sfAction
     $criteria->addJoin(QubitFunctionObject::ID, QubitFunctionObjectI18n::ID);
     $criteria->add(QubitFunctionObjectI18n::CULTURE, $this->context->user->getCulture());
 
-    if (isset($request->query))
-    {
-      if (sfConfig::get('app_markdown_enabled', true))
-      {
+    if (isset($request->query)) {
+      if (sfConfig::get('app_markdown_enabled', true)) {
         $criteria->add(QubitFunctionObjectI18n::AUTHORIZED_FORM_OF_NAME, "%{$request->query}%", Criteria::LIKE);
-      }
-      else
-      {
+      } else {
         $criteria->add(QubitFunctionObjectI18n::AUTHORIZED_FORM_OF_NAME, "{$request->query}%", Criteria::LIKE);
       }
     }
@@ -50,8 +45,7 @@ class FunctionAutocompleteAction extends sfAction
     // Exclude the calling function from the list
     $params = $this->context->routing->parse(Qubit::pathInfo($request->getReferer()));
     $resource = $params['_sf_route']->resource;
-    if (isset($resource->id))
-    {
+    if (isset($resource->id)) {
       $criteria->add(QubitFunctionObject::ID, $resource->id, Criteria::NOT_EQUAL);
     }
 

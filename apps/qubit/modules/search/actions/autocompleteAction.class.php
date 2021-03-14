@@ -28,8 +28,7 @@ class SearchAutocompleteAction extends sfAction
     $this->queryString = strtr($request->query, ['*' => '', '?' => '']);
 
     // If the query is empty, don't query
-    if (1 === preg_match('/^[\s\t\r\n]*$/', $this->queryString))
-    {
+    if (1 === preg_match('/^[\s\t\r\n]*$/', $this->queryString)) {
       $this->forward404();
     }
 
@@ -67,8 +66,7 @@ class SearchAutocompleteAction extends sfAction
         'type' => 'QubitTerm',
         'field' => sprintf('i18n.%s.name', $culture),
         'fields' => ['slug', sprintf('i18n.%s.name', $culture)],
-        'term_filter' => ['taxonomyId' => QubitTaxonomy::SUBJECT_ID], ], ] as $item)
-    {
+        'term_filter' => ['taxonomyId' => QubitTaxonomy::SUBJECT_ID], ], ] as $item) {
       $search = new \Elastica\Search($client);
       $search
         ->addIndex($index)
@@ -89,26 +87,21 @@ class SearchAutocompleteAction extends sfAction
       $queryBool->addMust($queryText);
 
       // Add term_fitler
-      if (isset($item['term_filter']) && is_array($item['term_filter']))
-      {
+      if (isset($item['term_filter']) && is_array($item['term_filter'])) {
         $queryBool->addMust(new \Elastica\Query\Term($item['term_filter']));
       }
 
-      if (isset($request->repos) && ctype_digit($request->repos) && 'QubitInformationObject' == $item['type'])
-      {
+      if (isset($request->repos) && ctype_digit($request->repos) && 'QubitInformationObject' == $item['type']) {
         $queryBool->addMust(new \Elastica\Query\Term(['repository.id' => $request->repos]));
 
         // Store realm in user session
         $this->context->user->setAttribute('search-realm', $request->repos);
-      }
-      elseif (sfConfig::get('app_enable_institutional_scoping'))
-      {
+      } elseif (sfConfig::get('app_enable_institutional_scoping')) {
         // Remove search-realm
         $this->context->user->removeAttribute('search-realm');
       }
 
-      if ('QubitInformationObject' == $item['type'])
-      {
+      if ('QubitInformationObject' == $item['type']) {
         QubitAclSearch::filterDrafts($queryBool);
       }
 
@@ -126,8 +119,7 @@ class SearchAutocompleteAction extends sfAction
     $this->subjects = $resultSets[4];
 
     // Return a 404 response if there are no results
-    if (0 == $this->descriptions->getTotalHits() + $this->repositories->getTotalHits() + $this->actors->getTotalHits() + $this->places->getTotalHits() + $this->subjects->getTotalHits())
-    {
+    if (0 == $this->descriptions->getTotalHits() + $this->repositories->getTotalHits() + $this->actors->getTotalHits() + $this->places->getTotalHits() + $this->subjects->getTotalHits()) {
       $this->forward404();
     }
 
@@ -139,8 +131,7 @@ class SearchAutocompleteAction extends sfAction
     unset($this->allMatchingParams['query'], $this->allMatchingParams['repos']);
 
     // Preload levels of descriptions
-    if (0 < $this->descriptions->getTotalHits())
-    {
+    if (0 < $this->descriptions->getTotalHits()) {
       $sql = '
         SELECT
           t.id,
@@ -152,8 +143,7 @@ class SearchAutocompleteAction extends sfAction
           t.taxonomy_id = ?';
 
       $this->levelsOfDescription = [];
-      foreach (QubitPdo::fetchAll($sql, [$this->context->user->getCulture(), QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID]) as $item)
-      {
+      foreach (QubitPdo::fetchAll($sql, [$this->context->user->getCulture(), QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID]) as $item) {
         $this->levelsOfDescription[$item->id] = $item->name;
       }
     }

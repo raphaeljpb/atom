@@ -69,10 +69,8 @@ class arMigration0105
         'is the provider of' => 'is the client of',
         'is the business partner of' => 'itself',
         'is the associate of' => 'itself',
-        'is the friend of' => 'itself', ], ] as $parentId => $terms)
-    {
-      foreach ($terms as $termName => $converseTermName)
-      {
+        'is the friend of' => 'itself', ], ] as $parentId => $terms) {
+      foreach ($terms as $termName => $converseTermName) {
         $term = new QubitTerm();
         $term->parentId = $parentId;
         $term->taxonomyId = QubitTaxonomy::ACTOR_RELATION_TYPE_ID;
@@ -80,12 +78,9 @@ class arMigration0105
         $term->culture = 'en';
         $term->save();
 
-        if ('itself' == $converseTermName)
-        {
+        if ('itself' == $converseTermName) {
           $term->converseTermId = $term->id;
-        }
-        else
-        {
+        } else {
           $converseTerm = new QubitTerm();
           $converseTerm->parentId = $parentId;
           $converseTerm->taxonomyId = QubitTaxonomy::ACTOR_RELATION_TYPE_ID;

@@ -30,8 +30,7 @@ class QubitPhysicalObject extends BasePhysicalObject
   public function __toString()
   {
     $string = $this->name;
-    if (!isset($string))
-    {
+    if (!isset($string)) {
       $string = $this->getName(['sourceCulture' => true]);
     }
 
@@ -40,8 +39,7 @@ class QubitPhysicalObject extends BasePhysicalObject
 
   public function insert($connection = null)
   {
-    if (!isset($this->slug))
-    {
+    if (!isset($this->slug)) {
       $this->slug = QubitSlug::slugify($this->__get('name', ['sourceCulture' => true]));
     }
 
@@ -52,20 +50,17 @@ class QubitPhysicalObject extends BasePhysicalObject
   {
     $label = '';
 
-    if ($this->type)
-    {
+    if ($this->type) {
       $label .= $this->type.': ';
     }
 
     $label .= $this->__toString();
 
-    if (0 == strlen($location = $this->getLocation()))
-    {
+    if (0 == strlen($location = $this->getLocation())) {
       $location = $this->getLocation(['sourceCulture' => true]);
     }
 
-    if (0 < strlen($location))
-    {
+    if (0 < strlen($location)) {
       $label .= ' - '.$location;
     }
 
@@ -93,8 +88,7 @@ class QubitPhysicalObject extends BasePhysicalObject
     $informationObjectRelations = QubitRelation::getRelationsBySubjectId($this->id,
     ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
 
-    foreach ($informationObjectRelations as $relation)
-    {
+    foreach ($informationObjectRelations as $relation) {
       $relation->delete();
     }
   }
@@ -133,13 +127,11 @@ class QubitPhysicalObject extends BasePhysicalObject
     $criteria = new Criteria();
     $criteria->addJoin(QubitPhysicalObject::ID, QubitPhysicalObjectI18n::ID);
 
-    if ($typeId)
-    {
+    if ($typeId) {
       $criteria->add(QubitPhysicalObject::TYPE_ID, $typeId);
     }
 
-    if ($location)
-    {
+    if ($location) {
       $criteria->add(QubitPhysicalObjectI18n::LOCATION, $location);
     }
 
@@ -164,18 +156,14 @@ class QubitPhysicalObject extends BasePhysicalObject
 
     $criteria->addJoin(QubitPhysicalObject::ID, QubitPhysicalObjectI18n::ID);
 
-    if (isset($options['partialMatch']) && 'begin' == $options['partialMatch'])
-    {
+    if (isset($options['partialMatch']) && 'begin' == $options['partialMatch']) {
       $criteria->add(QubitPhysicalObjectI18n::NAME, $name.'%',
         Criteria::LIKE);
-    }
-    else
-    {
+    } else {
       $criteria->add(QubitPhysicalObjectI18n::NAME, $name);
     }
 
-    if (isset($options['culture']))
-    {
+    if (isset($options['culture'])) {
       $criteria->add(QubitPhysicalObjectI18n::CULTURE, $options['culture']);
     }
 
@@ -199,8 +187,7 @@ class QubitPhysicalObject extends BasePhysicalObject
    */
   public static function checkPhysicalObjectExistsInCollection($name, $location, $typeId, $collectionId)
   {
-    if (!isset($collectionId))
-    {
+    if (!isset($collectionId)) {
       return;
     }
 
@@ -208,14 +195,12 @@ class QubitPhysicalObject extends BasePhysicalObject
     // always being updated in the class cache in multi-level imports
     $sql = 'SELECT lft, rgt FROM information_object WHERE id = :id;';
     $collection = QubitPdo::fetchOne($sql, [':id' => $collectionId]);
-    if (!isset($collection))
-    {
+    if (!isset($collection)) {
       return;
     }
 
     $objs = QubitPhysicalObject::getPhysicalObjectsByNameAndLocation($name, $location, $typeId);
-    foreach ($objs as $physObj)
-    {
+    foreach ($objs as $physObj) {
       $sql = 'SELECT rel.id FROM relation rel
         INNER JOIN information_object io ON rel.object_id = io.id
         WHERE rel.subject_id = :id AND rel.type_id = :typeId
@@ -228,8 +213,7 @@ class QubitPhysicalObject extends BasePhysicalObject
         ':rgt' => $collection->rgt,
       ];
 
-      if (QubitPdo::fetchOne($sql, $params))
-      {
+      if (QubitPdo::fetchOne($sql, $params)) {
         return $physObj;
       }
     }
@@ -242,13 +226,11 @@ class QubitPhysicalObject extends BasePhysicalObject
    */
   public function addInfobjRelations(array $newInfobjIds)
   {
-    if (empty($this->id))
-    {
+    if (empty($this->id)) {
       throw new sfException('Invalid QubitPhysicalObject id');
     }
 
-    foreach ($newInfobjIds as $infobjId)
-    {
+    foreach ($newInfobjIds as $infobjId) {
       $relation = new QubitRelation();
       $relation->subjectId = $this->id;
       $relation->objectId = $infobjId;
@@ -267,38 +249,32 @@ class QubitPhysicalObject extends BasePhysicalObject
   {
     $existingRelations = [];
 
-    if (empty($this->id))
-    {
+    if (empty($this->id)) {
       throw new sfException('Invalid QubitPhysicalObject id');
     }
 
     // Find existing relations
     if (null !== $relations = $this->getRelationsAsArray(
-      QubitTerm::HAS_PHYSICAL_OBJECT_ID))
-    {
-      foreach ($relations as $row)
-      {
+      QubitTerm::HAS_PHYSICAL_OBJECT_ID)) {
+      foreach ($relations as $row) {
         $existingRelations[$row['id']] = $row['object_id'];
       }
     }
 
     // Save any new relations
     if (false != $newInfobjIds = array_diff($relatedInfobjIds,
-      $existingRelations))
-    {
+      $existingRelations)) {
       $this->addInfobjRelations($newInfobjIds);
     }
 
     // Delete any obsolete relations
     $obsoleteInfobjIds = array_diff($existingRelations, $relatedInfobjIds);
 
-    foreach ($obsoleteInfobjIds as $infobjId)
-    {
+    foreach ($obsoleteInfobjIds as $infobjId) {
       $relationId = array_search($infobjId, $existingRelations);
 
       if (false === $relationId
-        || null === $relation = QubitRelation::getById($relationId))
-      {
+        || null === $relation = QubitRelation::getById($relationId)) {
         continue;
       }
 
@@ -309,8 +285,7 @@ class QubitPhysicalObject extends BasePhysicalObject
 
   public function getRelationsAsArray(int $typeId = null)
   {
-    if (empty($this->id))
-    {
+    if (empty($this->id)) {
       throw new sfException('Invalid QubitPhysicalObject id');
     }
 
@@ -326,8 +301,7 @@ class QubitPhysicalObject extends BasePhysicalObject
       FROM relation WHERE subject_id = :id
 SQL;
 
-    if (isset($typeId))
-    {
+    if (isset($typeId)) {
       $sql .= ' AND type_id = :typeId';
     }
 
@@ -363,26 +337,20 @@ SQL;
       'location',
     ];
 
-    if (!isset($connection))
-    {
+    if (!isset($connection)) {
       $connection = Propel::getConnection();
     }
 
-    foreach ($updateCols as $name)
-    {
-      if (!empty($data[$name]) && $this->{$name} != $data[$name])
-      {
+    foreach ($updateCols as $name) {
+      if (!empty($data[$name]) && $this->{$name} != $data[$name]) {
         $doUpdate = true;
         $newvals[$name] = $data[$name];
-      }
-      else
-      {
+      } else {
         $newvals[$name] = $this->{$name};
       }
     }
 
-    if (!$doUpdate)
-    {
+    if (!$doUpdate) {
       // The incoming data matches the data already in the database, so avoid
       // unnecessary db queries
 

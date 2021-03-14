@@ -30,8 +30,7 @@ class QubitRoute extends sfRoute
    */
   public static function urlencode3986($string)
   {
-    if (QubitSlug::SLUG_PERMISSIVE == sfConfig::get('app_permissive_slug_creation', QubitSlug::SLUG_RESTRICTIVE))
-    {
+    if (QubitSlug::SLUG_PERMISSIVE == sfConfig::get('app_permissive_slug_creation', QubitSlug::SLUG_RESTRICTIVE)) {
       $entities = ['%2A', '%3A', '%40', '%3D', '%2C'];
       $replacements = ['*', ':', '@', '=', ','];
 
@@ -66,8 +65,7 @@ class QubitRoute extends sfRoute
   {
     $params = $this->filterParams($params);
 
-    if (!$this->compiled)
-    {
+    if (!$this->compiled) {
       $this->compile();
     }
 
@@ -77,36 +75,28 @@ class QubitRoute extends sfRoute
     $tparams = $this->mergeArrays($defaults, $params);
 
     // All params must be given.
-    if ($diff = array_diff_key($this->variables, $tparams))
-    {
+    if ($diff = array_diff_key($this->variables, $tparams)) {
       throw new InvalidArgumentException(sprintf('The "%s" route has some missing mandatory parameters (%s).', $this->pattern, implode(', ', $diff)));
     }
 
-    if ($this->options['generate_shortest_url'] || $this->customToken)
-    {
+    if ($this->options['generate_shortest_url'] || $this->customToken) {
       $url = $this->generateWithTokens($tparams);
-    }
-    else
-    {
+    } else {
       $variables = $this->variables;
       uasort($variables, ['sfRoute', 'generateCompareVarsByStrlen']);
-      foreach ($variables as $variable => $value)
-      {
+      foreach ($variables as $variable => $value) {
         $url = str_replace($value, urlencode($tparams[$variable]), $url);
       }
 
-      if (!in_array($this->suffix, $this->options['segment_separators']))
-      {
+      if (!in_array($this->suffix, $this->options['segment_separators'])) {
         $url .= $this->suffix;
       }
     }
 
     $url = $this->generateStarParameter($url, $defaults, $params);
 
-    if ($this->options['extra_parameters_as_query_string'] && !$this->hasStarParameter())
-    {
-      if ($extra = array_diff_assoc(array_diff_key($params, $this->variables), $this->defaults))
-      {
+    if ($this->options['extra_parameters_as_query_string'] && !$this->hasStarParameter()) {
+      if ($extra = array_diff_assoc(array_diff_key($params, $this->variables), $this->defaults)) {
         $url .= '?'.http_build_query($extra);
       }
     }
@@ -117,26 +107,19 @@ class QubitRoute extends sfRoute
   protected function filterParams($params)
   {
     // Fill in missing parameters with attributes of $params[0]
-    if (!is_array($params))
-    {
+    if (!is_array($params)) {
       $params = [$params];
     }
 
-    if (isset($params[0]))
-    {
-      if ($params[0] instanceof sfOutputEscaper)
-      {
+    if (isset($params[0])) {
+      if ($params[0] instanceof sfOutputEscaper) {
         $params[0] = sfOutputEscaper::unescape($params[0]);
       }
 
-      foreach (array_diff_key($this->params + $this->variables, $params) as $key => $ignore)
-      {
-        try
-        {
+      foreach (array_diff_key($this->params + $this->variables, $params) as $key => $ignore) {
+        try {
           $params[$key] = $params[0][$key];
-        }
-        catch (sfException $e)
-        {
+        } catch (sfException $e) {
         }
       }
 
@@ -160,13 +143,10 @@ class QubitRoute extends sfRoute
     $optional = $this->options['generate_shortest_url'];
     $first = true;
     $tokens = array_reverse($this->tokens);
-    foreach ($tokens as $token)
-    {
-      switch ($token[0])
-      {
+    foreach ($tokens as $token) {
+      switch ($token[0]) {
         case 'variable':
-          if (!$optional || !isset($this->defaults[$token[3]]) || $parameters[$token[3]] != $this->defaults[$token[3]])
-          {
+          if (!$optional || !isset($this->defaults[$token[3]]) || $parameters[$token[3]] != $this->defaults[$token[3]]) {
             $url[] = QubitRoute::urlencode3986($parameters[$token[3]]);
             $optional = false;
           }
@@ -180,8 +160,7 @@ class QubitRoute extends sfRoute
           break;
 
         case 'separator':
-          if (false === $optional || $first)
-          {
+          if (false === $optional || $first) {
             $url[] = $token[2];
           }
 
@@ -189,8 +168,7 @@ class QubitRoute extends sfRoute
 
         default:
           // Handle custom tokens.
-          if ($segment = call_user_func_array([$this, 'generateFor'.ucfirst(array_shift($token))], array_merge([$optional, $parameters], $token)))
-          {
+          if ($segment = call_user_func_array([$this, 'generateFor'.ucfirst(array_shift($token))], array_merge([$optional, $parameters], $token))) {
             $url[] = $segment;
             $optional = false;
           }
@@ -202,8 +180,7 @@ class QubitRoute extends sfRoute
     }
 
     $url = implode('', array_reverse($url));
-    if (!$url)
-    {
+    if (!$url) {
       $url = '/';
     }
 

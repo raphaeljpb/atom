@@ -36,18 +36,14 @@ class arElasticSearchRepository extends arElasticSearchModelBase
 
     $repositories = $this->load();
 
-    foreach ($repositories as $key => $repository)
-    {
-      try
-      {
+    foreach ($repositories as $key => $repository) {
+      try {
         $data = self::serialize($repository);
 
         $this->search->addDocument($data, 'QubitRepository');
 
         $this->logEntry($repository->__toString(), $key + 1);
-      }
-      catch (sfException $e)
-      {
+      } catch (sfException $e) {
         $errors[] = $e->getMessage();
       }
     }
@@ -73,40 +69,33 @@ class arElasticSearchRepository extends arElasticSearchModelBase
       ]
     );
 
-    if (isset($relatedTerms[QubitTaxonomy::REPOSITORY_TYPE_ID]))
-    {
+    if (isset($relatedTerms[QubitTaxonomy::REPOSITORY_TYPE_ID])) {
       $serialized['types'] = $relatedTerms[QubitTaxonomy::REPOSITORY_TYPE_ID];
     }
 
-    if (isset($relatedTerms[QubitTaxonomy::THEMATIC_AREA_ID]))
-    {
+    if (isset($relatedTerms[QubitTaxonomy::THEMATIC_AREA_ID])) {
       $serialized['thematicAreas'] = $relatedTerms[QubitTaxonomy::THEMATIC_AREA_ID];
     }
 
-    if (isset($relatedTerms[QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID]))
-    {
+    if (isset($relatedTerms[QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID])) {
       $serialized['geographicSubregions'] = $relatedTerms[QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID];
     }
 
-    foreach ($object->contactInformations as $contactInformation)
-    {
+    foreach ($object->contactInformations as $contactInformation) {
       $serialized['contactInformations'][] = arElasticSearchContactInformation::serialize($contactInformation);
     }
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, [$object->id, QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item)
-    {
+    foreach (QubitPdo::fetchAll($sql, [$object->id, QubitTerm::OTHER_FORM_OF_NAME_ID]) as $item) {
       $serialized['otherNames'][] = arElasticSearchOtherName::serialize($item);
     }
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, [$object->id, QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item)
-    {
+    foreach (QubitPdo::fetchAll($sql, [$object->id, QubitTerm::PARALLEL_FORM_OF_NAME_ID]) as $item) {
       $serialized['parallelNames'][] = arElasticSearchOtherName::serialize($item);
     }
 
-    if ($object->existsLogo())
-    {
+    if ($object->existsLogo()) {
       $serialized['logoPath'] = $object->getLogoPath();
     }
 
@@ -140,15 +129,12 @@ class arElasticSearchRepository extends arElasticSearchModelBase
    */
   private static function addExtraSortInfo(&$i18n, $object)
   {
-    foreach (sfConfig::get('app_i18n_languages') as $lang)
-    {
-      if ($object->getCity(['culture' => $lang]))
-      {
+    foreach (sfConfig::get('app_i18n_languages') as $lang) {
+      if ($object->getCity(['culture' => $lang])) {
         $i18n[$lang]['city'] = $object->getCity(['culture' => $lang]);
       }
 
-      if ($object->getRegion(['culture' => $lang]))
-      {
+      if ($object->getRegion(['culture' => $lang])) {
         $i18n[$lang]['region'] = $object->getRegion(['culture' => $lang]);
       }
     }

@@ -29,17 +29,13 @@ class arElasticSearchPluginUtil
 
   public static function convertDate($date)
   {
-    if (is_null($date))
-    {
+    if (is_null($date)) {
       return;
     }
 
-    if ($date instanceof DateTime)
-    {
+    if ($date instanceof DateTime) {
       $value = $date->format('Y-m-d\TH:i:s\Z');
-    }
-    else
-    {
+    } else {
       $value = \Elastica\Util::convertDate($date);
     }
 
@@ -61,15 +57,13 @@ class arElasticSearchPluginUtil
    */
   public static function normalizeDateWithoutMonthOrDay($date, $endDate = false)
   {
-    if (!strlen($date))
-    {
+    if (!strlen($date)) {
       return null;
     }
 
     $dateParts = explode('-', $date);
 
-    if (3 !== count($dateParts))
-    {
+    if (3 !== count($dateParts)) {
       throw new sfException("Invalid date string given: {$date}. Must be in format YYYY-MM-DD");
     }
 
@@ -77,18 +71,15 @@ class arElasticSearchPluginUtil
 
     // Invalid year. Return null now since cal_days_in_month will fail
     // with year 0000. See #8796
-    if (0 === (int) $year)
-    {
+    if (0 === (int) $year) {
       return null;
     }
 
-    if (0 === (int) $month)
-    {
+    if (0 === (int) $month) {
       $month = $endDate ? '12' : '01';
     }
 
-    if (0 === (int) $day)
-    {
+    if (0 === (int) $day) {
       $day = $endDate ? cal_days_in_month(CAL_GREGORIAN, $month, $year) : '01';
     }
 
@@ -112,15 +103,13 @@ class arElasticSearchPluginUtil
     // Load ES mappings
     $mappings = arElasticSearchPlugin::loadMappings()->asArray();
 
-    if (!isset($mappings[$indexType]))
-    {
+    if (!isset($mappings[$indexType])) {
       throw new sfException('Unrecognized index type: '.$indexType);
     }
 
     $i18nIncludeInAll = null;
 
-    if ('informationObject' === $indexType)
-    {
+    if ('informationObject' === $indexType) {
       $i18nIncludeInAll = $mappings[$indexType]['_attributes']['i18nIncludeInAll'];
     }
 
@@ -134,14 +123,12 @@ class arElasticSearchPluginUtil
     );
 
     // Remove fields in except (use array_values() because array_diff() adds keys)
-    if (count($except) > 0)
-    {
+    if (count($except) > 0) {
       $allFields = array_values(array_diff($allFields, $except));
     }
 
     // Check information object hidden fields for unauthenticated users
-    if ('informationObject' == $indexType && !sfContext::getInstance()->user->isAuthenticated())
-    {
+    if ('informationObject' == $indexType && !sfContext::getInstance()->user->isAuthenticated()) {
       // Remove hidden fields from ES mapping fields (use array_values() because array_diff() adds keys)
       $allFields = array_values(array_diff($allFields, self::getHiddenFields()));
     }
@@ -160,24 +147,20 @@ class arElasticSearchPluginUtil
   public static function getI18nFieldNames($fields, $cultures = null)
   {
     // Get all available cultures if $cultures isn't set
-    if (empty($cultures))
-    {
+    if (empty($cultures)) {
       $cultures = sfConfig::get('app_i18n_languages');
     }
 
     // Make sure fields is an array
-    if (!is_array($fields))
-    {
+    if (!is_array($fields)) {
       $fields = [$fields];
     }
 
     $i18nFieldNames = [];
 
     // Format fields
-    foreach ($cultures as $culture)
-    {
-      foreach ($fields as $field)
-      {
+    foreach ($cultures as $culture) {
+      foreach ($fields as $field) {
         $i18nFieldNames[] = sprintf($field, $culture);
       }
     }
@@ -199,19 +182,14 @@ class arElasticSearchPluginUtil
     $boolQuery = new \Elastica\Query\BoolQuery();
     $query = self::escapeTerm($query);
 
-    foreach ($fields as $field => $boost)
-    {
-      if (false !== strpos($field, '%s'))
-      {
-        foreach ($cultures as $culture)
-        {
+    foreach ($fields as $field => $boost) {
+      if (false !== strpos($field, '%s')) {
+        foreach ($cultures as $culture) {
           $boolQuery->addShould(
             self::generateQueryString($query, sprintf($field, $culture), $boost)
           );
         }
-      }
-      else
-      {
+      } else {
         $boolQuery->addShould(
           self::generateQueryString($query, $field, $boost)
         );
@@ -255,20 +233,16 @@ class arElasticSearchPluginUtil
     $row = $statement->fetch();
 
     // Return if no results found
-    if (empty($row))
-    {
+    if (empty($row)) {
       return;
     }
 
-    foreach ($row as $field => $value)
-    {
-      if (empty($value))
-      {
+    foreach ($row as $field => $value) {
+      if (empty($value)) {
         continue;
       }
 
-      switch ($field)
-      {
+      switch ($field) {
         case 'last_modified':
           $premisData['lastModified'] = arElasticSearchPluginUtil::convertDate($value);
 
@@ -312,12 +286,10 @@ class arElasticSearchPluginUtil
     $statement = $conn->prepare($sql);
     $statement->execute([$ioId]);
 
-    foreach ($statement->fetchAll(PDO::FETCH_OBJ) as $property)
-    {
+    foreach ($statement->fetchAll(PDO::FETCH_OBJ) as $property) {
       $value = unserialize($property->value);
 
-      switch ($property->name)
-      {
+      switch ($property->name) {
         case 'fitsAudio':
           $premisData['audio'] = $value;
 
@@ -370,8 +342,7 @@ class arElasticSearchPluginUtil
       }
     }
 
-    if (!empty($premisData))
-    {
+    if (!empty($premisData)) {
       return $premisData;
     }
   }
@@ -388,8 +359,7 @@ class arElasticSearchPluginUtil
     $specialChars = trim(sfConfig::get('app_escape_queries', ''));
 
     // Return term directly if the setting is empty
-    if (empty($specialChars))
-    {
+    if (empty($specialChars)) {
       return $term;
     }
 
@@ -397,16 +367,13 @@ class arElasticSearchPluginUtil
     $specialChars = preg_split('/\s*,\s*/', $specialChars);
 
     // Escaping \ has to be first
-    if (in_array('\\', $specialChars))
-    {
+    if (in_array('\\', $specialChars)) {
       $term = str_replace('\\', '\\\\', $term);
     }
 
-    foreach ($specialChars as $char)
-    {
+    foreach ($specialChars as $char) {
       // Ignore empty chars and \
-      if (empty($char) || '\\' == $char)
-      {
+      if (empty($char) || '\\' == $char) {
         continue;
       }
 
@@ -436,11 +403,9 @@ class arElasticSearchPluginUtil
     $scroll = new \Elastica\Scroll($search);
 
     // Scroll and add hit IDs to array
-    foreach ($scroll as $resultSet)
-    {
-      foreach ($resultSet as $hit)
-      {
-       array_push($hitIds, $hit->getId());
+    foreach ($scroll as $resultSet) {
+      foreach ($resultSet as $hit) {
+        array_push($hitIds, $hit->getId());
       }
     }
 
@@ -468,24 +433,18 @@ class arElasticSearchPluginUtil
   {
     $fields = [];
 
-    if (isset($object['properties']))
-    {
-      foreach ($object['properties'] as $propertyName => $propertyProperties)
-      {
+    if (isset($object['properties'])) {
+      foreach ($object['properties'] as $propertyName => $propertyProperties) {
         // Get i18n fields, they're always included in _all
-        if ('i18n' == $propertyName)
-        {
+        if ('i18n' == $propertyName) {
           // Get the fields from a single culture and format them with
           // 'i18n.%s.' to set the required cultures at query time.
-          foreach ($propertyProperties['properties'] as $culture => $cultureProperties)
-          {
-            if ('languages' == $culture)
-            {
+          foreach ($propertyProperties['properties'] as $culture => $cultureProperties) {
+            if ('languages' == $culture) {
               continue;
             }
 
-            foreach ($cultureProperties['properties'] as $fieldName => $fieldProperties)
-            {
+            foreach ($cultureProperties['properties'] as $fieldName => $fieldProperties) {
               self::handleI18nStringFields($rootIndexType, $fields, $prefix, $fieldName, $foreignType,
                                            $i18nIncludeInAll);
             }
@@ -494,8 +453,7 @@ class arElasticSearchPluginUtil
           }
         }
         // Get nested objects fields
-        elseif (isset($propertyProperties['type']) && 'object' == $propertyProperties['type'])
-        {
+        elseif (isset($propertyProperties['type']) && 'object' == $propertyProperties['type']) {
           $nestedFields = self::getAllObjectStringFields(
             $rootIndexType,
             $object['properties'][$propertyName],
@@ -505,8 +463,7 @@ class arElasticSearchPluginUtil
           $fields = array_merge($fields, $nestedFields);
         }
         // Get foreign objects fields (couldn't find a better way than checking the dynamic property)
-        elseif (isset($propertyProperties['dynamic']))
-        {
+        elseif (isset($propertyProperties['dynamic'])) {
           $foreignObjectFields = self::getAllObjectStringFields(
             $rootIndexType,
             $object['properties'][$propertyName],
@@ -522,8 +479,7 @@ class arElasticSearchPluginUtil
           || $propertyProperties['include_in_all'])
           && (isset($propertyProperties['type'])
           && ('text' == $propertyProperties['type']
-          || 'keyword' == $propertyProperties['type'])))
-        {
+          || 'keyword' == $propertyProperties['type']))) {
           self::handleNonI18nStringFields($rootIndexType, $fields, $prefix, $propertyName, $foreignType);
         }
       }
@@ -541,12 +497,10 @@ class arElasticSearchPluginUtil
    */
   private static function getTemplate($indexType)
   {
-    switch ($indexType)
-    {
+    switch ($indexType) {
       case 'informationObject':
         $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template');
-        if (isset($infoObjectTemplate))
-        {
+        if (isset($infoObjectTemplate)) {
           return $infoObjectTemplate->getValue(['sourceCulture' => true]);
         }
 
@@ -564,10 +518,8 @@ class arElasticSearchPluginUtil
     // Create array with relations (hidden field => ES mapping field) for the actual template
     $relations = [];
 
-    if (null !== $template = self::getTemplate('informationObject'))
-    {
-      switch ($template)
-      {
+    if (null !== $template = self::getTemplate('informationObject')) {
+      switch ($template) {
         case 'isad':
           $relations = [
             'isad_archival_history' => 'i18n.%s.archivalHistory',
@@ -613,11 +565,9 @@ class arElasticSearchPluginUtil
     // Obtain hidden fields
     $hiddenFields = [];
 
-    foreach (QubitSetting::getByScope('element_visibility') as $setting)
-    {
+    foreach (QubitSetting::getByScope('element_visibility') as $setting) {
       if (!(bool) $setting->getValue(['sourceCulture' => true]) && isset($relations[$setting->name])
-        && '' != $relations[$setting->name])
-      {
+        && '' != $relations[$setting->name]) {
         $hiddenFields[] = $relations[$setting->name];
       }
     }
@@ -637,8 +587,7 @@ class arElasticSearchPluginUtil
   {
     $boost = $boostedFields = [];
 
-    switch ($indexType)
-    {
+    switch ($indexType) {
       case 'informationObject':
         $boost = [
           'i18n.%s.title' => 10,
@@ -653,14 +602,10 @@ class arElasticSearchPluginUtil
         break;
     }
 
-    foreach ($fields as $field)
-    {
-      if (isset($boost[$field]))
-      {
+    foreach ($fields as $field) {
+      if (isset($boost[$field])) {
         $boostedFields[$field] = $boost[$field];
-      }
-      else
-      {
+      } else {
         $boostedFields[$field] = 1;
       }
     }
@@ -679,8 +624,7 @@ class arElasticSearchPluginUtil
    */
   private static function checkI18nIncludeInAll($prefix, $fieldName, $i18nIncludeInAll)
   {
-    if (!$i18nIncludeInAll)
-    {
+    if (!$i18nIncludeInAll) {
       return; // Return and skip this check, no i18nIncludeInAll _attribute present.
     }
 
@@ -709,11 +653,9 @@ class arElasticSearchPluginUtil
                                                  $i18nIncludeInAll)
   {
     // We may add special rules for other index types in the future
-    switch ($rootIndexType)
-    {
+    switch ($rootIndexType) {
       case 'informationObject':
-        if ($foreignType && false === self::checkI18nIncludeInAll($prefix, $fieldName, $i18nIncludeInAll))
-        {
+        if ($foreignType && false === self::checkI18nIncludeInAll($prefix, $fieldName, $i18nIncludeInAll)) {
           return; // Skip field
         }
 
@@ -745,11 +687,9 @@ class arElasticSearchPluginUtil
   private static function handleNonI18nStringFields($rootIndexType, &$fields, $prefix, $propertyName, $foreignType)
   {
     // We may add special rules for other index types in the future
-    switch ($rootIndexType)
-    {
+    switch ($rootIndexType) {
       case 'informationObject':
-        if ($foreignType)
-        {
+        if ($foreignType) {
           return; // Skip all foreign type non-i18n string fields for info objects
         }
 

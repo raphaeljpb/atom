@@ -27,20 +27,15 @@ class MenuListAction extends sfAction
   public function execute($request)
   {
     // Re-order menus if "move" parameter passed
-    if (isset($request->move) && $menu = QubitMenu::getById($request->move))
-    {
-      if (isset($request->before))
-      {
+    if (isset($request->move) && $menu = QubitMenu::getById($request->move)) {
+      if (isset($request->before)) {
         $menu->moveBeforeById($request->before);
-      }
-      elseif (isset($request->after))
-      {
+      } elseif (isset($request->after)) {
         $menu->moveAfterById($request->after);
       }
 
       // Remove cache
-      if (null !== $this->context->getViewCacheManager())
-      {
+      if (null !== $this->context->getViewCacheManager()) {
         $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
         $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
       }
@@ -50,25 +45,20 @@ class MenuListAction extends sfAction
     // and indented list
     $this->menuTree = QubitMenu::getTreeById(QubitMenu::ROOT_ID);
 
-    foreach ($this->menuTree as $i => $menu)
-    {
+    foreach ($this->menuTree as $i => $menu) {
       // Build an array of siblings for each parentId for figuring out
       // prev/next buttons
       $siblingList[$menu['parentId']][] = ['id' => $menu['id'], 'pos' => $i];
     }
 
     // Build prev/next values based on number of siblings
-    foreach ($siblingList as $siblings)
-    {
-      foreach ($siblings as $i => $sibling)
-      {
-        if (0 < $i)
-        {
+    foreach ($siblingList as $siblings) {
+      foreach ($siblings as $i => $sibling) {
+        if (0 < $i) {
           $this->menuTree[$sibling['pos']]['prev'] = $siblings[$i - 1]['id'];
         }
 
-        if (count($siblings) - 1 > $i)
-        {
+        if (count($siblings) - 1 > $i) {
           $this->menuTree[$sibling['pos']]['next'] = $siblings[$i + 1]['id'];
         }
       }

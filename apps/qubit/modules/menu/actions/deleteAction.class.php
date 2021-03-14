@@ -25,25 +25,20 @@ class MenuDeleteAction extends sfAction
 
     $this->resource = QubitMenu::getById($request->id);
 
-    if (!isset($this->resource))
-    {
+    if (!isset($this->resource)) {
       $this->forward404();
     }
 
-    if ($request->isMethod('delete'))
-    {
+    if ($request->isMethod('delete')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
-        if (!$this->resource->isProtected())
-        {
+      if ($this->form->isValid()) {
+        if (!$this->resource->isProtected()) {
           $this->resource->delete();
         }
 
         // Remove cache
-        if (null !== $this->context->getViewCacheManager())
-        {
+        if (null !== $this->context->getViewCacheManager()) {
           $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
           $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
         }

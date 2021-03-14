@@ -32,8 +32,7 @@ class arMigration0179
   public function up($configuration)
   {
     // Add accession alternative identifier type taxonomy if it doesn't exist
-    if (null == QubitTaxonomy::getById(QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID))
-    {
+    if (null == QubitTaxonomy::getById(QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID)) {
       QubitMigrate::bumpTaxonomy(QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID, $configuration);
       $taxonomy = new QubitTaxonomy();
       $taxonomy->id = QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID;
@@ -51,8 +50,7 @@ class arMigration0179
               AND ti.culture='en'
               AND t.id=?";
 
-    if (null == QubitPdo::fetchOne($sql, [QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID, QubitTerm::ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID]))
-    {
+    if (null == QubitPdo::fetchOne($sql, [QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID, QubitTerm::ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID])) {
       QubitMigrate::bumpTerm(QubitTerm::ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID, $configuration);
       $term = new QubitTerm();
       $term->id = QubitTerm::ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID;

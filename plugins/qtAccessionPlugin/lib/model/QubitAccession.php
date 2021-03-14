@@ -33,8 +33,7 @@ class QubitAccession extends BaseAccession
 
     // Save updated related events (update search index after updating all
     // related objects that are included in the index document)
-    foreach ($this->eventsRelatedByobjectId as $item)
-    {
+    foreach ($this->eventsRelatedByobjectId as $item) {
       $item->indexOnSave = false;
 
       // TODO Needed if $this is new, should be transparent
@@ -42,8 +41,7 @@ class QubitAccession extends BaseAccession
       $item->save($connection);
     }
 
-    if ($indexOnSave)
-    {
+    if ($indexOnSave) {
       QubitSearch::getInstance()->update($this);
     }
 
@@ -59,8 +57,7 @@ class QubitAccession extends BaseAccession
 
   public function isAccrual()
   {
-    if (!isset($this->id))
-    {
+    if (!isset($this->id)) {
       return false;
     }
 
@@ -97,16 +94,14 @@ class QubitAccession extends BaseAccession
   {
     $con = Propel::getConnection();
 
-    try
-    {
+    try {
       $con->beginTransaction();
 
       // Determine what should be the next identifier
       $identifier = Qubit::generateIdentifierFromCounterAndMask(self::nextAccessionNumber(), sfConfig::get('app_accession_mask'));
 
       // If this identifier has already been used, increment counter and try again
-      if (!QubitValidatorAccessionIdentifier::identifierCanBeUsed($identifier))
-      {
+      if (!QubitValidatorAccessionIdentifier::identifierCanBeUsed($identifier)) {
         self::incrementAccessionCounter();
         $identifier = self::nextAvailableIdentifier();
       }
@@ -114,9 +109,7 @@ class QubitAccession extends BaseAccession
       $con->commit();
 
       return $identifier;
-    }
-    catch (PropelException $e)
-    {
+    } catch (PropelException $e) {
       $con->rollback();
 
       throw $e;
@@ -134,13 +127,11 @@ class QubitAccession extends BaseAccession
     $criteria->addJoin(QubitActor::ID, QubitEvent::ACTOR_ID);
     $criteria->add(QubitEvent::OBJECT_ID, $this->id);
 
-    if (isset($options['eventTypeId']))
-    {
+    if (isset($options['eventTypeId'])) {
       $criteria->add(QubitEvent::TYPE_ID, $options['eventTypeId']);
     }
 
-    if (isset($options['cultureFallback']) && true === $options['cultureFallback'])
-    {
+    if (isset($options['cultureFallback']) && true === $options['cultureFallback']) {
       $criteria->addAscendingOrderByColumn('authorized_form_of_name');
       $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor', $options);
     }
@@ -175,8 +166,7 @@ class QubitAccession extends BaseAccession
       ->addOr($criteria->getNewCriterion(QubitEvent::START_DATE, null, Criteria::ISNOTNULL))
       ->addOr($criteria->getNewCriterion(QubitEventI18n::DATE, null, Criteria::ISNOTNULL)));
 
-    if (isset($options['type_id']))
-    {
+    if (isset($options['type_id'])) {
       $criteria->add(QubitEvent::TYPE_ID, $options['type_id']);
     }
 
@@ -197,8 +187,7 @@ class QubitAccession extends BaseAccession
     $criteria->addJoin(QubitOtherName::TYPE_ID, QubitTerm::ID);
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID);
 
-    foreach (QubitOtherName::get($criteria) as $otherName)
-    {
+    foreach (QubitOtherName::get($criteria) as $otherName) {
       $otherNames[] = $otherName;
     }
 
@@ -208,26 +197,21 @@ class QubitAccession extends BaseAccession
   protected function insert($connection = null)
   {
     // If identifier has been specified and the mask is enabled, increment the counter
-    if (!empty($this->identifier) && self::maskEnabled())
-    {
+    if (!empty($this->identifier) && self::maskEnabled()) {
       $con = Propel::getConnection();
 
-      try
-      {
+      try {
         $con->beginTransaction();
         self::incrementAccessionCounter();
         $con->commit();
-      }
-      catch (PropelException $e)
-      {
+      } catch (PropelException $e) {
         $con->rollback();
 
         throw $e;
       }
     }
 
-    if (!isset($this->slug))
-    {
+    if (!isset($this->slug)) {
       $this->slug = QubitSlug::slugify($this->__get('identifier', ['sourceCulture' => true]));
     }
 

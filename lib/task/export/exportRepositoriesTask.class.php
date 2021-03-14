@@ -24,11 +24,11 @@
  */
 class exportRepositoriesTask extends arBaseTask
 {
-    protected $namespace = 'csv';
-    protected $name = 'repository-export';
-    protected $briefDescription = 'Export repository information to a CSV';
+  protected $namespace = 'csv';
+  protected $name = 'repository-export';
+  protected $briefDescription = 'Export repository information to a CSV';
 
-    protected $detailedDescription = <<<'EOF'
+  protected $detailedDescription = <<<'EOF'
 Export repository information to a CSV.
 EOF;
 
@@ -44,8 +44,7 @@ EOF;
 
     $writer = new csvRepositoryExport($arguments['filename']);
 
-    foreach ($this->getRepositories() as $r)
-    {
+    foreach ($this->getRepositories() as $r) {
       $this->context->getUser()->setCulture($r->culture);
       $repository = QubitRepository::getById($r->id);
 

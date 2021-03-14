@@ -32,8 +32,7 @@ class BrowseHierarchyDataAction extends DefaultFullTreeViewAction
 
     // Impose limit to what nodeLimit parameter can be set to
     $maxItemsPerPage = sfConfig::get('app_treeview_items_per_page_max', 10000);
-    if (!ctype_digit($request->nodeLimit) || $request->nodeLimit > $maxItemsPerPage)
-    {
+    if (!ctype_digit($request->nodeLimit) || $request->nodeLimit > $maxItemsPerPage) {
       $request->nodeLimit = $maxItemsPerPage;
     }
 

@@ -59,35 +59,29 @@ class QubitMetadataRoute extends QubitRoute
   public function matchesUrl($url, $context = [])
   {
     // Delegate basic matching to sfRoute
-    if (false === $parameters = parent::matchesUrl($url, $context))
-    {
+    if (false === $parameters = parent::matchesUrl($url, $context)) {
       return false;
     }
 
     // Rewrite action add/copy to edit
-    if (in_array($parameters['action'], ['add', 'copy']))
-    {
+    if (in_array($parameters['action'], ['add', 'copy'])) {
       $parameters['action'] = 'edit';
     }
 
     // At this point, it's likely that we are dealing with a permalink so let's
     // hit the database to see whether the resource exists or not.
-    if (isset($parameters['slug']))
-    {
+    if (isset($parameters['slug'])) {
       $criteria = new Criteria();
       $criteria->add(QubitSlug::SLUG, $parameters['slug']);
       $criteria->addJoin(QubitSlug::OBJECT_ID, QubitObject::ID);
 
-      try
-      {
-        if (null === $this->resource = QubitObject::get($criteria)->__get(0))
-        {
+      try {
+        if (null === $this->resource = QubitObject::get($criteria)->__get(0)) {
           return false;
         }
       }
       // If for any reason the database can't be accessed, trigger the installer
-      catch (PropelException $e)
-      {
+      catch (PropelException $e) {
         $parameters['module'] = 'sfInstallPlugin';
         $parameters['action'] = 'index';
 
@@ -99,8 +93,7 @@ class QubitMetadataRoute extends QubitRoute
       // considered. Additionally, QubitInformationObject will be analyzed
       // differently, since every object may have a specific metadata template
       // assigned.
-      switch (true)
-      {
+      switch (true) {
         case $this->resource instanceof QubitRepository:
           $parameters['module'] = 'sfIsdiahPlugin';
 
@@ -154,8 +147,7 @@ class QubitMetadataRoute extends QubitRoute
             FROM information_object JOIN term ON information_object.display_standard_id = term.id
             WHERE information_object.id = ? AND taxonomy_id = ?';
 
-          if (false !== $defaultSetting = QubitPdo::fetchColumn($sql, [$this->resource->id, QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID]))
-          {
+          if (false !== $defaultSetting = QubitPdo::fetchColumn($sql, [$this->resource->id, QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID])) {
             $default = $defaultSetting;
           }
 
@@ -205,13 +197,10 @@ class QubitMetadataRoute extends QubitRoute
 
     // Given the parent module (e.g. informationobject), find the best metadata
     // to be used
-    elseif (isset($parameters['module']))
-    {
-      switch ($parameters['module'])
-      {
+    elseif (isset($parameters['module'])) {
+      switch ($parameters['module']) {
         case 'informationobject':
-          if (false !== $code = $this->getDefaultTemplate($parameters['module']))
-          {
+          if (false !== $code = $this->getDefaultTemplate($parameters['module'])) {
             $parameters['module'] = self::$METADATA_PLUGINS[$code];
           }
 
@@ -240,11 +229,9 @@ class QubitMetadataRoute extends QubitRoute
   {
     $params = $this->parseParameters($params);
 
-    if (!isset($params['slug']) && isset($params['module']))
-    {
+    if (!isset($params['slug']) && isset($params['module'])) {
       $module = $params['module'];
-      if (!isset(self::$DEFAULT_MODULES[$module]))
-      {
+      if (!isset(self::$DEFAULT_MODULES[$module])) {
         return false;
       }
     }
@@ -269,33 +256,27 @@ class QubitMetadataRoute extends QubitRoute
   protected function parseParameters($params)
   {
     // Fill in missing parameters with attributes of $params[0]
-    if (!is_array($params))
-    {
+    if (!is_array($params)) {
       $params = [$params];
     }
 
     // Look for the slug property if an object is passed
-    if (isset($params[0]) && is_object($params[0]))
-    {
+    if (isset($params[0]) && is_object($params[0])) {
       // Extract slug if exists (some objects don't have a slug, like
       // QubitContactInformation
-      try
-      {
+      try {
         $params['slug'] = $params[0]->slug;
+      } catch (Exception $e) {
       }
-      catch (Exception $e) { }
 
       // Unset the object
       unset($params[0]);
     }
 
-    if (isset($params['slug']))
-    {
+    if (isset($params['slug'])) {
       // Set the metadata template
-      if (isset($params['module']))
-      {
-        if (false !== $key = array_search($params['module'], self::$METADATA_PLUGINS))
-        {
+      if (isset($params['module'])) {
+        if (false !== $key = array_search($params['module'], self::$METADATA_PLUGINS)) {
           $params['template'] = $key;
         }
 
@@ -311,13 +292,11 @@ class QubitMetadataRoute extends QubitRoute
   {
     $code = $default;
 
-    if (isset($parameters['template']))
-    {
+    if (isset($parameters['template'])) {
       $code = $parameters['template'];
     }
 
-    if (!in_array($code, $allowedValues))
-    {
+    if (!in_array($code, $allowedValues)) {
       throw new sfConfigurationException(sprintf('The metadata code "%s" is not valid.', $code));
     }
 

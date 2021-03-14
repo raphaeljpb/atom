@@ -39,8 +39,7 @@ class arSearchStatusTask extends arBaseTask
     // Display how many objects are indexed versus how many are available
     $this->log('Document indexing status:');
 
-    foreach ($this->availableDocumentTypes() as $docType)
-    {
+    foreach ($this->availableDocumentTypes() as $docType) {
       $docTypeDescription = sfInflector::humanize(sfInflector::underscore($docType));
 
       $docTypeIndexedCount = $this->objectsIndexed($docType);

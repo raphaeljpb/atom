@@ -29,8 +29,7 @@ class arElasticSearchContactInformation extends arElasticSearchModelBase
     $serialized['countryCode'] = $object->countryCode;
 
     // geo point type
-    if (!empty($object->latitude) && !empty($object->longitude))
-    {
+    if (!empty($object->latitude) && !empty($object->longitude)) {
       $serialized['location']['lat'] = $object->latitude;
       $serialized['location']['lon'] = $object->longitude;
     }

@@ -24,11 +24,11 @@
  */
 class clearJobsTask extends arBaseTask
 {
-    protected $namespace = 'jobs';
-    protected $name = 'clear';
-    protected $briefDescription = 'Clear AtoM jobs';
+  protected $namespace = 'jobs';
+  protected $name = 'clear';
+  protected $briefDescription = 'Clear AtoM jobs';
 
-    protected $detailedDescription = <<<'EOF'
+  protected $detailedDescription = <<<'EOF'
 Clears jobs
 EOF;
 
@@ -49,24 +49,21 @@ EOF;
     $sql = 'SELECT count(1) FROM job WHERE status_id=?';
     $runningJobCount = QubitPdo::fetchColumn($sql, [QubitTerm::JOB_STATUS_IN_PROGRESS_ID]);
 
-    if ($runningJobCount > 0)
-    {
+    if ($runningJobCount > 0) {
       echo 'WARNING: AtoM reports there are jobs currently running. It is *highly* recommended you make sure '.
             "there aren't any jobs actually running.\n\n";
     }
 
     // Confirmation
     $question = 'Are you SURE you want to clear all jobs in the database? (y/N)';
-    if (!$options['no-confirmation'] && !$this->askConfirmation([$question], 'QUESTION_LARGE', false))
-    {
+    if (!$options['no-confirmation'] && !$this->askConfirmation([$question], 'QUESTION_LARGE', false)) {
       $this->logSection('jobs:clear', 'Aborting.');
 
       return 1;
     }
 
     $jobs = QubitJob::getAll();
-    foreach ($jobs as $job)
-    {
+    foreach ($jobs as $job) {
       $job->delete();
     }
 

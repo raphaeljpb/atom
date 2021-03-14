@@ -71,8 +71,7 @@ sql;
     QubitPdo::modify($sql);
 
     // Add menu items
-    if (null !== $parentMenu = QubitMenu::getByName('clipboard'))
-    {
+    if (null !== $parentMenu = QubitMenu::getByName('clipboard')) {
       $menu = new QubitMenu();
       $menu->parentId = $parentMenu->id;
       $menu->sourceCulture = 'en';
@@ -82,8 +81,7 @@ sql;
       $menu->save();
     }
 
-    if (null !== $parentMenu = QubitMenu::getByName('clipboard'))
-    {
+    if (null !== $parentMenu = QubitMenu::getByName('clipboard')) {
       $menu = new QubitMenu();
       $menu->parentId = $parentMenu->id;
       $menu->sourceCulture = 'en';

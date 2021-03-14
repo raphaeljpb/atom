@@ -36,8 +36,7 @@ class QubitCultureFallback
     $tableMap = eval('return new '.substr($fallbackClassName, 5).'TableMap;');
 
     // Loop through table columns and add fallback calculated fields to criteria
-    foreach ($tableMap->getColumns() as $col)
-    {
+    foreach ($tableMap->getColumns() as $col) {
       $criteria->addAsColumn($col->getColumnName(), self::getfallbackCaseStmt($col->getColumnName()));
     }
 
@@ -55,12 +54,9 @@ class QubitCultureFallback
    */
   public static function addFallbackCriteria($criteria, $fallbackClassName, $options = [])
   {
-    if (isset($options['culture']))
-    {
+    if (isset($options['culture'])) {
       $culture = $options['culture'];
-    }
-    else
-    {
+    } else {
       $culture = sfContext::getInstance()->user->getCulture();
     }
 

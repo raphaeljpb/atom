@@ -51,10 +51,8 @@ class arMigration0173
       'dacs_access_points_area',
     ];
 
-    foreach ($dacsVisibilitySettingNames as $settingName)
-    {
-      if (null === QubitSetting::getByName($settingName))
-      {
+    foreach ($dacsVisibilitySettingNames as $settingName) {
+      if (null === QubitSetting::getByName($settingName)) {
         $setting = new QubitSetting();
 
         $setting->setName($settingName);

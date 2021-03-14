@@ -23,13 +23,11 @@ class ObjectGaInstitutionsDimensionComponent extends sfComponent
   {
     $this->dimensionIndex = sfConfig::get('app_google_analytics_institutions_dimension_index', '');
 
-    if (empty($this->dimensionIndex))
-    {
+    if (empty($this->dimensionIndex)) {
       return sfView::NONE;
     }
 
-    switch (get_class($this->resource))
-    {
+    switch (get_class($this->resource)) {
       case 'QubitInformationObject':
         $this->repository = $this->resource->getRepository(['inherit' => true]);
 
@@ -51,8 +49,7 @@ class ObjectGaInstitutionsDimensionComponent extends sfComponent
         break;
     }
 
-    if (!isset($this->repository))
-    {
+    if (!isset($this->repository)) {
       return sfView::NONE;
     }
   }

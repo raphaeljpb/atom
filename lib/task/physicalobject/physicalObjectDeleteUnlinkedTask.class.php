@@ -43,12 +43,10 @@ EOF;
     parent::execute($arguments, $options);
 
     // Offer to abort if not using --force or --dry-run options
-    if (!$options['force'] && !$options['dry-run'])
-    {
+    if (!$options['force'] && !$options['dry-run']) {
       $confirmation = $this->askConfirmation("Are you sure you'd like to delete all unlinked physical objects?");
 
-      if (!$confirmation)
-      {
+      if (!$confirmation) {
         $this->log('Aborted.');
 
         exit();
@@ -59,8 +57,7 @@ EOF;
     QubitSearch::disable();
 
     // Remind user they are in dry run mode
-    if ($options['dry-run'])
-    {
+    if ($options['dry-run']) {
       $this->log('*** DRY RUN (no changes will be made to the database) ***');
     }
 
@@ -80,18 +77,15 @@ EOF;
     $this->log(null);
     $this->log('Deleting unlinked physical objects...');
 
-    foreach ($toDelete as $id)
-    {
+    foreach ($toDelete as $id) {
       // Delete duplicates
       $po = QubitPhysicalObject::getById($id);
 
       // Show details of each individual physical object being deleted, if in verbose mode
-      if ($options['verbose'])
-      {
+      if ($options['verbose']) {
         $description = sprintf(" - Name: '%s'", $po->getName(['cultureFallback' => true]));
 
-        if (!empty($location = $po->getLocation(['cultureFallback' => true])))
-        {
+        if (!empty($location = $po->getLocation(['cultureFallback' => true]))) {
           $description .= sprintf(", Location: '%s'", $location);
         }
 
@@ -101,8 +95,7 @@ EOF;
       }
 
       // Delete, if not conducting a dry run
-      if (!$options['dry-run'])
-      {
+      if (!$options['dry-run']) {
         $po->delete();
       }
     }
@@ -110,12 +103,9 @@ EOF;
     $this->log(sprintf(' - %d physical objects deleted', count($toDelete)));
 
     // Display post-deletion count of physical objects
-    if (!$options['dry-run'])
-    {
+    if (!$options['dry-run']) {
       $physicalObjectsCountAfter = $this->getPhysicalObjectCount();
-    }
-    else
-    {
+    } else {
       // Simulate results during dry run
       $physicalObjectsCountAfter = $physicalObjectsCountBefore - count($toDelete);
     }
@@ -161,19 +151,15 @@ EOF;
 
     $sql = 'SELECT id FROM physical_object';
 
-    foreach (QubitPdo::fetchAll($sql) as $physicalObject)
-    {
+    foreach (QubitPdo::fetchAll($sql) as $physicalObject) {
       // Get relations to physical object
       $relations = QubitRelation::getRelationsBySubjectId($physicalObject->id, ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
 
       $informationObjectFound = false;
 
-      if (count($relations))
-      {
-        foreach ($relations as $relation)
-        {
-          if (null !== QubitInformationObject::getById($relation->objectId))
-          {
+      if (count($relations)) {
+        foreach ($relations as $relation) {
+          if (null !== QubitInformationObject::getById($relation->objectId)) {
             $informationObjectFound = true;
 
             break;
@@ -182,8 +168,7 @@ EOF;
       }
 
       // Mark physical object for deletion
-      if (!$informationObjectFound)
-      {
+      if (!$informationObjectFound) {
         $toDelete[] = $physicalObject->id;
       }
     }

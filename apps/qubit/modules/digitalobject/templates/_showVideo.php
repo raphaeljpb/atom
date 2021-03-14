@@ -8,7 +8,7 @@
     <?php echo link_to(image_tag($representation->getFullPath(), ['alt' => __($resource->getDigitalObjectAltText() ?: 'Open original %1%', ['%1%' => sfConfig::get('app_ui_label_digitalobject')])]), $link); ?>
   <?php } ?>
 
-<?php } elseif (QubitTerm::REFERENCE_ID == $usageType){ ?>
+<?php } elseif (QubitTerm::REFERENCE_ID == $usageType) { ?>
 
   <?php if ($showMediaPlayer) { ?>
     <video preload="metadata" class="mediaelement-player" src="<?php echo public_path($representation->getFullPath()); ?>"></video>
@@ -23,7 +23,7 @@
     <?php echo link_to(__('Download movie'), $link, ['class' => 'download']); ?>
   <?php } ?>
 
-<?php } elseif (QubitTerm::THUMBNAIL_ID == $usageType){ ?>
+<?php } elseif (QubitTerm::THUMBNAIL_ID == $usageType) { ?>
 
   <?php if ($iconOnly) { ?>
 

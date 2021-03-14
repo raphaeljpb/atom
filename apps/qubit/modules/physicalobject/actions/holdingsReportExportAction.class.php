@@ -24,22 +24,17 @@ class PhysicalObjectHoldingsReportExportAction extends sfAction
     $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         // Abort if export will be empty
-        if (empty($request->includeEmpty) && empty($request->includeDescriptions) && empty($request->includeAccessions))
-        {
+        if (empty($request->includeEmpty) && empty($request->includeDescriptions) && empty($request->includeAccessions)) {
           $message = $this->context->i18n->__('Please check one or more of the export options.');
           $this->context->user->setFlash('error', $message);
 
           $this->redirect(['module' => 'physicalobject', 'action' => 'holdingsReportExport']);
-        }
-        else
-        {
+        } else {
           $this->doBackgroundExport($request);
 
           $this->redirect(['module' => 'physicalobject', 'action' => 'browse']);
@@ -52,18 +47,15 @@ class PhysicalObjectHoldingsReportExportAction extends sfAction
   {
     $options = ['suppressEmpty' => empty($request->includeEmpty)];
 
-    if (!empty($request->includeAccessions) && empty($request->includeDescriptions))
-    {
+    if (!empty($request->includeAccessions) && empty($request->includeDescriptions)) {
       $options['holdingType'] = 'QubitAccession';
     }
 
-    if (empty($request->includeAccessions) && !empty($request->includeDescriptions))
-    {
+    if (empty($request->includeAccessions) && !empty($request->includeDescriptions)) {
       $options['holdingType'] = 'QubitInformationObject';
     }
 
-    if (empty($request->includeAccessions) && empty($request->includeDescriptions))
-    {
+    if (empty($request->includeAccessions) && empty($request->includeDescriptions)) {
       $options['holdingType'] = 'none';
     }
 

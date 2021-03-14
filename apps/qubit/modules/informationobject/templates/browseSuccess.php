@@ -208,7 +208,7 @@
 
       <?php if ($view === $tableView) { ?>
         <?php echo get_partial('informationobject/tableViewResults', ['pager' => $pager, 'selectedCulture' => $selectedCulture]); ?>
-      <?php } elseif ($view === $cardView){ ?>
+      <?php } elseif ($view === $cardView) { ?>
         <?php echo get_partial('informationobject/cardViewResults', ['pager' => $pager, 'selectedCulture' => $selectedCulture]); ?>
       <?php } ?>
     </div>

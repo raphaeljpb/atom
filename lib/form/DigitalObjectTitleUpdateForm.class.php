@@ -27,8 +27,7 @@ class DigitalObjectTitleUpdateForm extends sfForm
   public function configure()
   {
     // Build widgets and validators
-    foreach ($this->getInformationObjects() as $informationObject)
-    {
+    foreach ($this->getInformationObjects() as $informationObject) {
       $widgets[$informationObject->id] = new sfWidgetFormInput();
       $validators[$informationObject->id] = new sfValidatorString();
     }

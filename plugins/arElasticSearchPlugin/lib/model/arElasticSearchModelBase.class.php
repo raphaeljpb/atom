@@ -28,8 +28,7 @@ abstract class arElasticSearchModelBase
 
   public function __construct()
   {
-    if (!isset(self::$conn))
-    {
+    if (!isset(self::$conn)) {
       self::$conn = Propel::getConnection();
     }
 
@@ -50,14 +49,12 @@ abstract class arElasticSearchModelBase
 
   public static function serializeI18ns($id, array $classes, $options = [])
   {
-    if (empty($classes))
-    {
+    if (empty($classes)) {
       throw new sfException('At least one class name must be passed.');
     }
 
     // Get an array of i18n languages
-    if (!isset(self::$allowedLanguages))
-    {
+    if (!isset(self::$allowedLanguages)) {
       self::$allowedLanguages = sfConfig::get('app_i18n_languages');
     }
 
@@ -66,13 +63,11 @@ abstract class arElasticSearchModelBase
 
     // Allow merging i18n fields, used for partial foreign types
     // when different object fields are included in the same object
-    if (isset($options['merge']))
-    {
+    if (isset($options['merge'])) {
       $i18ns = $options['merge'];
     }
 
-    foreach ($classes as $class)
-    {
+    foreach ($classes as $class) {
       // Build SQL query per table. Tried with joins but for some reason the
       // culture value appears empty. The statement can't be reused as it's
       // not possible to bind and use a variable for the table name.
@@ -82,24 +77,20 @@ abstract class arElasticSearchModelBase
         ['fetchMode' => PDO::FETCH_ASSOC]
       );
 
-      foreach ($rows as $row)
-      {
+      foreach ($rows as $row) {
         // Any i18n record within a culture previously not configured will
         // be ignored since the search engine will only accept known languages
-        if (!in_array($row['culture'], self::$allowedLanguages))
-        {
+        if (!in_array($row['culture'], self::$allowedLanguages)) {
           continue;
         }
 
         // Collect cultures added
         $i18ns['languages'][] = $row['culture'];
 
-        foreach ($row as $key => $value)
-        {
+        foreach ($row as $key => $value) {
           // Pass if the column is unneeded or null, or if it's not set in options fields
           if (in_array($key, ['id', 'culture']) || is_null($value)
-            || (isset($options['fields']) && !in_array($key, $options['fields'])))
-          {
+            || (isset($options['fields']) && !in_array($key, $options['fields']))) {
             continue;
           }
 
@@ -142,26 +133,22 @@ abstract class arElasticSearchModelBase
 
   public static function extendRelatedTerms($termIds)
   {
-    if (empty($termIds))
-    {
+    if (empty($termIds)) {
       return [];
     }
 
     // Try to get term parent list from sfConfig, added in
     // the populate process when it includes terms and/or IOs.
-    if (!isset(self::$termParentList))
-    {
+    if (!isset(self::$termParentList)) {
       self::$termParentList = sfConfig::get('term_parent_list', null);
     }
 
     // If the term parent list is populated, recursively extend the terms
-    if (isset(self::$termParentList))
-    {
+    if (isset(self::$termParentList)) {
       $relatedTerms = [];
 
       // Iterate over each directly related term, adding all ancestors of each
-      foreach ($termIds as $id)
-      {
+      foreach ($termIds as $id) {
         $relatedTerms = array_merge(
           $relatedTerms,
           self::recursivelyGetParentTerms($id)
@@ -216,8 +203,7 @@ abstract class arElasticSearchModelBase
    */
   private static function recursivelyGetParentTerms($id)
   {
-    if (!isset(self::$termParentList) || null === $parent = self::$termParentList[$id])
-    {
+    if (!isset(self::$termParentList) || null === $parent = self::$termParentList[$id]) {
       return [$id];
     }
 

@@ -22,8 +22,7 @@ class menuClipboardMenuComponent extends sfComponent
   public function execute($request)
   {
     $this->menu = QubitMenu::getByName('clipboard');
-    if (null === $this->menu || !$this->menu->hasChildren())
-    {
+    if (null === $this->menu || !$this->menu->hasChildren()) {
       return sfView::NONE;
     }
   }

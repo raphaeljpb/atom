@@ -55,8 +55,7 @@ EOF;
       ? $options['source-name']
       : basename($arguments['filename']);
 
-    if (false === $fh = fopen($arguments['filename'], 'rb'))
-    {
+    if (false === $fh = fopen($arguments['filename'], 'rb')) {
       throw new sfException('You must specify a valid filename');
     }
 
@@ -170,11 +169,9 @@ EOF;
       ],
 
       // Import logic to execute before saving QubitRepository
-      'preSaveLogic' => function (&$self)
-      {
+      'preSaveLogic' => function (&$self) {
         $opts = $self->getStatus('options');
-        if (isset($opts['upload-limit']) && !isset($self->object->uploadLimit))
-        {
+        if (isset($opts['upload-limit']) && !isset($self->object->uploadLimit)) {
           $self->object->uploadLimit = $opts['upload-limit'];
         }
 
@@ -196,55 +193,42 @@ EOF;
       },
 
       // Import logic to execute after saving QubitRepository
-      'postSaveLogic' => function (&$self)
-      {
+      'postSaveLogic' => function (&$self) {
         csvImportBaseTask::importAlternateFormsOfName($self);
 
         // Check if any contact information data exists
         $addContactInfo = false;
         $contactInfoFields = ['contactPerson', 'streetAddress', 'city', 'region', 'postalCode', 'country', 'telephone', 'email', 'fax', 'website'];
-        foreach ($contactInfoFields as $field)
-        {
-          if (!empty($self->rowStatusVars[$field]))
-          {
+        foreach ($contactInfoFields as $field) {
+          if (!empty($self->rowStatusVars[$field])) {
             $addContactInfo = true;
 
             break;
           }
         }
 
-        if ($addContactInfo)
-        {
+        if ($addContactInfo) {
           // Try to get existing contact information
           $criteria = new Criteria();
           $criteria->add(QubitContactInformation::ACTOR_ID, $self->object->id);
           $contactInfo = QubitContactInformation::getOne($criteria);
 
-          if (!isset($contactInfo))
-          {
+          if (!isset($contactInfo)) {
             $contactInfo = new QubitContactInformation();
             $contactInfo->actorId = $self->object->id;
           }
 
-          foreach ($contactInfoFields as $field)
-          {
+          foreach ($contactInfoFields as $field) {
             // Don't overwrite/add blank fields
-            if (!empty($self->rowStatusVars[$field]))
-            {
-              if ('country' == $field)
-              {
+            if (!empty($self->rowStatusVars[$field])) {
+              if ('country' == $field) {
                 $countryCode = QubitFlatfileImport::normalizeCountryAsCountryCode($self->rowStatusVars[$field]);
-                if (null === $countryCode)
-                {
+                if (null === $countryCode) {
                   echo sprintf("Could not find country or country code matching '%s'\n", $self->rowStatusVars[$field]);
-                }
-                else
-                {
+                } else {
                   $contactInfo->countryCode = $countryCode;
                 }
-              }
-              else
-              {
+              } else {
                 $contactInfo->{$field} = $self->rowStatusVars[$field];
               }
             }
@@ -255,14 +239,12 @@ EOF;
         }
 
         // Add keymap entry
-        if (!empty($self->rowStatusVars['legacyId']))
-        {
+        if (!empty($self->rowStatusVars['legacyId'])) {
           $self->createKeymapEntry($self->getStatus('sourceName'), $self->rowStatusVars['legacyId']);
         }
 
         // Re-index to add related resources
-        if (!$self->searchIndexingDisabled)
-        {
+        if (!$self->searchIndexingDisabled) {
           QubitSearch::getInstance()->update($self->object);
         }
       },

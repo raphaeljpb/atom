@@ -44,13 +44,11 @@ class digitalObjectDeleteTask extends arBaseTask
     $t = new QubitTimer();
 
     // Remind user they are in dry run mode
-    if ($options['dry-run'])
-    {
+    if ($options['dry-run']) {
       $this->logSection('digital-object', '*** DRY RUN (no changes will be made to the database) ***');
     }
 
-    if ($options['media-type'] && !array_key_exists($options['media-type'], $this->validMediaTypes))
-    {
+    if ($options['media-type'] && !array_key_exists($options['media-type'], $this->validMediaTypes)) {
       error_log(sprintf('Invalid value for "media-type", must be one of (%s)',
         implode(',', array_keys($this->validMediaTypes))));
 
@@ -66,29 +64,24 @@ class digitalObjectDeleteTask extends arBaseTask
 
     $row = $statement->fetch(PDO::FETCH_ASSOC);
 
-    if (!$row['object_id'])
-    {
+    if (!$row['object_id']) {
       throw new sfException('Invalid slug "'.$arguments['slug'].'" entered.');
     }
 
-    if (!in_array($row['class_name'], ['QubitInformationObject', 'QubitRepository']))
-    {
+    if (!in_array($row['class_name'], ['QubitInformationObject', 'QubitRepository'])) {
       throw new sfException('Invalid slug with object type "'.$row['class_name'].'" entered.');
     }
 
     if ('QubitInformationObject' == $row['class_name']
-      && null === $informationObject = QubitInformationObject::getById($row['object_id']))
-    {
+      && null === $informationObject = QubitInformationObject::getById($row['object_id'])) {
       throw new sfException('Failed to fetch information object with the slug given.');
     }
     if ('QubitRepository' == $row['class_name']
-      && null === $repository = QubitRepository::getById($row['object_id']))
-    {
+      && null === $repository = QubitRepository::getById($row['object_id'])) {
       throw new sfException('Failed to fetch repository with the slug given.');
     }
 
-    switch ($row['class_name'])
-    {
+    switch ($row['class_name']) {
       case 'QubitInformationObject':
         $objectIds = $options['and-descendants'] ? $this->getIoDescendantIds($informationObject->lft, $informationObject->rgt) : [$informationObject->id];
 
@@ -100,8 +93,7 @@ class digitalObjectDeleteTask extends arBaseTask
         $params = [':repository_id' => $repository->id];
         $relatedInformationObjects = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
-        foreach ($relatedInformationObjects as $io)
-        {
+        foreach ($relatedInformationObjects as $io) {
           // Always include descendants when deleting by repository.
           $objectIds = array_merge($objectIds, $this->getIoDescendantIds($io['lft'], $io['rgt']));
         }
@@ -109,10 +101,8 @@ class digitalObjectDeleteTask extends arBaseTask
         break;
     }
 
-    foreach ($objectIds as $id)
-    {
-      if (null !== $object = QubitInformationObject::getById($id))
-      {
+    foreach ($objectIds as $id) {
+      if (null !== $object = QubitInformationObject::getById($id)) {
         $success = $this->deleteDigitalObject($object, $options);
 
         $this->logSection('digital-object', sprintf('(%d of %d) %s: %s',
@@ -171,12 +161,9 @@ EOF;
 
   private function deleteDigitalObject($object, $options = [])
   {
-    foreach ($object->digitalObjectsRelatedByobjectId as $do)
-    {
-      if (!$options['media-type'] || ($options['media-type'] && $do->mediaTypeId == $this->validMediaTypes[$options['media-type']]))
-      {
-        if (!$options['dry-run'])
-        {
+    foreach ($object->digitalObjectsRelatedByobjectId as $do) {
+      if (!$options['media-type'] || ($options['media-type'] && $do->mediaTypeId == $this->validMediaTypes[$options['media-type']])) {
+        if (!$options['dry-run']) {
           // Remove appropriate digital object files, empty directories left
           // behind, and db entries
           $do->delete();

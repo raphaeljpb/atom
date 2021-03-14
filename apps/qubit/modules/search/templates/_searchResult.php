@@ -11,11 +11,7 @@
     <div class="search-result-preview">
       <a href="<?php echo url_for(['module' => 'informationobject', 'slug' => $doc['slug']]); ?>">
         <div class="preview-container">
-          <?php if (
-              isset($doc['digitalObject']['thumbnailPath'])
-              && QubitAcl::check(QubitInformationObject::getById($hit->getId()), 'readThumbnail')
-            ) {
-          ?>
+          <?php if (isset($doc['digitalObject']['thumbnailPath']) && QubitAcl::check(QubitInformationObject::getById($hit->getId()), 'readThumbnail')) { ?>
             <?php echo image_tag($doc['digitalObject']['thumbnailPath'],
               ['alt' => isset($doc['digitalObject']['digitalObjectAltText']) ? $doc['digitalObject']['digitalObjectAltText'] : truncate_text(strip_markdown(get_search_i18n($doc, 'title', ['allowEmpty' => false, 'culture' => $culture])), 100)]); ?>
           <?php } else { ?>

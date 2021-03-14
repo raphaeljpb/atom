@@ -48,13 +48,10 @@ class i18nRectifyTask extends sfBaseTask
     $this->i18n->getMessageSource()->load();
 
     $currentMessages = [];
-    foreach ($this->i18n->getMessageSource()->read() as $catalogue => $translations)
-    {
-      foreach ($translations as $key => $value)
-      {
+    foreach ($this->i18n->getMessageSource()->read() as $catalogue => $translations) {
+      foreach ($translations as $key => $value) {
         // Use first message that has a valid translation
-        if (0 < strlen(trim($value[0])) && !isset($currentMessages[$key][0]))
-        {
+        if (0 < strlen(trim($value[0])) && !isset($currentMessages[$key][0])) {
           $currentMessages[$key] = $value;
         }
       }
@@ -62,8 +59,7 @@ class i18nRectifyTask extends sfBaseTask
 
     // Loop through plugins
     $pluginNames = sfFinder::type('dir')->maxdepth(0)->relative()->not_name('.')->in(sfConfig::get('sf_plugins_dir'));
-    foreach ($pluginNames as $pluginName)
-    {
+    foreach ($pluginNames as $pluginName) {
       $this->logSection('i18n', sprintf('rectifying %s plugin strings', $pluginName));
 
       $messageSource = sfMessageSource::factory($config['i18n']['param']['source'], sfConfig::get('sf_plugins_dir').'/'.$pluginName.'/i18n');
@@ -72,12 +68,9 @@ class i18nRectifyTask extends sfBaseTask
 
       // If the current plugin source *doesn't* have a translation, then try
       // and get translated value from $currentMessages
-      foreach ($messageSource->read() as $catalogue => $translations)
-      {
-        foreach ($translations as $key => &$value)
-        {
-          if (isset($currentMessages[$key]))
-          {
+      foreach ($messageSource->read() as $catalogue => $translations) {
+        foreach ($translations as $key => &$value) {
+          if (isset($currentMessages[$key])) {
             $messageSource->update($key, $currentMessages[$key][0], $value[2]);
           }
         }

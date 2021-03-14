@@ -24,16 +24,14 @@ class InformationObjectTreeViewSortAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check parameter
-    if (!in_array($request->move, ['moveAfter', 'moveBefore']))
-    {
+    if (!in_array($request->move, ['moveAfter', 'moveBefore'])) {
       $this->forward404();
     }
 
     // Check permissions and make sure that the user is not playing with
     // the root object, we do not want to sort that one
     if (QubitInformationObject::ROOT_ID == $this->resource->id
-        || !QubitAcl::check($this->resource, 'update'))
-    {
+        || !QubitAcl::check($this->resource, 'update')) {
       QubitAcl::forwardUnauthorized();
     }
 
@@ -42,16 +40,14 @@ class InformationObjectTreeViewSortAction extends sfAction
     $params = $this->context->routing->parse(Qubit::pathInfo($request->target));
 
     // Make sure the object exists
-    if (!isset($params['_sf_route']))
-    {
+    if (!isset($params['_sf_route'])) {
       $this->forward404();
     }
     $target = $params['_sf_route']->resource;
 
     // Go! This operation is delegated to the ORM
     // It could take a long time if the tree is very big
-    switch ($request->move)
-    {
+    switch ($request->move) {
       case 'moveAfter':
         $this->resource->moveToNextSiblingOf($target);
         echo 'after';

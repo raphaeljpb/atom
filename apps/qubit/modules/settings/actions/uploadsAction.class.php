@@ -51,8 +51,7 @@ class SettingsUploadsAction extends SettingsEditAction
   protected function addField($name)
   {
     // Set form field format
-    switch ($name)
-    {
+    switch ($name) {
       case 'enable_repository_quotas':
         $this->form->setValidator($name, new sfValidatorBoolean(
           ['required' => true]

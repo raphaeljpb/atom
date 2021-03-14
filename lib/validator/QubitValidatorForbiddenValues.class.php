@@ -40,8 +40,7 @@ class QubitValidatorForbiddenValues extends sfValidatorBase
   {
     $forbiddenValues = $this->getOption('forbidden_values');
 
-    if (in_array($value, $forbiddenValues))
-    {
+    if (in_array($value, $forbiddenValues)) {
       throw new sfValidatorError($this, 'forbidden', ['value' => $value]);
     }
 

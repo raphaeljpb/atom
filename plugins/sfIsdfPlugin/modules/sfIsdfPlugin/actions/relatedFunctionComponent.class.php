@@ -37,15 +37,13 @@ class sfIsdfPluginRelatedFunctionComponent extends RelationEditComponent
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'type':
         $this->form->setValidator('type', new sfValidatorString());
 
         $choices = [];
         $choices[null] = null;
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ISDF_RELATION_TYPE_ID) as $item)
-        {
+        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ISDF_RELATION_TYPE_ID) as $item) {
           $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
@@ -60,30 +58,22 @@ class sfIsdfPluginRelatedFunctionComponent extends RelationEditComponent
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'resource':
         // Update the object of the relation, unless the current resource is
         // the object
-        if ($this->resource->id != $this->relation->objectId)
-        {
+        if ($this->resource->id != $this->relation->objectId) {
           unset($this->relation->object);
-        }
-        else
-        {
+        } else {
           unset($this->relation->subject);
         }
 
         $value = $this->form->getValue('resource');
-        if (isset($value))
-        {
+        if (isset($value)) {
           $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          if ($this->resource->id != $this->relation->objectId)
-          {
+          if ($this->resource->id != $this->relation->objectId) {
             $this->relation->object = $params['_sf_route']->resource;
-          }
-          else
-          {
+          } else {
             $this->relation->subject = $params['_sf_route']->resource;
           }
         }

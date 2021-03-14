@@ -34,18 +34,14 @@ class DeaccessionEditAction extends DefaultEditAction
 
     $this->resource = new QubitDeaccession();
 
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
 
       // Check user authorization
-      if (!QubitAcl::check($this->resource, 'update'))
-      {
+      if (!QubitAcl::check($this->resource, 'update')) {
         QubitAcl::forwardUnauthorized();
       }
-    }
-    else
-    {
+    } else {
       $this->form->setDefault('accessionId', $this->request->accession);
       $this->form->setValidator('accessionId', new sfValidatorInteger());
       $this->form->setWidget('accessionId', new sfWidgetFormInputHidden());
@@ -53,17 +49,14 @@ class DeaccessionEditAction extends DefaultEditAction
       $this->resource->accessionId = $this->request->accession;
 
       // Check user authorization
-      if (!QubitAcl::check($this->resource, 'create'))
-      {
+      if (!QubitAcl::check($this->resource, 'create')) {
         QubitAcl::forwardUnauthorized();
       }
     }
 
     $title = $this->context->i18n->__('Add new deaccession record');
-    if (isset($this->getRoute()->resource))
-    {
-      if (1 > strlen($title = $this->resource->__toString()))
-      {
+    if (isset($this->getRoute()->resource)) {
+      if (1 > strlen($title = $this->resource->__toString())) {
         $title = $this->context->i18n->__('Untitled');
       }
 
@@ -77,11 +70,9 @@ class DeaccessionEditAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->resource->save();
@@ -95,16 +86,14 @@ class DeaccessionEditAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'scope':
         $this->form->setDefault('scope', $this->context->routing->generate(null, [$this->resource->scope, 'module' => 'term']));
         $this->form->setValidator('scope', new sfValidatorString());
 
         $choices = [];
         $choices[null] = null;
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DEACCESSION_SCOPE_ID) as $item)
-        {
+        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DEACCESSION_SCOPE_ID) as $item) {
           $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
@@ -124,8 +113,7 @@ class DeaccessionEditAction extends DefaultEditAction
       case 'date':
         $this->form->setDefault('date', Qubit::renderDate($this->resource['date']));
 
-        if (!isset($this->resource->id))
-        {
+        if (!isset($this->resource->id)) {
           $dt = new DateTime();
           $this->form->setDefault('date', $dt->format('Y-m-d'));
         }
@@ -151,14 +139,12 @@ class DeaccessionEditAction extends DefaultEditAction
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'scope':
         unset($this->resource->scope);
 
         $value = $this->form->getValue('scope');
-        if (isset($value))
-        {
+        if (isset($value)) {
           $params = $this->context->routing->parse(Qubit::pathInfo($value));
           $this->resource->scope = $params['_sf_route']->resource;
         }

@@ -24,15 +24,13 @@ class sfPluginAdminPluginPluginsAction extends sfAction
     $this->form = new sfForm();
     $this->defaultTemplate = sfConfig::get('app_default_template_informationobject');
 
-    if (!$this->context->user->isAdministrator())
-    {
+    if (!$this->context->user->isAdministrator()) {
       QubitAcl::forwardUnauthorized();
     }
 
     $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, 'plugins');
-    if (1 == count($query = QubitSetting::get($criteria)))
-    {
+    if (1 == count($query = QubitSetting::get($criteria))) {
       $setting = $query[0];
 
       $this->form->setDefault('enabled', unserialize($setting->getValue(['sourceCulture' => true])));
@@ -40,17 +38,14 @@ class sfPluginAdminPluginPluginsAction extends sfAction
 
     $configuration = ProjectConfiguration::getActive();
     $pluginPaths = $configuration->getAllPluginPaths();
-    foreach (sfPluginAdminPluginConfiguration::$pluginNames as $name)
-    {
+    foreach (sfPluginAdminPluginConfiguration::$pluginNames as $name) {
       unset($pluginPaths[$name]);
     }
 
     $this->plugins = [];
-    foreach ($pluginPaths as $name => $path)
-    {
+    foreach ($pluginPaths as $name => $path) {
       $className = $name.'Configuration';
-      if (sfConfig::get('sf_plugins_dir') == substr($path, 0, strlen(sfConfig::get('sf_plugins_dir'))) && is_readable($classPath = $path.'/config/'.$className.'.class.php'))
-      {
+      if (sfConfig::get('sf_plugins_dir') == substr($path, 0, strlen(sfConfig::get('sf_plugins_dir'))) && is_readable($classPath = $path.'/config/'.$className.'.class.php')) {
         $this->installPluginAssets($name, $path);
 
         require_once $classPath;
@@ -58,24 +53,20 @@ class sfPluginAdminPluginPluginsAction extends sfAction
         $class = new $className($configuration);
 
         // Build a list of plugins
-        if (isset($class::$summary) && 0 === preg_match('/theme/i', $class::$summary))
-        {
+        if (isset($class::$summary) && 0 === preg_match('/theme/i', $class::$summary)) {
           $this->plugins[$name] = $class;
         }
       }
     }
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->setValidators([
         'enabled' => new sfValidatorChoice(['choices' => array_keys($this->plugins), 'empty_value' => [], 'multiple' => true]), ]);
 
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
-        if (1 != count($query))
-        {
+      if ($this->form->isValid()) {
+        if (1 != count($query)) {
           $setting = new QubitSetting();
           $setting->name = 'plugins';
         }
@@ -84,22 +75,17 @@ class sfPluginAdminPluginPluginsAction extends sfAction
 
         $swordEnabled = in_array('qtSwordPlugin', $settings);
 
-        foreach (array_keys($this->plugins) as $item)
-        {
-          if (in_array($item, (array) $this->form->getValue('enabled')))
-          {
+        foreach (array_keys($this->plugins) as $item) {
+          if (in_array($item, (array) $this->form->getValue('enabled'))) {
             $settings[] = $item;
-          }
-          elseif (false !== $key = array_search($item, $settings))
-          {
+          } elseif (false !== $key = array_search($item, $settings)) {
             // Don't disable default plugins
             if (!('sfIsdiahPlugin' == $item
                 || 'sfIsaarPlugin' == $item
                 || ('sfIsadPlugin' == $item && 'isad' == $this->defaultTemplate)
                 || ('sfRadPlugin' == $item && 'rad' == $this->defaultTemplate)
                 || ('sfDcPlugin' == $item && 'dc' == $this->defaultTemplate)
-                || ('sfModsPlugin' == $item && 'mods' == $this->defaultTemplate)))
-            {
+                || ('sfModsPlugin' == $item && 'mods' == $this->defaultTemplate))) {
               unset($settings[$key]);
             }
           }
@@ -115,8 +101,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
         $cacheClear->run();
 
         // Notify use if SWORD setting has been changed
-        if ($swordEnabled != in_array('qtSwordPlugin', $settings))
-        {
+        if ($swordEnabled != in_array('qtSwordPlugin', $settings)) {
           $message = $this->context->i18n->__('SWORD plugin setting changed: the AtoM worker must be restarted for this change to take effect.');
           $this->getUser()->setFlash('info', $message);
         }
@@ -131,8 +116,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
   {
     $webDir = $path.'/web';
 
-    if (is_dir($webDir))
-    {
+    if (is_dir($webDir)) {
       $filesystem = new sfFilesystem();
       $filesystem->relativeSymlink($webDir, sfConfig::get('sf_web_dir').'/'.$name, true);
     }

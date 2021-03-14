@@ -39,19 +39,15 @@ class arElasticSearchTerm extends arElasticSearchModelBase
     $errors = [];
 
     // Loop through results, and add to search index
-    foreach ($this->load() as $key => $item)
-    {
-      try
-      {
+    foreach ($this->load() as $key => $item) {
+      try {
         $node = new arElasticSearchTermPdo($item->id);
         $data = $node->serialize();
 
         QubitSearch::getInstance()->addDocument($data, 'QubitTerm');
 
         $this->logEntry($data['i18n'][$data['sourceCulture']]['name'], $key + 1);
-      }
-      catch (sfException $e)
-      {
+      } catch (sfException $e) {
         $errors[] = $e->getMessage();
       }
     }

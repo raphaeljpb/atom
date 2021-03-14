@@ -9,8 +9,7 @@
  */
 
 // guess current application
-if (!isset($app))
-{
+if (!isset($app)) {
   $traces = debug_backtrace();
   $caller = $traces[0];
 

@@ -24,11 +24,11 @@
  */
 class csvCheckImportTask extends csvImportBaseTask
 {
-    protected $namespace = 'csv';
-    protected $name = 'check-import';
-    protected $briefDescription = 'Check CSV data, providing diagnostic info';
+  protected $namespace = 'csv';
+  protected $name = 'check-import';
+  protected $briefDescription = 'Check CSV data, providing diagnostic info';
 
-    protected $detailedDescription = <<<'EOF'
+  protected $detailedDescription = <<<'EOF'
 Check CSV data, providing information about it
 EOF;
 
@@ -51,10 +51,8 @@ EOF;
     $multiValueColumns = [];
     $rowCount = 0;
 
-    foreach ($filenames as $filename)
-    {
-      if (false === $fh = fopen($filename, 'rb'))
-      {
+    foreach ($filenames as $filename) {
+      if (false === $fh = fopen($filename, 'rb')) {
         throw new sfException('You must specify a valid filename');
       }
 
@@ -71,10 +69,8 @@ EOF;
           'numberOfSampleValues' => 1,
         ],
 
-        'saveLogic' => function (&$self)
-        {
-          foreach ($self->status['row'] as $key => $value)
-          {
+        'saveLogic' => function (&$self) {
+          foreach ($self->status['row'] as $key => $value) {
             $value = $self->status['row'][$key];
             $column = $self->columnNames[$key];
 
@@ -84,8 +80,7 @@ EOF;
                 : [];
 
             // Check if column isn't empty
-            if (trim($value))
-            {
+            if (trim($value)) {
               $self->status['nonEmptyColumns'][$column] = true;
 
               if ($self->status['numberOfSampleValues'] > 0
@@ -97,15 +92,13 @@ EOF;
                   !$self->status['sampleOnlyMultivalueColumns']
                     || substr_count($value, '|')
                 )
-              )
-              {
+              ) {
                 array_push($self->status['sampleColumnValues'][$column], trim($value));
               }
             }
 
             // Check for | character
-            if (substr_count($value, '|'))
-            {
+            if (substr_count($value, '|')) {
               $self->status['multiValueColumns'][$column]
                 = (isset($self->status['multiValueColumns'][$column]))
                   ? $self->status['multiValueColumns'][$column] + 1
@@ -128,10 +121,8 @@ EOF;
       $c = [];
 
       // Add values of both arrays if possible
-      foreach ($a as $key => $value)
-      {
-        if (isset($b[$key]))
-        {
+      foreach ($a as $key => $value) {
+        if (isset($b[$key])) {
           $c[$key] = $a[$key] + $b[$key];
         } else {
           $c[$key] = $a[$key];
@@ -139,10 +130,8 @@ EOF;
       }
 
       // Add values that only occur in array B
-      foreach ($b as $key => $value)
-      {
-        if (!isset($a[$key]))
-        {
+      foreach ($b as $key => $value) {
+        if (!isset($a[$key])) {
           $c[$key] = $value;
         }
       }
@@ -158,16 +147,13 @@ EOF;
 
     echo "\n\n".$rowCount.' rows, '.count($import->columnNames).' columns.';
 
-    if (count($import->columnNames != count($nonEmptyColumns)))
-    {
+    if (count($import->columnNames != count($nonEmptyColumns))) {
       echo "\n\nEmpty columns:\n";
       echo "--------------\n\n";
 
       $emptyCount = 0;
-      foreach ($import->columnNames as $column)
-      {
-        if (!isset($nonEmptyColumns[$column]))
-        {
+      foreach ($import->columnNames as $column) {
+        if (!isset($nonEmptyColumns[$column])) {
           echo $column.' ';
           ++$emptyCount;
         }
@@ -175,39 +161,31 @@ EOF;
       echo ($emptyCount) ? '' : '[None]';
     }
 
-    if (count($multiValueColumns))
-    {
+    if (count($multiValueColumns)) {
       echo "\n\nMulti-value columns (contain \"|\" character):\n";
       echo "-------------------\n\n";
 
       $displayCount = 1;
-      foreach ($multiValueColumns as $column => $count)
-      {
+      foreach ($multiValueColumns as $column => $count) {
         echo $column.'('.$count.')';
         echo ($displayCount < count($multiValueColumns)) ? ', ' : '';
         ++$displayCount;
       }
     }
 
-    if ($import->status['numberOfSampleValues'] > 0)
-    {
+    if ($import->status['numberOfSampleValues'] > 0) {
       echo "\n\nSample Values:\n";
       echo "--------------\n\n";
-      foreach ($sampleColumnValues as $column => $values)
-      {
+      foreach ($sampleColumnValues as $column => $values) {
         echo '  '.$column.':';
-        if (count($values))
-        {
+        if (count($values)) {
           $shownCount = 0;
-          foreach ($values as $value)
-          {
+          foreach ($values as $value) {
             echo ($shownCount) ? '    ' : ' ';
             echo $value."\n";
             ++$shownCount;
           }
-        }
-        else
-        {
+        } else {
           echo "    [empty]\n";
         }
       }

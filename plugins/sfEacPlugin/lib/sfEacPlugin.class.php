@@ -220,14 +220,12 @@ class sfEacPlugin implements ArrayAccess
 
   public function __get($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'biogHist':
         return self::toDiscursiveSet($this->resource->history);
 
       case 'entityType':
-        switch ($this->resource->entityTypeId)
-        {
+        switch ($this->resource->entityTypeId) {
           case QubitTerm::CORPORATE_BODY_ID:
             return 'corporateBody';
 
@@ -243,8 +241,7 @@ class sfEacPlugin implements ArrayAccess
       case 'existDates':
         // TODO <date/>, <dateRange/>, <dateSet/>, <descriptiveNote/>, simple
         // natural language parsing?
-        if ($this->resource->datesOfExistence)
-        {
+        if ($this->resource->datesOfExistence) {
           return '<date>'.esc_specialchars($this->resource->datesOfExistence).'</date>';
         }
 
@@ -280,8 +277,7 @@ class sfEacPlugin implements ArrayAccess
 return;
 
       case 'maintenanceStatus':
-        switch (strtolower($this->resource->descriptionStatus))
-        {
+        switch (strtolower($this->resource->descriptionStatus)) {
           case 'draft':
             return 'new';
 
@@ -331,16 +327,14 @@ return;
 
   public function __set($name, $value)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'biogHist':
         $this->resource->history = trim(self::fromDiscursiveSet($value));
 
         return $this;
 
       case 'entityType':
-        switch ($value)
-        {
+        switch ($value) {
           case 'corporateBody':
             $this->resource->entityTypeId = QubitTerm::CORPORATE_BODY_ID;
 
@@ -377,12 +371,9 @@ return;
         $criteria->add(QubitNote::OBJECT_ID, $this->resource->id);
         $criteria->add(QubitNote::TYPE_ID, QubitTerm::MAINTENANCE_NOTE_ID);
 
-        if (1 == count($query = QubitNote::get($criteria)))
-        {
+        if (1 == count($query = QubitNote::get($criteria))) {
           $item = $query[0];
-        }
-        else
-        {
+        } else {
           $item = new QubitNote();
           $item->typeId = QubitTerm::MAINTENANCE_NOTE_ID;
 
@@ -395,13 +386,11 @@ return;
 
       case 'maintenanceStatus':
         $descriptionStatusMap = [];
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DESCRIPTION_STATUS_ID) as $item)
-        {
+        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DESCRIPTION_STATUS_ID) as $item) {
           $descriptionStatusMap[$item->name] = $item->id;
         }
 
-        switch ($value)
-        {
+        switch ($value) {
           case 'revised':
             $this->resource->descriptionStatusId = $descriptionStatusMap['Revised'];
 
@@ -429,10 +418,8 @@ return;
         return $this;
 
       case 'descriptionDetail':
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID) as $item)
-        {
-          if ($item == trim($value))
-          {
+        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID) as $item) {
+          if ($item == trim($value)) {
             $this->resource->descriptionDetailId = $item->id;
 
             break;
@@ -486,8 +473,7 @@ return;
 
     // Abort import if identifier isn't unique
     if (!empty($identifier) && sfConfig::get('app_prevent_duplicate_actor_identifiers', false)
-        && QubitValidatorActorDescriptionIdentifier::identifierUsedByAnotherActor($identifier, $this->resource))
-    {
+        && QubitValidatorActorDescriptionIdentifier::identifierUsedByAnotherActor($identifier, $this->resource)) {
       $error = sfContext::getInstance()->i18n->__(
                  'Import aborted: %1% identifier "%2%" not unique.',
                  ['%1%' => sfConfig::get('app_ui_label_actor'), '%2%' => $identifier]);
@@ -507,15 +493,13 @@ return;
     // TODO <descriptiveNote/>
 
     $languages = [];
-    foreach ($fd->find('eac:control/eac:languageDeclaration/eac:language') as $node)
-    {
+    foreach ($fd->find('eac:control/eac:languageDeclaration/eac:language') as $node) {
       $languages[] = $this->from6392($node->attributes->getNamedItem('languageCode')->textContent);
     }
     $this->resource->language = $languages;
 
     $scripts = [];
-    foreach ($fd->find('eac:control/eac:languageDeclaration/eac:script') as $node)
-    {
+    foreach ($fd->find('eac:control/eac:languageDeclaration/eac:script') as $node) {
       $scripts[] = $this->from6392($node->attributes->getNamedItem('scriptCode')->textContent);
     }
     $this->resource->script = $scripts;
@@ -548,8 +532,7 @@ return;
     // TODO <nameEntryParallel/>, <useDates/>
     $this->resource->authorizedFormOfName = $fd->find('eac:cpfDescription/eac:identity/eac:nameEntry[eac:authorizedForm]/eac:part')->text();
 
-    foreach ($fd->find('eac:cpfDescription/eac:identity/eac:nameEntry[not(eac:authorizedForm) and not(@localType="standardized")]') as $node)
-    {
+    foreach ($fd->find('eac:cpfDescription/eac:identity/eac:nameEntry[not(eac:authorizedForm) and not(@localType="standardized")]') as $node) {
       $item = new QubitOtherName();
       $item->name = $fd->spawn()->add($node)->find('eac:part')->text();
       $item->typeId = QubitTerm::OTHER_FORM_OF_NAME_ID;
@@ -557,21 +540,18 @@ return;
       $this->resource->otherNames[] = $item;
     }
 
-    foreach ($fd->find('eac:cpfDescription/eac:identity/eac:nameEntryParallel') as $node)
-    {
+    foreach ($fd->find('eac:cpfDescription/eac:identity/eac:nameEntryParallel') as $node) {
       $item = new QubitOtherName();
       $item->typeId = QubitTerm::PARALLEL_FORM_OF_NAME_ID;
 
-      foreach ($fd->spawn()->add($node)->find('eac:nameEntry[@xml:lang]') as $node2)
-      {
+      foreach ($fd->spawn()->add($node)->find('eac:nameEntry[@xml:lang]') as $node2) {
         $item->setName($fd->spawn()->add($node2)->find('eac:part')->text(), ['culture' => $this->from6392($node2->getAttribute('xml:lang'))]);
       }
 
       $this->resource->otherNames[] = $item;
     }
 
-    foreach ($fd->find('eac:cpfDescription/eac:identity/eac:nameEntry[@localType="standardized"]') as $node)
-    {
+    foreach ($fd->find('eac:cpfDescription/eac:identity/eac:nameEntry[@localType="standardized"]') as $node) {
       $item = new QubitOtherName();
       $item->name = $fd->spawn()->add($node)->find('eac:part')->text();
       $item->typeId = QubitTerm::STANDARDIZED_FORM_OF_NAME_ID;
@@ -615,8 +595,7 @@ return;
 
     // TODO @lastDateTimeVerified, <date/>, <dateRange/>, <dateSet/>,
     // <descriptiveNote/>, <placeEntry/>
-    foreach ($fd->find('eac:cpfDescription/eac:relations/eac:cpfRelation') as $node)
-    {
+    foreach ($fd->find('eac:cpfDescription/eac:relations/eac:cpfRelation') as $node) {
       // Don't try to match the whole URL, focus on extracting the path, see #6660#note-6
       // $url = preg_replace('/^(?:[^:]+:\/\/[^\/]+)?'.preg_quote(sfContext::getInstance()->request->getPathInfoPrefix(), '/').'/', null, $node->getAttributeNS('http://www.w3.org/1999/xlink', 'href'), -1, $count);
       $url = preg_replace('/^(?:[^:]+:\/\/[^\/]+)?(\/(index|qubit_dev)\.php)?/', null, $node->getAttributeNS('http://www.w3.org/1999/xlink', 'href'), -1, $count);
@@ -624,18 +603,15 @@ return;
       unset($item);
 
       // @href is one of our resources
-      if ($node->hasAttributeNS('http://www.w3.org/1999/xlink', 'href') && 0 < $count)
-      {
+      if ($node->hasAttributeNS('http://www.w3.org/1999/xlink', 'href') && 0 < $count) {
         $params = sfContext::getInstance()->routing->parse($url);
-        if (isset($params['_sf_route'], $params['_sf_route']->resource))
-        {
+        if (isset($params['_sf_route'], $params['_sf_route']->resource)) {
           $item = $params['_sf_route']->resource;
         }
       }
 
       // Otherwise, create the new resource
-      if (!isset($item))
-      {
+      if (!isset($item)) {
         $item = new QubitActor();
         $item->authorizedFormOfName = $fd->spawn()->add($node)->find('eac:relationEntry')->text();
 
@@ -647,17 +623,14 @@ return;
       $relation->object = $item;
       $relation->typeId = self::fromCpfRelationType($node->getAttribute('cpfRelationType'));
 
-      if (0 < count($date = self::parseDates($node)))
-      {
+      if (0 < count($date = self::parseDates($node))) {
         $relation->startDate = $date[0][0];
         $relation->endDate = $date[count($date) - 1][1];
       }
 
       // Multiple, non-contiguous dates
-      if (1 < count($date))
-      {
-        foreach ($date as $key => $value)
-        {
+      if (1 < count($date)) {
+        foreach ($date as $key => $value) {
           $date[$key] = Qubit::renderDate($value[0]).' - '.Qubit::renderDate($value[1]);
         }
 
@@ -677,8 +650,7 @@ return;
     $this->itemsSubjectOf = [];
     // TODO @lastDateTimeVerified, <date/>, <dateRange/>, <dateSet/>,
     // <descriptiveNote/>, <placeEntry/>
-    foreach ($fd->find('eac:cpfDescription/eac:relations/eac:resourceRelation') as $node)
-    {
+    foreach ($fd->find('eac:cpfDescription/eac:relations/eac:resourceRelation') as $node) {
       // Don't try to match the whole URL, focus on extracting the path, see #6660#note-6
       // $url = preg_replace('/^(?:[^:]+:\/\/[^\/]+)?'.preg_quote(sfContext::getInstance()->request->getPathInfoPrefix(), '/').'/', null, $node->getAttributeNS('http://www.w3.org/1999/xlink', 'href'), -1, $count);
       $url = preg_replace('/^(?:[^:]+:\/\/[^\/]+)?(\/(index|qubit_dev)\.php)?/', null, $node->getAttributeNS('http://www.w3.org/1999/xlink', 'href'), -1, $count);
@@ -686,18 +658,15 @@ return;
       unset($item);
 
       // @href is one of our resources
-      if ($node->hasAttributeNS('http://www.w3.org/1999/xlink', 'href') && 0 < $count)
-      {
+      if ($node->hasAttributeNS('http://www.w3.org/1999/xlink', 'href') && 0 < $count) {
         $params = sfContext::getInstance()->routing->parse($url);
-        if (isset($params['_sf_route'], $params['_sf_route']->resource))
-        {
+        if (isset($params['_sf_route'], $params['_sf_route']->resource)) {
           $item = $params['_sf_route']->resource;
         }
       }
 
       // Otherwise, create the new resource
-      if (!isset($item))
-      {
+      if (!isset($item)) {
         $item = new QubitInformationObject();
         $item->parentId = QubitInformationObject::ROOT_ID;
         $item->title = $fd->spawn()->add($node)->find('eac:relationEntry')->text();
@@ -706,27 +675,21 @@ return;
         $item->save();
       }
 
-      if ('subjectOf' == $node->getAttribute('resourceRelationType'))
-      {
-         $this->itemsSubjectOf[] = $item;
-      }
-      else
-      {
+      if ('subjectOf' == $node->getAttribute('resourceRelationType')) {
+        $this->itemsSubjectOf[] = $item;
+      } else {
         $event = new QubitEvent();
         $event->object = $item;
         $event->typeId = self::fromResourceRelationType($node->getAttribute('resourceRelationType'), $node->getAttribute('xlink:role'));
 
-        if (0 < count($date = self::parseDates($node)))
-        {
+        if (0 < count($date = self::parseDates($node))) {
           $event->startDate = $date[0][0];
           $event->endDate = $date[count($date) - 1][1];
         }
 
         // Multiple, non-contiguous dates
-        if (1 < count($date))
-        {
-          foreach ($date as $key => $value)
-          {
+        if (1 < count($date)) {
+          foreach ($date as $key => $value) {
             $date[$key] = Qubit::renderDate($value[0]).' - '.Qubit::renderDate($value[1]);
           }
 
@@ -739,8 +702,7 @@ return;
 
     // TODO <date/>, <dateRange/>, <dateSet/>, <descriptiveNote/>,
     // <placeEntry/>, @lastDateTimeVerified
-    foreach ($fd->find('eac:cpfDescription/eac:relations/eac:functionRelation') as $node)
-    {
+    foreach ($fd->find('eac:cpfDescription/eac:relations/eac:functionRelation') as $node) {
       // Don't try to match the whole URL, focus on extracting the path, see #6660#note-6
       // $url = preg_replace('/^(?:[^:]+:\/\/[^\/]+)?'.preg_quote(sfContext::getInstance()->request->getPathInfoPrefix(), '/').'/', null, $node->getAttributeNS('http://www.w3.org/1999/xlink', 'href'), -1, $count);
       $url = preg_replace('/^(?:[^:]+:\/\/[^\/]+)?(\/(index|qubit_dev)\.php)?/', null, $node->getAttributeNS('http://www.w3.org/1999/xlink', 'href'), -1, $count);
@@ -748,18 +710,15 @@ return;
       unset($item);
 
       // @href is one of our resources
-      if ($node->hasAttributeNS('http://www.w3.org/1999/xlink', 'href') && 0 < $count)
-      {
+      if ($node->hasAttributeNS('http://www.w3.org/1999/xlink', 'href') && 0 < $count) {
         $params = sfContext::getInstance()->routing->parse($url);
-        if (isset($params['_sf_route'], $params['_sf_route']->resource))
-        {
+        if (isset($params['_sf_route'], $params['_sf_route']->resource)) {
           $item = $params['_sf_route']->resource;
         }
       }
 
       // Otherwise, create the new resource
-      if (!isset($item))
-      {
+      if (!isset($item)) {
         $item = new QubitFunctionObject();
         $item->authorizedFormOfName = $fd->spawn()->add($node)->find('eac:relationEntry')->text();
 
@@ -775,21 +734,17 @@ return;
       $this->resource->relationsRelatedByobjectId[] = $relation;
     }
 
-    foreach ($fd->find('eac:cpfDescription/eac:description/eac:occupations/eac:occupation') as $node)
-    {
+    foreach ($fd->find('eac:cpfDescription/eac:description/eac:occupations/eac:occupation') as $node) {
       $termName = trim($fd->spawn()->add($node)->find('eac:term')->text());
 
-      if (empty($termName))
-      {
+      if (empty($termName)) {
         continue;
       }
 
-      if (null !== $relation = QubitActor::setTermRelationByName($termName, $options = ['taxonomyId' => QubitTaxonomy::ACTOR_OCCUPATION_ID, 'culture' => sfContext::getInstance()->user->getCulture()]))
-      {
+      if (null !== $relation = QubitActor::setTermRelationByName($termName, $options = ['taxonomyId' => QubitTaxonomy::ACTOR_OCCUPATION_ID, 'culture' => sfContext::getInstance()->user->getCulture()])) {
         $noteContent = trim($fd->spawn()->add($node)->find('eac:descriptiveNote')->text());
 
-        if (!empty($noteContent))
-        {
+        if (!empty($noteContent)) {
           $note = new QubitNote();
           $note->typeId = QubitTerm::ACTOR_OCCUPATION_NOTE_ID;
           $note->content = $noteContent;
@@ -801,32 +756,26 @@ return;
       }
     }
 
-    foreach ($fd->find('eac:cpfDescription/eac:description/eac:place[@localType="placeAccessPoint"]|eac:cpfDescription/eac:description/eac:places/eac:place[@localType="placeAccessPoint"]') as $node)
-    {
+    foreach ($fd->find('eac:cpfDescription/eac:description/eac:place[@localType="placeAccessPoint"]|eac:cpfDescription/eac:description/eac:places/eac:place[@localType="placeAccessPoint"]') as $node) {
       $termName = trim($fd->spawn()->add($node)->find('eac:placeEntry')->text());
 
-      if (empty($termName))
-      {
+      if (empty($termName)) {
         continue;
       }
 
-      if (null !== $relation = QubitActor::setTermRelationByName($termName, $options = ['taxonomyId' => QubitTaxonomy::PLACE_ID, 'culture' => sfContext::getInstance()->user->getCulture()]))
-      {
+      if (null !== $relation = QubitActor::setTermRelationByName($termName, $options = ['taxonomyId' => QubitTaxonomy::PLACE_ID, 'culture' => sfContext::getInstance()->user->getCulture()])) {
         $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
       }
     }
 
-    foreach ($fd->find('eac:control/eac:localControl[@localType="subjectAccessPoint"]') as $node)
-    {
+    foreach ($fd->find('eac:control/eac:localControl[@localType="subjectAccessPoint"]') as $node) {
       $termName = trim($fd->spawn()->add($node)->find('eac:term')->text());
 
-      if (empty($termName))
-      {
+      if (empty($termName)) {
         continue;
       }
 
-      if (null !== $relation = QubitActor::setTermRelationByName($termName, $options = ['taxonomyId' => QubitTaxonomy::SUBJECT_ID, 'culture' => sfContext::getInstance()->user->getCulture()]))
-      {
+      if (null !== $relation = QubitActor::setTermRelationByName($termName, $options = ['taxonomyId' => QubitTaxonomy::SUBJECT_ID, 'culture' => sfContext::getInstance()->user->getCulture()])) {
         $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
       }
     }
@@ -838,8 +787,7 @@ return;
 
   public static function from6392($code)
   {
-    if (isset(self::$from6392[$code]))
-    {
+    if (isset(self::$from6392[$code])) {
       return self::$from6392[$code];
     }
 
@@ -849,13 +797,11 @@ return;
   public static function to6392($code)
   {
     static $to6392;
-    if (!isset($to6392))
-    {
+    if (!isset($to6392)) {
       $to6392 = array_flip(self::$from6392);
     }
 
-    if (isset($to6392[$code]))
-    {
+    if (isset($to6392[$code])) {
       return $to6392[$code];
     }
 
@@ -864,8 +810,7 @@ return;
 
   public static function fromCpfRelationType($value)
   {
-    switch ($value)
-    {
+    switch ($value) {
       case 'associative':
         return QubitTerm::ASSOCIATIVE_RELATION_ID;
 
@@ -889,8 +834,7 @@ return;
 
   public static function toCpfRelationType($value)
   {
-    switch ($value)
-    {
+    switch ($value) {
       case QubitTerm::ASSOCIATIVE_RELATION_ID:
         return 'associative';
 
@@ -907,24 +851,19 @@ return;
         $type = QubitTerm::getById($value);
         $typeName = $type->getName(['culture' => 'en']);
 
-        if ('is the superior of' == $typeName || 'controls' == $typeName || 'is the owner of' == $typeName)
-        {
+        if ('is the superior of' == $typeName || 'controls' == $typeName || 'is the owner of' == $typeName) {
           return 'hierarchical-parent';
         }
-        if ('is the subordinate of' == $typeName || 'is controlled by' == $typeName || 'is owned by' == $typeName)
-        {
+        if ('is the subordinate of' == $typeName || 'is controlled by' == $typeName || 'is owned by' == $typeName) {
           return 'hierarchical-child';
         }
-        if ('is the predecessor of' == $typeName)
-        {
+        if ('is the predecessor of' == $typeName) {
           return 'temporal-earlier';
         }
-        if ('is the successor of' == $typeName)
-        {
+        if ('is the successor of' == $typeName) {
           return 'temporal-later';
         }
-        if (QubitTerm::ROOT_ID != $type->parentId)
-        {
+        if (QubitTerm::ROOT_ID != $type->parentId) {
           return self::toCpfRelationType($type->parentId);
         }
     }
@@ -932,23 +871,18 @@ return;
 
   public function fromResourceRelationType($resourceRelationType, $xlinkRole)
   {
-    switch ($resourceRelationType)
-    {
+    switch ($resourceRelationType) {
       case 'creatorOf':
         return QubitTerm::CREATION_ID;
 
       case 'other':
-        if (!isset($this->eventTypes))
-        {
+        if (!isset($this->eventTypes)) {
           $this->eventTypes = QubitTaxonomy::getTermsById(QubitTaxonomy::EVENT_TYPE_ID);
         }
 
-        if (strlen($xlinkRole) > 0)
-        {
-          foreach ($this->eventTypes as $item)
-          {
-            if ($item->__toString() == $xlinkRole)
-            {
+        if (strlen($xlinkRole) > 0) {
+          foreach ($this->eventTypes as $item) {
+            if ($item->__toString() == $xlinkRole) {
               return $item->id;
             }
           }
@@ -977,8 +911,7 @@ return;
 
   public static function toResourceRelationTypeAndXlinkRole($type)
   {
-    switch ($type->id)
-    {
+    switch ($type->id) {
       case QubitTerm::CREATION_ID:
         return 'resourceRelationType="creatorOf"';
 
@@ -994,22 +927,15 @@ return;
       ->namespaces(['eac' => 'urn:isbn:1-931666-33-4'])
     ;
 
-    if (0 < $fd->find('./eac:dateSet/eac:dateRange')->length)
-    {
-      foreach ($fd->find('./eac:dateSet/eac:dateRange') as $node)
-      {
+    if (0 < $fd->find('./eac:dateSet/eac:dateRange')->length) {
+      foreach ($fd->find('./eac:dateSet/eac:dateRange') as $node) {
         $dates[] = sfEacPlugin::parseDateRange($node);
       }
-    }
-    elseif ($fd->find('./eac:dateRange')->length)
-    {
-      foreach ($fd->find('./eac:dateRange') as $node)
-      {
+    } elseif ($fd->find('./eac:dateRange')->length) {
+      foreach ($fd->find('./eac:dateRange') as $node) {
         $dates[] = sfEacPlugin::parseDateRange($node);
       }
-    }
-    elseif (0 < $fd->find('./eac:date')->length)
-    {
+    } elseif (0 < $fd->find('./eac:date')->length) {
       $dates[] = [$fd->find('eac:date')->attr('standardDate'), null];
     }
 
@@ -1029,12 +955,10 @@ return;
   {
     $dates = null;
 
-    if (isset($item->startDate))
-    {
+    if (isset($item->startDate)) {
       $startDate = Qubit::renderDate($item->startDate);
 
-      if (isset($item->endDate))
-      {
+      if (isset($item->endDate)) {
         $endDate = Qubit::renderDate($item->endDate);
         $dates = <<<str
                 <dateRange>
@@ -1042,9 +966,7 @@ return;
                   <toDate standardDate="{$endDate}">{$endDate}</toDate>
                 </dateRange>
 str;
-      }
-      else
-      {
+      } else {
         $dates = <<<str
                 <date standardDate="{$startDate}">{$startDate}</date>
 str;
@@ -1086,10 +1008,9 @@ str;
   {
     $value->namespaces(['eac' => 'urn:isbn:1-931666-33-4'])
       ->find('eac:list/eac:item')
-      ->replaceWith(function ($node)
-        {
-          return '* '.$node->textContent;
-        })
+      ->replaceWith(function ($node) {
+        return '* '.$node->textContent;
+      })
     ;
 
     return $value->text();
@@ -1107,8 +1028,7 @@ str;
     $value = preg_replace('/^(?:\*|-)\s*(.*)/m', '<item>$1</item>', $value);
     $value = preg_replace('/(?:\r?\n){2,}/', "</p>\n<p>", $value);
 
-    if ($value)
-    {
+    if ($value) {
       $value = '<p>'.$value.'</p>';
     }
 

@@ -50,8 +50,7 @@ EOF;
     // Determine what column values have custom links
     $columnValues = [];
 
-    foreach ($columns as $column)
-    {
+    foreach ($columns as $column) {
       $regex = '~
         (?:
           (?:&quot;|\")(.*?)(?:\&quot;|\")\:            # Double quote and colon
@@ -71,10 +70,8 @@ EOF;
         )
         ~x';
 
-      $transformedValue = preg_replace_callback($regex, function ($matches)
-      {
-        if (!empty($matches[1]))
-        {
+      $transformedValue = preg_replace_callback($regex, function ($matches) {
+        if (!empty($matches[1])) {
           return "[{$matches[1]}](".('www.' == $matches[2] ? 'http://www.' : $matches[2]).trim($matches[3]).')';
         }
 
@@ -82,8 +79,7 @@ EOF;
       }, $row[$column]);
 
       // Save changed values
-      if ($row[$column] != $transformedValue)
-      {
+      if ($row[$column] != $transformedValue) {
         $columnValues[$column] = $transformedValue;
       }
     }

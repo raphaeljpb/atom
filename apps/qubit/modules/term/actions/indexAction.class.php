@@ -59,8 +59,7 @@ class TermIndexAction extends DefaultBrowseAction
     $criteria->add(QubitTermI18n::CULTURE, $this->culture);
     $criteria->add(QubitTermI18n::NAME, $value);
 
-    if (0 < intval(BasePeer::doCount($criteria)->fetchColumn(0)))
-    {
+    if (0 < intval(BasePeer::doCount($criteria)->fetchColumn(0))) {
       throw new sfValidatorError($validator, $this->context->i18n->__('Name - A term with this name already exists.'));
     }
   }
@@ -70,58 +69,48 @@ class TermIndexAction extends DefaultBrowseAction
     $this->setAndCheckResource();
 
     // Disallow access to locked taxonomies
-    if (in_array($this->resource->taxonomyId, QubitTaxonomy::$lockedTaxonomies))
-    {
+    if (in_array($this->resource->taxonomyId, QubitTaxonomy::$lockedTaxonomies)) {
       $this->getResponse()->setStatusCode(403);
 
       return sfView::NONE;
     }
 
-    if (sfConfig::get('app_enable_institutional_scoping'))
-    {
+    if (sfConfig::get('app_enable_institutional_scoping')) {
       // Remove search-realm
       $this->context->user->removeAttribute('search-realm');
     }
 
     $this->setCulture($request);
 
-    if (1 > strlen($title = $this->resource->__toString()))
-    {
+    if (1 > strlen($title = $this->resource->__toString())) {
       $title = $this->context->i18n->__('Untitled');
     }
 
     $this->response->setTitle("{$title} - {$this->response->getTitle()}");
 
-    if (QubitAcl::check($this->resource, 'update'))
-    {
+    if (QubitAcl::check($this->resource, 'update')) {
       $validatorSchema = new sfValidatorSchema();
       $values = [];
 
       $validatorSchema->name = new sfValidatorCallback(['callback' => [$this, 'checkForRepeatedNames']]);
       $values['name'] = $this->resource->getName(['cultureFallback' => true]);
 
-      try
-      {
+      try {
         $validatorSchema->clean($values);
-      }
-      catch (sfValidatorErrorSchema $e)
-      {
+      } catch (sfValidatorErrorSchema $e) {
         $this->errorSchema = $e;
       }
     }
 
     // Add browse elements for places and subjects and genres
     $this->addBrowseElements = (QubitTaxonomy::PLACE_ID == $this->resource->taxonomyId || QubitTaxonomy::SUBJECT_ID == $this->resource->taxonomyId || QubitTaxonomy::GENRE_ID == $this->resource->taxonomyId);
-    if ($this->addBrowseElements)
-    {
+    if ($this->addBrowseElements) {
       // Return special response in JSON for XHR requests
-      if ($request->isXmlHttpRequest())
-      {
+      if ($request->isXmlHttpRequest()) {
         $this->loadListTerms($request);
 
         $total = $this->listResultSet->getTotalHits();
-        if (1 > $total)
-        {
+        if (1 > $total) {
           $this->forward404();
 
           return;
@@ -130,8 +119,7 @@ class TermIndexAction extends DefaultBrowseAction
         sfContext::getInstance()->getConfiguration()->loadHelpers('Url', 'Qubit');
 
         $response = ['results' => []];
-        foreach ($this->listResultSet->getResults() as $item)
-        {
+        foreach ($this->listResultSet->getResults() as $item) {
           $data = $item->getData();
 
           $result = [
@@ -141,13 +129,11 @@ class TermIndexAction extends DefaultBrowseAction
           $response['results'][] = $result;
         }
 
-        if ($this->listPager->haveToPaginate())
-        {
+        if ($this->listPager->haveToPaginate()) {
           $resultCount = $this->context->i18n->__('Results %1% to %2% of %3%', ['%1%' => $this->listPager->getFirstIndice(), '%2%' => $this->listPager->getLastIndice(), '%3%' => $this->listPager->getNbResults()]);
 
           $previous = $next = '';
-          if (1 < $this->listPager->getPage())
-          {
+          if (1 < $this->listPager->getPage()) {
             $url = url_for([$this->resource, 'module' => 'term', 'listPage' => $this->listPager->getPage() - 1, 'listLimit' => $request->listLimit]);
             $link = '&laquo; '.$this->context->i18n->__('Previous');
 
@@ -160,8 +146,7 @@ class TermIndexAction extends DefaultBrowseAction
 EOF;
           }
 
-          if ($this->listPager->getLastPage() > $this->listPager->getPage())
-          {
+          if ($this->listPager->getLastPage() > $this->listPager->getPage()) {
             $url = url_for([$this->resource, 'module' => 'term', 'listPage' => $this->listPager->getPage() + 1, 'listLimit' => $request->listLimit]);
             $link = $this->context->i18n->__('Next').' &raquo;';
 
@@ -197,14 +182,12 @@ EOF;
       }
 
       // Not XHR requests
-      switch ($this->resource->taxonomyId)
-      {
+      switch ($this->resource->taxonomyId) {
         case QubitTaxonomy::PLACE_ID:
           $query = new \Elastica\Query\Terms('places.id', [$this->resource->id]);
           $this::$AGGS['direct']['field'] = ['directPlaces' => $this->resource->id];
 
-          if (isset($request->onlyDirect))
-          {
+          if (isset($request->onlyDirect)) {
             $queryDirect = new \Elastica\Query\Terms('directPlaces', [$this->resource->id]);
           }
 
@@ -214,8 +197,7 @@ EOF;
           $query = new \Elastica\Query\Terms('subjects.id', [$this->resource->id]);
           $this::$AGGS['direct']['field'] = ['directSubjects' => $this->resource->id];
 
-          if (isset($request->onlyDirect))
-          {
+          if (isset($request->onlyDirect)) {
             $queryDirect = new \Elastica\Query\Terms('directSubjects', [$this->resource->id]);
           }
 
@@ -225,8 +207,7 @@ EOF;
           $query = new \Elastica\Query\Terms('genres.id', [$this->resource->id]);
           $this::$AGGS['direct']['field'] = ['directGenres' => $this->resource->id];
 
-          if (isset($request->onlyDirect))
-          {
+          if (isset($request->onlyDirect)) {
             $queryDirect = new \Elastica\Query\Terms('directGenres', [$this->resource->id]);
           }
 
@@ -237,13 +218,11 @@ EOF;
 
       $this->search->queryBool->addMust($query);
 
-      if (isset($queryDirect))
-      {
+      if (isset($queryDirect)) {
         $this->search->queryBool->addMust($queryDirect);
       }
 
-      switch ($request->sort)
-      {
+      switch ($request->sort) {
         case 'referenceCode':
           $this->search->query->setSort(['referenceCode.untouched' => $request->sortDir]);
 
@@ -285,8 +264,7 @@ EOF;
 
   protected function populateAgg($name, $buckets)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'places':
       case 'subjects':
       case 'genres':
@@ -294,8 +272,7 @@ EOF;
         $criteria = new Criteria();
         $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
 
-        foreach (QubitTerm::get($criteria) as $item)
-        {
+        foreach (QubitTerm::get($criteria) as $item) {
           $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
         }
 
@@ -313,34 +290,28 @@ EOF;
     $this->resource = $this->getRoute()->resource;
 
     // Make sure resource is a term
-    if (!$this->resource instanceof QubitTerm)
-    {
+    if (!$this->resource instanceof QubitTerm) {
       $this->forward404();
     }
 
     // Make sure resource isn't the root term
-    if (!isset($this->resource->parent))
-    {
+    if (!isset($this->resource->parent)) {
       $this->forward404();
     }
   }
 
   protected function setCulture($request)
   {
-    if (isset($request->languages))
-    {
+    if (isset($request->languages)) {
       $this->culture = $request->languages;
-    }
-    else
-    {
+    } else {
       $this->culture = $this->context->user->getCulture();
     }
   }
 
   protected function loadListTerms($request)
   {
-    if (!isset($request->listLimit))
-    {
+    if (!isset($request->listLimit)) {
       $request->listLimit = sfConfig::get('app_hits_per_page');
     }
 
@@ -348,8 +319,7 @@ EOF;
     $listQuery->setSize($request->listLimit);
     $listQuery->setSort([sprintf('i18n.%s.name.alphasort', $this->culture) => 'asc']);
 
-    if (!empty($request->listPage))
-    {
+    if (!empty($request->listPage)) {
       $listQuery->setFrom(($request->listPage - 1) * $request->listLimit);
     }
 

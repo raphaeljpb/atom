@@ -22,13 +22,11 @@ class DonorAutocompleteAction extends sfAction
   public function execute($request)
   {
     // Check user authorization
-    if (!$this->getUser()->isAuthenticated())
-    {
+    if (!$this->getUser()->isAuthenticated()) {
       QubitAcl::forwardUnauthorized();
     }
 
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
@@ -38,14 +36,10 @@ class DonorAutocompleteAction extends sfAction
     $criteria->addJoin(QubitActor::ID, QubitObject::ID);
     $criteria->add(QubitObject::CLASS_NAME, 'QubitDonor', Criteria::EQUAL);
 
-    if (isset($request->query))
-    {
-      if (sfConfig::get('app_markdown_enabled', true))
-      {
+    if (isset($request->query)) {
+      if (sfConfig::get('app_markdown_enabled', true)) {
         $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "%{$request->query}%", Criteria::LIKE);
-      }
-      else
-      {
+      } else {
         $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, "{$request->query}%", Criteria::LIKE);
       }
     }

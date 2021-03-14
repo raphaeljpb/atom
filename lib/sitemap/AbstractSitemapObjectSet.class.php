@@ -69,8 +69,7 @@ abstract class AbstractSitemapObjectSet implements Countable, Iterator
 
   public function rewind()
   {
-    if ($this->cursor >= 0)
-    {
+    if ($this->cursor >= 0) {
       $conn = Propel::getConnection();
       $this->init($conn);
     }

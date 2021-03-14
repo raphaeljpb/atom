@@ -23,31 +23,24 @@ class UserIndexTermAclAction extends sfAction
   {
     $this->resource = $this->getRoute()->resource;
 
-    if (!isset($this->resource))
-    {
+    if (!isset($this->resource)) {
       $this->forward404();
     }
 
     // Except for administrators, only allow users to see their own profile
-    if (!$this->context->user->isAdministrator())
-    {
-      if ($this->resource->id != $this->context->user->getAttribute('user_id'))
-      {
+    if (!$this->context->user->isAdministrator()) {
+      if ($this->resource->id != $this->context->user->getAttribute('user_id')) {
         $this->redirect('admin/secure');
       }
     }
 
     // Get user's groups
     $this->roles = [];
-    if (0 < count($aclUserGroups = $this->resource->aclUserGroups))
-    {
-      foreach ($aclUserGroups as $item)
-      {
+    if (0 < count($aclUserGroups = $this->resource->aclUserGroups)) {
+      foreach ($aclUserGroups as $item) {
         $this->roles[] = $item->groupId;
       }
-    }
-    else
-    {
+    } else {
       // User is *always* part of authenticated group
       $this->roles = [QubitAclGroup::AUTHENTICATED_ID];
     }
@@ -84,20 +77,15 @@ class UserIndexTermAclAction extends sfAction
 
     // Build ACL
     $this->acl = [];
-    if (0 < count($permissions = QubitAclPermission::get($criteria)))
-    {
-      foreach ($permissions as $item)
-      {
+    if (0 < count($permissions = QubitAclPermission::get($criteria))) {
+      foreach ($permissions as $item) {
         // Use username as key for permissions specific to user
         $roleKey = (null !== $item->groupId) ? $item->groupId : $this->resource->username;
 
-        if ('createTerm' != $item->action)
-        {
+        if ('createTerm' != $item->action) {
           $taxonomy = $item->getConstants(['name' => 'taxonomy']);
           $action = $item->action;
-        }
-        else
-        {
+        } else {
           // In this context permissions for all objects (null) and root object
           // are equivalent
           $taxonomy = (QubitTaxonomy::ROOT_ID != $item->objectId) ? $item->objectId : null;

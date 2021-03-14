@@ -24,8 +24,7 @@ class RepositoryHoldingsAction extends sfAction
     $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
 
     if ((empty($request->id) || !ctype_digit($request->id))
-      || (empty($request->page) || !ctype_digit($request->page)))
-    {
+      || (empty($request->page) || !ctype_digit($request->page))) {
       $this->forward404();
     }
 
@@ -35,8 +34,7 @@ class RepositoryHoldingsAction extends sfAction
     // Avoid pagination over ES' max result window config (default: 10000)
     $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
 
-    if ((int) $limit * (int) $request->page > $maxResultWindow)
-    {
+    if ((int) $limit * (int) $request->page > $maxResultWindow) {
       // Return nothing to not break the list
       return;
     }
@@ -51,8 +49,7 @@ class RepositoryHoldingsAction extends sfAction
     sfContext::getInstance()->getConfiguration()->loadHelpers(['Qubit', 'Url']);
 
     $results = [];
-    foreach ($pager->getResults() as $item)
-    {
+    foreach ($pager->getResults() as $item) {
       $doc = $item->getData();
       $results[] = [
         'url' => url_for(['module' => 'informationobject', 'slug' => $doc['slug']]),

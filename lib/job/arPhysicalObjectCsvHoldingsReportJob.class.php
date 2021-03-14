@@ -32,13 +32,11 @@ class arPhysicalObjectCsvHoldingsReportJob extends arExportJob
     // Indicate beginning of export and describe parameters provided
     $this->info($this->i18n->__('Starting physical storage holdings report CSV export.'));
 
-    if (!empty($parameters['suppressEmpty']))
-    {
+    if (!empty($parameters['suppressEmpty'])) {
       $this->info($this->i18n->__('Omitting physical storage without holdings.'));
     }
 
-    if (!empty($parameters['holdingType']))
-    {
+    if (!empty($parameters['holdingType'])) {
       $this->info($this->i18n->__(
         'Including physical storage containing holding type: %1.',
         ['%1' => $parameters['holdingType']]));
@@ -55,8 +53,7 @@ class arPhysicalObjectCsvHoldingsReportJob extends arExportJob
     $this->info($this->i18n->__('Creating ZIP file %1.', ['%1' => $this->getDownloadFilePath()]));
     $errors = $this->createZipForDownload($tempPath);
 
-    if (!empty($errors))
-    {
+    if (!empty($errors)) {
       $this->error($this->i18n->__('Failed to create ZIP file.').' : '.implode(' : ', $errors));
 
       return false;
@@ -77,8 +74,7 @@ class arPhysicalObjectCsvHoldingsReportJob extends arExportJob
 
     $options['suppressEmpty'] = (!empty($parameters['suppressEmpty'])) ? $parameters['suppressEmpty'] : null;
 
-    if (!empty($parameters['holdingType']))
-    {
+    if (!empty($parameters['holdingType'])) {
       $options['holdingType'] = $parameters['holdingType'];
     }
 

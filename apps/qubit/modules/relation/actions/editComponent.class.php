@@ -25,52 +25,40 @@ class RelationEditComponent extends sfComponent
     // really be configurable, ideally by interpreting
     // $form->getWidgetSchema()->getNameFormat()?
     $params = [$this->request[$this->actionName]];
-    if (isset($this->request["{$this->actionName}s"]))
-    {
+    if (isset($this->request["{$this->actionName}s"])) {
       // If dialog JavaScript did it's work, then use array of parameters
       $params = $this->request["{$this->actionName}s"];
     }
 
-    foreach ($params as $item)
-    {
+    foreach ($params as $item) {
       // Continue only if user typed something
-      foreach ($item as $value)
-      {
-        if (0 < strlen($value))
-        {
+      foreach ($item as $value) {
+        if (0 < strlen($value)) {
           break;
         }
       }
 
-      if (1 > strlen($value))
-      {
+      if (1 > strlen($value)) {
         continue;
       }
 
       $this->form->bind($item);
-      if ($this->form->isValid())
-      {
-        if (isset($item['id']))
-        {
+      if ($this->form->isValid()) {
+        if (isset($item['id'])) {
           $params = $this->context->routing->parse(Qubit::pathInfo($item['id']));
           $this->relation = $params['_sf_route']->resource;
-        }
-        else
-        {
+        } else {
           $this->resource->relationsRelatedBysubjectId[] = $this->relation = new QubitRelation();
         }
 
-        foreach ($this->form as $field)
-        {
-          if (isset($item[$field->getName()]))
-          {
+        foreach ($this->form as $field) {
+          if (isset($item[$field->getName()])) {
             $this->processField($field);
           }
         }
 
         // Only transient objects will be saved automatically
-        if (isset($item['id']))
-        {
+        if (isset($item['id'])) {
           $this->relation->save();
         }
       }
@@ -82,16 +70,14 @@ class RelationEditComponent extends sfComponent
     $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->addField($name);
     }
   }
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'date':
         $this->form->setValidator($name, new sfValidatorString());
         $this->form->setWidget($name, new sfWidgetFormInput());
@@ -137,14 +123,12 @@ class RelationEditComponent extends sfComponent
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'resource':
         unset($this->relation->object);
 
         $value = $this->form->getValue('resource');
-        if (isset($value))
-        {
+        if (isset($value)) {
           $params = $this->context->routing->parse(Qubit::pathInfo($value));
           $this->relation->object = $params['_sf_route']->resource;
         }
@@ -155,8 +139,7 @@ class RelationEditComponent extends sfComponent
         unset($this->relation->type);
 
         $value = $this->form->getValue('type');
-        if (isset($value))
-        {
+        if (isset($value)) {
           $params = $this->context->routing->parse(Qubit::pathInfo($value));
           $this->relation->type = $params['_sf_route']->resource;
         }

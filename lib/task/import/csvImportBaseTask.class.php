@@ -35,32 +35,27 @@ abstract class csvImportBaseTask extends arBaseTask
     // If keep-digital-objects is set and --update="match-and-update" is set,
     // skip this logic to delete digital objects.
     if ((!empty($self->rowStatusVars['digitalObjectPath']) || !empty($self->rowStatusVars['digitalObjectURI']))
-      && !$self->keepDigitalObjects)
-    {
+      && !$self->keepDigitalObjects) {
       // Retrieve any digital objects that exist for this information object
       $do = $self->object->getDigitalObject();
 
-      if (null !== $do)
-      {
+      if (null !== $do) {
         $deleteDigitalObject = true;
 
-        if ($self->isUpdating())
-        {
+        if ($self->isUpdating()) {
           // if   - there is a checksum in the import file
           //      - the checksum is non-blank
           //      - the checksum in the csv file matches what is in the database
           // then - do not re-load the digital object from the import file on UPDATE (leave existing recs as is)
           // else - reload the digital object in the import file (i.e. delete existing record below)
           if (!empty($self->rowStatusVars['digitalObjectChecksum'])
-            && $self->rowStatusVars['digitalObjectChecksum'] === $do->getChecksum())
-          {
+            && $self->rowStatusVars['digitalObjectChecksum'] === $do->getChecksum()) {
             // if the checksum matches what is stored with digital object, do not import this digital object.
             $deleteDigitalObject = false;
           }
         }
 
-        if ($deleteDigitalObject)
-        {
+        if ($deleteDigitalObject) {
           $this->log('Deleting existing digital object.');
           $do->delete();
         }
@@ -78,14 +73,10 @@ abstract class csvImportBaseTask extends arBaseTask
    */
   public function importDigitalObject($self)
   {
-    if (null === $self->object->getDigitalObject())
-    {
-      if ($uri = $self->rowStatusVars['digitalObjectURI'])
-      {
+    if (null === $self->object->getDigitalObject()) {
+      if ($uri = $self->rowStatusVars['digitalObjectURI']) {
         $this->addDigitalObjectFromURI($self, $uri);
-      }
-      elseif ($path = $self->rowStatusVars['digitalObjectPath'])
-      {
+      } elseif ($path = $self->rowStatusVars['digitalObjectPath']) {
         $this->addDigitalObjectFromPath($self, $path);
       }
     }
@@ -104,25 +95,19 @@ abstract class csvImportBaseTask extends arBaseTask
     $do->object = $self->object;
     $do->indexOnSave = false;
 
-    if ($self->status['options']['skip-derivatives'])
-    {
+    if ($self->status['options']['skip-derivatives']) {
       // Don't download remote resource or create derivatives
       $do->createDerivatives = false;
-    }
-    else
-    {
+    } else {
       // Try downloading external object up to three times (2 retries)
       $options = ['downloadRetries' => 2];
     }
 
     // Catch digital object import errors to avoid killing whole import
-    try
-    {
+    try {
       $do->importFromURI($uri, $options);
       $do->save();
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       // Log error
       $this->log($e->getMessage(), sfLogger::ERR);
     }
@@ -137,8 +122,7 @@ abstract class csvImportBaseTask extends arBaseTask
    */
   public function addDigitalObjectFromPath($self, $path)
   {
-    if (!is_readable($path))
-    {
+    if (!is_readable($path)) {
       $this->log("Cannot read digital object path. Skipping creation of digital object ({$path})");
 
       return;
@@ -150,19 +134,15 @@ abstract class csvImportBaseTask extends arBaseTask
     $do->indexOnSave = false;
 
     // Don't create derivatives (reference, thumb)
-    if ($self->status['options']['skip-derivatives'])
-    {
+    if ($self->status['options']['skip-derivatives']) {
       $do->createDerivatives = false;
     }
 
     $do->assets[] = new QubitAsset($path);
 
-    try
-    {
+    try {
       $do->save();
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $this->log($e->getMessage(), sfLogger::ERR);
     }
   }
@@ -175,16 +155,13 @@ abstract class csvImportBaseTask extends arBaseTask
       'other' => QubitTerm::OTHER_FORM_OF_NAME_ID,
     ];
 
-    foreach ($typeIds as $typeName => $typeId)
-    {
+    foreach ($typeIds as $typeName => $typeId) {
       $columnName = $typeName.'FormsOfName';
 
-      if (!empty($self->arrayColumns[$columnName]))
-      {
+      if (!empty($self->arrayColumns[$columnName])) {
         $aliases = $self->rowStatusVars[$columnName];
 
-        foreach ($aliases as $alias)
-        {
+        foreach ($aliases as $alias) {
           // Add other name
           $otherName = new QubitOtherName();
           $otherName->objectId = $self->object->id;
@@ -206,57 +183,42 @@ abstract class csvImportBaseTask extends arBaseTask
   {
     // Add physical objects
     if (isset($self->rowStatusVars['physicalObjectName'])
-        && $self->rowStatusVars['physicalObjectName'])
-    {
+        && $self->rowStatusVars['physicalObjectName']) {
       $names = explode('|', $self->rowStatusVars['physicalObjectName']);
       $locations = explode('|', $self->rowStatusVars['physicalObjectLocation']);
       $types = (isset($self->rowStatusVars['physicalObjectType']))
         ? explode('|', $self->rowStatusVars['physicalObjectType'])
         : [];
 
-      foreach ($names as $index => $name)
-      {
+      foreach ($names as $index => $name) {
         // If location column populated
-        if ($self->rowStatusVars['physicalObjectLocation'])
-        {
+        if ($self->rowStatusVars['physicalObjectLocation']) {
           // If current index applicable
-          if (isset($locations[$index]))
-          {
+          if (isset($locations[$index])) {
             $location = $locations[$index];
-          }
-          else
-          {
+          } else {
             $location = $locations[0];
           }
-        }
-        else
-        {
+        } else {
           $location = '';
         }
 
         // If object type column populated
-        if ($self->rowStatusVars['physicalObjectType'])
-        {
+        if ($self->rowStatusVars['physicalObjectType']) {
           // If current index applicable
-          if (isset($types[$index]))
-          {
+          if (isset($types[$index])) {
             $type = $types[$index];
-          }
-          else
-          {
+          } else {
             $type = $types[0];
           }
-        }
-        else
-        {
+        } else {
           $type = 'Box';
         }
 
         $physicalObjectTypeId = self::arraySearchCaseInsensitive($type, $self->status['physicalObjectTypes'][$self->columnValue('culture')]);
 
         // Create new physical object type if not found
-        if (false === $physicalObjectTypeId)
-        {
+        if (false === $physicalObjectTypeId) {
           echo "\nTerm {$type} not found in physical object type taxonomy, creating it...\n";
 
           $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID, $type, $self->columnValue('culture'));
@@ -310,8 +272,7 @@ abstract class csvImportBaseTask extends arBaseTask
         'endDate' => 'eventEndDates',
         'description' => 'eventDescriptions',
         'type' => 'eventTypes',
-        'place' => 'eventPlaces', ], ] as $version => $propertyColumns)
-    {
+        'place' => 'eventPlaces', ], ] as $version => $propertyColumns) {
       // Get event data if one of the columns is populated in the current index
       $index = 0;
       while (isset($import->rowStatusVars[$propertyColumns['actorName']][$index])
@@ -321,8 +282,7 @@ abstract class csvImportBaseTask extends arBaseTask
         || isset($import->rowStatusVars[$propertyColumns['endDate']][$index])
         || isset($import->rowStatusVars[$propertyColumns['description']][$index])
         || isset($import->rowStatusVars[$propertyColumns['type']][$index])
-        || isset($import->rowStatusVars[$propertyColumns['place']][$index]))
-      {
+        || isset($import->rowStatusVars[$propertyColumns['place']][$index])) {
         // Two columns are used in 2.1 and 2.2: 'creators' and 'creatorHistories'.
         // To avoid adding duplicate events, if we are checking the 2.1 version
         // and only those columns are populated, the events are not created and
@@ -333,20 +293,17 @@ abstract class csvImportBaseTask extends arBaseTask
           && !isset($import->rowStatusVars[$propertyColumns['date']][$index])
           && !isset($import->rowStatusVars[$propertyColumns['startDate']][$index])
           && !isset($import->rowStatusVars[$propertyColumns['endDate']][$index])
-          && !isset($import->rowStatusVars[$propertyColumns['description']][$index]))
-        {
+          && !isset($import->rowStatusVars[$propertyColumns['description']][$index])) {
           ++$index;
 
           continue;
         }
 
         $eventData = [];
-        foreach ($propertyColumns as $property => $column)
-        {
+        foreach ($propertyColumns as $property => $column) {
           // Ignore 'NULL' values
           if (isset($import->rowStatusVars[$column][$index])
-           && 'NULL' != $import->rowStatusVars[$column][$index])
-          {
+           && 'NULL' != $import->rowStatusVars[$column][$index]) {
             $eventData[$property] = $import->rowStatusVars[$column][$index];
 
             // Remove values to avoid duplicates in CSV files mixing version columns.
@@ -355,8 +312,7 @@ abstract class csvImportBaseTask extends arBaseTask
           }
         }
 
-        if (count($eventData))
-        {
+        if (count($eventData)) {
           $events[] = $eventData;
         }
 
@@ -365,17 +321,13 @@ abstract class csvImportBaseTask extends arBaseTask
     }
 
     // Create events
-    foreach ($events as $eventData)
-    {
-      if (!isset($eventData['type']))
-      {
+    foreach ($events as $eventData) {
+      if (!isset($eventData['type'])) {
         // Creation is the default event type. Cast variable as string to avoid
         // a type mismatch when testing if it's a duplicate event in
         // QubitFlatfileImport::hasDuplicateEvent()
         $eventTypeId = (string) QubitTerm::CREATION_ID;
-      }
-      else
-      {
+      } else {
         // Get or add term if event type is set
         $typeTerm = $import->createOrFetchTerm(QubitTaxonomy::EVENT_TYPE_ID, $eventData['type'], $import->columnValue('culture'));
         $eventTypeId = $typeTerm->id;
@@ -386,8 +338,7 @@ abstract class csvImportBaseTask extends arBaseTask
       // If in update mode, check if the import event data matches an existing
       // event
       if ($import->matchAndUpdate
-        && null !== $event = self::matchExistingEvent($import->object->id, $eventTypeId, $eventData['actorName']))
-      {
+        && null !== $event = self::matchExistingEvent($import->object->id, $eventTypeId, $eventData['actorName'])) {
         $eventData['eventId'] = $event->id;
       }
 
@@ -406,39 +357,30 @@ abstract class csvImportBaseTask extends arBaseTask
     $criteria->add(QubitEvent::OBJECT_ID, $objectId);
 
     // Search for a related event linked to the provided actor name
-    if (!isset($actorName))
-    {
+    if (!isset($actorName)) {
       // If no actor name is provided, check for a related event with no actor
       $criteria->add(QubitEvent::ACTOR_ID, null, Criteria::ISNULL);
-    }
-    else
-    {
-      if (null !== $actor = QubitActor::getByAuthorizedFormOfName($actorName))
-      {
+    } else {
+      if (null !== $actor = QubitActor::getByAuthorizedFormOfName($actorName)) {
         // If we found a matching actor, then check for an event related to
         // that actor
         $criteria->add(QubitEvent::ACTOR_ID, $actor->id);
-      }
-      else
-      {
+      } else {
         // The provided actor name doesn't exist, so create a new event
         return;
       }
     }
 
     // Return the matching event, if one is found
-    if (null !== $event = QubitEvent::getOne($criteria))
-    {
+    if (null !== $event = QubitEvent::getOne($criteria)) {
       return $event;
     }
   }
 
   public static function setObjectPropertyToTermIdLookedUpFromTermNameArray(&$self, $property, $propertyDescription, $termName, $termNameArray)
   {
-    if ($termName)
-    {
-      if (isset($self->object) && is_object($self->object))
-      {
+    if ($termName) {
+      if (isset($self->object) && is_object($self->object)) {
         $self->object->{$property} = $self->translateNameToTermId(
           $propertyDescription,
           $termName,
@@ -472,13 +414,11 @@ abstract class csvImportBaseTask extends arBaseTask
    */
   public static function setAlternativeIdentifiers($io, $altIds, $altIdLabels)
   {
-    if (count($altIdLabels) !== count($altIds))
-    {
+    if (count($altIdLabels) !== count($altIds)) {
       throw new sfException('Number of alternative ids does not match number of alt id labels');
     }
 
-    for ($i = 0; $i < count($altIds); ++$i)
-    {
+    for ($i = 0; $i < count($altIds); ++$i) {
       $io->addProperty($altIdLabels[$i], $altIds[$i], ['scope' => 'alternativeIdentifiers']);
     }
   }
@@ -528,34 +468,28 @@ abstract class csvImportBaseTask extends arBaseTask
   {
     $numericOptions = ['rows-until-update', 'skip-rows'];
 
-    foreach ($numericOptions as $option)
-    {
-      if ($options[$option] && !is_numeric($options[$option]))
-      {
+    foreach ($numericOptions as $option) {
+      if ($options[$option] && !is_numeric($options[$option])) {
         throw new sfException($option.' must be an integer');
       }
     }
 
-    if ($options['error-log'] && !is_dir(dirname($options['error-log'])))
-    {
+    if ($options['error-log'] && !is_dir(dirname($options['error-log']))) {
       throw new sfException('Path to error log is invalid.');
     }
 
-    if ($this->acceptsOption('source-name') && !$options['source-name'])
-    {
+    if ($this->acceptsOption('source-name') && !$options['source-name']) {
       echo "WARNING: If you're importing multiple CSV files as part of the "
         ."same import it's advisable to use the source-name CLI option to "
         .'specify a source name (otherwise the filename will be used as a '
         ."source name).\n";
     }
 
-    if ($options['limit'] && !$options['update'])
-    {
+    if ($options['limit'] && !$options['update']) {
       throw new sfException('The --limit option requires the --update option to be present.');
     }
 
-    if ($options['keep-digital-objects'] && 'match-and-update' != trim($options['update']))
-    {
+    if ($options['keep-digital-objects'] && 'match-and-update' != trim($options['update'])) {
       throw new sfException('The --keep-digital-objects option can only be used when --update=\'match-and-update\' option is present.');
     }
 
@@ -569,15 +503,13 @@ abstract class csvImportBaseTask extends arBaseTask
    */
   protected function validateUpdateOptions($options)
   {
-    if (!$options['update'])
-    {
+    if (!$options['update']) {
       return;
     }
 
     $validParams = ['match-and-update', 'delete-and-replace'];
 
-    if (!in_array(trim($options['update']), $validParams))
-    {
+    if (!in_array(trim($options['update']), $validParams)) {
       $msg = sprintf('Parameter "%s" is not valid for --update option. ', $options['update']);
       $msg .= sprintf('Valid options are: %s', implode(', ', $validParams));
 
@@ -594,9 +526,10 @@ abstract class csvImportBaseTask extends arBaseTask
    */
   protected function acceptsOption($name)
   {
-    foreach ($this->getOptions() as $option)
-    {
-      if ($name == $option->getName()) return true;
+    foreach ($this->getOptions() as $option) {
+      if ($name == $option->getName()) {
+        return true;
+      }
     }
 
     return false;

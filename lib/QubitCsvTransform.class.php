@@ -30,15 +30,13 @@ class QubitCsvTransform extends QubitFlatfileImport
     if (
       !isset($options['skipOptionsAndEnvironmentCheck'])
       || false == $options['skipOptionsAndEnvironmentCheck']
-    )
-    {
+    ) {
       $this->checkTaskOptionsAndEnvironment($options['options']);
     }
 
     // unset options not allowed in parent class
     unset($options['skipOptionsAndEnvironmentCheck']);
-    if (isset($options['options']))
-    {
+    if (isset($options['options'])) {
       $cliOptions = $options['options'];
       unset($options['options']);
     }
@@ -46,13 +44,11 @@ class QubitCsvTransform extends QubitFlatfileImport
     // call parent class constructor
     parent::__construct($options);
 
-    if (isset($options['setupLogic']))
-    {
+    if (isset($options['setupLogic'])) {
       $this->setupLogic = $options['setupLogic'];
     }
 
-    if (isset($options['transformLogic']))
-    {
+    if (isset($options['transformLogic'])) {
       $this->transformLogic = $options['transformLogic'];
     }
 
@@ -70,8 +66,7 @@ class QubitCsvTransform extends QubitFlatfileImport
     $criteria->addAscendingOrderByColumn('lft');
 
     $this->levelsOfDescription = [];
-    foreach (QubitTerm::get($criteria) as $term)
-    {
+    foreach (QubitTerm::get($criteria) as $term) {
       $this->levelsOfDescription[] = strtolower($term->name);
     }
   }
@@ -79,13 +74,11 @@ class QubitCsvTransform extends QubitFlatfileImport
   public function writeHeadersOnFirstPass()
   {
     // execute setup logic, if any
-    if (isset($this->setupLogic))
-    {
+    if (isset($this->setupLogic)) {
       $this->executeClosurePropertyIfSet('setupLogic');
     }
 
-    if (!$this->status['headersWritten'])
-    {
+    if (!$this->status['headersWritten']) {
       fputcsv($this->status['outFh'], $this->columnNames);
       $this->status['headersWritten'] = true;
     }
@@ -94,8 +87,7 @@ class QubitCsvTransform extends QubitFlatfileImport
   public function initializeMySQLtemp()
   {
     // Possible future cleanup: use QubitPdo (might have to add a method to set QubitPdo's private $conn property)
-    if (false === $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DB')))
-    {
+    if (false === $link = mysqli_connect(getenv('MYSQL_HOST'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWORD'), getenv('MYSQL_DB'))) {
       throw new sfException('MySQL connection failed.');
     }
 
@@ -107,14 +99,12 @@ class QubitCsvTransform extends QubitFlatfileImport
       data LONGTEXT,
       PRIMARY KEY (id)
     )';
-    if (false === mysqli_query($link, $sql))
-    {
+    if (false === mysqli_query($link, $sql)) {
       throw new sfException('MySQL create table failed.');
     }
 
     $sql = 'DELETE FROM import_descriptions';
-    if (false === mysqli_query($link, $sql))
-    {
+    if (false === mysqli_query($link, $sql)) {
       throw new sfException('MySQL delete from import_descriptions failed.');
     }
   }
@@ -128,8 +118,7 @@ class QubitCsvTransform extends QubitFlatfileImport
 
     $result = mysqli_query($this->link, $sql);
 
-    if (!$result)
-    {
+    if (!$result) {
       throw new sfException('Failed to create MySQL DB row.');
     }
   }
@@ -149,7 +138,9 @@ class QubitCsvTransform extends QubitFlatfileImport
     $startFile = $this->numberedFilePathVariation($filepath, $chunk);
     $fhOut = fopen($startFile, 'w');
 
-    if (!$fhOut) throw new sfException('Error writing to '.$startFile.'.');
+    if (!$fhOut) {
+      throw new sfException('Error writing to '.$startFile.'.');
+    }
 
     echo 'Writing to '.$startFile."...\n";
 
@@ -162,11 +153,9 @@ class QubitCsvTransform extends QubitFlatfileImport
 
     $currentRow = 1;
 
-    while ($row = mysqli_fetch_assoc($result))
-    {
+    while ($row = mysqli_fetch_assoc($result)) {
       // if starting a new chunk, write CSV headers
-      if (($currentRow % $this->rowsPerFile) == 0)
-      {
+      if (($currentRow % $this->rowsPerFile) == 0) {
         ++$chunk;
         $chunkFilePath = $this->numberedFilePathVariation($filepath, $chunk);
         $fhOut = fopen($chunkFilePath, 'w');
@@ -192,15 +181,12 @@ class QubitCsvTransform extends QubitFlatfileImport
 
   protected function checkTaskOptionsAndEnvironment($options)
   {
-    if (!$options['output-file'])
-    {
+    if (!$options['output-file']) {
       throw new sfException('You must specifiy the output-file option.');
     }
 
-    foreach (['MYSQL_HOST', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DB'] as $var)
-    {
-      if (false === getenv($var))
-      {
+    foreach (['MYSQL_HOST', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DB'] as $var) {
+      if (false === getenv($var)) {
         throw new sfException('You must set the '.$var.' environmental variable.');
       }
     }

@@ -29,12 +29,9 @@ abstract class QubitSearchEngine
   {
     $this->dispatcher = sfContext::getInstance()->getEventDispatcher();
 
-    if (sfContext::getInstance()->getController()->inCLI())
-    {
+    if (sfContext::getInstance()->getController()->inCLI()) {
       $this->event = 'command.log';
-    }
-    else
-    {
+    } else {
       $this->event = 'search.log';
     }
   }

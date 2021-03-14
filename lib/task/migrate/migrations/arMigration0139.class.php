@@ -34,14 +34,12 @@ class arMigration0139
 
   public function up($configuration)
   {
-    if (null !== $menu = QubitMenu::getByName('browseDigitalObjects'))
-    {
+    if (null !== $menu = QubitMenu::getByName('browseDigitalObjects')) {
       $menu->path = 'informationobject/browse?view=card&onlyMedia=1';
       $menu->save();
     }
 
-    if (null === QubitSetting::getByName('default_archival_description_browse_view'))
-    {
+    if (null === QubitSetting::getByName('default_archival_description_browse_view')) {
       $setting = new QubitSetting();
       $setting->setName('default_archival_description_browse_view');
       $setting->setSourceCulture('en');

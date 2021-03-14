@@ -30,8 +30,7 @@ class arCalculateDescendantDatesJob extends arBaseJob
 
   public function runJob($parameters)
   {
-    if (empty($parameters['eventId']) && empty($parameters['eventTypeId']))
-    {
+    if (empty($parameters['eventId']) && empty($parameters['eventTypeId'])) {
       throw new sfException('Either the eventId or eventTypeId parameter must be specified.');
     }
 
@@ -47,20 +46,16 @@ class arCalculateDescendantDatesJob extends arBaseJob
     $io = QubitInformationObject::getById($parameters['objectId']);
 
     // Create or load target event
-    if (empty($parameters['eventId']))
-    {
+    if (empty($parameters['eventId'])) {
       $event = new QubitEvent();
       $event->objectId = $parameters['objectId'];
       $event->typeId = $parameters['eventTypeId'];
-    }
-    else
-    {
+    } else {
       $event = QubitEvent::getById($parameters['eventId']);
     }
 
     // Describe original dates if replacing date data in an existing event
-    if (!empty($parameters['eventId']))
-    {
+    if (!empty($parameters['eventId'])) {
       // Describe original dates
       $this->info($this->i18n->__(
         'Original start date of event is %1 and end date is %2.',
@@ -95,8 +90,7 @@ class arCalculateDescendantDatesJob extends arBaseJob
     $eventData = QubitPdo::fetchOne($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
     // Update event with start and end dates if descendant events were found
-    if ($eventData->found)
-    {
+    if ($eventData->found) {
       // Describe new dates
       $this->info($this->i18n->__(
         'Setting start date of event to %1 and end date to %2.',

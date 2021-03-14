@@ -87,19 +87,15 @@ class QubitMigrate103 extends QubitMigrate
   {
     // Delete QubitEvent objects that have BOTH no related info object
     // AND no related actor (either one is enough for the event to be valid)
-    foreach ($this->data['QubitEvent'] as $key => $event)
-    {
-      if (!isset($event['information_object_id']) && !isset($event['actor_id']))
-      {
+    foreach ($this->data['QubitEvent'] as $key => $event) {
+      if (!isset($event['information_object_id']) && !isset($event['actor_id'])) {
         unset($this->data['QubitEvent'][$key]);
       }
     }
 
     // Re-map data QubitEvent::description -> QubitEvent::date_display
-    foreach ($this->data['QubitEvent'] as $key => $event)
-    {
-      if (isset($this->data['QubitEvent'][$key]['description']))
-      {
+    foreach ($this->data['QubitEvent'] as $key => $event) {
+      if (isset($this->data['QubitEvent'][$key]['description'])) {
         $this->data['QubitEvent'][$key]['date_display'] = $this->data['QubitEvent'][$key]['description'];
         unset($this->data['QubitEvent'][$key]['description']);
       }
@@ -108,10 +104,8 @@ class QubitMigrate103 extends QubitMigrate
     // Remove "existence" events and move existence info into actor table
     // dates_of_existence column
     $existenceTermKey = $this->getTermExistenceKey();
-    foreach ($this->data['QubitEvent'] as $key => $columns)
-    {
-      if ($columns['type_id'] == $existenceTermKey && isset($columns['date_display']))
-      {
+    foreach ($this->data['QubitEvent'] as $key => $columns) {
+      if ($columns['type_id'] == $existenceTermKey && isset($columns['date_display'])) {
         $this->data['QubitActor'][$columns['actor_id']]['dates_of_existence'] = $columns['date_display'];
         unset($this->data['QubitEvent'][$key]);
       }
@@ -121,14 +115,11 @@ class QubitMigrate103 extends QubitMigrate
     // based on event type (eg. event type = creation then actor role = creator)
     $oldSubjectKey = $this->getTermKey('<?php echo QubitTerm::SUBJECT_ID."\n" ?>');
     $creationEventTermKey = $this->getTermKey('<?php echo QubitTerm::CREATION_ID."\n" ?>');
-    foreach ($this->data['QubitEvent'] as $key => $columns)
-    {
-      if (isset($columns['actor_role_id']))
-      {
+    foreach ($this->data['QubitEvent'] as $key => $columns) {
+      if (isset($columns['actor_role_id'])) {
         // If this was a subject access point relationship, then give the 1.0.4
         // event type_id = 'subject'
-        if ($columns['actor_role_id'] == $oldSubjectKey && !isset($columns['type_id']))
-        {
+        if ($columns['actor_role_id'] == $oldSubjectKey && !isset($columns['type_id'])) {
           $this->data['QubitEvent'][$key]['type_id'] = 'QubitTerm_subject';
         }
 
@@ -138,16 +129,14 @@ class QubitMigrate103 extends QubitMigrate
 
       // Add event type_id of "creation" to events that don't have an
       // assigned type_id
-      if (!isset($this->data['QubitEvent'][$key]['type_id']))
-      {
+      if (!isset($this->data['QubitEvent'][$key]['type_id'])) {
         $this->data['QubitEvent'][$key] = array_merge(
           ['type_id' => $creationEventTermKey], $this->data['QubitEvent'][$key]);
       }
     }
 
     // If there are no QubitEvent objects left, remove the section
-    if ([] == $this->data['QubitEvent'])
-    {
+    if ([] == $this->data['QubitEvent']) {
       unset($this->data['QubitEvent']);
     }
 
@@ -162,10 +151,8 @@ class QubitMigrate103 extends QubitMigrate
   protected function alterQubitProperties()
   {
     // re-map QubitProperty 'value' column to i18n table
-    foreach ($this->data['QubitProperty'] as $key => $property)
-    {
-      if (isset($property['value']))
-      {
+    foreach ($this->data['QubitProperty'] as $key => $property) {
+      if (isset($property['value'])) {
         $this->data['QubitProperty'][$key]['source_culture'] = 'en';
         $this->data['QubitProperty'][$key]['value'] = ['en' => $property['value']];
       }
@@ -182,12 +169,9 @@ class QubitMigrate103 extends QubitMigrate
   protected function alterQubitStaticPages()
   {
     // Update version number
-    foreach ($this->data['QubitStaticPage'] as $key => $page)
-    {
-      if ('homepage' == $page['permalink'] || 'about' == $page['permalink'])
-      {
-        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x)
-        {
+    foreach ($this->data['QubitStaticPage'] as $key => $page) {
+      if ('homepage' == $page['permalink'] || 'about' == $page['permalink']) {
+        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x) {
           $x = str_replace('1.0.3', '1.0.4', $x);
         });
       }
@@ -205,10 +189,8 @@ class QubitMigrate103 extends QubitMigrate
   {
     // Remove old QubitSettings for default templates
     $i = 0;
-    foreach ($this->data['QubitSetting'] as $key => $setting)
-    {
-      switch ($setting['name'])
-      {
+    foreach ($this->data['QubitSetting'] as $key => $setting) {
+      switch ($setting['name']) {
         case 'informationobject_edit':
         case 'informationobject_show':
         case 'informationobject_list':
@@ -218,8 +200,7 @@ class QubitMigrate103 extends QubitMigrate
         case 'repository_edit':
         case 'repository_show':
         case 'repository_list':
-          if (!isset($defaultTemplateIndex))
-          {
+          if (!isset($defaultTemplateIndex)) {
             $defaultTemplateIndex = $i;
           }
           unset($this->data['QubitSetting'][$key]);
@@ -291,10 +272,8 @@ class QubitMigrate103 extends QubitMigrate
     ];
 
     // Update version number
-    if ($settingVersionKey = $this->getRowKey('QubitSetting', 'name', 'version'))
-    {
-      foreach ($this->data['QubitSetting'][$settingVersionKey]['value'] as $culture => $value)
-      {
+    if ($settingVersionKey = $this->getRowKey('QubitSetting', 'name', 'version')) {
+      foreach ($this->data['QubitSetting'][$settingVersionKey]['value'] as $culture => $value) {
         $this->data['QubitSetting'][$settingVersionKey]['value'][$culture] = str_replace('1.0.3', '1.0.4', $value);
       }
     }
@@ -329,8 +308,7 @@ class QubitMigrate103 extends QubitMigrate
     ];
 
     // Remove actor role Taxonomy
-    if ($taxonomyActorRoleKey = $this->getTaxonomyActorRoleKey())
-    {
+    if ($taxonomyActorRoleKey = $this->getTaxonomyActorRoleKey()) {
       unset($this->data['QubitTaxonomy'][$taxonomyActorRoleKey]);
     }
 
@@ -346,8 +324,7 @@ class QubitMigrate103 extends QubitMigrate
   {
     // Swap Term EXISTENCE_ID for SUBJECT_ID in the Event type taxonomy (they
     // share analogous primary keys 12 vs. 112)
-    if ($existenceKey = $this->getTermExistenceKey())
-    {
+    if ($existenceKey = $this->getTermExistenceKey()) {
       $existenceArrayKeyIndex = QubitMigrate::getArrayKeyIndex($this->data['QubitTerm'], $existenceKey);
       $subjectTerm = $this->data['QubitTerm'][$existenceKey];
       $subjectTerm['id'] = '<?php echo QubitTerm::SUBJECT_ID."\n" ?>';
@@ -567,17 +544,13 @@ class QubitMigrate103 extends QubitMigrate
 
     // Remove Actor Role Taxonomy Terms
     $taxonomyActorRoleKey = $this->getTaxonomyActorRoleKey();
-    if ($taxonomyActorRoleKey)
-    {
-      foreach ($this->data['QubitTerm'] as $key => $columns)
-      {
-        if (isset($columns['taxonomy_id']) && $columns['taxonomy_id'] == $taxonomyActorRoleKey)
-        {
+    if ($taxonomyActorRoleKey) {
+      foreach ($this->data['QubitTerm'] as $key => $columns) {
+        if (isset($columns['taxonomy_id']) && $columns['taxonomy_id'] == $taxonomyActorRoleKey) {
           unset($this->data['QubitTerm'][$key]);
 
           // And delete any QubitNotes linked to this term
-          while ($relatedNoteKey = $this->getRowKey('QubitNote', 'object_id', $key))
-          {
+          while ($relatedNoteKey = $this->getRowKey('QubitNote', 'object_id', $key)) {
             unset($this->data['QubitNote'][$relatedNoteKey]);
           }
         }
@@ -585,13 +558,11 @@ class QubitMigrate103 extends QubitMigrate
     }
 
     // Remove SUBJECT_ACCESS_POINT_ID term
-    if ($subjectAccessPointKey = $this->getRowKey('QubitTerm', 'id', '<?php echo QubitTerm::SUBJECT_ACCESS_POINT_ID."\n" ?>'))
-    {
+    if ($subjectAccessPointKey = $this->getRowKey('QubitTerm', 'id', '<?php echo QubitTerm::SUBJECT_ACCESS_POINT_ID."\n" ?>')) {
       unset($this->data['QubitTerm'][$subjectAccessPointKey]);
 
       // And delete any QubitNotes linked to this term
-      while ($relatedNoteKey = $this->getRowKey('QubitNote', 'object_id', $subjectAccessPointKey))
-      {
+      while ($relatedNoteKey = $this->getRowKey('QubitNote', 'object_id', $subjectAccessPointKey)) {
         unset($this->data['QubitNote'][$relatedNoteKey]);
       }
     }
@@ -614,8 +585,7 @@ class QubitMigrate103 extends QubitMigrate
       'source_culture' => 'en',
       'content' => ['en' => 'Accumulator'],
     ];
-    if ($termKey = $this->getTermKey('<?php echo QubitTerm::CREATION_ID."\n" ?>'))
-    {
+    if ($termKey = $this->getTermKey('<?php echo QubitTerm::CREATION_ID."\n" ?>')) {
       $this->data['QubitNote']['QubitNote_creator'] = [
         'object_id' => $termKey,
         'type_id' => 'QubitTerm_display_note',
@@ -624,8 +594,7 @@ class QubitMigrate103 extends QubitMigrate
         'content' => ['en' => 'Creator', 'es' => 'Produtor', 'fr' => 'Producteur', 'nl' => 'Vervaardiger', 'pt' => 'Produtor'],
       ];
     }
-    if ($termKey = $this->getTermKey('<?php echo QubitTerm::SUBJECT_ID."\n" ?>'))
-    {
+    if ($termKey = $this->getTermKey('<?php echo QubitTerm::SUBJECT_ID."\n" ?>')) {
       $this->data['QubitNote']['QubitNote_subject'] = [
         'object_id' => $termKey,
         'type_id' => 'QubitTerm_display_note',
@@ -634,8 +603,7 @@ class QubitMigrate103 extends QubitMigrate
         'content' => ['en' => 'Subject', 'fr' => 'Sujet', 'nl' => 'Onderwerp', 'pt' => 'Assunto'],
       ];
     }
-    if ($termKey = $this->getTermKey('<?php echo QubitTerm::CUSTODY_ID."\n" ?>'))
-    {
+    if ($termKey = $this->getTermKey('<?php echo QubitTerm::CUSTODY_ID."\n" ?>')) {
       $this->data['QubitNote']['QubitNote_custodian'] = [
         'object_id' => $termKey,
         'type_id' => 'QubitTerm_display_note',
@@ -644,8 +612,7 @@ class QubitMigrate103 extends QubitMigrate
         'content' => ['en' => 'Custodian', 'es' => 'Custodiador', 'fr' => 'Détenteur', 'nl' => 'Beheerder', 'pt' => 'Custodiador'],
       ];
     }
-    if ($termKey = $this->getTermKey('<?php echo QubitTerm::PUBLICATION_ID."\n" ?>'))
-    {
+    if ($termKey = $this->getTermKey('<?php echo QubitTerm::PUBLICATION_ID."\n" ?>')) {
       $this->data['QubitNote']['QubitNote_publisher'] = [
         'object_id' => $termKey,
         'type_id' => 'QubitTerm_display_note',
@@ -654,8 +621,7 @@ class QubitMigrate103 extends QubitMigrate
         'content' => ['en' => 'Publisher', 'es' => 'Publicador', 'fr' => 'Éditeur', 'nl' => 'Uitgever', 'pt' => 'Publicador'],
       ];
     }
-    if ($termKey = $this->getTermKey('<?php echo QubitTerm::CONTRIBUTION_ID."\n" ?>'))
-    {
+    if ($termKey = $this->getTermKey('<?php echo QubitTerm::CONTRIBUTION_ID."\n" ?>')) {
       $this->data['QubitNote']['QubitNote_contributor'] = [
         'object_id' => $termKey,
         'type_id' => 'QubitTerm_display_note',
@@ -664,8 +630,7 @@ class QubitMigrate103 extends QubitMigrate
         'content' => ['en' => 'Contributor', 'es' => 'Colaborador', 'fr' => 'Collaborateur', 'nl' => 'Contribuant', 'pt' => 'Colaborador'],
       ];
     }
-    if ($termKey = $this->getTermKey('<?php echo QubitTerm::COLLECTION_ID."\n" ?>'))
-    {
+    if ($termKey = $this->getTermKey('<?php echo QubitTerm::COLLECTION_ID."\n" ?>')) {
       $this->data['QubitNote']['QubitNote_collector'] = [
         'object_id' => 'QubitTerm_17',
         'type_id' => 'QubitTerm_display_note',
@@ -737,25 +702,20 @@ class QubitMigrate103 extends QubitMigrate
   {
     $newList = [];
     $highLft = 0;
-    foreach ($this->data['QubitInformationObject'] as $key => $row)
-    {
+    foreach ($this->data['QubitInformationObject'] as $key => $row) {
       // If this left value is higher than any previous value, then just add
       // current row to the end of $newList
-      if ($row['lft'] > $highLft)
-      {
+      if ($row['lft'] > $highLft) {
         $newList[$key] = $row;
         $highLft = $row['lft'];
       }
 
       // Else, find the right place in $newList to insert the current row
       // (sorted by lft values)
-      else
-      {
+      else {
         $i = 0;
-        foreach ($newList as $newKey => $newRow)
-        {
-          if ($newRow['lft'] > $row['lft'])
-          {
+        foreach ($newList as $newKey => $newRow) {
+          if ($newRow['lft'] > $row['lft']) {
             QubitMigrate::array_insert($newList, $i, [$key => $row]);
 
             break;
@@ -822,12 +782,9 @@ class QubitMigrate103 extends QubitMigrate
 
     // Restack array with Constant values at top
     $qubitTermArray = $this->data['QubitTerm'];
-    foreach ($qubitTermConstantIds as $key => $constantName)
-    {
-      foreach ($qubitTermArray as $key => $term)
-      {
-        if ($term['id'] == '<?php echo QubitTerm::'.$constantName.'."\n" ?>')
-        {
+    foreach ($qubitTermConstantIds as $key => $constantName) {
+      foreach ($qubitTermArray as $key => $term) {
+        if ($term['id'] == '<?php echo QubitTerm::'.$constantName.'."\n" ?>') {
           $newTermArray[$key] = $term;
           unset($qubitTermArray[$key]);
 
@@ -837,8 +794,7 @@ class QubitMigrate103 extends QubitMigrate
     }
 
     // Append remaining (variable id) terms to the end of the new array
-    foreach ($qubitTermArray as $key => $term)
-    {
+    foreach ($qubitTermArray as $key => $term) {
       $newTermArray[$key] = $term;
     }
 
@@ -877,10 +833,8 @@ class QubitMigrate103 extends QubitMigrate
 
     $originalData = $this->data;
 
-    foreach ($ormSortOrder as $i => $className)
-    {
-      if (isset($originalData[$className]))
-      {
+    foreach ($ormSortOrder as $i => $className) {
+      if (isset($originalData[$className])) {
         $sortedData[$className] = $originalData[$className];
         unset($originalData[$className]);
       }
@@ -888,10 +842,8 @@ class QubitMigrate103 extends QubitMigrate
 
     // If their are classes in the original data that are not listed in the
     // ormSortOrder array then tack them on to the end of the sorted data
-    if (count($originalData))
-    {
-      foreach ($originalData as $className => $classData)
-      {
+    if (count($originalData)) {
+      foreach ($originalData as $className => $classData) {
         $sortedData[$className] = $classData;
       }
     }
@@ -908,8 +860,7 @@ class QubitMigrate103 extends QubitMigrate
    */
   protected function getTaxonomyActorRoleKey()
   {
-    if (!isset($this->taxonomyActorRoleKey))
-    {
+    if (!isset($this->taxonomyActorRoleKey)) {
       $this->taxonomyActorRoleKey = $this->getRowKey('QubitTaxonomy', 'id', '<?php echo QubitTaxonomy::ACTOR_ROLE_ID."\n" ?>');
     }
 
@@ -923,8 +874,7 @@ class QubitMigrate103 extends QubitMigrate
    */
   protected function getTermExistenceKey()
   {
-    if (!isset($this->termExistenceKey))
-    {
+    if (!isset($this->termExistenceKey)) {
       $this->termExistenceKey = $this->getRowKey('QubitTerm', 'id', '<?php echo QubitTerm::EXISTENCE_ID."\n" ?>');
     }
 

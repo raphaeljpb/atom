@@ -71,15 +71,11 @@ EOF;
     // Unset default net_gearman prefix for jobs
     define('NET_GEARMAN_JOB_CLASS_PREFIX', '');
 
-    if (0 < strlen($options['abilities']))
-    {
+    if (0 < strlen($options['abilities'])) {
       $abilities = array_filter(explode(',', $options['abilities']));
-    }
-    else
-    {
+    } else {
       $opts = [];
-      if (0 < strlen($options['types']))
-      {
+      if (0 < strlen($options['types'])) {
         $opts['types'] = $options['types'];
       }
 
@@ -91,10 +87,8 @@ EOF;
     $worker = new Net_Gearman_Worker($servers);
 
     // Register abilities (jobs)
-    foreach ($abilities as $ability)
-    {
-      if (!class_exists($ability))
-      {
+    foreach ($abilities as $ability) {
+      if (!class_exists($ability)) {
         $this->log("Ability not defined: {$ability}. Please ensure the job is in the lib/task/job directory or that the plugin is enabled.");
 
         continue;
@@ -105,8 +99,7 @@ EOF;
     }
 
     $worker->attachCallback(
-      function ($handle, $job, $e)
-      {
+      function ($handle, $job, $e) {
         $this->log('Job failed: '.$e->getMessage());
       },
       Net_Gearman_Worker::JOB_FAIL);
@@ -124,10 +117,8 @@ EOF;
       // Another option would be to catch the ProperException from the worker
       // and restablish the connection when needed. Also, the persistent mode
       // could be disabled for this worker. See issue #4182.
-      function () use (&$counter)
-      {
-        if (30 == $counter++)
-        {
+      function () use (&$counter) {
+        if (30 == $counter++) {
           $counter = 0;
 
           QubitPdo::prepareAndExecute('SELECT 1');

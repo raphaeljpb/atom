@@ -80,22 +80,18 @@ class propelGenerateSlugsTask extends arBaseTask
     ];
 
     // Optionally delete existing slugs
-    if ($options['delete'])
-    {
-      foreach ($classesData as $class => $data)
-      {
+    if ($options['delete']) {
+      foreach ($classesData as $class => $data) {
         $table = constant($class.'::TABLE_NAME');
         $this->logSection('propel', "Delete {$table} slugs...");
 
         $sql = "DELETE FROM slug WHERE object_id IN (SELECT id FROM {$table})";
 
-        if (defined("{$class}::ROOT_ID"))
-        {
+        if (defined("{$class}::ROOT_ID")) {
           $sql .= ' AND object_id != '.$class::ROOT_ID;
         }
 
-        if ('QubitStaticPage' == $class)
-        {
+        if ('QubitStaticPage' == $class) {
           $sql .= " AND slug NOT IN ('home','about')";
         }
 
@@ -105,13 +101,11 @@ class propelGenerateSlugsTask extends arBaseTask
 
     // Create hash of slugs already in database
     $sql = 'SELECT slug FROM slug ORDER BY slug';
-    foreach ($conn->query($sql, PDO::FETCH_NUM) as $row)
-    {
+    foreach ($conn->query($sql, PDO::FETCH_NUM) as $row) {
       $this->slugs[$row[0]] = true;
     }
 
-    foreach ($classesData as $class => $data)
-    {
+    foreach ($classesData as $class => $data) {
       $table = constant($class.'::TABLE_NAME');
 
       $this->logSection('propel', "Generate {$table} slugs...");
@@ -119,8 +113,7 @@ class propelGenerateSlugsTask extends arBaseTask
 
       $sql = $data['select'].' FROM '.$table.' base';
 
-      if ($data['i18nQuery'])
-      {
+      if ($data['i18nQuery']) {
         $i18nTable = constant($class.'I18n::TABLE_NAME');
 
         $sql .= ' INNER JOIN '.$i18nTable.' i18n';
@@ -131,34 +124,29 @@ class propelGenerateSlugsTask extends arBaseTask
       $sql .= '  ON base.id = sl.object_id';
       $sql .= ' WHERE';
 
-      if (defined("{$class}::ROOT_ID"))
-      {
+      if (defined("{$class}::ROOT_ID")) {
         $sql .= '  base.id != '.$class::ROOT_ID.' AND';
       }
 
       $sql .= ' sl.id is NULL';
 
-      foreach ($conn->query($sql, PDO::FETCH_NUM) as $row)
-      {
+      foreach ($conn->query($sql, PDO::FETCH_NUM) as $row) {
         // Get unique slug
         $slug = QubitSlug::slugify($this->getStringToSlugify($row, $table));
 
-        if (!$slug)
-        {
+        if (!$slug) {
           $slug = $this->getRandomSlug();
         }
 
         // Truncate at 250 chars
-        if (250 < strlen($slug))
-        {
+        if (250 < strlen($slug)) {
           $slug = substr($slug, 0, 250);
         }
 
         $count = 0;
         $suffix = '';
 
-        while (isset($this->slugs[$slug.$suffix]))
-        {
+        while (isset($this->slugs[$slug.$suffix])) {
           ++$count;
           $suffix = '-'.$count;
         }
@@ -171,14 +159,12 @@ class propelGenerateSlugsTask extends arBaseTask
 
       // Do inserts
       $inc = 1000;
-      for ($i = 0; $i < count($newRows); $i += $inc)
-      {
+      for ($i = 0; $i < count($newRows); $i += $inc) {
         $values = [];
         $sql = 'INSERT INTO slug (object_id, slug) VALUES ';
 
         $last = min($i + $inc, count($newRows));
-        for ($j = $i; $j < $last; ++$j)
-        {
+        for ($j = $i; $j < $last; ++$j) {
           // Use PDO param/value binding - ensures special chars are escaped on DB insert.
           $sql .= '(?, ?), ';
           array_push($values, $newRows[$j][0], $newRows[$j][1]);
@@ -226,8 +212,7 @@ EOF;
   {
     $slug = QubitSlug::random();
 
-    while (isset($this->slugs[$slug]))
-    {
+    while (isset($this->slugs[$slug])) {
       $slug = QubitSlug::random();
     }
 
@@ -247,8 +232,7 @@ EOF;
    */
   private function getStringToSlugify($row, $table)
   {
-    switch ($table)
-    {
+    switch ($table) {
       case 'information_object':
         return $this->getInformationObjectStringToSlugify($row);
 
@@ -269,8 +253,7 @@ EOF;
     // Note: pull reference codes from ES, as hydrating an ORM object and building the inherited
     // reference code on-the-fly is not performant.
     // Fall back to title as the slug basis if no setting present
-    switch (sfConfig::get('app_slug_basis_informationobject', QubitSlug::SLUG_BASIS_TITLE))
-    {
+    switch (sfConfig::get('app_slug_basis_informationobject', QubitSlug::SLUG_BASIS_TITLE)) {
       case QubitSlug::SLUG_BASIS_REFERENCE_CODE:
         return $this->getSlugStringFromES($row[0], 'referenceCode');
 
@@ -308,15 +291,13 @@ EOF;
 
     $results = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($query);
 
-    if (!$results->count())
-    {
+    if (!$results->count()) {
       return null;
     }
 
     $doc = $results[0]->getData();
 
-    if (!array_key_exists($property, $doc))
-    {
+    if (!array_key_exists($property, $doc)) {
       throw new sfException("ElasticSearch document for information object (id: {$id}) has no property {$property}");
     }
 

@@ -41,8 +41,7 @@ class exportBulkTask extends exportBulkBaseTask
       ['ead', 'mods']
     );
 
-    if (!isset($options['single-slug']))
-    {
+    if (!isset($options['single-slug'])) {
       $this->checkPathIsWritable($arguments['path']);
     }
 
@@ -59,19 +58,16 @@ class exportBulkTask extends exportBulkBaseTask
 
     $this->includeXmlExportClassesAndHelpers();
 
-    foreach ($rows as $row)
-    {
+    foreach ($rows as $row) {
       $resource = QubitInformationObject::getById($row['id']);
 
       // Don't export draft descriptions with public option
       if (isset($options['public']) && $options['public']
-        && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $resource->getPublicationStatus()->statusId)
-      {
+        && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $resource->getPublicationStatus()->statusId) {
         continue;
       }
 
-      try
-      {
+      try {
         // Print warnings/notices here too, as they are often important.
         $errLevel = error_reporting(E_ALL);
 
@@ -79,38 +75,30 @@ class exportBulkTask extends exportBulkBaseTask
         $xml = Qubit::tidyXml($rawXml);
 
         error_reporting($errLevel);
-      }
-      catch (Exception $e)
-      {
+      } catch (Exception $e) {
         throw new sfException('Invalid XML generated for object '.$row['id'].'.');
       }
 
-      if (isset($options['single-slug']) && 'ead' == $options['format'])
-      {
-        if (is_dir($arguments['path']))
-        {
+      if (isset($options['single-slug']) && 'ead' == $options['format']) {
+        if (is_dir($arguments['path'])) {
           throw new sfException('When using the single-slug option with EAD, path should be a file.');
         }
 
         // If we're just exporting a single hierarchy of descriptions as EAD,
         // the given path is actually the full path and filename
         $filePath = $arguments['path'];
-      }
-      else
-      {
+      } else {
         $filename = $this->generateSortableFilename($resource, 'xml', $options['format']);
         $filePath = sprintf('%s/%s', $arguments['path'], $filename);
       }
 
-      if (false === file_put_contents($filePath, $xml))
-      {
+      if (false === file_put_contents($filePath, $xml)) {
         throw new sfException("Cannot write to path: {$filePath}");
       }
 
       $this->indicateProgress($options['items-until-update']);
 
-      if (0 == $itemsExported++ % 1000)
-      {
+      if (0 == $itemsExported++ % 1000) {
         Qubit::clearClassCaches();
       }
     }

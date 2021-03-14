@@ -46,32 +46,26 @@ class QubitXmlImport
     // load the XML document into a DOMXML object
     $importDOM = $this->loadXML($xmlFile, $options);
 
-    if (null === $xmlOrigFileName)
-    {
+    if (null === $xmlOrigFileName) {
       // WebUI passes a temp file name in $xmlFile. e.g. /tmp/phpLjBIBv
       // If $xmlOrigFileName is null, save $xmlFile in keymap record
       $this->sourceName = basename($xmlFile);
-    }
-    else
-    {
+    } else {
       // use the original file name when creating keymap record
       $this->sourceName = basename($xmlOrigFileName);
     }
 
     // if we were unable to parse the XML file at all
-    if (empty($importDOM->documentElement))
-    {
+    if (empty($importDOM->documentElement)) {
       $errorMsg = $this->i18n->__('Unable to parse XML file: malformed or unresolvable entities');
 
       throw new Exception($errorMsg);
     }
 
     // if libxml threw errors, populate them to show in the template
-    if ($importDOM->libxmlerrors)
-    {
+    if ($importDOM->libxmlerrors) {
       // warning condition, XML file has errors (perhaps not well-formed or invalid?)
-      foreach ($importDOM->libxmlerrors as $libxmlerror)
-      {
+      foreach ($importDOM->libxmlerrors as $libxmlerror) {
         $xmlerrors[] = $this->i18n->__('libxml error %code% on line %line% in input file: %message%', ['%code%' => $libxmlerror->code, '%message%' => $libxmlerror->message, '%line%' => $libxmlerror->line]);
       }
 
@@ -83,29 +77,23 @@ class QubitXmlImport
     // Add local XML catalog for EAD DTD and DC and MODS XSD validations
     putenv('XML_CATALOG_FILES='.sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'xml'.DIRECTORY_SEPARATOR.'catalog.xml');
 
-    if ('mods' == $importDOM->documentElement->tagName)
-    {
+    if ('mods' == $importDOM->documentElement->tagName) {
       // XSD validation for MODS
       $schema = sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'xsd'.DIRECTORY_SEPARATOR.'mods.xsd';
 
-      if (!$importDOM->schemaValidate($schema))
-      {
+      if (!$importDOM->schemaValidate($schema)) {
         $this->errors[] = 'XSD validation failed';
       }
 
       // Populate errors to show in the template
-      foreach (libxml_get_errors() as $libxmlerror)
-      {
+      foreach (libxml_get_errors() as $libxmlerror) {
         $this->errors[] = $this->i18n->__('libxml error %code% on line %line% in input file: %message%', ['%code%' => $libxmlerror->code, '%message%' => $libxmlerror->message, '%line%' => $libxmlerror->line]);
       }
 
       $parser = new sfModsConvertor();
-      if ($parser->parse($xmlFile))
-      {
+      if ($parser->parse($xmlFile)) {
         $this->rootObject = $parser->getResource();
-      }
-      else
-      {
+      } else {
         $errorData = $parser->getErrorData();
         $this->errors[] = [$this->i18n->__('SAX xml parse error %code% on line %line% in input file: %message%', ['%code%' => $errorData['code'], '%message%' => $errorData['string'], '%line%' => $errorData['line']])];
       }
@@ -113,25 +101,21 @@ class QubitXmlImport
       return $this;
     }
 
-    if ('eac-cpf' == $importDOM->documentElement->tagName)
-    {
+    if ('eac-cpf' == $importDOM->documentElement->tagName) {
       $this->rootObject = new QubitActor();
       $this->rootObject->parentId = QubitActor::ROOT_ID;
 
       $eac = new sfEacPlugin($this->rootObject);
       $eac->parse($importDOM);
 
-      if (!$this->handlePreSaveLogic($this->rootObject))
-      {
+      if (!$this->handlePreSaveLogic($this->rootObject)) {
         return $this;
       }
 
       $this->rootObject->save();
 
-      if (isset($eac->itemsSubjectOf))
-      {
-        foreach ($eac->itemsSubjectOf as $item)
-        {
+      if (isset($eac->itemsSubjectOf)) {
+        foreach ($eac->itemsSubjectOf as $item) {
           $relation = new QubitRelation();
           $relation->object = $this->rootObject;
           $relation->typeId = QubitTerm::NAME_ACCESS_POINT_ID;
@@ -170,20 +154,16 @@ class QubitXmlImport
 
     // determine what kind of schema we're trying to import
     $schemaDescriptors = [$importDOM->documentElement->tagName];
-    if (!empty($importDOM->namespaces))
-    {
+    if (!empty($importDOM->namespaces)) {
       krsort($importDOM->namespaces);
       $schemaDescriptors = array_merge($schemaDescriptors, $importDOM->namespaces);
     }
-    if (!empty($importDOM->doctype))
-    {
+    if (!empty($importDOM->doctype)) {
       $schemaDescriptors = array_merge($schemaDescriptors, [$importDOM->doctype->name, $importDOM->doctype->systemId, $importDOM->doctype->publicId]);
     }
 
-    foreach ($schemaDescriptors as $descriptor)
-    {
-      if (array_key_exists($descriptor, $validSchemas))
-      {
+    foreach ($schemaDescriptors as $descriptor) {
+      if (array_key_exists($descriptor, $validSchemas)) {
         $importSchema = $validSchemas[$descriptor];
 
         // Store the used descriptor to differentiate between
@@ -192,15 +172,13 @@ class QubitXmlImport
       }
     }
 
-    switch ($importSchema)
-    {
+    switch ($importSchema) {
       case 'ead':
         // just validate EAD import for now until we can get StrictXMLParsing working for all schemas in the self::LoadXML function. Having problems right now loading schemas.
         $importDOM->validate();
 
         // if libxml threw errors, populate them to show in the template
-        foreach (libxml_get_errors() as $libxmlerror)
-        {
+        foreach (libxml_get_errors() as $libxmlerror) {
           $this->errors[] = $this->i18n->__('libxml error %code% on line %line% in input file: %message%', ['%code%' => $libxmlerror->code, '%message%' => $libxmlerror->message, '%line%' => $libxmlerror->line]);
         }
 
@@ -209,23 +187,18 @@ class QubitXmlImport
       case 'dc':
         // XSD validation for DC
         $schema = sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'xsd'.DIRECTORY_SEPARATOR;
-        if ('oai_dc:dc' == $usedDescriptor)
-        {
+        if ('oai_dc:dc' == $usedDescriptor) {
           $schema .= 'oai_dc.xsd';
-        }
-        else
-        {
+        } else {
           $schema .= 'simpledc20021212.xsd';
         }
 
-        if (!$importDOM->schemaValidate($schema))
-        {
+        if (!$importDOM->schemaValidate($schema)) {
           $this->errors[] = 'XSD validation failed';
         }
 
         // Populate errors to show in the template
-        foreach (libxml_get_errors() as $libxmlerror)
-        {
+        foreach (libxml_get_errors() as $libxmlerror) {
           $this->errors[] = $this->i18n->__('libxml error %code% on line %line% in input file: %message%', ['%code%' => $libxmlerror->code, '%message%' => $libxmlerror->message, '%line%' => $libxmlerror->line]);
         }
 
@@ -235,8 +208,7 @@ class QubitXmlImport
         $criteria = new Criteria();
         $criteria->add(QubitSetting::NAME, 'plugins');
         $setting = QubitSetting::getOne($criteria);
-        if (null === $setting || !in_array('sfSkosPlugin', unserialize($setting->getValue(['sourceCulture' => true]))))
-        {
+        if (null === $setting || !in_array('sfSkosPlugin', unserialize($setting->getValue(['sourceCulture' => true])))) {
           throw new sfException($this->i18n->__('The SKOS plugin is not enabled'));
         }
         $this->rootObject = QubitTaxonomy::getById($options['taxonomy']);
@@ -251,8 +223,7 @@ class QubitXmlImport
     }
 
     $importMap = sfConfig::get('sf_app_module_dir').DIRECTORY_SEPARATOR.'object'.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.$importSchema.'.yml';
-    if (!file_exists($importMap))
-    {
+    if (!file_exists($importMap)) {
       // error condition, unknown schema or no import filter
       $errorMsg = $this->i18n->__('Unknown schema or import format: "%format%"', ['%format%' => $importSchema]);
 
@@ -262,15 +233,12 @@ class QubitXmlImport
     $this->schemaMap = sfYaml::load($importMap);
 
     // if XSLs are specified in the mapping, process them
-    if (!empty($this->schemaMap['processXSLT']))
-    {
+    if (!empty($this->schemaMap['processXSLT'])) {
       // pre-filter through XSLs in order
-      foreach ((array) $this->schemaMap['processXSLT'] as $importXSL)
-      {
+      foreach ((array) $this->schemaMap['processXSLT'] as $importXSL) {
         $importXSL = sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.'xslt'.DIRECTORY_SEPARATOR.$importXSL;
 
-        if (file_exists($importXSL))
-        {
+        if (file_exists($importXSL)) {
           // instantiate an XSLT parser
           $xslDOM = new DOMDocument();
           $xslDOM->load($importXSL);
@@ -282,9 +250,7 @@ class QubitXmlImport
 
           $importDOM->loadXML($xsltProc->transformToXML($importDOM));
           unset($xslDOM, $xsltProc);
-        }
-        else
-        {
+        } else {
           $this->errors[] = $this->i18n->__('Unable to load import XSL filter: "%importXSL%"', ['%importXSL%' => $importXSL]);
         }
       }
@@ -293,13 +259,10 @@ class QubitXmlImport
       $importDOM->xpath = new DOMXPath($importDOM);
     }
 
-    if ('ead' == $importSchema)
-    {
+    if ('ead' == $importSchema) {
       // get ead url from ead header for use in matching this object
-      if (is_object($urlValues = $importDOM->xpath->query('//eadheader/eadid/@url')))
-      {
-        foreach ($urlValues as $url)
-        {
+      if (is_object($urlValues = $importDOM->xpath->query('//eadheader/eadid/@url'))) {
+        foreach ($urlValues as $url) {
           $this->eadUrl = trim(preg_replace('/[\n\r\s]+/', ' ', $url->nodeValue));
           // Possibly more than one url but we can only take one. Take first
           // valid one.
@@ -308,17 +271,14 @@ class QubitXmlImport
       }
 
       // switch source culture if language is set in an EAD document
-      if (is_object($langusage = $importDOM->xpath->query('//eadheader/profiledesc/langusage/language/@langcode')))
-      {
+      if (is_object($langusage = $importDOM->xpath->query('//eadheader/profiledesc/langusage/language/@langcode'))) {
         $sf_user = sfContext::getInstance()->user;
         $currentCulture = $sf_user->getCulture();
         $langCodeConvertor = new fbISO639_Map();
-        foreach ($langusage as $language)
-        {
+        foreach ($langusage as $language) {
           $isocode = trim(preg_replace('/[\n\r\s]+/', ' ', $language->nodeValue));
           // convert to Symfony culture code
-          if (!$twoCharCode = strtolower($langCodeConvertor->getID1($isocode, false)))
-          {
+          if (!$twoCharCode = strtolower($langCodeConvertor->getID1($isocode, false))) {
             $twoCharCode = $isocode;
           }
           // Check to make sure that the selected language is supported with a Symfony i18n data file.
@@ -326,19 +286,15 @@ class QubitXmlImport
 
           ProjectConfiguration::getActive()->loadHelpers('I18N');
 
-          try
-          {
+          try {
             format_language($twoCharCode, $twoCharCode);
-          }
-          catch (Exception $e)
-          {
+          } catch (Exception $e) {
             $this->errors[] = $this->i18n->__('EAD "langmaterial" is set to').': "'.$isocode.'". '.$this->i18n->__('This language is currently not supported.');
 
             continue;
           }
 
-          if ($currentCulture !== $twoCharCode)
-          {
+          if ($currentCulture !== $twoCharCode) {
             $this->errors[] = $this->i18n->__('EAD "langmaterial" is set to').': "'.$isocode.'" ('.format_language($twoCharCode, 'en').'). '.$this->i18n->__('Your XML document has been saved in this language and your user interface has just been switched to this language.');
           }
           $sf_user->setCulture($twoCharCode);
@@ -351,11 +307,9 @@ class QubitXmlImport
     unset($this->schemaMap['processXSLT']);
 
     // go through schema map and populate objects/properties
-    foreach ($this->schemaMap as $name => $mapping)
-    {
+    foreach ($this->schemaMap as $name => $mapping) {
       // if object is not defined or a valid class, we can't process this mapping
-      if (empty($mapping['Object']) || !class_exists('Qubit'.$mapping['Object']))
-      {
+      if (empty($mapping['Object']) || !class_exists('Qubit'.$mapping['Object'])) {
         $this->errors[] = $this->i18n->__('Non-existent class defined in import mapping: "%class%"', ['%class%' => 'Qubit'.$mapping['Object']]);
 
         continue;
@@ -364,21 +318,18 @@ class QubitXmlImport
       // get a list of XML nodes to process
       $nodeList = $importDOM->xpath->query($mapping['XPath']);
 
-      foreach ($nodeList as $domNode)
-      {
+      foreach ($nodeList as $domNode) {
         // create a new object
         $class = 'Qubit'.$mapping['Object'];
         $currentObject = new $class();
 
         // set the rootObject to use for initial display in successful import
-        if (!$this->rootObject)
-        {
+        if (!$this->rootObject) {
           $this->rootObject = $currentObject;
         }
 
         // use DOM to populate object
-        if (!$this->populateObject($domNode, $importDOM, $mapping, $currentObject, $importSchema))
-        {
+        if (!$this->populateObject($domNode, $importDOM, $mapping, $currentObject, $importSchema)) {
           break; // No match found for top level description on --update, end import
         }
       }
@@ -456,30 +407,19 @@ class QubitXmlImport
     $nodeValue = '';
     $fieldsArray = ['extent', 'physfacet', 'dimensions'];
 
-    foreach ($node->childNodes as $child)
-    {
-      if ('lb' == $child->nodeName)
-      {
+    foreach ($node->childNodes as $child) {
+      if ('lb' == $child->nodeName) {
         $nodeValue .= "\n";
-      }
-      elseif (in_array($child->tagName, $fieldsArray))
-      {
-        foreach ($child->childNodes as $childNode)
-        {
-          if ('lb' == $childNode->nodeName)
-          {
+      } elseif (in_array($child->tagName, $fieldsArray)) {
+        foreach ($child->childNodes as $childNode) {
+          if ('lb' == $childNode->nodeName) {
             $nodeValue .= "\n";
-          }
-          else
-          {
+          } else {
             $nodeValue .= preg_replace('/[\n\r\s]+/', ' ', $childNode->nodeValue);
           }
         }
-      }
-      else
-      {
-        if (empty($methodMap['IgnoreChildElementText']) || !($child instanceof DOMElement))
-        {
+      } else {
+        if (empty($methodMap['IgnoreChildElementText']) || !($child instanceof DOMElement)) {
           $nodeValue .= preg_replace('/[\n\r\s]+/', ' ', $child->nodeValue);
         }
       }
@@ -502,21 +442,16 @@ class QubitXmlImport
    */
   public static function runFilters(&$node, $filterParam)
   {
-    foreach ($filterParam as $filters)
-    {
-      foreach ($filters as $tag => $classes)
-      {
-        foreach ($classes as $class => $method)
-        {
+    foreach ($filterParam as $filters) {
+      foreach ($filters as $tag => $classes) {
+        foreach ($classes as $class => $method) {
           $elementList = $node->getElementsByTagName($tag);
 
-          while ($elementList->length > 0)
-          {
+          while ($elementList->length > 0) {
             $element = $elementList->item(0);
 
             $parameters = [];
-            if (is_callable([$class, $method]))
-            {
+            if (is_callable([$class, $method])) {
               $parameters[] = $tag;
               $parameters[] = $element;
               $textValue = call_user_func_array([$class, $method], $parameters);
@@ -542,32 +477,22 @@ class QubitXmlImport
   {
     $nodeValue = '';
 
-    if (!($node instanceof DOMAttr))
-    {
+    if (!($node instanceof DOMAttr)) {
       $nodeList = $node->getElementsByTagName('p');
 
-      if (0 < $nodeList->length)
-      {
+      if (0 < $nodeList->length) {
         $i = 0;
-        foreach ($nodeList as $pNode)
-        {
-          if (0 == $i++)
-          {
+        foreach ($nodeList as $pNode) {
+          if (0 == $i++) {
             $nodeValue .= self::replaceLineBreaks($pNode, $methodMap);
-          }
-          else
-          {
+          } else {
             $nodeValue .= "\n\n".self::replaceLineBreaks($pNode, $methodMap);
           }
         }
-      }
-      else
-      {
+      } else {
         $nodeValue .= self::replaceLineBreaks($node, $methodMap);
       }
-    }
-    else
-    {
+    } else {
       $nodeValue .= $node->nodeValue;
     }
 
@@ -584,8 +509,7 @@ class QubitXmlImport
       '/plugins/sfSkosPlugin/lib/sfSkosUniqueRelations.class.php',
     ];
 
-    foreach ($includes as $include)
-    {
+    foreach ($includes as $include) {
       include_once $appRoot.$include;
     }
   }
@@ -620,14 +544,11 @@ class QubitXmlImport
     // namespaces and reuse the string for later when finding/registering namespaces.
     $rawXML = file_get_contents($xmlFile);
 
-    if ($strictXmlParsing)
-    {
+    if ($strictXmlParsing) {
       // enforce all XML parsing rules and validation
       $doc->validateOnParse = true;
       $doc->resolveExternals = true;
-    }
-    else
-    {
+    } else {
       // try to load whatever we've got, even if it's malformed or invalid
       $doc->recover = true;
       $doc->strictErrorChecking = false;
@@ -646,8 +567,7 @@ class QubitXmlImport
     $doc->libxmlerrors = libxml_get_errors();
 
     // if the document didn't parse correctly, stop right here
-    if (empty($doc->documentElement))
-    {
+    if (empty($doc->documentElement)) {
       return $doc;
     }
 
@@ -663,15 +583,13 @@ class QubitXmlImport
     $re = '/xmlns:([^=]+)="([^"]+)"/';
     preg_match_all($re, $rawXML, $mat, PREG_SET_ORDER);
 
-    foreach ($mat as $xmlns)
-    {
+    foreach ($mat as $xmlns) {
       $pre = $xmlns[1];
       $uri = $xmlns[2];
 
       $doc->namespaces[$pre] = $uri;
 
-      if ('' == $pre)
-      {
+      if ('' == $pre) {
         $pre = 'noname';
       }
       $doc->xpath->registerNamespace($pre, $uri);
@@ -694,35 +612,25 @@ class QubitXmlImport
   private function populateObject(&$domNode, &$importDOM, &$mapping, &$currentObject, $importSchema)
   {
     // if a parent path is specified, try to parent the node
-    if (empty($mapping['Parent']))
-    {
+    if (empty($mapping['Parent'])) {
       $parentNodes = new DOMNodeList();
-    }
-    else
-    {
+    } else {
       $parentNodes = $importDOM->xpath->query('('.$mapping['Parent'].')', $domNode);
     }
 
-    if ($parentNodes->length > 0)
-    {
+    if ($parentNodes->length > 0) {
       // parent ID comes from last node in the list because XPath forces forward document order
       $parentId = $parentNodes->item($parentNodes->length - 1)->getAttribute('xml:id');
       unset($parentNodes);
 
-      if (!empty($parentId) && is_callable([$currentObject, 'setParentId']))
-      {
+      if (!empty($parentId) && is_callable([$currentObject, 'setParentId'])) {
         $currentObject->parentId = $parentId;
       }
-    }
-    else
-    {
+    } else {
       // orphaned object, set root if possible
-      if (isset($this->parent))
-      {
+      if (isset($this->parent)) {
         $currentObject->parentId = $this->parent->id;
-      }
-      elseif (is_callable([$currentObject, 'setRoot']))
-      {
+      } elseif (is_callable([$currentObject, 'setRoot'])) {
         $currentObject->setRoot();
       }
     }
@@ -732,25 +640,21 @@ class QubitXmlImport
     $doSave = true;
 
     // make sure we have a publication status set before indexing
-    if ($currentObject instanceof QubitInformationObject && 0 == count($currentObject->statuss))
-    {
+    if ($currentObject instanceof QubitInformationObject && 0 == count($currentObject->statuss)) {
       $currentObject->setPublicationStatus(sfConfig::get('app_defaultPubStatus', QubitTerm::PUBLICATION_STATUS_DRAFT_ID));
     }
 
     // if this is an information object in an XML EAD import, run the enhanced update check.
-    if ($currentObject instanceof QubitInformationObject && 'ead' == $importSchema)
-    {
+    if ($currentObject instanceof QubitInformationObject && 'ead' == $importSchema) {
       $doSave = $this->handlePreSaveLogic($currentObject);
     }
 
-    if ($doSave)
-    {
+    if ($doSave) {
       // save the object after it's fully-populated
       $currentObject->save();
       // if this is the root Info Object, save the EadUrl in the keymap table for matching.
       if ($currentObject instanceof QubitInformationObject && 'ead' == $importSchema
-        && $this->rootObject === $currentObject)
-      {
+        && $this->rootObject === $currentObject) {
         $this->saveEadUrl($currentObject);
       }
 
@@ -775,11 +679,9 @@ class QubitXmlImport
     $processed = [];
 
     // go through methods and populate properties
-    foreach ($methods as $name => $methodMap)
-    {
+    foreach ($methods as $name => $methodMap) {
       // if method is not defined, we can't process this mapping
-      if (empty($methodMap['Method']) || !is_callable([$currentObject, $methodMap['Method']]))
-      {
+      if (empty($methodMap['Method']) || !is_callable([$currentObject, $methodMap['Method']])) {
         $this->errors[] = $this->i18n->__('Non-existent method defined in import mapping: "%method%"', ['%method%' => $methodMap['Method']]);
 
         continue;
@@ -788,19 +690,14 @@ class QubitXmlImport
       // Get a list of XML nodes to process
       // This condition mitigates a problem where the XPath query wasn't working
       // as expected, see #4302 for more details
-      if ('dc' == $importSchema && '.' != $methodMap['XPath'])
-      {
+      if ('dc' == $importSchema && '.' != $methodMap['XPath']) {
         $nodeList2 = $importDOM->getElementsByTagName($methodMap['XPath']);
-      }
-      else
-      {
+      } else {
         $nodeList2 = $importDOM->xpath->query($methodMap['XPath'], $domNode);
       }
 
-      if (is_object($nodeList2))
-      {
-        switch($name)
-        {
+      if (is_object($nodeList2)) {
+        switch ($name) {
           // hack: some multi-value elements (e.g. 'languages') need to get passed as one array instead of individual nodes values
           case 'languages':
           case 'language':
@@ -808,14 +705,10 @@ class QubitXmlImport
             $isID3 = ('dc' == $importSchhema) ? true : false;
 
             $value = [];
-            foreach ($nodeList2 as $item)
-            {
-              if ($twoCharCode = $langCodeConvertor->getID1($item->nodeValue, $isID3))
-              {
+            foreach ($nodeList2 as $item) {
+              if ($twoCharCode = $langCodeConvertor->getID1($item->nodeValue, $isID3)) {
                 $value[] = strtolower($twoCharCode);
-              }
-              else
-              {
+              } else {
                 $value[] = $item->nodeValue;
               }
             }
@@ -826,13 +719,11 @@ class QubitXmlImport
           case 'flocat':
           case 'digital_object':
             $resources = [];
-            foreach ($nodeList2 as $item)
-            {
+            foreach ($nodeList2 as $item) {
               $resources[] = $item->nodeValue;
             }
 
-            if (0 < count($resources))
-            {
+            if (0 < count($resources)) {
               $currentObject->importDigitalObjectFromUri($resources, $this->errors);
             }
 
@@ -840,13 +731,11 @@ class QubitXmlImport
 
           case 'container':
             // Get the collection root to check for existent phys. objects
-            if (!$this->collectionRoot)
-            {
+            if (!$this->collectionRoot) {
               $this->collectionRoot = $this->rootObject->getCollectionRoot();
             }
 
-            foreach ($nodeList2 as $item)
-            {
+            foreach ($nodeList2 as $item) {
               $name = $item->nodeValue;
               $parent = $importDOM->xpath->query('@parent', $item)->item(0)->nodeValue;
               $location = $importDOM->xpath->query('did/physloc[@id="'.$parent.'"]', $domNode)->item(0)->nodeValue;
@@ -856,8 +745,7 @@ class QubitXmlImport
                 'label' => $importDOM->xpath->query('@label', $item)->item(0)->nodeValue,
               ];
 
-              if ($this->collectionRoot)
-              {
+              if ($this->collectionRoot) {
                 $options['collectionId'] = $this->collectionRoot->id;
               }
 
@@ -869,14 +757,10 @@ class QubitXmlImport
           case 'relatedunitsofdescription':
             $i = 0;
             $nodeValue = '';
-            foreach ($nodeList2 as $item)
-            {
-              if (0 == $i++)
-              {
+            foreach ($nodeList2 as $item) {
+              if (0 == $i++) {
                 $nodeValue .= self::normalizeNodeValue($item);
-              }
-              else
-              {
+              } else {
                 $nodeValue .= "\n\n".self::normalizeNodeValue($item);
               }
             }
@@ -886,11 +770,9 @@ class QubitXmlImport
             break;
 
           default:
-            foreach ($nodeList2 as $key => $domNode2)
-            {
+            foreach ($nodeList2 as $key => $domNode2) {
               // Skip this node if method path isn't "self" and node's previously been processed
-              if ('.' != $methodMap['XPath'] && isset($processed[$domNode2->getNodePath()]))
-              {
+              if ('.' != $methodMap['XPath'] && isset($processed[$domNode2->getNodePath()])) {
                 continue;
               }
 
@@ -898,8 +780,7 @@ class QubitXmlImport
               $processed[$domNode2->getNodePath()] = true;
 
               // Additional node processing. Define filters in the schema file.
-              if (!empty($methodMap['Filters']))
-              {
+              if (!empty($methodMap['Filters'])) {
                 // Modify $domNode2 by reference.
                 self::runFilters($domNode2, $methodMap['Filters']);
               }
@@ -910,53 +791,37 @@ class QubitXmlImport
               // if you want the full XML from the node, use this
               $nodeXML = $domNode2->ownerDocument->saveXML($domNode2);
               // set the parameters for the method call
-              if (empty($methodMap['Parameters']))
-              {
+              if (empty($methodMap['Parameters'])) {
                 $parameters = [$nodeValue];
-              }
-              else
-              {
+              } else {
                 $parameters = [];
-                foreach ((array) $methodMap['Parameters'] as $parameter)
-                {
+                foreach ((array) $methodMap['Parameters'] as $parameter) {
                   // if the parameter begins with %, evaluate it as an XPath expression relative to the current node
-                  if ('%' == substr($parameter, 0, 1))
-                  {
+                  if ('%' == substr($parameter, 0, 1)) {
                     // evaluate the XPath expression
                     $xPath = substr($parameter, 1);
                     $result = $importDOM->xpath->query($xPath, $domNode2);
 
-                    if ($result->length > 1)
-                    {
+                    if ($result->length > 1) {
                       // convert nodelist into an array
-                      foreach ($result as $element)
-                      {
+                      foreach ($result as $element) {
                         $resultArray[] = $element->nodeValue;
                       }
                       $parameters[] = $resultArray;
-                    }
-                    else
-                    {
+                    } else {
                       // pass the node value unaltered; this provides an alternative to $nodeValue above
                       $parameters[] = $result->item(0)->nodeValue;
                     }
-                  }
-                  else
-                  {
+                  } else {
                     // Confirm DOMXML node exists to avoid warnings at run-time
-                    if (false !== preg_match_all('/\$importDOM->xpath->query\(\'@\w+\', \$domNode2\)->item\(0\)->nodeValue/', $parameter, $matches))
-                    {
-                      foreach ($matches[0] as $match)
-                      {
+                    if (false !== preg_match_all('/\$importDOM->xpath->query\(\'@\w+\', \$domNode2\)->item\(0\)->nodeValue/', $parameter, $matches)) {
+                      foreach ($matches[0] as $match) {
                         $str = str_replace('->nodeValue', '', $match);
 
-                        if (null !== ($node = eval('return '.$str.';')))
-                        {
+                        if (null !== ($node = eval('return '.$str.';'))) {
                           // Substitute node value for search string
                           $parameter = str_replace($match, '\''.addcslashes($node->nodeValue, "'").'\'', $parameter);
-                        }
-                        else
-                        {
+                        } else {
                           // Replace empty nodes with null in parameter string
                           $parameter = str_replace($match, 'null', $parameter);
                         }
@@ -1003,17 +868,12 @@ class QubitXmlImport
 
               // If an actor/event object was returned, track that
               // in the events cache for later cleanup
-              if ($currentObject instanceof QubitInformationObject && !empty($result))
-              {
-                if ('importOriginationEadData' === $methodMap['Method'])
-                {
-                  foreach ($result as $actorNode)
-                  {
+              if ($currentObject instanceof QubitInformationObject && !empty($result)) {
+                if ('importOriginationEadData' === $methodMap['Method']) {
+                  foreach ($result as $actorNode) {
                     $this->trackEvent($actorNode['actor'], $actorNode['node']);
                   }
-                }
-                else
-                {
+                } else {
                   $this->trackEvent($result, $domNode2);
                 }
               }
@@ -1048,8 +908,7 @@ class QubitXmlImport
     $xp = new DOMXPath($doc);
     $nodes = $xp->query('//comment()');
 
-    for ($i = 0; $i < $nodes->length; ++$i)
-    {
+    for ($i = 0; $i < $nodes->length; ++$i) {
       $nodes->item($i)->parentNode->removeChild($nodes->item($i));
     }
   }
@@ -1065,26 +924,18 @@ class QubitXmlImport
   private function trackEvent($object, $node)
   {
     $kind = $node->nodeName;
-    if ('geogname' === $kind)
-    {
+    if ('geogname' === $kind) {
       $key = 'place';
-    }
-    elseif ('unitdate' === $kind)
-    {
+    } elseif ('unitdate' === $kind) {
       $key = 'event';
-    }
-    elseif (in_array($kind, ['name', 'persname', 'corpname', 'famname']))
-    {
+    } elseif (in_array($kind, ['name', 'persname', 'corpname', 'famname'])) {
       $key = 'actor';
-    }
-    else
-    {
+    } else {
       return;
     }
 
     $id = $node->getAttribute('id');
-    if (!empty($id))
-    {
+    if (!empty($id)) {
       // The ID value is suffixed with its category, e.g. 384_place
       // This is because `id` is required to be unique within the entire
       // document.
@@ -1106,20 +957,17 @@ class QubitXmlImport
    */
   private function associateEvents()
   {
-    foreach ($this->events as $id => $values)
-    {
+    foreach ($this->events as $id => $values) {
       $event = $values['event'];
 
-      if (empty($event))
-      {
+      if (empty($event)) {
         continue;
       }
 
       $place = array_key_exists('place', $values) ? $values['place'] : null;
       $actor = array_key_exists('actor', $values) ? $values['actor'] : null;
 
-      if ($place)
-      {
+      if ($place) {
         $otr = new QubitObjectTermRelation();
         $otr->termId = $place->id;
         $otr->indexOnSave = false;
@@ -1127,8 +975,7 @@ class QubitXmlImport
         $event->objectTermRelationsRelatedByobjectId[] = $otr;
       }
 
-      if ($actor)
-      {
+      if ($actor) {
         $event->actorId = $actor->id;
       }
     }
@@ -1148,8 +995,7 @@ class QubitXmlImport
   private function handlePreSaveLogic($resource)
   {
     // Populate variables based on resource class
-    switch (get_class($resource))
-    {
+    switch (get_class($resource)) {
       case 'QubitInformationObject':
         // Short circuit if 'delete-and-replace' is set with 'skip-unmatched' if this is
         // not the root object. After the top level record is loaded, there will be
@@ -1159,8 +1005,7 @@ class QubitXmlImport
         // and the only match option that works with 'delete-and-replace' is
         // 'skip-unmatched'. This will need to be modified if additional matching
         // options are added.
-        if ('delete-and-replace' === $this->options['update'] && $this->options['skip-unmatched'] && $this->rootObject !== $resource)
-        {
+        if ('delete-and-replace' === $this->options['update'] && $this->options['skip-unmatched'] && $this->rootObject !== $resource) {
           return true;
         }
 
@@ -1175,23 +1020,20 @@ class QubitXmlImport
           ($this->rootObject !== $resource) ? $this->rootObject->repository->authorizedFormOfName : $resource->repository->authorizedFormOfName
         );
 
-        if ($matchId)
-        {
+        if ($matchId) {
           $matchResource = QubitInformationObject::getById($matchId);
         }
 
         // If resource not found, try matching against keymap table. eadUrl is
         // unique to EAD file, but not unique to each record in the file.
         // Matching on keymap will only make sense for the top level record.
-        if (!isset($matchResource) && $this->eadUrl && $this->rootObject === $resource)
-        {
+        if (!isset($matchResource) && $this->eadUrl && $this->rootObject === $resource) {
           $criteria = new Criteria();
           $criteria->add(QubitKeymap::SOURCE_ID, $this->eadUrl);
           $criteria->add(QubitKeymap::SOURCE_NAME, $this->sourceName);
           $criteria->add(QubitKeymap::TARGET_NAME, 'information_object');
 
-          if (null !== $keymap = QubitKeymap::getOne($criteria))
-          {
+          if (null !== $keymap = QubitKeymap::getOne($criteria)) {
             $matchResource = QubitInformationObject::getById($keymap->targetId);
           }
         }
@@ -1211,8 +1053,7 @@ class QubitXmlImport
 
         $matchId = QubitPdo::fetchColumn($query, [$resource->authorizedFormOfName]);
 
-        if ($matchId)
-        {
+        if ($matchId) {
           $matchResource = QubitActor::getById($matchId);
         }
 
@@ -1226,34 +1067,29 @@ class QubitXmlImport
     }
 
     // No need to check match if we're not updating nor skipping matches
-    if (!$this->options['update'] && !$this->options['skip-matched'])
-    {
+    if (!$this->options['update'] && !$this->options['skip-matched']) {
       $this->errors[] = $this->i18n->__('Creating a new record: %title%', ['%title%' => $title]);
 
       return true;
     }
 
     // Match found, but not updating and skipping matches
-    if (isset($matchResource) && !$this->options['update'] && $this->options['skip-matched'])
-    {
+    if (isset($matchResource) && !$this->options['update'] && $this->options['skip-matched']) {
       $this->errors[] = $this->i18n->__('Found duplicated record for %title%, skipping', ['%title%' => $title]);
 
       return false;
     }
 
     // No match found and updating with skip unmatched
-    if (!isset($matchResource) && $this->options['update'] && $this->options['skip-unmatched'])
-    {
+    if (!isset($matchResource) && $this->options['update'] && $this->options['skip-unmatched']) {
       $this->errors[] = $this->i18n->__('No match found for %title%, skipping', ['%title%' => $title]);
 
       return false;
     }
 
     // Match found and updating, check limit option
-    if (isset($matchResource) && $this->options['update'])
-    {
-      if (!call_user_func([$this, $passesLimitFunctionName], $matchResource))
-      {
+    if (isset($matchResource) && $this->options['update']) {
+      if (!call_user_func([$this, $passesLimitFunctionName], $matchResource)) {
         $this->errors[] = $this->i18n->__('Match found for %title% outside the limit, skipping', ['%title%' => $title]);
 
         return false;
@@ -1285,13 +1121,11 @@ class QubitXmlImport
    */
   private function passesLimitOptionForIo($io)
   {
-    if (false === $limit = $this->getLimitIdAndClassName())
-    {
+    if (false === $limit = $this->getLimitIdAndClassName()) {
       return true;
     }
 
-    switch ($limit->class_name)
-    {
+    switch ($limit->class_name) {
       case 'QubitRepository':
         $repo = $io->getRepository(['inherit' => true]);
 
@@ -1320,13 +1154,11 @@ class QubitXmlImport
    */
   private function passesLimitOptionForActor($actor)
   {
-    if (false === $limit = $this->getLimitIdAndClassName())
-    {
+    if (false === $limit = $this->getLimitIdAndClassName()) {
       return true;
     }
 
-    switch ($limit->class_name)
-    {
+    switch ($limit->class_name) {
       case 'QubitRepository':
         $repo = $actor->getMaintainingRepository();
 
@@ -1345,8 +1177,7 @@ class QubitXmlImport
    */
   private function getLimitIdAndClassName()
   {
-    if (empty($this->options['limit']))
-    {
+    if (empty($this->options['limit'])) {
       return false;
     }
 
@@ -1364,8 +1195,7 @@ class QubitXmlImport
    */
   private function saveEadUrl(&$currentObject)
   {
-    if ($this->eadUrl)
-    {
+    if ($this->eadUrl) {
       $keymap = new QubitKeymap();
       $keymap->sourceId = $this->eadUrl;
       $keymap->sourceName = $this->sourceName;
@@ -1380,8 +1210,7 @@ class QubitXmlImport
    */
   private function validateOptions()
   {
-    if ($this->options['update'] && 'delete-and-replace' !== $this->options['update'])
-    {
+    if ($this->options['update'] && 'delete-and-replace' !== $this->options['update']) {
       throw new sfException($this->i18n->__('EAD import currently only supports %mode% update mode.', ['%mode%' => '"delete-and-replace"']));
     }
   }

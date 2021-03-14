@@ -21,8 +21,7 @@ class MenuUserMenuComponent extends sfComponent
 {
   public function execute($request)
   {
-    if (sfConfig::get('app_read_only', false))
-    {
+    if (sfConfig::get('app_read_only', false)) {
       return sfView::NONE;
     }
 
@@ -42,8 +41,7 @@ class MenuUserMenuComponent extends sfComponent
     $this->form->setWidget('password', new sfWidgetFormInputPassword());
 
     $this->showLogin = false;
-    if ($this->context->user->isAuthenticated())
-    {
+    if ($this->context->user->isAuthenticated()) {
       $this->gravatar = sprintf('https://www.gravatar.com/avatar/%s?s=%s',
         md5(strtolower(trim($this->context->user->user->email))),
         25,
@@ -53,9 +51,7 @@ class MenuUserMenuComponent extends sfComponent
         'logout' => $this->getMenuLabel('logout'),
         'myProfile' => $this->getMenuLabel('myProfile'),
       ];
-    }
-    elseif (check_field_visibility('app_element_visibility_global_login_button'))
-    {
+    } elseif (check_field_visibility('app_element_visibility_global_login_button')) {
       $this->showLogin = true;
       $this->menuLabels = ['login' => $this->getMenuLabel('login')];
     }
@@ -63,13 +59,11 @@ class MenuUserMenuComponent extends sfComponent
 
   protected function getMenuLabel($name)
   {
-    if (null !== $menu = QubitMenu::getByName($name))
-    {
+    if (null !== $menu = QubitMenu::getByName($name)) {
       return $menu->getLabel(['cultureFallback' => true]);
     }
 
-    switch($name)
-    {
+    switch ($name) {
       case 'login':
         return $this->context->getI18n()->__('Log in');
 

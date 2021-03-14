@@ -61,10 +61,8 @@ class arActorExportJob extends arExportJob
     $search = self::findExportRecords($this->params);
 
     // Scroll through results then iterate through resulting IDs
-    foreach (arElasticSearchPluginUtil::getScrolledSearchResultIdentifiers($search) as $id)
-    {
-      if (null === $resource = QubitActor::getById($id))
-      {
+    foreach (arElasticSearchPluginUtil::getScrolledSearchResultIdentifiers($search) as $id) {
+      if (null === $resource = QubitActor::getById($id)) {
         $this->error($this->i18n->__(
           'Cannot fetch actor, id: %1', ['%1' => $id]
         ));

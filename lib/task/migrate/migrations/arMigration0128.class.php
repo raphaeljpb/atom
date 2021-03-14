@@ -32,10 +32,8 @@ class arMigration0128
   public function up($configuration)
   {
     $settingNames = ['toggleIoSlider', 'toggleLanguageMenu'];
-    foreach ($settingNames as $name)
-    {
-      if (null === QubitSetting::getByName($name))
-      {
+    foreach ($settingNames as $name) {
+      if (null === QubitSetting::getByName($name)) {
         $setting = new QubitSetting();
         $setting->name = $name;
         $setting->value = 1;

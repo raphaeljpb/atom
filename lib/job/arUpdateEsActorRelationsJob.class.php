@@ -29,8 +29,7 @@ class arUpdateEsActorRelationsJob extends arBaseJob
 
   public function runJob($parameters)
   {
-    if (empty($parameters['actorIds']))
-    {
+    if (empty($parameters['actorIds'])) {
       $this->error($this->i18n->__('Called arUpdateEsActorRelationsJob without specifying what needs to be updated.'));
 
       return false;
@@ -42,10 +41,8 @@ class arUpdateEsActorRelationsJob extends arBaseJob
     $this->info($message);
 
     $count = 0;
-    foreach ($parameters['actorIds'] as $id)
-    {
-      if (null === $object = QubitActor::getById($id))
-      {
+    foreach ($parameters['actorIds'] as $id) {
+      if (null === $object = QubitActor::getById($id)) {
         $this->info($this->i18n->__('Invalid actor id: %1', ['%1' => $id]));
 
         continue;
@@ -61,15 +58,13 @@ class arUpdateEsActorRelationsJob extends arBaseJob
       Qubit::clearClassCaches();
 
       // Status update every 100 descriptions
-      if (0 == $count % 100)
-      {
+      if (0 == $count % 100) {
         $this->info($message);
       }
     }
 
     // Final status update, if total count is not a multiple of 100
-    if (0 != $count % 100)
-    {
+    if (0 != $count % 100) {
       $this->info($message);
     }
 
@@ -90,15 +85,12 @@ class arUpdateEsActorRelationsJob extends arBaseJob
 
   public static function previousRelationActorIds($actorId)
   {
-    try
-    {
+    try {
       // Get actor's previously indexed relations from Elasticsearch
       $doc = QubitSearch::getInstance()->index->getType('QubitActor')->getDocument($actorId);
 
       return self::uniqueIdsFromRelationData($doc->getData()['actorRelations']);
-    }
-    catch (\Elastica\Exception\NotFoundException $e)
-    {
+    } catch (\Elastica\Exception\NotFoundException $e) {
       return [];
     }
   }
@@ -116,8 +108,7 @@ class arUpdateEsActorRelationsJob extends arBaseJob
     // Parse out unique actor IDs
     $actors = [];
 
-    foreach ($relationData as $relation)
-    {
+    foreach ($relationData as $relation) {
       $actors[] = $relation['objectId'];
       $actors[] = $relation['subjectId'];
     }

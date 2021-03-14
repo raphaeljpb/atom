@@ -38,8 +38,7 @@ class arMigration0147
    */
   public function up($configuration)
   {
-    if (null === QubitSetting::getByName('generate_reports_as_pub_user'))
-    {
+    if (null === QubitSetting::getByName('generate_reports_as_pub_user')) {
       $setting = new QubitSetting();
       $setting->setName('generate_reports_as_pub_user');
       $setting->setValue(1);

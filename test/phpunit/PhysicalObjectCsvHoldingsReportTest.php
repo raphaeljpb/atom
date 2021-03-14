@@ -143,8 +143,7 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
   {
     $report = new QubitPhysicalObjectCsvHoldingsReport();
 
-    foreach (QubitPhysicalObjectCsvHoldingsReport::$defaultTypeMap as $description => $className)
-    {
+    foreach (QubitPhysicalObjectCsvHoldingsReport::$defaultTypeMap as $description => $className) {
       $report->setOption('holdingType', $className);
       $this->assertSame($className, $report->getOption('holdingType'));
     }

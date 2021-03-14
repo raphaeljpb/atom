@@ -27,8 +27,7 @@ class InformationObjectSlugPreviewAction extends sfAction
 
     // Return 401 if unauthorized
     if (!sfContext::getInstance()->user->isAuthenticated()
-      || !QubitAcl::check($this->resource, 'read'))
-    {
+      || !QubitAcl::check($this->resource, 'read')) {
       $this->response->setStatusCode(401);
 
       return sfView::NONE;
@@ -51,8 +50,7 @@ class InformationObjectSlugPreviewAction extends sfAction
   {
     $originalText = $text;
 
-    do
-    {
+    do {
       $slugText = QubitSlug::slugify($text);
 
       $criteria = new Criteria();
@@ -63,8 +61,7 @@ class InformationObjectSlugPreviewAction extends sfAction
       $text = $originalText.'-'.$counter;
 
       $slug = QubitSlug::getOne($criteria);
-    }
-    while ((null != $slug) && ($slug->objectId != $resourceId));
+    } while ((null != $slug) && ($slug->objectId != $resourceId));
 
     return $slugText;
   }

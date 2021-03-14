@@ -28,31 +28,25 @@ class ObjectImportSelectAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->doBackgroundImport($request);
 
         $this->setTemplate('importResults');
       }
-    }
-    else
-    {
+    } else {
       $this->response->addJavaScript('checkReposFilter', 'last');
 
       // Check parameter
-      if (isset($request->type))
-      {
+      if (isset($request->type)) {
         $this->type = $request->type;
       }
 
-      switch ($this->type)
-      {
+      switch ($this->type) {
         case 'csv':
           $this->title = $this->context->i18n->__('Import CSV');
 
@@ -75,8 +69,7 @@ class ObjectImportSelectAction extends DefaultEditAction
   {
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
 
       $this->form->setDefault('parent', $this->context->routing->generate(null, [$this->resource]));
@@ -87,8 +80,7 @@ class ObjectImportSelectAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'repos':
         // Get list of repositories
         $criteria = new Criteria();
@@ -100,16 +92,12 @@ class ObjectImportSelectAction extends DefaultEditAction
         $cache = QubitCache::getInstance();
         $cacheKey = 'file-import:list-of-repositories:'.$this->context->user->getCulture();
 
-        if ($cache->has($cacheKey))
-        {
+        if ($cache->has($cacheKey)) {
           $choices = $cache->get($cacheKey);
-        }
-        else
-        {
+        } else {
           $choices = [];
           $choices[null] = null;
-          foreach (QubitRepository::get($criteria) as $repository)
-          {
+          foreach (QubitRepository::get($criteria) as $repository) {
             $choices[$repository->slug] = $repository->__toString();
           }
           $cache->set($cacheKey, $choices, 3600);
@@ -124,8 +112,7 @@ class ObjectImportSelectAction extends DefaultEditAction
         $choices = [];
 
         if (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection'])
-          && null !== $collection = QubitInformationObject::getById($this->getParameters['collection']))
-        {
+          && null !== $collection = QubitInformationObject::getById($this->getParameters['collection'])) {
           sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
           $collectionUrl = url_for($collection);
           $this->form->setDefault($name, $collectionUrl);
@@ -143,8 +130,7 @@ class ObjectImportSelectAction extends DefaultEditAction
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'repos':
         $this->repositorySlug = $this->request->getPostParameter('repos');
 
@@ -152,8 +138,7 @@ class ObjectImportSelectAction extends DefaultEditAction
 
       case 'collection':
         $url = $this->request->getPostParameter('collection');
-        if (!empty($url))
-        {
+        if (!empty($url)) {
           $parts = explode('/', $url);
           $this->collectionSlug = end($parts);
         }
@@ -175,37 +160,29 @@ class ObjectImportSelectAction extends DefaultEditAction
     $importType = $request->getParameter('importType', 'xml');
 
     // We will use this later to redirect users back to the importSelect page
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $importSelectRoute = [$this->getRoute()->resource, 'module' => 'object', 'action' => 'importSelect', 'type' => $importType];
-    }
-    else
-    {
+    } else {
       $importSelectRoute = ['module' => 'object', 'action' => 'importSelect', 'type' => $importType];
     }
 
     // Move uploaded file to new location to pass off to background arFileImportJob.
-    try
-    {
+    try {
       $file = Qubit::moveUploadFile($file);
-    }
-    catch (sfException $e)
-    {
+    } catch (sfException $e) {
       $this->getUser()->setFlash('error', $e->getMessage());
       $this->redirect($importSelectRoute);
     }
 
     // Redirect user if they are attempting to upload an invalid CSV file
-    if ('csv' == $importType && !$this->checkForValidCsvFile($request, $file['tmp_name']))
-    {
+    if ('csv' == $importType && !$this->checkForValidCsvFile($request, $file['tmp_name'])) {
       $errorMessage = $this->context->i18n->__('Not a CSV file (or CSV columns not recognized).');
       $this->context->user->setFlash('error', $errorMessage);
       $this->redirect($importSelectRoute);
     }
 
     // if we got here without a file upload, go to file selection
-    if (0 == count($file) || empty($file['tmp_name']))
-    {
+    if (0 == count($file) || empty($file['tmp_name'])) {
       $this->redirect($importSelectRoute);
     }
 
@@ -224,8 +201,7 @@ class ObjectImportSelectAction extends DefaultEditAction
       'collectionSlug' => $this->collectionSlug,
       'file' => $file, ];
 
-    try
-    {
+    try {
       $job = QubitJob::runJob('arFileImportJob', $options);
 
       $this->getUser()->setFlash('notice', $this->context->i18n->__('Import file initiated. Check %1%job %2%%3% to view the status of the import.', [
@@ -233,9 +209,7 @@ class ObjectImportSelectAction extends DefaultEditAction
         '%2%' => $job->id,
         '%3%' => '</a>',
       ]), ['persist' => false]);
-    }
-    catch (sfException $e)
-    {
+    } catch (sfException $e) {
       $this->context->user->setFlash('error', $e->getMessage());
       $this->redirect($importSelectRoute);
     }
@@ -268,10 +242,8 @@ class ObjectImportSelectAction extends DefaultEditAction
     $firstCsvRow = fgetcsv($fh, 60000);
 
     // Count valid columns found
-    foreach ($firstCsvRow as $column)
-    {
-      if (in_array($column, $exportTypeConfig['columnNames']))
-      {
+    foreach ($firstCsvRow as $column) {
+      if (in_array($column, $exportTypeConfig['columnNames'])) {
         ++$validColumnCount;
       }
     }

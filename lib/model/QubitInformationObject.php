@@ -31,9 +31,9 @@ class QubitInformationObject extends BaseInformationObject
   public const ROOT_ID = 1;
 
   // Allow per-object disabling of nested set updating during bulk imports
-    public $disableNestedSetUpdating = false;
+  public $disableNestedSetUpdating = false;
   // Flag for updating search index on save
-    public $indexOnSave = true;
+  public $indexOnSave = true;
 
   /**
    * When cast as a string, return i18n-ized object title with fallback to
@@ -44,8 +44,7 @@ class QubitInformationObject extends BaseInformationObject
   public function __toString()
   {
     $string = $this->title;
-    if (!isset($string))
-    {
+    if (!isset($string)) {
       $string = $this->getTitle(['sourceCulture' => true]);
     }
 
@@ -57,13 +56,11 @@ class QubitInformationObject extends BaseInformationObject
     $args = func_get_args();
 
     $options = [];
-    if (1 < count($args))
-    {
+    if (1 < count($args)) {
       $options = $args[1];
     }
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'formatName':
       case 'formatVersion':
       case 'formatRegistryKey':
@@ -78,20 +75,17 @@ class QubitInformationObject extends BaseInformationObject
       case 'preservationCopyFileName':
       case 'preservationCopyFileSize':
       case 'preservationCopyNormalizedAt':
-        if (!isset($this->values[$name]))
-        {
+        if (!isset($this->values[$name])) {
           $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
-          if (1 == count($query = QubitProperty::get($criteria)))
-          {
+          if (1 == count($query = QubitProperty::get($criteria))) {
             $this->values[$name] = $query[0];
           }
         }
 
-        if (isset($this->values[$name]))
-        {
+        if (isset($this->values[$name])) {
           return $this->values[$name];
         }
 
@@ -101,28 +95,24 @@ class QubitInformationObject extends BaseInformationObject
       case 'languageOfDescription':
       case 'script':
       case 'scriptOfDescription':
-        if (!isset($this->values[$name]))
-        {
+        if (!isset($this->values[$name])) {
           $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
-          if (1 == count($query = QubitProperty::get($criteria)))
-          {
+          if (1 == count($query = QubitProperty::get($criteria))) {
             $this->values[$name] = $query[0];
           }
         }
 
-        if (isset($this->values[$name]) && null !== $value = unserialize($this->values[$name]->__get('value', $options + ['sourceCulture' => true])))
-        {
+        if (isset($this->values[$name]) && null !== $value = unserialize($this->values[$name]->__get('value', $options + ['sourceCulture' => true]))) {
           return $value;
         }
 
         return [];
 
       case 'referenceCode':
-        if (sfConfig::get('app_inherit_code_informationobject'))
-        {
+        if (sfConfig::get('app_inherit_code_informationobject')) {
           return $this->getInheritedReferenceCode();
         }
 
@@ -130,16 +120,13 @@ class QubitInformationObject extends BaseInformationObject
       // It may happen that the sourceStandard column is undefined, in that case
       // look up for the value in higher levels
       case 'sourceStandard':
-        foreach ($this->ancestors->andSelf()->orderBy('rgt') as $item)
-        {
-          if (isset($item->sourceStandard))
-          {
+        foreach ($this->ancestors->andSelf()->orderBy('rgt') as $item) {
+          if (isset($item->sourceStandard)) {
             return call_user_func_array([$item, 'QubitObject::__get'], $args);
           }
 
           // Stop iteration before the root object is reached
-          if (QubitInformationObject::ROOT_ID == $item->parentId)
-          {
+          if (QubitInformationObject::ROOT_ID == $item->parentId) {
             break;
           }
         }
@@ -156,29 +143,23 @@ class QubitInformationObject extends BaseInformationObject
     $args = func_get_args();
 
     $options = [];
-    if (2 < count($args))
-    {
+    if (2 < count($args)) {
       $options = $args[2];
     }
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'language':
       case 'languageOfDescription':
       case 'script':
       case 'scriptOfDescription':
-        if (!isset($this->values[$name]))
-        {
+        if (!isset($this->values[$name])) {
           $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
-          if (1 == count($query = QubitProperty::get($criteria)))
-          {
+          if (1 == count($query = QubitProperty::get($criteria))) {
             $this->values[$name] = $query[0];
-          }
-          else
-          {
+          } else {
             $this->values[$name] = new QubitProperty();
             $this->values[$name]->name = $name;
             $this->propertys[] = $this->values[$name];
@@ -204,8 +185,7 @@ class QubitInformationObject extends BaseInformationObject
     parent::save($connection);
 
     // Log creation/modification
-    if (QubitInformationObject::ROOT_ID != $this->id && sfConfig::get('app_audit_log_enabled', false))
-    {
+    if (QubitInformationObject::ROOT_ID != $this->id && sfConfig::get('app_audit_log_enabled', false)) {
       $log = new QubitAuditLog();
       $log->objectId = $this->id;
       $currentUser = sfContext::getInstance()->getUser();
@@ -216,8 +196,7 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // Save child information objects
-    foreach ($this->informationObjectsRelatedByparentId->transient as $item)
-    {
+    foreach ($this->informationObjectsRelatedByparentId->transient as $item) {
       // TODO Needed if $this is new, should be transparent.
       // Do not add them to the search index on creation as
       // they will be added when $this is updated as part of
@@ -229,8 +208,7 @@ class QubitInformationObject extends BaseInformationObject
 
     // Save updated related events (update search index after updating all
     // related objects that are included in the index document)
-    foreach ($this->eventsRelatedByobjectId as $item)
-    {
+    foreach ($this->eventsRelatedByobjectId as $item) {
       $item->indexOnSave = false;
 
       // TODO Needed if $this is new, should be transparent
@@ -240,8 +218,7 @@ class QubitInformationObject extends BaseInformationObject
 
     // Save new digital objects
     // TODO Allow adding additional digital objects as derivatives
-    foreach ($this->digitalObjectsRelatedByobjectId as $item)
-    {
+    foreach ($this->digitalObjectsRelatedByobjectId as $item) {
       $item->indexOnSave = false;
 
       // TODO Needed if $this is new, should be transparent
@@ -252,8 +229,7 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // Save new premis objects
-    foreach ($this->premisObjects as $item)
-    {
+    foreach ($this->premisObjects as $item) {
       // TODO Needed if $this is new, should be transparent
       $item->informationObject = $this;
       $item->save($connection);
@@ -263,10 +239,8 @@ class QubitInformationObject extends BaseInformationObject
 
     // Save updated Status
     $hasPubStatus = false;
-    foreach ($this->statuss as $item)
-    {
-      if (QubitTerm::STATUS_TYPE_PUBLICATION_ID == $item->typeId)
-      {
+    foreach ($this->statuss as $item) {
+      if (QubitTerm::STATUS_TYPE_PUBLICATION_ID == $item->typeId) {
         $hasPubStatus = true;
       }
 
@@ -279,8 +253,7 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // Force a publication status
-    if (QubitInformationObject::ROOT_ID != $this->id && !$hasPubStatus)
-    {
+    if (QubitInformationObject::ROOT_ID != $this->id && !$hasPubStatus) {
       $status = new QubitStatus();
       $status->objectId = $this->id;
       $status->typeId = QubitTerm::STATUS_TYPE_PUBLICATION_ID;
@@ -294,22 +267,18 @@ class QubitInformationObject extends BaseInformationObject
     // Add a placeholder lft value incrementing the max lft value from
     // the resource's siblings. This placeholder will overlap with the
     // parent's rgt value until the nested set is rebuilt.
-    if ($this->disableNestedSetUpdating && !isset($this->lft))
-    {
-      if (!isset($connection))
-      {
+    if ($this->disableNestedSetUpdating && !isset($this->lft)) {
+      if (!isset($connection)) {
         $connection = Propel::getConnection();
       }
 
       $connection->beginTransaction();
 
-      try
-      {
+      try {
         $sql = 'SELECT MAX('.QubitInformationObject::LFT.')';
         $sql .= ' FROM '.QubitInformationObject::TABLE_NAME;
 
-        if (isset($this->parentId))
-        {
+        if (isset($this->parentId)) {
           $sql .= ' WHERE '.QubitInformationObject::PARENT_ID;
           $sql .= ' = '.$this->parentId;
         }
@@ -325,17 +294,14 @@ class QubitInformationObject extends BaseInformationObject
         $connection->exec($sql);
 
         $connection->commit();
-      }
-      catch (Exception $e)
-      {
+      } catch (Exception $e) {
         $connection->rollBack();
 
         throw $e;
       }
     }
 
-    if ($this->indexOnSave)
-    {
+    if ($this->indexOnSave) {
       QubitSearch::getInstance()->update($this, ['updateDescendants' => true]);
     }
 
@@ -355,23 +321,20 @@ class QubitInformationObject extends BaseInformationObject
   public function delete($connection = null)
   {
     // Delete related digitalObjects
-    foreach ($this->digitalObjectsRelatedByobjectId as $digitalObject)
-    {
+    foreach ($this->digitalObjectsRelatedByobjectId as $digitalObject) {
       // Set IO to null to avoid ES document update
       $digitalObject->objectId = null;
       $digitalObject->delete();
     }
 
     // Delete related premisObjects
-    foreach ($this->premisObjects as $premisObject)
-    {
+    foreach ($this->premisObjects as $premisObject) {
       $premisObject->delete();
     }
 
     // Physical object relations
     $relations = QubitRelation::getRelationsByObjectId($this->id, ['typeId' => QubitTerm::HAS_PHYSICAL_OBJECT_ID]);
-    foreach ($relations as $item)
-    {
+    foreach ($relations as $item) {
       $item->indexObjectOnDelete = false;
       $item->delete();
     }
@@ -379,10 +342,8 @@ class QubitInformationObject extends BaseInformationObject
     // Delete subject relations
     $criteria = new Criteria();
     $criteria = $this->addrelationsRelatedBysubjectIdCriteria($criteria);
-    if ($subjectRelations = QubitRelation::get($criteria))
-    {
-      foreach ($subjectRelations as $item)
-      {
+    if ($subjectRelations = QubitRelation::get($criteria)) {
+      foreach ($subjectRelations as $item) {
         $item->indexSubjectOnDelete = false;
         $item->delete();
       }
@@ -391,10 +352,8 @@ class QubitInformationObject extends BaseInformationObject
     // Delete object relations
     $criteria = new Criteria();
     $criteria = $this->addrelationsRelatedByobjectIdCriteria($criteria);
-    if ($objectRelations = QubitRelation::get($criteria))
-    {
-      foreach ($objectRelations as $item)
-      {
+    if ($objectRelations = QubitRelation::get($criteria)) {
+      foreach ($objectRelations as $item) {
         $item->indexObjectOnDelete = false;
         $item->delete();
       }
@@ -404,8 +363,7 @@ class QubitInformationObject extends BaseInformationObject
     $this->removeKeymapEntries();
 
     // Delete finding aid
-    if (null !== $path = arFindingAidJob::getFindingAidPathForDownload($this->id))
-    {
+    if (null !== $path = arFindingAidJob::getFindingAidPathForDownload($this->id)) {
       unlink($path);
     }
 
@@ -426,8 +384,7 @@ class QubitInformationObject extends BaseInformationObject
     $criteria->add(QubitKeymap::TARGET_ID, $this->id);
     $criteria->add(QubitKeymap::TARGET_NAME, 'information_object');
 
-    if (null !== $keymaps = QubitKeymap::get($criteria))
-    {
+    if (null !== $keymaps = QubitKeymap::get($criteria)) {
       return $keymaps;
     }
   }
@@ -461,35 +418,29 @@ class QubitInformationObject extends BaseInformationObject
     $criteria->add(QubitStatus::STATUS_ID, QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID);
     $criteria->addJoin(QubitInformationObject::ID, QubitObject::ID);
 
-    if (!empty($options['from']))
-    {
+    if (!empty($options['from'])) {
       $criteria->add(QubitObject::UPDATED_AT, $options['from'], Criteria::GREATER_EQUAL);
     }
 
-    if (!empty($options['until']))
-    {
+    if (!empty($options['until'])) {
       $criteria->addAnd(QubitObject::UPDATED_AT, $options['until'], Criteria::LESS_EQUAL);
     }
 
-    if (!empty($options['set']))
-    {
+    if (!empty($options['set'])) {
       $options['set']->apply($criteria);
     }
 
-    if (!empty($options['topLevel']))
-    {
+    if (!empty($options['topLevel'])) {
       $criteria->add(QubitInformationObject::PARENT_ID, QubitInformationObject::ROOT_ID);
     }
 
     $criteria->addAscendingOrderByColumn(QubitObject::UPDATED_AT);
 
-    if (empty($options['offset']))
-    {
+    if (empty($options['offset'])) {
       $options['offset'] = 0;
     }
 
-    if (empty($options['limit']))
-    {
+    if (empty($options['limit'])) {
       $options['limit'] = 10;
     }
 
@@ -531,8 +482,7 @@ class QubitInformationObject extends BaseInformationObject
 
   public function getRepositoryCountry()
   {
-    if ($this->getRepositoryId())
-    {
+    if ($this->getRepositoryId()) {
       return $this->getRepository()->getCountry();
     }
 
@@ -551,15 +501,11 @@ class QubitInformationObject extends BaseInformationObject
     $repositoryId = parent::offsetGet('repositoryId', $options);
     $repository = QubitRepository::getById($repositoryId);
 
-    if (isset($options['inherit']) && false !== $options['inherit'])
-    {
-      if (null === $repository)
-      {
+    if (isset($options['inherit']) && false !== $options['inherit']) {
+      if (null === $repository) {
         // Ascend up object hierarchy until a related repository is found
-        foreach ($this->getAncestors() as $ancestor)
-        {
-          if (null !== $repository = $ancestor->getRepository())
-          {
+        foreach ($this->getAncestors() as $ancestor) {
+          if (null !== $repository = $ancestor->getRepository()) {
             break;
           }
         }
@@ -582,23 +528,19 @@ class QubitInformationObject extends BaseInformationObject
   public function canInheritRepository($repositoryId)
   {
     // Inheriting from no repository doesn't make sense, return false.
-    if (!$repositoryId)
-    {
+    if (!$repositoryId) {
       return false;
     }
 
     $inheritedRepoId = null;
 
     // Find out which repository we'd inherit if any.
-    foreach ($this->getAncestors() as $ancestor)
-    {
-      if (QubitInformationObject::ROOT_ID == $ancestor->id)
-      {
+    foreach ($this->getAncestors() as $ancestor) {
+      if (QubitInformationObject::ROOT_ID == $ancestor->id) {
         continue;
       }
 
-      if (isset($ancestor->repositoryId))
-      {
+      if (isset($ancestor->repositoryId)) {
         $inheritedRepoId = $ancestor->repositoryId;
 
         break;
@@ -614,39 +556,32 @@ class QubitInformationObject extends BaseInformationObject
   public function updateXmlExports()
   {
     // Don't update unless caching-on-update is enabled
-    if (empty(sfConfig::get('app_cache_xml_on_save')))
-    {
+    if (empty(sfConfig::get('app_cache_xml_on_save'))) {
       return;
     }
 
     // Create EAD XML exports if the description and/or top-level parent is published... otherwise delete any that may exist
-    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->getCollectionRoot()->getPublicationStatus()->statusId)
-    {
+    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->getCollectionRoot()->getPublicationStatus()->statusId) {
       // Export top-level parent as EAD
       $params = [
         'objectId' => $this->getCollectionRoot()->id,
         'format' => 'ead',
       ];
       QubitJob::runJob('arXmlExportSingleFileJob', $params);
-    }
-    else
-    {
+    } else {
       unlink($this->pathToEadExport());
       unlink($this->pathToEadExport(true));
     }
 
     // Create DC XML exports if the description's published... otherwise delete any that may exist
-    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->getPublicationStatus()->statusId)
-    {
+    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->getPublicationStatus()->statusId) {
       // Export as DC
       $params = [
         'objectId' => $this->id,
         'format' => 'dc',
       ];
       QubitJob::runJob('arXmlExportSingleFileJob', $params);
-    }
-    else
-    {
+    } else {
       unlink($this->pathToDcExport());
       unlink($this->pathToDcExport(true));
     }
@@ -659,8 +594,7 @@ class QubitInformationObject extends BaseInformationObject
    */
   public function urlForEadExport()
   {
-    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->getPublicationStatus()->statusId && file_exists($this->pathToEadExport()))
-    {
+    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->getPublicationStatus()->statusId && file_exists($this->pathToEadExport())) {
       return sfConfig::get('app_siteBaseUrl').'/'.$this->pathToEadExport();
     }
 
@@ -689,8 +623,7 @@ class QubitInformationObject extends BaseInformationObject
    */
   public function urlForDcExport()
   {
-    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->getPublicationStatus()->statusId && file_exists($this->pathToDcExport()))
-    {
+    if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->getPublicationStatus()->statusId && file_exists($this->pathToDcExport())) {
       return sfConfig::get('app_siteBaseUrl').'/'.$this->pathToDcExport();
     }
 
@@ -726,8 +659,7 @@ class QubitInformationObject extends BaseInformationObject
 
     $sortBy = (isset($options['sortBy'])) ? $options['sortBy'] : 'lft';
 
-    switch ($sortBy)
-    {
+    switch ($sortBy) {
       case 'identifierTitle':
         $c = QubitCultureFallback::addFallbackCriteria($c, 'QubitInformationObject');
         $c->addAscendingOrderByColumn('identifier');
@@ -766,18 +698,15 @@ class QubitInformationObject extends BaseInformationObject
     $criteria->add(QubitInformationObject::RGT, QubitInformationObject::RGT.' > ('.QubitInformationObject::LFT.' + 1)', Criteria::CUSTOM);
     $criteria->add(QubitInformationObject::PARENT_ID, QubitInformationObject::ROOT_ID);
 
-    if (isset($options['filterDrafts']) && $options['filterDrafts'])
-    {
+    if (isset($options['filterDrafts']) && $options['filterDrafts']) {
       $criteria = QubitAcl::addFilterDraftsCriteria($criteria);
     }
 
-    if (empty($options['offset']))
-    {
+    if (empty($options['offset'])) {
       $options['offset'] = 0;
     }
 
-    if (empty($options['limit']))
-    {
+    if (empty($options['limit'])) {
       $options['limit'] = 10;
     }
 
@@ -808,8 +737,7 @@ class QubitInformationObject extends BaseInformationObject
     $criteria->add(QubitProperty::NAME, 'findingAidStatus');
     $property = QubitProperty::getOne($criteria);
 
-    if (!isset($property))
-    {
+    if (!isset($property)) {
       return;
     }
 
@@ -839,29 +767,24 @@ class QubitInformationObject extends BaseInformationObject
     $levels = isset($options['levels']) ? $options['levels'] : [];
     $numLevels = count($levels);
 
-    foreach ($this->getChildren()->orderBy('lft') as $child)
-    {
+    foreach ($this->getChildren()->orderBy('lft') as $child) {
       $addCondition = true;
 
       // If we're not in a CLI enviroment, check ACL
-      if ('cli' != sfContext::getInstance()->getConfiguration()->getEnvironment())
-      {
+      if ('cli' != sfContext::getInstance()->getConfiguration()->getEnvironment()) {
         $addCondition = QubitAcl::check($child, 'read');
       }
       // Otherwise, if public option is set to true, check drafts directly
-      if (isset($options['public']) && $options['public'])
-      {
+      if (isset($options['public']) && $options['public']) {
         // If $addCondition is already false, it should stay false.
         $addCondition = $addCondition && QubitTerm::PUBLICATION_STATUS_DRAFT_ID != $child->getPublicationStatus()->statusId;
       }
       // If 'levels' option is set, and $child LOD is not in $levels array, return and do not add more descendants.
-      if (0 < $numLevels)
-      {
+      if (0 < $numLevels) {
         $addCondition = $addCondition && array_key_exists($child->levelOfDescriptionId, $levels);
       }
 
-      if ($addCondition)
-      {
+      if ($addCondition) {
         $descendants[] = $child;
         $descendants = array_merge($descendants, $child->getDescendantsForExport($options));
       }
@@ -894,13 +817,11 @@ class QubitInformationObject extends BaseInformationObject
     $criteria->addJoin(QubitActor::ID, QubitEvent::ACTOR_ID);
     $criteria->add(QubitEvent::OBJECT_ID, $this->id);
 
-    if (isset($options['eventTypeId']))
-    {
+    if (isset($options['eventTypeId'])) {
       $criteria->add(QubitEvent::TYPE_ID, $options['eventTypeId']);
     }
 
-    if (isset($options['cultureFallback']) && true === $options['cultureFallback'])
-    {
+    if (isset($options['cultureFallback']) && true === $options['cultureFallback']) {
       $criteria->addAscendingOrderByColumn('authorized_form_of_name');
       $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor', $options);
     }
@@ -908,15 +829,11 @@ class QubitInformationObject extends BaseInformationObject
     $actors = QubitActor::get($criteria);
 
     // allow inheriting actors from ancestors
-    if (isset($options['inherit']) && false !== $options['inherit'])
-    {
-      if (0 === count($actors))
-      {
+    if (isset($options['inherit']) && false !== $options['inherit']) {
+      if (0 === count($actors)) {
         // Ascend up object hierarchy until an actor is found
-        foreach ($this->getAncestors() as $ancestor)
-        {
-          if (0 !== count($actors = $ancestor->getActors($options)))
-          {
+        foreach ($this->getAncestors() as $ancestor) {
+          if (0 !== count($actors = $ancestor->getActors($options))) {
             break;
           }
         }
@@ -946,8 +863,7 @@ class QubitInformationObject extends BaseInformationObject
     $criteria = new Criteria();
     $criteria->add(QubitEvent::OBJECT_ID, $this->id);
     $criteria->add(QubitEvent::ACTOR_ID, null, Criteria::ISNOTNULL);
-    if (isset($options['eventTypeId']))
-    {
+    if (isset($options['eventTypeId'])) {
       $criteria->add(QubitEvent::TYPE_ID, $options['eventTypeId']);
     }
     $criteria->addDescendingOrderByColumn(QubitEvent::START_DATE);
@@ -983,8 +899,7 @@ class QubitInformationObject extends BaseInformationObject
       ->addOr($criteria->getNewCriterion(QubitEvent::START_DATE, null, Criteria::ISNOTNULL))
       ->addOr($criteria->getNewCriterion(QubitEventI18n::DATE, null, Criteria::ISNOTNULL)));
 
-    if (isset($options['type_id']))
-    {
+    if (isset($options['type_id'])) {
       $criteria->add(QubitEvent::TYPE_ID, $options['type_id']);
     }
 
@@ -1040,8 +955,7 @@ class QubitInformationObject extends BaseInformationObject
   public function addTermRelation($termId, $options = [])
   {
     // Don't add a term relation to this information object that already exists.
-    if (null === $this->getTermRelation($termId))
-    {
+    if (null === $this->getTermRelation($termId)) {
       $newTermRelation = new QubitObjectTermRelation();
       $newTermRelation->setTermId($termId);
 
@@ -1056,8 +970,7 @@ class QubitInformationObject extends BaseInformationObject
     $criteria = new Criteria();
     $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->id);
 
-    if ('all' != $taxonomyId)
-    {
+    if ('all' != $taxonomyId) {
       $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
       $criteria->add(QubitTerm::TAXONOMY_ID, $taxonomyId);
     }
@@ -1110,13 +1023,10 @@ class QubitInformationObject extends BaseInformationObject
     // Places are either associated with the information object directly
     // (for standard authorities) or with events (for places added in
     // the events module).
-    if ($options['events'])
-    {
+    if ($options['events']) {
       $criteria->addJoin(QubitObjectTermRelation::OBJECT_ID, QubitEvent::ID);
       $criteria->add(QubitEvent::OBJECT_ID, $this->id);
-    }
-    else
-    {
+    } else {
       $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->id);
     }
 
@@ -1140,8 +1050,7 @@ class QubitInformationObject extends BaseInformationObject
   public function addProperty($name, $value, $options = [])
   {
     // Don't re-add a property that exists already
-    if (null != $this->id && QubitProperty::isExistent($this->id, $name, $value, $options))
-    {
+    if (null != $this->id && QubitProperty::isExistent($this->id, $name, $value, $options)) {
       return;
     }
 
@@ -1149,8 +1058,7 @@ class QubitInformationObject extends BaseInformationObject
     $property->setName($name);
     $property->setValue($value, $options);
 
-    if (isset($options['scope']))
-    {
+    if (isset($options['scope'])) {
       $property->setScope($options['scope']);
     }
 
@@ -1173,12 +1081,10 @@ class QubitInformationObject extends BaseInformationObject
   {
     $criteria = new Criteria();
     $criteria->add(QubitProperty::OBJECT_ID, $this->id);
-    if ($name)
-    {
+    if ($name) {
       $criteria->add(QubitProperty::NAME, $name);
     }
-    if ($scope)
-    {
+    if ($scope) {
       $criteria->add(QubitProperty::SCOPE, $scope);
     }
 
@@ -1198,15 +1104,13 @@ class QubitInformationObject extends BaseInformationObject
   public function saveProperty($name, $value, $options = [])
   {
     // Get existing property if possible
-    if (null === ($property = QubitProperty::getOneByObjectIdAndName($this->id, $name, $options)))
-    {
+    if (null === ($property = QubitProperty::getOneByObjectIdAndName($this->id, $name, $options))) {
       // Create a new property if required
       $property = new QubitProperty();
       $property->setObjectId($this->id);
       $property->setName($name);
 
-      if (isset($options['scope']))
-      {
+      if (isset($options['scope'])) {
         $property->setScope($options['scope']);
       }
     }
@@ -1221,16 +1125,13 @@ class QubitInformationObject extends BaseInformationObject
 
   public function getCreatorsNameString($options = [])
   {
-    if ($this->getCreators())
-    {
+    if ($this->getCreators()) {
       $culture = (isset($options['culture'])) ? $options['culture'] : sfContext::getInstance()->user->getCulture();
       $creatorNameString = '';
       $creators = $this->getCreators();
-      foreach ($creators as $creator)
-      {
+      foreach ($creators as $creator) {
         $creatorNameString .= $creator->getAuthorizedFormOfName(['culture' => $culture]).' ';
-        foreach ($creator->getOtherNames() as $otherName)
-        {
+        foreach ($creator->getOtherNames() as $otherName) {
           $creatorNameString .= $otherName->getName(['culture' => $culture]).' ';
         }
       }
@@ -1243,13 +1144,11 @@ class QubitInformationObject extends BaseInformationObject
 
   public function getCreatorsHistoryString($options = [])
   {
-    if ($this->getCreators())
-    {
+    if ($this->getCreators()) {
       $culture = (isset($options['culture'])) ? $options['culture'] : sfContext::getInstance()->user->getCulture();
       $creatorHistoryString = '';
       $creators = $this->getCreators();
-      foreach ($creators as $creator)
-      {
+      foreach ($creators as $creator) {
         $creatorHistoryString .= $creator->getHistory(['culture' => $culture]).' ';
       }
 
@@ -1261,13 +1160,11 @@ class QubitInformationObject extends BaseInformationObject
 
   public function getDatesString($options = [])
   {
-    if ($this->getDates())
-    {
+    if ($this->getDates()) {
       $culture = (isset($options['culture'])) ? $options['culture'] : sfContext::getInstance()->user->getCulture();
       $datesString = '';
       $dates = $this->getDates();
-      foreach ($dates as $date)
-      {
+      foreach ($dates as $date) {
         $datesString .= $date->getDate(['culture' => $culture]).' ';
       }
 
@@ -1282,20 +1179,16 @@ class QubitInformationObject extends BaseInformationObject
     $str = '';
     $accessPoints = $this->getTermRelations($typeId);
 
-    if ($accessPoints)
-    {
+    if ($accessPoints) {
       $list = [];
       $culture = (isset($options['culture'])) ? $options['culture'] : sfContext::getInstance()->user->getCulture();
 
-      foreach ($accessPoints as $accessPoint)
-      {
+      foreach ($accessPoints as $accessPoint) {
         $term = $accessPoint->getTerm();
         $list[] = $term->getName(['culture' => $culture]);
 
-        if (0 < count($term->otherNames))
-        {
-          foreach ($term->otherNames as $altLabel)
-          {
+        if (0 < count($term->otherNames)) {
+          foreach ($term->otherNames as $altLabel) {
             $list[] = $altLabel->getName(['culture' => $culture]);
           }
         }
@@ -1317,8 +1210,7 @@ class QubitInformationObject extends BaseInformationObject
 
     $culture = (isset($options['culture'])) ? $options['culture'] : sfContext::getInstance()->user->getCulture();
 
-    foreach ($this->nameAccessPoints = QubitRelation::get($criteria) as $name)
-    {
+    foreach ($this->nameAccessPoints = QubitRelation::get($criteria) as $name) {
       $nameAccessPointString .= $name->object->getAuthorizedFormOfName(['culture' => $culture]).' ';
     }
 
@@ -1339,16 +1231,12 @@ class QubitInformationObject extends BaseInformationObject
    */
   public function importDigitalObjectFromUri($uris, &$errors)
   {
-    if (is_array($uris) && 1 < count($uris))
-    {
+    if (is_array($uris) && 1 < count($uris)) {
       // Get publication status from current object
       $pubStatus = null;
-      if (isset($this->statuss) && 0 < count($this->statuss))
-      {
-        foreach ($this->statuss as $status)
-        {
-          if (QubitTerm::STATUS_TYPE_PUBLICATION_ID == $status->typeId)
-          {
+      if (isset($this->statuss) && 0 < count($this->statuss)) {
+        foreach ($this->statuss as $status) {
+          if (QubitTerm::STATUS_TYPE_PUBLICATION_ID == $status->typeId) {
             $pubStatus = $status->statusId;
 
             break;
@@ -1356,19 +1244,15 @@ class QubitInformationObject extends BaseInformationObject
         }
       }
 
-      foreach ($uris as $uri)
-      {
+      foreach ($uris as $uri) {
         $infoObject = new QubitInformationObject();
 
         $digitalObject = new QubitDigitalObject();
         $digitalObject->usageId = QubitTerm::MASTER_ID;
 
-        try
-        {
+        try {
           $digitalObject->importFromUri($uri);
-        }
-        catch (sfException $e)
-        {
+        } catch (sfException $e) {
           $errors[] = sfContext::getInstance()->i18n->__('Encountered error fetching external resource: '.$uri);
 
           continue;
@@ -1377,31 +1261,24 @@ class QubitInformationObject extends BaseInformationObject
         $infoObject->digitalObjectsRelatedByobjectId[] = $digitalObject;
         $infoObject->title = $digitalObject->name;
 
-        if (isset($pubStatus))
-        {
+        if (isset($pubStatus)) {
           $infoObject->setStatus(['typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID, 'statusId' => $pubStatus]);
         }
 
         $this->informationObjectsRelatedByparentId[] = $infoObject;
       }
-    }
-    else
-    {
+    } else {
       $digitalObject = new QubitDigitalObject();
       $digitalObject->usageId = QubitTerm::MASTER_ID;
 
-      if (is_array($uris))
-      {
+      if (is_array($uris)) {
         $uris = array_shift($uris);
       }
 
-      try
-      {
+      try {
         $digitalObject->importFromUri($uris);
         $this->digitalObjectsRelatedByobjectId[] = $digitalObject;
-      }
-      catch (sfException $e)
-      {
+      } catch (sfException $e) {
         $errors[] = sfContext::getInstance()->i18n->__('Encountered error fetching external resource: '.$uris);
       }
     }
@@ -1431,23 +1308,18 @@ class QubitInformationObject extends BaseInformationObject
   public function setRepositoryByName($name)
   {
     // ignore if repository URL instead of name is being passed
-    if ('http' !== strtolower(substr($name, 0, 4)))
-    {
+    if ('http' !== strtolower(substr($name, 0, 4))) {
       // see if Repository record already exists, if so link to it
       $criteria = new Criteria();
       $criteria->addJoin(QubitActor::ID, QubitActorI18n::ID);
       $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, $name);
-      if ($actor = QubitActor::getOne($criteria))
-      {
-        if ('QubitRepository' == $actor->getClassName())
-        {
+      if ($actor = QubitActor::getOne($criteria)) {
+        if ('QubitRepository' == $actor->getClassName()) {
           $this->setRepositoryId($actor->id);
         }
         //TODO figure out how to create a Repository from an existing Actor
         //e.g. if the Actor record exists but it is not yet been used as a Repository
-      }
-      else
-      {
+      } else {
         // if the repository does not already exist, create a new Repository and link to it
         $repository = new QubitRepository();
         $repository->setAuthorizedFormOfName($name);
@@ -1459,18 +1331,13 @@ class QubitInformationObject extends BaseInformationObject
 
   public function setRepositoryAddress($address)
   {
-    if ($repository = $this->getRepository())
-    {
-      if ($primaryContact = $repository->getPrimaryContact())
-      {
-        if (is_null($primaryContact->getStreetAddress()))
-        {
+    if ($repository = $this->getRepository()) {
+      if ($primaryContact = $repository->getPrimaryContact()) {
+        if (is_null($primaryContact->getStreetAddress())) {
           $primaryContact->setStreetAddress($address);
           $primaryContact->save();
         }
-      }
-      else
-      {
+      } else {
         $contactInformation = new QubitContactInformation();
         $contactInformation->setStreetAddress($address);
         $contactInformation->setPrimaryContact(true);
@@ -1489,8 +1356,7 @@ class QubitInformationObject extends BaseInformationObject
   public function setAccessPointByName($name, $options = [])
   {
     // Only create an linked access point if the type is indicated
-    if (!isset($options['type_id']))
-    {
+    if (!isset($options['type_id'])) {
       return;
     }
 
@@ -1500,8 +1366,7 @@ class QubitInformationObject extends BaseInformationObject
     $criteria->add(QubitTermI18n::NAME, $name);
     $criteria->add(QubitTerm::TAXONOMY_ID, $options['type_id']);
 
-    if (null === $accessPoint = QubitTerm::getOne($criteria))
-    {
+    if (null === $accessPoint = QubitTerm::getOne($criteria)) {
       $accessPoint = new QubitTerm();
       $accessPoint->setName($name);
       $accessPoint->setTaxonomyId($options['type_id']);
@@ -1536,8 +1401,7 @@ class QubitInformationObject extends BaseInformationObject
   public function setActorByName($name, $options)
   {
     // Only create and link actor if the event or relation type is indicated
-    if (!isset($options['event_type_id']) && !isset($options['relation_type_id']))
-    {
+    if (!isset($options['event_type_id']) && !isset($options['relation_type_id'])) {
       return;
     }
 
@@ -1547,27 +1411,23 @@ class QubitInformationObject extends BaseInformationObject
     $existingEventRelation = !is_null($actor);
 
     // Check relations related by subject
-    if (!$actor)
-    {
+    if (!$actor) {
       $actor = $this->getActorByNameAndRelation($name, 'subject');
     }
 
     // Check relations related by object
-    if (!$actor)
-    {
+    if (!$actor) {
       $actor = $this->getActorByNameAndRelation($name, 'object');
     }
 
     // Lastly, check just if there are any other actors with this exact name
-    if (!$actor)
-    {
+    if (!$actor) {
       $actor = QubitActor::getByAuthorizedFormOfName($name);
     }
 
     // When the history option is populated and we
     // already have a match with a different history
-    if ($actor && !empty($options['history']) && $actor->history !== $options['history'])
-    {
+    if ($actor && !empty($options['history']) && $actor->history !== $options['history']) {
       // Try to get a full match in name and history or create a new one.
       // Only the delete and replace option from IO import could reach
       // this point so there is no need to check by maintaining repository
@@ -1576,30 +1436,24 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // If there isn't a match create a new actor
-    if (!$actor)
-    {
+    if (!$actor) {
       $actor = new QubitActor();
       $actor->parentId = QubitActor::ROOT_ID;
       $actor->setAuthorizedFormOfName($name);
 
-      if (isset($options['entity_type_id']))
-      {
+      if (isset($options['entity_type_id'])) {
         $actor->setEntityTypeId($options['entity_type_id']);
       }
-      if (isset($options['source']))
-      {
+      if (isset($options['source'])) {
         $actor->setSources($options['source']);
       }
-      if (isset($options['rules']))
-      {
+      if (isset($options['rules'])) {
         $actor->setRules($options['rules']);
       }
-      if (isset($options['history']))
-      {
+      if (isset($options['history'])) {
         $actor->setHistory($options['history']);
       }
-      if (isset($options['dates_of_existence']))
-      {
+      if (isset($options['dates_of_existence'])) {
         $actor->datesOfExistence = $options['dates_of_existence'];
       }
 
@@ -1607,26 +1461,21 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // Create event or relation to link the information object and actor
-    if (isset($options['event_type_id']))
-    {
+    if (isset($options['event_type_id'])) {
       $event = new QubitEvent();
       $event->setActor($actor);
       $event->setTypeId($options['event_type_id']);
 
-      if (isset($options['dates']))
-      {
+      if (isset($options['dates'])) {
         $event->setDate($options['dates']);
       }
-      if (isset($options['date_start']))
-      {
+      if (isset($options['date_start'])) {
         $event->setStartDate($options['date_start']);
       }
-      if (isset($options['date_end']))
-      {
+      if (isset($options['date_end'])) {
         $event->setEndDate($options['date_end']);
       }
-      if (isset($options['event_note']))
-      {
+      if (isset($options['event_note'])) {
         $event->setDescription($options['event_note']);
       }
 
@@ -1635,12 +1484,10 @@ class QubitInformationObject extends BaseInformationObject
     // In EAD import, the term relation is not always created at this point;
     // it might be created afterwards.
     elseif (isset($options['relation_type_id'], $options['createRelation'])
-      && false !== $options['createRelation'])
-    {
+      && false !== $options['createRelation']) {
       // Only add actor as name access point if they are not already linked to
       // an event (i.e. they are not already a "creator", "accumulator", etc.)
-      if (!$existingEventRelation)
-      {
+      if (!$existingEventRelation) {
         $relation = new QubitRelation();
         $relation->object = $actor;
         $relation->typeId = QubitTerm::NAME_ACCESS_POINT_ID;
@@ -1666,16 +1513,13 @@ class QubitInformationObject extends BaseInformationObject
     $text = '';
 
     // Add <p> tag content to amalgamated value
-    foreach ($originalsNode->getElementsByTagName('p') as $pNode)
-    {
+    foreach ($originalsNode->getElementsByTagName('p') as $pNode) {
       $text .= trim($pNode->textContent)."\n";
     }
 
     // Add <addressline> tag content to amalgamated value
-    foreach ($originalsNode->getElementsByTagName('address') as $addressNode)
-    {
-      foreach ($addressNode->getElementsByTagName('addressline') as $addressLineNode)
-      {
+    foreach ($originalsNode->getElementsByTagName('address') as $addressNode) {
+      foreach ($addressNode->getElementsByTagName('addressline') as $addressLineNode) {
         $text .= trim($addressLineNode->textContent)."\n";
       }
     }
@@ -1696,27 +1540,19 @@ class QubitInformationObject extends BaseInformationObject
     $langCodeConvertor = new fbISO639_Map();
 
     // get language nodes
-    if (0 < count($langNodeList = QubitXmlImport::queryDomNode($langusageNode, '/xml/langusage/language/@langcode')))
-    {
+    if (0 < count($langNodeList = QubitXmlImport::queryDomNode($langusageNode, '/xml/langusage/language/@langcode'))) {
       // set first language as source culture
-      if ($langCode = $langCodeConvertor->getID1($langNodeList->item(0)->nodeValue, false))
-      {
+      if ($langCode = $langCodeConvertor->getID1($langNodeList->item(0)->nodeValue, false)) {
         $this->setLangcode(strtolower($langCode));
-      }
-      else
-      {
+      } else {
         $this->setLangcode(strtolower($langNodeList->item(0)->nodeValue));
       }
 
       // get all as language(s) of description
-      foreach ($langNodeList as $langNode)
-      {
-        if ($langCode = $langCodeConvertor->getID1($langNode->nodeValue, false))
-        {
+      foreach ($langNodeList as $langNode) {
+        if ($langCode = $langCodeConvertor->getID1($langNode->nodeValue, false)) {
           array_push($languagesOfDescription, strtolower($langCode));
-        }
-        else
-        {
+        } else {
           array_push($languagesOfDescription, strtolower($langNode->nodeValue));
         }
       }
@@ -1726,14 +1562,12 @@ class QubitInformationObject extends BaseInformationObject
     $scriptNodeList = QubitXmlImport::queryDomNode($langusageNode, '/xml/langusage/language/@scriptcode');
 
     // get scripts (s) of description
-    foreach ($scriptNodeList as $scriptNode)
-    {
+    foreach ($scriptNodeList as $scriptNode) {
       array_push($scriptsOfDescription, $scriptNode->nodeValue);
     }
 
     // add language(s) of description, if any
-    if (count($languagesOfDescription))
-    {
+    if (count($languagesOfDescription)) {
       $this->addProperty(
         'languageOfDescription',
         serialize($languagesOfDescription)
@@ -1741,8 +1575,7 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // add script(s) of description, if any
-    if (count($scriptsOfDescription))
-    {
+    if (count($scriptsOfDescription)) {
       $this->addProperty(
         'scriptOfDescription',
         serialize($scriptsOfDescription)
@@ -1766,58 +1599,44 @@ class QubitInformationObject extends BaseInformationObject
     $scripts = [];
 
     // amalgamate language and script data
-    foreach ($langNodeList as $langNode)
-    {
-      if ($langNode->hasAttributes())
-      {
-        if (0 < strlen($lang = $langNode->getAttribute('langcode')))
-        {
-          if ($langCode = $langCodeConvertor->getID1($lang, false))
-          {
+    foreach ($langNodeList as $langNode) {
+      if ($langNode->hasAttributes()) {
+        if (0 < strlen($lang = $langNode->getAttribute('langcode'))) {
+          if ($langCode = $langCodeConvertor->getID1($lang, false)) {
             array_push($languages, strtolower($langCode));
-          }
-          else
-          {
+          } else {
             array_push($languages, strtolower($lang));
           }
         }
 
-        if (0 < strlen($scriptCode = $langNode->getAttribute('scriptcode')))
-        {
+        if (0 < strlen($scriptCode = $langNode->getAttribute('scriptcode'))) {
           array_push($scripts, $scriptCode);
         }
       }
     }
 
     // add language(s), if any
-    if (count($languages))
-    {
+    if (count($languages)) {
       $this->addProperty('language', serialize($languages));
     }
 
     // add script(s), if any
-    if (count($scripts))
-    {
+    if (count($scripts)) {
       $this->addProperty('script', serialize($scripts));
     }
 
     // get language and script note
     $noteContent = '';
-    foreach ($langmaterialNode->childNodes as $child)
-    {
-      if (XML_TEXT_NODE == $child->nodeType)
-      {
+    foreach ($langmaterialNode->childNodes as $child) {
+      if (XML_TEXT_NODE == $child->nodeType) {
         $noteContent .= trim($child->textContent);
-      }
-      elseif ('lb' == $child->nodeName)
-      {
+      } elseif ('lb' == $child->nodeName) {
         $noteContent .= "\n";
       }
     }
 
     // add language and script note, if so
-    if (0 < strlen($noteContent))
-    {
+    if (0 < strlen($noteContent)) {
       $newNote = new QubitNote();
       $newNote->setScope('QubitInformationObject');
       $newNote->setContent(trim($noteContent));
@@ -1831,8 +1650,7 @@ class QubitInformationObject extends BaseInformationObject
   {
     $langCodeConvertor = new fbISO639_Map();
 
-    if ($langCodeConvertor->getID1($code, true))
-    {
+    if ($langCodeConvertor->getID1($code, true)) {
       $code = strtolower($langCode);
     }
 
@@ -1854,14 +1672,11 @@ class QubitInformationObject extends BaseInformationObject
       'name' => null,
     ];
 
-    foreach ($entityTypes as $type => $typeId)
-    {
+    foreach ($entityTypes as $type => $typeId) {
       $nameNodes = $node->getElementsByTagName($type);
 
-      if ($nameNodes->length)
-      {
-        foreach ($nameNodes as $node)
-        {
+      if ($nameNodes->length) {
+        foreach ($nameNodes as $node) {
           $actor = $this->setActorByName(
             $node->nodeValue,
             ['entity_type_id' => $typeId, 'event_type_id' => QubitTerm::CREATION_ID]
@@ -1885,8 +1700,7 @@ class QubitInformationObject extends BaseInformationObject
   {
     // Support legacy versions of AtoM that employed chronlist tags inside bioghist
     $chronNodeList = $biogHistNode->getElementsByTagName('chronlist');
-    if ($chronNodeList->length)
-    {
+    if ($chronNodeList->length) {
       $this->parseChronlist($chronNodeList);
 
       return;
@@ -1894,17 +1708,14 @@ class QubitInformationObject extends BaseInformationObject
 
     // Obtain creators (we can't use criteria because they're not saved yet)
     $creators = [];
-    foreach ($this->eventsRelatedByobjectId as $existingEvent)
-    {
-      if (QubitTerm::CREATION_ID == $existingEvent->typeId && isset($existingEvent->actor))
-      {
+    foreach ($this->eventsRelatedByobjectId as $existingEvent) {
+      if (QubitTerm::CREATION_ID == $existingEvent->typeId && isset($existingEvent->actor)) {
         $creators[] = $existingEvent->actor;
       }
     }
 
     // Add bioghist
-    if (strlen($history = QubitXmlImport::normalizeNodeValue($biogHistNode)) > 0)
-    {
+    if (strlen($history = QubitXmlImport::normalizeNodeValue($biogHistNode)) > 0) {
       // Options:
       // 1. If there isn't an actor in the current position:
       //   - Create new 'Untitled' actor with bioghist value as history and new event
@@ -1915,8 +1726,7 @@ class QubitInformationObject extends BaseInformationObject
       // 4. If the actor in the current position has history and it's equal to the bioghist value:
       //   - Do nothing
       if (!isset($creators[$key])
-        || (isset($creators[$key]->history) && $creators[$key]->history !== $history))
-      {
+        || (isset($creators[$key]->history) && $creators[$key]->history !== $history)) {
         $actor = new QubitActor();
         $actor->parentId = QubitActor::ROOT_ID;
         $actor->setHistory($history);
@@ -1927,9 +1737,7 @@ class QubitInformationObject extends BaseInformationObject
         $event->setTypeId(QubitTerm::CREATION_ID);
 
         $this->eventsRelatedByobjectId[] = $event;
-      }
-      elseif (!isset($creators[$key]->history))
-      {
+      } elseif (!isset($creators[$key]->history)) {
         $creators[$key]->history = $history;
         $creators[$key]->save();
       }
@@ -1945,12 +1753,9 @@ class QubitInformationObject extends BaseInformationObject
   {
     // Check events array for related events/actors (we may not have saved this
     // data to the database yet)
-    if (0 < count($relatedEvents = $this->eventsRelatedByobjectId))
-    {
-      foreach ($relatedEvents as $event)
-      {
-        if (null !== ($actor = $event->getActor()))
-        {
+    if (0 < count($relatedEvents = $this->eventsRelatedByobjectId)) {
+      foreach ($relatedEvents as $event) {
+        if (null !== ($actor = $event->getActor())) {
           $actor->setHistory($history);
           $actor->save();
 
@@ -1963,8 +1768,7 @@ class QubitInformationObject extends BaseInformationObject
   public function setLevelOfDescriptionByName($name)
   {
     // Normalize name of "Record group" level of description (for EAD imports)
-    if ('recordgrp' == $name)
-    {
+    if ('recordgrp' == $name) {
       // See if Level of Description term already exists, if so link to it
       $criteria = new Criteria();
       $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
@@ -1972,15 +1776,13 @@ class QubitInformationObject extends BaseInformationObject
       $criteria->add(QubitTermI18n::CULTURE, 'en');
       $criteria->add(QubitTermI18n::NAME, 'Record group');
 
-      if ($term = QubitTermI18n::getOne($criteria))
-      {
+      if ($term = QubitTermI18n::getOne($criteria)) {
         $name = $term->getName(['cultureFallback' => true]);
       }
     }
 
     // Don't proceed with empty $name, or if 'otherlevel' value is passed
-    if (0 < strlen($name) && 'otherlevel' !== $name)
-    {
+    if (0 < strlen($name) && 'otherlevel' !== $name) {
       // See if Level of Description term already exists, if so link to it
       $criteria = new Criteria();
       $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
@@ -1988,12 +1790,9 @@ class QubitInformationObject extends BaseInformationObject
       $criteria->add(QubitTermI18n::CULTURE, sfContext::getInstance()->user->getCulture());
       $criteria->add(QubitTermI18n::NAME, $name);
 
-      if ($term = QubitTermI18n::getOne($criteria))
-      {
+      if ($term = QubitTermI18n::getOne($criteria)) {
         $this->levelOfDescriptionId = $term->id;
-      }
-      else
-      {
+      } else {
         // If the Level of Description term does not already exist, create a new Level and link to it
         $term = new QubitTerm();
         $term->setTaxonomyId(QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
@@ -2016,8 +1815,7 @@ class QubitInformationObject extends BaseInformationObject
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::PUBLICATION_STATUS_ID);
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
     $criteria->add(QubitTermI18n::NAME, $name);
-    if ($term = QubitTermI18n::getOne($criteria))
-    {
+    if ($term = QubitTermI18n::getOne($criteria)) {
       $this->setStatus(['typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID, 'statusId' => $term->id]);
     }
   }
@@ -2061,13 +1859,11 @@ class QubitInformationObject extends BaseInformationObject
   {
     static $termNames;
 
-    if (!isset($termNames))
-    {
+    if (!isset($termNames)) {
       $termNames = [];
     }
 
-    if (!isset($termNames[$taxonomyId]))
-    {
+    if (!isset($termNames[$taxonomyId])) {
       $termNames[$taxonomyId] = [];
       $terms = QubitTaxonomy::getTaxonomyTerms($taxonomyId);
       foreach ($terms as $term) {
@@ -2075,8 +1871,7 @@ class QubitInformationObject extends BaseInformationObject
       }
     }
 
-    if (isset($termNames[$taxonomyId][strtolower($name)]))
-    {
+    if (isset($termNames[$taxonomyId][strtolower($name)])) {
       $this->{$property} = $termNames[$taxonomyId][strtolower($name)];
     }
   }
@@ -2085,28 +1880,23 @@ class QubitInformationObject extends BaseInformationObject
   {
     $normalizedDate = ['start' => null, 'end' => null];
 
-    if (isset($options['normalized_dates']))
-    {
+    if (isset($options['normalized_dates'])) {
       $dates = explode('/', $options['normalized_dates']);
       $normalizedDate['start'] = $this->getNormalizedDate($dates[0]);
       $normalizedDate['end'] = (count($dates) > 1) ? $this->getNormalizedDate($dates[1]) : null;
     }
 
     // determine the Event type
-    if (isset($options['date_type']))
-    {
+    if (isset($options['date_type'])) {
       $eventType = $options['date_type'];
       // see if Event Type already exists, if so use it
       $criteria = new Criteria();
       $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::EVENT_TYPE_ID);
       $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
       $criteria->add(QubitTermI18n::NAME, $eventType);
-      if ($term = QubitTermI18n::getOne($criteria))
-      {
+      if ($term = QubitTermI18n::getOne($criteria)) {
         $eventTypeId = $term->id;
-      }
-      else
-      {
+      } else {
         // if the Event Type does not already exist, create a new type and use it
         $term = new QubitTerm();
         $term->setTaxonomyId(QubitTaxonomy::EVENT_TYPE_ID);
@@ -2115,9 +1905,7 @@ class QubitInformationObject extends BaseInformationObject
         $term->save();
         $eventTypeId = $term->id;
       }
-    }
-    else
-    {
+    } else {
       // set event type to 'creation' by default
       $eventTypeId = QubitTerm::CREATION_ID;
     }
@@ -2139,34 +1927,24 @@ class QubitInformationObject extends BaseInformationObject
   {
     $this->setIdentifier($identifier);
 
-    if ($repository = QubitRepository::getById($this->getRepositoryId()))
-    {
+    if ($repository = QubitRepository::getById($this->getRepositoryId())) {
       // if the repository doesn't already have a code, set it using the <unitid repositorycode=""> value
-      if (isset($options['repositorycode']))
-      {
-        if (!$repository->getIdentifier())
-        {
+      if (isset($options['repositorycode'])) {
+        if (!$repository->getIdentifier()) {
           $repository->setIdentifier($options['repositorycode']);
           $repository->save();
         }
       }
       // if the repository doesn't already have an country code, set it using the <unitid countrycode=""> value
-      if (isset($options['countrycode']))
-      {
-        if (!$repository->getCountryCode())
-        {
-          if ($primaryContact = $repository->getPrimaryContact())
-          {
+      if (isset($options['countrycode'])) {
+        if (!$repository->getCountryCode()) {
+          if ($primaryContact = $repository->getPrimaryContact()) {
             $primaryContact->setCountryCode(strtoupper($options['countrycode']));
             $primaryContact->save();
-          }
-          elseif (count($contacts = $repository->getContactInformation()) > 0)
-          {
+          } elseif (count($contacts = $repository->getContactInformation()) > 0) {
             $contacts[0]->setCountryCode(strtoupper($options['countrycode']));
             $contacts[0]->save();
-          }
-          else
-          {
+          } else {
             $contactInformation = new QubitContactInformation();
             $contactInformation->setCountryCode(strtoupper($options['countrycode']));
             $contactInformation->setActorId($repository->id);
@@ -2184,15 +1962,13 @@ class QubitInformationObject extends BaseInformationObject
     $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
     $criteria->add(QubitTerm::TAXONOMY_ID, $options['taxonomyId']);
     $criteria->add(QubitTermI18n::NAME, $name);
-    if (null === $term = QubitTerm::getOne($criteria))
-    {
+    if (null === $term = QubitTerm::getOne($criteria)) {
       $term = new QubitTerm();
       $term->setTaxonomyId($options['taxonomyId']);
       $term->setName($name);
       $term->setRoot();
       $term->save();
-      if (isset($options['source']))
-      {
+      if (isset($options['source'])) {
         $note = new QubitNote();
         $note->content = $options['source'];
         $note->typeId = QubitTerm::SOURCE_NOTE_ID;
@@ -2204,8 +1980,7 @@ class QubitInformationObject extends BaseInformationObject
 
     // In EAD import, the term relation is not always created at this point;
     // it might be created afterwards.
-    if (isset($options['createRelation']) && false !== $options['createRelation'])
-    {
+    if (isset($options['createRelation']) && false !== $options['createRelation']) {
       $this->addTermRelation($term->id);
     }
 
@@ -2218,28 +1993,21 @@ class QubitInformationObject extends BaseInformationObject
     $criteria = new Criteria();
     $criteria->addJoin(QubitPhysicalObject::ID, QubitPhysicalObjectI18n::ID);
     $criteria->add(QubitPhysicalObjectI18n::NAME, $physicalObjectName);
-    if ($existingPhysicalObject = QubitPhysicalObject::getOne($criteria))
-    {
+    if ($existingPhysicalObject = QubitPhysicalObject::getOne($criteria)) {
       $this->addPhysicalObject($existingPhysicalObject);
-    }
-    else
-    {
+    } else {
       $newPhysicalObject = new QubitPhysicalObject();
       $newPhysicalObject->setName($physicalObjectName);
 
       // see if physical object type already exists, otherwise create a new one
-      if ($options['type'])
-      {
+      if ($options['type']) {
         $criteria = new Criteria();
         $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID);
         $criteria->add(QubitTermI18n::NAME, $options['type']);
-        if ($physicalObjectType = QubitTerm::getOne($criteria))
-        {
+        if ($physicalObjectType = QubitTerm::getOne($criteria)) {
           $newPhysicalObject->setTypeId($physicalObjectType->id);
-        }
-        else
-        {
+        } else {
           $newTerm = new QubitTerm();
           $newTerm->setTaxonomyId(QubitTaxonomy::PHYSICAL_OBJECT_TYPE_ID);
           $newTerm->setName($options['type']);
@@ -2249,8 +2017,7 @@ class QubitInformationObject extends BaseInformationObject
         }
       }
 
-      if (isset($options['location']))
-      {
+      if (isset($options['location'])) {
         $newPhysicalObject->setLocation($options['location']);
       }
       $newPhysicalObject->save();
@@ -2260,16 +2027,11 @@ class QubitInformationObject extends BaseInformationObject
 
   public function importPhysicalObject($location, $name, $options = [])
   {
-    if (!empty($options['label']) && !empty($options['type']))
-    {
+    if (!empty($options['label']) && !empty($options['type'])) {
       $fullType = ucfirst($options['label']).' '.$options['type'];
-    }
-    elseif (!empty($options['type']))
-    {
+    } elseif (!empty($options['type'])) {
       $fullType = ucfirst($options['type']);
-    }
-    elseif (!empty($options['label']))
-    {
+    } elseif (!empty($options['label'])) {
       $fullType = ucfirst($options['label']);
     }
 
@@ -2285,8 +2047,7 @@ class QubitInformationObject extends BaseInformationObject
       : false;
 
     // Check for an existing physical object within this collection with the same name
-    if (isset($options['collectionId']))
-    {
+    if (isset($options['collectionId'])) {
       $object = QubitPhysicalObject::checkPhysicalObjectExistsInCollection(
         $name,
         $location,
@@ -2296,18 +2057,15 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // There was no existing physical object to attach, create a new one
-    if (!isset($object))
-    {
+    if (!isset($object)) {
       $object = new QubitPhysicalObject();
       $object->name = $name;
 
-      if ($location)
-      {
+      if ($location) {
         $object->location = $location;
       }
 
-      if ($term)
-      {
+      if ($term) {
         $object->typeId = $term->id;
       }
 
@@ -2322,18 +2080,15 @@ class QubitInformationObject extends BaseInformationObject
     $newNote = new QubitNote();
     $newNote->setScope('QubitInformationObject');
 
-    if (isset($options['userId']))
-    {
+    if (isset($options['userId'])) {
       $newNote->setUserId($options['userId']);
     }
 
-    if (isset($options['note']))
-    {
+    if (isset($options['note'])) {
       $newNote->setContent($options['note']);
     }
 
-    if (isset($options['noteTypeId']))
-    {
+    if (isset($options['noteTypeId'])) {
       $newNote->setTypeId($options['noteTypeId']);
     }
 
@@ -2413,8 +2168,7 @@ class QubitInformationObject extends BaseInformationObject
    */
   public static function getByTitleIdentifierAndRepo($identifier, $title, $repoName)
   {
-    if (null !== $identifier && null !== $title)
-    {
+    if (null !== $identifier && null !== $title) {
       $sf_user = sfContext::getInstance()->user;
       $currentCulture = $sf_user->getCulture();
 
@@ -2427,8 +2181,7 @@ class QubitInformationObject extends BaseInformationObject
       $queryText = new \Elastica\Query\Match();
       $queryBool->addMust($queryText->setFieldQuery(sprintf('i18n.%s.title.untouched', $currentCulture), $title));
 
-      if (null !== $repoName)
-      {
+      if (null !== $repoName) {
         $queryText = new \Elastica\Query\Match();
         $queryBool->addMust($queryText->setFieldQuery(sprintf('repository.i18n.%s.authorizedFormOfName.untouched', $currentCulture), $repoName));
       }
@@ -2437,8 +2190,7 @@ class QubitInformationObject extends BaseInformationObject
       $query->setSize(1);
       $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($query);
 
-      if ($resultSet->count())
-      {
+      if ($resultSet->count()) {
         return $resultSet[0]->getId();
       }
     }
@@ -2460,8 +2212,7 @@ class QubitInformationObject extends BaseInformationObject
   public function getTreeViewChildren(array $options = [], &$childrenRemaining = null)
   {
     $numberOfPreviousOrNextSiblings = 4;
-    if (isset($options['numberOfPreviousOrNextSiblings']))
-    {
+    if (isset($options['numberOfPreviousOrNextSiblings'])) {
       $numberOfPreviousOrNextSiblings = $options['numberOfPreviousOrNextSiblings'];
     }
 
@@ -2470,8 +2221,7 @@ class QubitInformationObject extends BaseInformationObject
     $criteria->add(QubitInformationObject::PARENT_ID, $this->id);
 
     // If not authenticated, restrict access to published descriptions
-    if (!sfContext::getInstance()->user->isAuthenticated())
-    {
+    if (!sfContext::getInstance()->user->isAuthenticated()) {
       $criteria->addJoin(QubitInformationObject::ID, QubitStatus::OBJECT_ID);
       $criteria->add(QubitStatus::STATUS_ID, QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID);
     }
@@ -2481,8 +2231,7 @@ class QubitInformationObject extends BaseInformationObject
     $firstChild = QubitInformationObject::getOne($criteria);
 
     $items = [];
-    if (isset($firstChild))
-    {
+    if (isset($firstChild)) {
       $firstChildSiblings = $firstChild->getTreeViewSiblings(
         ['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'next'],
         $childrenRemaining
@@ -2492,8 +2241,7 @@ class QubitInformationObject extends BaseInformationObject
       $items = array_merge([$firstChild], $firstChildSiblings);
 
       $hasNextSiblings = count($items) > $numberOfPreviousOrNextSiblings + 1;
-      if ($hasNextSiblings)
-      {
+      if ($hasNextSiblings) {
         array_pop($items);
       }
     }
@@ -2506,23 +2254,20 @@ class QubitInformationObject extends BaseInformationObject
     // The max number of items that will be shown
     // The final amount may be smaller if there are no result enough
     $limit = 5;
-    if (isset($options['limit']))
-    {
+    if (isset($options['limit'])) {
       $limit = $options['limit'];
     }
 
     // Show 'previous' or 'next' siblings
     $position = 'next';
-    if (isset($options['position']))
-    {
+    if (isset($options['position'])) {
       $position = $options['position'];
     }
 
     // They way the results are sorted
     // 'none' (default), 'title' or 'identifierTitle'
     $sort = sfConfig::get('app_sort_treeview_informationobject', 'none');
-    if (isset($options['sort']))
-    {
+    if (isset($options['sort'])) {
       $sort = $options['sort'];
     }
 
@@ -2535,13 +2280,11 @@ class QubitInformationObject extends BaseInformationObject
 
     // Query the database and discard results by ACL, repeating the same
     // operation until the number of results requested is fulfilled
-    do
-    {
+    do {
       $criteria = new Criteria();
       $criteria->add(QubitInformationObject::PARENT_ID, $this->parentId);
 
-      switch ($sort)
-      {
+      switch ($sort) {
         case 'identifierTitle':
           $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitInformationObject');
 
@@ -2550,8 +2293,7 @@ class QubitInformationObject extends BaseInformationObject
           $concatCurrent .= str_pad($current->lft, 12, '0', STR_PAD_LEFT);
           $concatCurrent = Propel::getConnection()->quote($concatCurrent);
 
-          if ('next' == $position)
-          {
+          if ('next' == $position) {
             $criteria->add('title',
               'CONVERT(CONCAT(
                   RPAD(COALESCE(identifier, " "), 12, 0),
@@ -2563,9 +2305,7 @@ class QubitInformationObject extends BaseInformationObject
             $criteria->addAscendingOrderByColumn('identifier');
             $criteria->addAscendingOrderByColumn('title');
             $criteria->addAscendingOrderByColumn('lft');
-          }
-          else // 'previous'
-          {
+          } else { // 'previous'
             $criteria->add('title',
               'CONVERT(CONCAT(
                 RPAD(COALESCE(identifier, " "), 12, 0),
@@ -2588,8 +2328,7 @@ class QubitInformationObject extends BaseInformationObject
           $concatCurrent .= str_pad($current->lft, 12, '0', STR_PAD_LEFT);
           $concatCurrent = Propel::getConnection()->quote($concatCurrent);
 
-          if ('next' == $position)
-          {
+          if ('next' == $position) {
             $criteria->add('title',
               'CONVERT(CONCAT(COALESCE((CASE WHEN (current.TITLE IS NOT NULL AND current.TITLE <> "") THEN current.TITLE ELSE source.TITLE END), ""), LPAD(lft, 12, 0)), CHAR)
                 > '.$concatCurrent,
@@ -2597,9 +2336,7 @@ class QubitInformationObject extends BaseInformationObject
 
             $criteria->addAscendingOrderByColumn('title');
             $criteria->addAscendingOrderByColumn('lft');
-          }
-          else // 'previous'
-          {
+          } else { // 'previous'
             $criteria->add('title',
               'CONVERT(CONCAT(COALESCE((CASE WHEN (current.TITLE IS NOT NULL AND current.TITLE <> "") THEN current.TITLE ELSE source.TITLE END), ""), LPAD(lft, 12, 0)), CHAR)
                 < '.$concatCurrent,
@@ -2612,21 +2349,17 @@ class QubitInformationObject extends BaseInformationObject
           break;
 
         default:
-          if ('next' == $position)
-          {
+          if ('next' == $position) {
             $criteria->add(QubitInformationObject::LFT, $current->lft, Criteria::GREATER_THAN);
             $criteria->addAscendingOrderByColumn(QubitInformationObject::LFT);
-          }
-          else // 'previous'
-          {
+          } else { // 'previous'
             $criteria->add(QubitInformationObject::LFT, $current->lft, Criteria::LESS_THAN);
             $criteria->addDescendingOrderByColumn(QubitInformationObject::LFT);
           }
       }
 
       // If not authenticated, restrict access to published descriptions
-      if (!sfContext::getInstance()->user->isAuthenticated())
-      {
+      if (!sfContext::getInstance()->user->isAuthenticated()) {
         $criteria->addJoin(QubitInformationObject::ID, QubitStatus::OBJECT_ID);
         $criteria->add(QubitStatus::STATUS_ID, QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID);
       }
@@ -2641,18 +2374,15 @@ class QubitInformationObject extends BaseInformationObject
       $criteria->setLimit($limit);
       $rows = QubitInformationObject::get($criteria);
 
-      if (null !== $siblingsRemaining)
-      {
+      if (null !== $siblingsRemaining) {
         $siblingsRemaining = $rowsCount - $limit + 1;
       }
 
       // Iterate over results and store them in the $results array
-      foreach ($rows as $item)
-      {
+      foreach ($rows as $item) {
         // Avoid to add the same element, this may happen when sorting by title
         // or identifierTitle for unknown reasons
-        if ($item->id == $this->id)
-        {
+        if ($item->id == $this->id) {
           continue;
         }
 
@@ -2665,37 +2395,29 @@ class QubitInformationObject extends BaseInformationObject
 
       // If $last is not set at this time it means that we could not
       // find any results and it is worthless to continue
-      if (!isset($last))
-      {
+      if (!isset($last)) {
         break;
       }
 
       // Stop the loop if there are no more items to search for
       // Depending on the sorting mode this is done in different ways
-      switch ($sort)
-      {
+      switch ($sort) {
         case 'identifierTitle':
         case 'title':
           // Look for the last sibling
-          if (!isset($conditionLimit))
-          {
+          if (!isset($conditionLimit)) {
             $criteria = new Criteria();
             $criteria->add(QubitInformationObject::PARENT_ID, $this->parentId);
             $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitInformationObject');
 
-            if ('next' == $position)
-            {
-              if ('identifierTitle' == $sort)
-              {
+            if ('next' == $position) {
+              if ('identifierTitle' == $sort) {
                 $criteria->addDescendingOrderByColumn('identifier');
               }
               $criteria->addDescendingOrderByColumn('title');
               $criteria->addDescendingOrderByColumn('lft');
-            }
-            else
-            {
-              if ('identifierTitle' == $sort)
-              {
+            } else {
+              if ('identifierTitle' == $sort) {
                 $criteria->addAscendingOrderByColumn('identifier');
               }
               $criteria->addAscendingOrderByColumn('title');
@@ -2704,33 +2426,26 @@ class QubitInformationObject extends BaseInformationObject
 
             $criteria->setLimit(1);
 
-            if (null === $informationObject = QubitInformationObject::getOne($criteria))
-            {
+            if (null === $informationObject = QubitInformationObject::getOne($criteria)) {
               throw new sfException();
             }
 
             $conditionLimit = $informationObject->id;
           }
 
-          if ($conditionLimit == $last->id)
-          {
+          if ($conditionLimit == $last->id) {
             break 2;
           }
 
           break;
 
         default:
-          if ('next' == $position)
-          {
-            if (1 == $this->parent->rgt - $last->rgt)
-            {
+          if ('next' == $position) {
+            if (1 == $this->parent->rgt - $last->rgt) {
               break 2;
             }
-          }
-          else // 'previous'
-          {
-            if (1 == $last->lft - $this->parent->lft)
-            {
+          } else { // 'previous'
+            if (1 == $last->lft - $this->parent->lft) {
               break 2;
             }
           }
@@ -2739,16 +2454,14 @@ class QubitInformationObject extends BaseInformationObject
       // In the next iteration we will need the last sibling found
       $current = $last;
       unset($last);
-    }
-    while ($limit > count($results));
+    } while ($limit > count($results));
 
     return $results;
   }
 
   public static function addTreeViewSortCriteria($criteria)
   {
-    switch (sfConfig::get('app_sort_treeview_informationobject'))
-    {
+    switch (sfConfig::get('app_sort_treeview_informationobject')) {
       case 'identifierTitle':
         $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitInformationObject');
         $criteria->addAscendingOrderByColumn('identifier');
@@ -2782,19 +2495,15 @@ class QubitInformationObject extends BaseInformationObject
    */
   public static function getStandardsBasedInstance($resource)
   {
-    if (!isset(sfContext::getInstance()->getRequest()->informationobject_template))
-    {
+    if (!isset(sfContext::getInstance()->getRequest()->informationobject_template)) {
       return $resource;
     }
 
     $class = 'sf'.ucfirst(sfContext::getInstance()->getRequest()->informationobject_template).'Plugin';
 
-    try
-    {
+    try {
       $instance = new $class($resource);
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       return $resource;
     }
 
@@ -2824,8 +2533,7 @@ class QubitInformationObject extends BaseInformationObject
    */
   public function getInheritedReferenceCode($includeRepoAndCountry = true)
   {
-    if (!isset($this->identifier))
-    {
+    if (!isset($this->identifier)) {
       return;
     }
 
@@ -2836,15 +2544,12 @@ class QubitInformationObject extends BaseInformationObject
 
     // Ascend the hierarchy to build the inherited identifier manually,
     // as this method may be called before saving and getAncestors() can work.
-    while ($item && QubitInformationObject::ROOT_ID != $item->id)
-    {
-      if (isset($item->identifier))
-      {
+    while ($item && QubitInformationObject::ROOT_ID != $item->id) {
+      if (isset($item->identifier)) {
         array_unshift($identifier, $item->identifier);
       }
 
-      if (isset($item->repository))
-      {
+      if (isset($item->repository)) {
         $repository = $item->repository;
       }
 
@@ -2853,19 +2558,15 @@ class QubitInformationObject extends BaseInformationObject
 
     $identifier = implode(sfConfig::get('app_separator_character', '-'), $identifier);
 
-    if ($includeRepoAndCountry)
-    {
-      if (isset($repository->identifier))
-      {
+    if ($includeRepoAndCountry) {
+      if (isset($repository->identifier)) {
         $identifier = "{$repository->identifier} {$identifier}";
       }
 
-      if (isset($repository))
-      {
+      if (isset($repository)) {
         $countryCode = $repository->getCountryCode();
 
-        if (isset($countryCode))
-        {
+        if (isset($countryCode)) {
           $identifier = "{$countryCode} {$identifier}";
         }
       }
@@ -2881,8 +2582,7 @@ class QubitInformationObject extends BaseInformationObject
    */
   public static function getIdentifierCounter()
   {
-    if (null === $counter = QubitSetting::getByName('identifier_counter'))
-    {
+    if (null === $counter = QubitSetting::getByName('identifier_counter')) {
       throw new sfException('identifier_counter setting not found--is your database upgraded?');
     }
 
@@ -2904,8 +2604,7 @@ class QubitInformationObject extends BaseInformationObject
 
   protected function insert($connection = null)
   {
-    if (!isset($this->slug))
-    {
+    if (!isset($this->slug)) {
       $this->slug = $this->generateSlug();
     }
 
@@ -2914,8 +2613,7 @@ class QubitInformationObject extends BaseInformationObject
 
   protected function updateNestedSet($connection = null)
   {
-    if (!$this->disableNestedSetUpdating)
-    {
+    if (!$this->disableNestedSetUpdating) {
       return parent::updateNestedSet($connection);
     }
   }
@@ -2926,13 +2624,11 @@ class QubitInformationObject extends BaseInformationObject
 
     $defaultDateValue = str_pad($dateArray[0], 4, '0', STR_PAD_LEFT);
 
-    if (isset($dateArray[1]))
-    {
+    if (isset($dateArray[1])) {
       $defaultDateValue .= '-'.str_pad($dateArray[1], 2, '0', STR_PAD_LEFT);
     }
 
-    if (isset($dateArray[2]))
-    {
+    if (isset($dateArray[2])) {
       $defaultDateValue .= '-'.str_pad($dateArray[2], 2, '0', STR_PAD_LEFT);
     }
 
@@ -2948,10 +2644,8 @@ class QubitInformationObject extends BaseInformationObject
     $criteria->add(QubitKeymap::TARGET_ID, $this->id);
     $criteria->add(QubitKeymap::TARGET_NAME, 'information_object');
 
-    if ($objectKeymap = QubitKeymap::get($criteria))
-    {
-      foreach ($objectKeymap as $item)
-      {
+    if ($objectKeymap = QubitKeymap::get($criteria)) {
+      foreach ($objectKeymap as $item) {
         $item->delete();
       }
     }
@@ -2971,24 +2665,17 @@ class QubitInformationObject extends BaseInformationObject
   {
     // We could also maybe use $this->$varmagic here but
     // I figure just a simple if/else was more readable.
-    if ('object' === $relatedBy)
-    {
+    if ('object' === $relatedBy) {
       $relations = $this->relationsRelatedByobjectId;
-    }
-    else
-    {
+    } else {
       $relations = $this->relationsRelatedBysubjectId;
     }
 
-    foreach ($relations as $relation)
-    {
-      if ($relation->{$relatedBy} instanceof QubitActor)
-      {
-        foreach ($relation->{$relatedBy}->actorI18ns as $actorI18n)
-        {
+    foreach ($relations as $relation) {
+      if ($relation->{$relatedBy} instanceof QubitActor) {
+        foreach ($relation->{$relatedBy}->actorI18ns as $actorI18n) {
           if (isset($actorI18n->authorizedFormOfName)
-            && $name == $actorI18n->authorizedFormOfName)
-          {
+            && $name == $actorI18n->authorizedFormOfName) {
             return $relation->{$relatedBy};
           }
         }
@@ -3008,15 +2695,11 @@ class QubitInformationObject extends BaseInformationObject
    */
   private function getActorByNameAndEvent($name)
   {
-    foreach ($this->eventsRelatedByobjectId as $event)
-    {
-      if (isset($event->actor))
-      {
-        foreach ($event->actor->actorI18ns as $actorI18n)
-        {
+    foreach ($this->eventsRelatedByobjectId as $event) {
+      if (isset($event->actor)) {
+        foreach ($event->actor->actorI18ns as $actorI18n) {
           if (isset($actorI18n->authorizedFormOfName)
-            && $name == $actorI18n->authorizedFormOfName)
-          {
+            && $name == $actorI18n->authorizedFormOfName) {
             return $event->actor;
           }
         }
@@ -3033,45 +2716,38 @@ class QubitInformationObject extends BaseInformationObject
    */
   private function parseChronlist($chronlistNodeList)
   {
-    foreach ($chronlistNodeList as $chronlistNode)
-    {
+    foreach ($chronlistNodeList as $chronlistNode) {
       // Get chronitem elements in chronlist element
       $chronitemNodeList = $chronlistNode->getElementsByTagName('chronitem');
-      foreach ($chronitemNodeList as $chronitemNode)
-      {
+      foreach ($chronitemNodeList as $chronitemNode) {
         // Get creation date element contents
         $dateNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/date[@type='creation']");
-        foreach ($dateNodeList as $dateNode)
-        {
+        foreach ($dateNodeList as $dateNode) {
           $date = $dateNode->nodeValue;
         }
 
         // Get creation start and end date from "normal" attribute
         $dateNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/date[@type='creation']/@normal");
-        foreach ($dateNodeList as $dateNormalAttr)
-        {
+        foreach ($dateNodeList as $dateNormalAttr) {
           $normalizedDates = sfEadPlugin::parseEadDenormalizedDateData($dateNormalAttr->value);
 
           $date_start = $normalizedDates['start'];
 
-          if ($normalizedDates['end'])
-          {
+          if ($normalizedDates['end']) {
             $date_end = $normalizedDates['end'];
           }
         }
 
         // Get dates of existence element contents
         $dateNodeList = QubitXmlImport::queryDomNode($chronitemNode, "/xml/chronitem/eventgrp/event/date[@type='existence']");
-        foreach ($dateNodeList as $dateNode)
-        {
+        foreach ($dateNodeList as $dateNode) {
           $datesValue = $dateNode->nodeValue;
         }
 
         // Get creation end date element contents
         $history = '';
         $dateNodeList = QubitXmlImport::queryDomNode($chronitemNode, '/xml/chronitem/eventgrp/event/note[not(@type="eventNote")]/p');
-        foreach ($dateNodeList as $noteNode)
-        {
+        foreach ($dateNodeList as $noteNode) {
           $history = $noteNode->nodeValue;
         }
 
@@ -3085,17 +2761,14 @@ class QubitInformationObject extends BaseInformationObject
         $typeId = QubitTerm::PERSON_ID;
         $name = '';
 
-        foreach ($possibleNameFields as $fieldName => $fieldTypeId)
-        {
+        foreach ($possibleNameFields as $fieldName => $fieldTypeId) {
           $fieldValue = '';
           $nameNodeList = QubitXmlImport::queryDomNode($chronitemNode, '/xml/chronitem/eventgrp/event/origination/'.$fieldName);
-          foreach ($nameNodeList as $nameNode)
-          {
+          foreach ($nameNodeList as $nameNode) {
             $fieldValue = $nameNode->nodeValue;
           }
 
-          if ('' != $fieldValue)
-          {
+          if ('' != $fieldValue) {
             $name = $fieldValue;
             $typeId = $fieldTypeId;
             $datesOfExistence = $datesValue;
@@ -3104,8 +2777,7 @@ class QubitInformationObject extends BaseInformationObject
 
         $eventNote = '';
         $eventNoteList = QubitXmlImport::queryDomNode($chronitemNode, '/xml/chronitem/eventgrp/event/note[@type="eventNote"]/p');
-        foreach ($eventNoteList as $eventNoteNode)
-        {
+        foreach ($eventNoteList as $eventNoteNode) {
           $eventNote = $eventNoteNode->nodeValue;
         }
 
@@ -3115,28 +2787,23 @@ class QubitInformationObject extends BaseInformationObject
           'history' => $history,
         ];
 
-        if ($date)
-        {
+        if ($date) {
           $eventSpec['dates'] = $date;
         }
 
-        if ($datesOfExistence)
-        {
+        if ($datesOfExistence) {
           $eventSpec['dates_of_existence'] = $datesOfExistence;
         }
 
-        if ($date_start)
-        {
+        if ($date_start) {
           $eventSpec['date_start'] = $date_start;
         }
 
-        if ($date_end)
-        {
+        if ($date_end) {
           $eventSpec['date_end'] = $date_end;
         }
 
-        if (0 < strlen($eventNote))
-        {
+        if (0 < strlen($eventNote)) {
           $eventSpec['event_note'] = $eventNote;
         }
 
@@ -3154,22 +2821,19 @@ class QubitInformationObject extends BaseInformationObject
    */
   private function getNormalizedDate($date)
   {
-    if (false !== strpos($date, '-'))
-    {
+    if (false !== strpos($date, '-')) {
       return $date; // Already in YYYY-MM-DD format (hopefully)
     }
 
     // Check to see if date is proper length, either 4 for year only,
     // 6 for year & month, or 8 for year & month & day
-    if (!in_array(strlen($date), [4, 6, 8]))
-    {
+    if (!in_array(strlen($date), [4, 6, 8])) {
       return null;
     }
 
     $year = $month = $day = 0;
 
-    switch (true)
-    {
+    switch (true) {
       case strlen($date) >= 4: $year = (int) substr($date, 0, 4);
       // no break
       case strlen($date) >= 6: $month = (int) substr($date, 4, 2);
@@ -3177,8 +2841,7 @@ class QubitInformationObject extends BaseInformationObject
       case 8 == strlen($date): $day = (int) substr($date, 6, 2);
     }
 
-    if (0 === $year)
-    {
+    if (0 === $year) {
       return null; // Garbage date
     }
 
@@ -3198,8 +2861,7 @@ class QubitInformationObject extends BaseInformationObject
 
     $stringToSlugify = null;
 
-    switch ($slugBasis)
-    {
+    switch ($slugBasis) {
       case QubitSlug::SLUG_BASIS_REFERENCE_CODE:
         $stringToSlugify = $this->getInheritedReferenceCode();
 
@@ -3225,8 +2887,7 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     // Blank string or null returned, attempt to fall back to slug based on title
-    if (QubitSlug::SLUG_BASIS_TITLE != $slugBasis && !$stringToSlugify)
-    {
+    if (QubitSlug::SLUG_BASIS_TITLE != $slugBasis && !$stringToSlugify) {
       $stringToSlugify = $this->getTitle(['sourceCulture' => true]);
     }
 

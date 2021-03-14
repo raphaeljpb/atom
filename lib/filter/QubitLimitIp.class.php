@@ -34,16 +34,14 @@ class QubitLimitIpFilter extends sfFilter
     if ($this->context->getConfiguration()->isDebug()
         || !$this->limit
         || !$this->isFirstCall()
-        || ('user' == $this->request->getParameter('module') && 'logout' == $this->request->getParameter('action')))
-    {
+        || ('user' == $this->request->getParameter('module') && 'logout' == $this->request->getParameter('action'))) {
       $filterChain->execute();
 
       return;
     }
 
     // Forward to admin/secure if not allowed (only applies if user is authenticated)
-    if ($this->context->user->isAuthenticated() && !$this->isAllowed())
-    {
+    if ($this->context->user->isAuthenticated() && !$this->isAllowed()) {
       $this->context->getController()->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
 
       throw new sfStopException();
@@ -64,33 +62,28 @@ class QubitLimitIpFilter extends sfFilter
     $address = $this->getRemoteAddress();
 
     // Check if empty
-    if (1 == count($this->limit) && empty($this->limit[0]))
-    {
+    if (1 == count($this->limit) && empty($this->limit[0])) {
       return true;
     }
 
-    foreach ($this->limit as $item)
-    {
+    foreach ($this->limit as $item) {
       // Ranges are supported, using a comma or a dash
       $limit = preg_split('/[,-]/', $item);
 
       // Single IP
-      if (1 == count($limit) && $address == $limit[0])
-      {
+      if (1 == count($limit) && $address == $limit[0]) {
         return true;
       }
 
       // Range
-      if (2 == count($limit))
-      {
+      if (2 == count($limit)) {
         $limit[0] = trim($limit[0]);
         $limit[1] = trim($limit[1]);
 
         $addressLong = ip2long($address);
 
         if (ip2long($limit[0]) <= $addressLong
-            && ip2long($limit[1]) >= $addressLong)
-        {
+            && ip2long($limit[1]) >= $addressLong) {
           return true;
         }
       }

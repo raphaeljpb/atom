@@ -29,11 +29,12 @@
     <ul class="unstyled">
 
       <?php foreach ($ancestors as $ancestor) { ?>
-        <?php if (QubitTerm::ROOT_ID == $ancestor->id) continue; ?>
-        <?php echo render_treeview_node(
-          $ancestor,
-          ['ancestor' => true],
-          ['browser' => $browser, 'xhr-location' => url_for([$ancestor, 'module' => 'term', 'action' => 'treeView'])]); ?>
+        <?php if (QubitTerm::ROOT_ID != $ancestor->id) { ?>
+          <?php echo render_treeview_node(
+            $ancestor,
+            ['ancestor' => true],
+            ['browser' => $browser, 'xhr-location' => url_for([$ancestor, 'module' => 'term', 'action' => 'treeView'])]); ?>
+        <?php } ?>
       <?php } ?>
 
       <?php if (!isset($children)) { ?>
@@ -78,7 +79,7 @@
             ['browser' => $browser, 'xhr-location' => url_for([$child, 'module' => 'term', 'action' => 'treeView'])]); ?>
         <?php } ?>
 
-      <?php } elseif (isset($nextSiblings)){ ?>
+      <?php } elseif (isset($nextSiblings)) { ?>
 
         <?php if (isset($nextSiblings)) { ?>
           <?php foreach ($nextSiblings as $next) { ?>

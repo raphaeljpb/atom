@@ -27,16 +27,13 @@ class qtSwordPluginServicedocumentAction extends sfAction
     $this->maxUploadSize = QubitDigitalObject::getMaxUploadSize() / 1024; // From bytes to kilobytes
     $this->mediation = 'false'; // Should be based in auth + X-On-Behalf-Of
 
-    if (isset($request->getAttribute('sf_route')->resource))
-    {
+    if (isset($request->getAttribute('sf_route')->resource)) {
       $this->resource = $this->getRoute()->resource;
 
       $this->title = $this->resource->__toString();
 
       $this->workspaces = $this->resource->getChildren();
-    }
-    else
-    {
+    } else {
       $this->title = sfConfig::get('app_siteTitle');
 
       $criteria = new Criteria();

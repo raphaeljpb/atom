@@ -110,8 +110,7 @@
       $tableTemplate .= '</thead>';
       $tableTemplate .= '<tbody>';
 
-      foreach ($termActions as $key => $item)
-      {
+      foreach ($termActions as $key => $item) {
         $tableTemplate .= '<tr>';
         $tableTemplate .= '<td>'.__($item).'</th>';
         $tableTemplate .= '<td><ul class="radio inline">';

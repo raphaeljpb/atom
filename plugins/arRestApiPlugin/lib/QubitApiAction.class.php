@@ -21,8 +21,7 @@ class QubitApiAction extends sfAction
 {
   public function execute($request)
   {
-    if (!$this->authenticateUser())
-    {
+    if (!$this->authenticateUser()) {
       throw new QubitApiNotAuthorizedException();
     }
 
@@ -32,8 +31,7 @@ class QubitApiAction extends sfAction
   public function process($request)
   {
     $method = strtoupper($request->getMethod());
-    if (!method_exists($this, $method))
-    {
+    if (!method_exists($this, $method)) {
       return $this->forward404();
     }
 
@@ -43,8 +41,7 @@ class QubitApiAction extends sfAction
 
     // Modern frameworks support application/json, Symfony1 is too old :)
     // AngularJS doesn't use application/x-www-form-urlencoded
-    if (('PUT' == $method || 'POST' == $method) && 'application/json' == $request->getContentType())
-    {
+    if (('PUT' == $method || 'POST' == $method) && 'application/json' == $request->getContentType()) {
       $fnParamaters[] = json_decode($request->getContent());
     }
 
@@ -53,8 +50,7 @@ class QubitApiAction extends sfAction
 
     // Load site base URL
     $this->siteBaseUrl = '';
-    if (null !== $setting = QubitSetting::getByName('siteBaseUrl'))
-    {
+    if (null !== $setting = QubitSetting::getByName('siteBaseUrl')) {
       $this->siteBaseUrl = $setting->getValue(['sourceCulture' => true]);
     }
 
@@ -65,13 +61,11 @@ class QubitApiAction extends sfAction
 
   public function renderData($data)
   {
-    if ('CSV' === $data || 'DigitalObject' === $data)
-    {
+    if ('CSV' === $data || 'DigitalObject' === $data) {
       return sfView::NONE;
     }
 
-    if (sfView::NONE === $data)
-    {
+    if (sfView::NONE === $data) {
       $this->response->setHeaderOnly(true);
 
       $this->response->setStatusCode(204);
@@ -88,16 +82,14 @@ class QubitApiAction extends sfAction
   {
     $limit = empty($limit) ? sfConfig::get('app_hits_per_page', 10) : $limit;
     $limit = $this->request->getGetParameter('limit', $limit);
-    if ($limit > 100)
-    {
+    if ($limit > 100) {
       $limit = 100;
     }
 
     $query->setSize($limit);
 
     // Skip
-    if (isset($this->request->skip) && ctype_digit($this->request->skip))
-    {
+    if (isset($this->request->skip) && ctype_digit($this->request->skip)) {
       $query->setFrom($this->request->skip);
     }
   }
@@ -105,22 +97,18 @@ class QubitApiAction extends sfAction
   protected function prepareEsSorting(Elastica\Query &$query, $fields = [])
   {
     // Stop if preferred option is not set or $fields empty
-    if (1 > count($fields) || !isset($this->request->sort))
-    {
+    if (1 > count($fields) || !isset($this->request->sort)) {
       return;
     }
 
     // Stop if the preferred option can't be found
-    if (false === array_search($this->request->sort, array_keys($fields)))
-    {
+    if (false === array_search($this->request->sort, array_keys($fields))) {
       return;
     }
 
     $sortDirection = 'asc';
-    if (isset($this->request->sort_direction))
-    {
-      if ('desc' == $this->request->sort_direction)
-      {
+    if (isset($this->request->sort_direction)) {
+      if ('desc' == $this->request->sort_direction) {
         $sortDirection = 'desc';
       }
     }
@@ -131,8 +119,7 @@ class QubitApiAction extends sfAction
 
   protected function addItemToArray(&$array, $key, $value)
   {
-    if (empty($value))
-    {
+    if (empty($value)) {
       return;
     }
 
@@ -142,33 +129,27 @@ class QubitApiAction extends sfAction
   private function authenticateUser()
   {
     // Cookie-based authentication (already signed)
-    if ($this->context->user->isAuthenticated())
-    {
+    if ($this->context->user->isAuthenticated()) {
       return true;
     }
 
     // Basic authentication
-    if (isset($_SERVER['PHP_AUTH_USER']))
-    {
-      if ($this->context->user->authenticateWithBasicAuth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
-      {
+    if (isset($_SERVER['PHP_AUTH_USER'])) {
+      if ($this->context->user->authenticateWithBasicAuth($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
         return true;
       }
     }
 
     // X_REST_API_KEY is and old name still checked for backward compatibility. Last attempt!
-    if (null !== $key = Qubit::getHttpHeader(['REST-API-Key', 'HTTP_X_REST_API_KEY']))
-    {
+    if (null !== $key = Qubit::getHttpHeader(['REST-API-Key', 'HTTP_X_REST_API_KEY'])) {
       $criteria = new Criteria();
       $criteria->add(QubitProperty::NAME, 'restApiKey');
       $criteria->add(QubitPropertyI18n::VALUE, $key);
-      if (null === $restApiKeyProperty = QubitProperty::getOne($criteria))
-      {
+      if (null === $restApiKeyProperty = QubitProperty::getOne($criteria)) {
         return false;
       }
 
-      if (null === $user = QubitUser::getById($restApiKeyProperty->objectId))
-      {
+      if (null === $user = QubitUser::getById($restApiKeyProperty->objectId)) {
         return false;
       }
 

@@ -32,14 +32,12 @@ class addSuperuserTask extends sfBaseTask
    */
   public function execute($arguments = [], $options = [])
   {
-    if ($options['demo'])
-    {
+    if ($options['demo']) {
       $this->setDemoOptions($arguments, $options);
     }
 
     $needsData = !$arguments['username'] || !$options['email'] || !$options['password'];
-    if ($needsData && !function_exists('readline'))
-    {
+    if ($needsData && !function_exists('readline')) {
       throw new Exception('One of the following properties have not been '.
         'assigned: username, email and password. Please, use the '.
         'corresponding command line options.');
@@ -55,8 +53,7 @@ class addSuperuserTask extends sfBaseTask
   public static function addSuperUser($username, $options)
   {
     // Ask for admin user information
-    if (!$username)
-    {
+    if (!$username) {
       $defaultUser = 'admin';
       $usernamePrompt = 'Admin username';
       $usernamePrompt .= ($defaultUser) ? ' ['.$defaultUser.']' : '';
@@ -66,8 +63,7 @@ class addSuperuserTask extends sfBaseTask
     }
 
     $email = ($options['email']) ? $options['email'] : '';
-    if (!$email)
-    {
+    if (!$email) {
       $defaultEmail = 'admin@example.com';
       $emailPrompt = 'Admin email';
       $emailPrompt .= ($defaultEmail) ? ' ['.$defaultEmail.']' : '';
@@ -77,8 +73,7 @@ class addSuperuserTask extends sfBaseTask
     }
 
     $password = ($options['password']) ? $options['password'] : '';
-    if (!$password)
-    {
+    if (!$password) {
       $password = trim(readline('Admin password: '));
     }
 

@@ -48,10 +48,8 @@ class sfIsdfPluginEditAction extends FunctionEditAction
     $this->isdf = new sfIsdfPlugin($this->resource);
 
     $title = $this->context->i18n->__('Add new function');
-    if (isset($this->getRoute()->resource))
-    {
-      if (1 > strlen($title = $this->resource->__toString()))
-      {
+    if (isset($this->getRoute()->resource)) {
+      if (1 > strlen($title = $this->resource->__toString())) {
         $title = $this->context->i18n->__('Untitled');
       }
 
@@ -83,16 +81,14 @@ class sfIsdfPluginEditAction extends FunctionEditAction
    */
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'type':
         $this->form->setDefault('type', $this->context->routing->generate(null, [$this->resource->type, 'module' => 'term']));
         $this->form->setValidator('type', new sfValidatorString());
 
         $choices = [];
         $choices[null] = null;
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::FUNCTION_ID) as $item)
-        {
+        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::FUNCTION_ID) as $item) {
           $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
@@ -142,14 +138,12 @@ class sfIsdfPluginEditAction extends FunctionEditAction
    */
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'type':
         unset($this->resource->type);
 
         $value = $this->form->getValue($field->getName());
-        if (isset($value))
-        {
+        if (isset($value)) {
           $params = $this->context->routing->parse(Qubit::pathInfo($value));
           $this->resource->type = $params['_sf_route']->resource;
         }
@@ -172,10 +166,8 @@ class sfIsdfPluginEditAction extends FunctionEditAction
     $this->relatedFunctionComponent->processForm();
     $this->relatedResourceComponent->processForm();
 
-    if (isset($this->request->deleteRelations))
-    {
-      foreach ($this->request->deleteRelations as $item)
-      {
+    if (isset($this->request->deleteRelations)) {
+      foreach ($this->request->deleteRelations as $item) {
         $params = $this->context->routing->parse(Qubit::pathInfo($item));
         $params['_sf_route']->resource->delete();
       }

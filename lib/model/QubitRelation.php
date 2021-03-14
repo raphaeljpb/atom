@@ -48,25 +48,20 @@ class QubitRelation extends BaseRelation
 
     parent::save($connection);
 
-    if ($this->indexOnSave)
-    {
-      if ($this->objectId != $cleanObjectId && null !== QubitInformationObject::getById($cleanObjectId))
-      {
+    if ($this->indexOnSave) {
+      if ($this->objectId != $cleanObjectId && null !== QubitInformationObject::getById($cleanObjectId)) {
         QubitSearch::getInstance()->update(QubitInformationObject::getById($cleanObjectId));
       }
 
-      if ($this->subjectId != $cleanSubjectId && null != QubitInformationObject::getById($cleanSubjectId))
-      {
+      if ($this->subjectId != $cleanSubjectId && null != QubitInformationObject::getById($cleanSubjectId)) {
         QubitSearch::getInstance()->update(QubitInformationObject::getById($cleanSubjectId));
       }
 
-      if ($this->object instanceof QubitInformationObject)
-      {
+      if ($this->object instanceof QubitInformationObject) {
         QubitSearch::getInstance()->update($this->object);
       }
 
-      if ($this->subject instanceof QubitInformationObject)
-      {
+      if ($this->subject instanceof QubitInformationObject) {
         QubitSearch::getInstance()->update($this->subject);
       }
     }
@@ -78,13 +73,11 @@ class QubitRelation extends BaseRelation
   {
     parent::delete($connection);
 
-    if ($this->indexObjectOnDelete && $this->object instanceof QubitInformationObject)
-    {
+    if ($this->indexObjectOnDelete && $this->object instanceof QubitInformationObject) {
       QubitSearch::getInstance()->update($this->object);
     }
 
-    if ($this->indexSubjectOnDelete && $this->subject instanceof QubitInformationObject)
-    {
+    if ($this->indexSubjectOnDelete && $this->subject instanceof QubitInformationObject) {
       QubitSearch::getInstance()->update($this->subject);
     }
   }
@@ -103,8 +96,7 @@ class QubitRelation extends BaseRelation
     $criteria = new Criteria();
     $criteria->add(QubitRelation::OBJECT_ID, $id);
 
-    if (isset($options['typeId']))
-    {
+    if (isset($options['typeId'])) {
       $criteria->add(QubitRelation::TYPE_ID, $options['typeId']);
     }
 
@@ -125,8 +117,7 @@ class QubitRelation extends BaseRelation
     $criteria = new Criteria();
     $criteria->add(QubitRelation::SUBJECT_ID, $id);
 
-    if (isset($options['typeId']))
-    {
+    if (isset($options['typeId'])) {
       $criteria->add(QubitRelation::TYPE_ID, $options['typeId']);
     }
 
@@ -150,8 +141,7 @@ class QubitRelation extends BaseRelation
     $criterion1->addOr($criterion2);
 
     // If restricting by relation type
-    if (isset($options['typeId']))
-    {
+    if (isset($options['typeId'])) {
       $criterion3 = $criteria->getNewCriterion(QubitRelation::TYPE_ID, $options['typeId']);
       $criterion1->addAnd($criterion3);
     }
@@ -178,8 +168,7 @@ class QubitRelation extends BaseRelation
     $criteria->addJoin(QubitRelation::SUBJECT_ID, QubitObject::ID);
     $criteria->add(QubitObject::CLASS_NAME, $className);
 
-    if (isset($options['typeId']))
-    {
+    if (isset($options['typeId'])) {
       $criteria->add(QubitRelation::TYPE_ID, $options['typeId']);
     }
 
@@ -202,8 +191,7 @@ class QubitRelation extends BaseRelation
     $criteria->addJoin(QubitRelation::OBJECT_ID, QubitObject::ID);
     $criteria->add(QubitObject::CLASS_NAME, $className);
 
-    if (isset($options['typeId']))
-    {
+    if (isset($options['typeId'])) {
       $criteria->add(QubitRelation::TYPE_ID, $options['typeId']);
     }
 
@@ -220,22 +208,16 @@ class QubitRelation extends BaseRelation
    */
   public function getOpposedObject($reference)
   {
-    if (is_object($reference))
-    {
+    if (is_object($reference)) {
       $refid = $reference->id;
-    }
-    else
-    {
+    } else {
       $refid = $reference;
     }
 
     $opposite = null;
-    if ($this->subjectId == $refid)
-    {
+    if ($this->subjectId == $refid) {
       $opposite = $this->getObject();
-    }
-    elseif ($this->objectId == $refid)
-    {
+    } elseif ($this->objectId == $refid) {
       $opposite = $this->getSubject();
     }
 

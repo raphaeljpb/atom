@@ -63,8 +63,7 @@ class DigitalObjectMetadataComponent extends sfComponent
     // If the digital object is related to an information object, and the user
     // is not authenticated, access may be restricted by PREMIS rights, as well
     // as standard ACL rules
-    if ($this->relatedToIo && !$this->user->isAuthenticated())
-    {
+    if ($this->relatedToIo && !$this->user->isAuthenticated()) {
       $this->canAccessMasterFile = QubitGrantedRight::checkPremis(
         $this->resource->object->id, 'readMaster', $this->masterFileDenyReason
       ) && QubitAcl::check($this->resource->object, 'readMaster');
@@ -76,9 +75,7 @@ class DigitalObjectMetadataComponent extends sfComponent
       $this->canAccessThumbnailCopy = QubitGrantedRight::checkPremis(
         $this->resource->object->id, 'readThumbnail', $this->thumbnailCopyDenyReason
       ) && QubitAcl::check($this->resource->object, 'readThumbnail');
-    }
-    else
-    {
+    } else {
       // Check ACL authorization
       $this->canAccessMasterFile = QubitAcl::check(
         $this->resource->object, 'readMaster'
@@ -97,8 +94,7 @@ class DigitalObjectMetadataComponent extends sfComponent
     $this->accessStatement = $this->getPreservationSystemAccessStatement();
 
     // Determine which metadata sections should be shown
-    if ($this->relatedToIo)
-    {
+    if ($this->relatedToIo) {
       // Only an information object can have Archivematica "original file" and
       // "preservation copy" metadata
       $this->showOriginalFileMetadata = $this->setOriginalFileShowProperties();
@@ -118,8 +114,7 @@ class DigitalObjectMetadataComponent extends sfComponent
 
   protected function getPreservationSystemAccessStatement()
   {
-    if ($this->isPreservationSystemAccessStatementEnabled())
-    {
+    if ($this->isPreservationSystemAccessStatementEnabled()) {
       return sfConfig::get('app_digitalobject_preservation_system_access_statement');
     }
   }
@@ -359,8 +354,7 @@ class DigitalObjectMetadataComponent extends sfComponent
 
   protected function localizeUTCDateTime($dateTime)
   {
-    if (false !== $timestamp = strtotime($dateTime))
-    {
+    if (false !== $timestamp = strtotime($dateTime)) {
       return date('Y-m-d\TH:i:s\Z', $timestamp);
     }
   }

@@ -65,23 +65,19 @@ class sfInstallDatabaseConfigHandler extends sfDatabaseConfigHandler
     $config['all']['propel']['param']['dsn'] = 'mysql:dbname='.self::$options['databaseName'];
 
     if (isset(self::$options['databaseHost'])
-      && 'localhost' != self::$options['databaseHost'])
-    {
+      && 'localhost' != self::$options['databaseHost']) {
       $config['all']['propel']['param']['dsn'] .= ';host='.self::$options['databaseHost'];
     }
 
     // Database config
-    if (isset(self::$options['databasePort']))
-    {
+    if (isset(self::$options['databasePort'])) {
       $config['all']['propel']['param']['dsn'] .= ';port='.self::$options['databasePort'];
     }
 
-    if (isset(self::$options['databaseUsername']))
-    {
+    if (isset(self::$options['databaseUsername'])) {
       $config['all']['propel']['param']['username'] = self::$options['databaseUsername'];
 
-      if (isset(self::$options['databasePassword']))
-      {
+      if (isset(self::$options['databasePassword'])) {
         $config['all']['propel']['param']['password'] = self::$options['databasePassword'];
       }
     }

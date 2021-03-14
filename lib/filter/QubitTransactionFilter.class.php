@@ -24,57 +24,40 @@ class QubitTransactionFilter extends sfFilter
 
   public function execute($filterChain)
   {
-    try
-    {
+    try {
       $conn = Propel::getConnection();
       $conn->beginTransaction();
-    }
-    catch (PropelException $e)
-    {
+    } catch (PropelException $e) {
     }
 
-    try
-    {
+    try {
       $filterChain->execute();
 
-      if (isset($conn))
-      {
+      if (isset($conn)) {
         $conn->commit();
       }
-    }
-    catch (PDOException $e)
-    {
+    } catch (PDOException $e) {
       // Rollback the transaction
       $conn->rollBack();
 
       // If there was a transaction deadlock error (MySQL error code 1213)
-      if (isset($conn) && 1213 == $e->errorInfo[1])
-      {
+      if (isset($conn) && 1213 == $e->errorInfo[1]) {
         // Retry the current action (returns false when out of retries)
-        if (!$this->retry())
-        {
+        if (!$this->retry()) {
           // If we've hit the retry limit, re-throw the exception
           throw $e;
         }
-      }
-      else
-      {
+      } else {
         // Re-throw any other PDOExceptions
         throw $e;
       }
-    }
-    catch (Exception $e)
-    {
-      if (isset($conn))
-      {
+    } catch (Exception $e) {
+      if (isset($conn)) {
         // Whitelist of exceptions which commit instead of rollback the
         // transaction
-        if ($e instanceof sfStopException)
-        {
+        if ($e instanceof sfStopException) {
           $conn->commit();
-        }
-        else
-        {
+        } else {
           $conn->rollBack();
         }
       }
@@ -86,14 +69,12 @@ class QubitTransactionFilter extends sfFilter
   protected function retry()
   {
     // If we've hit the retry limit, abort and return false
-    if (self::$retry++ > self::$retryLimit)
-    {
+    if (self::$retry++ > self::$retryLimit) {
       return false;
     }
 
     // Log a warning
-    if (sfConfig::get('sf_logging_enabled'))
-    {
+    if (sfConfig::get('sf_logging_enabled')) {
       $this->context->getLogger()->warning(
         sprintf('Encountered a SQL transaction deadlock, retry %d of %d',
           self::$retry, self::$retryLimit

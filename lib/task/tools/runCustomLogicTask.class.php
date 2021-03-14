@@ -24,11 +24,11 @@
  */
 class runCustomLogicTask extends arBaseTask
 {
-    protected $namespace = 'tools';
-    protected $name = 'run';
-    protected $briefDescription = 'Run ad-hoc logic contained in a PHP file';
+  protected $namespace = 'tools';
+  protected $name = 'run';
+  protected $briefDescription = 'Run ad-hoc logic contained in a PHP file';
 
-    protected $detailedDescription = <<<'EOF'
+  protected $detailedDescription = <<<'EOF'
 Run ad-hoc logic contained in a PHP file
 EOF;
 
@@ -42,16 +42,14 @@ EOF;
   {
     parent::execute($arguments, $options);
 
-    if (false === $fh = fopen($arguments['filename'], 'rb'))
-    {
+    if (false === $fh = fopen($arguments['filename'], 'rb')) {
       throw new sfException('You must specify a valid filename');
     }
 
     include $arguments['filename'];
 
     // Optionally log script execution
-    if ($options['log'])
-    {
+    if ($options['log']) {
       $custom_logger = new sfFileLogger(new sfEventDispatcher(), ['file' => $options['log_file']]);
       $custom_logger->info($arguments['filename']);
     }

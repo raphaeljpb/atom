@@ -70,28 +70,21 @@ class RepositoryBrowseAction extends DefaultBrowseAction
     $this->tableView = 'table';
     $allowedViews = [$this->cardView, $this->tableView];
 
-    if (sfConfig::get('app_enable_institutional_scoping'))
-    {
-      if (isset($request->repos) && ctype_digit($request->repos) && null !== $this->repos = QubitRepository::getById($request->repos))
-      {
+    if (sfConfig::get('app_enable_institutional_scoping')) {
+      if (isset($request->repos) && ctype_digit($request->repos) && null !== $this->repos = QubitRepository::getById($request->repos)) {
         $this->search->queryBool->addMust(new \Elastica\Query\Term(['repository.id' => $request->repos]));
 
         // Store realm in user session
         $this->context->user->setAttribute('search-realm', $request->repos);
-      }
-      else
-      {
+      } else {
         // Remove search-realm
         $this->context->user->removeAttribute('search-realm');
       }
     }
 
-    if (1 === preg_match('/^[\s\t\r\n]*$/', $request->subquery))
-    {
+    if (1 === preg_match('/^[\s\t\r\n]*$/', $request->subquery)) {
       $this->search->queryBool->addMust(new \Elastica\Query\MatchAll());
-    }
-    else
-    {
+    } else {
       $this->search->queryBool->addMust(
         arElasticSearchPluginUtil::generateBoolQueryString(
           $request->subquery, arElasticSearchPluginUtil::getAllFields('repository')
@@ -101,8 +94,7 @@ class RepositoryBrowseAction extends DefaultBrowseAction
 
     $i18n = sprintf('i18n.%s.', $this->selectedCulture);
 
-    switch ($request->sort)
-    {
+    switch ($request->sort) {
       case 'nameUp':
         $this->search->query->setSort([$i18n.'authorizedFormOfName.alphasort' => 'asc']);
 
@@ -158,12 +150,9 @@ class RepositoryBrowseAction extends DefaultBrowseAction
 
     $this->populateAggs($resultSet);
 
-    if (isset($request->view) && in_array($request->view, $allowedViews))
-    {
+    if (isset($request->view) && in_array($request->view, $allowedViews)) {
       $this->view = $request->view;
-    }
-    else
-    {
+    } else {
       $this->view = sfConfig::get('app_default_repository_browse_view', 'card');
     }
 
@@ -172,8 +161,7 @@ class RepositoryBrowseAction extends DefaultBrowseAction
 
   protected function populateAgg($name, $buckets)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'types':
       case 'geographicSubregions':
       case 'thematicAreas':
@@ -181,8 +169,7 @@ class RepositoryBrowseAction extends DefaultBrowseAction
         $criteria = new Criteria();
         $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
 
-        foreach (QubitTerm::get($criteria) as $item)
-        {
+        foreach (QubitTerm::get($criteria) as $item) {
           $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
         }
 
@@ -190,8 +177,7 @@ class RepositoryBrowseAction extends DefaultBrowseAction
 
       case 'regions':
       case 'locality':
-        foreach ($buckets as $key => $bucket)
-        {
+        foreach ($buckets as $key => $bucket) {
           $buckets[$key]['display'] = $bucket['key'];
         }
 
@@ -223,10 +209,8 @@ class RepositoryBrowseAction extends DefaultBrowseAction
    */
   private function setI18nFieldCultures()
   {
-    foreach (self::$AGGS as $key => &$value)
-    {
-      if (false !== array_search('i18n.%s', $value['field']))
-      {
+    foreach (self::$AGGS as $key => &$value) {
+      if (false !== array_search('i18n.%s', $value['field'])) {
         $value['field'] = sprintf($value['field'], $this->context->user->getCulture());
       }
     }

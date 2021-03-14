@@ -31,8 +31,7 @@ class QubitStaticPage extends BaseStaticPage
 
   protected function insert($connection = null)
   {
-    if (!isset($this->slug))
-    {
+    if (!isset($this->slug)) {
       $this->slug = QubitSlug::slugify($this->__get('title', ['sourceCulture' => true]));
     }
 
@@ -41,8 +40,7 @@ class QubitStaticPage extends BaseStaticPage
 
   protected function update($connection = null)
   {
-    if (!isset($connection))
-    {
+    if (!isset($connection)) {
       $connection = Propel::getConnection();
     }
 
@@ -51,21 +49,18 @@ class QubitStaticPage extends BaseStaticPage
       SET '.QubitSlug::SLUG.' = ?
       WHERE '.QubitSlug::OBJECT_ID.' = ?');
 
-    if (1 > strlen($this->slug))
-    {
+    if (1 > strlen($this->slug)) {
       $statement->execute([QubitSlug::random(), $this->id]);
 
       return;
     }
 
-    try
-    {
+    try {
       $statement->execute([$this->slug, $this->id]);
     }
 
     // Collision? Try random, digit and letter slug
-    catch (PDOException $e)
-    {
+    catch (PDOException $e) {
       $statement->execute([QubitSlug::random(), $this->id]);
     }
 

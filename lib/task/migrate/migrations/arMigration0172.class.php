@@ -58,8 +58,7 @@ class arMigration0172
     ];
 
     // Increase size of culture-related columns
-    foreach ($i18nTables as $table)
-    {
+    foreach ($i18nTables as $table) {
       // Increase size of i18n table's culture column
       $sql = 'ALTER TABLE `%s` CHANGE `culture` `culture` VARCHAR(16)';
       QubitPdo::modify(sprintf($sql, $table));

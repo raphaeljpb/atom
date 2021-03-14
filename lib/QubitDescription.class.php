@@ -21,12 +21,9 @@ class QubitDescription
 {
   public static function addAssets(sfWebResponse $response)
   {
-    if (sfConfig::get('app_show_tooltips'))
-    {
+    if (sfConfig::get('app_show_tooltips')) {
       $response->addJavaScript('description', 'last');
-    }
-    else
-    {
+    } else {
       $response->addStylesheet('hide_tooltips', 'last');
     }
   }

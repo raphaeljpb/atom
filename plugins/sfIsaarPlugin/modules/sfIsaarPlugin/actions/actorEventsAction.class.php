@@ -24,8 +24,7 @@ class sfIsaarPluginActorEventsAction extends sfAction
 {
   public function execute($request)
   {
-    if (empty($request->slug))
-    {
+    if (empty($request->slug)) {
       $this->response->setStatusCode(400);
       $errorMessage = sfContext::getInstance()->i18n->__('Slug must be provided');
 
@@ -57,8 +56,7 @@ class sfIsaarPluginActorEventsAction extends sfAction
     sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
     sfContext::getInstance()->getConfiguration()->loadHelpers('Qubit');
 
-    foreach (QubitEvent::get($criteria) as $event)
-    {
+    foreach (QubitEvent::get($criteria) as $event) {
       $eventData = [
         'url' => url_for([$event, 'module' => 'event']),
         'title' => render_title($event->object),

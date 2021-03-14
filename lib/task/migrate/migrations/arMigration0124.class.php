@@ -38,8 +38,7 @@ class arMigration0124
    */
   public function up($configuration)
   {
-    if (null === QubitSetting::getByName('default_repository_browse_view'))
-    {
+    if (null === QubitSetting::getByName('default_repository_browse_view')) {
       $setting = new QubitSetting();
       $setting->setName('default_repository_browse_view');
       $setting->setSourceCulture('en');

@@ -49,8 +49,7 @@ EOF;
       ? $options['source-name']
       : basename($arguments['filename']);
 
-    if (false === $fh = fopen($arguments['filename'], 'rb'))
-    {
+    if (false === $fh = fopen($arguments['filename'], 'rb')) {
       throw new sfException('You must specify a valid filename');
     }
 
@@ -166,20 +165,16 @@ EOF;
         'script' => '|',
       ],
 
-      'updatePreparationLogic' => function (&$self)
-      {
+      'updatePreparationLogic' => function (&$self) {
         $this->deleteDigitalObjectIfUpdatingAndNotKeeping($self);
       },
 
       // Import logic to execute before saving actor
-      'preSaveLogic' => function (&$self)
-      {
-        if ($self->object)
-        {
+      'preSaveLogic' => function (&$self) {
+        if ($self->object) {
           // Warn or abort if identifier's already been used
           if (!empty($identifier = $self->columnValue('descriptionIdentifier'))
-              && QubitValidatorActorDescriptionIdentifier::identifierUsedByAnotherActor($identifier, $self->object))
-          {
+              && QubitValidatorActorDescriptionIdentifier::identifierUsedByAnotherActor($identifier, $self->object)) {
             $error = sfContext::getInstance()
               ->i18n
               ->__(
@@ -191,8 +186,7 @@ EOF;
                        )
             ;
 
-            if (sfConfig::get('app_prevent_duplicate_actor_identifiers', false))
-            {
+            if (sfConfig::get('app_prevent_duplicate_actor_identifiers', false)) {
               $error .= sfContext::getInstance()->i18n->__(' Import aborted.');
 
               throw new sfException($error);
@@ -204,8 +198,7 @@ EOF;
           if (
             isset($self->rowStatusVars['typeOfEntity'])
             && $self->rowStatusVars['typeOfEntity']
-          )
-          {
+          ) {
             $self->object->entityTypeId = $self->translateNameToTermId(
               'type of entity',
               $self->rowStatusVars['typeOfEntity'],
@@ -217,8 +210,7 @@ EOF;
           if (
             isset($self->rowStatusVars['status'])
             && $self->rowStatusVars['status']
-          )
-          {
+          ) {
             $self->object->descriptionStatusId = $self->translateNameToTermId(
               'status',
               $self->rowStatusVars['status'],
@@ -230,8 +222,7 @@ EOF;
           if (
             isset($self->rowStatusVars['levelOfDetail'])
             && $self->rowStatusVars['levelOfDetail']
-          )
-          {
+          ) {
             $self->object->descriptionDetailId = $self->translateNameToTermId(
               'level of detail',
               $self->rowStatusVars['levelOfDetail'],
@@ -243,10 +234,8 @@ EOF;
       },
 
       // Import logic to execute after saving actor
-      'postSaveLogic' => function (&$self)
-      {
-        if ($self->object)
-        {
+      'postSaveLogic' => function (&$self) {
+        if ($self->object) {
           // Note actor name for optional relationship import phase
           $self->status['actorNames'][$self->object->id] = $self->object->authorizedFormOfName;
 
@@ -265,24 +254,19 @@ EOF;
           ];
 
           $hasContactInfo = false;
-          foreach (array_keys($self->rowStatusVars) as $name)
-          {
-            if (in_array($name, $contactVariables))
-            {
+          foreach (array_keys($self->rowStatusVars) as $name) {
+            if (in_array($name, $contactVariables)) {
               $hasContactInfo = true;
             }
           }
 
-          if ($hasContactInfo)
-          {
+          if ($hasContactInfo) {
             // Add contact information
             $info = new QubitContactInformation();
             $info->actorId = $self->object->id;
 
-            foreach ($contactVariables as $property)
-            {
-              if ($self->rowStatusVars[$property])
-              {
+            foreach ($contactVariables as $property) {
+              if ($self->rowStatusVars[$property]) {
                 $info->{$property} = $self->rowStatusVars[$property];
               }
             }
@@ -291,18 +275,14 @@ EOF;
           }
 
           // Add placeAccessPoints
-          if (!empty($self->rowStatusVars['placeAccessPoints']))
-          {
+          if (!empty($self->rowStatusVars['placeAccessPoints'])) {
             $places = explode('|', $self->rowStatusVars['placeAccessPoints']);
-            for ($i = 0; $i < count($places); ++$i)
-            {
-              if (empty($places[$i]))
-              {
+            for ($i = 0; $i < count($places); ++$i) {
+              if (empty($places[$i])) {
                 continue;
               }
 
-              if (null !== $relation = QubitActor::setTermRelationByName($places[$i], $options = ['taxonomyId' => QubitTaxonomy::PLACE_ID, 'culture' => $self->columnValue('culture')]))
-              {
+              if (null !== $relation = QubitActor::setTermRelationByName($places[$i], $options = ['taxonomyId' => QubitTaxonomy::PLACE_ID, 'culture' => $self->columnValue('culture')])) {
                 $relation->object = $self->object;
                 $relation->save();
               }
@@ -310,18 +290,14 @@ EOF;
           }
 
           // Add subjectAccessPoints
-          if (!empty($self->rowStatusVars['subjectAccessPoints']))
-          {
+          if (!empty($self->rowStatusVars['subjectAccessPoints'])) {
             $subjects = explode('|', $self->rowStatusVars['subjectAccessPoints']);
-            for ($i = 0; $i < count($subjects); ++$i)
-            {
-              if (empty($subjects[$i]))
-              {
+            for ($i = 0; $i < count($subjects); ++$i) {
+              if (empty($subjects[$i])) {
                 continue;
               }
 
-              if (null !== $relation = QubitActor::setTermRelationByName($subjects[$i], $options = ['taxonomyId' => QubitTaxonomy::SUBJECT_ID, 'culture' => $self->columnValue('culture')]))
-              {
+              if (null !== $relation = QubitActor::setTermRelationByName($subjects[$i], $options = ['taxonomyId' => QubitTaxonomy::SUBJECT_ID, 'culture' => $self->columnValue('culture')])) {
                 $relation->object = $self->object;
                 $relation->save();
               }
@@ -329,30 +305,24 @@ EOF;
           }
 
           // Add occupations
-          if (!empty($self->rowStatusVars['actorOccupations']))
-          {
+          if (!empty($self->rowStatusVars['actorOccupations'])) {
             $occupations = explode('|', $self->rowStatusVars['actorOccupations']);
             $occupationNotes = [];
 
-            if (!empty($self->rowStatusVars['actorOccupationNotes']))
-            {
+            if (!empty($self->rowStatusVars['actorOccupationNotes'])) {
               $occupationNotes = explode('|', $self->rowStatusVars['actorOccupationNotes']);
             }
 
-            for ($i = 0; $i < count($occupations); ++$i)
-            {
-              if (empty($occupations[$i]))
-              {
+            for ($i = 0; $i < count($occupations); ++$i) {
+              if (empty($occupations[$i])) {
                 continue;
               }
 
-              if (null !== $relation = QubitActor::setTermRelationByName($occupations[$i], $options = ['taxonomyId' => QubitTaxonomy::ACTOR_OCCUPATION_ID, 'culture' => $self->columnValue('culture')]))
-              {
+              if (null !== $relation = QubitActor::setTermRelationByName($occupations[$i], $options = ['taxonomyId' => QubitTaxonomy::ACTOR_OCCUPATION_ID, 'culture' => $self->columnValue('culture')])) {
                 $relation->object = $self->object;
                 $relation->save();
 
-                if (!empty($occupationNotes[$i]) && 'NULL' !== $occupationNotes[$i])
-                {
+                if (!empty($occupationNotes[$i]) && 'NULL' !== $occupationNotes[$i]) {
                   $note = new QubitNote();
                   $note->typeId = QubitTerm::ACTOR_OCCUPATION_NOTE_ID;
                   $note->content = $occupationNotes[$i];
@@ -367,8 +337,7 @@ EOF;
           $this->importDigitalObject($self);
 
           // Re-index to add related resources
-          if (!$self->searchIndexingDisabled)
-          {
+          if (!$self->searchIndexingDisabled) {
             QubitSearch::getInstance()->update($self->object);
           }
         }

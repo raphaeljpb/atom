@@ -8,12 +8,10 @@ class Browser extends sfBrowser
 {
   public function files($files)
   {
-    foreach ($files as $key => $path)
-    {
+    foreach ($files as $key => $path) {
       $error = UPLOAD_ERR_NO_FILE;
       $size = 0;
-      if (is_readable($path))
-      {
+      if (is_readable($path)) {
         $error = UPLOAD_ERR_OK;
         $size = filesize($path);
       }

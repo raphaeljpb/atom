@@ -26,8 +26,7 @@ class DefaultUpdateCheckComponent extends sfComponent
 {
   public function execute($request)
   {
-    if (!$this->context->user->isAdministrator() || !sfConfig::get('app_check_for_updates'))
-    {
+    if (!$this->context->user->isAdministrator() || !sfConfig::get('app_check_for_updates')) {
       return sfView::NONE;
     }
 
@@ -39,8 +38,7 @@ class DefaultUpdateCheckComponent extends sfComponent
 
     // We are using cookies so we need to identify the application path
     $this->cookiePath = sfContext::getInstance()->request->getRelativeUrlRoot();
-    if (1 > strlen($this->cookiePath))
-    {
+    if (1 > strlen($this->cookiePath)) {
       $this->cookiePath = '/';
     }
 
@@ -64,25 +62,19 @@ class DefaultUpdateCheckComponent extends sfComponent
 
     // If the client does not support JavaScript we try to access to the service
     // using sfWebBrowser, a wrapper for php_curl/fopen/sockets (in that order)
-    if (!$request->getCookie('has_js'))
-    {
-      if (null === ($this->lastVersion = $this->context->user->getAttribute('last_version')))
-      {
-        try
-        {
+    if (!$request->getCookie('has_js')) {
+      if (null === ($this->lastVersion = $this->context->user->getAttribute('last_version'))) {
+        try {
           $browser = new sfWebBrowser();
           $this->lastVersion = $browser->post($this->updateCheckUrl, $this->updateCheckData)->getResponseText();
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
           $this->lastVersion = 0;
         }
 
         $this->context->user->setAttribute('last_version', $this->lastVersion);
       }
 
-      if (0 == $this->lastVersion || 1 > version_compare($this->lastVersion, qubitConfiguration::VERSION))
-      {
+      if (0 == $this->lastVersion || 1 > version_compare($this->lastVersion, qubitConfiguration::VERSION)) {
         return sfView::NONE;
       }
     }

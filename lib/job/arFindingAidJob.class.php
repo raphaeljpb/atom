@@ -37,8 +37,7 @@ class arFindingAidJob extends arBaseJob
     $this->resource = QubitInformationObject::getById($parameters['objectId']);
 
     // Check that object exists and that it is not the root
-    if (!isset($this->resource) || !isset($this->resource->parent))
-    {
+    if (!isset($this->resource) || !isset($this->resource->parent)) {
       $this->error($this->i18n->__('Error: Could not find an information object with id: %1', ['%1' => $parameters['objectId']]));
 
       return false;
@@ -46,21 +45,15 @@ class arFindingAidJob extends arBaseJob
 
     Qubit::createDownloadsDirIfNeeded();
 
-    if (isset($parameters['delete']) && $parameters['delete'])
-    {
+    if (isset($parameters['delete']) && $parameters['delete']) {
       $result = $this->delete();
-    }
-    elseif (isset($parameters['uploadPath']))
-    {
+    } elseif (isset($parameters['uploadPath'])) {
       $result = $this->upload($parameters['uploadPath']);
-    }
-    else
-    {
+    } else {
       $result = $this->generate();
     }
 
-    if (!$result)
-    {
+    if (!$result) {
       return false;
     }
 
@@ -91,8 +84,7 @@ class arFindingAidJob extends arBaseJob
       $id.'.rtf',
     ];
 
-    if (null !== $slug = QubitSlug::getByObjectId($id))
-    {
+    if (null !== $slug = QubitSlug::getByObjectId($id)) {
       $filenames[] = $slug->slug.'.pdf';
       $filenames[] = $slug->slug.'.rtf';
     }
@@ -102,12 +94,10 @@ class arFindingAidJob extends arBaseJob
 
   public static function getFindingAidPathForDownload($id)
   {
-    foreach (self::getPossibleFilenames($id) as $filename)
-    {
+    foreach (self::getPossibleFilenames($id) as $filename) {
       $path = 'downloads'.DIRECTORY_SEPARATOR.$filename;
 
-      if (file_exists(sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$path))
-      {
+      if (file_exists(sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$path)) {
         return $path;
       }
     }
@@ -117,13 +107,11 @@ class arFindingAidJob extends arBaseJob
 
   public static function getFindingAidPath($id)
   {
-    if (null !== $slug = QubitSlug::getByObjectId($id))
-    {
+    if (null !== $slug = QubitSlug::getByObjectId($id)) {
       $filename = $slug->slug;
     }
 
-    if (!isset($filename))
-    {
+    if (!isset($filename)) {
       $filename = $id;
     }
 
@@ -132,8 +120,7 @@ class arFindingAidJob extends arBaseJob
 
   public static function getFindingAidFormat()
   {
-    if (null !== $setting = QubitSetting::getByName('findingAidFormat'))
-    {
+    if (null !== $setting = QubitSetting::getByName('findingAidFormat')) {
       $format = $setting->getValue(['sourceCulture' => true]);
     }
 
@@ -149,8 +136,7 @@ class arFindingAidJob extends arBaseJob
     $eadFileHandle = tmpfile();
     $foFileHandle = tmpfile();
 
-    if (!$eadFileHandle || !$foFileHandle)
-    {
+    if (!$eadFileHandle || !$foFileHandle) {
       $this->error($this->i18n->__('Failed to create temporary file.'));
 
       return false;
@@ -163,8 +149,7 @@ class arFindingAidJob extends arBaseJob
 
     $public = '';
     if ((null !== $setting = QubitSetting::getByName('publicFindingAid'))
-      && $setting->getValue(['sourceCulture' => true]))
-    {
+      && $setting->getValue(['sourceCulture' => true])) {
       $public = '--public';
     }
 
@@ -173,8 +158,7 @@ class arFindingAidJob extends arBaseJob
     $output = [];
     exec(PHP_BINARY." {$appRoot}/symfony export:bulk --single-slug=\"{$slug}\" {$public} {$eadFilePath} 2>&1", $output, $exitCode);
 
-    if ($exitCode > 0)
-    {
+    if ($exitCode > 0) {
       $this->error($this->i18n->__('Exporting EAD has failed.'));
       $this->logCmdOutput($output, 'ERROR(EAD-EXPORT)');
 
@@ -183,8 +167,7 @@ class arFindingAidJob extends arBaseJob
 
     // Use XSL file selected in Finding Aid model setting
     $findingAidModel = 'inventory-summary';
-    if (null !== $setting = QubitSetting::getByName('findingAidModel'))
-    {
+    if (null !== $setting = QubitSetting::getByName('findingAidModel')) {
       $findingAidModel = $setting->getValue(['sourceCulture' => true]);
     }
 
@@ -203,8 +186,7 @@ class arFindingAidJob extends arBaseJob
     $output = [];
     exec($cmd, $output, $exitCode);
 
-    if ($exitCode > 0)
-    {
+    if ($exitCode > 0) {
       $this->error($this->i18n->__('Transforming the EAD with Saxon has failed.'));
       $this->logCmdOutput($output, 'ERROR(SAXON)');
 
@@ -217,8 +199,7 @@ class arFindingAidJob extends arBaseJob
     $output = [];
     exec($cmd, $output, $exitCode);
 
-    if (0 != $exitCode)
-    {
+    if (0 != $exitCode) {
       $this->error($this->i18n->__('Converting the EAD FO to PDF has failed.'));
       $this->logCmdOutput($output, 'ERROR(FOP)');
 
@@ -230,8 +211,7 @@ class arFindingAidJob extends arBaseJob
     $criteria->add(QubitProperty::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitProperty::NAME, 'findingAidStatus');
 
-    if (null === $property = QubitProperty::getOne($criteria))
-    {
+    if (null === $property = QubitProperty::getOne($criteria)) {
       $property = new QubitProperty();
       $property->objectId = $this->resource->id;
       $property->name = 'findingAidStatus';
@@ -266,8 +246,7 @@ class arFindingAidJob extends arBaseJob
     $criteria->add(QubitProperty::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitProperty::NAME, 'findingAidStatus');
 
-    if (null === $property = QubitProperty::getOne($criteria))
-    {
+    if (null === $property = QubitProperty::getOne($criteria)) {
       $property = new QubitProperty();
       $property->objectId = $this->resource->id;
       $property->name = 'findingAidStatus';
@@ -288,28 +267,22 @@ class arFindingAidJob extends arBaseJob
     // Extract finding aid transcript
     $mimeType = 'application/'.self::getFindingAidFormat();
 
-    if (!QubitDigitalObject::canExtractText($mimeType))
-    {
+    if (!QubitDigitalObject::canExtractText($mimeType)) {
       $message = $this->i18n->__('Could not obtain finding aid text.');
       $this->job->addNoteText($message);
       $this->info($message);
-    }
-    else
-    {
+    } else {
       $this->info($this->i18n->__('Obtaining finding aid text...'));
 
       $command = sprintf('pdftotext %s - 2> /dev/null', $path);
       exec($command, $output, $status);
 
-      if (0 != $status)
-      {
+      if (0 != $status) {
         $message = $this->i18n->__('Obtaining the text has failed.');
         $this->job->addNoteText($message);
         $this->info($message);
         $this->logCmdOutput($output, 'WARNING(PDFTOTEXT)');
-      }
-      elseif (0 < count($output))
-      {
+      } elseif (0 < count($output)) {
         $text = implode(PHP_EOL, $output);
 
         // Truncate PDF text to <64KB to fit in `property.value` column
@@ -321,8 +294,7 @@ class arFindingAidJob extends arBaseJob
         $criteria->add(QubitProperty::NAME, 'findingAidTranscript');
         $criteria->add(QubitProperty::SCOPE, 'Text extracted from finding aid PDF file text layer using pdftotext');
 
-        if (null === $property = QubitProperty::getOne($criteria))
-        {
+        if (null === $property = QubitProperty::getOne($criteria)) {
           $property = new QubitProperty();
           $property->objectId = $this->resource->id;
           $property->name = 'findingAidTranscript';
@@ -348,12 +320,10 @@ class arFindingAidJob extends arBaseJob
   {
     $this->info($this->i18n->__('Deleting finding aid (%1)...', ['%1' => $this->resource->slug]));
 
-    foreach (self::getPossibleFilenames($this->resource->id) as $filename)
-    {
+    foreach (self::getPossibleFilenames($this->resource->id) as $filename) {
       $path = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'downloads'.DIRECTORY_SEPARATOR.$filename;
 
-      if (file_exists($path))
-      {
+      if (file_exists($path)) {
         unlink($path);
       }
     }
@@ -364,8 +334,7 @@ class arFindingAidJob extends arBaseJob
     $criteria->add(QubitProperty::NAME, 'findingAidTranscript');
     $criteria->add(QubitProperty::SCOPE, 'Text extracted from finding aid PDF file text layer using pdftotext');
 
-    if (null !== $property = QubitProperty::getOne($criteria))
-    {
+    if (null !== $property = QubitProperty::getOne($criteria)) {
       $this->info($this->i18n->__('Deleting finding aid transcript...'));
 
       $property->indexOnDelete = false;
@@ -377,8 +346,7 @@ class arFindingAidJob extends arBaseJob
     $criteria->add(QubitProperty::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitProperty::NAME, 'findingAidStatus');
 
-    if (null !== $property = QubitProperty::getOne($criteria))
-    {
+    if (null !== $property = QubitProperty::getOne($criteria)) {
       $property->indexOnDelete = false;
       $property->delete();
     }
@@ -399,17 +367,13 @@ class arFindingAidJob extends arBaseJob
 
   private function logCmdOutput(array $output, $prefix = null)
   {
-    if (empty($prefix))
-    {
+    if (empty($prefix)) {
       $prefix = 'ERROR: ';
-    }
-    else
-    {
+    } else {
       $prefix = $prefix.': ';
     }
 
-    foreach ($output as $line)
-    {
+    foreach ($output as $line) {
       $this->error($prefix.$line);
     }
   }
@@ -421,8 +385,7 @@ class arFindingAidJob extends arBaseJob
         'xmlns="urn:isbn:1-931666-22-9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">', $xmlString, 1);
 
     // TODO: Use new base url functionality in AtoM instead of doing this kludge
-    if (null !== $url)
-    {
+    if (null !== $url) {
       // Since we call the EAD generation from inside Symfony and not as part as a web request,
       // the url was returning symfony://weirdurlhere. We can get around this by passing the referring url into
       // the job as an option when the user clicks 'generate' and replace the url in the EAD manually.

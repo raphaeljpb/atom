@@ -66,15 +66,13 @@ EOF;
     $dataTypes = explode(',', $arguments['data-type']);
     $this->validateDataTypes($dataTypes);
 
-    foreach ($dataTypes as $dataType)
-    {
+    foreach ($dataTypes as $dataType) {
       $typeSpec = self::$TYPE_SPECIFICATONS[$dataType];
 
       $options['older-than'] = $this->determineOlderThanDate($options, $typeSpec);
 
       // Abort if not forced or confirmed
-      if (!$options['force'] && !$this->getConfirmation($options, $typeSpec['plural_name']))
-      {
+      if (!$options['force'] && !$this->getConfirmation($options, $typeSpec['plural_name'])) {
         $this->logSection('expire-data', 'Aborted.');
 
         return;
@@ -97,8 +95,7 @@ EOF;
   {
     $description = '';
 
-    foreach (array_keys(self::$TYPE_SPECIFICATONS) as $dataType)
-    {
+    foreach (array_keys(self::$TYPE_SPECIFICATONS) as $dataType) {
       // Prepend with comma if not the first item
       $description = ($description) ? $description.', ' : $description;
       $description .= '"'.$dataType.'"';
@@ -109,11 +106,9 @@ EOF;
 
   private function validateDataTypes($dataTypes)
   {
-    foreach ($dataTypes as $dataType)
-    {
+    foreach ($dataTypes as $dataType) {
       // Abort if data type isn't supported
-      if (!in_array(strtolower($dataType), array_keys(self::$TYPE_SPECIFICATONS)))
-      {
+      if (!in_array(strtolower($dataType), array_keys(self::$TYPE_SPECIFICATONS))) {
         throw new sfException(
           sprintf('Aborted: unsupported data type: "%s".', $dataType)
         );
@@ -128,11 +123,9 @@ EOF;
       ? sfConfig::get($typeSpec['age_setting_name'])
       : null;
 
-    if (!isset($options['older-than']) && !empty($maxAge))
-    {
+    if (!isset($options['older-than']) && !empty($maxAge)) {
       // Throw error if setting value isn't an integer
-      if (!is_numeric($maxAge) || $maxAge < 0)
-      {
+      if (!is_numeric($maxAge) || $maxAge < 0) {
         throw new sfException(
           sprintf(
             'Error: setting %s value "%s" is not a valid number.',
@@ -172,12 +165,9 @@ EOF;
   {
     $message = 'Are you sure you want to delete ';
 
-    if (isset($options['older-than']))
-    {
+    if (isset($options['older-than'])) {
       $message .= sprintf('%s older than %s?', $typeNamePlural, $options['older-than']);
-    }
-    else
-    {
+    } else {
       $message .= sprintf('all %s?', $typeNamePlural);
     }
 
@@ -189,16 +179,14 @@ EOF;
     // Assemble criteria
     $criteria = new Criteria();
 
-    if (isset($options['older-than']))
-    {
+    if (isset($options['older-than'])) {
       $criteria->add(QubitClipboardSave::CREATED_AT, $options['older-than'], Criteria::LESS_THAN);
     }
 
     // Delete clipbooard saves and save items
     $deletedCount = 0;
 
-    foreach (QubitClipboardSave::get($criteria) as $save)
-    {
+    foreach (QubitClipboardSave::get($criteria) as $save) {
       $save->delete();
       ++$deletedCount;
     }
@@ -211,21 +199,18 @@ EOF;
     // Assemble criteria
     $criteria = new Criteria();
 
-    if (isset($options['older-than']))
-    {
+    if (isset($options['older-than'])) {
       $criteria->add(QubitJob::CREATED_AT, $options['older-than'], Criteria::LESS_THAN);
     }
 
     // Delete jobs and save items
     $deletedCount = 0;
 
-    foreach (QubitJob::get($criteria) as $job)
-    {
+    foreach (QubitJob::get($criteria) as $job) {
       // Jobs generate finding aids, which we *don't* want to delete... finding
       // aids won't be deleted by this logic, however, because the job doesn't
       // store the path to them after generating them
-      if (!empty($job->downloadPath) && file_exists($job->downloadPath))
-      {
+      if (!empty($job->downloadPath) && file_exists($job->downloadPath)) {
         unlink($job->downloadPath);
       }
 

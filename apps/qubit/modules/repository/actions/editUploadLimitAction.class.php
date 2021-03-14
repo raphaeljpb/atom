@@ -26,14 +26,12 @@ class RepositoryEditUploadLimitAction extends sfAction
     // about not finding the BaseForm class.
     $form = new sfForm();
 
-    if ($form->isCSRFProtected())
-    {
+    if ($form->isCSRFProtected()) {
       $fieldName = $form->getCSRFFieldName();
       $form->bind([$fieldName => $request->getParameter($fieldName)]);
     }
 
-    if (!$this->context->user->isAdministrator() || !$form->isValid())
-    {
+    if (!$this->context->user->isAdministrator() || !$form->isValid()) {
       // 403 - Forbidden
       $this->getResponse()->setStatusCode(403);
 
@@ -41,15 +39,13 @@ class RepositoryEditUploadLimitAction extends sfAction
     }
 
     $this->resource = $request->getAttribute('sf_route')->resource;
-    if (!isset($this->resource))
-    {
+    if (!isset($this->resource)) {
       $this->forward404();
     }
 
     $uploadLimit = $request->getParameter('uploadLimit');
 
-    switch ($uploadLimit['type'])
-    {
+    switch ($uploadLimit['type']) {
       case 'disabled':
         $this->resource->uploadLimit = 0;
 

@@ -34,12 +34,10 @@ class SettingsTreeviewAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         QubitCache::getInstance()->removePattern('settings:i18n:*');
@@ -58,8 +56,7 @@ class SettingsTreeviewAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'type':
         $this->typeSetting = QubitSetting::getByName('treeview_type');
         $default = 'sidebar';
@@ -143,8 +140,7 @@ class SettingsTreeviewAction extends DefaultEditAction
         $this->fullItemsPerPageSetting = QubitSetting::getByName('treeview_full_items_per_page');
 
         $default = 50;
-        if (isset($this->fullItemsPerPageSetting))
-        {
+        if (isset($this->fullItemsPerPageSetting)) {
           $default = $this->fullItemsPerPageSetting->getValue(['sourceCulture' => true]);
         }
         $this->form->setDefault($name, $default);
@@ -163,8 +159,7 @@ class SettingsTreeviewAction extends DefaultEditAction
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'type':
         $this->createOrUpdateSetting($this->typeSetting, 'treeview_type', $field->getValue());
 
@@ -209,8 +204,7 @@ class SettingsTreeviewAction extends DefaultEditAction
 
   private function addSettingRadioButtonsField($setting, $fieldName, $default, $options)
   {
-    if (isset($setting))
-    {
+    if (isset($setting)) {
       $default = $setting->getValue(['sourceCulture' => true]);
     }
 
@@ -221,8 +215,7 @@ class SettingsTreeviewAction extends DefaultEditAction
 
   private function createOrUpdateSetting($setting, $name, $value)
   {
-    if (!isset($setting))
-    {
+    if (!isset($setting)) {
       $setting = new QubitSetting();
       $setting->name = $name;
       $setting->sourceCulture = 'en';

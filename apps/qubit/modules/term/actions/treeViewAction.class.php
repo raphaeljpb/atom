@@ -28,15 +28,13 @@ class TermTreeViewAction extends sfAction
     // Number of siblings that we are showing above and below the current node
     $numberOfPreviousOrNextSiblings = 4;
 
-    switch ($request->show)
-    {
+    switch ($request->show) {
       case 'itemAndSiblings':
         // Previous siblings
         $prevItems = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous']);
 
         $this->hasPrevSiblings = count($prevItems) > $numberOfPreviousOrNextSiblings;
-        if ($this->hasPrevSiblings)
-        {
+        if ($this->hasPrevSiblings) {
           array_pop($prevItems);
         }
 
@@ -47,8 +45,7 @@ class TermTreeViewAction extends sfAction
         $nextItems = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'next']);
 
         $this->hasNextSiblings = count($nextItems) > $numberOfPreviousOrNextSiblings;
-        if ($this->hasNextSiblings)
-        {
+        if ($this->hasNextSiblings) {
           array_pop($nextItems);
         }
 
@@ -61,8 +58,7 @@ class TermTreeViewAction extends sfAction
         $this->items = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous']);
 
         $this->hasPrevSiblings = count($this->items) > $numberOfPreviousOrNextSiblings;
-        if ($this->hasPrevSiblings)
-        {
+        if ($this->hasPrevSiblings) {
           array_pop($this->items);
         }
 
@@ -75,8 +71,7 @@ class TermTreeViewAction extends sfAction
         $this->items = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'next']);
 
         $this->hasNextSiblings = count($this->items) > $numberOfPreviousOrNextSiblings;
-        if ($this->hasNextSiblings)
-        {
+        if ($this->hasNextSiblings) {
           array_pop($this->items);
         }
 

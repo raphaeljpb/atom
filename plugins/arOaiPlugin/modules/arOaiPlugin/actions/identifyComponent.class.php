@@ -42,8 +42,7 @@ class arOaiPluginIdentifyComponent extends arOaiPluginComponent
 
     $this->adminEmails = [];
     if ((null !== $adminEmailsSetting = QubitSetting::getByName('oai_admin_emails'))
-        && $adminEmailsValue = $adminEmailsSetting->getValue(['sourceCulture' => true]))
-    {
+        && $adminEmailsValue = $adminEmailsSetting->getValue(['sourceCulture' => true])) {
       $this->adminEmails = explode(',', $adminEmailsValue);
     }
   }

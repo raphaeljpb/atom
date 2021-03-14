@@ -31,8 +31,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     $this->metsParser = new QubitMetsParser($this->document);
 
     // Stop if there isn't a proper structMap
-    if (null === $structMap = $this->metsParser->getStructMap())
-    {
+    if (null === $structMap = $this->metsParser->getStructMap()) {
       throw new sfException(
         'A proper structMap could not be found in the METS file.'
       );
@@ -51,8 +50,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     );
 
     // Determine DIP upload method based on the structMap type
-    switch ((string) $structMap['TYPE'])
-    {
+    switch ((string) $structMap['TYPE']) {
       case 'logical':
         // Hierarchical DIP upload method
         $this->recursivelyAddChildrenFromStructMap($structMap, $this->resource);
@@ -80,12 +78,9 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    */
   protected function getMetsFilepath()
   {
-    if ($handle = opendir($this->filename))
-    {
-      while (false !== $item = readdir($handle))
-      {
-        if (0 < preg_match('/^METS\..*\.xml$/', $item))
-        {
+    if ($handle = opendir($this->filename)) {
+      while (false !== $item = readdir($handle)) {
+        if (0 < preg_match('/^METS\..*\.xml$/', $item)) {
           $path = $this->filename.DIRECTORY_SEPARATOR.$item;
 
           break;
@@ -93,14 +88,11 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
       }
 
       closedir($handle);
-    }
-    else
-    {
+    } else {
       throw new sfException('METS directory could not be opened.');
     }
 
-    if (!isset($path))
-    {
+    if (!isset($path)) {
       throw new sfException('METS XML file was not found.');
     }
 
@@ -124,8 +116,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
 
     $matches = glob($glob, GLOB_NOSORT);
 
-    if (empty($matches))
-    {
+    if (empty($matches)) {
       return;
     }
 
@@ -141,8 +132,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     $aipUUID = $this->getUUID($this->filename);
 
     // Don't re-add the AIP if it's already in the database
-    if (null !== $aip = QubitAip::getByUuid($aipUUID))
-    {
+    if (null !== $aip = QubitAip::getByUuid($aipUUID)) {
       $this->aip = $aip;
 
       return;
@@ -308,8 +298,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
    */
   protected function addDigitalObject($io, $path)
   {
-    if (!empty($path) && is_readable($path))
-    {
+    if (!empty($path) && is_readable($path)) {
       $digitalObject = new QubitDigitalObject();
       $digitalObject->assets[] = new QubitAsset($path);
       $digitalObject->usageId = QubitTerm::MASTER_ID;
@@ -352,12 +341,9 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   protected function addPremisData($io, $objectUUID)
   {
     // Add required data from METS file to the database
-    try
-    {
+    try {
       $this->metsParser->addMetsDataToInformationObject($io, $objectUUID);
-    }
-    catch (sfException $e)
-    {
+    } catch (sfException $e) {
       sfContext::getInstance()->getLogger()->err(
         'METSArchivematicaDIP -             '.$e->getMessage()
       );
@@ -378,8 +364,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
 
     $files = $this->metsParser->getFilesFromOriginalFileGrp();
 
-    if (false === $files || 0 === count($files))
-    {
+    if (false === $files || 0 === count($files)) {
       sfContext::getInstance()->getLogger()->err(
         'METSArchivematicaDIP - No files found in original fileGrp'
       );
@@ -391,8 +376,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     $children = $this->getChildDataFromFileGrp($files);
 
     // Create children in alphabetical order
-    foreach ($children as $fileId => $data)
-    {
+    foreach ($children as $fileId => $data) {
       $this->createInformationObjectFromFileGrp($fileId, $data);
     }
   }
@@ -413,8 +397,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   {
     // If there is a descriptive metadata section (dmdSec) then use the dmdSec
     // Dublin Core metadata to create a new intermediary information object
-    if (null !== $dmdSec = $this->metsParser->getMainDmdSec())
-    {
+    if (null !== $dmdSec = $this->metsParser->getMainDmdSec()) {
       sfContext::getInstance()->getLogger()->info(
         'METSArchivematicaDIP - Main dmdSec found!'
       );
@@ -428,9 +411,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
       $parent = $this->addAipRelation($parent, $this->aip);
 
       $parent->save();
-    }
-    else
-    {
+    } else {
       // If there is no dmdSec, then use the target description
       // ($this->resource) as the parent
       sfContext::getInstance()->getLogger()->info(
@@ -454,18 +435,15 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   {
     $children = [];
 
-    foreach ($files as $file)
-    {
-      if (!isset($file['ID']))
-      {
+    foreach ($files as $file) {
+      if (!isset($file['ID'])) {
         continue;
       }
 
       $fileId = (string) $file['ID'];
 
       // DIP paths
-      if (null == $absolutePathWithinDip = $this->getAccessCopyPath($fileId))
-      {
+      if (null == $absolutePathWithinDip = $this->getAccessCopyPath($fileId)) {
         sfContext::getInstance()->getLogger()->info(
           'METSArchivematicaDIP -             Access copy cannot be found in'
           .' the DIP'
@@ -482,8 +460,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     }
 
     // Sort children by title, use asort to keep index association
-    if (!empty($children))
-    {
+    if (!empty($children)) {
       uasort($children, function ($elem1, $elem2) {
         return strcasecmp($elem1['title'], $elem2['title']);
       });
@@ -504,12 +481,9 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   {
     $originalFilename = $this->metsParser->getOriginalFilename($fileId);
 
-    if (!empty($originalFilename))
-    {
+    if (!empty($originalFilename)) {
       $title = $originalFilename;
-    }
-    else
-    {
+    } else {
       // Search the "objects" directory for a file with this objectUUID
       $absolutePathWithinDipParts = pathinfo($this->getAccessCopyPath($fileId));
 
@@ -520,8 +494,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     // Optionally strip the filename's extension
     $stripExtensions = QubitSetting::getByName('stripExtensions');
 
-    if (isset($stripExtensions) && $stripExtensions->value)
-    {
+    if (isset($stripExtensions) && $stripExtensions->value) {
       $fileParts = pathinfo(trim($title));
       $title = $fileParts['filename'];
     }
@@ -586,21 +559,17 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   {
     $this->metsParser->registerNamespaces($element, ['m' => 'mets']);
 
-    foreach ($element->xpath('m:div') as $div)
-    {
+    foreach ($element->xpath('m:div') as $div) {
       $this->metsParser->registerNamespaces($div, ['m' => 'mets']);
 
       // If this element has no child file pointer <fptr> elements, then it is
       // directory node and we should recursively add it's children
-      if (0 == count($div->xpath('m:fptr')))
-      {
+      if (0 == count($div->xpath('m:fptr'))) {
         $io = $this->getDirectoryFromStuctMapDiv($div, $parent);
 
         // Pass new QubitInformationObject as parent to recursively add children
         $this->recursivelyAddChildrenFromStructMap($div, $io);
-      }
-      else
-      {
+      } else {
         // Otherwise, create an information object representing a DIP object
         $this->addDipObjectFromStructMap($div, $parent);
       }
@@ -623,18 +592,14 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     $io->parentId = $parent->id;
     $io->setPublicationStatus($this->publicationStatus);
 
-    if (null !== $div['LABEL'])
-    {
+    if (null !== $div['LABEL']) {
       $io->title = (string) $div['LABEL'];
     }
 
-    if (null !== $div['TYPE'])
-    {
+    if (null !== $div['TYPE']) {
       $io->levelOfDescriptionId =
         $this->mappings['lodMapping'][(string) $div['TYPE']];
-    }
-    else
-    {
+    } else {
       $io->setLevelOfDescriptionByName('Item');
     }
 
@@ -657,8 +622,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
   {
     // Special case where <div @label> is "objects" - don't create a new IO but
     // set the $parent LOD to <div @type> and attach child <div>s to $parent
-    if (isset($element['LABEL']) && 'objects' == (string) $element['LABEL'])
-    {
+    if (isset($element['LABEL']) && 'objects' == (string) $element['LABEL']) {
       $parent->levelOfDescriptionId =
         $this->mappings['lodMapping'][(string) $element['TYPE']];
       $parent->save();
@@ -689,20 +653,17 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     $fptr = $div->xpath('m:fptr');
     $fileId = (string) $fptr[0]['FILEID'];
 
-    if (empty($fileId))
-    {
+    if (empty($fileId)) {
       return;
     }
 
     // Get objectUUID
-    if (null == $objectUUID = $this->mappings['uuidMapping'][$fileId])
-    {
+    if (null == $objectUUID = $this->mappings['uuidMapping'][$fileId]) {
       return;
     }
 
     // Get absolute path to digital object in DIP
-    if (null == $absolutePathWithinDip = $this->getAccessCopyPath($fileId))
-    {
+    if (null == $absolutePathWithinDip = $this->getAccessCopyPath($fileId)) {
       return;
     }
 

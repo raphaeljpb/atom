@@ -47,7 +47,7 @@ sql;
 
     QubitPdo::modify($sql);
 
-        $sql = <<<'sql'
+    $sql = <<<'sql'
 
 ALTER TABLE `access_log`
 ADD CONSTRAINT `access_log_FK_1`

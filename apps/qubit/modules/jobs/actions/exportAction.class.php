@@ -24,17 +24,13 @@ class JobsExportAction extends DefaultBrowseAction
 {
   public function execute($request)
   {
-    if (!$this->context->user || !$this->context->user->isAuthenticated())
-    {
+    if (!$this->context->user || !$this->context->user->isAuthenticated()) {
       QubitAcl::forwardUnauthorized();
     }
 
-    if ($this->context->user->isAdministrator())
-    {
+    if ($this->context->user->isAdministrator()) {
       $jobs = QubitJob::getAll();
-    }
-    else
-    {
+    } else {
       $jobs = QubitJob::getJobsByUser($user);
     }
 
@@ -59,15 +55,12 @@ class JobsExportAction extends DefaultBrowseAction
       ['startDate', 'endDate', 'jobName', 'jobStatus', 'jobInfo', 'jobUser'],
     ];
 
-    foreach ($jobs as $job)
-    {
+    foreach ($jobs as $job) {
       // Get notes, separated by | if multiple
       $notes = $job->getNotes();
       $notesString = '';
-      foreach ($notes as $note)
-      {
-        if (strlen($notesString) > 0)
-        {
+      foreach ($notes as $note) {
+        if (strlen($notesString) > 0) {
           $notesString .= ' | ';
         }
 
@@ -76,13 +69,11 @@ class JobsExportAction extends DefaultBrowseAction
 
       // Get user name
       $name = 'None';
-      if (null != $job->userId)
-      {
+      if (null != $job->userId) {
         $user = QubitUser::getById($job->userId);
       }
 
-      if (isset($user))
-      {
+      if (isset($user)) {
         $name = $user->username;
       }
 
@@ -99,8 +90,7 @@ class JobsExportAction extends DefaultBrowseAction
     ob_start();
 
     $fp = fopen('php://output', 'w');
-    foreach ($output as $row)
-    {
+    foreach ($output as $row) {
       fputcsv($fp, $row);
     }
 

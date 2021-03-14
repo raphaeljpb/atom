@@ -32,22 +32,18 @@ class SettingsInterfaceLabelAction extends sfAction
       'settings' => QubitSetting::getByScope('ui_label'), 'scope' => 'ui_label', 'fieldsRequired' => false, ]);
 
     // Handle POST data (form submit)
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       QubitCache::getInstance()->removePattern('settings:i18n:*');
 
-      if (null !== $this->context->getViewCacheManager())
-      {
+      if (null !== $this->context->getViewCacheManager()) {
         $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
         $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
       }
 
       // Handle UI label form submission
-      if (null !== $request->ui_label)
-      {
+      if (null !== $request->ui_label) {
         $this->uiLabelForm->bind($request->ui_label);
-        if ($this->uiLabelForm->isValid())
-        {
+        if ($this->uiLabelForm->isValid()) {
           // Do update and redirect to avoid repeat submit wackiness
           $this->updateUiLabelSettings($this->uiLabelForm);
 
@@ -69,8 +65,7 @@ class SettingsInterfaceLabelAction extends sfAction
    */
   protected function populateUiLabelForm($form)
   {
-    foreach ($form->getSettings() as $setting)
-    {
+    foreach ($form->getSettings() as $setting) {
       $form->setDefault($setting->getName(), $setting->getValue());
     }
   }
@@ -84,18 +79,15 @@ class SettingsInterfaceLabelAction extends sfAction
    */
   protected function updateUiLabelSettings($form)
   {
-    foreach ($form->getSettings() as $setting)
-    {
-      if (null !== $value = $form->getValue($setting->getName()))
-      {
+    foreach ($form->getSettings() as $setting) {
+      if (null !== $value = $form->getValue($setting->getName())) {
         $setting->setValue($value);
         $setting->save();
       }
     }
 
     // Add a new ui_label
-    if (null !== ($newName = $form->getValue('new_setting_name')) && strlen($newValue = $form->getValue('new_setting_value')))
-    {
+    if (null !== ($newName = $form->getValue('new_setting_name')) && strlen($newValue = $form->getValue('new_setting_value'))) {
       $setting = QubitSetting::createNewSetting($newName, $newValue, ['scope' => $form->getScope()]);
       $setting->save();
     }

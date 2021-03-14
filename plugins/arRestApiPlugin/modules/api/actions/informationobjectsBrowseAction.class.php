@@ -26,28 +26,24 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
     // Get actual information object template to check archival history
     // visibility in _advancedSearch partial and in parseQuery function
     $archivalStandard = 'isad';
-    if (null !== $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template'))
-    {
+    if (null !== $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template')) {
       $archivalStandard = $infoObjectTemplate->getValue(['sourceCulture' => true]);
     }
 
     $limit = sfConfig::get('app_hits_per_page');
-    if (isset($request->limit) && ctype_digit($request->limit))
-    {
+    if (isset($request->limit) && ctype_digit($request->limit)) {
       $limit = $request->limit;
     }
 
     $skip = 0;
-    if (isset($request->skip) && ctype_digit($request->skip))
-    {
+    if (isset($request->skip) && ctype_digit($request->skip)) {
       $skip = $request->skip;
     }
 
     // Avoid pagination over ES' max result window config (default: 10000)
     $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
 
-    if ((int) $limit + (int) $skip > $maxResultWindow)
-    {
+    if ((int) $limit + (int) $skip > $maxResultWindow) {
       // Return 400 response with error message
       $message = $this->context->i18n->__(
         'Pagination limit reached. To avoid using vast amounts of memory,'.
@@ -59,8 +55,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
     }
 
     // Default to show all level descriptions
-    if (!isset($request->topLod) || !filter_var($request->topLod, FILTER_VALIDATE_BOOLEAN))
-    {
+    if (!isset($request->topLod) || !filter_var($request->topLod, FILTER_VALIDATE_BOOLEAN)) {
       $getParameters['topLod'] = 0;
     }
 
@@ -69,8 +64,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
     $this->search->addAdvancedSearchFilters(InformationObjectBrowseAction::$NAMES, $getParameters, $archivalStandard);
 
     // Determin sort field and default order
-    switch ($request->sort)
-    {
+    switch ($request->sort) {
       case 'identifier':
         $field = 'referenceCode.untouched';
         $order = 'asc';
@@ -96,8 +90,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
     }
 
     // Optionally reverse sort order
-    if (isset($request->reverse) && !empty($request->reverse))
-    {
+    if (isset($request->reverse) && !empty($request->reverse)) {
       $order = ('asc' == $order) ? 'desc' : 'asc';
     }
 
@@ -107,17 +100,13 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
 
     // Build array from results
     $results = $lodMapping = [];
-    foreach ($resultSet as $hit)
-    {
+    foreach ($resultSet as $hit) {
       $doc = $hit->getData();
       $result = [];
 
-      if ('1' == sfConfig::get('app_inherit_code_informationobject', 1))
-      {
+      if ('1' == sfConfig::get('app_inherit_code_informationobject', 1)) {
         $this->addItemToArray($result, 'reference_code', $doc['referenceCode']);
-      }
-      else
-      {
+      } else {
         $this->addItemToArray($result, 'reference_code', $doc['identifier']);
       }
 
@@ -125,22 +114,16 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
       $this->addItemToArray($result, 'title', get_search_i18n($doc, 'title'));
       $this->addItemToArray($result, 'physical_characteristics', get_search_i18n($doc, 'physicalCharacteristics'));
 
-      if (isset($doc['repository']))
-      {
+      if (isset($doc['repository'])) {
         $this->addItemToArray($result, 'repository', get_search_i18n($doc['repository'], 'authorizedFormOfName'));
       }
 
       // Get LOD name, creating a mapping for other results
-      if (isset($doc['levelOfDescriptionId']))
-      {
-        if (isset($lodMapping[$doc['levelOfDescriptionId']]))
-        {
+      if (isset($doc['levelOfDescriptionId'])) {
+        if (isset($lodMapping[$doc['levelOfDescriptionId']])) {
           $lodName = $lodMapping[$doc['levelOfDescriptionId']];
-        }
-        else
-        {
-          if (null !== $lod = QubitTerm::getById($doc['levelOfDescriptionId']))
-          {
+        } else {
+          if (null !== $lod = QubitTerm::getById($doc['levelOfDescriptionId'])) {
             $lodMapping[$doc['levelOfDescriptionId']] = $lod->name;
             $lodName = $lod->name;
           }
@@ -150,14 +133,11 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
       }
 
       // Create array with creator names
-      if (isset($doc['creators']) && count($doc['creators']) > 0)
-      {
+      if (isset($doc['creators']) && count($doc['creators']) > 0) {
         $creators = [];
-        foreach ($doc['creators'] as $creator)
-        {
+        foreach ($doc['creators'] as $creator) {
           $creatorName = get_search_i18n($creator, 'authorizedFormOfName');
-          if (!empty($creatorName))
-          {
+          if (!empty($creatorName)) {
             $creators[] = $creatorName;
           }
         }
@@ -166,16 +146,12 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
       }
 
       // Create array with creation dates
-      if (isset($doc['dates']) && count($doc['dates']) > 0)
-      {
+      if (isset($doc['dates']) && count($doc['dates']) > 0) {
         $dates = [];
-        foreach ($doc['dates'] as $event)
-        {
-          if (isset($event['typeId']) && QubitTerm::CREATION_ID == $event['typeId'])
-          {
+        foreach ($doc['dates'] as $event) {
+          if (isset($event['typeId']) && QubitTerm::CREATION_ID == $event['typeId']) {
             $date = get_search_i18n($event, 'date');
-            if (!empty($date))
-            {
+            if (!empty($date)) {
               $dates[] = $date;
             }
           }
@@ -185,14 +161,11 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
       }
 
       // Create array with place names
-      if (isset($doc['places']) && count($doc['places']) > 0)
-      {
+      if (isset($doc['places']) && count($doc['places']) > 0) {
         $places = [];
-        foreach ($doc['places'] as $place)
-        {
+        foreach ($doc['places'] as $place) {
           $placeName = get_search_i18n($place, 'name');
-          if (!empty($placeName))
-          {
+          if (!empty($placeName)) {
             $places[] = $placeName;
           }
         }
@@ -201,8 +174,7 @@ class ApiInformationObjectsBrowseAction extends QubitApiAction
       }
 
       // Add thumbnail URL
-      if (isset($doc['digitalObject']['thumbnailPath']))
-      {
+      if (isset($doc['digitalObject']['thumbnailPath'])) {
         $this->addItemToArray($result, 'thumbnail_url', $this->siteBaseUrl.$doc['digitalObject']['thumbnailPath']);
       }
 

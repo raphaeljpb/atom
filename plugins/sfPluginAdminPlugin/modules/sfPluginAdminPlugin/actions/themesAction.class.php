@@ -23,15 +23,13 @@ class sfPluginAdminPluginThemesAction extends sfAction
   {
     $this->form = new sfForm();
 
-    if (!$this->context->user->isAdministrator())
-    {
+    if (!$this->context->user->isAdministrator()) {
       QubitAcl::forwardUnauthorized();
     }
 
     $criteria = new Criteria();
     $criteria->add(QubitSetting::NAME, 'plugins');
-    if (1 == count($query = QubitSetting::get($criteria)))
-    {
+    if (1 == count($query = QubitSetting::get($criteria))) {
       $setting = $query[0];
 
       $this->form->setDefault('enabled', unserialize($setting->getValue(['sourceCulture' => true])));
@@ -39,17 +37,14 @@ class sfPluginAdminPluginThemesAction extends sfAction
 
     $configuration = ProjectConfiguration::getActive();
     $pluginPaths = $configuration->getAllPluginPaths();
-    foreach (sfPluginAdminPluginConfiguration::$pluginNames as $name)
-    {
+    foreach (sfPluginAdminPluginConfiguration::$pluginNames as $name) {
       unset($pluginPaths[$name]);
     }
 
     $this->plugins = [];
-    foreach ($pluginPaths as $name => $path)
-    {
+    foreach ($pluginPaths as $name => $path) {
       $className = $name.'Configuration';
-      if (sfConfig::get('sf_plugins_dir') == substr($path, 0, strlen(sfConfig::get('sf_plugins_dir'))) && is_readable($classPath = $path.'/config/'.$className.'.class.php'))
-      {
+      if (sfConfig::get('sf_plugins_dir') == substr($path, 0, strlen(sfConfig::get('sf_plugins_dir'))) && is_readable($classPath = $path.'/config/'.$className.'.class.php')) {
         $this->installPluginAssets($name, $path);
 
         require_once $classPath;
@@ -57,40 +52,31 @@ class sfPluginAdminPluginThemesAction extends sfAction
         $class = new $className($configuration);
 
         // Build a list of themes
-        if (isset($class::$summary) && 1 === preg_match('/theme/i', $class::$summary))
-        {
+        if (isset($class::$summary) && 1 === preg_match('/theme/i', $class::$summary)) {
           $this->plugins[$name] = $class;
         }
       }
     }
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->setValidators([
         'enabled' => new sfValidatorChoice(['choices' => array_keys($this->plugins), 'empty_value' => [], 'multiple' => true]), ]);
 
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
-        if (1 != count($query))
-        {
+      if ($this->form->isValid()) {
+        if (1 != count($query)) {
           $setting = new QubitSetting();
           $setting->name = 'plugins';
         }
 
         $settings = unserialize($setting->getValue(['sourceCulture' => true]));
 
-        foreach (array_keys($this->plugins) as $item)
-        {
-          if (in_array($item, (array) $this->form->getValue('enabled')))
-          {
+        foreach (array_keys($this->plugins) as $item) {
+          if (in_array($item, (array) $this->form->getValue('enabled'))) {
             $settings[] = $item;
-          }
-          else
-          {
-            if (false !== $key = array_search($item, $settings))
-            {
+          } else {
+            if (false !== $key = array_search($item, $settings)) {
               unset($settings[$key]);
             }
           }
@@ -115,8 +101,7 @@ class sfPluginAdminPluginThemesAction extends sfAction
   {
     $webDir = $path.'/web';
 
-    if (is_dir($webDir))
-    {
+    if (is_dir($webDir)) {
       $filesystem = new sfFilesystem();
       $filesystem->relativeSymlink($webDir, sfConfig::get('sf_web_dir').'/'.$name, true);
     }

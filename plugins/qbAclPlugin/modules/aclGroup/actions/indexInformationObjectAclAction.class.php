@@ -25,10 +25,8 @@ class AclGroupIndexInformationObjectAclAction extends sfAction
     $this->forward404Unless($this->group);
 
     $this->groups = [];
-    foreach ($this->group->getAncestorsAndSelfForAcl() as $group)
-    {
-      if (QubitAclGroup::ROOT_ID < $group->id)
-      {
+    foreach ($this->group->getAncestorsAndSelfForAcl() as $group) {
+      if (QubitAclGroup::ROOT_ID < $group->id) {
         $this->groups[] = $group->id;
       }
     }
@@ -41,12 +39,9 @@ class AclGroupIndexInformationObjectAclAction extends sfAction
     $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
 
     // Add group criteria
-    if (1 == count($this->groups))
-    {
+    if (1 == count($this->groups)) {
       $criteria->add(QubitAclPermission::GROUP_ID, $this->groups[0]);
-    }
-    else
-    {
+    } else {
       $criteria->add(QubitAclPermission::GROUP_ID, $this->groups, Criteria::IN);
     }
 
@@ -64,10 +59,8 @@ class AclGroupIndexInformationObjectAclAction extends sfAction
 
     // Build ACL
     $this->acl = [];
-    if (0 < count($permissions = QubitAclPermission::get($criteria)))
-    {
-      foreach ($permissions as $permission)
-      {
+    if (0 < count($permissions = QubitAclPermission::get($criteria))) {
+      foreach ($permissions as $permission) {
         // In this context permissions for all objects (null) and root actor
         // object are equivalent
         $objectId = (QubitInformationObject::ROOT_ID != $permission->objectId) ? $permission->objectId : null;

@@ -35,26 +35,20 @@ class sfIsdfPlugin implements ArrayAccess
     $args = func_get_args();
 
     $options = [];
-    if (1 < count($args))
-    {
+    if (1 < count($args)) {
       $options = $args[1];
     }
 
-    switch ($name)
-    {
+    switch ($name) {
       case '_maintenanceNote':
-        if (!isset($this->maintenanceNote))
-        {
+        if (!isset($this->maintenanceNote)) {
           $criteria = new Criteria();
           $criteria->add(QubitNote::OBJECT_ID, $this->resource->id);
           $criteria->add(QubitNote::TYPE_ID, QubitTerm::MAINTENANCE_NOTE_ID);
 
-          if (1 == count($query = QubitNote::get($criteria)))
-          {
+          if (1 == count($query = QubitNote::get($criteria))) {
             $this->maintenanceNote = $query[0];
-          }
-          else
-          {
+          } else {
             $this->maintenanceNote = new QubitNote();
             $this->maintenanceNote->typeId = QubitTerm::MAINTENANCE_NOTE_ID;
 
@@ -68,8 +62,7 @@ class sfIsdfPlugin implements ArrayAccess
         return $this->_maintenanceNote->__get('content', $options);
 
       case 'relatedAuthorityRecord':
-        if (!isset($this->relatedAuthorityRecord))
-        {
+        if (!isset($this->relatedAuthorityRecord)) {
           $criteria = new Criteria();
           $criteria->add(QubitRelation::SUBJECT_ID, $this->resource->id);
           $criteria->addJoin(QubitRelation::OBJECT_ID, QubitActor::ID);
@@ -80,8 +73,7 @@ class sfIsdfPlugin implements ArrayAccess
         return $this->relatedAuthorityRecord;
 
       case 'relatedFunction':
-        if (!isset($this->relatedFunction))
-        {
+        if (!isset($this->relatedFunction)) {
           $criteria = new Criteria();
           $criteria->add($criteria->getNewCriterion(QubitRelation::OBJECT_ID, $this->resource->id)
             ->addOr($criteria->getNewCriterion(QubitRelation::SUBJECT_ID, $this->resource->id)));
@@ -97,8 +89,7 @@ class sfIsdfPlugin implements ArrayAccess
         return $this->relatedFunction;
 
       case 'relatedResource':
-        if (!isset($this->relatedResource))
-        {
+        if (!isset($this->relatedResource)) {
           $criteria = new Criteria();
           $criteria->add(QubitRelation::SUBJECT_ID, $this->resource->id);
           $criteria->addJoin(QubitRelation::OBJECT_ID, QubitInformationObject::ID);
@@ -115,8 +106,7 @@ class sfIsdfPlugin implements ArrayAccess
 
   public function __set($name, $value)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'maintenanceNotes':
         $this->_maintenanceNote->content = $value;
 

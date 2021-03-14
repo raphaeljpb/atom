@@ -44,8 +44,7 @@ class arMigration0183
       'ALTER TABLE `term` MODIFY `lft` INTEGER, MODIFY `rgt` INTEGER;',
     ];
 
-    foreach ($alterTables as $sql)
-    {
+    foreach ($alterTables as $sql) {
       QubitPdo::modify($sql);
     }
 

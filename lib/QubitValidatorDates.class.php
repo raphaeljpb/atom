@@ -21,19 +21,15 @@ class QubitValidatorDates extends sfValidatorBase
 {
   protected function doClean($value)
   {
-    foreach ($value->eventsRelatedByobjectId as $item)
-    {
+    foreach ($value->eventsRelatedByobjectId as $item) {
       $valid = true;
 
       // Only validate this event if it has start or end date
-      if (isset($item->startDate) || isset($item->endDate))
-      {
+      if (isset($item->startDate) || isset($item->endDate)) {
         // Find first ancestor with an event, with a start or end date, of same
         // type as event we're validating
-        foreach ($value->ancestors->orderBy('rgt') as $ancestor)
-        {
-          foreach ($ancestor->getDates(['type_id' => $item->type->id]) as $event)
-          {
+        foreach ($value->ancestors->orderBy('rgt') as $ancestor) {
+          foreach ($ancestor->getDates(['type_id' => $item->type->id]) as $event) {
             // Found at least one such event, if event we're validating isn't
             // valid according to at least one of this ancestor's events, then
             // it's invalid
@@ -51,8 +47,7 @@ class QubitValidatorDates extends sfValidatorBase
                   || ((!isset($event->startDate)
                       || new DateTime($item->endDate) >= new DateTime($event->startDate))
                     && (!isset($event->endDate)
-                      || new DateTime($item->endDate) <= new DateTime($event->endDate)))))
-            {
+                      || new DateTime($item->endDate) <= new DateTime($event->endDate))))) {
               // Valid!  Check next event
               continue 3;
             }
@@ -60,8 +55,7 @@ class QubitValidatorDates extends sfValidatorBase
 
           // If event isn't in at least one of the ranges for this ancestor,
           // then throw validation error
-          if (!$valid)
-          {
+          if (!$valid) {
             throw new sfValidatorError($this, 'invalid', ['ancestor' => sfContext::getInstance()->routing->generate(null, [$ancestor, 'module' => 'informationobject'])]);
           }
         }

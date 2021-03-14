@@ -64,21 +64,18 @@ class Qubit
 
   public static function renderDateStartEnd($date, $start, $end)
   {
-    if (!empty($date))
-    {
+    if (!empty($date)) {
       return $date;
     }
 
-    if (!empty($start) || !empty($end))
-    {
+    if (!empty($start) || !empty($end)) {
       $start = Qubit::renderDate($start);
       $start = empty($start) ? '?' : $start;
 
       $end = Qubit::renderDate($end);
       $end = empty($end) ? '?' : $end;
 
-      if ($end == $start)
-      {
+      if ($end == $start) {
         return $start;
       }
 
@@ -100,8 +97,7 @@ class Qubit
     $dateText = trim(str_replace('/', '-', $dateText));
 
     // Avoid appending first day (and month) to Y and Y-MM dates
-    if (preg_match('/^\d{1,4}(-((0[1-9])|(1[0-2])))?$/', $dateText))
-    {
+    if (preg_match('/^\d{1,4}(-((0[1-9])|(1[0-2])))?$/', $dateText)) {
       return $dateText;
     }
 
@@ -110,8 +106,7 @@ class Qubit
     $dateData = date_parse($dateText);
 
     // Return nothing if the date is not parseable
-    if (!$dateData['year'] || !$dateData['month'] || !$dateData['day'])
-    {
+    if (!$dateData['year'] || !$dateData['month'] || !$dateData['day']) {
       return;
     }
 
@@ -132,8 +127,7 @@ class Qubit
     $tmpDir = sys_get_temp_dir();
 
     // Create temporary directory unless exists
-    if (!is_writable($tmpDir))
-    {
+    if (!is_writable($tmpDir)) {
       mkdir($tmpDir);
       chmod($tmpDir, 0775);
     }
@@ -143,8 +137,7 @@ class Qubit
 
     // Get a unique file name (to avoid clashing file names)
     $tmpFileName = null;
-    while (file_exists($tmpFileName) || null == $tmpFileName)
-    {
+    while (file_exists($tmpFileName) || null == $tmpFileName) {
       $uniqueString = substr(md5(time()), 0, 8);
       $tmpFileName = $tmpDir.'/QUBIT'.$uniqueString.'.'.$extension;
     }
@@ -163,25 +156,18 @@ class Qubit
   {
     $path = '';
     $stack[] = $directory;
-    while ($stack)
-    {
+    while ($stack) {
       $thisdir = array_pop($stack);
-      if ($dircont = scandir($thisdir))
-      {
+      if ($dircont = scandir($thisdir)) {
         $i = 0;
-        while (isset($dircont[$i]))
-        {
+        while (isset($dircont[$i])) {
           if ('.' !== $dircont[$i] && '..' !== $dircont[$i]
             // ignore system/hidden files
-            && !preg_match('/^\..*/', $dircont[$i]))
-          {
+            && !preg_match('/^\..*/', $dircont[$i])) {
             $current_file = "{$thisdir}/{$dircont[$i]}";
-            if (is_file($current_file))
-            {
+            if (is_file($current_file)) {
               $path[] = "{$thisdir}/{$dircont[$i]}";
-            }
-            elseif (is_dir($current_file))
-            {
+            } elseif (is_dir($current_file)) {
               $stack[] = $current_file;
             }
           }
@@ -203,24 +189,20 @@ class Qubit
    */
   public static function getDirectorySize($directory, $options = [])
   {
-    if (!is_dir($directory))
-    {
+    if (!is_dir($directory)) {
       return -1;
     }
 
     // Derived from http://www.php.net/manual/en/function.filesize.php#94566
     $size = 0;
     $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
-    foreach ($iterator as $item)
-    {
+    foreach ($iterator as $item) {
       $size += $item->getSize();
     }
 
     // Set metric units for return value
-    if (isset($options['units']))
-    {
-      switch (strtolower($options['units']))
-      {
+    if (isset($options['units'])) {
+      switch (strtolower($options['units'])) {
         case 'g':
           $size /= pow(10, 3);
 
@@ -243,14 +225,12 @@ class Qubit
   {
     $date = substr($date, 0, 19).'Z';
 
-    if (true == preg_match('/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z$/', $date, $parts))
-    {
+    if (true == preg_match('/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z$/', $date, $parts)) {
       $time = gmmktime($parts[4], $parts[5], $parts[6], $parts[2], $parts[3], $parts[1]);
 
       $input_time = strtotime($date);
 
-      if (false === $input_time)
-      {
+      if (false === $input_time) {
         return false;
       }
 
@@ -277,26 +257,19 @@ class Qubit
     $dest = $source.'.gz';
     $mode = 'wb'.$level;
     $error = false;
-    if ($fpOut = gzopen($dest, $mode))
-    {
-      if ($fpIn = fopen($source, 'rb'))
-      {
-        while (!feof($fpIn))
-        {
+    if ($fpOut = gzopen($dest, $mode)) {
+      if ($fpIn = fopen($source, 'rb')) {
+        while (!feof($fpIn)) {
           gzwrite($fpOut, fread($fpIn, 1024 * 512));
         }
 
         fclose($fpIn);
-      }
-      else
-      {
+      } else {
         $error = true;
       }
 
       gzclose($fpOut);
-    }
-    else
-    {
+    } else {
       $error = true;
     }
 
@@ -308,10 +281,8 @@ class Qubit
    */
   public static function clearClassCaches()
   {
-    foreach (get_declared_classes() as $c)
-    {
-      if (0 === strpos($c, 'Qubit') && method_exists($c, 'clearCache'))
-      {
+    foreach (get_declared_classes() as $c) {
+      if (0 === strpos($c, 'Qubit') && method_exists($c, 'clearCache')) {
         $c::clearCache();
       }
     }
@@ -343,15 +314,12 @@ class Qubit
   {
     $request = sfContext::getInstance()->getRequest();
 
-    if (!is_array($names))
-    {
+    if (!is_array($names)) {
       $names = [$names];
     }
 
-    foreach ($names as $item)
-    {
-      if (null !== $value = $request->getHttpHeader($item))
-      {
+    foreach ($names as $item) {
+      if (null !== $value = $request->getHttpHeader($item)) {
         return $value;
       }
     }
@@ -375,19 +343,16 @@ class Qubit
     $extension = substr($file['name'], strrpos($file['name'], '.'));
 
     // Get a unique file name (to avoid clashing file names).
-    do
-    {
+    do {
       $uniqueString = substr(md5(time().$file['name']), 0, 8);
       $tmpFileName = "TMP{$uniqueString}";
 
       // Add temp filename, preserving extension (if any)
       $tmpFilePath = "{$tmpDir}/{$tmpFileName}{$extension}";
-    }
-    while (file_exists($tmpFilePath));
+    } while (file_exists($tmpFilePath));
 
     // Move file to web/uploads/tmp directory.
-    if (!move_uploaded_file($file['tmp_name'], $tmpFilePath))
-    {
+    if (!move_uploaded_file($file['tmp_name'], $tmpFilePath)) {
       $errorMessage = sfContext::getInstance()->i18n->__('Unable to complete file import. File %1% could not be moved to %2%', ['%1%' => $file['name'], '%2%' => $tmpDir]);
 
       throw new sfException($errorMessage);
@@ -409,10 +374,8 @@ class Qubit
       $uploadsPath.DIRECTORY_SEPARATOR.'tmp',
     ];
 
-    foreach ($directories as $dirPath)
-    {
-      if (!is_dir($dirPath))
-      {
+    foreach ($directories as $dirPath) {
+      if (!is_dir($dirPath)) {
         mkdir($dirPath, 0755);
       }
     }
@@ -424,8 +387,7 @@ class Qubit
   public static function createDownloadsDirIfNeeded()
   {
     $downloadsPath = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'downloads';
-    if (!is_dir($downloadsPath))
-    {
+    if (!is_dir($downloadsPath)) {
       mkdir($downloadsPath, 0755);
     }
   }
@@ -440,16 +402,12 @@ class Qubit
    */
   public static function generateIdentifierFromCounterAndMask($counter, $mask)
   {
-    return preg_replace_callback('/([#%])([A-z]+)/', function ($match) use ($counter)
-    {
-      if ('%' == $match[1])
-      {
+    return preg_replace_callback('/([#%])([A-z]+)/', function ($match) use ($counter) {
+      if ('%' == $match[1]) {
         return strftime('%'.$match[2]);
       }
-      if ('#' == $match[1])
-      {
-        if (0 < preg_match('/^i+$/', $match[2], $matches))
-        {
+      if ('#' == $match[1]) {
+        if (0 < preg_match('/^i+$/', $match[2], $matches)) {
           return str_pad($counter, strlen($matches[0]), 0, STR_PAD_LEFT);
         }
 

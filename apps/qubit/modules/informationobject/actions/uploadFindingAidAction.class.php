@@ -24,20 +24,17 @@ class InformationObjectUploadFindingAidAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that object exists and that it is not the root
-    if (!isset($this->resource) || !isset($this->resource->parent))
-    {
+    if (!isset($this->resource) || !isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'update'))
-    {
+    if (!QubitAcl::check($this->resource, 'update')) {
       QubitAcl::forwardUnauthorized();
     }
 
     // Check if a finding aid file already exists
-    if (null !== arFindingAidJob::getFindingAidPathForDownload($this->resource->id))
-    {
+    if (null !== arFindingAidJob::getFindingAidPathForDownload($this->resource->id)) {
       $this->redirect([$this->resource, 'module' => 'informationobject']);
     }
 
@@ -47,8 +44,7 @@ class InformationObjectUploadFindingAidAction extends sfAction
 
     // sfValidatorFile gets 'text/rtf' as the mime type of RTF files
     // but the accept attribute works better with only 'application/rtf'
-    if ('rtf' == $this->format)
-    {
+    if ('rtf' == $this->format) {
       $mimeTypes[] = 'text/rtf';
     }
 
@@ -58,12 +54,10 @@ class InformationObjectUploadFindingAidAction extends sfAction
     $this->form->setValidator('file', new sfValidatorFile(['required' => true, 'mime_types' => $mimeTypes]));
 
     // Process form
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind([], $request->getFiles());
 
-      if (!$this->form->isValid())
-      {
+      if (!$this->form->isValid()) {
         return;
       }
 
@@ -74,8 +68,7 @@ class InformationObjectUploadFindingAidAction extends sfAction
       Qubit::createDownloadsDirIfNeeded();
       $path = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.arFindingAidJob::getFindingAidPath($this->resource->id);
 
-      if (!move_uploaded_file($file->getTempName(), $path))
-      {
+      if (!move_uploaded_file($file->getTempName(), $path)) {
         $this->errorMessage = $i18n->__('Uploaded finding aid could not be moved to the downloads directory.');
 
         return;

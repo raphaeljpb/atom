@@ -40,8 +40,7 @@ class QubitValidatorUrl extends sfValidatorBase
    */
   protected function doClean($value)
   {
-    if (!filter_var($value, FILTER_VALIDATE_URL))
-    {
+    if (!filter_var($value, FILTER_VALIDATE_URL)) {
       throw new sfValidatorError($this, 'invalid', ['value' => $value]);
     }
 

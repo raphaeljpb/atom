@@ -55,8 +55,7 @@ class sfSocketsAdapter
     isset($url_info['query']) ? $qstring = '?'.$url_info['query'] : $qstring = null;
     isset($url_info['port']) ? null : $url_info['port'] = 80;
 
-    if (!$socket = @fsockopen($url_info['host'], $url_info['port'], $errno, $errstr, 15))
-    {
+    if (!$socket = @fsockopen($url_info['host'], $url_info['port'], $errno, $errstr, 15)) {
       throw new Exception("Could not connect ({$errno}): {$errstr}");
     }
 
@@ -66,8 +65,7 @@ class sfSocketsAdapter
     $request .= $request_headers;
     $request .= "Connection: Close\r\n";
 
-    if ('PUT' == $method && is_array($parameters) && array_key_exists('file', $parameters))
-    {
+    if ('PUT' == $method && is_array($parameters) && array_key_exists('file', $parameters)) {
       $fp = fopen($parameters['file'], 'rb');
       $sent = 0;
       $blocksize = (2 << 20); // 2MB chunks
@@ -79,16 +77,13 @@ class sfSocketsAdapter
 
       fwrite($socket, $request);
 
-      while ($sent < $filesize)
-      {
+      while ($sent < $filesize) {
         $data = fread($fp, $blocksize);
         fwrite($socket, $data);
         $sent += $blocksize;
       }
       fclose($fp);
-    }
-    elseif ('POST' == $method || 'PUT' == $method)
-    {
+    } elseif ('POST' == $method || 'PUT' == $method) {
       $body = is_array($parameters) ? http_build_query($parameters, '', '&') : $parameters;
       $request .= 'Content-Length: '.strlen($body)."\r\n";
       $request .= "\r\n";
@@ -101,8 +96,7 @@ class sfSocketsAdapter
 
     $response = '';
     $response_body = '';
-    while (!feof($socket))
-    {
+    while (!feof($socket)) {
       $response .= fgets($socket, 1024);
     }
     fclose($socket);
@@ -115,27 +109,22 @@ class sfSocketsAdapter
 
     $start_body = false;
     $response_headers = [];
-    for ($i = 0; $i < count($response_lines); ++$i)
-    {
+    for ($i = 0; $i < count($response_lines); ++$i) {
       // grab body
-      if (true == $start_body)
-      {
+      if (true == $start_body) {
         // ignore chunked encoding size
-        if (!preg_match('@^[0-9A-Fa-f]+\s*$@', $response_lines[$i]))
-        {
+        if (!preg_match('@^[0-9A-Fa-f]+\s*$@', $response_lines[$i])) {
           $response_body .= $response_lines[$i];
         }
       }
 
       // body starts after first blank line
-      elseif (false == $start_body && '' == $response_lines[$i])
-      {
+      elseif (false == $start_body && '' == $response_lines[$i]) {
         $start_body = true;
       }
 
       // grab headers
-      else
-      {
+      else {
         $response_headers[] = $response_lines[$i];
       }
     }
@@ -144,8 +133,7 @@ class sfSocketsAdapter
 
     // grab status code
     preg_match('@(\d{3})@', $status_line, $status_code);
-    if (isset($status_code[1]))
-    {
+    if (isset($status_code[1])) {
       $browser->setResponseCode($status_code[1]);
     }
     $browser->setResponseText(trim($response_body));

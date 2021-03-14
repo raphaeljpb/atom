@@ -26,8 +26,7 @@ class DefaultPopularComponent extends sfComponent
   {
     $this->popularThisWeek = QubitAccessLog::getPopularThisWeek(['limit' => isset($this->limit) ? $this->limit : 10]);
 
-    if (0 == count($this->popularThisWeek))
-    {
+    if (0 == count($this->popularThisWeek)) {
       return sfView::NONE;
     }
   }

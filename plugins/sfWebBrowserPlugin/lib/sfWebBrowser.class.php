@@ -34,18 +34,12 @@ class sfWebBrowser
 
   public function __construct($defaultHeaders = [], $adapterClass = null, $adapterOptions = [])
   {
-    if (!$adapterClass)
-    {
-      if (function_exists('curl_init'))
-      {
+    if (!$adapterClass) {
+      if (function_exists('curl_init')) {
         $adapterClass = 'sfCurlAdapter';
-      }
-      elseif (1 == ini_get('allow_url_fopen'))
-      {
+      } elseif (1 == ini_get('allow_url_fopen')) {
         $adapterClass = 'sfFopenAdapter';
-      }
-      else
-      {
+      } else {
         $adapterClass = 'sfSocketsAdapter';
       }
     }
@@ -113,8 +107,7 @@ class sfWebBrowser
    */
   public function get($uri, $parameters = [], $headers = [])
   {
-    if ($parameters)
-    {
+    if ($parameters) {
       $uri .= ((false !== strpos($uri, '?')) ? '&' : '?').http_build_query($parameters, '', '&');
     }
 
@@ -123,8 +116,7 @@ class sfWebBrowser
 
   public function head($uri, $parameters = [], $headers = [])
   {
-    if ($parameters)
-    {
+    if ($parameters) {
       $uri .= ((false !== strpos($uri, '?')) ? '&' : '?').http_build_query($parameters, '', '&');
     }
 
@@ -206,22 +198,16 @@ class sfWebBrowser
     $headers = $this->fixHeaders($headers);
 
     // check port
-    if (isset($urlInfo['port']))
-    {
+    if (isset($urlInfo['port'])) {
       $this->urlInfo['port'] = $urlInfo['port'];
-    }
-    elseif (!isset($this->urlInfo['port']))
-    {
+    } elseif (!isset($this->urlInfo['port'])) {
       $this->urlInfo['port'] = 80;
     }
 
-    if (!isset($urlInfo['host']))
-    {
+    if (!isset($urlInfo['host'])) {
       // relative link
       $uri = $this->urlInfo['scheme'].'://'.$this->urlInfo['host'].':'.$this->urlInfo['port'].'/'.$uri;
-    }
-    elseif ('http' != $urlInfo['scheme'] && 'https' != $urlInfo['scheme'])
-    {
+    } elseif ('http' != $urlInfo['scheme'] && 'https' != $urlInfo['scheme']) {
       throw new Exception('sfWebBrowser handles only http and https requests');
     }
 
@@ -229,16 +215,14 @@ class sfWebBrowser
 
     $this->initializeResponse();
 
-    if ($changeStack)
-    {
+    if ($changeStack) {
       $this->addToStack($uri, $method, $parameters, $headers);
     }
 
     $browser = $this->adapter->call($this, $uri, $method, $parameters, $headers);
 
     // redirect support
-    if ((in_array($browser->getResponseCode(), [301, 307]) && in_array($method, ['GET', 'HEAD'])) || in_array($browser->getResponseCode(), [302, 303]))
-    {
+    if ((in_array($browser->getResponseCode(), [301, 307]) && in_array($method, ['GET', 'HEAD'])) || in_array($browser->getResponseCode(), [302, 303])) {
       $this->call($browser->getResponseHeader('Location'), 'GET', [], $headers);
     }
 
@@ -275,40 +259,33 @@ class sfWebBrowser
    */
   public function click($name, $arguments = [])
   {
-    if (!$dom = $this->getResponseDom())
-    {
+    if (!$dom = $this->getResponseDom()) {
       throw new Exception('Cannot click because there is no current page in the browser');
     }
 
     $xpath = new DomXpath($dom);
 
     // text link, the name being in an attribute
-    if ($link = $xpath->query(sprintf('//a[@*="%s"]', $name))->item(0))
-    {
+    if ($link = $xpath->query(sprintf('//a[@*="%s"]', $name))->item(0)) {
       return $this->get($link->getAttribute('href'));
     }
 
     // text link, the name being the text value
-    if ($links = $xpath->query('//a[@href]'))
-    {
-      foreach ($links as $link)
-      {
-        if (preg_replace(['/\s{2,}/', '/\\r\\n|\\n|\\r/'], [' ', ''], $link->nodeValue) == $name)
-        {
+    if ($links = $xpath->query('//a[@href]')) {
+      foreach ($links as $link) {
+        if (preg_replace(['/\s{2,}/', '/\\r\\n|\\n|\\r/'], [' ', ''], $link->nodeValue) == $name) {
           return $this->get($link->getAttribute('href'));
         }
       }
     }
 
     // image link, the name being the alt attribute value
-    if ($link = $xpath->query(sprintf('//a/img[@alt="%s"]/ancestor::a', $name))->item(0))
-    {
+    if ($link = $xpath->query(sprintf('//a/img[@alt="%s"]/ancestor::a', $name))->item(0)) {
       return $this->get($link->getAttribute('href'));
     }
 
     // form, the name being the button or input value
-    if (!$form = $xpath->query(sprintf('//input[((@type="submit" or @type="button") and @value="%s") or (@type="image" and @alt="%s")]/ancestor::form', $name, $name))->item(0))
-    {
+    if (!$form = $xpath->query(sprintf('//input[((@type="submit" or @type="button") and @value="%s") or (@type="image" and @alt="%s")]/ancestor::form', $name, $name))->item(0)) {
       throw new Exception(sprintf('Cannot find the "%s" link or button.', $name));
     }
 
@@ -318,80 +295,59 @@ class sfWebBrowser
 
     // merge form default values and arguments
     $defaults = [];
-    foreach ($xpath->query('descendant::input | descendant::textarea | descendant::select', $form) as $element)
-    {
+    foreach ($xpath->query('descendant::input | descendant::textarea | descendant::select', $form) as $element) {
       $elementName = $element->getAttribute('name');
       $nodeName = $element->nodeName;
       $value = null;
-      if ('input' == $nodeName && ('checkbox' == $element->getAttribute('type') || 'radio' == $element->getAttribute('type')))
-      {
-        if ($element->getAttribute('checked'))
-        {
+      if ('input' == $nodeName && ('checkbox' == $element->getAttribute('type') || 'radio' == $element->getAttribute('type'))) {
+        if ($element->getAttribute('checked')) {
           $value = $element->getAttribute('value');
         }
-      }
-      elseif (
+      } elseif (
         'input' == $nodeName
         && (('submit' != $element->getAttribute('type') && 'button' != $element->getAttribute('type')) || $element->getAttribute('value') == $name)
         && ('image' != $element->getAttribute('type') || $element->getAttribute('alt') == $name)
-      )
-      {
+      ) {
         $value = $element->getAttribute('value');
-      }
-      elseif ('textarea' == $nodeName)
-      {
+      } elseif ('textarea' == $nodeName) {
         $value = '';
-        foreach ($element->childNodes as $el)
-        {
+        foreach ($element->childNodes as $el) {
           $value .= $dom->saveXML($el);
         }
-      }
-      elseif ('select' == $nodeName)
-      {
-        if ($multiple = $element->hasAttribute('multiple'))
-        {
+      } elseif ('select' == $nodeName) {
+        if ($multiple = $element->hasAttribute('multiple')) {
           $elementName = str_replace('[]', '', $elementName);
           $value = [];
-        }
-        else
-        {
+        } else {
           $value = null;
         }
 
         $found = false;
-        foreach ($xpath->query('descendant::option', $element) as $option)
-        {
-          if ($option->getAttribute('selected'))
-          {
+        foreach ($xpath->query('descendant::option', $element) as $option) {
+          if ($option->getAttribute('selected')) {
             $found = true;
-            if ($multiple)
-            {
+            if ($multiple) {
               $value[] = $option->getAttribute('value');
-            }
-            else
-            {
+            } else {
               $value = $option->getAttribute('value');
             }
           }
         }
 
         // if no option is selected and if it is a simple select box, take the first option as the value
-        if (!$found && !$multiple)
-        {
+        if (!$found && !$multiple) {
           $value = $xpath->query('descendant::option', $element)->item(0)->getAttribute('value');
         }
       }
 
-      if (null !== $value)
-      {
+      if (null !== $value) {
         $this->parseArgumentAsArray($elementName, $value, $defaults);
       }
     }
 
     // create request parameters
     $arguments = sfToolkit::arrayDeepMerge($defaults, $this->fields, $arguments);
-    if ('post' == $method)
-    {
+    if ('post' == $method) {
       return $this->post($url, $arguments);
     }
 
@@ -433,8 +389,7 @@ class sfWebBrowser
    */
   public function back()
   {
-    if ($this->stackPosition < 1)
-    {
+    if ($this->stackPosition < 1) {
       throw new Exception('You are already on the first page.');
     }
 
@@ -454,8 +409,7 @@ class sfWebBrowser
    */
   public function forward()
   {
-    if ($this->stackPosition > count($this->stack) - 2)
-    {
+    if ($this->stackPosition > count($this->stack) - 2) {
       throw new Exception('You are already on the last page.');
     }
 
@@ -475,8 +429,7 @@ class sfWebBrowser
    */
   public function reload()
   {
-    if (-1 == $this->stackPosition)
-    {
+    if (-1 == $this->stackPosition) {
       throw new Exception('No page to reload.');
     }
 
@@ -497,8 +450,7 @@ class sfWebBrowser
   public function prepareHeaders($headers = [])
   {
     $prepared_headers = [];
-    foreach ($headers as $name => $value)
-    {
+    foreach ($headers as $name => $value) {
       $prepared_headers[] = sprintf("%s: %s\r\n", ucfirst($name), $value);
     }
 
@@ -532,11 +484,9 @@ class sfWebBrowser
   public function setResponseHeaders($headers = [])
   {
     $header_array = [];
-    foreach ($headers as $header)
-    {
+    foreach ($headers as $header) {
       $arr = explode(': ', $header);
-      if (isset($arr[1]))
-      {
+      if (isset($arr[1])) {
         $header_array[$this->normalizeHeaderName($arr[0])] = trim($arr[1]);
       }
     }
@@ -557,12 +507,9 @@ class sfWebBrowser
   public function setResponseCode($firstLine)
   {
     preg_match('/\d{3}/', $firstLine, $matches);
-    if (isset($matches[0]))
-    {
+    if (isset($matches[0])) {
       $this->responseCode = $matches[0];
-    }
-    else
-    {
+    } else {
       $this->responseCode = '';
     }
 
@@ -632,11 +579,9 @@ class sfWebBrowser
    */
   public function getResponseDom()
   {
-    if (!$this->responseDom)
-    {
+    if (!$this->responseDom) {
       // for HTML/XML content, create a DOM object for the response content
-      if (preg_match('/(x|ht)ml/i', $this->getResponseHeader('Content-Type')))
-      {
+      if (preg_match('/(x|ht)ml/i', $this->getResponseHeader('Content-Type'))) {
         $this->responseDom = new DomDocument('1.0', 'utf8');
         $this->responseDom->validateOnParse = true;
         @$this->responseDom->loadHTML($this->getResponseText());
@@ -653,11 +598,9 @@ class sfWebBrowser
    */
   public function getResponseDomCssSelector()
   {
-    if (!$this->responseDomCssSelector)
-    {
+    if (!$this->responseDomCssSelector) {
       // for HTML/XML content, create a DOM object for the response content
-      if (preg_match('/(x|ht)ml/i', $this->getResponseHeader('Content-Type')))
-      {
+      if (preg_match('/(x|ht)ml/i', $this->getResponseHeader('Content-Type'))) {
         $this->responseDomCssSelector = new sfDomCssSelector($this->getResponseDom());
       }
     }
@@ -674,18 +617,15 @@ class sfWebBrowser
    */
   public function getResponseXML()
   {
-    if (!$this->responseXml)
-    {
+    if (!$this->responseXml) {
       // for HTML/XML content, create a DOM object for the response content
-      if (preg_match('/(x|ht)ml/i', $this->getResponseHeader('Content-Type')))
-      {
+      if (preg_match('/(x|ht)ml/i', $this->getResponseHeader('Content-Type'))) {
         $this->responseXml = @simplexml_load_string($this->getResponseText());
       }
     }
 
     // Throw an exception if response is not valid XML
-    if ('SimpleXMLElement' != get_class($this->responseXml))
-    {
+    if ('SimpleXMLElement' != get_class($this->responseXml)) {
       $msg = sprintf("Response is not a valid XML string : \n%s", $this->getResponseText());
 
       throw new sfWebBrowserInvalidResponseException($msg);
@@ -781,16 +721,13 @@ class sfWebBrowser
   {
     // Supported encodings
     $encodings = [];
-    if (isset($headers['Accept-Encoding']))
-    {
+    if (isset($headers['Accept-Encoding'])) {
       $encodings = explode(',', $headers['Accept-Encoding']);
     }
-    if (function_exists('gzinflate') && !in_array('gzip', $encodings))
-    {
+    if (function_exists('gzinflate') && !in_array('gzip', $encodings)) {
       $encodings[] = 'gzip';
     }
-    if (function_exists('gzuncompress') && !in_array('deflate', $encodings))
-    {
+    if (function_exists('gzuncompress') && !in_array('deflate', $encodings)) {
       $encodings[] = 'deflate';
     }
 
@@ -801,29 +738,21 @@ class sfWebBrowser
 
   protected function parseArgumentAsArray($name, $value, &$vars)
   {
-    if (false !== $pos = strpos($name, '['))
-    {
+    if (false !== $pos = strpos($name, '[')) {
       $var = &$vars;
       $tmps = array_filter(preg_split('/(\[ | \[\] | \])/x', $name));
-      foreach ($tmps as $tmp)
-      {
+      foreach ($tmps as $tmp) {
         $var = &$var[$tmp];
       }
-      if ($var)
-      {
-        if (!is_array($var))
-        {
+      if ($var) {
+        if (!is_array($var)) {
           $var = [$var];
         }
         $var[] = $value;
-      }
-      else
-      {
+      } else {
         $var = $value;
       }
-    }
-    else
-    {
+    } else {
       $vars[$name] = $value;
     }
   }
@@ -862,10 +791,8 @@ class sfWebBrowser
   protected function fixHeaders($headers)
   {
     $fixed_headers = [];
-    foreach ($headers as $name => $value)
-    {
-      if (!preg_match('/([a-z]*)(-[a-z]*)*/i', $name))
-      {
+    foreach ($headers as $name => $value) {
+      if (!preg_match('/([a-z]*)(-[a-z]*)*/i', $name)) {
         $msg = sprintf('Invalid header "%s"', $name);
 
         throw new Exception($msg);
@@ -886,9 +813,8 @@ class sfWebBrowser
    */
   protected function normalizeHeaderName($name)
   {
-    return preg_replace_callback('/\-(.)/', function ($matches)
-      {
-        return '-'.strtoupper($matches[1]);
-      }, strtr(ucfirst($name), '_', '-'));
+    return preg_replace_callback('/\-(.)/', function ($matches) {
+      return '-'.strtoupper($matches[1]);
+    }, strtr(ucfirst($name), '_', '-'));
   }
 }

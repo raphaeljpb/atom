@@ -25,12 +25,9 @@ class QubitSettingsFilter extends sfFilter
     $cacheKey = 'settings:i18n:'.sfContext::getInstance()->getUser()->getCulture();
 
     // Get settings (from cache if exists)
-    if ($cache->has($cacheKey))
-    {
+    if ($cache->has($cacheKey)) {
       $settings = unserialize($cache->get($cacheKey));
-    }
-    else
-    {
+    } else {
       $settings = QubitSetting::getSettingsArray();
 
       $cache->set($cacheKey, serialize($settings));
@@ -38,15 +35,12 @@ class QubitSettingsFilter extends sfFilter
 
     // Check environment vairables and overwrite/populate settings
     $envHashmap = ['ATOM_READ_ONLY' => 'boolean'];
-    foreach ($envHashmap as $env => $type)
-    {
-      if (false === $value = getenv($env))
-      {
+    foreach ($envHashmap as $env => $type) {
+      if (false === $value = getenv($env)) {
         continue;
       }
 
-      switch ($type)
-      {
+      switch ($type) {
         case 'boolean':
           $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
 

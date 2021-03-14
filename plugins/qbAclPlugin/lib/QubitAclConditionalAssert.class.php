@@ -33,49 +33,38 @@ class QubitAclConditionalAssert implements Zend_Acl_Assert_Interface
                          Zend_Acl_Role_Interface $role = null,
                          Zend_Acl_Resource_Interface $resource = null,
                          $privilege = null
-                         )
-  {
+                         ) {
     // Translate permissions are global to all objects
-    if ('translate' == $privilege)
-    {
+    if ('translate' == $privilege) {
       // If source language is the current language, then we aren't translating
-      if (method_exists($resource, 'getSourceCulture') && $resource->sourceCulture == sfContext::getInstance()->user->getCulture())
-      {
+      if (method_exists($resource, 'getSourceCulture') && $resource->sourceCulture == sfContext::getInstance()->user->getCulture()) {
         return false;
       }
 
       // Test that user can translate into current language
-      if (!$this->permission->evaluateConditional(['language' => sfContext::getInstance()->user->getCulture()]))
-      {
+      if (!$this->permission->evaluateConditional(['language' => sfContext::getInstance()->user->getCulture()])) {
         return false;
       }
     }
 
     // No update if source language != current language (requires translate)
-    elseif ('update' == $privilege && $resource->sourceCulture != sfContext::getInstance()->user->getCulture())
-    {
+    elseif ('update' == $privilege && $resource->sourceCulture != sfContext::getInstance()->user->getCulture()) {
       return false;
     }
 
-    if ($resource instanceof QubitInformationObject)
-    {
+    if ($resource instanceof QubitInformationObject) {
       $repositorySlug = null;
-      if (null !== $repository = $resource->getRepository(['inherit' => true]))
-      {
+      if (null !== $repository = $resource->getRepository(['inherit' => true])) {
         $repositorySlug = $repository->slug;
       }
 
       // Test repository conditional
-      if (!$this->permission->evaluateConditional(['repository' => $repositorySlug]))
-      {
+      if (!$this->permission->evaluateConditional(['repository' => $repositorySlug])) {
         return false;
       }
-    }
-    elseif ($resource instanceof QubitTerm)
-    {
+    } elseif ($resource instanceof QubitTerm) {
       // Test taxonomy conditional
-      if (!$this->permission->evaluateConditional(['taxonomy' => $resource->taxonomy->slug]))
-      {
+      if (!$this->permission->evaluateConditional(['taxonomy' => $resource->taxonomy->slug])) {
         return false;
       }
     }

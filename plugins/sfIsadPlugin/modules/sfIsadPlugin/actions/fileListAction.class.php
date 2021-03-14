@@ -21,23 +21,20 @@ class sfIsadPluginFileListAction extends sfAction
 {
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
     $this->resource = $this->getRoute()->resource;
 
     // Check that this isn't the root
-    if (!isset($this->resource->parent))
-    {
+    if (!isset($this->resource->parent)) {
       $this->forward404();
     }
 
     $query = QubitSearch::getInstance()->addTerm($this->resource->id, 'parentId');
 
-    if (isset($request->query))
-    {
+    if (isset($request->query)) {
       $query = $request->query;
     }
 
@@ -50,8 +47,7 @@ class sfIsadPluginFileListAction extends sfAction
     $this->pager->setPage($request->page);
 
     $ids = [];
-    foreach ($this->pager->getResults() as $hit)
-    {
+    foreach ($this->pager->getResults() as $hit) {
       $ids[] = $hit->getDocument()->id;
     }
 

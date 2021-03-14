@@ -23,27 +23,22 @@ class UserIndexAction extends sfAction
   {
     $this->resource = $this->getRoute()->resource;
 
-    if (!isset($this->resource))
-    {
+    if (!isset($this->resource)) {
       $this->forward404();
     }
 
-    foreach (['restApiKey', 'oaiApiKey'] as $key)
-    {
+    foreach (['restApiKey', 'oaiApiKey'] as $key) {
       // Get API key value, if any
       $apiKeyProperty = QubitProperty::getOneByObjectIdAndName($this->resource->id, sfInflector::camelize($key));
 
-      if (null != $apiKeyProperty)
-      {
+      if (null != $apiKeyProperty) {
         $this->{$key} = $apiKeyProperty->value;
       }
     }
 
     // Except for administrators, only allow users to see their own profile
-    if (!$this->context->user->isAdministrator())
-    {
-      if ($this->resource->id != $this->context->user->getAttribute('user_id'))
-      {
+    if (!$this->context->user->isAdministrator()) {
+      if ($this->resource->id != $this->context->user->getAttribute('user_id')) {
         $this->redirect('admin/secure');
       }
     }

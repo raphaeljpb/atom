@@ -2,7 +2,7 @@
 
   <?php if (isset($sidebar)) { ?>
     <h4><?php echo __('Related people and organizations'); ?></h4>
-  <?php } elseif (isset($mods)){ ?>
+  <?php } elseif (isset($mods)) { ?>
     <h3><?php echo __('Names'); ?></h3>
   <?php } else { ?>
     <h3><?php echo __('Name access points'); ?></h3>

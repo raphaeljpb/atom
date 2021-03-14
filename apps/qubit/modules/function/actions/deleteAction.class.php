@@ -25,15 +25,12 @@ class FunctionDeleteAction extends sfAction
 
     $this->resource = $this->getRoute()->resource;
 
-    if ($request->isMethod('delete'))
-    {
+    if ($request->isMethod('delete')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         // Delete relationships
-        foreach (QubitRelation::getBySubjectOrObjectId($this->resource->id) as $item)
-        {
+        foreach (QubitRelation::getBySubjectOrObjectId($this->resource->id) as $item) {
           $item->delete();
         }
 

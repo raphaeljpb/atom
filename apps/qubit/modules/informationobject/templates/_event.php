@@ -30,8 +30,7 @@ value
 
 // Omit edit button if object is being duplicated
 $editButtonJs = null;
-if (!isset($sf_request->source))
-{
+if (!isset($sf_request->source)) {
   $editButtonJs = <<<editButtonJs
 // Add edit button to rows
 jQuery('#relatedEvents tr[id]', context)

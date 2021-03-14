@@ -34,8 +34,7 @@ class resetPasswordTask extends sfBaseTask
     $maxlength = strlen($possible);
 
     // Check for length overflow and truncate if necessary
-    if ($length > $maxlength)
-    {
+    if ($length > $maxlength) {
       $length = $maxlength;
     }
 
@@ -43,14 +42,12 @@ class resetPasswordTask extends sfBaseTask
     $i = 0;
 
     // add random characters to $password until $length is reached
-    while ($i < $length)
-    {
+    while ($i < $length) {
       // Pick a random character from the possible ones
       $char = substr($possible, mt_rand(0, $maxlength - 1), 1);
 
       // Have we already used this character in $password?
-      if (!strstr($password, $char))
-      {
+      if (!strstr($password, $char)) {
         // No, so it's OK to add it onto the end of whatever we've already got...
         $password .= $char;
         // ... and increase the counter by one
@@ -97,30 +94,23 @@ EOF;
     $user = QubitUser::getOne($criteria);
 
     // User account exists?
-    if (null !== $user)
-    {
-      if (isset($arguments['password']))
-      {
+    if (null !== $user) {
+      if (isset($arguments['password'])) {
         $password = $arguments['password'];
-      }
-      else
-      {
+      } else {
         $password = $this->generatePassword();
       }
 
       $user->setPassword($password);
 
-      if (false !== $options['activate'])
-      {
+      if (false !== $options['activate']) {
         $user->active = true;
       }
 
       $user->save();
 
       $this->logSection('reset-password', 'New password: '.$password);
-    }
-    else
-    {
+    } else {
       throw new sfException('Given username does not exist');
     }
   }

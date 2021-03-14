@@ -49,38 +49,29 @@ class SettingsPageElementsAction extends sfAction
     // Take note of whether digital object map is enabled
     $toggleDigitalObjectMapSetting = QubitSetting::getByName('toggleDigitalObjectMap');
 
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       // Disable checkbox to show digital object maps if it's not currently enabled and no Google Maps API key is defined
-      if ('toggleDigitalObjectMap' == $name && empty($toggleDigitalObjectMapSetting->value) && empty($googleMapsApiKeySetting->value))
-      {
+      if ('toggleDigitalObjectMap' == $name && empty($toggleDigitalObjectMapSetting->value) && empty($googleMapsApiKeySetting->value)) {
         $this->form->setWidget($name, new sfWidgetFormInputCheckbox([], ['class' => 'disabled', 'disabled' => true]));
-      }
-      else
-      {
+      } else {
         $this->form->setWidget($name, new sfWidgetFormInputCheckbox());
       }
 
       $this->form->setValidator($name, new sfValidatorBoolean());
 
-      if (null !== $settings[$name] = QubitSetting::getByName($name))
-      {
+      if (null !== $settings[$name] = QubitSetting::getByName($name)) {
         $this->form->setDefault($name, filter_var($settings[$name]->__get('value', ['sourceCulture' => true]), FILTER_VALIDATE_BOOLEAN));
       }
     }
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if (!$this->form->isValid())
-      {
+      if (!$this->form->isValid()) {
         return;
       }
 
-      foreach ($this::$NAMES as $name)
-      {
-        if (null === $settings[$name])
-        {
+      foreach ($this::$NAMES as $name) {
+        if (null === $settings[$name]) {
           $settings[$name] = new QubitSetting();
           $settings[$name]->name = $name;
         }

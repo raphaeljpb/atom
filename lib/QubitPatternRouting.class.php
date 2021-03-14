@@ -32,12 +32,9 @@ class QubitPatternRouting extends sfPatternRouting
    */
   public function parse($url)
   {
-    try
-    {
+    try {
       return parent::parse($url);
-    }
-    catch (sfError404Exception $e)
-    {
+    } catch (sfError404Exception $e) {
       return false;
     }
   }

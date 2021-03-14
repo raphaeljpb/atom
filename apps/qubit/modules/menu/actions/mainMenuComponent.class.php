@@ -27,8 +27,7 @@ class MenuMainMenuComponent extends sfComponent
 {
   public function execute($request)
   {
-    if (!$this->context->user->isAuthenticated())
-    {
+    if (!$this->context->user->isAuthenticated()) {
       return sfView::NONE;
     }
 
@@ -44,8 +43,7 @@ class MenuMainMenuComponent extends sfComponent
     ];
 
     // Add, if applicable, menu for adding content
-    if ($this->context->user->hasGroup($groupsAllowedToAddContent) || $this->userCanCreate())
-    {
+    if ($this->context->user->hasGroup($groupsAllowedToAddContent) || $this->userCanCreate()) {
       $this->addMenu = QubitMenu::getById(QubitMenu::ADD_EDIT_ID);
     }
 

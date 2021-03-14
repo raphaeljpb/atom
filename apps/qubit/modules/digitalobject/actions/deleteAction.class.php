@@ -32,53 +32,39 @@ class DigitalObjectDeleteAction extends sfAction
 
     // Get related object by first grabbing top-level digital object
     $parent = $this->resource->parent;
-    if (isset($parent))
-    {
+    if (isset($parent)) {
       $this->object = $parent->object;
-    }
-    else
-    {
+    } else {
       $this->object = $this->resource->object;
-      if (!isset($this->object))
-      {
+      if (!isset($this->object)) {
         $this->forward404();
       }
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->object, 'delete'))
-    {
+    if (!QubitAcl::check($this->object, 'delete')) {
       QubitAcl::forwardUnauthorized();
     }
 
-    if ($request->isMethod('delete'))
-    {
+    if ($request->isMethod('delete')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         // Delete the digital object record from the database
         $this->resource->delete();
         QubitSearch::getInstance()->update($this->object);
 
-        if ($this->object instanceof QubitInformationObject)
-        {
+        if ($this->object instanceof QubitInformationObject) {
           $this->object->updateXmlExports();
         }
 
         // Redirect to edit page for parent Object
-        if (isset($parent))
-        {
+        if (isset($parent)) {
           $this->redirect([$parent, 'module' => 'digitalobject', 'action' => 'edit']);
-        }
-        else
-        {
-          if ($this->object instanceof QubitInformationObject)
-          {
+        } else {
+          if ($this->object instanceof QubitInformationObject) {
             $this->redirect([$this->object, 'module' => 'informationobject']);
-          }
-          elseif ($this->object instanceof QubitActor)
-          {
+          } elseif ($this->object instanceof QubitActor) {
             $this->redirect([$this->object, 'module' => 'actor']);
           }
         }

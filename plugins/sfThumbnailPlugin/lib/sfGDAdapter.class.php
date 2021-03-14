@@ -62,8 +62,7 @@ class sfGDAdapter
 
   public function __construct($maxWidth, $maxHeight, $scale, $inflate, $quality, $options)
   {
-    if (!extension_loaded('gd'))
-    {
+    if (!extension_loaded('gd')) {
       throw new Exception('GD not enabled. Check your php.ini file.');
     }
     $this->maxWidth = $maxWidth;
@@ -78,16 +77,13 @@ class sfGDAdapter
   {
     $imgData = @getimagesize($image);
 
-    if (!$imgData)
-    {
+    if (!$imgData) {
       throw new Exception(sprintf('Could not load image %s', $image));
     }
 
-    if (in_array($imgData['mime'], $this->imgTypes))
-    {
+    if (in_array($imgData['mime'], $this->imgTypes)) {
       $loader = $this->imgLoaders[$imgData['mime']];
-      if (!function_exists($loader))
-      {
+      if (!function_exists($loader)) {
         throw new Exception(sprintf('Function %s not available. Please enable the GD extension.', $loader));
       }
 
@@ -98,12 +94,9 @@ class sfGDAdapter
       $thumbnail->initThumb($this->sourceWidth, $this->sourceHeight, $this->maxWidth, $this->maxHeight, $this->scale, $this->inflate);
 
       $this->thumb = imagecreatetruecolor($thumbnail->getThumbWidth(), $thumbnail->getThumbHeight());
-      if ($imgData[0] == $this->maxWidth && $imgData[1] == $this->maxHeight)
-      {
+      if ($imgData[0] == $this->maxWidth && $imgData[1] == $this->maxHeight) {
         $this->thumb = $this->source;
-      }
-      else
-      {
+      } else {
         imagecopyresampled($this->thumb, $this->source, 0, 0, 0, 0, $thumbnail->getThumbWidth(), $thumbnail->getThumbHeight(), $imgData[0], $imgData[1]);
       }
 
@@ -115,8 +108,7 @@ class sfGDAdapter
 
   public function loadData($thumbnail, $image, $mime)
   {
-    if (in_array($mime, $this->imgTypes))
-    {
+    if (in_array($mime, $this->imgTypes)) {
       $this->source = imagecreatefromstring($image);
       $this->sourceWidth = imagesx($this->source);
       $this->sourceHeight = imagesy($this->source);
@@ -124,12 +116,9 @@ class sfGDAdapter
       $thumbnail->initThumb($this->sourceWidth, $this->sourceHeight, $this->maxWidth, $this->maxHeight, $this->scale, $this->inflate);
 
       $this->thumb = imagecreatetruecolor($thumbnail->getThumbWidth(), $thumbnail->getThumbHeight());
-      if ($this->sourceWidth == $this->maxWidth && $this->sourceHeight == $this->maxHeight)
-      {
+      if ($this->sourceWidth == $this->maxWidth && $this->sourceHeight == $this->maxHeight) {
         $this->thumb = $this->source;
-      }
-      else
-      {
+      } else {
         imagecopyresampled($this->thumb, $this->source, 0, 0, 0, 0, $thumbnail->getThumbWidth(), $thumbnail->getThumbHeight(), $this->sourceWidth, $this->sourceHeight);
       }
 
@@ -141,33 +130,24 @@ class sfGDAdapter
 
   public function save($thumbnail, $thumbDest, $targetMime = null)
   {
-    if (null !== $targetMime)
-    {
+    if (null !== $targetMime) {
       $creator = $this->imgCreators[$targetMime];
-    }
-    else
-    {
+    } else {
       $creator = $this->imgCreators[$thumbnail->getMime()];
     }
 
-    if ('imagejpeg' == $creator)
-    {
+    if ('imagejpeg' == $creator) {
       imagejpeg($this->thumb, $thumbDest, $this->quality);
-    }
-    else
-    {
+    } else {
       $creator($this->thumb, $thumbDest);
     }
   }
 
   public function toString($thumbnail, $targetMime = null)
   {
-    if (null !== $targetMime)
-    {
+    if (null !== $targetMime) {
       $creator = $this->imgCreators[$targetMime];
-    }
-    else
-    {
+    } else {
       $creator = $this->imgCreators[$thumbnail->getMime()];
     }
 
@@ -184,16 +164,14 @@ class sfGDAdapter
 
   public function freeSource()
   {
-    if (is_resource($this->source))
-    {
+    if (is_resource($this->source)) {
       imagedestroy($this->source);
     }
   }
 
   public function freeThumb()
   {
-    if (is_resource($this->thumb))
-    {
+    if (is_resource($this->thumb)) {
       imagedestroy($this->thumb);
     }
   }

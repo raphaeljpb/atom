@@ -30,8 +30,7 @@ class sfIsaarPluginEventComponent extends EventEditComponent
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'informationObject':
         $this->form->setValidator($name, new sfValidatorString(['required' => true]));
         $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => []]));
@@ -54,15 +53,13 @@ class sfIsaarPluginEventComponent extends EventEditComponent
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'informationObject':
         unset($this->event->object);
 
         $value = $this->form->getValue('informationObject');
 
-        if (isset($value))
-        {
+        if (isset($value)) {
           $params = $this->context->routing->parse(Qubit::pathInfo($value));
           $this->event->object = $params['_sf_route']->resource;
         }

@@ -38,8 +38,7 @@ class arMigration0149
    */
   public function up($configuration)
   {
-    if (null === QubitSetting::getByName('enable_institutional_scoping'))
-    {
+    if (null === QubitSetting::getByName('enable_institutional_scoping')) {
       $setting = new QubitSetting();
       $setting->name = 'enable_institutional_scoping';
       $setting->value = 0;
@@ -48,8 +47,7 @@ class arMigration0149
       $setting->save();
     }
 
-    if (null === QubitSetting::getByName('globalSearch'))
-    {
+    if (null === QubitSetting::getByName('globalSearch')) {
       $setting = new QubitSetting();
       $setting->name = 'globalSearch';
       $setting->scope = 'ui_label';
@@ -60,8 +58,7 @@ class arMigration0149
       $setting->save();
     }
 
-    if (null === QubitSetting::getByName('institutionSearchHoldings'))
-    {
+    if (null === QubitSetting::getByName('institutionSearchHoldings')) {
       $setting = new QubitSetting();
       $setting->name = 'institutionSearchHoldings';
       $setting->scope = 'ui_label';
@@ -72,8 +69,7 @@ class arMigration0149
       $setting->save();
     }
 
-    if (null === QubitMenu::getByName('browseInstitution'))
-    {
+    if (null === QubitMenu::getByName('browseInstitution')) {
       $browseInstMenu = new QubitMenu();
       $browseInstMenu->parentId = QubitMenu::ROOT_ID;
       $browseInstMenu->name = 'browseInstitution';
@@ -81,8 +77,7 @@ class arMigration0149
       $browseInstMenu->culture = 'en';
       $browseInstMenu->save();
 
-      if (null === QubitMenu::getByName('browseInformationObjectsInstitution'))
-      {
+      if (null === QubitMenu::getByName('browseInformationObjectsInstitution')) {
         $menu = new QubitMenu();
         $menu->parentId = $browseInstMenu->id;
         $menu->name = 'browseInformationObjectsInstitution';

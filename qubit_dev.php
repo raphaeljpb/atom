@@ -5,13 +5,11 @@
 // something more sophisticated.
 
 $allowedIps = ['127.0.0.1', '::1'];
-if (false !== $envIp = getenv('ATOM_DEBUG_IP'))
-{
+if (false !== $envIp = getenv('ATOM_DEBUG_IP')) {
   $allowedIps = array_merge($allowedIps, array_filter(explode(',', $envIp)));
 }
 
-if (!in_array(@$_SERVER['REMOTE_ADDR'], $allowedIps))
-{
+if (!in_array(@$_SERVER['REMOTE_ADDR'], $allowedIps)) {
   exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
 }
 

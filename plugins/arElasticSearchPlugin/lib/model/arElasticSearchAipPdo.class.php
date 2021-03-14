@@ -38,13 +38,11 @@ class arElasticSearchAipPdo
    */
   public function __construct($id, $options = [])
   {
-    if (isset($options['conn']))
-    {
+    if (isset($options['conn'])) {
       self::$conn = $options['conn'];
     }
 
-    if (!isset(self::$conn))
-    {
+    if (!isset(self::$conn)) {
       self::$conn = Propel::getConnection();
     }
 
@@ -58,8 +56,7 @@ class arElasticSearchAipPdo
 
   public function __get($name)
   {
-    if (isset($this->data[$name]))
-    {
+    if (isset($this->data[$name])) {
       return $this->data[$name];
     }
   }
@@ -80,14 +77,12 @@ class arElasticSearchAipPdo
     $serialized['digitalObjectCount'] = $this->digital_object_count;
     $serialized['createdAt'] = arElasticSearchPluginUtil::convertDate($this->created_at);
 
-    if (null !== $this->type_id)
-    {
+    if (null !== $this->type_id) {
       $node = new arElasticSearchTermPdo($this->type_id);
       $serialized['type'] = $node->serialize();
     }
 
-    if (null !== $digitalObjects = $this->getDigitalObjects())
-    {
+    if (null !== $digitalObjects = $this->getDigitalObjects()) {
       $serialized['digitalObjects'] = $digitalObjects;
     }
 
@@ -96,8 +91,7 @@ class arElasticSearchAipPdo
 
   protected function loadData($id)
   {
-    if (!isset(self::$statements['aip']))
-    {
+    if (!isset(self::$statements['aip'])) {
       $sql = 'SELECT *';
       $sql .= ' FROM '.QubitAip::TABLE_NAME;
       $sql .= ' WHERE id = :id';
@@ -111,8 +105,7 @@ class arElasticSearchAipPdo
     // Get first result
     $this->data = self::$statements['aip']->fetch(PDO::FETCH_ASSOC);
 
-    if (false === $this->data)
-    {
+    if (false === $this->data) {
       throw new sfException("Couldn't find aip (id: {$id})");
     }
 
@@ -140,16 +133,13 @@ class arElasticSearchAipPdo
     self::$statements['do']->execute([$this->id, QubitTerm::AIP_RELATION_ID]);
 
     $digitalObjects = [];
-    foreach (self::$statements['do']->fetchAll(PDO::FETCH_OBJ) as $item)
-    {
-      if (null !== $premisData = arElasticSearchPluginUtil::getPremisData($item->object_id, self::$conn))
-      {
+    foreach (self::$statements['do']->fetchAll(PDO::FETCH_OBJ) as $item) {
+      if (null !== $premisData = arElasticSearchPluginUtil::getPremisData($item->object_id, self::$conn)) {
         $digitalObjects[] = ['metsData' => $premisData];
       }
     }
 
-    if (!empty($digitalObjects))
-    {
+    if (!empty($digitalObjects)) {
       return $digitalObjects;
     }
   }

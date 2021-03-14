@@ -26,22 +26,18 @@ class FunctionListAction extends sfAction
 {
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
     $criteria = new Criteria();
     $criteria->addDescendingOrderByColumn(QubitObject::UPDATED_AT);
 
-    if (isset($request->subquery))
-    {
+    if (isset($request->subquery)) {
       $criteria->addJoin(QubitFunctionObject::ID, QubitFunctionObjectI18n::ID);
       $criteria->add(QubitFunctionObjectI18n::CULTURE, $this->context->user->getCulture());
       $criteria->add(QubitFunctionObjectI18n::AUTHORIZED_FORM_OF_NAME, "%{$request->subquery}%", Criteria::LIKE);
-    }
-    else
-    {
+    } else {
       $this->redirect(['module' => 'function', 'action' => 'browse']);
     }
 

@@ -75,8 +75,7 @@ class csvActorExport extends QubitFlatfileExport
   {
     $rows = [];
 
-    foreach ($resource->getActorRelations() as $relation)
-    {
+    foreach ($resource->getActorRelations() as $relation) {
       $relatedEntity = $relation->getOpposedObject($resource->id);
 
       // Take note of relationship type
@@ -94,8 +93,7 @@ class csvActorExport extends QubitFlatfileExport
          don't have converse types. A lookup of the converse type for this relation type
          will return null.
       */
-      if ($relation->objectId == $resource->id)
-      {
+      if ($relation->objectId == $resource->id) {
         $converseRelation = $relationType->getConverseActorRelationTerm();
         $relationType = (empty($converseRelation)) ? $relationType : $converseRelation;
       }
@@ -117,24 +115,20 @@ class csvActorExport extends QubitFlatfileExport
 
   private function appendToCompanionCsv($filename, array $rows)
   {
-    if (empty($rows))
-    {
+    if (empty($rows)) {
       return;
     }
 
-    if (false === $fh = fopen($filename, 'a'))
-    {
+    if (false === $fh = fopen($filename, 'a')) {
       throw new sfException("Failed to create/open file {$filename}");
     }
 
-    if (!filesize($filename))
-    {
+    if (!filesize($filename)) {
       // Write header if file's newly created
       fputcsv($fh, array_keys($rows[0]));
     }
 
-    foreach ($rows as $row)
-    {
+    foreach ($rows as $row) {
       fputcsv($fh, $row);
     }
 
@@ -147,8 +141,7 @@ class csvActorExport extends QubitFlatfileExport
     $criteria->add(QubitNote::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitNote::TYPE_ID, QubitTerm::MAINTENANCE_NOTE_ID);
 
-    if (null !== $note = QubitNote::getOne($criteria))
-    {
+    if (null !== $note = QubitNote::getOne($criteria)) {
       $this->setColumn('maintenanceNotes', (string) $note);
     }
   }
@@ -158,29 +151,24 @@ class csvActorExport extends QubitFlatfileExport
     $addNotes = false;
     $actorOccupations = $actorOccupationNotes = [];
 
-    foreach ($this->resource->getOccupations() as $occupation)
-    {
+    foreach ($this->resource->getOccupations() as $occupation) {
       $actorOccupations[] = (string) $occupation->term;
 
       $note = $occupation->getNotesByType([
         'noteTypeId' => QubitTerm::ACTOR_OCCUPATION_NOTE_ID,
       ])->offsetGet(0);
 
-      if (isset($note))
-      {
+      if (isset($note)) {
         $addNotes = true;
         $actorOccupationNotes[] = (string) $note->content;
-      }
-      else
-      {
+      } else {
         $actorOccupationNotes[] = 'NULL';
       }
     }
 
     $this->setColumn('actorOccupations', implode('|', $actorOccupations));
 
-    if ($addNotes)
-    {
+    if ($addNotes) {
       $this->setColumn('actorOccupationNotes', implode('|', $actorOccupationNotes));
     }
   }
@@ -197,10 +185,8 @@ class csvActorExport extends QubitFlatfileExport
     $data = [];
     $data['names'] = [];
 
-    foreach ($accessPoints as $accessPoint)
-    {
-      if ($accessPoint->term->name)
-      {
+    foreach ($accessPoints as $accessPoint) {
+      if ($accessPoint->term->name) {
         $data['names'][] = $accessPoint->term->name;
       }
     }
@@ -220,10 +206,8 @@ class csvActorExport extends QubitFlatfileExport
     $data = [];
     $data['names'] = [];
 
-    foreach ($accessPoints as $accessPoint)
-    {
-      if ($accessPoint->term->name)
-      {
+    foreach ($accessPoints as $accessPoint) {
+      if ($accessPoint->term->name) {
         $data['names'][] = $accessPoint->term->name;
       }
     }
@@ -240,8 +224,7 @@ class csvActorExport extends QubitFlatfileExport
   {
     $results = [];
 
-    foreach ($this->resource->getOtherNames(['typeId' => $typeId]) as $name)
-    {
+    foreach ($this->resource->getOtherNames(['typeId' => $typeId]) as $name) {
       $results[] = $name->getName();
     }
 

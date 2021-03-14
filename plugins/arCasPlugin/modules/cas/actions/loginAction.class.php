@@ -23,8 +23,7 @@ class CasLoginAction extends sfAction
   {
     // Redirect to @homepage if the user is already authenticated
     // or the read only mode is enabled
-    if (sfConfig::get('app_read_only', false) || $this->context->user->isAuthenticated())
-    {
+    if (sfConfig::get('app_read_only', false) || $this->context->user->isAuthenticated()) {
       $this->redirect('@homepage');
     }
 

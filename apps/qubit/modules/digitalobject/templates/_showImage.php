@@ -8,7 +8,7 @@
     <?php echo image_tag($representation->getFullPath(), ['alt' => __($resource->getDigitalObjectAltText() ?: 'Original %1% not accessible', ['%1%' => sfConfig::get('app_ui_label_digitalobject')])]); ?>
   <?php } ?>
 
-<?php } elseif (QubitTerm::THUMBNAIL_ID == $usageType){ ?>
+<?php } elseif (QubitTerm::THUMBNAIL_ID == $usageType) { ?>
 
   <?php if ($iconOnly) { ?>
     <?php if (isset($link)) { ?>

@@ -24,13 +24,11 @@ class RightManageAction extends sfAction
     $this->earlyExecute();
     $this->formSetup();
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $params = $request->getPostParameters();
       $this->form->bind($params);
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         // Set job params
         $jobParams = $this->form->getValues();
         $jobParams['objectId'] = $this->resource->getId();
@@ -56,14 +54,12 @@ class RightManageAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // if we haven't got a resource, we have a problem houston
-    if (null === $this->resource)
-    {
+    if (null === $this->resource) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID))
-    {
+    if (!QubitAcl::check($this->resource, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)) {
       QubitAcl::forwardUnauthorized();
     }
   }

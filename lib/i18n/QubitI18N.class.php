@@ -35,10 +35,8 @@ class QubitI18N
     $translations = [];
 
     // Index the array with all the language codes available in the application
-    foreach (new DirectoryIterator(sfConfig::get('sf_app_i18n_dir')) as $fileInfo)
-    {
-      if ($fileInfo->isDot())
-      {
+    foreach (new DirectoryIterator(sfConfig::get('sf_app_i18n_dir')) as $fileInfo) {
+      if ($fileInfo->isDot()) {
         continue;
       }
 
@@ -47,8 +45,7 @@ class QubitI18N
 
     $configuration = sfContext::getInstance()->getConfiguration();
     $cache = new sfNoCache();
-    foreach ($translations as $langCode => &$value)
-    {
+    foreach ($translations as $langCode => &$value) {
       $i18n = new sfI18N($configuration, $cache, ['culture' => $langCode]);
 
       // Mark untranslated messages
@@ -58,8 +55,7 @@ class QubitI18N
       $value = $i18n->__($string);
 
       // But discard the message if it's untranslated
-      if (empty($value) || 0 === strpos($value, '[T]', 0))
-      {
+      if (empty($value) || 0 === strpos($value, '[T]', 0)) {
         unset($translations[$langCode]);
       }
     }

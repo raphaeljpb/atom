@@ -25,8 +25,7 @@ class ActorRelatedInformationObjectsAction extends sfAction
 
     if ((empty($request->actorId) || !ctype_digit($request->actorId))
       || (empty($request->page) || !ctype_digit($request->page))
-      || (isset($request->eventTypeId) && !ctype_digit($request->eventTypeId)))
-    {
+      || (isset($request->eventTypeId) && !ctype_digit($request->eventTypeId))) {
       $this->forward404();
     }
 
@@ -36,8 +35,7 @@ class ActorRelatedInformationObjectsAction extends sfAction
     // Avoid pagination over ES' max result window config (default: 10000)
     $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
 
-    if ((int) $limit * (int) $request->page > $maxResultWindow)
-    {
+    if ((int) $limit * (int) $request->page > $maxResultWindow) {
       // Return nothing to not break the list
       return;
     }
@@ -52,8 +50,7 @@ class ActorRelatedInformationObjectsAction extends sfAction
     sfContext::getInstance()->getConfiguration()->loadHelpers(['Qubit', 'Url']);
 
     $results = [];
-    foreach ($pager->getResults() as $item)
-    {
+    foreach ($pager->getResults() as $item) {
       $doc = $item->getData();
       $results[] = [
         'url' => url_for(['module' => 'informationobject', 'slug' => $doc['slug']]),
@@ -86,15 +83,12 @@ class ActorRelatedInformationObjectsAction extends sfAction
     $query = new \Elastica\Query();
     $queryBool = new \Elastica\Query\BoolQuery();
 
-    if (!isset($eventTypeId))
-    {
+    if (!isset($eventTypeId)) {
       // Get subject of IOs (name access points)
       $queryTerm = new \Elastica\Query\Term(['names.id' => $actorId]);
 
       $queryBool->addMust($queryTerm);
-    }
-    else
-    {
+    } else {
       // Get related by event IOs
       $queryBoolDates = new \Elastica\Query\BoolQuery();
       $queryBoolDates->addMust(new \Elastica\Query\Term(['dates.actorId' => $actorId]));

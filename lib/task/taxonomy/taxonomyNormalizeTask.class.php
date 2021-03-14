@@ -67,8 +67,7 @@ EOF;
 
     // Look up taxonomy ID using name
     $this->taxonomyId = $this->getTaxonomyIdByName($arguments['taxonomy-name'], $options['culture']);
-    if (!$this->taxonomyId)
-    {
+    if (!$this->taxonomyId) {
       throw new sfException("A taxonomy named '".$arguments['taxonomy-name']."' not found for culture '".$options['culture']."'.");
     }
 
@@ -92,8 +91,7 @@ EOF;
 
     $statement = QubitFlatfileImport::sqlQuery($sql, [$culture, $name]);
 
-    if ($object = $statement->fetch(PDO::FETCH_OBJ))
-    {
+    if ($object = $statement->fetch(PDO::FETCH_OBJ)) {
       return $object->id;
     }
 
@@ -111,10 +109,8 @@ EOF;
 
     $terms = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_OBJ]);
 
-    foreach ($terms as $term)
-    {
-      if (!isset($names[$term->name]))
-      {
+    foreach ($terms as $term) {
+      if (!isset($names[$term->name])) {
         $names[$term->name] = [];
       }
 
@@ -124,10 +120,8 @@ EOF;
 
   protected function normalizeTaxonomy($names, &$affectedObjects)
   {
-    foreach ($names as $name => $usage)
-    {
-      if (count($usage) > 1)
-      {
+    foreach ($names as $name => $usage) {
+      if (count($usage) > 1) {
         $this->normalizeTaxonomyTerm($name, $usage, $affectedObjects);
       }
     }
@@ -140,12 +134,10 @@ EOF;
     $this->log("Normalizing terms with name '".$name."'...");
 
     // Cycle through usage and change to point to selected term
-    foreach ($usage as $id)
-    {
+    foreach ($usage as $id) {
       $sql = 'select object_id from object_term_relation where term_id=?';
       $statement = QubitFlatfileImport::sqlQuery($sql, [$id]);
-      while ($object = $statement->fetch(PDO::FETCH_OBJ))
-      {
+      while ($object = $statement->fetch(PDO::FETCH_OBJ)) {
         $affectedObjects[] = $object->object_id;
       }
 
@@ -155,8 +147,7 @@ EOF;
       $params = [':newId' => $selected_id, ':oldId' => $id];
       QubitPdo::modify($sql, $params);
 
-      if (QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID == $this->taxonomyId)
-      {
+      if (QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID == $this->taxonomyId) {
         $this->log('Changing level of descriptions from term '.$id.' to '.$selected_id.'.');
 
         $sql = 'UPDATE information_object SET level_of_description_id=:newId WHERE level_of_description_id=:oldId';
@@ -174,8 +165,7 @@ EOF;
   protected function reindexAffectedObjects($affectedObjects)
   {
     $search = QubitSearch::getInstance();
-    foreach ($affectedObjects as $id)
-    {
+    foreach ($affectedObjects as $id) {
       $o = QubitInformationObject::getById($id);
       $search->update($o);
     }

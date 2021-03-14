@@ -43,8 +43,7 @@ $cases = [
   ['Foobar23-'.$rand,  '2010-01-01', '2010-12-31', true,  ['t4']], ];        // Case 23
 
 // Create information objects
-foreach ($cases as $item)
-{
+foreach ($cases as $item) {
   $title = $item[0];
   $informationObject = new QubitInformationObject();
   $informationObject->title = $title;
@@ -59,8 +58,7 @@ foreach ($cases as $item)
 }
 
 // Search and test
-foreach ($cases as $key => $item)
-{
+foreach ($cases as $key => $item) {
   $tmp1 = (false !== array_search('t1', $item[4])) ? $t1 : null;
   $tmp2 = (false !== array_search('t2', $item[4])) ? $t2 : null;
 

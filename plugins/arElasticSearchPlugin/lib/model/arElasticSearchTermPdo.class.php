@@ -38,13 +38,11 @@ class arElasticSearchTermPdo
    */
   public function __construct($id, $options = [])
   {
-    if (isset($options['conn']))
-    {
+    if (isset($options['conn'])) {
       self::$conn = $options['conn'];
     }
 
-    if (!isset(self::$conn))
-    {
+    if (!isset(self::$conn)) {
       self::$conn = Propel::getConnection();
     }
 
@@ -58,8 +56,7 @@ class arElasticSearchTermPdo
 
   public function __get($name)
   {
-    if (isset($this->data[$name]))
-    {
+    if (isset($this->data[$name])) {
       return $this->data[$name];
     }
   }
@@ -79,14 +76,12 @@ class arElasticSearchTermPdo
     $serialized['taxonomyId'] = $this->taxonomy_id;
 
     $sql = 'SELECT id, source_culture FROM '.QubitOtherName::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::ALTERNATIVE_LABEL_ID]) as $item)
-    {
+    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::ALTERNATIVE_LABEL_ID]) as $item) {
       $serialized['useFor'][] = arElasticSearchOtherName::serialize($item);
     }
 
     $sql = 'SELECT id, source_culture FROM '.QubitNote::TABLE_NAME.' WHERE object_id = ? AND type_id = ?';
-    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::SCOPE_NOTE_ID]) as $item)
-    {
+    foreach (QubitPdo::fetchAll($sql, [$this->id, QubitTerm::SCOPE_NOTE_ID]) as $item) {
       $serialized['scopeNotes'][] = arElasticSearchNote::serialize($item);
     }
 
@@ -104,8 +99,7 @@ class arElasticSearchTermPdo
 
   protected function loadData($id)
   {
-    if (!isset(self::$statements['term']))
-    {
+    if (!isset(self::$statements['term'])) {
       $sql = 'SELECT
                 term.*,
                 slug.slug,
@@ -127,8 +121,7 @@ class arElasticSearchTermPdo
     // Get first result
     $this->data = self::$statements['term']->fetch(PDO::FETCH_ASSOC);
 
-    if (false === $this->data)
-    {
+    if (false === $this->data) {
       throw new sfException("Couldn't find term (id: {$id})");
     }
 

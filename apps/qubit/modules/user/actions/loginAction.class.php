@@ -26,15 +26,13 @@ class UserLoginAction extends sfAction
 
     // Redirect to @homepage if the user is already authenticated
     // or the read only mode is enabled
-    if (sfConfig::get('app_read_only', false) || $this->context->user->isAuthenticated())
-    {
+    if (sfConfig::get('app_read_only', false) || $this->context->user->isAuthenticated()) {
       $this->redirect('@homepage');
     }
 
     // Redirect to the current URI in case we're forwarded to the login page
     $this->form->setDefault('next', $request->getUri());
-    if ('user' == $request->module && 'login' == $request->action)
-    {
+    if ('user' == $request->module && 'login' == $request->action) {
       // Redirect to our referer otherwise
       $this->form->setDefault('next', $request->getReferer());
     }
@@ -43,13 +41,10 @@ class UserLoginAction extends sfAction
     $this->form->setWidget('next', new sfWidgetFormInputHidden());
 
     // Use string validation if LDAP authentication's used as email not used to log in
-    if ($this->context->user instanceof ldapUser)
-    {
+    if ($this->context->user instanceof ldapUser) {
       $this->form->setValidator('email', new sfValidatorString(['required' => true], [
         'required' => $this->context->i18n->__('You must enter your username'), ]));
-    }
-    else
-    {
+    } else {
       $this->form->setValidator('email', new sfValidatorEmail(['required' => true], [
         'required' => $this->context->i18n->__('You must enter your email address'),
         'invalid' => $this->context->i18n->__('This isn\'t a valid email address'), ]));
@@ -61,21 +56,16 @@ class UserLoginAction extends sfAction
       'required' => $this->context->i18n->__('You must enter your password'), ]));
     $this->form->setWidget('password', new sfWidgetFormInputPassword());
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
-        if ($this->context->user->authenticate($this->form->getValue('email'), $this->form->getValue('password')))
-        {
-          if (sfConfig::get('app_draft_notification_enabled') && $draftCount = QubitInformationObject::getDraftCount())
-          {
+      if ($this->form->isValid()) {
+        if ($this->context->user->authenticate($this->form->getValue('email'), $this->form->getValue('password'))) {
+          if (sfConfig::get('app_draft_notification_enabled') && $draftCount = QubitInformationObject::getDraftCount()) {
             $this->getUser()->setFlash('notice', $this->getDraftNotificationText($draftCount));
           }
 
-          if (null !== $next = $this->form->getValue('next'))
-          {
+          if (null !== $next = $this->form->getValue('next')) {
             $this->redirect($next);
           }
 

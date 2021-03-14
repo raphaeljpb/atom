@@ -23,8 +23,7 @@ class StaticPageIndexAction extends sfAction
   {
     $this->resource = $this->getRoute()->resource;
 
-    if (1 > strlen($title = $this->resource->__toString()))
-    {
+    if (1 > strlen($title = $this->resource->__toString())) {
       $title = $this->context->i18n->__('Untitled');
     }
 
@@ -32,8 +31,7 @@ class StaticPageIndexAction extends sfAction
 
     $this->content = $this->getPurifiedStaticPageContent();
 
-    if (sfConfig::get('app_enable_institutional_scoping') && 'home' == $this->resource->slug)
-    {
+    if (sfConfig::get('app_enable_institutional_scoping') && 'home' == $this->resource->slug) {
       // Remove the search-realm attribute
       $this->context->user->removeAttribute('search-realm');
     }
@@ -45,13 +43,11 @@ class StaticPageIndexAction extends sfAction
     $cacheKey = 'staticpage:'.$this->resource->id.':'.$culture;
     $cache = QubitCache::getInstance();
 
-    if (null === $cache)
-    {
+    if (null === $cache) {
       return;
     }
 
-    if ($cache->has($cacheKey))
-    {
+    if ($cache->has($cacheKey)) {
       return $cache->get($cacheKey);
     }
 

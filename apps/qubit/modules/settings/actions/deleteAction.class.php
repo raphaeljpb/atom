@@ -26,14 +26,12 @@ class SettingsDeleteAction extends sfAction
     $this->forward404Unless($setting);
 
     // check that the setting is deleteable
-    if ($setting->isDeleteable())
-    {
+    if ($setting->isDeleteable()) {
       $setting->delete();
     }
     // TODO: else populate an error?
 
-    if (null !== $this->context->getViewCacheManager())
-    {
+    if (null !== $this->context->getViewCacheManager()) {
       $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
       $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
     }

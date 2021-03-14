@@ -22,8 +22,7 @@ class arWidgetFormSelectRadio extends sfWidgetFormSelectRadio
   public function formatter($widget, $inputs)
   {
     $rows = [];
-    foreach ($inputs as $input)
-    {
+    foreach ($inputs as $input) {
       $rows[] = $this->renderContentTag(
         'label',
         $input['input'].$this->getOption('label_separator').$input['label'],

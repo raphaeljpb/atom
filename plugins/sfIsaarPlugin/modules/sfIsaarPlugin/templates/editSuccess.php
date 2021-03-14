@@ -204,7 +204,7 @@
       <ul>
         <?php if (0 < strlen($next = $form->next->getValue())) { ?>
           <li><?php echo link_to(__('Cancel'), $next, ['title' => __('Cancel'), 'class' => 'c-btn']); ?>
-        <?php } elseif (isset($sf_request->id)){ ?>
+        <?php } elseif (isset($sf_request->id)) { ?>
           <li><?php echo link_to(__('Cancel'), [$resource, 'module' => 'actor'], ['title' => __('Cancel'), 'class' => 'c-btn']); ?></li>
         <?php } else { ?>
           <li><?php echo link_to(__('Cancel'), ['module' => 'actor', 'action' => 'browse'], ['title' => __('Cancel'), 'class' => 'c-btn']); ?></li>

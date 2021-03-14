@@ -36,8 +36,7 @@ class QubitPhysicalObject
   {
     $results = new \ArrayIterator();
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'DJ001':
         $object = new self();
         $object->id = 111111;

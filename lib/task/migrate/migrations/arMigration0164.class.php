@@ -38,8 +38,7 @@ class arMigration0164
    */
   public function up($configuration)
   {
-    if (null === QubitSetting::getByName('global_login_button'))
-    {
+    if (null === QubitSetting::getByName('global_login_button')) {
       $setting = new QubitSetting();
       $setting->setName('global_login_button');
       $setting->setScope('element_visibility');

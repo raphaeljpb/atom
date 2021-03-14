@@ -11,7 +11,7 @@
           <?php foreach ($userGroups as $item) { ?>
             <?php if (null !== $group = QubitAclGroup::getById($item)) { ?>
               <th><?php echo esc_entities($group->__toString()); ?></th>
-            <?php } elseif ($resource->username == $item){ ?>
+            <?php } elseif ($resource->username == $item) { ?>
               <th><?php echo $resource->username; ?></th>
             <?php } ?>
           <?php } ?>
@@ -23,7 +23,7 @@
               <td colspan="<?php echo $tableCols; ?>"><strong>
                 <?php if ('' == $repository && '' == $objectId) { ?>
                   <em><?php echo __('All %1%', ['%1%' => lcfirst(sfConfig::get('app_ui_label_informationobject'))]); ?></em>
-                <?php } elseif ('' != $repository){ ?>
+                <?php } elseif ('' != $repository) { ?>
                   <?php echo sfConfig::get('app_ui_label_repository').': '.esc_entities(render_title(QubitRepository::getBySlug($repository))); ?>
                 <?php } else { ?>
                   <?php echo esc_entities(render_title(QubitInformationObject::getById($objectId))); ?>

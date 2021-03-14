@@ -44,13 +44,11 @@ class csvRepositoryExport extends QubitFlatfileExport
     $this->setColumn('types', $this->getRelatedTermNames(QubitTaxonomy::REPOSITORY_TYPE_ID));
     $this->setColumn('legacyId', $this->resource->id);
 
-    if (isset($this->resource->descStatus))
-    {
+    if (isset($this->resource->descStatus)) {
       $this->setColumn('descriptionStatus', $this->resource->descStatus->name);
     }
 
-    if (isset($this->resource->descDetail))
-    {
+    if (isset($this->resource->descDetail)) {
       $this->setColumn('levelOfDetail', $this->resource->descDetail->name);
     }
 
@@ -69,10 +67,8 @@ class csvRepositoryExport extends QubitFlatfileExport
   {
     $results = [];
 
-    foreach ($this->resource->getTermRelations($taxonomyId) as $r)
-    {
-      if ($r->term->name)
-      {
+    foreach ($this->resource->getTermRelations($taxonomyId) as $r) {
+      if ($r->term->name) {
         $results[] = $r->term->name;
       }
     }
@@ -82,8 +78,7 @@ class csvRepositoryExport extends QubitFlatfileExport
 
   private function setContactInfo()
   {
-    if (null === $c = $this->resource->getPrimaryContact())
-    {
+    if (null === $c = $this->resource->getPrimaryContact()) {
       return;
     }
 
@@ -103,8 +98,7 @@ class csvRepositoryExport extends QubitFlatfileExport
   {
     $results = [];
 
-    foreach ($this->resource->getOtherNames(['typeId' => $typeId]) as $name)
-    {
+    foreach ($this->resource->getOtherNames(['typeId' => $typeId]) as $name) {
       $results[] = $name->__toString();
     }
 

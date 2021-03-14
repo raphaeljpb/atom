@@ -386,8 +386,7 @@ class arMigration0178
       'ALTER TABLE `donor` %1$s;',
     ];
 
-    foreach ($alterTables as $sql)
-    {
+    foreach ($alterTables as $sql) {
       QubitPdo::modify(sprintf(
         $sql,
         'CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci'

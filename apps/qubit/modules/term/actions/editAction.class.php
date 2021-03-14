@@ -47,11 +47,9 @@ class TermEditAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         $this->resource->save();
@@ -68,23 +66,19 @@ class TermEditAction extends DefaultEditAction
     $this->resource = new QubitTerm();
     $title = $this->context->i18n->__('Add new term');
 
-    if (isset($this->getRoute()->resource))
-    {
+    if (isset($this->getRoute()->resource)) {
       $this->resource = $this->getRoute()->resource;
-      if (!$this->resource instanceof QubitTerm)
-      {
+      if (!$this->resource instanceof QubitTerm) {
         $this->forward404();
       }
 
       // Check that this isn't the root
-      if (!isset($this->resource->parent))
-      {
+      if (!isset($this->resource->parent)) {
         $this->forward404();
       }
 
       // Check authorization
-      if (QubitTerm::isProtected($this->resource->id) || (!QubitAcl::check($this->resource, 'update') && !QubitAcl::check($this->resource, 'translate')))
-      {
+      if (QubitTerm::isProtected($this->resource->id) || (!QubitAcl::check($this->resource, 'update') && !QubitAcl::check($this->resource, 'translate'))) {
         QubitAcl::forwardUnauthorized();
       }
 
@@ -93,30 +87,23 @@ class TermEditAction extends DefaultEditAction
       $this->form->setValidator('serialNumber', new sfValidatorInteger());
       $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
 
-      if (1 > strlen($title = $this->resource->__toString()))
-      {
+      if (1 > strlen($title = $this->resource->__toString())) {
         $title = $this->context->i18n->__('Untitled');
       }
 
       $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
-    }
-    else
-    {
+    } else {
       // Check authorization
-      if (isset($this->request->taxonomy))
-      {
+      if (isset($this->request->taxonomy)) {
         $params = $this->context->routing->parse(Qubit::pathInfo($this->request->taxonomy));
         $taxonomy = $params['_sf_route']->resource;
 
         $authorized = QubitAcl::check($taxonomy, 'createTerm');
-      }
-      else
-      {
+      } else {
         $authorized = QubitAcl::check(QubitTerm::getRoot(), 'create');
       }
 
-      if (!$authorized)
-      {
+      if (!$authorized) {
         QubitAcl::forwardUnauthorized();
       }
     }
@@ -126,8 +113,7 @@ class TermEditAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'code':
         $this->form->setDefault('code', $this->resource->code);
         $this->form->setValidator('code', new sfValidatorString());
@@ -141,8 +127,7 @@ class TermEditAction extends DefaultEditAction
         $criteria = new Criteria();
         $criteria->add(QubitNote::OBJECT_ID, $this->resource->id);
 
-        switch ($name)
-        {
+        switch ($name) {
           case 'scopeNote':
             $criteria->add(QubitNote::TYPE_ID, QubitTerm::SCOPE_NOTE_ID);
 
@@ -160,8 +145,7 @@ class TermEditAction extends DefaultEditAction
         }
 
         $value = $defaults = [];
-        foreach ($this[$name] = QubitNote::get($criteria) as $item)
-        {
+        foreach ($this[$name] = QubitNote::get($criteria) as $item) {
           $defaults[$value[] = $item->id] = $item;
         }
 
@@ -189,13 +173,11 @@ class TermEditAction extends DefaultEditAction
         $this->form->setValidator('parent', new sfValidatorString());
 
         $choices = [];
-        if (isset($this->resource->parent))
-        {
+        if (isset($this->resource->parent)) {
           $choices[$this->context->routing->generate(null, [$this->resource->parent, 'module' => 'term'])] = $this->resource->parent;
         }
 
-        if (isset($this->request->parent))
-        {
+        if (isset($this->request->parent)) {
           $this->form->setDefault('parent', $this->request->parent);
 
           $params = $this->context->routing->parse(Qubit::pathInfo($this->request->parent));
@@ -211,12 +193,10 @@ class TermEditAction extends DefaultEditAction
         $this->form->setValidator('converseTerm', new sfValidatorString());
 
         $choices = [];
-        if (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($this->resource->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID])))
-        {
+        if (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($this->resource->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]))) {
           $this->converseTerm = $converseTerms[0]->getOpposedObject($this->resource);
 
-          if (isset($this->converseTerm) && $this->converseTerm->id != $this->resource->id)
-          {
+          if (isset($this->converseTerm) && $this->converseTerm->id != $this->resource->id) {
             $this->form->setDefault('converseTerm', $this->context->routing->generate(null, [$this->converseTerm, 'module' => 'term']));
             $choices[$this->context->routing->generate(null, [$this->converseTerm, 'module' => 'term'])] = $this->converseTerm;
           }
@@ -228,8 +208,7 @@ class TermEditAction extends DefaultEditAction
 
       case 'relatedTerms':
         $value = $choices = [];
-        foreach ($this->relations = QubitRelation::getBySubjectOrObjectId($this->resource->id, ['typeId' => QubitTerm::TERM_RELATION_ASSOCIATIVE_ID]) as $item)
-        {
+        foreach ($this->relations = QubitRelation::getBySubjectOrObjectId($this->resource->id, ['typeId' => QubitTerm::TERM_RELATION_ASSOCIATIVE_ID]) as $item) {
           $choices[$value[] = $this->context->routing->generate(null, [$item->object, 'module' => 'term'])] = $item->object;
         }
 
@@ -244,13 +223,11 @@ class TermEditAction extends DefaultEditAction
         $this->form->setValidator('taxonomy', new sfValidatorString(['required' => true], ['required' => $this->context->i18n->__('This is a mandatory element.')]));
 
         $choices = [];
-        if (isset($this->resource->taxonomy))
-        {
+        if (isset($this->resource->taxonomy)) {
           $choices[$this->context->routing->generate(null, [$this->resource->taxonomy, 'module' => 'taxonomy'])] = $this->resource->taxonomy;
         }
 
-        if (isset($this->request->taxonomy))
-        {
+        if (isset($this->request->taxonomy)) {
           $this->form->setDefault('taxonomy', $this->request->taxonomy);
 
           $params = $this->context->routing->parse(Qubit::pathInfo($this->request->taxonomy));
@@ -267,8 +244,7 @@ class TermEditAction extends DefaultEditAction
         $criteria->add(QubitOtherName::TYPE_ID, QubitTerm::ALTERNATIVE_LABEL_ID);
 
         $value = $defaults = [];
-        foreach ($this->useFor = QubitOtherName::get($criteria) as $item)
-        {
+        foreach ($this->useFor = QubitOtherName::get($criteria) as $item) {
           $defaults[$value[] = $item->id] = $item;
         }
 
@@ -282,8 +258,7 @@ class TermEditAction extends DefaultEditAction
         $this->form->setValidator('selfReciprocal', new sfValidatorBoolean());
         $this->form->setWidget('selfReciprocal', new sfWidgetFormInputCheckbox());
 
-        if (isset($this->converseTerm) && $this->converseTerm->id == $this->resource->id)
-        {
+        if (isset($this->converseTerm) && $this->converseTerm->id == $this->resource->id) {
           $this->form->setDefault('selfReciprocal', true);
         }
 
@@ -301,38 +276,30 @@ class TermEditAction extends DefaultEditAction
    */
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'displayNote':
       case 'scopeNote':
       case 'sourceNote':
         $value = $filtered = $this->form->getValue($field->getName());
 
-        foreach ($this[$field->getName()] as $item)
-        {
-          if (!empty($value[$item->id]))
-          {
+        foreach ($this[$field->getName()] as $item) {
+          if (!empty($value[$item->id])) {
             $item->content = $value[$item->id];
             unset($filtered[$item->id]);
-          }
-          else
-          {
+          } else {
             $item->delete();
           }
         }
 
-        foreach ($filtered as $item)
-        {
-          if (!$item)
-          {
+        foreach ($filtered as $item) {
+          if (!$item) {
             continue;
           }
 
           $note = new QubitNote();
           $note->content = $item;
 
-          switch ($field->getName())
-          {
+          switch ($field->getName()) {
             case 'scopeNote':
               $note->typeId = QubitTerm::SCOPE_NOTE_ID;
 
@@ -356,18 +323,15 @@ class TermEditAction extends DefaultEditAction
 
       case 'name':
         if (!QubitTerm::isProtected($this->resource->id)
-            && $this->resource->name != $this->form->getValue('name'))
-        {
+            && $this->resource->name != $this->form->getValue('name')) {
           // Avoid duplicates (used in autocomplete.js)
-          if (filter_var($this->request->getPostParameter('linkExisting'), FILTER_VALIDATE_BOOLEAN))
-          {
+          if (filter_var($this->request->getPostParameter('linkExisting'), FILTER_VALIDATE_BOOLEAN)) {
             $criteria = new Criteria();
             $criteria->add(QubitTerm::TAXONOMY_ID, $this->resource->taxonomyId);
             $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
             $criteria->add(QubitTermI18n::CULTURE, $this->context->user->getCulture());
             $criteria->add(QubitTermI18n::NAME, $this->form->getValue('name'));
-            if (null !== $term = QubitTerm::getOne($criteria))
-            {
+            if (null !== $term = QubitTerm::getOne($criteria)) {
               $this->redirect([$term, 'module' => 'term']);
 
               return;
@@ -381,10 +345,8 @@ class TermEditAction extends DefaultEditAction
         break;
 
       case 'narrowTerms':
-        foreach ($this->form->getValue('narrowTerms') as $item)
-        {
-          if (1 > strlen($item = trim($item)))
-          {
+        foreach ($this->form->getValue('narrowTerms') as $item) {
+          if (1 > strlen($item = trim($item))) {
             continue;
           }
 
@@ -394,8 +356,7 @@ class TermEditAction extends DefaultEditAction
           $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
           $criteria->add(QubitTermI18n::CULTURE, $this->context->user->getCulture());
           $criteria->add(QubitTermI18n::NAME, $item);
-          if (0 < count(QubitTermI18n::get($criteria)))
-          {
+          if (0 < count(QubitTermI18n::get($criteria))) {
             continue;
           }
 
@@ -413,8 +374,7 @@ class TermEditAction extends DefaultEditAction
         $this->resource->parentId = QubitTerm::ROOT_ID;
 
         $value = $this->form->getValue('parent');
-        if (isset($value))
-        {
+        if (isset($value)) {
           $params = $this->context->routing->parse(Qubit::pathInfo($value));
           $this->resource->parent = $params['_sf_route']->resource;
         }
@@ -423,15 +383,13 @@ class TermEditAction extends DefaultEditAction
 
       case 'converseTerm':
         // Remove converse relations for this term
-        foreach (QubitRelation::getBySubjectOrObjectId($this->resource->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]) as $converseRelation)
-        {
+        foreach (QubitRelation::getBySubjectOrObjectId($this->resource->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]) as $converseRelation) {
           $converseRelation->delete();
         }
 
         $value = $this->form->getValue('converseTerm');
 
-        if (true === $this->form->getValue('selfReciprocal'))
-        {
+        if (true === $this->form->getValue('selfReciprocal')) {
           $this->resource->save();
 
           // Set self-reciprocal relation
@@ -440,9 +398,7 @@ class TermEditAction extends DefaultEditAction
           $relation->object = $this->resource;
 
           $this->resource->relationsRelatedBysubjectId[] = $relation;
-        }
-        elseif (isset($value) && '' != $value)
-        {
+        } elseif (isset($value) && '' != $value) {
           // Create new converse relation
           $relation = new QubitRelation();
           $relation->typeId = QubitTerm::CONVERSE_TERM_ID;
@@ -455,8 +411,7 @@ class TermEditAction extends DefaultEditAction
           $converseTerm->save();
 
           // Remove converse relations for the converse term
-          foreach (QubitRelation::getBySubjectOrObjectId($converseTerm->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]) as $converseRelation)
-          {
+          foreach (QubitRelation::getBySubjectOrObjectId($converseTerm->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]) as $converseRelation) {
             $converseRelation->delete();
           }
 
@@ -471,8 +426,7 @@ class TermEditAction extends DefaultEditAction
         unset($this->resource->taxonomy);
 
         $value = $this->form->getValue('taxonomy');
-        if (isset($value))
-        {
+        if (isset($value)) {
           $params = $this->context->routing->parse(Qubit::pathInfo($value));
           $this->resource->taxonomy = $params['_sf_route']->resource;
         }
@@ -481,27 +435,21 @@ class TermEditAction extends DefaultEditAction
 
       case 'relatedTerms':
         $value = $filtered = [];
-        foreach ($this->form->getValue('relatedTerms') as $item)
-        {
+        foreach ($this->form->getValue('relatedTerms') as $item) {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));
           $resource = $params['_sf_route']->resource;
           $value[$resource->id] = $filtered[$resource->id] = $resource;
         }
 
-        foreach ($this->relations as $item)
-        {
-          if (isset($value[$item->objectId]))
-          {
+        foreach ($this->relations as $item) {
+          if (isset($value[$item->objectId])) {
             unset($filtered[$item->objectId]);
-          }
-          else
-          {
+          } else {
             $item->delete();
           }
         }
 
-        foreach ($filtered as $item)
-        {
+        foreach ($filtered as $item) {
           $relation = new QubitRelation();
           $relation->object = $item;
           $relation->typeId = QubitTerm::TERM_RELATION_ASSOCIATIVE_ID;
@@ -514,23 +462,17 @@ class TermEditAction extends DefaultEditAction
       case 'useFor':
         $value = $filtered = $this->form->getValue('useFor');
 
-        foreach ($this->useFor as $item)
-        {
-          if (!empty($value[$item->id]))
-          {
+        foreach ($this->useFor as $item) {
+          if (!empty($value[$item->id])) {
             $item->name = $value[$item->id];
             unset($filtered[$item->id]);
-          }
-          else
-          {
+          } else {
             $item->delete();
           }
         }
 
-        foreach ($filtered as $item)
-        {
-          if (!$item)
-          {
+        foreach ($filtered as $item) {
+          if (!$item) {
             continue;
           }
 
@@ -556,14 +498,12 @@ class TermEditAction extends DefaultEditAction
     parent::processForm();
 
     // Check authorization
-    if (!isset($this->getRoute()->resource) && !QubitAcl::check($this->resource->taxonomy, 'createTerm'))
-    {
+    if (!isset($this->getRoute()->resource) && !QubitAcl::check($this->resource->taxonomy, 'createTerm')) {
       QubitAcl::forwardUnauthorized();
     }
 
     // Update related info objects when term labels changes
-    if ($this->updatedLabel)
-    {
+    if ($this->updatedLabel) {
       $this->updateLinkedInfoObjects();
     }
   }
@@ -572,22 +512,18 @@ class TermEditAction extends DefaultEditAction
   {
     // Only update related IOs of terms that are fully added to the IOs in ES
     $allowedTaxonomyIds = [QubitTaxonomy::PLACE_ID, QubitTaxonomy::SUBJECT_ID, QubitTaxonomy::GENRE_ID];
-    if (!isset($this->resource->taxonomyId) || !in_array($this->resource->taxonomyId, $allowedTaxonomyIds))
-    {
+    if (!isset($this->resource->taxonomyId) || !in_array($this->resource->taxonomyId, $allowedTaxonomyIds)) {
       return;
     }
 
     $ioIds = [];
-    foreach ($this->resource->objectTermRelations as $item)
-    {
-      if ($item->object instanceof QubitInformationObject)
-      {
+    foreach ($this->resource->objectTermRelations as $item) {
+      if ($item->object instanceof QubitInformationObject) {
         $ioIds[] = $item->objectId;
       }
     }
 
-    if (0 == count($ioIds))
-    {
+    if (0 == count($ioIds)) {
       return;
     }
 

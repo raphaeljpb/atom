@@ -49,8 +49,7 @@ EOF;
       ? $options['source-name']
       : basename($arguments['filename']);
 
-    if (false === $fh = fopen($arguments['filename'], 'rb'))
-    {
+    if (false === $fh = fopen($arguments['filename'], 'rb')) {
       throw new sfException('You must specify a valid filename');
     }
 
@@ -166,8 +165,7 @@ EOF;
       ],
 
       // Import logic to load accession
-      'rowInitLogic' => function (&$self)
-      {
+      'rowInitLogic' => function (&$self) {
         $accessionNumber = $self->rowStatusVars['accessionNumber'];
 
         // Look up Qubit ID of pre-created accession
@@ -177,52 +175,39 @@ EOF;
         );
 
         $result = $statement->fetch(PDO::FETCH_OBJ);
-        if ($result)
-        {
+        if ($result) {
           echo $self->logError(sprintf('Found accession ID %d with identifier %s', $result->id, $accessionNumber));
           $self->object = QubitAccession::getById($result->id);
-        }
-        elseif (!empty($accessionNumber))
-        {
+        } elseif (!empty($accessionNumber)) {
           echo $self->logError(sprintf('Could not find accession # %s, creating.', $accessionNumber));
           $self->object = new QubitAccession();
           $self->object->identifier = $accessionNumber;
-        }
-        elseif ($self->getStatus('assignId'))
-        {
+        } elseif ($self->getStatus('assignId')) {
           $identifier = QubitAccession::nextAvailableIdentifier();
           echo $self->logError(sprintf('No accession number, creating accession with identifier %s', $identifier));
           $self->object = new QubitAccession();
           $self->object->identifier = $identifier;
-        }
-        else
-        {
+        } else {
           echo $self->logError('No accession number, skipping');
         }
       },
 
       // Import logic to save accession
-      'saveLogic' => function (&$self)
-      {
+      'saveLogic' => function (&$self) {
         // If row was skipped due to not having an accession number, don't attempt to save
-        if (isset($self->object) && $self->object instanceof QubitAccession)
-        {
+        if (isset($self->object) && $self->object instanceof QubitAccession) {
           $self->object->save();
         }
       },
 
       // Create related objects
-      'postSaveLogic' => function (&$self)
-      {
+      'postSaveLogic' => function (&$self) {
         // If row was skipped due to not having an accession number, don't create related objects
-        if (isset($self->object) && $self->object instanceof QubitAccession && isset($self->object->id))
-        {
+        if (isset($self->object) && $self->object instanceof QubitAccession && isset($self->object->id)) {
           // Add creators
           if (isset($self->rowStatusVars['creators'])
-            && $self->rowStatusVars['creators'])
-          {
-            foreach ($self->rowStatusVars['creators'] as $creator)
-            {
+            && $self->rowStatusVars['creators']) {
+            foreach ($self->rowStatusVars['creators'] as $creator) {
               // Fetch/create actor
               $actor = $self->createOrFetchActor($creator);
 
@@ -235,27 +220,22 @@ EOF;
           $identifiers = $self->rowStatusVars['alternativeIdentifiers'];
           $identifierNotes = $self->rowStatusVars['alternativeIdentifierNotes'];
 
-          if (!empty($identifiers) || !empty($identifierNotes))
-          {
+          if (!empty($identifiers) || !empty($identifierNotes)) {
             $identifierTypes = $self->rowStatusVars['alternativeIdentifierTypes'];
 
-            for ($index = 0; $index < max(count($identifiers), count($identifierNotes)); ++$index)
-            {
+            for ($index = 0; $index < max(count($identifiers), count($identifierNotes)); ++$index) {
               $identifier = (empty($identifiers[$index])) ? null : $identifiers[$index];
 
-              if (!empty($identifier) || !empty($identifierNotes[$index]))
-              {
+              if (!empty($identifier) || !empty($identifierNotes[$index])) {
                 $otherName = new QubitOtherName();
                 $otherName->object = $self->object;
                 $otherName->name = $identifier;
 
                 // Set type attribute, determine alternative identifier type ID if a type name's specified
                 $otherName->typeId = QubitTerm::ACCESSION_ALTERNATIVE_IDENTIFIER_DEFAULT_TYPE_ID;
-                if (!empty($typeName = $identifierTypes[$index]))
-                {
+                if (!empty($typeName = $identifierTypes[$index])) {
                   // Create new accession identifier type term, if necessary
-                  if (empty($typeId = self::arraySearchCaseInsensitive($typeName, $self->status['alternativeIdentifierTypes'][$self->columnValue('culture')])))
-                  {
+                  if (empty($typeId = self::arraySearchCaseInsensitive($typeName, $self->status['alternativeIdentifierTypes'][$self->columnValue('culture')]))) {
                     $term = new QubitTerm();
                     $term->parentId = QubitTerm::ROOT_ID;
                     $term->taxonomyId = QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID;
@@ -272,8 +252,7 @@ EOF;
                 }
 
                 // Set type note, if specified
-                if (!empty($note = $identifierNotes[$index]))
-                {
+                if (!empty($note = $identifierNotes[$index])) {
                   $otherName->setNote($note, ['culture' => $self->columnValue('culture')]);
                 }
 
@@ -293,21 +272,17 @@ EOF;
           $eventTypes = $self->rowStatusVars['accessionEventTypes'];
           $eventDates = $self->rowStatusVars['accessionEventDates'];
 
-          if (!empty($eventTypes) || !empty($eventDates))
-          {
+          if (!empty($eventTypes) || !empty($eventDates)) {
             $eventAgents = $self->rowStatusVars['accessionEventAgents'];
             $eventNotes = $self->rowStatusVars['accessionEventNotes'];
 
-            for ($index = 0; $index < count($eventTypes); ++$index)
-            {
+            for ($index = 0; $index < count($eventTypes); ++$index) {
               $eventType = (empty($eventTypes[$index])) ? null : $eventTypes[$index];
               $eventDate = (empty($eventDates[$index])) ? null : $eventDates[$index];
 
-              if (!empty($eventType) && !empty($eventDate))
-              {
+              if (!empty($eventType) && !empty($eventDate)) {
                 // Create new accession event type term, if necessary
-                if (empty($typeId = self::arraySearchCaseInsensitive($eventType, $self->status['accessionEventTypes'][$self->columnValue('culture')])))
-                {
+                if (empty($typeId = self::arraySearchCaseInsensitive($eventType, $self->status['accessionEventTypes'][$self->columnValue('culture')]))) {
                   $term = new QubitTerm();
                   $term->parentId = QubitTerm::ROOT_ID;
                   $term->taxonomyId = QubitTaxonomy::ACCESSION_EVENT_TYPE_ID;
@@ -331,8 +306,7 @@ EOF;
                 $event->save();
 
                 // Add accession event notes
-                if (!empty($eventNoteText))
-                {
+                if (!empty($eventNoteText)) {
                   $note = new QubitNote();
                   $note->objectId = $event->id;
                   $note->typeId = QubitTerm::ACCESSION_EVENT_NOTE_ID;
@@ -344,8 +318,7 @@ EOF;
           }
 
           if (isset($self->rowStatusVars['donorName'])
-            && $self->rowStatusVars['donorName'])
-          {
+            && $self->rowStatusVars['donorName']) {
             // Fetch/create donor
             $donor = $self->createOrFetchDonor($self->rowStatusVars['donorName']);
 
@@ -364,24 +337,18 @@ EOF;
 
             // Set up creation of contact infomation
             $contactData = [];
-            foreach ($columnToProperty as $column => $property)
-            {
-              if (isset($self->rowStatusVars[$column]))
-              {
+            foreach ($columnToProperty as $column => $property) {
+              if (isset($self->rowStatusVars[$column])) {
                 $contactData[$property] = $self->rowStatusVars[$column];
               }
             }
 
             // Attempt to coerce country to country code if value specified (and not already a country code)
-            if (!empty($self->rowStatusVars['donorCountry']))
-            {
+            if (!empty($self->rowStatusVars['donorCountry'])) {
               $countryCode = QubitFlatfileImport::normalizeCountryAsCountryCode($self->rowStatusVars['donorCountry']);
-              if (null === $countryCode)
-              {
+              if (null === $countryCode) {
                 echo sprintf("Could not find country or country code matching '%s'\n", $self->rowStatusVars['donorCountry']);
-              }
-              else
-              {
+              } else {
                 $contactData['countryCode'] = $countryCode;
               }
             }
@@ -395,64 +362,49 @@ EOF;
 
           // Link accession to existing description
           if (isset($self->rowStatusVars['qubitParentSlug'])
-            && $self->rowStatusVars['qubitParentSlug'])
-          {
+            && $self->rowStatusVars['qubitParentSlug']) {
             $query = 'SELECT object_id FROM slug WHERE slug=?';
             $statement = QubitFlatfileImport::sqlQuery($query, [$self->rowStatusVars['qubitParentSlug']]);
             $result = $statement->fetch(PDO::FETCH_OBJ);
-            if ($result)
-            {
+            if ($result) {
               $self->createRelation($result->object_id, $self->object->id, QubitTerm::ACCESSION_ID);
-            }
-            else
-            {
+            } else {
               throw new sfException('Could not find information object matching slug "'.$self->rowStatusVars['qubitParentSlug'].'"');
             }
           }
         }
 
         // Add keymap entry
-        if (!empty($self->rowStatusVars['accessionNumber']))
-        {
+        if (!empty($self->rowStatusVars['accessionNumber'])) {
           $self->createKeymapEntry($self->getStatus('sourceName'), $self->rowStatusVars['accessionNumber']);
         }
 
         // Re-index to add related resources
-        if (!$self->searchIndexingDisabled)
-        {
+        if (!$self->searchIndexingDisabled) {
           QubitSearch::getInstance()->update($self->object);
         }
       },
     ]);
 
-    $import->addColumnHandler('acquisitionDate', function ($self, $data)
-    {
-      if ($data)
-      {
-        if (isset($self->object) && is_object($self->object))
-        {
+    $import->addColumnHandler('acquisitionDate', function ($self, $data) {
+      if ($data) {
+        if (isset($self->object) && is_object($self->object)) {
           $parsedDate = Qubit::parseDate($data);
-          if ($parsedDate)
-          {
+          if ($parsedDate) {
             $self->object->date = $parsedDate;
-          }
-          else
-          {
+          } else {
             $self->logError('Could not parse date: '.$data);
           }
         }
       }
     });
 
-    $import->addColumnHandler('resourceType', function ($self, $data)
-    {
-      if ($data)
-      {
+    $import->addColumnHandler('resourceType', function ($self, $data) {
+      if ($data) {
         $data = trim($data);
         $resourceTypeId = self::arraySearchCaseInsensitive($data, $self->status['resourceTypes'][$self->columnValue('culture')]);
 
-        if (false === $resourceTypeId)
-        {
+        if (false === $resourceTypeId) {
           echo "\nTerm {$data} not found in resource type taxonomy, creating it...\n";
           $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID, $data, $self->columnValue('culture'));
           $self->status['resourceTypes'] = self::refreshTaxonomyTerms(QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID);
@@ -468,15 +420,12 @@ EOF;
       }
     });
 
-    $import->addColumnHandler('acquisitionType', function ($self, $data)
-    {
-      if ($data)
-      {
+    $import->addColumnHandler('acquisitionType', function ($self, $data) {
+      if ($data) {
         $data = trim($data);
         $acquisitionTypeId = self::arraySearchCaseInsensitive($data, $self->status['acquisitionTypes'][$self->columnValue('culture')]);
 
-        if (false === $acquisitionTypeId)
-        {
+        if (false === $acquisitionTypeId) {
           echo "\nTerm {$data} not found in acquisition type taxonomy, creating it...\n";
           $newTerm = QubitFlatfileImport::createTerm(QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID, $data, $self->columnValue('culture'));
           $self->status['acquisitionTypes'] = self::refreshTaxonomyTerms(QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID);
@@ -492,8 +441,7 @@ EOF;
       }
     });
 
-    $import->addColumnHandler('processingStatus', function ($self, $data)
-    {
+    $import->addColumnHandler('processingStatus', function ($self, $data) {
       $this->setObjectPropertyToTermIdLookedUpFromTermNameArray(
         $self,
         'processingStatusId',
@@ -503,8 +451,7 @@ EOF;
       );
     });
 
-    $import->addColumnHandler('processingPriority', function ($self, $data)
-    {
+    $import->addColumnHandler('processingPriority', function ($self, $data) {
       $this->setObjectPropertyToTermIdLookedUpFromTermNameArray(
         $self,
         'processingPriorityId',

@@ -39,8 +39,7 @@ class SettingsDigitalObjectDerivativesAction extends SettingsEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'digital_object_derivatives_pdf_page_number':
         $this->form->setValidator($name, new sfValidatorInteger(['min' => 1]));
         $this->form->setWidget($name, new sfWidgetFormInput());

@@ -27,16 +27,13 @@ class SettingsFindingAidAction extends sfAction
     $this->findingAidForm = new SettingsFindingAidForm();
 
     // Handle POST data (form submit)
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       QubitCache::getInstance()->removePattern('settings:i18n:*');
 
       // Handle Finding Aid form submission
-      if (null !== $request->finding_aid)
-      {
+      if (null !== $request->finding_aid) {
         $this->findingAidForm->bind($request->finding_aid);
-        if ($this->findingAidForm->isValid())
-        {
+        if ($this->findingAidForm->isValid()) {
           // Do update and redirect to avoid repeat submit wackiness
           $this->updateFindingAidSettings();
 
@@ -74,22 +71,19 @@ class SettingsFindingAidAction extends sfAction
   {
     $thisForm = $this->findingAidForm;
 
-    if (null !== $findingAidFormat = $thisForm->getValue('finding_aid_format'))
-    {
+    if (null !== $findingAidFormat = $thisForm->getValue('finding_aid_format')) {
       $setting = QubitSetting::getByName('findingAidFormat');
       $setting->setValue($findingAidFormat, ['sourceCulture' => true]);
       $setting->save();
     }
 
-    if (null !== $findingAidModel = $thisForm->getValue('finding_aid_model'))
-    {
+    if (null !== $findingAidModel = $thisForm->getValue('finding_aid_model')) {
       $setting = QubitSetting::getByName('findingAidModel');
       $setting->setValue($findingAidModel, ['sourceCulture' => true]);
       $setting->save();
     }
 
-    if (null !== $publicFindingAid = $thisForm->getValue('public_finding_aid'))
-    {
+    if (null !== $publicFindingAid = $thisForm->getValue('public_finding_aid')) {
       $setting = QubitSetting::getByName('publicFindingAid');
       $setting->setValue($publicFindingAid, ['sourceCulture' => true]);
       $setting->save();

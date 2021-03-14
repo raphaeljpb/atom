@@ -31,17 +31,14 @@ class QubitUser extends BaseUser
   {
     parent::save($connection);
 
-    foreach ($this->aclUserGroups as $aclUserGroup)
-    {
-      if (!$aclUserGroup->isDeleted())
-      {
+    foreach ($this->aclUserGroups as $aclUserGroup) {
+      if (!$aclUserGroup->isDeleted()) {
         $aclUserGroup->user = $this;
         $aclUserGroup->save();
       }
     }
 
-    foreach ($this->aclPermissions as $aclPermission)
-    {
+    foreach ($this->aclPermissions as $aclPermission) {
       $aclPermission->user = $this;
       $aclPermission->save();
     }
@@ -52,8 +49,7 @@ class QubitUser extends BaseUser
   public function delete($connection = null)
   {
     // Remove user's association with notes before deletion.
-    foreach ($this->getNotes() as $note)
-    {
+    foreach ($this->getNotes() as $note) {
       $note->userId = null;
       $note->save();
     }
@@ -77,8 +73,7 @@ class QubitUser extends BaseUser
     $hashAlgoConstant = sfConfig::get('app_password_hash_algorithm', 'PASSWORD_ARGON2I');
 
     // Check to make sure hashing constant specified in settings is defined
-    if (defined($hashAlgoConstant))
-    {
+    if (defined($hashAlgoConstant)) {
       // Hashing constant is defined so use it and options specified in settings
       $hashAlgo = constant($hashAlgoConstant);
 
@@ -86,9 +81,7 @@ class QubitUser extends BaseUser
         sfConfig::get('app_password_hash_algorithm_options', '{}'),
         true
       );
-    }
-    else
-    {
+    } else {
       // Hashing constant specified in settings isn't defined: use default
       // alghorithm (PASSWORD_DEFAULT, usually PASSWORD_BCRYPT) and options
       $hashAlgo = PASSWORD_DEFAULT;
@@ -98,8 +91,7 @@ class QubitUser extends BaseUser
     $passwordHash = password_hash($password, $hashAlgo, $hashAlgoOptions);
 
     // Make sure hashing completed successfully
-    if (empty($passwordHash))
-    {
+    if (empty($passwordHash)) {
       $errorMessage = sprintf(
         'Password hashing using the %s algorithm was unsuccessful.',
         $hashAlgoConstant
@@ -117,8 +109,7 @@ class QubitUser extends BaseUser
     $authenticatedGroup = QubitAclGroup::getById(QubitAclGroup::AUTHENTICATED_ID);
 
     $groups = [$authenticatedGroup];
-    foreach ($this->getAclUserGroups() as $userGroup)
-    {
+    foreach ($this->getAclUserGroups() as $userGroup) {
       $groups[] = $userGroup->getGroup();
     }
 
@@ -136,8 +127,7 @@ class QubitUser extends BaseUser
     $error = null;
 
     // anonymous is not a real user
-    if ('anonymous' == $username)
-    {
+    if ('anonymous' == $username) {
       $error = 'invalid username';
 
       return null;
@@ -148,11 +138,9 @@ class QubitUser extends BaseUser
     $user = QubitUser::getOne($criteria);
 
     // user account exists?
-    if (null !== $user)
-    {
+    if (null !== $user) {
       // Stop if user is not active
-      if (!$user->active)
-      {
+      if (!$user->active) {
         $error = 'inactive user';
 
         return null;
@@ -160,17 +148,12 @@ class QubitUser extends BaseUser
 
       // Check password, hashed with salt using SHA-1, against stored hash
       // (hash algorithm, options, and salt get detected from stored hash)
-      if (password_verify(sha1($user->getSalt().$password), $user->getPasswordHash()))
-      {
+      if (password_verify(sha1($user->getSalt().$password), $user->getPasswordHash())) {
         $validCreds = true;
-      }
-      else
-      {
+      } else {
         $error = 'invalid password';
       }
-    }
-    else
-    {
+    } else {
       $error = 'invalid username';
     }
 
@@ -190,26 +173,21 @@ class QubitUser extends BaseUser
     $hasGroup = false;
 
     // Cast $checkGroups as an array
-    if (!is_array($checkGroups))
-    {
+    if (!is_array($checkGroups)) {
       $checkGroups = [$checkGroups];
     }
 
     // A user is always part of the authenticated group
-    if (in_array(QubitAclGroup::AUTHENTICATED_ID, $checkGroups))
-    {
+    if (in_array(QubitAclGroup::AUTHENTICATED_ID, $checkGroups)) {
       return true;
     }
 
     $criteria = new Criteria();
     $criteria->add(QubitAclUserGroup::USER_ID, $this->id);
 
-    if (0 < count($userGroups = QubitAclUserGroup::get($criteria)))
-    {
-      foreach ($userGroups as $userGroup)
-      {
-        if (in_array(intval($userGroup->groupId), $checkGroups))
-        {
+    if (0 < count($userGroups = QubitAclUserGroup::get($criteria))) {
+      foreach ($userGroups as $userGroup) {
+        if (in_array(intval($userGroup->groupId), $checkGroups)) {
           $hasGroup = true;
 
           break;
@@ -229,10 +207,8 @@ class QubitUser extends BaseUser
    */
   public static function getSystemAdmin()
   {
-    foreach (self::getAll() as $user)
-    {
-      if ($user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID))
-      {
+    foreach (self::getAll() as $user) {
+      if ($user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID)) {
         return $user;
       }
     }
@@ -256,15 +232,11 @@ class QubitUser extends BaseUser
   {
     // Get user's groups
     $userGroups = [];
-    if (0 < count($aclUserGroups = $this->aclUserGroups))
-    {
-      foreach ($aclUserGroups as $aclUserGroup)
-      {
+    if (0 < count($aclUserGroups = $this->aclUserGroups)) {
+      foreach ($aclUserGroups as $aclUserGroup) {
         $userGroups[] = $aclUserGroup->groupId;
       }
-    }
-    else
-    {
+    } else {
       // User is *always* part of authenticated group
       $userGroups = [QubitAclGroup::AUTHENTICATED_ID];
     }
@@ -275,12 +247,9 @@ class QubitUser extends BaseUser
     $c1 = $criteria->getNewCriterion(QubitAclPermission::USER_ID, $this->id);
 
     // Add group criteria
-    if (1 == count($userGroups))
-    {
+    if (1 == count($userGroups)) {
       $c2 = $criteria->getNewCriterion(QubitAclPermission::GROUP_ID, $userGroups[0]);
-    }
-    else
-    {
+    } else {
       $c2 = $criteria->getNewCriterion(QubitAclPermission::GROUP_ID, $userGroups, Criteria::IN);
     }
     $c1->addOr($c2);
@@ -300,14 +269,10 @@ class QubitUser extends BaseUser
 
     // Build ACL
     $repositories = [];
-    if (0 < count($permissions = QubitAclPermission::get($criteria)))
-    {
-      foreach ($permissions as $item)
-      {
-        if (null !== $constant = $item->getConstants(['name' => 'repository']))
-        {
-          if (!isset($repositories[$constant]))
-          {
+    if (0 < count($permissions = QubitAclPermission::get($criteria))) {
+      foreach ($permissions as $item) {
+        if (null !== $constant = $item->getConstants(['name' => 'repository'])) {
+          if (!isset($repositories[$constant])) {
             $repositories[$constant] = QubitRepository::getBySlug($constant);
           }
         }

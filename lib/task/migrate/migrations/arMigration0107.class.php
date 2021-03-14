@@ -60,8 +60,7 @@ class arMigration0107
       'isad_description_control_area', ];
 
     // Add visibility settings
-    foreach ($elements as $item)
-    {
+    foreach ($elements as $item) {
       $setting = new QubitSetting();
       $setting->name = $item;
       $setting->scope = 'element_visibility';

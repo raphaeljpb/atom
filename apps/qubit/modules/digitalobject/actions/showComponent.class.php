@@ -34,8 +34,7 @@ class DigitalObjectShowComponent extends sfComponent
   public function execute($request)
   {
     // If type of display not specified, show a thumbnail
-    if (!isset($this->usageType))
-    {
+    if (!isset($this->usageType)) {
       $this->usageType = QubitTerm::THUMBNAIL_ID;
     }
 
@@ -43,8 +42,7 @@ class DigitalObjectShowComponent extends sfComponent
     if (
       QubitTerm::MASTER_ID == $this->usageType
       && !QubitAcl::check($this->resource->object, 'readMaster')
-    )
-    {
+    ) {
       return sfView::NONE;
     }
 
@@ -52,25 +50,21 @@ class DigitalObjectShowComponent extends sfComponent
 
     // Check to see if the user has permission to view this representation,
     // if not, we'll show a generic icon.
-    if ($this->checkShowGenericIcon())
-    {
+    if ($this->checkShowGenericIcon()) {
       $this->showComponent = 'showGenericIcon';
     }
 
     // Check PREMIS granted rights, and show an access warning if they prevent
     // access
-    if (QubitTerm::REFERENCE_ID == $this->usageType)
-    {
+    if (QubitTerm::REFERENCE_ID == $this->usageType) {
       $this->accessWarning = $this->getAccessWarning();
     }
 
-    if (!isset($this->link))
-    {
+    if (!isset($this->link)) {
       $this->link = null;
     }
 
-    if (!isset($this->iconOnly))
-    {
+    if (!isset($this->iconOnly)) {
       $this->iconOnly = false;
     }
   }
@@ -80,8 +74,7 @@ class DigitalObjectShowComponent extends sfComponent
    */
   private function checkShowGenericIcon()
   {
-    switch ($this->usageType)
-    {
+    switch ($this->usageType) {
       case QubitTerm::REFERENCE_ID:
         return !QubitAcl::check($this->resource->object, 'readReference');
 
@@ -100,8 +93,7 @@ class DigitalObjectShowComponent extends sfComponent
   {
     $denyReason = '';
 
-    if ($this->resource->object instanceof QubitActor)
-    {
+    if ($this->resource->object instanceof QubitActor) {
       return '';
     }
 
@@ -115,19 +107,13 @@ class DigitalObjectShowComponent extends sfComponent
   private function setComponentType()
   {
     // Figure out which show component to call
-    switch ($this->resource->mediaTypeId)
-    {
+    switch ($this->resource->mediaTypeId) {
       case QubitTerm::IMAGE_ID:
-        if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceof QubitInformationObject)
-        {
+        if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceof QubitInformationObject) {
           $this->showComponent = 'showCompound';
-        }
-        elseif ($this->resource->isWebCompatibleImageFormat())
-        {
+        } elseif ($this->resource->isWebCompatibleImageFormat()) {
           $this->showComponent = 'showImage';
-        }
-        else
-        {
+        } else {
           $this->showComponent = 'showDownload';
         }
 
@@ -144,12 +130,9 @@ class DigitalObjectShowComponent extends sfComponent
         break;
 
       case QubitTerm::TEXT_ID:
-        if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceof QubitInformationObject)
-        {
+        if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceof QubitInformationObject) {
           $this->showComponent = 'showCompound';
-        }
-        else
-        {
+        } else {
           $this->showComponent = 'showText';
         }
 

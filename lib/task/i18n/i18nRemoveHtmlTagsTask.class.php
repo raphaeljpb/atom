@@ -54,11 +54,9 @@ EOF;
     // Determine what column values contain HTML
     $columnValues = [];
 
-    foreach ($columns as $column)
-    {
+    foreach ($columns as $column) {
       // Store column name/value for processing if it contains tags
-      if ($row[$column] && (($row[$column] != strip_tags($row[$column])) || ($row[$column] != html_entity_decode($row[$column]))))
-      {
+      if ($row[$column] && (($row[$column] != strip_tags($row[$column])) || ($row[$column] != html_entity_decode($row[$column])))) {
         $columnValues[$column] = $this->transformHtmlToText($row[$column]);
       }
     }
@@ -116,15 +114,13 @@ EOF;
     $linkList = $doc->getElementsByTagName('a');
 
     // Loop through each <a> tag and replace with text content
-    while ($linkList->length > 0)
-    {
+    while ($linkList->length > 0) {
       $linkNode = $linkList->item(0);
 
       $linkText = $linkNode->textContent;
       $linkHref = $linkNode->getAttribute('href');
 
-      if ($linkHref)
-      {
+      if ($linkHref) {
         // Convert <a href="url">label</a> link to Markdown style [label](url) link.
         $linkText = sprintf('[%s](%s)', $linkText, $linkHref);
       }
@@ -145,8 +141,7 @@ EOF;
     $ulList = $doc->getElementsByTagName('ul');
 
     // Loop through each <ul> tag and change to a <p> tag
-    while ($ulList->length > 0)
-    {
+    while ($ulList->length > 0) {
       $listNode = $ulList->item(0);
 
       $newParaNode = $doc->createElement('p');
@@ -154,8 +149,7 @@ EOF;
       // Assemble text representation of list
       $paraText = '';
 
-      foreach ($listNode->childNodes as $childNode)
-      {
+      foreach ($listNode->childNodes as $childNode) {
         $paraText .= '* '.$childNode->textContent."\n";
       }
 
@@ -177,8 +171,7 @@ EOF;
     $termList = $doc->getElementsByTagName('dt');
 
     // Loop through each <dt> tag and remove it
-    while ($termList->length > 0)
-    {
+    while ($termList->length > 0) {
       $termNode = $termList->item(0);
       $termNode->parentNode->removeChild($termNode);
     }
@@ -186,8 +179,7 @@ EOF;
     $descriptionList = $doc->getElementsByTagName('dd');
 
     // Look through each <dd> element and change to a <p> element
-    while ($descriptionList->length > 0)
-    {
+    while ($descriptionList->length > 0) {
       $descriptionNode = $descriptionList->item(0);
       // Create <p> node with description's text
       $newParaNode = $doc->createElement('p');
@@ -207,8 +199,7 @@ EOF;
     $breakList = $doc->getElementsByTagName('br');
 
     // Loop through each <p> and replace with text
-    while ($breakList->length)
-    {
+    while ($breakList->length) {
       $breakNode = $breakList->item(0);
 
       $newTextNode = $doc->createTextNode("\n");
@@ -227,8 +218,7 @@ EOF;
     $paraList = $doc->getElementsByTagName('p');
 
     // Loop through each <p> and replace with text
-    while ($paraList->length)
-    {
+    while ($paraList->length) {
       $paraNode = $paraList->item(0);
 
       $paraText = "\n".$paraNode->textContent."\n";

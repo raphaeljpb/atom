@@ -30,14 +30,10 @@ class QubitContactInformation extends BaseContactInformation
     $criteria->add(QubitContactInformation::ACTOR_ID, $this->actorId);
     $contacts = self::get($criteria);
 
-    foreach ($contacts as $item)
-    {
-      if ($item->id == $this->id)
-      {
+    foreach ($contacts as $item) {
+      if ($item->id == $this->id) {
         $item->primaryContact = true;
-      }
-      else
-      {
+      } else {
         $item->primaryContact = false;
       }
 

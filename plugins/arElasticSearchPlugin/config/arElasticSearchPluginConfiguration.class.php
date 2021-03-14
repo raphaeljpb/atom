@@ -28,21 +28,17 @@ class arElasticSearchPluginConfiguration extends sfPluginConfiguration
 
   public function initialize()
   {
-    if (!extension_loaded('curl'))
-    {
+    if (!extension_loaded('curl')) {
       throw new sfInitializationException('arElasticSearchPlugin needs cURL PHP extension');
     }
 
-    if ($this->configuration instanceof sfApplicationConfiguration)
-    {
+    if ($this->configuration instanceof sfApplicationConfiguration) {
       // Use config cache in application context
       $configCache = $this->configuration->getConfigCache();
       $configCache->registerConfigHandler(self::$configPath, 'arElasticSearchConfigHandler');
 
       self::$config = include $configCache->checkConfig(self::$configPath);
-    }
-    else
-    {
+    } else {
       // Live parsing (task context)
       self::reloadConfig($this->configuration);
     }
@@ -60,8 +56,7 @@ class arElasticSearchPluginConfiguration extends sfPluginConfiguration
     $maxResultWindow = 10000;
     $indexConfig = self::$config['index']['configuration'];
 
-    if (!empty($indexConfig['index.max_result_window']))
-    {
+    if (!empty($indexConfig['index.max_result_window'])) {
       $maxResultWindow = (int) $indexConfig['index.max_result_window'];
     }
 

@@ -46,12 +46,9 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
-    foreach (QubitContactInformation::getAll() as $item)
-    {
-      if (!empty($item->latitude) || !empty($item->longitude))
-      {
-        if (false === $options['overwrite'])
-        {
+    foreach (QubitContactInformation::getAll() as $item) {
+      if (!empty($item->latitude) || !empty($item->longitude)) {
+        if (false === $options['overwrite']) {
           $this->logSection('latlng', sprintf('Skipping entry (%s, %s)', $item->latitude, $item->longitude));
 
           continue;
@@ -60,20 +57,16 @@ EOF;
 
       $address = [];
 
-      foreach (['streetAddress', 'city', 'region', 'postalCode', 'countryCode'] as $field)
-      {
-        if (isset($item->{$field}) && !empty($item->{$field}))
-        {
+      foreach (['streetAddress', 'city', 'region', 'postalCode', 'countryCode'] as $field) {
+        if (isset($item->{$field}) && !empty($item->{$field})) {
           $address[] = $item->{$field};
         }
       }
 
-      if (0 < count($address))
-      {
+      if (0 < count($address)) {
         list($lat, $lng) = $this->getLatLng(implode(', ', $address));
 
-        if (!is_null($lat) && !is_null($lng))
-        {
+        if (!is_null($lat) && !is_null($lng)) {
           $item->latitude = $lat;
           $item->longitude = $lng;
 
@@ -81,9 +74,7 @@ EOF;
 
           $this->logSection('latlng', 'Saved!');
           $this->logSection('latlng', ' ');
-        }
-        else
-        {
+        } else {
           ++$this->errorCount;
         }
       }
@@ -95,12 +86,9 @@ EOF;
   protected function getLatLng($address)
   {
     $url = sprintf('http://maps.googleapis.com/maps/api/geocode/json?address=%s&sensor=false', urlencode($address));
-    if (false === $response = file_get_contents($url))
-    {
+    if (false === $response = file_get_contents($url)) {
       $this->logSection('latlng', sprintf('Failed to locate address: %s.', $this->wordLimiter($address)));
-    }
-    else
-    {
+    } else {
       $data = json_decode($response);
       $data = array_pop($data->results);
 
@@ -111,8 +99,7 @@ EOF;
       $address = preg_replace('/[\n\r\f]+/m', ', ', $address);
 
       $this->logSection('latlng', sprintf('Address: %s', $address));
-      if (!is_float($lat) || !is_float($lng))
-      {
+      if (!is_float($lat) || !is_float($lng)) {
         $this->logSection('latlng', 'ERROR!');
         $this->logSection('latlng', ' ');
 
@@ -127,15 +114,13 @@ EOF;
 
   protected function wordLimiter($str, $limit = 100, $end_char = '...')
   {
-    if ('' == trim($str))
-    {
+    if ('' == trim($str)) {
       return $str;
     }
 
     preg_match('/^\s*+(?:\S++\s*+){1,'.(int) $limit.'}/', $str, $matches);
 
-    if (strlen($str) == strlen($matches[0]))
-    {
+    if (strlen($str) == strlen($matches[0])) {
       $end_char = '';
     }
 

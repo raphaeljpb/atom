@@ -22,26 +22,22 @@ class RepositoryUploadLimitComponent extends sfComponent
   public function execute($request)
   {
     // If repository quotas are disabled, don't show this component
-    if (!sfConfig::get('app_enable_repository_quotas', true))
-    {
+    if (!sfConfig::get('app_enable_repository_quotas', true)) {
       return sfView::NONE;
     }
 
     $this->resource = $request->getAttribute('sf_route')->resource;
 
-    if (isset($this->resource) && 'QubitInformationObject' == get_class($this->resource))
-    {
+    if (isset($this->resource) && 'QubitInformationObject' == get_class($this->resource)) {
       $this->resource = $this->resource->getRepository(['inherit' => true]);
     }
 
-    if (!isset($this->resource) || !QubitAcl::check($this->resource, 'update'))
-    {
+    if (!isset($this->resource) || !QubitAcl::check($this->resource, 'update')) {
       return sfView::NONE;
     }
 
     // Get upload type
-    switch ($this->resource->uploadLimit)
-    {
+    switch ($this->resource->uploadLimit) {
       case -1:
         $this->quotaType = 'unlimited';
 
@@ -64,23 +60,20 @@ class RepositoryUploadLimitComponent extends sfComponent
     ];
 
     // Hide edit component for ajax response
-    if (!isset($this->noedit))
-    {
+    if (!isset($this->noedit)) {
       $this->noedit = false;
     }
 
     // Calc disk usage display value (in GB)
     $this->diskUsage = $this->resource->getDiskUsage();
-    if (0 != $this->diskUsage)
-    {
+    if (0 != $this->diskUsage) {
       // Convert bytes to GB
       $this->diskUsage = floatval($this->diskUsage) / pow(10, 9);
     }
 
     // Get display value for upload limit
     $this->uploadLimit = $this->resource->uploadLimit;
-    if (0 > $this->uploadLimit)
-    {
+    if (0 > $this->uploadLimit) {
       $this->uploadLimit = '<em>Unlimited</em>';
     }
 
@@ -88,37 +81,28 @@ class RepositoryUploadLimitComponent extends sfComponent
     $this->usageBarColor = $this->usageBarColors['default'];
 
     // Calc progress bar and percentages values for usage limit > 0
-    if ('limited' == $this->quotaType)
-    {
+    if ('limited' == $this->quotaType) {
       // Calc percent
       $dup = $this->diskUsage / floatval($this->resource->uploadLimit) * 100;
 
       // Get display values
-      if (0 <= $dup && 1 > $dup)
-      {
+      if (0 <= $dup && 1 > $dup) {
         $this->diskUsagePercent = '<&nbsp;1';
         $this->usageBarPixels = '1';
-      }
-      elseif (100 < $dup)
-      {
+      } elseif (100 < $dup) {
         $this->diskUsagePercent = '>&nbsp;100';
         $this->usageBarPixels = 200;
         $this->usageBarColor = $this->usageBarColors['warning'];
-      }
-      else
-      {
+      } else {
         $this->diskUsagePercent = round($dup, 0);
         $this->usageBarPixels = round($dup * 2, 0);
       }
     }
 
     // Get display value for disk usage
-    if (0 < $this->diskUsage && 0.01 > $this->diskUsage)
-    {
+    if (0 < $this->diskUsage && 0.01 > $this->diskUsage) {
       $this->diskUsage = '<&nbsp;0.01';
-    }
-    else
-    {
+    } else {
       $this->diskUsage = round($this->diskUsage, 2);
     }
 

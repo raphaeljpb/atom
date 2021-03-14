@@ -22,20 +22,17 @@ class ApiInformationObjectsDownloadDigitalObjectAction extends QubitApiAction
   protected function get($request)
   {
     // Check that Information Object with provided slug exists
-    if (null === $this->resource = QubitInformationObject::getBySlug($this->request->slug))
-    {
+    if (null === $this->resource = QubitInformationObject::getBySlug($this->request->slug)) {
       throw new QubitApi404Exception('Information object not found');
     }
 
     // Check that this isn't the root
-    if (!isset($this->resource->parent))
-    {
+    if (!isset($this->resource->parent)) {
       throw new QubitApi404Exception('Information object not found');
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'readMaster'))
-    {
+    if (!QubitAcl::check($this->resource, 'readMaster')) {
       throw new QubitApiNotAuthorizedException();
     }
 
@@ -45,8 +42,7 @@ class ApiInformationObjectsDownloadDigitalObjectAction extends QubitApiAction
     if (
       QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID != $publicationStatusId
       && !QubitAcl::check($this->resource, 'viewDraft')
-    )
-    {
+    ) {
       throw new QubitApiNotAuthorizedException();
     }
 
@@ -55,22 +51,17 @@ class ApiInformationObjectsDownloadDigitalObjectAction extends QubitApiAction
     $criteria = new Criteria();
     $criteria->add(QubitDigitalObject::OBJECT_ID, $this->resource->id);
     $criteria->add(QubitDigitalObject::USAGE_ID, $digitalObjectTypes, Criteria::IN);
-    if (null === $this->do = QubitDigitalObject::getOne($criteria))
-    {
+    if (null === $this->do = QubitDigitalObject::getOne($criteria)) {
       throw new QubitApi404Exception('Digital object not found');
     }
 
     // Get path (filepath or URI) to digital object
-    if (QubitTerm::EXTERNAL_URI_ID == $this->do->usageId)
-    {
+    if (QubitTerm::EXTERNAL_URI_ID == $this->do->usageId) {
       $this->path = $this->do->getPath();
-    }
-    else
-    {
+    } else {
       $this->path = $this->do->getAbsolutePath();
 
-      if (!file_exists($this->path))
-      {
+      if (!file_exists($this->path)) {
         throw new QubitApi404Exception('Digital object not found');
       }
     }
@@ -102,8 +93,7 @@ class ApiInformationObjectsDownloadDigitalObjectAction extends QubitApiAction
     $this->getResponse()->sendHttpHeaders();
 
     // Disable output buffering to avoid memory issues
-    if (ob_get_level())
-    {
+    if (ob_get_level()) {
       ob_end_clean();
     }
 

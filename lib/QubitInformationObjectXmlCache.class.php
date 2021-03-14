@@ -44,13 +44,11 @@ class QubitInformationObjectXmlCache
   public function export($resource, $format = null)
   {
     // Only cache top-level information object's EAD XML
-    if (QubitInformationObject::ROOT_ID == $resource->parentId && 'dc' !== $format)
-    {
+    if (QubitInformationObject::ROOT_ID == $resource->parentId && 'dc' !== $format) {
       $this->cacheXmlFormat($resource, 'ead');
     }
 
-    if ('ead' !== $format)
-    {
+    if ('ead' !== $format) {
       $this->cacheXmlFormat($resource, 'dc');
     }
   }
@@ -89,13 +87,11 @@ class QubitInformationObjectXmlCache
     Propel::getDB()->applyLimit($sql, $skip, $limit);
     $results = QubitPdo::fetchAll($sql, $params);
 
-    if (count($results))
-    {
+    if (count($results)) {
       $this->logger->info($this->i18n->__('%1% published information objects found.', ['%1%' => count($results)]));
 
       // Export each information object
-      foreach ($results as $row)
-      {
+      foreach ($results as $row) {
         $io = QubitInformationObject::getById($row->id);
 
         ++$exporting;
@@ -136,14 +132,12 @@ class QubitInformationObjectXmlCache
     $exportsPath = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'downloads'.DIRECTORY_SEPARATOR.'exports';
 
     $eadExportPath = $exportsPath.DIRECTORY_SEPARATOR.'ead';
-    if (!is_dir($eadExportPath))
-    {
+    if (!is_dir($eadExportPath)) {
       mkdir($eadExportPath, 0755, true);
     }
 
     $dcExportPath = $exportsPath.DIRECTORY_SEPARATOR.'dc';
-    if (!is_dir($dcExportPath))
-    {
+    if (!is_dir($dcExportPath)) {
       mkdir($dcExportPath, 0755, true);
     }
   }
@@ -216,15 +210,13 @@ class QubitInformationObjectXmlCache
     $dfp = fopen($destination, 'w');
 
     // Skip lines
-    for ($i = 1; $i <= $skipLines; ++$i)
-    {
+    for ($i = 1; $i <= $skipLines; ++$i) {
       fgets($sfp);
     }
 
     $next = fgets($sfp);
 
-    while (false !== $next)
-    {
+    while (false !== $next) {
       $line = $next;
       fwrite($dfp, $line);
 

@@ -39,14 +39,14 @@ EOL;
   protected $initialVersion;
   protected $targetVersion;
   // list of migratable releases
-    protected $validReleases = [
-      '1.0.3',
-      '1.0.4',
-      '1.0.5',
-      '1.0.6',
-      '1.0.7',
-      '1.0.8',
-    ];
+  protected $validReleases = [
+    '1.0.3',
+    '1.0.4',
+    '1.0.5',
+    '1.0.6',
+    '1.0.7',
+    '1.0.8',
+  ];
 
   /**
    * @see sfBaseTask
@@ -81,8 +81,7 @@ EOF;
    */
   protected function execute($arguments = [], $options = [])
   {
-    if (!is_readable($arguments['datafile']))
-    {
+    if (!is_readable($arguments['datafile'])) {
       throw new Exception('The file '.$arguments['datafile'].' is not readable.');
     }
 
@@ -91,13 +90,11 @@ EOF;
     $this->data = $yamlParser->parse(file_get_contents($arguments['datafile']));
 
     // Determine current version of the application (according to settings)
-    if (null !== $this->initialVersion = $this->getDataVersion())
-    {
+    if (null !== $this->initialVersion = $this->getDataVersion()) {
       $this->logSection('migrate', 'Initial data version '.$this->initialVersion);
     }
 
-    if (self::FINAL_VERSION <= $this->initialVersion)
-    {
+    if (self::FINAL_VERSION <= $this->initialVersion) {
       $this->logBlock(array_merge(
         explode("\n", sprintf(self::NOTICE_FINAL_VERSION, self::FINAL_VERSION)),
         ['Exiting.', '']), 'ERROR');
@@ -106,64 +103,48 @@ EOF;
     }
 
     // Get target application version for data migration
-    if (isset($options['target-version']))
-    {
-      if (in_array($options['target-version'], $this->validReleases))
-      {
+    if (isset($options['target-version'])) {
+      if (in_array($options['target-version'], $this->validReleases)) {
         $this->targetVersion = $options['target-version'];
-      }
-
-      elseif (!preg_match('/^\d+$/', $options['target-version']))
-      {
+      } elseif (!preg_match('/^\d+$/', $options['target-version'])) {
         $this->logBlock(sprintf('Invalid target version "%s".', $options['target-version']), 'ERROR');
 
         return 1;
       }
 
       // Version 62 is the last valid version for this migration script
-      if (self::FINAL_VERSION < intval($options['target-version']))
-      {
+      if (self::FINAL_VERSION < intval($options['target-version'])) {
         if (!$this->askConfirmation(array_merge(
           explode("\n", sprintf(self::NOTICE_FINAL_VERSION, self::FINAL_VERSION)),
           [sprintf('Do you want to proceed with migrating your data to version %s (Y/n)?', self::FINAL_VERSION), '']),
-          'QUESTION_LARGE'))
-        {
+          'QUESTION_LARGE')) {
           $this->log('Halting migration.');
 
           return 1;
         }
 
         $this->targetVersion = self::FINAL_VERSION;
-      }
-      else
-      {
+      } else {
         $this->targetVersion = $options['target-version'];
       }
     }
 
     // At version 1.0.8 we switched from versioning by release to fine-grained
     // versions (integer)
-    if (preg_match('/^\d+$/', $this->initialVersion))
-    {
+    if (preg_match('/^\d+$/', $this->initialVersion)) {
       $this->migrateFineGrained();
-    }
-    else
-    {
+    } else {
       $this->migratePre108();
 
-      if (null == $this->targetVersion || preg_match('/^\d+$/', $this->targetVersion))
-      {
+      if (null == $this->targetVersion || preg_match('/^\d+$/', $this->targetVersion)) {
         $this->migrateFineGrained();
       }
     }
 
     // Write new data.yml file (if data was modified)
-    if ($this->dataModified)
-    {
+    if ($this->dataModified) {
       $this->writeMigratedData($arguments['datafile']);
-    }
-    else
-    {
+    } else {
       $this->logSection('migrate', 'The specified data file is up-to-date, no migration done.');
     }
   }
@@ -172,36 +153,29 @@ EOF;
   {
     // If target release is not set, then use last major milestone
     $targetVersion = $this->targetVersion;
-    if (null == $targetVersion)
-    {
+    if (null == $targetVersion) {
       $targetVersion = '1.0.8';
     }
 
     // Incrementally call the upgrade task for each intervening release from
     // initial release to the target release
     $initialIndex = array_search($this->initialVersion, $this->validReleases);
-    if (false === $initialIndex)
-    {
+    if (false === $initialIndex) {
       $initialIndex = count($this->validReleases) - 2;
     }
 
     $finalIndex = array_search($targetVersion, $this->validReleases);
 
-    if (false !== $initialIndex && false !== $finalIndex && $initialIndex < $finalIndex)
-    {
-      for ($i = $initialIndex; $i < $finalIndex; ++$i)
-      {
+    if (false !== $initialIndex && false !== $finalIndex && $initialIndex < $finalIndex) {
+      for ($i = $initialIndex; $i < $finalIndex; ++$i) {
         $this->migrator = QubitMigrateFactory::getMigrator($this->data, $this->validReleases[$i]);
         $this->data = $this->migrator->execute();
         $this->dataModified = true;
 
         // Set release
-        if ('1.0.7' == $this->validReleases[$i])
-        {
+        if ('1.0.7' == $this->validReleases[$i]) {
           $this->version = 0; // After 1.0.7 use integer versions
-        }
-        else
-        {
+        } else {
           $this->version = $this->validReleases[$i + 1];
         }
 
@@ -212,17 +186,13 @@ EOF;
 
   protected function migrateFineGrained()
   {
-    if (preg_match('/^\d+$/', $this->initialVersion))
-    {
+    if (preg_match('/^\d+$/', $this->initialVersion)) {
       $this->version = $this->initialVersion;
-    }
-    else
-    {
+    } else {
       $this->version = 0;
     }
 
-    while (self::FINAL_VERSION > $this->version && (null === $this->targetVersion || $this->targetVersion > $this->version))
-    {
+    while (self::FINAL_VERSION > $this->version && (null === $this->targetVersion || $this->targetVersion > $this->version)) {
       $migrator = QubitMigrateFactory::getMigrator($this->data, $this->version);
 
       $this->data = $migrator->execute();
@@ -231,8 +201,7 @@ EOF;
       $this->version = $migrator::FINAL_VERSION;
     }
 
-    if (null == $this->version)
-    {
+    if (null == $this->version) {
       // Set version to value in data/fixtures/settings.yml
       $parser = new sfYamlParser();
       $data = $parser->parse(file_get_contents(sfConfig::get('sf_data_dir').'/fixtures/settings.yml'));
@@ -242,8 +211,7 @@ EOF;
     $milestone = $migrator::MILESTONE;
 
     // Hack for Release 1.2
-    if (self::FINAL_VERSION == $migrator::FINAL_VERSION)
-    {
+    if (self::FINAL_VERSION == $migrator::FINAL_VERSION) {
       $milestone = '1.2';
     }
 
@@ -271,16 +239,11 @@ EOF;
   protected function getDataVersion()
   {
     $currentVersion = null;
-    foreach ($this->data['QubitSetting'] as $setting)
-    {
-      if ('version' == $setting['name'])
-      {
-        if (preg_match('/^\d+$/', $setting['value']['en'], $matches))
-        {
+    foreach ($this->data['QubitSetting'] as $setting) {
+      if ('version' == $setting['name']) {
+        if (preg_match('/^\d+$/', $setting['value']['en'], $matches)) {
           $currentVersion = $matches[0];
-        }
-        elseif (preg_match('/\d\.\d(\.\d)?/', $setting['value']['en'], $matches))
-        {
+        } elseif (preg_match('/\d\.\d(\.\d)?/', $setting['value']['en'], $matches)) {
           $currentVersion = $matches[0];
         }
 
@@ -293,10 +256,8 @@ EOF;
 
   protected function setDataVersion()
   {
-    foreach ($this->data['QubitSetting'] as $key => $value)
-    {
-      if ('version' == $value['name'])
-      {
+    foreach ($this->data['QubitSetting'] as $key => $value) {
+      if ('version' == $value['name']) {
         $version = $value['value'][$value['source_culture']];
 
         break;

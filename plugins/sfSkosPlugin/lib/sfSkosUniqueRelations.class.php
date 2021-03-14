@@ -26,15 +26,15 @@ class sfSkosUniqueRelations implements Iterator, Countable
   private $relations = [];
   private $visited = [];
 
-  public function __construct() {
+  public function __construct()
+  {
     $this->position = 0;
   }
 
   public function insert($x, $y)
   {
     $sum = $this->hash($x, $y);
-    if ($this->visited($sum))
-    {
+    if ($this->visited($sum)) {
       return false;
     }
 

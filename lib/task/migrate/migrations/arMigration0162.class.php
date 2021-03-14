@@ -44,8 +44,7 @@ class arMigration0162
       QubitTerm::USER_ACTION_MODIFICATION_ID => 'Modification',
     ];
 
-    foreach ($terms as $id => $name)
-    {
+    foreach ($terms as $id => $name) {
       QubitMigrate::bumpTerm($id, $configuration);
       $term = new QubitTerm();
       $term->id = $id;

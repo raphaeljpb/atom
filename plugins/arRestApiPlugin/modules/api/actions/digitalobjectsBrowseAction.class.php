@@ -47,8 +47,7 @@ class ApiDigitalObjectsBrowseAction extends QubitApiAction
 
     // Build array from results
     $results = [];
-    foreach ($resultSet as $do)
-    {
+    foreach ($resultSet as $do) {
       $fields = [
         'name' => $do->name,
         'path' => $do->path,
@@ -57,12 +56,13 @@ class ApiDigitalObjectsBrowseAction extends QubitApiAction
       ];
 
       // Look up media type
-      if (null !== $do->mediaTypeId)
-      {
+      if (null !== $do->mediaTypeId) {
         $criteria = new Criteria();
         $criteria->addJoin(QubitTerm::ID, $do->mediaTypeId);
 
-        if (null !== ($typeTerm = QubitTerm::getOne($criteria))) { $fields['media_type'] = $typeTerm->name; }
+        if (null !== ($typeTerm = QubitTerm::getOne($criteria))) {
+          $fields['media_type'] = $typeTerm->name;
+        }
       }
 
       // Add related property data
@@ -71,13 +71,14 @@ class ApiDigitalObjectsBrowseAction extends QubitApiAction
         'aipUUID' => 'aip_uuid',
       ];
 
-      foreach ($propertyFields as $propertyName => $apiFieldLabel)
-      {
+      foreach ($propertyFields as $propertyName => $apiFieldLabel) {
         $criteria = new Criteria();
         $criteria->add(QubitProperty::NAME, $propertyName);
         $criteria->add(QubitProperty::OBJECT_ID, $do->objectId);
 
-        if (null !== ($uuidProperty = QubitProperty::getOne($criteria))) { $fields[$apiFieldLabel] = $uuidProperty->value; }
+        if (null !== ($uuidProperty = QubitProperty::getOne($criteria))) {
+          $fields[$apiFieldLabel] = $uuidProperty->value;
+        }
       }
 
       $results[$do->id] = $fields;

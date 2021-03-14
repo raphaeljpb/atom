@@ -26,20 +26,17 @@ class InformationObjectMultiFileUploadAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that object exists and that it is not the root
-    if (!isset($this->resource) || !isset($this->resource->parent))
-    {
+    if (!isset($this->resource) || !isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID))
-    {
+    if (!QubitAcl::check($this->resource, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)) {
       QubitAcl::forwardUnauthorized();
     }
 
     // Check if uploads are allowed
-    if (!QubitDigitalObject::isUploadAllowed())
-    {
+    if (!QubitDigitalObject::isUploadAllowed()) {
       QubitAcl::forwardToSecureAction();
     }
 
@@ -62,18 +59,15 @@ class InformationObjectMultiFileUploadAction extends sfAction
 
     $choices = [];
     $choices[null] = null;
-    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID) as $item)
-    {
+    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID) as $item) {
       $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
     }
 
     $this->form->setWidget('levelOfDescription', new sfWidgetFormSelect(['choices' => $choices]));
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters(), $request->getFiles());
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
       }
     }
@@ -87,10 +81,8 @@ class InformationObjectMultiFileUploadAction extends sfAction
     $i = 0;
     $informationObjectSlugList = [];
 
-    foreach ($this->form->getValue('files') as $file)
-    {
-      if (0 == strlen($file['infoObjectTitle'] || 0 == strlen($file['tmpName'])))
-      {
+    foreach ($this->form->getValue('files') as $file) {
+      if (0 == strlen($file['infoObjectTitle'] || 0 == strlen($file['tmpName']))) {
         continue;
       }
 
@@ -100,13 +92,11 @@ class InformationObjectMultiFileUploadAction extends sfAction
       $informationObject = new QubitInformationObject();
       $informationObject->parentId = $this->resource->id;
 
-      if (0 < strlen($title = $file['infoObjectTitle']))
-      {
+      if (0 < strlen($title = $file['infoObjectTitle'])) {
         $informationObject->title = $title;
       }
 
-      if (null !== $levelOfDescription = $this->form->getValue('levelOfDescription'))
-      {
+      if (null !== $levelOfDescription = $this->form->getValue('levelOfDescription')) {
         $params = $this->context->routing->parse(Qubit::pathInfo($levelOfDescription));
         $informationObject->levelOfDescription = $params['_sf_route']->resource;
       }
@@ -116,8 +106,7 @@ class InformationObjectMultiFileUploadAction extends sfAction
       // Save description
       $informationObject->save();
 
-      if (file_exists("{$tmpPath}/{$file['tmpName']}"))
-      {
+      if (file_exists("{$tmpPath}/{$file['tmpName']}")) {
         // Upload asset and create digital object
         $digitalObject = new QubitDigitalObject();
         $digitalObject->object = $informationObject;
@@ -130,8 +119,7 @@ class InformationObjectMultiFileUploadAction extends sfAction
       $informationObjectSlugList[] = $informationObject->slug;
 
       // Clean up temp files
-      if (file_exists("{$tmpPath}/{$file['tmpName']}"))
-      {
+      if (file_exists("{$tmpPath}/{$file['tmpName']}")) {
         unlink("{$tmpPath}/{$file['tmpName']}");
       }
     }

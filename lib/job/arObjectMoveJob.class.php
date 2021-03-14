@@ -32,36 +32,29 @@ class arObjectMoveJob extends arBaseJob
     $this->info($this->i18n->__('Moving object (id: %1)', ['%1' => $parameters['objectId']]));
 
     // Fetch object
-    if (($object = QubitObject::getById($parameters['objectId'])) === null)
-    {
+    if (($object = QubitObject::getById($parameters['objectId'])) === null) {
       $this->error($this->i18n->__('Invalid object id'));
 
       return false;
     }
 
     // Change parent if requested
-    if (isset($parameters['parentId']))
-    {
-      if (($parent = QubitObject::getById($parameters['parentId'])) === null)
-      {
+    if (isset($parameters['parentId'])) {
+      if (($parent = QubitObject::getById($parameters['parentId'])) === null) {
         $this->error($this->i18n->__('Invalid parent (id: %1)', ['%1' => $parameters['parentId']]));
 
         return false;
       }
 
       // In term treeview, root node links (href) to taxonomy, but it represents the term root object
-      if ($object instanceof QubitTerm && $parent instanceof QubitTaxonomy)
-      {
+      if ($object instanceof QubitTerm && $parent instanceof QubitTaxonomy) {
         $newParentId = QubitTerm::ROOT_ID;
-      }
-      else
-      {
+      } else {
         $newParentId = $parent->id;
       }
 
       // Avoid updating parent if not needed
-      if ($object->parentId !== $newParentId)
-      {
+      if ($object->parentId !== $newParentId) {
         $this->info($this->i18n->__('Moving object to parent (id: %1)', ['%1' => $parameters['parentId']]));
 
         $object->parentId = $newParentId;
@@ -70,8 +63,7 @@ class arObjectMoveJob extends arBaseJob
     }
 
     // Move between siblings if requested
-    if (isset($parameters['oldPosition'], $parameters['newPosition']))
-    {
+    if (isset($parameters['oldPosition'], $parameters['newPosition'])) {
       $this->info($this->i18n->__('Moving object between siblings'));
 
       // Check current positions to avoid mismatch
@@ -79,15 +71,13 @@ class arObjectMoveJob extends arBaseJob
       $params = [':parentId' => $object->parentId];
       $children = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
-      if (array_search(['id' => $object->id], $children) != $parameters['oldPosition'])
-      {
+      if (array_search(['id' => $object->id], $children) != $parameters['oldPosition']) {
         $this->error($this->i18n->__('Mismatch in current position'));
 
         return false;
       }
 
-      if ($parameters['newPosition'] >= count($children))
-      {
+      if ($parameters['newPosition'] >= count($children)) {
         $this->error($this->i18n->__('New position outside the range'));
 
         return false;
@@ -97,15 +87,13 @@ class arObjectMoveJob extends arBaseJob
       $targetSiblingId = $children[$parameters['newPosition']]['id'];
       $targetPosition = $parameters['newPosition'] > $parameters['oldPosition'] ? 'after' : 'before';
 
-      if (($targetSibling = QubitObject::getById($targetSiblingId)) === null)
-      {
+      if (($targetSibling = QubitObject::getById($targetSiblingId)) === null) {
         $this->error($this->i18n->__('Invalid target sibling (id: %1)', ['%1' => $targetSiblingId]));
 
         return false;
       }
 
-      switch ($targetPosition)
-      {
+      switch ($targetPosition) {
         case 'before':
           $this->info($this->i18n->__('Moving object before sibling (id: %1)', ['%1' => $targetSiblingId]));
           $object->moveToPrevSiblingOf($targetSibling);

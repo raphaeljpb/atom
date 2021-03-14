@@ -21,12 +21,10 @@ class QubitGenerator extends sfPropelAdminGenerator
 {
   public function getColumnEditTag($column, $params = [])
   {
-    if ($column->isComponent())
-    {
+    if ($column->isComponent()) {
       $moduleName = $this->getModuleName();
       $componentName = $column->getName();
-      if (false !== $pos = strpos($componentName, '/'))
-      {
+      if (false !== $pos = strpos($componentName, '/')) {
         $moduleName = substr($componentName, 0, $pos);
         $componentName = substr($componentName, $pos + 1);
       }

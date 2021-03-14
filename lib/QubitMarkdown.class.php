@@ -37,8 +37,7 @@ class QubitMarkdown
   {
     $this->enabled = sfConfig::get('app_markdown_enabled', true);
 
-    if (!$this->enabled)
-    {
+    if (!$this->enabled) {
       return;
     }
 
@@ -47,8 +46,7 @@ class QubitMarkdown
 
   public static function getInstance()
   {
-    if (!isset(self::$instance))
-    {
+    if (!isset(self::$instance)) {
       self::$instance = new QubitMarkdown();
     }
 
@@ -74,23 +72,20 @@ class QubitMarkdown
   {
     $content = $this->getUnescapedString($content);
 
-    if (!$this->enabled || 0 == strlen($content))
-    {
+    if (!$this->enabled || 0 == strlen($content)) {
       return $content;
     }
 
     // Use safe mode by default
     $safeMode = true;
-    if (isset($options['safeMode']))
-    {
+    if (isset($options['safeMode'])) {
       $safeMode = $options['safeMode'];
     }
 
     // Use text method by default,
     // which adds paragraph elements.
     $method = 'text';
-    if (isset($options['inline']) && $options['inline'])
-    {
+    if (isset($options['inline']) && $options['inline']) {
       $method = 'line';
     }
 
@@ -114,8 +109,7 @@ class QubitMarkdown
   {
     $content = $this->getUnescapedString($content);
 
-    if (!$this->enabled || 0 == strlen($content))
-    {
+    if (!$this->enabled || 0 == strlen($content)) {
       return $content;
     }
 
@@ -148,13 +142,11 @@ class QubitMarkdown
   public static function eadTagToMarkdown($eadTag, $node)
   {
     // Don't convert if Markdown is not enabled
-    if (!sfConfig::get('app_markdown_enabled', true))
-    {
+    if (!sfConfig::get('app_markdown_enabled', true)) {
       return $node->nodeValue;
     }
 
-    switch ($eadTag)
-    {
+    switch ($eadTag) {
       // EAD tags that we want to convert to markdown.
       case 'emph':
         // Set default to italic when no render attribute is present.
@@ -183,13 +175,11 @@ class QubitMarkdown
   {
     $content = sfOutputEscaper::unescape($content);
 
-    if (is_string($content))
-    {
+    if (is_string($content)) {
       return $content;
     }
 
-    if (is_object($content) && method_exists($content, '__toString'))
-    {
+    if (is_object($content) && method_exists($content, '__toString')) {
       return $content->__toString();
     }
 

@@ -23,32 +23,25 @@ class QubitCache
 
   public static function getInstance(array $options = [])
   {
-    if (!isset(self::$instance))
-    {
-      if (null === $cacheClass = sfConfig::get('app_cache_engine'))
-      {
+    if (!isset(self::$instance)) {
+      if (null === $cacheClass = sfConfig::get('app_cache_engine')) {
         $cacheClass = sfConfig::get('app_cache_engine_class', 'sfAPCCache');
       }
 
       $options = [];
 
-      if (null !== $setting = sfConfig::get('app_cache_engine_param_prefix'))
-      {
+      if (null !== $setting = sfConfig::get('app_cache_engine_param_prefix')) {
         $options['prefix'] = $setting;
       }
 
-      if (null !== $setting = sfConfig::get('app_cache_engine_param_lifetime'))
-      {
+      if (null !== $setting = sfConfig::get('app_cache_engine_param_lifetime')) {
         $options['lifetime'] = (float) $setting;
       }
 
-      if ('sfMemcacheCache' === $cacheClass)
-      {
-        if (null !== $setting = sfConfig::get('app_cache_engine_param_servers'))
-        {
+      if ('sfMemcacheCache' === $cacheClass) {
+        if (null !== $setting = sfConfig::get('app_cache_engine_param_servers')) {
           $servers = [];
-          foreach ($setting as $item)
-          {
+          foreach ($setting as $item) {
             $servers[] = [
               'host' => $item[0]['host'],
               'port' => $item[1]['port'],
@@ -56,20 +49,16 @@ class QubitCache
           }
 
           $options['servers'] = $servers;
-        }
-        elseif ((null !== $host = sfConfig::get('app_cache_engine_param_host')) && (null !== $port = sfConfig::get('app_cache_engine_param_port')))
-        {
+        } elseif ((null !== $host = sfConfig::get('app_cache_engine_param_host')) && (null !== $port = sfConfig::get('app_cache_engine_param_port'))) {
           $options['host'] = $host;
           $options['port'] = $port;
         }
 
-        if (null !== $setting = sfConfig::get('app_cache_engine_param_storeCacheInfo'))
-        {
+        if (null !== $setting = sfConfig::get('app_cache_engine_param_storeCacheInfo')) {
           $options['storeCacheInfo'] = (bool) $setting;
         }
 
-        if (null !== $setting = sfConfig::get('app_cache_engine_param_persistent'))
-        {
+        if (null !== $setting = sfConfig::get('app_cache_engine_param_persistent')) {
           $options['persistent'] = (bool) $setting;
         }
       }
@@ -90,15 +79,11 @@ class QubitCache
       $id,
       sfContext::getInstance()->user->getCulture());
 
-    if ($cache->has($cacheKey))
-    {
+    if ($cache->has($cacheKey)) {
       $label = $cache->get($cacheKey);
-    }
-    else
-    {
+    } else {
       // Avoid caching non-existing records
-      if (null === $object = $className::getById($id))
-      {
+      if (null === $object = $className::getById($id)) {
         return;
       }
 

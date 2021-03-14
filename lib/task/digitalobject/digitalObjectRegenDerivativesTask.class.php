@@ -22,8 +22,7 @@ class digitalObjectRegenDerivativesTask extends arBaseTask
   public static function regenerateDerivatives(&$digitalObject, $options = [])
   {
     // Determine usage ID from type flag
-    switch($options['type'])
-    {
+    switch ($options['type']) {
       case 'reference':
         $usageId = QubitTerm::REFERENCE_ID;
 
@@ -40,8 +39,7 @@ class digitalObjectRegenDerivativesTask extends arBaseTask
 
     // If master isn't stored in AtoM, attempt to cache external resource before deleting
     // existing derivatives (an unavailable resource will result in an exception)
-    if ($digitalObject->derivativesGeneratedFromExternalMaster($digitalObject->usageId))
-    {
+    if ($digitalObject->derivativesGeneratedFromExternalMaster($digitalObject->usageId)) {
       $digitalObject->getLocalPath();
     }
 
@@ -50,21 +48,18 @@ class digitalObjectRegenDerivativesTask extends arBaseTask
     $criteria->add(QubitDigitalObject::PARENT_ID, $digitalObject->id);
 
     // Delete only ref or thumnail derivative if "type" flag set
-    if (QubitTerm::REFERENCE_ID == $usageId || QubitTerm::THUMBNAIL_ID == $usageId)
-    {
+    if (QubitTerm::REFERENCE_ID == $usageId || QubitTerm::THUMBNAIL_ID == $usageId) {
       $criteria->add(QubitDigitalObject::USAGE_ID, $usageId);
     }
 
-    foreach (QubitDigitalObject::get($criteria) as $derivative)
-    {
+    foreach (QubitDigitalObject::get($criteria) as $derivative) {
       $derivative->delete();
     }
 
     // Delete existing transcript if 'keepTranscript' option is not sent or it's false,
     // we need to keep it to avoid an error trying to save a deleted property when this
     // method is called from IO rename action
-    if (!isset($options['keepTranscript']) || !$options['keepTranscript'])
-    {
+    if (!isset($options['keepTranscript']) || !$options['keepTranscript']) {
       $transcriptProperty = $digitalObject->getPropertyByName('transcript');
       $transcriptProperty->delete();
     }
@@ -72,8 +67,7 @@ class digitalObjectRegenDerivativesTask extends arBaseTask
     // Generate new derivatives
     $digitalObject->createRepresentations($usageId, $conn);
 
-    if ($options['index'])
-    {
+    if ($options['index']) {
       // Update index
       $digitalObject->save();
     }
@@ -125,8 +119,7 @@ EOF;
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
     // Validate 'type' value
-    if ($options['type'] && !in_array($options['type'], $this->validTypes))
-    {
+    if ($options['type'] && !in_array($options['type'], $this->validTypes)) {
       // If value is not valid, show message and return error code 1
       error_log(sprintf('Invalid value for "type", must be one of (%s)',
         implode(',', $this->validTypes)));
@@ -141,8 +134,7 @@ EOF;
       'text' => QubitTerm::TEXT_ID,
       'video' => QubitTerm::VIDEO_ID,
     ];
-    if ($options['media-type'] && !array_key_exists($options['media-type'], $validMediaTypes))
-    {
+    if ($options['media-type'] && !array_key_exists($options['media-type'], $validMediaTypes)) {
       // If value is not valid, show message and return error code 1
       error_log(sprintf('Invalid value for "media-type", must be one of (%s)',
         implode(',', array_keys($validMediaTypes))));
@@ -150,12 +142,9 @@ EOF;
       exit(1);
     }
 
-    if ($options['index'])
-    {
+    if ($options['index']) {
       QubitSearch::enable();
-    }
-    else
-    {
+    } else {
       QubitSearch::disable();
     }
 
@@ -165,16 +154,14 @@ EOF;
     $whereClauses = [];
 
     // Limit to a branch
-    if ($options['slug'])
-    {
+    if ($options['slug']) {
       $q2 = 'SELECT io.id, io.lft, io.rgt
         FROM information_object io JOIN slug ON io.id = slug.object_id
         WHERE slug.slug = ?';
 
       $row = QubitPdo::fetchOne($q2, [$options['slug']]);
 
-      if (false === $row)
-      {
+      if (false === $row) {
         throw new sfException('Invalid slug');
       }
 
@@ -182,46 +169,38 @@ EOF;
     }
 
     // Only regenerate derivatives for remote digital objects
-    if ($options['only-externals'])
-    {
+    if ($options['only-externals']) {
       $query .= ' AND do.usage_id = '.QubitTerm::EXTERNAL_URI_ID;
     }
 
     // Only regenerate derivatives for digital objects of specific media type
-    if ($options['media-type'])
-    {
+    if ($options['media-type']) {
       $query .= ' AND do.media_type_id = '.$validMediaTypes[$options['media-type']];
     }
 
     // Limit ids for regeneration by json list
-    if ($options['json'])
-    {
+    if ($options['json']) {
       $ids = json_decode(file_get_contents($options['json']));
       $query .= ' AND do.id IN ('.implode(', ', $ids).')';
     }
 
     $query .= ' AND do.usage_id != '.QubitTerm::OFFLINE_ID;
 
-    if ($options['no-overwrite'])
-    {
+    if ($options['no-overwrite']) {
       $query .= ' LEFT JOIN digital_object child ON do.id = child.parent_id';
       array_push($whereClauses, 'do.parent_id IS NULL AND child.id IS NULL');
     }
 
     // Final confirmation (skip if no-overwrite)
-    if (!$options['force'] && !$options['no-overwrite'])
-    {
+    if (!$options['force'] && !$options['no-overwrite']) {
       $confirm = [];
 
       $changed = $options['media-type'] ? $options['media-type'] : 'ALL';
 
-      if ($options['slug'])
-      {
+      if ($options['slug']) {
         $confirm[] = 'Continuing will regenerate the derivatives for '.$changed.' descendants of';
         $confirm[] = '"'.$options['slug'].'"';
-      }
-      else
-      {
+      } else {
         $confirm[] = 'Continuing will regenerate the derivatives for '.$changed.' digital objects';
       }
 
@@ -229,8 +208,7 @@ EOF;
       $confirm[] = '';
       $confirm[] = 'Continue? (y/N)';
 
-      if (!$this->askConfirmation($confirm, 'QUESTION_LARGE', false))
-      {
+      if (!$this->askConfirmation($confirm, 'QUESTION_LARGE', false)) {
         $this->logSection('digital object', 'Bye!');
 
         return 1;
@@ -238,25 +216,20 @@ EOF;
     }
 
     // Add WHERE clauses to SQL query
-    if (count($whereClauses))
-    {
+    if (count($whereClauses)) {
       $query .= sprintf(' WHERE %s', implode(' AND ', $whereClauses));
     }
 
     // Do work
-    foreach (QubitPdo::fetchAll($query) as $item)
-    {
+    foreach (QubitPdo::fetchAll($query) as $item) {
       $do = QubitDigitalObject::getById($item->id);
 
-      if (null == $do)
-      {
+      if (null == $do) {
         continue;
       }
 
-      if ($options['skip-to'])
-      {
-        if ($do->name != $options['skip-to'] && $skip)
-        {
+      if ($options['skip-to']) {
+        if ($do->name != $options['skip-to'] && $skip) {
           $this->logSection('digital object', 'Skipping '.$do->name);
 
           continue;
@@ -269,12 +242,9 @@ EOF;
         $do->name, $timer->elapsed()));
 
       // Trap any exceptions when creating derivatives and continue script
-      try
-      {
+      try {
         digitalObjectRegenDerivativesTask::regenerateDerivatives($do, $options);
-      }
-      catch (Exception $e)
-      {
+      } catch (Exception $e) {
         // Echo error
         $this->log($e->getMessage());
 
@@ -284,8 +254,7 @@ EOF;
     }
 
     // Warn user to manually update search index
-    if (!$options['index'])
-    {
+    if (!$options['index']) {
       $this->logSection('digital object', 'Please update the search index manually to reflect any changes');
     }
 

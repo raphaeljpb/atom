@@ -44,8 +44,7 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function alterData()
   {
-    switch ($this->version)
-    {
+    switch ($this->version) {
       case 39:
         $this->updateStaticPageVersionNumber();
 
@@ -108,13 +107,10 @@ class QubitMigrate109 extends QubitMigrate
         // no break
       case 54:
         // Replace "permalink" property with "slug"
-        foreach ($this->data['QubitStaticPage'] as $key => $value)
-        {
-          if (isset($value['permalink']))
-          {
+        foreach ($this->data['QubitStaticPage'] as $key => $value) {
+          if (isset($value['permalink'])) {
             $this->data['QubitStaticPage'][$key]['slug'] = $value['permalink'];
-            if ('homepage' == $value['permalink'])
-            {
+            if ('homepage' == $value['permalink']) {
               $this->data['QubitStaticPage'][$key]['slug'] = 'home';
             }
 
@@ -125,10 +121,8 @@ class QubitMigrate109 extends QubitMigrate
         // no break
       case 55:
         // Update "home" and "about" links
-        foreach ($this->data['QubitMenu'] as $key => $value)
-        {
-          switch (@$value['path'])
-          {
+        foreach ($this->data['QubitMenu'] as $key => $value) {
+          switch (@$value['path']) {
             case 'staticpage/static?permalink=about':
               $this->data['QubitMenu'][$key]['path'] = 'staticpage/index?slug=about';
 
@@ -143,10 +137,8 @@ class QubitMigrate109 extends QubitMigrate
 
         // no break
       case 56:
-        foreach ($this->data['QubitMenu'] as $key => $value)
-        {
-          if (isset($value['path']))
-          {
+        foreach ($this->data['QubitMenu'] as $key => $value) {
+          if (isset($value['path'])) {
             $this->data['QubitMenu'][$key]['path'] = str_replace(['create', 'duplicate'], ['add', 'copy'], $value['path']);
           }
         }
@@ -154,10 +146,8 @@ class QubitMigrate109 extends QubitMigrate
         // no break
       case 57:
         // Update tab links in user module
-        foreach ($this->data['QubitMenu'] as $key => $value)
-        {
-          switch (@$value['path'])
-          {
+        foreach ($this->data['QubitMenu'] as $key => $value) {
+          switch (@$value['path']) {
             case 'user/index?id=%currentId%':
               $this->data['QubitMenu'][$key]['path'] = 'user/index?slug=%currentSlug%';
 
@@ -182,12 +172,9 @@ class QubitMigrate109 extends QubitMigrate
 
         // no break
       case 58:
-        if (isset($this->data['QubitEvent']))
-        {
-          foreach ($this->data['QubitEvent'] as $key => $value)
-          {
-            if (isset($value['date_display']))
-            {
+        if (isset($this->data['QubitEvent'])) {
+          foreach ($this->data['QubitEvent'] as $key => $value) {
+            if (isset($value['date_display'])) {
               $this->data['QubitEvent'][$key]['date'] = $value['date_display'];
 
               unset($this->data['QubitEvent'][$key]['date_display']);
@@ -197,33 +184,25 @@ class QubitMigrate109 extends QubitMigrate
 
         // no break
       case 59:
-        if (isset($this->data['QubitEvent']))
-        {
-          foreach ($this->data['QubitEvent'] as $key => $value)
-          {
-            if (isset($value['date']))
-            {
-              foreach ($value['date'] as $culture => $date)
-              {
-                if (0 == strlen($date))
-                {
+        if (isset($this->data['QubitEvent'])) {
+          foreach ($this->data['QubitEvent'] as $key => $value) {
+            if (isset($value['date'])) {
+              foreach ($value['date'] as $culture => $date) {
+                if (0 == strlen($date)) {
                   unset($this->data['QubitEvent'][$key]['date'][$culture]);
                 }
               }
 
-              if (0 == count($this->data['QubitEvent'][$key]['date']))
-              {
+              if (0 == count($this->data['QubitEvent'][$key]['date'])) {
                 unset($this->data['QubitEvent'][$key]['date']);
               }
             }
 
-            if ('0000-00-00' == @$value['end_date'])
-            {
+            if ('0000-00-00' == @$value['end_date']) {
               unset($this->data['QubitEvent'][$key]['end_date']);
             }
 
-            if ('0000-00-00' == @$value['start_date'])
-            {
+            if ('0000-00-00' == @$value['start_date']) {
               unset($this->data['QubitEvent'][$key]['start_date']);
             }
           }
@@ -231,12 +210,9 @@ class QubitMigrate109 extends QubitMigrate
 
         // no break
       case 60:
-        if (isset($ths->data['QubitEvent']))
-        {
-          foreach ($this->data['QubitEvent'] as $key => $value)
-          {
-            if (!isset($value['end_date']) && isset($value['start_date']))
-            {
+        if (isset($ths->data['QubitEvent'])) {
+          foreach ($this->data['QubitEvent'] as $key => $value) {
+            if (!isset($value['end_date']) && isset($value['start_date'])) {
               $this->data['QubitEvent'][$key]['end_date'] = $value['start_date'];
             }
           }
@@ -261,25 +237,20 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function slugData()
   {
-    if (!isset($this->data['QubitSlug']))
-    {
+    if (!isset($this->data['QubitSlug'])) {
       return $this;
     }
 
     $slug = [];
-    foreach ($this->data['QubitSlug'] as $item)
-    {
+    foreach ($this->data['QubitSlug'] as $item) {
       $slug[$item['object_id']] = $item['slug'];
     }
 
     unset($this->data['QubitSlug']);
 
-    foreach ($this->data as $table => $value)
-    {
-      foreach ($value as $row => $value)
-      {
-        if (isset($slug[$row]))
-        {
+    foreach ($this->data as $table => $value) {
+      foreach ($value as $row => $value) {
+        if (isset($slug[$row])) {
           $this->data[$table][$row]['slug'] = $slug[$row];
         }
       }
@@ -313,12 +284,9 @@ class QubitMigrate109 extends QubitMigrate
   protected function updateStaticPageVersionNumber()
   {
     // Update version number
-    foreach ($this->data['QubitStaticPage'] as $key => $page)
-    {
-      if ('homepage' == $page['permalink'] || 'about' == $page['permalink'])
-      {
-        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x)
-        {
+    foreach ($this->data['QubitStaticPage'] as $key => $page) {
+      if ('homepage' == $page['permalink'] || 'about' == $page['permalink']) {
+        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x) {
           $x = preg_replace('/1\.0\.9/', '1.1', $x);
         });
       }
@@ -336,15 +304,12 @@ class QubitMigrate109 extends QubitMigrate
   {
     $eqKey = $this->getRowKey('QubitTerm', 'id', '<?php echo QubitTerm::TERM_RELATION_EQUIVALENCE_ID."\n" ?>');
 
-    if (!$eqKey)
-    {
+    if (!$eqKey) {
       return $this;
     }
 
-    foreach ($this->data['QubitRelation'] as $key => $row)
-    {
-      if (!isset($row['type_id']) || $eqKey != $row['type_id'] || null === $eqTerm = $this->data['QubitTerm'][$row['object_id']])
-      {
+    foreach ($this->data['QubitRelation'] as $key => $row) {
+      if (!isset($row['type_id']) || $eqKey != $row['type_id'] || null === $eqTerm = $this->data['QubitTerm'][$row['object_id']]) {
         continue;
       }
 
@@ -370,8 +335,7 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function renameEquivalenceTermConstant()
   {
-    if ($key = $this->getRowKey('QubitTerm', 'id', '<?php echo QubitTerm::TERM_RELATION_EQUIVALENCE_ID."\n" ?>'))
-    {
+    if ($key = $this->getRowKey('QubitTerm', 'id', '<?php echo QubitTerm::TERM_RELATION_EQUIVALENCE_ID."\n" ?>')) {
       $this->data['QubitTerm'][$key]['id'] = '<?php echo QubitTerm::ALTERNATIVE_LABEL_ID."\n" ?>';
       $this->data['QubitTerm'][$key]['source_culture'] = 'en';
       $this->data['QubitTerm'][$key]['name'] = ['en' => 'alternative label'];
@@ -392,10 +356,8 @@ class QubitMigrate109 extends QubitMigrate
 
     // Find setting
     $found = false;
-    foreach ($this->data['QubitSetting'] as $key => $value)
-    {
-      if ('plugins' == $value['name'])
-      {
+    foreach ($this->data['QubitSetting'] as $key => $value) {
+      if ('plugins' == $value['name']) {
         // Found setting, add new plugins
         $found = true;
         $this->data['QubitSetting'][$key]['value'][$value['source_culture']] = serialize(array_unique(array_merge(unserialize($value['value'][$value['source_culture']]), $plugins)));
@@ -404,8 +366,7 @@ class QubitMigrate109 extends QubitMigrate
       }
     }
 
-    if (!$found)
-    {
+    if (!$found) {
       // No setting, add one
       $value = [];
       $value['name'] = 'plugins';
@@ -423,15 +384,12 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function updateTaxonomyPaths()
   {
-    if ($key = $this->getRowKey('QubitMenu', 'path', 'term/list'))
-    {
+    if ($key = $this->getRowKey('QubitMenu', 'path', 'term/list')) {
       $this->data['QubitMenu'][$key]['path'] = 'taxonomy/list';
     }
 
-    foreach ($this->data['QubitMenu'] as $key => $row)
-    {
-      if (isset($row['path']) && null !== strpos($row['path'], 'term/browseTaxonomy'))
-      {
+    foreach ($this->data['QubitMenu'] as $key => $row) {
+      if (isset($row['path']) && null !== strpos($row['path'], 'term/browseTaxonomy')) {
         $this->data['QubitMenu'][$key]['path'] = str_replace('term/browseTaxonomy', 'taxonomy/browse', $row['path']);
       }
     }
@@ -444,8 +402,7 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function addCheckForUpdatesSetting()
   {
-    if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_checkForUpdates'))
-    {
+    if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_checkForUpdates')) {
       $this->data['QubitSetting']['QubitSetting_checkForUpdates'] = [
         'name' => 'check_for_updates',
         'value' => 1,
@@ -463,8 +420,7 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function updateFunctionRelationTaxonomyName()
   {
-    if ($key = $this->getRowKey('QubitTaxonomy', 'name', ['en' => 'ISDF Relation Type']))
-    {
+    if ($key = $this->getRowKey('QubitTaxonomy', 'name', ['en' => 'ISDF Relation Type'])) {
       $this->data['QubitTaxonomy'][$key]['name']['en'] = 'Function Relation Type';
     }
 
@@ -487,15 +443,12 @@ class QubitMigrate109 extends QubitMigrate
       'rad' => 'RAD version Jul2008',
     ];
 
-    foreach ($this->data['QubitSetting'] as $key => $row)
-    {
-      if (isset($row['scope']) && 'default_template' != $row['scope'])
-      {
+    foreach ($this->data['QubitSetting'] as $key => $row) {
+      if (isset($row['scope']) && 'default_template' != $row['scope']) {
         continue;
       }
 
-      switch ($row['name'])
-      {
+      switch ($row['name']) {
         case 'informationobject':
           $className = 'QubitInformationObject';
           $standard = $standards['isad'];
@@ -518,17 +471,13 @@ class QubitMigrate109 extends QubitMigrate
           break;
       }
 
-      if (isset($row['value']['en'], $standards[$row['value']['en']]))
-      {
+      if (isset($row['value']['en'], $standards[$row['value']['en']])) {
         $standard = $standards[$row['value']['en']];
       }
 
-      if (isset($className))
-      {
-        foreach ($this->data[$className] as $key2 => $row2)
-        {
-          if (!isset($row2['source_standard']) && false === strpos(@$row2['id'], 'ROOT_ID') && !in_array(@$row2['id'], [QubitInformationObject::ROOT_ID, QubitActor::ROOT_ID, QubitRepository::ROOT_ID]))
-          {
+      if (isset($className)) {
+        foreach ($this->data[$className] as $key2 => $row2) {
+          if (!isset($row2['source_standard']) && false === strpos(@$row2['id'], 'ROOT_ID') && !in_array(@$row2['id'], [QubitInformationObject::ROOT_ID, QubitActor::ROOT_ID, QubitRepository::ROOT_ID])) {
             $this->data[$className][$key2]['source_standard'] = $standard;
           }
         }
@@ -545,8 +494,7 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function addExplodeMultipageFilesSetting()
   {
-    if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_explodeMultipageFiles'))
-    {
+    if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_explodeMultipageFiles')) {
       $this->data['QubitSetting']['QubitSetting_explodeMultipageFiles'] = [
         'name' => 'explode_multipage_files',
         'value' => 0,
@@ -563,8 +511,7 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function addShowTooltipsSetting()
   {
-    if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_showTooltips'))
-    {
+    if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_showTooltips')) {
       $this->data['QubitSetting']['QubitSetting_showTooltips'] = [
         'name' => 'show_tooltips',
         'value' => 1,
@@ -637,27 +584,22 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function setPubStatusExplictly()
   {
-    foreach ($this->data['QubitInformationObject'] as $key => $item)
-    {
+    foreach ($this->data['QubitInformationObject'] as $key => $item) {
       // Don't touch root info object
-      if (isset($item['id']) && '<?php echo QubitInformationObject::ROOT_ID."\n" ?>' == $item['id'])
-      {
+      if (isset($item['id']) && '<?php echo QubitInformationObject::ROOT_ID."\n" ?>' == $item['id']) {
         continue;
       }
 
-      if (false === $this->getRowKey('QubitStatus', 'object_id', $key))
-      {
+      if (false === $this->getRowKey('QubitStatus', 'object_id', $key)) {
         $keys = [$key];
 
         // Build array of all descriptions from the current one until we reach
         // an ancestor with a publication status
-        while (isset($this->data['QubitInformationObject'][$keys[0]]['parent_id']))
-        {
+        while (isset($this->data['QubitInformationObject'][$keys[0]]['parent_id'])) {
           $parentKey = $this->data['QubitInformationObject'][$keys[0]]['parent_id'];
           $statusKey = $this->getRowKey('QubitStatus', 'object_id', $parentKey);
 
-          if ($statusKey)
-          {
+          if ($statusKey) {
             break;
           }
 
@@ -665,15 +607,13 @@ class QubitMigrate109 extends QubitMigrate
         }
 
         // Duplicate ancestor's publication status
-        if ($statusKey)
-        {
+        if ($statusKey) {
           $status = [];
           $status['type_id'] = $this->data['QubitStatus'][$statusKey]['type_id'];
           $status['status_id'] = $this->data['QubitStatus'][$statusKey]['status_id'];
 
           // Assign status to all descendents in $keys stack
-          while (0 < count($keys))
-          {
+          while (0 < count($keys)) {
             $status['object_id'] = array_shift($keys);
 
             $this->data['QubitStatus']["QubitStatus_{$status['object_id']}"] = $status;
@@ -696,10 +636,8 @@ class QubitMigrate109 extends QubitMigrate
 
     // Find setting
     $found = false;
-    foreach ($this->data['QubitSetting'] as $key => $value)
-    {
-      if ('plugins' == $value['name'])
-      {
+    foreach ($this->data['QubitSetting'] as $key => $value) {
+      if ('plugins' == $value['name']) {
         // Found setting, add new plugins
         $found = true;
         $this->data['QubitSetting'][$key]['value'][$value['source_culture']] = serialize(array_unique(array_merge(unserialize($value['value'][$value['source_culture']]), $plugin)));
@@ -708,8 +646,7 @@ class QubitMigrate109 extends QubitMigrate
       }
     }
 
-    if (!$found)
-    {
+    if (!$found) {
       // No setting, add one
       $value = [];
       $value['name'] = 'plugins';
@@ -727,10 +664,8 @@ class QubitMigrate109 extends QubitMigrate
    */
   protected function renameRelationNoteDateConstant()
   {
-    foreach ($this->data['QubitTerm'] as $key => &$item)
-    {
-      if (isset($item['id']) && false !== strpos($item['id'], 'RELATION_NOTE_DATE_DISPLAY_ID'))
-      {
+    foreach ($this->data['QubitTerm'] as $key => &$item) {
+      if (isset($item['id']) && false !== strpos($item['id'], 'RELATION_NOTE_DATE_DISPLAY_ID')) {
         $item['id'] = str_replace('RELATION_NOTE_DATE_DISPLAY_ID', 'RELATION_NOTE_DATE_ID', $item['id']);
       }
     }
@@ -837,12 +772,9 @@ class QubitMigrate109 extends QubitMigrate
 
     // Restack array with Constant values at top
     $qubitTermArray = $this->data['QubitTerm'];
-    foreach ($qubitTermConstantIds as $key => $constantName)
-    {
-      foreach ($qubitTermArray as $key => $term)
-      {
-        if (isset($term['id']) && $term['id'] == '<?php echo QubitTerm::'.$constantName.'."\n" ?>')
-        {
+    foreach ($qubitTermConstantIds as $key => $constantName) {
+      foreach ($qubitTermArray as $key => $term) {
+        if (isset($term['id']) && $term['id'] == '<?php echo QubitTerm::'.$constantName.'."\n" ?>') {
           $newTermArray[$key] = $term;
           unset($qubitTermArray[$key]);
 
@@ -855,8 +787,7 @@ class QubitMigrate109 extends QubitMigrate
     QubitMigrate::sortByLft($qubitTermArray);
 
     // Append remaining (variable id) terms to the end of the new array
-    foreach ($qubitTermArray as $key => $term)
-    {
+    foreach ($qubitTermArray as $key => $term) {
       $newTermArray[$key] = $term;
     }
 
@@ -901,10 +832,8 @@ class QubitMigrate109 extends QubitMigrate
 
     $originalData = $this->data;
 
-    foreach ($ormSortOrder as $i => $className)
-    {
-      if (isset($originalData[$className]))
-      {
+    foreach ($ormSortOrder as $i => $className) {
+      if (isset($originalData[$className])) {
         $sortedData[$className] = $originalData[$className];
         unset($originalData[$className]);
       }
@@ -912,10 +841,8 @@ class QubitMigrate109 extends QubitMigrate
 
     // If their are classes in the original data that are not listed in the
     // ormSortOrder array then tack them on to the end of the sorted data
-    if (count($originalData))
-    {
-      foreach ($originalData as $className => $classData)
-      {
+    if (count($originalData)) {
+      foreach ($originalData as $className => $classData) {
         $sortedData[$className] = $classData;
       }
     }

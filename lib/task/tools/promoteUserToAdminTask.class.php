@@ -36,8 +36,7 @@ class promoteUserToAdminTask extends sfBaseTask
 
     $criteria = new Criteria();
     $criteria->add(QubitUser::USERNAME, $arguments['username']);
-    if (null === $user = QubitUser::getOne($criteria))
-    {
+    if (null === $user = QubitUser::getOne($criteria)) {
       throw new Exception('Unknown user.');
     }
 
@@ -45,8 +44,7 @@ class promoteUserToAdminTask extends sfBaseTask
     $user->active = true;
 
     // Check if the user is already an administrator
-    if ($user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID))
-    {
+    if ($user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID)) {
       throw new Exception('The given user is already an administrator.');
     }
 

@@ -47,10 +47,8 @@ class sfDcPluginEditAction extends InformationObjectEditAction
     $this->dc = new sfDcPlugin($this->resource);
 
     $title = $this->context->i18n->__('Add new resource');
-    if (isset($this->getRoute()->resource))
-    {
-      if (1 > strlen($title = $this->resource->__toString()))
-      {
+    if (isset($this->getRoute()->resource)) {
+      if (1 > strlen($title = $this->resource->__toString())) {
         $title = $this->context->i18n->__('Untitled');
       }
 
@@ -70,8 +68,7 @@ class sfDcPluginEditAction extends InformationObjectEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'type':
         $criteria = new Criteria();
         $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
@@ -79,8 +76,7 @@ class sfDcPluginEditAction extends InformationObjectEditAction
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::DC_TYPE_ID);
 
         $value = [];
-        foreach ($this->relations = QubitObjectTermRelation::get($criteria) as $item)
-        {
+        foreach ($this->relations = QubitObjectTermRelation::get($criteria) as $item) {
           $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
         }
 
@@ -88,8 +84,7 @@ class sfDcPluginEditAction extends InformationObjectEditAction
         $this->form->setValidator('type', new sfValidatorPass());
 
         $choices = [];
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DC_TYPE_ID) as $item)
-        {
+        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::DC_TYPE_ID) as $item) {
           $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
@@ -104,31 +99,24 @@ class sfDcPluginEditAction extends InformationObjectEditAction
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'type':
         $value = $filtered = [];
-        foreach ($this->form->getValue('type') as $item)
-        {
+        foreach ($this->form->getValue('type') as $item) {
           $params = $this->context->routing->parse(Qubit::pathInfo($item));
           $resource = $params['_sf_route']->resource;
           $value[$resource->id] = $filtered[$resource->id] = $resource;
         }
 
-        foreach ($this->relations as $item)
-        {
-          if (isset($value[$item->term->id]))
-          {
+        foreach ($this->relations as $item) {
+          if (isset($value[$item->term->id])) {
             unset($filtered[$item->term->id]);
-          }
-          else
-          {
+          } else {
             $item->delete();
           }
         }
 
-        foreach ($filtered as $item)
-        {
+        foreach ($filtered as $item) {
           $relation = new QubitObjectTermRelation();
           $relation->term = $item;
 

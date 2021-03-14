@@ -45,13 +45,11 @@ class arMigration0186
       'user/clipboard' => 'clipboard/view',
     ];
 
-    foreach ($menuPaths as $oldPath => $newPath)
-    {
+    foreach ($menuPaths as $oldPath => $newPath) {
       $criteria = new Criteria();
       $criteria->add(QubitMenu::PATH, "{$oldPath}%", Criteria::LIKE);
 
-      foreach (QubitMenu::get($criteria) as $menu)
-      {
+      foreach (QubitMenu::get($criteria) as $menu) {
         $menu->path = str_replace($oldPath, $newPath, $menu->path);
         $menu->save();
       }

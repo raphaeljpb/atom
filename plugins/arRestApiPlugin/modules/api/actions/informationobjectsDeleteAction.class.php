@@ -27,18 +27,15 @@ class ApiInformationObjectsDeleteAction extends QubitApiAction
 
     $slug = QubitSlug::getOne($criteria);
 
-    if (null !== $slug)
-    {
-      if (QubitInformationObject::ROOT_ID === (int) $slug->objectId)
-      {
+    if (null !== $slug) {
+      if (QubitInformationObject::ROOT_ID === (int) $slug->objectId) {
         throw new QubitApiForbiddenException();
       }
 
       $criteria = new Criteria();
       $criteria->add(QubitInformationObject::ID, $slug->objectId);
 
-      if (null !== ($io = QubitInformationObject::getOne($criteria)))
-      {
+      if (null !== ($io = QubitInformationObject::getOne($criteria))) {
         $io->delete();
 
         return sfView::NONE;

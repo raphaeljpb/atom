@@ -14,9 +14,9 @@
         <div style="width: <?php echo $usageBarPixels; ?>px; background-color: <?php echo $usageBarColor; ?>;"></div>
       </div>
       <?php echo __('%du% of %limit% <abbr title="1 GB = 1 000 000 000 bytes">GB</abbr> (%percent%%)', ['%du%' => $sf_data->getRaw('diskUsage'), '%limit%' => $sf_data->getRaw('uploadLimit'), '%percent%' => $sf_data->getRaw('diskUsagePercent')]); ?>
-    <?php } elseif ('disabled' == $quotaType){ ?>
+    <?php } elseif ('disabled' == $quotaType) { ?>
       <?php echo __('Upload is disabled'); ?>
-    <?php } elseif ('unlimited' == $quotaType){ ?>
+    <?php } elseif ('unlimited' == $quotaType) { ?>
       <?php echo __('%du% <abbr title="1 GB = 1 000 000 000 bytes">GB</abbr> of <em>Unlimited</em>&nbsp;', ['%du%' => $sf_data->getRaw('diskUsage')]); ?>
     <?php } ?>
 

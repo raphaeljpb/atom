@@ -38,8 +38,7 @@ class arMigration0168
     $criteria->add(QubitTermI18n::NAME, 'Record group');
     $criteria->add(QubitTermI18n::CULTURE, 'en');
 
-    if (null === QubitTerm::get($criteria))
-    {
+    if (null === QubitTerm::get($criteria)) {
       // Create new term for record group level of description
       $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;

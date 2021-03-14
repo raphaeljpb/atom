@@ -22,22 +22,18 @@ class sfIsadPluginStylesheetComponent extends sfComponent
   public function execute($request)
   {
     // If institutional scoping is on, repo comes from the search-realm
-    if (sfConfig::get('app_enable_institutional_scoping') && sfContext::getInstance()->user->hasAttribute('search-realm'))
-    {
+    if (sfConfig::get('app_enable_institutional_scoping') && sfContext::getInstance()->user->hasAttribute('search-realm')) {
       $repository = QubitRepository::getById(sfContext::getInstance()->user->getAttribute('search-realm'));
     }
     // If the feature is off, fall back to the repository component rules.
-    elseif (!sfConfig::get('app_enable_institutional_scoping'))
-    {
-      if (!isset($request->getAttribute('sf_route')->resource))
-      {
+    elseif (!sfConfig::get('app_enable_institutional_scoping')) {
+      if (!isset($request->getAttribute('sf_route')->resource)) {
         return sfView::NONE;
       }
 
       $resource = $request->getAttribute('sf_route')->resource;
 
-      switch (true)
-      {
+      switch (true) {
         case $resource instanceof QubitInformationObject:
           $repository = $resource->getRepository(['inherit' => true]);
 
@@ -51,22 +47,18 @@ class sfIsadPluginStylesheetComponent extends sfComponent
         default:
           return sfView::NONE;
       }
-    }
-    else
-    {
+    } else {
       return sfView::NONE;
     }
 
-    if (null === $repository || null === $repository->backgroundColor)
-    {
+    if (null === $repository || null === $repository->backgroundColor) {
       return sfView::NONE;
     }
 
     // Get value
     $this->backgroundColor = $repository->backgroundColor->__toString();
 
-    if (0 == strlen($this->backgroundColor))
-    {
+    if (0 == strlen($this->backgroundColor)) {
       return sfView::NONE;
     }
   }

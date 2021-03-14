@@ -28,23 +28,19 @@ class qtSwordPluginDepositAction extends sfAction
 {
   public function execute($request)
   {
-    if ($request->isMethod('put') || $request->isMethod('delete'))
-    {
+    if ($request->isMethod('put') || $request->isMethod('delete')) {
       return $this->generateResponse(501, 'error/ErrorNotImplemented', ['summary' => $this->context->i18n->__('Not implemented')]);
     }
 
-    if (!$request->isMethod('post'))
-    {
+    if (!$request->isMethod('post')) {
       return $this->generateResponse(400, 'error/ErrorBadRequest', ['summary' => $this->context->i18n->__('Bad request')]);
     }
 
-    if (!QubitAcl::check(QubitInformationObject::getRoot(), 'create'))
-    {
+    if (!QubitAcl::check(QubitInformationObject::getRoot(), 'create')) {
       return $this->generateResponse(403, 'error/ErrorBadRequest', ['summary' => $this->context->i18n->__('Forbidden')]);
     }
 
-    if (!isset($this->getRoute()->resource))
-    {
+    if (!isset($this->getRoute()->resource)) {
       return $this->generateResponse(404, 'error/ErrorBadRequest', ['summary' => $this->context->i18n->__('Not found')]);
     }
 
@@ -54,43 +50,34 @@ class qtSwordPluginDepositAction extends sfAction
 
     // Package format, check if supported
     $this->package['format'] = $request->getHttpHeader('X-Packaging');
-    if (!in_array($this->package['format'], qtSwordPluginConfiguration::$packaging))
-    {
+    if (!in_array($this->package['format'], qtSwordPluginConfiguration::$packaging)) {
       return $this->generateResponse(415, 'error/ErrorContent', ['summary' => $this->context->i18n->__('The supplied format is not supported by this server')]);
     }
 
     // Package content is part of the request or sent by reference?
-    if (null !== $request->getHttpHeader('Content-Location'))
-    {
+    if (null !== $request->getHttpHeader('Content-Location')) {
       $this->package['location'] = $request->getHttpHeader('Content-Location');
-    }
-    else
-    {
+    } else {
       // Save the file temporary
       $this->package['filename'] = qtSwordPlugin::saveRequestContent();
 
       // Package content type, check if supported
       $this->package['type'] = $request->getContentType();
-      if (!in_array($this->package['type'], qtSwordPluginConfiguration::$mediaRanges))
-      {
+      if (!in_array($this->package['type'], qtSwordPluginConfiguration::$mediaRanges)) {
         return $this->generateResponse(415, 'error/ErrorContent', ['summary' => $this->context->i18n->__('The supplied content type is not supported by this server')]);
       }
     }
 
     // Check if a filename was suggested
-    if (null !== $request->getHttpHeader('Content-Disposition'))
-    {
+    if (null !== $request->getHttpHeader('Content-Disposition')) {
       $this->package['suggested_name'] = substr($request->getHttpHeader('Content-Disposition'), 9);
-    }
-    else
-    {
+    } else {
       // TODO see [RFC2183]
       $this->package['suggested_name'] = $filename;
     }
 
     // Check if a filename was suggested
-    if (null !== $request->getHttpHeader('Content-MD5'))
-    {
+    if (null !== $request->getHttpHeader('Content-MD5')) {
       $this->package['checksum_md5'] = $request->getHttpHeader('Content-MD5');
     }
 
@@ -109,22 +96,18 @@ class qtSwordPluginDepositAction extends sfAction
   {
     $this->response->setStatusCode($code);
 
-    if (null !== $template)
-    {
+    if (null !== $template) {
       $this->request->setRequestFormat('xml');
 
       $this->response->setHttpHeader('Content-Type', 'application/atom+xml; charset="utf-8"');
 
-      if (isset($options['headers']))
-      {
-        foreach ($options['headers'] as $key => $value)
-        {
+      if (isset($options['headers'])) {
+        foreach ($options['headers'] as $key => $value) {
           $this->response->setHttpHeader($key, $value);
         }
       }
 
-      if (isset($options['summary']))
-      {
+      if (isset($options['summary'])) {
         $this->summary = $options['summary'];
       }
 

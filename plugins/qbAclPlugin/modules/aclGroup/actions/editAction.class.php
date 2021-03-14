@@ -29,12 +29,10 @@ class AclGroupEditAction extends sfAction
   {
     $this->group = new QubitAclGroup();
 
-    if (isset($this->request->id))
-    {
+    if (isset($this->request->id)) {
       $this->group = QubitAclGroup::getById($this->request->id);
 
-      if (!isset($this->group))
-      {
+      if (!isset($this->group)) {
         $this->forward404();
       }
     }
@@ -42,17 +40,14 @@ class AclGroupEditAction extends sfAction
     $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->addField($name);
     }
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
         $this->redirect([$this->group, 'module' => 'aclGroup']);
       }
@@ -61,8 +56,7 @@ class AclGroupEditAction extends sfAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'name':
         $this->form->setDefault($name, $this->group[$name]);
         $this->form->setValidator($name, new sfValidatorString());
@@ -87,8 +81,7 @@ class AclGroupEditAction extends sfAction
         $criteria->add(QubitAclPermission::GRANT_DENY, 1);
 
         $default = 0;
-        if (null !== QubitAclPermission::getOne($criteria))
-        {
+        if (null !== QubitAclPermission::getOne($criteria)) {
           $default = 1;
         }
 
@@ -103,13 +96,11 @@ class AclGroupEditAction extends sfAction
 
   protected function processForm()
   {
-    foreach ($this->form as $field)
-    {
+    foreach ($this->form as $field) {
       $this->processField($field);
     }
 
-    if (null === $this->group->parentId)
-    {
+    if (null === $this->group->parentId) {
       // By default, inherit permissions from authenticated group
       $this->group->parentId = QubitAclGroup::AUTHENTICATED_ID;
     }
@@ -124,8 +115,7 @@ class AclGroupEditAction extends sfAction
    */
   protected function processField($field)
   {
-    switch ($name = $field->getName())
-    {
+    switch ($name = $field->getName()) {
       case 'translate':
         $criteria = new Criteria();
         $criteria->add(QubitAclPermission::GROUP_ID, $this->group->id);
@@ -133,23 +123,17 @@ class AclGroupEditAction extends sfAction
 
         $translatePermission = QubitAclPermission::getOne($criteria);
 
-        if (1 == $this->form->getValue($name))
-        {
-          if (null === $translatePermission)
-          {
+        if (1 == $this->form->getValue($name)) {
+          if (null === $translatePermission) {
             $translatePermission = new QubitAclPermission();
             $translatePermission->action = 'translate';
             $translatePermission->grantDeny = 1;
-          }
-          else
-          {
+          } else {
             $translatePermission->grantDeny = 1;
           }
 
           $this->group->aclPermissions[] = $translatePermission;
-        }
-        elseif (null !== $translatePermission)
-        {
+        } elseif (null !== $translatePermission) {
           $translatePermission->delete();
         }
 

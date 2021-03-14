@@ -23,31 +23,24 @@ class UserIndexActorAclAction extends sfAction
   {
     $this->resource = $this->getRoute()->resource;
 
-    if (!isset($this->resource))
-    {
+    if (!isset($this->resource)) {
       $this->forward404();
     }
 
     //except for administrators, only allow users to see their own profile
-    if (!$this->context->user->isAdministrator())
-    {
-      if ($this->resource->id != $this->context->user->getAttribute('user_id'))
-      {
+    if (!$this->context->user->isAdministrator()) {
+      if ($this->resource->id != $this->context->user->getAttribute('user_id')) {
         $this->redirect('admin/secure');
       }
     }
 
     // Get user's groups
     $this->userGroups = [];
-    if (0 < count($aclUserGroups = $this->resource->aclUserGroups))
-    {
-      foreach ($aclUserGroups as $item)
-      {
+    if (0 < count($aclUserGroups = $this->resource->aclUserGroups)) {
+      foreach ($aclUserGroups as $item) {
         $this->userGroups[] = $item->groupId;
       }
-    }
-    else
-    {
+    } else {
       // User is *always* part of authenticated group
       $this->userGroups = [QubitAclGroup::AUTHENTICATED_ID];
     }
@@ -59,12 +52,9 @@ class UserIndexActorAclAction extends sfAction
     $criteria = new Criteria();
     $criteria->addJoin(QubitAclPermission::OBJECT_ID, QubitObject::ID, Criteria::LEFT_JOIN);
     $c1 = $criteria->getNewCriterion(QubitAclPermission::USER_ID, $this->resource->id);
-    if (1 == count($this->userGroups))
-    {
+    if (1 == count($this->userGroups)) {
       $c2 = $criteria->getNewCriterion(QubitAclPermission::GROUP_ID, $this->userGroups[0]);
-    }
-    else
-    {
+    } else {
       $c2 = $criteria->getNewCriterion(QubitAclPermission::GROUP_ID, $this->userGroups, Criteria::IN);
     }
     $c1->addOr($c2);
@@ -83,10 +73,8 @@ class UserIndexActorAclAction extends sfAction
 
     // Build ACL
     $this->acl = [];
-    if (0 < count($permissions = QubitAclPermission::get($criteria)))
-    {
-      foreach ($permissions as $item)
-      {
+    if (0 < count($permissions = QubitAclPermission::get($criteria))) {
+      foreach ($permissions as $item) {
         // In this context permissions for all objects (null) and root actor
         // object are equivalent
         $objectId = (QubitActor::ROOT_ID != $item->objectId) ? $item->objectId : null;

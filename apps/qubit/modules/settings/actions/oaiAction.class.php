@@ -30,24 +30,20 @@ class SettingsOaiAction extends sfAction
   public function execute($request)
   {
     // Redirect to global settings form if the OAI plugin is not enabled
-    if (!in_array('arOaiPlugin', unserialize(sfConfig::get('app_plugins'))))
-    {
+    if (!in_array('arOaiPlugin', unserialize(sfConfig::get('app_plugins')))) {
       $this->redirect('settings/global');
     }
 
     $this->oaiRepositoryForm = new SettingsOaiRepositoryForm();
 
     // Handle POST data (form submit)
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       // Handle OAI Repository form submission
-      if (null !== $request->oai_repository)
-      {
+      if (null !== $request->oai_repository) {
         QubitCache::getInstance()->removePattern('settings:i18n:*');
 
         $this->oaiRepositoryForm->bind($request->oai_repository);
-        if ($this->oaiRepositoryForm->isValid())
-        {
+        if ($this->oaiRepositoryForm->isValid()) {
           // Do update and redirect to avoid repeat submit wackiness
           $this->updateOaiRepositorySettings($this->oaiRepositoryForm);
           $this->redirect('settings/oai');
@@ -112,8 +108,7 @@ class SettingsOaiAction extends sfAction
     // Hits per page
     $resumptionTokenLimit = $thisForm->getValue('resumption_token_limit');
 
-    if (intval($resumptionTokenLimit) && $resumptionTokenLimit > 0)
-    {
+    if (intval($resumptionTokenLimit) && $resumptionTokenLimit > 0) {
       $setting = QubitSetting::getByName('resumption_token_limit');
       $setting->setValue($resumptionTokenLimit, ['sourceCulture' => true]);
       $setting->save();

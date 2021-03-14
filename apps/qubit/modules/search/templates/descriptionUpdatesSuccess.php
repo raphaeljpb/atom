@@ -82,7 +82,7 @@
             <th><?php echo __($nameColumnDisplay); ?></th>
             <?php if ('QubitInformationObject' == $className && 0 < sfConfig::get('app_multi_repository')) { ?>
               <th><?php echo __('Repository'); ?></th>
-            <?php } elseif ('QubitTerm' == $className){ ?>
+            <?php } elseif ('QubitTerm' == $className) { ?>
               <th><?php echo __('Taxonomy'); ?></th>
             <?php } ?>
             <?php if ('CREATED_AT' != $form->getValue('dateOf')) { ?>
@@ -113,22 +113,22 @@
                 <?php $status = (isset($doc['publicationStatusId'])) ? QubitTerm::getById($doc['publicationStatusId']) : null; ?>
                 <?php if (isset($status) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $status->id) { ?><span class="note2"><?php echo ' ('.render_value_inline($status).')'; ?></span><?php } ?>
 
-              <?php } elseif ('QubitActor' == $className){ ?>
+              <?php } elseif ('QubitActor' == $className) { ?>
 
                 <?php $name = render_title(get_search_i18n($doc, 'authorizedFormOfName', ['allowEmpty' => false])); ?>
                 <?php echo link_to($name, ['slug' => $doc['slug'], 'module' => 'actor']); ?>
 
-              <?php } elseif ('QubitFunctionObject' == $className){ ?>
+              <?php } elseif ('QubitFunctionObject' == $className) { ?>
 
                 <?php $name = render_title(get_search_i18n($doc, 'authorizedFormOfName', ['allowEmpty' => false])); ?>
                 <?php echo link_to($name, ['slug' => $doc['slug'], 'module' => 'function']); ?>
 
-              <?php } elseif ('QubitRepository' == $className){ ?>
+              <?php } elseif ('QubitRepository' == $className) { ?>
 
                 <?php $name = render_title(get_search_i18n($doc, 'authorizedFormOfName', ['allowEmpty' => false])); ?>
                 <?php echo link_to($name, ['slug' => $doc['slug'], 'module' => 'repository']); ?>
 
-              <?php } elseif ('QubitTerm' == $className){ ?>
+              <?php } elseif ('QubitTerm' == $className) { ?>
 
                 <?php $name = render_title(get_search_i18n($doc, 'name', ['allowEmpty' => false])); ?>
                 <?php echo link_to($name, ['slug' => $doc['slug'], 'module' => 'term']); ?>
@@ -143,7 +143,7 @@
                   <?php echo $repository; ?>
                 <?php } ?>
               </td>
-            <?php } elseif ('QubitTerm' == $className){ ?>
+            <?php } elseif ('QubitTerm' == $className) { ?>
               <td><?php echo render_title(get_search_i18n($doc, 'name', ['allowEmpty' => false])); ?></td>
             <?php } ?>
 
@@ -159,11 +159,11 @@
               <td>
                 <?php echo get_component('clipboard', 'button', ['slug' => $doc['slug'], 'wide' => true, 'type' => 'informationObject']); ?>
               </td>
-            <?php } elseif ('QubitActor' == $className){ ?>
+            <?php } elseif ('QubitActor' == $className) { ?>
               <td>
                 <?php echo get_component('clipboard', 'button', ['slug' => $doc['slug'], 'wide' => true, 'type' => 'actor']); ?>
               </td>
-            <?php } elseif ('QubitRepository' == $className){ ?>
+            <?php } elseif ('QubitRepository' == $className) { ?>
               <td>
                 <?php echo get_component('clipboard', 'button', ['slug' => $doc['slug'], 'wide' => true, 'type' => 'repository']); ?>
               </td>

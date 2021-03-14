@@ -38,8 +38,7 @@ class my_lime_test extends lime_test
 {
   public function diag($message, $adapter = '')
   {
-    if ($adapter)
-    {
+    if ($adapter) {
       $adapter = " [{$adapter}]";
     }
     $this->output->diag($message.$adapter);
@@ -51,10 +50,9 @@ $t->diag('*** Generic Tests ***');
 
 $t->diag('initialization', $adapter);
 
-foreach ($adapters as $adapter)
-{
-$t->todo('loadFile() throws an exception when an invalid file is loaded');
-// todo: remove annoying error that results when uncommenting below code
+foreach ($adapters as $adapter) {
+  $t->todo('loadFile() throws an exception when an invalid file is loaded');
+  // todo: remove annoying error that results when uncommenting below code
 //  try
 //  {
 //    $thmb = new sfThumbnail(150, 150, true, true, 75, $adapter, array());
@@ -99,8 +97,7 @@ $t->todo('loadFile() throws an exception when an invalid file is loaded');
   checkResult($t, 200, 200, 'image/gif');
 
   // imagemagick-specific tests
-  if ('sfImageMagickAdapter' == $adapter)
-  {
+  if ('sfImageMagickAdapter' == $adapter) {
     $t = new my_lime_test($tests_imagemagick, new lime_output_color());
 
     $t->diag('creates thumbnail from pdf', $adapter);
@@ -111,8 +108,7 @@ $t->todo('loadFile() throws an exception when an invalid file is loaded');
   }
 
   // gd specific tests (imagemagick does not currently support loadData())
-  if ('sfGDAdapter' == $adapter)
-  {
+  if ('sfGDAdapter' == $adapter) {
     $t->diag('creates image from string');
     $thmb = new sfThumbnail(200, 200, false, true, 75, $adapter, []);
     $blob = file_get_contents($data['blob']);
@@ -132,14 +128,11 @@ function checkResult($t, $width, $height, $mime)
   // check generated thumbnail for expected results
   // use getimagesize() when possible, otherwise use 'identify'
   $imgData = @getimagesize($result);
-  if ($imgData)
-  {
+  if ($imgData) {
     $res_width = $imgData[0];
     $res_height = $imgData[1];
     $res_mime = $imgData['mime'];
-  }
-  else
-  {
+  } else {
     exec('identify '.$result, $output);
     list($img, $type, $dimen) = explode(' ', $output[0]);
     list($res_width, $res_height) = explode('x', $dimen);

@@ -44,8 +44,7 @@ class QubitMigrate110 extends QubitMigrate
    */
   protected function alterData()
   {
-    switch ($this->version)
-    {
+    switch ($this->version) {
       case 62:
         $this->addAccessionFixtures();
 
@@ -116,8 +115,7 @@ class QubitMigrate110 extends QubitMigrate
   protected function addAccessionFixtures()
   {
     // Add accession mask user setting
-    if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_accessionMask'))
-    {
+    if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_accessionMask')) {
       $this->data['QubitSetting']['QubitSetting_accessionMask'] = [
         'name' => 'accession_mask',
         'value' => '%Y-%m-%d/#i',
@@ -125,8 +123,7 @@ class QubitMigrate110 extends QubitMigrate
     }
 
     // Add accession counter setting
-    if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_accessionCounter'))
-    {
+    if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_accessionCounter')) {
       $this->data['QubitSetting']['QubitSetting_accessionCounter'] = [
         'name' => 'accession_counter',
         'value' => 0,
@@ -134,8 +131,7 @@ class QubitMigrate110 extends QubitMigrate
     }
 
     // Update add button, accession is now the default action
-    if ($key = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'add'))
-    {
+    if ($key = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'add')) {
       $this->data['QubitMenu'][$key]['path'] = 'accession/add';
     }
 
@@ -153,12 +149,9 @@ class QubitMigrate110 extends QubitMigrate
       'path' => 'accession/add', ];
 
     // Introduce it before "addInformationObject"
-    if ($pivotKey = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'addInformationObject'))
-    {
+    if ($pivotKey = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'addInformationObject')) {
       self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_addedit_accession' => $accessionAddMenu]);
-    }
-    else
-    {
+    } else {
       $this->data['QubitMenu']['QubitMenu_mainmenu_addedit_accession'] = $accessionAddMenu;
     }
 
@@ -177,12 +170,9 @@ class QubitMigrate110 extends QubitMigrate
       'path' => 'accession/browse', ];
 
     // Introduce it before taxonomies
-    if ($pivotKey = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'taxonomies'))
-    {
+    if ($pivotKey = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'taxonomies')) {
       self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_manage' => $manageMenu]);
-    }
-    else
-    {
+    } else {
       $this->data['QubitMenu']['QubitMenu_mainmenu_manage'] = $manageMenu;
     }
 
@@ -203,12 +193,9 @@ class QubitMigrate110 extends QubitMigrate
       'path' => 'accession/browse', ];
 
     // Introduce it before taxonomies
-    if ($pivotKey)
-    {
+    if ($pivotKey) {
       self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_manage_accessions' => $accessionsManageMenu]);
-    }
-    else
-    {
+    } else {
       $this->data['QubitMenu']['QubitMenu_mainmenu_manage_accessions'] = $accessionsManageMenu;
     }
 
@@ -227,12 +214,9 @@ class QubitMigrate110 extends QubitMigrate
       'path' => 'donor/browse', ];
 
     // Introduce it before taxonomies
-    if ($pivotKey)
-    {
+    if ($pivotKey) {
       self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_manage_donors' => $donorsManageMenu]);
-    }
-    else
-    {
+    } else {
       $this->data['QubitMenu']['QubitMenu_mainmenu_manage_donors'] = $donorsManageMenu;
     }
 
@@ -251,12 +235,9 @@ class QubitMigrate110 extends QubitMigrate
       'path' => 'rightsholder/browse', ];
 
     // Introduce it before taxonomies
-    if ($pivotKey)
-    {
+    if ($pivotKey) {
       self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_manage_rightsholders' => $rightsHoldersManageMenu]);
-    }
-    else
-    {
+    } else {
       $this->data['QubitMenu']['QubitMenu_mainmenu_manage_rightsholders'] = $rightsHoldersManageMenu;
     }
 
@@ -459,20 +440,16 @@ class QubitMigrate110 extends QubitMigrate
   protected function moveRelationNotesToI18n()
   {
     // Search for relation notes
-    foreach ($this->data['QubitNote'] as $key => $item)
-    {
-      if (isset($item['type_id']))
-      {
+    foreach ($this->data['QubitNote'] as $key => $item) {
+      if (isset($item['type_id'])) {
         $type_id = $item['type_id'];
 
         // Test if type_id is defined in related QubitTerm row
-        if (isset($this->data['QubitTerm'][$item['type_id']]))
-        {
+        if (isset($this->data['QubitTerm'][$item['type_id']])) {
           $type_id = $this->data['QubitTerm'][$item['type_id']]['id'];
         }
 
-        switch ($type_id)
-        {
+        switch ($type_id) {
           case '<?php echo QubitTerm::RELATION_NOTE_DATE_ID."\n" ?>':
             $colname = 'date';
 
@@ -488,8 +465,7 @@ class QubitMigrate110 extends QubitMigrate
         }
 
         // Replace relation note with relation_i18n row
-        if (isset($this->data['QubitRelation'][$item['object_id']], $item['content']))
-        {
+        if (isset($this->data['QubitRelation'][$item['object_id']], $item['content'])) {
           $this->data['QubitRelation'][$item['object_id']]['source_culture'] = $item['source_culture'];
           $this->data['QubitRelation'][$item['object_id']][$colname] = $item['content'];
         }
@@ -509,12 +485,9 @@ class QubitMigrate110 extends QubitMigrate
    */
   protected function setChecksumType()
   {
-    if (isset($this->data['QubitDigitalObject']))
-    {
-      foreach ($this->data['QubitDigitalObject'] as $key => &$item)
-      {
-        if (!isset($item['checksum']) || 0 == strlen($item['checksum']))
-        {
+    if (isset($this->data['QubitDigitalObject'])) {
+      foreach ($this->data['QubitDigitalObject'] as $key => &$item) {
+        if (!isset($item['checksum']) || 0 == strlen($item['checksum'])) {
           // No checksum, skip
           continue;
         }
@@ -589,8 +562,7 @@ class QubitMigrate110 extends QubitMigrate
   protected function addSeparatorCharacterSetting()
   {
     // Add separator character
-    if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_separatorCharacter'))
-    {
+    if (false === $this->getRowKey('QubitSetting', 'name', 'QubitSetting_separatorCharacter')) {
       $this->data['QubitSetting']['QubitSetting_separatorCharacter'] = [
         'name' => 'separator_character',
         'value' => '-',
@@ -622,18 +594,14 @@ class QubitMigrate110 extends QubitMigrate
       'path' => 'sfPluginAdminPlugin/themes', ];
 
     // Introduce themes menu before settings
-    if ($pivotKey = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'settings'))
-    {
+    if ($pivotKey = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'settings')) {
       self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_admin_themes' => $themesMenu]);
-    }
-    else
-    {
+    } else {
       $this->data['QubitMenu']['QubitMenu_mainmenu_admin_themes'] = $themesMenu;
     }
 
     // Update plugins menu path
-    if ($key = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'plugins'))
-    {
+    if ($key = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'plugins')) {
       $this->data['QubitMenu'][$key]['path'] = 'sfPluginAdminPlugin/plugins';
     }
 
@@ -648,41 +616,33 @@ class QubitMigrate110 extends QubitMigrate
   protected function updatePathToAssets()
   {
     // Create "uploads/r" subdirectory
-    if (!file_exists(sfConfig::get('sf_upload_dir').'/r'))
-    {
+    if (!file_exists(sfConfig::get('sf_upload_dir').'/r')) {
       mkdir(sfConfig::get('sf_upload_dir').'/r', 0775);
     }
 
-    foreach ($this->data['QubitDigitalObject'] as $key => &$item)
-    {
-      if (!isset($item['information_object_id']))
-      {
+    foreach ($this->data['QubitDigitalObject'] as $key => &$item) {
+      if (!isset($item['information_object_id'])) {
         continue;
       }
 
       // Get the related information object
       $infoObject = $this->getRowByKeyOrId('QubitInformationObject', $item['information_object_id']);
-      if (null === $infoObject)
-      {
+      if (null === $infoObject) {
         continue;
       }
 
       // Recursively check info object ancestors for repository foreign key
-      while (!isset($infoObject['repository_id']) && isset($infoObject['parent_id']))
-      {
+      while (!isset($infoObject['repository_id']) && isset($infoObject['parent_id'])) {
         $infoObject = $this->getRowByKeyOrId('QubitInformationObject', $infoObject['parent_id']);
       }
 
       // Get repository
-      if (isset($infoObject['repository_id']))
-      {
+      if (isset($infoObject['repository_id'])) {
         $repo = &$this->data['QubitRepository'][$infoObject['repository_id']];
 
-        if (!isset($repo['slug']))
-        {
+        if (!isset($repo['slug'])) {
           $slug = $this->getUniqueSlug($repo['authorized_form_of_name'][$repo['source_culture']]);
-          if (!isset($slug) || 0 == strlen($slug))
-          {
+          if (!isset($slug) || 0 == strlen($slug)) {
             continue;
           }
 
@@ -690,48 +650,36 @@ class QubitMigrate110 extends QubitMigrate
         }
 
         $repoName = $repo['slug'];
-      }
-      else
-      {
+      } else {
         $repoName = 'null';
       }
 
       // Update digital object and derivatives paths
-      foreach ($this->data['QubitDigitalObject'] as $key2 => &$item2)
-      {
-        if ($key == $key2 || (isset($item2['parent_id']) && $key == $item2['parent_id']))
-        {
+      foreach ($this->data['QubitDigitalObject'] as $key2 => &$item2) {
+        if ($key == $key2 || (isset($item2['parent_id']) && $key == $item2['parent_id'])) {
           // Don't try to move remote assets
           $externalUriKey = $this->getTermKey('<?php echo QubitTerm::EXTERNAL_URI_ID."\n" ?>');
-          if ($externalUriKey == $item2['usage_id'])
-          {
+          if ($externalUriKey == $item2['usage_id']) {
             continue;
           }
 
           $oldpath = $item2['path'];
 
           // Build new path
-          if (preg_match('|\d/\d/\d{3,}/$|', $oldpath, $matches))
-          {
+          if (preg_match('|\d/\d/\d{3,}/$|', $oldpath, $matches)) {
             $newpath = '/uploads/r/'.$repoName.'/'.$matches[0];
-          }
-          else
-          {
+          } else {
             continue;
           }
 
-          if (!file_exists(sfConfig::get('sf_web_dir').$newpath))
-          {
-            if (!mkdir(sfConfig::get('sf_web_dir').$newpath, 0775, true))
-            {
+          if (!file_exists(sfConfig::get('sf_web_dir').$newpath)) {
+            if (!mkdir(sfConfig::get('sf_web_dir').$newpath, 0775, true)) {
               continue;
             }
           }
 
-          if (file_exists(sfConfig::get('sf_web_dir').$oldpath))
-          {
-            if (!rename(sfConfig::get('sf_web_dir').$oldpath.$item2['name'], sfConfig::get('sf_web_dir').$newpath.$item2['name']))
-            {
+          if (file_exists(sfConfig::get('sf_web_dir').$oldpath)) {
+            if (!rename(sfConfig::get('sf_web_dir').$oldpath.$item2['name'], sfConfig::get('sf_web_dir').$newpath.$item2['name'])) {
               continue; // If rename fails, don't update path
             }
           }
@@ -755,8 +703,7 @@ class QubitMigrate110 extends QubitMigrate
    */
   protected function addRepostioryUploadLimit()
   {
-    foreach ($this->data['QubitRepository'] as $key => &$item)
-    {
+    foreach ($this->data['QubitRepository'] as $key => &$item) {
       $item['upload_limit'] = -1; // Unlimited
     }
 
@@ -784,12 +731,9 @@ class QubitMigrate110 extends QubitMigrate
       'path' => 'physicalobject/browse', ];
 
     // Introduce Physical objects menu before Rights-holders
-    if ($pivotKey = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'rightsholders'))
-    {
+    if ($pivotKey = $this->findRowKeyForColumnValue($this->data['QubitMenu'], 'name', 'rightsholders')) {
       self::insertBeforeNestedSet($this->data['QubitMenu'], $pivotKey, ['QubitMenu_mainmenu_manage_physicalobjects' => $menu]);
-    }
-    else
-    {
+    } else {
       $this->data['QubitMenu']['QubitMenu_mainmenu_manage_physicalobjects'] = $menu;
     }
 
@@ -807,15 +751,12 @@ class QubitMigrate110 extends QubitMigrate
     $replacement = 'sfCaribouPlugin';
 
     // Find setting
-    foreach ($this->data['QubitSetting'] as $key => $value)
-    {
-      if ('plugins' == $value['name'])
-      {
+    foreach ($this->data['QubitSetting'] as $key => $value) {
+      if ('plugins' == $value['name']) {
         $settings = unserialize($value['value'][$value['source_culture']]);
 
         // Find plugin
-        if (-1 < ($index = array_search($plugin, $settings)))
-        {
+        if (-1 < ($index = array_search($plugin, $settings))) {
           // Replace
           $settings[$index] = $replacement;
           $this->data['QubitSetting'][$key]['value'][$value['source_culture']] = serialize($settings);
@@ -835,18 +776,15 @@ class QubitMigrate110 extends QubitMigrate
    */
   protected function ensurePublicationStatus()
   {
-    foreach ($this->data['QubitInformationObject'] as $key => &$item)
-    {
+    foreach ($this->data['QubitInformationObject'] as $key => &$item) {
       // Ignore ROOT
-      if ('<?php echo QubitInformationObject::ROOT_ID."\n" ?>' == $item['id'])
-      {
+      if ('<?php echo QubitInformationObject::ROOT_ID."\n" ?>' == $item['id']) {
         continue;
       }
 
       // Don't do anything if this node already has a publication status
       if ($this->findRowKeyForColumnValue($this->data['QubitStatus'], 'object_id', $key)
-        || $this->findRowKeyForColumnValue($this->data['QubitStatus'], 'object_id', $item['id']))
-      {
+        || $this->findRowKeyForColumnValue($this->data['QubitStatus'], 'object_id', $item['id'])) {
         continue;
       }
 
@@ -854,22 +792,17 @@ class QubitMigrate110 extends QubitMigrate
       $inheritedStatusKey = null;
       $node = $item;
 
-      while (!isset($inheritedStatusKey))
-      {
+      while (!isset($inheritedStatusKey)) {
         $parentKey = $node['parent_id'];
         $statusKey = $this->findRowKeyForColumnValue($this->data['QubitStatus'], 'object_id', $parentKey);
 
-        if ($statusKey)
-        {
+        if ($statusKey) {
           $inheritedStatusKey = $statusKey;
-        }
-        else
-        {
+        } else {
           $node = $this->data['QubitInformationObject'][$parentKey];
         }
 
-        if (null == $parentKey)
-        {
+        if (null == $parentKey) {
           break;
         }
       }
@@ -891,25 +824,20 @@ class QubitMigrate110 extends QubitMigrate
    */
   protected function slugData()
   {
-    if (!isset($this->data['QubitSlug']))
-    {
+    if (!isset($this->data['QubitSlug'])) {
       return $this;
     }
 
     $slug = [];
-    foreach ($this->data['QubitSlug'] as $item)
-    {
+    foreach ($this->data['QubitSlug'] as $item) {
       $slug[$item['object_id']] = $item['slug'];
     }
 
     unset($this->data['QubitSlug']);
 
-    foreach ($this->data as $table => $value)
-    {
-      foreach ($value as $row => $value)
-      {
-        if (isset($slug[$row]))
-        {
+    foreach ($this->data as $table => $value) {
+      foreach ($value as $row => $value) {
+        if (isset($slug[$row])) {
           $this->data[$table][$row]['slug'] = $slug[$row];
         }
       }
@@ -929,10 +857,8 @@ class QubitMigrate110 extends QubitMigrate
    */
   protected function removeRepositoryRoot()
   {
-    foreach ($this->data['QubitRepository'] as $key => &$item)
-    {
-      if (isset($item['parent_id']))
-      {
+    foreach ($this->data['QubitRepository'] as $key => &$item) {
+      if (isset($item['parent_id'])) {
         unset($item['parent_id']);
       }
     }
@@ -1065,12 +991,9 @@ class QubitMigrate110 extends QubitMigrate
 
     // Restack array with Constant values at top
     $qubitTermArray = $this->data['QubitTerm'];
-    foreach ($qubitTermConstantIds as $key => $constantName)
-    {
-      foreach ($qubitTermArray as $key => $term)
-      {
-        if (isset($term['id']) && $term['id'] == '<?php echo QubitTerm::'.$constantName.'."\n" ?>')
-        {
+    foreach ($qubitTermConstantIds as $key => $constantName) {
+      foreach ($qubitTermArray as $key => $term) {
+        if (isset($term['id']) && $term['id'] == '<?php echo QubitTerm::'.$constantName.'."\n" ?>') {
           $newTermArray[$key] = $term;
           unset($qubitTermArray[$key]);
 
@@ -1083,8 +1006,7 @@ class QubitMigrate110 extends QubitMigrate
     QubitMigrate::sortByLft($qubitTermArray);
 
     // Append remaining (variable id) terms to the end of the new array
-    foreach ($qubitTermArray as $key => $term)
-    {
+    foreach ($qubitTermArray as $key => $term) {
       $newTermArray[$key] = $term;
     }
 
@@ -1129,10 +1051,8 @@ class QubitMigrate110 extends QubitMigrate
 
     $originalData = $this->data;
 
-    foreach ($ormSortOrder as $i => $className)
-    {
-      if (isset($originalData[$className]))
-      {
+    foreach ($ormSortOrder as $i => $className) {
+      if (isset($originalData[$className])) {
         $sortedData[$className] = $originalData[$className];
         unset($originalData[$className]);
       }
@@ -1140,10 +1060,8 @@ class QubitMigrate110 extends QubitMigrate
 
     // If their are classes in the original data that are not listed in the
     // ormSortOrder array then tack them on to the end of the sorted data
-    if (count($originalData))
-    {
-      foreach ($originalData as $className => $classData)
-      {
+    if (count($originalData)) {
+      foreach ($originalData as $className => $classData) {
         $sortedData[$className] = $classData;
       }
     }
@@ -1157,12 +1075,9 @@ class QubitMigrate110 extends QubitMigrate
   {
     $slug = $root = QubitSlug::slugify($str);
 
-    for ($i = 0; $i < 100; ++$i)
-    {
-      foreach ($this->data['QubitRepository'] as $item)
-      {
-        if (isset($item['slug']) && $item['slug'] == $slug)
-        {
+    for ($i = 0; $i < 100; ++$i) {
+      foreach ($this->data['QubitRepository'] as $item) {
+        if (isset($item['slug']) && $item['slug'] == $slug) {
           $slug = $root.'-'.($i + 1);
 
           break;
@@ -1170,8 +1085,7 @@ class QubitMigrate110 extends QubitMigrate
       }
 
       // If $slug hasn't been incremented this pass
-      if ($slug == $root || $slug == $root.'-'.$i)
-      {
+      if ($slug == $root || $slug == $root.'-'.$i) {
         return $slug;
       }
     }

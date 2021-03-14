@@ -28,17 +28,14 @@ class SettingsVisibleElementsAction extends sfAction
   {
     $this->form = new sfForm();
 
-    foreach (QubitSetting::getByScope('element_visibility') as $item)
-    {
+    foreach (QubitSetting::getByScope('element_visibility') as $item) {
       $this->addField($item);
     }
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if (!$this->form->isValid())
-      {
+      if (!$this->form->isValid()) {
         return;
       }
 
@@ -63,8 +60,7 @@ class SettingsVisibleElementsAction extends sfAction
 
   protected function processForm()
   {
-    foreach ($this->form as $field)
-    {
+    foreach ($this->form as $field) {
       // We do not check if the field is isset() in the request object
       // because checkboxes won't be sent by the browser when they
       // are not selected
@@ -81,8 +77,7 @@ class SettingsVisibleElementsAction extends sfAction
 
     // Search by name and scope (='element_visibility')
     // Create if it does not exist
-    if (null === $setting = QubitSetting::getByNameAndScope($name, 'element_visibility'))
-    {
+    if (null === $setting = QubitSetting::getByNameAndScope($name, 'element_visibility')) {
       $setting = new QubitSetting();
       $setting->name = $name;
       $setting->scope = 'element_visibility';

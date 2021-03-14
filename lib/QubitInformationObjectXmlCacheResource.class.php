@@ -61,8 +61,7 @@ class QubitInformationObjectXmlCacheResource
   public function getFilePath($format, $contentsOnly = false)
   {
     $filename = md5($this->resource->id);
-    if ($contentsOnly)
-    {
+    if ($contentsOnly) {
       $filename .= '_contents';
     }
     $filename .= '.'.strtolower($format).'.xml';
@@ -84,8 +83,7 @@ class QubitInformationObjectXmlCacheResource
   {
     $path = self::getFilePath($this->resource->id, $format);
 
-    if (file_exists(sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$path))
-    {
+    if (file_exists(sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$path)) {
       return $path;
     }
 

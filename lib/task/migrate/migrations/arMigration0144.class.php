@@ -44,8 +44,7 @@ class arMigration0144
 SHOW INDEX FROM information_object WHERE Column_name = 'lft';
 sql;
 
-    if (0 == count(QubitPdo::fetchAll($sql)))
-    {
+    if (0 == count(QubitPdo::fetchAll($sql))) {
       $sql = <<<'sql'
 CREATE INDEX lft ON information_object(lft);
 sql;
@@ -59,8 +58,7 @@ sql;
 SHOW INDEX FROM term WHERE Column_name = 'lft';
 sql;
 
-    if (0 == count(QubitPdo::fetchAll($sql)))
-    {
+    if (0 == count(QubitPdo::fetchAll($sql))) {
       $sql = <<<'sql'
 CREATE INDEX lft ON term(lft);
 sql;

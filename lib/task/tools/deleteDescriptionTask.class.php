@@ -34,16 +34,14 @@ class deleteDescriptionTask extends arBaseTask
     $this->resourceType = $options['repository'] ? 'QubitRepository' : 'QubitInformationObject';
     $this->fetchResource($arguments['slug']);
 
-    if (!$this->confirmDeletion($options['no-confirmation']))
-    {
+    if (!$this->confirmDeletion($options['no-confirmation'])) {
       $this->logSection('delete-description', sprintf('[%s] Task aborted.', strftime('%r')));
 
       return;
     }
 
     // User wishes to proceed, delete targeted information objects.
-    switch ($this->resourceType)
-    {
+    switch ($this->resourceType) {
       case 'QubitRepository':
         $this->deleteDescriptionsFromRepository();
 
@@ -94,13 +92,11 @@ EOF;
    */
   private function confirmDeletion($noConfirmation)
   {
-    if ($noConfirmation)
-    {
+    if ($noConfirmation) {
       return true;
     }
 
-    switch ($this->resourceType)
-    {
+    switch ($this->resourceType) {
       case 'QubitRepository':
         $confirmWarning = sprintf('WARNING: You are about to delete all the records under the repository "%s".',
                                   $this->resource->getAuthorizedFormOfName(['cultureFallback' => true]));
@@ -116,8 +112,7 @@ EOF;
     }
 
     if ($this->askConfirmation([$confirmWarning, 'Are you sure you want to proceed? (y/N)'],
-                               'QUESTION_LARGE', false))
-    {
+                               'QUESTION_LARGE', false)) {
       return true;
     }
 
@@ -135,8 +130,7 @@ EOF;
     $c->addJoin(constant("{$this->resourceType}::ID"), QubitSlug::OBJECT_ID);
     $c->add(QubitSlug::SLUG, $slug);
 
-    if (null === $this->resource = call_user_func_array("{$this->resourceType}::getOne", [$c]))
-    {
+    if (null === $this->resource = call_user_func_array("{$this->resourceType}::getOne", [$c])) {
       throw new sfException(sprintf('Resource (slug: %s, type: %s) not found in database.',
                                     $slug, $this->resourceType));
     }
@@ -156,14 +150,11 @@ EOF;
     $conn = Propel::getConnection();
     $conn->beginTransaction();
 
-    try
-    {
+    try {
       $this->nDeleted += $root->deleteFullHierarchy();
 
       $conn->commit();
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $conn->rollBack();
 
       throw $e;
@@ -189,10 +180,8 @@ EOF;
     // TLD hierarchy deletions were leaving the iterators with outdated lft/rgt values resulting in them
     // attempting to delete unrelated records.
     //
-    foreach ($rows as $row)
-    {
-      if (null === $io = QubitInformationObject::getById($row->id))
-      {
+    foreach ($rows as $row) {
+      if (null === $io = QubitInformationObject::getById($row->id)) {
         throw new sfException("Failed to get information object {$row->id} in deleteDescriptionsFromRepository");
       }
 

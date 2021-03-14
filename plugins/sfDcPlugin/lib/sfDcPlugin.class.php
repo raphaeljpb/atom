@@ -37,15 +37,13 @@ class sfDcPlugin implements ArrayAccess
     $string = '';
 
     // Add title if set
-    if (0 < strlen($title = $this->resource->__toString()))
-    {
+    if (0 < strlen($title = $this->resource->__toString())) {
       $string .= $title;
     }
 
     // Add publication status
     $publicationStatus = $this->resource->getPublicationStatus();
-    if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId)
-    {
+    if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId) {
       $string .= (!empty($string)) ? ' ' : '';
       $string .= "({$publicationStatus->status->__toString()})";
     }
@@ -55,20 +53,16 @@ class sfDcPlugin implements ArrayAccess
 
   public function __get($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'creators':
         $creators = null;
 
-        foreach ($this->resource->ancestors->andSelf()->orderBy('rgt') as $ancestor)
-        {
-          if (QubitInformationObject::ROOT_ID == $ancestor->id)
-          {
+        foreach ($this->resource->ancestors->andSelf()->orderBy('rgt') as $ancestor) {
+          if (QubitInformationObject::ROOT_ID == $ancestor->id) {
             break;
           }
 
-          if (0 < count($creators = $ancestor->getCreators()))
-          {
+          if (0 < count($creators = $ancestor->getCreators())) {
             break;
           }
         }
@@ -80,10 +74,8 @@ class sfDcPlugin implements ArrayAccess
         // elements, we only return a limited set of events: just those that
         // are related to creation/origination
         $event = [];
-        foreach ($this->resource->eventsRelatedByobjectId as $item)
-        {
-          switch ($item->typeId)
-          {
+        foreach ($this->resource->eventsRelatedByobjectId as $item) {
+          switch ($item->typeId) {
             case QubitTerm::CREATION_ID:
             case QubitTerm::CONTRIBUTION_ID:
             case QubitTerm::PUBLICATION_ID:
@@ -100,16 +92,13 @@ class sfDcPlugin implements ArrayAccess
       case 'coverage':
         $coverage = [];
 
-        foreach ($this->resource->eventsRelatedByobjectId as $item)
-        {
-          if (null !== $place = $item->getPlace())
-          {
+        foreach ($this->resource->eventsRelatedByobjectId as $item) {
+          if (null !== $place = $item->getPlace()) {
             $coverage[] = $place;
           }
         }
 
-        foreach ($this->resource->getPlaceAccessPoints() as $item)
-        {
+        foreach ($this->resource->getPlaceAccessPoints() as $item) {
           $coverage[] = $item->term;
         }
 
@@ -117,10 +106,8 @@ class sfDcPlugin implements ArrayAccess
 
       case 'date':
         $list = [];
-        foreach ($this->_event as $item)
-        {
-          if (0 < strlen($date = $item->getDate(['cultureFallback' => true])))
-          {
+        foreach ($this->_event as $item) {
+          if (0 < strlen($date = $item->getDate(['cultureFallback' => true]))) {
             $list[] = $date;
           }
         }
@@ -130,16 +117,13 @@ class sfDcPlugin implements ArrayAccess
       case 'format':
         $format = [];
 
-        if (null !== $digitalObject = $this->resource->getDigitalObject())
-        {
-          if (isset($digitalObject->mimeType))
-          {
+        if (null !== $digitalObject = $this->resource->getDigitalObject()) {
+          if (isset($digitalObject->mimeType)) {
             $format[] = $digitalObject->mimeType;
           }
         }
 
-        if (isset($this->resource->extentAndMedium))
-        {
+        if (isset($this->resource->extentAndMedium)) {
           $format[] = $this->resource->getCleanExtentAndMedium(['cultureFallback' => true]);
         }
 
@@ -153,8 +137,7 @@ class sfDcPlugin implements ArrayAccess
 
       case 'subject':
         $subject = [];
-        foreach ($this->resource->getSubjectAccessPoints() as $item)
-        {
+        foreach ($this->resource->getSubjectAccessPoints() as $item) {
           $subject[] = $item->term;
         }
 
@@ -163,8 +146,7 @@ class sfDcPlugin implements ArrayAccess
         $criteria = $this->resource->addrelationsRelatedBysubjectIdCriteria($criteria);
         $criteria->add(QubitRelation::TYPE_ID, QubitTerm::NAME_ACCESS_POINT_ID);
 
-        foreach (QubitRelation::get($criteria) as $item)
-        {
+        foreach (QubitRelation::get($criteria) as $item) {
           $subject[] = $item->object;
         }
 
@@ -173,16 +155,13 @@ class sfDcPlugin implements ArrayAccess
       case 'type':
         $type = [];
 
-        foreach ($this->resource->getTermRelations(QubitTaxonomy::DC_TYPE_ID) as $item)
-        {
+        foreach ($this->resource->getTermRelations(QubitTaxonomy::DC_TYPE_ID) as $item) {
           $type[] = $item->term;
         }
 
         // Map media type to DCMI type vocabulary
-        if (null !== $digitalObject = $this->resource->getDigitalObject())
-        {
-          switch ($digitalObject->mediaType)
-          {
+        if (null !== $digitalObject = $this->resource->getDigitalObject()) {
+          switch ($digitalObject->mediaType) {
             case 'Image':
               $type[] = 'image';
 

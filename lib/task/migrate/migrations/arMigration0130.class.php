@@ -38,8 +38,7 @@ class arMigration0130
    */
   public function up($configuration)
   {
-    if (false === QubitPdo::fetchOne('SHOW COLUMNS IN '.QubitJob::TABLE_NAME.' LIKE ?', ['download_path']))
-    {
+    if (false === QubitPdo::fetchOne('SHOW COLUMNS IN '.QubitJob::TABLE_NAME.' LIKE ?', ['download_path'])) {
       // Add extra column, job.download_path, if it doesn't already exist
       QubitMigrate::addColumn(
         QubitJob::TABLE_NAME,

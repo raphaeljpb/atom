@@ -24,22 +24,19 @@ class RepositoryIndexAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that this isn't the root
-    if (!isset($this->resource->parent))
-    {
+    if (!isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'read'))
-    {
+    if (!QubitAcl::check($this->resource, 'read')) {
       QubitAcl::forwardUnauthorized();
     }
 
     $this->dispatcher->notify(new sfEvent($this, 'access_log.view', ['object' => $this->resource]));
 
     // Per-institution stylesheet
-    if (file_exists(sfConfig::get('sf_upload_dir').'/r/'.$this->resource->slug.'/conf/style.css'))
-    {
+    if (file_exists(sfConfig::get('sf_upload_dir').'/r/'.$this->resource->slug.'/conf/style.css')) {
       $this->response->addStyleSheet('/uploads/r/'.$this->resource->slug.'/conf/style.css', 'last', ['media' => 'all']);
     }
 

@@ -53,32 +53,26 @@ EOF;
 
     // Confirmation
     $question = 'Are you SURE you want to do this (y/N)?';
-    if (!$options['no-confirmation'] && !$this->askConfirmation([$question], 'QUESTION_LARGE', false))
-    {
+    if (!$options['no-confirmation'] && !$this->askConfirmation([$question], 'QUESTION_LARGE', false)) {
       return 1;
     }
 
     $n = 0;
-    foreach ($conn->query($sqlQuery, PDO::FETCH_ASSOC) as $row)
-    {
+    foreach ($conn->query($sqlQuery, PDO::FETCH_ASSOC) as $row) {
       $id = $row['object_id'];
       $resource = QubitInformationObject::getById($id);
 
-      if (!$resource)
+      if (!$resource) {
         continue;
-      foreach ($resource->descendants->andSelf()->orderBy('rgt') as $item)
-      {
-        try
-        {
+      }
+      foreach ($resource->descendants->andSelf()->orderBy('rgt') as $item) {
+        try {
           $item->delete();
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
           $this->log('Warning: got error while deleting: '.$e->getMessage());
         }
 
-        if (0 == ++$n % 10)
-        {
+        if (0 == ++$n % 10) {
           echo '.';
           fflush(STDOUT);
         }

@@ -27,23 +27,20 @@ class InformationObjectFullWidthTreeViewMoveAction extends sfAction
     $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
 
     // Check that this isn't the root
-    if (!isset($this->resource->parent))
-    {
+    if (!isset($this->resource->parent)) {
       $this->response->setStatusCode(404);
 
       return $this->renderText(json_encode(['error' => $i18n->__('Move failed: resource not found')]));
     }
 
-    if (!$this->getUser()->isAuthenticated())
-    {
+    if (!$this->getUser()->isAuthenticated()) {
       $this->response->setStatusCode(401);
 
       return $this->renderText(json_encode(['error' => $i18n->__('Move not allowed: log in required')]));
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'update'))
-    {
+    if (!QubitAcl::check($this->resource, 'update')) {
       $this->response->setStatusCode(403);
 
       return $this->renderText(json_encode(['error' => $i18n->__('Move not allowed: not enough permissions')]));
@@ -53,16 +50,14 @@ class InformationObjectFullWidthTreeViewMoveAction extends sfAction
     $newPosition = $request->getParameter('newPosition');
 
     // Empty or non numeric positions are not allowed
-    if (!is_numeric($oldPosition) || !is_numeric($newPosition))
-    {
+    if (!is_numeric($oldPosition) || !is_numeric($newPosition)) {
       $this->response->setStatusCode(400);
 
       return $this->renderText(json_encode(['error' => $i18n->__('Move failed: new and old positions required as numbers')]));
     }
 
     // Moving to the same position
-    if ($oldPosition == $newPosition)
-    {
+    if ($oldPosition == $newPosition) {
       $this->response->setStatusCode(400);
 
       return $this->renderText(json_encode(['error' => $i18n->__('Move not needed: new and old positions are the same')]));
@@ -76,12 +71,9 @@ class InformationObjectFullWidthTreeViewMoveAction extends sfAction
 
     // Catch no Gearman worker available exception
     // and others to show alert with exception message
-    try
-    {
+    try {
       QubitJob::runJob('arObjectMoveJob', $params);
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $this->response->setStatusCode(500);
 
       return $this->renderText(json_encode(['error' => $i18n->__('Move failed: ').$e->getMessage()]));

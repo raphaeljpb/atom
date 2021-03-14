@@ -47,8 +47,7 @@ class QubitPdo
     $readStmt = self::prepareAndExecute($query, $parameters);
 
     $fetchedRow = $readStmt->fetchObject();
-    if (!is_object($fetchedRow))
-    {
+    if (!is_object($fetchedRow)) {
       $fetchedRow = false;
     }
 
@@ -80,8 +79,7 @@ class QubitPdo
 
   public static function prepare($query)
   {
-    if (!isset(self::$conn))
-    {
+    if (!isset(self::$conn)) {
       self::$conn = Propel::getConnection();
     }
 

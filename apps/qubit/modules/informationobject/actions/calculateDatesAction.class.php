@@ -29,15 +29,13 @@ class InformationObjectCalculateDatesAction extends sfAction
     $this->i18n = $this->context->i18n;
 
     // Redirect if unauthorized
-    if (!QubitAcl::check($this->resource, 'update'))
-    {
+    if (!QubitAcl::check($this->resource, 'update')) {
       QubitAcl::forwardUnauthorized();
     }
 
     // Return error page if attempting to calculate dates for a description that
     // has no descendants
-    if (1 == $this->resource->rgt - $this->resource->lft)
-    {
+    if (1 == $this->resource->rgt - $this->resource->lft) {
       return sfView::ERROR;
     }
 
@@ -49,29 +47,23 @@ class InformationObjectCalculateDatesAction extends sfAction
       $this->descendantEventTypes
     );
 
-    if (0 == count($this->descendantEventTypes))
-    {
+    if (0 == count($this->descendantEventTypes)) {
       return sfView::ERROR;
     }
 
     // Add form fields
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->addField($name);
     }
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
         $this->beginDateCalculation();
         $this->redirect([$this->resource, 'module' => 'informationobject']);
-      }
-      else
-      {
+      } else {
         $message = $this->i18n->__('Please make a selection.');
         $this->context->user->setFlash('error', $message);
       }
@@ -98,8 +90,7 @@ class InformationObjectCalculateDatesAction extends sfAction
 
     $eventData = QubitPdo::fetchAll($sql, $params, ['fetchMode' => PDO::FETCH_ASSOC]);
 
-    foreach ($eventData as $event)
-    {
+    foreach ($eventData as $event) {
       $eventTypeTerm = QubitTerm::getById($event['type_id']);
       $eventTypes[($event['type_id'])] = $eventTypeTerm->getName(['cultureFallback' => true]);
     }
@@ -109,11 +100,9 @@ class InformationObjectCalculateDatesAction extends sfAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'eventIdOrTypeId':
-        if (count($this->events) || count($this->descendantEventTypes))
-        {
+        if (count($this->events) || count($this->descendantEventTypes)) {
           $eventIdChoices = $this->events + $this->descendantEventTypes;
           $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $eventIdChoices]));
           $this->form->setValidator($name, new sfValidatorInteger(['required' => true]));
@@ -125,8 +114,7 @@ class InformationObjectCalculateDatesAction extends sfAction
 
   protected function processField($field)
   {
-    switch ($name = $field->getName())
-    {
+    switch ($name = $field->getName()) {
       case 'eventIdOrTypeId':
         $this->eventIdOrTypeId = $field->getValue();
 
@@ -134,14 +122,10 @@ class InformationObjectCalculateDatesAction extends sfAction
         $criteria = new Criteria();
         $criteria->add(QubitObject::ID, $this->eventIdOrTypeId);
 
-        if (null !== $object = QubitObject::getOne($criteria))
-        {
-          if ('QubitEvent' == $object->className)
-          {
+        if (null !== $object = QubitObject::getOne($criteria)) {
+          if ('QubitEvent' == $object->className) {
             $this->eventId = $object->id;
-          }
-          else
-          {
+          } else {
             $this->eventTypeId = $object->id;
           }
         }
@@ -152,8 +136,7 @@ class InformationObjectCalculateDatesAction extends sfAction
 
   protected function processForm()
   {
-    foreach ($this->form as $field)
-    {
+    foreach ($this->form as $field) {
       $this->processField($field);
     }
   }
@@ -169,15 +152,12 @@ class InformationObjectCalculateDatesAction extends sfAction
 
     // Catch no Gearman worker available exception
     // and others to show alert with exception message
-    try
-    {
+    try {
       QubitJob::runJob('arCalculateDescendantDatesJob', $params);
 
       $message = $this->i18n->__('Date calculation started.');
       $this->context->user->setFlash('info', $message);
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $message = $this->i18n->__('Calculation failed').': '.$this->i18n->__($e->getMessage());
       $this->context->user->setFlash('error', $message);
     }
@@ -193,10 +173,8 @@ class InformationObjectCalculateDatesAction extends sfAction
     $criteria->add(QubitEvent::OBJECT_ID, $resource->id);
 
     // Assemble array of descriptions for any events containing date information
-    foreach (QubitEvent::get($criteria) as $event)
-    {
-      if ($this->eventHasDateAndDateRangeSet($event) && null !== $event->typeId && isset($validEventTypes[$event->typeId]))
-      {
+    foreach (QubitEvent::get($criteria) as $event) {
+      if ($this->eventHasDateAndDateRangeSet($event) && null !== $event->typeId && isset($validEventTypes[$event->typeId])) {
         $eventTypeName = $event->type->getName(['cultureFallback' => true]);
         $eventRange = Qubit::renderDateStartEnd($event->getDate(['cultureFallback' => true]), $event->startDate, $event->endDate);
         $events[$event->id] = sprintf('%s [%s]', $eventRange, $eventTypeName);

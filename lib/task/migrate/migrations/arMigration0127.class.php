@@ -32,8 +32,7 @@ class arMigration0127
   public function up($configuration)
   {
     $name = 'treeview_type';
-    if (null === QubitSetting::getByName($name))
-    {
+    if (null === QubitSetting::getByName($name)) {
       $setting = new QubitSetting();
       $setting->name = $name;
       $setting->editable = 1;

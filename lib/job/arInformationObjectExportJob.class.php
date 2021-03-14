@@ -45,12 +45,9 @@ class arInformationObjectExportJob extends arExportJob
       arElasticSearchPluginUtil::SCROLL_SIZE
     );
 
-    if ($parameters['params']['fromClipboard'])
-    {
+    if ($parameters['params']['fromClipboard']) {
       self::addClipboardCriteria($query, $parameters);
-    }
-    else
-    {
+    } else {
       $query->addAggFilters(
         InformationObjectBrowseAction::$AGGS,
         $parameters['params']
@@ -79,8 +76,7 @@ class arInformationObjectExportJob extends arExportJob
    */
   public static function getCurrentArchivalStandard()
   {
-    if ('rad' == QubitSetting::getByNameAndScope('informationobject', 'default_template'))
-    {
+    if ('rad' == QubitSetting::getByNameAndScope('informationobject', 'default_template')) {
       return 'rad';
     }
 
@@ -101,8 +97,7 @@ class arInformationObjectExportJob extends arExportJob
     );
 
     // If "public" option is set, filter out draft records
-    if (isset($parameters['public']) && $parameters['public'])
-    {
+    if (isset($parameters['public']) && $parameters['public']) {
       $search->queryBool->addMust(new \Elastica\Query\Term(
         ['publicationStatusId' => QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID]
       ));
@@ -118,8 +113,7 @@ class arInformationObjectExportJob extends arExportJob
   {
     $search = self::findExportRecords($this->params);
 
-    if (0 == $search->count())
-    {
+    if (0 == $search->count()) {
       return;
     }
 
@@ -128,13 +122,11 @@ class arInformationObjectExportJob extends arExportJob
     ));
 
     // Scroll through results then iterate through resulting IDs
-    foreach (arElasticSearchPluginUtil::getScrolledSearchResultIdentifiers($search) as $id)
-    {
+    foreach (arElasticSearchPluginUtil::getScrolledSearchResultIdentifiers($search) as $id) {
       $resource = QubitInformationObject::getById($id);
 
       // Skip if ElasticSearch document is stale (no corresponding MySQL data)
-      if (null == $resource)
-      {
+      if (null == $resource) {
         continue;
       }
 

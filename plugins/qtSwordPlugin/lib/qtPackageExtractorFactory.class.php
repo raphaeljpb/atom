@@ -23,17 +23,13 @@ class qtPackageExtractorFactory
   {
     preg_match_all('/^.*\/(.*)\/*$/', $format, $matches);
 
-    if (isset($matches[1]))
-    {
+    if (isset($matches[1])) {
       $className = 'qtPackageExtractor'.$matches[1][0];
 
-      if (!class_exists($className))
-      {
+      if (!class_exists($className)) {
         throw new Exception('Package format not supported.');
       }
-    }
-    else
-    {
+    } else {
       throw new Exception('Package format not recognized.');
     }
 

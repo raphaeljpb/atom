@@ -33,11 +33,9 @@ class ClipboardExportCheckAction extends sfAction
     $alerts = $missingTokens = [];
     $tokens = $request->getParameter('tokens', []);
 
-    foreach ($tokens as $token)
-    {
+    foreach ($tokens as $token) {
       // Validate token
-      if (!ctype_xdigit($token) || 32 != strlen($token))
-      {
+      if (!ctype_xdigit($token) || 32 != strlen($token)) {
         $missingTokens[] = $token;
 
         continue;
@@ -46,8 +44,7 @@ class ClipboardExportCheckAction extends sfAction
       $job = QubitJob::getByUserTokenProperty($token);
 
       // Save and return missing tokens to clear front-end storage
-      if (!isset($job))
-      {
+      if (!isset($job)) {
         $missingTokens[] = $token;
 
         continue;
@@ -63,8 +60,7 @@ class ClipboardExportCheckAction extends sfAction
       );
 
       // Add download path if applicable
-      if (isset($job->downloadPath) && QubitTerm::JOB_STATUS_COMPLETED_ID == $job->statusId)
-      {
+      if (isset($job->downloadPath) && QubitTerm::JOB_STATUS_COMPLETED_ID == $job->statusId) {
         $message .= $this->context->i18n->__(' %1%Download%2% (%3% b)',
           [
             '%1%' => sprintf('<a href="%s">', sfConfig::get('app_siteBaseUrl').'/'.$job->downloadPath),
@@ -72,9 +68,7 @@ class ClipboardExportCheckAction extends sfAction
             '%3%' => hr_filesize(filesize($job->downloadPath)),
           ]
         );
-      }
-      else
-      {
+      } else {
         $message .= ' '.$this->context->i18n->__('%1%Refresh the page%2% for progress updates.',
           [
             '%1%' => '<a href="javascript:location.reload();">',

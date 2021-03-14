@@ -44,14 +44,12 @@ class InformationObjectModificationsAction extends sfAction
   private function abortInvalidRequests()
   {
     // Check that this isn't the root
-    if (!isset($this->resource->parent))
-    {
+    if (!isset($this->resource->parent)) {
       $this->forward404();
     }
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'read') || !sfConfig::get('app_audit_log_enabled', false))
-    {
+    if (!QubitAcl::check($this->resource, 'read') || !sfConfig::get('app_audit_log_enabled', false)) {
       QubitAcl::forwardToSecureAction();
     }
   }

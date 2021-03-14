@@ -39,13 +39,12 @@ class QubitTestFunctional extends sfTestFunctional
     QubitAcl::getInstance()->acl = new StubAcl();
 
     // PHP 5.3 only, but this will soon be a minimum requirement?
-    $this->browser->addListener('controller.change_action', function (sfEvent $event)
-      {
-        $controller = $event->getSubject();
+    $this->browser->addListener('controller.change_action', function (sfEvent $event) {
+      $controller = $event->getSubject();
 
-        // Total HACK, disable sfBasicSecurityFilter
-        sfConfig::set('sf_secure_module', $event->module);
-        sfConfig::set('sf_secure_action', $event->action);
-      });
+      // Total HACK, disable sfBasicSecurityFilter
+      sfConfig::set('sf_secure_module', $event->module);
+      sfConfig::set('sf_secure_action', $event->action);
+    });
   }
 }

@@ -37,12 +37,10 @@ class SettingsIdentifierAction extends DefaultEditAction
   {
     parent::execute($request);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
 
         QubitCache::getInstance()->removePattern('settings:i18n:*');
@@ -61,8 +59,7 @@ class SettingsIdentifierAction extends DefaultEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'accession_mask':
       case 'accession_counter':
       case 'identifier_mask':
@@ -109,8 +106,7 @@ class SettingsIdentifierAction extends DefaultEditAction
 
   protected function processField($field)
   {
-    switch ($name = $field->getName())
-    {
+    switch ($name = $field->getName()) {
       case 'accession_mask_enabled':
       case 'accession_mask':
       case 'accession_counter':
@@ -121,8 +117,7 @@ class SettingsIdentifierAction extends DefaultEditAction
       case 'inherit_code_informationobject':
       case 'inherit_code_dc_xml':
       case 'prevent_duplicate_actor_identifiers':
-        if (null === $this->{$name})
-        {
+        if (null === $this->{$name}) {
           $this->{$name} = new QubitSetting();
           $this->{$name}->name = $name;
         }

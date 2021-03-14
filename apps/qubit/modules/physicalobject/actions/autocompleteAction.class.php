@@ -24,8 +24,7 @@ class PhysicalObjectAutocompleteAction extends sfAction
 {
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
@@ -33,12 +32,9 @@ class PhysicalObjectAutocompleteAction extends sfAction
     $criteria->addJoin(QubitPhysicalObject::ID, QubitPhysicalObjectI18n::ID);
     $criteria->add(QubitPhysicalObjectI18n::CULTURE, $this->context->user->getCulture());
 
-    if (sfConfig::get('app_markdown_enabled', true))
-    {
+    if (sfConfig::get('app_markdown_enabled', true)) {
       $criteria->add(QubitPhysicalObjectI18n::NAME, "%{$request->query}%", Criteria::LIKE);
-    }
-    else
-    {
+    } else {
       $criteria->add(QubitPhysicalObjectI18n::NAME, "{$request->query}%", Criteria::LIKE);
     }
 

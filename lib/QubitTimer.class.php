@@ -28,16 +28,14 @@ class QubitTimer
   {
     $this->start();
 
-    if (null != $logFile)
-    {
+    if (null != $logFile) {
       $this->fh = fopen($logFile, 'w');
     }
   }
 
   public function __destruct()
   {
-    if (isset($this->fh))
-    {
+    if (isset($this->fh)) {
       fclose($this->fh);
     }
   }
@@ -59,8 +57,7 @@ class QubitTimer
 
   public function elapsed($rnd = 2)
   {
-    if (empty($this->end))
-    {
+    if (empty($this->end)) {
       $this->add(true);
     }
 
@@ -73,8 +70,7 @@ class QubitTimer
 
     $this->total += $this->end - $this->start;
 
-    if ($continue)
-    {
+    if ($continue) {
       $this->start();
     }
 
@@ -83,8 +79,7 @@ class QubitTimer
 
   public function log($string)
   {
-    if (!isset($this->fh))
-    {
+    if (!isset($this->fh)) {
       return;
     }
 

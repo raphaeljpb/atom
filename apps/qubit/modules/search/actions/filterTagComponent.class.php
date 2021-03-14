@@ -25,14 +25,12 @@ class SearchFilterTagComponent extends sfComponent
 
     // If filter param isn't set in the request, or filter is model-based yet no object
     // has been stored, display nothing
-    if (!$this->checkIfParamsSet() || (!empty($this->options['model']) && empty($this->options['object'])))
-    {
+    if (!$this->checkIfParamsSet() || (!empty($this->options['model']) && empty($this->options['object']))) {
       return sfView::NONE;
     }
 
     // If filter has neither a label nor an object, display nothing
-    if (empty($this->options['label']) && empty($this->options['object']))
-    {
+    if (empty($this->options['label']) && empty($this->options['object'])) {
       return sfView::NONE;
     }
 
@@ -50,18 +48,15 @@ class SearchFilterTagComponent extends sfComponent
 
   private function checkIfParamsSet()
   {
-    if (!empty($this->options['params']))
-    {
+    if (!empty($this->options['params'])) {
       // Count how many params are set
       $setCount = 0;
-      foreach ($this->options['params'] as $param)
-      {
+      foreach ($this->options['params'] as $param) {
         $setCount += !empty($this->getParams[$param]);
       }
 
       // Check using params specified in filter tag configuration
-      if (empty($this->options['operator']) || 'and' == strtolower($this->options['operator']))
-      {
+      if (empty($this->options['operator']) || 'and' == strtolower($this->options['operator'])) {
         // All specified params must be set for filter tag to show
         return count($this->options['params']) == $setCount;
       }
@@ -76,15 +71,11 @@ class SearchFilterTagComponent extends sfComponent
 
   private function unsetParams()
   {
-    if (!empty($this->options['params']))
-    {
-      foreach ($this->options['params'] as $param)
-      {
+    if (!empty($this->options['params'])) {
+      foreach ($this->options['params'] as $param) {
         unset($this->getParams[$param]);
       }
-    }
-    else
-    {
+    } else {
       unset($this->getParams[$this->name]);
     }
   }

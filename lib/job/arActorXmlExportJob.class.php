@@ -48,8 +48,7 @@ class arActorXmlExportJob extends arActorExportJob
    */
   protected function exportResource($resource, $path, $options = [])
   {
-    try
-    {
+    try {
       // Print warnings/notices here too, as they are often important.
       $errLevel = error_reporting(E_ALL);
 
@@ -59,9 +58,7 @@ class arActorXmlExportJob extends arActorExportJob
       $xml = Qubit::tidyXml($rawXml);
 
       error_reporting($errLevel);
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       throw new sfException($this->i18n->__(
         'Invalid XML generated for object %1%.', ['%1%' => $row['id']]
       ));
@@ -72,8 +69,7 @@ class arActorXmlExportJob extends arActorExportJob
     );
     $filePath = sprintf('%s/%s', $path, $filename);
 
-    if (false === file_put_contents($filePath, $xml))
-    {
+    if (false === file_put_contents($filePath, $xml)) {
       throw new sfException($this->i18n->__(
         'Cannot write to path: %1%', ['%1%' => $filePath]
       ));

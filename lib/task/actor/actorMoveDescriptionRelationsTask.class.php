@@ -77,15 +77,13 @@ EOF;
   {
     parent::execute($arguments, $options);
 
-    if (null === $source = QubitActor::getBySlug($arguments['source']))
-    {
+    if (null === $source = QubitActor::getBySlug($arguments['source'])) {
       throw new sfException(
         'An actor with slug "'.$arguments['source'].'" could not be found.'
       );
     }
 
-    if (null === $target = QubitActor::getBySlug($arguments['target']))
-    {
+    if (null === $target = QubitActor::getBySlug($arguments['target'])) {
       throw new sfException(
         'An actor with slug "'.$arguments['target'].'" could not be found.'
       );
@@ -101,8 +99,7 @@ EOF;
 
     // Amalgamate related description ids before update
     $relatedIoIds = [];
-    if (!$options['skip-index'])
-    {
+    if (!$options['skip-index']) {
       $sql = "SELECT event.object_id FROM event
         JOIN object ON event.object_id=object.id
         WHERE event.actor_id=:sourceId
@@ -150,20 +147,16 @@ EOF;
     $this->log($updatedCount.' description relations moved.');
 
     // Update Elasticsearch index
-    if (!$options['skip-index'])
-    {
+    if (!$options['skip-index']) {
       $this->log('Updating Elasticsearch index ...');
 
       $search = QubitSearch::getInstance();
       $search->update($source);
       $search->update($target);
-      foreach ($relatedIoIds as $id)
-      {
+      foreach ($relatedIoIds as $id) {
         $search->update(QubitInformationObject::getById($id));
       }
-    }
-    else
-    {
+    } else {
       $this->log(
         'The Elasticsearch index has not been updated. '.
         'Please run search:populate manually to update the actor-description '.

@@ -21,29 +21,25 @@ class TermAutocompleteAction extends sfAction
 {
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
     // For term module show only preferred term
     $params = $this->context->routing->parse(Qubit::pathInfo($request->getReferer()));
-    if ('term' == $params['module'])
-    {
+    if ('term' == $params['module']) {
       $criteria = new Criteria();
 
       // Exclude the calling object and it's descendants from the list (prevent
       // circular inheritance)
-      if (isset($params['_sf_route']->resource->id))
-      {
+      if (isset($params['_sf_route']->resource->id)) {
         // TODO Self join would be ideal
         $criteria->add($criteria->getNewCriterion(QubitTerm::LFT, $params['_sf_route']->resource->lft, Criteria::LESS_THAN)
           ->addOr($criteria->getNewCriterion(QubitTerm::RGT, $params['_sf_route']->resource->rgt, Criteria::GREATER_THAN)));
       }
 
       // Filter by parent if it's set
-      if (isset($request->parent))
-      {
+      if (isset($request->parent)) {
         $params = $this->context->routing->parse(Qubit::pathInfo($request->parent));
         $criteria->add(QubitTerm::PARENT_ID, $params['_sf_route']->resource->id);
       }
@@ -55,14 +51,10 @@ class TermAutocompleteAction extends sfAction
       $criteria->add(QubitTermI18n::CULTURE, $this->context->user->getCulture());
 
       // Narrow results by query
-      if (isset($request->query))
-      {
-        if (sfConfig::get('app_markdown_enabled', true))
-        {
+      if (isset($request->query)) {
+        if (sfConfig::get('app_markdown_enabled', true)) {
           $criteria->add(QubitTermI18n::NAME, "%{$request->query}%", Criteria::LIKE);
-        }
-        else
-        {
+        } else {
           $criteria->add(QubitTermI18n::NAME, "{$request->query}%", Criteria::LIKE);
         }
       }
@@ -76,12 +68,10 @@ class TermAutocompleteAction extends sfAction
     }
 
     // If NOT calling from term page show preferred and alternative terms
-    else
-    {
+    else {
       $where = '';
-      if (isset($request->query))
-      {
-       $where = ' WHERE name LIKE :p3';
+      if (isset($request->query)) {
+        $where = ' WHERE name LIKE :p3';
       }
 
       $s1 = 'SELECT qt.id, null, qti.name
@@ -91,9 +81,8 @@ class TermAutocompleteAction extends sfAction
         WHERE taxonomy_id = :p1
           AND qti.culture = :p2';
 
-      if (isset($request->parent))
-      {
-       $s1 .= ' AND parent_id = :p5';
+      if (isset($request->parent)) {
+        $s1 .= ' AND parent_id = :p5';
       }
 
       $s2 = 'SELECT qt.id, qon.id as altId, qoni.name
@@ -106,14 +95,12 @@ class TermAutocompleteAction extends sfAction
           AND qoni.culture = :p2';
 
       // Narrow results by query
-      if (isset($request->query))
-      {
-       $s2 .= ' AND qoni.name LIKE :p3';
+      if (isset($request->query)) {
+        $s2 .= ' AND qoni.name LIKE :p3';
       }
 
       // Narrow results by parent
-      if (isset($request->parent))
-      {
+      if (isset($request->parent)) {
         $s2 .= ' AND qt.parent_id = :p5';
       }
 
@@ -124,13 +111,11 @@ class TermAutocompleteAction extends sfAction
       $statement->bindValue(':p1', $params['_sf_route']->resource->id);
       $statement->bindValue(':p2', $this->context->user->getCulture());
 
-      if (isset($request->query))
-      {
+      if (isset($request->query)) {
         $statement->bindValue(':p3', "{$request->query}%");
       }
 
-      if (isset($request->parent))
-      {
+      if (isset($request->parent)) {
         $params = $this->context->routing->parse(Qubit::pathInfo($request->parent));
         $statement->bindValue(':p5', $params['_sf_route']->resource->id);
       }
@@ -141,15 +126,11 @@ class TermAutocompleteAction extends sfAction
 
       $this->terms = [];
       $rows = $statement->fetchAll();
-      foreach ($rows as $row)
-      {
-        if (isset($row[1]))
-        {
+      foreach ($rows as $row) {
+        if (isset($row[1])) {
           // Alternative term
           $this->terms[] = [QubitTerm::getById($row[0]), $row[2]];
-        }
-        else
-        {
+        } else {
           // Preferred term
           $this->terms[] = QubitTerm::getById($row[0]);
         }

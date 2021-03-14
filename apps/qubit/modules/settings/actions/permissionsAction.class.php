@@ -34,8 +34,7 @@ class SettingsPermissionsAction extends sfAction
     $this->permissionsPreservationSystemAccessStatementForm = new SettingsPermissionsPreservationSystemAccessStatementForm();
 
     $this->basis = [];
-    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item)
-    {
+    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item) {
       $this->basis[$item->slug] = $item->getName(['cultureFallback' => true]);
     }
 
@@ -47,13 +46,11 @@ class SettingsPermissionsAction extends sfAction
     $this->response->addJavaScript('permissionsSettings', 'last');
 
     // Handle POST data (form submit)
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       // Give the user the ability to preview the copyright statement before
       // we persist the changes. We are reusing the viewCopyrightStatement
       // template, populating the properties that are needed.
-      if ($request->hasParameter('preview'))
-      {
+      if ($request->hasParameter('preview')) {
         $this->setTemplate('viewCopyrightStatement', 'digitalobject');
 
         $this->preview = true;
@@ -81,8 +78,7 @@ class SettingsPermissionsAction extends sfAction
         || !$this->permissionsAccessStatementsForm->isValid()
         || !$this->permissionsCopyrightStatementForm->isValid()
         || !$this->permissionsPreservationSystemAccessStatementForm->isValid()
-      )
-      {
+      ) {
         return;
       }
 
@@ -98,11 +94,9 @@ class SettingsPermissionsAction extends sfAction
       // PREMIS access statements
       $accessValues = $this->permissionsAccessStatementsForm->getValues();
 
-      foreach ($accessValues as $key => $value)
-      {
+      foreach ($accessValues as $key => $value) {
         $setting = QubitSetting::getByNameAndScope($key, 'access_statement');
-        if (null === $setting)
-        {
+        if (null === $setting) {
           $setting = new QubitSetting();
           $setting->name = $key;
           $setting->scope = 'access_statement';
@@ -114,18 +108,15 @@ class SettingsPermissionsAction extends sfAction
       // Remove unused settings (e.g. a term of the basis taxonomy was
       // deleted). We use array_key_exists because isset() returns false
       // if the key is defined but its value is NULL.
-      foreach (QubitSetting::getByScope('access_statement') as $setting)
-      {
-        if (!array_key_exists($setting->name, $accessValues))
-        {
+      foreach (QubitSetting::getByScope('access_statement') as $setting) {
+        if (!array_key_exists($setting->name, $accessValues)) {
           $setting->delete();
         }
       }
 
       // Copyright statement
       $setting = QubitSetting::getByName('digitalobject_copyright_statement_enabled');
-      if (null === $setting)
-      {
+      if (null === $setting) {
         $setting = new QubitSetting();
         $setting->name = 'digitalobject_copyright_statement_enabled';
         $setting->sourceCulture = sfConfig::get('sf_default_culture');
@@ -136,11 +127,9 @@ class SettingsPermissionsAction extends sfAction
       $statement = $this->permissionsCopyrightStatementForm->getValue('copyrightStatement');
       $statement = QubitHtmlPurifier::getInstance()->purify($statement);
 
-      if (!empty($statement))
-      {
+      if (!empty($statement)) {
         $setting = QubitSetting::getByName('digitalobject_copyright_statement');
-        if (null === $setting)
-        {
+        if (null === $setting) {
           $setting = new QubitSetting();
           $setting->name = 'digitalobject_copyright_statement';
         }
@@ -150,8 +139,7 @@ class SettingsPermissionsAction extends sfAction
 
       // Preservation system access statement
       $setting = QubitSetting::getByName('digitalobject_preservation_system_access_statement_enabled');
-      if (null === $setting)
-      {
+      if (null === $setting) {
         $setting = new QubitSetting();
         $setting->name = 'digitalobject_preservation_system_access_statement_enabled';
         $setting->sourceCulture = sfConfig::get('sf_default_culture');
@@ -169,11 +157,9 @@ class SettingsPermissionsAction extends sfAction
       );
       $statement = QubitHtmlPurifier::getInstance()->purify($statement);
 
-      if (!empty($statement))
-      {
+      if (!empty($statement)) {
         $setting = QubitSetting::getByName('digitalobject_preservation_system_access_statement');
-        if (null === $setting)
-        {
+        if (null === $setting) {
           $setting = new QubitSetting();
           $setting->name = 'digitalobject_preservation_system_access_statement';
         }

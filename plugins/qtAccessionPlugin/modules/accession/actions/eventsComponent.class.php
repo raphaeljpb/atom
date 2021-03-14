@@ -26,8 +26,7 @@ class AccessionEventsComponent extends sfComponent
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::ACCESSION_EVENT_TYPE_ID);
 
     $this->eventTypes = [];
-    foreach (QubitTerm::get($criteria) as $term)
-    {
+    foreach (QubitTerm::get($criteria) as $term) {
       $this->eventTypes[$term->id] = $term->getName(['cultureFallback' => true]);
     }
 
@@ -43,8 +42,7 @@ class AccessionEventsComponent extends sfComponent
     // Summarize/cache existing accession event data
     $this->eventData = [];
 
-    foreach ($this->resource->accessionEvents as $event)
-    {
+    foreach ($this->resource->accessionEvents as $event) {
       $note = $event->getNote();
 
       $this->eventData[] = [
@@ -63,25 +61,19 @@ class AccessionEventsComponent extends sfComponent
   {
     $finalEvents = [];
 
-    if (is_array($this->request->events))
-    {
-      foreach ($this->request->events as $item)
-      {
+    if (is_array($this->request->events)) {
+      foreach ($this->request->events as $item) {
         // Continue only if event type is populated
-        if (empty($item['eventType']) || empty($item['date']))
-        {
+        if (empty($item['eventType']) || empty($item['date'])) {
           continue;
         }
 
         // Fetch or create new accession event object
-        if (!empty($item['id']))
-        {
+        if (!empty($item['id'])) {
           $finalEvents[] = $item['id'];
 
           $event = QubitAccessionEvent::getById($item['id']);
-        }
-        else
-        {
+        } else {
           $event = new QubitAccessionEvent();
         }
 
@@ -92,8 +84,7 @@ class AccessionEventsComponent extends sfComponent
         $event->save();
 
         // Store note
-        if (null === $note = $event->getNote())
-        {
+        if (null === $note = $event->getNote()) {
           $note = new QubitNote();
           $note->objectId = $this->resource->id;
           $note->typeId = QubitTerm::ACCESSION_EVENT_NOTE_ID;
@@ -106,10 +97,8 @@ class AccessionEventsComponent extends sfComponent
     }
 
     // Delete the old accession events if they don't appear in the table (removed by multiRow.js)
-    foreach ($this->eventData as $item)
-    {
-      if (false === array_search($item['id'], $finalEvents))
-      {
+    foreach ($this->eventData as $item) {
+      if (false === array_search($item['id'], $finalEvents)) {
         $event = QubitAccessionEvent::getById($item['id']);
         $event->delete();
       }
@@ -118,8 +107,7 @@ class AccessionEventsComponent extends sfComponent
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
     case 'eventType':
         $this->form->setValidator($name, new sfValidatorInteger());
         $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $this->eventTypes]));

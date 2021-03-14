@@ -34,21 +34,16 @@ class sitemapTask extends sfBaseTask
   {
     sfContext::createInstance($this->configuration);
 
-    if (!$options['base-url'])
-    {
-      if (null !== $setting = QubitSetting::getByName('siteBaseUrl'))
-      {
+    if (!$options['base-url']) {
+      if (null !== $setting = QubitSetting::getByName('siteBaseUrl')) {
         $options['base-url'] = $setting->getValue();
-      }
-      else
-      {
+      } else {
         $options['base-url'] = 'http://127.0.0.1';
       }
     }
 
     // Check if the given directory exists
-    if (!is_dir($options['output-directory']))
-    {
+    if (!is_dir($options['output-directory'])) {
       throw new sfException('The given directory cannot be found');
     }
 
@@ -59,21 +54,17 @@ class sitemapTask extends sfBaseTask
       ->maxdepth(0)
       ->in($options['output-directory'])
     ;
-    if (count($files) > 0)
-    {
-      if (!$options['no-confirmation'])
-      {
+    if (count($files) > 0) {
+      if (!$options['no-confirmation']) {
         $result = $this->askConfirmation(['Do you want to delete the previous sitemap(s)? (Y/n)'], 'QUESTION_LARGE', true);
-        if (!$result)
-        {
+        if (!$result) {
           $this->log('Quitting');
 
           return;
         }
       }
       natsort($files);
-      foreach ($files as $file)
-      {
+      foreach ($files as $file) {
         $this->log('Deleting '.$file);
         unlink($file);
       }
@@ -90,13 +81,11 @@ class sitemapTask extends sfBaseTask
     $writer->end();
 
     // Sitemap submission
-    if ($options['ping'])
-    {
+    if ($options['ping']) {
       $location = $options['base-url'].'/sitemap.xml';
 
       $client = new sfWebBrowser();
-      foreach (self::$urls as $sName => $sUrl)
-      {
+      foreach (self::$urls as $sName => $sUrl) {
         $url = sprintf($sUrl, $location);
         $this->log(sprintf('[%s] Submitting - %s', $sName, $url));
 

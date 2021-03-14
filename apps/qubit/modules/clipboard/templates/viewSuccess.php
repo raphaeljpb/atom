@@ -49,9 +49,9 @@
       <?php foreach ($pager->getResults() as $hit) { ?>
         <?php if ('QubitInformationObject' === $entityType) { ?>
           <?php echo get_partial('search/searchResult', ['hit' => $hit, 'culture' => $selectedCulture]); ?>
-        <?php } elseif ('QubitActor' === $entityType){ ?>
+        <?php } elseif ('QubitActor' === $entityType) { ?>
           <?php echo get_partial('actor/searchResult', ['doc' => $hit->getData(), 'culture' => $selectedCulture, 'clipboardType' => 'actor']); ?>
-        <?php } elseif ('QubitRepository' === $entityType){ ?>
+        <?php } elseif ('QubitRepository' === $entityType) { ?>
           <?php echo get_partial('actor/searchResult', ['doc' => $hit->getData(), 'culture' => $selectedCulture, 'clipboardType' => 'repository']); ?>
         <?php } ?>
       <?php } ?>

@@ -29,8 +29,7 @@ class QubitSearch
 
   public static function getInstance(array $options = [])
   {
-    if (!isset(self::$instance))
-    {
+    if (!isset(self::$instance)) {
       // Using arElasticSearchPlugin but other classes could be
       // implemented, for example: arSphinxSearchPlugin
       self::$instance = new arElasticSearchPlugin($options);
@@ -41,8 +40,7 @@ class QubitSearch
 
   public static function disable()
   {
-    if (!isset(self::$instance))
-    {
+    if (!isset(self::$instance)) {
       self::$instance = self::getInstance(['initialize' => false]);
     }
 

@@ -37,14 +37,12 @@ class sfRadPlugin implements ArrayAccess
   {
     $string = '';
 
-    if (0 < strlen($title = $this->resource->__toString()))
-    {
+    if (0 < strlen($title = $this->resource->__toString())) {
       $string .= $title;
     }
 
     $publicationStatus = $this->resource->getPublicationStatus();
-    if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId)
-    {
+    if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId) {
       $string .= (!empty($string)) ? ' ' : '';
       $string .= "({$publicationStatus->status->__toString()})";
     }
@@ -57,13 +55,11 @@ class sfRadPlugin implements ArrayAccess
     $args = func_get_args();
 
     $options = [];
-    if (1 < count($args))
-    {
+    if (1 < count($args)) {
       $options = $args[1];
     }
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'editionStatementOfResponsibility':
       case 'issuingJurisdictionAndDenomination':
       case 'noteOnPublishersSeries':
@@ -94,8 +90,7 @@ class sfRadPlugin implements ArrayAccess
 
   public function __set($name, $value)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'editionStatementOfResponsibility':
       case 'issuingJurisdictionAndDenomination':
       case 'noteOnPublishersSeries':
@@ -119,19 +114,16 @@ class sfRadPlugin implements ArrayAccess
         $note = $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
         $missingNote = 0 === count($note);
 
-        if (0 == strlen($value))
-        {
+        if (0 == strlen($value)) {
           // Delete note if it's available
-          if (!$missingNote)
-          {
+          if (!$missingNote) {
             $note->delete();
           }
 
           break;
         }
 
-        if ($missingNote)
-        {
+        if ($missingNote) {
           $note = new QubitNote();
           $note->typeId = QubitTerm::LANGUAGE_NOTE_ID;
           $note->userId = sfContext::getInstance()->user->getAttribute('user_id');
@@ -175,18 +167,14 @@ class sfRadPlugin implements ArrayAccess
 
   protected function property($name)
   {
-    if (!isset($this->property[$name]))
-    {
+    if (!isset($this->property[$name])) {
       $criteria = new Criteria();
       $this->resource->addPropertysCriteria($criteria);
       $criteria->add(QubitProperty::NAME, $name);
 
-      if (1 == count($query = QubitProperty::get($criteria)))
-      {
+      if (1 == count($query = QubitProperty::get($criteria))) {
         $this->property[$name] = $query[0];
-      }
-      else
-      {
+      } else {
         $this->property[$name] = new QubitProperty();
         $this->property[$name]->name = $name;
 

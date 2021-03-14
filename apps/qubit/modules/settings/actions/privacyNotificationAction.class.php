@@ -36,8 +36,7 @@ class SettingsPrivacyNotificationAction extends SettingsEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'privacy_notification_enabled':
         $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
 

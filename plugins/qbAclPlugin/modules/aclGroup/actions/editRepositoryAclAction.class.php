@@ -37,10 +37,8 @@ class AclGroupEditRepositoryAclAction extends AclGroupEditDefaultAclAction
     $c1 = $criteria->getNewCriterion(QubitObject::CLASS_NAME, 'QubitRepository');
     $criteria->add($c1);
 
-    if (null !== $permissions = QubitAclPermission::get($criteria))
-    {
-      foreach ($permissions as $p)
-      {
+    if (null !== $permissions = QubitAclPermission::get($criteria)) {
+      foreach ($permissions as $p) {
         $this->repositories[$p->objectId][$p->action] = $p;
       }
     }
@@ -49,12 +47,10 @@ class AclGroupEditRepositoryAclAction extends AclGroupEditDefaultAclAction
     $this->basicActions = QubitAcl::$ACTIONS;
     unset($this->basicActions['translate']);
 
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $this->processForm();
         $this->redirect([$this->resource, 'module' => 'aclGroup', 'action' => 'indexRepositoryAcl']);
       }

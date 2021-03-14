@@ -67,15 +67,13 @@ class csvExportInformationObjectsTask extends exportBulkBaseTask
     $writer->user = $context->getUser();
     $writer->setOptions($options);
 
-    foreach ($rows as $row)
-    {
+    foreach ($rows as $row) {
       $writer->user->setCulture($row['culture']);
       $resource = QubitInformationObject::getById($row['id']);
 
       // Don't export draft descriptions with public option
       if (isset($options['public']) && $options['public']
-        && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $resource->getPublicationStatus()->statusId)
-      {
+        && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $resource->getPublicationStatus()->statusId) {
         continue;
       }
 

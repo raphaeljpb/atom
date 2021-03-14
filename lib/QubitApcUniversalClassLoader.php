@@ -28,41 +28,41 @@ use Symfony\Component\ClassLoader\UniversalClassLoader;
  */
 class QubitApcUniversalClassLoader extends UniversalClassLoader
 {
-    private $prefix;
+  private $prefix;
 
-    /**
-     * Constructor.
-     *
-     * @param string $prefix A prefix to create a namespace in APCu/APC
-     *
-     * @throws \RuntimeException
-     */
-    public function __construct($prefix)
-    {
-        if (!extension_loaded('apcu') && !extension_loaded('apc')) {
-            throw new \RuntimeException('Unable to use QubitApcUniversalClassLoader as neither APCu or APC are enabled.');
-        }
-
-        $this->prefix = $prefix;
+  /**
+   * Constructor.
+   *
+   * @param string $prefix A prefix to create a namespace in APCu/APC
+   *
+   * @throws \RuntimeException
+   */
+  public function __construct($prefix)
+  {
+    if (!extension_loaded('apcu') && !extension_loaded('apc')) {
+      throw new \RuntimeException('Unable to use QubitApcUniversalClassLoader as neither APCu or APC are enabled.');
     }
 
-    /**
-     * Finds a file by class name while caching lookups to APCu/APC.
-     *
-     * @param string $class A class name to resolve to file
-     *
-     * @return null|string The path, if found
-     */
-    public function findFile($class)
-    {
-        $functionPrefix = (extension_loaded('apcu')) ? 'apcu' : 'apc';
-        $fetchFunction = $functionPrefix.'_fetch';
-        $storeFunction = $functionPrefix.'_store';
+    $this->prefix = $prefix;
+  }
 
-        if (false === $file = $fetchFunction($this->prefix.$class)) {
-            $storeFunction($this->prefix.$class, $file = parent::findFile($class));
-        }
+  /**
+   * Finds a file by class name while caching lookups to APCu/APC.
+   *
+   * @param string $class A class name to resolve to file
+   *
+   * @return null|string The path, if found
+   */
+  public function findFile($class)
+  {
+    $functionPrefix = (extension_loaded('apcu')) ? 'apcu' : 'apc';
+    $fetchFunction = $functionPrefix.'_fetch';
+    $storeFunction = $functionPrefix.'_store';
 
-        return $file;
+    if (false === $file = $fetchFunction($this->prefix.$class)) {
+      $storeFunction($this->prefix.$class, $file = parent::findFile($class));
     }
+
+    return $file;
+  }
 }

@@ -61,8 +61,7 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
         || isset($this->contactInformation->longitude)
         || isset($this->contactInformation->note)
         || isset($this->contactInformation->fax)
-        || isset($this->contactInformation->website))
-    {
+        || isset($this->contactInformation->website)) {
       $this->contactInformation->actor = $this->relation->object;
       $this->contactInformation->save();
       $this->contactInformation->makePrimaryContact();
@@ -80,8 +79,7 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'authorizedFormOfName':
         $this->form->setValidator('authorizedFormOfName', new sfValidatorString());
         $this->form->setWidget('authorizedFormOfName', new sfWidgetFormSelect(['choices' => []]));
@@ -135,20 +133,17 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       // Override RelationEditComponent
       case 'resource':
         unset($this->relation->object);
 
         $value = $this->form->getValue('resource');
-        if (isset($value))
-        {
+        if (isset($value)) {
           $params = $this->context->routing->parse(Qubit::pathInfo($value));
           $this->relation->object = $params['_sf_route']->resource;
 
-          if (null === $this->contactInformation = $this->relation->object->getPrimaryContact())
-          {
+          if (null === $this->contactInformation = $this->relation->object->getPrimaryContact()) {
             $this->contactInformation = new QubitContactInformation();
           }
         }

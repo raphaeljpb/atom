@@ -25,8 +25,7 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
 
     $this->dacs = new arDacsPlugin($this->resource);
 
-    if (1 > strlen($title = $this->resource->__toString()))
-    {
+    if (1 > strlen($title = $this->resource->__toString())) {
       $title = $this->context->i18n->__('Untitled');
     }
 
@@ -47,8 +46,7 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
       QubitTerm::FAMILY_ID => $this->context->i18n->__('Biographical history'),
     ];
 
-    if (QubitAcl::check($this->resource, 'update'))
-    {
+    if (QubitAcl::check($this->resource, 'update')) {
       $validatorSchema = new sfValidatorSchema();
       $values = [];
 
@@ -60,8 +58,7 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
       $validatorSchema->repository = new QubitValidatorCountable([
         'required' => true, ], [
           'required' => $this->context->i18n->__('Name and location of repository - This is a mandatory element.'), ]);
-      if (null !== $repository = $this->resource->getRepository(['inherit' => true]))
-      {
+      if (null !== $repository = $this->resource->getRepository(['inherit' => true])) {
         $values['repository'] = $repository;
       }
 
@@ -87,11 +84,9 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
       $validatorSchema->creators = new QubitValidatorCountable([
         'required' => true, ], [
           'required' => $this->context->i18n->__('This archival description, or one of its higher levels, requires at least one creator.'), ]);
-      foreach ($this->resource->ancestors->andSelf()->orderBy('rgt') as $item)
-      {
+      foreach ($this->resource->ancestors->andSelf()->orderBy('rgt') as $item) {
         $values['creators'] = $item->getCreators();
-        if (0 < count($values['creators']))
-        {
+        if (0 < count($values['creators'])) {
           break;
         }
       }
@@ -101,12 +96,9 @@ class arDacsPluginIndexAction extends InformationObjectIndexAction
           'required' => $this->context->i18n->__('Scope and content - This is a mandatory element.'), ]);
       $values['scopeAndContent'] = $this->resource->getScopeAndContent(['cultureFallback' => true]);
 
-      try
-      {
+      try {
         $validatorSchema->clean($values);
-      }
-      catch (sfValidatorErrorSchema $e)
-      {
+      } catch (sfValidatorErrorSchema $e) {
         $this->errorSchema = $e;
       }
     }

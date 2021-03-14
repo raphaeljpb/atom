@@ -21,21 +21,18 @@ class AccessionBrowseAction extends sfAction
 {
   public function execute($request)
   {
-    if (!isset($request->limit))
-    {
+    if (!isset($request->limit)) {
       $request->limit = sfConfig::get('app_hits_per_page');
     }
 
-    if (!isset($request->page))
-    {
+    if (!isset($request->page)) {
       $request->page = 1;
     }
 
     // Avoid pagination over ES' max result window config (default: 10000)
     $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
 
-    if ((int) $request->limit * (int) $request->page > $maxResultWindow)
-    {
+    if ((int) $request->limit * (int) $request->page > $maxResultWindow) {
       // Show alert
       $message = $this->context->i18n->__(
         "We've redirected you to the first page of results.".
@@ -57,32 +54,24 @@ class AccessionBrowseAction extends sfAction
       'title' => $this->context->i18n->__('Title'),
       'acquisitionDate' => $this->context->i18n->__('Acquisition date'), ];
 
-    if (!isset($request->sort))
-    {
-      if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->subquery))
-      {
+    if (!isset($request->sort)) {
+      if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->subquery)) {
         $request->sort = 'relevance';
-      }
-      elseif ($this->getUser()->isAuthenticated())
-      {
+      } elseif ($this->getUser()->isAuthenticated()) {
         $request->sort = sfConfig::get('app_sort_browser_user');
-      }
-      else
-      {
+      } else {
         $request->sort = sfConfig::get('app_sort_browser_anonymous');
       }
     }
 
     // Default sort direction
     $sortDir = 'asc';
-    if ('lastUpdated' == $request->sort)
-    {
+    if ('lastUpdated' == $request->sort) {
       $sortDir = 'desc';
     }
 
     // Set default sort direction in request if not present or not valid
-    if (!isset($request->sortDir) || !in_array($request->sortDir, ['asc', 'desc']))
-    {
+    if (!isset($request->sortDir) || !in_array($request->sortDir, ['asc', 'desc'])) {
       $request->sortDir = $sortDir;
     }
 
@@ -94,12 +83,9 @@ class AccessionBrowseAction extends sfAction
 
     $this->queryBool = new \Elastica\Query\BoolQuery();
 
-    if (1 === preg_match('/^[\s\t\r\n]*$/', $request->subquery))
-    {
+    if (1 === preg_match('/^[\s\t\r\n]*$/', $request->subquery)) {
       $this->queryBool->addMust(new \Elastica\Query\MatchAll());
-    }
-    else
-    {
+    } else {
       $fields = [
         'identifier' => 10,
         'donors.i18n.%s.authorizedFormOfName' => 10,
@@ -134,8 +120,7 @@ class AccessionBrowseAction extends sfAction
     $this->query->setQuery($this->queryBool);
 
     // Set order
-    switch ($request->sort)
-    {
+    switch ($request->sort) {
       case 'identifier': // For backward compatibility
       case 'accessionNumber':
         $this->query->setSort(['identifier.untouched' => $request->sortDir]);

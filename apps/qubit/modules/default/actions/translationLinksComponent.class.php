@@ -23,8 +23,7 @@ class DefaultTranslationLinksComponent extends sfComponent
   {
     $currentCulture = $this->getUser()->getCulture();
 
-    switch (get_class($this->resource))
-    {
+    switch (get_class($this->resource)) {
       case 'QubitInformationObject':
         $this->module = 'informationobject';
         $i18ns = $this->resource->informationObjectI18ns;
@@ -105,17 +104,14 @@ class DefaultTranslationLinksComponent extends sfComponent
     }
 
     // Return nothing if the resource only has the current culture
-    if (1 == count($i18ns) && $i18ns[0]->culture == $currentCulture)
-    {
+    if (1 == count($i18ns) && $i18ns[0]->culture == $currentCulture) {
       return sfView::NONE;
     }
 
     // Get other cultures available
     $this->translations = [];
-    foreach ($i18ns as $i18n)
-    {
-      if ($i18n->culture == $currentCulture)
-      {
+    foreach ($i18ns as $i18n) {
+      if ($i18n->culture == $currentCulture) {
         continue;
       }
 

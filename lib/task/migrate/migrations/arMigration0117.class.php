@@ -96,14 +96,12 @@ class arMigration0117
       ['en' => 'Scores'],
       ['en' => 'Sheet Music'],
       ['en' => 'Timetables'],
-      ['en' => 'Transcriptions'], ] as $termNames)
-    {
+      ['en' => 'Transcriptions'], ] as $termNames) {
       $term = new QubitTerm();
       $term->parentId = QubitTerm::ROOT_ID;
       $term->taxonomyId = QubitTaxonomy::GENRE_ID;
       $term->sourceCulture = 'en';
-      foreach ($termNames as $key => $value)
-      {
+      foreach ($termNames as $key => $value) {
         $term->setName($value, ['culture' => $key]);
       }
 

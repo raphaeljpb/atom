@@ -19,30 +19,25 @@ class sfTranslateMessageFormat extends sfMessageFormat
    */
   protected function formatString($string, $args = [], $catalogue = null)
   {
-    if (empty($catalogue))
-    {
+    if (empty($catalogue)) {
       $catalogue = empty($this->catalogue) ? 'messages' : $this->catalogue;
     }
 
     $this->loadCatalogue($catalogue);
 
     $messages = sfContext::getInstance()->request->getAttribute('messages', []);
-    foreach ($this->messages[$catalogue] as $variant)
-    {
-      if (isset($variant[$string]))
-      {
+    foreach ($this->messages[$catalogue] as $variant) {
+      if (isset($variant[$string])) {
         $target = $variant[$string];
 
-        if (is_array($target))
-        {
+        if (is_array($target)) {
           $target = array_shift($target);
         }
 
         $messages[$string] = $target;
         sfContext::getInstance()->request->setAttribute('messages', $messages);
 
-        if (empty($target))
-        {
+        if (empty($target)) {
           break;
         }
 

@@ -153,8 +153,7 @@ class QubitTerm extends BaseTerm
   public function __toString()
   {
     $string = $this->name;
-    if (!isset($string))
-    {
+    if (!isset($string)) {
       $string = $this->getName(['sourceCulture' => true]);
     }
 
@@ -237,8 +236,7 @@ class QubitTerm extends BaseTerm
   public function save($connection = null)
   {
     // Add root term as parent if no parent is set and it's not the root term
-    if (QubitTerm::ROOT_ID != $this->id && !isset($this->parent))
-    {
+    if (QubitTerm::ROOT_ID != $this->id && !isset($this->parent)) {
       $this->parentId = QubitTerm::ROOT_ID;
     }
 
@@ -247,8 +245,7 @@ class QubitTerm extends BaseTerm
     QubitSearch::getInstance()->update($this);
 
     // Save related terms
-    foreach ($this->termsRelatedByparentId as $child)
-    {
+    foreach ($this->termsRelatedByparentId as $child) {
       $child->indexOnSave = false;
       $child->parentId = $this->id;
       $child->save();
@@ -268,10 +265,8 @@ class QubitTerm extends BaseTerm
   public function delete($connection = null)
   {
     // Cascade delete descendants
-    if (0 < count($children = $this->getChildren()))
-    {
-      foreach ($children as $child)
-      {
+    if (0 < count($children = $this->getChildren())) {
+      foreach ($children as $child) {
         $child->delete($connection);
       }
     }
@@ -283,10 +278,8 @@ class QubitTerm extends BaseTerm
     $cton1->addOr($cton2);
     $criteria->add($cton1);
 
-    if (0 < count($relations = QubitRelation::get($criteria)))
-    {
-      foreach ($relations as $relation)
-      {
+    if (0 < count($relations = QubitRelation::get($criteria))) {
+      foreach ($relations as $relation) {
         $relation->delete($connection);
       }
     }
@@ -295,10 +288,8 @@ class QubitTerm extends BaseTerm
     $criteria = new Criteria();
     $criteria->add(QubitObjectTermRelation::TERM_ID, $this->id);
 
-    if (0 < count($otRelations = QubitObjectTermRelation::get($criteria)))
-    {
-      foreach ($otRelations as $otRelation)
-      {
+    if (0 < count($otRelations = QubitObjectTermRelation::get($criteria))) {
+      foreach ($otRelations as $otRelation) {
         $otRelation->delete($connection);
       }
     }
@@ -312,8 +303,7 @@ class QubitTerm extends BaseTerm
   {
     $notes = $this->getNotesByType($options = ['noteTypeId' => QubitTerm::DISPLAY_NOTE_ID]);
 
-    if (count($notes) > 0)
-    {
+    if (count($notes) > 0) {
       return $notes[0]->getContent($options = ['cultureFallback' => true]);
     }
 
@@ -473,8 +463,7 @@ class QubitTerm extends BaseTerm
    */
   public static function getIndentedChildTree($parentTermId, $indentStr = '&nbsp;', $options = [])
   {
-    if (!$parentTerm = QubitTerm::getById($parentTermId))
-    {
+    if (!$parentTerm = QubitTerm::getById($parentTermId)) {
       return false;
     }
 
@@ -482,17 +471,13 @@ class QubitTerm extends BaseTerm
 
     $parentDepth = count($parentTerm->getAncestors());
 
-    foreach ($parentTerm->getDescendants()->orderBy('lft') as $i => $node)
-    {
+    foreach ($parentTerm->getDescendants()->orderBy('lft') as $i => $node) {
       $relativeDepth = intval(count($node->getAncestors()) - $parentDepth - 1);
       $indentedName = str_repeat($indentStr, $relativeDepth).$node->getName(['cultureFallback' => 'true']);
 
-      if (isset($options['returnObjectInstances']) && true == $options['returnObjectInstances'])
-      {
+      if (isset($options['returnObjectInstances']) && true == $options['returnObjectInstances']) {
         $tree[sfContext::getInstance()->routing->generate(null, [$node, 'module' => 'term'])] = $indentedName;
-      }
-      else
-      {
+      } else {
         $tree[$node->id] = $indentedName;
       }
     }
@@ -720,13 +705,11 @@ class QubitTerm extends BaseTerm
     $criteria->add(QubitTerm::TAXONOMY_ID, $taxonomyId);
 
     // Exclude specified term
-    if (isset($options['exclude']))
-    {
+    if (isset($options['exclude'])) {
       // Turn string into a single entity array
       $excludes = (is_array($options['exclude'])) ? $options['exclude'] : [$options['exclude']];
 
-      foreach ($excludes as $exclude)
-      {
+      foreach ($excludes as $exclude) {
         $criteria->addAnd(QubitTerm::ID, $exclude, Criteria::NOT_EQUAL);
       }
     }
@@ -736,20 +719,16 @@ class QubitTerm extends BaseTerm
     $terms = QubitTerm::get($criteria);
 
     $selectList = [];
-    if (isset($options['include_blank']))
-    {
+    if (isset($options['include_blank'])) {
       $selectList[null] = '';
     }
-    foreach ($terms as $term)
-    {
+    foreach ($terms as $term) {
       $displayValue = $term->getName(['cultureFallback' => true]);
 
       // Display note content instead of term name - used mainly for displaying
       // event type actor vs. action (e.g. "creator" vs. "creation")
-      if (isset($options['displayNote']) && true == $options['displayNote'])
-      {
-        if (count($notes = $term->getNotesByType(QubitTerm::DISPLAY_NOTE_ID)))
-        {
+      if (isset($options['displayNote']) && true == $options['displayNote']) {
+        if (count($notes = $term->getNotesByType(QubitTerm::DISPLAY_NOTE_ID))) {
           $displayValue = $notes[0]->getContent(['cultureFallback' => true]);
         }
       }
@@ -774,8 +753,7 @@ class QubitTerm extends BaseTerm
 
     $sortBy = (isset($options['sortBy'])) ? $options['sortBy'] : 'lft';
 
-    switch ($sortBy)
-    {
+    switch ($sortBy) {
       case 'name':
         $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitTerm');
         $criteria->addAscendingOrderByColumn('name');
@@ -791,8 +769,7 @@ class QubitTerm extends BaseTerm
   public function getTreeViewChildren(array $options = [])
   {
     $numberOfPreviousOrNextSiblings = 4;
-    if (isset($options['numberOfPreviousOrNextSiblings']))
-    {
+    if (isset($options['numberOfPreviousOrNextSiblings'])) {
       $numberOfPreviousOrNextSiblings = $options['numberOfPreviousOrNextSiblings'];
     }
 
@@ -814,8 +791,7 @@ class QubitTerm extends BaseTerm
     $items = array_merge($items, $first->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 2, 'position' => 'next']));
 
     $hasNextSiblings = count($items) > $numberOfPreviousOrNextSiblings;
-    if ($hasNextSiblings)
-    {
+    if ($hasNextSiblings) {
       array_pop($items);
     }
 
@@ -827,15 +803,13 @@ class QubitTerm extends BaseTerm
     // The max number of items that will be shown
     // The final amount may be smaller if there are no result enough
     $limit = 5;
-    if (isset($options['limit']))
-    {
+    if (isset($options['limit'])) {
       $limit = $options['limit'];
     }
 
     // Show 'previous' or 'next' siblings
     $position = 'next';
-    if (isset($options['position']))
-    {
+    if (isset($options['position'])) {
       $position = $options['position'];
     }
 
@@ -843,8 +817,7 @@ class QubitTerm extends BaseTerm
     $criteria->add(QubitTerm::PARENT_ID, $this->parentId);
     $criteria->add(QubitTerm::TAXONOMY_ID, $this->taxonomyId);
 
-    switch ($position)
-    {
+    switch ($position) {
       case 'previous':
         $criteria->add('name', '
           COALESCE(
@@ -881,8 +854,7 @@ class QubitTerm extends BaseTerm
     $criteria->setLimit($limit);
 
     $results = [];
-    foreach (QubitTerm::get($criteria) as $item)
-    {
+    foreach (QubitTerm::get($criteria) as $item) {
       $results[] = $item;
     }
 
@@ -921,8 +893,7 @@ class QubitTerm extends BaseTerm
     $sql .= ' FROM '.QubitTerm::TABLE_NAME.' term';
     $sql .= ' WHERE term.parent_id != ?';
 
-    if (is_array($taxonomyIds) && count($taxonomyIds) > 0)
-    {
+    if (is_array($taxonomyIds) && count($taxonomyIds) > 0) {
       $sql .= ' AND term.taxonomy_id IN ('.implode(',', $taxonomyIds).')';
     }
 
@@ -946,16 +917,14 @@ class QubitTerm extends BaseTerm
     );
 
     // If converse relations exist, return related term ID of first found
-    if (count($converseTerms))
-    {
+    if (count($converseTerms)) {
       return $converseTerms[0]->getOpposedObject($this->id);
     }
   }
 
   protected function insert($connection = null)
   {
-    if (!isset($this->slug))
-    {
+    if (!isset($this->slug)) {
       $this->slug = QubitSlug::slugify($this->__get('name', ['sourceCulture' => true]));
     }
 
@@ -964,8 +933,7 @@ class QubitTerm extends BaseTerm
 
   protected function updateNestedSet($connection = null)
   {
-    if (!$this->disableNestedSetUpdating)
-    {
+    if (!$this->disableNestedSetUpdating) {
       return parent::updateNestedSet($connection);
     }
   }
@@ -975,8 +943,7 @@ class QubitTerm extends BaseTerm
     $conn = Propel::getConnection();
     $stmt = $conn->prepare($sql);
     $stmt->execute();
-    if (count($row = $stmt->fetch()))
-    {
+    if (count($row = $stmt->fetch())) {
       return intval($row[0]);
     }
 

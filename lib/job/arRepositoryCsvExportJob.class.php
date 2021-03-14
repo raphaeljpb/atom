@@ -42,8 +42,7 @@ class arRepositoryCsvExportJob extends arExportJob
     // Export CSV to temp directory
     $this->info($this->i18n->__('Starting export to %1', ['%1' => $tempPath]));
 
-    if (-1 === $itemsExported = $this->exportResults($tempPath))
-    {
+    if (-1 === $itemsExported = $this->exportResults($tempPath)) {
       return false;
     }
 
@@ -53,8 +52,7 @@ class arRepositoryCsvExportJob extends arExportJob
     $this->info($this->i18n->__('Creating ZIP file %1', ['%1' => $this->getDownloadFilePath()]));
     $errors = $this->createZipForDownload($tempPath);
 
-    if (!empty($errors))
-    {
+    if (!empty($errors)) {
       $this->error($this->i18n->__('Failed to create ZIP file.').' : '.implode(' : ', $errors));
 
       return false;
@@ -87,10 +85,8 @@ class arRepositoryCsvExportJob extends arExportJob
     $writer->loadResourceSpecificConfiguration('QubitRepository');
 
     // Scroll through results then iterate through resulting IDs
-    foreach (arElasticSearchPluginUtil::getScrolledSearchResultIdentifiers($search) as $id)
-    {
-      if (null === $resource = QubitRepository::getById($id))
-      {
+    foreach (arElasticSearchPluginUtil::getScrolledSearchResultIdentifiers($search) as $id) {
+      if (null === $resource = QubitRepository::getById($id)) {
         $this->error($this->i18n->__('Cannot fetch repository, id: %1', ['%1' => $id]));
 
         return -1;
@@ -99,8 +95,7 @@ class arRepositoryCsvExportJob extends arExportJob
       $writer->exportResource($resource);
 
       // Log progress every 1000 rows
-      if ($itemsExported && (0 == $itemsExported % 1000))
-      {
+      if ($itemsExported && (0 == $itemsExported % 1000)) {
         $this->info($this->i18n->__('%1 items exported.', ['%1' => $itemsExported]));
       }
 

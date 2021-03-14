@@ -38,8 +38,7 @@ class arMigration0146
    */
   public function up($configuration)
   {
-    if (null === QubitSetting::getByName('digital_object_geolocation'))
-    {
+    if (null === QubitSetting::getByName('digital_object_geolocation')) {
       $setting = new QubitSetting();
       $setting->setName('digital_object_geolocation');
       $setting->setScope('element_visibility');

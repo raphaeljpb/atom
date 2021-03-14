@@ -38,8 +38,9 @@
 
           <ul>
             <?php foreach ($resource->descendants as $index => $item) { ?>
-              <li><?php echo link_to(render_title($item), [$item, 'module' => 'term']); ?></li>
-              <?php if ($index + 1 == $previewSize) break; ?>
+              <?php if ($index + 1 < $previewSize) { ?>
+                <li><?php echo link_to(render_title($item), [$item, 'module' => 'term']); ?></li>
+              <?php } ?>
             <?php } ?>
           </ul>
 

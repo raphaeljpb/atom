@@ -26,8 +26,7 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
     $this->resource = $this->getRoute()->resource;
 
     // Check that this isn't the root
-    if (!isset($this->resource->parent))
-    {
+    if (!isset($this->resource->parent)) {
       $this->forward404();
     }
 
@@ -37,22 +36,19 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
     $this->response->setTitle("{$title} - Inventory list - {$this->response->getTitle()}");
 
     $limit = sfConfig::get('app_hits_per_page');
-    if (isset($request->limit) && ctype_digit($request->limit))
-    {
+    if (isset($request->limit) && ctype_digit($request->limit)) {
       $limit = $request->limit;
     }
 
     $page = 1;
-    if (isset($request->page) && ctype_digit($request->page))
-    {
+    if (isset($request->page) && ctype_digit($request->page)) {
       $page = $request->page;
     }
 
     // Avoid pagination over ES' max result window config (default: 10000)
     $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
 
-    if ((int) $limit * $page > $maxResultWindow)
-    {
+    if ((int) $limit * $page > $maxResultWindow) {
       // Show alert
       $message = $this->context->i18n->__(
         "We've redirected you to the first page of results.".
@@ -79,8 +75,7 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
 
   public static function showInventory($resource)
   {
-    if (empty(self::getLevels()))
-    {
+    if (empty(self::getLevels())) {
       return false;
     }
 
@@ -91,19 +86,16 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
 
   private static function getLevels()
   {
-    if (null !== self::$levels)
-    {
+    if (null !== self::$levels) {
       return self::$levels;
     }
 
     $setting = QubitSetting::getByName('inventory_levels');
-    if (null === $setting || false === $value = unserialize($setting->getValue()))
-    {
+    if (null === $setting || false === $value = unserialize($setting->getValue())) {
       return;
     }
 
-    if (!is_array($value) || 0 === count($value))
-    {
+    if (!is_array($value) || 0 === count($value)) {
       return;
     }
 
@@ -116,8 +108,7 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
   {
     $query = new \Elastica\Query();
     $query->setSize($limit);
-    if (!empty($page))
-    {
+    if (!empty($page)) {
       $query->setFrom(($page - 1) * $limit);
     }
 
@@ -132,8 +123,7 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
 
     $i18n = sprintf('i18n.%s.', sfContext::getInstance()->getUser()->getCulture());
 
-    switch ($sort)
-    {
+    switch ($sort) {
       case 'identifierDown':
         $query->setSort(['identifier.untouched' => 'desc']);
 

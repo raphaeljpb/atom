@@ -34,16 +34,13 @@ class arSearchDocumentTask extends arBaseTask
   {
     parent::execute($arguments, $options);
 
-    if (null !== $slugObject = QubitObject::getBySlug($arguments[slug]))
-    {
+    if (null !== $slugObject = QubitObject::getBySlug($arguments[slug])) {
       $this->log(sprintf("Fetching data for %s ID %d...\n", $slugObject->className, $slugObject->id));
 
       $doc = QubitSearch::getInstance()->index->getType($slugObject->className)->getDocument($slugObject->id);
 
       echo json_encode($doc->getData(), JSON_PRETTY_PRINT)."\n";
-    }
-    else
-    {
+    } else {
       throw new sfException('Slug not found');
     }
   }

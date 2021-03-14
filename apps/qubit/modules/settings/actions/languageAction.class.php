@@ -33,20 +33,15 @@ class SettingsLanguageAction extends sfAction
     $this->form->setWidget('languageCode', new sfWidgetFormI18nChoiceLanguage(['add_empty' => true, 'culture' => $this->context->user->getCulture()]));
 
     // Handle POST data (form submit)
-    if ($request->isMethod('post'))
-    {
+    if ($request->isMethod('post')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
-        try
-        {
+      if ($this->form->isValid()) {
+        try {
           ProjectConfiguration::getActive()->loadHelpers('I18N');
 
           format_language($request->languageCode, $request->languageCode);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
           $this->redirect(['module' => 'settings', 'action' => 'language']);
         }
 

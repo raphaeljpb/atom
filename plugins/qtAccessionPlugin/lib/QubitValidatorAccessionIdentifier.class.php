@@ -25,8 +25,7 @@ class QubitValidatorAccessionIdentifier extends sfValidatorBase
     $criteria->add(QubitAccession::IDENTIFIER, $identifier);
 
     // If accession isn't new, make sure no accession other than it is using proposed identifier
-    if (null !== $byResource && isset($byResource->id))
-    {
+    if (null !== $byResource && isset($byResource->id)) {
       $criteria->add(QubitAccession::ID, $byResource->id, Criteria::NOT_EQUAL);
     }
 
@@ -43,8 +42,7 @@ class QubitValidatorAccessionIdentifier extends sfValidatorBase
   protected function doClean($value)
   {
     // Before allowing use of proposed identifier, make sure it's available for use
-    if (self::identifierCanBeUsed($value, $this->getOption('resource')))
-    {
+    if (self::identifierCanBeUsed($value, $this->getOption('resource'))) {
       return $value;
     }
 

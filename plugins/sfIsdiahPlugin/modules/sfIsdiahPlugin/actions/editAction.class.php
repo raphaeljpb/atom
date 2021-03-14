@@ -65,10 +65,8 @@ class sfIsdiahPluginEditAction extends RepositoryEditAction
     $this->isdiah = new sfIsdiahPlugin($this->resource);
 
     $title = $this->context->i18n->__('Add new archival institution');
-    if (isset($this->getRoute()->resource))
-    {
-      if (1 > strlen($title = $this->resource->__toString()))
-      {
+    if (isset($this->getRoute()->resource)) {
+      if (1 > strlen($title = $this->resource->__toString())) {
         $title = $this->context->i18n->__('Untitled');
       }
 
@@ -84,8 +82,7 @@ class sfIsdiahPluginEditAction extends RepositoryEditAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'maintenanceNotes':
         $this->form->setDefault('maintenanceNotes', $this->isdiah->maintenanceNotes);
         $this->form->setValidator('maintenanceNotes', new sfValidatorString());
@@ -100,8 +97,7 @@ class sfIsdiahPluginEditAction extends RepositoryEditAction
 
   protected function processField($field)
   {
-    switch ($field->getName())
-    {
+    switch ($field->getName()) {
       case 'maintenanceNotes':
         $this->isdiah->maintenanceNotes = $this->form->getValue('maintenanceNotes');
 

@@ -33,8 +33,7 @@ class QubitProperty extends BaseProperty
   public function __toString()
   {
     $string = $this->value;
-    if (!isset($string))
-    {
+    if (!isset($string)) {
       $string = $this->getValue(['sourceCulture' => true]);
     }
 
@@ -48,15 +47,12 @@ class QubitProperty extends BaseProperty
 
     parent::save($connection);
 
-    if ($this->indexOnSave)
-    {
-      if ($this->objectId != $cleanObjectId && null !== QubitInformationObject::getById($cleanObjectId))
-      {
+    if ($this->indexOnSave) {
+      if ($this->objectId != $cleanObjectId && null !== QubitInformationObject::getById($cleanObjectId)) {
         QubitSearch::getInstance()->update(QubitInformationObject::getById($cleanObjectId));
       }
 
-      if ($this->object instanceof QubitInformationObject)
-      {
+      if ($this->object instanceof QubitInformationObject) {
         QubitSearch::getInstance()->update($this->object);
       }
     }
@@ -68,10 +64,8 @@ class QubitProperty extends BaseProperty
   {
     parent::delete($connection);
 
-    if ($this->indexOnDelete)
-    {
-      if ($this->getObject() instanceof QubitInformationObject)
-      {
+    if ($this->indexOnDelete) {
+      if ($this->getObject() instanceof QubitInformationObject) {
         QubitSearch::getInstance()->update($this->getObject());
       }
     }
@@ -87,8 +81,7 @@ class QubitProperty extends BaseProperty
    */
   public function getSourceTextForTranslation($sfUserCulture)
   {
-    if (strlen($sourceCultureValue = $this->getValue(['sourceCulture' => 'true'])) > 0 && $sfUserCulture != $this->getSourceCulture())
-    {
+    if (strlen($sourceCultureValue = $this->getValue(['sourceCulture' => 'true'])) > 0 && $sfUserCulture != $this->getSourceCulture()) {
       return $sourceCultureValue;
     }
 
@@ -110,8 +103,7 @@ class QubitProperty extends BaseProperty
     $criteria->add(QubitProperty::OBJECT_ID, $objectId);
     $criteria->add(QubitProperty::NAME, $name);
 
-    if (isset($options['scope']))
-    {
+    if (isset($options['scope'])) {
       $criteria->add(QubitProperty::SCOPE, $options['scope']);
     }
 
@@ -132,20 +124,17 @@ class QubitProperty extends BaseProperty
   public static function addUnique($objectId, $name, $value, $options = [])
   {
     // Only add if an existing property does not exist
-    if (!QubitProperty::isExistent($objectId, $name, $value, $options))
-    {
+    if (!QubitProperty::isExistent($objectId, $name, $value, $options)) {
       $property = new QubitProperty();
       $property->setObjectId($objectId);
       $property->setName($name);
       $property->setValue($value, $options);
 
-      if (isset($options['scope']))
-      {
+      if (isset($options['scope'])) {
         $property->setScope($options['scope']);
       }
 
-      if (isset($options['indexOnSave']) && !$options['indexOnSave'])
-      {
+      if (isset($options['indexOnSave']) && !$options['indexOnSave']) {
         $property->indexOnSave = false;
       }
 
@@ -177,27 +166,20 @@ class QubitProperty extends BaseProperty
     $criteria->add(QubitProperty::NAME, $name);
     $criteria->add(QubitPropertyI18n::VALUE, $value);
 
-    if (isset($options['culture']))
-    {
+    if (isset($options['culture'])) {
       $criteria->add(QubitPropertyI18n::CULTURE, $options['culture']);
-    }
-    elseif (isset($options['sourceCulture']))
-    {
+    } elseif (isset($options['sourceCulture'])) {
       $criteria->add(QubitPropertyI18n::CULTURE, QubitProperty::SOURCE_CULTURE.' = '.QubitPropertyI18n::CULTURE, Criteria::CUSTOM);
-    }
-    else
-    {
+    } else {
       $criteria->add(QubitPropertyI18n::CULTURE, sfPropel::getDefaultCulture());
     }
 
-    if (isset($options['scope']))
-    {
+    if (isset($options['scope'])) {
       $criteria->add(QubitProperty::SCOPE, $options['scope']);
     }
 
     // See if search returns a hit.
-    if (($property = QubitProperty::getOne($criteria)) !== null)
-    {
+    if (($property = QubitProperty::getOne($criteria)) !== null) {
       $propertyExists = true;
     }
 

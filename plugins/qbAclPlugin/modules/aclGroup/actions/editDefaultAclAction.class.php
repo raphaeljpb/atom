@@ -24,18 +24,15 @@ class AclGroupEditDefaultAclAction extends sfAction
     $this->form = new sfForm();
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    if (isset($this->request->id))
-    {
+    if (isset($this->request->id)) {
       $this->resource = QubitAclGroup::getById($this->request->id);
 
-      if (!isset($this->resource))
-      {
+      if (!isset($this->resource)) {
         $this->forward404();
       }
     }
 
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->addField($name);
     }
   }
@@ -48,41 +45,32 @@ class AclGroupEditDefaultAclAction extends sfAction
 
   protected function processForm()
   {
-    foreach ($this->request->acl as $key => $value)
-    {
+    foreach ($this->request->acl as $key => $value) {
       // If key has an underscore, then we are creating a new permission
-      if (1 == preg_match('/([\w]+)_(.*)/', $key, $matches))
-      {
+      if (1 == preg_match('/([\w]+)_(.*)/', $key, $matches)) {
         list($action, $uri) = array_slice($matches, 1, 2);
         $params = $this->context->routing->parse(Qubit::pathInfo($uri));
-        if (isset($params['_sf_route']->resource))
-        {
+        if (isset($params['_sf_route']->resource)) {
           $resource = $params['_sf_route']->resource;
-        }
-        else
-        {
+        } else {
           continue;
         }
 
-        if (QubitAcl::INHERIT != $value && isset($this->basicActions[$action]))
-        {
+        if (QubitAcl::INHERIT != $value && isset($this->basicActions[$action])) {
           $aclPermission = new QubitAclPermission();
           $aclPermission->action = $action;
           $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
 
-          switch ($resource->className)
-          {
+          switch ($resource->className) {
             case 'QubitRepository':
               // Coming from editInformationObjectAcl class, add permissions to the
               // repository information objects
-              if (false !== strrpos($this->request->getReferer(), 'editInformationObjectAcl'))
-              {
+              if (false !== strrpos($this->request->getReferer(), 'editInformationObjectAcl')) {
                 $aclPermission->objectId = QubitInformationObject::ROOT_ID;
                 $aclPermission->setRepository($resource);
               }
               // If not, add permissions to the repository
-              else
-              {
+              else {
                 $aclPermission->object = $resource;
               }
 
@@ -103,14 +91,10 @@ class AclGroupEditDefaultAclAction extends sfAction
       }
 
       // Otherwise, update an existing permission
-      elseif (null !== $aclPermission = QubitAclPermission::getById($key))
-      {
-        if (QubitAcl::INHERIT == $value)
-        {
+      elseif (null !== $aclPermission = QubitAclPermission::getById($key)) {
+        if (QubitAcl::INHERIT == $value) {
           $aclPermission->delete();
-        }
-        else
-        {
+        } else {
           $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
 
           $this->resource->aclPermissions[] = $aclPermission;

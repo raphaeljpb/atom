@@ -35,14 +35,12 @@ class DigitalObjectShowVideoComponent extends sfComponent
     $this->representation = $this->resource->getRepresentationByUsage($this->usageType);
 
     // If we can't find a representation for this object, try their parent
-    if (!$this->representation && ($parent = $this->resource->parent))
-    {
+    if (!$this->representation && ($parent = $this->resource->parent)) {
       $this->representation = $parent->getRepresentationByUsage($this->usageType);
     }
 
     // Set up display of video in mediaelement
-    if ($this->representation)
-    {
+    if ($this->representation) {
       $this->response->addJavaScript('/vendor/mediaelement/mediaelement-and-player.min.js', 'last');
       $this->response->addJavaScript('mediaelement', 'last');
       $this->response->addStyleSheet('/vendor/mediaelement/mediaelementplayer.min.css');
@@ -50,8 +48,7 @@ class DigitalObjectShowVideoComponent extends sfComponent
       // If this is a reference movie, get the thumbnail representation for the
       // place holder image
       $this->showMediaPlayer = true;
-      if (QubitTerm::REFERENCE_ID == $this->usageType)
-      {
+      if (QubitTerm::REFERENCE_ID == $this->usageType) {
         $this->thumbnail = $this->resource->getRepresentationByUsage(QubitTerm::THUMBNAIL_ID);
       }
 
@@ -61,8 +58,7 @@ class DigitalObjectShowVideoComponent extends sfComponent
       $this->representationFullPath = public_path($this->representation->getFullPath());
     }
     // If representation is not a valid digital object, return a generic icon
-    else
-    {
+    else {
       $this->showMediaPlayer = false;
       $this->representation = QubitDigitalObject::getGenericRepresentation($this->resource->mimeType, $this->usageType);
     }

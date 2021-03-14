@@ -29,29 +29,24 @@ class QubitRepository extends BaseRepository
     $args = func_get_args();
 
     $options = [];
-    if (1 < count($args))
-    {
+    if (1 < count($args)) {
       $options = $args[1];
     }
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'backgroundColor':
       case 'htmlSnippet':
-        if (!isset($this->values[$name]))
-        {
+        if (!isset($this->values[$name])) {
           $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
-          if (1 == count($query = QubitProperty::get($criteria)))
-          {
+          if (1 == count($query = QubitProperty::get($criteria))) {
             $this->values[$name] = $query[0];
           }
         }
 
-        if (isset($this->values[$name]))
-        {
+        if (isset($this->values[$name])) {
           return $this->values[$name];
         }
 
@@ -67,27 +62,21 @@ class QubitRepository extends BaseRepository
     $args = func_get_args();
 
     $options = [];
-    if (2 < count($args))
-    {
+    if (2 < count($args)) {
       $options = $args[2];
     }
 
-    switch ($name)
-    {
+    switch ($name) {
       case 'backgroundColor':
       case 'htmlSnippet':
-        if (!isset($this->values[$name]))
-        {
+        if (!isset($this->values[$name])) {
           $criteria = new Criteria();
           $this->addPropertysCriteria($criteria);
           $criteria->add(QubitProperty::NAME, $name);
 
-          if (1 == count($query = QubitProperty::get($criteria)))
-          {
+          if (1 == count($query = QubitProperty::get($criteria))) {
             $this->values[$name] = $query[0];
-          }
-          else
-          {
+          } else {
             $this->values[$name] = new QubitProperty();
             $this->values[$name]->name = $name;
             $this->propertys[] = $this->values[$name];
@@ -107,8 +96,7 @@ class QubitRepository extends BaseRepository
   {
     parent::save($connection);
 
-    if ($this->indexOnSave)
-    {
+    if ($this->indexOnSave) {
       $this->updateSearchIndex();
     }
 
@@ -143,16 +131,14 @@ class QubitRepository extends BaseRepository
 
   public function updateInformationObjects($ioIds, $operationDescription)
   {
-    if (empty($ioIds))
-    {
+    if (empty($ioIds)) {
       return;
     }
 
     // Handle web request asynchronously
     $context = sfContext::getInstance();
 
-    if (!in_array($context->getConfiguration()->getEnvironment(), ['cli', 'worker']))
-    {
+    if (!in_array($context->getConfiguration()->getEnvironment(), ['cli', 'worker'])) {
       // Let user know related descriptions update has started
       $jobsUrl = $context->routing->generate(null, ['module' => 'jobs', 'action' => 'browse']);
       $messageParams = ['%1' => $operationDescription, '%2' => $jobsUrl];
@@ -171,8 +157,7 @@ class QubitRepository extends BaseRepository
     }
 
     // Handle CLI and worker requests synchronously
-    foreach ($ioIds as $id)
-    {
+    foreach ($ioIds as $id) {
       $io = QubitInformationObject::getById($id);
       QubitSearch::getInstance()->update($io, ['updateDescendants' => true]);
 
@@ -194,8 +179,7 @@ class QubitRepository extends BaseRepository
     // Get IDs of any associated information objects
     $ioIds = $this->getRelatedInformationObjectIds();
 
-    if (!empty($ioIds))
-    {
+    if (!empty($ioIds)) {
       // Remove associations between this repository and information objects
       $sql = 'UPDATE '.QubitInformationObject::TABLE_NAME." \r
               SET repository_id=NULL \r
@@ -252,8 +236,7 @@ class QubitRepository extends BaseRepository
    */
   public function getCountry()
   {
-    if ($this->getCountryCode())
-    {
+    if ($this->getCountryCode()) {
       return format_country($this->getCountryCode());
     }
   }
@@ -290,8 +273,7 @@ class QubitRepository extends BaseRepository
 
   public static function addCountryCodeCriteria($criteria, $countryCode)
   {
-    if (null !== $countryCode)
-    {
+    if (null !== $countryCode) {
       $criteria->addJoin(QubitRepository::ID, QubitContactInformation::ACTOR_ID);
       $criteria->add(QubitContactInformation::PRIMARY_CONTACT, true);
       $criteria->add(QubitContactInformation::COUNTRY_CODE, $countryCode);
@@ -312,11 +294,9 @@ class QubitRepository extends BaseRepository
   {
     $repositories = self::getAll($options);
 
-    foreach ($repositories as $repository)
-    {
+    foreach ($repositories as $repository) {
       // Don't display repositories with no name
-      if ($name = $repository->getAuthorizedFormOfName($options))
-      {
+      if ($name = $repository->getAuthorizedFormOfName($options)) {
         $selectOptions[$repository->id] = $name;
       }
     }
@@ -335,14 +315,12 @@ class QubitRepository extends BaseRepository
   {
     $repoDir = sfConfig::get('app_upload_dir').'/r/'.$this->slug;
 
-    if (!file_exists($repoDir))
-    {
+    if (!file_exists($repoDir)) {
       return 0;
     }
 
     $size = Qubit::getDirectorySize($repoDir, $options);
-    if ($size < 0)
-    {
+    if ($size < 0) {
       $size = 0;
     }
 
@@ -359,8 +337,7 @@ class QubitRepository extends BaseRepository
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::REPOSITORY_TYPE_ID);
     $criteria->add(QubitTermI18n::NAME, $name);
 
-    if (null === $term = QubitTerm::getOne($criteria))
-    {
+    if (null === $term = QubitTerm::getOne($criteria)) {
       $term = new QubitTerm();
       $term->setTaxonomyId(QubitTaxonomy::REPOSITORY_TYPE_ID);
       $term->setName($name);
@@ -368,11 +345,9 @@ class QubitRepository extends BaseRepository
       $term->save();
     }
 
-    foreach (self::getTermRelations(QubitTaxonomy::REPOSITORY_TYPE_ID) as $item)
-    {
+    foreach (self::getTermRelations(QubitTaxonomy::REPOSITORY_TYPE_ID) as $item) {
       // Faster than $item->term == $term
-      if ($item->termId == $term->id)
-      {
+      if ($item->termId == $term->id) {
         return;
       }
     }
@@ -391,8 +366,7 @@ class QubitRepository extends BaseRepository
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::THEMATIC_AREA_ID);
     $criteria->add(QubitTermI18n::NAME, $name);
 
-    if (null === $term = QubitTerm::getOne($criteria))
-    {
+    if (null === $term = QubitTerm::getOne($criteria)) {
       $term = new QubitTerm();
       $term->setTaxonomyId(QubitTaxonomy::THEMATIC_AREA_ID);
       $term->setName($name);
@@ -400,11 +374,9 @@ class QubitRepository extends BaseRepository
       $term->save();
     }
 
-    foreach (self::getTermRelations(QubitTaxonomy::THEMATIC_AREA_ID) as $item)
-    {
+    foreach (self::getTermRelations(QubitTaxonomy::THEMATIC_AREA_ID) as $item) {
       // Faster than $item->term == $term
-      if ($item->termId == $term->id)
-      {
+      if ($item->termId == $term->id) {
         return;
       }
     }
@@ -423,8 +395,7 @@ class QubitRepository extends BaseRepository
     $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID);
     $criteria->add(QubitTermI18n::NAME, $name);
 
-    if (null === $term = QubitTerm::getOne($criteria))
-    {
+    if (null === $term = QubitTerm::getOne($criteria)) {
       $term = new QubitTerm();
       $term->setTaxonomyId(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID);
       $term->setName($name);
@@ -432,11 +403,9 @@ class QubitRepository extends BaseRepository
       $term->save();
     }
 
-    foreach (self::getTermRelations(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID) as $item)
-    {
+    foreach (self::getTermRelations(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID) as $item) {
       // Faster than $item->term == $term
-      if ($item->termId == $term->id)
-      {
+      if ($item->termId == $term->id) {
         return;
       }
     }
@@ -514,8 +483,7 @@ class QubitRepository extends BaseRepository
   {
     // When creating a new repository, set the upload_limit to the default
     // value (app_repository_quota)
-    if (null == $this->__get('uploadLimit'))
-    {
+    if (null == $this->__get('uploadLimit')) {
       $this->__set('uploadLimit', sfConfig::get('app_repository_quota'));
     }
 
@@ -543,15 +511,12 @@ class QubitRepository extends BaseRepository
   {
     $primaryContact = $this->getPrimaryContact();
 
-    if ($primaryContact && $primaryContact->{$getFunction}($options))
-    {
+    if ($primaryContact && $primaryContact->{$getFunction}($options)) {
       return $primaryContact->{$getFunction}($options);
     }
 
-    foreach ($this->getContactInformation() as $contact)
-    {
-      if ($contact->{$getFunction}($options))
-      {
+    foreach ($this->getContactInformation() as $contact) {
+      if ($contact->{$getFunction}($options)) {
         return $contact->{$getFunction}($options);
       }
     }

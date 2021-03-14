@@ -38,8 +38,7 @@ class arMigration0170
    */
   public function up($configuration)
   {
-    if (null === QubitSetting::getByName('rad_rights_notes'))
-    {
+    if (null === QubitSetting::getByName('rad_rights_notes')) {
       $setting = new QubitSetting();
       $setting->setName('rad_rights_notes');
       $setting->setScope('element_visibility');

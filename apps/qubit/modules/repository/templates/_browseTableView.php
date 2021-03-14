@@ -8,7 +8,7 @@
 
         <?php if ('nameUp' == $sf_request->sort) { ?>
           <?php echo image_tag('up.gif', ['alt' => __('Sort ascending')]); ?>
-        <?php } elseif ('nameDown' == $sf_request->sort){ ?>
+        <?php } elseif ('nameDown' == $sf_request->sort) { ?>
           <?php echo image_tag('down.gif', ['alt' => __('Sort descending')]); ?>
         <?php } ?>
       </th>
@@ -20,7 +20,7 @@
 
         <?php if ('regionUp' == $sf_request->sort) { ?>
           <?php echo image_tag('up.gif', ['alt' => __('Sort ascending')]); ?>
-        <?php } elseif ('regionDown' == $sf_request->sort){ ?>
+        <?php } elseif ('regionDown' == $sf_request->sort) { ?>
           <?php echo image_tag('down.gif', ['alt' => __('Sort descending')]); ?>
         <?php } ?>
       </th>
@@ -32,7 +32,7 @@
 
         <?php if ('localityUp' == $sf_request->sort) { ?>
           <?php echo image_tag('up.gif', ['alt' => __('Sort ascending')]); ?>
-        <?php } elseif ('localityDown' == $sf_request->sort){ ?>
+        <?php } elseif ('localityDown' == $sf_request->sort) { ?>
           <?php echo image_tag('down.gif', ['alt' => __('Sort descending')]); ?>
         <?php } ?>
       </th>

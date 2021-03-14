@@ -26,17 +26,14 @@ class DeaccessionDeleteAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource, 'delete'))
-    {
+    if (!QubitAcl::check($this->resource, 'delete')) {
       QubitAcl::forwardUnauthorized();
     }
 
-    if ($request->isMethod('delete'))
-    {
+    if ($request->isMethod('delete')) {
       $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid())
-      {
+      if ($this->form->isValid()) {
         $accession = $this->resource->accession;
 
         $this->resource->delete();

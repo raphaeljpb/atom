@@ -22,8 +22,7 @@ class qtPackageExtractorBase
   public function __construct(array $options = [])
   {
     // Check arguments, maybe better as an array property
-    if (0 < count(array_diff(['format', 'resource'], array_keys($options))))
-    {
+    if (0 < count(array_diff(['format', 'resource'], array_keys($options)))) {
       throw new Exception('Missing arguments.');
     }
 
@@ -34,31 +33,26 @@ class qtPackageExtractorBase
     $this->resource = $options['resource'];
 
     // Filename
-    if (isset($options['filename']))
-    {
+    if (isset($options['filename'])) {
       $this->filename = $options['filename'];
     }
 
     // Suggested name
-    if (isset($options['suggested_name']))
-    {
+    if (isset($options['suggested_name'])) {
       $this->suggestedName = $options['suggested_name'];
     }
 
     // Package physical location (file://, http://, ...)
-    if (isset($options['location']))
-    {
+    if (isset($options['location'])) {
       $this->location = $options['location'];
     }
 
     // Package container format (zip, rar, directory...)
-    if (isset($options['type']))
-    {
+    if (isset($options['type'])) {
       $this->type = $options['type'];
     }
 
-    if (isset($options['checksum_md5']))
-    {
+    if (isset($options['checksum_md5'])) {
       $this->checksumMd5 = $options['checksum_md5'];
     }
   }
@@ -73,16 +67,13 @@ class qtPackageExtractorBase
   protected function load()
   {
     // Download the package if it was sent by reference
-    if (isset($this->location))
-    {
+    if (isset($this->location)) {
       $this->grab();
     }
     // Or send within the deposit HTTP request
-    else
-    {
+    else {
       // MD5 checksum expected
-      if (isset($this->checksumMd5) && md5(file_get_contents($this->filename)) != $this->checksumMd5)
-      {
+      if (isset($this->checksumMd5) && md5(file_get_contents($this->filename)) != $this->checksumMd5) {
         throw new qtPackageExtractorChecksumException();
       }
     }
@@ -90,10 +81,8 @@ class qtPackageExtractorBase
     // At this point, $this->filename should point to a local directory or a file
     // If it is a file and a container (tar, zip, etc...), let's extract it
     // $this->filename will point to the directory generated from the container
-    if (!is_dir($this->filename))
-    {
-      switch ($this->type)
-      {
+    if (!is_dir($this->filename)) {
+      switch ($this->type) {
         case 'application/xml':
         case 'text/xml':
           break;
@@ -102,12 +91,9 @@ class qtPackageExtractorBase
           $directory = $this->filename.'_dir';
           $command = vsprintf('unzip -n -d %s %s', [$directory, $this->filename]);
           exec($command, $output, $return);
-          if (2 > $return)
-          {
+          if (2 > $return) {
             $this->filename = $directory;
-          }
-          else
-          {
+          } else {
             throw new Exception('Zip container could not be extracted.');
           }
 
@@ -128,20 +114,14 @@ class qtPackageExtractorBase
   {
     unlink($this->filename);
 
-    $rrmdir = function ($directory) use (&$rrmdir)
-    {
+    $rrmdir = function ($directory) use (&$rrmdir) {
       $objects = scandir($directory);
 
-      foreach ($objects as $object)
-      {
-        if ('.' != $object && '..' != $object)
-        {
-          if ('dir' == filetype($directory.'/'.$object))
-          {
+      foreach ($objects as $object) {
+        if ('.' != $object && '..' != $object) {
+          if ('dir' == filetype($directory.'/'.$object)) {
             $rrmdir($directory.'/'.$object);
-          }
-          else
-          {
+          } else {
             unlink($directory.'/'.$object);
           }
         }
@@ -156,15 +136,12 @@ class qtPackageExtractorBase
 
   protected function grab()
   {
-    if (1 == preg_match('/^(.*):\/\/.*/', $this->location, $matches))
-    {
-      if (2 > count($matches))
-      {
+    if (1 == preg_match('/^(.*):\/\/.*/', $this->location, $matches)) {
+      if (2 > count($matches)) {
         throw new Exception('Location string format could not be recognized.');
       }
 
-      switch ($matches[1])
-      {
+      switch ($matches[1]) {
         // The file is available in the local filesystem where this code is being executed
         // Absolute paths are not accepted, this loader is restricted to a given directory
         case 'file':
@@ -183,13 +160,10 @@ class qtPackageExtractorBase
       }
 
       // Ultimate check to make sure the file/directory exists
-      if (!is_readable($this->filename))
-      {
+      if (!is_readable($this->filename)) {
         throw new Exception('File/directory does not exist or is not readable: '.$this->filename.'.');
       }
-    }
-    else
-    {
+    } else {
       throw new Exception('The localization protocol could not be recognized.');
     }
   }
@@ -198,19 +172,13 @@ class qtPackageExtractorBase
   {
     $files = [];
 
-    if ($handle = opendir($dir))
-    {
-      while (false !== ($file = readdir($handle)))
-      {
-        if ('.' != $file && '..' != $file)
-        {
-          if (is_dir($dir.DIRECTORY_SEPARATOR.$file))
-          {
+    if ($handle = opendir($dir)) {
+      while (false !== ($file = readdir($handle))) {
+        if ('.' != $file && '..' != $file) {
+          if (is_dir($dir.DIRECTORY_SEPARATOR.$file)) {
             $dir2 = $dir.DIRECTORY_SEPARATOR.$file;
             $files = $files + $this->getFilesFromDirectory($dir2);
-          }
-          else
-          {
+          } else {
             $files[] = $dir.DIRECTORY_SEPARATOR.$file;
           }
         }
@@ -226,8 +194,7 @@ class qtPackageExtractorBase
   {
     preg_match_all('/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/', $subject, $matches);
 
-    if (isset($matches[0]) && is_array($matches[0]))
-    {
+    if (isset($matches[0]) && is_array($matches[0])) {
       return end($matches[0]);
     }
   }

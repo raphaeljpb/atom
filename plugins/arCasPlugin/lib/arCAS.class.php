@@ -36,8 +36,7 @@ class arCAS
 
     require_once sfConfig::get('sf_root_dir').'/vendor/composer/jasig/phpcas/CAS.php';
 
-    if (true == sfConfig::get('sf_debug', false))
-    {
+    if (true == sfConfig::get('sf_debug', false)) {
       $debugLogPath = sfConfig::get('sf_log_dir').'/phpcas.log';
       phpCAS::setDebug($debugLogPath);
       phpCAS::setVerbose(true);
@@ -61,20 +60,14 @@ class arCAS
 
     // Validate the server SSL certificate according to configuration.
     $certPath = sfConfig::get('app_cas_server_cert', false);
-    if (0 === !strpos($certPath, '/'))
-    {
+    if (0 === !strpos($certPath, '/')) {
       $certPath = sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.$certPath;
     }
-    if (file_exists($certPath))
-    {
+    if (file_exists($certPath)) {
       phpCAS::setCasServerCACert($certPath);
-    }
-    elseif (false === $certPath)
-    {
+    } elseif (false === $certPath) {
       phpCAS::setNoCasServerValidation();
-    }
-    else
-    {
+    } else {
       throw new Exception('Invalid SSL certificate settings. Please review the app_cas_server_cert parameter in plugin app.yml.');
     }
 

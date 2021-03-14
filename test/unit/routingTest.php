@@ -35,33 +35,43 @@ $routingOptions['context']['prefix'] = '';
 $routing->initialize(sfContext::getInstance()->getEventDispatcher(), $routing->getCache(), $routingOptions);
 
 $t->diag('Creeate QubitInformationObject "peanut-12345"');
-if (null !== $io = QubitObject::getBySlug('peanut-12345')) $io->delete();
+if (null !== $io = QubitObject::getBySlug('peanut-12345')) {
+  $io->delete();
+}
 $io = new QubitInformationObject();
 $io->parentId = QubitInformationObject::ROOT_ID;
 $io->slug = 'peanut-12345'; $io->save();
 
 $t->diag('Create QubitActor "actor-12345"');
-if (null !== $actor = QubitObject::getBySlug('actor-12345')) $actor->delete();
+if (null !== $actor = QubitObject::getBySlug('actor-12345')) {
+  $actor->delete();
+}
 $actor = new QubitActor();
 $actor->parentId = QubitActor::ROOT_ID;
 $actor->slug = 'actor-12345';
 $actor->save();
 
 $t->diag('Create QubitRepository "repository-12345"');
-if (null !== $repository = QubitObject::getBySlug('repository-12345')) $repository->delete();
+if (null !== $repository = QubitObject::getBySlug('repository-12345')) {
+  $repository->delete();
+}
 $repository = new QubitRepository();
 $repository->parentId = QubitRepository::ROOT_ID;
 $repository->slug = 'repository-12345';
 $repository->save();
 
 $t->diag('Create QubitFunctionObject "function-12345"');
-if (null !== $function = QubitObject::getBySlug('function-12345')) $function->delete();
+if (null !== $function = QubitObject::getBySlug('function-12345')) {
+  $function->delete();
+}
 $function = new QubitFunctionObject();
 $function->slug = 'function-12345';
 $function->save();
 
 $t->diag('Create QubitTaxonomy "taxonomy-12345"');
-if (null !== $taxonomy = QubitObject::getBySlug('taxonomy-12345')) $taxonomy->delete();
+if (null !== $taxonomy = QubitObject::getBySlug('taxonomy-12345')) {
+  $taxonomy->delete();
+}
 $taxonomy = new QubitTaxonomy();
 $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
 $taxonomy->slug = 'taxonomy-12345';
@@ -82,8 +92,7 @@ $t->is($routing->getCurrentRouteName(), 'homepage', 'Url "/" is matched with rou
 $t->is($info['module'], 'staticpage', '... with module="staticpage"');
 $t->is($info['action'], 'home', '... and action="home"');
 
-if ($configuration->isPluginEnabled('sfInstallPlugin'))
-{
+if ($configuration->isPluginEnabled('sfInstallPlugin')) {
   $t->diag('Test sfInstallPlugin');
 
   $uri = $routing->generate(null, ['module' => 'sfInstallPlugin']);
@@ -203,8 +212,7 @@ $ioTemplates = ['dc' => 'sfDcPlugin', 'isad' => 'sfIsadPlugin', 'mods' => 'sfMod
 $defaultIoTemplateCode = sfConfig::get('app_default_template_informationobject');
 $defaultIoTemplateModule = $ioTemplates[$defaultIoTemplateCode];
 
-foreach ($ioTemplates as $code => $module)
-{
+foreach ($ioTemplates as $code => $module) {
   $t->diag('Uri /peanut-12345;'.$code);
   $uri = $routing->generate(null, [$io, 'template' => $code]);
   $t->is($uri, '/peanut-12345;'.$code);
@@ -214,10 +222,10 @@ foreach ($ioTemplates as $code => $module)
   $t->is($info['action'], 'index');
 }
 
-foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID) as $term)
-{
+foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID) as $term) {
   // Update object
-  $io->displayStandardId = $term->id; $io->save();
+  $io->displayStandardId = $term->id;
+  $io->save();
   $t->diag('/peanut-12345 '.'(displayStandardId points to '.$term->code.')');
   $info = $routing->parse('/peanut-12345');
   $t->is($routing->getCurrentRouteName(), 'slug');

@@ -7,8 +7,7 @@ function getenv_default($name, $default)
 {
   $value = getenv($name);
 
-  if (false === $value)
-  {
+  if (false === $value) {
     return $default;
   }
 
@@ -19,8 +18,7 @@ function getenv_or_fail($name)
 {
   $value = getenv($name);
 
-  if (false === $value)
-  {
+  if (false === $value) {
     echo "Environment variable {$name} is not defined!";
 
     exit(1);
@@ -33,8 +31,7 @@ function get_host_and_port($value, $default_port)
 {
   $parts = explode(':', $value);
 
-  if (1 == count($parts))
-  {
+  if (1 == count($parts)) {
     $parts[1] = $default_port;
   }
 
@@ -63,8 +60,7 @@ $CONFIG = [
 // /apps/qubit/config/settings.yml
 //
 
-if (!file_exists(_ATOM_DIR.'/apps/qubit/config/settings.yml'))
-{
+if (!file_exists(_ATOM_DIR.'/apps/qubit/config/settings.yml')) {
   copy(_ATOM_DIR.'/apps/qubit/config/settings.yml.tmpl', _ATOM_DIR.'/apps/qubit/config/settings.yml');
 }
 
@@ -92,8 +88,7 @@ file_put_contents(_ATOM_DIR.'/apps/qubit/config/gearman.yml', $gearman_yml);
 // /apps/qubit/config/app.yml
 //
 
-if (!file_exists(_ATOM_DIR.'/apps/qubit/config/app.yml'))
-{
+if (!file_exists(_ATOM_DIR.'/apps/qubit/config/app.yml')) {
   $parts = get_host_and_port($CONFIG['atom.memcached_host'], 11211);
   $app_yml = <<<EOT
 all:
@@ -117,8 +112,7 @@ EOT;
 // /apps/qubit/config/factories.yml
 //
 
-if (!file_exists(_ATOM_DIR.'/apps/qubit/config/factories.yml'))
-{
+if (!file_exists(_ATOM_DIR.'/apps/qubit/config/factories.yml')) {
   $parts = get_host_and_port($CONFIG['atom.memcached_host'], 11211);
   $factories_yml = <<<EOT
 prod:
@@ -252,8 +246,7 @@ opcache.validate_timestamps = off
 
 EOT;
 
-if ($CONFIG['atom.development_mode'])
-{
+if ($CONFIG['atom.development_mode']) {
   $php_ini .= <<<EOT
 \n
 # Development-specific configuration

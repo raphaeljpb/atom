@@ -23,21 +23,14 @@ class arRestApiPluginFilter extends sfFilter
   {
     sfConfig::set('sf_web_debug', false);
 
-    try
-    {
+    try {
       $filterChain->execute();
-    }
-    catch (sfStopException $e)
-    {
+    } catch (sfStopException $e) {
       // Ignore stop exceptions
       return;
-    }
-    catch (QubitApiException $e)
-    {
+    } catch (QubitApiException $e) {
       $this->setErrorResponse($e);
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
       $this->setErrorResponse(new QubitApiUnknownException());
     }
   }

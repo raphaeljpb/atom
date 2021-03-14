@@ -120,48 +120,38 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     // the autocomplete value is converted to the resource id
     // before the agg filters are added to the query
     $this->getParameters = $request->getGetParameters();
-    if (isset($this->getParameters['collection']) && !ctype_digit($this->getParameters['collection']))
-    {
+    if (isset($this->getParameters['collection']) && !ctype_digit($this->getParameters['collection'])) {
       $params = sfContext::getInstance()->routing->parse(Qubit::pathInfo($this->getParameters['collection']));
       $this->collection = $params['_sf_route']->resource;
 
       unset($this->getParameters['collection']);
 
-      if ($this->collection instanceof QubitInformationObject)
-      {
+      if ($this->collection instanceof QubitInformationObject) {
         $this->getParameters['collection'] = $this->collection->id;
       }
-    }
-    elseif (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection']))
-    {
+    } elseif (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection'])) {
       $this->collection = QubitInformationObject::getById($this->getParameters['collection']);
     }
 
     // Set search realm if searching by repository
-    if (isset($request->repos) && ctype_digit($request->repos))
-    {
+    if (isset($request->repos) && ctype_digit($request->repos)) {
       // Add repo to the user session as realm
-      if (sfConfig::get('app_enable_institutional_scoping'))
-      {
+      if (sfConfig::get('app_enable_institutional_scoping')) {
         $this->context->user->setAttribute('search-realm', $request->repos);
       }
-    }
-    elseif (sfConfig::get('app_enable_institutional_scoping'))
-    {
+    } elseif (sfConfig::get('app_enable_institutional_scoping')) {
       // Remove realm
       $this->context->user->removeAttribute('search-realm');
     }
 
     // Add first criterion to the search box if it's over any field
-    if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->sq0) && !isset($request->sf0))
-    {
+    if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->sq0) && !isset($request->sf0)) {
       $request->query = $request->sq0;
       $this->getParameters['query'] = $request->sq0;
     }
 
     // And search box query to the first criterion
-    if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->query))
-    {
+    if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->query)) {
       $request->sq0 = $request->query;
       $this->getParameters['sq0'] = $request->query;
     }
@@ -173,43 +163,37 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     $this->form = new sfForm([], [], false);
     $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    foreach ($this::$NAMES as $name)
-    {
+    foreach ($this::$NAMES as $name) {
       $this->addField($name);
     }
 
     // Get actual information object template to check archival history
     // visibility in _advancedSearch partial and in parseQuery function
     $this->template = 'isad';
-    if (null !== $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template'))
-    {
+    if (null !== $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template')) {
       $this->template = $infoObjectTemplate->getValue(['sourceCulture' => true]);
     }
 
     // Add print preview style
-    if ('print' == $request->media)
-    {
+    if ('print' == $request->media) {
       $this->getResponse()->addStylesheet('print-preview', 'last');
     }
 
     // Default to hide the advanced search panel
     $this->showAdvanced = false;
-    if (filter_var($request->showAdvanced, FILTER_VALIDATE_BOOLEAN))
-    {
+    if (filter_var($request->showAdvanced, FILTER_VALIDATE_BOOLEAN)) {
       $this->showAdvanced = true;
     }
 
     // Default to show only top level descriptions
     $this->topLod = true;
-    if (isset($request->topLod) && !filter_var($request->topLod, FILTER_VALIDATE_BOOLEAN))
-    {
+    if (isset($request->topLod) && !filter_var($request->topLod, FILTER_VALIDATE_BOOLEAN)) {
       $this->topLod = false;
     }
 
     // Defaults to inclusive date range type
     $this->rangeType = 'inclusive';
-    if (isset($request->rangeType))
-    {
+    if (isset($request->rangeType)) {
       $this->rangeType = $request->rangeType;
     }
 
@@ -222,14 +206,12 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     // Stop if the input is not valid. It must be after the query is created but before
     // it's executed to keep the boolean search and other params for the next request
     $this->form->bind($request->getRequestParameters() + $request->getGetParameters());
-    if (!$this->form->isValid())
-    {
+    if (!$this->form->isValid()) {
       return;
     }
 
     // Sort
-    switch ($request->sort)
-    {
+    switch ($request->sort) {
       // Sort by highest ES score
       case 'relevance':
         $this->search->query->addSort(['_score' => $request->sortDir]);
@@ -282,15 +264,13 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
   protected function addField($name)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'copyrightStatus':
         $this->form->setValidator($name, new sfValidatorString());
 
         $choices = [];
         $choices[null] = null;
-        foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::COPYRIGHT_STATUS_ID) as $item)
-        {
+        foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::COPYRIGHT_STATUS_ID) as $item) {
           $choices[$item->id] = $item->__toString();
         }
 
@@ -321,8 +301,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
         $choices = [];
         $choices[null] = null;
-        foreach (QubitTerm::get($criteria) as $item)
-        {
+        foreach (QubitTerm::get($criteria) as $item) {
           $choices[$item->id] = $item->__toString();
         }
 
@@ -341,8 +320,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
         $choices = [];
         $choices[null] = null;
-        foreach (QubitTerm::get($criteria) as $item)
-        {
+        foreach (QubitTerm::get($criteria) as $item) {
           $choices[$item->id] = $item->__toString();
         }
 
@@ -365,16 +343,12 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
         $cache = QubitCache::getInstance();
         $cacheKey = 'search:list-of-repositories:'.$this->context->user->getCulture();
-        if ($cache->has($cacheKey))
-        {
+        if ($cache->has($cacheKey)) {
           $choices = $cache->get($cacheKey);
-        }
-        else
-        {
+        } else {
           $choices = [];
           $choices[null] = null;
-          foreach (QubitRepository::get($criteria) as $repository)
-          {
+          foreach (QubitRepository::get($criteria) as $repository) {
             $choices[$repository->id] = $repository->__toString();
           }
 
@@ -391,8 +365,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
         $choices = [];
         if (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection'])
-          && null !== $collection = QubitInformationObject::getById($this->getParameters['collection']))
-        {
+          && null !== $collection = QubitInformationObject::getById($this->getParameters['collection'])) {
           sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
           $collectionUrl = url_for($collection);
 
@@ -432,15 +405,13 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
   protected function populateAgg($name, $buckets)
   {
-    switch ($name)
-    {
+    switch ($name) {
       case 'repos':
         $ids = array_column($buckets, 'key');
         $criteria = new Criteria();
         $criteria->add(QubitRepository::ID, $ids, Criteria::IN);
 
-        foreach (QubitRepository::get($criteria) as $item)
-        {
+        foreach (QubitRepository::get($criteria) as $item) {
           $buckets[array_search($item->id, $ids)]['display'] = $item->__toString();
         }
 
@@ -455,8 +426,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         $criteria = new Criteria();
         $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
 
-        foreach (QubitTerm::get($criteria) as $item)
-        {
+        foreach (QubitTerm::get($criteria) as $item) {
           $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
         }
 
@@ -468,8 +438,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         $criteria = new Criteria();
         $criteria->add(QubitActor::ID, $ids, Criteria::IN);
 
-        foreach (QubitActor::get($criteria) as $item)
-        {
+        foreach (QubitActor::get($criteria) as $item) {
           $buckets[array_search($item->id, $ids)]['display'] = $item->__toString();
         }
 
@@ -480,8 +449,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         $criteria = new Criteria();
         $criteria->add(QubitInformationObject::ID, $ids, Criteria::IN);
 
-        foreach (QubitInformationObject::get($criteria) as $item)
-        {
+        foreach (QubitInformationObject::get($criteria) as $item) {
           $buckets[array_search($item->id, $ids)]['display'] = $item->__toString();
         }
 
@@ -521,47 +489,37 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     $i18n = $this->context->i18n;
 
     // Set search realm, if needed
-    if (isset($request->repos) && ctype_digit($request->repos))
-    {
+    if (isset($request->repos) && ctype_digit($request->repos)) {
       // Add repo to the user session as realm
-      if (sfConfig::get('app_enable_institutional_scoping'))
-      {
+      if (sfConfig::get('app_enable_institutional_scoping')) {
         $this->context->user->setAttribute('search-realm', $request->repos);
       }
-    }
-    elseif (sfConfig::get('app_enable_institutional_scoping'))
-    {
+    } elseif (sfConfig::get('app_enable_institutional_scoping')) {
       // Remove realm
       $this->context->user->removeAttribute('search-realm');
     }
 
     // Set label for has digital object filter tag
-    if (filter_var($request->onlyMedia, FILTER_VALIDATE_BOOLEAN))
-    {
+    if (filter_var($request->onlyMedia, FILTER_VALIDATE_BOOLEAN)) {
       $this->setFilterTagLabel('onlyMedia', $i18n->__('With digital objects'));
-    }
-    else
-    {
+    } else {
       $this->setFilterTagLabel('onlyMedia', $i18n->__('Without digital objects'));
     }
 
     // Set label for languages filter tag
-    if (!empty($request->languages))
-    {
+    if (!empty($request->languages)) {
       $language = ucfirst(sfCultureInfo::getInstance($this->context->user->getCulture())->getLanguage($request->languages));
       $this->setFilterTagLabel('languages', $language);
     }
 
     // Set label for date range
-    if (isset($request->startDate) || isset($request->endDate))
-    {
+    if (isset($request->startDate) || isset($request->endDate)) {
       $dateRangeLabel = '[ '.$request->startDate.' - '.$request->endDate.' ]';
       $this->setFilterTagLabel('dateRange', $dateRangeLabel);
     }
 
     // Set label for finding aid status
-    if (!empty($request->findingAidStatus))
-    {
+    if (!empty($request->findingAidStatus)) {
       $labels = [
         'yes' => $i18n->__('With finding aid'),
         'no' => $i18n->__('Without finding aid'),
@@ -584,12 +542,9 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     $this->tableView = 'table';
     $allowedViews = [$this->cardView, $this->tableView];
 
-    if (isset($request->view) && in_array($request->view, $allowedViews))
-    {
+    if (isset($request->view) && in_array($request->view, $allowedViews)) {
       $this->view = $request->view;
-    }
-    else
-    {
+    } else {
       $this->view = sfConfig::get('app_default_archival_description_browse_view', $this->tableView);
     }
   }

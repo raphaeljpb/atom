@@ -46,8 +46,7 @@
         $tableTemplate .= '</thead>';
         $tableTemplate .= '<tbody>';
 
-        foreach ($basicActions as $action => $label)
-        {
+        foreach ($basicActions as $action => $label) {
           $tableTemplate .= '<tr>';
           $tableTemplate .= '<td>'.__($label).'</th>';
           $tableTemplate .= '<td><ul class="radio inline">';

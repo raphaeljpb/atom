@@ -29,14 +29,12 @@ class DigitalObjectUpdateAction extends sfAction
     $this->resource = $this->getRoute()->resource;
 
     // Check user authorization
-    if (!QubitAcl::check($this->resource->object, 'update'))
-    {
+    if (!QubitAcl::check($this->resource->object, 'update')) {
       QubitAcl::forwardUnauthorized();
     }
 
     // Check if uploads are allowed
-    if (!QubitDigitalObject::isUploadAllowed())
-    {
+    if (!QubitDigitalObject::isUploadAllowed()) {
       QubitAcl::forwardToSecureAction();
     }
 
