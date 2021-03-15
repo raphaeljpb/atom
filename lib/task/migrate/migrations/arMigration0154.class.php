@@ -25,38 +25,38 @@
  */
 class arMigration0154
 {
-  public const VERSION = 154;
-  public const // The new database version
+    public const VERSION = 154;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    $identifierSettings = [
-      ['identifier_mask', '%Y-%m-%d/#i'],
-      ['identifier_mask_enabled', 0],
-      ['identifier_counter', 0],
-    ];
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        $identifierSettings = [
+            ['identifier_mask', '%Y-%m-%d/#i'],
+            ['identifier_mask_enabled', 0],
+            ['identifier_counter', 0],
+        ];
 
-    foreach ($identifierSettings as $setting) {
-      list($name, $val) = $setting;
+        foreach ($identifierSettings as $setting) {
+            list($name, $val) = $setting;
 
-      if (null === QubitSetting::getByName($name)) {
-        $setting = new QubitSetting();
-        $setting->name = $name;
-        $setting->value = $val;
-        $setting->editable = 1;
-        $setting->culture = 'en';
-        $setting->save();
-      }
+            if (null === QubitSetting::getByName($name)) {
+                $setting = new QubitSetting();
+                $setting->name = $name;
+                $setting->value = $val;
+                $setting->editable = 1;
+                $setting->culture = 'en';
+                $setting->save();
+            }
+        }
+
+        return true;
     }
-
-    return true;
-  }
 }

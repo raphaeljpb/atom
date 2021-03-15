@@ -19,24 +19,24 @@
 
 class SettingsPrivacyNotificationAction extends SettingsEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'privacy_notification_enabled',
-    'privacy_notification', ];
-  public static $I18N = [
-    'privacy_notification',
-  ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'privacy_notification_enabled',
+        'privacy_notification', ];
+    public static $I18N = [
+        'privacy_notification',
+    ];
 
-  public function earlyExecute()
-  {
-    parent::earlyExecute();
+    public function earlyExecute()
+    {
+        parent::earlyExecute();
 
-    $this->updateMessage = $this->i18n->__('Privacy notification settings saved.');
-  }
+        $this->updateMessage = $this->i18n->__('Privacy notification settings saved.');
+    }
 
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'privacy_notification_enabled':
         $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
 
@@ -51,5 +51,5 @@ class SettingsPrivacyNotificationAction extends SettingsEditAction
 
         break;
     }
-  }
+    }
 }

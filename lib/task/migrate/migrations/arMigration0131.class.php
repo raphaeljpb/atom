@@ -25,20 +25,20 @@
  */
 class arMigration0131
 {
-  public const VERSION = 131;
-  public const // The new database version
+    public const VERSION = 131;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    if (null === QubitSetting::getByName('stripExtensions')) {
-      $setting = new QubitSetting();
-      $setting->name = 'stripExtensions';
-      $setting->value = 0;
-      $setting->culture = 'en';
-      $setting->save();
-    }
+      if (null === QubitSetting::getByName('stripExtensions')) {
+          $setting = new QubitSetting();
+          $setting->name = 'stripExtensions';
+          $setting->value = 0;
+          $setting->culture = 'en';
+          $setting->save();
+      }
 
-    return true;
+      return true;
   }
 }

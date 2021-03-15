@@ -19,62 +19,62 @@
 
 class StaticPageEditAction extends DefaultEditAction
 {
-  public static $NAMES = [
-    'title',
-    'slug',
-    'content', ];
+    public static $NAMES = [
+        'title',
+        'slug',
+        'content', ];
 
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid()) {
-        $this->processForm();
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
+            if ($this->form->isValid()) {
+                $this->processForm();
 
-        $this->resource->save();
+                $this->resource->save();
 
-        // Invalidate static page content cache entry
-        if (!$this->new && null !== $cache = QubitCache::getInstance()) {
-          foreach (sfConfig::get('app_i18n_languages') as $culture) {
-            $cacheKey = 'staticpage:'.$this->resource->id.':'.$culture;
-            $cache->remove($cacheKey);
-          }
+                // Invalidate static page content cache entry
+                if (!$this->new && null !== $cache = QubitCache::getInstance()) {
+                    foreach (sfConfig::get('app_i18n_languages') as $culture) {
+                        $cacheKey = 'staticpage:'.$this->resource->id.':'.$culture;
+                        $cache->remove($cacheKey);
+                    }
+                }
+
+                $this->redirect([$this->resource, 'module' => 'staticpage']);
+            }
+        }
+    }
+
+    protected function earlyExecute()
+    {
+        $this->form->getWidgetSchema()->setIdFormat('edit-%s');
+
+        $this->resource = new QubitStaticPage();
+        $title = $this->context->i18n->__('Add new page');
+
+        if (isset($this->getRoute()->resource)) {
+            $this->resource = $this->getRoute()->resource;
+
+            $this->new = false;
+
+            if (1 > strlen($title = $this->resource->__toString())) {
+                $title = $this->context->i18n->__('Untitled');
+            }
+
+            $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
+        } else {
+            $this->new = true;
         }
 
-        $this->redirect([$this->resource, 'module' => 'staticpage']);
-      }
-    }
-  }
-
-  protected function earlyExecute()
-  {
-    $this->form->getWidgetSchema()->setIdFormat('edit-%s');
-
-    $this->resource = new QubitStaticPage();
-    $title = $this->context->i18n->__('Add new page');
-
-    if (isset($this->getRoute()->resource)) {
-      $this->resource = $this->getRoute()->resource;
-
-      $this->new = false;
-
-      if (1 > strlen($title = $this->resource->__toString())) {
-        $title = $this->context->i18n->__('Untitled');
-      }
-
-      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
-    } else {
-      $this->new = true;
+        $this->response->setTitle("{$title} - {$this->response->getTitle()}");
     }
 
-    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
-  }
-
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'content':
         $this->form->setDefault('content', $this->resource->content);
         $this->form->setValidator('content', new sfValidatorString());
@@ -97,14 +97,14 @@ class StaticPageEditAction extends DefaultEditAction
       default:
         return parent::addField($name);
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'slug':
         if (!$this->resource->isProtected()) {
-          $this->resource->slug = $this->form->getValue('slug');
+            $this->resource->slug = $this->form->getValue('slug');
         }
 
         break;
@@ -112,5 +112,5 @@ class StaticPageEditAction extends DefaultEditAction
       default:
         return parent::processField($field);
     }
-  }
+    }
 }

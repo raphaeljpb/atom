@@ -24,53 +24,53 @@
  */
 class PhysicalObjectEditAction extends DefaultEditAction
 {
-  public static $NAMES = [
-    'location',
-    'name',
-    'type', ];
+    public static $NAMES = [
+        'location',
+        'name',
+        'type', ];
 
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid()) {
-        $this->processForm();
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
+            if ($this->form->isValid()) {
+                $this->processForm();
 
-        $this->resource->save();
+                $this->resource->save();
 
-        if (null !== $next = $this->form->getValue('next')) {
-          $this->redirect($next);
+                if (null !== $next = $this->form->getValue('next')) {
+                    $this->redirect($next);
+                }
+
+                $this->redirect([$this->resource, 'module' => 'physicalobject']);
+            }
+        }
+    }
+
+    protected function earlyExecute()
+    {
+        $this->resource = new QubitPhysicalObject();
+        if (isset($this->getRoute()->resource)) {
+            $this->resource = $this->getRoute()->resource;
         }
 
-        $this->redirect([$this->resource, 'module' => 'physicalobject']);
-      }
-    }
-  }
+        $title = $this->context->i18n->__('Add new physical storage');
+        if (isset($this->getRoute()->resource)) {
+            if (1 > strlen($title = $this->resource->__toString())) {
+                $title = $this->context->i18n->__('Untitled');
+            }
 
-  protected function earlyExecute()
-  {
-    $this->resource = new QubitPhysicalObject();
-    if (isset($this->getRoute()->resource)) {
-      $this->resource = $this->getRoute()->resource;
-    }
+            $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
+        }
 
-    $title = $this->context->i18n->__('Add new physical storage');
-    if (isset($this->getRoute()->resource)) {
-      if (1 > strlen($title = $this->resource->__toString())) {
-        $title = $this->context->i18n->__('Untitled');
-      }
-
-      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
+        $this->response->setTitle("{$title} - {$this->response->getTitle()}");
     }
 
-    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
-  }
-
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'location':
       case 'name':
         $this->form->setDefault($name, $this->resource[$name]);
@@ -89,11 +89,11 @@ class PhysicalObjectEditAction extends DefaultEditAction
       default:
         return parent::addField($name);
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'type':
         unset($this->resource->type);
 
@@ -105,5 +105,5 @@ class PhysicalObjectEditAction extends DefaultEditAction
       default:
         return parent::processField($field);
     }
-  }
+    }
 }

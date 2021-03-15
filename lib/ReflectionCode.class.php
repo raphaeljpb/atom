@@ -19,20 +19,20 @@
 
 class ReflectionCode
 {
-  protected $code;
+    protected $code;
 
-  public function __construct($code)
-  {
-    $this->initialize($code);
-  }
+    public function __construct($code)
+    {
+        $this->initialize($code);
+    }
 
-  public function __toString()
-  {
-    return (string) $this->code;
-  }
+    public function __toString()
+    {
+        return (string) $this->code;
+    }
 
-  public function initialize($code)
-  {
-    $this->code = $code;
-  }
+    public function initialize($code)
+    {
+        $this->code = $code;
+    }
 }

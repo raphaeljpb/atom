@@ -26,67 +26,67 @@
  */
 class RepositoryEditAction extends DefaultEditAction
 {
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid()) {
-        $this->contactInformationEditComponent->processForm();
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
+            if ($this->form->isValid()) {
+                $this->contactInformationEditComponent->processForm();
 
-        $this->processForm();
+                $this->processForm();
 
-        $this->resource->save();
+                $this->resource->save();
 
-        $this->redirect([$this->resource, 'module' => 'repository']);
-      }
+                $this->redirect([$this->resource, 'module' => 'repository']);
+            }
+        }
+
+        QubitDescription::addAssets($this->response);
     }
 
-    QubitDescription::addAssets($this->response);
-  }
+    protected function earlyExecute()
+    {
+        $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-  protected function earlyExecute()
-  {
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+        $this->resource = new QubitRepository();
 
-    $this->resource = new QubitRepository();
+        // Make root repository the parent of new repositories
+        $this->resource->parentId = QubitRepository::ROOT_ID;
 
-    // Make root repository the parent of new repositories
-    $this->resource->parentId = QubitRepository::ROOT_ID;
+        if (isset($this->getRoute()->resource)) {
+            $this->resource = $this->getRoute()->resource;
 
-    if (isset($this->getRoute()->resource)) {
-      $this->resource = $this->getRoute()->resource;
+            // Check that this isn't the root
+            if (!isset($this->resource->parent)) {
+                $this->forward404();
+            }
 
-      // Check that this isn't the root
-      if (!isset($this->resource->parent)) {
-        $this->forward404();
-      }
+            // Check user authorization
+            if (!QubitAcl::check($this->resource, 'update') && !QubitAcl::check($this->resource, 'translate')) {
+                QubitAcl::forwardUnauthorized();
+            }
 
-      // Check user authorization
-      if (!QubitAcl::check($this->resource, 'update') && !QubitAcl::check($this->resource, 'translate')) {
-        QubitAcl::forwardUnauthorized();
-      }
+            // Add optimistic lock
+            $this->form->setDefault('serialNumber', $this->resource->serialNumber);
+            $this->form->setValidator('serialNumber', new sfValidatorInteger());
+            $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
+        } else {
+            // Check user authorization against ROOT repository
+            if (!QubitAcl::check(QubitRepository::getById(QubitRepository::ROOT_ID), 'create')) {
+                QubitAcl::forwardUnauthorized();
+            }
+        }
 
-      // Add optimistic lock
-      $this->form->setDefault('serialNumber', $this->resource->serialNumber);
-      $this->form->setValidator('serialNumber', new sfValidatorInteger());
-      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
-    } else {
-      // Check user authorization against ROOT repository
-      if (!QubitAcl::check(QubitRepository::getById(QubitRepository::ROOT_ID), 'create')) {
-        QubitAcl::forwardUnauthorized();
-      }
+        $this->contactInformationEditComponent = new ContactInformationEditComponent($this->context, 'contactinformation', 'editContactInformation');
+        $this->contactInformationEditComponent->resource = $this->resource;
+        $this->contactInformationEditComponent->execute($this->request);
     }
 
-    $this->contactInformationEditComponent = new ContactInformationEditComponent($this->context, 'contactinformation', 'editContactInformation');
-    $this->contactInformationEditComponent->resource = $this->resource;
-    $this->contactInformationEditComponent->execute($this->request);
-  }
-
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'type':
         $criteria = new Criteria();
         $criteria = $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
@@ -95,7 +95,7 @@ class RepositoryEditAction extends DefaultEditAction
 
         $value = [];
         foreach ($this->relations = QubitObjectTermRelation::get($criteria) as $item) {
-          $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
+            $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
         }
 
         $this->form->setDefault('type', $value);
@@ -103,7 +103,7 @@ class RepositoryEditAction extends DefaultEditAction
 
         $choices = [];
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::REPOSITORY_TYPE_ID) as $item) {
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
         }
 
         $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
@@ -118,7 +118,7 @@ class RepositoryEditAction extends DefaultEditAction
 
         $value = [];
         foreach ($this->thematicAreaRelations = QubitObjectTermRelation::get($criteria) as $item) {
-          $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
+            $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
         }
 
         $this->form->setDefault('thematicArea', $value);
@@ -126,7 +126,7 @@ class RepositoryEditAction extends DefaultEditAction
 
         $choices = [];
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::THEMATIC_AREA_ID) as $item) {
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
         }
 
         $choice[] = asort($choices);
@@ -143,7 +143,7 @@ class RepositoryEditAction extends DefaultEditAction
 
         $value = [];
         foreach ($this->geographicSubregionRelations = QubitObjectTermRelation::get($criteria) as $item) {
-          $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
+            $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
         }
 
         $this->form->setDefault('geographicSubregion', $value);
@@ -151,7 +151,7 @@ class RepositoryEditAction extends DefaultEditAction
 
         $choices = [];
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID) as $item) {
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
         }
 
         $choice[] = asort($choices);
@@ -180,7 +180,7 @@ class RepositoryEditAction extends DefaultEditAction
         $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById($id) as $item) {
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
         $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
@@ -223,32 +223,32 @@ class RepositoryEditAction extends DefaultEditAction
       default:
         return parent::addField($name);
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'type':
         $value = $filtered = [];
         foreach ($this->form->getValue('type') as $item) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($item));
-          $resource = $params['_sf_route']->resource;
-          $value[$resource->id] = $filtered[$resource->id] = $resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($item));
+            $resource = $params['_sf_route']->resource;
+            $value[$resource->id] = $filtered[$resource->id] = $resource;
         }
 
         foreach ($this->relations as $item) {
-          if (isset($value[$item->termId])) {
-            unset($filtered[$item->termId]);
-          } else {
-            $item->delete();
-          }
+            if (isset($value[$item->termId])) {
+                unset($filtered[$item->termId]);
+            } else {
+                $item->delete();
+            }
         }
 
         foreach ($filtered as $item) {
-          $relation = new QubitObjectTermRelation();
-          $relation->term = $item;
+            $relation = new QubitObjectTermRelation();
+            $relation->term = $item;
 
-          $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
+            $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
         }
 
         break;
@@ -256,24 +256,24 @@ class RepositoryEditAction extends DefaultEditAction
       case 'geographicSubregion':
         $value = $filtered = [];
         foreach ($this->form->getValue('geographicSubregion') as $item) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($item));
-          $resource = $params['_sf_route']->resource;
-          $value[$resource->id] = $filtered[$resource->id] = $resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($item));
+            $resource = $params['_sf_route']->resource;
+            $value[$resource->id] = $filtered[$resource->id] = $resource;
         }
 
         foreach ($this->geographicSubregionRelations as $item) {
-          if (isset($value[$item->termId])) {
-            unset($filtered[$item->termId]);
-          } else {
-            $item->delete();
-          }
+            if (isset($value[$item->termId])) {
+                unset($filtered[$item->termId]);
+            } else {
+                $item->delete();
+            }
         }
 
         foreach ($filtered as $item) {
-          $relation = new QubitObjectTermRelation();
-          $relation->term = $item;
+            $relation = new QubitObjectTermRelation();
+            $relation->term = $item;
 
-          $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
+            $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
         }
 
         break;
@@ -281,24 +281,24 @@ class RepositoryEditAction extends DefaultEditAction
       case 'thematicArea':
         $value = $filtered = [];
         foreach ($this->form->getValue('thematicArea') as $item) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($item));
-          $resource = $params['_sf_route']->resource;
-          $value[$resource->id] = $filtered[$resource->id] = $resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($item));
+            $resource = $params['_sf_route']->resource;
+            $value[$resource->id] = $filtered[$resource->id] = $resource;
         }
 
         foreach ($this->thematicAreaRelations as $item) {
-          if (isset($value[$item->termId])) {
-            unset($filtered[$item->termId]);
-          } else {
-            $item->delete();
-          }
+            if (isset($value[$item->termId])) {
+                unset($filtered[$item->termId]);
+            } else {
+                $item->delete();
+            }
         }
 
         foreach ($filtered as $item) {
-          $relation = new QubitObjectTermRelation();
-          $relation->term = $item;
+            $relation = new QubitObjectTermRelation();
+            $relation->term = $item;
 
-          $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
+            $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
         }
 
         break;
@@ -309,8 +309,8 @@ class RepositoryEditAction extends DefaultEditAction
 
         $value = $this->form->getValue($field->getName());
         if (isset($value)) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          $this->resource[$field->getName()] = $params['_sf_route']->resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($value));
+            $this->resource[$field->getName()] = $params['_sf_route']->resource;
         }
 
         break;
@@ -318,5 +318,5 @@ class RepositoryEditAction extends DefaultEditAction
       default:
         return parent::processField($field);
     }
-  }
+    }
 }

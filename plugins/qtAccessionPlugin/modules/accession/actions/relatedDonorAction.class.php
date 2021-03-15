@@ -19,30 +19,30 @@
 
 class AccessionRelatedDonorAction extends RelationIndexAction
 {
-  public function extraQueries($value)
-  {
-    if (null !== $contact = $this->resource->object->getPrimaryContact()) {
-      foreach ([
-        'city',
-        'contactPerson',
-        'countryCode',
-        'email',
-        'postalCode',
-        'region',
-        'streetAddress',
-        'telephone',
-        'contactType',
-        'website',
-        'fax',
-        'latitude',
-        'longitude',
-        'note', ] as $field) {
-        if (isset($contact->{$field})) {
-          $value[$field] = $contact->{$field};
+    public function extraQueries($value)
+    {
+        if (null !== $contact = $this->resource->object->getPrimaryContact()) {
+            foreach ([
+                'city',
+                'contactPerson',
+                'countryCode',
+                'email',
+                'postalCode',
+                'region',
+                'streetAddress',
+                'telephone',
+                'contactType',
+                'website',
+                'fax',
+                'latitude',
+                'longitude',
+                'note', ] as $field) {
+                if (isset($contact->{$field})) {
+                    $value[$field] = $contact->{$field};
+                }
+            }
         }
-      }
-    }
 
-    return $value;
-  }
+        return $value;
+    }
 }

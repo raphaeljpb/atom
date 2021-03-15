@@ -25,25 +25,25 @@
  */
 class arMigration0132
 {
-  public const VERSION = 132;
-  public const // The new database version
+    public const VERSION = 132;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    $setting = new QubitSetting();
-    $setting->name = 'slug_basis_informationobject';
-    $setting->value = QubitSlug::SLUG_BASIS_TITLE;
-    $setting->culture = 'en';
-    $setting->save();
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        $setting = new QubitSetting();
+        $setting->name = 'slug_basis_informationobject';
+        $setting->value = QubitSlug::SLUG_BASIS_TITLE;
+        $setting->culture = 'en';
+        $setting->save();
 
-    return true;
-  }
+        return true;
+    }
 }

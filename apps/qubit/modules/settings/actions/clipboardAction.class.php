@@ -19,40 +19,40 @@
 
 class SettingsClipboardAction extends SettingsEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'clipboard_save_max_age',
-    'clipboard_send_enabled',
-    'clipboard_send_url',
-    'clipboard_send_button_text',
-    'clipboard_send_message_html',
-    'clipboard_send_http_method',
-    'clipboard_export_digitalobjects_enabled', ];
-  public static $I18N = [
-    'clipboard_send_button_text',
-    'clipboard_send_message_html',
-  ];
-
-  public function earlyExecute()
-  {
-    parent::earlyExecute();
-
-    $this->updateMessage = $this->i18n->__('Clipboard settings saved.');
-
-    $this->settingDefaults = [
-      'clipboard_save_max_age' => '0',
-      'clipboard_send_enabled' => '0',
-      'clipboard_send_button_text' => $this->i18n->__('Send'),
-      'clipboard_send_message_html' => $this->i18n->__('Sending...'),
-      'clipboard_send_http_method' => 'POST',
-      'clipboard_export_digitalobjects_enabled' => '0',
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'clipboard_save_max_age',
+        'clipboard_send_enabled',
+        'clipboard_send_url',
+        'clipboard_send_button_text',
+        'clipboard_send_message_html',
+        'clipboard_send_http_method',
+        'clipboard_export_digitalobjects_enabled', ];
+    public static $I18N = [
+        'clipboard_send_button_text',
+        'clipboard_send_message_html',
     ];
-  }
 
-  protected function addField($name)
-  {
-    // Set form field format
-    switch ($name) {
+    public function earlyExecute()
+    {
+        parent::earlyExecute();
+
+        $this->updateMessage = $this->i18n->__('Clipboard settings saved.');
+
+        $this->settingDefaults = [
+            'clipboard_save_max_age' => '0',
+            'clipboard_send_enabled' => '0',
+            'clipboard_send_button_text' => $this->i18n->__('Send'),
+            'clipboard_send_message_html' => $this->i18n->__('Sending...'),
+            'clipboard_send_http_method' => 'POST',
+            'clipboard_export_digitalobjects_enabled' => '0',
+        ];
+    }
+
+    protected function addField($name)
+    {
+        // Set form field format
+        switch ($name) {
       case 'clipboard_save_max_age':
       case 'clipboard_send_url':
       case 'clipboard_send_button_text':
@@ -66,9 +66,9 @@ class SettingsClipboardAction extends SettingsEditAction
       case 'clipboard_send_http_method':
       case 'clipboard_export_digitalobjects_enabled':
         if ('clipboard_send_enabled' == $name || 'clipboard_export_digitalobjects_enabled' == $name) {
-          $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
+            $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
         } else {
-          $options = ['POST' => 'POST', 'GET' => 'GET'];
+            $options = ['POST' => 'POST', 'GET' => 'GET'];
         }
 
         $this->form->setValidator($name, new sfValidatorString(['required' => false]));
@@ -76,5 +76,5 @@ class SettingsClipboardAction extends SettingsEditAction
 
         break;
     }
-  }
+    }
 }

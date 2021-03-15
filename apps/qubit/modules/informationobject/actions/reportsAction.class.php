@@ -19,103 +19,103 @@
 
 class InformationObjectReportsAction extends sfAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'report',
-  ];
-
-  public function execute($request)
-  {
-    $this->typeLabels = [
-      'fileList' => $this->context->i18n->__('File list'),
-      'itemList' => $this->context->i18n->__('Item list'),
-      'storageLocations' => $this->context->i18n->__('Physical storage locations'),
-      'boxLabel' => $this->context->i18n->__('Box label'),
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'report',
     ];
 
-    $this->resource = $this->getRoute()->resource;
-    $this->getExistingReports();
+    public function execute($request)
+    {
+        $this->typeLabels = [
+            'fileList' => $this->context->i18n->__('File list'),
+            'itemList' => $this->context->i18n->__('Item list'),
+            'storageLocations' => $this->context->i18n->__('Physical storage locations'),
+            'boxLabel' => $this->context->i18n->__('Box label'),
+        ];
 
-    if (!isset($this->resource)) {
-      $this->forward404();
+        $this->resource = $this->getRoute()->resource;
+        $this->getExistingReports();
+
+        if (!isset($this->resource)) {
+            $this->forward404();
+        }
+
+        $this->form = new sfForm();
+
+        foreach ($this::$NAMES as $name) {
+            $this->addField($name);
+        }
+
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
+            if ($this->form->isValid()) {
+                $this->redirect($this->form->getValue('report'));
+            }
+        }
     }
 
-    $this->form = new sfForm();
-
-    foreach ($this::$NAMES as $name) {
-      $this->addField($name);
-    }
-
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid()) {
-        $this->redirect($this->form->getValue('report'));
-      }
-    }
-  }
-
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'report':
         // Hide if DC or MODS since they don't use such levels of description
         if (!in_array($this->resource->sourceStandard, ['Dublin Core Simple version 1.1', 'MODS version 3.3'])) {
-          $choices = [];
+            $choices = [];
 
-          if ($this->resource->containsLevelOfDescription('File')) {
-            $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'itemOrFileList', 'type' => 'file'])] = $this->context->i18n->__('File list');
-          }
+            if ($this->resource->containsLevelOfDescription('File')) {
+                $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'itemOrFileList', 'type' => 'file'])] = $this->context->i18n->__('File list');
+            }
 
-          if ($this->resource->containsLevelOfDescription('Item')) {
-            $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'itemOrFileList', 'type' => 'item'])] = $this->context->i18n->__('Item list');
-          }
+            if ($this->resource->containsLevelOfDescription('Item')) {
+                $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'itemOrFileList', 'type' => 'item'])] = $this->context->i18n->__('Item list');
+            }
         } else {
-          $choices = [];
+            $choices = [];
         }
 
         if ($this->getUser()->isAuthenticated()) {
-          $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'storageLocations'])] = $this->context->i18n->__('Physical storage locations');
-          $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'boxLabel'])] = $this->context->i18n->__('Box label');
+            $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'storageLocations'])] = $this->context->i18n->__('Physical storage locations');
+            $choices[$this->context->routing->generate(null, [$this->resource, 'module' => 'informationobject', 'action' => 'boxLabel'])] = $this->context->i18n->__('Box label');
         }
 
         $this->reportsAvailable = !empty($choices);
 
         if ($this->reportsAvailable) {
-          $available_routes = array_keys($choices);
-          $this->form->setDefault($name, $available_routes[0]);
-          $this->form->setValidator($name, new sfValidatorChoice(['choices' => $available_routes]));
-          $this->form->setWidget($name, new sfWidgetFormChoice([
-            'expanded' => true,
-            'choices' => $choices, ]));
+            $available_routes = array_keys($choices);
+            $this->form->setDefault($name, $available_routes[0]);
+            $this->form->setValidator($name, new sfValidatorChoice(['choices' => $available_routes]));
+            $this->form->setWidget($name, new sfWidgetFormChoice([
+                'expanded' => true,
+                'choices' => $choices, ]));
         }
 
         break;
     }
-  }
-
-  private function getExistingReports()
-  {
-    $formats = ['csv', 'html'];
-    $types = array_keys($this->typeLabels);
-    $this->existingReports = [];
-
-    foreach ($types as $type) {
-      foreach ($formats as $format) {
-        $path = arGenerateReportJob::getFilename($this->resource, $format, $type);
-
-        if (file_exists($path)) {
-          if (!sfContext::getInstance()->user->isAuthenticated()
-              && in_array($type, ['storageLocations', 'boxLabel'])) {
-            continue;
-          }
-
-          $this->existingReports[] = [
-            'path' => sfConfig::get('app_siteBaseUrl').'/'.$path,
-            'type' => $this->typeLabels[$type],
-            'format' => strtoupper($format),
-          ];
-        }
-      }
     }
-  }
+
+    private function getExistingReports()
+    {
+        $formats = ['csv', 'html'];
+        $types = array_keys($this->typeLabels);
+        $this->existingReports = [];
+
+        foreach ($types as $type) {
+            foreach ($formats as $format) {
+                $path = arGenerateReportJob::getFilename($this->resource, $format, $type);
+
+                if (file_exists($path)) {
+                    if (!sfContext::getInstance()->user->isAuthenticated()
+              && in_array($type, ['storageLocations', 'boxLabel'])) {
+                        continue;
+                    }
+
+                    $this->existingReports[] = [
+                        'path' => sfConfig::get('app_siteBaseUrl').'/'.$path,
+                        'type' => $this->typeLabels[$type],
+                        'format' => strtoupper($format),
+                    ];
+                }
+            }
+        }
+    }
 }

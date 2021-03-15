@@ -19,47 +19,47 @@
 
 class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'resource',
-    'type',
-    'subType',
-    'description',
-    'startDate',
-    'endDate',
-    'date', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'resource',
+        'type',
+        'subType',
+        'description',
+        'startDate',
+        'endDate',
+        'date', ];
 
-  public function processForm()
-  {
-    if (isset($this->request->deleteRelations)) {
-      foreach ($this->request->deleteRelations as $item) {
-        $params = $this->context->routing->parse(Qubit::pathInfo($item));
-        $params['_sf_route']->resource->delete();
-      }
+    public function processForm()
+    {
+        if (isset($this->request->deleteRelations)) {
+            foreach ($this->request->deleteRelations as $item) {
+                $params = $this->context->routing->parse(Qubit::pathInfo($item));
+                $params['_sf_route']->resource->delete();
+            }
+        }
+
+        return parent::processForm();
     }
 
-    return parent::processForm();
-  }
+    public function execute($request)
+    {
+        parent::execute($request);
 
-  public function execute($request)
-  {
-    parent::execute($request);
+        $this->form->getWidgetSchema()->setNameFormat('relatedAuthorityRecord[%s]');
+    }
 
-    $this->form->getWidgetSchema()->setNameFormat('relatedAuthorityRecord[%s]');
-  }
-
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'type':
         $this->form->setValidator('type', new sfValidatorString(['required' => true]));
 
         $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ACTOR_RELATION_TYPE_ID) as $item) {
-          if (QubitTerm::ROOT_ID == $item->parentId) {
-            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
-          }
+            if (QubitTerm::ROOT_ID == $item->parentId) {
+                $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
+            }
         }
 
         $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices]));
@@ -75,28 +75,28 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
       default:
         return parent::addField($name);
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'resource':
         // Update the object of the relation, unless the current resource is
         // the object
         if ($this->resource->id != $this->relation->objectId) {
-          unset($this->relation->object);
+            unset($this->relation->object);
         } else {
-          unset($this->relation->subject);
+            unset($this->relation->subject);
         }
 
         $value = $this->form->getValue('resource');
         if (isset($value)) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          if ($this->resource->id != $this->relation->objectId) {
-            $this->relation->object = $params['_sf_route']->resource;
-          } else {
-            $this->relation->subject = $params['_sf_route']->resource;
-          }
+            $params = $this->context->routing->parse(Qubit::pathInfo($value));
+            if ($this->resource->id != $this->relation->objectId) {
+                $this->relation->object = $params['_sf_route']->resource;
+            } else {
+                $this->relation->subject = $params['_sf_route']->resource;
+            }
         }
 
         break;
@@ -104,12 +104,12 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
       case 'subType':
         $value = $this->form->getValue('subType');
         if (isset($value)) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          if ($this->resource->id != $this->relation->objectId) {
-            $this->relation->type = $params['_sf_route']->resource;
-          } elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($params['_sf_route']->resource->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]))) {
-            $this->relation->type = $converseTerms[0]->getOpposedObject($params['_sf_route']->resource);
-          }
+            $params = $this->context->routing->parse(Qubit::pathInfo($value));
+            if ($this->resource->id != $this->relation->objectId) {
+                $this->relation->type = $params['_sf_route']->resource;
+            } elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($params['_sf_route']->resource->id, ['typeId' => QubitTerm::CONVERSE_TERM_ID]))) {
+                $this->relation->type = $converseTerms[0]->getOpposedObject($params['_sf_route']->resource);
+            }
         }
 
         break;
@@ -117,5 +117,5 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
       default:
         return parent::processField($field);
     }
-  }
+    }
 }

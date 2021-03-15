@@ -24,69 +24,69 @@
  */
 class QubitInformationObjectXmlCacheResource
 {
-  protected $resource;
+    protected $resource;
 
-  public function __construct($resource)
-  {
-    $this->resource = $resource;
-  }
-
-  /**
-   * Generate XML representation of information object.
-   *
-   * @param string  format of XML ("dc" or "ead")
-   * @param mixed $format
-   *
-   * @return string XML representation
-   */
-  public function generateXmlRepresentation($format)
-  {
-    exportBulkBaseTask::includeXmlExportClassesAndHelpers();
-    $options = ('ead' == $format) ? ['public' => true] : [];
-    $rawXml = exportBulkBaseTask::captureResourceExportTemplateOutput($this->resource, $format, $options);
-
-    return Qubit::tidyXml($rawXml);
-  }
-
-  /**
-   * Get file path of an information object's XML representation.
-   *
-   * @param string  format of XML ("dc" or "ead")
-   * @param bool  where or not to store just the contents (no XML header lines)
-   * @param mixed $format
-   * @param mixed $contentsOnly
-   *
-   * @return string path to XML representation
-   */
-  public function getFilePath($format, $contentsOnly = false)
-  {
-    $filename = md5($this->resource->id);
-    if ($contentsOnly) {
-      $filename .= '_contents';
-    }
-    $filename .= '.'.strtolower($format).'.xml';
-
-    $exportsPath = 'downloads'.DIRECTORY_SEPARATOR.'exports';
-
-    return $exportsPath.DIRECTORY_SEPARATOR.strtolower($format).DIRECTORY_SEPARATOR.$filename;
-  }
-
-  /**
-   * Get URL of an information object's XML representation.
-   *
-   * @param string  format of XML ("dc" or "ead")
-   * @param mixed $format
-   *
-   * @return string URL of XML representation
-   */
-  public function getPathForDownload($format)
-  {
-    $path = self::getFilePath($this->resource->id, $format);
-
-    if (file_exists(sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$path)) {
-      return $path;
+    public function __construct($resource)
+    {
+        $this->resource = $resource;
     }
 
-    return null;
-  }
+    /**
+     * Generate XML representation of information object.
+     *
+     * @param string  format of XML ("dc" or "ead")
+     * @param mixed $format
+     *
+     * @return string XML representation
+     */
+    public function generateXmlRepresentation($format)
+    {
+        exportBulkBaseTask::includeXmlExportClassesAndHelpers();
+        $options = ('ead' == $format) ? ['public' => true] : [];
+        $rawXml = exportBulkBaseTask::captureResourceExportTemplateOutput($this->resource, $format, $options);
+
+        return Qubit::tidyXml($rawXml);
+    }
+
+    /**
+     * Get file path of an information object's XML representation.
+     *
+     * @param string  format of XML ("dc" or "ead")
+     * @param bool  where or not to store just the contents (no XML header lines)
+     * @param mixed $format
+     * @param mixed $contentsOnly
+     *
+     * @return string path to XML representation
+     */
+    public function getFilePath($format, $contentsOnly = false)
+    {
+        $filename = md5($this->resource->id);
+        if ($contentsOnly) {
+            $filename .= '_contents';
+        }
+        $filename .= '.'.strtolower($format).'.xml';
+
+        $exportsPath = 'downloads'.DIRECTORY_SEPARATOR.'exports';
+
+        return $exportsPath.DIRECTORY_SEPARATOR.strtolower($format).DIRECTORY_SEPARATOR.$filename;
+    }
+
+    /**
+     * Get URL of an information object's XML representation.
+     *
+     * @param string  format of XML ("dc" or "ead")
+     * @param mixed $format
+     *
+     * @return string URL of XML representation
+     */
+    public function getPathForDownload($format)
+    {
+        $path = self::getFilePath($this->resource->id, $format);
+
+        if (file_exists(sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.$path)) {
+            return $path;
+        }
+
+        return null;
+    }
 }

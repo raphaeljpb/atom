@@ -19,42 +19,42 @@
 
 class QubitSettingsFilter extends sfFilter
 {
-  public function execute($filterChain)
-  {
-    $cache = QubitCache::getInstance();
-    $cacheKey = 'settings:i18n:'.sfContext::getInstance()->getUser()->getCulture();
+    public function execute($filterChain)
+    {
+        $cache = QubitCache::getInstance();
+        $cacheKey = 'settings:i18n:'.sfContext::getInstance()->getUser()->getCulture();
 
-    // Get settings (from cache if exists)
-    if ($cache->has($cacheKey)) {
-      $settings = unserialize($cache->get($cacheKey));
-    } else {
-      $settings = QubitSetting::getSettingsArray();
+        // Get settings (from cache if exists)
+        if ($cache->has($cacheKey)) {
+            $settings = unserialize($cache->get($cacheKey));
+        } else {
+            $settings = QubitSetting::getSettingsArray();
 
-      $cache->set($cacheKey, serialize($settings));
-    }
+            $cache->set($cacheKey, serialize($settings));
+        }
 
-    // Check environment vairables and overwrite/populate settings
-    $envHashmap = ['ATOM_READ_ONLY' => 'boolean'];
-    foreach ($envHashmap as $env => $type) {
-      if (false === $value = getenv($env)) {
-        continue;
-      }
+        // Check environment vairables and overwrite/populate settings
+        $envHashmap = ['ATOM_READ_ONLY' => 'boolean'];
+        foreach ($envHashmap as $env => $type) {
+            if (false === $value = getenv($env)) {
+                continue;
+            }
 
-      switch ($type) {
+            switch ($type) {
         case 'boolean':
           $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
 
           break;
       }
 
-      $key = strtolower(str_replace('ATOM', 'app', $env));
-      $settings[$key] = $value;
+            $key = strtolower(str_replace('ATOM', 'app', $env));
+            $settings[$key] = $value;
+        }
+
+        // Overwrite/populate settings into sfConfig object
+        sfConfig::add($settings);
+
+        // Execute next filter
+        $filterChain->execute();
     }
-
-    // Overwrite/populate settings into sfConfig object
-    sfConfig::add($settings);
-
-    // Execute next filter
-    $filterChain->execute();
-  }
 }

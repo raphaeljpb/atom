@@ -2,10 +2,10 @@
 
 <div class="messages error">
   <?php echo __('The upload limit of %1% GB for <a href="%2%">%3%</a> has been exceeded (%4% GB currently used)', [
-    '%1%' => $resource->uploadLimit,
-    '%2%' => url_for([$resource, 'module' => 'repository']),
-    '%3%' => $resource->__toString(),
-    '%4%' => $resource->getDiskUsage(['units' => 'G']), ]); ?>
+      '%1%' => $resource->uploadLimit,
+      '%2%' => url_for([$resource, 'module' => 'repository']),
+      '%3%' => $resource->__toString(),
+      '%4%' => $resource->getDiskUsage(['units' => 'G']), ]); ?>
 </div>
 
 <div>

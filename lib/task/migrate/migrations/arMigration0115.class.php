@@ -25,26 +25,26 @@
  */
 class arMigration0115
 {
-  public const VERSION = 115;
-  public const // The new database version
+    public const VERSION = 115;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    $menu = QubitMenu::getByName('settings');
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        $menu = QubitMenu::getByName('settings');
 
-    if (isset($menu)) {
-      $menu->setPath('settings/global');
-      $menu->save();
+        if (isset($menu)) {
+            $menu->setPath('settings/global');
+            $menu->save();
+        }
+
+        return true;
     }
-
-    return true;
-  }
 }

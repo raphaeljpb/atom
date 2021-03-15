@@ -25,32 +25,32 @@
  */
 class arMigration0112
 {
-  public const VERSION = 112;
-  public const // The new database version
+    public const VERSION = 112;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    $setting = QubitSetting::getByName('findingAidFormat');
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        $setting = QubitSetting::getByName('findingAidFormat');
 
-    if (!isset($setting)) {
-      $setting = new QubitSetting();
+        if (!isset($setting)) {
+            $setting = new QubitSetting();
+        }
+
+        $setting->setName('findingAidFormat');
+        $setting->setSourceCulture('en');
+        $setting->setValue('pdf', ['culture' => 'en']);
+        $setting->setEditable(1);
+        $setting->setDeleteable(0);
+        $setting->save();
+
+        return true;
     }
-
-    $setting->setName('findingAidFormat');
-    $setting->setSourceCulture('en');
-    $setting->setValue('pdf', ['culture' => 'en']);
-    $setting->setEditable(1);
-    $setting->setDeleteable(0);
-    $setting->save();
-
-    return true;
-  }
 }

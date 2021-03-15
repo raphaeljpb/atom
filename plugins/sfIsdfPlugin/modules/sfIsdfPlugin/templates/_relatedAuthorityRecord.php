@@ -98,18 +98,18 @@ content
 
       <div class="form-item">
         <?php echo $form->resource
-          ->label(__('Authorized form of name'))
-          ->renderLabel(); ?>
+            ->label(__('Authorized form of name'))
+            ->renderLabel(); ?>
         <?php echo $form->resource->render(['class' => 'form-autocomplete']); ?>
         <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete', 'showOnlyActors' => 'true']); ?>"/>
         <?php echo $form->resource
-          ->help(__('Select the name from the drop-down menu; enter the identifier or the first few letters to narrow the choices. (ISDF 6.1)'))
-          ->renderHelp(); ?>
+            ->help(__('Select the name from the drop-down menu; enter the identifier or the first few letters to narrow the choices. (ISDF 6.1)'))
+            ->renderHelp(); ?>
       </div>
 
       <?php echo $form->description
-        ->label(__('Nature of relationship'))
-        ->renderRow(); ?>
+          ->label(__('Nature of relationship'))
+          ->renderRow(); ?>
 
       <?php echo $form->date->renderRow(); ?>
 

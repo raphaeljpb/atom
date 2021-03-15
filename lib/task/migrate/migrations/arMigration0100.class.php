@@ -25,37 +25,37 @@
  */
 class arMigration0100
 {
-  public const VERSION = 100;
-  public const // The new database version
+    public const VERSION = 100;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    // Enable arDacsPlugin
-    if (null !== $setting = QubitSetting::getByName('plugins')) {
-      $settings = unserialize($setting->getValue(['sourceCulture' => true]));
-      $settings[] = 'arDacsPlugin';
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        // Enable arDacsPlugin
+        if (null !== $setting = QubitSetting::getByName('plugins')) {
+            $settings = unserialize($setting->getValue(['sourceCulture' => true]));
+            $settings[] = 'arDacsPlugin';
 
-      $setting->setValue(serialize($settings), ['sourceCulture' => true]);
-      $setting->save();
+            $setting->setValue(serialize($settings), ['sourceCulture' => true]);
+            $setting->save();
+        }
+
+        // Add the "dacs" template to its taxonomy
+        $term = new QubitTerm();
+        $term->parentId = QubitTerm::ROOT_ID;
+        $term->taxonomyId = QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID;
+        $term->code = 'dacs';
+        $term->name = 'DACS, 2nd ed. Society of American Archivists';
+        $term->culture = 'en';
+        $term->save();
+
+        return true;
     }
-
-    // Add the "dacs" template to its taxonomy
-    $term = new QubitTerm();
-    $term->parentId = QubitTerm::ROOT_ID;
-    $term->taxonomyId = QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID;
-    $term->code = 'dacs';
-    $term->name = 'DACS, 2nd ed. Society of American Archivists';
-    $term->culture = 'en';
-    $term->save();
-
-    return true;
-  }
 }

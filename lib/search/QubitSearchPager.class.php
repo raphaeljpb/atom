@@ -19,45 +19,45 @@
 
 class QubitSearchPager extends sfPager
 {
-  protected $nbResults;
-  protected $resultSet;
+    protected $nbResults;
+    protected $resultSet;
 
-  public function __construct(Elastica\ResultSet $resultSet)
-  {
-    $this->resultSet = $resultSet;
-  }
-
-  /**
-   * @see sfPager
-   */
-  public function init()
-  {
-    $this->setNbResults($this->resultSet->getTotalHits());
-
-    if (0 == $this->getPage() || 0 == $this->getMaxPerPage()) {
-      $this->setLastPage(0);
-    } else {
-      $this->setLastPage(ceil($this->getNbResults() / $this->getMaxPerPage()));
+    public function __construct(Elastica\ResultSet $resultSet)
+    {
+        $this->resultSet = $resultSet;
     }
-  }
 
-  /**
-   * @see sfPager
-   */
-  public function getResults()
-  {
-    // Note: to get results here beyond page 1, you'll need to call $resultSet->setFrom()
-    // prior to this pager's creation.
-    return $this->resultSet->getResults();
-  }
+    /**
+     * @see sfPager
+     */
+    public function init()
+    {
+        $this->setNbResults($this->resultSet->getTotalHits());
 
-  /**
-   * @see sfPager
-   *
-   * @param mixed $offset
-   */
-  public function retrieveObject($offset)
-  {
-    return array_slice($this->getResults, $offset, 1);
-  }
+        if (0 == $this->getPage() || 0 == $this->getMaxPerPage()) {
+            $this->setLastPage(0);
+        } else {
+            $this->setLastPage(ceil($this->getNbResults() / $this->getMaxPerPage()));
+        }
+    }
+
+    /**
+     * @see sfPager
+     */
+    public function getResults()
+    {
+        // Note: to get results here beyond page 1, you'll need to call $resultSet->setFrom()
+        // prior to this pager's creation.
+        return $this->resultSet->getResults();
+    }
+
+    /**
+     * @see sfPager
+     *
+     * @param mixed $offset
+     */
+    public function retrieveObject($offset)
+    {
+        return array_slice($this->getResults, $offset, 1);
+    }
 }

@@ -85,8 +85,8 @@
   <?php echo render_show(__('Extent'), render_value($resource->getCleanExtentAndMedium(['cultureFallback' => true]))); ?>
 
   <?php echo get_component('informationobject', 'creatorDetail', [
-    'resource' => $resource,
-    'creatorHistoryLabels' => $creatorHistoryLabels, ]); ?>
+      'resource' => $resource,
+      'creatorHistoryLabels' => $creatorHistoryLabels, ]); ?>
 
   <?php foreach ($functionRelations as $item) { ?>
     <div class="field">

@@ -26,68 +26,68 @@
  */
 class SettingsPageElementsAction extends sfAction
 {
-  public static $NAMES = [
-    'toggleDescription',
-    'toggleLogo',
-    'toggleTitle',
-    'toggleLanguageMenu',
-    'toggleIoSlider',
-    'toggleDigitalObjectMap',
-    'toggleCopyrightFilter',
-    'toggleMaterialFilter',
-  ];
+    public static $NAMES = [
+        'toggleDescription',
+        'toggleLogo',
+        'toggleTitle',
+        'toggleLanguageMenu',
+        'toggleIoSlider',
+        'toggleDigitalObjectMap',
+        'toggleCopyrightFilter',
+        'toggleMaterialFilter',
+    ];
 
-  public function execute($request)
-  {
-    $settings = [];
-    $this->form = new sfForm();
+    public function execute($request)
+    {
+        $settings = [];
+        $this->form = new sfForm();
 
-    // Take note if a Google Maps API key has been set
-    $googleMapsApiKeySetting = QubitSetting::getByName('google_maps_api_key');
-    $this->googleMapsApiKeySet = !empty($googleMapsApiKeySetting->value);
+        // Take note if a Google Maps API key has been set
+        $googleMapsApiKeySetting = QubitSetting::getByName('google_maps_api_key');
+        $this->googleMapsApiKeySet = !empty($googleMapsApiKeySetting->value);
 
-    // Take note of whether digital object map is enabled
-    $toggleDigitalObjectMapSetting = QubitSetting::getByName('toggleDigitalObjectMap');
+        // Take note of whether digital object map is enabled
+        $toggleDigitalObjectMapSetting = QubitSetting::getByName('toggleDigitalObjectMap');
 
-    foreach ($this::$NAMES as $name) {
-      // Disable checkbox to show digital object maps if it's not currently enabled and no Google Maps API key is defined
-      if ('toggleDigitalObjectMap' == $name && empty($toggleDigitalObjectMapSetting->value) && empty($googleMapsApiKeySetting->value)) {
-        $this->form->setWidget($name, new sfWidgetFormInputCheckbox([], ['class' => 'disabled', 'disabled' => true]));
-      } else {
-        $this->form->setWidget($name, new sfWidgetFormInputCheckbox());
-      }
+        foreach ($this::$NAMES as $name) {
+            // Disable checkbox to show digital object maps if it's not currently enabled and no Google Maps API key is defined
+            if ('toggleDigitalObjectMap' == $name && empty($toggleDigitalObjectMapSetting->value) && empty($googleMapsApiKeySetting->value)) {
+                $this->form->setWidget($name, new sfWidgetFormInputCheckbox([], ['class' => 'disabled', 'disabled' => true]));
+            } else {
+                $this->form->setWidget($name, new sfWidgetFormInputCheckbox());
+            }
 
-      $this->form->setValidator($name, new sfValidatorBoolean());
+            $this->form->setValidator($name, new sfValidatorBoolean());
 
-      if (null !== $settings[$name] = QubitSetting::getByName($name)) {
-        $this->form->setDefault($name, filter_var($settings[$name]->__get('value', ['sourceCulture' => true]), FILTER_VALIDATE_BOOLEAN));
-      }
-    }
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
-
-      if (!$this->form->isValid()) {
-        return;
-      }
-
-      foreach ($this::$NAMES as $name) {
-        if (null === $settings[$name]) {
-          $settings[$name] = new QubitSetting();
-          $settings[$name]->name = $name;
+            if (null !== $settings[$name] = QubitSetting::getByName($name)) {
+                $this->form->setDefault($name, filter_var($settings[$name]->__get('value', ['sourceCulture' => true]), FILTER_VALIDATE_BOOLEAN));
+            }
         }
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
 
-        $settings[$name]->__set('value', filter_var($this->form->getValue($name), FILTER_VALIDATE_BOOLEAN), ['sourceCulture' => true]);
-        $settings[$name]->save();
-      }
+            if (!$this->form->isValid()) {
+                return;
+            }
 
-      QubitCache::getInstance()->removePattern('settings:i18n:*');
+            foreach ($this::$NAMES as $name) {
+                if (null === $settings[$name]) {
+                    $settings[$name] = new QubitSetting();
+                    $settings[$name]->name = $name;
+                }
 
-      $notice = sfContext::getInstance()->i18n->__('Default page elements saved.');
-      $this->getUser()->setFlash('notice', $notice);
+                $settings[$name]->__set('value', filter_var($this->form->getValue($name), FILTER_VALIDATE_BOOLEAN), ['sourceCulture' => true]);
+                $settings[$name]->save();
+            }
 
-      // Redirect to display changes in the interface
-      // because the settings are added to sfConfig in a filter
-      $this->redirect(['module' => 'settings', 'action' => 'pageElements']);
+            QubitCache::getInstance()->removePattern('settings:i18n:*');
+
+            $notice = sfContext::getInstance()->i18n->__('Default page elements saved.');
+            $this->getUser()->setFlash('notice', $notice);
+
+            // Redirect to display changes in the interface
+            // because the settings are added to sfConfig in a filter
+            $this->redirect(['module' => 'settings', 'action' => 'pageElements']);
+        }
     }
-  }
 }

@@ -25,29 +25,29 @@
  */
 class arMigration0099
 {
-  public const VERSION = 99;
-  public const // The new database version
+    public const VERSION = 99;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    foreach ([
-      'taxonomies' => 'taxonomy/browse',
-      'browseDigitalObjects' => 'digitalobject/browse', ] as $key => $value) {
-      if (null !== $menu = QubitMenu::getByName($key)) {
-        $menu->path = $value;
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        foreach ([
+            'taxonomies' => 'taxonomy/browse',
+            'browseDigitalObjects' => 'digitalobject/browse', ] as $key => $value) {
+            if (null !== $menu = QubitMenu::getByName($key)) {
+                $menu->path = $value;
 
-        $menu->save();
-      }
+                $menu->save();
+            }
+        }
+
+        return true;
     }
-
-    return true;
-  }
 }

@@ -25,26 +25,26 @@
  */
 class arMigration0147
 {
-  public const VERSION = 147;
-  public const // The new database version
+    public const VERSION = 147;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    if (null === QubitSetting::getByName('generate_reports_as_pub_user')) {
-      $setting = new QubitSetting();
-      $setting->setName('generate_reports_as_pub_user');
-      $setting->setValue(1);
-      $setting->save();
-    }
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        if (null === QubitSetting::getByName('generate_reports_as_pub_user')) {
+            $setting = new QubitSetting();
+            $setting->setName('generate_reports_as_pub_user');
+            $setting->setValue(1);
+            $setting->save();
+        }
 
-    return true;
-  }
+        return true;
+    }
 }

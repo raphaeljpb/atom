@@ -24,97 +24,99 @@
  */
 class DigitalObjectShowComponent extends sfComponent
 {
-  /**
-   * Show digital object representation.
-   *
-   * @param sfWebRequest $request
-   *
-   * @todo add components for non-image digital objects
-   */
-  public function execute($request)
-  {
-    // If type of display not specified, show a thumbnail
-    if (!isset($this->usageType)) {
-      $this->usageType = QubitTerm::THUMBNAIL_ID;
-    }
+    /**
+     * Show digital object representation.
+     *
+     * @param sfWebRequest $request
+     *
+     * @todo add components for non-image digital objects
+     */
+    public function execute($request)
+    {
+        // If type of display not specified, show a thumbnail
+        if (!isset($this->usageType)) {
+            $this->usageType = QubitTerm::THUMBNAIL_ID;
+        }
 
-    // Don't show anything if trying to view a master DO without authorization
-    if (
+        // Don't show anything if trying to view a master DO without authorization
+        if (
       QubitTerm::MASTER_ID == $this->usageType
       && !QubitAcl::check($this->resource->object, 'readMaster')
     ) {
-      return sfView::NONE;
+            return sfView::NONE;
+        }
+
+        $this->setComponentType();
+
+        // Check to see if the user has permission to view this representation,
+        // if not, we'll show a generic icon.
+        if ($this->checkShowGenericIcon()) {
+            $this->showComponent = 'showGenericIcon';
+        }
+
+        // Check PREMIS granted rights, and show an access warning if they prevent
+        // access
+        if (QubitTerm::REFERENCE_ID == $this->usageType) {
+            $this->accessWarning = $this->getAccessWarning();
+        }
+
+        if (!isset($this->link)) {
+            $this->link = null;
+        }
+
+        if (!isset($this->iconOnly)) {
+            $this->iconOnly = false;
+        }
     }
 
-    $this->setComponentType();
-
-    // Check to see if the user has permission to view this representation,
-    // if not, we'll show a generic icon.
-    if ($this->checkShowGenericIcon()) {
-      $this->showComponent = 'showGenericIcon';
-    }
-
-    // Check PREMIS granted rights, and show an access warning if they prevent
-    // access
-    if (QubitTerm::REFERENCE_ID == $this->usageType) {
-      $this->accessWarning = $this->getAccessWarning();
-    }
-
-    if (!isset($this->link)) {
-      $this->link = null;
-    }
-
-    if (!isset($this->iconOnly)) {
-      $this->iconOnly = false;
-    }
-  }
-
-  /**
-   * Check permissions to tell if we should show a generic icon or not.
-   */
-  private function checkShowGenericIcon()
-  {
-    switch ($this->usageType) {
+    /**
+     * Check permissions to tell if we should show a generic icon or not.
+     */
+    private function checkShowGenericIcon()
+    {
+        switch ($this->usageType) {
       case QubitTerm::REFERENCE_ID:
         return !QubitAcl::check($this->resource->object, 'readReference');
 
       case QubitTerm::THUMBNAIL_ID:
         return !QubitAcl::check($this->resource->object, 'readThumbnail');
     }
-  }
-
-  /**
-   * Get warning messages if access denied via 'deny' or 'conditional' PREMIS
-   * rules.
-   *
-   * @return string Custom PREMIS "access denied" message, or an empty string
-   */
-  private function getAccessWarning()
-  {
-    $denyReason = '';
-
-    if ($this->resource->object instanceof QubitActor) {
-      return '';
     }
 
-    QubitGrantedRight::checkPremis(
-      $this->resource->object->id, 'readReference', $denyReason
-    );
+    /**
+     * Get warning messages if access denied via 'deny' or 'conditional' PREMIS
+     * rules.
+     *
+     * @return string Custom PREMIS "access denied" message, or an empty string
+     */
+    private function getAccessWarning()
+    {
+        $denyReason = '';
 
-    return $denyReason;
-  }
+        if ($this->resource->object instanceof QubitActor) {
+            return '';
+        }
 
-  private function setComponentType()
-  {
-    // Figure out which show component to call
-    switch ($this->resource->mediaTypeId) {
+        QubitGrantedRight::checkPremis(
+            $this->resource->object->id,
+            'readReference',
+            $denyReason
+        );
+
+        return $denyReason;
+    }
+
+    private function setComponentType()
+    {
+        // Figure out which show component to call
+        switch ($this->resource->mediaTypeId) {
       case QubitTerm::IMAGE_ID:
         if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceof QubitInformationObject) {
-          $this->showComponent = 'showCompound';
+            $this->showComponent = 'showCompound';
         } elseif ($this->resource->isWebCompatibleImageFormat()) {
-          $this->showComponent = 'showImage';
+            $this->showComponent = 'showImage';
         } else {
-          $this->showComponent = 'showDownload';
+            $this->showComponent = 'showDownload';
         }
 
         break;
@@ -131,9 +133,9 @@ class DigitalObjectShowComponent extends sfComponent
 
       case QubitTerm::TEXT_ID:
         if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceof QubitInformationObject) {
-          $this->showComponent = 'showCompound';
+            $this->showComponent = 'showCompound';
         } else {
-          $this->showComponent = 'showText';
+            $this->showComponent = 'showText';
         }
 
         break;
@@ -143,5 +145,5 @@ class DigitalObjectShowComponent extends sfComponent
 
         break;
     }
-  }
+    }
 }

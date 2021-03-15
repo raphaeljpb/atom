@@ -19,73 +19,73 @@
 
 class RightsHolderEditAction extends DefaultEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'authorizedFormOfName', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'authorizedFormOfName', ];
 
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid()) {
-        $this->contactInformationEditComponent->processForm();
+            if ($this->form->isValid()) {
+                $this->contactInformationEditComponent->processForm();
 
-        $this->processForm();
+                $this->processForm();
 
-        $this->resource->save();
+                $this->resource->save();
 
-        $this->redirect([$this->resource, 'module' => 'rightsholder']);
-      }
-    }
-  }
-
-  protected function earlyExecute()
-  {
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-
-    $this->resource = new QubitRightsHolder();
-
-    if (isset($this->getRoute()->resource)) {
-      $this->resource = $this->getRoute()->resource;
-
-      // Check user authorization
-      if (!QubitAcl::check($this->resource, 'update')) {
-        QubitAcl::forwardUnauthorized();
-      }
-
-      // Add optimistic lock
-      $this->form->setDefault('serialNumber', $this->resource->serialNumber);
-      $this->form->setValidator('serialNumber', new sfValidatorInteger());
-      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
-    } else {
-      // Check user authorization
-      if (!QubitAcl::check($this->resource, 'create')) {
-        QubitAcl::forwardUnauthorized();
-      }
+                $this->redirect([$this->resource, 'module' => 'rightsholder']);
+            }
+        }
     }
 
-    $title = $this->context->i18n->__('Add new rights holder');
-    if (isset($this->getRoute()->resource)) {
-      if (1 > strlen($title = $this->resource->__toString())) {
-        $title = $this->context->i18n->__('Untitled');
-      }
+    protected function earlyExecute()
+    {
+        $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
+        $this->resource = new QubitRightsHolder();
+
+        if (isset($this->getRoute()->resource)) {
+            $this->resource = $this->getRoute()->resource;
+
+            // Check user authorization
+            if (!QubitAcl::check($this->resource, 'update')) {
+                QubitAcl::forwardUnauthorized();
+            }
+
+            // Add optimistic lock
+            $this->form->setDefault('serialNumber', $this->resource->serialNumber);
+            $this->form->setValidator('serialNumber', new sfValidatorInteger());
+            $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
+        } else {
+            // Check user authorization
+            if (!QubitAcl::check($this->resource, 'create')) {
+                QubitAcl::forwardUnauthorized();
+            }
+        }
+
+        $title = $this->context->i18n->__('Add new rights holder');
+        if (isset($this->getRoute()->resource)) {
+            if (1 > strlen($title = $this->resource->__toString())) {
+                $title = $this->context->i18n->__('Untitled');
+            }
+
+            $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
+        }
+
+        $this->response->setTitle("{$title} - {$this->response->getTitle()}");
+
+        $this->contactInformationEditComponent = new ContactInformationEditComponent($this->context, 'contactinformation', 'editContactInformation');
+        $this->contactInformationEditComponent->resource = $this->resource;
+        $this->contactInformationEditComponent->execute($this->request);
     }
 
-    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
-
-    $this->contactInformationEditComponent = new ContactInformationEditComponent($this->context, 'contactinformation', 'editContactInformation');
-    $this->contactInformationEditComponent->resource = $this->resource;
-    $this->contactInformationEditComponent->execute($this->request);
-  }
-
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'authorizedFormOfName':
         $this->form->setDefault('authorizedFormOfName', $this->resource['authorizedFormOfName']);
         $this->form->setValidator('authorizedFormOfName', new sfValidatorString());
@@ -96,5 +96,5 @@ class RightsHolderEditAction extends DefaultEditAction
       default:
         return parent::addField($name);
     }
-  }
+    }
 }

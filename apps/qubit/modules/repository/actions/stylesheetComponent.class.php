@@ -19,15 +19,15 @@
 
 class RepositoryStylesheetComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    if (!isset($request->getAttribute('sf_route')->resource)) {
-      return sfView::NONE;
-    }
+    public function execute($request)
+    {
+        if (!isset($request->getAttribute('sf_route')->resource)) {
+            return sfView::NONE;
+        }
 
-    $resource = $request->getAttribute('sf_route')->resource;
+        $resource = $request->getAttribute('sf_route')->resource;
 
-    switch (true) {
+        switch (true) {
       case $resource instanceof QubitInformationObject:
         $repository = $resource->getRepository(['inherit' => true]);
 
@@ -42,15 +42,15 @@ class RepositoryStylesheetComponent extends sfComponent
         return sfView::NONE;
     }
 
-    if (null === $repository || null === $repository->backgroundColor) {
-      return sfView::NONE;
-    }
+        if (null === $repository || null === $repository->backgroundColor) {
+            return sfView::NONE;
+        }
 
-    // Get value
-    $this->backgroundColor = $repository->backgroundColor->__toString();
+        // Get value
+        $this->backgroundColor = $repository->backgroundColor->__toString();
 
-    if (0 == strlen($this->backgroundColor)) {
-      return sfView::NONE;
+        if (0 == strlen($this->backgroundColor)) {
+            return sfView::NONE;
+        }
     }
-  }
 }

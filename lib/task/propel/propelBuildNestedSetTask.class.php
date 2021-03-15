@@ -24,132 +24,132 @@
  */
 class propelBuildNestedSetTask extends sfBaseTask
 {
-  private $children;
-  private $conn;
+    private $children;
+    private $conn;
 
-  /**
-   * @see sfTask
-   *
-   * @param mixed $arguments
-   * @param mixed $options
-   */
-  public function execute($arguments = [], $options = [])
-  {
-    $databaseManager = new sfDatabaseManager($this->configuration);
-    $this->conn = $databaseManager->getDatabase('propel')->getConnection();
+    /**
+     * @see sfTask
+     *
+     * @param mixed $arguments
+     * @param mixed $options
+     */
+    public function execute($arguments = [], $options = [])
+    {
+        $databaseManager = new sfDatabaseManager($this->configuration);
+        $this->conn = $databaseManager->getDatabase('propel')->getConnection();
 
-    $tables = [
-      'information_object' => 'QubitInformationObject',
-      'term' => 'QubitTerm',
-      'menu' => 'QubitMenu',
-    ];
+        $tables = [
+            'information_object' => 'QubitInformationObject',
+            'term' => 'QubitTerm',
+            'menu' => 'QubitMenu',
+        ];
 
-    $excludeTables = [];
+        $excludeTables = [];
 
-    if (!empty($options['exclude-tables'])) {
-      $excludeTables = array_map('trim', explode(',', $options['exclude-tables']));
-    }
-
-    foreach ($tables as $table => $classname) {
-      if (in_array($table, $excludeTables)) {
-        $this->logSection('propel', 'Skip nested set build for '.$table.'.');
-
-        continue;
-      }
-
-      $this->logSection('propel', 'Build nested set for '.$table.'...');
-
-      $this->conn->beginTransaction();
-
-      $sql = 'SELECT id, parent_id';
-      $sql .= ' FROM '.constant($classname.'::TABLE_NAME');
-      $sql .= ' ORDER BY parent_id ASC, lft ASC';
-
-      $this->children = [];
-
-      // Build hash of child rows keyed on parent_id
-      foreach ($this->conn->query($sql, PDO::FETCH_ASSOC) as $item) {
-        if (isset($this->children[$item['parent_id']])) {
-          array_push($this->children[$item['parent_id']], $item['id']);
-        } else {
-          $this->children[$item['parent_id']] = [$item['id']];
+        if (!empty($options['exclude-tables'])) {
+            $excludeTables = array_map('trim', explode(',', $options['exclude-tables']));
         }
-      }
 
-      $rootNode = [
-        'id' => $classname::ROOT_ID,
-        'lft' => 1,
-        'rgt' => null,
-      ];
+        foreach ($tables as $table => $classname) {
+            if (in_array($table, $excludeTables)) {
+                $this->logSection('propel', 'Skip nested set build for '.$table.'.');
 
-      try {
-        self::recursivelyUpdateTree($rootNode, $classname);
-      } catch (PDOException $e) {
-        $this->conn->rollback();
+                continue;
+            }
 
-        throw new sfException($e);
-      }
+            $this->logSection('propel', 'Build nested set for '.$table.'...');
 
-      $this->conn->commit();
+            $this->conn->beginTransaction();
+
+            $sql = 'SELECT id, parent_id';
+            $sql .= ' FROM '.constant($classname.'::TABLE_NAME');
+            $sql .= ' ORDER BY parent_id ASC, lft ASC';
+
+            $this->children = [];
+
+            // Build hash of child rows keyed on parent_id
+            foreach ($this->conn->query($sql, PDO::FETCH_ASSOC) as $item) {
+                if (isset($this->children[$item['parent_id']])) {
+                    array_push($this->children[$item['parent_id']], $item['id']);
+                } else {
+                    $this->children[$item['parent_id']] = [$item['id']];
+                }
+            }
+
+            $rootNode = [
+                'id' => $classname::ROOT_ID,
+                'lft' => 1,
+                'rgt' => null,
+            ];
+
+            try {
+                self::recursivelyUpdateTree($rootNode, $classname);
+            } catch (PDOException $e) {
+                $this->conn->rollback();
+
+                throw new sfException($e);
+            }
+
+            $this->conn->commit();
+        }
+
+        $this->logSection('propel', 'Done!');
     }
 
-    $this->logSection('propel', 'Done!');
-  }
+    /**
+     * @see sfTask
+     */
+    protected function configure()
+    {
+        $this->addArguments([
+        ]);
 
-  /**
-   * @see sfTask
-   */
-  protected function configure()
-  {
-    $this->addArguments([
-    ]);
+        $this->addOptions([
+            new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+            new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+            new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+            new sfCommandOption('exclude-tables', null, sfCommandOption::PARAMETER_OPTIONAL, 'Exclude tables (comma-separated). Options: information_object, term, menu'),
+        ]);
 
-    $this->addOptions([
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('exclude-tables', null, sfCommandOption::PARAMETER_OPTIONAL, 'Exclude tables (comma-separated). Options: information_object, term, menu'),
-    ]);
+        $this->namespace = 'propel';
+        $this->name = 'build-nested-set';
+        $this->briefDescription = 'Build all nested set values.';
 
-    $this->namespace = 'propel';
-    $this->name = 'build-nested-set';
-    $this->briefDescription = 'Build all nested set values.';
-
-    $this->detailedDescription = <<<'EOF'
+        $this->detailedDescription = <<<'EOF'
 Build nested set values. Optionally excluding tables (information_object, term, menu).
 EOF;
-  }
-
-  protected function recursivelyUpdateTree($node, $classname)
-  {
-    $width = 2;
-    $lft = $node['lft'];
-
-    if (isset($this->children[$node['id']])) {
-      ++$lft;
-
-      foreach ($this->children[$node['id']] as $id) {
-        $child = ['id' => $id, 'lft' => $lft, 'rgt' => null];
-
-        // Update children first
-        $w0 = self::recursivelyUpdateTree($child, $classname);
-        $lft += $w0;
-        $width += $w0;
-      }
-
-      // Clear already processed children
-      unset($this->children[$node['id']]);
     }
 
-    $node['rgt'] = $node['lft'] + $width - 1;
+    protected function recursivelyUpdateTree($node, $classname)
+    {
+        $width = 2;
+        $lft = $node['lft'];
 
-    $sql = 'UPDATE '.$classname::TABLE_NAME;
-    $sql .= ' SET lft = '.$node['lft'];
-    $sql .= ', rgt = '.$node['rgt'];
-    $sql .= ' WHERE id = '.$node['id'].';';
+        if (isset($this->children[$node['id']])) {
+            ++$lft;
 
-    $this->conn->exec($sql);
+            foreach ($this->children[$node['id']] as $id) {
+                $child = ['id' => $id, 'lft' => $lft, 'rgt' => null];
 
-    return $width;
-  }
+                // Update children first
+                $w0 = self::recursivelyUpdateTree($child, $classname);
+                $lft += $w0;
+                $width += $w0;
+            }
+
+            // Clear already processed children
+            unset($this->children[$node['id']]);
+        }
+
+        $node['rgt'] = $node['lft'] + $width - 1;
+
+        $sql = 'UPDATE '.$classname::TABLE_NAME;
+        $sql .= ' SET lft = '.$node['lft'];
+        $sql .= ', rgt = '.$node['rgt'];
+        $sql .= ' WHERE id = '.$node['id'].';';
+
+        $this->conn->exec($sql);
+
+        return $width;
+    }
 }

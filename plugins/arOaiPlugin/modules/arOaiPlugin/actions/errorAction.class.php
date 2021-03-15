@@ -24,13 +24,13 @@
  */
 class arOaiPluginErrorAction extends sfAction
 {
-  /**
-   * Executes action.
-   *
-   * @param sfRequest $request A request object
-   */
-  public function execute($request)
-  {
-    sfConfig::set('sf_escaping_strategy', false);
-  }
+    /**
+     * Executes action.
+     *
+     * @param sfRequest $request A request object
+     */
+    public function execute($request)
+    {
+        sfConfig::set('sf_escaping_strategy', false);
+    }
 }

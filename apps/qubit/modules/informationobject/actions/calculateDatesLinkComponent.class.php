@@ -19,24 +19,24 @@
 
 class InformationObjectCalculateDatesLinkComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    $i18n = $this->context->i18n;
+    public function execute($request)
+    {
+        $i18n = $this->context->i18n;
 
-    // Determine when, or if, the date calculation job was last run
-    $criteria = new Criteria();
-    $criteria->add(QubitJob::NAME, 'arCalculateDescendantDatesJob');
-    $criteria->add(QubitJob::OBJECT_ID, $this->resource->id);
-    $criteria->addDescendingOrderByColumn(QubitJob::ID);
+        // Determine when, or if, the date calculation job was last run
+        $criteria = new Criteria();
+        $criteria->add(QubitJob::NAME, 'arCalculateDescendantDatesJob');
+        $criteria->add(QubitJob::OBJECT_ID, $this->resource->id);
+        $criteria->addDescendingOrderByColumn(QubitJob::ID);
 
-    $lastJobRan = QubitJob::getOne($criteria);
+        $lastJobRan = QubitJob::getOne($criteria);
 
-    if (null === $lastJobRan) {
-      $this->lastRun = $i18n->__('Never');
-    } elseif (QubitTerm::JOB_STATUS_IN_PROGRESS_ID == $lastJobRan->statusId) {
-      $this->lastRun = $i18n->__('In progress');
-    } else {
-      $this->lastRun = $lastJobRan->completedAt;
+        if (null === $lastJobRan) {
+            $this->lastRun = $i18n->__('Never');
+        } elseif (QubitTerm::JOB_STATUS_IN_PROGRESS_ID == $lastJobRan->statusId) {
+            $this->lastRun = $i18n->__('In progress');
+        } else {
+            $this->lastRun = $lastJobRan->completedAt;
+        }
     }
-  }
 }

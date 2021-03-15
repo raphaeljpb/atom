@@ -23,45 +23,45 @@ $t = new lime_test(20, new lime_output_color());
 
 // QubitSlug::slugify
  $testsRestrictive = [
-   // GIVEN - EXPECTED
-   ['test slug', 'test-slug'],
-   ['test-slug', 'test-slug'],
-   ['test----slug', 'test-slug'],
-   ['Test Slug', 'test-slug'],
-   ['Test Slug 123', 'test-slug-123'],
+     // GIVEN - EXPECTED
+     ['test slug', 'test-slug'],
+     ['test-slug', 'test-slug'],
+     ['test----slug', 'test-slug'],
+     ['Test Slug', 'test-slug'],
+     ['Test Slug 123', 'test-slug-123'],
 
-   ['Test \'Slug\'', 'test-slug'],
-   ['test ~\'`!@#$%^&*()_{}[]+=-;:"<>,.\\/? slug', 'test-slug'],
-   ['Tést Slug', 'test-slug'],
-   ['Tést SLÜG', 'test-slug'],
-   ['TEST АБВ абв', 'test'],
+     ['Test \'Slug\'', 'test-slug'],
+     ['test ~\'`!@#$%^&*()_{}[]+=-;:"<>,.\\/? slug', 'test-slug'],
+     ['Tést Slug', 'test-slug'],
+     ['Tést SLÜG', 'test-slug'],
+     ['TEST АБВ абв', 'test'],
  ];
 
 $testsPermissive = [
-  // GIVEN - EXPECTED
-  ['test slug', 'test-slug'],
-  ['test-slug', 'test-slug'],
-  ['test----slug', 'test-slug'],
-  ['Test Slug', 'Test-Slug'],
-  ['Test Slug 123', 'Test-Slug-123'],
+    // GIVEN - EXPECTED
+    ['test slug', 'test-slug'],
+    ['test-slug', 'test-slug'],
+    ['test----slug', 'test-slug'],
+    ['Test Slug', 'Test-Slug'],
+    ['Test Slug 123', 'Test-Slug-123'],
 
-  ['Test \'Slug\'', 'Test-Slug'],
-  ['test ~\'`|!@#$%^&*()_{}[]+=-;:"<>,.\\/? slug', 'test-~-@-*-_-=-;:-,-slug'],
-  ['Tést Slug', 'Tést-Slug'],
-  ['Tést SLÜG', 'Tést-SLÜG'],
-  ['TEST АБВ абв', 'TEST-АБВ-абв'],
+    ['Test \'Slug\'', 'Test-Slug'],
+    ['test ~\'`|!@#$%^&*()_{}[]+=-;:"<>,.\\/? slug', 'test-~-@-*-_-=-;:-,-slug'],
+    ['Tést Slug', 'Tést-Slug'],
+    ['Tést SLÜG', 'Tést-SLÜG'],
+    ['TEST АБВ абв', 'TEST-АБВ-абв'],
 ];
 
 // Test Restrictive mode slug creation.
 foreach ($testsRestrictive as $item) {
-  list($given, $expected) = $item;
+    list($given, $expected) = $item;
 
-  $t->is(QubitSlug::slugify($given, QubitSlug::SLUG_RESTRICTIVE), $expected, "slugify(SLUG_RESTRICTIVE) creates slug from text: {$given} as {$expected}");
+    $t->is(QubitSlug::slugify($given, QubitSlug::SLUG_RESTRICTIVE), $expected, "slugify(SLUG_RESTRICTIVE) creates slug from text: {$given} as {$expected}");
 }
 
 // Test Permissive mode slug creation.
 foreach ($testsPermissive as $item) {
-  list($given, $expected) = $item;
+    list($given, $expected) = $item;
 
-  $t->is(QubitSlug::slugify($given, QubitSlug::SLUG_PERMISSIVE), $expected, "slugify(SLUG_PERMISSIVE) creates slug from text: {$given} as {$expected}");
+    $t->is(QubitSlug::slugify($given, QubitSlug::SLUG_PERMISSIVE), $expected, "slugify(SLUG_PERMISSIVE) creates slug from text: {$given} as {$expected}");
 }

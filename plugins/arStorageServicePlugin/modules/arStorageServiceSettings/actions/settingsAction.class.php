@@ -19,29 +19,29 @@
 
 class arStorageServiceSettingsSettingsAction extends SettingsEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'storage_service_api_url',
-    'storage_service_username',
-    'storage_service_api_key',
-    'download_aip_enabled',
-  ];
-
-  public function earlyExecute()
-  {
-    parent::earlyExecute();
-
-    $this->updateMessage = $this->i18n->__('Storage service settings saved.');
-
-    $this->settingDefaults = [
-      'download_aip_enabled' => '0',
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'storage_service_api_url',
+        'storage_service_username',
+        'storage_service_api_key',
+        'download_aip_enabled',
     ];
-  }
 
-  protected function addField($name)
-  {
-    // Set form field format
-    switch ($name) {
+    public function earlyExecute()
+    {
+        parent::earlyExecute();
+
+        $this->updateMessage = $this->i18n->__('Storage service settings saved.');
+
+        $this->settingDefaults = [
+            'download_aip_enabled' => '0',
+        ];
+    }
+
+    protected function addField($name)
+    {
+        // Set form field format
+        switch ($name) {
       case 'storage_service_api_url':
       case 'storage_service_username':
       case 'storage_service_api_key':
@@ -52,18 +52,19 @@ class arStorageServiceSettingsSettingsAction extends SettingsEditAction
 
       case 'download_aip_enabled':
         $options = [
-          '0' => $this->i18n->__('Disabled'),
-          '1' => $this->i18n->__('Enabled'),
+            '0' => $this->i18n->__('Disabled'),
+            '1' => $this->i18n->__('Enabled'),
         ];
 
         $this->form->setValidator($name, new sfValidatorString(
-          ['required' => false]
+            ['required' => false]
         ));
         $this->form->setWidget($name, new sfWidgetFormSelectRadio(
-          ['choices' => $options], ['class' => 'radio']
+            ['choices' => $options],
+            ['class' => 'radio']
         ));
 
         break;
     }
-  }
+    }
 }

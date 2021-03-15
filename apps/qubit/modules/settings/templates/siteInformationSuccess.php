@@ -38,10 +38,10 @@
             <td>
               <?php echo get_partial('settings/i18n_form_field',
                 [
-                  'name' => 'siteTitle',
-                  'label' => null,
-                  'settings' => $settings,
-                  'form' => $form, ]); ?>
+                    'name' => 'siteTitle',
+                    'label' => null,
+                    'settings' => $settings,
+                    'form' => $form, ]); ?>
             </td>
           </tr>
           <tr>
@@ -52,10 +52,10 @@
             <td>
               <?php echo get_partial('settings/i18n_form_field',
                 [
-                  'name' => 'siteDescription',
-                  'label' => null,
-                  'settings' => $settings,
-                  'form' => $form, ]); ?>
+                    'name' => 'siteDescription',
+                    'label' => null,
+                    'settings' => $settings,
+                    'form' => $form, ]); ?>
             </td>
           </tr>
           <tr>
@@ -67,10 +67,10 @@
             <td>
               <?php echo get_partial('settings/i18n_form_field',
                 [
-                  'name' => 'siteBaseUrl',
-                  'label' => null,
-                  'settings' => $settings,
-                  'form' => $form, ]); ?>
+                    'name' => 'siteBaseUrl',
+                    'label' => null,
+                    'settings' => $settings,
+                    'form' => $form, ]); ?>
             </td>
           </tr>
         </tbody>

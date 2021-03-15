@@ -28,17 +28,17 @@
     <li>
       <?php if (isset($resource) && sfConfig::get('app_enable_institutional_scoping') && $sf_user->hasAttribute('search-realm')) { ?>
         <a href="<?php echo url_for([
-          'module' => 'informationobject',
-          'action' => 'browse',
-          'collection' => $resource->getCollectionRoot()->id,
-          'repos' => $sf_user->getAttribute('search-realm'),
-          'topLod' => false, ]); ?>">
+            'module' => 'informationobject',
+            'action' => 'browse',
+            'collection' => $resource->getCollectionRoot()->id,
+            'repos' => $sf_user->getAttribute('search-realm'),
+            'topLod' => false, ]); ?>">
       <?php } else { ?>
         <a href="<?php echo url_for([
-          'module' => 'informationobject',
-          'action' => 'browse',
-          'collection' => $resource->getCollectionRoot()->id,
-          'topLod' => false, ]); ?>">
+            'module' => 'informationobject',
+            'action' => 'browse',
+            'collection' => $resource->getCollectionRoot()->id,
+            'topLod' => false, ]); ?>">
       <?php } ?>
 
         <i class="fa fa-list"></i>
@@ -49,12 +49,12 @@
     <?php if (!empty($resource->getDigitalObject())) { ?>
       <li>
         <a href="<?php echo url_for([
-          'module' => 'informationobject',
-          'action' => 'browse',
-          'collection' => $resource->getCollectionRoot()->id,
-          'topLod' => false,
-          'view' => 'card',
-          'onlyMedia' => true, ]); ?>">
+            'module' => 'informationobject',
+            'action' => 'browse',
+            'collection' => $resource->getCollectionRoot()->id,
+            'topLod' => false,
+            'view' => 'card',
+            'onlyMedia' => true, ]); ?>">
           <i class="fa fa-picture-o"></i>
           <?php echo __('Browse digital objects'); ?>
         </a>

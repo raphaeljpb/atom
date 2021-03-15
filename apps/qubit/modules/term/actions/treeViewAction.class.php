@@ -19,23 +19,23 @@
 
 class TermTreeViewAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->resource = $this->getRoute()->resource;
+    public function execute($request)
+    {
+        $this->resource = $this->getRoute()->resource;
 
-    $this->browser = isset($request->browser) && 'true' === $request->browser;
+        $this->browser = isset($request->browser) && 'true' === $request->browser;
 
-    // Number of siblings that we are showing above and below the current node
-    $numberOfPreviousOrNextSiblings = 4;
+        // Number of siblings that we are showing above and below the current node
+        $numberOfPreviousOrNextSiblings = 4;
 
-    switch ($request->show) {
+        switch ($request->show) {
       case 'itemAndSiblings':
         // Previous siblings
         $prevItems = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous']);
 
         $this->hasPrevSiblings = count($prevItems) > $numberOfPreviousOrNextSiblings;
         if ($this->hasPrevSiblings) {
-          array_pop($prevItems);
+            array_pop($prevItems);
         }
 
         // Reverse array
@@ -46,7 +46,7 @@ class TermTreeViewAction extends sfAction
 
         $this->hasNextSiblings = count($nextItems) > $numberOfPreviousOrNextSiblings;
         if ($this->hasNextSiblings) {
-          array_pop($nextItems);
+            array_pop($nextItems);
         }
 
         //Merge siblings and self
@@ -59,7 +59,7 @@ class TermTreeViewAction extends sfAction
 
         $this->hasPrevSiblings = count($this->items) > $numberOfPreviousOrNextSiblings;
         if ($this->hasPrevSiblings) {
-          array_pop($this->items);
+            array_pop($this->items);
         }
 
         // Reverse array
@@ -72,7 +72,7 @@ class TermTreeViewAction extends sfAction
 
         $this->hasNextSiblings = count($this->items) > $numberOfPreviousOrNextSiblings;
         if ($this->hasNextSiblings) {
-          array_pop($this->items);
+            array_pop($this->items);
         }
 
         break;
@@ -83,5 +83,5 @@ class TermTreeViewAction extends sfAction
 
         break;
     }
-  }
+    }
 }

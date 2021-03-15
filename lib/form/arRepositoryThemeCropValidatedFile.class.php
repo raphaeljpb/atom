@@ -24,26 +24,26 @@
  */
 class arRepositoryThemeCropValidatedFile extends sfValidatedFile
 {
-  // Max dimensions in pixels
-  public const LOGO_MAX_WIDTH = 270;
-  public const LOGO_MAX_HEIGHT = 270;
-  public const BANNER_MAX_WIDTH = 800;
-  public const BANNER_MAX_HEIGHT = 300;
+    // Max dimensions in pixels
+    public const LOGO_MAX_WIDTH = 270;
+    public const LOGO_MAX_HEIGHT = 270;
+    public const BANNER_MAX_WIDTH = 800;
+    public const BANNER_MAX_HEIGHT = 300;
 
-  public function save($file = null, $fileMode = 0666, $create = true, $dirMode = 0777)
-  {
-    $file = parent::save($file, $fileMode, $create, $dirMode);
+    public function save($file = null, $fileMode = 0666, $create = true, $dirMode = 0777)
+    {
+        $file = parent::save($file, $fileMode, $create, $dirMode);
 
-    // Check if mogrify is available in the system
-    exec('which mogrify', $output, $status);
-    if (0 < $status) {
-      return $file;
-    }
+        // Check if mogrify is available in the system
+        exec('which mogrify', $output, $status);
+        if (0 < $status) {
+            return $file;
+        }
 
-    // Figure out necessary dimensions from the filename
-    $pathInfo = pathinfo($this->savedName);
+        // Figure out necessary dimensions from the filename
+        $pathInfo = pathinfo($this->savedName);
 
-    switch ($pathInfo['filename']) {
+        switch ($pathInfo['filename']) {
       case 'logo':
         $width = self::LOGO_MAX_WIDTH;
         $height = self::LOGO_MAX_HEIGHT;
@@ -57,18 +57,20 @@ class arRepositoryThemeCropValidatedFile extends sfValidatedFile
         break;
     }
 
-    // Stop execution if dimensions were not set
-    if (!isset($width, $height)) {
-      return $file;
+        // Stop execution if dimensions were not set
+        if (!isset($width, $height)) {
+            return $file;
+        }
+
+        // mogrify overwrites the original image file
+        $command = sprintf(
+            'mogrify -crop %sx%s+0+0 %s',
+            $width,
+            $height,
+            $this->savedName
+        );
+        exec($command, $output, $status);
+
+        return $file;
     }
-
-    // mogrify overwrites the original image file
-    $command = sprintf('mogrify -crop %sx%s+0+0 %s',
-      $width,
-      $height,
-      $this->savedName);
-    exec($command, $output, $status);
-
-    return $file;
-  }
 }

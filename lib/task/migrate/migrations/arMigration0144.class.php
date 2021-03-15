@@ -25,47 +25,47 @@
  */
 class arMigration0144
 {
-  public const VERSION = 144;
-  public const // The new database version
+    public const VERSION = 144;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    // Add LFT index to the information object table
-    // if it's not already added
-    $sql = <<<'sql'
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        // Add LFT index to the information object table
+        // if it's not already added
+        $sql = <<<'sql'
 SHOW INDEX FROM information_object WHERE Column_name = 'lft';
 sql;
 
-    if (0 == count(QubitPdo::fetchAll($sql))) {
-      $sql = <<<'sql'
+        if (0 == count(QubitPdo::fetchAll($sql))) {
+            $sql = <<<'sql'
 CREATE INDEX lft ON information_object(lft);
 sql;
 
-      QubitPdo::modify($sql);
-    }
+            QubitPdo::modify($sql);
+        }
 
-    // Add LFT index to the term table
-    // if it's not already added
-    $sql = <<<'sql'
+        // Add LFT index to the term table
+        // if it's not already added
+        $sql = <<<'sql'
 SHOW INDEX FROM term WHERE Column_name = 'lft';
 sql;
 
-    if (0 == count(QubitPdo::fetchAll($sql))) {
-      $sql = <<<'sql'
+        if (0 == count(QubitPdo::fetchAll($sql))) {
+            $sql = <<<'sql'
 CREATE INDEX lft ON term(lft);
 sql;
 
-      QubitPdo::modify($sql);
-    }
+            QubitPdo::modify($sql);
+        }
 
-    return true;
-  }
+        return true;
+    }
 }

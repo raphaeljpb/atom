@@ -25,29 +25,29 @@
  */
 class arMigration0093
 {
-  public const VERSION = 93;
-  public const // The new database version
+    public const VERSION = 93;
+    public const // The new database version
     MIN_MILESTONE = 1; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    // Get current codebase milestone
-    $substrings = preg_split('/\./', qubitConfiguration::VERSION);
-    $milestone = array_shift($substrings);
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        // Get current codebase milestone
+        $substrings = preg_split('/\./', qubitConfiguration::VERSION);
+        $milestone = array_shift($substrings);
 
-    // Store it
-    $setting = new QubitSetting();
-    $setting->name = 'milestone';
-    $setting->setValue($milestone, ['sourceCulture' => true]);
-    $setting->save();
+        // Store it
+        $setting = new QubitSetting();
+        $setting->name = 'milestone';
+        $setting->setValue($milestone, ['sourceCulture' => true]);
+        $setting->save();
 
-    return true;
-  }
+        return true;
+    }
 }

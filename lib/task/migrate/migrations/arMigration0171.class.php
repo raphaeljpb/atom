@@ -25,22 +25,22 @@
  */
 class arMigration0171
 {
-  public const VERSION = 171;
-  public const // The new database version
+    public const VERSION = 171;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    // Create new term for external file digital object usage
-    QubitMigrate::bumpTerm(QubitTerm::EXTERNAL_FILE_ID, $configuration);
-    $term = new QubitTerm();
-    $term->id = QubitTerm::EXTERNAL_FILE_ID;
-    $term->parentId = QubitTerm::ROOT_ID;
-    $term->taxonomyId = QubitTaxonomy::DIGITAL_OBJECT_USAGE_ID;
-    $term->name = 'Local file';
-    $term->culture = 'en';
-    $term->save();
+      // Create new term for external file digital object usage
+      QubitMigrate::bumpTerm(QubitTerm::EXTERNAL_FILE_ID, $configuration);
+      $term = new QubitTerm();
+      $term->id = QubitTerm::EXTERNAL_FILE_ID;
+      $term->parentId = QubitTerm::ROOT_ID;
+      $term->taxonomyId = QubitTaxonomy::DIGITAL_OBJECT_USAGE_ID;
+      $term->name = 'Local file';
+      $term->culture = 'en';
+      $term->save();
 
-    return true;
+      return true;
   }
 }

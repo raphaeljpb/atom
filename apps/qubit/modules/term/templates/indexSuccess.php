@@ -4,11 +4,11 @@
 <?php slot('sidebar'); ?>
 
   <?php echo get_partial('term/sidebar', [
-    'resource' => $resource,
-    'showTreeview' => $addBrowseElements,
-    'search' => $search,
-    'aggs' => $aggs,
-    'listPager' => $listPager, ]); ?>
+      'resource' => $resource,
+      'showTreeview' => $addBrowseElements,
+      'search' => $search,
+      'aggs' => $aggs,
+      'listPager' => $listPager, ]); ?>
 
 <?php end_slot(); ?>
 
@@ -66,19 +66,19 @@
 
       <div class="pickers">
         <?php echo get_partial('default/sortPickers', [
-          'options' => [
-            'lastUpdated' => __('Date modified'),
-            'alphabetic' => __('Title'),
-            'referenceCode' => __('Reference code'),
-            'date' => __('Start date'), ], ]); ?>
+            'options' => [
+                'lastUpdated' => __('Date modified'),
+                'alphabetic' => __('Title'),
+                'referenceCode' => __('Reference code'),
+                'date' => __('Start date'), ], ]); ?>
       </div>
     </section>
 
     <div id="content">
 
       <?php echo get_partial('term/directTerms', [
-        'resource' => $resource,
-        'aggs' => $aggs, ]); ?>
+          'resource' => $resource,
+          'aggs' => $aggs, ]); ?>
 
       <?php echo get_partial('search/searchResults', ['pager' => $pager, 'culture' => $culture]); ?>
 

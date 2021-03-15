@@ -129,23 +129,23 @@ content
 
       <div class="form-item">
         <?php echo $form->resource
-          ->label(__('Authorized form of name'))
-          ->renderLabel(); ?>
+            ->label(__('Authorized form of name'))
+            ->renderLabel(); ?>
         <?php echo $form->resource->render(['class' => 'form-autocomplete']); ?>
         <input class="list" type="hidden" value="<?php echo url_for(['module' => 'function', 'action' => 'autocomplete']); ?>"/>
         <?php echo $form->resource
-          ->help(__('"Record the authorised form of name and any unique identifier of the related function." (ISDF 5.3.1)'))
-          ->renderHelp(); ?>
+            ->help(__('"Record the authorised form of name and any unique identifier of the related function." (ISDF 5.3.1)'))
+            ->renderHelp(); ?>
       </div>
 
       <?php echo $form->type
-        ->help(__('"Record a general category into which the relationship being described falls." (ISDF 5.3.2) Select a category from the drop-down menu: hierarchical, temporal or associative.'))
-        ->label(__('Category'))
-        ->renderRow(); ?>
+          ->help(__('"Record a general category into which the relationship being described falls." (ISDF 5.3.2) Select a category from the drop-down menu: hierarchical, temporal or associative.'))
+          ->label(__('Category'))
+          ->renderRow(); ?>
 
       <?php echo $form->description
-        ->help(__('"Record a precise description of the nature of the relationship between the function being described and the related function." (ISDF 5.3.3) Note that the text entered in this field will also appear in the related function.'))
-        ->renderRow(); ?>
+          ->help(__('"Record a precise description of the nature of the relationship between the function being described and the related function." (ISDF 5.3.3) Note that the text entered in this field will also appear in the related function.'))
+          ->renderRow(); ?>
 
       <?php echo $form->date->renderRow(); ?>
 

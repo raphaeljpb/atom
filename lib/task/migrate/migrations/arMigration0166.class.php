@@ -25,62 +25,62 @@
  */
 class arMigration0166
 {
-  public const VERSION = 166;
-  public const // The new database version
+    public const VERSION = 166;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    $lockedMenus = [
-      'byName' => [
-        'accessions',
-        'browseDigitalObjects',
-        'browseInstitution',
-        'browseSubjects',
-        'clipboard',
-        'globalReplace',
-        'groups',
-        'importSkos',
-        'jobs',
-        'login',
-        'logout',
-        'myProfile',
-        'plugins',
-        'privacy',
-        'settings',
-        'staticPagesMenu',
-        'taxonomies',
-        'users',
-      ],
-      'byId' => [
-        QubitMenu::ROOT_ID,
-        QubitMenu::BROWSE_ID,
-        QubitMenu::IMPORT_ID,
-        QubitMenu::MAIN_MENU_ID,
-        QubitMenu::MANAGE_ID,
-        QubitMenu::QUICK_LINKS_ID,
-        QubitMenu::ADD_EDIT_ID,
-        QubitMenu::ADMIN_ID,
-      ],
-    ];
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        $lockedMenus = [
+            'byName' => [
+                'accessions',
+                'browseDigitalObjects',
+                'browseInstitution',
+                'browseSubjects',
+                'clipboard',
+                'globalReplace',
+                'groups',
+                'importSkos',
+                'jobs',
+                'login',
+                'logout',
+                'myProfile',
+                'plugins',
+                'privacy',
+                'settings',
+                'staticPagesMenu',
+                'taxonomies',
+                'users',
+            ],
+            'byId' => [
+                QubitMenu::ROOT_ID,
+                QubitMenu::BROWSE_ID,
+                QubitMenu::IMPORT_ID,
+                QubitMenu::MAIN_MENU_ID,
+                QubitMenu::MANAGE_ID,
+                QubitMenu::QUICK_LINKS_ID,
+                QubitMenu::ADD_EDIT_ID,
+                QubitMenu::ADMIN_ID,
+            ],
+        ];
 
-    if (null === QubitSetting::getByName('menu_locking_info')) {
-      $setting = new QubitSetting();
-      $setting->name = 'menu_locking_info';
-      $setting->value = serialize($lockedMenus);
-      $setting->culture = 'en';
-      $setting->editable = 0;
-      $setting->deleteable = 0;
-      $setting->save();
+        if (null === QubitSetting::getByName('menu_locking_info')) {
+            $setting = new QubitSetting();
+            $setting->name = 'menu_locking_info';
+            $setting->value = serialize($lockedMenus);
+            $setting->culture = 'en';
+            $setting->editable = 0;
+            $setting->deleteable = 0;
+            $setting->save();
+        }
+
+        return true;
     }
-
-    return true;
-  }
 }

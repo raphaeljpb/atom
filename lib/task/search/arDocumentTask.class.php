@@ -24,50 +24,65 @@
  */
 class arSearchDocumentTask extends arBaseTask
 {
-  /**
-   * @see sfTask
-   *
-   * @param mixed $arguments
-   * @param mixed $options
-   */
-  public function execute($arguments = [], $options = [])
-  {
-    parent::execute($arguments, $options);
+    /**
+     * @see sfTask
+     *
+     * @param mixed $arguments
+     * @param mixed $options
+     */
+    public function execute($arguments = [], $options = [])
+    {
+        parent::execute($arguments, $options);
 
-    if (null !== $slugObject = QubitObject::getBySlug($arguments[slug])) {
-      $this->log(sprintf("Fetching data for %s ID %d...\n", $slugObject->className, $slugObject->id));
+        if (null !== $slugObject = QubitObject::getBySlug($arguments[slug])) {
+            $this->log(sprintf("Fetching data for %s ID %d...\n", $slugObject->className, $slugObject->id));
 
-      $doc = QubitSearch::getInstance()->index->getType($slugObject->className)->getDocument($slugObject->id);
+            $doc = QubitSearch::getInstance()->index->getType($slugObject->className)->getDocument($slugObject->id);
 
-      echo json_encode($doc->getData(), JSON_PRETTY_PRINT)."\n";
-    } else {
-      throw new sfException('Slug not found');
+            echo json_encode($doc->getData(), JSON_PRETTY_PRINT)."\n";
+        } else {
+            throw new sfException('Slug not found');
+        }
     }
-  }
 
-  /**
-   * @see sfTask
-   */
-  protected function configure()
-  {
-    $this->addArguments([
-      new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Slug of resource'),
-    ]);
+    /**
+     * @see sfTask
+     */
+    protected function configure()
+    {
+        $this->addArguments([
+            new sfCommandArgument('slug', sfCommandArgument::REQUIRED, 'Slug of resource'),
+        ]);
 
-    $this->addOptions([
-      new sfCommandOption('application', null,
-        sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null,
-        sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null,
-        sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-    ]);
+        $this->addOptions([
+            new sfCommandOption(
+                'application',
+                null,
+                sfCommandOption::PARAMETER_OPTIONAL,
+                'The application name',
+                true
+            ),
+            new sfCommandOption(
+                'env',
+                null,
+                sfCommandOption::PARAMETER_REQUIRED,
+                'The environment',
+                'cli'
+            ),
+            new sfCommandOption(
+                'connection',
+                null,
+                sfCommandOption::PARAMETER_REQUIRED,
+                'The connection name',
+                'propel'
+            ),
+        ]);
 
-    $this->namespace = 'search';
-    $this->name = 'document';
-    $this->briefDescription = 'Output search index document data corresponding to an AtoM resource';
-    $this->detailedDescription = <<<'EOF'
+        $this->namespace = 'search';
+        $this->name = 'document';
+        $this->briefDescription = 'Output search index document data corresponding to an AtoM resource';
+        $this->detailedDescription = <<<'EOF'
       Output search index document data corresponding to an AtoM resource
 EOF;
-  }
+    }
 }

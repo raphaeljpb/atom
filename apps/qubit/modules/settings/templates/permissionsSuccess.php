@@ -33,8 +33,8 @@
         <legend><?php echo __('PREMIS access permissions'); ?></legend>
 
         <?php echo $permissionsForm['granted_right']
-          ->label(__('PREMIS act'))
-          ->renderRow(); ?>
+            ->label(__('PREMIS act'))
+            ->renderRow(); ?>
 
         <table>
           <caption>
@@ -157,8 +157,8 @@
         <legend><?php echo __('Copyright statement'); ?></legend>
 
         <?php echo $permissionsCopyrightStatementForm->copyrightStatementEnabled
-          ->label(__('Enable copyright statement'))
-          ->renderRow(); ?>
+            ->label(__('Enable copyright statement'))
+            ->renderRow(); ?>
 
         <br />
         <div class="alert alert-info">
@@ -166,7 +166,7 @@
         </div>
 
         <?php echo render_field($permissionsCopyrightStatementForm->copyrightStatement
-          ->label(__('Copyright statement')), $copyrightStatementSetting, ['name' => 'value', 'class' => 'resizable']); ?>
+            ->label(__('Copyright statement')), $copyrightStatementSetting, ['name' => 'value', 'class' => 'resizable']); ?>
 
         <input class="btn" type="submit" name="preview" value="<?php echo __('Preview'); ?>"/>
 
@@ -177,8 +177,8 @@
         <legend><?php echo __('Preservation system access statement'); ?></legend>
 
         <?php echo $permissionsPreservationSystemAccessStatementForm->preservationSystemAccessStatementEnabled
-          ->label(__('Enable access statement'))
-          ->renderRow(); ?>
+            ->label(__('Enable access statement'))
+            ->renderRow(); ?>
 
         <br />
         <div class="alert alert-info">
@@ -186,7 +186,7 @@
         </div>
 
         <?php echo render_field($permissionsPreservationSystemAccessStatementForm->preservationSystemAccessStatement
-          ->label(__('Access statement')), $preservationSystemAccessStatementSetting, ['name' => 'value', 'class' => 'resizable']); ?>
+            ->label(__('Access statement')), $preservationSystemAccessStatementSetting, ['name' => 'value', 'class' => 'resizable']); ?>
 
       </fieldset>
 

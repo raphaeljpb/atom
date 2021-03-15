@@ -22,27 +22,27 @@
  */
 class RepositoryMaintainedActorsComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
+    public function execute($request)
+    {
+        sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
 
-    $page = 1;
-    $limit = sfConfig::get('app_hits_per_page', 10);
+        $page = 1;
+        $limit = sfConfig::get('app_hits_per_page', 10);
 
-    $resultSet = RepositoryMaintainedActorsAction::getActors($this->resource->id, $page, $limit);
-    if (0 == $resultSet->getTotalHits()) {
-      return sfView::NONE;
+        $resultSet = RepositoryMaintainedActorsAction::getActors($this->resource->id, $page, $limit);
+        if (0 == $resultSet->getTotalHits()) {
+            return sfView::NONE;
+        }
+
+        $pager = new QubitSearchPager($resultSet);
+        $pager->setPage($page);
+        $pager->setMaxPerPage($limit);
+        $pager->init();
+
+        $this->list = [
+            'label' => $this->context->i18n->__('Maintainer of'),
+            'pager' => $pager,
+            'dataUrl' => url_for(['module' => 'repository', 'action' => 'maintainedActors', 'repositoryId' => $this->resource->id]),
+            'moreUrl' => url_for(['module' => 'actor', 'action' => 'browse', 'maintainingRepository' => $this->resource->id]), ];
     }
-
-    $pager = new QubitSearchPager($resultSet);
-    $pager->setPage($page);
-    $pager->setMaxPerPage($limit);
-    $pager->init();
-
-    $this->list = [
-      'label' => $this->context->i18n->__('Maintainer of'),
-      'pager' => $pager,
-      'dataUrl' => url_for(['module' => 'repository', 'action' => 'maintainedActors', 'repositoryId' => $this->resource->id]),
-      'moreUrl' => url_for(['module' => 'actor', 'action' => 'browse', 'maintainingRepository' => $this->resource->id]), ];
-  }
 }

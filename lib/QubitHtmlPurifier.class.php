@@ -19,71 +19,71 @@
 
 class QubitHtmlPurifier
 {
-  protected static $instance = null;
+    protected static $instance = null;
 
-  private $enabled;
+    private $enabled;
 
-  protected function __construct()
-  {
-    $this->enabled = sfConfig::get('app_htmlpurifier_enabled', true);
+    protected function __construct()
+    {
+        $this->enabled = sfConfig::get('app_htmlpurifier_enabled', true);
 
-    if (!$this->enabled) {
-      return;
+        if (!$this->enabled) {
+            return;
+        }
+
+        // Prepare htmlpurifier cache directory
+        $purifierCacheDirectory = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'htmlpurifier';
+        if (!file_exists($purifierCacheDirectory)) {
+            mkdir($purifierCacheDirectory, 0770, true);
+        }
+
+        // Load htmlpurifier library
+        require sfConfig::get('sf_root_dir').'/vendor/htmlpurifier/library/HTMLPurifier.includes.php';
+
+        $config = HTMLPurifier_Config::createDefault();
+        $config->set('Core', 'Encoding', sfConfig::get('sf_charset', 'UTF-8'));
+        $config->set('Cache.SerializerPath', $purifierCacheDirectory);
+        $config->set('AutoFormat.AutoParagraph', true);
+        $config->set('HTML', 'Doctype', 'XHTML 1.1');
+        $config->set('HTML.Allowed', implode(',', [
+            'div', 'span', 'p',
+            'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            'strong', 'em',
+            'abbr[title]', 'acronym', 'address',
+            'blockquote', 'cite', 'code',
+            'pre', 'br',
+            'a[href]', 'img[src]',
+            'ul', 'ol', 'li',
+            'dl', 'dt', 'dd',
+            'table', 'tr', 'td', 'th',
+            'tbody', 'thead', 'tfoot',
+            'col', 'colgroup', 'caption',
+            'b', 'i', 'tt',
+            'sub', 'sup', 'big', 'small', 'hr', ]));
+        $config->set('HTML.AllowedAttributes', implode(',', [
+            'class', 'title', 'src', 'href', ]));
+
+        $this->purifier = new HTMLPurifier($config);
     }
 
-    // Prepare htmlpurifier cache directory
-    $purifierCacheDirectory = sfConfig::get('sf_cache_dir').DIRECTORY_SEPARATOR.'htmlpurifier';
-    if (!file_exists($purifierCacheDirectory)) {
-      mkdir($purifierCacheDirectory, 0770, true);
+    public static function getInstance()
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new QubitHtmlPurifier();
+        }
+
+        return self::$instance;
     }
 
-    // Load htmlpurifier library
-    require sfConfig::get('sf_root_dir').'/vendor/htmlpurifier/library/HTMLPurifier.includes.php';
+    public function purify($content)
+    {
+        if (!$this->enabled) {
+            return $content;
+        }
 
-    $config = HTMLPurifier_Config::createDefault();
-    $config->set('Core', 'Encoding', sfConfig::get('sf_charset', 'UTF-8'));
-    $config->set('Cache.SerializerPath', $purifierCacheDirectory);
-    $config->set('AutoFormat.AutoParagraph', true);
-    $config->set('HTML', 'Doctype', 'XHTML 1.1');
-    $config->set('HTML.Allowed', implode(',', [
-      'div', 'span', 'p',
-      'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-      'strong', 'em',
-      'abbr[title]', 'acronym', 'address',
-      'blockquote', 'cite', 'code',
-      'pre', 'br',
-      'a[href]', 'img[src]',
-      'ul', 'ol', 'li',
-      'dl', 'dt', 'dd',
-      'table', 'tr', 'td', 'th',
-      'tbody', 'thead', 'tfoot',
-      'col', 'colgroup', 'caption',
-      'b', 'i', 'tt',
-      'sub', 'sup', 'big', 'small', 'hr', ]));
-    $config->set('HTML.AllowedAttributes', implode(',', [
-      'class', 'title', 'src', 'href', ]));
-
-    $this->purifier = new HTMLPurifier($config);
-  }
-
-  public static function getInstance()
-  {
-    if (!isset(self::$instance)) {
-      self::$instance = new QubitHtmlPurifier();
+        return $this->purifier->purify($content);
     }
 
-    return self::$instance;
-  }
-
-  public function purify($content)
-  {
-    if (!$this->enabled) {
-      return $content;
-    }
-
-    return $this->purifier->purify($content);
-  }
-
-  // __call ...
+    // __call ...
   // return call_user_func_array(array($this->purifier, 'purify'), $args);
 }

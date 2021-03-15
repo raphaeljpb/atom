@@ -24,80 +24,82 @@
  */
 class csvExportInformationObjectsTask extends exportBulkBaseTask
 {
-  protected $namespace = 'csv';
-  protected $name = 'export';
-  protected $briefDescription = 'Export descriptions as CSV file(s)';
+    protected $namespace = 'csv';
+    protected $name = 'export';
+    protected $briefDescription = 'Export descriptions as CSV file(s)';
 
-  /**
-   * @see sfTask
-   *
-   * @param mixed $arguments
-   * @param mixed $options
-   */
-  public function execute($arguments = [], $options = [])
-  {
-    // Make sure standard is lower case
-    $options['standard'] = $this->normalizeExportFormat(
-      $options['standard'],
-      ['isad', 'rad']
-    );
+    /**
+     * @see sfTask
+     *
+     * @param mixed $arguments
+     * @param mixed $options
+     */
+    public function execute($arguments = [], $options = [])
+    {
+        // Make sure standard is lower case
+        $options['standard'] = $this->normalizeExportFormat(
+            $options['standard'],
+            ['isad', 'rad']
+        );
 
-    $configuration = ProjectConfiguration::getApplicationConfiguration(
-      'qubit', 'cli', false
-    );
-    $context = sfContext::createInstance($configuration);
+        $configuration = ProjectConfiguration::getApplicationConfiguration(
+            'qubit',
+            'cli',
+            false
+        );
+        $context = sfContext::createInstance($configuration);
 
-    // QubitSetting are not available for tasks? See lib/SiteSettingsFilter.class.php
-    sfConfig::add(QubitSetting::getSettingsArray());
+        // QubitSetting are not available for tasks? See lib/SiteSettingsFilter.class.php
+        sfConfig::add(QubitSetting::getSettingsArray());
 
-    $itemsExported = 0;
+        $itemsExported = 0;
 
-    $conn = $this->getDatabaseConnection();
-    $rows = $conn->query($this->informationObjectQuerySql($options), PDO::FETCH_ASSOC);
+        $conn = $this->getDatabaseConnection();
+        $rows = $conn->query($this->informationObjectQuerySql($options), PDO::FETCH_ASSOC);
 
-    echo 'Exporting as '.strtoupper($options['standard']).".\n";
+        echo 'Exporting as '.strtoupper($options['standard']).".\n";
 
-    // Instantiate CSV writer
-    $writer = new csvInformationObjectExport(
-      $arguments['path'],
-      $options['standard'],
-      $options['rows-per-file']
-    );
+        // Instantiate CSV writer
+        $writer = new csvInformationObjectExport(
+            $arguments['path'],
+            $options['standard'],
+            $options['rows-per-file']
+        );
 
-    $writer->user = $context->getUser();
-    $writer->setOptions($options);
+        $writer->user = $context->getUser();
+        $writer->setOptions($options);
 
-    foreach ($rows as $row) {
-      $writer->user->setCulture($row['culture']);
-      $resource = QubitInformationObject::getById($row['id']);
+        foreach ($rows as $row) {
+            $writer->user->setCulture($row['culture']);
+            $resource = QubitInformationObject::getById($row['id']);
 
-      // Don't export draft descriptions with public option
-      if (isset($options['public']) && $options['public']
+            // Don't export draft descriptions with public option
+            if (isset($options['public']) && $options['public']
         && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $resource->getPublicationStatus()->statusId) {
-        continue;
-      }
+                continue;
+            }
 
-      $writer->exportResource($resource);
+            $writer->exportResource($resource);
 
-      $this->indicateProgress($options['items-until-update']);
+            $this->indicateProgress($options['items-until-update']);
 
-      ++$itemsExported;
+            ++$itemsExported;
+        }
+
+        echo "\nExport complete (".$itemsExported." descriptions exported).\n";
     }
 
-    echo "\nExport complete (".$itemsExported." descriptions exported).\n";
-  }
-
-  /**
-   * @see sfTask
-   */
-  protected function configure()
-  {
-    $this->addCommonArgumentsAndOptions();
-    $this->addOptions([
-      new sfCommandOption('standard', null, sfCommandOption::PARAMETER_OPTIONAL, 'Description format ("isad" or "rad")', 'isad'),
-    ]);
-    $this->addOptions([
-      new sfCommandOption('rows-per-file', null, sfCommandOption::PARAMETER_OPTIONAL, 'Rows per file (disregarded if writing to a file, not a directory)', false),
-    ]);
-  }
+    /**
+     * @see sfTask
+     */
+    protected function configure()
+    {
+        $this->addCommonArgumentsAndOptions();
+        $this->addOptions([
+            new sfCommandOption('standard', null, sfCommandOption::PARAMETER_OPTIONAL, 'Description format ("isad" or "rad")', 'isad'),
+        ]);
+        $this->addOptions([
+            new sfCommandOption('rows-per-file', null, sfCommandOption::PARAMETER_OPTIONAL, 'Rows per file (disregarded if writing to a file, not a directory)', false),
+        ]);
+    }
 }

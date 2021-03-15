@@ -91,8 +91,8 @@
 
   <div class="creatorHistories">
     <?php echo get_component('informationobject', 'creatorDetail', [
-      'resource' => $resource,
-      'creatorHistoryLabels' => $creatorHistoryLabels, ]); ?>
+        'resource' => $resource,
+        'creatorHistoryLabels' => $creatorHistoryLabels, ]); ?>
   </div>
 
   <div class="relatedFunctions">

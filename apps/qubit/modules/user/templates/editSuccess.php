@@ -28,19 +28,19 @@
         <?php echo $form->email->renderRow(); ?>
 
         <?php $settings = json_encode([
-          'password' => [
-            'strengthTitle' => __('Password strength:'),
-            'hasWeaknesses' => __('To make your password stronger:'),
-            'tooShort' => __('Make it at least six characters'),
-            'addLowerCase' => __('Add lowercase letters'),
-            'addUpperCase' => __('Add uppercase letters'),
-            'addNumbers' => __('Add numbers'),
-            'addPunctuation' => __('Add punctuation'),
-            'sameAsUsername' => __('Make it different from your username'),
-            'confirmSuccess' => __('Yes'),
-            'confirmFailure' => __('No'),
-            'confirmTitle' => __('Passwords match:'),
-            'username' => '', ], ]); ?>
+            'password' => [
+                'strengthTitle' => __('Password strength:'),
+                'hasWeaknesses' => __('To make your password stronger:'),
+                'tooShort' => __('Make it at least six characters'),
+                'addLowerCase' => __('Add lowercase letters'),
+                'addUpperCase' => __('Add uppercase letters'),
+                'addNumbers' => __('Add numbers'),
+                'addPunctuation' => __('Add punctuation'),
+                'sameAsUsername' => __('Make it different from your username'),
+                'confirmSuccess' => __('Yes'),
+                'confirmFailure' => __('No'),
+                'confirmTitle' => __('Passwords match:'),
+                'username' => '', ], ]); ?>
 
         <?php echo javascript_tag(<<<EOF
 jQuery.extend(Drupal.settings, {$settings});
@@ -53,12 +53,12 @@ EOF
 
           <?php if (isset($sf_request->getAttribute('sf_route')->resource)) { ?>
             <?php echo $form->password
-            ->label(__('Change password'))
-            ->renderLabel(); ?>
+              ->label(__('Change password'))
+              ->renderLabel(); ?>
           <?php } else { ?>
             <?php echo $form->password
-            ->label(__('Password'))
-            ->renderLabel(); ?>
+              ->label(__('Password'))
+              ->renderLabel(); ?>
           <?php } ?>
 
           <?php echo $form->password->render(['class' => 'password-field']); ?>
@@ -67,15 +67,15 @@ EOF
 
         <div class="form-item confirm-parent">
           <?php echo $form->password
-            ->label(__('Confirm password'))
-            ->renderLabel(); ?>
+              ->label(__('Confirm password'))
+              ->renderLabel(); ?>
           <?php echo $form->confirmPassword->render(['class' => 'password-confirm']); ?>
         </div>
 
         <?php if ($sf_user->user != $resource) { ?>
           <?php echo $form->active
-          ->label(__('Active'))
-          ->renderRow(); ?>
+            ->label(__('Active'))
+            ->renderRow(); ?>
         <?php } ?>
 
       </fieldset> <!-- /#basicInfo -->
@@ -85,23 +85,23 @@ EOF
         <legend><?php echo __('Access control'); ?></legend>
 
         <?php echo $form->groups
-          ->label(__('User groups'))
-          ->renderRow(['class' => 'form-autocomplete']); ?>
+            ->label(__('User groups'))
+            ->renderRow(['class' => 'form-autocomplete']); ?>
 
         <?php echo $form->translate
-          ->label(__('Allowed languages for translation'))
-          ->renderRow(['class' => 'form-autocomplete']); ?>
+            ->label(__('Allowed languages for translation'))
+            ->renderRow(['class' => 'form-autocomplete']); ?>
 
         <?php if ($restEnabled) { ?>
           <?php echo $form->restApiKey
-          ->label(__('REST API access key'.((isset($restApiKey)) ? ': <code>'.$restApiKey.'</code>' : '')))
-          ->renderRow(); ?>
+            ->label(__('REST API access key'.((isset($restApiKey)) ? ': <code>'.$restApiKey.'</code>' : '')))
+            ->renderRow(); ?>
         <?php } ?>
 
         <?php if ($oaiEnabled) { ?>
           <?php echo $form->oaiApiKey
-          ->label(__('OAI-PMH API access key'.((isset($oaiApiKey)) ? ': <code>'.$oaiApiKey.'</code>' : '')))
-          ->renderRow(); ?>
+            ->label(__('OAI-PMH API access key'.((isset($oaiApiKey)) ? ': <code>'.$oaiApiKey.'</code>' : '')))
+            ->renderRow(); ?>
         <?php } ?>
 
       </fieldset> <!-- /#groupsAndPermissions -->

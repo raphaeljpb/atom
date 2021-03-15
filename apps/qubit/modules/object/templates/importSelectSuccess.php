@@ -96,16 +96,16 @@
                   <div class="filter-row repos-limit">
                     <div class="filter">
                       <?php echo $form->repos
-                        ->label(__('Limit matches to:'))
-                        ->renderRow(); ?>
+                          ->label(__('Limit matches to:'))
+                          ->renderRow(); ?>
                     </div>
                   </div>
 
                   <div class="filter-row collection-limit">
                     <div class="filter">
                       <?php echo $form->collection
-                        ->label(__('Top-level description'))
-                        ->renderLabel(); ?>
+                          ->label(__('Top-level description'))
+                          ->renderLabel(); ?>
                       <?php echo $form->collection->render(['class' => 'form-autocomplete']); ?>
                       <input class="list" type="hidden" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'autocomplete', 'parent' => QubitInformationObject::ROOT_ID, 'filterDrafts' => true]); ?>"/>
                     </div>

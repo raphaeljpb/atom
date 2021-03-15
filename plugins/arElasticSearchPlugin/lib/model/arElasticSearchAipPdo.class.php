@@ -22,125 +22,125 @@
  */
 class arElasticSearchAipPdo
 {
-  public $i18ns;
+    public $i18ns;
 
-  protected $data = [];
+    protected $data = [];
 
-  protected static $conn;
-  protected static $lookups;
-  protected static $statements;
+    protected static $conn;
+    protected static $lookups;
+    protected static $statements;
 
-  /**
-   * METHODS.
-   *
-   * @param mixed $id
-   * @param mixed $options
-   */
-  public function __construct($id, $options = [])
-  {
-    if (isset($options['conn'])) {
-      self::$conn = $options['conn'];
+    /**
+     * METHODS.
+     *
+     * @param mixed $id
+     * @param mixed $options
+     */
+    public function __construct($id, $options = [])
+    {
+        if (isset($options['conn'])) {
+            self::$conn = $options['conn'];
+        }
+
+        if (!isset(self::$conn)) {
+            self::$conn = Propel::getConnection();
+        }
+
+        $this->loadData($id, $options);
     }
 
-    if (!isset(self::$conn)) {
-      self::$conn = Propel::getConnection();
+    public function __isset($name)
+    {
+        return isset($this->data[$name]);
     }
 
-    $this->loadData($id, $options);
-  }
-
-  public function __isset($name)
-  {
-    return isset($this->data[$name]);
-  }
-
-  public function __get($name)
-  {
-    if (isset($this->data[$name])) {
-      return $this->data[$name];
-    }
-  }
-
-  public function __set($name, $value)
-  {
-    $this->data[$name] = $value;
-  }
-
-  public function serialize()
-  {
-    $serialized = [];
-
-    $serialized['id'] = $this->id;
-    $serialized['uuid'] = $this->uuid;
-    $serialized['filename'] = $this->filename;
-    $serialized['sizeOnDisk'] = $this->size_on_disk;
-    $serialized['digitalObjectCount'] = $this->digital_object_count;
-    $serialized['createdAt'] = arElasticSearchPluginUtil::convertDate($this->created_at);
-
-    if (null !== $this->type_id) {
-      $node = new arElasticSearchTermPdo($this->type_id);
-      $serialized['type'] = $node->serialize();
+    public function __get($name)
+    {
+        if (isset($this->data[$name])) {
+            return $this->data[$name];
+        }
     }
 
-    if (null !== $digitalObjects = $this->getDigitalObjects()) {
-      $serialized['digitalObjects'] = $digitalObjects;
+    public function __set($name, $value)
+    {
+        $this->data[$name] = $value;
     }
 
-    return $serialized;
-  }
+    public function serialize()
+    {
+        $serialized = [];
 
-  protected function loadData($id)
-  {
-    if (!isset(self::$statements['aip'])) {
-      $sql = 'SELECT *';
-      $sql .= ' FROM '.QubitAip::TABLE_NAME;
-      $sql .= ' WHERE id = :id';
+        $serialized['id'] = $this->id;
+        $serialized['uuid'] = $this->uuid;
+        $serialized['filename'] = $this->filename;
+        $serialized['sizeOnDisk'] = $this->size_on_disk;
+        $serialized['digitalObjectCount'] = $this->digital_object_count;
+        $serialized['createdAt'] = arElasticSearchPluginUtil::convertDate($this->created_at);
 
-      self::$statements['aip'] = self::$conn->prepare($sql);
+        if (null !== $this->type_id) {
+            $node = new arElasticSearchTermPdo($this->type_id);
+            $serialized['type'] = $node->serialize();
+        }
+
+        if (null !== $digitalObjects = $this->getDigitalObjects()) {
+            $serialized['digitalObjects'] = $digitalObjects;
+        }
+
+        return $serialized;
     }
 
-    // Do select
-    self::$statements['aip']->execute([':id' => $id]);
+    protected function loadData($id)
+    {
+        if (!isset(self::$statements['aip'])) {
+            $sql = 'SELECT *';
+            $sql .= ' FROM '.QubitAip::TABLE_NAME;
+            $sql .= ' WHERE id = :id';
 
-    // Get first result
-    $this->data = self::$statements['aip']->fetch(PDO::FETCH_ASSOC);
+            self::$statements['aip'] = self::$conn->prepare($sql);
+        }
 
-    if (false === $this->data) {
-      throw new sfException("Couldn't find aip (id: {$id})");
+        // Do select
+        self::$statements['aip']->execute([':id' => $id]);
+
+        // Get first result
+        $this->data = self::$statements['aip']->fetch(PDO::FETCH_ASSOC);
+
+        if (false === $this->data) {
+            throw new sfException("Couldn't find aip (id: {$id})");
+        }
+
+        self::$statements['aip']->closeCursor();
+
+        return $this;
     }
 
-    self::$statements['aip']->closeCursor();
-
-    return $this;
-  }
-
-  protected function getDigitalObjects()
-  {
-    $sql = 'SELECT
+    protected function getDigitalObjects()
+    {
+        $sql = 'SELECT
                 do.name,
                 do.byte_size,
                 do.mime_type,
                 obj.updated_at';
-    $sql .= ' FROM '.QubitDigitalObject::TABLE_NAME.' do';
-    $sql .= ' JOIN '.QubitRelation::TABLE_NAME.' relation
+        $sql .= ' FROM '.QubitDigitalObject::TABLE_NAME.' do';
+        $sql .= ' JOIN '.QubitRelation::TABLE_NAME.' relation
                 ON do.object_id = relation.object_id';
-    $sql .= ' JOIN '.QubitObject::TABLE_NAME.' obj
+        $sql .= ' JOIN '.QubitObject::TABLE_NAME.' obj
                 ON do.id = obj.id';
-    $sql .= ' WHERE relation.subject_id = ?
+        $sql .= ' WHERE relation.subject_id = ?
                 AND relation.type_id = ?';
 
-    self::$statements['do'] = self::$conn->prepare($sql);
-    self::$statements['do']->execute([$this->id, QubitTerm::AIP_RELATION_ID]);
+        self::$statements['do'] = self::$conn->prepare($sql);
+        self::$statements['do']->execute([$this->id, QubitTerm::AIP_RELATION_ID]);
 
-    $digitalObjects = [];
-    foreach (self::$statements['do']->fetchAll(PDO::FETCH_OBJ) as $item) {
-      if (null !== $premisData = arElasticSearchPluginUtil::getPremisData($item->object_id, self::$conn)) {
-        $digitalObjects[] = ['metsData' => $premisData];
-      }
-    }
+        $digitalObjects = [];
+        foreach (self::$statements['do']->fetchAll(PDO::FETCH_OBJ) as $item) {
+            if (null !== $premisData = arElasticSearchPluginUtil::getPremisData($item->object_id, self::$conn)) {
+                $digitalObjects[] = ['metsData' => $premisData];
+            }
+        }
 
-    if (!empty($digitalObjects)) {
-      return $digitalObjects;
+        if (!empty($digitalObjects)) {
+            return $digitalObjects;
+        }
     }
-  }
 }

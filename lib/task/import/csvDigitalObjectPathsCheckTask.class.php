@@ -24,161 +24,161 @@
  */
 class csvDigitalObjectPathsCheckTask extends arBaseTask
 {
-  public function execute($arguments = [], $options = [])
-  {
-    parent::execute($arguments, $options);
+    public function execute($arguments = [], $options = [])
+    {
+        parent::execute($arguments, $options);
 
-    if (!is_dir($arguments['path-to-images'])) {
-      throw new sfException("Images directory doesn't exist.");
+        if (!is_dir($arguments['path-to-images'])) {
+            throw new sfException("Images directory doesn't exist.");
+        }
+
+        if (!file_exists($arguments['path-to-csv-file'])) {
+            throw new sfException("CSV file doesn't exist.");
+        }
+
+        $csvFilePathColumnName = ($options['csv-column-name']) ? $options['csv-column-name'] : 'digitalObjectPath';
+
+        $this->logSection('digital-object-path-check', 'Checking '.$csvFilePathColumnName.' column.');
+
+        $this->printImageUsageInfo($arguments['path-to-images'], $arguments['path-to-csv-file'], $csvFilePathColumnName);
     }
 
-    if (!file_exists($arguments['path-to-csv-file'])) {
-      throw new sfException("CSV file doesn't exist.");
-    }
+    protected function configure()
+    {
+        $this->addArguments([
+            new sfCommandArgument('path-to-images', sfCommandArgument::REQUIRED, 'Path to directory containing images.'),
+            new sfCommandArgument('path-to-csv-file', sfCommandArgument::REQUIRED, 'Path to CSV file.'),
+        ]);
 
-    $csvFilePathColumnName = ($options['csv-column-name']) ? $options['csv-column-name'] : 'digitalObjectPath';
+        $this->addOptions([
+            new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+            new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+            new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+            new sfCommandOption('csv-column-name', 'n', sfCommandOption::PARAMETER_OPTIONAL, 'CSV column name containing digital object paths', null),
+        ]);
 
-    $this->logSection('digital-object-path-check', 'Checking '.$csvFilePathColumnName.' column.');
+        $this->namespace = 'csv';
+        $this->name = 'digital-object-path-check';
+        $this->briefDescription = 'Check digital object paths in CSV data.';
 
-    $this->printImageUsageInfo($arguments['path-to-images'], $arguments['path-to-csv-file'], $csvFilePathColumnName);
-  }
-
-  protected function configure()
-  {
-    $this->addArguments([
-      new sfCommandArgument('path-to-images', sfCommandArgument::REQUIRED, 'Path to directory containing images.'),
-      new sfCommandArgument('path-to-csv-file', sfCommandArgument::REQUIRED, 'Path to CSV file.'),
-    ]);
-
-    $this->addOptions([
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('csv-column-name', 'n', sfCommandOption::PARAMETER_OPTIONAL, 'CSV column name containing digital object paths', null),
-    ]);
-
-    $this->namespace = 'csv';
-    $this->name = 'digital-object-path-check';
-    $this->briefDescription = 'Check digital object paths in CSV data.';
-
-    $this->detailedDescription = <<<'EOF'
+        $this->detailedDescription = <<<'EOF'
 Compare digital object-related files in a directory to data in a CSV file's
 column (digitalObjectPath by default) and display a report.
 
 Determines which files aren't referenced in the CSV data, which are referenced
 in CSV data but missing, and which files are references more than once.
 EOF;
-  }
-
-  private function printImageUsageInfo($pathToImages, $csvFilePath, $csvFilePathColumnName)
-  {
-    $imageFiles = $this->getImageFiles($pathToImages);
-
-    $columnValues = $this->getCsvColumnValues($csvFilePath, $csvFilePathColumnName);
-    $imageUses = $this->summarizeImageUsage($columnValues);
-
-    $this->printImageUses($imageUses);
-    $this->printUnusedFiles($imageFiles, $imageUses);
-    $this->printMissingFiles($imageUses, $pathToImages);
-  }
-
-  private function getImageFiles($pathToImages)
-  {
-    $imageFiles = [];
-
-    $pathToImages = realpath($pathToImages);
-    $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($pathToImages));
-
-    foreach ($objects as $filePath => $object) {
-      if (!is_dir($filePath)) {
-        // Remove absolute path leading to image directory
-        $relativeFilePath = substr($filePath, strlen($pathToImages) + 1, strlen($filePath));
-        array_push($imageFiles, $relativeFilePath);
-      }
     }
 
-    return $imageFiles;
-  }
+    private function printImageUsageInfo($pathToImages, $csvFilePath, $csvFilePathColumnName)
+    {
+        $imageFiles = $this->getImageFiles($pathToImages);
 
-  private function getCsvColumnValues($filepath, $columnName)
-  {
-    $values = [];
+        $columnValues = $this->getCsvColumnValues($csvFilePath, $csvFilePathColumnName);
+        $imageUses = $this->summarizeImageUsage($columnValues);
 
-    $fh = fopen($filepath, 'r');
-
-    // Determine column index number using specified name
-    $header = fgetcsv($fh, 60000);
-    if (false === $imageColumnIndex = array_search($columnName, $header)) {
-      throw new sfException('Column name not found in header.');
+        $this->printImageUses($imageUses);
+        $this->printUnusedFiles($imageFiles, $imageUses);
+        $this->printMissingFiles($imageUses, $pathToImages);
     }
 
-    while ($row = fgetcsv($fh, 60000)) {
-      array_push($values, $row[$imageColumnIndex]);
+    private function getImageFiles($pathToImages)
+    {
+        $imageFiles = [];
+
+        $pathToImages = realpath($pathToImages);
+        $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($pathToImages));
+
+        foreach ($objects as $filePath => $object) {
+            if (!is_dir($filePath)) {
+                // Remove absolute path leading to image directory
+                $relativeFilePath = substr($filePath, strlen($pathToImages) + 1, strlen($filePath));
+                array_push($imageFiles, $relativeFilePath);
+            }
+        }
+
+        return $imageFiles;
     }
 
-    return $values;
-  }
+    private function getCsvColumnValues($filepath, $columnName)
+    {
+        $values = [];
 
-  private function summarizeImageUsage($columnValues)
-  {
-    $imageUses = [];
+        $fh = fopen($filepath, 'r');
 
-    foreach ($columnValues as $columnValue) {
-      $imageUses[$columnValue] = (!isset($imageUses[$columnValue])) ? 1 : $imageUses[$columnValue] + 1;
+        // Determine column index number using specified name
+        $header = fgetcsv($fh, 60000);
+        if (false === $imageColumnIndex = array_search($columnName, $header)) {
+            throw new sfException('Column name not found in header.');
+        }
+
+        while ($row = fgetcsv($fh, 60000)) {
+            array_push($values, $row[$imageColumnIndex]);
+        }
+
+        return $values;
     }
 
-    return $imageUses;
-  }
+    private function summarizeImageUsage($columnValues)
+    {
+        $imageUses = [];
 
-  private function printImageUses($imageUses)
-  {
-    $usedMoreThanOnce = [];
+        foreach ($columnValues as $columnValue) {
+            $imageUses[$columnValue] = (!isset($imageUses[$columnValue])) ? 1 : $imageUses[$columnValue] + 1;
+        }
 
-    foreach ($imageUses as $image => $uses) {
-      if ($uses > 1) {
-        array_push($usedMoreThanOnce, $image);
-      }
+        return $imageUses;
     }
 
-    $this->printListOfItemsIfNotEmpty($usedMoreThanOnce, 'Used more than once in CSV:');
-  }
+    private function printImageUses($imageUses)
+    {
+        $usedMoreThanOnce = [];
 
-  private function printUnusedFiles($imageFiles, $imageUses)
-  {
-    $unusedFiles = [];
+        foreach ($imageUses as $image => $uses) {
+            if ($uses > 1) {
+                array_push($usedMoreThanOnce, $image);
+            }
+        }
 
-    foreach ($imageFiles as $imageFile) {
-      if (!isset($imageUses[$imageFile])) {
-        array_push($unusedFiles, $imageFile);
-      }
+        $this->printListOfItemsIfNotEmpty($usedMoreThanOnce, 'Used more than once in CSV:');
     }
 
-    $this->printListOfItemsIfNotEmpty($unusedFiles, 'Unused files:');
-  }
+    private function printUnusedFiles($imageFiles, $imageUses)
+    {
+        $unusedFiles = [];
 
-  private function printMissingFiles($imageUses, $pathToImages)
-  {
-    $missingFiles = [];
+        foreach ($imageFiles as $imageFile) {
+            if (!isset($imageUses[$imageFile])) {
+                array_push($unusedFiles, $imageFile);
+            }
+        }
 
-    foreach ($imageUses as $image => $uses) {
-      if (!file_exists($pathToImages.'/'.$image)) {
-        array_push($missingFiles, $image);
-      }
+        $this->printListOfItemsIfNotEmpty($unusedFiles, 'Unused files:');
     }
 
-    $this->printListOfItemsIfNotEmpty($missingFiles, 'Files referenced in CSV that are missing:');
-  }
+    private function printMissingFiles($imageUses, $pathToImages)
+    {
+        $missingFiles = [];
 
-  private function printListOfItemsIfNotEmpty($list, $listHeader)
-  {
-    if (count($list)) {
-      echo $listHeader."\n";
+        foreach ($imageUses as $image => $uses) {
+            if (!file_exists($pathToImages.'/'.$image)) {
+                array_push($missingFiles, $image);
+            }
+        }
 
-      foreach ($list as $item) {
-        echo '* '.$item."\n";
-      }
-
-      echo "\n";
+        $this->printListOfItemsIfNotEmpty($missingFiles, 'Files referenced in CSV that are missing:');
     }
-  }
+
+    private function printListOfItemsIfNotEmpty($list, $listHeader)
+    {
+        if (count($list)) {
+            echo $listHeader."\n";
+
+            foreach ($list as $item) {
+                echo '* '.$item."\n";
+            }
+
+            echo "\n";
+        }
+    }
 }

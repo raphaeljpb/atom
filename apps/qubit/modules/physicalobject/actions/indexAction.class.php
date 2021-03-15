@@ -19,18 +19,18 @@
 
 class PhysicalObjectIndexAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->resource = $this->getRoute()->resource;
+    public function execute($request)
+    {
+        $this->resource = $this->getRoute()->resource;
 
-    if (!isset($this->resource)) {
-      $this->forward404();
+        if (!isset($this->resource)) {
+            $this->forward404();
+        }
+
+        if (1 > strlen($title = $this->resource->__toString())) {
+            $title = $this->context->i18n->__('Untitled');
+        }
+
+        $this->response->setTitle("{$title} - {$this->response->getTitle()}");
     }
-
-    if (1 > strlen($title = $this->resource->__toString())) {
-      $title = $this->context->i18n->__('Untitled');
-    }
-
-    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
-  }
 }

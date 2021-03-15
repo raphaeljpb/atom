@@ -26,21 +26,21 @@
  */
 class arMigration0111
 {
-  public const VERSION = 111;
-  public const // The new database version
+    public const VERSION = 111;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    // Create job table
-    $sql = <<<'sql'
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        // Create job table
+        $sql = <<<'sql'
 CREATE TABLE IF NOT EXISTS `job` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -57,20 +57,20 @@ CREATE TABLE IF NOT EXISTS `job` (
 ) ENGINE=InnoDB;
 sql;
 
-    QubitPdo::modify($sql);
+        QubitPdo::modify($sql);
 
-    // Create job menu item under manage->jobs
-    $jobs = QubitMenu::getByName('jobs');
-    if (null === $jobs) {
-      $node = new QubitMenu();
-      $node->parentId = QubitMenu::MANAGE_ID;
-      $node->name = 'jobs';
-      $node->path = 'jobs/browse';
-      $node->label = 'Jobs';
-      $node->culture = 'en';
-      $node->save();
+        // Create job menu item under manage->jobs
+        $jobs = QubitMenu::getByName('jobs');
+        if (null === $jobs) {
+            $node = new QubitMenu();
+            $node->parentId = QubitMenu::MANAGE_ID;
+            $node->name = 'jobs';
+            $node->path = 'jobs/browse';
+            $node->label = 'Jobs';
+            $node->culture = 'en';
+            $node->save();
+        }
+
+        return true;
     }
-
-    return true;
-  }
 }

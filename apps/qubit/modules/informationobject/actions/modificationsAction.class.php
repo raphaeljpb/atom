@@ -19,38 +19,38 @@
 
 class InformationObjectModificationsAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->resource = $this->getRoute()->resource;
-    $this->abortInvalidRequests();
+    public function execute($request)
+    {
+        $this->resource = $this->getRoute()->resource;
+        $this->abortInvalidRequests();
 
-    // Criteria to fetch user actions
-    $criteria = new Criteria();
-    $criteria->add(QubitAuditLog::OBJECT_ID, $this->resource->id);
-    $criteria->addDescendingOrderByColumn(QubitAuditLog::CREATED_AT);
+        // Criteria to fetch user actions
+        $criteria = new Criteria();
+        $criteria->add(QubitAuditLog::OBJECT_ID, $this->resource->id);
+        $criteria->addDescendingOrderByColumn(QubitAuditLog::CREATED_AT);
 
-    // Page results
-    $limit = sfConfig::get('app_hits_per_page');
-    $page = (isset($request->page) && ctype_digit($request->page)) ? $request->page : 1;
+        // Page results
+        $limit = sfConfig::get('app_hits_per_page');
+        $page = (isset($request->page) && ctype_digit($request->page)) ? $request->page : 1;
 
-    $this->pager = new QubitPager('QubitAuditLog');
-    $this->pager->setCriteria($criteria);
-    $this->pager->setPage($page);
-    $this->pager->setMaxPerPage($limit);
+        $this->pager = new QubitPager('QubitAuditLog');
+        $this->pager->setCriteria($criteria);
+        $this->pager->setPage($page);
+        $this->pager->setMaxPerPage($limit);
 
-    $this->modifications = $this->pager->getResults();
-  }
-
-  private function abortInvalidRequests()
-  {
-    // Check that this isn't the root
-    if (!isset($this->resource->parent)) {
-      $this->forward404();
+        $this->modifications = $this->pager->getResults();
     }
 
-    // Check user authorization
-    if (!QubitAcl::check($this->resource, 'read') || !sfConfig::get('app_audit_log_enabled', false)) {
-      QubitAcl::forwardToSecureAction();
+    private function abortInvalidRequests()
+    {
+        // Check that this isn't the root
+        if (!isset($this->resource->parent)) {
+            $this->forward404();
+        }
+
+        // Check user authorization
+        if (!QubitAcl::check($this->resource, 'read') || !sfConfig::get('app_audit_log_enabled', false)) {
+            QubitAcl::forwardToSecureAction();
+        }
     }
-  }
 }

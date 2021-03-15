@@ -22,28 +22,28 @@
  */
 class QubitValidatorUrl extends sfValidatorBase
 {
-  /**
-   * @param array $options  An array of options
-   * @param array $messages An array of error messages
-   *
-   * @see sfValidatorBase
-   */
-  protected function configure($options = [], $messages = [])
-  {
-    $this->setMessage('invalid', '"%value%" is not a URL.');
-  }
-
-  /**
-   * @see sfValidatorBase
-   *
-   * @param mixed $value
-   */
-  protected function doClean($value)
-  {
-    if (!filter_var($value, FILTER_VALIDATE_URL)) {
-      throw new sfValidatorError($this, 'invalid', ['value' => $value]);
+    /**
+     * @param array $options  An array of options
+     * @param array $messages An array of error messages
+     *
+     * @see sfValidatorBase
+     */
+    protected function configure($options = [], $messages = [])
+    {
+        $this->setMessage('invalid', '"%value%" is not a URL.');
     }
 
-    return $value;
-  }
+    /**
+     * @see sfValidatorBase
+     *
+     * @param mixed $value
+     */
+    protected function doClean($value)
+    {
+        if (!filter_var($value, FILTER_VALIDATE_URL)) {
+            throw new sfValidatorError($this, 'invalid', ['value' => $value]);
+        }
+
+        return $value;
+    }
 }

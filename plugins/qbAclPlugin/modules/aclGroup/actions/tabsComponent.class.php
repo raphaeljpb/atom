@@ -24,12 +24,12 @@
  */
 class aclGroupTabsComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    // Get parent menu
-    $criteria = new Criteria();
-    $criteria->add(QubitMenu::NAME, 'groups');
+    public function execute($request)
+    {
+        // Get parent menu
+        $criteria = new Criteria();
+        $criteria->add(QubitMenu::NAME, 'groups');
 
-    $this->groupsMenu = QubitMenu::getOne($criteria);
-  }
+        $this->groupsMenu = QubitMenu::getOne($criteria);
+    }
 }

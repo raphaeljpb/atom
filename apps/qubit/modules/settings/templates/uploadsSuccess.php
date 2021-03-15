@@ -35,54 +35,54 @@
         <tbody>
 
           <?php echo $form
-            ->upload_quota
-            ->label(__('Total space available for uploads'))
-            ->renderRow();
+              ->upload_quota
+              ->label(__('Total space available for uploads'))
+              ->renderRow();
           ?>
 
           <?php echo $form
-            ->enable_repository_quotas
-            ->label(
+              ->enable_repository_quotas
+              ->label(
                 __('%1% upload limits',
                 [
-                  '%1%' => sfConfig::get('app_ui_label_repository'),
+                    '%1%' => sfConfig::get('app_ui_label_repository'),
                 ]
               ))
-            ->help(__(
+              ->help(__(
                 'When enabled, an &quot;Upload limit&quot; meter is displayed'
                 .' for authenticated users on the %1% view page, and'
                 .' administrators can limit the disk space each %1% is allowed'
                 .' for %2% uploads',
                 [
-                  '%1%' => strtolower(sfConfig::get('app_ui_label_repository')),
-                  '%2%' => strtolower(sfConfig::get('app_ui_label_digitalobject')),
+                    '%1%' => strtolower(sfConfig::get('app_ui_label_repository')),
+                    '%2%' => strtolower(sfConfig::get('app_ui_label_digitalobject')),
                 ]
               ))
-            ->renderRow();
+              ->renderRow();
           ?>
 
           <?php echo $form
-            ->repository_quota
-            ->label(__(
+              ->repository_quota
+              ->label(__(
               'Default %1% upload limit (GB)',
               ['%1%' => strtolower(sfConfig::get('app_ui_label_repository'))]
             ))
-            ->help(__(
+              ->help(__(
                 'Default %1% upload limit for a new %2%.  A value of &quot;0'
                 .'&quot; (zero) disables file upload.  A value of &quot;-1'
                 .'&quot; allows unlimited uploads',
                 [
-                  '%1%' => strtolower(sfConfig::get('app_ui_label_digitalobject')),
-                  '%2%' => strtolower(sfConfig::get('app_ui_label_repository')),
+                    '%1%' => strtolower(sfConfig::get('app_ui_label_digitalobject')),
+                    '%2%' => strtolower(sfConfig::get('app_ui_label_repository')),
                 ]
               ))
-            ->renderRow();
+              ->renderRow();
           ?>
 
           <?php echo $form
-            ->explode_multipage_files
-            ->label(__('Upload multi-page files as multiple descriptions'))
-            ->renderRow();
+              ->explode_multipage_files
+              ->label(__('Upload multi-page files as multiple descriptions'))
+              ->renderRow();
           ?>
 
         </tbody>

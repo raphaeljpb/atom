@@ -26,69 +26,69 @@
  */
 class ActorEditAction extends DefaultEditAction
 {
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid()) {
-        $this->processForm();
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
+            if ($this->form->isValid()) {
+                $this->processForm();
 
-        $this->resource->save();
+                $this->resource->save();
 
-        if (isset($request->id) && (0 < strlen($next = $this->form->getValue('next')))) {
-          $this->redirect($next);
+                if (isset($request->id) && (0 < strlen($next = $this->form->getValue('next')))) {
+                    $this->redirect($next);
+                }
+
+                $this->redirect([$this->resource, 'module' => 'actor']);
+            }
         }
 
-        $this->redirect([$this->resource, 'module' => 'actor']);
-      }
+        QubitDescription::addAssets($this->response);
     }
 
-    QubitDescription::addAssets($this->response);
-  }
+    protected function earlyExecute()
+    {
+        $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-  protected function earlyExecute()
-  {
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+        $this->resource = new QubitActor();
 
-    $this->resource = new QubitActor();
+        // Make root actor the parent of new actors
+        $this->resource->parentId = QubitActor::ROOT_ID;
 
-    // Make root actor the parent of new actors
-    $this->resource->parentId = QubitActor::ROOT_ID;
+        if (isset($this->getRoute()->resource)) {
+            $this->resource = $this->getRoute()->resource;
 
-    if (isset($this->getRoute()->resource)) {
-      $this->resource = $this->getRoute()->resource;
+            // Check that this isn't the root
+            if (!isset($this->resource->parent)) {
+                $this->forward404();
+            }
 
-      // Check that this isn't the root
-      if (!isset($this->resource->parent)) {
-        $this->forward404();
-      }
+            // Check user authorization
+            if (!QubitAcl::check($this->resource, 'update') && !QubitAcl::check($this->resource, 'translate')) {
+                QubitAcl::forwardUnauthorized();
+            }
 
-      // Check user authorization
-      if (!QubitAcl::check($this->resource, 'update') && !QubitAcl::check($this->resource, 'translate')) {
-        QubitAcl::forwardUnauthorized();
-      }
+            // Add optimistic lock
+            $this->form->setDefault('serialNumber', $this->resource->serialNumber);
+            $this->form->setValidator('serialNumber', new sfValidatorInteger());
+            $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
+        } else {
+            // Check user authorization against Actor ROOT
+            if (!QubitAcl::check(QubitActor::getById(QubitActor::ROOT_ID), 'create')) {
+                QubitAcl::forwardUnauthorized();
+            }
+        }
 
-      // Add optimistic lock
-      $this->form->setDefault('serialNumber', $this->resource->serialNumber);
-      $this->form->setValidator('serialNumber', new sfValidatorInteger());
-      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
-    } else {
-      // Check user authorization against Actor ROOT
-      if (!QubitAcl::check(QubitActor::getById(QubitActor::ROOT_ID), 'create')) {
-        QubitAcl::forwardUnauthorized();
-      }
+        $this->form->setDefault('next', $this->request->getReferer());
+        $this->form->setValidator('next', new sfValidatorString());
+        $this->form->setWidget('next', new sfWidgetFormInputHidden());
     }
 
-    $this->form->setDefault('next', $this->request->getReferer());
-    $this->form->setValidator('next', new sfValidatorString());
-    $this->form->setWidget('next', new sfWidgetFormInputHidden());
-  }
-
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'entityType':
         $this->form->setDefault('entityType', $this->context->routing->generate(null, [$this->resource->entityType, 'module' => 'term']));
         $this->form->setValidator('entityType', new sfValidatorString());
@@ -96,7 +96,7 @@ class ActorEditAction extends DefaultEditAction
         $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::ACTOR_ENTITY_TYPE_ID) as $item) {
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
         $this->form->setWidget('entityType', new sfWidgetFormSelect(['choices' => $choices]));
@@ -133,9 +133,9 @@ class ActorEditAction extends DefaultEditAction
       case 'maintainingRepository':
         $choices = [];
         if (null !== $repo = $this->resource->getMaintainingRepository()) {
-          $repoRoute = $this->context->routing->generate(null, [$repo, 'module' => 'repository']);
-          $choices[$repoRoute] = $repo;
-          $this->form->setDefault('maintainingRepository', $repoRoute);
+            $repoRoute = $this->context->routing->generate(null, [$repo, 'module' => 'repository']);
+            $choices[$repoRoute] = $repo;
+            $this->form->setDefault('maintainingRepository', $repoRoute);
         }
 
         $this->form->setValidator('maintainingRepository', new sfValidatorString());
@@ -163,7 +163,7 @@ class ActorEditAction extends DefaultEditAction
 
           $value = $choices = [];
           foreach ($this[$name] = QubitObjectTermRelation::get($criteria) as $item) {
-            $choices[$value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term'])] = $item->term;
+              $choices[$value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term'])] = $item->term;
           }
 
           $this->form->setDefault($name, $value);
@@ -175,29 +175,29 @@ class ActorEditAction extends DefaultEditAction
       default:
         return parent::addField($name);
     }
-  }
+    }
 
-  /**
-   * Process form fields.
-   *
-   * @param $field mixed symfony form widget
-   */
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    /**
+     * Process form fields.
+     *
+     * @param $field mixed symfony form widget
+     */
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'authorizedFormOfName':
         // Avoid duplicates (used in autocomplete.js)
         if (filter_var($this->request->getPostParameter('linkExisting'), FILTER_VALIDATE_BOOLEAN)) {
-          $criteria = new Criteria();
-          $criteria->addJoin(QubitObject::ID, QubitActorI18n::ID);
-          $criteria->add(QubitObject::CLASS_NAME, get_class($this->request));
-          $criteria->add(QubitActorI18n::CULTURE, $this->context->user->getCulture());
-          $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, $this->form->getValue('authorizedFormOfName'));
-          if (null !== $actor = QubitActor::getOne($criteria)) {
-            $this->redirect([$actor]);
+            $criteria = new Criteria();
+            $criteria->addJoin(QubitObject::ID, QubitActorI18n::ID);
+            $criteria->add(QubitObject::CLASS_NAME, get_class($this->request));
+            $criteria->add(QubitActorI18n::CULTURE, $this->context->user->getCulture());
+            $criteria->add(QubitActorI18n::AUTHORIZED_FORM_OF_NAME, $this->form->getValue('authorizedFormOfName'));
+            if (null !== $actor = QubitActor::getOne($criteria)) {
+                $this->redirect([$actor]);
 
-            return;
-          }
+                return;
+            }
         }
 
         return parent::processField($field);
@@ -207,8 +207,8 @@ class ActorEditAction extends DefaultEditAction
 
         $value = $this->form->getValue('entityType');
         if (isset($value)) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          $this->resource->entityType = $params['_sf_route']->resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($value));
+            $this->resource->entityType = $params['_sf_route']->resource;
         }
 
         break;
@@ -216,10 +216,10 @@ class ActorEditAction extends DefaultEditAction
       case 'maintainingRepository':
         $value = $this->form->getValue('maintainingRepository');
         if (isset($value)) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          $this->resource->setOrDeleteMaintainingRepository($params['_sf_route']->resource);
+            $params = $this->context->routing->parse(Qubit::pathInfo($value));
+            $this->resource->setOrDeleteMaintainingRepository($params['_sf_route']->resource);
         } else {
-          $this->resource->setOrDeleteMaintainingRepository();
+            $this->resource->setOrDeleteMaintainingRepository();
         }
 
         break;
@@ -228,25 +228,25 @@ class ActorEditAction extends DefaultEditAction
       case 'placeAccessPoints':
         $value = $filtered = [];
         foreach ($this->form->getValue($field->getName()) as $item) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($item));
-          $resource = $params['_sf_route']->resource;
-          $value[$resource->id] = $filtered[$resource->id] = $resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($item));
+            $resource = $params['_sf_route']->resource;
+            $value[$resource->id] = $filtered[$resource->id] = $resource;
         }
 
         foreach ($this[$field->getName()] as $item) {
-          if (isset($value[$item->term->id])) {
-            unset($filtered[$item->term->id]);
-          } else {
-            $item->indexObjectOnDelete = false;
-            $item->delete();
-          }
+            if (isset($value[$item->term->id])) {
+                unset($filtered[$item->term->id]);
+            } else {
+                $item->indexObjectOnDelete = false;
+                $item->delete();
+            }
         }
 
         foreach ($filtered as $item) {
-          $relation = new QubitObjectTermRelation();
-          $relation->term = $item;
+            $relation = new QubitObjectTermRelation();
+            $relation->term = $item;
 
-          $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
+            $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
         }
 
         break;
@@ -254,5 +254,5 @@ class ActorEditAction extends DefaultEditAction
       default:
         return parent::processField($field);
     }
-  }
+    }
 }

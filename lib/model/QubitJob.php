@@ -22,108 +22,108 @@
  */
 class QubitJob extends BaseJob
 {
-  private $notes = [];
+    private $notes = [];
 
-  public function __toString()
-  {
-    return $this->name;
-  }
-
-  /**
-   * Save the job along with its notes.
-   *
-   * @param null|mixed $connection
-   */
-  public function save($connection = null)
-  {
-    parent::save($connection);
-
-    foreach ($this->notes as $note) {
-      $note->save();
-    }
-  }
-
-  /**
-   * Delete the job along with its notes.
-   *
-   * @param null|mixed $connection
-   */
-  public function delete($connection = null)
-  {
-    parent::delete($connection);
-
-    if (isset($job->downloadPath)) {
-      unlink($job->downloadPath);
+    public function __toString()
+    {
+        return $this->name;
     }
 
-    foreach ($this->notes as $note) {
-      $note->delete();
-    }
-  }
+    /**
+     * Save the job along with its notes.
+     *
+     * @param null|mixed $connection
+     */
+    public function save($connection = null)
+    {
+        parent::save($connection);
 
-  /**
-   * Set the job status to error.
-   *
-   * @param string $errorNote Optional note to give additional error information
-   */
-  public function setStatusError($errorNote = null)
-  {
-    if (null !== $errorNote) {
-      $this->addNoteText($errorNote);
+        foreach ($this->notes as $note) {
+            $note->save();
+        }
     }
 
-    $this->statusId = QubitTerm::JOB_STATUS_ERROR_ID;
-    $this->completedAt = new DateTime('now');
-  }
+    /**
+     * Delete the job along with its notes.
+     *
+     * @param null|mixed $connection
+     */
+    public function delete($connection = null)
+    {
+        parent::delete($connection);
 
-  /**
-   * Set the job status to in progress.
-   */
-  public function setStatusInProgress()
-  {
-    $this->statusId = QubitTerm::JOB_STATUS_IN_PROGRESS_ID;
-  }
+        if (isset($job->downloadPath)) {
+            unlink($job->downloadPath);
+        }
 
-  /**
-   * Set the job status to complete.
-   */
-  public function setStatusCompleted()
-  {
-    $this->statusId = QubitTerm::JOB_STATUS_COMPLETED_ID;
-    $this->completedAt = new DateTime('now');
-  }
+        foreach ($this->notes as $note) {
+            $note->delete();
+        }
+    }
 
-  /**
-   * Get a string representing the job creation date.
-   *
-   * @return string the job's creation date in a human readable string
-   */
-  public function getCreationDateString()
-  {
-    return $this->formatDate($this->createdAt);
-  }
+    /**
+     * Set the job status to error.
+     *
+     * @param string $errorNote Optional note to give additional error information
+     */
+    public function setStatusError($errorNote = null)
+    {
+        if (null !== $errorNote) {
+            $this->addNoteText($errorNote);
+        }
 
-  /**
-   * Get a string representing the job completion date.
-   *
-   * @return string the job's creation date in a human readable string
-   */
-  public function getCompletionDateString()
-  {
-    return $this->formatDate($this->completedAt);
-  }
+        $this->statusId = QubitTerm::JOB_STATUS_ERROR_ID;
+        $this->completedAt = new DateTime('now');
+    }
 
-  /**
-   * Get a string representing the job status.
-   *
-   * @return string the job's status in a human readable string
-   */
-  public function getStatusString()
-  {
-    $i18n = sfContext::getInstance()->i18n;
-    $unknown = $i18n->__('Unknown');
+    /**
+     * Set the job status to in progress.
+     */
+    public function setStatusInProgress()
+    {
+        $this->statusId = QubitTerm::JOB_STATUS_IN_PROGRESS_ID;
+    }
 
-    switch ($this->statusId) {
+    /**
+     * Set the job status to complete.
+     */
+    public function setStatusCompleted()
+    {
+        $this->statusId = QubitTerm::JOB_STATUS_COMPLETED_ID;
+        $this->completedAt = new DateTime('now');
+    }
+
+    /**
+     * Get a string representing the job creation date.
+     *
+     * @return string the job's creation date in a human readable string
+     */
+    public function getCreationDateString()
+    {
+        return $this->formatDate($this->createdAt);
+    }
+
+    /**
+     * Get a string representing the job completion date.
+     *
+     * @return string the job's creation date in a human readable string
+     */
+    public function getCompletionDateString()
+    {
+        return $this->formatDate($this->completedAt);
+    }
+
+    /**
+     * Get a string representing the job status.
+     *
+     * @return string the job's status in a human readable string
+     */
+    public function getStatusString()
+    {
+        $i18n = sfContext::getInstance()->i18n;
+        $unknown = $i18n->__('Unknown');
+
+        switch ($this->statusId) {
       case QubitTerm::JOB_STATUS_COMPLETED_ID:
         return $i18n->__('Completed');
 
@@ -136,266 +136,266 @@ class QubitJob extends BaseJob
       default:
         return $unknown;
     }
-  }
-
-  /**
-   * Get the module type for this job's corresponding object.
-   * e.g., informationobject, actor, etc.
-   *
-   * @return mixed a string indicating the module type of the object for this job,
-   *               or else null
-   */
-  public function getObjectModule()
-  {
-    $className = QubitPdo::fetchColumn('SELECT class_name FROM object WHERE id = ?', [$this->objectId]);
-    if (!$className) {
-      return null;
     }
 
-    return strtolower(str_replace('Qubit', '', $className));
-  }
+    /**
+     * Get the module type for this job's corresponding object.
+     * e.g., informationobject, actor, etc.
+     *
+     * @return mixed a string indicating the module type of the object for this job,
+     *               or else null
+     */
+    public function getObjectModule()
+    {
+        $className = QubitPdo::fetchColumn('SELECT class_name FROM object WHERE id = ?', [$this->objectId]);
+        if (!$className) {
+            return null;
+        }
 
-  /**
-   * Get the associated object's slug for this job.
-   *
-   * @return mixed A string indicating the object's slug. If none, return null.
-   */
-  public function getObjectSlug()
-  {
-    return QubitPdo::fetchColumn('SELECT slug FROM slug WHERE object_id = ?', [$this->objectId]);
-  }
-
-  /**
-   * Add a basic note to this job. This function creates/saves a new note.
-   *
-   * @param string $contents The text for the note
-   */
-  public function addNoteText($contents)
-  {
-    $note = new QubitNote();
-    $note->content = $contents;
-
-    if (!isset($this->id)) {
-      throw new sfException('Tried to add a note to a job that is not saved yet');
+        return strtolower(str_replace('Qubit', '', $className));
     }
 
-    $note->objectId = $this->id;
-    $this->notes[] = $note;
+    /**
+     * Get the associated object's slug for this job.
+     *
+     * @return mixed A string indicating the object's slug. If none, return null.
+     */
+    public function getObjectSlug()
+    {
+        return QubitPdo::fetchColumn('SELECT slug FROM slug WHERE object_id = ?', [$this->objectId]);
+    }
 
-    $note->save();
-  }
+    /**
+     * Add a basic note to this job. This function creates/saves a new note.
+     *
+     * @param string $contents The text for the note
+     */
+    public function addNoteText($contents)
+    {
+        $note = new QubitNote();
+        $note->content = $contents;
 
-  /**
-   * Get the notes attached to this job.
-   *
-   * @return QubitQuery An query of the notes for this job
-   */
-  public function getNotes()
-  {
-    $criteria = new Criteria();
-    $criteria->add(QubitNote::OBJECT_ID, $this->id);
+        if (!isset($this->id)) {
+            throw new sfException('Tried to add a note to a job that is not saved yet');
+        }
 
-    return QubitNote::get($criteria);
-  }
+        $note->objectId = $this->id;
+        $this->notes[] = $note;
 
-  /**
-   * Generate a unique token property to associate unauthenticated users with jobs.
-   *
-   * @throws sfException if a unique token can't be generated
-   *
-   * @return QubitProperty generated user token property
-   */
-  public function generateUserTokenProperty()
-  {
-    $token = null;
-    $tries = 0;
+        $note->save();
+    }
 
-    while (!isset($token) && $tries < 3) {
-      $tokenToCheck = bin2hex(openssl_random_pseudo_bytes(16));
+    /**
+     * Get the notes attached to this job.
+     *
+     * @return QubitQuery An query of the notes for this job
+     */
+    public function getNotes()
+    {
+        $criteria = new Criteria();
+        $criteria->add(QubitNote::OBJECT_ID, $this->id);
 
-      $sql = 'SELECT COUNT(p.id) FROM property p
+        return QubitNote::get($criteria);
+    }
+
+    /**
+     * Generate a unique token property to associate unauthenticated users with jobs.
+     *
+     * @throws sfException if a unique token can't be generated
+     *
+     * @return QubitProperty generated user token property
+     */
+    public function generateUserTokenProperty()
+    {
+        $token = null;
+        $tries = 0;
+
+        while (!isset($token) && $tries < 3) {
+            $tokenToCheck = bin2hex(openssl_random_pseudo_bytes(16));
+
+            $sql = 'SELECT COUNT(p.id) FROM property p
               JOIN property_i18n i18n ON p.id = i18n.id
               WHERE p.name = ? AND i18n.value = ?';
-      $count = QubitPdo::fetchColumn($sql, ['userToken', $tokenToCheck]);
+            $count = QubitPdo::fetchColumn($sql, ['userToken', $tokenToCheck]);
 
-      if ($count > 0) {
-        ++$tries;
-      } else {
-        $token = $tokenToCheck;
-      }
+            if ($count > 0) {
+                ++$tries;
+            } else {
+                $token = $tokenToCheck;
+            }
+        }
+
+        if (!isset($token)) {
+            throw new sfException('Could not generate user token for the job.');
+        }
+
+        $property = new QubitProperty();
+        $property->setObjectId($this->id);
+        $property->setName('userToken');
+        $property->setValue($token);
+        $property->save();
+
+        return $property;
     }
 
-    if (!isset($token)) {
-      throw new sfException('Could not generate user token for the job.');
-    }
-
-    $property = new QubitProperty();
-    $property->setObjectId($this->id);
-    $property->setName('userToken');
-    $property->setValue($token);
-    $property->save();
-
-    return $property;
-  }
-
-  /**
-   * Get the QubitJob associated with a given user token, if any.
-   *
-   * @param string $token the user token
-   *
-   * @return mixed qubitJob associated with the token or null
-   */
-  public static function getByUserTokenProperty($token)
-  {
-    // Use raw SQL to avoid join with the object table
-    $sql = 'SELECT object_id FROM property p
+    /**
+     * Get the QubitJob associated with a given user token, if any.
+     *
+     * @param string $token the user token
+     *
+     * @return mixed qubitJob associated with the token or null
+     */
+    public static function getByUserTokenProperty($token)
+    {
+        // Use raw SQL to avoid join with the object table
+        $sql = 'SELECT object_id FROM property p
             JOIN property_i18n i18n ON p.id = i18n.id
             WHERE p.name = ? AND i18n.value = ?';
 
-    $jobId = QubitPdo::fetchColumn($sql, ['userToken', $token]);
+        $jobId = QubitPdo::fetchColumn($sql, ['userToken', $token]);
 
-    if (false !== $jobId) {
-      return QubitJob::getById($jobId);
-    }
-  }
-
-  /**
-   * Add a basic note to this job.
-   *
-   * @param sfBasicSecurityUser $user the currently logged in user
-   */
-  public static function getJobsByUser($user)
-  {
-    $criteria = new Criteria();
-    $criteria->add(QubitJob::USER_ID, $user->getUserID());
-
-    return QubitJob::get($criteria);
-  }
-
-  /**
-   * Run a job via gearman.
-   *
-   * @param string $jobName   The name of the ability the worker will execute
-   * @param array  $jobParams Whatever parameters need to be passed to the worker.
-   *                          You can set 'name' to specify the job name, otherwise the class name is used.
-   *                          You can set 'description' to summarize what the job is doing.
-   *
-   * @return QubitJob The job that was just created for the running job
-   */
-  public static function runJob($jobName, $jobParams = [])
-  {
-    if (!self::checkWorkerAvailable(self::getJobPrefix().$jobName)) {
-      throw new Net_Gearman_Exception("No Gearman worker available that can handle the job {$jobName}.");
+        if (false !== $jobId) {
+            return QubitJob::getById($jobId);
+        }
     }
 
-    $job = new QubitJob();
+    /**
+     * Add a basic note to this job.
+     *
+     * @param sfBasicSecurityUser $user the currently logged in user
+     */
+    public static function getJobsByUser($user)
+    {
+        $criteria = new Criteria();
+        $criteria->add(QubitJob::USER_ID, $user->getUserID());
 
-    // You can specify 'name' => 'whatever' to make the name human friendly.
-    // Default is we just use the job class name.
-    if (!isset($jobParams['name'])) {
-      $jobParams['name'] = $jobName;
+        return QubitJob::get($criteria);
     }
 
-    $job->name = $jobParams['name'];
-    $job->statusId = QubitTerm::JOB_STATUS_IN_PROGRESS_ID;
+    /**
+     * Run a job via gearman.
+     *
+     * @param string $jobName   The name of the ability the worker will execute
+     * @param array  $jobParams Whatever parameters need to be passed to the worker.
+     *                          You can set 'name' to specify the job name, otherwise the class name is used.
+     *                          You can set 'description' to summarize what the job is doing.
+     *
+     * @return QubitJob The job that was just created for the running job
+     */
+    public static function runJob($jobName, $jobParams = [])
+    {
+        if (!self::checkWorkerAvailable(self::getJobPrefix().$jobName)) {
+            throw new Net_Gearman_Exception("No Gearman worker available that can handle the job {$jobName}.");
+        }
 
-    $sfUser = sfContext::getInstance()->user;
-    if (null !== $sfUser && $sfUser->isAuthenticated()) {
-      $job->userId = $sfUser->getUserID();
+        $job = new QubitJob();
+
+        // You can specify 'name' => 'whatever' to make the name human friendly.
+        // Default is we just use the job class name.
+        if (!isset($jobParams['name'])) {
+            $jobParams['name'] = $jobName;
+        }
+
+        $job->name = $jobParams['name'];
+        $job->statusId = QubitTerm::JOB_STATUS_IN_PROGRESS_ID;
+
+        $sfUser = sfContext::getInstance()->user;
+        if (null !== $sfUser && $sfUser->isAuthenticated()) {
+            $job->userId = $sfUser->getUserID();
+        }
+
+        if (isset($jobParams['objectId'])) {
+            $job->objectId = $jobParams['objectId'];
+        }
+
+        $job->save();
+
+        // Add summary info to the job
+        if (isset($jobParams['description'])) {
+            $job->addNoteText($jobParams['description']);
+        }
+
+        try {
+            // Commit current database transaction before we dispatch the task to gearmand
+            // so the resources modified are persisted before the assigned worker starts
+            // processing the task. If we don't do this now the transaction will be committed
+            // once this request is processed but not before the worker hits the database.
+            $connection = Propel::getConnection();
+            $connection->commit();
+
+            // Start a new transaction as there might be more database work within the
+            // current request, it's commited at the end in QubitTransactionFilter.
+            $connection->beginTransaction();
+        } catch (Exception $e) {
+            $connection->rollBack();
+
+            throw $e;
+        }
+
+        // Pass in the job id to the worker so it can update status
+        $jobParams['id'] = $job->id;
+        $jobName = self::getJobPrefix().$jobName; // Append prefix, see getJobPrefix() for details
+
+        // Submit a non-blocking task to Gearman
+        $gmClient = new Net_Gearman_Client(arGearman::getServers());
+        $gmClient->{$jobName}($jobParams);
+
+        return $job;
     }
 
-    if (isset($jobParams['objectId'])) {
-      $job->objectId = $jobParams['objectId'];
+    /**
+     * Get a unique identifier to associate a job with a particular AtoM install.
+     * See workers_key in config/app.yml for more information.
+     */
+    public static function getJobPrefix()
+    {
+        // Deliberately avoiding spaces, tabs, etc by using md5 hashing, see #9648.
+        $key = sfConfig::get('sf_root_dir').sfConfig::get('app_workers_key', '');
+
+        return md5($key).'-';
     }
 
-    $job->save();
+    /**
+     * Get a string representation of a job's user name.
+     *
+     * @param mixed $job
+     *
+     * @return string The user name
+     */
+    public static function getUserString($job)
+    {
+        if (isset($job->userId)) {
+            $user = QubitUser::getById($job->userId);
 
-    // Add summary info to the job
-    if (isset($jobParams['description'])) {
-      $job->addNoteText($jobParams['description']);
+            return $user ? $user->__toString() : 'Deleted user';
+        }
+
+        return 'Command line';
     }
 
-    try {
-      // Commit current database transaction before we dispatch the task to gearmand
-      // so the resources modified are persisted before the assigned worker starts
-      // processing the task. If we don't do this now the transaction will be committed
-      // once this request is processed but not before the worker hits the database.
-      $connection = Propel::getConnection();
-      $connection->commit();
+    /**
+     * Get a string representing a date.
+     *
+     * @param mixed $date
+     *
+     * @return string the job's creation date in a human readable string
+     */
+    private function formatDate($date)
+    {
+        $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $date);
 
-      // Start a new transaction as there might be more database work within the
-      // current request, it's commited at the end in QubitTransactionFilter.
-      $connection->beginTransaction();
-    } catch (Exception $e) {
-      $connection->rollBack();
-
-      throw $e;
+        return $dateTime ? $dateTime->format('Y-m-d h:i A') : 'N/A';
     }
 
-    // Pass in the job id to the worker so it can update status
-    $jobParams['id'] = $job->id;
-    $jobName = self::getJobPrefix().$jobName; // Append prefix, see getJobPrefix() for details
+    private static function checkWorkerAvailable($jobName)
+    {
+        $manager = new Net_Gearman_Manager(arGearman::getServer(), 2);
+        $status = $manager->status();
 
-    // Submit a non-blocking task to Gearman
-    $gmClient = new Net_Gearman_Client(arGearman::getServers());
-    $gmClient->{$jobName}($jobParams);
+        if (!array_key_exists($jobName, $status) || !$status[$jobName]['capable_workers']) {
+            return false;
+        }
 
-    return $job;
-  }
-
-  /**
-   * Get a unique identifier to associate a job with a particular AtoM install.
-   * See workers_key in config/app.yml for more information.
-   */
-  public static function getJobPrefix()
-  {
-    // Deliberately avoiding spaces, tabs, etc by using md5 hashing, see #9648.
-    $key = sfConfig::get('sf_root_dir').sfConfig::get('app_workers_key', '');
-
-    return md5($key).'-';
-  }
-
-  /**
-   * Get a string representation of a job's user name.
-   *
-   * @param mixed $job
-   *
-   * @return string The user name
-   */
-  public static function getUserString($job)
-  {
-    if (isset($job->userId)) {
-      $user = QubitUser::getById($job->userId);
-
-      return $user ? $user->__toString() : 'Deleted user';
+        return true;
     }
-
-    return 'Command line';
-  }
-
-  /**
-   * Get a string representing a date.
-   *
-   * @param mixed $date
-   *
-   * @return string the job's creation date in a human readable string
-   */
-  private function formatDate($date)
-  {
-    $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $date);
-
-    return $dateTime ? $dateTime->format('Y-m-d h:i A') : 'N/A';
-  }
-
-  private static function checkWorkerAvailable($jobName)
-  {
-    $manager = new Net_Gearman_Manager(arGearman::getServer(), 2);
-    $status = $manager->status();
-
-    if (!array_key_exists($jobName, $status) || !$status[$jobName]['capable_workers']) {
-      return false;
-    }
-
-    return true;
-  }
 }

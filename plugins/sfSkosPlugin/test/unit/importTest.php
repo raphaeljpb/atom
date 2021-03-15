@@ -846,136 +846,138 @@ EOT;
 
 function toDataScheme($string)
 {
-  return 'data://text/plain;base64,'.base64_encode(trim($string));
+    return 'data://text/plain;base64,'.base64_encode(trim($string));
 }
 
 function withTransaction($callback)
 {
-  try {
-    $conn = Propel::getConnection();
-    $conn->beginTransaction();
+    try {
+        $conn = Propel::getConnection();
+        $conn->beginTransaction();
 
-    return call_user_func($callback, $conn);
-  } finally {
-    $conn->rollBack();
-  }
+        return call_user_func($callback, $conn);
+    } finally {
+        $conn->rollBack();
+    }
 }
 
 withTransaction(function ($conn) use ($t, $vocabCSS2) {
-  // Make sure that Russian is not defined as a supported language
-  $criteria = new Criteria();
-  $criteria->add(QubitSetting::NAME, 'ru');
-  $criteria->add(QubitSetting::SCOPE, 'i18n_languages');
-  if (null !== $term = QubitTerm::getOne($criteria)) {
-    $term->delete();
-  }
+    // Make sure that Russian is not defined as a supported language
+    $criteria = new Criteria();
+    $criteria->add(QubitSetting::NAME, 'ru');
+    $criteria->add(QubitSetting::SCOPE, 'i18n_languages');
+    if (null !== $term = QubitTerm::getOne($criteria)) {
+        $term->delete();
+    }
 
-  $term = new QubitTerm();
-  $term->parentId = QubitTerm::ROOT_ID;
-  $term->taxonomyId = QubitTaxonomy::SUBJECT_ID;
-  $term->save();
-  $termId = $term->id;
+    $term = new QubitTerm();
+    $term->parentId = QubitTerm::ROOT_ID;
+    $term->taxonomyId = QubitTaxonomy::SUBJECT_ID;
+    $term->save();
+    $termId = $term->id;
 
-  $importer = new sfSkosPlugin(QubitTaxonomy::SUBJECT_ID, ['parentId' => $termId]);
-  $importer->load(toDataScheme($vocabCSS2));
-  $importer->importGraph();
+    $importer = new sfSkosPlugin(QubitTaxonomy::SUBJECT_ID, ['parentId' => $termId]);
+    $importer->load(toDataScheme($vocabCSS2));
+    $importer->importGraph();
 
-  QubitTerm::clearCache();
-  $term = QubitTerm::getById($termId);
+    QubitTerm::clearCache();
+    $term = QubitTerm::getById($termId);
 
-  $t->is(
-    floor(($term->rgt - $term->lft) / 2),
-    count($importer->getGraph()->allOfType('skos:Concept')),
-    'Graph concept count and database descendants count using lft/rgt match');
+    $t->is(
+        floor(($term->rgt - $term->lft) / 2),
+        count($importer->getGraph()->allOfType('skos:Concept')),
+        'Graph concept count and database descendants count using lft/rgt match'
+    );
 
-  $t->is(
-    count($term->getDescendants()),
-    count($importer->getGraph()->allOfType('skos:Concept')),
-    'Graph concept count and database descendants match');
+    $t->is(
+        count($term->getDescendants()),
+        count($importer->getGraph()->allOfType('skos:Concept')),
+        'Graph concept count and database descendants match'
+    );
 
-  $criteria = new Criteria();
-  $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::SUBJECT_ID);
-  $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
-  $criteria->add(QubitTermI18n::NAME, 'user agent (UA)');
-  $term = QubitTerm::getOne($criteria);
+    $criteria = new Criteria();
+    $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::SUBJECT_ID);
+    $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
+    $criteria->add(QubitTermI18n::NAME, 'user agent (UA)');
+    $term = QubitTerm::getOne($criteria);
 
-  $t->is(get_class($term), 'QubitTerm', 'skos:Concept is created');
-  $t->is($term->getName(['culture' => 'en']), 'user agent (UA)', 'skos:Concept\'s prefLabel matches the term name');
+    $t->is(get_class($term), 'QubitTerm', 'skos:Concept is created');
+    $t->is($term->getName(['culture' => 'en']), 'user agent (UA)', 'skos:Concept\'s prefLabel matches the term name');
 
-  $t->is($importer->hasErrors(), true, 'sfSkosPlugin has errors');
-  $t->is(count($importer->getErrors()), 1, 'sfSkosPlugin has *one* error');
-  $errors = $importer->getErrors();
-  $t->is($errors[0], 'The following languages are used in the dataset imported but not supported by AtoM: ru', 'There is an error about Russian being not defined in AtoM');
+    $t->is($importer->hasErrors(), true, 'sfSkosPlugin has errors');
+    $t->is(count($importer->getErrors()), 1, 'sfSkosPlugin has *one* error');
+    $errors = $importer->getErrors();
+    $t->is($errors[0], 'The following languages are used in the dataset imported but not supported by AtoM: ru', 'There is an error about Russian being not defined in AtoM');
 });
 
 withTransaction(function ($conn) use ($t, $vocabSimple) {
-  // Count existing subjects that are children of the root term
-  $criteria = new Criteria();
-  $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::SUBJECT_ID);
-  $criteria->add(QubitTerm::PARENT_ID, QubitTerm::ROOT_ID);
-  $termCount1 = count(QubitTerm::get($criteria));
+    // Count existing subjects that are children of the root term
+    $criteria = new Criteria();
+    $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::SUBJECT_ID);
+    $criteria->add(QubitTerm::PARENT_ID, QubitTerm::ROOT_ID);
+    $termCount1 = count(QubitTerm::get($criteria));
 
-  // Import graph
-  $importer = new sfSkosPlugin(QubitTaxonomy::SUBJECT_ID);
-  $importer->load(toDataScheme($vocabSimple));
-  $importer->importGraph();
+    // Import graph
+    $importer = new sfSkosPlugin(QubitTaxonomy::SUBJECT_ID);
+    $importer->load(toDataScheme($vocabSimple));
+    $importer->importGraph();
 
-  $graph = $importer->getGraph();
-  $conceptCount = count($graph->allOfType('skos:Concept'));
-  $t->is($conceptCount, 2, '$vocabSimple has two concepts');
+    $graph = $importer->getGraph();
+    $conceptCount = count($graph->allOfType('skos:Concept'));
+    $t->is($conceptCount, 2, '$vocabSimple has two concepts');
 
-  // Test that there are two extra subjects after importing the new dataset
-  $terms = QubitTerm::get($criteria);
-  $termCount2 = count($terms);
-  $t->is($termCount1 + $conceptCount, $termCount2, 'Subject taxonomy contains the new concepts in the dataset');
+    // Test that there are two extra subjects after importing the new dataset
+    $terms = QubitTerm::get($criteria);
+    $termCount2 = count($terms);
+    $t->is($termCount1 + $conceptCount, $termCount2, 'Subject taxonomy contains the new concepts in the dataset');
 
-  $match = null;
-  foreach ($terms as $item) {
-    if ('Bar ESPAÑOL' == $item->getName(['culture' => 'es'])) {
-      $match = $item;
+    $match = null;
+    foreach ($terms as $item) {
+        if ('Bar ESPAÑOL' == $item->getName(['culture' => 'es'])) {
+            $match = $item;
 
-      break;
+            break;
+        }
     }
-  }
-  $t->is(get_class($match), 'QubitTerm', 'Translations are properly imported too');
+    $t->is(get_class($match), 'QubitTerm', 'Translations are properly imported too');
 });
 
 withTransaction(function ($conn) use ($t, $vocabSimple) {
-  // Create subject parent term
-  $parent = new QubitTerm();
-  $parent->parentId = QubitTerm::ROOT_ID;
-  $parent->taxonomyId = QubitTaxonomy::SUBJECT_ID;
-  $parent->sourceCulture = 'eu'; // Basque!
-  $parent->setName('proba', ['culture' => 'eu']);
-  $parent->save();
+    // Create subject parent term
+    $parent = new QubitTerm();
+    $parent->parentId = QubitTerm::ROOT_ID;
+    $parent->taxonomyId = QubitTaxonomy::SUBJECT_ID;
+    $parent->sourceCulture = 'eu'; // Basque!
+    $parent->setName('proba', ['culture' => 'eu']);
+    $parent->save();
 
-  // Import graph
-  $importer = new sfSkosPlugin(QubitTaxonomy::SUBJECT_ID, ['parentId' => $parent->id]);
-  $importer->load(toDataScheme($vocabSimple));
-  $importer->importGraph();
+    // Import graph
+    $importer = new sfSkosPlugin(QubitTaxonomy::SUBJECT_ID, ['parentId' => $parent->id]);
+    $importer->load(toDataScheme($vocabSimple));
+    $importer->importGraph();
 
-  // Populate parent term again
-  QubitTerm::clearCache();
-  $parent = QubitTerm::getById($parent->id);
+    // Populate parent term again
+    QubitTerm::clearCache();
+    $parent = QubitTerm::getById($parent->id);
 
-  // Test hierarchy
-  $t->is(count($parent->getDescendants()), count($importer->getGraph()->allOfType('skos:Concept')), 'Term container reflects new hierarchy');
+    // Test hierarchy
+    $t->is(count($parent->getDescendants()), count($importer->getGraph()->allOfType('skos:Concept')), 'Term container reflects new hierarchy');
 
-  // Test search
-  $search = QubitSearch::getInstance();
-  $search->flushBatch();
+    // Test search
+    $search = QubitSearch::getInstance();
+    $search->flushBatch();
 
-  foreach ($parent->getDescendants() as $key => $item) {
-    try {
-      $search->index->getType('QubitTerm')->getDocument($item->id);
-      $t->pass("Term {$key} is indexed");
-    } catch (Elastica\Exception\NotFoundException $e) {
-      $t->fail("Term {$key} was not indexed");
+    foreach ($parent->getDescendants() as $key => $item) {
+        try {
+            $search->index->getType('QubitTerm')->getDocument($item->id);
+            $t->pass("Term {$key} is indexed");
+        } catch (Elastica\Exception\NotFoundException $e) {
+            $t->fail("Term {$key} was not indexed");
+        }
     }
-  }
 
-  $doc = $search->index->getType('QubitTerm')->getDocument($parent->id)->getData();
-  $t->is($doc['numberOfDescendants'], count($importer->getGraph()->allOfType('skos:Concept')), 'Parent term ES document :numberOfDescendants: field is up to date');
+    $doc = $search->index->getType('QubitTerm')->getDocument($parent->id)->getData();
+    $t->is($doc['numberOfDescendants'], count($importer->getGraph()->allOfType('skos:Concept')), 'Parent term ES document :numberOfDescendants: field is up to date');
 });
 
 /**
@@ -986,41 +988,41 @@ withTransaction(function ($conn) use ($t, $vocabSimple) {
  */
 function getPrivateMethod($object, $name)
 {
-  $class = new ReflectionClass($object);
-  $method = $class->getMethod($name);
-  $method->setAccessible(true);
+    $class = new ReflectionClass($object);
+    $method = $class->getMethod($name);
+    $method->setAccessible(true);
 
-  return $method;
+    return $method;
 }
 
 $testingDataSets = [
-  [
-    'name' => 'vocabCSS2',
-    'data' => $vocabCSS2,
-    'totalConcepts' => 20,
-  ],
-  [
-    'name' => 'vocabSimple',
-    'data' => $vocabSimple,
-    'totalConcepts' => 22,
-  ],
-  [
-    'name' => 'europeUnescoThesaurus',
-    'data' => $europeUnescoThesaurus,
-    'totalConcepts' => 100,
-  ],
+    [
+        'name' => 'vocabCSS2',
+        'data' => $vocabCSS2,
+        'totalConcepts' => 20,
+    ],
+    [
+        'name' => 'vocabSimple',
+        'data' => $vocabSimple,
+        'totalConcepts' => 22,
+    ],
+    [
+        'name' => 'europeUnescoThesaurus',
+        'data' => $europeUnescoThesaurus,
+        'totalConcepts' => 100,
+    ],
 ];
 
 $importer = new sfSkosPlugin(QubitTaxonomy::PLACE_ID);
 $methodGetRootConcepts = getPrivateMethod($importer, 'getRootConcepts');
 
 foreach ($testingDataSets as $item) {
-  $data = $item['data'];
-  $totalConcepts = $item['totalConcepts'];
+    $data = $item['data'];
+    $totalConcepts = $item['totalConcepts'];
 
-  $importer->load(toDataScheme($data));
+    $importer->load(toDataScheme($data));
 
-  $result = $methodGetRootConcepts->invoke($importer);
+    $result = $methodGetRootConcepts->invoke($importer);
 
-  $t->is(count($result), $totalConcepts, "Number of concepts found in ${item[name]} equals to {$totalConcepts}");
+    $t->is(count($result), $totalConcepts, "Number of concepts found in ${item[name]} equals to {$totalConcepts}");
 }

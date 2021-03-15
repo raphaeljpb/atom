@@ -24,26 +24,26 @@
  */
 class arOaiPluginIdentifyComponent extends arOaiPluginComponent
 {
-  public function execute($request)
-  {
-    $this->title = sfconfig::get('app_siteTitle');
-    $this->description = sfconfig::get('app_siteDescription');
-    $this->protocolVersion = '2.0';
+    public function execute($request)
+    {
+        $this->title = sfconfig::get('app_siteTitle');
+        $this->description = sfconfig::get('app_siteDescription');
+        $this->protocolVersion = '2.0';
 
-    list($this->earliestDatestamp) = Propel::getConnection()->query('SELECT MIN('.QubitObject::UPDATED_AT.') FROM '.QubitObject::TABLE_NAME)->fetch();
-    $this->earliestDatestamp = date_format(date_create($this->earliestDatestamp), 'Y-m-d\TH:i:s\Z');
+        list($this->earliestDatestamp) = Propel::getConnection()->query('SELECT MIN('.QubitObject::UPDATED_AT.') FROM '.QubitObject::TABLE_NAME)->fetch();
+        $this->earliestDatestamp = date_format(date_create($this->earliestDatestamp), 'Y-m-d\TH:i:s\Z');
 
-    $this->baseUrl = QubitSetting::getByName('siteBaseUrl')->getValue(['sourceCulture' => true]);
-    $this->granularity = 'YYYY-MM-DDThh:mm:ssZ';
-    $this->deletedRecord = 'no';
-    $this->compression = 'gzip';
+        $this->baseUrl = QubitSetting::getByName('siteBaseUrl')->getValue(['sourceCulture' => true]);
+        $this->granularity = 'YYYY-MM-DDThh:mm:ssZ';
+        $this->deletedRecord = 'no';
+        $this->compression = 'gzip';
 
-    $this->setRequestAttributes($request);
+        $this->setRequestAttributes($request);
 
-    $this->adminEmails = [];
-    if ((null !== $adminEmailsSetting = QubitSetting::getByName('oai_admin_emails'))
+        $this->adminEmails = [];
+        if ((null !== $adminEmailsSetting = QubitSetting::getByName('oai_admin_emails'))
         && $adminEmailsValue = $adminEmailsSetting->getValue(['sourceCulture' => true])) {
-      $this->adminEmails = explode(',', $adminEmailsValue);
+            $this->adminEmails = explode(',', $adminEmailsValue);
+        }
     }
-  }
 }

@@ -28,25 +28,25 @@
  */
 class arMigration0139
 {
-  public const VERSION = 139;
-  public const // The new database version
+    public const VERSION = 139;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    if (null !== $menu = QubitMenu::getByName('browseDigitalObjects')) {
-      $menu->path = 'informationobject/browse?view=card&onlyMedia=1';
-      $menu->save();
-    }
+      if (null !== $menu = QubitMenu::getByName('browseDigitalObjects')) {
+          $menu->path = 'informationobject/browse?view=card&onlyMedia=1';
+          $menu->save();
+      }
 
-    if (null === QubitSetting::getByName('default_archival_description_browse_view')) {
-      $setting = new QubitSetting();
-      $setting->setName('default_archival_description_browse_view');
-      $setting->setSourceCulture('en');
-      $setting->setValue('table');
-      $setting->save();
-    }
+      if (null === QubitSetting::getByName('default_archival_description_browse_view')) {
+          $setting = new QubitSetting();
+          $setting->setName('default_archival_description_browse_view');
+          $setting->setSourceCulture('en');
+          $setting->setValue('table');
+          $setting->save();
+      }
 
-    return true;
+      return true;
   }
 }

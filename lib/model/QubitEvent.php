@@ -26,81 +26,81 @@
  */
 class QubitEvent extends BaseEvent
 {
-  // Flag for updating search index on save or delete
-  public $indexOnSave = true;
+    // Flag for updating search index on save or delete
+    public $indexOnSave = true;
 
-  /**
-   * Additional save functionality, e.g. update search index.
-   *
-   * @param mixed $connection provide a database connection
-   *
-   * @return QubitInformationObject self-reference
-   */
-  public function save($connection = null)
-  {
-    // TODO $cleanObject = $this->object->clean;
-    $cleanObjectId = $this->__get('objectId', ['clean' => true]);
+    /**
+     * Additional save functionality, e.g. update search index.
+     *
+     * @param mixed $connection provide a database connection
+     *
+     * @return QubitInformationObject self-reference
+     */
+    public function save($connection = null)
+    {
+        // TODO $cleanObject = $this->object->clean;
+        $cleanObjectId = $this->__get('objectId', ['clean' => true]);
 
-    parent::save($connection);
+        parent::save($connection);
 
-    if ($this->indexOnSave) {
-      // Update IO descendants in creation events
-      $options = [];
-      if (QubitTerm::CREATION_ID == $this->typeId) {
-        $options['updateDescendants'] = true;
-      }
+        if ($this->indexOnSave) {
+            // Update IO descendants in creation events
+            $options = [];
+            if (QubitTerm::CREATION_ID == $this->typeId) {
+                $options['updateDescendants'] = true;
+            }
 
-      if ($this->objectId != $cleanObjectId && null !== QubitObject::getById($cleanObjectId)) {
-        QubitSearch::getInstance()->update(QubitObject::getById($cleanObjectId), $options);
-      }
+            if ($this->objectId != $cleanObjectId && null !== QubitObject::getById($cleanObjectId)) {
+                QubitSearch::getInstance()->update(QubitObject::getById($cleanObjectId), $options);
+            }
 
-      if (isset($this->object)) {
-        QubitSearch::getInstance()->update($this->object, $options);
-      }
+            if (isset($this->object)) {
+                QubitSearch::getInstance()->update($this->object, $options);
+            }
+        }
+
+        return $this;
     }
 
-    return $this;
-  }
+    public function delete($connection = null)
+    {
+        // Get related object
+        $object = $this->getObject();
 
-  public function delete($connection = null)
-  {
-    // Get related object
-    $object = $this->getObject();
+        // Delete event
+        parent::delete($connection);
 
-    // Delete event
-    parent::delete($connection);
+        // Update object
+        if (isset($object) && $this->indexOnSave) {
+            // Update IO descendants in creation events
+            $options = [];
+            if (QubitTerm::CREATION_ID == $this->typeId) {
+                $options['updateDescendants'] = true;
+            }
 
-    // Update object
-    if (isset($object) && $this->indexOnSave) {
-      // Update IO descendants in creation events
-      $options = [];
-      if (QubitTerm::CREATION_ID == $this->typeId) {
-        $options['updateDescendants'] = true;
-      }
-
-      QubitSearch::getInstance()->update($object, $options);
-    }
-  }
-
-  public function getPlace(array $options = [])
-  {
-    $criteria = new Criteria();
-    $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->id);
-    $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
-    $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::PLACE_ID);
-    $relation = QubitObjectTermRelation::get($criteria);
-
-    if (count($relation) > 0) {
-      return $relation[0]->getTerm();
+            QubitSearch::getInstance()->update($object, $options);
+        }
     }
 
-    return null;
-  }
+    public function getPlace(array $options = [])
+    {
+        $criteria = new Criteria();
+        $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->id);
+        $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
+        $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::PLACE_ID);
+        $relation = QubitObjectTermRelation::get($criteria);
 
-  protected function insert($connection = null)
-  {
-    $this->slug = QubitSlug::slugify($this->slug);
+        if (count($relation) > 0) {
+            return $relation[0]->getTerm();
+        }
 
-    return parent::insert($connection);
-  }
+        return null;
+    }
+
+    protected function insert($connection = null)
+    {
+        $this->slug = QubitSlug::slugify($this->slug);
+
+        return parent::insert($connection);
+    }
 }

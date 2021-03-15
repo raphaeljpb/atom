@@ -22,26 +22,26 @@
  */
 class atomPluginsTask extends sfBaseTask
 {
-  public function execute($arguments = [], $options = [])
-  {
-    $databaseManager = new sfDatabaseManager($this->configuration);
-    $conn = $databaseManager->getDatabase('propel')->getConnection();
+    public function execute($arguments = [], $options = [])
+    {
+        $databaseManager = new sfDatabaseManager($this->configuration);
+        $conn = $databaseManager->getDatabase('propel')->getConnection();
 
-    // Retrieve QubitSetting object
-    $criteria = new Criteria();
-    $criteria->add(QubitSetting::NAME, 'plugins');
-    if (null === $setting = QubitSetting::getOne($criteria)) {
-      throw new sfException('Database entry could not be found.');
-    }
+        // Retrieve QubitSetting object
+        $criteria = new Criteria();
+        $criteria->add(QubitSetting::NAME, 'plugins');
+        if (null === $setting = QubitSetting::getOne($criteria)) {
+            throw new sfException('Database entry could not be found.');
+        }
 
-    // Array of plugins
-    $plugins = array_values(unserialize($setting->getValue(['sourceCulture' => true])));
+        // Array of plugins
+        $plugins = array_values(unserialize($setting->getValue(['sourceCulture' => true])));
 
-    if (in_array($arguments['action'], ['add', 'delete']) && !isset($arguments['plugin'])) {
-      throw new sfException('Missing plugin name.');
-    }
+        if (in_array($arguments['action'], ['add', 'delete']) && !isset($arguments['plugin'])) {
+            throw new sfException('Missing plugin name.');
+        }
 
-    switch ($arguments['action']) {
+        switch ($arguments['action']) {
       case 'add':
         $plugins[] = $arguments['plugin'];
 
@@ -53,9 +53,9 @@ class atomPluginsTask extends sfBaseTask
 
       case 'delete':
         if (false !== $key = array_search($arguments['plugin'], $plugins)) {
-          unset($plugins[$key]);
+            unset($plugins[$key]);
         } else {
-          throw new sfException('Plugin could not be found.');
+            throw new sfException('Plugin could not be found.');
         }
 
         // Save changes
@@ -66,7 +66,7 @@ class atomPluginsTask extends sfBaseTask
 
       case 'list':
         foreach ($plugins as $plugin) {
-          echo $plugin."\n";
+            echo $plugin."\n";
         }
 
         break;
@@ -74,31 +74,31 @@ class atomPluginsTask extends sfBaseTask
       default:
         throw new sfException('Missing action');
     }
-  }
+    }
 
-  protected function configure()
-  {
-    $this->addArguments([
-      new sfCommandArgument('action', sfCommandArgument::REQUIRED, 'The action (add, delete or list).'),
-      new sfCommandArgument('plugin', sfCommandArgument::OPTIONAL, 'The plugin name.'),
-    ]);
+    protected function configure()
+    {
+        $this->addArguments([
+            new sfCommandArgument('action', sfCommandArgument::REQUIRED, 'The action (add, delete or list).'),
+            new sfCommandArgument('plugin', sfCommandArgument::OPTIONAL, 'The plugin name.'),
+        ]);
 
-    $this->addOptions([
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('action', null, sfCommandOption::PARAMETER_REQUIRED, 'Desired action'),
-    ]);
+        $this->addOptions([
+            new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+            new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+            new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+            new sfCommandOption('action', null, sfCommandOption::PARAMETER_REQUIRED, 'Desired action'),
+        ]);
 
-    $this->namespace = 'tools';
-    $this->name = 'atom-plugins';
-    $this->briefDescription = 'Manage AtoM plugins.';
+        $this->namespace = 'tools';
+        $this->name = 'atom-plugins';
+        $this->briefDescription = 'Manage AtoM plugins.';
 
-    $this->detailedDescription = <<<'EOF'
+        $this->detailedDescription = <<<'EOF'
 Manage AtoM plugins stored in the database. Examples:
  - symfony atom-plugins add arFoobarPlugin
  - symfony atom-plugins delete arFoobarPlugin
  - symfony atom-plugins list
 EOF;
-  }
+    }
 }

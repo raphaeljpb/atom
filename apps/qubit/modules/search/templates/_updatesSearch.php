@@ -16,8 +16,8 @@
 
           <div class="filter-left">
             <?php echo $form->className
-              ->label(__('Type'))
-              ->renderRow(); ?>
+                ->label(__('Type'))
+                ->renderRow(); ?>
           </div>
 
           <div class="filter-right">
@@ -39,8 +39,8 @@
           <?php if (sfConfig::get('app_multi_repository')) { ?>
             <div class="filter-left">
               <?php echo $form->repository
-                ->label(__('Repository'))
-                ->renderRow(); ?>
+                  ->label(__('Repository'))
+                  ->renderRow(); ?>
             </div>
             <div class="filter-right">
           <?php } else { ?>
@@ -63,8 +63,8 @@
           <div class="filter-row io-options">
             <div class="filter-left">
               <?php echo $form->user
-                ->label(__('User'))
-                ->renderLabel(); ?>
+                  ->label(__('User'))
+                  ->renderLabel(); ?>
               <?php echo $form->user->render(['class' => 'form-autocomplete']); ?>
               <input class="list" type="hidden" value="<?php echo url_for(['module' => 'user', 'action' => 'autocomplete']); ?>"/>
 
@@ -86,14 +86,14 @@
 
           <div class="filter-left">
             <?php echo $form->startDate
-              ->label(__('Start'))
-              ->renderRow(); ?>
+                ->label(__('Start'))
+                ->renderRow(); ?>
           </div>
 
           <div class="filter-right">
             <?php echo $form->endDate
-              ->label(__('End'))
-              ->renderRow(); ?>
+                ->label(__('End'))
+                ->renderRow(); ?>
           </div>
         </div>
       </div>

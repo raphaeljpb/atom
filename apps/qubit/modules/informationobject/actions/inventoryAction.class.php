@@ -19,111 +19,111 @@
 
 class InformationObjectInventoryAction extends DefaultBrowseAction
 {
-  private static $levels;
+    private static $levels;
 
-  public function execute($request)
-  {
-    $this->resource = $this->getRoute()->resource;
+    public function execute($request)
+    {
+        $this->resource = $this->getRoute()->resource;
 
-    // Check that this isn't the root
-    if (!isset($this->resource->parent)) {
-      $this->forward404();
-    }
+        // Check that this isn't the root
+        if (!isset($this->resource->parent)) {
+            $this->forward404();
+        }
 
-    // Set title header
-    sfContext::getInstance()->getConfiguration()->loadHelpers(['Qubit']);
-    $title = strip_markdown($this->resource);
-    $this->response->setTitle("{$title} - Inventory list - {$this->response->getTitle()}");
+        // Set title header
+        sfContext::getInstance()->getConfiguration()->loadHelpers(['Qubit']);
+        $title = strip_markdown($this->resource);
+        $this->response->setTitle("{$title} - Inventory list - {$this->response->getTitle()}");
 
-    $limit = sfConfig::get('app_hits_per_page');
-    if (isset($request->limit) && ctype_digit($request->limit)) {
-      $limit = $request->limit;
-    }
+        $limit = sfConfig::get('app_hits_per_page');
+        if (isset($request->limit) && ctype_digit($request->limit)) {
+            $limit = $request->limit;
+        }
 
-    $page = 1;
-    if (isset($request->page) && ctype_digit($request->page)) {
-      $page = $request->page;
-    }
+        $page = 1;
+        if (isset($request->page) && ctype_digit($request->page)) {
+            $page = $request->page;
+        }
 
-    // Avoid pagination over ES' max result window config (default: 10000)
-    $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
+        // Avoid pagination over ES' max result window config (default: 10000)
+        $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
 
-    if ((int) $limit * $page > $maxResultWindow) {
-      // Show alert
-      $message = $this->context->i18n->__(
-        "We've redirected you to the first page of results.".
+        if ((int) $limit * $page > $maxResultWindow) {
+            // Show alert
+            $message = $this->context->i18n->__(
+                "We've redirected you to the first page of results.".
         ' To avoid using vast amounts of memory, AtoM limits pagination to %1% records.'.
         ' To view the last records in the current result set, try changing the sort direction.',
-        ['%1%' => $maxResultWindow]
-      );
-      $this->getUser()->setFlash('notice', $message);
+                ['%1%' => $maxResultWindow]
+            );
+            $this->getUser()->setFlash('notice', $message);
 
-      // Redirect to first page
-      $params = $request->getParameterHolder()->getAll();
-      unset($params['page']);
-      $this->redirect($params);
+            // Redirect to first page
+            $params = $request->getParameterHolder()->getAll();
+            unset($params['page']);
+            $this->redirect($params);
+        }
+
+        $resultSet = self::getResults($this->resource, $limit, $page, $request->sort);
+
+        // Page results
+        $this->pager = new QubitSearchPager($resultSet);
+        $this->pager->setPage($page);
+        $this->pager->setMaxPerPage($limit);
+        $this->pager->init();
     }
 
-    $resultSet = self::getResults($this->resource, $limit, $page, $request->sort);
+    public static function showInventory($resource)
+    {
+        if (empty(self::getLevels())) {
+            return false;
+        }
 
-    // Page results
-    $this->pager = new QubitSearchPager($resultSet);
-    $this->pager->setPage($page);
-    $this->pager->setMaxPerPage($limit);
-    $this->pager->init();
-  }
+        $resultSet = self::getResults($resource);
 
-  public static function showInventory($resource)
-  {
-    if (empty(self::getLevels())) {
-      return false;
+        return $resultSet->getTotalHits() > 0;
     }
 
-    $resultSet = self::getResults($resource);
+    private static function getLevels()
+    {
+        if (null !== self::$levels) {
+            return self::$levels;
+        }
 
-    return $resultSet->getTotalHits() > 0;
-  }
+        $setting = QubitSetting::getByName('inventory_levels');
+        if (null === $setting || false === $value = unserialize($setting->getValue())) {
+            return;
+        }
 
-  private static function getLevels()
-  {
-    if (null !== self::$levels) {
-      return self::$levels;
+        if (!is_array($value) || 0 === count($value)) {
+            return;
+        }
+
+        self::$levels = $value;
+
+        return $value;
     }
 
-    $setting = QubitSetting::getByName('inventory_levels');
-    if (null === $setting || false === $value = unserialize($setting->getValue())) {
-      return;
-    }
+    private static function getResults($resource, $limit = 10, $page = 1, $sort = null)
+    {
+        $query = new \Elastica\Query();
+        $query->setSize($limit);
+        if (!empty($page)) {
+            $query->setFrom(($page - 1) * $limit);
+        }
 
-    if (!is_array($value) || 0 === count($value)) {
-      return;
-    }
+        $queryBool = new \Elastica\Query\BoolQuery();
 
-    self::$levels = $value;
+        $q1 = new \Elastica\Query\Term();
+        $q1->setTerm('ancestors', $resource->id);
+        $queryBool->addMust($q1);
+        $q2 = new \Elastica\Query\Terms();
+        $q2->setTerms('levelOfDescriptionId', self::getLevels());
+        $queryBool->addMust($q2);
 
-    return $value;
-  }
+        $i18n = sprintf('i18n.%s.', sfContext::getInstance()->getUser()->getCulture());
 
-  private static function getResults($resource, $limit = 10, $page = 1, $sort = null)
-  {
-    $query = new \Elastica\Query();
-    $query->setSize($limit);
-    if (!empty($page)) {
-      $query->setFrom(($page - 1) * $limit);
-    }
-
-    $queryBool = new \Elastica\Query\BoolQuery();
-
-    $q1 = new \Elastica\Query\Term();
-    $q1->setTerm('ancestors', $resource->id);
-    $queryBool->addMust($q1);
-    $q2 = new \Elastica\Query\Terms();
-    $q2->setTerms('levelOfDescriptionId', self::getLevels());
-    $queryBool->addMust($q2);
-
-    $i18n = sprintf('i18n.%s.', sfContext::getInstance()->getUser()->getCulture());
-
-    switch ($sort) {
+        switch ($sort) {
       case 'identifierDown':
         $query->setSort(['identifier.untouched' => 'desc']);
 
@@ -151,15 +151,15 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
 
       case 'dateUp':
         $query->setSort([
-          'startDateSort' => 'asc',
-          'endDateSort' => 'asc', ]);
+            'startDateSort' => 'asc',
+            'endDateSort' => 'asc', ]);
 
         break;
 
       case 'dateDown':
         $query->setSort([
-          'startDateSort' => 'desc',
-          'endDateSort' => 'desc', ]);
+            'startDateSort' => 'desc',
+            'endDateSort' => 'desc', ]);
 
         break;
       // Avoid sorting when we are just counting records
@@ -171,9 +171,9 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
         $query->setSort(['identifier.untouched' => 'asc']);
     }
 
-    QubitAclSearch::filterDrafts($queryBool);
-    $query->setQuery($queryBool);
+        QubitAclSearch::filterDrafts($queryBool);
+        $query->setQuery($queryBool);
 
-    return QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($query);
-  }
+        return QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($query);
+    }
 }

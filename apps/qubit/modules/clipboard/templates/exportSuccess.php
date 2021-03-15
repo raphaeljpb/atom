@@ -26,9 +26,9 @@
           <legend><?php echo __('Export options'); ?></legend>
 
           <?php echo $form->type
-            ->renderRow(); ?>
+              ->renderRow(); ?>
           <?php echo $form->format
-            ->renderRow(); ?>
+              ->renderRow(); ?>
           <?php if ($showOptions) { ?>
           <div class="panel panel-default" id="exportOptions">
             <div class="panel-body">

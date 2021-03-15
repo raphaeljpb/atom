@@ -24,47 +24,47 @@
  */
 class qtIsaarCsv extends sfIsaarPlugin
 {
-  public static $keymapSource;
-  public static $keymapTarget = 'actor';
-  public static $entityTypeLookup;
-  public static $NAMES = [
-    'authorizedFormOfName',
-    'datesOfExistence',
-    'descriptionIdentifier',
-    'entityType',
-    'functions',
-    'generalContext',
-    'history',
-    'identifier',
-    'institutionIdentifier',
-    'internalStructures',
-    'languages',
-    'legalStatus',
-    'maintenanceNotes',
-    'mandates',
-    //'otherNames',
-    //'parallelNames',
-    'places',
-    'rules',
-    'scripts',
-    'sources',
-    //'standardizedNames'
-    'uniqueId',
-  ];
-  protected $resource;
-  protected $isaar;
-  protected $sourceId;
+    public static $keymapSource;
+    public static $keymapTarget = 'actor';
+    public static $entityTypeLookup;
+    public static $NAMES = [
+        'authorizedFormOfName',
+        'datesOfExistence',
+        'descriptionIdentifier',
+        'entityType',
+        'functions',
+        'generalContext',
+        'history',
+        'identifier',
+        'institutionIdentifier',
+        'internalStructures',
+        'languages',
+        'legalStatus',
+        'maintenanceNotes',
+        'mandates',
+        //'otherNames',
+        //'parallelNames',
+        'places',
+        'rules',
+        'scripts',
+        'sources',
+        //'standardizedNames'
+        'uniqueId',
+    ];
+    protected $resource;
+    protected $isaar;
+    protected $sourceId;
 
-  public function __construct($resource)
-  {
-    $this->resource = $resource;
-    $this->isaar = new sfIsaarPlugin($this->resource);
-  }
+    public function __construct($resource)
+    {
+        $this->resource = $resource;
+        $this->isaar = new sfIsaarPlugin($this->resource);
+    }
 
-  public function __get($name)
-  {
-    if (in_array($name, self::$NAMES)) {
-      switch ($name) {
+    public function __get($name)
+    {
+        if (in_array($name, self::$NAMES)) {
+            switch ($name) {
         case 'maintenanceNotes':
           return $this->isaar->maintenanceNotes = $value;
 
@@ -74,17 +74,17 @@ class qtIsaarCsv extends sfIsaarPlugin
         default:
           return $this->resource->__get($name);
       }
+        }
     }
-  }
 
-  public function __set($name, $value)
-  {
-    if (in_array($name, self::$NAMES)) {
-      switch ($name) {
+    public function __set($name, $value)
+    {
+        if (in_array($name, self::$NAMES)) {
+            switch ($name) {
         case 'entityType':
           $value = strtolower($value);
           if (isset(self::$entityTypeLookup[$value])) {
-            $this->resource->entityTypeId = self::$entityTypeLookup[$value];
+              $this->resource->entityTypeId = self::$entityTypeLookup[$value];
           }
 
           break;
@@ -102,24 +102,24 @@ class qtIsaarCsv extends sfIsaarPlugin
         default:
           $this->resource->__set($name, $value);
       }
+        }
+
+        return $this;
     }
 
-    return $this;
-  }
+    public function save($connection = null)
+    {
+        $this->resource->save($connection);
 
-  public function save($connection = null)
-  {
-    $this->resource->save($connection);
+        // Add to keymap table
+        $keymap = new QubitKeymap();
+        $keymap->sourceName = self::$keymapSource;
+        $keymap->sourceId = $this->sourceId;
+        $keymap->targetName = self::$keymapTarget;
+        $keymap->targetId = $this->resource->id;
 
-    // Add to keymap table
-    $keymap = new QubitKeymap();
-    $keymap->sourceName = self::$keymapSource;
-    $keymap->sourceId = $this->sourceId;
-    $keymap->targetName = self::$keymapTarget;
-    $keymap->targetId = $this->resource->id;
+        $keymap->save($connection);
 
-    $keymap->save($connection);
-
-    return $this;
-  }
+        return $this;
+    }
 }

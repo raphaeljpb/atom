@@ -31,17 +31,17 @@
     </div>
 
     <?php echo $form
-      ->searchHost
-      ->renderRow(); ?>
+        ->searchHost
+        ->renderRow(); ?>
 
     <?php echo $form
-      ->searchPort
-      ->renderRow(); ?>
+        ->searchPort
+        ->renderRow(); ?>
 
     <?php echo $form
-      ->searchIndex
-      ->help('The name of the <em>ElasticSearch</em> index your data will be stored in.')
-      ->renderRow(); ?>
+        ->searchIndex
+        ->help('The name of the <em>ElasticSearch</em> index your data will be stored in.')
+        ->renderRow(); ?>
 
   </fieldset>
 

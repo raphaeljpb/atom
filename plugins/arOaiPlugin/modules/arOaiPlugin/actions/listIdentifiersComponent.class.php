@@ -24,17 +24,17 @@
  */
 class arOaiPluginListIdentifiersComponent extends arOaiPluginComponent
 {
-  public function execute($request)
-  {
-    $this->setUpdateParametersFromRequest($request);
+    public function execute($request)
+    {
+        $this->setUpdateParametersFromRequest($request);
 
-    // Restrict to top-level descriptions for EAD given children get nested
-    if ('oai_ead' == $request->metadataPrefix) {
-      $options['topLevel'] = true;
+        // Restrict to top-level descriptions for EAD given children get nested
+        if ('oai_ead' == $request->metadataPrefix) {
+            $options['topLevel'] = true;
+        }
+
+        $this->getUpdates($options);
+
+        $this->setRequestAttributes($request);
     }
-
-    $this->getUpdates($options);
-
-    $this->setRequestAttributes($request);
-  }
 }

@@ -13,7 +13,7 @@
 <?php slot('content'); ?>
 
   <?php echo $form->renderFormTag(url_for([
-    $resource, 'module' => 'informationobject', 'action' => 'calculateDates', ]
+      $resource, 'module' => 'informationobject', 'action' => 'calculateDates', ]
   )); ?>
 
     <div id="content">

@@ -19,99 +19,99 @@
 
 class sfIsadPluginEventComponent extends InformationObjectEventComponent
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'date',
-    'endDate',
-    'startDate',
-    'type', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'date',
+        'endDate',
+        'startDate',
+        'type', ];
 
-  // TODO Refactor with parent::processForm()
-  public function processForm()
-  {
-    $params = [$this->request->editEvent];
-    if (isset($this->request->editEvents)) {
-      // If dialog JavaScript did it's work, then use array of parameters
-      $params = $this->request->editEvents;
-    }
+    // TODO Refactor with parent::processForm()
+    public function processForm()
+    {
+        $params = [$this->request->editEvent];
+        if (isset($this->request->editEvents)) {
+            // If dialog JavaScript did it's work, then use array of parameters
+            $params = $this->request->editEvents;
+        }
 
-    $finalEventIds = [];
+        $finalEventIds = [];
 
-    foreach ($params as $item) {
-      // Continue only if user typed something
-      if (1 > strlen($item['date'])
+        foreach ($params as $item) {
+            // Continue only if user typed something
+            if (1 > strlen($item['date'])
           && 1 > strlen($item['endDate'])
           && 1 > strlen($item['startDate'])) {
-        continue;
-      }
+                continue;
+            }
 
-      $this->form->bind($item);
-      if ($this->form->isValid()) {
-        if (!isset($this->request->sourceId) && isset($item['id'])) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($item['id']));
+            $this->form->bind($item);
+            if ($this->form->isValid()) {
+                if (!isset($this->request->sourceId) && isset($item['id'])) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($item['id']));
 
-          // Do not add exiting events to the eventsRelatedByobjectId
-          // array, as they could be deleted before saving the resource
-          $this->event = $params['_sf_route']->resource;
-          array_push($finalEventIds, $this->event->id);
-        } else {
-          $this->resource->eventsRelatedByobjectId[] = $this->event = new QubitEvent();
+                    // Do not add exiting events to the eventsRelatedByobjectId
+                    // array, as they could be deleted before saving the resource
+                    $this->event = $params['_sf_route']->resource;
+                    array_push($finalEventIds, $this->event->id);
+                } else {
+                    $this->resource->eventsRelatedByobjectId[] = $this->event = new QubitEvent();
+                }
+
+                foreach ($this->form as $field) {
+                    if (isset($item[$field->getName()])) {
+                        $this->processField($field);
+                    }
+                }
+
+                // Save existing events as they are not attached
+                // to the eventsRelatedByobjectId array
+                if (isset($this->event->id)) {
+                    $this->event->indexOnSave = false;
+                    $this->event->save();
+                }
+            }
         }
 
-        foreach ($this->form as $field) {
-          if (isset($item[$field->getName()])) {
-            $this->processField($field);
-          }
-        }
+        // Delete the old events if they don't appear in the table (removed by multiRow.js)
+        // Check date events as they are the only ones added in this table
+        foreach ($this->resource->getDates() as $item) {
+            if (isset($item->id) && false === array_search($item->id, $finalEventIds)) {
+                // Will be indexed when description is saved
+                $item->indexOnSave = false;
 
-        // Save existing events as they are not attached
-        // to the eventsRelatedByobjectId array
-        if (isset($this->event->id)) {
-          $this->event->indexOnSave = false;
-          $this->event->save();
+                // Only delete event if it has no associated actor
+                if (null === $item->actor) {
+                    $item->indexOnSave = false;
+                    $item->delete();
+                } else {
+                    // Handle specially as data wasn't created using ISAD template
+                    $item->startDate = null;
+                    $item->endDate = null;
+                    $item->date = null;
+                    $item->save();
+                }
+            }
         }
-      }
     }
 
-    // Delete the old events if they don't appear in the table (removed by multiRow.js)
-    // Check date events as they are the only ones added in this table
-    foreach ($this->resource->getDates() as $item) {
-      if (isset($item->id) && false === array_search($item->id, $finalEventIds)) {
-        // Will be indexed when description is saved
-        $item->indexOnSave = false;
-
-        // Only delete event if it has no associated actor
-        if (null === $item->actor) {
-          $item->indexOnSave = false;
-          $item->delete();
-        } else {
-          // Handle specially as data wasn't created using ISAD template
-          $item->startDate = null;
-          $item->endDate = null;
-          $item->date = null;
-          $item->save();
-        }
-      }
-    }
-  }
-
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'type':
         if ('arDacsPlugin' == $this->request->module) {
-          $eventTypes = arDacsPlugin::eventTypes();
+            $eventTypes = arDacsPlugin::eventTypes();
         } else {
-          $eventTypes = sfIsadPlugin::eventTypes();
+            $eventTypes = sfIsadPlugin::eventTypes();
         }
 
         foreach ($eventTypes as $item) {
-          // Default event type is creation
-          if (QubitTerm::CREATION_ID == $item->id) {
-            $this->form->setDefault('type', $this->context->routing->generate(null, [$item, 'module' => 'term']));
-          }
+            // Default event type is creation
+            if (QubitTerm::CREATION_ID == $item->id) {
+                $this->form->setDefault('type', $this->context->routing->generate(null, [$item, 'module' => 'term']));
+            }
 
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
         }
 
         $this->form->setValidator('type', new sfValidatorString());
@@ -122,5 +122,5 @@ class sfIsadPluginEventComponent extends InformationObjectEventComponent
       default:
         return parent::addField($name);
     }
-  }
+    }
 }

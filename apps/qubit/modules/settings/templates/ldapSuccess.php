@@ -27,20 +27,20 @@
         <legend><?php echo __('LDAP authentication settings'); ?></legend>
 
         <?php echo $form->ldapHost
-          ->label(__('Host'))
-          ->renderRow(); ?>
+            ->label(__('Host'))
+            ->renderRow(); ?>
 
         <?php echo $form->ldapPort
-          ->label(__('Port'))
-          ->renderRow(); ?>
+            ->label(__('Port'))
+            ->renderRow(); ?>
 
         <?php echo $form->ldapBaseDn
-          ->label(__('Base DN'))
-          ->renderRow(); ?>
+            ->label(__('Base DN'))
+            ->renderRow(); ?>
 
         <?php echo $form->ldapBindAttribute
-          ->label(__('Bind Lookup Attribute'))
-          ->renderRow(); ?>
+            ->label(__('Bind Lookup Attribute'))
+            ->renderRow(); ?>
 
       </fieldset>
 

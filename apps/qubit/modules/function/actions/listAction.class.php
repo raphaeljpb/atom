@@ -24,29 +24,29 @@
  */
 class FunctionListAction extends sfAction
 {
-  public function execute($request)
-  {
-    if (!isset($request->limit)) {
-      $request->limit = sfConfig::get('app_hits_per_page');
+    public function execute($request)
+    {
+        if (!isset($request->limit)) {
+            $request->limit = sfConfig::get('app_hits_per_page');
+        }
+
+        $criteria = new Criteria();
+        $criteria->addDescendingOrderByColumn(QubitObject::UPDATED_AT);
+
+        if (isset($request->subquery)) {
+            $criteria->addJoin(QubitFunctionObject::ID, QubitFunctionObjectI18n::ID);
+            $criteria->add(QubitFunctionObjectI18n::CULTURE, $this->context->user->getCulture());
+            $criteria->add(QubitFunctionObjectI18n::AUTHORIZED_FORM_OF_NAME, "%{$request->subquery}%", Criteria::LIKE);
+        } else {
+            $this->redirect(['module' => 'function', 'action' => 'browse']);
+        }
+
+        // Page results
+        $this->pager = new QubitPager('QubitFunctionObject');
+        $this->pager->setCriteria($criteria);
+        $this->pager->setMaxPerPage($request->limit);
+        $this->pager->setPage($request->page);
+
+        $this->functions = $this->pager->getResults();
     }
-
-    $criteria = new Criteria();
-    $criteria->addDescendingOrderByColumn(QubitObject::UPDATED_AT);
-
-    if (isset($request->subquery)) {
-      $criteria->addJoin(QubitFunctionObject::ID, QubitFunctionObjectI18n::ID);
-      $criteria->add(QubitFunctionObjectI18n::CULTURE, $this->context->user->getCulture());
-      $criteria->add(QubitFunctionObjectI18n::AUTHORIZED_FORM_OF_NAME, "%{$request->subquery}%", Criteria::LIKE);
-    } else {
-      $this->redirect(['module' => 'function', 'action' => 'browse']);
-    }
-
-    // Page results
-    $this->pager = new QubitPager('QubitFunctionObject');
-    $this->pager->setCriteria($criteria);
-    $this->pager->setMaxPerPage($request->limit);
-    $this->pager->setPage($request->page);
-
-    $this->functions = $this->pager->getResults();
-  }
 }

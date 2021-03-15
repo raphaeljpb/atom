@@ -24,33 +24,33 @@
  */
 interface QubitOaiSet
 {
-  /**
-   * Query OAI set membership by record.
-   *
-   * @param mixed $record A record that can be part of an OAI set
-   *
-   * @return bool true if $record is contained in this OAI set
-   */
-  public function contains($record);
+    /**
+     * Query OAI set membership by record.
+     *
+     * @param mixed $record A record that can be part of an OAI set
+     *
+     * @return bool true if $record is contained in this OAI set
+     */
+    public function contains($record);
 
-  /**
-   * The OAI set specification for the current set.
-   *
-   * @return string An OAI set specification
-   */
-  public function setSpec();
+    /**
+     * The OAI set specification for the current set.
+     *
+     * @return string An OAI set specification
+     */
+    public function setSpec();
 
-  /**
-   * The name of the current OAI set.
-   *
-   * @return string A display name
-   */
-  public function getName();
+    /**
+     * The name of the current OAI set.
+     *
+     * @return string A display name
+     */
+    public function getName();
 
-  /**
-   * Apply the current set's restrictions to $criteria.
-   *
-   * @param Criteria $criteria The search criteria to be modified
-   */
-  public function apply($criteria);
+    /**
+     * Apply the current set's restrictions to $criteria.
+     *
+     * @param Criteria $criteria The search criteria to be modified
+     */
+    public function apply($criteria);
 }

@@ -26,7 +26,7 @@
         <legend><?php echo __('Identity area'); ?></legend>
 
         <?php echo render_field($form->authorizedFormOfName
-          ->label(__('Authorized form of name').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>'), $resource); ?>
+            ->label(__('Authorized form of name').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>'), $resource); ?>
 
       </fieldset>
 

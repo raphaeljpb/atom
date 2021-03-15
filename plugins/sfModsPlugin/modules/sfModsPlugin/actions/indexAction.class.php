@@ -24,20 +24,20 @@
  */
 class sfModsPluginIndexAction extends InformationObjectIndexAction
 {
-  public function execute($request)
-  {
-    if ('xml' === $request->getRequestFormat()) {
-      sfConfig::set('sf_escaping_strategy', false);
+    public function execute($request)
+    {
+        if ('xml' === $request->getRequestFormat()) {
+            sfConfig::set('sf_escaping_strategy', false);
+        }
+
+        parent::execute($request);
+
+        $this->mods = new sfModsPlugin($this->resource);
+
+        if (1 > strlen($title = $this->resource->__toString())) {
+            $title = $this->context->i18n->__('Untitled');
+        }
+
+        $this->response->setTitle("{$title} - {$this->response->getTitle()}");
     }
-
-    parent::execute($request);
-
-    $this->mods = new sfModsPlugin($this->resource);
-
-    if (1 > strlen($title = $this->resource->__toString())) {
-      $title = $this->context->i18n->__('Untitled');
-    }
-
-    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
-  }
 }

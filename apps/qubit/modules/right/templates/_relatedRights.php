@@ -4,9 +4,9 @@
 
     <?php echo get_partial('right/right',
       [
-        'resource' => $right->object,
-        'inherit' => $item != $resource ? $item : null,
-        'relatedObject' => $resource, ]); ?>
+          'resource' => $right->object,
+          'inherit' => $item != $resource ? $item : null,
+          'relatedObject' => $resource, ]); ?>
 
   <?php } ?>
 
@@ -16,9 +16,9 @@
 
     <?php echo get_partial('right/right',
       [
-        'resource' => $item->object,
-        'inherit' => 0 == count($resource->getRights()) ? $resource : null,
-        'relatedObject' => $resource, ]); ?>
+          'resource' => $item->object,
+          'inherit' => 0 == count($resource->getRights()) ? $resource : null,
+          'relatedObject' => $resource, ]); ?>
 
   <?php } ?>
 

@@ -19,24 +19,25 @@
 
 class arWidgetFormSelectRadio extends sfWidgetFormSelectRadio
 {
-  public function formatter($widget, $inputs)
-  {
-    $rows = [];
-    foreach ($inputs as $input) {
-      $rows[] = $this->renderContentTag(
-        'label',
-        $input['input'].$this->getOption('label_separator').$input['label'],
-        ['class' => 'radio']);
+    public function formatter($widget, $inputs)
+    {
+        $rows = [];
+        foreach ($inputs as $input) {
+            $rows[] = $this->renderContentTag(
+                'label',
+                $input['input'].$this->getOption('label_separator').$input['label'],
+                ['class' => 'radio']
+            );
+        }
+
+        return !$rows ? '' : $this->renderContentTag('div', implode($this->getOption('separator'), $rows), ['class' => $this->getOption('class')]);
     }
 
-    return !$rows ? '' : $this->renderContentTag('div', implode($this->getOption('separator'), $rows), ['class' => $this->getOption('class')]);
-  }
+    protected function configure($options = [], $attributes = [])
+    {
+        parent::configure($options, $attributes);
 
-  protected function configure($options = [], $attributes = [])
-  {
-    parent::configure($options, $attributes);
-
-    $this->addOption('class', 'control-group');
-    $this->addOption('label_separator', '');
-  }
+        $this->addOption('class', 'control-group');
+        $this->addOption('label_separator', '');
+    }
 }

@@ -25,29 +25,29 @@
  */
 class arMigration0102
 {
-  public const VERSION = 102;
-  public const // The new database version
+    public const VERSION = 102;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    // Create setting
-    $setting = new QubitSetting();
-    $setting->name = 'facetstitle';
-    $setting->scope = 'ui_label';
-    $setting->editable = 1;
-    $setting->deleteable = 0;
-    $setting->source_culture = 'en';
-    $setting->setValue('Narrow your results by:', ['culture' => 'en']);
-    $setting->save();
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        // Create setting
+        $setting = new QubitSetting();
+        $setting->name = 'facetstitle';
+        $setting->scope = 'ui_label';
+        $setting->editable = 1;
+        $setting->deleteable = 0;
+        $setting->source_culture = 'en';
+        $setting->setValue('Narrow your results by:', ['culture' => 'en']);
+        $setting->save();
 
-    return true;
-  }
+        return true;
+    }
 }

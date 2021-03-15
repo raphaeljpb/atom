@@ -25,37 +25,37 @@
  */
 class arMigration0174
 {
-  public const VERSION = 174;
-  public const // The new database version
+    public const VERSION = 174;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    $settings = [
-      'fullTreeviewCollapseOpenedButtonText' => 'Hide hierarchy',
-      'fullTreeviewCollapseClosedButtonText' => 'Show hierarchy',
-    ];
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        $settings = [
+            'fullTreeviewCollapseOpenedButtonText' => 'Hide hierarchy',
+            'fullTreeviewCollapseClosedButtonText' => 'Show hierarchy',
+        ];
 
-    foreach ($settings as $settingName => $settingValue) {
-      if (null === QubitSetting::getByName($settingName)) {
-        $setting = new QubitSetting();
-        $setting->name = $settingName;
-        $setting->scope = 'ui_label';
-        $setting->editable = 1;
-        $setting->deleteable = 0;
-        $setting->source_culture = 'en';
-        $setting->setValue($settingValue, ['culture' => 'en']);
-        $setting->save();
-      }
+        foreach ($settings as $settingName => $settingValue) {
+            if (null === QubitSetting::getByName($settingName)) {
+                $setting = new QubitSetting();
+                $setting->name = $settingName;
+                $setting->scope = 'ui_label';
+                $setting->editable = 1;
+                $setting->deleteable = 0;
+                $setting->source_culture = 'en';
+                $setting->setValue($settingValue, ['culture' => 'en']);
+                $setting->save();
+            }
+        }
+
+        return true;
     }
-
-    return true;
-  }
 }

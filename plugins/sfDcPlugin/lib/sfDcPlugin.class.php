@@ -25,46 +25,46 @@
  */
 class sfDcPlugin implements ArrayAccess
 {
-  protected $resource;
+    protected $resource;
 
-  public function __construct($resource)
-  {
-    $this->resource = $resource;
-  }
-
-  public function __toString()
-  {
-    $string = '';
-
-    // Add title if set
-    if (0 < strlen($title = $this->resource->__toString())) {
-      $string .= $title;
+    public function __construct($resource)
+    {
+        $this->resource = $resource;
     }
 
-    // Add publication status
-    $publicationStatus = $this->resource->getPublicationStatus();
-    if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId) {
-      $string .= (!empty($string)) ? ' ' : '';
-      $string .= "({$publicationStatus->status->__toString()})";
+    public function __toString()
+    {
+        $string = '';
+
+        // Add title if set
+        if (0 < strlen($title = $this->resource->__toString())) {
+            $string .= $title;
+        }
+
+        // Add publication status
+        $publicationStatus = $this->resource->getPublicationStatus();
+        if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId) {
+            $string .= (!empty($string)) ? ' ' : '';
+            $string .= "({$publicationStatus->status->__toString()})";
+        }
+
+        return $string;
     }
 
-    return $string;
-  }
-
-  public function __get($name)
-  {
-    switch ($name) {
+    public function __get($name)
+    {
+        switch ($name) {
       case 'creators':
         $creators = null;
 
         foreach ($this->resource->ancestors->andSelf()->orderBy('rgt') as $ancestor) {
-          if (QubitInformationObject::ROOT_ID == $ancestor->id) {
-            break;
-          }
+            if (QubitInformationObject::ROOT_ID == $ancestor->id) {
+                break;
+            }
 
-          if (0 < count($creators = $ancestor->getCreators())) {
-            break;
-          }
+            if (0 < count($creators = $ancestor->getCreators())) {
+                break;
+            }
         }
 
         return $creators;
@@ -75,7 +75,7 @@ class sfDcPlugin implements ArrayAccess
         // are related to creation/origination
         $event = [];
         foreach ($this->resource->eventsRelatedByobjectId as $item) {
-          switch ($item->typeId) {
+            switch ($item->typeId) {
             case QubitTerm::CREATION_ID:
             case QubitTerm::CONTRIBUTION_ID:
             case QubitTerm::PUBLICATION_ID:
@@ -93,13 +93,13 @@ class sfDcPlugin implements ArrayAccess
         $coverage = [];
 
         foreach ($this->resource->eventsRelatedByobjectId as $item) {
-          if (null !== $place = $item->getPlace()) {
-            $coverage[] = $place;
-          }
+            if (null !== $place = $item->getPlace()) {
+                $coverage[] = $place;
+            }
         }
 
         foreach ($this->resource->getPlaceAccessPoints() as $item) {
-          $coverage[] = $item->term;
+            $coverage[] = $item->term;
         }
 
         return $coverage;
@@ -107,9 +107,9 @@ class sfDcPlugin implements ArrayAccess
       case 'date':
         $list = [];
         foreach ($this->_event as $item) {
-          if (0 < strlen($date = $item->getDate(['cultureFallback' => true]))) {
-            $list[] = $date;
-          }
+            if (0 < strlen($date = $item->getDate(['cultureFallback' => true]))) {
+                $list[] = $date;
+            }
         }
 
         return $list;
@@ -118,13 +118,13 @@ class sfDcPlugin implements ArrayAccess
         $format = [];
 
         if (null !== $digitalObject = $this->resource->getDigitalObject()) {
-          if (isset($digitalObject->mimeType)) {
-            $format[] = $digitalObject->mimeType;
-          }
+            if (isset($digitalObject->mimeType)) {
+                $format[] = $digitalObject->mimeType;
+            }
         }
 
         if (isset($this->resource->extentAndMedium)) {
-          $format[] = $this->resource->getCleanExtentAndMedium(['cultureFallback' => true]);
+            $format[] = $this->resource->getCleanExtentAndMedium(['cultureFallback' => true]);
         }
 
         return $format;
@@ -138,7 +138,7 @@ class sfDcPlugin implements ArrayAccess
       case 'subject':
         $subject = [];
         foreach ($this->resource->getSubjectAccessPoints() as $item) {
-          $subject[] = $item->term;
+            $subject[] = $item->term;
         }
 
         // Add name access points
@@ -147,7 +147,7 @@ class sfDcPlugin implements ArrayAccess
         $criteria->add(QubitRelation::TYPE_ID, QubitTerm::NAME_ACCESS_POINT_ID);
 
         foreach (QubitRelation::get($criteria) as $item) {
-          $subject[] = $item->object;
+            $subject[] = $item->object;
         }
 
         return $subject;
@@ -156,12 +156,12 @@ class sfDcPlugin implements ArrayAccess
         $type = [];
 
         foreach ($this->resource->getTermRelations(QubitTaxonomy::DC_TYPE_ID) as $item) {
-          $type[] = $item->term;
+            $type[] = $item->term;
         }
 
         // Map media type to DCMI type vocabulary
         if (null !== $digitalObject = $this->resource->getDigitalObject()) {
-          switch ($digitalObject->mediaType) {
+            switch ($digitalObject->mediaType) {
             case 'Image':
               $type[] = 'image';
 
@@ -186,40 +186,40 @@ class sfDcPlugin implements ArrayAccess
 
         return $type;
     }
-  }
+    }
 
-  public function offsetExists($offset)
-  {
-    $args = func_get_args();
+    public function offsetExists($offset)
+    {
+        $args = func_get_args();
 
-    return call_user_func_array([$this, '__isset'], $args);
-  }
+        return call_user_func_array([$this, '__isset'], $args);
+    }
 
-  public function offsetGet($offset)
-  {
-    $args = func_get_args();
+    public function offsetGet($offset)
+    {
+        $args = func_get_args();
 
-    return call_user_func_array([$this, '__get'], $args);
-  }
+        return call_user_func_array([$this, '__get'], $args);
+    }
 
-  public function offsetSet($offset, $value)
-  {
-    $args = func_get_args();
+    public function offsetSet($offset, $value)
+    {
+        $args = func_get_args();
 
-    return call_user_func_array([$this, '__set'], $args);
-  }
+        return call_user_func_array([$this, '__set'], $args);
+    }
 
-  public function offsetUnset($offset)
-  {
-    $args = func_get_args();
+    public function offsetUnset($offset)
+    {
+        $args = func_get_args();
 
-    return call_user_func_array([$this, '__unset'], $args);
-  }
+        return call_user_func_array([$this, '__unset'], $args);
+    }
 
-  public static function eventTypes()
-  {
-    return [QubitTerm::getById(QubitTerm::CONTRIBUTION_ID),
-      QubitTerm::getById(QubitTerm::CREATION_ID),
-      QubitTerm::getById(QubitTerm::PUBLICATION_ID), ];
-  }
+    public static function eventTypes()
+    {
+        return [QubitTerm::getById(QubitTerm::CONTRIBUTION_ID),
+            QubitTerm::getById(QubitTerm::CREATION_ID),
+            QubitTerm::getById(QubitTerm::PUBLICATION_ID), ];
+    }
 }

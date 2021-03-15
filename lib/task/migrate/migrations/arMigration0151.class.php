@@ -25,29 +25,29 @@
  */
 class arMigration0151
 {
-  public const VERSION = 151;
-  public const // The new database version
+    public const VERSION = 151;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    if (null === QubitMenu::getByName('browseDigitalObjectsInstitution')) {
-      $menu = new QubitMenu();
-      $menu->parentId = QubitMenu::getByName('browseInstitution')->id;
-      $menu->name = 'browseDigitalObjectsInstitution';
-      $menu->path = 'informationobject/browse?repos=%currentRealm%&view=card&onlyMedia=1&topLod=0';
-      $menu->sourceCulture = 'en';
-      $menu->label = 'Digital objects';
-      $menu->save();
-    }
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        if (null === QubitMenu::getByName('browseDigitalObjectsInstitution')) {
+            $menu = new QubitMenu();
+            $menu->parentId = QubitMenu::getByName('browseInstitution')->id;
+            $menu->name = 'browseDigitalObjectsInstitution';
+            $menu->path = 'informationobject/browse?repos=%currentRealm%&view=card&onlyMedia=1&topLod=0';
+            $menu->sourceCulture = 'en';
+            $menu->label = 'Digital objects';
+            $menu->save();
+        }
 
-    return true;
-  }
+        return true;
+    }
 }

@@ -6,11 +6,11 @@
 
 $allowedIps = ['127.0.0.1', '::1'];
 if (false !== $envIp = getenv('ATOM_DEBUG_IP')) {
-  $allowedIps = array_merge($allowedIps, array_filter(explode(',', $envIp)));
+    $allowedIps = array_merge($allowedIps, array_filter(explode(',', $envIp)));
 }
 
 if (!in_array(@$_SERVER['REMOTE_ADDR'], $allowedIps)) {
-  exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
+    exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
 }
 
 require_once dirname(__FILE__).'/config/ProjectConfiguration.class.php';

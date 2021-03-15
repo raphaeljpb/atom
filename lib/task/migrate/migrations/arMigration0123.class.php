@@ -25,35 +25,37 @@
  */
 class arMigration0123
 {
-  public const VERSION = 123;
-  public const // The new database version
+    public const VERSION = 123;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    // Find RAD General note term (it doesn't have a fixed id)
-    $criteria = new Criteria();
-    $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
-    $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::RAD_NOTE_ID);
-    $criteria->add(QubitTermI18n::CULTURE, 'en');
-    $criteria->add(QubitTermI18n::NAME, 'General note');
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        // Find RAD General note term (it doesn't have a fixed id)
+        $criteria = new Criteria();
+        $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
+        $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::RAD_NOTE_ID);
+        $criteria->add(QubitTermI18n::CULTURE, 'en');
+        $criteria->add(QubitTermI18n::NAME, 'General note');
 
-    if (null !== $term = QubitTerm::getOne($criteria)) {
-      // Get all RAD General notes
-      QubitPdo::prepareAndExecute('UPDATE note SET type_id=? WHERE type_id=?',
-                                  [QubitTerm::GENERAL_NOTE_ID, $term->id]);
+        if (null !== $term = QubitTerm::getOne($criteria)) {
+            // Get all RAD General notes
+            QubitPdo::prepareAndExecute(
+                'UPDATE note SET type_id=? WHERE type_id=?',
+                [QubitTerm::GENERAL_NOTE_ID, $term->id]
+            );
 
-      // Remove RAD General note term
-      $term->delete();
+            // Remove RAD General note term
+            $term->delete();
+        }
+
+        return true;
     }
-
-    return true;
-  }
 }

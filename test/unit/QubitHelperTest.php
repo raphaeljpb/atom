@@ -27,24 +27,28 @@ $t = new lime_test(19, new lime_output_color());
 $t->diag('qubit_auto_link_text()');
 
 $t->is(
-  qubit_auto_link_text('Visit our "website":http://www.accesstomemory.org.'),
-  'Visit our <a href="http://www.accesstomemory.org">website</a>.',
-  'qubit_auto_link_text() converts Redmine links');
+    qubit_auto_link_text('Visit our "website":http://www.accesstomemory.org.'),
+    'Visit our <a href="http://www.accesstomemory.org">website</a>.',
+    'qubit_auto_link_text() converts Redmine links'
+);
 
 $t->is(
-  qubit_auto_link_text('Email me "here":mailto:bob@bob.com'),
-  'Email me <a href="mailto:bob@bob.com">here</a>',
-  'qubit_auto_link_text() converts Redmine mailto links');
+    qubit_auto_link_text('Email me "here":mailto:bob@bob.com'),
+    'Email me <a href="mailto:bob@bob.com">here</a>',
+    'qubit_auto_link_text() converts Redmine mailto links'
+);
 
 $t->is(
-  qubit_auto_link_text('Foobar1 http://www.foobar1.com Foobar2 ftp://ftp.foobar2.com and special link "here":http://here.com.'),
-  'Foobar1 <a href="http://www.foobar1.com">http://www.foobar1.com</a> Foobar2 <a href="ftp://ftp.foobar2.com">ftp://ftp.foobar2.com</a> and special link <a href="http://here.com">here</a>.',
-  'qubit_auto_link_text() converts Redmine and URLs when they both appear in the same string');
+    qubit_auto_link_text('Foobar1 http://www.foobar1.com Foobar2 ftp://ftp.foobar2.com and special link "here":http://here.com.'),
+    'Foobar1 <a href="http://www.foobar1.com">http://www.foobar1.com</a> Foobar2 <a href="ftp://ftp.foobar2.com">ftp://ftp.foobar2.com</a> and special link <a href="http://here.com">here</a>.',
+    'qubit_auto_link_text() converts Redmine and URLs when they both appear in the same string'
+);
 
 $t->is(
-  qubit_auto_link_text('&quot;Foobar&quot;:http://foobar.com/12345.'),
-  '<a href="http://foobar.com/12345">Foobar</a>.',
-  'qubit_auto_link_text() converts Redmine link with HTML entities (&quot;)');
+    qubit_auto_link_text('&quot;Foobar&quot;:http://foobar.com/12345.'),
+    '<a href="http://foobar.com/12345">Foobar</a>.',
+    'qubit_auto_link_text() converts Redmine link with HTML entities (&quot;)'
+);
 
 $email_raw = 'fabien.potencier@symfony-project.com';
 $email_result = '<a href="mailto:'.$email_raw.'">'.$email_raw.'</a>';

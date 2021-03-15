@@ -92,8 +92,8 @@
           <div class="filter-row">
             <div class="filter">
               <?php echo $form->repository
-                ->label(__('Repository'))
-                ->renderRow(); ?>
+                  ->label(__('Repository'))
+                  ->renderRow(); ?>
             </div>
           </div>
 
@@ -108,20 +108,20 @@
 
           <div class="filter-left">
             <?php echo $form->hasDigitalObject
-              ->label(__('%1% available', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]))
-              ->renderRow(); ?>
+                ->label(__('%1% available', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]))
+                ->renderRow(); ?>
           </div>
 
           <div class="filter-center">
             <?php echo $form->entityType
-              ->label(__('%1% available', ['%1%' => __('Entity type')]))
-              ->renderRow(); ?>
+                ->label(__('%1% available', ['%1%' => __('Entity type')]))
+                ->renderRow(); ?>
           </div>
 
           <div class="filter-right">
             <?php echo $form->emptyField
-              ->label(__('Empty field'))
-              ->renderRow(); ?>
+                ->label(__('Empty field'))
+                ->renderRow(); ?>
           </div>
 
         </div>
@@ -135,14 +135,14 @@
 
           <div class="filter-left relation">
             <?php echo $form->relatedType
-              ->label(__('Relationship'))
-              ->renderRow(); ?>
+                ->label(__('Relationship'))
+                ->renderRow(); ?>
           </div>
 
           <div class="filter-right relation">
             <?php echo $form->relatedAuthority
-              ->label(__('Related %1%', ['%1%' => sfConfig::get('app_ui_label_actor')]))
-              ->renderLabel(); ?>
+                ->label(__('Related %1%', ['%1%' => sfConfig::get('app_ui_label_actor')]))
+                ->renderLabel(); ?>
             <?php echo $form->relatedAuthority->render(['class' => 'form-autocomplete']); ?>
             <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete']); ?>"/>
           </div>

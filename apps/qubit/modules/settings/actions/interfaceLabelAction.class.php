@@ -26,72 +26,72 @@
  */
 class SettingsInterfaceLabelAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->uiLabelForm = new SettingsGenericForm([], [
-      'settings' => QubitSetting::getByScope('ui_label'), 'scope' => 'ui_label', 'fieldsRequired' => false, ]);
+    public function execute($request)
+    {
+        $this->uiLabelForm = new SettingsGenericForm([], [
+            'settings' => QubitSetting::getByScope('ui_label'), 'scope' => 'ui_label', 'fieldsRequired' => false, ]);
 
-    // Handle POST data (form submit)
-    if ($request->isMethod('post')) {
-      QubitCache::getInstance()->removePattern('settings:i18n:*');
+        // Handle POST data (form submit)
+        if ($request->isMethod('post')) {
+            QubitCache::getInstance()->removePattern('settings:i18n:*');
 
-      if (null !== $this->context->getViewCacheManager()) {
-        $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
-        $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
-      }
+            if (null !== $this->context->getViewCacheManager()) {
+                $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
+                $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
+            }
 
-      // Handle UI label form submission
-      if (null !== $request->ui_label) {
-        $this->uiLabelForm->bind($request->ui_label);
-        if ($this->uiLabelForm->isValid()) {
-          // Do update and redirect to avoid repeat submit wackiness
-          $this->updateUiLabelSettings($this->uiLabelForm);
+            // Handle UI label form submission
+            if (null !== $request->ui_label) {
+                $this->uiLabelForm->bind($request->ui_label);
+                if ($this->uiLabelForm->isValid()) {
+                    // Do update and redirect to avoid repeat submit wackiness
+                    $this->updateUiLabelSettings($this->uiLabelForm);
 
-          $notice = sfContext::getInstance()->i18n->__('User interface labels saved.');
-          $this->getUser()->setFlash('notice', $notice);
+                    $notice = sfContext::getInstance()->i18n->__('User interface labels saved.');
+                    $this->getUser()->setFlash('notice', $notice);
 
-          $this->redirect('settings/interfaceLabel');
+                    $this->redirect('settings/interfaceLabel');
+                }
+            }
         }
-      }
+
+        $this->populateUiLabelForm($this->uiLabelForm);
     }
 
-    $this->populateUiLabelForm($this->uiLabelForm);
-  }
-
-  /**
-   * Populate the ui_label form with database values (localized).
-   *
-   * @param mixed $form
-   */
-  protected function populateUiLabelForm($form)
-  {
-    foreach ($form->getSettings() as $setting) {
-      $form->setDefault($setting->getName(), $setting->getValue());
-    }
-  }
-
-  /**
-   * Update ui_label db values with form values (localized).
-   *
-   * @param mixed $form
-   *
-   * @return $this
-   */
-  protected function updateUiLabelSettings($form)
-  {
-    foreach ($form->getSettings() as $setting) {
-      if (null !== $value = $form->getValue($setting->getName())) {
-        $setting->setValue($value);
-        $setting->save();
-      }
+    /**
+     * Populate the ui_label form with database values (localized).
+     *
+     * @param mixed $form
+     */
+    protected function populateUiLabelForm($form)
+    {
+        foreach ($form->getSettings() as $setting) {
+            $form->setDefault($setting->getName(), $setting->getValue());
+        }
     }
 
-    // Add a new ui_label
-    if (null !== ($newName = $form->getValue('new_setting_name')) && strlen($newValue = $form->getValue('new_setting_value'))) {
-      $setting = QubitSetting::createNewSetting($newName, $newValue, ['scope' => $form->getScope()]);
-      $setting->save();
-    }
+    /**
+     * Update ui_label db values with form values (localized).
+     *
+     * @param mixed $form
+     *
+     * @return $this
+     */
+    protected function updateUiLabelSettings($form)
+    {
+        foreach ($form->getSettings() as $setting) {
+            if (null !== $value = $form->getValue($setting->getName())) {
+                $setting->setValue($value);
+                $setting->save();
+            }
+        }
 
-    return $this;
-  }
+        // Add a new ui_label
+        if (null !== ($newName = $form->getValue('new_setting_name')) && strlen($newValue = $form->getValue('new_setting_value'))) {
+            $setting = QubitSetting::createNewSetting($newName, $newValue, ['scope' => $form->getScope()]);
+            $setting->save();
+        }
+
+        return $this;
+    }
 }

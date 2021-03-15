@@ -19,52 +19,52 @@
 
 class AccessionCheckIdentifierAvailableAction extends sfAction
 {
-  public function execute($request)
-  {
-    // Check user authorization
-    if (!QubitAcl::check($this->resource, 'create') && !QubitAcl::check($this->resource, 'update')) {
-      $this->getResponse()->setStatusCode(401);
+    public function execute($request)
+    {
+        // Check user authorization
+        if (!QubitAcl::check($this->resource, 'create') && !QubitAcl::check($this->resource, 'update')) {
+            $this->getResponse()->setStatusCode(401);
 
-      return sfView::NONE;
+            return sfView::NONE;
+        }
+
+        $this->getResponse()->setContentType('application/json');
+
+        // Assemble response data
+        $valid = $this->validateAccessionIdentifier($request->identifier, $request->accession_id);
+        $message = ($valid) ? $this->context->i18n->__('Identifier available.') : $this->context->i18n->__('Identifier unavailable.');
+        $responseData = ['allowable' => $valid, 'message' => $message];
+
+        $this->getResponse()->setContent(json_encode($responseData));
+
+        return sfView::NONE;
     }
 
-    $this->getResponse()->setContentType('application/json');
+    private function validateAccessionIdentifier($identifier, $accessionId = null)
+    {
+        if (!empty($accessionId)) {
+            // Attempt to load existing accession
+            $resource = QubitAccession::getById($accessionId);
 
-    // Assemble response data
-    $valid = $this->validateAccessionIdentifier($request->identifier, $request->accession_id);
-    $message = ($valid) ? $this->context->i18n->__('Identifier available.') : $this->context->i18n->__('Identifier unavailable.');
-    $responseData = ['allowable' => $valid, 'message' => $message];
+            // Indicate bad request if accession doesn't exist
+            if (null === $resource) {
+                $this->getResponse()->setStatusCode(400);
 
-    $this->getResponse()->setContent(json_encode($responseData));
+                return false;
+            }
+        } else {
+            // Create new accession so validator can be run
+            $resource = new QubitAccession();
+        }
 
-    return sfView::NONE;
-  }
+        $validator = new QubitValidatorAccessionIdentifier(['required' => true, 'resource' => $resource]);
 
-  private function validateAccessionIdentifier($identifier, $accessionId = null)
-  {
-    if (!empty($accessionId)) {
-      // Attempt to load existing accession
-      $resource = QubitAccession::getById($accessionId);
+        try {
+            $validator->clean($identifier);
 
-      // Indicate bad request if accession doesn't exist
-      if (null === $resource) {
-        $this->getResponse()->setStatusCode(400);
-
-        return false;
-      }
-    } else {
-      // Create new accession so validator can be run
-      $resource = new QubitAccession();
+            return true;
+        } catch (sfValidatorError $e) {
+            return false;
+        }
     }
-
-    $validator = new QubitValidatorAccessionIdentifier(['required' => true, 'resource' => $resource]);
-
-    try {
-      $validator->clean($identifier);
-
-      return true;
-    } catch (sfValidatorError $e) {
-      return false;
-    }
-  }
 }

@@ -42,8 +42,8 @@
 
         <?php if ($showCompoundObjectToggle) { ?>
           <?php echo $form->displayAsCompound
-          ->label(__('View children as a compound %1%?', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]))
-          ->renderRow(); ?>
+            ->label(__('View children as a compound %1%?', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]))
+            ->renderRow(); ?>
         <?php } ?>
 
         <?php echo $form->latitude->label('Latitude')->renderRow(); ?>
@@ -65,13 +65,13 @@
           <?php } else { ?>
 
             <?php echo $form["repFile_{$usageId}"]
-              ->label(__('Select a %1% to upload', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]))
-              ->renderRow(); ?>
+                ->label(__('Select a %1% to upload', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]))
+                ->renderRow(); ?>
 
             <?php if ($resource->canThumbnail()) { ?>
               <?php echo $form["generateDerivative_{$usageId}"]
-              ->label('Or auto-generate a new representation from master image')
-              ->renderRow(); ?>
+                ->label('Or auto-generate a new representation from master image')
+                ->renderRow(); ?>
             <?php } ?>
 
           <?php } ?>

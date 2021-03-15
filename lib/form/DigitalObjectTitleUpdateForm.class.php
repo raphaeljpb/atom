@@ -24,48 +24,48 @@
  */
 class DigitalObjectTitleUpdateForm extends sfForm
 {
-  public function configure()
-  {
-    // Build widgets and validators
-    foreach ($this->getInformationObjects() as $informationObject) {
-      $widgets[$informationObject->id] = new sfWidgetFormInput();
-      $validators[$informationObject->id] = new sfValidatorString();
+    public function configure()
+    {
+        // Build widgets and validators
+        foreach ($this->getInformationObjects() as $informationObject) {
+            $widgets[$informationObject->id] = new sfWidgetFormInput();
+            $validators[$informationObject->id] = new sfValidatorString();
+        }
+
+        // Set them
+        $this->setWidgets($widgets);
+        $this->setValidators($validators);
+
+        // Set decorator
+        $decorator = new QubitWidgetFormSchemaFormatterList($this->widgetSchema);
+        $this->widgetSchema->addFormFormatter('list', $decorator);
+        $this->widgetSchema->setFormFormatterName('list');
+
+        // Set wrapper text
+        $this->widgetSchema->setNameFormat('titles[%s]');
     }
 
-    // Set them
-    $this->setWidgets($widgets);
-    $this->setValidators($validators);
+    public function setScope($scope)
+    {
+        $this->setOption('scope', $scope);
 
-    // Set decorator
-    $decorator = new QubitWidgetFormSchemaFormatterList($this->widgetSchema);
-    $this->widgetSchema->addFormFormatter('list', $decorator);
-    $this->widgetSchema->setFormFormatterName('list');
+        return $this;
+    }
 
-    // Set wrapper text
-    $this->widgetSchema->setNameFormat('titles[%s]');
-  }
+    public function getScope()
+    {
+        return $this->getOption('scope');
+    }
 
-  public function setScope($scope)
-  {
-    $this->setOption('scope', $scope);
+    public function setInformationObjects(array $objects)
+    {
+        $this->setOption('informationObjects', $objects);
 
-    return $this;
-  }
+        return $this;
+    }
 
-  public function getScope()
-  {
-    return $this->getOption('scope');
-  }
-
-  public function setInformationObjects(array $objects)
-  {
-    $this->setOption('informationObjects', $objects);
-
-    return $this;
-  }
-
-  public function getInformationObjects()
-  {
-    return $this->getOption('informationObjects');
-  }
+    public function getInformationObjects()
+    {
+        return $this->getOption('informationObjects');
+    }
 }

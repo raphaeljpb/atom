@@ -19,53 +19,53 @@
 
 class RightEditAction extends sfAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'basis',
-    'endDate',
-    'startDate',
-    'rightsHolder',
-    'rightsNote',
-    'copyrightStatus',
-    'copyrightStatusDate',
-    'copyrightJurisdiction',
-    'copyrightNote',
-    'identifierType',
-    'identifierValue',
-    'identifierRole',
-    'licenseTerms',
-    'licenseNote',
-    'statuteJurisdiction',
-    'statuteCitation',
-    'statuteDeterminationDate',
-    'statuteNote', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'basis',
+        'endDate',
+        'startDate',
+        'rightsHolder',
+        'rightsNote',
+        'copyrightStatus',
+        'copyrightStatusDate',
+        'copyrightJurisdiction',
+        'copyrightNote',
+        'identifierType',
+        'identifierValue',
+        'identifierRole',
+        'licenseTerms',
+        'licenseNote',
+        'statuteJurisdiction',
+        'statuteCitation',
+        'statuteDeterminationDate',
+        'statuteNote', ];
 
-  public function execute($request)
-  {
-    $this->earlyExecute();
-    $this->formSetup();
+    public function execute($request)
+    {
+        $this->earlyExecute();
+        $this->formSetup();
 
-    if ($request->isMethod('post')) {
-      $params = $request->getPostParameters();
-      $this->form->bind($params['right']);
-      if ($this->form->isValid()) {
-        $this->processForm();
-        $this->redirect($this->redirectTo);
-      }
+        if ($request->isMethod('post')) {
+            $params = $request->getPostParameters();
+            $this->form->bind($params['right']);
+            if ($this->form->isValid()) {
+                $this->processForm();
+                $this->redirect($this->redirectTo);
+            }
+        }
     }
-  }
 
-  protected function dateWidget()
-  {
-    $widget = new sfWidgetFormInput();
-    $widget->setAttribute('type', 'date');
+    protected function dateWidget()
+    {
+        $widget = new sfWidgetFormInput();
+        $widget->setAttribute('type', 'date');
 
-    return $widget;
-  }
+        return $widget;
+    }
 
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'endDate':
         $this->form->setDefault('endDate', ($this->right->endDate));
         $this->form->setValidator('endDate', new sfValidatorString());
@@ -88,17 +88,17 @@ class RightEditAction extends sfAction
         $this->form->setWidget($name, $this->dateWidget());
         $this->form->setDefault($name, $this->right[$name]);
         if ('copyrightStatusDate' == $name) {
-          $this->form->getWidgetSchema()->{$name}->setLabel($this->context->i18n->__('Copyright status determination date'));
+            $this->form->getWidgetSchema()->{$name}->setLabel($this->context->i18n->__('Copyright status determination date'));
         }
 
         break;
 
       case 'basis':
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item) {
-          if (QubitTerm::RIGHT_BASIS_POLICY_ID == $item->id) {
-            $this->form->setDefault('basis', $this->context->routing->generate(null, [$item, 'module' => 'term']));
-          }
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
+            if (QubitTerm::RIGHT_BASIS_POLICY_ID == $item->id) {
+                $this->form->setDefault('basis', $this->context->routing->generate(null, [$item, 'module' => 'term']));
+            }
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
         }
         $this->form->setValidator('basis', new sfValidatorString());
         $this->form->setWidget('basis', new sfWidgetFormSelect(['choices' => $choices]));
@@ -108,7 +108,7 @@ class RightEditAction extends sfAction
 
       case 'copyrightStatus':
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::COPYRIGHT_STATUS_ID) as $item) {
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
         }
 
         $this->form->setValidator('copyrightStatus', new sfValidatorString());
@@ -120,7 +120,7 @@ class RightEditAction extends sfAction
       case 'rightsHolder':
         $choices = [];
         if ($this->right->rightsHolder) {
-          $choices[$this->context->routing->generate(null, [$this->right->rightsHolder, 'module' => 'actor'])] = $this->right->rightsHolder->__toString();
+            $choices[$this->context->routing->generate(null, [$this->right->rightsHolder, 'module' => 'actor'])] = $this->right->rightsHolder->__toString();
         }
         $this->form->setValidator('rightsHolder', new sfValidatorString());
         $this->form->setWidget('rightsHolder', new sfWidgetFormSelect(['choices' => $choices]));
@@ -152,7 +152,7 @@ class RightEditAction extends sfAction
 
         $choices = [];
         if (isset($this->right->statuteCitation)) {
-          $choices[$this->context->routing->generate(null, [$this->right->statuteCitation, 'module' => 'term'])] = $this->right->statuteCitation;
+            $choices[$this->context->routing->generate(null, [$this->right->statuteCitation, 'module' => 'term'])] = $this->right->statuteCitation;
         }
 
         $this->form->setWidget('statuteCitation', new sfWidgetFormSelect(['choices' => $choices]));
@@ -169,11 +169,11 @@ class RightEditAction extends sfAction
 
         break;
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'basis':
       case 'copyrightStatus':
       case 'rightsHolder':
@@ -182,46 +182,46 @@ class RightEditAction extends sfAction
 
         $value = $this->form->getValue($field->getName());
         if (isset($value)) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          $this->right[$field->getName()] = $params['_sf_route']->resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($value));
+            $this->right[$field->getName()] = $params['_sf_route']->resource;
         }
 
         break;
 
       case 'grantedRights':
         foreach ($field->getValue() as $data) {
-          $grantedRight = null;
+            $grantedRight = null;
 
-          // try and find pre-existing record with this id
-          $grantedRight = $this->right->grantedRightsFindById($data['id']);
+            // try and find pre-existing record with this id
+            $grantedRight = $this->right->grantedRightsFindById($data['id']);
 
-          // if one was found, but user
-          // has requested it be deleted
-          // then lets delete it.
-          if (null !== $grantedRight && 'true' === $data['delete']) {
-            $grantedRight->delete();
+            // if one was found, but user
+            // has requested it be deleted
+            // then lets delete it.
+            if (null !== $grantedRight && 'true' === $data['delete']) {
+                $grantedRight->delete();
 
-            continue;
-          }
+                continue;
+            }
 
-          // none found, so make a new one
-          if (false === $grantedRight) {
-            $grantedRight = new QubitGrantedRight();
-          }
+            // none found, so make a new one
+            if (false === $grantedRight) {
+                $grantedRight = new QubitGrantedRight();
+            }
 
-          $actparams = $this->context->routing->parse(Qubit::pathInfo($data['act']));
-          $grantedRight->act = $actparams['_sf_route']->resource;
-          $grantedRight->restriction = $data['restriction'];
+            $actparams = $this->context->routing->parse(Qubit::pathInfo($data['act']));
+            $grantedRight->act = $actparams['_sf_route']->resource;
+            $grantedRight->restriction = $data['restriction'];
 
-          // empty dates come in as empty strings, but propel wants 'null' or it'll default to today's date
-          $grantedRight->startDate = strlen($data['startDate'] > 0) ? $data['startDate'] : null;
-          $grantedRight->endDate = strlen($data['endDate'] > 0) ? $data['endDate'] : null;
-          $grantedRight->notes = $data['notes'];
+            // empty dates come in as empty strings, but propel wants 'null' or it'll default to today's date
+            $grantedRight->startDate = strlen($data['startDate'] > 0) ? $data['startDate'] : null;
+            $grantedRight->endDate = strlen($data['endDate'] > 0) ? $data['endDate'] : null;
+            $grantedRight->notes = $data['notes'];
 
-          // relate it to the Right if it is new
-          if (null === $grantedRight->id) {
-            $this->right->grantedRights[] = $grantedRight;
-          }
+            // relate it to the Right if it is new
+            if (null === $grantedRight->id) {
+                $this->right->grantedRights[] = $grantedRight;
+            }
         }
 
         // no break
@@ -231,73 +231,79 @@ class RightEditAction extends sfAction
       default:
         $this->right[$field->getName()] = $this->form->getValue($field->getName());
     }
-  }
-
-  protected function processForm()
-  {
-    // attach each value in the form
-    // to the new/existing rights object
-    foreach ($this->form as $field) {
-      $this->processField($field);
     }
 
-    // in theory we can save the Right now.
-    $this->right->save();
+    protected function processForm()
+    {
+        // attach each value in the form
+        // to the new/existing rights object
+        foreach ($this->form as $field) {
+            $this->processField($field);
+        }
 
-    // if new right, then create QubitRelation
-    // to associate it to the resource
-    if (null === $this->right->relationsRelatedByobjectId[0]) {
-      $this->relation = new QubitRelation();
-      $this->relation->object = $this->right;
-      $this->relation->typeId = QubitTerm::RIGHT_ID;
-      $this->relation->subject = $this->resource;
+        // in theory we can save the Right now.
+        $this->right->save();
 
-      $this->relation->save();
-    }
-  }
+        // if new right, then create QubitRelation
+        // to associate it to the resource
+        if (null === $this->right->relationsRelatedByobjectId[0]) {
+            $this->relation = new QubitRelation();
+            $this->relation->object = $this->right;
+            $this->relation->typeId = QubitTerm::RIGHT_ID;
+            $this->relation->subject = $this->resource;
 
-  protected function getRelatedObject($id)
-  {
-    $results = QubitRelation::getRelatedSubjectsByObjectId(
-        'QubitInformationObject', $id, ['typeId' => QubitTerm::RIGHT_ID]
-    );
-
-    if (0 < count($results)) {
-      return $results[0];
+            $this->relation->save();
+        }
     }
 
-    $results = QubitRelation::getRelatedSubjectsByObjectId(
-      'QubitDigitalObject', $id, ['typeId' => QubitTerm::RIGHT_ID]
-    );
+    protected function getRelatedObject($id)
+    {
+        $results = QubitRelation::getRelatedSubjectsByObjectId(
+            'QubitInformationObject',
+            $id,
+            ['typeId' => QubitTerm::RIGHT_ID]
+        );
 
-    if (0 < count($results)) {
-      return $results[0];
+        if (0 < count($results)) {
+            return $results[0];
+        }
+
+        $results = QubitRelation::getRelatedSubjectsByObjectId(
+            'QubitDigitalObject',
+            $id,
+            ['typeId' => QubitTerm::RIGHT_ID]
+        );
+
+        if (0 < count($results)) {
+            return $results[0];
+        }
+
+        $results = QubitRelation::getRelatedSubjectsByObjectId(
+            'QubitAccession',
+            $id,
+            ['typeId' => QubitTerm::RIGHT_ID]
+        );
+
+        if (0 < count($results)) {
+            return $results[0];
+        }
+
+        return null;
     }
 
-    $results = QubitRelation::getRelatedSubjectsByObjectId(
-      'QubitAccession', $id, ['typeId' => QubitTerm::RIGHT_ID]
-    );
+    protected function newRightWithDefaults()
+    {
+        $right = new QubitRights();
+        $dt = new DateTime();
+        $right->startDate = $dt->format('Y-m-d');
+        $right->restriction = '0';
 
-    if (0 < count($results)) {
-      return $results[0];
+        return $right;
     }
 
-    return null;
-  }
-
-  protected function newRightWithDefaults()
-  {
-    $right = new QubitRights();
-    $dt = new DateTime();
-    $right->startDate = $dt->format('Y-m-d');
-    $right->restriction = '0';
-
-    return $right;
-  }
-
-  protected function setRedirect($type)
-  {
-    switch ($type) {
+    protected function setRedirect($type)
+    {
+        switch ($type) {
       case 'QubitInformationObject':
       case 'QubitDigitalObject':
         $this->redirectTo = [$this->informationObject, 'module' => 'informationObject'];
@@ -309,136 +315,136 @@ class RightEditAction extends sfAction
 
         break;
     }
-  }
-
-  protected function earlyExecute()
-  {
-    $object = $this->getRoute()->resource;
-    $type = get_class($object);
-
-    // editing an existing QubitRights - need to determine if the rights
-    // are associated to InformationObject, Accession or DigitalObject
-    if ('QubitRights' === $type) {
-      $this->resource = $this->getRelatedObject($object->id);
-      $type = get_class($this->resource);
-      $this->right = $object;
-    }
-    // we're creating new rights object on the object provided
-    else {
-      $this->resource = $object;
-      $this->right = $this->newRightWithDefaults();
     }
 
-    // need the informationObject handy for redirects and ACL checks
-    if ('QubitDigitalObject' == $type) {
-      if (isset($this->resource->parent)) {
-        $this->informationObject = $this->resource->parent->informationObject;
-      } else {
-        $this->informationObject = $this->resource->informationObject;
-      }
-    } else {
-      $this->informationObject = $this->resource;
+    protected function earlyExecute()
+    {
+        $object = $this->getRoute()->resource;
+        $type = get_class($object);
+
+        // editing an existing QubitRights - need to determine if the rights
+        // are associated to InformationObject, Accession or DigitalObject
+        if ('QubitRights' === $type) {
+            $this->resource = $this->getRelatedObject($object->id);
+            $type = get_class($this->resource);
+            $this->right = $object;
+        }
+        // we're creating new rights object on the object provided
+        else {
+            $this->resource = $object;
+            $this->right = $this->newRightWithDefaults();
+        }
+
+        // need the informationObject handy for redirects and ACL checks
+        if ('QubitDigitalObject' == $type) {
+            if (isset($this->resource->parent)) {
+                $this->informationObject = $this->resource->parent->informationObject;
+            } else {
+                $this->informationObject = $this->resource->informationObject;
+            }
+        } else {
+            $this->informationObject = $this->resource;
+        }
+
+        // set where we redirect to after processing the new/changed right
+        $this->setRedirect($type);
+
+        // if we haven't got a resource, we have a problem houston
+        if (null === $this->resource) {
+            $this->forward404();
+        }
+
+        // Check that this isn't the root
+        if ('QubitInformationObject' == $type && !isset($this->resource->parent)) {
+            $this->forward404();
+        }
+
+        // Check user authorization
+        if (!QubitAcl::check($this->informationObject, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)) {
+            QubitAcl::forwardUnauthorized();
+        }
     }
 
-    // set where we redirect to after processing the new/changed right
-    $this->setRedirect($type);
+    protected function grantedRightFormSetup($grantedRight)
+    {
+        // if new, unsaved right, then id can be set to 0
+        if (null === $grantedRight->id) {
+            $grantedRight->id = 0;
+        }
 
-    // if we haven't got a resource, we have a problem houston
-    if (null === $this->resource) {
-      $this->forward404();
+        // 'id', 'act', 'startDate', 'endDate', 'restriction', 'notes'
+        $form = new sfForm();
+        $form->getValidatorSchema()->setOption('allow_extra_fields', true);
+        $form->getWidgetSchema()->setNameFormat('grantedRight[%s][]');
+
+        $form->setValidator('id', new sfValidatorInteger());
+        $form->setWidget('id', new sfWidgetFormInputHidden());
+        $form->setDefault('id', $grantedRight->id);
+
+        $form->setValidator('delete', new sfValidatorString());
+        $form->setWidget('delete', new sfWidgetFormInputHidden());
+
+        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_ACT_ID) as $item) {
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
+        }
+
+        $form->setValidator('act', new sfValidatorString());
+        $form->setWidget('act', new sfWidgetFormSelect(['choices' => $choices]));
+        $form->setDefault('act', $this->context->routing->generate(null, [$grantedRight->act, 'module' => 'term']));
+
+        $form->setValidator('startDate', new sfValidatorString());
+        $form->setWidget('startDate', $this->dateWidget());
+        $form->getWidgetSchema()->startDate->setLabel($this->context->i18n->__('Start'));
+        $form->setDefault('startDate', ($grantedRight->startDate));
+
+        $form->setValidator('endDate', new sfValidatorString());
+        $form->setWidget('endDate', $this->dateWidget());
+        $form->getWidgetSchema()->endDate->setLabel($this->context->i18n->__('End'));
+        $form->setDefault('endDate', ($grantedRight->endDate));
+
+        $res_choices[1] = $this->context->i18n->__('Allow');
+        $res_choices[2] = $this->context->i18n->__('Conditional');
+        $res_choices[0] = $this->context->i18n->__('Disallow');
+        $form->setValidator('restriction', new sfValidatorInteger());
+        $form->setWidget('restriction', new sfWidgetFormSelect(['choices' => $res_choices]));
+        $form->setDefault('restriction', $grantedRight->restriction);
+
+        $form->setValidator('notes', new sfValidatorString());
+        $form->setWidget('notes', new sfWidgetFormTextarea());
+        $form->setDefault('notes', $grantedRight->notes);
+
+        return $form;
     }
 
-    // Check that this isn't the root
-    if ('QubitInformationObject' == $type && !isset($this->resource->parent)) {
-      $this->forward404();
+    protected function formSetup()
+    {
+        $this->form = new sfForm();
+        $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+        $this->form->getWidgetSchema()->setNameFormat('right[%s]');
+
+        foreach ($this::$NAMES as $name) {
+            $this->addField($name);
+        }
+
+        // handle related act records:
+        // if new rights, generate one empty act by default
+        // if existing rights, look at related act records
+        // and generate an act row for each one.
+        $subForm = new sfForm();
+        $subForm->getValidatorSchema()->setOption('allow_extra_fields', true);
+        if (0 < count($this->right->grantedRights)) {
+            foreach ($this->right->grantedRights as $i => $gr) {
+                $subForm->embedForm($i, $this->grantedRightFormSetup($gr));
+            }
+        } else {
+            $subForm->embedForm(0, $this->grantedRightFormSetup(new QubitGrantedRight()));
+        }
+
+        // finally store a blank GrantedRight form that'll be used
+        // by javascript as a reference for adding new grantedRights
+        // forms
+        $gr = new QubitGrantedRight();
+        $this->form->embedForm('blank', $this->grantedRightFormSetup($gr));
+        $this->form->embedForm('grantedRights', $subForm);
     }
-
-    // Check user authorization
-    if (!QubitAcl::check($this->informationObject, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)) {
-      QubitAcl::forwardUnauthorized();
-    }
-  }
-
-  protected function grantedRightFormSetup($grantedRight)
-  {
-    // if new, unsaved right, then id can be set to 0
-    if (null === $grantedRight->id) {
-      $grantedRight->id = 0;
-    }
-
-    // 'id', 'act', 'startDate', 'endDate', 'restriction', 'notes'
-    $form = new sfForm();
-    $form->getValidatorSchema()->setOption('allow_extra_fields', true);
-    $form->getWidgetSchema()->setNameFormat('grantedRight[%s][]');
-
-    $form->setValidator('id', new sfValidatorInteger());
-    $form->setWidget('id', new sfWidgetFormInputHidden());
-    $form->setDefault('id', $grantedRight->id);
-
-    $form->setValidator('delete', new sfValidatorString());
-    $form->setWidget('delete', new sfWidgetFormInputHidden());
-
-    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_ACT_ID) as $item) {
-      $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
-    }
-
-    $form->setValidator('act', new sfValidatorString());
-    $form->setWidget('act', new sfWidgetFormSelect(['choices' => $choices]));
-    $form->setDefault('act', $this->context->routing->generate(null, [$grantedRight->act, 'module' => 'term']));
-
-    $form->setValidator('startDate', new sfValidatorString());
-    $form->setWidget('startDate', $this->dateWidget());
-    $form->getWidgetSchema()->startDate->setLabel($this->context->i18n->__('Start'));
-    $form->setDefault('startDate', ($grantedRight->startDate));
-
-    $form->setValidator('endDate', new sfValidatorString());
-    $form->setWidget('endDate', $this->dateWidget());
-    $form->getWidgetSchema()->endDate->setLabel($this->context->i18n->__('End'));
-    $form->setDefault('endDate', ($grantedRight->endDate));
-
-    $res_choices[1] = $this->context->i18n->__('Allow');
-    $res_choices[2] = $this->context->i18n->__('Conditional');
-    $res_choices[0] = $this->context->i18n->__('Disallow');
-    $form->setValidator('restriction', new sfValidatorInteger());
-    $form->setWidget('restriction', new sfWidgetFormSelect(['choices' => $res_choices]));
-    $form->setDefault('restriction', $grantedRight->restriction);
-
-    $form->setValidator('notes', new sfValidatorString());
-    $form->setWidget('notes', new sfWidgetFormTextarea());
-    $form->setDefault('notes', $grantedRight->notes);
-
-    return $form;
-  }
-
-  protected function formSetup()
-  {
-    $this->form = new sfForm();
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-    $this->form->getWidgetSchema()->setNameFormat('right[%s]');
-
-    foreach ($this::$NAMES as $name) {
-      $this->addField($name);
-    }
-
-    // handle related act records:
-    // if new rights, generate one empty act by default
-    // if existing rights, look at related act records
-    // and generate an act row for each one.
-    $subForm = new sfForm();
-    $subForm->getValidatorSchema()->setOption('allow_extra_fields', true);
-    if (0 < count($this->right->grantedRights)) {
-      foreach ($this->right->grantedRights as $i => $gr) {
-        $subForm->embedForm($i, $this->grantedRightFormSetup($gr));
-      }
-    } else {
-      $subForm->embedForm(0, $this->grantedRightFormSetup(new QubitGrantedRight()));
-    }
-
-    // finally store a blank GrantedRight form that'll be used
-    // by javascript as a reference for adding new grantedRights
-    // forms
-    $gr = new QubitGrantedRight();
-    $this->form->embedForm('blank', $this->grantedRightFormSetup($gr));
-    $this->form->embedForm('grantedRights', $subForm);
-  }
 }

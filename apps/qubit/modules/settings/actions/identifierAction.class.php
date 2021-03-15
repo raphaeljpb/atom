@@ -19,47 +19,47 @@
 
 class SettingsIdentifierAction extends DefaultEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'accession_mask_enabled',
-    'accession_mask',
-    'accession_counter',
-    'identifier_mask_enabled',
-    'identifier_mask',
-    'identifier_counter',
-    'separator_character',
-    'inherit_code_informationobject',
-    'inherit_code_dc_xml',
-    'prevent_duplicate_actor_identifiers',
-  ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'accession_mask_enabled',
+        'accession_mask',
+        'accession_counter',
+        'identifier_mask_enabled',
+        'identifier_mask',
+        'identifier_counter',
+        'separator_character',
+        'inherit_code_informationobject',
+        'inherit_code_dc_xml',
+        'prevent_duplicate_actor_identifiers',
+    ];
 
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid()) {
-        $this->processForm();
+            if ($this->form->isValid()) {
+                $this->processForm();
 
-        QubitCache::getInstance()->removePattern('settings:i18n:*');
+                QubitCache::getInstance()->removePattern('settings:i18n:*');
 
-        $this->getUser()->setFlash('notice', $this->i18n->__('Identifier settings saved.'));
+                $this->getUser()->setFlash('notice', $this->i18n->__('Identifier settings saved.'));
 
-        $this->redirect(['module' => 'settings', 'action' => 'identifier']);
-      }
+                $this->redirect(['module' => 'settings', 'action' => 'identifier']);
+            }
+        }
     }
-  }
 
-  protected function earlyExecute()
-  {
-    $this->i18n = sfContext::getInstance()->i18n;
-  }
+    protected function earlyExecute()
+    {
+        $this->i18n = sfContext::getInstance()->i18n;
+    }
 
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'accession_mask':
       case 'accession_counter':
       case 'identifier_mask':
@@ -85,9 +85,9 @@ class SettingsIdentifierAction extends DefaultEditAction
         // Determine default value
         // (accession mask enabled setting doesn't get created in DB by default)
         $defaults = [
-          'accession_mask_enabled' => 1,
-          'inherit_code_dc_xml' => 0,
-          'prevent_duplicate_actor_identifiers' => 0,
+            'accession_mask_enabled' => 1,
+            'inherit_code_dc_xml' => 0,
+            'prevent_duplicate_actor_identifiers' => 0,
         ];
 
         $default = (null !== $this->{$name} = QubitSetting::getByName($name))
@@ -102,11 +102,11 @@ class SettingsIdentifierAction extends DefaultEditAction
 
         break;
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($name = $field->getName()) {
+    protected function processField($field)
+    {
+        switch ($name = $field->getName()) {
       case 'accession_mask_enabled':
       case 'accession_mask':
       case 'accession_counter':
@@ -118,13 +118,13 @@ class SettingsIdentifierAction extends DefaultEditAction
       case 'inherit_code_dc_xml':
       case 'prevent_duplicate_actor_identifiers':
         if (null === $this->{$name}) {
-          $this->{$name} = new QubitSetting();
-          $this->{$name}->name = $name;
+            $this->{$name} = new QubitSetting();
+            $this->{$name}->name = $name;
         }
         $this->{$name}->setValue($field->getValue(), ['sourceCulture' => true]);
         $this->{$name}->save();
 
         break;
     }
-  }
+    }
 }

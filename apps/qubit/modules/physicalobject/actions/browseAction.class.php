@@ -19,43 +19,43 @@
 
 class PhysicalObjectBrowseAction extends sfAction
 {
-  public function execute($request)
-  {
-    if (!isset($request->limit)) {
-      $request->limit = sfConfig::get('app_hits_per_page');
-    }
+    public function execute($request)
+    {
+        if (!isset($request->limit)) {
+            $request->limit = sfConfig::get('app_hits_per_page');
+        }
 
-    if (sfConfig::get('app_enable_institutional_scoping')) {
-      //remove search-realm
-      $this->context->user->removeAttribute('search-realm');
-    }
+        if (sfConfig::get('app_enable_institutional_scoping')) {
+            //remove search-realm
+            $this->context->user->removeAttribute('search-realm');
+        }
 
-    $criteria = new Criteria();
+        $criteria = new Criteria();
 
-    // Do source culture fallback
-    $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitPhysicalObject');
+        // Do source culture fallback
+        $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitPhysicalObject');
 
-    if (isset($request->subquery)) {
-      // Get physical object data for culture
-      $criteria->addJoin(QubitPhysicalObject::ID, QubitPhysicalObjectI18n::ID);
-      $criteria->add(QubitPhysicalObjectI18n::CULTURE, $this->context->user->getCulture());
+        if (isset($request->subquery)) {
+            // Get physical object data for culture
+            $criteria->addJoin(QubitPhysicalObject::ID, QubitPhysicalObjectI18n::ID);
+            $criteria->add(QubitPhysicalObjectI18n::CULTURE, $this->context->user->getCulture());
 
-      // Get physical object's type term data for culture
-      $criteria->addJoin(QubitPhysicalObject::TYPE_ID, QubitTerm::ID);
-      $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
-      $criteria->add(QubitTermI18n::CULTURE, $this->context->user->getCulture());
+            // Get physical object's type term data for culture
+            $criteria->addJoin(QubitPhysicalObject::TYPE_ID, QubitTerm::ID);
+            $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
+            $criteria->add(QubitTermI18n::CULTURE, $this->context->user->getCulture());
 
-      // Match search query to either physical object name, location, or type
-      $c1 = $criteria->getNewCriterion(QubitPhysicalObjectI18n::NAME, "%{$request->subquery}%", Criteria::LIKE);
-      $c2 = $criteria->getNewCriterion(QubitPhysicalObjectI18n::LOCATION, "%{$request->subquery}%", Criteria::LIKE);
-      $c1->addOr($c2);
-      $c3 = $criteria->getNewCriterion(QubitTermI18n::NAME, "%{$request->subquery}%", Criteria::LIKE);
-      $c1->addOr($c3);
+            // Match search query to either physical object name, location, or type
+            $c1 = $criteria->getNewCriterion(QubitPhysicalObjectI18n::NAME, "%{$request->subquery}%", Criteria::LIKE);
+            $c2 = $criteria->getNewCriterion(QubitPhysicalObjectI18n::LOCATION, "%{$request->subquery}%", Criteria::LIKE);
+            $c1->addOr($c2);
+            $c3 = $criteria->getNewCriterion(QubitTermI18n::NAME, "%{$request->subquery}%", Criteria::LIKE);
+            $c1->addOr($c3);
 
-      $criteria->add($c1);
-    }
+            $criteria->add($c1);
+        }
 
-    switch ($request->sort) {
+        switch ($request->sort) {
       case 'nameDown':
         $criteria->addDescendingOrderByColumn('name');
 
@@ -77,10 +77,10 @@ class PhysicalObjectBrowseAction extends sfAction
         $criteria->addAscendingOrderByColumn('name');
     }
 
-    // Page results
-    $this->pager = new QubitPager('QubitPhysicalObject');
-    $this->pager->setCriteria($criteria);
-    $this->pager->setMaxPerPage($request->limit);
-    $this->pager->setPage($request->page);
-  }
+        // Page results
+        $this->pager = new QubitPager('QubitPhysicalObject');
+        $this->pager->setCriteria($criteria);
+        $this->pager->setMaxPerPage($request->limit);
+        $this->pager->setPage($request->page);
+    }
 }

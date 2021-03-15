@@ -19,12 +19,12 @@
 
 class InformationObjectAccessionsComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    if (!$this->getUser()->isAuthenticated()) {
-      return sfView::NONE;
-    }
+    public function execute($request)
+    {
+        if (!$this->getUser()->isAuthenticated()) {
+            return sfView::NONE;
+        }
 
-    $this->accessions = QubitRelation::getRelationsBySubjectId($this->resource->id, ['typeId' => QubitTerm::ACCESSION_ID]);
-  }
+        $this->accessions = QubitRelation::getRelationsBySubjectId($this->resource->id, ['typeId' => QubitTerm::ACCESSION_ID]);
+    }
 }

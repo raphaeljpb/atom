@@ -24,30 +24,30 @@
  */
 class arOaiPluginlistSetsComponent extends arOaiPluginComponent
 {
-  /**
-   * Executes action.
-   *
-   * @param sfRequest $request A request object
-   */
-  public function execute($request)
-  {
-    $this->setUpdateParametersFromRequest($request);
-    $this->getPagedOaiSets($request);
-    $this->setRequestAttributes($request);
-  }
-
-  private function getPagedOaiSets($request)
-  {
-    $options = ['filterDrafts' => true];
-    if (isset($this->cursor)) {
-      $options['offset'] = $this->cursor;
+    /**
+     * Executes action.
+     *
+     * @param sfRequest $request A request object
+     */
+    public function execute($request)
+    {
+        $this->setUpdateParametersFromRequest($request);
+        $this->getPagedOaiSets($request);
+        $this->setRequestAttributes($request);
     }
-    $options['limit'] = QubitSetting::getByName('resumption_token_limit')->__toString();
 
-    $results = QubitOai::getOaiSets($options);
-    $this->oaiSets = $results['data'];
-    $this->remaining = $results['remaining'];
-    $resumptionCursor = $this->cursor + $options['limit'];
-    $this->resumptionToken = base64_encode(json_encode(['cursor' => $resumptionCursor]));
-  }
+    private function getPagedOaiSets($request)
+    {
+        $options = ['filterDrafts' => true];
+        if (isset($this->cursor)) {
+            $options['offset'] = $this->cursor;
+        }
+        $options['limit'] = QubitSetting::getByName('resumption_token_limit')->__toString();
+
+        $results = QubitOai::getOaiSets($options);
+        $this->oaiSets = $results['data'];
+        $this->remaining = $results['remaining'];
+        $resumptionCursor = $this->cursor + $options['limit'];
+        $this->resumptionToken = base64_encode(json_encode(['cursor' => $resumptionCursor]));
+    }
 }

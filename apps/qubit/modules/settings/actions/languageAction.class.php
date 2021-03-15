@@ -26,42 +26,42 @@
  */
 class SettingsLanguageAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->form = new sfForm();
-    $this->form->setValidator('languageCode', new sfValidatorI18nChoiceLanguage(['required' => true]));
-    $this->form->setWidget('languageCode', new sfWidgetFormI18nChoiceLanguage(['add_empty' => true, 'culture' => $this->context->user->getCulture()]));
+    public function execute($request)
+    {
+        $this->form = new sfForm();
+        $this->form->setValidator('languageCode', new sfValidatorI18nChoiceLanguage(['required' => true]));
+        $this->form->setWidget('languageCode', new sfWidgetFormI18nChoiceLanguage(['add_empty' => true, 'culture' => $this->context->user->getCulture()]));
 
-    // Handle POST data (form submit)
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
+        // Handle POST data (form submit)
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid()) {
-        try {
-          ProjectConfiguration::getActive()->loadHelpers('I18N');
+            if ($this->form->isValid()) {
+                try {
+                    ProjectConfiguration::getActive()->loadHelpers('I18N');
 
-          format_language($request->languageCode, $request->languageCode);
-        } catch (Exception $e) {
-          $this->redirect(['module' => 'settings', 'action' => 'language']);
+                    format_language($request->languageCode, $request->languageCode);
+                } catch (Exception $e) {
+                    $this->redirect(['module' => 'settings', 'action' => 'language']);
+                }
+
+                QubitCache::getInstance()->removePattern('settings:i18n:*');
+
+                $setting = new QubitSetting();
+                $setting->name = $request->languageCode;
+                $setting->scope = 'i18n_languages';
+                $setting->value = $request->languageCode;
+                $setting->deleteable = true;
+                $setting->editable = true;
+                $setting->getCurrentSettingI18n()->setCulture('en');
+                $setting->sourceCulture = 'en';
+                $setting->save();
+
+                $notice = sfContext::getInstance()->i18n->__('Language saved.');
+                $this->getUser()->setFlash('notice', $notice);
+            }
         }
 
-        QubitCache::getInstance()->removePattern('settings:i18n:*');
-
-        $setting = new QubitSetting();
-        $setting->name = $request->languageCode;
-        $setting->scope = 'i18n_languages';
-        $setting->value = $request->languageCode;
-        $setting->deleteable = true;
-        $setting->editable = true;
-        $setting->getCurrentSettingI18n()->setCulture('en');
-        $setting->sourceCulture = 'en';
-        $setting->save();
-
-        $notice = sfContext::getInstance()->i18n->__('Language saved.');
-        $this->getUser()->setFlash('notice', $notice);
-      }
+        $this->i18nLanguages = QubitSetting::getByScope('i18n_languages');
     }
-
-    $this->i18nLanguages = QubitSetting::getByScope('i18n_languages');
-  }
 }

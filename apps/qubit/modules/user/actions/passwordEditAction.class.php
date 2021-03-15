@@ -19,63 +19,67 @@
 
 class UserPasswordEditAction extends DefaultEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'confirmPassword',
-    'password', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'confirmPassword',
+        'password', ];
 
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid()) {
-        $this->processForm();
+            if ($this->form->isValid()) {
+                $this->processForm();
 
-        $this->resource->save();
+                $this->resource->save();
 
-        $this->redirect([$this->resource, 'module' => 'user']);
-      }
-    }
-  }
-
-  protected function earlyExecute()
-  {
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-    $this->form->getValidatorSchema()->setPreValidator(new sfValidatorSchemaCompare(
-      'password', '==', 'confirmPassword',
-      [],
-      ['invalid' => $this->context->i18n->__('Your password confirmation did not match your password.')]));
-
-    $this->resource = new QubitUser();
-    if (isset($this->getRoute()->resource)) {
-      $this->resource = $this->getRoute()->resource;
+                $this->redirect([$this->resource, 'module' => 'user']);
+            }
+        }
     }
 
-    // Except for administrators, only allow users to reset their own password
-    if (!$this->context->user->isAdministrator()) {
-      if ($this->resource->id != $this->context->user->getAttribute('user_id')) {
-        QubitAcl::forwardToSecureAction();
-      }
-    }
-  }
+    protected function earlyExecute()
+    {
+        $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+        $this->form->getValidatorSchema()->setPreValidator(new sfValidatorSchemaCompare(
+            'password',
+            '==',
+            'confirmPassword',
+            [],
+            ['invalid' => $this->context->i18n->__('Your password confirmation did not match your password.')]
+        ));
 
-  protected function addField($name)
-  {
-    switch ($name) {
+        $this->resource = new QubitUser();
+        if (isset($this->getRoute()->resource)) {
+            $this->resource = $this->getRoute()->resource;
+        }
+
+        // Except for administrators, only allow users to reset their own password
+        if (!$this->context->user->isAdministrator()) {
+            if ($this->resource->id != $this->context->user->getAttribute('user_id')) {
+                QubitAcl::forwardToSecureAction();
+            }
+        }
+    }
+
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'password':
         $this->form->setDefault('password', null);
 
         // Use QubitValidatorPassword only when strong passwords are required
         if (sfConfig::get('app_require_strong_passwords')) {
-          $this->form->setValidator('password', new QubitValidatorPassword(
-            [],
-            ['invalid' => $this->context->i18n->__('Your password is not strong enough.'),
-              'min_length' => $this->context->i18n->__('Your password is not strong enough (too short).'), ]));
+            $this->form->setValidator('password', new QubitValidatorPassword(
+                [],
+                ['invalid' => $this->context->i18n->__('Your password is not strong enough.'),
+                    'min_length' => $this->context->i18n->__('Your password is not strong enough (too short).'), ]
+            ));
         } else {
-          $this->form->setValidator('password', new sfValidatorString(['required' => !isset($this->getRoute()->resource)]));
+            $this->form->setValidator('password', new sfValidatorString(['required' => !isset($this->getRoute()->resource)]));
         }
 
         $this->form->setWidget('password', new sfWidgetFormInputPassword());
@@ -88,21 +92,21 @@ class UserPasswordEditAction extends DefaultEditAction
 
         break;
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($name = $field->getName()) {
+    protected function processField($field)
+    {
+        switch ($name = $field->getName()) {
       case 'confirmPassword':
         // Don't do anything for confirmPassword
         break;
 
       case 'password':
         if (0 < strlen(trim($this->form->getValue('password')))) {
-          $this->resource->setPassword($this->form->getValue('password'));
+            $this->resource->setPassword($this->form->getValue('password'));
         }
 
         break;
     }
-  }
+    }
 }

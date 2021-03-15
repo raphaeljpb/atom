@@ -19,24 +19,24 @@
 
 class InformationObjectTreeViewAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->resource = $this->getRoute()->resource;
+    public function execute($request)
+    {
+        $this->resource = $this->getRoute()->resource;
 
-    // Number of siblings that we are showing above and below the current node
-    // It's good to keep this number small since getTreeViewSiblings can be very
-    // slow (when sorting by title or identifierTitle)
-    $numberOfPreviousOrNextSiblings = 4;
-    $this->siblingCountNext = 0;
-    $this->siblingCountPrev = 0;
+        // Number of siblings that we are showing above and below the current node
+        // It's good to keep this number small since getTreeViewSiblings can be very
+        // slow (when sorting by title or identifierTitle)
+        $numberOfPreviousOrNextSiblings = 4;
+        $this->siblingCountNext = 0;
+        $this->siblingCountPrev = 0;
 
-    switch ($request->show) {
+        switch ($request->show) {
       case 'prevSiblings':
         $this->items = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous'], $this->siblingCountPrev);
         $this->hasPrevSiblings = count($this->items) > $numberOfPreviousOrNextSiblings;
 
         if ($this->hasPrevSiblings) {
-          array_pop($this->items);
+            array_pop($this->items);
         }
 
         // Reverse array
@@ -49,7 +49,7 @@ class InformationObjectTreeViewAction extends sfAction
         $this->hasNextSiblings = count($this->items) > $numberOfPreviousOrNextSiblings;
 
         if ($this->hasNextSiblings) {
-          array_pop($this->items);
+            array_pop($this->items);
         }
 
         break;
@@ -58,5 +58,5 @@ class InformationObjectTreeViewAction extends sfAction
       default:
         list($this->items, $this->hasNextSiblings) = $this->resource->getTreeViewChildren(['numberOfPreviousOrNextSiblings' => $numberOfPreviousOrNextSiblings], $this->siblingCountNext);
     }
-  }
+    }
 }

@@ -19,79 +19,81 @@
 
 class QubitCache
 {
-  protected static $instance = null;
+    protected static $instance = null;
 
-  public static function getInstance(array $options = [])
-  {
-    if (!isset(self::$instance)) {
-      if (null === $cacheClass = sfConfig::get('app_cache_engine')) {
-        $cacheClass = sfConfig::get('app_cache_engine_class', 'sfAPCCache');
-      }
+    public static function getInstance(array $options = [])
+    {
+        if (!isset(self::$instance)) {
+            if (null === $cacheClass = sfConfig::get('app_cache_engine')) {
+                $cacheClass = sfConfig::get('app_cache_engine_class', 'sfAPCCache');
+            }
 
-      $options = [];
+            $options = [];
 
-      if (null !== $setting = sfConfig::get('app_cache_engine_param_prefix')) {
-        $options['prefix'] = $setting;
-      }
+            if (null !== $setting = sfConfig::get('app_cache_engine_param_prefix')) {
+                $options['prefix'] = $setting;
+            }
 
-      if (null !== $setting = sfConfig::get('app_cache_engine_param_lifetime')) {
-        $options['lifetime'] = (float) $setting;
-      }
+            if (null !== $setting = sfConfig::get('app_cache_engine_param_lifetime')) {
+                $options['lifetime'] = (float) $setting;
+            }
 
-      if ('sfMemcacheCache' === $cacheClass) {
-        if (null !== $setting = sfConfig::get('app_cache_engine_param_servers')) {
-          $servers = [];
-          foreach ($setting as $item) {
-            $servers[] = [
-              'host' => $item[0]['host'],
-              'port' => $item[1]['port'],
-            ];
-          }
+            if ('sfMemcacheCache' === $cacheClass) {
+                if (null !== $setting = sfConfig::get('app_cache_engine_param_servers')) {
+                    $servers = [];
+                    foreach ($setting as $item) {
+                        $servers[] = [
+                            'host' => $item[0]['host'],
+                            'port' => $item[1]['port'],
+                        ];
+                    }
 
-          $options['servers'] = $servers;
-        } elseif ((null !== $host = sfConfig::get('app_cache_engine_param_host')) && (null !== $port = sfConfig::get('app_cache_engine_param_port'))) {
-          $options['host'] = $host;
-          $options['port'] = $port;
+                    $options['servers'] = $servers;
+                } elseif ((null !== $host = sfConfig::get('app_cache_engine_param_host')) && (null !== $port = sfConfig::get('app_cache_engine_param_port'))) {
+                    $options['host'] = $host;
+                    $options['port'] = $port;
+                }
+
+                if (null !== $setting = sfConfig::get('app_cache_engine_param_storeCacheInfo')) {
+                    $options['storeCacheInfo'] = (bool) $setting;
+                }
+
+                if (null !== $setting = sfConfig::get('app_cache_engine_param_persistent')) {
+                    $options['persistent'] = (bool) $setting;
+                }
+            }
+
+            self::$instance = new $cacheClass($options);
         }
 
-        if (null !== $setting = sfConfig::get('app_cache_engine_param_storeCacheInfo')) {
-          $options['storeCacheInfo'] = (bool) $setting;
-        }
-
-        if (null !== $setting = sfConfig::get('app_cache_engine_param_persistent')) {
-          $options['persistent'] = (bool) $setting;
-        }
-      }
-
-      self::$instance = new $cacheClass($options);
+        return self::$instance;
     }
 
-    return self::$instance;
-  }
+    public static function getLabel($id, $className, $ttl = 3600)
+    {
+        // I should make this a property of the class instead
+        $cache = self::getInstance();
 
-  public static function getLabel($id, $className, $ttl = 3600)
-  {
-    // I should make this a property of the class instead
-    $cache = self::getInstance();
+        // Cache key
+        $cacheKey = sprintf(
+            'label:%s:%s',
+            $id,
+            sfContext::getInstance()->user->getCulture()
+        );
 
-    // Cache key
-    $cacheKey = sprintf('label:%s:%s',
-      $id,
-      sfContext::getInstance()->user->getCulture());
+        if ($cache->has($cacheKey)) {
+            $label = $cache->get($cacheKey);
+        } else {
+            // Avoid caching non-existing records
+            if (null === $object = $className::getById($id)) {
+                return;
+            }
 
-    if ($cache->has($cacheKey)) {
-      $label = $cache->get($cacheKey);
-    } else {
-      // Avoid caching non-existing records
-      if (null === $object = $className::getById($id)) {
-        return;
-      }
+            $label = $className::getById($id)->__toString();
 
-      $label = $className::getById($id)->__toString();
+            $cache->set($cacheKey, $label, $ttl);
+        }
 
-      $cache->set($cacheKey, $label, $ttl);
+        return $label;
     }
-
-    return $label;
-  }
 }

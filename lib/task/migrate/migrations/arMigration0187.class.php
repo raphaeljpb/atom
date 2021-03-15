@@ -25,62 +25,62 @@
  */
 class arMigration0187
 {
-  public const VERSION = 187;
-  public const // The new database version
+    public const VERSION = 187;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    $SCOPE = 'element_visibility';
-    $VALUE = 1;
-    $settingNames = [
-      // Master file
-      'digital_object_permissions',
+      $SCOPE = 'element_visibility';
+      $VALUE = 1;
+      $settingNames = [
+          // Master file
+          'digital_object_permissions',
 
-      // Reference copy
-      'digital_object_reference_file_name',
-      'digital_object_reference_media_type',
-      'digital_object_reference_mime_type',
-      'digital_object_reference_file_size',
-      'digital_object_reference_uploaded',
-      'digital_object_reference_permissions',
+          // Reference copy
+          'digital_object_reference_file_name',
+          'digital_object_reference_media_type',
+          'digital_object_reference_mime_type',
+          'digital_object_reference_file_size',
+          'digital_object_reference_uploaded',
+          'digital_object_reference_permissions',
 
-      // Thumbnail copy
-      'digital_object_thumbnail_file_name',
-      'digital_object_thumbnail_media_type',
-      'digital_object_thumbnail_mime_type',
-      'digital_object_thumbnail_file_size',
-      'digital_object_thumbnail_uploaded',
-      'digital_object_thumbnail_permissions',
+          // Thumbnail copy
+          'digital_object_thumbnail_file_name',
+          'digital_object_thumbnail_media_type',
+          'digital_object_thumbnail_mime_type',
+          'digital_object_thumbnail_file_size',
+          'digital_object_thumbnail_uploaded',
+          'digital_object_thumbnail_permissions',
 
-      // Original file in preservation system
-      'digital_object_preservation_system_original_file_name',
-      'digital_object_preservation_system_original_format_name',
-      'digital_object_preservation_system_original_format_version',
-      'digital_object_preservation_system_original_format_registry_key',
-      'digital_object_preservation_system_original_format_registry_name',
-      'digital_object_preservation_system_original_file_size',
-      'digital_object_preservation_system_original_ingested',
-      'digital_object_preservation_system_original_permissions',
+          // Original file in preservation system
+          'digital_object_preservation_system_original_file_name',
+          'digital_object_preservation_system_original_format_name',
+          'digital_object_preservation_system_original_format_version',
+          'digital_object_preservation_system_original_format_registry_key',
+          'digital_object_preservation_system_original_format_registry_name',
+          'digital_object_preservation_system_original_file_size',
+          'digital_object_preservation_system_original_ingested',
+          'digital_object_preservation_system_original_permissions',
 
-      // Preservation copy in preservation system
-      'digital_object_preservation_system_preservation_file_name',
-      'digital_object_preservation_system_preservation_file_size',
-      'digital_object_preservation_system_preservation_normalized',
-      'digital_object_preservation_system_preservation_permissions',
-    ];
+          // Preservation copy in preservation system
+          'digital_object_preservation_system_preservation_file_name',
+          'digital_object_preservation_system_preservation_file_size',
+          'digital_object_preservation_system_preservation_normalized',
+          'digital_object_preservation_system_preservation_permissions',
+      ];
 
-    foreach ($settingNames as $settingName) {
-      if (null === $setting = QubitSetting::getByNameAndScope($settingName, $SCOPE)) {
-        $setting = new QubitSetting();
-        $setting->name = $settingName;
-        $setting->setValue($VALUE, ['sourceCulture' => true]);
-        $setting->scope = $SCOPE;
-        $setting->culture = 'en';
-        $setting->save();
+      foreach ($settingNames as $settingName) {
+          if (null === $setting = QubitSetting::getByNameAndScope($settingName, $SCOPE)) {
+              $setting = new QubitSetting();
+              $setting->name = $settingName;
+              $setting->setValue($VALUE, ['sourceCulture' => true]);
+              $setting->scope = $SCOPE;
+              $setting->culture = 'en';
+              $setting->save();
+          }
       }
-    }
 
-    return true;
+      return true;
   }
 }

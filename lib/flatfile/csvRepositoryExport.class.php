@@ -24,84 +24,84 @@
  */
 class csvRepositoryExport extends QubitFlatfileExport
 {
-  public function __construct($destinationPath, $standard = null, $rowsPerFile = false)
-  {
-    parent::__construct($destinationPath, $standard, $rowsPerFile);
-    $this->loadHelpers();
-  }
-
-  /*
-   * Information object-specific column setting before CSV row write
-   *
-   * @return void
-   */
-  protected function modifyRowBeforeExport()
-  {
-    $this->setColumn('parallelFormsOfName', $this->getNames(QubitTerm::PARALLEL_FORM_OF_NAME_ID));
-    $this->setColumn('otherFormsOfName', $this->getNames(QubitTerm::OTHER_FORM_OF_NAME_ID));
-    $this->setColumn('thematicAreas', $this->getRelatedTermNames(QubitTaxonomy::THEMATIC_AREA_ID));
-    $this->setColumn('geographicSubregions', $this->getRelatedTermNames(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID));
-    $this->setColumn('types', $this->getRelatedTermNames(QubitTaxonomy::REPOSITORY_TYPE_ID));
-    $this->setColumn('legacyId', $this->resource->id);
-
-    if (isset($this->resource->descStatus)) {
-      $this->setColumn('descriptionStatus', $this->resource->descStatus->name);
+    public function __construct($destinationPath, $standard = null, $rowsPerFile = false)
+    {
+        parent::__construct($destinationPath, $standard, $rowsPerFile);
+        $this->loadHelpers();
     }
 
-    if (isset($this->resource->descDetail)) {
-      $this->setColumn('levelOfDetail', $this->resource->descDetail->name);
+    /*
+     * Information object-specific column setting before CSV row write
+     *
+     * @return void
+     */
+    protected function modifyRowBeforeExport()
+    {
+        $this->setColumn('parallelFormsOfName', $this->getNames(QubitTerm::PARALLEL_FORM_OF_NAME_ID));
+        $this->setColumn('otherFormsOfName', $this->getNames(QubitTerm::OTHER_FORM_OF_NAME_ID));
+        $this->setColumn('thematicAreas', $this->getRelatedTermNames(QubitTaxonomy::THEMATIC_AREA_ID));
+        $this->setColumn('geographicSubregions', $this->getRelatedTermNames(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID));
+        $this->setColumn('types', $this->getRelatedTermNames(QubitTaxonomy::REPOSITORY_TYPE_ID));
+        $this->setColumn('legacyId', $this->resource->id);
+
+        if (isset($this->resource->descStatus)) {
+            $this->setColumn('descriptionStatus', $this->resource->descStatus->name);
+        }
+
+        if (isset($this->resource->descDetail)) {
+            $this->setColumn('levelOfDetail', $this->resource->descDetail->name);
+        }
+
+        $this->setContactInfo();
+
+        $this->setColumnToNotes('maintenanceNote', QubitTerm::MAINTENANCE_NOTE_ID);
     }
 
-    $this->setContactInfo();
-
-    $this->setColumnToNotes('maintenanceNote', QubitTerm::MAINTENANCE_NOTE_ID);
-  }
-
-  private function loadHelpers()
-  {
-    include_once sfConfig::get('sf_root_dir').'/lib/helper/QubitHelper.php';
-    ProjectConfiguration::getActive()->loadHelpers('I18N');
-  }
-
-  private function getRelatedTermNames($taxonomyId)
-  {
-    $results = [];
-
-    foreach ($this->resource->getTermRelations($taxonomyId) as $r) {
-      if ($r->term->name) {
-        $results[] = $r->term->name;
-      }
+    private function loadHelpers()
+    {
+        include_once sfConfig::get('sf_root_dir').'/lib/helper/QubitHelper.php';
+        ProjectConfiguration::getActive()->loadHelpers('I18N');
     }
 
-    return $results;
-  }
+    private function getRelatedTermNames($taxonomyId)
+    {
+        $results = [];
 
-  private function setContactInfo()
-  {
-    if (null === $c = $this->resource->getPrimaryContact()) {
-      return;
+        foreach ($this->resource->getTermRelations($taxonomyId) as $r) {
+            if ($r->term->name) {
+                $results[] = $r->term->name;
+            }
+        }
+
+        return $results;
     }
 
-    $this->setColumn('contactPerson', $c->getContactPerson());
-    $this->setColumn('streetAddress', $c->getStreetAddress());
-    $this->setColumn('city', $c->getCity());
-    $this->setColumn('region', $c->getRegion());
-    $this->setColumn('country', $c->getCountryCode());
-    $this->setColumn('postalCode', $c->getPostalCode());
-    $this->setColumn('telephone', $c->getTelephone());
-    $this->setColumn('email', $c->getEmail());
-    $this->setColumn('fax', $c->getFax());
-    $this->setColumn('website', $c->getWebsite());
-  }
+    private function setContactInfo()
+    {
+        if (null === $c = $this->resource->getPrimaryContact()) {
+            return;
+        }
 
-  private function getNames($typeId)
-  {
-    $results = [];
-
-    foreach ($this->resource->getOtherNames(['typeId' => $typeId]) as $name) {
-      $results[] = $name->__toString();
+        $this->setColumn('contactPerson', $c->getContactPerson());
+        $this->setColumn('streetAddress', $c->getStreetAddress());
+        $this->setColumn('city', $c->getCity());
+        $this->setColumn('region', $c->getRegion());
+        $this->setColumn('country', $c->getCountryCode());
+        $this->setColumn('postalCode', $c->getPostalCode());
+        $this->setColumn('telephone', $c->getTelephone());
+        $this->setColumn('email', $c->getEmail());
+        $this->setColumn('fax', $c->getFax());
+        $this->setColumn('website', $c->getWebsite());
     }
 
-    return $results;
-  }
+    private function getNames($typeId)
+    {
+        $results = [];
+
+        foreach ($this->resource->getOtherNames(['typeId' => $typeId]) as $name) {
+            $results[] = $name->__toString();
+        }
+
+        return $results;
+    }
 }

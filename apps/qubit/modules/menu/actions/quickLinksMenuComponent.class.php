@@ -24,25 +24,25 @@
  */
 class menuQuickLinksMenuComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    // Get menu
-    $quickLinksMenu = QubitMenu::getById(QubitMenu::QUICK_LINKS_ID);
+    public function execute($request)
+    {
+        // Get menu
+        $quickLinksMenu = QubitMenu::getById(QubitMenu::QUICK_LINKS_ID);
 
-    if (!$quickLinksMenu instanceof QubitMenu) {
-      return;
+        if (!$quickLinksMenu instanceof QubitMenu) {
+            return;
+        }
+
+        // Get menu items that correspond to an external URL or an internal path
+        $this->quickLinks = [];
+
+        foreach ($quickLinksMenu->getChildren() as $child) {
+            $url = $child->getPath(['getUrl' => true, 'resolveAlias' => true]);
+            $urlParsed = parse_url($url);
+
+            if (isset($urlParsed['scheme']) || QubitObject::actionExistsForUrl($url)) {
+                $this->quickLinks[] = $child;
+            }
+        }
     }
-
-    // Get menu items that correspond to an external URL or an internal path
-    $this->quickLinks = [];
-
-    foreach ($quickLinksMenu->getChildren() as $child) {
-      $url = $child->getPath(['getUrl' => true, 'resolveAlias' => true]);
-      $urlParsed = parse_url($url);
-
-      if (isset($urlParsed['scheme']) || QubitObject::actionExistsForUrl($url)) {
-        $this->quickLinks[] = $child;
-      }
-    }
-  }
 }

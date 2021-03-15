@@ -24,45 +24,45 @@
  */
 class InformationObjectFullWidthTreeViewAction extends DefaultFullTreeViewAction
 {
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    $this->resource = $this->getRoute()->resource;
+        $this->resource = $this->getRoute()->resource;
 
-    // Check that this isn't the root
-    if (!isset($this->resource->parent)) {
-      $this->forward404();
+        // Check that this isn't the root
+        if (!isset($this->resource->parent)) {
+            $this->forward404();
+        }
+
+        // Check user authorization
+        if (!QubitAcl::check($this->resource, 'read')) {
+            QubitAcl::forwardUnauthorized();
+        }
+
+        // Impose limit to what nodeLimit parameter can be set to
+        $maxItemsPerPage = sfConfig::get('app_treeview_items_per_page_max', 10000);
+        if (!intval($request->nodeLimit) || $request->nodeLimit < 1 || $request->nodeLimit > $maxItemsPerPage) {
+            $request->nodeLimit = $maxItemsPerPage;
+        }
+
+        // Allow the ability to page through children
+        $options = [
+            'skip' => $request->skip,
+            'limit' => $request->nodeLimit,
+        ];
+
+        // On first load, retrieve the ancestors of the selected resource, the
+        // resource and its siblings, otherwise get only the resource's siblings
+        if (filter_var(
+            $request->getParameter('firstLoad', false),
+            FILTER_VALIDATE_BOOLEAN
+        )) {
+            $data = $this->getAncestorsAndSiblings($options);
+        } else {
+            $data = $this->getChildren($this->resource->id, $options);
+        }
+
+        return $this->renderText(json_encode($data));
     }
-
-    // Check user authorization
-    if (!QubitAcl::check($this->resource, 'read')) {
-      QubitAcl::forwardUnauthorized();
-    }
-
-    // Impose limit to what nodeLimit parameter can be set to
-    $maxItemsPerPage = sfConfig::get('app_treeview_items_per_page_max', 10000);
-    if (!intval($request->nodeLimit) || $request->nodeLimit < 1 || $request->nodeLimit > $maxItemsPerPage) {
-      $request->nodeLimit = $maxItemsPerPage;
-    }
-
-    // Allow the ability to page through children
-    $options = [
-      'skip' => $request->skip,
-      'limit' => $request->nodeLimit,
-    ];
-
-    // On first load, retrieve the ancestors of the selected resource, the
-    // resource and its siblings, otherwise get only the resource's siblings
-    if (filter_var(
-      $request->getParameter('firstLoad', false),
-      FILTER_VALIDATE_BOOLEAN
-    )) {
-      $data = $this->getAncestorsAndSiblings($options);
-    } else {
-      $data = $this->getChildren($this->resource->id, $options);
-    }
-
-    return $this->renderText(json_encode($data));
-  }
 }

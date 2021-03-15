@@ -19,40 +19,40 @@
 
 class SettingsMarkdownAction extends DefaultEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = ['enabled'];
+    // Arrays not allowed in class constants
+    public static $NAMES = ['enabled'];
 
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid()) {
-        $this->processForm();
+            if ($this->form->isValid()) {
+                $this->processForm();
 
-        QubitCache::getInstance()->removePattern('settings:i18n:*');
+                QubitCache::getInstance()->removePattern('settings:i18n:*');
 
-        $this->getUser()->setFlash('notice', $this->i18n->__('Markdown settings saved.'));
+                $this->getUser()->setFlash('notice', $this->i18n->__('Markdown settings saved.'));
 
-        $this->redirect(['module' => 'settings', 'action' => 'markdown']);
-      }
+                $this->redirect(['module' => 'settings', 'action' => 'markdown']);
+            }
+        }
     }
-  }
 
-  protected function earlyExecute()
-  {
-    $this->i18n = sfContext::getInstance()->i18n;
-  }
+    protected function earlyExecute()
+    {
+        $this->i18n = sfContext::getInstance()->i18n;
+    }
 
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'enabled':
         $default = 1;
         if (null !== $this->settingEnabled = QubitSetting::getByName('markdown_enabled')) {
-          $default = $this->settingEnabled->getValue(['sourceCulture' => true]);
+            $default = $this->settingEnabled->getValue(['sourceCulture' => true]);
         }
 
         $this->form->setDefault($name, $default);
@@ -61,16 +61,16 @@ class SettingsMarkdownAction extends DefaultEditAction
 
         break;
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'enabled':
         if (null === $this->settingEnabled) {
-          $this->settingEnabled = new QubitSetting();
-          $this->settingEnabled->name = 'markdown_enabled';
-          $this->settingEnabled->sourceCulture = 'en';
+            $this->settingEnabled = new QubitSetting();
+            $this->settingEnabled->name = 'markdown_enabled';
+            $this->settingEnabled->sourceCulture = 'en';
         }
 
         $this->settingEnabled->setValue($field->getValue(), ['culture' => 'en']);
@@ -78,5 +78,5 @@ class SettingsMarkdownAction extends DefaultEditAction
 
         break;
     }
-  }
+    }
 }

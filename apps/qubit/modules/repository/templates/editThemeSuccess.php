@@ -22,8 +22,8 @@
         <legend><?php echo __('Style'); ?></legend>
 
         <?php echo $form->backgroundColor
-          ->label(__('Background color'))
-          ->renderRow(); ?>
+            ->label(__('Background color'))
+            ->renderRow(); ?>
 
         <div class="form-item form-item-banner">
           <?php echo $form->banner->renderLabel(); ?>
@@ -50,8 +50,8 @@
         <legend><?php echo __('Page content'); ?></legend>
 
         <?php echo render_field($form->htmlSnippet
-          ->label(__('Description'))
-          ->help(__('Content in this area will appear below an uploaded banner and above the institution\'s description areas. It can be used to offer a summary of the institution\'s mandate, include a tag line or important information, etc. HTML and inline CSS can be used to style the contents.')), $resource, ['class' => 'resizable']); ?>
+            ->label(__('Description'))
+            ->help(__('Content in this area will appear below an uploaded banner and above the institution\'s description areas. It can be used to offer a summary of the institution\'s mandate, include a tag line or important information, etc. HTML and inline CSS can be used to style the contents.')), $resource, ['class' => 'resizable']); ?>
 
       </fieldset>
 

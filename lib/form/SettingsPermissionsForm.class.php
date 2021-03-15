@@ -24,71 +24,71 @@
  */
 class SettingsPermissionsForm extends sfForm
 {
-  public function configure()
-  {
-    $this->widgetSchema->setNameFormat('permissions[%s]');
-    $this->getValidatorSchema()->setOption('allow_extra_fields', true);
+    public function configure()
+    {
+        $this->widgetSchema->setNameFormat('permissions[%s]');
+        $this->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    //
-    // PREMIS act
-    //
+        //
+        // PREMIS act
+        //
 
-    $premisAccessRight = QubitSetting::getByName('premisAccessRight');
-    if (null === $premisAccessRight) {
-      throw new sfException('Setting premisAccessRight cannot be found');
-    }
-
-    $choices = [];
-    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_ACT_ID) as $item) {
-      $choices[$item->slug] = $item->__toString();
-    }
-    $this->setWidget('granted_right', new sfWidgetFormSelect(['choices' => $choices]));
-    $this->setDefault('granted_right', $premisAccessRight->getValue(['sourceCulture' => true]));
-    $this->setValidator('granted_right', new sfValidatorChoice(['choices' => array_keys($choices)]));
-
-    //
-    // PREMIS permissionss
-    //
-
-    $this->embedForm('permissions', $this->getPermissionsForm());
-  }
-
-  protected function getPermissionsForm()
-  {
-    $premisAccessRightValues = QubitSetting::getByName('premisAccessRightValues');
-    if (null === $premisAccessRightValues) {
-      throw new sfException('Setting premisAccessRightValues cannot be found');
-    }
-
-    $premisAccessRightValues = unserialize($premisAccessRightValues->getValue(['sourceCulture' => true]));
-    $defaults = QubitSetting::$premisAccessRightValueDefaults;
-
-    $form = new sfForm();
-    $form->getValidatorSchema()->setOption('allow_extra_fields', true);
-
-    // Each basis has its own set of permissions (allow_master,
-    // allow_reference, etc...). We are embedding a new sfForm ($formBasis) for
-    // each basis and indexed by its slug.
-    foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item) {
-      $formBasis = new sfForm();
-      $formBasis->getValidatorSchema()->setOption('allow_extra_fields', true);
-
-      // Permissions are represented with sfWidgetFormInputCheckbox
-      foreach ($defaults as $key => $value) {
-        $formBasis->setWidget($key, new sfWidgetFormInputCheckbox());
-        $formBasis->setValidator($key, new sfValidatorBoolean(['empty_value' => false]));
-
-        // The default value is obtained from the existing QubitSetting
-        // premisAccessRightValues
-        if (!empty($premisAccessRightValues[$item->slug]) && !empty($premisAccessRightValues[$item->slug][$key])) {
-          $v = $premisAccessRightValues[$item->slug][$key];
-          $formBasis->setDefault($key, $v);
+        $premisAccessRight = QubitSetting::getByName('premisAccessRight');
+        if (null === $premisAccessRight) {
+            throw new sfException('Setting premisAccessRight cannot be found');
         }
-      }
 
-      $form->embedForm($item->slug, $formBasis);
+        $choices = [];
+        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_ACT_ID) as $item) {
+            $choices[$item->slug] = $item->__toString();
+        }
+        $this->setWidget('granted_right', new sfWidgetFormSelect(['choices' => $choices]));
+        $this->setDefault('granted_right', $premisAccessRight->getValue(['sourceCulture' => true]));
+        $this->setValidator('granted_right', new sfValidatorChoice(['choices' => array_keys($choices)]));
+
+        //
+        // PREMIS permissionss
+        //
+
+        $this->embedForm('permissions', $this->getPermissionsForm());
     }
 
-    return $form;
-  }
+    protected function getPermissionsForm()
+    {
+        $premisAccessRightValues = QubitSetting::getByName('premisAccessRightValues');
+        if (null === $premisAccessRightValues) {
+            throw new sfException('Setting premisAccessRightValues cannot be found');
+        }
+
+        $premisAccessRightValues = unserialize($premisAccessRightValues->getValue(['sourceCulture' => true]));
+        $defaults = QubitSetting::$premisAccessRightValueDefaults;
+
+        $form = new sfForm();
+        $form->getValidatorSchema()->setOption('allow_extra_fields', true);
+
+        // Each basis has its own set of permissions (allow_master,
+        // allow_reference, etc...). We are embedding a new sfForm ($formBasis) for
+        // each basis and indexed by its slug.
+        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item) {
+            $formBasis = new sfForm();
+            $formBasis->getValidatorSchema()->setOption('allow_extra_fields', true);
+
+            // Permissions are represented with sfWidgetFormInputCheckbox
+            foreach ($defaults as $key => $value) {
+                $formBasis->setWidget($key, new sfWidgetFormInputCheckbox());
+                $formBasis->setValidator($key, new sfValidatorBoolean(['empty_value' => false]));
+
+                // The default value is obtained from the existing QubitSetting
+                // premisAccessRightValues
+                if (!empty($premisAccessRightValues[$item->slug]) && !empty($premisAccessRightValues[$item->slug][$key])) {
+                    $v = $premisAccessRightValues[$item->slug][$key];
+                    $formBasis->setDefault($key, $v);
+                }
+            }
+
+            $form->embedForm($item->slug, $formBasis);
+        }
+
+        return $form;
+    }
 }

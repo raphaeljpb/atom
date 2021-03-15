@@ -24,8 +24,8 @@
  */
 class arOaiPluginListMetadataFormatsComponent extends arOaiPluginComponent
 {
-  public function execute($request)
-  {
-    $this->setRequestAttributes($request);
-  }
+    public function execute($request)
+    {
+        $this->setRequestAttributes($request);
+    }
 }

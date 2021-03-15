@@ -19,51 +19,51 @@
 
 class QubitStaticPage extends BaseStaticPage
 {
-  public function __toString()
-  {
-    return (string) $this->title;
-  }
-
-  public function isProtected()
-  {
-    return 'home' == $this->slug;
-  }
-
-  protected function insert($connection = null)
-  {
-    if (!isset($this->slug)) {
-      $this->slug = QubitSlug::slugify($this->__get('title', ['sourceCulture' => true]));
+    public function __toString()
+    {
+        return (string) $this->title;
     }
 
-    return parent::insert($connection);
-  }
-
-  protected function update($connection = null)
-  {
-    if (!isset($connection)) {
-      $connection = Propel::getConnection();
+    public function isProtected()
+    {
+        return 'home' == $this->slug;
     }
 
-    $statement = $connection->prepare('
+    protected function insert($connection = null)
+    {
+        if (!isset($this->slug)) {
+            $this->slug = QubitSlug::slugify($this->__get('title', ['sourceCulture' => true]));
+        }
+
+        return parent::insert($connection);
+    }
+
+    protected function update($connection = null)
+    {
+        if (!isset($connection)) {
+            $connection = Propel::getConnection();
+        }
+
+        $statement = $connection->prepare('
       UPDATE '.QubitSlug::TABLE_NAME.'
       SET '.QubitSlug::SLUG.' = ?
       WHERE '.QubitSlug::OBJECT_ID.' = ?');
 
-    if (1 > strlen($this->slug)) {
-      $statement->execute([QubitSlug::random(), $this->id]);
+        if (1 > strlen($this->slug)) {
+            $statement->execute([QubitSlug::random(), $this->id]);
 
-      return;
+            return;
+        }
+
+        try {
+            $statement->execute([$this->slug, $this->id]);
+        }
+
+        // Collision? Try random, digit and letter slug
+        catch (PDOException $e) {
+            $statement->execute([QubitSlug::random(), $this->id]);
+        }
+
+        return parent::update($connection);
     }
-
-    try {
-      $statement->execute([$this->slug, $this->id]);
-    }
-
-    // Collision? Try random, digit and letter slug
-    catch (PDOException $e) {
-      $statement->execute([QubitSlug::random(), $this->id]);
-    }
-
-    return parent::update($connection);
-  }
 }

@@ -36,22 +36,22 @@
         <?php } ?>
 
         <?php echo $form->useFor
-          ->label(__('Use for'))
-          ->renderRow(); ?>
+            ->label(__('Use for'))
+            ->renderRow(); ?>
 
         <?php echo render_field($form->code, $resource); ?>
 
         <?php echo $form->scopeNote
-          ->label(__('Scope note(s)'))
-          ->renderRow(); ?>
+            ->label(__('Scope note(s)'))
+            ->renderRow(); ?>
 
         <?php echo $form->sourceNote
-          ->label(__('Source note(s)'))
-          ->renderRow(); ?>
+            ->label(__('Source note(s)'))
+            ->renderRow(); ?>
 
         <?php echo $form->displayNote
-          ->label(__('Display note(s)'))
-          ->renderRow(); ?>
+            ->label(__('Display note(s)'))
+            ->renderRow(); ?>
 
       </fieldset>
 
@@ -61,16 +61,16 @@
 
         <div class="form-item">
           <?php echo $form->parent
-            ->label(__('Broad term'))
-            ->renderLabel(); ?>
+              ->label(__('Broad term'))
+              ->renderLabel(); ?>
           <?php echo $form->parent->render(['class' => 'form-autocomplete']); ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete']); ?>"/>
         </div>
 
         <div class="form-item">
           <?php echo $form->relatedTerms
-            ->label(__('Related term(s)'))
-            ->renderLabel(); ?>
+              ->label(__('Related term(s)'))
+              ->renderLabel(); ?>
           <?php echo $form->relatedTerms->render(['class' => 'form-autocomplete']); ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete']); ?>"/>
         </div>
@@ -79,8 +79,8 @@
 
           <div class="span9">
             <?php echo $form->converseTerm
-              ->label(__('Converse term'))
-              ->renderLabel(); ?>
+                ->label(__('Converse term'))
+                ->renderLabel(); ?>
             <?php echo $form->converseTerm->render(['class' => 'form-autocomplete']); ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::ROOT_ID), 'module' => 'taxonomy'])]); ?> #name"/>
             <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete']); ?>"/>
@@ -93,8 +93,8 @@
         </div>
 
         <?php echo $form->narrowTerms
-          ->label(__('Add new narrow terms'))
-          ->renderRow(); ?>
+            ->label(__('Add new narrow terms'))
+            ->renderRow(); ?>
 
       </fieldset>
 

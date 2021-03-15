@@ -22,86 +22,86 @@
  */
 class arRepositoryCsvExportJob extends arExportJob
 {
-  /**
-   * @see arBaseJob::$requiredParameters
-   */
-  protected $downloadFileExtension = 'zip';
-  protected $search;
-  protected $params = [];
+    /**
+     * @see arBaseJob::$requiredParameters
+     */
+    protected $downloadFileExtension = 'zip';
+    protected $search;
+    protected $params = [];
 
-  public function runJob($parameters)
-  {
-    $this->params = $parameters;
+    public function runJob($parameters)
+    {
+        $this->params = $parameters;
 
-    // Create query increasing limit from default
-    $this->search = new arElasticSearchPluginQuery(arElasticSearchPluginUtil::SCROLL_SIZE);
-    $this->search->queryBool->addMust(new \Elastica\Query\Terms('slug', $this->params['params']['slugs']));
+        // Create query increasing limit from default
+        $this->search = new arElasticSearchPluginQuery(arElasticSearchPluginUtil::SCROLL_SIZE);
+        $this->search->queryBool->addMust(new \Elastica\Query\Terms('slug', $this->params['params']['slugs']));
 
-    $tempPath = $this->createJobTempDir();
+        $tempPath = $this->createJobTempDir();
 
-    // Export CSV to temp directory
-    $this->info($this->i18n->__('Starting export to %1', ['%1' => $tempPath]));
+        // Export CSV to temp directory
+        $this->info($this->i18n->__('Starting export to %1', ['%1' => $tempPath]));
 
-    if (-1 === $itemsExported = $this->exportResults($tempPath)) {
-      return false;
+        if (-1 === $itemsExported = $this->exportResults($tempPath)) {
+            return false;
+        }
+
+        $this->info($this->i18n->__('Exported %1 repositories.', ['%1' => $itemsExported]));
+
+        // Compress CSV export files as a ZIP archive
+        $this->info($this->i18n->__('Creating ZIP file %1', ['%1' => $this->getDownloadFilePath()]));
+        $errors = $this->createZipForDownload($tempPath);
+
+        if (!empty($errors)) {
+            $this->error($this->i18n->__('Failed to create ZIP file.').' : '.implode(' : ', $errors));
+
+            return false;
+        }
+
+        // Mark job as complete and set download path
+        $this->info($this->i18n->__('Export and archiving complete.'));
+        $this->job->setStatusCompleted();
+        $this->job->downloadPath = $this->getDownloadRelativeFilePath();
+        $this->job->save();
+
+        return true;
     }
 
-    $this->info($this->i18n->__('Exported %1 repositories.', ['%1' => $itemsExported]));
+    /**
+     * Export search results as CSV.
+     *
+     * @param string  Path of file to write CSV data to
+     * @param mixed $path
+     *
+     * @return int number of descriptions exported, -1 if and error occurred and to end the job
+     */
+    protected function exportResults($path)
+    {
+        $itemsExported = 0;
 
-    // Compress CSV export files as a ZIP archive
-    $this->info($this->i18n->__('Creating ZIP file %1', ['%1' => $this->getDownloadFilePath()]));
-    $errors = $this->createZipForDownload($tempPath);
+        $search = QubitSearch::getInstance()->index->getType('QubitRepository')->createSearch($this->search->getQuery(false, false));
 
-    if (!empty($errors)) {
-      $this->error($this->i18n->__('Failed to create ZIP file.').' : '.implode(' : ', $errors));
+        $writer = new csvRepositoryExport($path, null, 10000);
+        $writer->loadResourceSpecificConfiguration('QubitRepository');
 
-      return false;
+        // Scroll through results then iterate through resulting IDs
+        foreach (arElasticSearchPluginUtil::getScrolledSearchResultIdentifiers($search) as $id) {
+            if (null === $resource = QubitRepository::getById($id)) {
+                $this->error($this->i18n->__('Cannot fetch repository, id: %1', ['%1' => $id]));
+
+                return -1;
+            }
+
+            $writer->exportResource($resource);
+
+            // Log progress every 1000 rows
+            if ($itemsExported && (0 == $itemsExported % 1000)) {
+                $this->info($this->i18n->__('%1 items exported.', ['%1' => $itemsExported]));
+            }
+
+            ++$itemsExported;
+        }
+
+        return $itemsExported;
     }
-
-    // Mark job as complete and set download path
-    $this->info($this->i18n->__('Export and archiving complete.'));
-    $this->job->setStatusCompleted();
-    $this->job->downloadPath = $this->getDownloadRelativeFilePath();
-    $this->job->save();
-
-    return true;
-  }
-
-  /**
-   * Export search results as CSV.
-   *
-   * @param string  Path of file to write CSV data to
-   * @param mixed $path
-   *
-   * @return int number of descriptions exported, -1 if and error occurred and to end the job
-   */
-  protected function exportResults($path)
-  {
-    $itemsExported = 0;
-
-    $search = QubitSearch::getInstance()->index->getType('QubitRepository')->createSearch($this->search->getQuery(false, false));
-
-    $writer = new csvRepositoryExport($path, null, 10000);
-    $writer->loadResourceSpecificConfiguration('QubitRepository');
-
-    // Scroll through results then iterate through resulting IDs
-    foreach (arElasticSearchPluginUtil::getScrolledSearchResultIdentifiers($search) as $id) {
-      if (null === $resource = QubitRepository::getById($id)) {
-        $this->error($this->i18n->__('Cannot fetch repository, id: %1', ['%1' => $id]));
-
-        return -1;
-      }
-
-      $writer->exportResource($resource);
-
-      // Log progress every 1000 rows
-      if ($itemsExported && (0 == $itemsExported % 1000)) {
-        $this->info($this->i18n->__('%1 items exported.', ['%1' => $itemsExported]));
-      }
-
-      ++$itemsExported;
-    }
-
-    return $itemsExported;
-  }
 }

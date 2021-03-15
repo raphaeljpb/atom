@@ -24,20 +24,20 @@
  */
 class QubitOaiRepository extends BaseOaiRepository
 {
-  /**
-   * Get repository by URI.
-   *
-   * @param string $url the url of the repository to find
-   * @param mixed  $URI
-   *
-   * @return QubitQuery collection of OAI-PMH Repositories
-   */
-  public static function getByURI($URI)
-  {
-    $criteria = new Criteria();
-    $criteria->add(QubitOaiRepository::URI, $URI, Criteria::LIKE);
-    $criteria->addAscendingOrderByColumn(QubitOaiRepository::NAME);
+    /**
+     * Get repository by URI.
+     *
+     * @param string $url the url of the repository to find
+     * @param mixed  $URI
+     *
+     * @return QubitQuery collection of OAI-PMH Repositories
+     */
+    public static function getByURI($URI)
+    {
+        $criteria = new Criteria();
+        $criteria->add(QubitOaiRepository::URI, $URI, Criteria::LIKE);
+        $criteria->addAscendingOrderByColumn(QubitOaiRepository::NAME);
 
-    return self::get($criteria);
-  }
+        return self::get($criteria);
+    }
 }

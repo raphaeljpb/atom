@@ -25,57 +25,57 @@ $t->diag('Initializing configuration.');
 $configuration = ProjectConfiguration::getApplicationConfiguration('qubit', 'test', true);
 
 $tests = [
-  [
-    'relations' => [
-      [1, 2],
-      [1, 3],
-      [1, 4],
-      [2, 3],
-      [4, 1],
+    [
+        'relations' => [
+            [1, 2],
+            [1, 3],
+            [1, 4],
+            [2, 3],
+            [4, 1],
+        ],
+        'expected' => [
+            [1, 2],
+            [1, 3],
+            [1, 4],
+            [2, 3],
+        ],
     ],
-    'expected' => [
-      [1, 2],
-      [1, 3],
-      [1, 4],
-      [2, 3],
-    ],
-  ],
 
-  [
-    'relations' => [
-      [10, 20],
-      [3, 3],
-      [3, 3],
+    [
+        'relations' => [
+            [10, 20],
+            [3, 3],
+            [3, 3],
+        ],
+        'expected' => [
+            [10, 20],
+            [3, 3],
+        ],
     ],
-    'expected' => [
-      [10, 20],
-      [3, 3],
-    ],
-  ],
 ];
 
 foreach ($tests as $item) {
-  // Build
-  $uniquer = new sfSkosUniqueRelations();
-  foreach ($item['relations'] as $rel) {
-    $uniquer->insert($rel[0], $rel[1]);
-  }
+    // Build
+    $uniquer = new sfSkosUniqueRelations();
+    foreach ($item['relations'] as $rel) {
+        $uniquer->insert($rel[0], $rel[1]);
+    }
 
-  // Test that the duplicates are not included (is() uses the === operator, sort is also checked!)
-  $result = $uniquer->getAll();
-  $t->is($result, $item['expected']);
+    // Test that the duplicates are not included (is() uses the === operator, sort is also checked!)
+    $result = $uniquer->getAll();
+    $t->is($result, $item['expected']);
 
-  // Test that the object is countable
-  $t->is(count($uniquer), count($item['expected']));
+    // Test that the object is countable
+    $t->is(count($uniquer), count($item['expected']));
 
-  // Test that the object is iterable
-  $index = 0;
-  foreach ($uniquer as $unique) {
-    ++$index;
-  }
-  $t->is($index, count($item['expected']));
+    // Test that the object is iterable
+    $index = 0;
+    foreach ($uniquer as $unique) {
+        ++$index;
+    }
+    $t->is($index, count($item['expected']));
 
-  unset($uniquer);
+    unset($uniquer);
 }
 
 // Test if sfSkosUniqueRelations is working with the UNESCO Thesaurus
@@ -89,27 +89,27 @@ $relations = new sfSkosUniqueRelations();
 $prefix = 'http://vocabularies.unesco.org/thesaurus/concept';
 $prefixLen = strlen($prefix);
 foreach ($graph->allOfType('skos:Concept') as $x) {
-  foreach ($x->allResources('skos:related') as $y) {
-    $idX = substr($x->getUri(), $prefixLen);
-    $idY = substr($y->getUri(), $prefixLen);
+    foreach ($x->allResources('skos:related') as $y) {
+        $idX = substr($x->getUri(), $prefixLen);
+        $idY = substr($y->getUri(), $prefixLen);
 
-    $relations->insert((int) $idX, (int) $idY);
-  }
+        $relations->insert((int) $idX, (int) $idY);
+    }
 }
 
 $results = $relations->getAll();
 
 $tests = [
-  9345 => [7050, 10321, 81, 8646, 9403, 13294, 9842, 83, 2073],
-  2340 => [2327, 2328],
-  249 => [1927, 219, 619, 8188, 11757, 12189],
-  1518 => [1480, 3602, 11264, 1516, 17061],
+    9345 => [7050, 10321, 81, 8646, 9403, 13294, 9842, 83, 2073],
+    2340 => [2327, 2328],
+    249 => [1927, 219, 619, 8188, 11757, 12189],
+    1518 => [1480, 3602, 11264, 1516, 17061],
 ];
 
 foreach ($tests as $s => $p) {
-  foreach ($p as $pX) {
-    $rel = [$s, $pX];
-    $matched = $relations->exists($rel[0], $rel[1]);
-    $t->is($matched, true, sprintf('Relation %s => %s should be found', $rel[0], $rel[1]));
-  }
+    foreach ($p as $pX) {
+        $rel = [$s, $pX];
+        $matched = $relations->exists($rel[0], $rel[1]);
+        $t->is($matched, true, sprintf('Relation %s => %s should be found', $rel[0], $rel[1]));
+    }
 }

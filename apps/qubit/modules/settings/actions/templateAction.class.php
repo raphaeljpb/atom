@@ -26,75 +26,75 @@
  */
 class SettingsTemplateAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->defaultTemplateForm = new SettingsDefaultTemplateForm();
+    public function execute($request)
+    {
+        $this->defaultTemplateForm = new SettingsDefaultTemplateForm();
 
-    // Handle POST data (form submit)
-    if ($request->isMethod('post')) {
-      QubitCache::getInstance()->removePattern('settings:i18n:*');
+        // Handle POST data (form submit)
+        if ($request->isMethod('post')) {
+            QubitCache::getInstance()->removePattern('settings:i18n:*');
 
-      // Handle default template form submission
-      if (null !== $request->default_template) {
-        $this->defaultTemplateForm->bind($request->default_template);
-        if ($this->defaultTemplateForm->isValid()) {
-          // Do update and redirect to avoid repeat submit wackiness
-          $this->updateDefaultTemplateSettings($this->defaultTemplateForm);
+            // Handle default template form submission
+            if (null !== $request->default_template) {
+                $this->defaultTemplateForm->bind($request->default_template);
+                if ($this->defaultTemplateForm->isValid()) {
+                    // Do update and redirect to avoid repeat submit wackiness
+                    $this->updateDefaultTemplateSettings($this->defaultTemplateForm);
 
-          $notice = sfContext::getInstance()->i18n->__('Default templates saved.');
-          $this->getUser()->setFlash('notice', $notice);
+                    $notice = sfContext::getInstance()->i18n->__('Default templates saved.');
+                    $this->getUser()->setFlash('notice', $notice);
 
-          $this->redirect('settings/template');
+                    $this->redirect('settings/template');
+                }
+            }
         }
-      }
+
+        $this->populateDefaultTemplateForm($this->defaultTemplateForm);
     }
 
-    $this->populateDefaultTemplateForm($this->defaultTemplateForm);
-  }
+    /**
+     * Populate the default template settings from the database (non-localized).
+     *
+     * @param mixed $form
+     */
+    protected function populateDefaultTemplateForm($form)
+    {
+        $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template');
+        $actorTemplate = QubitSetting::getByNameAndScope('actor', 'default_template');
+        $repositoryTemplate = QubitSetting::getByNameAndScope('repository', 'default_template');
 
-  /**
-   * Populate the default template settings from the database (non-localized).
-   *
-   * @param mixed $form
-   */
-  protected function populateDefaultTemplateForm($form)
-  {
-    $infoObjectTemplate = QubitSetting::getByNameAndScope('informationobject', 'default_template');
-    $actorTemplate = QubitSetting::getByNameAndScope('actor', 'default_template');
-    $repositoryTemplate = QubitSetting::getByNameAndScope('repository', 'default_template');
-
-    // Set defaults for global form
-    $this->defaultTemplateForm->setDefaults([
-      'informationobject' => (isset($infoObjectTemplate)) ? $infoObjectTemplate->getValue(['sourceCulture' => true]) : null,
-      'actor' => (isset($actorTemplate)) ? $actorTemplate->getValue(['sourceCulture' => true]) : null,
-      'repository' => (isset($repositoryTemplate)) ? $repositoryTemplate->getValue(['sourceCulture' => true]) : null,
-    ]);
-  }
-
-  /**
-   * Update default template db values with form values (non-localized).
-   *
-   * @param mixed $form
-   *
-   * @return $this;
-   */
-  protected function updateDefaultTemplateSettings($form)
-  {
-    if (null !== $newValue = $form->getValue('informationobject')) {
-      $setting = QubitSetting::findAndSave('informationobject', $newValue, [
-        'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true, ]);
+        // Set defaults for global form
+        $this->defaultTemplateForm->setDefaults([
+            'informationobject' => (isset($infoObjectTemplate)) ? $infoObjectTemplate->getValue(['sourceCulture' => true]) : null,
+            'actor' => (isset($actorTemplate)) ? $actorTemplate->getValue(['sourceCulture' => true]) : null,
+            'repository' => (isset($repositoryTemplate)) ? $repositoryTemplate->getValue(['sourceCulture' => true]) : null,
+        ]);
     }
 
-    if (null !== $newValue = $form->getValue('actor')) {
-      $setting = QubitSetting::findAndSave('actor', $newValue, [
-        'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true, ]);
-    }
+    /**
+     * Update default template db values with form values (non-localized).
+     *
+     * @param mixed $form
+     *
+     * @return $this;
+     */
+    protected function updateDefaultTemplateSettings($form)
+    {
+        if (null !== $newValue = $form->getValue('informationobject')) {
+            $setting = QubitSetting::findAndSave('informationobject', $newValue, [
+                'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true, ]);
+        }
 
-    if (null !== $newValue = $form->getValue('repository')) {
-      $setting = QubitSetting::findAndSave('repository', $newValue, [
-        'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true, ]);
-    }
+        if (null !== $newValue = $form->getValue('actor')) {
+            $setting = QubitSetting::findAndSave('actor', $newValue, [
+                'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true, ]);
+        }
 
-    return $this;
-  }
+        if (null !== $newValue = $form->getValue('repository')) {
+            $setting = QubitSetting::findAndSave('repository', $newValue, [
+                'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true, ]);
+        }
+
+        return $this;
+    }
 }

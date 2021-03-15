@@ -19,24 +19,24 @@
 
 class InformationObjectFindingAidLinkComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    // Get finding aid path and status from top-level
-    if (QubitInformationObject::ROOT_ID != $this->resource->parentId) {
-      $this->resource = $this->resource->getCollectionRoot();
-    }
+    public function execute($request)
+    {
+        // Get finding aid path and status from top-level
+        if (QubitInformationObject::ROOT_ID != $this->resource->parentId) {
+            $this->resource = $this->resource->getCollectionRoot();
+        }
 
-    $this->path = arFindingAidJob::getFindingAidPathForDownload($this->resource->id);
-    if (!isset($this->path)) {
-      return sfView::NONE;
-    }
+        $this->path = arFindingAidJob::getFindingAidPathForDownload($this->resource->id);
+        if (!isset($this->path)) {
+            return sfView::NONE;
+        }
 
-    $parts = explode(DIRECTORY_SEPARATOR, $this->path);
-    $this->filename = array_pop($parts);
+        $parts = explode(DIRECTORY_SEPARATOR, $this->path);
+        $this->filename = array_pop($parts);
 
-    $i18n = $this->context->i18n;
+        $i18n = $this->context->i18n;
 
-    switch ((int) $this->resource->getFindingAidStatus()) {
+        switch ((int) $this->resource->getFindingAidStatus()) {
       case arFindingAidJob::GENERATED_STATUS:
         $this->label = $i18n->__('Generated finding aid');
 
@@ -50,5 +50,5 @@ class InformationObjectFindingAidLinkComponent extends sfComponent
       default:
         $this->label = $i18n->__('Finding aid');
     }
-  }
+    }
 }

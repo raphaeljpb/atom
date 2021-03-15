@@ -123,8 +123,8 @@
           <div class="filter-row">
             <div class="filter">
               <?php echo $form->repos
-                ->label(__('Repository'))
-                ->renderRow(); ?>
+                  ->label(__('Repository'))
+                  ->renderRow(); ?>
             </div>
           </div>
         <?php } ?>
@@ -132,8 +132,8 @@
         <div class="filter-row">
           <div class="filter">
             <?php echo $form->collection
-              ->label(__('Top-level description'))
-              ->renderLabel(); ?>
+                ->label(__('Top-level description'))
+                ->renderLabel(); ?>
             <?php echo $form->collection->render(['class' => 'form-autocomplete']); ?>
             <input class="list" type="hidden" value="<?php echo url_for(['module' => 'informationobject', 'action' => 'autocomplete', 'parent' => QubitInformationObject::ROOT_ID, 'filterDrafts' => true]); ?>"/>
           </div>
@@ -149,20 +149,20 @@
 
           <div class="filter-left">
             <?php echo $form->levels
-              ->label(__('Level of description'))
-              ->renderRow(); ?>
+                ->label(__('Level of description'))
+                ->renderRow(); ?>
           </div>
 
           <div class="filter-center">
             <?php echo $form->onlyMedia
-              ->label(__('%1% available', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]))
-              ->renderRow(); ?>
+                ->label(__('%1% available', ['%1%' => sfConfig::get('app_ui_label_digitalobject')]))
+                ->renderRow(); ?>
           </div>
 
           <div class="filter-right">
             <?php echo $form->findingAidStatus
-              ->label(__('Finding aid'))
-              ->renderRow(); ?>
+                ->label(__('Finding aid'))
+                ->renderRow(); ?>
           </div>
 
         </div>
@@ -176,16 +176,16 @@
             <?php if ($showCopyright) { ?>
               <div class="filter<?php echo $showMaterial ? '-left' : ''; ?>">
                 <?php echo $form->copyrightStatus
-                  ->label(__('Copyright status'))
-                  ->renderRow(); ?>
+                    ->label(__('Copyright status'))
+                    ->renderRow(); ?>
               </div>
             <?php } ?>
 
             <?php if ($showMaterial) { ?>
               <div class="filter<?php echo $showCopyright ? '-right' : ''; ?>">
                 <?php echo $form->materialType
-                  ->label(__('General material designation'))
-                  ->renderRow(); ?>
+                    ->label(__('General material designation'))
+                    ->renderRow(); ?>
               </div>
             <?php } ?>
 
@@ -217,14 +217,14 @@
 
           <div class="start-date">
             <?php echo $form->startDate
-              ->label(__('Start'))
-              ->renderRow(); ?>
+                ->label(__('Start'))
+                ->renderRow(); ?>
           </div>
 
           <div class="end-date">
             <?php echo $form->endDate
-              ->label(__('End'))
-              ->renderRow(); ?>
+                ->label(__('End'))
+                ->renderRow(); ?>
           </div>
 
           <div class="date-type">

@@ -27,15 +27,15 @@
         <legend><?php echo __('Privacy Notification Settings'); ?></legend>
 
         <?php echo $form->privacy_notification_enabled
-          ->label(__('Display Privacy Notification on first visit to site'))
-          ->renderRow(); ?>
+            ->label(__('Display Privacy Notification on first visit to site'))
+            ->renderRow(); ?>
 
         <?php echo get_partial('settings/i18n_form_field',
           [
-            'name' => 'privacy_notification',
-            'label' => __('Privacy Notification Message'),
-            'settings' => $settings,
-            'form' => $form, ]); ?>
+              'name' => 'privacy_notification',
+              'label' => __('Privacy Notification Message'),
+              'settings' => $settings,
+              'form' => $form, ]); ?>
 
       </fieldset>
 

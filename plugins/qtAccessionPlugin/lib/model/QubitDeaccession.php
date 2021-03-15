@@ -19,29 +19,29 @@
 
 class QubitDeaccession extends BaseDeaccession
 {
-  public function __toString()
-  {
-    return (string) $this->accession->__toString().' - D'.$this->identifier;
-  }
-
-  public function save($connection = null)
-  {
-    parent::save($connection);
-
-    return $this;
-  }
-
-  public function delete($connection = null)
-  {
-    return parent::delete($connection);
-  }
-
-  protected function insert($connection = null)
-  {
-    if (!isset($this->slug)) {
-      $this->slug = QubitSlug::slugify($this->__get('identifier', ['sourceCulture' => true]));
+    public function __toString()
+    {
+        return (string) $this->accession->__toString().' - D'.$this->identifier;
     }
 
-    return parent::insert($connection);
-  }
+    public function save($connection = null)
+    {
+        parent::save($connection);
+
+        return $this;
+    }
+
+    public function delete($connection = null)
+    {
+        return parent::delete($connection);
+    }
+
+    protected function insert($connection = null)
+    {
+        if (!isset($this->slug)) {
+            $this->slug = QubitSlug::slugify($this->__get('identifier', ['sourceCulture' => true]));
+        }
+
+        return parent::insert($connection);
+    }
 }

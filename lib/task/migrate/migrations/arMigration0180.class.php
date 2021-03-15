@@ -25,30 +25,30 @@
  */
 class arMigration0180
 {
-  public const VERSION = 180;
-  public const // The new database version
+    public const VERSION = 180;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    if (null === QubitSetting::getByName('authority_record_relationships')) {
-      $setting = new QubitSetting();
-      $setting->name = 'authority_record_relationships';
-      $setting->scope = 'ui_label';
-      $setting->editable = 1;
-      $setting->deleteable = 0;
-      $setting->source_culture = 'en';
-      $setting->setValue('Authority record relationships', ['culture' => 'en']);
-      $setting->save();
-    }
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        if (null === QubitSetting::getByName('authority_record_relationships')) {
+            $setting = new QubitSetting();
+            $setting->name = 'authority_record_relationships';
+            $setting->scope = 'ui_label';
+            $setting->editable = 1;
+            $setting->deleteable = 0;
+            $setting->source_culture = 'en';
+            $setting->setValue('Authority record relationships', ['culture' => 'en']);
+            $setting->save();
+        }
 
-    return true;
-  }
+        return true;
+    }
 }

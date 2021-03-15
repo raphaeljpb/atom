@@ -23,13 +23,13 @@
  */
 class MenuBrowseMenuInstitutionComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    // Get menu objects
-    $this->browseMenuInstitution = QubitMenu::getByName('browseInstitution');
+    public function execute($request)
+    {
+        // Get menu objects
+        $this->browseMenuInstitution = QubitMenu::getByName('browseInstitution');
 
-    if (!$this->browseMenuInstitution instanceof QubitMenu) {
-      return sfView::NONE;
+        if (!$this->browseMenuInstitution instanceof QubitMenu) {
+            return sfView::NONE;
+        }
     }
-  }
 }

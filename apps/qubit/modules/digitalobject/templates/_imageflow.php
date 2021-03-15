@@ -12,12 +12,12 @@
     <div class="result-count">
       <?php echo __('Results %1% to %2% of %3%', ['%1%' => 1, '%2%' => $limit, '%3%' => $total]); ?>
       <a href="<?php echo url_for([
-        'module' => 'informationobject',
-        'action' => 'browse',
-        'ancestor' => $resource->id,
-        'topLod' => false,
-        'view' => 'card',
-        'onlyMedia' => true, ]); ?>"><?php echo __('Show all'); ?></a>
+          'module' => 'informationobject',
+          'action' => 'browse',
+          'ancestor' => $resource->id,
+          'topLod' => false,
+          'view' => 'card',
+          'onlyMedia' => true, ]); ?>"><?php echo __('Show all'); ?></a>
     </div>
   <?php } ?>
 

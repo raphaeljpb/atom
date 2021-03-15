@@ -23,19 +23,19 @@
  */
 class arTestJob extends arBaseJob
 {
-  public function runJob($parameters)
-  {
-    $this->info($this->i18n->__('Got a test job! Id: %1', ['%1' => $this->job->id]));
+    public function runJob($parameters)
+    {
+        $this->info($this->i18n->__('Got a test job! Id: %1', ['%1' => $this->job->id]));
 
-    if (isset($parameters['error'])) {
-      $this->job->setStatusError($this->i18n->__('The test worker broke!'));
-    } else {
-      $this->job->setStatusCompleted();
+        if (isset($parameters['error'])) {
+            $this->job->setStatusError($this->i18n->__('The test worker broke!'));
+        } else {
+            $this->job->setStatusCompleted();
+        }
+
+        // Don't forget to set the job status & save at the end!
+        $this->job->save();
+
+        return true;
     }
-
-    // Don't forget to set the job status & save at the end!
-    $this->job->save();
-
-    return true;
-  }
 }

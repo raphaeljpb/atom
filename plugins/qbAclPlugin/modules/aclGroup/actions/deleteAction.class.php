@@ -19,30 +19,30 @@
 
 class AclGroupDeleteAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->form = new sfForm();
+    public function execute($request)
+    {
+        $this->form = new sfForm();
 
-    $this->group = QubitAclGroup::getById($request->id);
+        $this->group = QubitAclGroup::getById($request->id);
 
-    // Check that object exists
-    if (!isset($this->group)) {
-      $this->forward404();
+        // Check that object exists
+        if (!isset($this->group)) {
+            $this->forward404();
+        }
+
+        // Check permissions
+        if ($this->group->isProtected() || !QubitAcl::check($this->group, 'delete')) {
+            QubitAcl::forwardUnauthorized();
+        }
+
+        if ($request->isMethod('delete')) {
+            $this->form->bind($request->getPostParameters());
+
+            if ($this->form->isValid()) {
+                $this->group->delete();
+
+                $this->redirect(['module' => 'aclGroup', 'action' => 'list']);
+            }
+        }
     }
-
-    // Check permissions
-    if ($this->group->isProtected() || !QubitAcl::check($this->group, 'delete')) {
-      QubitAcl::forwardUnauthorized();
-    }
-
-    if ($request->isMethod('delete')) {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid()) {
-        $this->group->delete();
-
-        $this->redirect(['module' => 'aclGroup', 'action' => 'list']);
-      }
-    }
-  }
 }

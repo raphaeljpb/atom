@@ -58,14 +58,14 @@
         <legend><?php echo __('Select source'); ?></legend>
 
         <?php echo $form->file
-          ->label(__('Select a file to import'))
-          ->renderRow(); ?>
+            ->label(__('Select a file to import'))
+            ->renderRow(); ?>
 
         <br /> <!-- Not ideal! -->
 
         <?php echo $form->url
-          ->label(__('Or a remote resource'))
-          ->renderRow(); ?>
+            ->label(__('Or a remote resource'))
+            ->renderRow(); ?>
 
       </fieldset>
 

@@ -26,52 +26,52 @@
  */
 class InformationObjectIndexAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->resource = $this->getRoute()->resource;
+    public function execute($request)
+    {
+        $this->resource = $this->getRoute()->resource;
 
-    // Check that this isn't the root
-    if (!isset($this->resource->parent)) {
-      $this->forward404();
+        // Check that this isn't the root
+        if (!isset($this->resource->parent)) {
+            $this->forward404();
+        }
+
+        // Check user authorization
+        if (!QubitAcl::check($this->resource, 'read')) {
+            QubitAcl::forwardToSecureAction();
+        }
+
+        $this->dispatcher->notify(new sfEvent($this, 'access_log.view', ['object' => $this->resource]));
+
+        if ('fullWidth' == sfConfig::get('app_treeview_type__source', 'sidebar')) {
+            $this->getResponse()->addStylesheet('fullWidthTreeView', 'last');
+            $this->getResponse()->addStylesheet('/vendor/jstree/themes/default/style.min.css', 'last');
+            $this->getResponse()->addJavascript('treeviewTypes', 'last');
+            $this->getResponse()->addJavascript('pager', 'last');
+            $this->getResponse()->addJavascript('treeViewPager', 'last');
+            $this->getResponse()->addJavascript('fullWidthTreeView', 'last');
+            $this->getResponse()->addJavascript('/vendor/jstree/jstree.min.js', 'last');
+            $this->getResponse()->addJavaScript('/vendor/mediaelement/mediaelement-and-player.min.js', 'last');
+            $this->getResponse()->addJavaScript('mediaelement', 'last');
+            $this->getResponse()->addStyleSheet('/vendor/mediaelement/mediaelementplayer.min.css');
+        }
+
+        $scopeAndContent = $this->resource->getScopeAndContent(['cultureFallback' => true]);
+        if (!empty($scopeAndContent)) {
+            $this->getContext()->getConfiguration()->loadHelpers(['Text', 'Qubit']);
+            $this->response->addMeta('description', truncate_text(strip_markdown($scopeAndContent), 150));
+        }
+
+        $this->digitalObjectLink = $this->resource->getDigitalObjectUrl();
     }
 
-    // Check user authorization
-    if (!QubitAcl::check($this->resource, 'read')) {
-      QubitAcl::forwardToSecureAction();
-    }
-
-    $this->dispatcher->notify(new sfEvent($this, 'access_log.view', ['object' => $this->resource]));
-
-    if ('fullWidth' == sfConfig::get('app_treeview_type__source', 'sidebar')) {
-      $this->getResponse()->addStylesheet('fullWidthTreeView', 'last');
-      $this->getResponse()->addStylesheet('/vendor/jstree/themes/default/style.min.css', 'last');
-      $this->getResponse()->addJavascript('treeviewTypes', 'last');
-      $this->getResponse()->addJavascript('pager', 'last');
-      $this->getResponse()->addJavascript('treeViewPager', 'last');
-      $this->getResponse()->addJavascript('fullWidthTreeView', 'last');
-      $this->getResponse()->addJavascript('/vendor/jstree/jstree.min.js', 'last');
-      $this->getResponse()->addJavaScript('/vendor/mediaelement/mediaelement-and-player.min.js', 'last');
-      $this->getResponse()->addJavaScript('mediaelement', 'last');
-      $this->getResponse()->addStyleSheet('/vendor/mediaelement/mediaelementplayer.min.css');
-    }
-
-    $scopeAndContent = $this->resource->getScopeAndContent(['cultureFallback' => true]);
-    if (!empty($scopeAndContent)) {
-      $this->getContext()->getConfiguration()->loadHelpers(['Text', 'Qubit']);
-      $this->response->addMeta('description', truncate_text(strip_markdown($scopeAndContent), 150));
-    }
-
-    $this->digitalObjectLink = $this->resource->getDigitalObjectUrl();
-  }
-
-  protected function addField($validatorSchema, $name)
-  {
-    switch ($name) {
+    protected function addField($validatorSchema, $name)
+    {
+        switch ($name) {
       case 'levelOfDescription':
         $forbiddenValues = [];
         foreach ($this->resource->ancestors->orderBy('rgt') as $item) {
-          if (isset($item->levelOfDescription)) {
-            switch ($item->levelOfDescription->getName(['sourceCulture' => true])) {
+            if (isset($item->levelOfDescription)) {
+                switch ($item->levelOfDescription->getName(['sourceCulture' => true])) {
               case 'Item':
                 $forbiddenValues[] = 'Item';
 
@@ -116,15 +116,15 @@ class InformationObjectIndexAction extends sfAction
                 break;
             }
 
-            break;
-          }
+                break;
+            }
         }
 
         $validatorSchema->levelOfDescription = new QubitValidatorForbiddenValues([
-          'forbidden_values' => $forbiddenValues,
-          'required' => true, ]);
+            'forbidden_values' => $forbiddenValues,
+            'required' => true, ]);
 
         break;
     }
-  }
+    }
 }

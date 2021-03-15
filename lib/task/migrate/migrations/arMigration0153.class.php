@@ -25,37 +25,37 @@
  */
 class arMigration0153
 {
-  public const VERSION = 153;
-  public const // The new database version
+    public const VERSION = 153;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    QubitMigrate::bumpTaxonomy(QubitTaxonomy::JOB_STATUS_ID, $configuration);
-    $taxonomy = new QubitTaxonomy();
-    $taxonomy->id = QubitTaxonomy::JOB_STATUS_ID;
-    $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
-    $taxonomy->sourceCulture = 'en';
-    $taxonomy->setName('Job status', ['culture' => 'en']);
-    $taxonomy->save();
+      QubitMigrate::bumpTaxonomy(QubitTaxonomy::JOB_STATUS_ID, $configuration);
+      $taxonomy = new QubitTaxonomy();
+      $taxonomy->id = QubitTaxonomy::JOB_STATUS_ID;
+      $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
+      $taxonomy->sourceCulture = 'en';
+      $taxonomy->setName('Job status', ['culture' => 'en']);
+      $taxonomy->save();
 
-    $terms = [
-      QubitTerm::JOB_STATUS_IN_PROGRESS_ID => 'In progress',
-      QubitTerm::JOB_STATUS_COMPLETED_ID => 'Completed',
-      QubitTerm::JOB_STATUS_ERROR_ID => 'Error',
-    ];
+      $terms = [
+          QubitTerm::JOB_STATUS_IN_PROGRESS_ID => 'In progress',
+          QubitTerm::JOB_STATUS_COMPLETED_ID => 'Completed',
+          QubitTerm::JOB_STATUS_ERROR_ID => 'Error',
+      ];
 
-    foreach ($terms as $id => $name) {
-      QubitMigrate::bumpTerm($id, $configuration);
-      $term = new QubitTerm();
-      $term->id = $id;
-      $term->parentId = QubitTerm::ROOT_ID;
-      $term->taxonomyId = QubitTaxonomy::JOB_STATUS_ID;
-      $term->sourceCulture = 'en';
-      $term->setName($name, ['culture' => 'en']);
-      $term->save();
-    }
+      foreach ($terms as $id => $name) {
+          QubitMigrate::bumpTerm($id, $configuration);
+          $term = new QubitTerm();
+          $term->id = $id;
+          $term->parentId = QubitTerm::ROOT_ID;
+          $term->taxonomyId = QubitTaxonomy::JOB_STATUS_ID;
+          $term->sourceCulture = 'en';
+          $term->setName($name, ['culture' => 'en']);
+          $term->save();
+      }
 
-    return true;
+      return true;
   }
 }

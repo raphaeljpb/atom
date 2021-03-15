@@ -10,13 +10,13 @@
 
 class sfTranslatePluginTranslateComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    $this->messages = $request->getAttribute('messages');
-    if (empty($this->messages)) {
-      return sfView::NONE;
-    }
+    public function execute($request)
+    {
+        $this->messages = $request->getAttribute('messages');
+        if (empty($this->messages)) {
+            return sfView::NONE;
+        }
 
-    ksort($this->messages);
-  }
+        ksort($this->messages);
+    }
 }

@@ -26,27 +26,27 @@
  */
 class SettingsSecurityAction extends SettingsEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'limit_admin_ip',
-    'require_ssl_admin',
-    'require_strong_passwords', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'limit_admin_ip',
+        'require_ssl_admin',
+        'require_strong_passwords', ];
 
-  public function earlyExecute()
-  {
-    parent::earlyExecute();
+    public function earlyExecute()
+    {
+        parent::earlyExecute();
 
-    $this->updateMessage = $this->i18n->__('Security settings saved.');
+        $this->updateMessage = $this->i18n->__('Security settings saved.');
 
-    // Set form decorator
-    $decorator = new QubitWidgetFormSchemaFormatterList($this->form->getWidgetSchema());
-    $this->form->getWidgetSchema()->addFormFormatter('list', $decorator);
-    $this->form->getWidgetSchema()->setFormFormatterName('list');
-  }
+        // Set form decorator
+        $decorator = new QubitWidgetFormSchemaFormatterList($this->form->getWidgetSchema());
+        $this->form->getWidgetSchema()->addFormFormatter('list', $decorator);
+        $this->form->getWidgetSchema()->setFormFormatterName('list');
+    }
 
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'limit_admin_ip':
         $this->form->setWidget($name, new sfWidgetFormInput());
         $this->form->setValidator($name, new sfValidatorString(['required' => false]));
@@ -71,5 +71,5 @@ class SettingsSecurityAction extends SettingsEditAction
 
         break;
     }
-  }
+    }
 }

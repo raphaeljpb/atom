@@ -26,28 +26,28 @@
  */
 class arMigration0114
 {
-  public const VERSION = 114;
-  public const // The new database version
+    public const VERSION = 114;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    // Add setting for enabling OAI API key authentication
-    $setting = new QubitSetting();
-    $setting->name = 'oai_authentication_enabled';
-    $setting->scope = 'oai';
-    $setting->editable = 1;
-    $setting->deleteable = 0;
-    $setting->value = 0;
-    $setting->save();
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        // Add setting for enabling OAI API key authentication
+        $setting = new QubitSetting();
+        $setting->name = 'oai_authentication_enabled';
+        $setting->scope = 'oai';
+        $setting->editable = 1;
+        $setting->deleteable = 0;
+        $setting->value = 0;
+        $setting->save();
 
-    return true;
-  }
+        return true;
+    }
 }

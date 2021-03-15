@@ -148,39 +148,39 @@ content
 
       <div class="form-item">
         <?php echo $form->resource
-          ->label(__('Authorized form of name'))
-          ->renderLabel(); ?>
+            ->label(__('Authorized form of name'))
+            ->renderLabel(); ?>
         <?php echo $form->resource->render(['class' => 'form-autocomplete']); ?>
         <input class="list" type="hidden" value="<?php echo url_for(['module' => 'actor', 'action' => 'autocomplete']); ?>"/>
         <?php echo $form->resource
-          ->help(__('"Record the authorized form of name and any relevant unique identifiers, including the authority record identifier, for the related entity." (ISAAR 5.3.1) Select the name from the drop-down menu; enter the first few letters to narrow the choices.'))
-          ->renderHelp(); ?>
+            ->help(__('"Record the authorized form of name and any relevant unique identifiers, including the authority record identifier, for the related entity." (ISAAR 5.3.1) Select the name from the drop-down menu; enter the first few letters to narrow the choices.'))
+            ->renderHelp(); ?>
       </div>
 
       <?php echo $form->type
-        ->help(__('"Purpose: To identify the general category of relationship between the entity being described and another corporate body, person or family." (ISAAR 5.3.2). Select a category from the drop-down menu: hierarchical, temporal, family or associative.'))
-        ->label(__('Category of relationship'))
-        ->renderRow(); ?>
+          ->help(__('"Purpose: To identify the general category of relationship between the entity being described and another corporate body, person or family." (ISAAR 5.3.2). Select a category from the drop-down menu: hierarchical, temporal, family or associative.'))
+          ->label(__('Category of relationship'))
+          ->renderRow(); ?>
 
       <div class="form-item">
         <?php echo $form->subType
-          ->label(__('Relationship type'))
-          ->renderLabel(); ?>
+            ->label(__('Relationship type'))
+            ->renderLabel(); ?>
         <?php echo $form->subType->render(['class' => 'form-autocomplete', 'disabled' => 'true']); ?>
         <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::ACTOR_RELATION_TYPE_ID), 'module' => 'taxonomy']), 'addWords' => isset($resource->id) ? render_title($resource) : '']); ?>"/>
         <?php echo $form->subType
-          ->help(__('"Select a descriptive term from the drop-down menu to clarify the type of relationship between these two actors."'))
-          ->renderHelp(); ?>
+            ->help(__('"Select a descriptive term from the drop-down menu to clarify the type of relationship between these two actors."'))
+            ->renderHelp(); ?>
       </div>
 
       <?php echo $form->description
-        ->help(__('"Record a precise description of the nature of the relationship between the entity described in this authority record and the other related entity....Record in the Rules and/or conventions element (5.4.3) any classification scheme used as a source of controlled vocabulary terms to describe the relationship. A narrative description of the history and/or nature of the relationship may also be provided here." (ISAAR 5.3.3). Note that the text entered in this field will also appear in the related authority record.'))
-        ->label(__('Description of relationship'))
-        ->renderRow(); ?>
+          ->help(__('"Record a precise description of the nature of the relationship between the entity described in this authority record and the other related entity....Record in the Rules and/or conventions element (5.4.3) any classification scheme used as a source of controlled vocabulary terms to describe the relationship. A narrative description of the history and/or nature of the relationship may also be provided here." (ISAAR 5.3.3). Note that the text entered in this field will also appear in the related authority record.'))
+          ->label(__('Description of relationship'))
+          ->renderRow(); ?>
 
       <?php echo $form->date
-        ->help(__('"Record when relevant the commencement date of the relationship or succession date and, when relevant, the cessation date of the relationship." (ISAAR 5.3.4) Enter the date as you would like it to appear in the show page for the authority record, using qualifiers and/or typographical symbols to express uncertainty if desired.'))
-        ->renderRow(); ?>
+          ->help(__('"Record when relevant the commencement date of the relationship or succession date and, when relevant, the cessation date of the relationship." (ISAAR 5.3.4) Enter the date as you would like it to appear in the show page for the authority record, using qualifiers and/or typographical symbols to express uncertainty if desired.'))
+          ->renderRow(); ?>
 
       <?php echo $form->startDate->renderRow(); ?>
 

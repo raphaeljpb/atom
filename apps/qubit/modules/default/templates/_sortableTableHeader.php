@@ -4,7 +4,7 @@
 
     // Set a default if it has been defined
     if (empty($sf_request->sort) && !empty($default)) {
-      $sf_request->sort = $name.ucfirst($default);
+        $sf_request->sort = $name.ucfirst($default);
     }
 
     $up = "{$name}Up";

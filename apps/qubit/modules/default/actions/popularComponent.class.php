@@ -22,12 +22,12 @@
  */
 class DefaultPopularComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    $this->popularThisWeek = QubitAccessLog::getPopularThisWeek(['limit' => isset($this->limit) ? $this->limit : 10]);
+    public function execute($request)
+    {
+        $this->popularThisWeek = QubitAccessLog::getPopularThisWeek(['limit' => isset($this->limit) ? $this->limit : 10]);
 
-    if (0 == count($this->popularThisWeek)) {
-      return sfView::NONE;
+        if (0 == count($this->popularThisWeek)) {
+            return sfView::NONE;
+        }
     }
-  }
 }

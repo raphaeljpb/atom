@@ -19,34 +19,36 @@
 
 class qtSwordPluginWorker extends arBaseJob
 {
-  /**
-   * @see arBaseJob::$requiredParameters
-   */
-  protected $extraRequiredParameters = ['information_object_id'];
+    /**
+     * @see arBaseJob::$requiredParameters
+     */
+    protected $extraRequiredParameters = ['information_object_id'];
 
-  public function runJob($package)
-  {
-    if (isset($package['location'])) {
-      $this->info('A package was deposited by reference.');
-      $this->info(sprintf('Location: %s', $package['location']));
-    } elseif (isset($package['filename'])) {
-      $this->info('A package was deposited by upload.');
+    public function runJob($package)
+    {
+        if (isset($package['location'])) {
+            $this->info('A package was deposited by reference.');
+            $this->info(sprintf('Location: %s', $package['location']));
+        } elseif (isset($package['filename'])) {
+            $this->info('A package was deposited by upload.');
+        }
+
+        $this->info('Processing...');
+
+        $resource = QubitInformationObject::getById($package['information_object_id']);
+
+        $this->info(sprintf('Object slug: %s', $resource->slug));
+
+        $extractor = qtPackageExtractorFactory::build(
+            $package['format'],
+            $package + ['resource' => $resource, 'job' => $this->job]
+        );
+
+        $extractor->run();
+
+        $this->job->setStatusCompleted();
+        $this->job->save();
+
+        return true;
     }
-
-    $this->info('Processing...');
-
-    $resource = QubitInformationObject::getById($package['information_object_id']);
-
-    $this->info(sprintf('Object slug: %s', $resource->slug));
-
-    $extractor = qtPackageExtractorFactory::build($package['format'],
-      $package + ['resource' => $resource, 'job' => $this->job]);
-
-    $extractor->run();
-
-    $this->job->setStatusCompleted();
-    $this->job->save();
-
-    return true;
-  }
 }

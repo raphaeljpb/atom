@@ -6,13 +6,13 @@
       <p><?php echo __('Browse by'); ?></p>
       <ul>
         <?php $icons = [
-          'browseInformationObjects' => '/images/icons-large/icon-archival.png',
-          'browseActors' => '/images/icons-large/icon-people.png',
-          'browseRepositories' => '/images/icons-large/icon-institutions.png',
-          'browseSubjects' => '/images/icons-large/icon-subjects.png',
-          'browseFunctions' => '/images/icons-large/icon-functions.png',
-          'browsePlaces' => '/images/icons-large/icon-places.png',
-          'browseDigitalObjects' => '/images/icons-large/icon-media.png', ]; ?>
+            'browseInformationObjects' => '/images/icons-large/icon-archival.png',
+            'browseActors' => '/images/icons-large/icon-people.png',
+            'browseRepositories' => '/images/icons-large/icon-institutions.png',
+            'browseSubjects' => '/images/icons-large/icon-subjects.png',
+            'browseFunctions' => '/images/icons-large/icon-functions.png',
+            'browsePlaces' => '/images/icons-large/icon-places.png',
+            'browseDigitalObjects' => '/images/icons-large/icon-media.png', ]; ?>
         <?php $browseMenu = QubitMenu::getById(QubitMenu::BROWSE_ID); ?>
         <?php if ($browseMenu->hasChildren()) { ?>
           <?php foreach ($browseMenu->getChildren() as $item) { ?>

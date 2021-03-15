@@ -111,15 +111,15 @@
       $tableTemplate .= '<tbody>';
 
       foreach ($termActions as $key => $item) {
-        $tableTemplate .= '<tr>';
-        $tableTemplate .= '<td>'.__($item).'</th>';
-        $tableTemplate .= '<td><ul class="radio inline">';
-        $tableTemplate .= '<li><input type="radio" name="acl['.$key.'_{objectId}]" value="'.QubitAcl::GRANT.'"/>'.__('Grant').'</li>';
-        $tableTemplate .= '<li><input type="radio" name="acl['.$key.'_{objectId}]" value="'.QubitAcl::DENY.'"/>'.__('Deny').'</li>';
-        $tableTemplate .= '<li><input type="radio" name="acl['.$key.'_{objectId}]" value="'.QubitAcl::INHERIT.'" checked/>'.__('Inherit').'</li>';
-        $tableTemplate .= '</ul></td>';
-        $tableTemplate .= '</tr>';
-        $tableTemplate .= '</div>';
+          $tableTemplate .= '<tr>';
+          $tableTemplate .= '<td>'.__($item).'</th>';
+          $tableTemplate .= '<td><ul class="radio inline">';
+          $tableTemplate .= '<li><input type="radio" name="acl['.$key.'_{objectId}]" value="'.QubitAcl::GRANT.'"/>'.__('Grant').'</li>';
+          $tableTemplate .= '<li><input type="radio" name="acl['.$key.'_{objectId}]" value="'.QubitAcl::DENY.'"/>'.__('Deny').'</li>';
+          $tableTemplate .= '<li><input type="radio" name="acl['.$key.'_{objectId}]" value="'.QubitAcl::INHERIT.'" checked/>'.__('Inherit').'</li>';
+          $tableTemplate .= '</ul></td>';
+          $tableTemplate .= '</tr>';
+          $tableTemplate .= '</div>';
       }
 
       $tableTemplate .= '</tbody>';

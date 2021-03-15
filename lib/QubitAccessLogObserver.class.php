@@ -22,15 +22,15 @@
  */
 class QubitAccessLogObserver
 {
-  // access_log.view event listener
-  public static function view(sfEvent $event)
-  {
-    $object = $event['object'];
+    // access_log.view event listener
+    public static function view(sfEvent $event)
+    {
+        $object = $event['object'];
 
-    $access = new QubitAccessLog();
-    $access->objectId = $object->id;
-    $access->accessDate = date('Y-m-d H:i:s');
+        $access = new QubitAccessLog();
+        $access->objectId = $object->id;
+        $access->accessDate = date('Y-m-d H:i:s');
 
-    $access->save();
-  }
+        $access->save();
+    }
 }

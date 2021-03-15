@@ -20,66 +20,67 @@
 // Notice that his is also used in XHR context (see treeview search)
 class SearchIndexAction extends DefaultBrowseAction
 {
-  public const INDEX_TYPE = 'QubitInformationObject';
+    public const INDEX_TYPE = 'QubitInformationObject';
 
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    $this->search->queryBool->addMust(
-      arElasticSearchPluginUtil::generateBoolQueryString(
-        $request->query, arElasticSearchPluginUtil::getAllFields('informationObject')
-      )
-    );
+        $this->search->queryBool->addMust(
+            arElasticSearchPluginUtil::generateBoolQueryString(
+                $request->query,
+                arElasticSearchPluginUtil::getAllFields('informationObject')
+            )
+        );
 
-    // Realm filter
-    if (isset($request->repos) && ctype_digit($request->repos)) {
-      $this->search->queryBool->addMust(new \Elastica\Query\Term(['repository.id' => $request->repos]));
+        // Realm filter
+        if (isset($request->repos) && ctype_digit($request->repos)) {
+            $this->search->queryBool->addMust(new \Elastica\Query\Term(['repository.id' => $request->repos]));
 
-      // Store realm in user session
-      $this->context->user->setAttribute('search-realm', $request->repos);
-    }
+            // Store realm in user session
+            $this->context->user->setAttribute('search-realm', $request->repos);
+        }
 
-    if (isset($request->collection) && ctype_digit($request->collection)) {
-      $this->search->queryBool->addMust(new \Elastica\Query\Term(['ancestors' => $request->collection]));
-    }
+        if (isset($request->collection) && ctype_digit($request->collection)) {
+            $this->search->queryBool->addMust(new \Elastica\Query\Term(['ancestors' => $request->collection]));
+        }
 
-    QubitAclSearch::filterDrafts($this->search->queryBool);
-    $this->search->query->setQuery($this->search->queryBool);
+        QubitAclSearch::filterDrafts($this->search->queryBool);
+        $this->search->query->setQuery($this->search->queryBool);
 
-    $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($this->search->query);
+        $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($this->search->query);
 
-    $total = $resultSet->getTotalHits();
-    if (1 > $total) {
-      $this->forward404();
+        $total = $resultSet->getTotalHits();
+        if (1 > $total) {
+            $this->forward404();
 
-      return;
-    }
+            return;
+        }
 
-    sfContext::getInstance()->getConfiguration()->loadHelpers(['Url', 'Escaping', 'Qubit']);
+        sfContext::getInstance()->getConfiguration()->loadHelpers(['Url', 'Escaping', 'Qubit']);
 
-    $response = ['results' => []];
-    foreach ($resultSet->getResults() as $item) {
-      $data = $item->getData();
-      $levelOfDescription = QubitTerm::getById($data['levelOfDescriptionId']);
+        $response = ['results' => []];
+        foreach ($resultSet->getResults() as $item) {
+            $data = $item->getData();
+            $levelOfDescription = QubitTerm::getById($data['levelOfDescriptionId']);
 
-      $result = [
-        'url' => url_for(['module' => 'informationobject', 'slug' => $data['slug']]),
-        'title' => render_title(get_search_i18n($data, 'title', ['allowEmpty' => false])),
-        'identifier' => isset($data['identifier']) && !empty($data['identifier']) ? render_value_inline($data['identifier']).' - ' : '',
-        'level' => null !== $levelOfDescription ? render_value_inline($levelOfDescription) : '', ];
+            $result = [
+                'url' => url_for(['module' => 'informationobject', 'slug' => $data['slug']]),
+                'title' => render_title(get_search_i18n($data, 'title', ['allowEmpty' => false])),
+                'identifier' => isset($data['identifier']) && !empty($data['identifier']) ? render_value_inline($data['identifier']).' - ' : '',
+                'level' => null !== $levelOfDescription ? render_value_inline($levelOfDescription) : '', ];
 
-      $response['results'][] = $result;
-    }
+            $response['results'][] = $result;
+        }
 
-    if (sfConfig::get('app_enable_institutional_scoping') && $this->context->user->hasAttribute('search-realm')) {
-      $url = url_for(['module' => 'informationobject', 'action' => 'browse', 'collection' => $request->collection, 'repos' => $this->context->user->getAttribute('search-realm'), 'query' => $request->query, 'topLod' => '0']);
-    } else {
-      $url = url_for(['module' => 'informationobject', 'action' => 'browse', 'collection' => $request->collection, 'query' => $request->query, 'topLod' => '0']);
-    }
+        if (sfConfig::get('app_enable_institutional_scoping') && $this->context->user->hasAttribute('search-realm')) {
+            $url = url_for(['module' => 'informationobject', 'action' => 'browse', 'collection' => $request->collection, 'repos' => $this->context->user->getAttribute('search-realm'), 'query' => $request->query, 'topLod' => '0']);
+        } else {
+            $url = url_for(['module' => 'informationobject', 'action' => 'browse', 'collection' => $request->collection, 'query' => $request->query, 'topLod' => '0']);
+        }
 
-    $link = $this->context->i18n->__('Browse all descriptions');
-    $response['more'] = <<<EOF
+        $link = $this->context->i18n->__('Browse all descriptions');
+        $response['more'] = <<<EOF
 <div class="more">
   <a href="{$url}">
     <i class="fa fa-search"></i>
@@ -88,8 +89,8 @@ class SearchIndexAction extends DefaultBrowseAction
 </div>
 EOF;
 
-    $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
+        $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
 
-    return $this->renderText(json_encode($response));
-  }
+        return $this->renderText(json_encode($response));
+    }
 }

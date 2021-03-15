@@ -24,26 +24,26 @@
  */
 class arOaiPluginListRecordsComponent extends arOaiPluginComponent
 {
-  public function execute($request)
-  {
-    $this->requestname = $request;
+    public function execute($request)
+    {
+        $this->requestname = $request;
 
-    $this->setUpdateParametersFromRequest($request);
+        $this->setUpdateParametersFromRequest($request);
 
-    $options = ('oai_ead' == $request->metadataPrefix) ? ['topLevel' => true, 'limit' => 1] : [];
-    $this->getUpdates($options);
+        $options = ('oai_ead' == $request->metadataPrefix) ? ['topLevel' => true, 'limit' => 1] : [];
+        $this->getUpdates($options);
 
-    // If metadata requested is EAD and results were found, determine if any are missing corresponding cache files
-    $this->identifiersWithMissingCacheFiles = [];
-    if ('oai_ead' == $request->metadataPrefix && count($this->publishedRecords)) {
-      foreach ($this->publishedRecords as $resource) {
-        if (!arOaiPluginComponent::cachedMetadataExists($resource, 'oai_ead')) {
-          array_push($this->identifiersWithMissingCacheFiles, $resource->getOaiIdentifier());
+        // If metadata requested is EAD and results were found, determine if any are missing corresponding cache files
+        $this->identifiersWithMissingCacheFiles = [];
+        if ('oai_ead' == $request->metadataPrefix && count($this->publishedRecords)) {
+            foreach ($this->publishedRecords as $resource) {
+                if (!arOaiPluginComponent::cachedMetadataExists($resource, 'oai_ead')) {
+                    array_push($this->identifiersWithMissingCacheFiles, $resource->getOaiIdentifier());
+                }
+            }
         }
-      }
-    }
 
-    $this->metadataPrefix = $request->metadataPrefix;
-    $this->setRequestAttributes($request);
-  }
+        $this->metadataPrefix = $request->metadataPrefix;
+        $this->setRequestAttributes($request);
+    }
 }

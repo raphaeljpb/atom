@@ -25,29 +25,29 @@
  */
 class arMigration0175
 {
-  public const VERSION = 175;
-  public const // The new database version
+    public const VERSION = 175;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    // Rename password hash column
-    $sql = 'ALTER TABLE `user` CHANGE COLUMN `sha1_password` `password_hash` VARCHAR(255) DEFAULT NULL';
-    QubitPdo::modify($sql);
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        // Rename password hash column
+        $sql = 'ALTER TABLE `user` CHANGE COLUMN `sha1_password` `password_hash` VARCHAR(255) DEFAULT NULL';
+        QubitPdo::modify($sql);
 
-    // Cycle through each user and re-hash stored SHA-1 hash (and salt)
-    foreach (QubitUser::getAll() as $user) {
-      $user->passwordHash = QubitUser::generatePasswordHash($user->passwordHash);
-      $user->save();
+        // Cycle through each user and re-hash stored SHA-1 hash (and salt)
+        foreach (QubitUser::getAll() as $user) {
+            $user->passwordHash = QubitUser::generatePasswordHash($user->passwordHash);
+            $user->save();
+        }
+
+        return true;
     }
-
-    return true;
-  }
 }

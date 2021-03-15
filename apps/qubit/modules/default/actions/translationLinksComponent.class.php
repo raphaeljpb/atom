@@ -19,11 +19,11 @@
 
 class DefaultTranslationLinksComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    $currentCulture = $this->getUser()->getCulture();
+    public function execute($request)
+    {
+        $currentCulture = $this->getUser()->getCulture();
 
-    switch (get_class($this->resource)) {
+        switch (get_class($this->resource)) {
       case 'QubitInformationObject':
         $this->module = 'informationobject';
         $i18ns = $this->resource->informationObjectI18ns;
@@ -103,26 +103,26 @@ class DefaultTranslationLinksComponent extends sfComponent
         break;
     }
 
-    // Return nothing if the resource only has the current culture
-    if (1 == count($i18ns) && $i18ns[0]->culture == $currentCulture) {
-      return sfView::NONE;
+        // Return nothing if the resource only has the current culture
+        if (1 == count($i18ns) && $i18ns[0]->culture == $currentCulture) {
+            return sfView::NONE;
+        }
+
+        // Get other cultures available
+        $this->translations = [];
+        foreach ($i18ns as $i18n) {
+            if ($i18n->culture == $currentCulture) {
+                continue;
+            }
+
+            $name = isset($propertyName) && isset($i18n->{$propertyName}) ? $i18n->{$propertyName} : $sourceCultureProperty;
+            $langCode = $i18n->culture;
+            $langName = format_language($langCode);
+
+            $this->translations[$langCode] = [
+                'name' => $name,
+                'language' => ucfirst($langName),
+            ];
+        }
     }
-
-    // Get other cultures available
-    $this->translations = [];
-    foreach ($i18ns as $i18n) {
-      if ($i18n->culture == $currentCulture) {
-        continue;
-      }
-
-      $name = isset($propertyName) && isset($i18n->{$propertyName}) ? $i18n->{$propertyName} : $sourceCultureProperty;
-      $langCode = $i18n->culture;
-      $langName = format_language($langCode);
-
-      $this->translations[$langCode] = [
-        'name' => $name,
-        'language' => ucfirst($langName),
-      ];
-    }
-  }
 }

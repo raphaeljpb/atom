@@ -19,23 +19,23 @@
 
 class SettingsDeleteAction extends sfAction
 {
-  public function execute($request)
-  {
-    $setting = QubitSetting::getById($this->request->id);
+    public function execute($request)
+    {
+        $setting = QubitSetting::getById($this->request->id);
 
-    $this->forward404Unless($setting);
+        $this->forward404Unless($setting);
 
-    // check that the setting is deleteable
-    if ($setting->isDeleteable()) {
-      $setting->delete();
+        // check that the setting is deleteable
+        if ($setting->isDeleteable()) {
+            $setting->delete();
+        }
+        // TODO: else populate an error?
+
+        if (null !== $this->context->getViewCacheManager()) {
+            $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
+            $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
+        }
+
+        $this->redirect('settings/language');
     }
-    // TODO: else populate an error?
-
-    if (null !== $this->context->getViewCacheManager()) {
-      $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_browseMenu&sf_cache_key=*');
-      $this->context->getViewCacheManager()->remove('@sf_cache_partial?module=menu&action=_mainMenu&sf_cache_key=*');
-    }
-
-    $this->redirect('settings/language');
-  }
 }

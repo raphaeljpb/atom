@@ -50,17 +50,17 @@
 
             <div class="messages warning">
               <?php echo __('Uploads for <a href="%1%">%2%</a> are disabled', [
-                '%1%' => url_for([$repository, 'module' => 'repository']),
-                '%2%' => $repository->__toString(), ]); ?>
+                  '%1%' => url_for([$repository, 'module' => 'repository']),
+                  '%2%' => $repository->__toString(), ]); ?>
             </div>
 
           <?php } else { ?>
 
             <div class="messages warning">
               <?php echo __('The upload limit of %1% GB for <a href="%2%">%3%</a> has been reached', [
-                '%1%' => $repository->uploadLimit,
-                '%2%' => url_for([$repository, 'module' => 'repository']),
-                '%3%' => $repository->__toString(), ]); ?>
+                  '%1%' => $repository->uploadLimit,
+                  '%2%' => url_for([$repository, 'module' => 'repository']),
+                  '%3%' => $repository->__toString(), ]); ?>
             </div>
 
           <?php } ?>

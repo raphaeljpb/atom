@@ -26,17 +26,17 @@
  */
 class arMigration0141
 {
-  public const VERSION = 141;
-  public const // The new database version
+    public const VERSION = 141;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    if (null !== $menu = QubitMenu::getByName('browseDigitalObjects')) {
-      $menu->path = 'informationobject/browse?view=card&onlyMedia=1&topLod=0';
-      $menu->save();
-    }
+      if (null !== $menu = QubitMenu::getByName('browseDigitalObjects')) {
+          $menu->path = 'informationobject/browse?view=card&onlyMedia=1&topLod=0';
+          $menu->save();
+      }
 
-    return true;
+      return true;
   }
 }

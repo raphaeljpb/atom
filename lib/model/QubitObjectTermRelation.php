@@ -19,51 +19,51 @@
 
 class QubitObjectTermRelation extends BaseObjectTermRelation
 {
-  // Flag for updating search index on save or delete
-  public $indexOnSave = true;
-  public $indexObjectOnDelete = true;
+    // Flag for updating search index on save or delete
+    public $indexOnSave = true;
+    public $indexObjectOnDelete = true;
 
-  public function save($connection = null)
-  {
-    // TODO: $cleanObject = $this->object->clean;
-    $cleanObjectId = $this->__get('objectId', ['clean' => true]);
+    public function save($connection = null)
+    {
+        // TODO: $cleanObject = $this->object->clean;
+        $cleanObjectId = $this->__get('objectId', ['clean' => true]);
 
-    parent::save($connection);
+        parent::save($connection);
 
-    if ($this->indexOnSave) {
-      if ($this->objectId != $cleanObjectId && null !== QubitObject::getById($cleanObjectId)) {
-        QubitSearch::getInstance()->update(QubitObject::getById($cleanObjectId));
-      }
+        if ($this->indexOnSave) {
+            if ($this->objectId != $cleanObjectId && null !== QubitObject::getById($cleanObjectId)) {
+                QubitSearch::getInstance()->update(QubitObject::getById($cleanObjectId));
+            }
 
-      if ($this->object instanceof QubitInformationObject) {
-        QubitSearch::getInstance()->update($this->object);
-      }
+            if ($this->object instanceof QubitInformationObject) {
+                QubitSearch::getInstance()->update($this->object);
+            }
+        }
+
+        return $this;
     }
 
-    return $this;
-  }
+    public function delete($connection = null)
+    {
+        parent::delete($connection);
 
-  public function delete($connection = null)
-  {
-    parent::delete($connection);
-
-    if ($this->indexObjectOnDelete && $this->getObject() instanceof QubitInformationObject) {
-      QubitSearch::getInstance()->update($this->getObject());
+        if ($this->indexObjectOnDelete && $this->getObject() instanceof QubitInformationObject) {
+            QubitSearch::getInstance()->update($this->getObject());
+        }
     }
-  }
 
-  /**
-   * Get first ObjectTermRelation with given $objectId.
-   *
-   * @param int $objectId foreign key to object
-   *
-   * @return QubitObjectTermRelation object
-   */
-  public static function getOneByObjectId($objectId)
-  {
-    $c = new Criteria();
-    $c->add(QubitObjectTermRelation::OBJECT_ID, $objectId);
+    /**
+     * Get first ObjectTermRelation with given $objectId.
+     *
+     * @param int $objectId foreign key to object
+     *
+     * @return QubitObjectTermRelation object
+     */
+    public static function getOneByObjectId($objectId)
+    {
+        $c = new Criteria();
+        $c->add(QubitObjectTermRelation::OBJECT_ID, $objectId);
 
-    return QubitObjectTermRelation::getOne($c);
-  }
+        return QubitObjectTermRelation::getOne($c);
+    }
 }

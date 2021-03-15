@@ -19,78 +19,78 @@
 
 class AccessionAlternativeIdentifiersComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    // Cache alternative identifier types (used in each identifier's type select form field)
-    $criteria = new Criteria();
-    $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID);
+    public function execute($request)
+    {
+        // Cache alternative identifier types (used in each identifier's type select form field)
+        $criteria = new Criteria();
+        $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::ACCESSION_ALTERNATIVE_IDENTIFIER_TYPE_ID);
 
-    $this->identifierTypes = [];
-    foreach (QubitTerm::get($criteria) as $term) {
-      $this->identifierTypes[$term->id] = $term->getName(['cultureFallback' => true]);
-    }
-
-    // Define form used to add/edit identifiers
-    $this->form = new sfForm();
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-
-    $this->addField('identifierType');
-    $this->addField('identifier');
-    $this->addField('note');
-
-    // Summarize/cache existing alternative identifier data
-    $this->alternativeIdentifierData = [];
-
-    foreach ($this->resource->getAlternativeIdentifiers() as $identifier) {
-      $this->alternativeIdentifierData[] = [
-        'id' => $identifier->id,
-        'value' => $identifier->getName(['sourceCulture' => true]),
-        'typeId' => $identifier->typeId,
-        'hasNote' => !empty($identifier->getNote(['cultureFallback' => true])),
-        'note' => $identifier->getNote(),
-        'object' => $identifier,
-      ];
-    }
-  }
-
-  public function processForm()
-  {
-    $finalAlternativeIdentifiers = [];
-
-    if (is_array($this->request->alternativeIdentifiers)) {
-      foreach ($this->request->alternativeIdentifiers as $item) {
-        // Continue only if both fields are populated
-        if (1 > strlen($item['identifierType']) || 1 > strlen($item['identifier'])) {
-          continue;
+        $this->identifierTypes = [];
+        foreach (QubitTerm::get($criteria) as $term) {
+            $this->identifierTypes[$term->id] = $term->getName(['cultureFallback' => true]);
         }
 
-        if (!empty($item['id'])) {
-          $finalAlternativeIdentifiers[] = $item['id'];
+        // Define form used to add/edit identifiers
+        $this->form = new sfForm();
+        $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-          $otherName = QubitOtherName::getById($item['id']);
-        } else {
-          $otherName = new QubitOtherName();
+        $this->addField('identifierType');
+        $this->addField('identifier');
+        $this->addField('note');
+
+        // Summarize/cache existing alternative identifier data
+        $this->alternativeIdentifierData = [];
+
+        foreach ($this->resource->getAlternativeIdentifiers() as $identifier) {
+            $this->alternativeIdentifierData[] = [
+                'id' => $identifier->id,
+                'value' => $identifier->getName(['sourceCulture' => true]),
+                'typeId' => $identifier->typeId,
+                'hasNote' => !empty($identifier->getNote(['cultureFallback' => true])),
+                'note' => $identifier->getNote(),
+                'object' => $identifier,
+            ];
+        }
+    }
+
+    public function processForm()
+    {
+        $finalAlternativeIdentifiers = [];
+
+        if (is_array($this->request->alternativeIdentifiers)) {
+            foreach ($this->request->alternativeIdentifiers as $item) {
+                // Continue only if both fields are populated
+                if (1 > strlen($item['identifierType']) || 1 > strlen($item['identifier'])) {
+                    continue;
+                }
+
+                if (!empty($item['id'])) {
+                    $finalAlternativeIdentifiers[] = $item['id'];
+
+                    $otherName = QubitOtherName::getById($item['id']);
+                } else {
+                    $otherName = new QubitOtherName();
+                }
+
+                $otherName->object = $this->resource;
+                $otherName->typeId = $item['identifierType'];
+                $otherName->name = $item['identifier'];
+                $otherName->note = $item['note'];
+                $otherName->save();
+            }
         }
 
-        $otherName->object = $this->resource;
-        $otherName->typeId = $item['identifierType'];
-        $otherName->name = $item['identifier'];
-        $otherName->note = $item['note'];
-        $otherName->save();
-      }
+        // Delete the old alternative identifiers if they don't appear in the table (removed by multiRow.js)
+        foreach ($this->alternativeIdentifierData as $identifier) {
+            if (false === array_search($identifier['id'], $finalAlternativeIdentifiers)) {
+                $identifier['object']->delete();
+            }
+        }
     }
 
-    // Delete the old alternative identifiers if they don't appear in the table (removed by multiRow.js)
-    foreach ($this->alternativeIdentifierData as $identifier) {
-      if (false === array_search($identifier['id'], $finalAlternativeIdentifiers)) {
-        $identifier['object']->delete();
-      }
-    }
-  }
-
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
     case 'identifierType':
         $this->form->setValidator($name, new sfValidatorInteger());
         $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $this->identifierTypes]));
@@ -111,5 +111,5 @@ class AccessionAlternativeIdentifiersComponent extends sfComponent
 
         break;
     }
-  }
+    }
 }

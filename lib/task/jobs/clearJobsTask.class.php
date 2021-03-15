@@ -24,62 +24,62 @@
  */
 class clearJobsTask extends arBaseTask
 {
-  protected $namespace = 'jobs';
-  protected $name = 'clear';
-  protected $briefDescription = 'Clear AtoM jobs';
+    protected $namespace = 'jobs';
+    protected $name = 'clear';
+    protected $briefDescription = 'Clear AtoM jobs';
 
-  protected $detailedDescription = <<<'EOF'
+    protected $detailedDescription = <<<'EOF'
 Clears jobs
 EOF;
 
-  /**
-   * @see sfTask
-   *
-   * @param mixed $arguments
-   * @param mixed $options
-   */
-  public function execute($arguments = [], $options = [])
-  {
-    parent::execute($arguments, $options);
+    /**
+     * @see sfTask
+     *
+     * @param mixed $arguments
+     * @param mixed $options
+     */
+    public function execute($arguments = [], $options = [])
+    {
+        parent::execute($arguments, $options);
 
-    // initialized data connection in case it's needed
-    $databaseManager = new sfDatabaseManager($this->configuration);
-    $conn = $databaseManager->getDatabase('propel')->getConnection();
+        // initialized data connection in case it's needed
+        $databaseManager = new sfDatabaseManager($this->configuration);
+        $conn = $databaseManager->getDatabase('propel')->getConnection();
 
-    $sql = 'SELECT count(1) FROM job WHERE status_id=?';
-    $runningJobCount = QubitPdo::fetchColumn($sql, [QubitTerm::JOB_STATUS_IN_PROGRESS_ID]);
+        $sql = 'SELECT count(1) FROM job WHERE status_id=?';
+        $runningJobCount = QubitPdo::fetchColumn($sql, [QubitTerm::JOB_STATUS_IN_PROGRESS_ID]);
 
-    if ($runningJobCount > 0) {
-      echo 'WARNING: AtoM reports there are jobs currently running. It is *highly* recommended you make sure '.
+        if ($runningJobCount > 0) {
+            echo 'WARNING: AtoM reports there are jobs currently running. It is *highly* recommended you make sure '.
             "there aren't any jobs actually running.\n\n";
+        }
+
+        // Confirmation
+        $question = 'Are you SURE you want to clear all jobs in the database? (y/N)';
+        if (!$options['no-confirmation'] && !$this->askConfirmation([$question], 'QUESTION_LARGE', false)) {
+            $this->logSection('jobs:clear', 'Aborting.');
+
+            return 1;
+        }
+
+        $jobs = QubitJob::getAll();
+        foreach ($jobs as $job) {
+            $job->delete();
+        }
+
+        $this->logSection('jobs:clear', 'All jobs cleared successfully!');
     }
 
-    // Confirmation
-    $question = 'Are you SURE you want to clear all jobs in the database? (y/N)';
-    if (!$options['no-confirmation'] && !$this->askConfirmation([$question], 'QUESTION_LARGE', false)) {
-      $this->logSection('jobs:clear', 'Aborting.');
-
-      return 1;
+    /**
+     * @see sfBaseTask
+     */
+    protected function configure()
+    {
+        $this->addOptions([
+            new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+            new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+            new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+            new sfCommandOption('no-confirmation', 'B', sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
+        ]);
     }
-
-    $jobs = QubitJob::getAll();
-    foreach ($jobs as $job) {
-      $job->delete();
-    }
-
-    $this->logSection('jobs:clear', 'All jobs cleared successfully!');
-  }
-
-  /**
-   * @see sfBaseTask
-   */
-  protected function configure()
-  {
-    $this->addOptions([
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('no-confirmation', 'B', sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
-    ]);
-  }
 }

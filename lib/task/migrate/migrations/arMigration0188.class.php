@@ -26,54 +26,54 @@
  */
 class arMigration0188
 {
-  public const VERSION = 188;
-  public const // The new database version
+    public const VERSION = 188;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    // This maps existing names to the ones expected by QubitInformationObject
-    $propertyNamesMap = [
-      'name' => 'formatName',
-      'version' => 'formatVersion',
-      'registryName' => 'formatRegistryName',
-      'registryKey' => 'formatRegistryKey',
-    ];
+      // This maps existing names to the ones expected by QubitInformationObject
+      $propertyNamesMap = [
+          'name' => 'formatName',
+          'version' => 'formatVersion',
+          'registryName' => 'formatRegistryName',
+          'registryKey' => 'formatRegistryKey',
+      ];
 
-    // Criteria for getting all the QubitProperty objects with format metadata
-    $propertyName = 'format';
-    $propertyScope = 'premisData';
-    $criteria = new Criteria();
-    $criteria->add(QubitProperty::NAME, $propertyName);
-    $criteria->add(QubitProperty::SCOPE, $propertyScope);
+      // Criteria for getting all the QubitProperty objects with format metadata
+      $propertyName = 'format';
+      $propertyScope = 'premisData';
+      $criteria = new Criteria();
+      $criteria->add(QubitProperty::NAME, $propertyName);
+      $criteria->add(QubitProperty::SCOPE, $propertyScope);
 
-    // Traverse all the existing QubitProperty objects and:
-    //   1. Unserialize their value
-    //   2. Create new properties using the updated names
-    //   3. Delete the existing property
-    foreach (QubitProperty::get($criteria) as $property) {
-      if (null !== $value = $property->getValue(['sourceCulture' => true])) {
-        $data = unserialize($value);
-        if (is_array($data)) {
-          $objectId = $property->getObject()->id;
-          foreach ($propertyNamesMap as $oldName => $newName) {
-            if (array_key_exists($oldName, $data)) {
-              QubitProperty::addUnique(
-                $objectId,
-                $newName,
-                $data[$oldName],
-                ['scope' => $propertyScope, 'indexOnSave' => false]
-              );
-            }
+      // Traverse all the existing QubitProperty objects and:
+      //   1. Unserialize their value
+      //   2. Create new properties using the updated names
+      //   3. Delete the existing property
+      foreach (QubitProperty::get($criteria) as $property) {
+          if (null !== $value = $property->getValue(['sourceCulture' => true])) {
+              $data = unserialize($value);
+              if (is_array($data)) {
+                  $objectId = $property->getObject()->id;
+                  foreach ($propertyNamesMap as $oldName => $newName) {
+                      if (array_key_exists($oldName, $data)) {
+                          QubitProperty::addUnique(
+                              $objectId,
+                              $newName,
+                              $data[$oldName],
+                              ['scope' => $propertyScope, 'indexOnSave' => false]
+                          );
+                      }
+                  }
+              }
           }
-        }
+
+          // Always delete the existing property
+          $property->indexOnDelete = false;
+          $property->delete();
       }
 
-      // Always delete the existing property
-      $property->indexOnDelete = false;
-      $property->delete();
-    }
-
-    return true;
+      return true;
   }
 }

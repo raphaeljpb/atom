@@ -118,66 +118,66 @@
   <?php
   // Load taxonomies into variables to avoid use of magic numbers
   $termData = QubitFlatfileImport::loadTermsFromTaxonomies([
-    QubitTaxonomy::RAD_NOTE_ID => 'radNoteTypes',
-    QubitTaxonomy::RAD_TITLE_NOTE_ID => 'titleNoteTypes',
-    QubitTaxonomy::DACS_NOTE_ID => 'dacsSpecializedNoteTypes',
+      QubitTaxonomy::RAD_NOTE_ID => 'radNoteTypes',
+      QubitTaxonomy::RAD_TITLE_NOTE_ID => 'titleNoteTypes',
+      QubitTaxonomy::DACS_NOTE_ID => 'dacsSpecializedNoteTypes',
   ]);
 
   $radTitleNotes = [
-    'Variations in title' => 'titleVariation',
-    'Attributions and conjectures' => 'titleAttributions',
-    'Continuation of title' => 'titleContinuation',
-    'Statements of responsibility' => 'titleStatRep',
-    'Parallel titles and other title information' => 'titleParallel',
-    'Source of title proper' => 'titleSource',
+      'Variations in title' => 'titleVariation',
+      'Attributions and conjectures' => 'titleAttributions',
+      'Continuation of title' => 'titleContinuation',
+      'Statements of responsibility' => 'titleStatRep',
+      'Parallel titles and other title information' => 'titleParallel',
+      'Source of title proper' => 'titleSource',
   ];
 
   foreach ($radTitleNotes as $name => $xmlType) {
-    $noteTypeId = array_search($name, $termData['titleNoteTypes']['en']);
+      $noteTypeId = array_search($name, $termData['titleNoteTypes']['en']);
 
-    if (0 < count($notes = $resource->getNotesByType(['noteTypeId' => $noteTypeId]))) {
-      foreach ($notes as $note) { ?>
+      if (0 < count($notes = $resource->getNotesByType(['noteTypeId' => $noteTypeId]))) {
+          foreach ($notes as $note) { ?>
         <odd type="<?php echo $xmlType; ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter($xmlType))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?>><p><?php echo escape_dc(esc_specialchars($note->getContent(['cultureFallback' => true]))); ?></p></odd>
       <?php }
-    }
+      }
   }
 
   $radNotes = [
-    'Edition' => 'edition',
-    'Physical description' => 'physDesc',
-    'Conservation' => 'conservation',
-    'Accompanying material' => 'material',
-    'Alpha-numeric designations' => 'alphanumericDesignation',
-    "Publisher's series" => 'bibSeries',
-    'Rights' => 'rights',
+      'Edition' => 'edition',
+      'Physical description' => 'physDesc',
+      'Conservation' => 'conservation',
+      'Accompanying material' => 'material',
+      'Alpha-numeric designations' => 'alphanumericDesignation',
+      "Publisher's series" => 'bibSeries',
+      'Rights' => 'rights',
   ];
 
   foreach ($radNotes as $name => $xmlType) {
-    $noteTypeId = array_search($name, $termData['radNoteTypes']['en']);
+      $noteTypeId = array_search($name, $termData['radNoteTypes']['en']);
 
-    if (0 < count($notes = $resource->getNotesByType(['noteTypeId' => $noteTypeId]))) {
-      foreach ($notes as $note) { ?>
+      if (0 < count($notes = $resource->getNotesByType(['noteTypeId' => $noteTypeId]))) {
+          foreach ($notes as $note) { ?>
         <odd type="<?php echo $xmlType; ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter($xmlType))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?>><p><?php echo escape_dc(esc_specialchars($note->getContent(['cultureFallback' => true]))); ?></p></odd>
       <?php }
-    }
+      }
   }
 
   $dacsSpecializedNotes = [
-    'Conservation' => 'dacsConservation',
-    'Citation' => 'dacsCitation',
-    'Alphanumeric designations' => 'dacsAlphanumericDesignation',
-    'Variant title information' => 'dacsVariantTitleInformation',
-    'Processing information' => 'dacsProcessingInformation',
+      'Conservation' => 'dacsConservation',
+      'Citation' => 'dacsCitation',
+      'Alphanumeric designations' => 'dacsAlphanumericDesignation',
+      'Variant title information' => 'dacsVariantTitleInformation',
+      'Processing information' => 'dacsProcessingInformation',
   ];
 
   foreach ($dacsSpecializedNotes as $name => $xmlType) {
-    $noteTypeId = array_search($name, $termData['dacsSpecializedNoteTypes']['en']);
+      $noteTypeId = array_search($name, $termData['dacsSpecializedNoteTypes']['en']);
 
-    if (0 < count($notes = $resource->getNotesByType(['noteTypeId' => $noteTypeId]))) {
-      foreach ($notes as $note) { ?>
+      if (0 < count($notes = $resource->getNotesByType(['noteTypeId' => $noteTypeId]))) {
+          foreach ($notes as $note) { ?>
         <odd type="<?php echo $xmlType; ?>" <?php if (0 < strlen($encoding = $ead->getMetadataParameter($xmlType))) { ?>encodinganalog="<?php echo $encoding; ?>"<?php } ?>><p><?php echo escape_dc(esc_specialchars($note->getContent(['cultureFallback' => true]))); ?></p></odd>
       <?php }
-    }
+      }
   } ?>
 
   <?php if (0 < strlen($value = $resource->getPropertyByName('noteOnPublishersSeries')->__toString())) { ?>

@@ -36,7 +36,7 @@ $routing->initialize(sfContext::getInstance()->getEventDispatcher(), $routing->g
 
 $t->diag('Creeate QubitInformationObject "peanut-12345"');
 if (null !== $io = QubitObject::getBySlug('peanut-12345')) {
-  $io->delete();
+    $io->delete();
 }
 $io = new QubitInformationObject();
 $io->parentId = QubitInformationObject::ROOT_ID;
@@ -44,7 +44,7 @@ $io->slug = 'peanut-12345'; $io->save();
 
 $t->diag('Create QubitActor "actor-12345"');
 if (null !== $actor = QubitObject::getBySlug('actor-12345')) {
-  $actor->delete();
+    $actor->delete();
 }
 $actor = new QubitActor();
 $actor->parentId = QubitActor::ROOT_ID;
@@ -53,7 +53,7 @@ $actor->save();
 
 $t->diag('Create QubitRepository "repository-12345"');
 if (null !== $repository = QubitObject::getBySlug('repository-12345')) {
-  $repository->delete();
+    $repository->delete();
 }
 $repository = new QubitRepository();
 $repository->parentId = QubitRepository::ROOT_ID;
@@ -62,7 +62,7 @@ $repository->save();
 
 $t->diag('Create QubitFunctionObject "function-12345"');
 if (null !== $function = QubitObject::getBySlug('function-12345')) {
-  $function->delete();
+    $function->delete();
 }
 $function = new QubitFunctionObject();
 $function->slug = 'function-12345';
@@ -70,7 +70,7 @@ $function->save();
 
 $t->diag('Create QubitTaxonomy "taxonomy-12345"');
 if (null !== $taxonomy = QubitObject::getBySlug('taxonomy-12345')) {
-  $taxonomy->delete();
+    $taxonomy->delete();
 }
 $taxonomy = new QubitTaxonomy();
 $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
@@ -93,14 +93,14 @@ $t->is($info['module'], 'staticpage', '... with module="staticpage"');
 $t->is($info['action'], 'home', '... and action="home"');
 
 if ($configuration->isPluginEnabled('sfInstallPlugin')) {
-  $t->diag('Test sfInstallPlugin');
+    $t->diag('Test sfInstallPlugin');
 
-  $uri = $routing->generate(null, ['module' => 'sfInstallPlugin']);
-  $t->is($uri, '/sfInstallPlugin');
-  $info = $routing->parse('/sfInstallPlugin');
-  $t->is($routing->getCurrentRouteName(), 'default_index');
-  $t->is($info['module'], 'sfInstallPlugin');
-  $t->is($info['action'], 'index');
+    $uri = $routing->generate(null, ['module' => 'sfInstallPlugin']);
+    $t->is($uri, '/sfInstallPlugin');
+    $info = $routing->parse('/sfInstallPlugin');
+    $t->is($routing->getCurrentRouteName(), 'default_index');
+    $t->is($info['module'], 'sfInstallPlugin');
+    $t->is($info['action'], 'index');
 }
 
 /*
@@ -213,24 +213,24 @@ $defaultIoTemplateCode = sfConfig::get('app_default_template_informationobject')
 $defaultIoTemplateModule = $ioTemplates[$defaultIoTemplateCode];
 
 foreach ($ioTemplates as $code => $module) {
-  $t->diag('Uri /peanut-12345;'.$code);
-  $uri = $routing->generate(null, [$io, 'template' => $code]);
-  $t->is($uri, '/peanut-12345;'.$code);
-  $info = $routing->parse('/peanut-12345;'.$code);
-  $t->is($routing->getCurrentRouteName(), 'slug;template');
-  $t->is($info['module'], $module);
-  $t->is($info['action'], 'index');
+    $t->diag('Uri /peanut-12345;'.$code);
+    $uri = $routing->generate(null, [$io, 'template' => $code]);
+    $t->is($uri, '/peanut-12345;'.$code);
+    $info = $routing->parse('/peanut-12345;'.$code);
+    $t->is($routing->getCurrentRouteName(), 'slug;template');
+    $t->is($info['module'], $module);
+    $t->is($info['action'], 'index');
 }
 
 foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID) as $term) {
-  // Update object
-  $io->displayStandardId = $term->id;
-  $io->save();
-  $t->diag('/peanut-12345 '.'(displayStandardId points to '.$term->code.')');
-  $info = $routing->parse('/peanut-12345');
-  $t->is($routing->getCurrentRouteName(), 'slug');
-  $t->is($info['module'], $ioTemplates[$term->code], $ioTemplates[$term->code]);
-  $t->is($info['action'], 'index');
+    // Update object
+    $io->displayStandardId = $term->id;
+    $io->save();
+    $t->diag('/peanut-12345 '.'(displayStandardId points to '.$term->code.')');
+    $info = $routing->parse('/peanut-12345');
+    $t->is($routing->getCurrentRouteName(), 'slug');
+    $t->is($info['module'], $ioTemplates[$term->code], $ioTemplates[$term->code]);
+    $t->is($info['action'], 'index');
 }
 
 $io->displayStandardId = null; $io->save();

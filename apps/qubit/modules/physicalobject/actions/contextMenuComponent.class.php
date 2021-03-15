@@ -24,17 +24,17 @@
  */
 class PhysicalObjectContextMenuComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    $this->resource = $request->getAttribute('sf_route')->resource;
+    public function execute($request)
+    {
+        $this->resource = $request->getAttribute('sf_route')->resource;
 
-    $this->physicalObjects = [];
-    foreach ($this->resource->getPhysicalObjects() as $item) {
-      $this->physicalObjects[$item->id] = $item;
-    }
+        $this->physicalObjects = [];
+        foreach ($this->resource->getPhysicalObjects() as $item) {
+            $this->physicalObjects[$item->id] = $item;
+        }
 
-    if (1 > count($this->physicalObjects)) {
-      return sfView::NONE;
+        if (1 > count($this->physicalObjects)) {
+            return sfView::NONE;
+        }
     }
-  }
 }

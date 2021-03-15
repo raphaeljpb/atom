@@ -22,36 +22,36 @@
  */
 class i18nCustomLinkToMarkdownTask extends i18nTransformBaseTask
 {
-  /**
-   * @see sfTask
-   */
-  protected function configure()
-  {
-    parent::configure();
+    /**
+     * @see sfTask
+     */
+    protected function configure()
+    {
+        parent::configure();
 
-    $this->namespace = 'i18n';
-    $this->name = 'custom-link-to-markdown';
-    $this->briefDescription = 'Convert custom link format to Markdown syntax in various i18n table fields';
+        $this->namespace = 'i18n';
+        $this->name = 'custom-link-to-markdown';
+        $this->briefDescription = 'Convert custom link format to Markdown syntax in various i18n table fields';
 
-    $this->detailedDescription = <<<'EOF'
+        $this->detailedDescription = <<<'EOF'
 Convert custom link format to Markdown syntax from inside information object, actor, note, repository, and rights i18n fields.
 EOF;
-  }
+    }
 
-  /**
-   * @see i18nProcessColumnsBaseTask
-   *
-   * @param mixed $row
-   * @param mixed $tableName
-   * @param mixed $columns
-   */
-  protected function processRow($row, $tableName, $columns)
-  {
-    // Determine what column values have custom links
-    $columnValues = [];
+    /**
+     * @see i18nProcessColumnsBaseTask
+     *
+     * @param mixed $row
+     * @param mixed $tableName
+     * @param mixed $columns
+     */
+    protected function processRow($row, $tableName, $columns)
+    {
+        // Determine what column values have custom links
+        $columnValues = [];
 
-    foreach ($columns as $column) {
-      $regex = '~
+        foreach ($columns as $column) {
+            $regex = '~
         (?:
           (?:&quot;|\")(.*?)(?:\&quot;|\")\:            # Double quote and colon
         )
@@ -70,23 +70,23 @@ EOF;
         )
         ~x';
 
-      $transformedValue = preg_replace_callback($regex, function ($matches) {
-        if (!empty($matches[1])) {
-          return "[{$matches[1]}](".('www.' == $matches[2] ? 'http://www.' : $matches[2]).trim($matches[3]).')';
+            $transformedValue = preg_replace_callback($regex, function ($matches) {
+                if (!empty($matches[1])) {
+                    return "[{$matches[1]}](".('www.' == $matches[2] ? 'http://www.' : $matches[2]).trim($matches[3]).')';
+                }
+
+                return "[{$matches[2]}".trim($matches[3]).']('.('www.' == $matches[2] ? 'http://www.' : $matches[2]).trim($matches[3]).')';
+            }, $row[$column]);
+
+            // Save changed values
+            if ($row[$column] != $transformedValue) {
+                $columnValues[$column] = $transformedValue;
+            }
         }
 
-        return "[{$matches[2]}".trim($matches[3]).']('.('www.' == $matches[2] ? 'http://www.' : $matches[2]).trim($matches[3]).')';
-      }, $row[$column]);
+        // Update row
+        $this->updateRow($tableName, $row['id'], $row['culture'], $columnValues);
 
-      // Save changed values
-      if ($row[$column] != $transformedValue) {
-        $columnValues[$column] = $transformedValue;
-      }
+        return count($columnValues);
     }
-
-    // Update row
-    $this->updateRow($tableName, $row['id'], $row['culture'], $columnValues);
-
-    return count($columnValues);
-  }
 }

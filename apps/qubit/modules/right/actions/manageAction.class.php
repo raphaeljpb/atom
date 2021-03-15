@@ -19,77 +19,77 @@
 
 class RightManageAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->earlyExecute();
-    $this->formSetup();
+    public function execute($request)
+    {
+        $this->earlyExecute();
+        $this->formSetup();
 
-    if ($request->isMethod('post')) {
-      $params = $request->getPostParameters();
-      $this->form->bind($params);
+        if ($request->isMethod('post')) {
+            $params = $request->getPostParameters();
+            $this->form->bind($params);
 
-      if ($this->form->isValid()) {
-        // Set job params
-        $jobParams = $this->form->getValues();
-        $jobParams['objectId'] = $this->resource->getId();
+            if ($this->form->isValid()) {
+                // Set job params
+                $jobParams = $this->form->getValues();
+                $jobParams['objectId'] = $this->resource->getId();
 
-        $jobParams['name'] = $this->context->i18n->__('Inherit rights');
+                $jobParams['name'] = $this->context->i18n->__('Inherit rights');
 
-        $desc = $this->context->i18n->__('Children inheriting rights from record: ').
+                $desc = $this->context->i18n->__('Children inheriting rights from record: ').
                 $this->resource->getTitle(['cultureFallback' => true]);
 
-        $jobParams['description'] = $desc;
+                $jobParams['description'] = $desc;
 
-        // Queue job with params
-        $job = QubitJob::runJob('arInheritRightsJob', $jobParams);
+                // Queue job with params
+                $job = QubitJob::runJob('arInheritRightsJob', $jobParams);
 
-        // redirect to info object view page
-        $this->redirect([$this->resource, 'module' => 'informationobject']);
-      }
-    }
-  }
-
-  protected function earlyExecute()
-  {
-    $this->resource = $this->getRoute()->resource;
-
-    // if we haven't got a resource, we have a problem houston
-    if (null === $this->resource) {
-      $this->forward404();
+                // redirect to info object view page
+                $this->redirect([$this->resource, 'module' => 'informationobject']);
+            }
+        }
     }
 
-    // Check user authorization
-    if (!QubitAcl::check($this->resource, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)) {
-      QubitAcl::forwardUnauthorized();
+    protected function earlyExecute()
+    {
+        $this->resource = $this->getRoute()->resource;
+
+        // if we haven't got a resource, we have a problem houston
+        if (null === $this->resource) {
+            $this->forward404();
+        }
+
+        // Check user authorization
+        if (!QubitAcl::check($this->resource, 'update') && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)) {
+            QubitAcl::forwardUnauthorized();
+        }
     }
-  }
 
-  protected function formSetup()
-  {
-    $this->form = new sfForm();
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', false);
+    protected function formSetup()
+    {
+        $this->form = new sfForm();
+        $this->form->getValidatorSchema()->setOption('allow_extra_fields', false);
 
-    $this->form->setWidget('all_or_digital_only', new sfWidgetFormChoice([
-      'expanded' => true,
-      'choices' => ['all' => $this->context->i18n->__('Apply to all descendants'),
-        'digital_only' => $this->context->i18n->__('Apply only to %1% descendants', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]), ],
-      'default' => 'all',
-    ]));
+        $this->form->setWidget('all_or_digital_only', new sfWidgetFormChoice([
+            'expanded' => true,
+            'choices' => ['all' => $this->context->i18n->__('Apply to all descendants'),
+                'digital_only' => $this->context->i18n->__('Apply only to %1% descendants', ['%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject'))]), ],
+            'default' => 'all',
+        ]));
 
-    $choices = [
-      'overwrite' => $this->context->i18n->__('Delete current rights in descendants and replace with parent rights.'),
-      'combine' => $this->context->i18n->__('Keep current rights in descendants and add parent rights.'),
-    ];
+        $choices = [
+            'overwrite' => $this->context->i18n->__('Delete current rights in descendants and replace with parent rights.'),
+            'combine' => $this->context->i18n->__('Keep current rights in descendants and add parent rights.'),
+        ];
 
-    $this->form->setWidget('overwrite_or_combine', new sfWidgetFormChoice([
-      'expanded' => true,
-      'choices' => $choices,
-      'default' => 'overwrite',
-    ]));
+        $this->form->setWidget('overwrite_or_combine', new sfWidgetFormChoice([
+            'expanded' => true,
+            'choices' => $choices,
+            'default' => 'overwrite',
+        ]));
 
-    $this->form->setValidators([
-      'all_or_digital_only' => new sfValidatorChoice(['choices' => ['all', 'digital_only'], 'required' => true]),
-      'overwrite_or_combine' => new sfValidatorChoice(['choices' => ['overwrite', 'combine'], 'required' => true]),
-    ]);
-  }
+        $this->form->setValidators([
+            'all_or_digital_only' => new sfValidatorChoice(['choices' => ['all', 'digital_only'], 'required' => true]),
+            'overwrite_or_combine' => new sfValidatorChoice(['choices' => ['overwrite', 'combine'], 'required' => true]),
+        ]);
+    }
 }

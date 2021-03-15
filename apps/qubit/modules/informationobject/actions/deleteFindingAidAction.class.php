@@ -19,41 +19,41 @@
 
 class InformationObjectDeleteFindingAidAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->resource = $this->getRoute()->resource;
+    public function execute($request)
+    {
+        $this->resource = $this->getRoute()->resource;
 
-    // Check that object exists and that it is not the root
-    if (!isset($this->resource) || !isset($this->resource->parent)) {
-      $this->forward404();
+        // Check that object exists and that it is not the root
+        if (!isset($this->resource) || !isset($this->resource->parent)) {
+            $this->forward404();
+        }
+
+        // Check user authorization
+        if (!$this->context->user->isAuthenticated()) {
+            QubitAcl::forwardUnauthorized();
+        }
+
+        $this->form = new sfForm();
+        $this->path = arFindingAidJob::getFindingAidPathForDownload($this->resource->id);
+        $parts = explode(DIRECTORY_SEPARATOR, $this->path);
+        $this->filename = array_pop($parts);
+
+        if ($request->isMethod('delete')) {
+            $this->form->bind($request->getPostParameters());
+
+            if ($this->form->isValid()) {
+                $i18n = $this->context->i18n;
+
+                $params = [
+                    'objectId' => $this->resource->id,
+                    'description' => $i18n->__('Deleting finding aid for: %1%', ['%1%' => $this->resource->getTitle(['cultureFallback' => true])]),
+                    'delete' => true,
+                ];
+
+                QubitJob::runJob('arFindingAidJob', $params);
+
+                $this->redirect([$this->resource, 'module' => 'informationobject']);
+            }
+        }
     }
-
-    // Check user authorization
-    if (!$this->context->user->isAuthenticated()) {
-      QubitAcl::forwardUnauthorized();
-    }
-
-    $this->form = new sfForm();
-    $this->path = arFindingAidJob::getFindingAidPathForDownload($this->resource->id);
-    $parts = explode(DIRECTORY_SEPARATOR, $this->path);
-    $this->filename = array_pop($parts);
-
-    if ($request->isMethod('delete')) {
-      $this->form->bind($request->getPostParameters());
-
-      if ($this->form->isValid()) {
-        $i18n = $this->context->i18n;
-
-        $params = [
-          'objectId' => $this->resource->id,
-          'description' => $i18n->__('Deleting finding aid for: %1%', ['%1%' => $this->resource->getTitle(['cultureFallback' => true])]),
-          'delete' => true,
-        ];
-
-        QubitJob::runJob('arFindingAidJob', $params);
-
-        $this->redirect([$this->resource, 'module' => 'informationobject']);
-      }
-    }
-  }
 }

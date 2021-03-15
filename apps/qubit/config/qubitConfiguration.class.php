@@ -19,142 +19,142 @@
 
 class qubitConfiguration extends sfApplicationConfiguration
 {
-  public const // Required format: x.y.z
+    public const // Required format: x.y.z
     VERSION = '2.6.0';
 
-  public function responseFilterContent(sfEvent $event, $content)
-  {
-    ProjectConfiguration::getActive()->loadHelpers('Javascript');
+    public function responseFilterContent(sfEvent $event, $content)
+    {
+        ProjectConfiguration::getActive()->loadHelpers('Javascript');
 
-    return str_ireplace('</head>', javascript_tag('jQuery.extend(Qubit, '.json_encode(['relativeUrlRoot' => sfContext::getInstance()->request->getRelativeUrlRoot()]).');').'</head>', $content);
-  }
-
-  public function listenToChangeCultureEvent(sfEvent $event)
-  {
-    setcookie('atom_culture', $event['culture']);
-  }
-
-  /**
-   * @see sfApplicationConfiguration
-   */
-  public function configure()
-  {
-    $this->dispatcher->connect('response.filter_content', [$this, 'responseFilterContent']);
-
-    $this->dispatcher->connect('access_log.view', ['QubitAccessLogObserver', 'view']);
-
-    $this->dispatcher->connect('user.change_culture', [$this, 'listenToChangeCultureEvent']);
-  }
-
-  /**
-   * @see sfApplicationConfiguration
-   */
-  public function initialize()
-  {
-    if (false !== $readOnly = getenv('ATOM_READ_ONLY')) {
-      sfConfig::set('app_read_only', filter_var($readOnly, FILTER_VALIDATE_BOOLEAN));
+        return str_ireplace('</head>', javascript_tag('jQuery.extend(Qubit, '.json_encode(['relativeUrlRoot' => sfContext::getInstance()->request->getRelativeUrlRoot()]).');').'</head>', $content);
     }
 
-    // Force escaping
-    sfConfig::set('sf_escaping_strategy', true);
-  }
-
-  /**
-   * @see sfApplicationConfiguration
-   *
-   * @param mixed $moduleName
-   */
-  public function getControllerDirs($moduleName)
-  {
-    if (!isset($this->cache['getControllerDirs'][$moduleName])) {
-      $this->cache['getControllerDirs'][$moduleName] = [];
-
-      // HACK Currently plugins only override application templates, not the
-      // other way around
-      foreach ($this->getPluginSubPaths('/modules/'.$moduleName.'/actions') as $dir) {
-        $this->cache['getControllerDirs'][$moduleName][$dir] = false; // plugins
-      }
-
-      $this->cache['getControllerDirs'][$moduleName][sfConfig::get('sf_app_module_dir').'/'.$moduleName.'/actions'] = false; // application
+    public function listenToChangeCultureEvent(sfEvent $event)
+    {
+        setcookie('atom_culture', $event['culture']);
     }
 
-    return $this->cache['getControllerDirs'][$moduleName];
-  }
+    /**
+     * @see sfApplicationConfiguration
+     */
+    public function configure()
+    {
+        $this->dispatcher->connect('response.filter_content', [$this, 'responseFilterContent']);
 
-  /**
-   * @see sfApplicationConfiguration
-   */
-  public function getDecoratorDirs()
-  {
-    $dirs = sfConfig::get('sf_decorator_dirs');
-    $dirs[] = sfConfig::get('sf_app_template_dir');
+        $this->dispatcher->connect('access_log.view', ['QubitAccessLogObserver', 'view']);
 
-    return $dirs;
-  }
+        $this->dispatcher->connect('user.change_culture', [$this, 'listenToChangeCultureEvent']);
+    }
 
-  /**
-   * @see sfApplicationConfiguration
-   *
-   * @param mixed $moduleName
-   */
-  public function getTemplateDirs($moduleName)
-  {
-    // HACK Currently plugins only override application templates, not the
-    // other way around
-    $dirs = $this->getPluginSubPaths('/modules/'.$moduleName.'/templates');
-    $dirs[] = sfConfig::get('sf_app_module_dir').'/'.$moduleName.'/templates';
+    /**
+     * @see sfApplicationConfiguration
+     */
+    public function initialize()
+    {
+        if (false !== $readOnly = getenv('ATOM_READ_ONLY')) {
+            sfConfig::set('app_read_only', filter_var($readOnly, FILTER_VALIDATE_BOOLEAN));
+        }
 
-    return array_merge($dirs, $this->getDecoratorDirs());
-  }
+        // Force escaping
+        sfConfig::set('sf_escaping_strategy', true);
+    }
 
-  /**
-   * @see sfProjectConfiguration
-   *
-   * @param mixed $path
-   */
-  public function setRootDir($path)
-  {
-    parent::setRootDir($path);
+    /**
+     * @see sfApplicationConfiguration
+     *
+     * @param mixed $moduleName
+     */
+    public function getControllerDirs($moduleName)
+    {
+        if (!isset($this->cache['getControllerDirs'][$moduleName])) {
+            $this->cache['getControllerDirs'][$moduleName] = [];
 
-    $this->setWebDir($path);
-  }
+            // HACK Currently plugins only override application templates, not the
+            // other way around
+            foreach ($this->getPluginSubPaths('/modules/'.$moduleName.'/actions') as $dir) {
+                $this->cache['getControllerDirs'][$moduleName][$dir] = false; // plugins
+            }
 
-  /**
-   * Get a config variable from an application config file (YAML) for a specific
-   * environment (e.g. "prod", "dev", "cli").
-   *
-   * N.B. to get a config variable for the current context/environment, use
-   * sfConfing::get() instead!
-   *
-   * @param string $varname    config variable name
-   * @param string $env        Environment name (e.g. 'prod', 'cli')
-   * @param string $configFile config file to check (e.g. 'config/settings.yml')
-   *
-   * @return null|string config value or null if variable is not set
-   */
-  public static function getConfigForEnvironment($varname, $env, $configFile)
-  {
-    // Parse the YAML data to an array
-    $config = sfSimpleYamlConfigHandler::getConfiguration(
-      sfContext::getInstance()
-        ->getConfiguration()
-        ->getConfigPaths($configFile)
-    );
+            $this->cache['getControllerDirs'][$moduleName][sfConfig::get('sf_app_module_dir').'/'.$moduleName.'/actions'] = false; // application
+        }
 
-    // The settings.yml file requires an intermediate '.settings' key for
-    // some reason :-/
-    if (
+        return $this->cache['getControllerDirs'][$moduleName];
+    }
+
+    /**
+     * @see sfApplicationConfiguration
+     */
+    public function getDecoratorDirs()
+    {
+        $dirs = sfConfig::get('sf_decorator_dirs');
+        $dirs[] = sfConfig::get('sf_app_template_dir');
+
+        return $dirs;
+    }
+
+    /**
+     * @see sfApplicationConfiguration
+     *
+     * @param mixed $moduleName
+     */
+    public function getTemplateDirs($moduleName)
+    {
+        // HACK Currently plugins only override application templates, not the
+        // other way around
+        $dirs = $this->getPluginSubPaths('/modules/'.$moduleName.'/templates');
+        $dirs[] = sfConfig::get('sf_app_module_dir').'/'.$moduleName.'/templates';
+
+        return array_merge($dirs, $this->getDecoratorDirs());
+    }
+
+    /**
+     * @see sfProjectConfiguration
+     *
+     * @param mixed $path
+     */
+    public function setRootDir($path)
+    {
+        parent::setRootDir($path);
+
+        $this->setWebDir($path);
+    }
+
+    /**
+     * Get a config variable from an application config file (YAML) for a specific
+     * environment (e.g. "prod", "dev", "cli").
+     *
+     * N.B. to get a config variable for the current context/environment, use
+     * sfConfing::get() instead!
+     *
+     * @param string $varname    config variable name
+     * @param string $env        Environment name (e.g. 'prod', 'cli')
+     * @param string $configFile config file to check (e.g. 'config/settings.yml')
+     *
+     * @return null|string config value or null if variable is not set
+     */
+    public static function getConfigForEnvironment($varname, $env, $configFile)
+    {
+        // Parse the YAML data to an array
+        $config = sfSimpleYamlConfigHandler::getConfiguration(
+            sfContext::getInstance()
+                ->getConfiguration()
+                ->getConfigPaths($configFile)
+        );
+
+        // The settings.yml file requires an intermediate '.settings' key for
+        // some reason :-/
+        if (
       'config/settings.yml' == $configFile
       && isset($config[$env]['.settings'][$varname])) {
-      return $config[$env]['.settings'][$varname];
-    }
+            return $config[$env]['.settings'][$varname];
+        }
 
-    // Get a value from non "settings.yml" config files
-    if (isset($config[$env][$varname])) {
-      return $config[$env][$varname];
-    }
+        // Get a value from non "settings.yml" config files
+        if (isset($config[$env][$varname])) {
+            return $config[$env][$varname];
+        }
 
-    // Return null if the variable is not set in the specified config file
-    return null;
-  }
+        // Return null if the variable is not set in the specified config file
+        return null;
+    }
 }

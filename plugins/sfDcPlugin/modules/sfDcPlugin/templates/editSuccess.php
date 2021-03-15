@@ -38,15 +38,15 @@
         <legend><?php echo __('Elements area'); ?></legend>
 
         <?php echo $form->identifier
-          ->help(__('The unambiguous reference code used to uniquely identify this resource.'))
-          ->label(__('Identifier').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>')
-          ->renderRow(); ?>
+            ->help(__('The unambiguous reference code used to uniquely identify this resource.'))
+            ->label(__('Identifier').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>')
+            ->renderRow(); ?>
 
         <?php echo get_partial('informationobject/identifierOptions', ['mask' => $mask, 'hideAltIdButton' => true]); ?>
 
         <?php echo render_field($form->title
-          ->help(__('The name given to this resource.'))
-          ->label(__('Title').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>'), $resource); ?>
+            ->help(__('The name given to this resource.'))
+            ->label(__('Title').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>'), $resource); ?>
 
         <section>
 
@@ -60,25 +60,25 @@
 
         <div class="form-item">
           <?php echo $form->subjectAccessPoints
-            ->label(__('Subject'))
-            ->renderLabel(); ?>
+              ->label(__('Subject'))
+              ->renderLabel(); ?>
           <?php echo $form->subjectAccessPoints->render(['class' => 'form-autocomplete']); ?>
           <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]); ?> #name"/>
           <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::SUBJECT_ID), 'module' => 'taxonomy'])]); ?>"/>
           <?php echo $form->subjectAccessPoints
-            ->help(__('The topic of the resource. Search for an existing term in the Subject taxonomy by typing the first few characters of the term name. Alternatively, type a new name to create and link to a new subject term.'))
-            ->renderHelp(); ?>
+              ->help(__('The topic of the resource. Search for an existing term in the Subject taxonomy by typing the first few characters of the term name. Alternatively, type a new name to create and link to a new subject term.'))
+              ->renderHelp(); ?>
         </div>
 
         <?php echo render_field($form->scopeAndContent
-          ->help(__('An abstract, table of contents or description of the resource\'s scope and contents.'))
-          ->label(__('Description')), $resource, ['class' => 'resizable']); ?>
+            ->help(__('An abstract, table of contents or description of the resource\'s scope and contents.'))
+            ->label(__('Description')), $resource, ['class' => 'resizable']); ?>
 
         <?php echo $form->type
-          ->help(__('<p>The nature or genre of the resource.</p><p>Assign as many types as applicable. The <em>Type</em> options are limited to the DCMI Type vocabulary.</p><p>Assign the <em>Collection</em> value if this resource is the top-level for a set of lower-level (child) resources.</p><p>Please note: if this resource is linked to a digital object, the <em>image</em>, <em>text</em>, <em>sound</em> or <em>moving image</em> types are added automatically upon output, so do not duplicate those values here.</p>'))
-          ->renderRow(); ?>
+            ->help(__('<p>The nature or genre of the resource.</p><p>Assign as many types as applicable. The <em>Type</em> options are limited to the DCMI Type vocabulary.</p><p>Assign the <em>Collection</em> value if this resource is the top-level for a set of lower-level (child) resources.</p><p>Please note: if this resource is linked to a digital object, the <em>image</em>, <em>text</em>, <em>sound</em> or <em>moving image</em> types are added automatically upon output, so do not duplicate those values here.</p>'))
+            ->renderRow(); ?>
 
         <section>
 
@@ -118,46 +118,46 @@
         </section>
 
         <?php echo render_field($form->extentAndMedium
-          ->help(__('<p>The file format, physical medium, or dimensions of the resource.</p><p>Please note: if this resource is linked to a digital object, the Internet Media Types (MIME) will be added automatically upon output, so don\'t duplicate those values here.</p>'))
-          ->label(__('Format')), $resource, ['class' => 'resizable']); ?>
+            ->help(__('<p>The file format, physical medium, or dimensions of the resource.</p><p>Please note: if this resource is linked to a digital object, the Internet Media Types (MIME) will be added automatically upon output, so don\'t duplicate those values here.</p>'))
+            ->label(__('Format')), $resource, ['class' => 'resizable']); ?>
 
         <?php echo render_field($form->locationOfOriginals
-          ->help(__('Related material(s) from which this resource is derived.'))
-          ->label(__('Source')), $resource, ['class' => 'resizable']); ?>
+            ->help(__('Related material(s) from which this resource is derived.'))
+            ->label(__('Source')), $resource, ['class' => 'resizable']); ?>
 
         <?php echo $form->language
-          ->help(__('Language(s) of this resource.'))
-          ->renderRow(['class' => 'form-autocomplete']); ?>
+            ->help(__('Language(s) of this resource.'))
+            ->renderRow(['class' => 'form-autocomplete']); ?>
 
         <div class="form-item">
           <?php echo $form->repository
-            ->label(__('Relation (isLocatedAt)').' <span class="form-required" title="'.__('This is a mandatory element for this resource or one of its higher descriptive levels (if part of a collection hierarchy).').'">*</span>')
-            ->renderLabel(); ?>
+              ->label(__('Relation (isLocatedAt)').' <span class="form-required" title="'.__('This is a mandatory element for this resource or one of its higher descriptive levels (if part of a collection hierarchy).').'">*</span>')
+              ->renderLabel(); ?>
           <?php echo $form->repository->render(['class' => 'form-autocomplete']); ?>
           <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'repository', 'action' => 'add']); ?> #authorizedFormOfName"/>
           <input class="list" type="hidden" value="<?php echo url_for($sf_data->getRaw('repoAcParams')); ?>"/>
           <?php echo $form->repository
-            ->help(__('<p>The name of the organization which has custody of the resource.</p><p>Search for an existing name in the organization records by typing the first few characters of the name. Alternatively, type a new name to create and link to a new organization record.</p>'))
-            ->renderHelp(); ?>
+              ->help(__('<p>The name of the organization which has custody of the resource.</p><p>Search for an existing name in the organization records by typing the first few characters of the name. Alternatively, type a new name to create and link to a new organization record.</p>'))
+              ->renderHelp(); ?>
         </div>
 
         <div class="form-item">
           <?php echo $form->placeAccessPoints
-            ->label(__('Coverage (spatial)'))
-            ->renderLabel(); ?>
+              ->label(__('Coverage (spatial)'))
+              ->renderLabel(); ?>
           <?php echo $form->placeAccessPoints->render(['class' => 'form-autocomplete']); ?>
           <?php if (QubitAcl::check(QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'createTerm')) { ?>
             <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'term', 'action' => 'add', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]); ?> #name"/>
           <?php } ?>
           <input class="list" type="hidden" value="<?php echo url_for(['module' => 'term', 'action' => 'autocomplete', 'taxonomy' => url_for([QubitTaxonomy::getById(QubitTaxonomy::PLACE_ID), 'module' => 'taxonomy'])]); ?>"/>
           <?php echo $form->placeAccessPoints
-            ->help(__('<p>The name of a place or geographic area which is a topic of the resource or relevant to its jurisdiction.</p><p>Search for an existing term in the Place taxonomy by typing the first few characters of the place name. Alternatively, type a new name to create and link to a new place.</p><p>Please note: if you entered a place of creation, publication or contribution that will be output automatically, so don’t repeat that place name here.</p>'))
-            ->renderHelp(); ?>
+              ->help(__('<p>The name of a place or geographic area which is a topic of the resource or relevant to its jurisdiction.</p><p>Search for an existing term in the Place taxonomy by typing the first few characters of the place name. Alternatively, type a new name to create and link to a new place.</p><p>Please note: if you entered a place of creation, publication or contribution that will be output automatically, so don’t repeat that place name here.</p>'))
+              ->renderHelp(); ?>
         </div>
 
         <?php echo render_field($form->accessConditions
-          ->help(__('Information about rights held in and over the resource (e.g. copyright, access conditions, etc.).'))
-          ->label(__('Rights')), $resource, ['class' => 'resizable']); ?>
+            ->help(__('Information about rights held in and over the resource (e.g. copyright, access conditions, etc.).'))
+            ->label(__('Rights')), $resource, ['class' => 'resizable']); ?>
 
       </fieldset> <!-- #elementsArea -->
 

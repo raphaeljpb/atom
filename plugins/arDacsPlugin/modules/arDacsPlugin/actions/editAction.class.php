@@ -19,88 +19,88 @@
 
 class arDacsPluginEditAction extends InformationObjectEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'accessConditions',
-    'accruals',
-    'acquisition',
-    'appraisal',
-    'archivalHistory',
-    'arrangement',
-    'creators',
-    'extentAndMedium',
-    'findingAids',
-    'identifier',
-    'language',
-    'languageNotes',
-    'levelOfDescription',
-    'locationOfCopies',
-    'locationOfOriginals',
-    'nameAccessPoints',
-    'genreAccessPoints',
-    'physicalCharacteristics',
-    'placeAccessPoints',
-    'relatedMaterialDescriptions',
-    'relatedUnitsOfDescription',
-    'repository',
-    'reproductionConditions',
-    'rules',
-    'scopeAndContent',
-    'script',
-    'sources',
-    'subjectAccessPoints',
-    'displayStandard',
-    'displayStandardUpdateDescendants',
-    'title',
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'accessConditions',
+        'accruals',
+        'acquisition',
+        'appraisal',
+        'archivalHistory',
+        'arrangement',
+        'creators',
+        'extentAndMedium',
+        'findingAids',
+        'identifier',
+        'language',
+        'languageNotes',
+        'levelOfDescription',
+        'locationOfCopies',
+        'locationOfOriginals',
+        'nameAccessPoints',
+        'genreAccessPoints',
+        'physicalCharacteristics',
+        'placeAccessPoints',
+        'relatedMaterialDescriptions',
+        'relatedUnitsOfDescription',
+        'repository',
+        'reproductionConditions',
+        'rules',
+        'scopeAndContent',
+        'script',
+        'sources',
+        'subjectAccessPoints',
+        'displayStandard',
+        'displayStandardUpdateDescendants',
+        'title',
 
-    // DACS, see arDacsPlugin
-    'technicalAccess', ];
+        // DACS, see arDacsPlugin
+        'technicalAccess', ];
 
-  protected function earlyExecute()
-  {
-    parent::earlyExecute();
+    protected function earlyExecute()
+    {
+        parent::earlyExecute();
 
-    $this->dacs = new arDacsPlugin($this->resource);
+        $this->dacs = new arDacsPlugin($this->resource);
 
-    $title = $this->context->i18n->__('Add new archival description');
-    if (isset($this->getRoute()->resource)) {
-      if (1 > strlen($title = $this->resource->__toString())) {
-        $title = $this->context->i18n->__('Untitled');
-      }
+        $title = $this->context->i18n->__('Add new archival description');
+        if (isset($this->getRoute()->resource)) {
+            if (1 > strlen($title = $this->resource->__toString())) {
+                $title = $this->context->i18n->__('Untitled');
+            }
 
-      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
+            $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
+        }
+
+        $this->response->setTitle("{$title} - {$this->response->getTitle()}");
+
+        $this->alternativeIdentifiersComponent = new InformationObjectAlternativeIdentifiersComponent($this->context, 'informationobject', 'alternativeIdentifiers');
+        $this->alternativeIdentifiersComponent->resource = $this->resource;
+        $this->alternativeIdentifiersComponent->execute($this->request);
+
+        $this->eventComponent = new sfIsadPluginEventComponent($this->context, 'sfIsadPlugin', 'event');
+        $this->eventComponent->resource = $this->resource;
+        $this->eventComponent->execute($this->request);
+
+        $this->publicationNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
+        $this->publicationNotesComponent->resource = $this->resource;
+        $this->publicationNotesComponent->execute($this->request, $options = ['type' => 'dacsPublicationNotes']);
+
+        $this->notesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
+        $this->notesComponent->resource = $this->resource;
+        $this->notesComponent->execute($this->request, $options = ['type' => 'dacsNotes']);
+
+        $this->specializedNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
+        $this->specializedNotesComponent->resource = $this->resource;
+        $this->specializedNotesComponent->execute($this->request, $options = ['type' => 'dacsSpecializedNotes']);
+
+        $this->archivistsNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
+        $this->archivistsNotesComponent->resource = $this->resource;
+        $this->archivistsNotesComponent->execute($this->request, $options = ['type' => 'dacsArchivistsNotes']);
     }
 
-    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
-
-    $this->alternativeIdentifiersComponent = new InformationObjectAlternativeIdentifiersComponent($this->context, 'informationobject', 'alternativeIdentifiers');
-    $this->alternativeIdentifiersComponent->resource = $this->resource;
-    $this->alternativeIdentifiersComponent->execute($this->request);
-
-    $this->eventComponent = new sfIsadPluginEventComponent($this->context, 'sfIsadPlugin', 'event');
-    $this->eventComponent->resource = $this->resource;
-    $this->eventComponent->execute($this->request);
-
-    $this->publicationNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
-    $this->publicationNotesComponent->resource = $this->resource;
-    $this->publicationNotesComponent->execute($this->request, $options = ['type' => 'dacsPublicationNotes']);
-
-    $this->notesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
-    $this->notesComponent->resource = $this->resource;
-    $this->notesComponent->execute($this->request, $options = ['type' => 'dacsNotes']);
-
-    $this->specializedNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
-    $this->specializedNotesComponent->resource = $this->resource;
-    $this->specializedNotesComponent->execute($this->request, $options = ['type' => 'dacsSpecializedNotes']);
-
-    $this->archivistsNotesComponent = new InformationObjectNotesComponent($this->context, 'informationobject', 'notes');
-    $this->archivistsNotesComponent->resource = $this->resource;
-    $this->archivistsNotesComponent->execute($this->request, $options = ['type' => 'dacsArchivistsNotes']);
-  }
-
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'creators':
         $criteria = new Criteria();
         $criteria->add(QubitEvent::OBJECT_ID, $this->resource->id);
@@ -109,7 +109,7 @@ class arDacsPluginEditAction extends InformationObjectEditAction
 
         $value = $choices = [];
         foreach ($this->events = QubitEvent::get($criteria) as $item) {
-          $choices[$value[] = $this->context->routing->generate(null, [$item->actor, 'module' => 'actor'])] = $item->actor;
+            $choices[$value[] = $this->context->routing->generate(null, [$item->actor, 'module' => 'actor'])] = $item->actor;
         }
 
         $this->form->setDefault('creators', $value);
@@ -136,35 +136,35 @@ class arDacsPluginEditAction extends InformationObjectEditAction
       default:
         return parent::addField($name);
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'creators':
         $value = $filtered = [];
         foreach ($this->form->getValue('creators') as $item) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($item));
-          $resource = $params['_sf_route']->resource;
-          $value[$resource->id] = $filtered[$resource->id] = $resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($item));
+            $resource = $params['_sf_route']->resource;
+            $value[$resource->id] = $filtered[$resource->id] = $resource;
         }
 
         foreach ($this->events as $item) {
-          if (isset($value[$item->actor->id])) {
-            unset($filtered[$item->actor->id]);
-          } elseif (!isset($this->request->sourceId)) {
-            // Will be indexed when description is saved
-            $item->indexOnSave = false;
-            $item->delete();
-          }
+            if (isset($value[$item->actor->id])) {
+                unset($filtered[$item->actor->id]);
+            } elseif (!isset($this->request->sourceId)) {
+                // Will be indexed when description is saved
+                $item->indexOnSave = false;
+                $item->delete();
+            }
         }
 
         foreach ($filtered as $item) {
-          $event = new QubitEvent();
-          $event->actor = $item;
-          $event->typeId = QubitTerm::CREATION_ID;
+            $event = new QubitEvent();
+            $event->actor = $item;
+            $event->typeId = QubitTerm::CREATION_ID;
 
-          $this->resource->eventsRelatedByobjectId[] = $event;
+            $this->resource->eventsRelatedByobjectId[] = $event;
         }
 
         break;
@@ -178,24 +178,24 @@ class arDacsPluginEditAction extends InformationObjectEditAction
       default:
         return parent::processField($field);
     }
-  }
+    }
 
-  protected function processForm()
-  {
-    $this->resource->sourceStandard = 'DACS 2nd edition';
+    protected function processForm()
+    {
+        $this->resource->sourceStandard = 'DACS 2nd edition';
 
-    $this->alternativeIdentifiersComponent->processForm();
+        $this->alternativeIdentifiersComponent->processForm();
 
-    $this->eventComponent->processForm();
+        $this->eventComponent->processForm();
 
-    $this->publicationNotesComponent->processForm();
+        $this->publicationNotesComponent->processForm();
 
-    $this->notesComponent->processForm();
+        $this->notesComponent->processForm();
 
-    $this->archivistsNotesComponent->processForm();
+        $this->archivistsNotesComponent->processForm();
 
-    $this->specializedNotesComponent->processForm();
+        $this->specializedNotesComponent->processForm();
 
-    return parent::processForm();
-  }
+        return parent::processForm();
+    }
 }

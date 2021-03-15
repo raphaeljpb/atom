@@ -19,19 +19,19 @@
 
 class arDacsPlugin extends sfIsadPlugin
 {
-  // sfIsadPlugin is not using properties
-  protected $property;
+    // sfIsadPlugin is not using properties
+    protected $property;
 
-  public function __get($name)
-  {
-    $args = func_get_args();
+    public function __get($name)
+    {
+        $args = func_get_args();
 
-    $options = [];
-    if (1 < count($args)) {
-      $options = $args[1];
-    }
+        $options = [];
+        if (1 < count($args)) {
+            $options = $args[1];
+        }
 
-    switch ($name) {
+        switch ($name) {
       case 'technicalAccess':
         return $this->property('technicalAccess')->__get('value', $options);
 
@@ -40,11 +40,11 @@ class arDacsPlugin extends sfIsadPlugin
       default:
         return parent::__get($name);
     }
-  }
+    }
 
-  public function __set($name, $value)
-  {
-    switch ($name) {
+    public function __set($name, $value)
+    {
+        switch ($name) {
       case 'technicalAccess':
         $this->property('technicalAccess')->value = $value;
 
@@ -55,44 +55,44 @@ class arDacsPlugin extends sfIsadPlugin
 
         return $this;
     }
-  }
-
-  public static function eventTypes()
-  {
-    $types = [
-      QubitTerm::getById(QubitTerm::CREATION_ID),
-      QubitTerm::getById(QubitTerm::PUBLICATION_ID), ];
-
-    $criteria = new Criteria();
-    $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
-    $criteria->add(QubitTermI18n::NAME, ['Broadcasting', 'Record-keeping activity'], Criteria::IN);
-    $criteria->add(QubitTermI18n::CULTURE, 'en');
-    if (null !== $terms = QubitTerm::get($criteria)) {
-      foreach ($terms as $item) {
-        $types[] = $item;
-      }
     }
 
-    return $types;
-  }
+    public static function eventTypes()
+    {
+        $types = [
+            QubitTerm::getById(QubitTerm::CREATION_ID),
+            QubitTerm::getById(QubitTerm::PUBLICATION_ID), ];
 
-  protected function property($name)
-  {
-    if (!isset($this->property[$name])) {
-      $criteria = new Criteria();
-      $this->resource->addPropertysCriteria($criteria);
-      $criteria->add(QubitProperty::NAME, $name);
+        $criteria = new Criteria();
+        $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
+        $criteria->add(QubitTermI18n::NAME, ['Broadcasting', 'Record-keeping activity'], Criteria::IN);
+        $criteria->add(QubitTermI18n::CULTURE, 'en');
+        if (null !== $terms = QubitTerm::get($criteria)) {
+            foreach ($terms as $item) {
+                $types[] = $item;
+            }
+        }
 
-      if (1 == count($query = QubitProperty::get($criteria))) {
-        $this->property[$name] = $query[0];
-      } else {
-        $this->property[$name] = new QubitProperty();
-        $this->property[$name]->name = $name;
-
-        $this->resource->propertys[] = $this->property[$name];
-      }
+        return $types;
     }
 
-    return $this->property[$name];
-  }
+    protected function property($name)
+    {
+        if (!isset($this->property[$name])) {
+            $criteria = new Criteria();
+            $this->resource->addPropertysCriteria($criteria);
+            $criteria->add(QubitProperty::NAME, $name);
+
+            if (1 == count($query = QubitProperty::get($criteria))) {
+                $this->property[$name] = $query[0];
+            } else {
+                $this->property[$name] = new QubitProperty();
+                $this->property[$name]->name = $name;
+
+                $this->resource->propertys[] = $this->property[$name];
+            }
+        }
+
+        return $this->property[$name];
+    }
 }

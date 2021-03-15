@@ -25,23 +25,23 @@
  */
 class arMigration0127
 {
-  public const VERSION = 127;
-  public const // The new database version
+    public const VERSION = 127;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    $name = 'treeview_type';
-    if (null === QubitSetting::getByName($name)) {
-      $setting = new QubitSetting();
-      $setting->name = $name;
-      $setting->editable = 1;
-      $setting->deleteable = 0;
-      $setting->value = 'sidebar';
-      $setting->culture = 'en';
-      $setting->save();
-    }
+      $name = 'treeview_type';
+      if (null === QubitSetting::getByName($name)) {
+          $setting = new QubitSetting();
+          $setting->name = $name;
+          $setting->editable = 1;
+          $setting->deleteable = 0;
+          $setting->value = 'sidebar';
+          $setting->culture = 'en';
+          $setting->save();
+      }
 
-    return true;
+      return true;
   }
 }

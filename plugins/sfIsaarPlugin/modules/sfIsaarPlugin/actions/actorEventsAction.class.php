@@ -22,51 +22,51 @@
  */
 class sfIsaarPluginActorEventsAction extends sfAction
 {
-  public function execute($request)
-  {
-    if (empty($request->slug)) {
-      $this->response->setStatusCode(400);
-      $errorMessage = sfContext::getInstance()->i18n->__('Slug must be provided');
+    public function execute($request)
+    {
+        if (empty($request->slug)) {
+            $this->response->setStatusCode(400);
+            $errorMessage = sfContext::getInstance()->i18n->__('Slug must be provided');
 
-      return $this->renderText(json_encode(['error' => $errorMessage]));
+            return $this->renderText(json_encode(['error' => $errorMessage]));
+        }
+
+        $actor = QubitActor::getBySlug($request->slug);
+
+        $criteria = new Criteria();
+        $criteria->add(QubitEvent::ACTOR_ID, $actor->id);
+
+        $data = [];
+        $data['total'] = count(QubitEvent::get($criteria));
+
+        $criteria->setOffset($request->skip);
+        $criteria->setLimit($request->limit);
+
+        $data['data'] = $this->assembleEventData($criteria);
+
+        $this->getResponse()->setHttpHeader('Content-type', 'application/json');
+
+        return $this->renderText(json_encode($data));
     }
 
-    $actor = QubitActor::getBySlug($request->slug);
+    private function assembleEventData($criteria)
+    {
+        $events = [];
 
-    $criteria = new Criteria();
-    $criteria->add(QubitEvent::ACTOR_ID, $actor->id);
+        sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
+        sfContext::getInstance()->getConfiguration()->loadHelpers('Qubit');
 
-    $data = [];
-    $data['total'] = count(QubitEvent::get($criteria));
+        foreach (QubitEvent::get($criteria) as $event) {
+            $eventData = [
+                'url' => url_for([$event, 'module' => 'event']),
+                'title' => render_title($event->object),
+                'type' => render_value_inline($event->type),
+                'date' => render_value_inline(Qubit::renderDateStartEnd($event->date, $event->startDate, $event->endDate)),
+            ];
 
-    $criteria->setOffset($request->skip);
-    $criteria->setLimit($request->limit);
+            array_push($events, $eventData);
+        }
 
-    $data['data'] = $this->assembleEventData($criteria);
-
-    $this->getResponse()->setHttpHeader('Content-type', 'application/json');
-
-    return $this->renderText(json_encode($data));
-  }
-
-  private function assembleEventData($criteria)
-  {
-    $events = [];
-
-    sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
-    sfContext::getInstance()->getConfiguration()->loadHelpers('Qubit');
-
-    foreach (QubitEvent::get($criteria) as $event) {
-      $eventData = [
-        'url' => url_for([$event, 'module' => 'event']),
-        'title' => render_title($event->object),
-        'type' => render_value_inline($event->type),
-        'date' => render_value_inline(Qubit::renderDateStartEnd($event->date, $event->startDate, $event->endDate)),
-      ];
-
-      array_push($events, $eventData);
+        return $events;
     }
-
-    return $events;
-  }
 }

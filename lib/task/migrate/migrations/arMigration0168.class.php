@@ -25,29 +25,29 @@
  */
 class arMigration0168
 {
-  public const VERSION = 168;
-  public const // The new database version
+    public const VERSION = 168;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    // Check if term actually exists before adding
-    $criteria = new Criteria();
-    $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
-    $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
-    $criteria->add(QubitTermI18n::NAME, 'Record group');
-    $criteria->add(QubitTermI18n::CULTURE, 'en');
+      // Check if term actually exists before adding
+      $criteria = new Criteria();
+      $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
+      $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
+      $criteria->add(QubitTermI18n::NAME, 'Record group');
+      $criteria->add(QubitTermI18n::CULTURE, 'en');
 
-    if (null === QubitTerm::get($criteria)) {
-      // Create new term for record group level of description
-      $term = new QubitTerm();
-      $term->parentId = QubitTerm::ROOT_ID;
-      $term->taxonomyId = QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID;
-      $term->name = 'Record group';
-      $term->culture = 'en';
-      $term->save();
-    }
+      if (null === QubitTerm::get($criteria)) {
+          // Create new term for record group level of description
+          $term = new QubitTerm();
+          $term->parentId = QubitTerm::ROOT_ID;
+          $term->taxonomyId = QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID;
+          $term->name = 'Record group';
+          $term->culture = 'en';
+          $term->save();
+      }
 
-    return true;
+      return true;
   }
 }

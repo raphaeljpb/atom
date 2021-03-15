@@ -19,50 +19,50 @@
 
 class DeaccessionIndexAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->resource = $this->getRoute()->resource;
+    public function execute($request)
+    {
+        $this->resource = $this->getRoute()->resource;
 
-    // Check user authorization
-    if (!QubitAcl::check($this->resource, 'read')) {
-      QubitAcl::forwardToSecureAction();
+        // Check user authorization
+        if (!QubitAcl::check($this->resource, 'read')) {
+            QubitAcl::forwardToSecureAction();
+        }
+
+        if (1 > strlen($title = $this->resource->__toString())) {
+            $title = $this->context->i18n->__('Untitled');
+        }
+
+        $this->response->setTitle("{$title} - {$this->response->getTitle()}");
+
+        if (QubitAcl::check($this->resource, 'update')) {
+            $validatorSchema = new sfValidatorSchema();
+            $values = [];
+
+            $validatorSchema->identifier = new sfValidatorString([
+                'required' => true, ], [
+                    'required' => $this->context->i18n->__('Identifier - This is a mandatory element.'), ]);
+            $values['identifier'] = $this->resource->identifier;
+
+            $validatorSchema->date = new sfValidatorString([
+                'required' => true, ], [
+                    'required' => $this->context->i18n->__('Date of acquisition - This is a mandatory element.'), ]);
+            $values['date'] = $this->resource->date;
+
+            $validatorSchema->scope = new sfValidatorString([
+                'required' => true, ], [
+                    'required' => $this->context->i18n->__('Scope - This is a mandatory element.'), ]);
+            $values['scope'] = $this->resource->scope;
+
+            $validatorSchema->description = new sfValidatorString([
+                'required' => true, ], [
+                    'required' => $this->context->i18n->__('Description - This is a mandatory element.'), ]);
+            $values['description'] = $this->resource->getDescription(['culltureFallback' => true]);
+
+            try {
+                $validatorSchema->clean($values);
+            } catch (sfValidatorErrorSchema $e) {
+                $this->errorSchema = $e;
+            }
+        }
     }
-
-    if (1 > strlen($title = $this->resource->__toString())) {
-      $title = $this->context->i18n->__('Untitled');
-    }
-
-    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
-
-    if (QubitAcl::check($this->resource, 'update')) {
-      $validatorSchema = new sfValidatorSchema();
-      $values = [];
-
-      $validatorSchema->identifier = new sfValidatorString([
-        'required' => true, ], [
-          'required' => $this->context->i18n->__('Identifier - This is a mandatory element.'), ]);
-      $values['identifier'] = $this->resource->identifier;
-
-      $validatorSchema->date = new sfValidatorString([
-        'required' => true, ], [
-          'required' => $this->context->i18n->__('Date of acquisition - This is a mandatory element.'), ]);
-      $values['date'] = $this->resource->date;
-
-      $validatorSchema->scope = new sfValidatorString([
-        'required' => true, ], [
-          'required' => $this->context->i18n->__('Scope - This is a mandatory element.'), ]);
-      $values['scope'] = $this->resource->scope;
-
-      $validatorSchema->description = new sfValidatorString([
-        'required' => true, ], [
-          'required' => $this->context->i18n->__('Description - This is a mandatory element.'), ]);
-      $values['description'] = $this->resource->getDescription(['culltureFallback' => true]);
-
-      try {
-        $validatorSchema->clean($values);
-      } catch (sfValidatorErrorSchema $e) {
-        $this->errorSchema = $e;
-      }
-    }
-  }
 }

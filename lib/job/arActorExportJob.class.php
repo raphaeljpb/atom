@@ -22,56 +22,57 @@
  */
 class arActorExportJob extends arExportJob
 {
-  /**
-   * @see arBaseJob::$requiredParameters
-   */
-  protected $downloadFileExtension = 'zip';
+    /**
+     * @see arBaseJob::$requiredParameters
+     */
+    protected $downloadFileExtension = 'zip';
 
-  /**
-   * Create and return an ES search for clipboard actor records.
-   *
-   * @param array $parameters job parameters
-   *
-   * @return \Elastica\Search ES search object
-   */
-  public static function findExportRecords($parameters)
-  {
-    $query = new arElasticSearchPluginQuery(
-      arElasticSearchPluginUtil::SCROLL_SIZE
-    );
+    /**
+     * Create and return an ES search for clipboard actor records.
+     *
+     * @param array $parameters job parameters
+     *
+     * @return \Elastica\Search ES search object
+     */
+    public static function findExportRecords($parameters)
+    {
+        $query = new arElasticSearchPluginQuery(
+            arElasticSearchPluginUtil::SCROLL_SIZE
+        );
 
-    $query->queryBool->addMust(
-      new \Elastica\Query\Terms('slug', $parameters['params']['slugs'])
-    );
+        $query->queryBool->addMust(
+            new \Elastica\Query\Terms('slug', $parameters['params']['slugs'])
+        );
 
-    return QubitSearch::getInstance()
-      ->index
-      ->getType('QubitActor')
-      ->createSearch($query->getQuery(false, false))
+        return QubitSearch::getInstance()
+            ->index
+            ->getType('QubitActor')
+            ->createSearch($query->getQuery(false, false))
     ;
-  }
-
-  /**
-   * Export actor metadata and related digital objects if appropriate.
-   *
-   * @param string $path to tempoarary export directory
-   */
-  protected function doExport($path)
-  {
-    $search = self::findExportRecords($this->params);
-
-    // Scroll through results then iterate through resulting IDs
-    foreach (arElasticSearchPluginUtil::getScrolledSearchResultIdentifiers($search) as $id) {
-      if (null === $resource = QubitActor::getById($id)) {
-        $this->error($this->i18n->__(
-          'Cannot fetch actor, id: %1', ['%1' => $id]
-        ));
-
-        return;
-      }
-
-      $this->exportResource($resource, $path);
-      $this->logExportProgress();
     }
-  }
+
+    /**
+     * Export actor metadata and related digital objects if appropriate.
+     *
+     * @param string $path to tempoarary export directory
+     */
+    protected function doExport($path)
+    {
+        $search = self::findExportRecords($this->params);
+
+        // Scroll through results then iterate through resulting IDs
+        foreach (arElasticSearchPluginUtil::getScrolledSearchResultIdentifiers($search) as $id) {
+            if (null === $resource = QubitActor::getById($id)) {
+                $this->error($this->i18n->__(
+                    'Cannot fetch actor, id: %1',
+                    ['%1' => $id]
+                ));
+
+                return;
+            }
+
+            $this->exportResource($resource, $path);
+            $this->logExportProgress();
+        }
+    }
 }

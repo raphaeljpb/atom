@@ -19,96 +19,96 @@
 
 class ClipboardViewAction extends DefaultBrowseAction
 {
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    if ('print' == $request->getGetParameter('media')) {
-      $this->getResponse()->addStylesheet('print-preview', 'last');
+        if ('print' == $request->getGetParameter('media')) {
+            $this->getResponse()->addStylesheet('print-preview', 'last');
 
-      // Negate paging when printing
-      $maxPerPage = arElasticSearchPluginConfiguration::getMaxResultWindow();
-    } else {
-      $maxPerPage = $this->limit;
+            // Negate paging when printing
+            $maxPerPage = arElasticSearchPluginConfiguration::getMaxResultWindow();
+        } else {
+            $maxPerPage = $this->limit;
+        }
+
+        // Get entity type and class name
+        $this->type = $request->getGetParameter('type', 'informationObject');
+        $this->entityType = 'Qubit'.ucfirst($this->type);
+
+        $slugs = $request->getPostParameter('slugs', []);
+
+        if (empty($slugs)) {
+            $resultSet = new \Elastica\ResultSet(new Elastica\Response(null), new Elastica\Query(), []);
+        } else {
+            $this->search->queryBool->addMust(new \Elastica\Query\Terms('slug', $slugs));
+            $this->setSortOptions();
+            $this->setESSort($request);
+
+            if ('QubitInformationObject' == $this->entityType) {
+                QubitAclSearch::filterDrafts($this->search->queryBool);
+            }
+
+            $this->search->query->setQuery($this->search->queryBool);
+
+            $resultSet = QubitSearch::getInstance()->index->getType($this->entityType)->search($this->search->query);
+        }
+
+        // Page results
+        $this->pager = new QubitSearchPager($resultSet);
+        $this->pager->setPage($request->page ? $request->page : 1);
+        $this->pager->setMaxPerPage($maxPerPage);
+        $this->pager->init();
+
+        $this->uiLabels = [
+            'informationObject' => sfConfig::get('app_ui_label_informationobject'),
+            'actor' => sfConfig::get('app_ui_label_actor'),
+            'repository' => sfConfig::get('app_ui_label_repository'),
+        ];
+
+        // Remove slugs parameter. In some templates (entity type dropdown
+        // for example) the links are generated with all the request params
+        // (including POST) which appends the slugs from the Ajax request.
+        unset($request['slugs']);
     }
 
-    // Get entity type and class name
-    $this->type = $request->getGetParameter('type', 'informationObject');
-    $this->entityType = 'Qubit'.ucfirst($this->type);
+    /**
+     * Set available sorting options based on entity type.
+     */
+    private function setSortOptions()
+    {
+        $this->sortOptions = [
+            'lastUpdated' => $this->context->i18n->__('Date modified'),
+            'alphabetic' => $this->context->i18n->__('Name'),
+        ];
 
-    $slugs = $request->getPostParameter('slugs', []);
+        // IOs and Repos have identifier sort option in common
+        if (in_array($this->entityType, ['QubitInformationObject', 'QubitRepository'])) {
+            $this->sortOptions['identifier'] = $this->context->i18n->__('Identifier');
+        }
 
-    if (empty($slugs)) {
-      $resultSet = new \Elastica\ResultSet(new Elastica\Response(null), new Elastica\Query(), []);
-    } else {
-      $this->search->queryBool->addMust(new \Elastica\Query\Terms('slug', $slugs));
-      $this->setSortOptions();
-      $this->setESSort($request);
-
-      if ('QubitInformationObject' == $this->entityType) {
-        QubitAclSearch::filterDrafts($this->search->queryBool);
-      }
-
-      $this->search->query->setQuery($this->search->queryBool);
-
-      $resultSet = QubitSearch::getInstance()->index->getType($this->entityType)->search($this->search->query);
+        // IO specific sort options
+        if ('QubitInformationObject' === $this->entityType) {
+            $this->sortOptions['alphabetic'] = $this->context->i18n->__('Title');
+            $this->sortOptions['referenceCode'] = $this->context->i18n->__('Reference code');
+            $this->sortOptions['startDate'] = $this->context->i18n->__('Start date');
+            $this->sortOptions['endDate'] = $this->context->i18n->__('End date');
+        }
     }
 
-    // Page results
-    $this->pager = new QubitSearchPager($resultSet);
-    $this->pager->setPage($request->page ? $request->page : 1);
-    $this->pager->setMaxPerPage($maxPerPage);
-    $this->pager->init();
+    /**
+     * Set which field to sort by for current ES query.
+     *
+     * @param sfRequest $request current request object
+     */
+    private function setESSort($request)
+    {
+        // Prevent selecting an inappropriate sort field when switching entity types.
+        // e.g.: if we are sorting by start date for archival descriptions, but switch to auth recs we
+        // will default to sort by relevance since authority records don't have start dates to sort over.
+        $request->sort = isset($this->sortOptions[$request->sort]) ? $request->sort : 'relevance';
 
-    $this->uiLabels = [
-      'informationObject' => sfConfig::get('app_ui_label_informationobject'),
-      'actor' => sfConfig::get('app_ui_label_actor'),
-      'repository' => sfConfig::get('app_ui_label_repository'),
-    ];
-
-    // Remove slugs parameter. In some templates (entity type dropdown
-    // for example) the links are generated with all the request params
-    // (including POST) which appends the slugs from the Ajax request.
-    unset($request['slugs']);
-  }
-
-  /**
-   * Set available sorting options based on entity type.
-   */
-  private function setSortOptions()
-  {
-    $this->sortOptions = [
-      'lastUpdated' => $this->context->i18n->__('Date modified'),
-      'alphabetic' => $this->context->i18n->__('Name'),
-    ];
-
-    // IOs and Repos have identifier sort option in common
-    if (in_array($this->entityType, ['QubitInformationObject', 'QubitRepository'])) {
-      $this->sortOptions['identifier'] = $this->context->i18n->__('Identifier');
-    }
-
-    // IO specific sort options
-    if ('QubitInformationObject' === $this->entityType) {
-      $this->sortOptions['alphabetic'] = $this->context->i18n->__('Title');
-      $this->sortOptions['referenceCode'] = $this->context->i18n->__('Reference code');
-      $this->sortOptions['startDate'] = $this->context->i18n->__('Start date');
-      $this->sortOptions['endDate'] = $this->context->i18n->__('End date');
-    }
-  }
-
-  /**
-   * Set which field to sort by for current ES query.
-   *
-   * @param sfRequest $request current request object
-   */
-  private function setESSort($request)
-  {
-    // Prevent selecting an inappropriate sort field when switching entity types.
-    // e.g.: if we are sorting by start date for archival descriptions, but switch to auth recs we
-    // will default to sort by relevance since authority records don't have start dates to sort over.
-    $request->sort = isset($this->sortOptions[$request->sort]) ? $request->sort : 'relevance';
-
-    switch ($request->sort) {
+        switch ($request->sort) {
       // Sort by highest ES score
       case 'relevance':
         $this->search->query->addSort(['_score' => $request->sortDir]);
@@ -146,5 +146,5 @@ class ClipboardViewAction extends DefaultBrowseAction
       default:
         $this->search->query->setSort(['updatedAt' => $request->sortDir]);
     }
-  }
+    }
 }

@@ -21,22 +21,22 @@ namespace AccessToMemory\test\mock;
 
 class QubitPhysicalObject
 {
-  public $id;
-  public $name;
-  public $typeId;
-  public $location;
-  public $culture;
+    public $id;
+    public $name;
+    public $typeId;
+    public $location;
+    public $culture;
 
-  public function save($dbcon = null)
-  {
-    return \QubitQuery::create();
-  }
+    public function save($dbcon = null)
+    {
+        return \QubitQuery::create();
+    }
 
-  public static function getByName($name, $options = [])
-  {
-    $results = new \ArrayIterator();
+    public static function getByName($name, $options = [])
+    {
+        $results = new \ArrayIterator();
 
-    switch ($name) {
+        switch ($name) {
       case 'DJ001':
         $object = new self();
         $object->id = 111111;
@@ -76,37 +76,37 @@ class QubitPhysicalObject
           isset($options['partialMatch'])
           && 'begin' == $options['partialMatch']
         ) {
-          // Simulate partial match on start of name
-          $object = new self();
-          $object->id = 444444;
-          $object->name = 'DJ003 folders 1-6';
-          $object->typeId = 1;
-          $object->location = '200-A-19';
-          $object->culture = 'en';
+            // Simulate partial match on start of name
+            $object = new self();
+            $object->id = 444444;
+            $object->name = 'DJ003 folders 1-6';
+            $object->typeId = 1;
+            $object->location = '200-A-19';
+            $object->culture = 'en';
 
-          $results->append($object);
+            $results->append($object);
 
-          $object = new self();
-          $object->id = 555555;
-          $object->name = 'DJ003 folders 7-12';
-          $object->typeId = 1;
-          $object->location = '200-B-01';
-          $object->culture = 'en';
+            $object = new self();
+            $object->id = 555555;
+            $object->name = 'DJ003 folders 7-12';
+            $object->typeId = 1;
+            $object->location = '200-B-01';
+            $object->culture = 'en';
 
-          $results->append($object);
+            $results->append($object);
         }
 
         break;
     }
 
-    return $results;
-  }
+        return $results;
+    }
 
-  public function addInfobjRelations(array $infobjIds = null)
-  {
-  }
+    public function addInfobjRelations(array $infobjIds = null)
+    {
+    }
 
-  public function updateInfobjRelations(array $infobjIds = null)
-  {
-  }
+    public function updateInfobjRelations(array $infobjIds = null)
+    {
+    }
 }

@@ -19,18 +19,18 @@
 
 class sfIsaarPluginEventComponent extends EventEditComponent
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'informationObject',
-    'type',
-    'resourceType',
-    'startDate',
-    'endDate',
-    'date', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'informationObject',
+        'type',
+        'resourceType',
+        'startDate',
+        'endDate',
+        'date', ];
 
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'informationObject':
         $this->form->setValidator($name, new sfValidatorString(['required' => true]));
         $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => []]));
@@ -49,19 +49,19 @@ class sfIsaarPluginEventComponent extends EventEditComponent
       default:
         return parent::addField($name);
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'informationObject':
         unset($this->event->object);
 
         $value = $this->form->getValue('informationObject');
 
         if (isset($value)) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          $this->event->object = $params['_sf_route']->resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($value));
+            $this->event->object = $params['_sf_route']->resource;
         }
 
         break;
@@ -69,5 +69,5 @@ class sfIsaarPluginEventComponent extends EventEditComponent
       default:
         return parent::processField($field);
     }
-  }
+    }
 }

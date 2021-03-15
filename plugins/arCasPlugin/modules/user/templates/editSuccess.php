@@ -25,8 +25,8 @@
           <legend><?php echo __('Basic info'); ?></legend>
           
             <?php echo $form->active
-              ->label(__('Active'))
-              ->renderRow(); ?>
+                ->label(__('Active'))
+                ->renderRow(); ?>
 
         </fieldset> <!-- /#basicInfo -->
       <?php } ?>
@@ -36,23 +36,23 @@
         <legend><?php echo __('Access control'); ?></legend>
 
         <?php echo $form->groups
-          ->label(__('User groups'))
-          ->renderRow(['class' => 'form-autocomplete']); ?>
+            ->label(__('User groups'))
+            ->renderRow(['class' => 'form-autocomplete']); ?>
 
         <?php echo $form->translate
-          ->label(__('Allowed languages for translation'))
-          ->renderRow(['class' => 'form-autocomplete']); ?>
+            ->label(__('Allowed languages for translation'))
+            ->renderRow(['class' => 'form-autocomplete']); ?>
 
         <?php if ($restEnabled) { ?>
           <?php echo $form->restApiKey
-          ->label(__('REST API access key'.((isset($restApiKey)) ? ': <code>'.$restApiKey.'</code>' : '')))
-          ->renderRow(); ?>
+            ->label(__('REST API access key'.((isset($restApiKey)) ? ': <code>'.$restApiKey.'</code>' : '')))
+            ->renderRow(); ?>
         <?php } ?>
 
         <?php if ($oaiEnabled) { ?>
           <?php echo $form->oaiApiKey
-          ->label(__('OAI-PMH API access key'.((isset($oaiApiKey)) ? ': <code>'.$oaiApiKey.'</code>' : '')))
-          ->renderRow(); ?>
+            ->label(__('OAI-PMH API access key'.((isset($oaiApiKey)) ? ': <code>'.$oaiApiKey.'</code>' : '')))
+            ->renderRow(); ?>
         <?php } ?>
 
       </fieldset> <!-- /#groupsAndPermissions -->

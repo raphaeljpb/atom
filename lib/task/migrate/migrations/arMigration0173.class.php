@@ -26,47 +26,47 @@
  */
 class arMigration0173
 {
-  public const VERSION = 173;
-  public const // The new database version
+    public const VERSION = 173;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    $dacsVisibilitySettingNames = [
-      'dacs_physical_access',
-      'dacs_identity_area',
-      'dacs_content_area',
-      'dacs_conditions_of_access_area',
-      'dacs_acquisition_area',
-      'dacs_materials_area',
-      'dacs_notes_area',
-      'dacs_control_area',
-      'dacs_access_points_area',
-    ];
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        $dacsVisibilitySettingNames = [
+            'dacs_physical_access',
+            'dacs_identity_area',
+            'dacs_content_area',
+            'dacs_conditions_of_access_area',
+            'dacs_acquisition_area',
+            'dacs_materials_area',
+            'dacs_notes_area',
+            'dacs_control_area',
+            'dacs_access_points_area',
+        ];
 
-    foreach ($dacsVisibilitySettingNames as $settingName) {
-      if (null === QubitSetting::getByName($settingName)) {
-        $setting = new QubitSetting();
+        foreach ($dacsVisibilitySettingNames as $settingName) {
+            if (null === QubitSetting::getByName($settingName)) {
+                $setting = new QubitSetting();
 
-        $setting->setName($settingName);
-        $setting->setScope('element_visibility');
-        $setting->setEditable(1);
-        $setting->setDeleteable(0);
-        $setting->setSourceCulture('en');
-        $setting->setCulture('en');
-        $setting->setValue('1');
+                $setting->setName($settingName);
+                $setting->setScope('element_visibility');
+                $setting->setEditable(1);
+                $setting->setDeleteable(0);
+                $setting->setSourceCulture('en');
+                $setting->setCulture('en');
+                $setting->setValue('1');
 
-        $setting->save();
-      }
+                $setting->save();
+            }
+        }
+
+        return true;
     }
-
-    return true;
-  }
 }

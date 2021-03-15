@@ -25,47 +25,47 @@
  */
 class arMigration0161
 {
-  public const VERSION = 161;
-  public const // The new database version
+    public const VERSION = 161;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    // Add RGT index to the information object table
-    // if it's not already added
-    $sql = <<<'sql'
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        // Add RGT index to the information object table
+        // if it's not already added
+        $sql = <<<'sql'
 SHOW INDEX FROM information_object WHERE Column_name = 'rgt';
 sql;
 
-    if (0 == count(QubitPdo::fetchAll($sql))) {
-      $sql = <<<'sql'
+        if (0 == count(QubitPdo::fetchAll($sql))) {
+            $sql = <<<'sql'
 CREATE INDEX rgt ON information_object(rgt);
 sql;
 
-      QubitPdo::modify($sql);
-    }
+            QubitPdo::modify($sql);
+        }
 
-    // Add PATH index to the digital object table
-    // if it's not already added
-    $sql = <<<'sql'
+        // Add PATH index to the digital object table
+        // if it's not already added
+        $sql = <<<'sql'
 SHOW INDEX FROM digital_object WHERE Column_name = 'path';
 sql;
 
-    if (0 == count(QubitPdo::fetchAll($sql))) {
-      $sql = <<<'sql'
+        if (0 == count(QubitPdo::fetchAll($sql))) {
+            $sql = <<<'sql'
 CREATE INDEX path ON digital_object (path);
 sql;
 
-      QubitPdo::modify($sql);
-    }
+            QubitPdo::modify($sql);
+        }
 
-    return true;
-  }
+        return true;
+    }
 }

@@ -25,23 +25,23 @@
  */
 class arMigration0128
 {
-  public const VERSION = 128;
-  public const // The new database version
+    public const VERSION = 128;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    $settingNames = ['toggleIoSlider', 'toggleLanguageMenu'];
-    foreach ($settingNames as $name) {
-      if (null === QubitSetting::getByName($name)) {
-        $setting = new QubitSetting();
-        $setting->name = $name;
-        $setting->value = 1;
-        $setting->culture = 'en';
-        $setting->save();
+      $settingNames = ['toggleIoSlider', 'toggleLanguageMenu'];
+      foreach ($settingNames as $name) {
+          if (null === QubitSetting::getByName($name)) {
+              $setting = new QubitSetting();
+              $setting->name = $name;
+              $setting->value = 1;
+              $setting->culture = 'en';
+              $setting->save();
+          }
       }
-    }
 
-    return true;
+      return true;
   }
 }

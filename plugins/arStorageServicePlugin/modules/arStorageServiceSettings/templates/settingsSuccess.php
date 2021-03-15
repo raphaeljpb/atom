@@ -29,21 +29,21 @@
         <legend><?php echo __('Storage Service credentials'); ?></legend>
 
         <?php echo $form->storage_service_api_url
-          ->label(__(
+            ->label(__(
             'Storage Service API endpoint, e.g. "http://localhost:62081/api/v2"'
           ))
-          ->renderRow(); ?>
+            ->renderRow(); ?>
 
         <?php echo $form->storage_service_username
-          ->label(__('Storage Service username, e.g. "atom"'))
-          ->renderRow(); ?>
+            ->label(__('Storage Service username, e.g. "atom"'))
+            ->renderRow(); ?>
 
         <?php echo $form->storage_service_api_key
-          ->label(__(
+            ->label(__(
             'Storage Service API key, e.g.'
             .'"2ef7bde608ce5404e97d5f042f95f89f1c232871"'
           ))
-          ->renderRow(); ?>
+            ->renderRow(); ?>
 
       </fieldset>
 
@@ -52,12 +52,12 @@
         <legend><?php echo __('AIP download'); ?></legend>
 
         <?php echo $form->download_aip_enabled
-          ->label(__('Enable AIP download'))
-          ->help(__(
+            ->label(__('Enable AIP download'))
+            ->help(__(
             'Allow authorized users to download a linked AIP or AIP file from'
             .' the configured Archivematica Storage Service'
           ))
-          ->renderRow(); ?>
+            ->renderRow(); ?>
 
       </fieldset>
 

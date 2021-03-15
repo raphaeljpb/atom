@@ -25,35 +25,35 @@
  */
 class sfModsPlugin implements ArrayAccess
 {
-  protected $resource;
+    protected $resource;
 
-  public function __construct($resource)
-  {
-    $this->resource = $resource;
-  }
-
-  public function __toString()
-  {
-    $string = '';
-
-    // Add title if set
-    if (0 < strlen($title = $this->resource->__toString())) {
-      $string .= $title;
+    public function __construct($resource)
+    {
+        $this->resource = $resource;
     }
 
-    // Add publication status
-    $publicationStatus = $this->resource->getPublicationStatus();
-    if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId) {
-      $string .= (!empty($string)) ? ' ' : '';
-      $string .= "({$publicationStatus->status->__toString()})";
+    public function __toString()
+    {
+        $string = '';
+
+        // Add title if set
+        if (0 < strlen($title = $this->resource->__toString())) {
+            $string .= $title;
+        }
+
+        // Add publication status
+        $publicationStatus = $this->resource->getPublicationStatus();
+        if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId) {
+            $string .= (!empty($string)) ? ' ' : '';
+            $string .= "({$publicationStatus->status->__toString()})";
+        }
+
+        return $string;
     }
 
-    return $string;
-  }
-
-  public function __get($name)
-  {
-    switch ($name) {
+    public function __get($name)
+    {
+        switch ($name) {
       case 'identifier':
         return $this->resource->referenceCode;
 
@@ -66,9 +66,9 @@ class sfModsPlugin implements ArrayAccess
       case 'name':
         $name = [];
         foreach ($this->resource->getActorEvents() as $item) {
-          if (isset($item->actor)) {
-            $name[] = $item;
-          }
+            if (isset($item->actor)) {
+                $name[] = $item;
+            }
         }
 
         return $name;
@@ -84,30 +84,30 @@ class sfModsPlugin implements ArrayAccess
 
         // Map to translate RAD GMD terms to MODS resource types
         $map = [
-          'architectural drawing' => 'still image',
-          'cartographic material' => 'cartographic',
-          'graphic material' => 'still image',
-          'moving images' => 'moving image',
-          'multiple media' => 'mixed material',
-          'object' => 'three dimensional object',
-          'philatelic record' => 'still image',
-          'sound recording' => 'sound recording',
-          'technical drawing' => 'still image',
-          'textual record' => 'text',
+            'architectural drawing' => 'still image',
+            'cartographic material' => 'cartographic',
+            'graphic material' => 'still image',
+            'moving images' => 'moving image',
+            'multiple media' => 'mixed material',
+            'object' => 'three dimensional object',
+            'philatelic record' => 'still image',
+            'sound recording' => 'sound recording',
+            'technical drawing' => 'still image',
+            'textual record' => 'text',
         ];
 
         // Real MODS resource types
         foreach ($this->resource->getTermRelations(QubitTaxonomy::MODS_RESOURCE_TYPE_ID) as $relation) {
-          $typeOfResources[] = $relation->term->getName(['culture' => 'en']);
+            $typeOfResources[] = $relation->term->getName(['culture' => 'en']);
         }
 
         // Translated RAD material types
         foreach ($this->resource->getTermRelations(QubitTaxonomy::MATERIAL_TYPE_ID) as $relation) {
-          $gmd = trim(strtolower($relation->term->getName(['culture' => 'en'])));
+            $gmd = trim(strtolower($relation->term->getName(['culture' => 'en'])));
 
-          if (isset($map[$gmd])) {
-            $typeOfResources[] = $map[$gmd];
-          }
+            if (isset($map[$gmd])) {
+                $typeOfResources[] = $map[$gmd];
+            }
         }
 
         // Return without duplicates
@@ -117,7 +117,7 @@ class sfModsPlugin implements ArrayAccess
         $genres = [];
 
         foreach ($this->resource->getTermRelations(QubitTaxonomy::GENRE_ID) as $relation) {
-          array_push($genres, $relation->term->getName(['cultureFallback' => true]));
+            array_push($genres, $relation->term->getName(['cultureFallback' => true]));
         }
 
         return $genres;
@@ -140,34 +140,34 @@ class sfModsPlugin implements ArrayAccess
       case 'hasRightsReplicate':
         return $this->determineIfResourceHasRightsAct('Replicate');
     }
-  }
-
-  public function levelOfDescriptionAndIdentifier()
-  {
-    $string = '';
-
-    if (isset($this->resource->levelOfDescription)) {
-      $string .= $this->resource->levelOfDescription->__toString();
     }
 
-    if (isset($this->resource->identifier)) {
-      $string .= (!empty($string)) ? ' ' : '';
-      $string .= $this->resource->identifier;
+    public function levelOfDescriptionAndIdentifier()
+    {
+        $string = '';
+
+        if (isset($this->resource->levelOfDescription)) {
+            $string .= $this->resource->levelOfDescription->__toString();
+        }
+
+        if (isset($this->resource->identifier)) {
+            $string .= (!empty($string)) ? ' ' : '';
+            $string .= $this->resource->identifier;
+        }
+
+        return $string;
     }
 
-    return $string;
-  }
+    public function offsetExists($offset)
+    {
+        $args = func_get_args();
 
-  public function offsetExists($offset)
-  {
-    $args = func_get_args();
+        return call_user_func_array([$this, '__isset'], $args);
+    }
 
-    return call_user_func_array([$this, '__isset'], $args);
-  }
-
-  public function getDateTagNameForEventType($typeId)
-  {
-    switch ($typeId) {
+    public function getDateTagNameForEventType($typeId)
+    {
+        switch ($typeId) {
       case QubitTerm::CREATION_ID:
         return 'dateCreated';
 
@@ -177,80 +177,80 @@ class sfModsPlugin implements ArrayAccess
       default:
         return 'dateOther';
     }
-  }
-
-  public function getMatchingRadNotesByName($noteTypeName)
-  {
-    foreach (QubitTerm::getRADNotes() as $term) {
-      if ($term->getName() == $noteTypeName) {
-        return $this->getNoteTexts($term->id);
-      }
-    }
-  }
-
-  public function getNoteTexts($noteTypeId)
-  {
-    $notes = [];
-
-    $noteData = $this->resource->getNotesByType(['noteTypeId' => $noteTypeId]);
-    foreach ($noteData as $note) {
-      array_push($notes, $note->getContent(['cultureFallback' => true]));
     }
 
-    return $notes;
-  }
-
-  public function getIdForRightsActTerm($termName)
-  {
-    $criteria = new Criteria();
-    $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::RIGHT_ACT_ID);
-    $criteria->add(QubitTerm::SOURCE_CULTURE, 'en');
-    $criteria->addJoin(QubitTermI18n::ID, QubitTerm::ID);
-    $criteria->add(QubitTermI18n::NAME, $termName);
-
-    if ($term = QubitTerm::getOne($criteria)) {
-      return $term->id;
+    public function getMatchingRadNotesByName($noteTypeName)
+    {
+        foreach (QubitTerm::getRADNotes() as $term) {
+            if ($term->getName() == $noteTypeName) {
+                return $this->getNoteTexts($term->id);
+            }
+        }
     }
 
-    return false;
-  }
+    public function getNoteTexts($noteTypeId)
+    {
+        $notes = [];
 
-  public function determineIfResourceHasRightsAct($actName)
-  {
-    $criteria = new Criteria();
-    $criteria->add(QubitInformationObject::ID, $this->resource->id);
-    $criteria->addJoin(QubitRelation::SUBJECT_ID, QubitInformationObject::ID);
-    $criteria->addJoin(QubitGrantedRight::RIGHTS_ID, QubitRelation::OBJECT_ID);
-    $criteria->add(QubitGrantedRight::ACT_ID, $this->getIdForRightsActTerm($actName));
+        $noteData = $this->resource->getNotesByType(['noteTypeId' => $noteTypeId]);
+        foreach ($noteData as $note) {
+            array_push($notes, $note->getContent(['cultureFallback' => true]));
+        }
 
-    return QubitRights::getOne($criteria);
-  }
+        return $notes;
+    }
 
-  public function offsetGet($offset)
-  {
-    $args = func_get_args();
+    public function getIdForRightsActTerm($termName)
+    {
+        $criteria = new Criteria();
+        $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::RIGHT_ACT_ID);
+        $criteria->add(QubitTerm::SOURCE_CULTURE, 'en');
+        $criteria->addJoin(QubitTermI18n::ID, QubitTerm::ID);
+        $criteria->add(QubitTermI18n::NAME, $termName);
 
-    return call_user_func_array([$this, '__get'], $args);
-  }
+        if ($term = QubitTerm::getOne($criteria)) {
+            return $term->id;
+        }
 
-  public function offsetSet($offset, $value)
-  {
-    $args = func_get_args();
+        return false;
+    }
 
-    return call_user_func_array([$this, '__set'], $args);
-  }
+    public function determineIfResourceHasRightsAct($actName)
+    {
+        $criteria = new Criteria();
+        $criteria->add(QubitInformationObject::ID, $this->resource->id);
+        $criteria->addJoin(QubitRelation::SUBJECT_ID, QubitInformationObject::ID);
+        $criteria->addJoin(QubitGrantedRight::RIGHTS_ID, QubitRelation::OBJECT_ID);
+        $criteria->add(QubitGrantedRight::ACT_ID, $this->getIdForRightsActTerm($actName));
 
-  public function offsetUnset($offset)
-  {
-    $args = func_get_args();
+        return QubitRights::getOne($criteria);
+    }
 
-    return call_user_func_array([$this, '__unset'], $args);
-  }
+    public function offsetGet($offset)
+    {
+        $args = func_get_args();
 
-  protected function baseUrl()
-  {
-    $baseUrl = QubitSetting::getByName('siteBaseUrl');
+        return call_user_func_array([$this, '__get'], $args);
+    }
 
-    return (null == $baseUrl) ? 'http://'.gethostname() : $baseUrl;
-  }
+    public function offsetSet($offset, $value)
+    {
+        $args = func_get_args();
+
+        return call_user_func_array([$this, '__set'], $args);
+    }
+
+    public function offsetUnset($offset)
+    {
+        $args = func_get_args();
+
+        return call_user_func_array([$this, '__unset'], $args);
+    }
+
+    protected function baseUrl()
+    {
+        $baseUrl = QubitSetting::getByName('siteBaseUrl');
+
+        return (null == $baseUrl) ? 'http://'.gethostname() : $baseUrl;
+    }
 }

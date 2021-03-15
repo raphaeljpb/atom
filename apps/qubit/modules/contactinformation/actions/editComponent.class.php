@@ -19,96 +19,96 @@
 
 class ContactInformationEditComponent extends sfComponent
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'city',
-    'contactPerson',
-    'contactType',
-    'countryCode',
-    'email',
-    'fax',
-    'latitude',
-    'longitude',
-    'note',
-    'region',
-    'postalCode',
-    'primaryContact',
-    'telephone',
-    'streetAddress',
-    'website', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'city',
+        'contactPerson',
+        'contactType',
+        'countryCode',
+        'email',
+        'fax',
+        'latitude',
+        'longitude',
+        'note',
+        'region',
+        'postalCode',
+        'primaryContact',
+        'telephone',
+        'streetAddress',
+        'website', ];
 
-  public function processForm()
-  {
-    // HACK For now, parameter name and action name are the same. Should
-    // really be configurable, ideally by interpreting
-    // $form->getWidgetSchema()->getNameFormat()?
-    $params = [$this->request[$this->actionName]];
-    if (isset($this->request["{$this->actionName}s"])) {
-      // If dialog JavaScript did it's work, then use array of parameters
-      $params = $this->request["{$this->actionName}s"];
+    public function processForm()
+    {
+        // HACK For now, parameter name and action name are the same. Should
+        // really be configurable, ideally by interpreting
+        // $form->getWidgetSchema()->getNameFormat()?
+        $params = [$this->request[$this->actionName]];
+        if (isset($this->request["{$this->actionName}s"])) {
+            // If dialog JavaScript did it's work, then use array of parameters
+            $params = $this->request["{$this->actionName}s"];
+        }
+
+        foreach ($params as $item) {
+            // Continue only if user typed something
+            foreach ($item as $value) {
+                if (0 < strlen($value)) {
+                    break;
+                }
+            }
+
+            if (1 > strlen($value)) {
+                continue;
+            }
+
+            $this->form->bind($item);
+            if ($this->form->isValid()) {
+                if (isset($item['id'])) {
+                    $this->contactInformation = QubitContactInformation::getById(preg_replace('/^.*\/(\d+)$/', '$1', $item['id']));
+                } else {
+                    $this->resource->contactInformations[] = $this->contactInformation = new QubitContactInformation();
+                }
+
+                foreach ($this->form as $field) {
+                    if (isset($item[$field->getName()])) {
+                        $this->processField($field);
+                    }
+                }
+
+                if (isset($item['id'])) {
+                    $this->contactInformation->save();
+
+                    if ($this->contactInformation->primaryContact) {
+                        $this->contactInformation->makePrimaryContact();
+                    }
+                }
+            }
+        }
+
+        if (isset($this->request->deleteContactInformations)) {
+            foreach ($this->request->deleteContactInformations as $item) {
+                $contactInformation = QubitContactInformation::getById($item);
+
+                if (isset($contactInformation)) {
+                    $contactInformation->delete();
+                }
+            }
+        }
     }
 
-    foreach ($params as $item) {
-      // Continue only if user typed something
-      foreach ($item as $value) {
-        if (0 < strlen($value)) {
-          break;
+    public function execute($request)
+    {
+        $this->form = new sfForm();
+        $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+        $this->form->getWidgetSchema()->setNameFormat('editContactInformation[%s]');
+
+        foreach ($this::$NAMES as $name) {
+            $this->addField($name);
         }
-      }
-
-      if (1 > strlen($value)) {
-        continue;
-      }
-
-      $this->form->bind($item);
-      if ($this->form->isValid()) {
-        if (isset($item['id'])) {
-          $this->contactInformation = QubitContactInformation::getById(preg_replace('/^.*\/(\d+)$/', '$1', $item['id']));
-        } else {
-          $this->resource->contactInformations[] = $this->contactInformation = new QubitContactInformation();
-        }
-
-        foreach ($this->form as $field) {
-          if (isset($item[$field->getName()])) {
-            $this->processField($field);
-          }
-        }
-
-        if (isset($item['id'])) {
-          $this->contactInformation->save();
-
-          if ($this->contactInformation->primaryContact) {
-            $this->contactInformation->makePrimaryContact();
-          }
-        }
-      }
     }
 
-    if (isset($this->request->deleteContactInformations)) {
-      foreach ($this->request->deleteContactInformations as $item) {
-        $contactInformation = QubitContactInformation::getById($item);
-
-        if (isset($contactInformation)) {
-          $contactInformation->delete();
-        }
-      }
-    }
-  }
-
-  public function execute($request)
-  {
-    $this->form = new sfForm();
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-    $this->form->getWidgetSchema()->setNameFormat('editContactInformation[%s]');
-
-    foreach ($this::$NAMES as $name) {
-      $this->addField($name);
-    }
-  }
-
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'countryCode':
         $this->form->setValidator('countryCode', new sfValidatorI18nChoiceCountry());
         $this->form->setWidget('countryCode', new sfWidgetFormI18nChoiceCountry(['add_empty' => true, 'culture' => $this->context->user->getCulture()]));
@@ -142,13 +142,13 @@ class ContactInformationEditComponent extends sfComponent
 
         break;
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       default:
         $this->contactInformation[$field->getName()] = $this->form->getValue($field->getName());
     }
-  }
+    }
 }

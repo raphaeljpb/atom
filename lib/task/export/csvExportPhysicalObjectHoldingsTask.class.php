@@ -24,52 +24,74 @@
  */
 class csvExportPhysicalObjectHoldingsTask extends arBaseTask
 {
-  /**
-   * @see sfTask
-   *
-   * @param mixed $arguments
-   * @param mixed $options
-   */
-  public function execute($arguments = [], $options = [])
-  {
-    parent::execute($arguments, $options);
+    /**
+     * @see sfTask
+     *
+     * @param mixed $arguments
+     * @param mixed $options
+     */
+    public function execute($arguments = [], $options = [])
+    {
+        parent::execute($arguments, $options);
 
-    $this->log('Exporting physical storage holdings report..');
+        $this->log('Exporting physical storage holdings report..');
 
-    $report = new QubitPhysicalObjectCsvHoldingsReport($this->getReportOptions($options));
-    $report->write($arguments['filename']);
+        $report = new QubitPhysicalObjectCsvHoldingsReport($this->getReportOptions($options));
+        $report->write($arguments['filename']);
 
-    $this->log('Done.');
-  }
+        $this->log('Done.');
+    }
 
-  /**
-   * @see sfTask
-   */
-  protected function configure()
-  {
-    $this->addArguments([
-      new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'Output filename'),
-    ]);
+    /**
+     * @see sfTask
+     */
+    protected function configure()
+    {
+        $this->addArguments([
+            new sfCommandArgument('filename', sfCommandArgument::REQUIRED, 'Output filename'),
+        ]);
 
-    $this->addOptions([
-      new sfCommandOption('application', null,
-        sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null,
-        sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null,
-        sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+        $this->addOptions([
+            new sfCommandOption(
+                'application',
+                null,
+                sfCommandOption::PARAMETER_OPTIONAL,
+                'The application name',
+                true
+            ),
+            new sfCommandOption(
+                'env',
+                null,
+                sfCommandOption::PARAMETER_REQUIRED,
+                'The environment',
+                'cli'
+            ),
+            new sfCommandOption(
+                'connection',
+                null,
+                sfCommandOption::PARAMETER_REQUIRED,
+                'The connection name',
+                'propel'
+            ),
 
-      new sfCommandOption('omit-empty', 's',
-        sfCommandOption::PARAMETER_NONE, 'Omit physical storage without holdings'),
-      new sfCommandOption('holding-type', 'e',
-        sfCommandOption::PARAMETER_OPTIONAL,
-        'Only include specific holding type ("description", "accession", or "none")'),
-    ]);
+            new sfCommandOption(
+                'omit-empty',
+                's',
+                sfCommandOption::PARAMETER_NONE,
+                'Omit physical storage without holdings'
+            ),
+            new sfCommandOption(
+                'holding-type',
+                'e',
+                sfCommandOption::PARAMETER_OPTIONAL,
+                'Only include specific holding type ("description", "accession", or "none")'
+            ),
+        ]);
 
-    $this->namespace = 'csv';
-    $this->name = 'physicalstorage-holdings';
-    $this->briefDescription = 'Export physical storage holdings report as CSV data.';
-    $this->detailedDescription = <<<'EOF'
+        $this->namespace = 'csv';
+        $this->name = 'physicalstorage-holdings';
+        $this->briefDescription = 'Export physical storage holdings report as CSV data.';
+        $this->detailedDescription = <<<'EOF'
       Export physical storage holdings report as CSV data
 
       Physical storage containing no holdings will be included unless the --omit-empty option is used.
@@ -79,37 +101,38 @@ class csvExportPhysicalObjectHoldingsTask extends arBaseTask
       * "accession" (accessions)
       * "none" (omit non-empty physical storage)
 EOF;
-  }
+    }
 
-  protected function getReportOptions($options = [])
-  {
-    $this->validateOptions($options);
+    protected function getReportOptions($options = [])
+    {
+        $this->validateOptions($options);
 
-    $reportOptions = [];
+        $reportOptions = [];
 
-    $reportOptions['suppressEmpty'] = $options['omit-empty'];
+        $reportOptions['suppressEmpty'] = $options['omit-empty'];
 
-    if (!empty($type = strtolower($options['holding-type']))) {
-      $reportOptions['holdingType'] = ('none' == $type)
+        if (!empty($type = strtolower($options['holding-type']))) {
+            $reportOptions['holdingType'] = ('none' == $type)
         ? $type
         : QubitPhysicalObjectCsvHoldingsReport::$defaultTypeMap[$options['holding-type']];
+        }
+
+        return $reportOptions;
     }
 
-    return $reportOptions;
-  }
+    protected function validateOptions($options = [])
+    {
+        // Throw error if holding type isn't one of the allowed types
+        $allowedValues = array_merge(array_keys(QubitPhysicalObjectCsvHoldingsReport::$defaultTypeMap), ['none']);
 
-  protected function validateOptions($options = [])
-  {
-    // Throw error if holding type isn't one of the allowed types
-    $allowedValues = array_merge(array_keys(QubitPhysicalObjectCsvHoldingsReport::$defaultTypeMap), ['none']);
+        if (!empty($options['holding-type']) && !in_array($options['holding-type'], $allowedValues)) {
+            $message = sprintf(
+                'Invalid holding type "%s" (must be one of: %s).',
+                $options['holding-type'],
+                implode(', ', $allowedValues)
+            );
 
-    if (!empty($options['holding-type']) && !in_array($options['holding-type'], $allowedValues)) {
-      $message = sprintf(
-        'Invalid holding type "%s" (must be one of: %s).',
-        $options['holding-type'],
-        implode(', ', $allowedValues));
-
-      throw new Exception($message);
+            throw new Exception($message);
+        }
     }
-  }
 }

@@ -25,37 +25,37 @@
  */
 class arMigration0129
 {
-  public const VERSION = 129;
-  public const // The new database version
+    public const VERSION = 129;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    $newRadNotes = [
-      'Signatures note',
-      'Cast note',
-      'Credits note',
-    ];
+      $newRadNotes = [
+          'Signatures note',
+          'Cast note',
+          'Credits note',
+      ];
 
-    // Create RAD note types if they don't already exist
-    foreach ($newRadNotes as $note) {
-      $criteria = new Criteria();
-      $criteria->add(QubitTerm::PARENT_ID, QubitTerm::ROOT_ID);
-      $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::RAD_NOTE_ID);
-      $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
-      $criteria->add(QubitTermI18n::NAME, $note);
-      $criteria->add(QubitTermI18n::CULTURE, 'en');
+      // Create RAD note types if they don't already exist
+      foreach ($newRadNotes as $note) {
+          $criteria = new Criteria();
+          $criteria->add(QubitTerm::PARENT_ID, QubitTerm::ROOT_ID);
+          $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::RAD_NOTE_ID);
+          $criteria->addJoin(QubitTerm::ID, QubitTermI18n::ID);
+          $criteria->add(QubitTermI18n::NAME, $note);
+          $criteria->add(QubitTermI18n::CULTURE, 'en');
 
-      if (null == QubitTerm::getOne($criteria)) {
-        $term = new QubitTerm();
-        $term->name = $note;
-        $term->culture = 'en';
-        $term->parentId = QubitTerm::ROOT_ID;
-        $term->taxonomyId = QubitTaxonomy::RAD_NOTE_ID;
-        $term->save();
+          if (null == QubitTerm::getOne($criteria)) {
+              $term = new QubitTerm();
+              $term->name = $note;
+              $term->culture = 'en';
+              $term->parentId = QubitTerm::ROOT_ID;
+              $term->taxonomyId = QubitTaxonomy::RAD_NOTE_ID;
+              $term->save();
+          }
       }
-    }
 
-    return true;
+      return true;
   }
 }

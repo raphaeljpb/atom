@@ -25,46 +25,46 @@
       <h2><?php echo sfConfig::get('app_ui_label_facetstitle'); ?></h2>
 
       <?php echo get_partial('search/aggregation', [
-        'id' => '#facet-languages',
-        'label' => __('Language'),
-        'name' => 'languages',
-        'aggs' => $aggs,
-        'filters' => $search->filters, ]); ?>
+          'id' => '#facet-languages',
+          'label' => __('Language'),
+          'name' => 'languages',
+          'aggs' => $aggs,
+          'filters' => $search->filters, ]); ?>
 
       <?php echo get_partial('search/aggregation', [
-        'id' => '#facet-archivetype',
-        'label' => __('Archive type'),
-        'name' => 'types',
-        'aggs' => $aggs,
-        'filters' => $search->filters, ]); ?>
+          'id' => '#facet-archivetype',
+          'label' => __('Archive type'),
+          'name' => 'types',
+          'aggs' => $aggs,
+          'filters' => $search->filters, ]); ?>
 
       <?php echo get_partial('search/aggregation', [
-        'id' => '#facet-province',
-        'label' => __('Geographic Region'),
-        'name' => 'regions',
-        'aggs' => $aggs,
-        'filters' => $search->filters, ]); ?>
+          'id' => '#facet-province',
+          'label' => __('Geographic Region'),
+          'name' => 'regions',
+          'aggs' => $aggs,
+          'filters' => $search->filters, ]); ?>
 
       <?php echo get_partial('search/aggregation', [
-        'id' => '#facet-geographicsubregion',
-        'label' => __('Geographic Subregion'),
-        'name' => 'geographicSubregions',
-        'aggs' => $aggs,
-        'filters' => $search->filters, ]); ?>
+          'id' => '#facet-geographicsubregion',
+          'label' => __('Geographic Subregion'),
+          'name' => 'geographicSubregions',
+          'aggs' => $aggs,
+          'filters' => $search->filters, ]); ?>
 
       <?php echo get_partial('search/aggregation', [
-        'id' => '#facet-locality',
-        'label' => __('Locality'),
-        'name' => 'locality',
-        'aggs' => $aggs,
-        'filters' => $search->filters, ]); ?>
+          'id' => '#facet-locality',
+          'label' => __('Locality'),
+          'name' => 'locality',
+          'aggs' => $aggs,
+          'filters' => $search->filters, ]); ?>
 
       <?php echo get_partial('search/aggregation', [
-        'id' => '#facet-thematicarea',
-        'label' => __('Thematic Area'),
-        'name' => 'thematicAreas',
-        'aggs' => $aggs,
-        'filters' => $search->filters, ]); ?>
+          'id' => '#facet-thematicarea',
+          'label' => __('Thematic Area'),
+          'name' => 'thematicAreas',
+          'aggs' => $aggs,
+          'filters' => $search->filters, ]); ?>
 
     </div>
 
@@ -78,19 +78,19 @@
     <div class="row">
       <div class="span4">
         <?php echo get_component('search', 'inlineSearch', [
-          'label' => __('Search %1%', ['%1%' => strtolower(sfConfig::get('app_ui_label_repository'))]), ]); ?>
+            'label' => __('Search %1%', ['%1%' => strtolower(sfConfig::get('app_ui_label_repository'))]), ]); ?>
       </div>
 
       <?php echo get_partial('default/viewPicker', ['view' => $view, 'cardView' => $cardView,
-        'tableView' => $tableView, 'module' => 'repository', ]); ?>
+          'tableView' => $tableView, 'module' => 'repository', ]); ?>
 
       <div class="pickers">
         <?php echo get_partial('default/sortPickers',
           [
-            'options' => [
-              'lastUpdated' => __('Date modified'),
-              'alphabetic' => __('Name'),
-              'identifier' => __('Identifier'), ], ]); ?>
+              'options' => [
+                  'lastUpdated' => __('Date modified'),
+                  'alphabetic' => __('Name'),
+                  'identifier' => __('Identifier'), ], ]); ?>
       </div>
     </div>
   </section>
@@ -99,9 +99,9 @@
     <a href="#" id="toggle-advanced-filters" class="advanced-search-toggle"><?php echo __('Advanced search options'); ?></a>
     <div id="advanced-repository-filters" class="advanced-search">
       <?php echo get_component('repository', 'advancedFilters', [
-        'thematicAreas' => $thematicAreas,
-        'repositories' => $repositories,
-        'repositoryTypes' => $repositoryTypes, ] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()); ?>
+          'thematicAreas' => $thematicAreas,
+          'repositories' => $repositories,
+          'repositoryTypes' => $repositoryTypes, ] + $sf_data->getRaw('sf_request')->getParameterHolder()->getAll()); ?>
     </div>
   </section>
 

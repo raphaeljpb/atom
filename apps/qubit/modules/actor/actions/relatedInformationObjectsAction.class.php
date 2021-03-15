@@ -19,98 +19,98 @@
 
 class ActorRelatedInformationObjectsAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
+    public function execute($request)
+    {
+        $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
 
-    if ((empty($request->actorId) || !ctype_digit($request->actorId))
+        if ((empty($request->actorId) || !ctype_digit($request->actorId))
       || (empty($request->page) || !ctype_digit($request->page))
       || (isset($request->eventTypeId) && !ctype_digit($request->eventTypeId))) {
-      $this->forward404();
+            $this->forward404();
+        }
+
+        $limit = sfConfig::get('app_hits_per_page', 10);
+        $culture = $this->context->user->getCulture();
+
+        // Avoid pagination over ES' max result window config (default: 10000)
+        $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
+
+        if ((int) $limit * (int) $request->page > $maxResultWindow) {
+            // Return nothing to not break the list
+            return;
+        }
+
+        $resultSet = self::getRelatedInformationObjects($request->actorId, $request->page, $limit, $request->eventTypeId);
+
+        $pager = new QubitSearchPager($resultSet);
+        $pager->setMaxPerPage($limit);
+        $pager->setPage($request->page);
+        $pager->init();
+
+        sfContext::getInstance()->getConfiguration()->loadHelpers(['Qubit', 'Url']);
+
+        $results = [];
+        foreach ($pager->getResults() as $item) {
+            $doc = $item->getData();
+            $results[] = [
+                'url' => url_for(['module' => 'informationobject', 'slug' => $doc['slug']]),
+                'title' => render_value_inline(get_search_i18n($doc, 'title', ['allowEmpty' => false, 'culture' => $culture, 'cultureFallback' => true])),
+            ];
+        }
+
+        $data = [
+            'results' => $results,
+            'start' => $pager->getFirstIndice(),
+            'end' => $pager->getLastIndice(),
+            'currentPage' => $pager->getPage(),
+            'lastPage' => $pager->getLastPage(),
+        ];
+
+        return $this->renderText(json_encode($data));
     }
 
-    $limit = sfConfig::get('app_hits_per_page', 10);
-    $culture = $this->context->user->getCulture();
+    /**
+     * Get related IOs by event type. If no event type id
+     * is provided, 'Subject of' IOs are returned.
+     *
+     * @param mixed      $actorId
+     * @param mixed      $page
+     * @param mixed      $limit
+     * @param null|mixed $eventTypeId
+     */
+    public static function getRelatedInformationObjects($actorId, $page, $limit, $eventTypeId = null)
+    {
+        $query = new \Elastica\Query();
+        $queryBool = new \Elastica\Query\BoolQuery();
 
-    // Avoid pagination over ES' max result window config (default: 10000)
-    $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
+        if (!isset($eventTypeId)) {
+            // Get subject of IOs (name access points)
+            $queryTerm = new \Elastica\Query\Term(['names.id' => $actorId]);
 
-    if ((int) $limit * (int) $request->page > $maxResultWindow) {
-      // Return nothing to not break the list
-      return;
+            $queryBool->addMust($queryTerm);
+        } else {
+            // Get related by event IOs
+            $queryBoolDates = new \Elastica\Query\BoolQuery();
+            $queryBoolDates->addMust(new \Elastica\Query\Term(['dates.actorId' => $actorId]));
+            $queryBoolDates->addMust(new \Elastica\Query\Term(['dates.typeId' => $eventTypeId]));
+
+            // Use nested query and mapping object to allow querying
+            // over the actor and event ids from the same event
+            $queryNested = new \Elastica\Query\Nested();
+            $queryNested->setPath('dates');
+            $queryNested->setQuery($queryBoolDates);
+
+            $queryBool->addMust($queryNested);
+        }
+
+        QubitAclSearch::filterDrafts($queryBool);
+        $title = sprintf('i18n.%s.title.alphasort', sfContext::getInstance()->user->getCulture());
+
+        $query->setQuery($queryBool);
+        $query->setSort([$title => 'asc']);
+        $query->setSize($limit);
+        $query->setFrom($limit * ($page - 1));
+
+        return QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($query);
     }
-
-    $resultSet = self::getRelatedInformationObjects($request->actorId, $request->page, $limit, $request->eventTypeId);
-
-    $pager = new QubitSearchPager($resultSet);
-    $pager->setMaxPerPage($limit);
-    $pager->setPage($request->page);
-    $pager->init();
-
-    sfContext::getInstance()->getConfiguration()->loadHelpers(['Qubit', 'Url']);
-
-    $results = [];
-    foreach ($pager->getResults() as $item) {
-      $doc = $item->getData();
-      $results[] = [
-        'url' => url_for(['module' => 'informationobject', 'slug' => $doc['slug']]),
-        'title' => render_value_inline(get_search_i18n($doc, 'title', ['allowEmpty' => false, 'culture' => $culture, 'cultureFallback' => true])),
-      ];
-    }
-
-    $data = [
-      'results' => $results,
-      'start' => $pager->getFirstIndice(),
-      'end' => $pager->getLastIndice(),
-      'currentPage' => $pager->getPage(),
-      'lastPage' => $pager->getLastPage(),
-    ];
-
-    return $this->renderText(json_encode($data));
-  }
-
-  /**
-   * Get related IOs by event type. If no event type id
-   * is provided, 'Subject of' IOs are returned.
-   *
-   * @param mixed      $actorId
-   * @param mixed      $page
-   * @param mixed      $limit
-   * @param null|mixed $eventTypeId
-   */
-  public static function getRelatedInformationObjects($actorId, $page, $limit, $eventTypeId = null)
-  {
-    $query = new \Elastica\Query();
-    $queryBool = new \Elastica\Query\BoolQuery();
-
-    if (!isset($eventTypeId)) {
-      // Get subject of IOs (name access points)
-      $queryTerm = new \Elastica\Query\Term(['names.id' => $actorId]);
-
-      $queryBool->addMust($queryTerm);
-    } else {
-      // Get related by event IOs
-      $queryBoolDates = new \Elastica\Query\BoolQuery();
-      $queryBoolDates->addMust(new \Elastica\Query\Term(['dates.actorId' => $actorId]));
-      $queryBoolDates->addMust(new \Elastica\Query\Term(['dates.typeId' => $eventTypeId]));
-
-      // Use nested query and mapping object to allow querying
-      // over the actor and event ids from the same event
-      $queryNested = new \Elastica\Query\Nested();
-      $queryNested->setPath('dates');
-      $queryNested->setQuery($queryBoolDates);
-
-      $queryBool->addMust($queryNested);
-    }
-
-    QubitAclSearch::filterDrafts($queryBool);
-    $title = sprintf('i18n.%s.title.alphasort', sfContext::getInstance()->user->getCulture());
-
-    $query->setQuery($queryBool);
-    $query->setSort([$title => 'asc']);
-    $query->setSize($limit);
-    $query->setFrom($limit * ($page - 1));
-
-    return QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($query);
-  }
 }

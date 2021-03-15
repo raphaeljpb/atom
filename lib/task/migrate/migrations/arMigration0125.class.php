@@ -25,21 +25,21 @@
  */
 class arMigration0125
 {
-  public const VERSION = 125;
-  public const // The new database version
+    public const VERSION = 125;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    if (null === QubitMenu::getByName('staticPagesMenu')) {
-      $node = new QubitMenu();
-      $node->parentId = QubitMenu::ROOT_ID;
-      $node->name = 'staticPagesMenu';
-      $node->label = 'Static pages';
-      $node->culture = 'en';
-      $node->save();
-    }
+      if (null === QubitMenu::getByName('staticPagesMenu')) {
+          $node = new QubitMenu();
+          $node->parentId = QubitMenu::ROOT_ID;
+          $node->name = 'staticPagesMenu';
+          $node->label = 'Static pages';
+          $node->culture = 'en';
+          $node->save();
+      }
 
-    return true;
+      return true;
   }
 }

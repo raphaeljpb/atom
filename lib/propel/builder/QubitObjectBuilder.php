@@ -21,259 +21,259 @@ require_once 'propel/engine/builder/om/php5/PHP5ObjectBuilder.php';
 
 class QubitObjectBuilder extends PHP5ObjectBuilder
 {
-  protected $basePeerClassName;
-  protected $classNameColumn;
-  protected $cultureColumn;
-  protected $nestedSetLeftColumn;
-  protected $nestedSetRightColumn;
-  protected $sourceCultureColumn;
-  protected $inheritanceFk;
-  protected $selfFk;
-  protected $i18nFk;
-  protected $emulateOnDeleteCascade;
-  protected $emulateOnDeleteSetNull;
+    protected $basePeerClassName;
+    protected $classNameColumn;
+    protected $cultureColumn;
+    protected $nestedSetLeftColumn;
+    protected $nestedSetRightColumn;
+    protected $sourceCultureColumn;
+    protected $inheritanceFk;
+    protected $selfFk;
+    protected $i18nFk;
+    protected $emulateOnDeleteCascade;
+    protected $emulateOnDeleteSetNull;
 
-  public function __construct(Table $table)
-  {
-    parent::__construct($table);
+    public function __construct(Table $table)
+    {
+        parent::__construct($table);
 
-    $this->initialize($table);
-  }
-
-  public function initialize(Table $table)
-  {
-    $this->basePeerClassName = preg_replace('/.*\./', null, $this->getBasePeer($table));
-
-    foreach ($table->getColumns() as $column) {
-      if ('class_name' == $column->getName()) {
-        $this->classNameColumn = $column;
-      }
-
-      if ($column->getAttribute('isCulture')) {
-        $this->cultureColumn = $column;
-      }
-
-      if ($column->getAttribute('nestedSetLeftKey')) {
-        $this->nestedSetLeftColumn = $column;
-      }
-
-      if ($column->getAttribute('nestedSetRightKey')) {
-        $this->nestedSetRightColumn = $column;
-      }
-
-      if ('source_culture' == $column->getName()) {
-        $this->sourceCultureColumn = $column;
-      }
+        $this->initialize($table);
     }
 
-    foreach ($table->getForeignKeys() as $fk) {
-      foreach ($fk->getLocalColumns() as $localName) {
-        if ($table->getColumn($localName)->getAttribute('inheritanceKey')) {
-          $this->inheritanceFk = $fk;
-        }
-      }
+    public function initialize(Table $table)
+    {
+        $this->basePeerClassName = preg_replace('/.*\./', null, $this->getBasePeer($table));
 
-      if ($fk->getForeignTableName() == $table->getName()) {
-        $this->selfFk = $fk;
-      }
-    }
+        foreach ($table->getColumns() as $column) {
+            if ('class_name' == $column->getName()) {
+                $this->classNameColumn = $column;
+            }
 
-    foreach ($table->getReferrers() as $refFk) {
-      if ($refFk->getTable()->getName() == $table->getAttribute('i18nTable')) {
-        $this->i18nFk = $refFk;
-      }
+            if ($column->getAttribute('isCulture')) {
+                $this->cultureColumn = $column;
+            }
 
-      if (!$this->getPlatform()->supportsNativeDeleteTrigger() || $this->getBuildProperty('emulateForeignKeyConstraints')) {
-        if (ForeignKey::CASCADE == $refFk->getOnDelete()) {
-          $this->emulateOnDeleteCascade = true;
+            if ($column->getAttribute('nestedSetLeftKey')) {
+                $this->nestedSetLeftColumn = $column;
+            }
+
+            if ($column->getAttribute('nestedSetRightKey')) {
+                $this->nestedSetRightColumn = $column;
+            }
+
+            if ('source_culture' == $column->getName()) {
+                $this->sourceCultureColumn = $column;
+            }
         }
 
-        if (ForeignKey::SETNULL == $refFk->getOnDelete()) {
-          $this->emulateOnDeleteSetNull = true;
+        foreach ($table->getForeignKeys() as $fk) {
+            foreach ($fk->getLocalColumns() as $localName) {
+                if ($table->getColumn($localName)->getAttribute('inheritanceKey')) {
+                    $this->inheritanceFk = $fk;
+                }
+            }
+
+            if ($fk->getForeignTableName() == $table->getName()) {
+                $this->selfFk = $fk;
+            }
         }
-      }
-    }
-  }
 
-  public function getClassName()
-  {
-    return $this->getBuildProperty('basePrefix').ucfirst($this->getTable()->getPhpName());
-  }
+        foreach ($table->getReferrers() as $refFk) {
+            if ($refFk->getTable()->getName() == $table->getAttribute('i18nTable')) {
+                $this->i18nFk = $refFk;
+            }
 
-  public function getColumnConstant(Column $column)
-  {
-    return "{$this->getPeerClassName()}::".strtoupper($column->getName());
-  }
+            if (!$this->getPlatform()->supportsNativeDeleteTrigger() || $this->getBuildProperty('emulateForeignKeyConstraints')) {
+                if (ForeignKey::CASCADE == $refFk->getOnDelete()) {
+                    $this->emulateOnDeleteCascade = true;
+                }
 
-  public function getPeerClassName()
-  {
-    return $this->getStubObjectBuilder()->getClassName();
-  }
-
-  public function getFkPhpName(ForeignKey $fk)
-  {
-    if (count($localNames = $fk->getLocalColumns()) < 2 && '_id' == substr($localNames[0], -3)) {
-      return substr($this->getTable()->getColumn($localNames[0])->getPhpName(), 0, -2);
+                if (ForeignKey::SETNULL == $refFk->getOnDelete()) {
+                    $this->emulateOnDeleteSetNull = true;
+                }
+            }
+        }
     }
 
-    return $this->getFkPhpNameAffix($fk);
-  }
-
-  public function getFkVarName(ForeignKey $fk)
-  {
-    return strtolower(substr($phpName = $this->getFkPhpName($fk), 0, 1)).substr($phpName, 1);
-  }
-
-  public function getRefFkCollVarName(ForeignKey $refFk)
-  {
-    return strtolower(substr($phpName = $this->getRefFkPhpNameAffix($refFk, true), 0, 1)).substr($phpName, 1);
-  }
-
-  protected function getBaseClass()
-  {
-    if (isset($this->inheritanceFk)) {
-      return self::getNewObjectBuilder($this->getForeignTable($this->inheritanceFk))->getObjectClassName();
-    }
-  }
-
-  protected function getColumnVarName(Column $column)
-  {
-    return $column->getPhpName();
-  }
-
-  protected function getRetrieveMethodName()
-  {
-    $names = [];
-    foreach ($this->getTable()->getPrimaryKey() as $column) {
-      $names[] = ucfirst($column->getPhpName());
+    public function getClassName()
+    {
+        return $this->getBuildProperty('basePrefix').ucfirst($this->getTable()->getPhpName());
     }
 
-    return 'getBy'.implode($names, 'And');
-  }
-
-  protected function getVarName($plural = null)
-  {
-    $name = $this->getTable()->getPhpName();
-    if (!empty($plural)) {
-      $name .= 's';
+    public function getColumnConstant(Column $column)
+    {
+        return "{$this->getPeerClassName()}::".strtoupper($column->getName());
     }
 
-    return $name;
-  }
-
-  protected function addClassOpen(&$script)
-  {
-    $this->refFks = [];
-    foreach ($this->getTable()->getReferrers() as $refFk) {
-      $foreignPeerBuilder = self::getNewPeerBuilder($refFk->getTable());
-
-      if ($foreignPeerBuilder->inheritanceFk != $refFk) {
-        $this->refFks[] = $refFk;
-      }
+    public function getPeerClassName()
+    {
+        return $this->getStubObjectBuilder()->getClassName();
     }
 
-    $extends = null;
-    if (isset($this->inheritanceFk)) {
-      $this->baseClassName = preg_replace('/.*\./', null, $this->getBaseClass());
-      $extends = " extends {$this->baseClassName}";
+    public function getFkPhpName(ForeignKey $fk)
+    {
+        if (count($localNames = $fk->getLocalColumns()) < 2 && '_id' == substr($localNames[0], -3)) {
+            return substr($this->getTable()->getColumn($localNames[0])->getPhpName(), 0, -2);
+        }
+
+        return $this->getFkPhpNameAffix($fk);
     }
 
-    $script .= <<<script
+    public function getFkVarName(ForeignKey $fk)
+    {
+        return strtolower(substr($phpName = $this->getFkPhpName($fk), 0, 1)).substr($phpName, 1);
+    }
+
+    public function getRefFkCollVarName(ForeignKey $refFk)
+    {
+        return strtolower(substr($phpName = $this->getRefFkPhpNameAffix($refFk, true), 0, 1)).substr($phpName, 1);
+    }
+
+    protected function getBaseClass()
+    {
+        if (isset($this->inheritanceFk)) {
+            return self::getNewObjectBuilder($this->getForeignTable($this->inheritanceFk))->getObjectClassName();
+        }
+    }
+
+    protected function getColumnVarName(Column $column)
+    {
+        return $column->getPhpName();
+    }
+
+    protected function getRetrieveMethodName()
+    {
+        $names = [];
+        foreach ($this->getTable()->getPrimaryKey() as $column) {
+            $names[] = ucfirst($column->getPhpName());
+        }
+
+        return 'getBy'.implode($names, 'And');
+    }
+
+    protected function getVarName($plural = null)
+    {
+        $name = $this->getTable()->getPhpName();
+        if (!empty($plural)) {
+            $name .= 's';
+        }
+
+        return $name;
+    }
+
+    protected function addClassOpen(&$script)
+    {
+        $this->refFks = [];
+        foreach ($this->getTable()->getReferrers() as $refFk) {
+            $foreignPeerBuilder = self::getNewPeerBuilder($refFk->getTable());
+
+            if ($foreignPeerBuilder->inheritanceFk != $refFk) {
+                $this->refFks[] = $refFk;
+            }
+        }
+
+        $extends = null;
+        if (isset($this->inheritanceFk)) {
+            $this->baseClassName = preg_replace('/.*\./', null, $this->getBaseClass());
+            $extends = " extends {$this->baseClassName}";
+        }
+
+        $script .= <<<script
 
 abstract class {$this->getClassName()}$extends implements ArrayAccess
 {
 script;
-  }
-
-  protected function addClassBody(&$script)
-  {
-    $this->addConstants($script);
-    $this->addSelectMethods($script);
-    $this->addRetrieveByPkMethods($script);
-
-    if (!isset($this->inheritanceFk)) {
-      $this->addUpdateMethods($script);
     }
 
-    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
-      $this->addAddOrderByPreorder($script);
-      $this->addAddRootsCriteria($script);
+    protected function addClassBody(&$script)
+    {
+        $this->addConstants($script);
+        $this->addSelectMethods($script);
+        $this->addRetrieveByPkMethods($script);
+
+        if (!isset($this->inheritanceFk)) {
+            $this->addUpdateMethods($script);
+        }
+
+        if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
+            $this->addAddOrderByPreorder($script);
+            $this->addAddRootsCriteria($script);
+        }
+
+        $this->addConstructor($script);
+        $this->addColumnMethods($script);
+
+        if (!isset($this->inheritanceFk)) {
+            $this->addNew($script);
+            $this->addDeleted($script);
+        }
+
+        $this->addManipulationMethods($script);
+
+        if ($this->isAddGenericAccessors()) {
+            $this->addGetByName($script);
+            $this->addGetByPosition($script);
+            $this->addToArray($script);
+        }
+
+        if ($this->isAddGenericMutators()) {
+            $this->addSetByName($script);
+            $this->addSetByPosition($script);
+            $this->addFromArray($script);
+        }
+
+        if (!isset($this->inheritanceFk)) {
+            $this->addGetPrimaryKey($script);
+            $this->addSetPrimaryKey($script);
+        }
+
+        $this->addFkMethods($script);
+        $this->addRefFkMethods($script);
+
+        if ($this->getTable()->getAttribute('isI18n')) {
+            if (count($this->getTable()->getPrimaryKey()) > 1) {
+                throw new Exception('i18n support only works with a single primary key');
+            }
+
+            $this->addI18nMethods($script);
+        }
+
+        if (isset($this->selfFk) && 'parent_id' == $this->selfFk->getLocalColumns()[0]) {
+            $this->addGetAncestorsAndSelfForAcl($script);
+        }
+
+        if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
+            $this->addHasChildren($script);
+            $this->addAddAncestorsCriteria($script);
+            $this->addAddDescendantsCriteria($script);
+            $this->addUpdateNestedSet($script);
+            $this->addDeleteFromNestedSet($script);
+            $this->addIsInTree($script);
+            $this->addIsRoot($script);
+            $this->addIsDescendantOf($script);
+            $this->addMoveToFirstChildOf($script);
+            $this->addMoveToLastChildOf($script);
+            $this->addMoveToPrevSiblingOf($script);
+            $this->addMoveToNextSiblingOf($script);
+            $this->addMoveSubtreeTo($script);
+            $this->addShiftRLValues($script);
+        }
+
+        $this->addCall($script);
     }
 
-    $this->addConstructor($script);
-    $this->addColumnMethods($script);
-
-    if (!isset($this->inheritanceFk)) {
-      $this->addNew($script);
-      $this->addDeleted($script);
-    }
-
-    $this->addManipulationMethods($script);
-
-    if ($this->isAddGenericAccessors()) {
-      $this->addGetByName($script);
-      $this->addGetByPosition($script);
-      $this->addToArray($script);
-    }
-
-    if ($this->isAddGenericMutators()) {
-      $this->addSetByName($script);
-      $this->addSetByPosition($script);
-      $this->addFromArray($script);
-    }
-
-    if (!isset($this->inheritanceFk)) {
-      $this->addGetPrimaryKey($script);
-      $this->addSetPrimaryKey($script);
-    }
-
-    $this->addFkMethods($script);
-    $this->addRefFkMethods($script);
-
-    if ($this->getTable()->getAttribute('isI18n')) {
-      if (count($this->getTable()->getPrimaryKey()) > 1) {
-        throw new Exception('i18n support only works with a single primary key');
-      }
-
-      $this->addI18nMethods($script);
-    }
-
-    if (isset($this->selfFk) && 'parent_id' == $this->selfFk->getLocalColumns()[0]) {
-      $this->addGetAncestorsAndSelfForAcl($script);
-    }
-
-    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
-      $this->addHasChildren($script);
-      $this->addAddAncestorsCriteria($script);
-      $this->addAddDescendantsCriteria($script);
-      $this->addUpdateNestedSet($script);
-      $this->addDeleteFromNestedSet($script);
-      $this->addIsInTree($script);
-      $this->addIsRoot($script);
-      $this->addIsDescendantOf($script);
-      $this->addMoveToFirstChildOf($script);
-      $this->addMoveToLastChildOf($script);
-      $this->addMoveToPrevSiblingOf($script);
-      $this->addMoveToNextSiblingOf($script);
-      $this->addMoveSubtreeTo($script);
-      $this->addShiftRLValues($script);
-    }
-
-    $this->addCall($script);
-  }
-
-  protected function addConstants(&$script)
-  {
-    $consts = [];
-    foreach ($this->getTable()->getColumns() as $column) {
-      $upperColumnName = strtoupper($column->getName());
-      $consts[] = <<<consts
+    protected function addConstants(&$script)
+    {
+        $consts = [];
+        foreach ($this->getTable()->getColumns() as $column) {
+            $upperColumnName = strtoupper($column->getName());
+            $consts[] = <<<consts
     {$upperColumnName} = '{$this->getTable()->getName()}.{$upperColumnName}'
 consts;
-    }
-    $consts = implode(",\n", $consts);
+        }
+        $consts = implode(",\n", $consts);
 
-    $script .= <<<script
+        $script .= <<<script
 
   const
     DATABASE_NAME = '{$this->getDatabase()->getName()}',
@@ -283,76 +283,76 @@ consts;
 {$consts};
 
 script;
-  }
+    }
 
-  protected function addSelectMethods(&$script)
-  {
-    $this->addAddSelectColumns($script);
+    protected function addSelectMethods(&$script)
+    {
+        $this->addAddSelectColumns($script);
 
-    $this->addGetFromRow($script);
-    $this->addClearCache($script);
+        $this->addGetFromRow($script);
+        $this->addClearCache($script);
 
-    $this->addGet($script);
-    $this->addGetAll($script);
-    $this->addGetOne($script);
-  }
+        $this->addGet($script);
+        $this->addGetAll($script);
+        $this->addGetOne($script);
+    }
 
-  protected function addAddSelectColumns(&$script)
-  {
-    $script .= <<<'script'
+    protected function addAddSelectColumns(&$script)
+    {
+        $script .= <<<'script'
 
   public static function addSelectColumns(Criteria $criteria)
   {
 
 script;
 
-    if (isset($this->inheritanceFk)) {
-      $foreignPeerBuilder = self::getNewPeerBuilder($this->getForeignTable($this->inheritanceFk));
+        if (isset($this->inheritanceFk)) {
+            $foreignPeerBuilder = self::getNewPeerBuilder($this->getForeignTable($this->inheritanceFk));
 
-      $adds = [];
-      foreach ($this->inheritanceFk->getLocalForeignMapping() as $localName => $foreignName) {
-        $adds[] = <<<adds
+            $adds = [];
+            foreach ($this->inheritanceFk->getLocalForeignMapping() as $localName => $foreignName) {
+                $adds[] = <<<adds
     \$criteria->addJoin({$this->getColumnConstant($this->getTable()->getColumn($localName))}, {$foreignPeerBuilder->getColumnConstant($this->getForeignTable($this->inheritanceFk)->getColumn($foreignName))});
 adds;
-      }
-      $adds = implode("\n", $adds);
+            }
+            $adds = implode("\n", $adds);
 
-      $script .= <<<script
+            $script .= <<<script
     parent::addSelectColumns(\$criteria);
 
 {$adds}
 
 
 script;
-    }
+        }
 
-    foreach ($this->getTable()->getColumns() as $column) {
-      if ($column->isLazyLoad()) {
-        continue;
-      }
+        foreach ($this->getTable()->getColumns() as $column) {
+            if ($column->isLazyLoad()) {
+                continue;
+            }
 
-      $script .= <<<script
+            $script .= <<<script
     \$criteria->addSelectColumn({$this->getColumnConstant($column)});
 
 script;
-    }
+        }
 
-    $script .= <<<'script'
+        $script .= <<<'script'
 
     return $criteria;
   }
 
 script;
-  }
-
-  protected function addClearCache(&$script)
-  {
-    // Cache subclass instances in the base class
-    if (isset($this->inheritanceFk)) {
-      return;
     }
 
-    $script .= <<<script
+    protected function addClearCache(&$script)
+    {
+        // Cache subclass instances in the base class
+        if (isset($this->inheritanceFk)) {
+            return;
+        }
+
+        $script .= <<<script
 
   public static function clearCache()
   {
@@ -360,30 +360,30 @@ script;
   }
 
 script;
-  }
-
-  protected function addGetFromRow(&$script)
-  {
-    // Cache subclass instances in the base class
-    if (isset($this->inheritanceFk)) {
-      return;
     }
 
-    // Object instances are indexed by primary keys.  In the case of
-    // multi table inheritance, all the primary keys are in the base table, so
-    // we get the primary key values directly from the result set and possibly
-    // avoid constructing a new object.  An alternative would be to construct a
-    // new object, but return an old object if one existed.
-    $keys = [];
-    foreach ($this->getTable()->getPrimaryKey() as $primaryKey) {
-      $position = $primaryKey->getPosition() - 1;
-      $keys[] = <<<keys
+    protected function addGetFromRow(&$script)
+    {
+        // Cache subclass instances in the base class
+        if (isset($this->inheritanceFk)) {
+            return;
+        }
+
+        // Object instances are indexed by primary keys.  In the case of
+        // multi table inheritance, all the primary keys are in the base table, so
+        // we get the primary key values directly from the result set and possibly
+        // avoid constructing a new object.  An alternative would be to construct a
+        // new object, but return an old object if one existed.
+        $keys = [];
+        foreach ($this->getTable()->getPrimaryKey() as $primaryKey) {
+            $position = $primaryKey->getPosition() - 1;
+            $keys[] = <<<keys
     \$keys['{$this->getColumnVarName($primaryKey)}'] = \$row[{$position}];
 keys;
-    }
-    $keys = implode("\n", $keys);
+        }
+        $keys = implode("\n", $keys);
 
-    $script .= <<<script
+        $script .= <<<script
 
   protected static
     \${$this->getVarName(true)} = array();
@@ -403,20 +403,20 @@ keys;
 
 script;
 
-    if (isset($this->classNameColumn)) {
-      $position = $this->classNameColumn->getPosition() - 1;
-      $script .= <<<script
+        if (isset($this->classNameColumn)) {
+            $position = $this->classNameColumn->getPosition() - 1;
+            $script .= <<<script
       \${$this->getVarName()} = new \$row[{$position}];
 
 script;
-    } else {
-      $script .= <<<script
+        } else {
+            $script .= <<<script
       \${$this->getVarName()} = new {$this->getObjectClassName()};
 
 script;
-    }
+        }
 
-    $script .= <<<script
+        $script .= <<<script
 
       \${$this->getVarName()}->keys = \$keys;
       \${$this->getVarName()}->row = \$row;
@@ -430,11 +430,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addGet(&$script)
-  {
-    $script .= <<<script
+    protected function addGet(&$script)
+    {
+        $script .= <<<script
 
   public static function get(Criteria \$criteria, array \$options = array())
   {
@@ -449,15 +449,15 @@ script;
   }
 
 script;
-  }
+    }
 
-  // The following three functions can disappear from multi table inheritance
-  // children once we have late static binding.  Children must have the same
-  // primary keys as the base table:
-  // http://php.net/manual/en/language.oop5.late-static-bindings.php
-  protected function addGetAll(&$script)
-  {
-    $script .= <<<'script'
+    // The following three functions can disappear from multi table inheritance
+    // children once we have late static binding.  Children must have the same
+    // primary keys as the base table:
+    // http://php.net/manual/en/language.oop5.late-static-bindings.php
+    protected function addGetAll(&$script)
+    {
+        $script .= <<<'script'
 
   public static function getAll(array $options = array())
   {
@@ -465,11 +465,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addGetOne(&$script)
-  {
-    $script .= <<<'script'
+    protected function addGetOne(&$script)
+    {
+        $script .= <<<'script'
 
   public static function getOne(Criteria $criteria, array $options = array())
   {
@@ -479,24 +479,24 @@ script;
   }
 
 script;
-  }
+    }
 
-  // Considder using getOne(), unless we drop that method.  Possibly add LIMIT
-  // 1 anyway.
-  protected function addRetrieveByPkMethods(&$script)
-  {
-    $args = [];
-    $adds = [];
-    foreach ($this->getTable()->getPrimaryKey() as $column) {
-      $args[] = "\${$this->getColumnVarName($column)}";
-      $adds[] = <<<adds
+    // Considder using getOne(), unless we drop that method.  Possibly add LIMIT
+    // 1 anyway.
+    protected function addRetrieveByPkMethods(&$script)
+    {
+        $args = [];
+        $adds = [];
+        foreach ($this->getTable()->getPrimaryKey() as $column) {
+            $args[] = "\${$this->getColumnVarName($column)}";
+            $adds[] = <<<adds
     \$criteria->add({$this->getColumnConstant($column)}, \${$this->getColumnVarName($column)});
 adds;
-    }
-    $args = implode(', ', $args);
-    $adds = implode("\n", $adds);
+        }
+        $args = implode(', ', $args);
+        $adds = implode("\n", $adds);
 
-    $script .= <<<script
+        $script .= <<<script
 
   public static function {$this->getRetrieveMethodName()}({$args}, array \$options = array())
   {
@@ -510,24 +510,24 @@ adds;
   }
 
 script;
-  }
-
-  protected function addUpdateMethods(&$script)
-  {
-    if (!empty($this->emulateOnDeleteCascade)) {
-      $this->addDoOnDeleteCascade($script);
     }
 
-    if (!empty($this->emulateOnDeleteSetNull)) {
-      $this->addDoOnDeleteSetNull($script);
+    protected function addUpdateMethods(&$script)
+    {
+        if (!empty($this->emulateOnDeleteCascade)) {
+            $this->addDoOnDeleteCascade($script);
+        }
+
+        if (!empty($this->emulateOnDeleteSetNull)) {
+            $this->addDoOnDeleteSetNull($script);
+        }
+
+        $this->addDoDelete($script);
     }
 
-    $this->addDoDelete($script);
-  }
-
-  protected function addDoDelete(&$script)
-  {
-    $script .= <<<'script'
+    protected function addDoDelete(&$script)
+    {
+        $script .= <<<'script'
 
   public static function doDelete(Criteria $criteria, $connection = null)
   {
@@ -540,23 +540,23 @@ script;
 
 script;
 
-    if (!empty($this->emulateOnDeleteCascade)) {
-      $script .= <<<'script'
+        if (!empty($this->emulateOnDeleteCascade)) {
+            $script .= <<<'script'
 
     $affectedRows += self::doOnDeleteCascade($criteria, $connection);
 
 script;
-    }
+        }
 
-    if (!empty($this->emulateOnDeleteSetNull)) {
-      $script .= <<<'script'
+        if (!empty($this->emulateOnDeleteSetNull)) {
+            $script .= <<<'script'
 
     $affectedRows += self::doOnDeleteSetNull($criteria, $connection);
 
 script;
-    }
+        }
 
-    $script .= <<<script
+        $script .= <<<script
 
     \$affectedRows += {$this->basePeerClassName}::doDelete(\$criteria, \$connection);
 
@@ -564,11 +564,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addAddOrderByPreorder(&$script)
-  {
-    $script .= <<<script
+    protected function addAddOrderByPreorder(&$script)
+    {
+        $script .= <<<script
 
   public static function addOrderByPreorder(Criteria \$criteria, \$order = Criteria::ASC)
   {
@@ -581,19 +581,19 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addAddRootsCriteria(&$script)
-  {
-    $adds = [];
-    foreach ($this->selfFk->getLocalColumns() as $localName) {
-      $adds[] = <<<script
+    protected function addAddRootsCriteria(&$script)
+    {
+        $adds = [];
+        foreach ($this->selfFk->getLocalColumns() as $localName) {
+            $adds[] = <<<script
     \$criteria->add({$this->getColumnConstant($this->getTable()->getColumn($localName))});
 script;
-    }
-    $adds = implode("\n", $adds);
+        }
+        $adds = implode("\n", $adds);
 
-    $script .= <<<script
+        $script .= <<<script
 
   public static function addRootsCriteria(Criteria \$criteria)
   {
@@ -603,77 +603,77 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addConstructor(&$script)
-  {
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+    protected function addConstructor(&$script)
+    {
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<'script'
 
   protected
     $tables = array();
 
 script;
-    }
+        }
 
-    $script .= <<<'script'
+        $script .= <<<'script'
 
   public function __construct()
   {
 
 script;
 
-    if (isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (isset($this->inheritanceFk)) {
+            $script .= <<<'script'
     parent::__construct();
 
 
 script;
-    }
+        }
 
-    if (isset($this->classNameColumn)) {
-      // Bypass __get() because tables are not yet initialized
-      $script .= <<<script
+        if (isset($this->classNameColumn)) {
+            // Bypass __get() because tables are not yet initialized
+            $script .= <<<script
     \$this->values['{$this->getColumnVarName($this->classNameColumn)}'] = get_class(\$this);
 
 
 script;
-    }
+        }
 
-    $script .= <<<script
+        $script .= <<<script
     \$this->tables[] = Propel::getDatabaseMap({$this->getPeerClassName()}::DATABASE_NAME)->getTable({$this->getPeerClassName()}::TABLE_NAME);
   }
 
 script;
-  }
-
-  protected function addColumnMethods(&$script)
-  {
-    if (isset($this->inheritanceFk) && 1 > count($this->refFks) && !$this->getTable()->getAttribute('isI18n') && (!isset($this->nestedSetLeftColumn) || !isset($this->nestedSetRightColumn))) {
-      return;
     }
 
-    // TODO Be more conservative about adding $refFkValues, and change the name
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+    protected function addColumnMethods(&$script)
+    {
+        if (isset($this->inheritanceFk) && 1 > count($this->refFks) && !$this->getTable()->getAttribute('isI18n') && (!isset($this->nestedSetLeftColumn) || !isset($this->nestedSetRightColumn))) {
+            return;
+        }
+
+        // TODO Be more conservative about adding $refFkValues, and change the name
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<'script'
 
   protected
     $values = array(),
     $refFkValues = array();
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk)) {
-      $adds = [];
-      foreach ($this->getTable()->getPrimaryKey() as $column) {
-        $adds[] = <<<adds
+        if (!isset($this->inheritanceFk)) {
+            $adds = [];
+            foreach ($this->getTable()->getPrimaryKey() as $column) {
+                $adds[] = <<<adds
       \$criteria->add({$this->getColumnConstant($column)}, \$this->{$this->getColumnVarName($column)});
 adds;
-      }
-      $adds = implode("\n", $adds);
+            }
+            $adds = implode("\n", $adds);
 
-      $script .= <<<script
+            $script .= <<<script
 
   protected function rowOffsetGet(\$name, \$offset, \$options)
   {
@@ -712,9 +712,9 @@ adds;
   }
 
 script;
-    }
+        }
 
-    $script .= <<<'script'
+        $script .= <<<'script'
 
   public function __isset($name)
   {
@@ -723,8 +723,8 @@ script;
 
 script;
 
-    if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<'script'
     $options = array();
     if (1 < count($args))
     {
@@ -733,10 +733,10 @@ script;
 
 
 script;
-    }
+        }
 
-    if (isset($this->inheritanceFk)) {
-      $script .= <<<script
+        if (isset($this->inheritanceFk)) {
+            $script .= <<<script
     try
     {
       return call_user_func_array(array(\$this, '{$this->baseClassName}::__isset'), \$args);
@@ -746,10 +746,10 @@ script;
     }
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<'script'
     $offset = 0;
     foreach ($this->tables as $table)
     {
@@ -770,10 +770,10 @@ script;
     }
 
 script;
-    }
+        }
 
-    foreach ($this->refFks as $refFk) {
-      $script .= <<<script
+        foreach ($this->refFks as $refFk) {
+            $script .= <<<script
 
     if ('{$this->getRefFkPhpNameAffix($refFk, true)}' == \$name)
     {
@@ -781,10 +781,10 @@ script;
     }
 
 script;
-    }
+        }
 
-    if ($this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<script
+        if ($this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<script
 
     try
     {
@@ -800,10 +800,10 @@ script;
     }
 
 script;
-    }
+        }
 
-    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
-      $script .= <<<'script'
+        if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
+            $script .= <<<'script'
 
     if ('ancestors' == $name)
     {
@@ -816,17 +816,17 @@ script;
     }
 
 script;
-    }
+        }
 
-    $script .= <<<'script'
+        $script .= <<<'script'
 
     throw new sfException("Unknown record property \"$name\" on \"".get_class($this).'"');
   }
 
 script;
 
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<'script'
 
   public function offsetExists($offset)
   {
@@ -836,9 +836,9 @@ script;
   }
 
 script;
-    }
+        }
 
-    $script .= <<<'script'
+        $script .= <<<'script'
 
   public function __get($name)
   {
@@ -847,8 +847,8 @@ script;
 
 script;
 
-    if (!isset($this->inheritanceFk) || 0 < count($this->refFks) || $this->getTable()->getAttribute('isI18n') || isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk) || 0 < count($this->refFks) || $this->getTable()->getAttribute('isI18n') || isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
+            $script .= <<<'script'
     $options = array();
     if (1 < count($args))
     {
@@ -857,10 +857,10 @@ script;
 
 
 script;
-    }
+        }
 
-    if (isset($this->inheritanceFk)) {
-      $script .= <<<script
+        if (isset($this->inheritanceFk)) {
+            $script .= <<<script
     try
     {
       return call_user_func_array(array(\$this, '{$this->baseClassName}::__get'), \$args);
@@ -870,10 +870,10 @@ script;
     }
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<'script'
     $offset = 0;
     foreach ($this->tables as $table)
     {
@@ -896,19 +896,19 @@ script;
     }
 
 script;
-    }
+        }
 
-    foreach ($this->refFks as $refFk) {
-      $args = [];
-      $conds = [];
-      foreach ($refFk->getLocalForeignMapping() as $localName => $foreignName) {
-        $args[] = "\$this->{$foreignName}";
-        $conds[] = "!isset(\$this->{$foreignName})";
-      }
-      $args = implode(', ', $args);
-      $conds = implode(' || ', $conds);
+        foreach ($this->refFks as $refFk) {
+            $args = [];
+            $conds = [];
+            foreach ($refFk->getLocalForeignMapping() as $localName => $foreignName) {
+                $args[] = "\$this->{$foreignName}";
+                $conds[] = "!isset(\$this->{$foreignName})";
+            }
+            $args = implode(', ', $args);
+            $conds = implode(' || ', $conds);
 
-      $script .= <<<script
+            $script .= <<<script
 
     if ('{$this->getRefFkPhpNameAffix($refFk, true)}' == \$name)
     {
@@ -928,10 +928,10 @@ script;
     }
 
 script;
-    }
+        }
 
-    if ($this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<script
+        if ($this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<script
 
     try
     {
@@ -947,10 +947,10 @@ script;
     }
 
 script;
-    }
+        }
 
-    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
-      $script .= <<<'script'
+        if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
+            $script .= <<<'script'
 
     if ('ancestors' == $name)
     {
@@ -993,17 +993,17 @@ script;
     }
 
 script;
-    }
+        }
 
-    $script .= <<<'script'
+        $script .= <<<'script'
 
     throw new sfException("Unknown record property \"$name\" on \"".get_class($this).'"');
   }
 
 script;
 
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<'script'
 
   public function offsetGet($offset)
   {
@@ -1013,10 +1013,10 @@ script;
   }
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<'script'
 
   public function __set($name, $value)
   {
@@ -1030,17 +1030,17 @@ script;
 
 
 script;
-    }
+        }
 
-    if (isset($this->inheritanceFk) && $this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<script
+        if (isset($this->inheritanceFk) && $this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<script
     call_user_func_array(array(\$this, '{$this->baseClassName}::__set'), \$args);
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<'script'
     $offset = 0;
     foreach ($this->tables as $table)
     {
@@ -1076,27 +1076,27 @@ script;
     }
 
 script;
-    }
+        }
 
-    if ($this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<script
+        if ($this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<script
 
     call_user_func_array(array(\$this->getCurrent{$this->getRefFkPhpNameAffix($this->i18nFk)}(\$options), '__set'), \$args);
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<'script'
 
     return $this;
   }
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<'script'
 
   public function offsetSet($offset, $value)
   {
@@ -1106,19 +1106,19 @@ script;
   }
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<'script'
 
   public function __unset($name)
   {
 
 script;
-    }
+        }
 
-    if ($this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<'script'
+        if ($this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<'script'
     $args = func_get_args();
 
     $options = array();
@@ -1129,17 +1129,17 @@ script;
 
 
 script;
-    }
+        }
 
-    if (isset($this->inheritanceFk) && $this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<script
+        if (isset($this->inheritanceFk) && $this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<script
     call_user_func_array(array(\$this, '{$this->baseClassName}::__unset'), \$args);
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<'script'
     $offset = 0;
     foreach ($this->tables as $table)
     {
@@ -1160,27 +1160,27 @@ script;
     }
 
 script;
-    }
+        }
 
-    if ($this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<script
+        if ($this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<script
 
     call_user_func_array(array(\$this->getCurrent{$this->getRefFkPhpNameAffix($this->i18nFk)}(\$options), '__unset'), \$args);
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<'script'
 
     return $this;
   }
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<'script'
 
   public function offsetUnset($offset)
   {
@@ -1190,19 +1190,19 @@ script;
   }
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n')) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk) || $this->getTable()->getAttribute('isI18n')) {
+            $script .= <<<'script'
 
   public function clear()
   {
 
 script;
 
-      if ($this->getTable()->getAttribute('isI18n')) {
-        $foreignPeerBuilder = self::getNewPeerBuilder($this->i18nFk->getTable());
-        $script .= <<<script
+            if ($this->getTable()->getAttribute('isI18n')) {
+                $foreignPeerBuilder = self::getNewPeerBuilder($this->i18nFk->getTable());
+                $script .= <<<script
     foreach (\$this->{$this->getRefFkCollVarName($this->i18nFk)} as \${$foreignPeerBuilder->getVarName()})
     {
       \${$foreignPeerBuilder->getVarName()}->clear();
@@ -1210,78 +1210,78 @@ script;
 
 
 script;
-      }
+            }
 
-      if (isset($this->inheritanceFk)) {
-        $script .= <<<'script'
+            if (isset($this->inheritanceFk)) {
+                $script .= <<<'script'
     return parent::clear();
   }
 
 script;
-      }
+            }
 
-      if (!isset($this->inheritanceFk)) {
-        $script .= <<<'script'
+            if (!isset($this->inheritanceFk)) {
+                $script .= <<<'script'
     $this->row = $this->values = array();
 
     return $this;
   }
 
 script;
-      }
+            }
+        }
     }
-  }
 
-  protected function addNew(&$script)
-  {
-    $script .= <<<'script'
+    protected function addNew(&$script)
+    {
+        $script .= <<<'script'
 
   protected
     $new = true;
 
 script;
-  }
+    }
 
-  protected function addDeleted(&$script)
-  {
-    $script .= <<<'script'
+    protected function addDeleted(&$script)
+    {
+        $script .= <<<'script'
 
   protected
     $deleted = false;
 
 script;
-  }
-
-  protected function addManipulationMethods(&$script)
-  {
-    $this->addSave($script);
-    $this->addInsert($script);
-    $this->addUpdate($script);
-    $this->addDelete($script);
-  }
-
-  protected function addSave(&$script)
-  {
-    if (isset($this->inheritanceFk) && !$this->getTable()->getAttribute('isI18n')) {
-      return;
     }
 
-    $script .= <<<'script'
+    protected function addManipulationMethods(&$script)
+    {
+        $this->addSave($script);
+        $this->addInsert($script);
+        $this->addUpdate($script);
+        $this->addDelete($script);
+    }
+
+    protected function addSave(&$script)
+    {
+        if (isset($this->inheritanceFk) && !$this->getTable()->getAttribute('isI18n')) {
+            return;
+        }
+
+        $script .= <<<'script'
 
   public function save($connection = null)
   {
 
 script;
 
-    if (isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (isset($this->inheritanceFk)) {
+            $script .= <<<'script'
     parent::save($connection);
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<'script'
     if ($this->deleted)
     {
       throw new PropelException('You cannot save an object that has been deleted.');
@@ -1319,20 +1319,20 @@ script;
     $this->values = array();
 
 script;
-    }
+        }
 
-    if ($this->getTable()->getAttribute('isI18n')) {
-      $foreignPeerBuilder = self::getNewPeerBuilder($this->i18nFk->getTable());
+        if ($this->getTable()->getAttribute('isI18n')) {
+            $foreignPeerBuilder = self::getNewPeerBuilder($this->i18nFk->getTable());
 
-      $sets = [];
-      foreach ($this->i18nFk->getLocalForeignMapping() as $localName => $foreignName) {
-        $sets[] = <<<script
+            $sets = [];
+            foreach ($this->i18nFk->getLocalForeignMapping() as $localName => $foreignName) {
+                $sets[] = <<<script
       \${$foreignPeerBuilder->getVarName()}->{$this->i18nFk->getTable()->getColumn($localName)->getPhpName()} = \$this->{$this->getColumnVarName($this->getTable()->getColumn($foreignName))};
 script;
-      }
-      $sets = implode("\n", $sets);
+            }
+            $sets = implode("\n", $sets);
 
-      $script .= <<<script
+            $script .= <<<script
 
     foreach (\$this->{$this->getRefFkCollVarName($this->i18nFk)} as \${$foreignPeerBuilder->getVarName()})
     {
@@ -1342,23 +1342,23 @@ script;
     }
 
 script;
-    }
+        }
 
-    $script .= <<<'script'
+        $script .= <<<'script'
 
     return $this;
   }
 
 script;
-  }
-
-  protected function addInsert(&$script)
-  {
-    if (isset($this->inheritanceFk) && (!isset($this->nestedSetLeftColumn) || !isset($this->nestedSetRightColumn))) {
-      return;
     }
 
-    $script .= <<<'script'
+    protected function addInsert(&$script)
+    {
+        if (isset($this->inheritanceFk) && (!isset($this->nestedSetLeftColumn) || !isset($this->nestedSetRightColumn))) {
+            return;
+        }
+
+        $script .= <<<'script'
 
   protected function param($column)
   {
@@ -1403,24 +1403,24 @@ script;
   {
 script;
 
-    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
-      $script .= <<<'script'
+        if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
+            $script .= <<<'script'
 
     $this->updateNestedSet($connection);
 
 script;
-    }
+        }
 
-    if (isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (isset($this->inheritanceFk)) {
+            $script .= <<<'script'
 
     parent::insert($connection);
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<script
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<script
 
     if (!isset(\$connection))
     {
@@ -1470,31 +1470,31 @@ script;
     }
 
 script;
-    }
+        }
 
-    $script .= <<<'script'
+        $script .= <<<'script'
 
     return $this;
   }
 
 script;
-  }
-
-  protected function addUpdate(&$script)
-  {
-    if (isset($this->inheritanceFk) && (!isset($this->nestedSetLeftColumn) || !isset($this->nestedSetRightColumn))) {
-      return;
     }
 
-    $script .= <<<'script'
+    protected function addUpdate(&$script)
+    {
+        if (isset($this->inheritanceFk) && (!isset($this->nestedSetLeftColumn) || !isset($this->nestedSetRightColumn))) {
+            return;
+        }
+
+        $script .= <<<'script'
 
   protected function update($connection = null)
   {
 script;
 
-    // TODO Only update nested set if the self foreign key has changed
-    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
-      $script .= <<<'script'
+        // TODO Only update nested set if the self foreign key has changed
+        if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
+            $script .= <<<'script'
 
     // Update nested set keys only if parent id has changed
     if (isset($this->values['parentId']))
@@ -1524,18 +1524,18 @@ script;
     }
 
 script;
-    }
+        }
 
-    if (isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (isset($this->inheritanceFk)) {
+            $script .= <<<'script'
 
     parent::update($connection);
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk)) {
-      $script .= <<<script
+        if (!isset($this->inheritanceFk)) {
+            $script .= <<<script
 
     if (!isset(\$connection))
     {
@@ -1582,26 +1582,26 @@ script;
     }
 
 script;
-    }
+        }
 
-    $script .= <<<'script'
+        $script .= <<<'script'
 
     return $this;
   }
 
 script;
-  }
-
-  protected function addDelete(&$script)
-  {
-    // If this class is not the base of an object hierarchy and it does not
-    // contain any nested set behavior, then this method does nothing except
-    // call the parent class' implementation.
-    if (isset($this->inheritanceFk) && (!isset($this->nestedSetLeftColumn) || !isset($this->nestedSetRightColumn))) {
-      return;
     }
 
-    $script .= <<<'script'
+    protected function addDelete(&$script)
+    {
+        // If this class is not the base of an object hierarchy and it does not
+        // contain any nested set behavior, then this method does nothing except
+        // call the parent class' implementation.
+        if (isset($this->inheritanceFk) && (!isset($this->nestedSetLeftColumn) || !isset($this->nestedSetRightColumn))) {
+            return;
+        }
+
+        $script .= <<<'script'
 
   public function delete($connection = null)
   {
@@ -1612,8 +1612,8 @@ script;
 
 script;
 
-    if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
-      $script .= <<<'script'
+        if (isset($this->nestedSetLeftColumn, $this->nestedSetRightColumn)) {
+            $script .= <<<'script'
 
     $this->clear();
     if (!property_exists($this, 'disableNestedSetUpdating') || $this->disableNestedSetUpdating !== true)
@@ -1622,26 +1622,26 @@ script;
     }
 
 script;
-    }
+        }
 
-    if (isset($this->inheritanceFk)) {
-      $script .= <<<'script'
+        if (isset($this->inheritanceFk)) {
+            $script .= <<<'script'
 
     parent::delete($connection);
 
 script;
-    }
+        }
 
-    if (!isset($this->inheritanceFk)) {
-      $adds = [];
-      foreach ($this->getTable()->getPrimaryKey() as $column) {
-        $adds[] = <<<adds
+        if (!isset($this->inheritanceFk)) {
+            $adds = [];
+            foreach ($this->getTable()->getPrimaryKey() as $column) {
+                $adds[] = <<<adds
     \$criteria->add({$this->getColumnConstant($column)}, \$this->{$this->getColumnVarName($column)});
 adds;
-      }
-      $adds = implode("\n", $adds);
+            }
+            $adds = implode("\n", $adds);
 
-      $script .= <<<script
+            $script .= <<<script
 
     \$criteria = new Criteria;
 {$adds}
@@ -1651,40 +1651,40 @@ adds;
     \$this->deleted = true;
 
 script;
-    }
+        }
 
-    $script .= <<<'script'
+        $script .= <<<'script'
 
     return $this;
   }
 
 script;
-  }
-
-  protected function addFkMethods(&$script)
-  {
-    foreach ($this->getTable()->getForeignKeys() as $fk) {
-      if ($fk == $this->inheritanceFk) {
-        continue;
-      }
-
-      $this->addFkAddJoinCriteria($script, $fk);
     }
-  }
 
-  protected function addFkAddJoinCriteria(&$script, ForeignKey $fk)
-  {
-    $foreignPeerBuilder = self::getNewPeerBuilder($this->getForeignTable($fk));
+    protected function addFkMethods(&$script)
+    {
+        foreach ($this->getTable()->getForeignKeys() as $fk) {
+            if ($fk == $this->inheritanceFk) {
+                continue;
+            }
 
-    $adds = [];
-    foreach ($fk->getLocalForeignMapping() as $localName => $foreignName) {
-      $adds[] = <<<adds
+            $this->addFkAddJoinCriteria($script, $fk);
+        }
+    }
+
+    protected function addFkAddJoinCriteria(&$script, ForeignKey $fk)
+    {
+        $foreignPeerBuilder = self::getNewPeerBuilder($this->getForeignTable($fk));
+
+        $adds = [];
+        foreach ($fk->getLocalForeignMapping() as $localName => $foreignName) {
+            $adds[] = <<<adds
     \$criteria->addJoin({$this->getColumnConstant($this->getTable()->getColumn($localName))}, {$foreignPeerBuilder->getColumnConstant($this->getForeignTable($fk)->getColumn($foreignName))});
 adds;
-    }
-    $adds = implode("\n", $adds);
+        }
+        $adds = implode("\n", $adds);
 
-    $script .= <<<script
+        $script .= <<<script
 
   public static function addJoin{$this->getFkPhpName($fk)}Criteria(Criteria \$criteria)
   {
@@ -1694,33 +1694,33 @@ adds;
   }
 
 script;
-  }
-
-  protected function addRefFkMethods(&$script)
-  {
-    foreach ($this->refFks as $refFk) {
-      $this->addRefFkAddCriteriaById($script, $refFk);
-      $this->addRefFkGetById($script, $refFk);
-      $this->addRefFkAddCriteria($script, $refFk);
     }
-  }
 
-  protected function addRefFkAddCriteriaById(&$script, ForeignKey $refFk)
-  {
-    $foreignPeerBuilder = self::getNewPeerBuilder($refFk->getTable());
+    protected function addRefFkMethods(&$script)
+    {
+        foreach ($this->refFks as $refFk) {
+            $this->addRefFkAddCriteriaById($script, $refFk);
+            $this->addRefFkGetById($script, $refFk);
+            $this->addRefFkAddCriteria($script, $refFk);
+        }
+    }
 
-    $args = [];
-    $adds = [];
-    foreach ($refFk->getLocalForeignMapping() as $localName => $foreignName) {
-      $args[] = "\${$foreignName}";
-      $adds[] = <<<adds
+    protected function addRefFkAddCriteriaById(&$script, ForeignKey $refFk)
+    {
+        $foreignPeerBuilder = self::getNewPeerBuilder($refFk->getTable());
+
+        $args = [];
+        $adds = [];
+        foreach ($refFk->getLocalForeignMapping() as $localName => $foreignName) {
+            $args[] = "\${$foreignName}";
+            $adds[] = <<<adds
     \$criteria->add({$foreignPeerBuilder->getColumnConstant($refFk->getTable()->getColumn($localName))}, \${$foreignName});
 adds;
-    }
-    $args = implode(', ', $args);
-    $adds = implode("\n", $adds);
+        }
+        $args = implode(', ', $args);
+        $adds = implode("\n", $adds);
 
-    $script .= <<<script
+        $script .= <<<script
 
   public static function add{$this->getRefFkPhpNameAffix($refFk, true)}CriteriaById(Criteria \$criteria, {$args})
   {
@@ -1730,19 +1730,19 @@ adds;
   }
 
 script;
-  }
-
-  protected function addRefFkGetById(&$script, ForeignKey $refFk)
-  {
-    $foreignPeerBuilder = self::getNewPeerBuilder($refFk->getTable());
-
-    $args = [];
-    foreach ($refFk->getForeignColumns() as $foreignName) {
-      $args[] = "\${$foreignName}";
     }
-    $args = implode(', ', $args);
 
-    $script .= <<<script
+    protected function addRefFkGetById(&$script, ForeignKey $refFk)
+    {
+        $foreignPeerBuilder = self::getNewPeerBuilder($refFk->getTable());
+
+        $args = [];
+        foreach ($refFk->getForeignColumns() as $foreignName) {
+            $args[] = "\${$foreignName}";
+        }
+        $args = implode(', ', $args);
+
+        $script .= <<<script
 
   public static function get{$this->getRefFkPhpNameAffix($refFk, true)}ById({$args}, array \$options = array())
   {
@@ -1753,17 +1753,17 @@ script;
   }
 
 script;
-  }
-
-  protected function addRefFkAddCriteria(&$script, ForeignKey $refFk)
-  {
-    $args = [];
-    foreach ($refFk->getForeignColumns() as $foreignName) {
-      $args[] = "\$this->{$foreignName}";
     }
-    $args = implode(', ', $args);
 
-    $script .= <<<script
+    protected function addRefFkAddCriteria(&$script, ForeignKey $refFk)
+    {
+        $args = [];
+        foreach ($refFk->getForeignColumns() as $foreignName) {
+            $args[] = "\$this->{$foreignName}";
+        }
+        $args = implode(', ', $args);
+
+        $script .= <<<script
 
   public function add{$this->getRefFkPhpNameAffix($refFk, true)}Criteria(Criteria \$criteria)
   {
@@ -1771,13 +1771,13 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addI18nMethods(&$script)
-  {
-    $foreignPeerBuilder = self::getNewPeerBuilder($this->i18nFk->getTable());
+    protected function addI18nMethods(&$script)
+    {
+        $foreignPeerBuilder = self::getNewPeerBuilder($this->i18nFk->getTable());
 
-    $script .= <<<script
+        $script .= <<<script
 
   public function getCurrent{$this->getRefFkPhpNameAffix($this->i18nFk)}(array \$options = array())
   {
@@ -1801,11 +1801,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addHasChildren(&$script)
-  {
-    $script .= <<<script
+    protected function addHasChildren(&$script)
+    {
+        $script .= <<<script
 
   public function hasChildren()
   {
@@ -1813,16 +1813,16 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addGetAncestorsAndSelfForAcl(&$script)
-  {
-    $selfFkTableName = $this->selfFk->getTableName();
-    $selfFkColName = $this->selfFk->getLocalColumns()[0];
-    $selfFkRefColName = $this->selfFk->getForeignColumns()[0];
-    $selfFkRefColCons = $this->getColumnConstant($this->getTable()->getColumn($selfFkRefColName));
+    protected function addGetAncestorsAndSelfForAcl(&$script)
+    {
+        $selfFkTableName = $this->selfFk->getTableName();
+        $selfFkColName = $this->selfFk->getLocalColumns()[0];
+        $selfFkRefColName = $this->selfFk->getForeignColumns()[0];
+        $selfFkRefColCons = $this->getColumnConstant($this->getTable()->getColumn($selfFkRefColName));
 
-    $script .= <<<script
+        $script .= <<<script
 
   public function getAncestorsAndSelfForAcl()
   {
@@ -1853,16 +1853,16 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addAddAncestorsCriteria(&$script)
-  {
-    $selfFkTableName = $this->selfFk->getTableName();
-    $selfFkColName = $this->selfFk->getLocalColumns()[0];
-    $selfFkRefColName = $this->selfFk->getForeignColumns()[0];
-    $selfFkPhpName = $this->getTable()->getColumn($selfFkColName)->getPhpName();
+    protected function addAddAncestorsCriteria(&$script)
+    {
+        $selfFkTableName = $this->selfFk->getTableName();
+        $selfFkColName = $this->selfFk->getLocalColumns()[0];
+        $selfFkRefColName = $this->selfFk->getForeignColumns()[0];
+        $selfFkPhpName = $this->getTable()->getColumn($selfFkColName)->getPhpName();
 
-    $script .= <<<script
+        $script .= <<<script
 
   public function addAncestorsCriteria(Criteria \$criteria)
   {
@@ -1889,11 +1889,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addAddDescendantsCriteria(&$script)
-  {
-    $script .= <<<script
+    protected function addAddDescendantsCriteria(&$script)
+    {
+        $script .= <<<script
 
   public function addDescendantsCriteria(Criteria \$criteria)
   {
@@ -1912,11 +1912,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addUpdateNestedSet(&$script)
-  {
-    $script .= <<<script
+    protected function addUpdateNestedSet(&$script)
+    {
+        $script .= <<<script
 
   protected function updateNestedSet(\$connection = null)
   {
@@ -2019,11 +2019,11 @@ unset(\$this->values['{$this->getColumnVarName($this->nestedSetRightColumn)}']);
   }
 
 script;
-  }
+    }
 
-  protected function addDeleteFromNestedSet(&$script)
-  {
-    $script .= <<<script
+    protected function addDeleteFromNestedSet(&$script)
+    {
+        $script .= <<<script
 
   protected function deleteFromNestedSet(\$connection = null)
   {
@@ -2050,11 +2050,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addIsInTree(&$script)
-  {
-    $script .= <<<'script'
+    protected function addIsInTree(&$script)
+    {
+        $script .= <<<'script'
 
   public function isInTree()
   {
@@ -2062,11 +2062,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addIsRoot(&$script)
-  {
-    $script .= <<<'script'
+    protected function addIsRoot(&$script)
+    {
+        $script .= <<<'script'
 
   public function isRoot()
   {
@@ -2074,11 +2074,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addIsDescendantOf(&$script)
-  {
-    $script .= <<<'script'
+    protected function addIsDescendantOf(&$script)
+    {
+        $script .= <<<'script'
 
   public function isDescendantOf($parent)
   {
@@ -2086,11 +2086,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addMoveToFirstChildOf(&$script)
-  {
-    $script .= <<<'script'
+    protected function addMoveToFirstChildOf(&$script)
+    {
+        $script .= <<<'script'
 
   public function moveToFirstChildOf($parent, PropelPDO $con = null)
   {
@@ -2105,11 +2105,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addMoveToLastChildOf(&$script)
-  {
-    $script .= <<<'script'
+    protected function addMoveToLastChildOf(&$script)
+    {
+        $script .= <<<'script'
 
   public function moveToLastChildOf($parent, PropelPDO $con = null)
   {
@@ -2124,11 +2124,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addMoveToPrevSiblingOf(&$script)
-  {
-    $script .= <<<'script'
+    protected function addMoveToPrevSiblingOf(&$script)
+    {
+        $script .= <<<'script'
 
   public function moveToPrevSiblingOf($sibling, PropelPDO $con = null)
   {
@@ -2153,11 +2153,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addMoveToNextSiblingOf(&$script)
-  {
-    $script .= <<<'script'
+    protected function addMoveToNextSiblingOf(&$script)
+    {
+        $script .= <<<'script'
 
   public function moveToNextSiblingOf($sibling, PropelPDO $con = null)
   {
@@ -2182,11 +2182,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addMoveSubtreeTo(&$script)
-  {
-    $script .= <<<'script'
+    protected function addMoveSubtreeTo(&$script)
+    {
+        $script .= <<<'script'
 
   protected function moveSubtreeTo($destLeft, PropelPDO $con = null)
   {
@@ -2233,11 +2233,11 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addShiftRLValues(&$script)
-  {
-    $script .= <<<script
+    protected function addShiftRLValues(&$script)
+    {
+        $script .= <<<script
 
   /**
    * Adds \$delta to all L and R values that are >= \$first and <= \$last.
@@ -2285,15 +2285,15 @@ script;
   }
 
 script;
-  }
-
-  protected function addCall(&$script)
-  {
-    if (isset($this->inheritanceFk)) {
-      return;
     }
 
-    $script .= <<<'script'
+    protected function addCall(&$script)
+    {
+        if (isset($this->inheritanceFk)) {
+            return;
+        }
+
+        $script .= <<<'script'
 
   public function __call($name, $args)
   {
@@ -2308,13 +2308,13 @@ script;
   }
 
 script;
-  }
+    }
 
-  protected function addClassClose(&$script)
-  {
-    $script .= <<<'script'
+    protected function addClassClose(&$script)
+    {
+        $script .= <<<'script'
 }
 
 script;
-  }
+    }
 }

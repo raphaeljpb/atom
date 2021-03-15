@@ -19,143 +19,143 @@
 
 class AccessionEditAction extends DefaultEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'acquisitionType',
-    'appraisal',
-    'archivalHistory',
-    'creators',
-    'date',
-    'identifier',
-    'identifierAvailableCheckUrl',
-    'informationObjects',
-    'locationInformation',
-    'resourceType',
-    'physicalCharacteristics',
-    'processingNotes',
-    'processingPriority',
-    'processingStatus',
-    'receivedExtentUnits',
-    'scopeAndContent',
-    'sourceOfAcquisition',
-    'title', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'acquisitionType',
+        'appraisal',
+        'archivalHistory',
+        'creators',
+        'date',
+        'identifier',
+        'identifierAvailableCheckUrl',
+        'informationObjects',
+        'locationInformation',
+        'resourceType',
+        'physicalCharacteristics',
+        'processingNotes',
+        'processingPriority',
+        'processingStatus',
+        'receivedExtentUnits',
+        'scopeAndContent',
+        'sourceOfAcquisition',
+        'title', ];
 
-  public function earlyExecute()
-  {
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+    public function earlyExecute()
+    {
+        $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-    $this->resource = new QubitAccession();
+        $this->resource = new QubitAccession();
 
-    if (isset($this->getRoute()->resource)) {
-      $this->resource = $this->getRoute()->resource;
+        if (isset($this->getRoute()->resource)) {
+            $this->resource = $this->getRoute()->resource;
 
-      // Check user authorization
-      if (!QubitAcl::check($this->resource, 'update')) {
-        QubitAcl::forwardUnauthorized();
-      }
-    } else {
-      // Check user authorization
-      if (!QubitAcl::check($this->resource, 'create')) {
-        QubitAcl::forwardUnauthorized();
-      }
-    }
-
-    $title = $this->context->i18n->__('Add new accession record');
-    if (isset($this->getRoute()->resource)) {
-      if (1 > strlen($title = $this->resource->__toString())) {
-        $title = $this->context->i18n->__('Untitled');
-      }
-
-      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
-    }
-
-    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
-
-    $this->relatedDonorComponent = new AccessionRelatedDonorComponent($this->context, 'accession', 'relatedDonor');
-    $this->relatedDonorComponent->resource = $this->resource;
-    $this->relatedDonorComponent->execute($this->request);
-
-    $this->eventComponent = new sfIsadPluginEventComponent($this->context, 'sfIsadPlugin', 'event');
-    $this->eventComponent->resource = $this->resource;
-    $this->eventComponent->execute($this->request);
-  }
-
-  public function execute($request)
-  {
-    parent::execute($request);
-
-    // Parameter "accession" is sent when creating an accrual
-    if (isset($request->accession)) {
-      $params = $this->context->routing->parse(Qubit::pathInfo($request->accession));
-
-      if (isset($params['_sf_route'])) {
-        $this->accession = $params['_sf_route']->resource;
-
-        if ($this->accession->isAccrual()) {
-          throw new sfException('This accession can\'t be created.');
+            // Check user authorization
+            if (!QubitAcl::check($this->resource, 'update')) {
+                QubitAcl::forwardUnauthorized();
+            }
+        } else {
+            // Check user authorization
+            if (!QubitAcl::check($this->resource, 'create')) {
+                QubitAcl::forwardUnauthorized();
+            }
         }
 
-        // Add id of the information object source
-        $this->form->setDefault('accession', $request->accession);
-        $this->form->setValidator('accession', new sfValidatorString());
-        $this->form->setWidget('accession', new sfWidgetFormInputHidden());
-      }
-    }
+        $title = $this->context->i18n->__('Add new accession record');
+        if (isset($this->getRoute()->resource)) {
+            if (1 > strlen($title = $this->resource->__toString())) {
+                $title = $this->context->i18n->__('Untitled');
+            }
 
-    // Handle alternative identifiers
-    $this->alternativeIdentifiersComponent = new AccessionAlternativeIdentifiersComponent($this->context, 'accession', 'alternativeIdentifiers');
-    $this->alternativeIdentifiersComponent->resource = $this->resource;
-    $this->alternativeIdentifiersComponent->execute($this->request);
-
-    // Handle accession events
-    $this->eventsComponent = new AccessionEventsComponent($this->context, 'accession', 'events');
-    $this->eventsComponent->resource = $this->resource;
-    $this->eventsComponent->execute($this->request);
-
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid()) {
-        $this->relatedDonorComponent->processForm();
-
-        $this->eventComponent->processForm();
-
-        if (isset($this->request->deleteRelations)) {
-          foreach ($this->request->deleteRelations as $item) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($item));
-            $params['_sf_route']->resource->delete();
-          }
+            $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
         }
 
-        // Relation between accesion will only be accepted if the object is new
-        if (!isset($this->resource->id) && isset($this->accession)) {
-          $relation = new QubitRelation();
-          $relation->typeId = QubitTerm::ACCRUAL_ID;
-          $relation->object = $this->accession;
+        $this->response->setTitle("{$title} - {$this->response->getTitle()}");
 
-          $this->resource->relationsRelatedBysubjectId[] = $relation;
-        }
+        $this->relatedDonorComponent = new AccessionRelatedDonorComponent($this->context, 'accession', 'relatedDonor');
+        $this->relatedDonorComponent->resource = $this->resource;
+        $this->relatedDonorComponent->execute($this->request);
 
-        $this->processForm();
-
-        // Postpone search indexing until alternative IDs are added
-        $this->resource->indexOnSave = false;
-        $this->resource->save();
-
-        $this->alternativeIdentifiersComponent->processForm();
-        $this->eventsComponent->processForm();
-
-        QubitSearch::getInstance()->update($this->resource);
-
-        $this->redirect([$this->resource, 'module' => 'accession']);
-      }
+        $this->eventComponent = new sfIsadPluginEventComponent($this->context, 'sfIsadPlugin', 'event');
+        $this->eventComponent->resource = $this->resource;
+        $this->eventComponent->execute($this->request);
     }
 
-    QubitDescription::addAssets($this->response);
-  }
+    public function execute($request)
+    {
+        parent::execute($request);
 
-  protected function addField($name)
-  {
-    switch ($name) {
+        // Parameter "accession" is sent when creating an accrual
+        if (isset($request->accession)) {
+            $params = $this->context->routing->parse(Qubit::pathInfo($request->accession));
+
+            if (isset($params['_sf_route'])) {
+                $this->accession = $params['_sf_route']->resource;
+
+                if ($this->accession->isAccrual()) {
+                    throw new sfException('This accession can\'t be created.');
+                }
+
+                // Add id of the information object source
+                $this->form->setDefault('accession', $request->accession);
+                $this->form->setValidator('accession', new sfValidatorString());
+                $this->form->setWidget('accession', new sfWidgetFormInputHidden());
+            }
+        }
+
+        // Handle alternative identifiers
+        $this->alternativeIdentifiersComponent = new AccessionAlternativeIdentifiersComponent($this->context, 'accession', 'alternativeIdentifiers');
+        $this->alternativeIdentifiersComponent->resource = $this->resource;
+        $this->alternativeIdentifiersComponent->execute($this->request);
+
+        // Handle accession events
+        $this->eventsComponent = new AccessionEventsComponent($this->context, 'accession', 'events');
+        $this->eventsComponent->resource = $this->resource;
+        $this->eventsComponent->execute($this->request);
+
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
+            if ($this->form->isValid()) {
+                $this->relatedDonorComponent->processForm();
+
+                $this->eventComponent->processForm();
+
+                if (isset($this->request->deleteRelations)) {
+                    foreach ($this->request->deleteRelations as $item) {
+                        $params = $this->context->routing->parse(Qubit::pathInfo($item));
+                        $params['_sf_route']->resource->delete();
+                    }
+                }
+
+                // Relation between accesion will only be accepted if the object is new
+                if (!isset($this->resource->id) && isset($this->accession)) {
+                    $relation = new QubitRelation();
+                    $relation->typeId = QubitTerm::ACCRUAL_ID;
+                    $relation->object = $this->accession;
+
+                    $this->resource->relationsRelatedBysubjectId[] = $relation;
+                }
+
+                $this->processForm();
+
+                // Postpone search indexing until alternative IDs are added
+                $this->resource->indexOnSave = false;
+                $this->resource->save();
+
+                $this->alternativeIdentifiersComponent->processForm();
+                $this->eventsComponent->processForm();
+
+                QubitSearch::getInstance()->update($this->resource);
+
+                $this->redirect([$this->resource, 'module' => 'accession']);
+            }
+        }
+
+        QubitDescription::addAssets($this->response);
+    }
+
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'acquisitionType':
         $this->form->setDefault('acquisitionType', $this->context->routing->generate(null, [$this->resource->acquisitionType, 'module' => 'term']));
         $this->form->setValidator('acquisitionType', new sfValidatorString());
@@ -163,7 +163,7 @@ class AccessionEditAction extends DefaultEditAction
         $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ACCESSION_ACQUISITION_TYPE_ID) as $item) {
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
         $this->form->setWidget('acquisitionType', new sfWidgetFormSelect(['choices' => $choices]));
@@ -177,7 +177,7 @@ class AccessionEditAction extends DefaultEditAction
         $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ACCESSION_PROCESSING_PRIORITY_ID) as $item) {
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
         $this->form->setWidget('processingPriority', new sfWidgetFormSelect(['choices' => $choices]));
@@ -191,7 +191,7 @@ class AccessionEditAction extends DefaultEditAction
         $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ACCESSION_PROCESSING_STATUS_ID) as $item) {
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
         $this->form->setWidget('processingStatus', new sfWidgetFormSelect(['choices' => $choices]));
@@ -205,7 +205,7 @@ class AccessionEditAction extends DefaultEditAction
         $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::ACCESSION_RESOURCE_TYPE_ID) as $item) {
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
         $this->form->setWidget('resourceType', new sfWidgetFormSelect(['choices' => $choices]));
@@ -215,7 +215,7 @@ class AccessionEditAction extends DefaultEditAction
       case 'creators':
         $value = $choices = [];
         foreach ($this->creators = QubitRelation::getRelationsByObjectId($this->resource->id, ['typeId' => QubitTerm::CREATION_ID]) as $item) {
-          $choices[$value[] = $this->context->routing->generate(null, [$item->subject, 'module' => 'actor'])] = $item->subject;
+            $choices[$value[] = $this->context->routing->generate(null, [$item->subject, 'module' => 'actor'])] = $item->subject;
         }
 
         $this->form->setDefault('creators', $value);
@@ -228,14 +228,14 @@ class AccessionEditAction extends DefaultEditAction
         $this->form->setDefault('date', Qubit::renderDate($this->resource['date']));
 
         if (!isset($this->resource->id)) {
-          $dt = new DateTime();
-          $this->form->setDefault('date', $dt->format('Y-m-d'));
+            $dt = new DateTime();
+            $this->form->setDefault('date', $dt->format('Y-m-d'));
         }
 
         $this->form->setWidget('date', new sfWidgetFormInput());
         $this->form->setValidator('date', new sfValidatorDate([
-          'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
-          'date_format_error' => 'YYYY-MM-DD', ]));
+            'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
+            'date_format_error' => 'YYYY-MM-DD', ]));
 
         break;
 
@@ -244,8 +244,8 @@ class AccessionEditAction extends DefaultEditAction
 
         // If accession mask enable setting isn't set or is set to on, then populate default with mask value
         if (!isset($this->resource->id) && QubitAccession::maskEnabled()) {
-          $dt = new DateTime();
-          $this->form->setDefault('identifier', QubitAccession::nextAvailableIdentifier());
+            $dt = new DateTime();
+            $this->form->setDefault('identifier', QubitAccession::nextAvailableIdentifier());
         }
 
         $this->form->setValidator('identifier', new QubitValidatorAccessionIdentifier(['required' => true, 'resource' => $this->resource]));
@@ -291,7 +291,7 @@ class AccessionEditAction extends DefaultEditAction
 
         $value = $choices = [];
         foreach ($this->informationObjects = QubitRelation::get($criteria) as $item) {
-          $choices[$value[] = $this->context->routing->generate(null, [$item->subject, 'module' => 'informationobject'])] = render_title($item->subject, false);
+            $choices[$value[] = $this->context->routing->generate(null, [$item->subject, 'module' => 'informationobject'])] = render_title($item->subject, false);
         }
 
         $this->form->setDefault($name, $value);
@@ -303,33 +303,33 @@ class AccessionEditAction extends DefaultEditAction
       default:
         return parent::addField($name);
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'creators':
         $value = $filtered = [];
         foreach ($this->form->getValue('creators') as $item) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($item));
-          $resource = $params['_sf_route']->resource;
-          $value[$resource->id] = $filtered[$resource->id] = $resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($item));
+            $resource = $params['_sf_route']->resource;
+            $value[$resource->id] = $filtered[$resource->id] = $resource;
         }
 
         foreach ($this->creators as $item) {
-          if (isset($value[$item->objectId])) {
-            unset($filtered[$item->objectId]);
-          } else {
-            $item->delete();
-          }
+            if (isset($value[$item->objectId])) {
+                unset($filtered[$item->objectId]);
+            } else {
+                $item->delete();
+            }
         }
 
         foreach ($filtered as $item) {
-          $relation = new QubitRelation();
-          $relation->subject = $item;
-          $relation->typeId = QubitTerm::CREATION_ID;
+            $relation = new QubitRelation();
+            $relation->subject = $item;
+            $relation->typeId = QubitTerm::CREATION_ID;
 
-          $this->resource->relationsRelatedByobjectId[] = $relation;
+            $this->resource->relationsRelatedByobjectId[] = $relation;
         }
 
         break;
@@ -342,8 +342,8 @@ class AccessionEditAction extends DefaultEditAction
 
         $value = $this->form->getValue($field->getName());
         if (isset($value)) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          $this->resource[$field->getName()] = $params['_sf_route']->resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($value));
+            $this->resource[$field->getName()] = $params['_sf_route']->resource;
         }
 
         break;
@@ -357,26 +357,26 @@ class AccessionEditAction extends DefaultEditAction
       case 'informationObjects':
         $value = $filtered = [];
         foreach ($this->form->getValue('informationObjects') as $item) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($item));
-          $resource = $params['_sf_route']->resource;
-          $value[$resource->id] = $filtered[$resource->id] = $resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($item));
+            $resource = $params['_sf_route']->resource;
+            $value[$resource->id] = $filtered[$resource->id] = $resource;
         }
 
         foreach ($this->informationObjects as $item) {
-          if (isset($value[$item->subjectId])) {
-            unset($filtered[$item->subjectId]);
-          } else {
-            $item->delete();
-          }
+            if (isset($value[$item->subjectId])) {
+                unset($filtered[$item->subjectId]);
+            } else {
+                $item->delete();
+            }
         }
 
         foreach ($filtered as $item) {
-          $relation = new QubitRelation();
-          $relation->subject = $item;
-          $relation->typeId = QubitTerm::ACCESSION_ID;
-          $relation->indexOnSave = false;
+            $relation = new QubitRelation();
+            $relation->subject = $item;
+            $relation->typeId = QubitTerm::ACCESSION_ID;
+            $relation->indexOnSave = false;
 
-          $this->resource->relationsRelatedByobjectId[] = $relation;
+            $this->resource->relationsRelatedByobjectId[] = $relation;
         }
 
         break;
@@ -384,5 +384,5 @@ class AccessionEditAction extends DefaultEditAction
       default:
         return parent::processField($field);
     }
-  }
+    }
 }

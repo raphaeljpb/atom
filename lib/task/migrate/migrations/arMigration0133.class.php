@@ -25,16 +25,16 @@
  */
 class arMigration0133
 {
-  public const VERSION = 133;
-  public const // The new database version
+    public const VERSION = 133;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    // Drop columns
-    $sql = 'ALTER TABLE `digital_object` DROP COLUMN `lft`, DROP COLUMN `rgt`';
-    QubitPdo::modify($sql);
+      // Drop columns
+      $sql = 'ALTER TABLE `digital_object` DROP COLUMN `lft`, DROP COLUMN `rgt`';
+      QubitPdo::modify($sql);
 
-    return true;
+      return true;
   }
 }

@@ -19,66 +19,66 @@
 
 class arRestApiPluginUtils
 {
-  /**
-   * Convert dates into ISO 8601 and UTC, recommended format in REST APIs.
-   * Integers are treated as timestamps. Strings will be parsed using strtotime().
-   *
-   * @param mixed $date
-   */
-  public static function convertDate($date, array $options = [])
-  {
-    if (empty($date)) {
-      return;
+    /**
+     * Convert dates into ISO 8601 and UTC, recommended format in REST APIs.
+     * Integers are treated as timestamps. Strings will be parsed using strtotime().
+     *
+     * @param mixed $date
+     */
+    public static function convertDate($date, array $options = [])
+    {
+        if (empty($date)) {
+            return;
+        }
+
+        if ($date instanceof DateTime) {
+            $dt = $date;
+        } elseif (is_int($date)) {
+            $dt = new DateTime();
+            $dt->setTimestamp($date);
+        } else {
+            $dt = new DateTime();
+
+            /*
+             * [ TEMPORARY HACK ].
+             *
+             * ElasticSearch uses UTC but we are storing local times.
+             * So their ISO dates are using the Z suffix (stands for UTC). This hack
+             * replaces Z with difference greenwich time in hours, e.g.:
+             * 2014-06-27T11:02:52Z -> 2014-06-27T11:02:52-7000
+             *
+             * Once we update our ES documents so they contain UTC dates, we'll be
+             * able to stop using this hack.
+             *
+             */
+            if ('Z' === substr($date, -1)) {
+                $e = new DateTime();
+                $date = substr($date, 0, -1).$e->format('O');
+            }
+
+            $timestamp = strtotime($date);
+            $dt->setTimestamp($timestamp);
+        }
+
+        $format = DateTime::ISO8601;
+        $timezone = new DateTimeZone('UTC');
+
+        return $dt->setTimezone($timezone)->format($format);
     }
 
-    if ($date instanceof DateTime) {
-      $dt = $date;
-    } elseif (is_int($date)) {
-      $dt = new DateTime();
-      $dt->setTimestamp($date);
-    } else {
-      $dt = new DateTime();
+    /**
+     * Convert array into JSON, pretty printing it if in dev mode.
+     *
+     * @param mixed $data
+     */
+    public static function arrayToJson($data)
+    {
+        // Determine if JSON should be pretty printed
+        $options = 0;
+        if (sfContext::getInstance()->getConfiguration()->isDebug() && defined('JSON_PRETTY_PRINT')) {
+            $options |= JSON_PRETTY_PRINT;
+        }
 
-      /*
-       * [ TEMPORARY HACK ].
-       *
-       * ElasticSearch uses UTC but we are storing local times.
-       * So their ISO dates are using the Z suffix (stands for UTC). This hack
-       * replaces Z with difference greenwich time in hours, e.g.:
-       * 2014-06-27T11:02:52Z -> 2014-06-27T11:02:52-7000
-       *
-       * Once we update our ES documents so they contain UTC dates, we'll be
-       * able to stop using this hack.
-       *
-       */
-      if ('Z' === substr($date, -1)) {
-        $e = new DateTime();
-        $date = substr($date, 0, -1).$e->format('O');
-      }
-
-      $timestamp = strtotime($date);
-      $dt->setTimestamp($timestamp);
+        return json_encode($data, $options);
     }
-
-    $format = DateTime::ISO8601;
-    $timezone = new DateTimeZone('UTC');
-
-    return $dt->setTimezone($timezone)->format($format);
-  }
-
-  /**
-   * Convert array into JSON, pretty printing it if in dev mode.
-   *
-   * @param mixed $data
-   */
-  public static function arrayToJson($data)
-  {
-    // Determine if JSON should be pretty printed
-    $options = 0;
-    if (sfContext::getInstance()->getConfiguration()->isDebug() && defined('JSON_PRETTY_PRINT')) {
-      $options |= JSON_PRETTY_PRINT;
-    }
-
-    return json_encode($data, $options);
-  }
 }

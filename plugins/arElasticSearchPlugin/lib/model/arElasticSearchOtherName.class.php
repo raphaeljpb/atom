@@ -19,22 +19,22 @@
 
 class arElasticSearchOtherName extends arElasticSearchModelBase
 {
-  public static function serialize($object)
-  {
-    $serialized = [];
+    public static function serialize($object)
+    {
+        $serialized = [];
 
-    $serialized['sourceCulture'] = $object->source_culture;
-    $serialized['i18n'] = self::serializeI18ns($object->id, ['QubitOtherName']);
+        $serialized['sourceCulture'] = $object->source_culture;
+        $serialized['i18n'] = self::serializeI18ns($object->id, ['QubitOtherName']);
 
-    // Serialize type term
-    if (!empty($object->type_id)) {
-      $serialized['type'] = ['i18n' => arElasticSearchModelBase::serializeI18ns(
-        $object->type_id,
-        ['QubitTerm'],
-        ['fields' => ['name']]
-      )];
+        // Serialize type term
+        if (!empty($object->type_id)) {
+            $serialized['type'] = ['i18n' => arElasticSearchModelBase::serializeI18ns(
+                $object->type_id,
+                ['QubitTerm'],
+                ['fields' => ['name']]
+            )];
+        }
+
+        return $serialized;
     }
-
-    return $serialized;
-  }
 }

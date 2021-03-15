@@ -25,49 +25,49 @@
  */
 class ActorContextMenuComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
+    public function execute($request)
+    {
+        sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
 
-    $page = 1;
-    $limit = sfConfig::get('app_hits_per_page', 10);
+        $page = 1;
+        $limit = sfConfig::get('app_hits_per_page', 10);
 
-    // Store related information objects in lists with pagination, lists for
-    // all event types and for name access point relations (subject of)
-    $this->lists = [];
+        // Store related information objects in lists with pagination, lists for
+        // all event types and for name access point relations (subject of)
+        $this->lists = [];
 
-    // Subject of
-    $resultSet = ActorRelatedInformationObjectsAction::getRelatedInformationObjects($this->resource->id, $page, $limit);
+        // Subject of
+        $resultSet = ActorRelatedInformationObjectsAction::getRelatedInformationObjects($this->resource->id, $page, $limit);
 
-    if ($resultSet->getTotalHits() > 0) {
-      $pager = new QubitSearchPager($resultSet);
-      $pager->setPage($page);
-      $pager->setMaxPerPage($limit);
-      $pager->init();
+        if ($resultSet->getTotalHits() > 0) {
+            $pager = new QubitSearchPager($resultSet);
+            $pager->setPage($page);
+            $pager->setMaxPerPage($limit);
+            $pager->init();
 
-      $this->lists[] = [
-        'label' => $this->context->i18n->__('Subject'),
-        'pager' => $pager,
-        'dataUrl' => url_for(['module' => 'actor', 'action' => 'relatedInformationObjects', 'actorId' => $this->resource->id]),
-        'moreUrl' => url_for(['module' => 'informationobject', 'action' => 'browse', 'topLod' => 0, 'names' => $this->resource->id]), ];
+            $this->lists[] = [
+                'label' => $this->context->i18n->__('Subject'),
+                'pager' => $pager,
+                'dataUrl' => url_for(['module' => 'actor', 'action' => 'relatedInformationObjects', 'actorId' => $this->resource->id]),
+                'moreUrl' => url_for(['module' => 'informationobject', 'action' => 'browse', 'topLod' => 0, 'names' => $this->resource->id]), ];
+        }
+
+        // All event types
+        foreach (QubitTerm::getEventTypes() as $eventType) {
+            $resultSet = ActorRelatedInformationObjectsAction::getRelatedInformationObjects($this->resource->id, $page, $limit, $eventType->id);
+
+            if ($resultSet->getTotalHits() > 0) {
+                $pager = new QubitSearchPager($resultSet);
+                $pager->setPage($page);
+                $pager->setMaxPerPage($limit);
+                $pager->init();
+
+                $this->lists[] = [
+                    'label' => $eventType->getRole(),
+                    'pager' => $pager,
+                    'dataUrl' => url_for(['module' => 'actor', 'action' => 'relatedInformationObjects', 'actorId' => $this->resource->id, 'eventTypeId' => $eventType->id]),
+                    'moreUrl' => url_for(['module' => 'informationobject', 'action' => 'browse', 'topLod' => 0, 'actorId' => $this->resource->id, 'eventTypeId' => $eventType->id]), ];
+            }
+        }
     }
-
-    // All event types
-    foreach (QubitTerm::getEventTypes() as $eventType) {
-      $resultSet = ActorRelatedInformationObjectsAction::getRelatedInformationObjects($this->resource->id, $page, $limit, $eventType->id);
-
-      if ($resultSet->getTotalHits() > 0) {
-        $pager = new QubitSearchPager($resultSet);
-        $pager->setPage($page);
-        $pager->setMaxPerPage($limit);
-        $pager->init();
-
-        $this->lists[] = [
-          'label' => $eventType->getRole(),
-          'pager' => $pager,
-          'dataUrl' => url_for(['module' => 'actor', 'action' => 'relatedInformationObjects', 'actorId' => $this->resource->id, 'eventTypeId' => $eventType->id]),
-          'moreUrl' => url_for(['module' => 'informationobject', 'action' => 'browse', 'topLod' => 0, 'actorId' => $this->resource->id, 'eventTypeId' => $eventType->id]), ];
-      }
-    }
-  }
 }

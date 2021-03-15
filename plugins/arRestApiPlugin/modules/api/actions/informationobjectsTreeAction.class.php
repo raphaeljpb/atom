@@ -19,63 +19,63 @@
 
 class ApiInformationObjectsTreeAction extends QubitApiAction
 {
-  public function getChildren($parentId)
-  {
-    $results = [];
+    public function getChildren($parentId)
+    {
+        $results = [];
 
-    $criteria = new Criteria();
-    $criteria->add(QubitInformationObject::PARENT_ID, $parentId);
+        $criteria = new Criteria();
+        $criteria->add(QubitInformationObject::PARENT_ID, $parentId);
 
-    $inforationObjects = QubitInformationObject::get($criteria);
+        $inforationObjects = QubitInformationObject::get($criteria);
 
-    foreach ($inforationObjects as $io) {
-      $item = $this->informationObjectToArray($io);
+        foreach ($inforationObjects as $io) {
+            $item = $this->informationObjectToArray($io);
 
-      $children = $this->getChildren($io->id);
+            $children = $this->getChildren($io->id);
 
-      if (count($children)) {
-        $item['children'] = $children;
-      }
+            if (count($children)) {
+                $item['children'] = $children;
+            }
 
-      array_push($results, $item);
+            array_push($results, $item);
+        }
+
+        return $results;
     }
 
-    return $results;
-  }
+    protected function get($request)
+    {
+        // Get parent slug so we can determine its ID
+        $criteria = new Criteria();
+        $criteria->add(QubitSlug::SLUG, $request->parent_slug);
 
-  protected function get($request)
-  {
-    // Get parent slug so we can determine its ID
-    $criteria = new Criteria();
-    $criteria->add(QubitSlug::SLUG, $request->parent_slug);
+        $slug = QubitSlug::getOne($criteria);
 
-    $slug = QubitSlug::getOne($criteria);
+        $io = QubitInformationObject::getById($slug->objectId);
 
-    $io = QubitInformationObject::getById($slug->objectId);
+        $result = $this->informationObjectToArray($io);
 
-    $result = $this->informationObjectToArray($io);
+        $children = $this->getChildren($io->id);
 
-    $children = $this->getChildren($io->id);
+        if (count($children)) {
+            $result['children'] = $children;
+        }
 
-    if (count($children)) {
-      $result['children'] = $children;
+        return $result;
     }
 
-    return $result;
-  }
+    private function informationObjectToArray($io)
+    {
+        $ioData = [
+            'title' => $io->title,
+            'identifier' => $io->identifier,
+            'slug' => $io->slug,
+        ];
 
-  private function informationObjectToArray($io)
-  {
-    $ioData = [
-      'title' => $io->title,
-      'identifier' => $io->identifier,
-      'slug' => $io->slug,
-    ];
+        if (null !== $io->getLevelOfDescription()) {
+            $ioData['level'] = $io->getLevelOfDescription()->getName(['culture' => 'en']);
+        }
 
-    if (null !== $io->getLevelOfDescription()) {
-      $ioData['level'] = $io->getLevelOfDescription()->getName(['culture' => 'en']);
+        return $ioData;
     }
-
-    return $ioData;
-  }
 }

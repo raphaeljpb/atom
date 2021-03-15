@@ -32,23 +32,23 @@
 
           <div class="span4">
             <?php echo $form->type
-              ->label(__('Type'))
-              ->renderRow(); ?>
+                ->label(__('Type'))
+                ->renderRow(); ?>
           </div>
 
           <div class="span4">
             <?php echo $form->showBrowseHierarchyPage
-              ->label(__('Show browse hierarchy page'))
-              ->help(__('Determines whether to show a link to the browse hierarchy page on the information objects browse/search pages'))
-              ->renderRow(); ?>
+                ->label(__('Show browse hierarchy page'))
+                ->help(__('Determines whether to show a link to the browse hierarchy page on the information objects browse/search pages'))
+                ->renderRow(); ?>
            </div>
 
         </div>
 
         <p>
           <?php echo $form->allowFullWidthTreeviewCollapse
-            ->label(__('Make full width treeview collapsible on description pages'))
-            ->renderRow(); ?>
+              ->label(__('Make full width treeview collapsible on description pages'))
+              ->renderRow(); ?>
         </p>
 
       </fieldset>
@@ -58,9 +58,9 @@
         <legend><?php echo __('Sidebar'); ?></legend>
 
         <?php echo $form->ioSort
-          ->label(__('Sort (information object)'))
-          ->help(__('Determines whether to sort siblings in the information object treeview control and, if so, what sort criteria to use'))
-          ->renderRow(); ?>
+            ->label(__('Sort (information object)'))
+            ->help(__('Determines whether to sort siblings in the information object treeview control and, if so, what sort criteria to use'))
+            ->renderRow(); ?>
 
       </fieldset>
 
@@ -72,38 +72,38 @@
 
           <div class="span3">
             <?php echo $form->showIdentifier
-              ->label(__('Show identifier'))
-              ->renderRow(); ?>
+                ->label(__('Show identifier'))
+                ->renderRow(); ?>
           </div>
 
           <div class="span3">
             <?php echo $form->showLevelOfDescription
-              ->label(__('Show level of description'))
-              ->renderRow(); ?>
+                ->label(__('Show level of description'))
+                ->renderRow(); ?>
           </div>
 
           <div class="span2">
             <?php echo $form->showDates
-              ->label(__('Show dates'))
-              ->renderRow(); ?>
+                ->label(__('Show dates'))
+                ->renderRow(); ?>
           </div>
 
         </div>
 
         <p>
             <?php echo $form->fullItemsPerPage
-              ->label(__('Items per page'))
-              ->help(
+                ->label(__('Items per page'))
+                ->help(
                   __('Items per page can be a minimum of %1% and a maximum of %2%',
                     [
-                      '%1%' => format_number(10),
-                      '%2%' => format_number(
-                        sfConfig::get('app_treeview_items_per_page_max', 10000)
-                      ),
+                        '%1%' => format_number(10),
+                        '%2%' => format_number(
+                          sfConfig::get('app_treeview_items_per_page_max', 10000)
+                        ),
                     ]
                   )
                 )
-              ->renderRow(); ?>
+                ->renderRow(); ?>
         </p>
 
       </fieldset>

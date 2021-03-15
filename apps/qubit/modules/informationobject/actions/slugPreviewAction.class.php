@@ -19,50 +19,50 @@
 
 class InformationObjectSlugPreviewAction extends sfAction
 {
-  // Slugify text, if it's not already slugified, and indicate if it has been
-  // padded (if slug already used by another resource)
-  public function execute($request)
-  {
-    $this->resource = $this->getRoute()->resource;
+    // Slugify text, if it's not already slugified, and indicate if it has been
+    // padded (if slug already used by another resource)
+    public function execute($request)
+    {
+        $this->resource = $this->getRoute()->resource;
 
-    // Return 401 if unauthorized
-    if (!sfContext::getInstance()->user->isAuthenticated()
+        // Return 401 if unauthorized
+        if (!sfContext::getInstance()->user->isAuthenticated()
       || !QubitAcl::check($this->resource, 'read')) {
-      $this->response->setStatusCode(401);
+            $this->response->setStatusCode(401);
 
-      return sfView::NONE;
+            return sfView::NONE;
+        }
+
+        // Return JSON containing first available slug
+        $availableSlug = $this->determineAvailableSlug($this->request->getParameter('text'), $this->resource->id);
+
+        $response = [
+            'slug' => $availableSlug,
+            'padded' => $availableSlug != QubitSlug::slugify($this->request->getParameter('text')),
+        ];
+
+        $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
+
+        return $this->renderText(json_encode($response));
     }
 
-    // Return JSON containing first available slug
-    $availableSlug = $this->determineAvailableSlug($this->request->getParameter('text'), $this->resource->id);
+    public static function determineAvailableSlug($text, $resourceId)
+    {
+        $originalText = $text;
 
-    $response = [
-      'slug' => $availableSlug,
-      'padded' => $availableSlug != QubitSlug::slugify($this->request->getParameter('text')),
-    ];
+        do {
+            $slugText = QubitSlug::slugify($text);
 
-    $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
+            $criteria = new Criteria();
+            $criteria->add(QubitSlug::SLUG, $slugText);
 
-    return $this->renderText(json_encode($response));
-  }
+            // Padded text if slugified text slug is used by another resource
+            ++$counter;
+            $text = $originalText.'-'.$counter;
 
-  public static function determineAvailableSlug($text, $resourceId)
-  {
-    $originalText = $text;
+            $slug = QubitSlug::getOne($criteria);
+        } while ((null != $slug) && ($slug->objectId != $resourceId));
 
-    do {
-      $slugText = QubitSlug::slugify($text);
-
-      $criteria = new Criteria();
-      $criteria->add(QubitSlug::SLUG, $slugText);
-
-      // Padded text if slugified text slug is used by another resource
-      ++$counter;
-      $text = $originalText.'-'.$counter;
-
-      $slug = QubitSlug::getOne($criteria);
-    } while ((null != $slug) && ($slug->objectId != $resourceId));
-
-    return $slugText;
-  }
+        return $slugText;
+    }
 }

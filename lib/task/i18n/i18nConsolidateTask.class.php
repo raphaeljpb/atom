@@ -25,48 +25,48 @@
  */
 class i18nConsolidateTask extends sfBaseTask
 {
-  /**
-   * @see sfTask
-   *
-   * @param mixed $arguments
-   * @param mixed $options
-   */
-  public function execute($arguments = [], $options = [])
-  {
-    if (!file_exists($arguments['target'])) {
-      throw new sfException('Target directory "'.$arguments['target'].'" doesn\t exist');
+    /**
+     * @see sfTask
+     *
+     * @param mixed $arguments
+     * @param mixed $options
+     */
+    public function execute($arguments = [], $options = [])
+    {
+        if (!file_exists($arguments['target'])) {
+            throw new sfException('Target directory "'.$arguments['target'].'" doesn\t exist');
+        }
+
+        $this->logSection('i18n', sprintf('Consolidating "%s" i18n messages', $arguments['culture']));
+
+        $i18n = new sfI18N($this->configuration, new sfNoCache(), ['source' => 'XLIFF', 'debug' => false]);
+        $extract = new QubitI18nConsolidatedExtract($i18n, $arguments['culture'], ['target' => $arguments['target']]);
+        $extract->extract();
+        $extract->save();
     }
 
-    $this->logSection('i18n', sprintf('Consolidating "%s" i18n messages', $arguments['culture']));
+    /**
+     * @see sfTask
+     */
+    protected function configure()
+    {
+        $this->addArguments([
+            new sfCommandArgument('culture', sfCommandArgument::REQUIRED, 'Message culture'),
+            new sfCommandArgument('target', sfCommandArgument::REQUIRED, 'Target directory'),
+        ]);
 
-    $i18n = new sfI18N($this->configuration, new sfNoCache(), ['source' => 'XLIFF', 'debug' => false]);
-    $extract = new QubitI18nConsolidatedExtract($i18n, $arguments['culture'], ['target' => $arguments['target']]);
-    $extract->extract();
-    $extract->save();
-  }
+        $this->addOptions([
+            // http://trac.symfony-project.org/ticket/8352
+            new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', true),
+        ]);
 
-  /**
-   * @see sfTask
-   */
-  protected function configure()
-  {
-    $this->addArguments([
-      new sfCommandArgument('culture', sfCommandArgument::REQUIRED, 'Message culture'),
-      new sfCommandArgument('target', sfCommandArgument::REQUIRED, 'Target directory'),
-    ]);
+        $this->namespace = 'i18n';
+        $this->name = 'consolidate';
+        $this->briefDescription = 'Combine all application messages into a single output (XLIFF)';
 
-    $this->addOptions([
-      // http://trac.symfony-project.org/ticket/8352
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', true),
-    ]);
-
-    $this->namespace = 'i18n';
-    $this->name = 'consolidate';
-    $this->briefDescription = 'Combine all application messages into a single output (XLIFF)';
-
-    $this->detailedDescription = <<<'EOF'
+        $this->detailedDescription = <<<'EOF'
 Combine all application messages into a single output (XLIFF) file for ease of
 use by translators.
 EOF;
-  }
+    }
 }

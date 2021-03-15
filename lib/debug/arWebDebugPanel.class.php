@@ -19,57 +19,58 @@
 
 class arWebDebugPanel extends sfWebDebugPanel
 {
-  public static function listenToLoadDebugWebPanelEvent(sfEvent $event)
-  {
-    $panelManager = $event->getSubject();
-    $event->getSubject()->setPanel(
-      'AtoM', new self($panelManager)
-    );
-  }
-
-  public function getTitle()
-  {
-    $title = 'AtoM '.qubitConfiguration::VERSION;
-
-    if (null !== $rev = $this->getCurrentGitRevision()) {
-      $title .= ' <strong>(git:'.$rev.')</strong>';
+    public static function listenToLoadDebugWebPanelEvent(sfEvent $event)
+    {
+        $panelManager = $event->getSubject();
+        $event->getSubject()->setPanel(
+            'AtoM',
+            new self($panelManager)
+        );
     }
 
-    return $title;
-  }
+    public function getTitle()
+    {
+        $title = 'AtoM '.qubitConfiguration::VERSION;
 
-  public function getPanelTitle()
-  {
-    return 'AtoM';
-  }
+        if (null !== $rev = $this->getCurrentGitRevision()) {
+            $title .= ' <strong>(git:'.$rev.')</strong>';
+        }
 
-  public function getPanelContent()
-  {
-  }
-
-  protected function getCurrentGitRevision()
-  {
-    $gitDirectory = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'.git'.DIRECTORY_SEPARATOR;
-    $headFile = $gitDirectory.'HEAD';
-    // Use at sign to avoid unnecessary warning
-    if (false !== $fd = @fopen($headFile, 'r')) {
-      $line = fgets($fd);
-      fclose($fd);
-    } else {
-      return;
+        return $title;
     }
 
-    $refParts = preg_split("/[\\s\t]+/", $line, -1, PREG_SPLIT_NO_EMPTY);
-    if (2 == count($refParts)) {
-      $ref = $gitDirectory.$refParts[1];
-      if (false !== $fd = fopen($ref, 'r')) {
-        $hash = fgets($fd);
-        fclose($fd);
-
-        $branch = substr($ref, strrpos($ref, '/') + 1);
-
-        return $branch.'/'.substr($hash, 0, 16);
-      }
+    public function getPanelTitle()
+    {
+        return 'AtoM';
     }
-  }
+
+    public function getPanelContent()
+    {
+    }
+
+    protected function getCurrentGitRevision()
+    {
+        $gitDirectory = sfConfig::get('sf_web_dir').DIRECTORY_SEPARATOR.'.git'.DIRECTORY_SEPARATOR;
+        $headFile = $gitDirectory.'HEAD';
+        // Use at sign to avoid unnecessary warning
+        if (false !== $fd = @fopen($headFile, 'r')) {
+            $line = fgets($fd);
+            fclose($fd);
+        } else {
+            return;
+        }
+
+        $refParts = preg_split("/[\\s\t]+/", $line, -1, PREG_SPLIT_NO_EMPTY);
+        if (2 == count($refParts)) {
+            $ref = $gitDirectory.$refParts[1];
+            if (false !== $fd = fopen($ref, 'r')) {
+                $hash = fgets($fd);
+                fclose($fd);
+
+                $branch = substr($ref, strrpos($ref, '/') + 1);
+
+                return $branch.'/'.substr($hash, 0, 16);
+            }
+        }
+    }
 }

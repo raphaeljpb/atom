@@ -22,36 +22,36 @@
  */
 class QubitArrayPager extends sfPager
 {
-  protected $hits;
+    protected $hits;
 
-  public function __construct()
-  {
-    parent::__construct(null);
-  }
-
-  public function __get($name)
-  {
-    if ('hits' == $name) {
-      return $this->hits;
+    public function __construct()
+    {
+        parent::__construct(null);
     }
 
-    return call_user_func([$this, 'get'.ucfirst($name)]);
-  }
+    public function __get($name)
+    {
+        if ('hits' == $name) {
+            return $this->hits;
+        }
 
-  public function __set($name, $val)
-  {
-    if ('hits' == $name) {
-      $this->hits = $val;
-
-      $this->nbResults = count($this->hits);
-      $this->lastPage = ceil($this->nbResults / $this->getMaxPerPage());
-    } else {
-      call_user_func([$this, 'set'.ucfirst($name)]);
+        return call_user_func([$this, 'get'.ucfirst($name)]);
     }
-  }
 
-  public function getResults()
-  {
-    return array_slice($this->hits, $this->getFirstIndice() - 1, $this->getMaxPerPage());
-  }
+    public function __set($name, $val)
+    {
+        if ('hits' == $name) {
+            $this->hits = $val;
+
+            $this->nbResults = count($this->hits);
+            $this->lastPage = ceil($this->nbResults / $this->getMaxPerPage());
+        } else {
+            call_user_func([$this, 'set'.ucfirst($name)]);
+        }
+    }
+
+    public function getResults()
+    {
+        return array_slice($this->hits, $this->getFirstIndice() - 1, $this->getMaxPerPage());
+    }
 }

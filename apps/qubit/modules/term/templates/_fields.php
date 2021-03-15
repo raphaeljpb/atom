@@ -55,7 +55,7 @@
     <?php if (QubitTerm::ROOT_ID != $resource->parent->id) { ?>
       <?php echo render_show(
                    render_title($resource), __('BT %1%', [
-                     '%1%' => link_to(render_title($resource->parent), [$resource->parent, 'module' => 'term']), ])); ?>
+                       '%1%' => link_to(render_title($resource->parent), [$resource->parent, 'module' => 'term']), ])); ?>
     <?php } ?>
 
     <div class="field">
@@ -108,7 +108,7 @@
         <ul>
           <?php foreach (QubitRelation::getBySubjectOrObjectId($resource->id, ['typeId' => QubitTerm::TERM_RELATION_ASSOCIATIVE_ID]) as $item) { ?>
             <li><?php echo __('RT %1%', ['%1%' => link_to(render_title(
-                        $item->getOpposedObject($resource->id)), [$item->getOpposedObject($resource->id), 'module' => 'term'])]); ?></li>
+                          $item->getOpposedObject($resource->id)), [$item->getOpposedObject($resource->id), 'module' => 'term'])]); ?></li>
           <?php } ?>
         </ul>
       </div>

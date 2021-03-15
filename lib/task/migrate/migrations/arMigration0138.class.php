@@ -25,23 +25,23 @@
  */
 class arMigration0138
 {
-  public const VERSION = 138;
-  public const // The new database version
+    public const VERSION = 138;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    $settingNames = ['toggleCopyrightFilter', 'toggleMaterialFilter'];
-    foreach ($settingNames as $name) {
-      if (null === QubitSetting::getByName($name)) {
-        $setting = new QubitSetting();
-        $setting->name = $name;
-        $setting->value = 1;
-        $setting->culture = 'en';
-        $setting->save();
+      $settingNames = ['toggleCopyrightFilter', 'toggleMaterialFilter'];
+      foreach ($settingNames as $name) {
+          if (null === QubitSetting::getByName($name)) {
+              $setting = new QubitSetting();
+              $setting->name = $name;
+              $setting->value = 1;
+              $setting->culture = 'en';
+              $setting->save();
+          }
       }
-    }
 
-    return true;
+      return true;
   }
 }

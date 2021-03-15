@@ -24,33 +24,33 @@
  */
 class PhysicalObjectDeleteAction extends sfAction
 {
-  public function execute($request)
-  {
-    $this->form = new sfForm();
+    public function execute($request)
+    {
+        $this->form = new sfForm();
 
-    $this->resource = $this->getRoute()->resource;
+        $this->resource = $this->getRoute()->resource;
 
-    $criteria = new Criteria();
-    $criteria->add(QubitRelation::SUBJECT_ID, $this->resource->id);
-    $criteria->addJoin(QubitRelation::OBJECT_ID, QubitInformationObject::ID);
-    $this->informationObjects = QubitInformationObject::get($criteria);
+        $criteria = new Criteria();
+        $criteria->add(QubitRelation::SUBJECT_ID, $this->resource->id);
+        $criteria->addJoin(QubitRelation::OBJECT_ID, QubitInformationObject::ID);
+        $this->informationObjects = QubitInformationObject::get($criteria);
 
-    $this->form->setValidator('next', new sfValidatorString());
-    $this->form->setWidget('next', new sfWidgetFormInputHidden());
+        $this->form->setValidator('next', new sfValidatorString());
+        $this->form->setWidget('next', new sfWidgetFormInputHidden());
 
-    if ($request->isMethod('delete')) {
-      $this->form->bind($request->getPostParameters());
+        if ($request->isMethod('delete')) {
+            $this->form->bind($request->getPostParameters());
 
-      if ($this->form->isValid()) {
-        $this->resource->delete();
+            if ($this->form->isValid()) {
+                $this->resource->delete();
 
-        $next = $this->form->getValue('next');
-        if (isset($next)) {
-          $this->redirect($next);
+                $next = $this->form->getValue('next');
+                if (isset($next)) {
+                    $this->redirect($next);
+                }
+
+                $this->redirect('@homepage');
+            }
         }
-
-        $this->redirect('@homepage');
-      }
     }
-  }
 }

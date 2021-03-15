@@ -5,55 +5,55 @@ define('_ETC_DIR', '/usr/local/etc');
 
 function getenv_default($name, $default)
 {
-  $value = getenv($name);
+    $value = getenv($name);
 
-  if (false === $value) {
-    return $default;
-  }
+    if (false === $value) {
+        return $default;
+    }
 
-  return $value;
+    return $value;
 }
 
 function getenv_or_fail($name)
 {
-  $value = getenv($name);
+    $value = getenv($name);
 
-  if (false === $value) {
-    echo "Environment variable {$name} is not defined!";
+    if (false === $value) {
+        echo "Environment variable {$name} is not defined!";
 
-    exit(1);
-  }
+        exit(1);
+    }
 
-  return $value;
+    return $value;
 }
 
 function get_host_and_port($value, $default_port)
 {
-  $parts = explode(':', $value);
+    $parts = explode(':', $value);
 
-  if (1 == count($parts)) {
-    $parts[1] = $default_port;
-  }
+    if (1 == count($parts)) {
+        $parts[1] = $default_port;
+    }
 
-  return ['host' => $parts[0], 'port' => $parts[1]];
+    return ['host' => $parts[0], 'port' => $parts[1]];
 }
 
 $CONFIG = [
-  'atom.development_mode' => filter_var(getenv_default('ATOM_DEVELOPMENT_MODE', false), FILTER_VALIDATE_BOOLEAN),
-  'atom.elasticsearch_host' => getenv_or_fail('ATOM_ELASTICSEARCH_HOST'),
-  'atom.memcached_host' => getenv_or_fail('ATOM_MEMCACHED_HOST'),
-  'atom.gearmand_host' => getenv_or_fail('ATOM_GEARMAND_HOST'),
-  'atom.mysql_dsn' => getenv_or_fail('ATOM_MYSQL_DSN'),
-  'atom.mysql_username' => getenv_or_fail('ATOM_MYSQL_USERNAME'),
-  'atom.mysql_password' => getenv_or_fail('ATOM_MYSQL_PASSWORD'),
-  'atom.debug_ip' => getenv_default('ATOM_DEBUG_IP', ''),
-  'php.max_execution_time' => getenv_default('ATOM_PHP_MAX_EXECUTION_TIME', '120'),
-  'php.max_input_time' => getenv_default('ATOM_PHP_MAX_INPUT_TIME', '120'),
-  'php.memory_limit' => getenv_default('ATOM_PHP_MEMORY_LIMIT', '512M'),
-  'php.post_max_size' => getenv_default('ATOM_PHP_POST_MAX_SIZE', '72M'),
-  'php.upload_max_filesize' => getenv_default('ATOM_PHP_UPLOAD_MAX_FILESIZE', '64M'),
-  'php.max_file_uploads' => getenv_default('ATOM_PHP_MAX_FILE_UPLOADS', '20'),
-  'php.date.timezone' => getenv_default('ATOM_PHP_DATE_TIMEZONE', 'America/Vancouver'),
+    'atom.development_mode' => filter_var(getenv_default('ATOM_DEVELOPMENT_MODE', false), FILTER_VALIDATE_BOOLEAN),
+    'atom.elasticsearch_host' => getenv_or_fail('ATOM_ELASTICSEARCH_HOST'),
+    'atom.memcached_host' => getenv_or_fail('ATOM_MEMCACHED_HOST'),
+    'atom.gearmand_host' => getenv_or_fail('ATOM_GEARMAND_HOST'),
+    'atom.mysql_dsn' => getenv_or_fail('ATOM_MYSQL_DSN'),
+    'atom.mysql_username' => getenv_or_fail('ATOM_MYSQL_USERNAME'),
+    'atom.mysql_password' => getenv_or_fail('ATOM_MYSQL_PASSWORD'),
+    'atom.debug_ip' => getenv_default('ATOM_DEBUG_IP', ''),
+    'php.max_execution_time' => getenv_default('ATOM_PHP_MAX_EXECUTION_TIME', '120'),
+    'php.max_input_time' => getenv_default('ATOM_PHP_MAX_INPUT_TIME', '120'),
+    'php.memory_limit' => getenv_default('ATOM_PHP_MEMORY_LIMIT', '512M'),
+    'php.post_max_size' => getenv_default('ATOM_PHP_POST_MAX_SIZE', '72M'),
+    'php.upload_max_filesize' => getenv_default('ATOM_PHP_UPLOAD_MAX_FILESIZE', '64M'),
+    'php.max_file_uploads' => getenv_default('ATOM_PHP_MAX_FILE_UPLOADS', '20'),
+    'php.date.timezone' => getenv_default('ATOM_PHP_DATE_TIMEZONE', 'America/Vancouver'),
 ];
 
 //
@@ -61,7 +61,7 @@ $CONFIG = [
 //
 
 if (!file_exists(_ATOM_DIR.'/apps/qubit/config/settings.yml')) {
-  copy(_ATOM_DIR.'/apps/qubit/config/settings.yml.tmpl', _ATOM_DIR.'/apps/qubit/config/settings.yml');
+    copy(_ATOM_DIR.'/apps/qubit/config/settings.yml.tmpl', _ATOM_DIR.'/apps/qubit/config/settings.yml');
 }
 
 //
@@ -89,8 +89,8 @@ file_put_contents(_ATOM_DIR.'/apps/qubit/config/gearman.yml', $gearman_yml);
 //
 
 if (!file_exists(_ATOM_DIR.'/apps/qubit/config/app.yml')) {
-  $parts = get_host_and_port($CONFIG['atom.memcached_host'], 11211);
-  $app_yml = <<<EOT
+    $parts = get_host_and_port($CONFIG['atom.memcached_host'], 11211);
+    $app_yml = <<<EOT
 all:
   upload_limit: -1
   download_timeout: 10
@@ -105,7 +105,7 @@ all:
   htmlpurifier_enabled: false
 EOT;
 
-  file_put_contents(_ATOM_DIR.'/apps/qubit/config/app.yml', $app_yml);
+    file_put_contents(_ATOM_DIR.'/apps/qubit/config/app.yml', $app_yml);
 }
 
 //
@@ -113,8 +113,8 @@ EOT;
 //
 
 if (!file_exists(_ATOM_DIR.'/apps/qubit/config/factories.yml')) {
-  $parts = get_host_and_port($CONFIG['atom.memcached_host'], 11211);
-  $factories_yml = <<<EOT
+    $parts = get_host_and_port($CONFIG['atom.memcached_host'], 11211);
+    $factories_yml = <<<EOT
 prod:
   storage:
     class: QubitCacheSessionStorage
@@ -149,7 +149,7 @@ dev:
 
 EOT;
 
-  file_put_contents(_ATOM_DIR.'/apps/qubit/config/factories.yml', $factories_yml);
+    file_put_contents(_ATOM_DIR.'/apps/qubit/config/factories.yml', $factories_yml);
 }
 
 //
@@ -173,43 +173,43 @@ file_put_contents(_ATOM_DIR.'/config/search.yml', $search_yml);
 //
 
 $mysql_config = [
-  'all' => [
-    'propel' => [
-      'class' => 'sfPropelDatabase',
-      'param' => [
-        'encoding' => 'utf8mb4',
-        'persistent' => true,
-        'pooling' => true,
-        'dsn' => $CONFIG['atom.mysql_dsn'],
-        'username' => $CONFIG['atom.mysql_username'],
-        'password' => $CONFIG['atom.mysql_password'],
-      ],
-    ],
-  ],
-  'dev' => [
-    'propel' => [
-      'param' => [
-        'classname' => 'DebugPDO',
-        'debug' => [
-          'realmemoryusage' => true,
-          'details' => [
-            'time' => ['enabled' => true],
-            'slow' => ['enabled' => true, 'threshold' => 0.1],
-            'mem' => ['enabled' => true],
-            'mempeak' => ['enabled' => true],
-            'memdelta' => ['enabled' => true],
-          ],
+    'all' => [
+        'propel' => [
+            'class' => 'sfPropelDatabase',
+            'param' => [
+                'encoding' => 'utf8mb4',
+                'persistent' => true,
+                'pooling' => true,
+                'dsn' => $CONFIG['atom.mysql_dsn'],
+                'username' => $CONFIG['atom.mysql_username'],
+                'password' => $CONFIG['atom.mysql_password'],
+            ],
         ],
-      ],
     ],
-  ],
-  'test' => [
-    'propel' => [
-      'param' => [
-        'classname' => 'DebugPDO',
-      ],
+    'dev' => [
+        'propel' => [
+            'param' => [
+                'classname' => 'DebugPDO',
+                'debug' => [
+                    'realmemoryusage' => true,
+                    'details' => [
+                        'time' => ['enabled' => true],
+                        'slow' => ['enabled' => true, 'threshold' => 0.1],
+                        'mem' => ['enabled' => true],
+                        'mempeak' => ['enabled' => true],
+                        'memdelta' => ['enabled' => true],
+                    ],
+                ],
+            ],
+        ],
     ],
-  ],
+    'test' => [
+        'propel' => [
+            'param' => [
+                'classname' => 'DebugPDO',
+            ],
+        ],
+    ],
 ];
 
 $config_php = "<?php\n\nreturn ".var_export($mysql_config, 1).";\n\n?>\n";
@@ -247,7 +247,7 @@ opcache.validate_timestamps = off
 EOT;
 
 if ($CONFIG['atom.development_mode']) {
-  $php_ini .= <<<EOT
+    $php_ini .= <<<EOT
 \n
 # Development-specific configuration
 expose_php = on

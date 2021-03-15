@@ -115,12 +115,12 @@ content
 
       <div class="form-item">
         <?php echo $form->resource
-          ->label(__('Name'))
-          ->renderLabel(); ?>
+            ->label(__('Name'))
+            ->renderLabel(); ?>
         <?php echo $form->resource->render(['class' => 'form-autocomplete']); ?>
         <?php echo $form->resource
-          ->help(__('This is the legal entity field and provides the contact information for the person(s) or the institution that donated or transferred the materials. It has the option of multiple instances and provides the option of creating more than one contact record using the same form.'))
-          ->renderHelp(); ?>
+            ->help(__('This is the legal entity field and provides the contact information for the person(s) or the institution that donated or transferred the materials. It has the option of multiple instances and provides the option of creating more than one contact record using the same form.'))
+            ->renderHelp(); ?>
         <input class="add" type="hidden" data-link-existing="true" value="<?php echo url_for(['module' => 'donor', 'action' => 'add']); ?> #authorizedFormOfName"/>
         <input class="list" type="hidden" value="<?php echo url_for(['module' => 'donor', 'action' => 'autocomplete']); ?>"/>
       </div>
@@ -152,8 +152,8 @@ content
               <?php echo $form->email->renderRow(); ?>
 
               <?php echo $form->website
-                ->label(__('URL'))
-                ->renderRow(); ?>
+                  ->label(__('URL'))
+                  ->renderRow(); ?>
 
             </div>
 
@@ -162,12 +162,12 @@ content
               <?php echo $form->streetAddress->renderRow(); ?>
 
               <?php echo $form->region
-                ->label(__('Region/province'))
-                ->renderRow(); ?>
+                  ->label(__('Region/province'))
+                  ->renderRow(); ?>
 
               <?php echo $form->countryCode
-                ->label(__('Country'))
-                ->renderRow(); ?>
+                  ->label(__('Country'))
+                  ->renderRow(); ?>
 
               <?php echo $form->postalCode->renderRow(); ?>
 

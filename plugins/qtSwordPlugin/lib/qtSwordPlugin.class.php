@@ -19,20 +19,20 @@
 
 class qtSwordPlugin
 {
-  public static function saveRequestContent()
-  {
-    $filename = tempnam('/tmp', 'php_qubit_');
+    public static function saveRequestContent()
+    {
+        $filename = tempnam('/tmp', 'php_qubit_');
 
-    $file = fopen($filename, 'w');
-    $source = fopen('php://input', 'r');
+        $file = fopen($filename, 'w');
+        $source = fopen('php://input', 'r');
 
-    while ($kb = fread($source, 1024)) {
-      fwrite($file, $kb, 1024);
+        while ($kb = fread($source, 1024)) {
+            fwrite($file, $kb, 1024);
+        }
+
+        fclose($file);
+        fclose($source);
+
+        return $filename;
     }
-
-    fclose($file);
-    fclose($source);
-
-    return $filename;
-  }
 }

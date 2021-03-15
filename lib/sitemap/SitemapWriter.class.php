@@ -22,148 +22,148 @@
  */
 class SitemapWriter
 {
-  /**
-   * Instance of XMLWriter.
-   */
-  private $writer;
+    /**
+     * Instance of XMLWriter.
+     */
+    private $writer;
 
-  /**
-   * Batch size.
-   */
-  private $batchSize = 0;
+    /**
+     * Batch size.
+     */
+    private $batchSize = 0;
 
-  /**
-   * Current sitemap.
-   */
-  private $sitemap;
+    /**
+     * Current sitemap.
+     */
+    private $sitemap;
 
-  /**
-   * Sitemap index.
-   */
-  private $sitemapIndex = 0;
+    /**
+     * Sitemap index.
+     */
+    private $sitemapIndex = 0;
 
-  /**
-   * Base URL.
-   */
-  private $baseUrl;
+    /**
+     * Base URL.
+     */
+    private $baseUrl;
 
-  /**
-   * Indent XML output.
-   */
-  private $indent = false;
+    /**
+     * Indent XML output.
+     */
+    private $indent = false;
 
-  /**
-   * Compress XML output.
-   */
-  private $compress = false;
+    /**
+     * Compress XML output.
+     */
+    private $compress = false;
 
-  /**
-   * Main document location.
-   */
-  private $file;
+    /**
+     * Main document location.
+     */
+    private $file;
 
-  /**
-   * Is the document ended?
-   */
-  private $ended = false;
+    /**
+     * Is the document ended?
+     */
+    private $ended = false;
 
-  /**
-   * Configuration object.
-   */
-  private $config;
+    /**
+     * Configuration object.
+     */
+    private $config;
 
-  /**
-   * Configuration path.
-   */
-  private static $configPath = 'config/sitemap.yml';
+    /**
+     * Configuration path.
+     */
+    private static $configPath = 'config/sitemap.yml';
 
-  /**
-   * Constructor.
-   *
-   * @param mixed $baseDir
-   * @param mixed $baseUrl
-   * @param mixed $indent
-   * @param mixed $compress
-   */
-  public function __construct($baseDir, $baseUrl, $indent = false, $compress = false)
-  {
-    $this->file = $baseDir.DIRECTORY_SEPARATOR.'sitemap.xml';
-    $this->indent = $indent;
-    $this->baseUrl = $baseUrl;
-    $this->compress = $compress;
+    /**
+     * Constructor.
+     *
+     * @param mixed $baseDir
+     * @param mixed $baseUrl
+     * @param mixed $indent
+     * @param mixed $compress
+     */
+    public function __construct($baseDir, $baseUrl, $indent = false, $compress = false)
+    {
+        $this->file = $baseDir.DIRECTORY_SEPARATOR.'sitemap.xml';
+        $this->indent = $indent;
+        $this->baseUrl = $baseUrl;
+        $this->compress = $compress;
 
-    $this->loadConfiguration();
+        $this->loadConfiguration();
 
-    $this->writer = new XMLWriter();
-    $this->writer->openUri($this->file);
-    $this->writer->setIndent($this->indent);
-    $this->writer->startDocument('1.0', 'UTF-8');
-    $this->writer->startElement('sitemapindex');
-    $this->writer->writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-    $this->writer->writeAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd');
-    $this->writer->writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
-  }
-
-  /**
-   * Add all the elements of a given set. The set must be
-   * an object extending AbstractSitemapObjectSet.
-   */
-  public function addSet(AbstractSitemapObjectSet $set)
-  {
-    $set->setConfig($this->config);
-    $set->init();
-
-    foreach ($set as $item) {
-      $this->getSitemap()->add($item);
-    }
-    $this->sitemap->flush();
-  }
-
-  public function end()
-  {
-    if ($this->ended) {
-      return;
+        $this->writer = new XMLWriter();
+        $this->writer->openUri($this->file);
+        $this->writer->setIndent($this->indent);
+        $this->writer->startDocument('1.0', 'UTF-8');
+        $this->writer->startElement('sitemapindex');
+        $this->writer->writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $this->writer->writeAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd');
+        $this->writer->writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
     }
 
-    if (null !== $this->sitemap) {
-      $this->sitemap->end();
+    /**
+     * Add all the elements of a given set. The set must be
+     * an object extending AbstractSitemapObjectSet.
+     */
+    public function addSet(AbstractSitemapObjectSet $set)
+    {
+        $set->setConfig($this->config);
+        $set->init();
+
+        foreach ($set as $item) {
+            $this->getSitemap()->add($item);
+        }
+        $this->sitemap->flush();
     }
 
-    $this->writer->endElement(); // </sitemapindex>
-    $this->writer->endDocument();
+    public function end()
+    {
+        if ($this->ended) {
+            return;
+        }
 
-    $this->ended = true;
-  }
+        if (null !== $this->sitemap) {
+            $this->sitemap->end();
+        }
 
-  private function loadConfiguration()
-  {
-    $configPaths = sfContext::getInstance()->getConfiguration()->getConfigPaths(self::$configPath);
-    $this->config = SitemapConfigHandler::getConfiguration($configPaths);
-  }
+        $this->writer->endElement(); // </sitemapindex>
+        $this->writer->endDocument();
 
-  /**
-   * getSitemap returns the current SitemapWriterSection instance or
-   * instantiate a new one while taking care of updating the index.
-   */
-  private function getSitemap()
-  {
-    if (is_null($this->sitemap)) {
-      $this->addSitemap();
-    } elseif ($this->sitemap->isFull()) {
-      $this->sitemap->end();
-      $this->addSitemap();
+        $this->ended = true;
     }
 
-    return $this->sitemap;
-  }
+    private function loadConfiguration()
+    {
+        $configPaths = sfContext::getInstance()->getConfiguration()->getConfigPaths(self::$configPath);
+        $this->config = SitemapConfigHandler::getConfiguration($configPaths);
+    }
 
-  private function addSitemap()
-  {
-    ++$this->sitemapIndex;
-    $this->sitemap = new SitemapWriterSection($this->file, $this->sitemapIndex, $this->baseUrl, $this->indent, $this->compress);
-    $this->writer->startElement('sitemap');
-    $this->writer->writeElement('loc', $this->sitemap->getLocation());
-    $this->writer->writeElement('lastmod', date('c'));
-    $this->writer->endElement();
-  }
+    /**
+     * getSitemap returns the current SitemapWriterSection instance or
+     * instantiate a new one while taking care of updating the index.
+     */
+    private function getSitemap()
+    {
+        if (is_null($this->sitemap)) {
+            $this->addSitemap();
+        } elseif ($this->sitemap->isFull()) {
+            $this->sitemap->end();
+            $this->addSitemap();
+        }
+
+        return $this->sitemap;
+    }
+
+    private function addSitemap()
+    {
+        ++$this->sitemapIndex;
+        $this->sitemap = new SitemapWriterSection($this->file, $this->sitemapIndex, $this->baseUrl, $this->indent, $this->compress);
+        $this->writer->startElement('sitemap');
+        $this->writer->writeElement('loc', $this->sitemap->getLocation());
+        $this->writer->writeElement('lastmod', date('c'));
+        $this->writer->endElement();
+    }
 }

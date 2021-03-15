@@ -25,29 +25,29 @@
  */
 class arMigration0121
 {
-  public const VERSION = 121;
-  public const // The new database version
+    public const VERSION = 121;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    // Remove existing constraint and index
-    $sql = 'ALTER TABLE `event` DROP FOREIGN KEY `event_FK_3`';
-    QubitPdo::modify($sql);
+      // Remove existing constraint and index
+      $sql = 'ALTER TABLE `event` DROP FOREIGN KEY `event_FK_3`';
+      QubitPdo::modify($sql);
 
-    $sql = 'DROP INDEX `event_FI_3` ON `event`';
-    QubitPdo::modify($sql);
+      $sql = 'DROP INDEX `event_FI_3` ON `event`';
+      QubitPdo::modify($sql);
 
-    // Rename column
-    $sql = 'ALTER TABLE `event` CHANGE `information_object_id` `object_id` INT(11) DEFAULT NULL';
-    QubitPdo::modify($sql);
+      // Rename column
+      $sql = 'ALTER TABLE `event` CHANGE `information_object_id` `object_id` INT(11) DEFAULT NULL';
+      QubitPdo::modify($sql);
 
-    // Add new index
-    $sql = 'CREATE INDEX `event_FI_3` ON `event`(`object_id`)';
-    QubitPdo::modify($sql);
+      // Add new index
+      $sql = 'CREATE INDEX `event_FI_3` ON `event`(`object_id`)';
+      QubitPdo::modify($sql);
 
-    // Add new constraint
-    $sql = <<<'sql'
+      // Add new constraint
+      $sql = <<<'sql'
 
 ALTER TABLE `event`
   ADD CONSTRAINT `event_FK_3`
@@ -57,8 +57,8 @@ ALTER TABLE `event`
 
 sql;
 
-    QubitPdo::modify($sql);
+      QubitPdo::modify($sql);
 
-    return true;
+      return true;
   }
 }

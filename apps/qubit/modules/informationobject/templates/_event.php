@@ -31,7 +31,7 @@ value
 // Omit edit button if object is being duplicated
 $editButtonJs = null;
 if (!isset($sf_request->source)) {
-  $editButtonJs = <<<editButtonJs
+    $editButtonJs = <<<editButtonJs
 // Add edit button to rows
 jQuery('#relatedEvents tr[id]', context)
   .click(function ()
@@ -82,8 +82,8 @@ content
   <div class="form-item">
 
     <?php echo $form->actor
-      ->label(__('Actor name'))
-      ->renderLabel(); ?>
+        ->label(__('Actor name'))
+        ->renderLabel(); ?>
     <?php echo $form->actor->render(['class' => 'form-autocomplete']); ?>
 
     <?php if (QubitAcl::check(QubitActor::getRoot(), 'create')) { ?>
@@ -96,8 +96,8 @@ content
   </div>
 
   <?php echo $form->type
-    ->label(__('Event type'))
-    ->renderRow(); ?>
+      ->label(__('Event type'))
+      ->renderRow(); ?>
 
   <div class="form-item form-item-place">
 
@@ -120,7 +120,7 @@ content
   <?php echo $form->endDate->renderRow(); ?>
 
   <?php echo $form->description
-    ->label(__('Event note'))
-    ->renderRow(); ?>
+      ->label(__('Event note'))
+      ->renderRow(); ?>
 
 </div>

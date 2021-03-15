@@ -19,35 +19,35 @@
 
 class arRestApiPluginFilter extends sfFilter
 {
-  public function execute($filterChain)
-  {
-    sfConfig::set('sf_web_debug', false);
+    public function execute($filterChain)
+    {
+        sfConfig::set('sf_web_debug', false);
 
-    try {
-      $filterChain->execute();
-    } catch (sfStopException $e) {
-      // Ignore stop exceptions
-      return;
-    } catch (QubitApiException $e) {
-      $this->setErrorResponse($e);
-    } catch (Exception $e) {
-      $this->setErrorResponse(new QubitApiUnknownException());
+        try {
+            $filterChain->execute();
+        } catch (sfStopException $e) {
+            // Ignore stop exceptions
+            return;
+        } catch (QubitApiException $e) {
+            $this->setErrorResponse($e);
+        } catch (Exception $e) {
+            $this->setErrorResponse(new QubitApiUnknownException());
+        }
     }
-  }
 
-  private function setErrorResponse(QubitApiException $e)
-  {
-    $response = sfContext::getInstance()->response;
-    $response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
+    private function setErrorResponse(QubitApiException $e)
+    {
+        $response = sfContext::getInstance()->response;
+        $response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
 
-    // Translate exception into response data
-    $response->setStatusCode($e->getStatusCode());
+        // Translate exception into response data
+        $response->setStatusCode($e->getStatusCode());
 
-    $responseData = [
-      'id' => $e->getId(),
-      'message' => $e->getMessage(),
-    ];
+        $responseData = [
+            'id' => $e->getId(),
+            'message' => $e->getMessage(),
+        ];
 
-    $response->setContent($response->getContent().arRestApiPluginUtils::arrayToJson($responseData));
-  }
+        $response->setContent($response->getContent().arRestApiPluginUtils::arrayToJson($responseData));
+    }
 }

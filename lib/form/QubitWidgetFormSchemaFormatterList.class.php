@@ -24,11 +24,11 @@
  */
 class QubitWidgetFormSchemaFormatterList extends sfWidgetFormSchemaFormatter
 {
-  protected $rowFormat = "<tr>\n <td><span title=\"%help%\">%label%</td>\n <td>%error%%field%%hidden_fields%</td>\n</tr>\n";
-  protected $helpFormat = '%help%';
-  protected $errorRowFormat = "<tr><td colspan=\"2\">\n%errors%</td></tr>\n";
-  protected $errorListFormatInARow = " <div class=\"messages error\"><ul>\n%errors% </ul></div>\n";
-  protected $errorRowFormatInARow = " <li>%error%</li>\n";
-  protected $namedErrorRowFormatInARow = " <li>%name%: %error%</li>\n";
-  protected $decoratorFormat = "<table>\n %content%</table>";
+    protected $rowFormat = "<tr>\n <td><span title=\"%help%\">%label%</td>\n <td>%error%%field%%hidden_fields%</td>\n</tr>\n";
+    protected $helpFormat = '%help%';
+    protected $errorRowFormat = "<tr><td colspan=\"2\">\n%errors%</td></tr>\n";
+    protected $errorListFormatInARow = " <div class=\"messages error\"><ul>\n%errors% </ul></div>\n";
+    protected $errorRowFormatInARow = " <li>%error%</li>\n";
+    protected $namedErrorRowFormatInARow = " <li>%name%: %error%</li>\n";
+    protected $decoratorFormat = "<table>\n %content%</table>";
 }

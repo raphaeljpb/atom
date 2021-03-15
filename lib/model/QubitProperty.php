@@ -26,163 +26,163 @@
  */
 class QubitProperty extends BaseProperty
 {
-  // Flag for updating search index on save or delete
-  public $indexOnSave = true;
-  public $indexOnDelete = true;
+    // Flag for updating search index on save or delete
+    public $indexOnSave = true;
+    public $indexOnDelete = true;
 
-  public function __toString()
-  {
-    $string = $this->value;
-    if (!isset($string)) {
-      $string = $this->getValue(['sourceCulture' => true]);
+    public function __toString()
+    {
+        $string = $this->value;
+        if (!isset($string)) {
+            $string = $this->getValue(['sourceCulture' => true]);
+        }
+
+        return (string) $string;
     }
 
-    return (string) $string;
-  }
+    public function save($connection = null)
+    {
+        // TODO: $cleanObject = $this->object->clean;
+        $cleanObjectId = $this->__get('objectId', ['clean' => true]);
 
-  public function save($connection = null)
-  {
-    // TODO: $cleanObject = $this->object->clean;
-    $cleanObjectId = $this->__get('objectId', ['clean' => true]);
+        parent::save($connection);
 
-    parent::save($connection);
+        if ($this->indexOnSave) {
+            if ($this->objectId != $cleanObjectId && null !== QubitInformationObject::getById($cleanObjectId)) {
+                QubitSearch::getInstance()->update(QubitInformationObject::getById($cleanObjectId));
+            }
 
-    if ($this->indexOnSave) {
-      if ($this->objectId != $cleanObjectId && null !== QubitInformationObject::getById($cleanObjectId)) {
-        QubitSearch::getInstance()->update(QubitInformationObject::getById($cleanObjectId));
-      }
+            if ($this->object instanceof QubitInformationObject) {
+                QubitSearch::getInstance()->update($this->object);
+            }
+        }
 
-      if ($this->object instanceof QubitInformationObject) {
-        QubitSearch::getInstance()->update($this->object);
-      }
+        return $this;
     }
 
-    return $this;
-  }
+    public function delete($connection = null)
+    {
+        parent::delete($connection);
 
-  public function delete($connection = null)
-  {
-    parent::delete($connection);
-
-    if ($this->indexOnDelete) {
-      if ($this->getObject() instanceof QubitInformationObject) {
-        QubitSearch::getInstance()->update($this->getObject());
-      }
-    }
-  }
-
-  /**
-   * Get source culture text for "value" column for this property to aid in
-   * translation on the front-end.
-   *
-   * @param string $sfUserCulture current culture selected by user
-   *
-   * @return string source culture value
-   */
-  public function getSourceTextForTranslation($sfUserCulture)
-  {
-    if (strlen($sourceCultureValue = $this->getValue(['sourceCulture' => 'true'])) > 0 && $sfUserCulture != $this->getSourceCulture()) {
-      return $sourceCultureValue;
+        if ($this->indexOnDelete) {
+            if ($this->getObject() instanceof QubitInformationObject) {
+                QubitSearch::getInstance()->update($this->getObject());
+            }
+        }
     }
 
-    return null;
-  }
+    /**
+     * Get source culture text for "value" column for this property to aid in
+     * translation on the front-end.
+     *
+     * @param string $sfUserCulture current culture selected by user
+     *
+     * @return string source culture value
+     */
+    public function getSourceTextForTranslation($sfUserCulture)
+    {
+        if (strlen($sourceCultureValue = $this->getValue(['sourceCulture' => 'true'])) > 0 && $sfUserCulture != $this->getSourceCulture()) {
+            return $sourceCultureValue;
+        }
 
-  /**
-   * Get a unique property associated with object identified by $objectId.
-   *
-   * @param int    $objectId foreign key to related object
-   * @param string $name     name of property
-   * @param array  $options  optional parameter array
-   *
-   * @return QubitProperty matching property (if any)
-   */
-  public static function getOneByObjectIdAndName($objectId, $name, $options = [])
-  {
-    $criteria = new Criteria();
-    $criteria->add(QubitProperty::OBJECT_ID, $objectId);
-    $criteria->add(QubitProperty::NAME, $name);
-
-    if (isset($options['scope'])) {
-      $criteria->add(QubitProperty::SCOPE, $options['scope']);
+        return null;
     }
 
-    return QubitProperty::getOne($criteria);
-  }
+    /**
+     * Get a unique property associated with object identified by $objectId.
+     *
+     * @param int    $objectId foreign key to related object
+     * @param string $name     name of property
+     * @param array  $options  optional parameter array
+     *
+     * @return QubitProperty matching property (if any)
+     */
+    public static function getOneByObjectIdAndName($objectId, $name, $options = [])
+    {
+        $criteria = new Criteria();
+        $criteria->add(QubitProperty::OBJECT_ID, $objectId);
+        $criteria->add(QubitProperty::NAME, $name);
 
-  /**
-   * Add property after verifying that there isn't already one with an identical
-   * object_id, name, and (optionally) scope.
-   *
-   * @param int    $objectId related object foreign key
-   * @param string $name     name of property
-   * @param string $value    value to set for property
-   * @param array  $options  optional parameters
-   *
-   * @return QubitProperty this property object
-   */
-  public static function addUnique($objectId, $name, $value, $options = [])
-  {
-    // Only add if an existing property does not exist
-    if (!QubitProperty::isExistent($objectId, $name, $value, $options)) {
-      $property = new QubitProperty();
-      $property->setObjectId($objectId);
-      $property->setName($name);
-      $property->setValue($value, $options);
+        if (isset($options['scope'])) {
+            $criteria->add(QubitProperty::SCOPE, $options['scope']);
+        }
 
-      if (isset($options['scope'])) {
-        $property->setScope($options['scope']);
-      }
-
-      if (isset($options['indexOnSave']) && !$options['indexOnSave']) {
-        $property->indexOnSave = false;
-      }
-
-      $property->save();
-
-      return $property;
+        return QubitProperty::getOne($criteria);
     }
 
-    return null;
-  }
+    /**
+     * Add property after verifying that there isn't already one with an identical
+     * object_id, name, and (optionally) scope.
+     *
+     * @param int    $objectId related object foreign key
+     * @param string $name     name of property
+     * @param string $value    value to set for property
+     * @param array  $options  optional parameters
+     *
+     * @return QubitProperty this property object
+     */
+    public static function addUnique($objectId, $name, $value, $options = [])
+    {
+        // Only add if an existing property does not exist
+        if (!QubitProperty::isExistent($objectId, $name, $value, $options)) {
+            $property = new QubitProperty();
+            $property->setObjectId($objectId);
+            $property->setName($name);
+            $property->setValue($value, $options);
 
-  /**
-   * Determine if a property matching passed values already exists.
-   *
-   * @param int    $objectId foreign key to QubitObject::ID
-   * @param string $name     name of property
-   * @param string $value    value of property
-   * @param string $options  array of optional parameters
-   *
-   * @return bool true if QubitProperty exists
-   */
-  public static function isExistent($objectId, $name, $value, $options = [])
-  {
-    $propertyExists = false;
+            if (isset($options['scope'])) {
+                $property->setScope($options['scope']);
+            }
 
-    $criteria = new Criteria();
-    $criteria->addJoin(QubitProperty::ID, QubitPropertyI18n::ID);
-    $criteria->add(QubitProperty::OBJECT_ID, $objectId);
-    $criteria->add(QubitProperty::NAME, $name);
-    $criteria->add(QubitPropertyI18n::VALUE, $value);
+            if (isset($options['indexOnSave']) && !$options['indexOnSave']) {
+                $property->indexOnSave = false;
+            }
 
-    if (isset($options['culture'])) {
-      $criteria->add(QubitPropertyI18n::CULTURE, $options['culture']);
-    } elseif (isset($options['sourceCulture'])) {
-      $criteria->add(QubitPropertyI18n::CULTURE, QubitProperty::SOURCE_CULTURE.' = '.QubitPropertyI18n::CULTURE, Criteria::CUSTOM);
-    } else {
-      $criteria->add(QubitPropertyI18n::CULTURE, sfPropel::getDefaultCulture());
+            $property->save();
+
+            return $property;
+        }
+
+        return null;
     }
 
-    if (isset($options['scope'])) {
-      $criteria->add(QubitProperty::SCOPE, $options['scope']);
-    }
+    /**
+     * Determine if a property matching passed values already exists.
+     *
+     * @param int    $objectId foreign key to QubitObject::ID
+     * @param string $name     name of property
+     * @param string $value    value of property
+     * @param string $options  array of optional parameters
+     *
+     * @return bool true if QubitProperty exists
+     */
+    public static function isExistent($objectId, $name, $value, $options = [])
+    {
+        $propertyExists = false;
 
-    // See if search returns a hit.
-    if (($property = QubitProperty::getOne($criteria)) !== null) {
-      $propertyExists = true;
-    }
+        $criteria = new Criteria();
+        $criteria->addJoin(QubitProperty::ID, QubitPropertyI18n::ID);
+        $criteria->add(QubitProperty::OBJECT_ID, $objectId);
+        $criteria->add(QubitProperty::NAME, $name);
+        $criteria->add(QubitPropertyI18n::VALUE, $value);
 
-    return $propertyExists;
-  }
+        if (isset($options['culture'])) {
+            $criteria->add(QubitPropertyI18n::CULTURE, $options['culture']);
+        } elseif (isset($options['sourceCulture'])) {
+            $criteria->add(QubitPropertyI18n::CULTURE, QubitProperty::SOURCE_CULTURE.' = '.QubitPropertyI18n::CULTURE, Criteria::CUSTOM);
+        } else {
+            $criteria->add(QubitPropertyI18n::CULTURE, sfPropel::getDefaultCulture());
+        }
+
+        if (isset($options['scope'])) {
+            $criteria->add(QubitProperty::SCOPE, $options['scope']);
+        }
+
+        // See if search returns a hit.
+        if (($property = QubitProperty::getOne($criteria)) !== null) {
+            $propertyExists = true;
+        }
+
+        return $propertyExists;
+    }
 }

@@ -19,44 +19,44 @@
 
 class QubitNote extends BaseNote
 {
-  // Flag for updating search index on save or delete
-  public $indexOnSave = true;
+    // Flag for updating search index on save or delete
+    public $indexOnSave = true;
 
-  public function __toString()
-  {
-    if (null === $content = $this->getContent()) {
-      $content = $this->getContent(['sourceCulture' => true]);
+    public function __toString()
+    {
+        if (null === $content = $this->getContent()) {
+            $content = $this->getContent(['sourceCulture' => true]);
+        }
+
+        return (string) $content;
     }
 
-    return (string) $content;
-  }
+    public function save($connection = null)
+    {
+        // TODO: $cleanObject = $this->object->clean;
+        $cleanObjectId = $this->__get('objectId', ['clean' => true]);
 
-  public function save($connection = null)
-  {
-    // TODO: $cleanObject = $this->object->clean;
-    $cleanObjectId = $this->__get('objectId', ['clean' => true]);
+        parent::save($connection);
 
-    parent::save($connection);
+        if ($this->indexOnSave) {
+            if ($this->objectId != $cleanObjectId && null !== QubitInformationObject::getById($cleanObjectId)) {
+                QubitSearch::getInstance()->update(QubitInformationObject::getById($cleanObjectId));
+            }
 
-    if ($this->indexOnSave) {
-      if ($this->objectId != $cleanObjectId && null !== QubitInformationObject::getById($cleanObjectId)) {
-        QubitSearch::getInstance()->update(QubitInformationObject::getById($cleanObjectId));
-      }
+            if ($this->object instanceof QubitInformationObject) {
+                QubitSearch::getInstance()->update($this->object);
+            }
+        }
 
-      if ($this->object instanceof QubitInformationObject) {
-        QubitSearch::getInstance()->update($this->object);
-      }
+        return $this;
     }
 
-    return $this;
-  }
+    public function delete($connection = null)
+    {
+        parent::delete($connection);
 
-  public function delete($connection = null)
-  {
-    parent::delete($connection);
-
-    if ($this->getObject() instanceof QubitInformationObject) {
-      QubitSearch::getInstance()->update($this->getObject());
+        if ($this->getObject() instanceof QubitInformationObject) {
+            QubitSearch::getInstance()->update($this->getObject());
+        }
     }
-  }
 }

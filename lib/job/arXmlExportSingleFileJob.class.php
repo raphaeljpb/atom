@@ -22,57 +22,57 @@
  */
 class arXmlExportSingleFileJob extends arBaseJob
 {
-  /**
-   * @see arBaseJob::$requiredParameters
-   */
-  protected $extraRequiredParameters = ['objectId', 'format'];
+    /**
+     * @see arBaseJob::$requiredParameters
+     */
+    protected $extraRequiredParameters = ['objectId', 'format'];
 
-  protected $params = [];
+    protected $params = [];
 
-  public function runJob($parameters)
-  {
-    $this->params = $parameters;
+    public function runJob($parameters)
+    {
+        $this->params = $parameters;
 
-    if (!is_numeric($this->params['objectId'])) {
-      $this->error($this->i18n->__('Object ID must be numberic.'));
+        if (!is_numeric($this->params['objectId'])) {
+            $this->error($this->i18n->__('Object ID must be numberic.'));
 
-      return false;
+            return false;
+        }
+
+        $this->info($this->i18n->__('Starting %1 export of information object %2.', ['%1' => strtoupper($this->params['format']), '%2' => $this->params['objectId']]));
+        $this->exportResource();
+
+        // Mark job as complete
+        $this->info($this->i18n->__('Export complete.'));
+        $this->job->setStatusCompleted();
+        $this->job->save();
+
+        return true;
     }
 
-    $this->info($this->i18n->__('Starting %1 export of information object %2.', ['%1' => strtoupper($this->params['format']), '%2' => $this->params['objectId']]));
-    $this->exportResource();
+    /**
+     * Export XML representation of information object as file.
+     *
+     * @param object  information object to be export
+     */
+    protected function exportResource()
+    {
+        $resource = QubitInformationObject::getById($this->params['objectId']);
 
-    // Mark job as complete
-    $this->info($this->i18n->__('Export complete.'));
-    $this->job->setStatusCompleted();
-    $this->job->save();
+        if (null === $resource) {
+            throw new sfException($this->i18n->__('Information object %1% does not eist', ['%1%' => $this->params['objectId']]));
+        }
 
-    return true;
-  }
+        try {
+            // Print warnings/notices here too, as they are often important.
+            $errLevel = error_reporting(E_ALL);
 
-  /**
-   * Export XML representation of information object as file.
-   *
-   * @param object  information object to be export
-   */
-  protected function exportResource()
-  {
-    $resource = QubitInformationObject::getById($this->params['objectId']);
+            $cache = new QubitInformationObjectXmlCache();
+            $cache->export($resource);
 
-    if (null === $resource) {
-      throw new sfException($this->i18n->__('Information object %1% does not eist', ['%1%' => $this->params['objectId']]));
+            error_reporting($errLevel);
+        } catch (Exception $e) {
+            throw new sfException($this->i18n->__('Invalid XML generated for information object %1%.', ['%1%' => $this->params['objectId']]));
+        }
     }
-
-    try {
-      // Print warnings/notices here too, as they are often important.
-      $errLevel = error_reporting(E_ALL);
-
-      $cache = new QubitInformationObjectXmlCache();
-      $cache->export($resource);
-
-      error_reporting($errLevel);
-    } catch (Exception $e) {
-      throw new sfException($this->i18n->__('Invalid XML generated for information object %1%.', ['%1%' => $this->params['objectId']]));
-    }
-  }
 }

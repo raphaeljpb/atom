@@ -22,35 +22,35 @@
  */
 class QubitSearch
 {
-  protected static $instance = null;
+    protected static $instance = null;
 
-  // protected function __construct() { }
-  // protected function __clone() { }
+    // protected function __construct() { }
+    // protected function __clone() { }
 
-  public static function getInstance(array $options = [])
-  {
-    if (!isset(self::$instance)) {
-      // Using arElasticSearchPlugin but other classes could be
-      // implemented, for example: arSphinxSearchPlugin
-      self::$instance = new arElasticSearchPlugin($options);
+    public static function getInstance(array $options = [])
+    {
+        if (!isset(self::$instance)) {
+            // Using arElasticSearchPlugin but other classes could be
+            // implemented, for example: arSphinxSearchPlugin
+            self::$instance = new arElasticSearchPlugin($options);
+        }
+
+        return self::$instance;
     }
 
-    return self::$instance;
-  }
+    public static function disable()
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = self::getInstance(['initialize' => false]);
+        }
 
-  public static function disable()
-  {
-    if (!isset(self::$instance)) {
-      self::$instance = self::getInstance(['initialize' => false]);
+        self::$instance->disable();
     }
 
-    self::$instance->disable();
-  }
+    public static function enable()
+    {
+        self::$instance = self::getInstance();
 
-  public static function enable()
-  {
-    self::$instance = self::getInstance();
-
-    self::$instance->enable();
-  }
+        self::$instance->enable();
+    }
 }

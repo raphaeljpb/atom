@@ -26,35 +26,35 @@
  */
 class sfIsadPlugin implements ArrayAccess
 {
-  protected $resource;
+    protected $resource;
 
-  public function __construct($resource)
-  {
-    $this->resource = $resource;
-  }
-
-  public function __toString()
-  {
-    $string = '';
-
-    // Add title if set
-    if (0 < strlen($title = $this->resource->__toString())) {
-      $string .= $title;
+    public function __construct($resource)
+    {
+        $this->resource = $resource;
     }
 
-    // Add publication status
-    $publicationStatus = $this->resource->getPublicationStatus();
-    if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId) {
-      $string .= (!empty($string)) ? ' ' : '';
-      $string .= "({$publicationStatus->status->__toString()})";
+    public function __toString()
+    {
+        $string = '';
+
+        // Add title if set
+        if (0 < strlen($title = $this->resource->__toString())) {
+            $string .= $title;
+        }
+
+        // Add publication status
+        $publicationStatus = $this->resource->getPublicationStatus();
+        if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId) {
+            $string .= (!empty($string)) ? ' ' : '';
+            $string .= "({$publicationStatus->status->__toString()})";
+        }
+
+        return $string;
     }
 
-    return $string;
-  }
-
-  public function __get($name)
-  {
-    switch ($name) {
+    public function __get($name)
+    {
+        switch ($name) {
       case 'languageNotes':
         return $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
 
@@ -64,69 +64,69 @@ class sfIsadPlugin implements ArrayAccess
       case 'sourceCulture':
         return $this->resource->sourceCulture;
     }
-  }
+    }
 
-  public function __set($name, $value)
-  {
-    switch ($name) {
+    public function __set($name, $value)
+    {
+        switch ($name) {
       case 'languageNotes':
         $note = $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
         $missingNote = 0 === count($note);
 
         if (0 == strlen($value)) {
-          // Delete note if it's available
-          if (!$missingNote) {
-            $note->delete();
-          }
+            // Delete note if it's available
+            if (!$missingNote) {
+                $note->delete();
+            }
 
-          break;
+            break;
         }
 
         if ($missingNote) {
-          $note = new QubitNote();
-          $note->typeId = QubitTerm::LANGUAGE_NOTE_ID;
-          $note->userId = sfContext::getInstance()->user->getAttribute('user_id');
+            $note = new QubitNote();
+            $note->typeId = QubitTerm::LANGUAGE_NOTE_ID;
+            $note->userId = sfContext::getInstance()->user->getAttribute('user_id');
 
-          $this->resource->notes[] = $note;
+            $this->resource->notes[] = $note;
         }
 
         $note->content = $value;
 
         return $this;
     }
-  }
+    }
 
-  public function offsetExists($offset)
-  {
-    $args = func_get_args();
+    public function offsetExists($offset)
+    {
+        $args = func_get_args();
 
-    return call_user_func_array([$this, '__isset'], $args);
-  }
+        return call_user_func_array([$this, '__isset'], $args);
+    }
 
-  public function offsetGet($offset)
-  {
-    $args = func_get_args();
+    public function offsetGet($offset)
+    {
+        $args = func_get_args();
 
-    return call_user_func_array([$this, '__get'], $args);
-  }
+        return call_user_func_array([$this, '__get'], $args);
+    }
 
-  public function offsetSet($offset, $value)
-  {
-    $args = func_get_args();
+    public function offsetSet($offset, $value)
+    {
+        $args = func_get_args();
 
-    return call_user_func_array([$this, '__set'], $args);
-  }
+        return call_user_func_array([$this, '__set'], $args);
+    }
 
-  public function offsetUnset($offset)
-  {
-    $args = func_get_args();
+    public function offsetUnset($offset)
+    {
+        $args = func_get_args();
 
-    return call_user_func_array([$this, '__unset'], $args);
-  }
+        return call_user_func_array([$this, '__unset'], $args);
+    }
 
-  public static function eventTypes()
-  {
-    return [QubitTerm::getById(QubitTerm::CREATION_ID),
-      QubitTerm::getById(QubitTerm::ACCUMULATION_ID), ];
-  }
+    public static function eventTypes()
+    {
+        return [QubitTerm::getById(QubitTerm::CREATION_ID),
+            QubitTerm::getById(QubitTerm::ACCUMULATION_ID), ];
+    }
 }

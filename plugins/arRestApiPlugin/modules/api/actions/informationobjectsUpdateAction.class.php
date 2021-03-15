@@ -19,36 +19,36 @@
 
 class ApiInformationObjectsUpdateAction extends QubitApiAction
 {
-  private $noteToDelete; // To specify a note to delete after updating
+    private $noteToDelete; // To specify a note to delete after updating
 
-  protected function put($request, $payload)
-  {
-    if (null === $this->io = QubitObject::getBySlug($request->slug)) {
-      throw new QubitApi404Exception('Information object not found');
+    protected function put($request, $payload)
+    {
+        if (null === $this->io = QubitObject::getBySlug($request->slug)) {
+            throw new QubitApi404Exception('Information object not found');
+        }
+
+        if (QubitInformationObject::ROOT_ID === (int) $this->io->id) {
+            throw new QubitApiForbiddenException();
+        }
+
+        foreach ($payload as $field => $value) {
+            $this->processField($field, $value);
+        }
+
+        $this->io->save();
+
+        if (isset($this->noteToDelete)) {
+            $this->noteToDelete->delete();
+        }
+
+        return [
+            'id' => (int) $this->io->id,
+            'parent_id' => (int) $this->io->parentId, ];
     }
 
-    if (QubitInformationObject::ROOT_ID === (int) $this->io->id) {
-      throw new QubitApiForbiddenException();
-    }
-
-    foreach ($payload as $field => $value) {
-      $this->processField($field, $value);
-    }
-
-    $this->io->save();
-
-    if (isset($this->noteToDelete)) {
-      $this->noteToDelete->delete();
-    }
-
-    return [
-      'id' => (int) $this->io->id,
-      'parent_id' => (int) $this->io->parentId, ];
-  }
-
-  protected function processField($field, $value)
-  {
-    switch ($field) {
+    protected function processField($field, $value)
+    {
+        switch ($field) {
       case 'identifier':
       case 'level_of_description_id':
       case 'parent_id':
@@ -81,39 +81,39 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
       case 'names':
         // Multi-value not supported yet!
         if (is_array($value)) {
-          $value = array_pop($value);
+            $value = array_pop($value);
         }
         if (empty($value) || empty($value->type_id)) {
-          break;
+            break;
         }
         $event = false;
         if ('PUT' === $this->request->getMethod()) {
-          foreach ($this->io->getActorEvents() as $item) {
-            $event = $item;
+            foreach ($this->io->getActorEvents() as $item) {
+                $event = $item;
 
-            break;
-          }
+                break;
+            }
         }
 
         // The user passed a name but not the ID so I'll create
         if (isset($value->authorized_form_of_name) && !isset($value->actor_id)) {
-          $actor = new QubitActor();
-          $actor->authorizedFormOfName = $value->authorized_form_of_name;
-          $actor->save();
+            $actor = new QubitActor();
+            $actor->authorizedFormOfName = $value->authorized_form_of_name;
+            $actor->save();
 
-          $value->actor_id = $actor->id;
+            $value->actor_id = $actor->id;
         }
 
         if (false !== $event) {
-          $event->typeId = $value->type_id;
-          $event->actorId = $value->actor_id;
-          $event->save();
+            $event->typeId = $value->type_id;
+            $event->actorId = $value->actor_id;
+            $event->save();
         } else {
-          $event = new QubitEvent();
-          $event->typeId = $value->type_id;
-          $event->actorId = $value->actor_id;
+            $event = new QubitEvent();
+            $event->typeId = $value->type_id;
+            $event->actorId = $value->actor_id;
 
-          $this->io->eventsRelatedByobjectId[] = $event;
+            $this->io->eventsRelatedByobjectId[] = $event;
         }
 
         break;
@@ -121,33 +121,33 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
       case 'dates':
         // Multi-value not supported yet!
         if (is_array($value)) {
-          $value = array_pop($value);
+            $value = array_pop($value);
         }
         if (empty($value)) {
-          break;
+            break;
         }
         $event = false;
         if ('PUT' === $this->request->getMethod()) {
-          foreach ($this->io->getDates() as $item) {
-            $event = $item;
+            foreach ($this->io->getDates() as $item) {
+                $event = $item;
 
-            break;
-          }
+                break;
+            }
         }
 
         if (false !== $event) {
-          $event->startDate = $value->start_date;
-          $event->endDate = $value->end_date;
-          $event->date = $value->date;
-          $event->save();
+            $event->startDate = $value->start_date;
+            $event->endDate = $value->end_date;
+            $event->date = $value->date;
+            $event->save();
         } else {
-          $event = new QubitEvent();
-          $event->startDate = $value->start_date;
-          $event->endDate = $value->end_date;
-          $event->date = $value->date;
-          $event->typeId = QubitTerm::CREATION_ID;
+            $event = new QubitEvent();
+            $event->startDate = $value->start_date;
+            $event->endDate = $value->end_date;
+            $event->date = $value->date;
+            $event->typeId = QubitTerm::CREATION_ID;
 
-          $this->io->eventsRelatedByobjectId[] = $event;
+            $this->io->eventsRelatedByobjectId[] = $event;
         }
 
         break;
@@ -155,46 +155,46 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
       case 'notes':
         // Multi-value not supported yet!
         if (is_array($value)) {
-          $value = array_pop($value);
+            $value = array_pop($value);
         }
         if (empty($value)) {
-          break;
+            break;
         }
         $note = false;
         if ('PUT' === $this->request->getMethod()) {
-          foreach ($this->io->getNotes() as $item) {
-            $note = $item;
+            foreach ($this->io->getNotes() as $item) {
+                $note = $item;
 
-            break;
-          }
+                break;
+            }
         }
 
         if (!empty($value->type)) {
-          $combinedNoteTypeData = $this->getNoteTypeData() + $this->getRadNoteTypeData();
-          $noteTypeId = array_search($value->type, $combinedNoteTypeData);
+            $combinedNoteTypeData = $this->getNoteTypeData() + $this->getRadNoteTypeData();
+            $noteTypeId = array_search($value->type, $combinedNoteTypeData);
         }
         if (false !== $note) {
-          if (!empty($value->content)) {
+            if (!empty($value->content)) {
+                $note->setContent($value->content);
+
+                if (!empty($noteTypeId)) {
+                    $note->setTypeId($noteTypeId);
+                }
+
+                $note->save();
+            } else {
+                $this->noteToDelete = $note;
+            }
+        } else {
+            $note = new QubitNote();
+
+            $note->setScope('QubitInformationObject');
             $note->setContent($value->content);
 
-            if (!empty($noteTypeId)) {
-              $note->setTypeId($noteTypeId);
-            }
+            $noteTypeId = (!empty($noteTypeId)) ? $noteTypeId : QubitTerm::GENERAL_NOTE_ID;
+            $note->setTypeId($noteTypeId);
 
-            $note->save();
-          } else {
-            $this->noteToDelete = $note;
-          }
-        } else {
-          $note = new QubitNote();
-
-          $note->setScope('QubitInformationObject');
-          $note->setContent($value->content);
-
-          $noteTypeId = (!empty($noteTypeId)) ? $noteTypeId : QubitTerm::GENERAL_NOTE_ID;
-          $note->setTypeId($noteTypeId);
-
-          $this->io->notes[] = $note;
+            $this->io->notes[] = $note;
         }
 
         break;
@@ -202,25 +202,25 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
       case 'types':
         // Multi-value not supported yet!
         if (is_array($value)) {
-          $value = array_pop($value);
+            $value = array_pop($value);
         }
         if (empty($value)) {
-          break;
+            break;
         }
         $relation = false;
         foreach ($this->io->getTermRelations(QubitTaxonomy::DC_TYPE_ID) as $item) {
-          $relation = $item;
+            $relation = $item;
 
-          break;
+            break;
         }
         if (false !== $relation) {
-          $relation->termId = $value->id;
-          $relation->save();
+            $relation->termId = $value->id;
+            $relation->save();
         } else {
-          $relation = new QubitObjectTermRelation();
-          $relation->termId = $value->id;
+            $relation = new QubitObjectTermRelation();
+            $relation->termId = $value->id;
 
-          $this->io->objectTermRelationsRelatedByobjectId[] = $relation;
+            $this->io->objectTermRelationsRelatedByobjectId[] = $relation;
         }
 
         break;
@@ -231,31 +231,31 @@ class ApiInformationObjectsUpdateAction extends QubitApiAction
         $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
         $criteria->add(QubitTermI18n::NAME, $value, Criteria::LIKE);
         if (null !== $term = QubitTerm::getOne($criteria)) {
-          $this->io->levelOfDescriptionId = $term->id;
+            $this->io->levelOfDescriptionId = $term->id;
         }
 
         break;
     }
-  }
-
-  protected function getNoteTypeData()
-  {
-    return $this->simplifyTermData(QubitTerm::getNoteTypes());
-  }
-
-  protected function getRadNoteTypeData()
-  {
-    return $this->simplifyTermData(QubitTerm::getRADNotes());
-  }
-
-  protected function simplifyTermData($terms)
-  {
-    $termData = [];
-
-    foreach ($terms as $term) {
-      $termData[$term->id] = $term->name;
     }
 
-    return $termData;
-  }
+    protected function getNoteTypeData()
+    {
+        return $this->simplifyTermData(QubitTerm::getNoteTypes());
+    }
+
+    protected function getRadNoteTypeData()
+    {
+        return $this->simplifyTermData(QubitTerm::getRADNotes());
+    }
+
+    protected function simplifyTermData($terms)
+    {
+        $termData = [];
+
+        foreach ($terms as $term) {
+            $termData[$term->id] = $term->name;
+        }
+
+        return $termData;
+    }
 }

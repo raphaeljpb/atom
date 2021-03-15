@@ -19,81 +19,81 @@
 
 class QubitMetadataRoute extends QubitRoute
 {
-  public static $METADATA_PLUGINS = [
-    'isaar' => 'sfIsaarPlugin',
-    'eac' => 'sfEacPlugin',
-    'ead' => 'sfEadPlugin',
-    'isad' => 'sfIsadPlugin',
-    'dc' => 'sfDcPlugin',
-    'skos' => 'sfSkosPlugin',
-    'rad' => 'sfRadPlugin',
-    'mods' => 'sfModsPlugin',
-    'dacs' => 'arDacsPlugin',
-    'isdf' => 'sfIsdfPlugin', ];
-  public static $DEFAULT_MODULES = [
-    'informationobject' => false,
-    'term' => 'term',
-    'actor' => 'sfIsaarPlugin',
-    'repository' => 'sfIsdiahPlugin',
-    'function' => 'sfIsdfPlugin', ];
+    public static $METADATA_PLUGINS = [
+        'isaar' => 'sfIsaarPlugin',
+        'eac' => 'sfEacPlugin',
+        'ead' => 'sfEadPlugin',
+        'isad' => 'sfIsadPlugin',
+        'dc' => 'sfDcPlugin',
+        'skos' => 'sfSkosPlugin',
+        'rad' => 'sfRadPlugin',
+        'mods' => 'sfModsPlugin',
+        'dacs' => 'arDacsPlugin',
+        'isdf' => 'sfIsdfPlugin', ];
+    public static $DEFAULT_MODULES = [
+        'informationobject' => false,
+        'term' => 'term',
+        'actor' => 'sfIsaarPlugin',
+        'repository' => 'sfIsdiahPlugin',
+        'function' => 'sfIsdfPlugin', ];
 
-  /**
-   * Returns an array of parameters if the $url matches this route by looking up
-   * the slug in the database, otherwise returns FALSE. These parameters are
-   * modified according to the type of resource in order to route the request to
-   * its corresponding Symfony module.
-   *
-   * Case 1: e.g. uri "/peanut-12345" (QubitInformationObject)
-   *     -> Add module 'sfIsadPlugin' since that is the module that corresponds
-   *        with that description (it looks at the record settings and the
-   *        default application template).
-   * Case 2: e.g. uri "/repository/add"
-   *     -> Replace module "repository" with "sfIsdiahPlugin". The relation
-   *        is descrbied in self::$DEFAULT_MODULES
-   *
-   * @see sfRoute
-   *
-   * @param mixed $url
-   * @param mixed $context
-   */
-  public function matchesUrl($url, $context = [])
-  {
-    // Delegate basic matching to sfRoute
-    if (false === $parameters = parent::matchesUrl($url, $context)) {
-      return false;
-    }
-
-    // Rewrite action add/copy to edit
-    if (in_array($parameters['action'], ['add', 'copy'])) {
-      $parameters['action'] = 'edit';
-    }
-
-    // At this point, it's likely that we are dealing with a permalink so let's
-    // hit the database to see whether the resource exists or not.
-    if (isset($parameters['slug'])) {
-      $criteria = new Criteria();
-      $criteria->add(QubitSlug::SLUG, $parameters['slug']);
-      $criteria->addJoin(QubitSlug::OBJECT_ID, QubitObject::ID);
-
-      try {
-        if (null === $this->resource = QubitObject::get($criteria)->__get(0)) {
-          return false;
+    /**
+     * Returns an array of parameters if the $url matches this route by looking up
+     * the slug in the database, otherwise returns FALSE. These parameters are
+     * modified according to the type of resource in order to route the request to
+     * its corresponding Symfony module.
+     *
+     * Case 1: e.g. uri "/peanut-12345" (QubitInformationObject)
+     *     -> Add module 'sfIsadPlugin' since that is the module that corresponds
+     *        with that description (it looks at the record settings and the
+     *        default application template).
+     * Case 2: e.g. uri "/repository/add"
+     *     -> Replace module "repository" with "sfIsdiahPlugin". The relation
+     *        is descrbied in self::$DEFAULT_MODULES
+     *
+     * @see sfRoute
+     *
+     * @param mixed $url
+     * @param mixed $context
+     */
+    public function matchesUrl($url, $context = [])
+    {
+        // Delegate basic matching to sfRoute
+        if (false === $parameters = parent::matchesUrl($url, $context)) {
+            return false;
         }
-      }
-      // If for any reason the database can't be accessed, trigger the installer
-      catch (PropelException $e) {
-        $parameters['module'] = 'sfInstallPlugin';
-        $parameters['action'] = 'index';
 
-        return $parameters;
-      }
+        // Rewrite action add/copy to edit
+        if (in_array($parameters['action'], ['add', 'copy'])) {
+            $parameters['action'] = 'edit';
+        }
 
-      // Find the Symfony module to be used based in the object class.
-      // In some cases, the metadata template passed as part of the URL will be
-      // considered. Additionally, QubitInformationObject will be analyzed
-      // differently, since every object may have a specific metadata template
-      // assigned.
-      switch (true) {
+        // At this point, it's likely that we are dealing with a permalink so let's
+        // hit the database to see whether the resource exists or not.
+        if (isset($parameters['slug'])) {
+            $criteria = new Criteria();
+            $criteria->add(QubitSlug::SLUG, $parameters['slug']);
+            $criteria->addJoin(QubitSlug::OBJECT_ID, QubitObject::ID);
+
+            try {
+                if (null === $this->resource = QubitObject::get($criteria)->__get(0)) {
+                    return false;
+                }
+            }
+            // If for any reason the database can't be accessed, trigger the installer
+            catch (PropelException $e) {
+                $parameters['module'] = 'sfInstallPlugin';
+                $parameters['action'] = 'index';
+
+                return $parameters;
+            }
+
+            // Find the Symfony module to be used based in the object class.
+            // In some cases, the metadata template passed as part of the URL will be
+            // considered. Additionally, QubitInformationObject will be analyzed
+            // differently, since every object may have a specific metadata template
+            // assigned.
+            switch (true) {
         case $this->resource instanceof QubitRepository:
           $parameters['module'] = 'sfIsdiahPlugin';
 
@@ -148,7 +148,7 @@ class QubitMetadataRoute extends QubitRoute
             WHERE information_object.id = ? AND taxonomy_id = ?';
 
           if (false !== $defaultSetting = QubitPdo::fetchColumn($sql, [$this->resource->id, QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID])) {
-            $default = $defaultSetting;
+              $default = $defaultSetting;
           }
 
           $parameters['module'] = $this->getActionParameter(['isad', 'dc', 'mods', 'rad', 'ead', 'dacs'], $default, $parameters);
@@ -193,15 +193,15 @@ class QubitMetadataRoute extends QubitRoute
         default:
           return false;
       }
-    }
+        }
 
-    // Given the parent module (e.g. informationobject), find the best metadata
-    // to be used
-    elseif (isset($parameters['module'])) {
-      switch ($parameters['module']) {
+        // Given the parent module (e.g. informationobject), find the best metadata
+        // to be used
+        elseif (isset($parameters['module'])) {
+            switch ($parameters['module']) {
         case 'informationobject':
           if (false !== $code = $this->getDefaultTemplate($parameters['module'])) {
-            $parameters['module'] = self::$METADATA_PLUGINS[$code];
+              $parameters['module'] = self::$METADATA_PLUGINS[$code];
           }
 
           break;
@@ -214,107 +214,107 @@ class QubitMetadataRoute extends QubitRoute
 
           break;
       }
-    }
-
-    return $parameters;
-  }
-
-  /**
-   * @see sfRoute
-   *
-   * @param mixed $params
-   * @param mixed $context
-   */
-  public function matchesParameters($params, $context = [])
-  {
-    $params = $this->parseParameters($params);
-
-    if (!isset($params['slug']) && isset($params['module'])) {
-      $module = $params['module'];
-      if (!isset(self::$DEFAULT_MODULES[$module])) {
-        return false;
-      }
-    }
-
-    return parent::matchesParameters($params, $context);
-  }
-
-  /**
-   * @see sfRoute
-   *
-   * @param mixed $params
-   * @param mixed $context
-   * @param mixed $absolute
-   */
-  public function generate($params, $context = [], $absolute = false)
-  {
-    $params = $this->parseParameters($params);
-
-    return parent::generate($params, $context, $absolute);
-  }
-
-  protected function parseParameters($params)
-  {
-    // Fill in missing parameters with attributes of $params[0]
-    if (!is_array($params)) {
-      $params = [$params];
-    }
-
-    // Look for the slug property if an object is passed
-    if (isset($params[0]) && is_object($params[0])) {
-      // Extract slug if exists (some objects don't have a slug, like
-      // QubitContactInformation
-      try {
-        $params['slug'] = $params[0]->slug;
-      } catch (Exception $e) {
-      }
-
-      // Unset the object
-      unset($params[0]);
-    }
-
-    if (isset($params['slug'])) {
-      // Set the metadata template
-      if (isset($params['module'])) {
-        if (false !== $key = array_search($params['module'], self::$METADATA_PLUGINS)) {
-          $params['template'] = $key;
         }
 
-        // Hide the module because it is hip!
-        unset($params['module']);
-      }
+        return $parameters;
     }
 
-    return $params;
-  }
+    /**
+     * @see sfRoute
+     *
+     * @param mixed $params
+     * @param mixed $context
+     */
+    public function matchesParameters($params, $context = [])
+    {
+        $params = $this->parseParameters($params);
 
-  protected function getActionParameter($allowedValues, $default, $parameters)
-  {
-    $code = $default;
+        if (!isset($params['slug']) && isset($params['module'])) {
+            $module = $params['module'];
+            if (!isset(self::$DEFAULT_MODULES[$module])) {
+                return false;
+            }
+        }
 
-    if (isset($parameters['template'])) {
-      $code = $parameters['template'];
+        return parent::matchesParameters($params, $context);
     }
 
-    if (!in_array($code, $allowedValues)) {
-      throw new sfConfigurationException(sprintf('The metadata code "%s" is not valid.', $code));
+    /**
+     * @see sfRoute
+     *
+     * @param mixed $params
+     * @param mixed $context
+     * @param mixed $absolute
+     */
+    public function generate($params, $context = [], $absolute = false)
+    {
+        $params = $this->parseParameters($params);
+
+        return parent::generate($params, $context, $absolute);
     }
 
-    return self::$METADATA_PLUGINS[$code];
-  }
+    protected function parseParameters($params)
+    {
+        // Fill in missing parameters with attributes of $params[0]
+        if (!is_array($params)) {
+            $params = [$params];
+        }
 
-  /**
-   * Fetch the default template for a given module from the database/settings
-   * TODO: this should be cached somewhere.
-   *
-   * @param mixed $module
-   */
-  protected function getDefaultTemplate($module)
-  {
-    $sql = 'SELECT value
+        // Look for the slug property if an object is passed
+        if (isset($params[0]) && is_object($params[0])) {
+            // Extract slug if exists (some objects don't have a slug, like
+            // QubitContactInformation
+            try {
+                $params['slug'] = $params[0]->slug;
+            } catch (Exception $e) {
+            }
+
+            // Unset the object
+            unset($params[0]);
+        }
+
+        if (isset($params['slug'])) {
+            // Set the metadata template
+            if (isset($params['module'])) {
+                if (false !== $key = array_search($params['module'], self::$METADATA_PLUGINS)) {
+                    $params['template'] = $key;
+                }
+
+                // Hide the module because it is hip!
+                unset($params['module']);
+            }
+        }
+
+        return $params;
+    }
+
+    protected function getActionParameter($allowedValues, $default, $parameters)
+    {
+        $code = $default;
+
+        if (isset($parameters['template'])) {
+            $code = $parameters['template'];
+        }
+
+        if (!in_array($code, $allowedValues)) {
+            throw new sfConfigurationException(sprintf('The metadata code "%s" is not valid.', $code));
+        }
+
+        return self::$METADATA_PLUGINS[$code];
+    }
+
+    /**
+     * Fetch the default template for a given module from the database/settings
+     * TODO: this should be cached somewhere.
+     *
+     * @param mixed $module
+     */
+    protected function getDefaultTemplate($module)
+    {
+        $sql = 'SELECT value
       FROM setting JOIN setting_i18n ON setting.id = setting_i18n.id
       WHERE scope = "default_template" AND name = ?';
 
-    return QubitPdo::fetchColumn($sql, [$module]);
-  }
+        return QubitPdo::fetchColumn($sql, [$module]);
+    }
 }

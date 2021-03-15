@@ -19,69 +19,69 @@
 
 class sfIsdfPluginEditAction extends FunctionEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'type',
-    'authorizedFormOfName',
-    'parallelName',
-    'otherName',
-    'classification',
-    'dates',
-    'description',
-    'history',
-    'legislation',
-    'descriptionIdentifier',
-    'institutionIdentifier',
-    'rules',
-    'descriptionStatus',
-    'descriptionDetail',
-    'revisionHistory',
-    'language',
-    'script',
-    'sources',
-    'maintenanceNotes', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'type',
+        'authorizedFormOfName',
+        'parallelName',
+        'otherName',
+        'classification',
+        'dates',
+        'description',
+        'history',
+        'legislation',
+        'descriptionIdentifier',
+        'institutionIdentifier',
+        'rules',
+        'descriptionStatus',
+        'descriptionDetail',
+        'revisionHistory',
+        'language',
+        'script',
+        'sources',
+        'maintenanceNotes', ];
 
-  protected function earlyExecute()
-  {
-    parent::earlyExecute();
+    protected function earlyExecute()
+    {
+        parent::earlyExecute();
 
-    $this->isdf = new sfIsdfPlugin($this->resource);
+        $this->isdf = new sfIsdfPlugin($this->resource);
 
-    $title = $this->context->i18n->__('Add new function');
-    if (isset($this->getRoute()->resource)) {
-      if (1 > strlen($title = $this->resource->__toString())) {
-        $title = $this->context->i18n->__('Untitled');
-      }
+        $title = $this->context->i18n->__('Add new function');
+        if (isset($this->getRoute()->resource)) {
+            if (1 > strlen($title = $this->resource->__toString())) {
+                $title = $this->context->i18n->__('Untitled');
+            }
 
-      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
+            $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
+        }
+
+        $this->response->setTitle("{$title} - {$this->response->getTitle()}");
+
+        $this->relatedAuthorityRecordComponent = new sfIsdfPluginRelatedAuthorityRecordComponent($this->context, 'sfIsdfPlugin', 'relatedAuthorityRecord');
+        $this->relatedAuthorityRecordComponent->resource = $this->resource;
+        $this->relatedAuthorityRecordComponent->isdf = $this->isdf;
+        $this->relatedAuthorityRecordComponent->execute($this->request);
+
+        $this->relatedFunctionComponent = new sfIsdfPluginRelatedFunctionComponent($this->context, 'sfIsdfPlugin', 'relatedFunction');
+        $this->relatedFunctionComponent->resource = $this->resource;
+        $this->relatedFunctionComponent->isdf = $this->isdf;
+        $this->relatedFunctionComponent->execute($this->request);
+
+        $this->relatedResourceComponent = new sfIsdfPluginRelatedResourceComponent($this->context, 'sfIsdfPlugin', 'relatedResource');
+        $this->relatedResourceComponent->resource = $this->resource;
+        $this->relatedResourceComponent->isdf = $this->isdf;
+        $this->relatedResourceComponent->execute($this->request);
     }
 
-    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
-
-    $this->relatedAuthorityRecordComponent = new sfIsdfPluginRelatedAuthorityRecordComponent($this->context, 'sfIsdfPlugin', 'relatedAuthorityRecord');
-    $this->relatedAuthorityRecordComponent->resource = $this->resource;
-    $this->relatedAuthorityRecordComponent->isdf = $this->isdf;
-    $this->relatedAuthorityRecordComponent->execute($this->request);
-
-    $this->relatedFunctionComponent = new sfIsdfPluginRelatedFunctionComponent($this->context, 'sfIsdfPlugin', 'relatedFunction');
-    $this->relatedFunctionComponent->resource = $this->resource;
-    $this->relatedFunctionComponent->isdf = $this->isdf;
-    $this->relatedFunctionComponent->execute($this->request);
-
-    $this->relatedResourceComponent = new sfIsdfPluginRelatedResourceComponent($this->context, 'sfIsdfPlugin', 'relatedResource');
-    $this->relatedResourceComponent->resource = $this->resource;
-    $this->relatedResourceComponent->isdf = $this->isdf;
-    $this->relatedResourceComponent->execute($this->request);
-  }
-
-  /**
-   * Add fields to form.
-   *
-   * @param $name string
-   */
-  protected function addField($name)
-  {
-    switch ($name) {
+    /**
+     * Add fields to form.
+     *
+     * @param $name string
+     */
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'type':
         $this->form->setDefault('type', $this->context->routing->generate(null, [$this->resource->type, 'module' => 'term']));
         $this->form->setValidator('type', new sfValidatorString());
@@ -89,7 +89,7 @@ class sfIsdfPluginEditAction extends FunctionEditAction
         $choices = [];
         $choices[null] = null;
         foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::FUNCTION_ID) as $item) {
-          $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
+            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
         }
 
         $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices]));
@@ -129,23 +129,23 @@ class sfIsdfPluginEditAction extends FunctionEditAction
       default:
         return parent::addField($name);
     }
-  }
+    }
 
-  /**
-   * Process form fields.
-   *
-   * @param $field mixed symfony form widget
-   */
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    /**
+     * Process form fields.
+     *
+     * @param $field mixed symfony form widget
+     */
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'type':
         unset($this->resource->type);
 
         $value = $this->form->getValue($field->getName());
         if (isset($value)) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          $this->resource->type = $params['_sf_route']->resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($value));
+            $this->resource->type = $params['_sf_route']->resource;
         }
 
         break;
@@ -158,21 +158,21 @@ class sfIsdfPluginEditAction extends FunctionEditAction
       default:
         return parent::processField($field);
     }
-  }
-
-  protected function processForm()
-  {
-    $this->relatedAuthorityRecordComponent->processForm();
-    $this->relatedFunctionComponent->processForm();
-    $this->relatedResourceComponent->processForm();
-
-    if (isset($this->request->deleteRelations)) {
-      foreach ($this->request->deleteRelations as $item) {
-        $params = $this->context->routing->parse(Qubit::pathInfo($item));
-        $params['_sf_route']->resource->delete();
-      }
     }
 
-    return parent::processForm();
-  }
+    protected function processForm()
+    {
+        $this->relatedAuthorityRecordComponent->processForm();
+        $this->relatedFunctionComponent->processForm();
+        $this->relatedResourceComponent->processForm();
+
+        if (isset($this->request->deleteRelations)) {
+            foreach ($this->request->deleteRelations as $item) {
+                $params = $this->context->routing->parse(Qubit::pathInfo($item));
+                $params['_sf_route']->resource->delete();
+            }
+        }
+
+        return parent::processForm();
+    }
 }

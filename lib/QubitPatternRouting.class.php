@@ -25,17 +25,17 @@
  */
 class QubitPatternRouting extends sfPatternRouting
 {
-  /**
-   * @see sfPatternRouting
-   *
-   * @param mixed $url
-   */
-  public function parse($url)
-  {
-    try {
-      return parent::parse($url);
-    } catch (sfError404Exception $e) {
-      return false;
+    /**
+     * @see sfPatternRouting
+     *
+     * @param mixed $url
+     */
+    public function parse($url)
+    {
+        try {
+            return parent::parse($url);
+        } catch (sfError404Exception $e) {
+            return false;
+        }
     }
-  }
 }

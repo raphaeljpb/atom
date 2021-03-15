@@ -22,17 +22,17 @@
  */
 class arCasPluginConfiguration extends sfPluginConfiguration
 {
-  public static $summary = 'CAS authentication plugin.';
-  public static $version = '1.0.0';
+    public static $summary = 'CAS authentication plugin.';
+    public static $version = '1.0.0';
 
-  /**
-   * @see sfPluginConfiguration
-   */
-  public function initialize()
-  {
-    // Enable sfInstallPlugin module
-    $enabledModules = sfConfig::get('sf_enabled_modules');
-    $enabledModules[] = 'arCasPlugin';
-    sfConfig::set('sf_enabled_modules', $enabledModules);
-  }
+    /**
+     * @see sfPluginConfiguration
+     */
+    public function initialize()
+    {
+        // Enable sfInstallPlugin module
+        $enabledModules = sfConfig::get('sf_enabled_modules');
+        $enabledModules[] = 'arCasPlugin';
+        sfConfig::set('sf_enabled_modules', $enabledModules);
+    }
 }

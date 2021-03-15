@@ -26,16 +26,25 @@ $configuration = ProjectConfiguration::getApplicationConfiguration('qubit', 'tes
 sfContext::createInstance($configuration);
 
 $informationObject = new QubitInformationObject();
-$t->isa_ok($informationObject->__toString(), 'string',
-  '"->__toString()" returns a string');
+$t->isa_ok(
+    $informationObject->__toString(),
+    'string',
+    '"->__toString()" returns a string'
+);
 
 $informationObject->title = 'test title';
-$t->is($informationObject->__toString(), 'test title',
-  '"->__toString()" returns the title');
+$t->is(
+    $informationObject->__toString(),
+    'test title',
+    '"->__toString()" returns the title'
+);
 
 $informationObject->language = ['en', 'fr'];
-$t->is($informationObject->language, ['en', 'fr'],
-  '"->language" can be set and got');
+$t->is(
+    $informationObject->language,
+    ['en', 'fr'],
+    '"->language" can be set and got'
+);
 
 $informationObject->save();
 

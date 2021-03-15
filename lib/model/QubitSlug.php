@@ -19,52 +19,52 @@
 
 class QubitSlug extends BaseSlug
 {
-  public const SLUG_BASIS_TITLE = 0;
-  public const SLUG_BASIS_REFERENCE_CODE = 1;
-  public const SLUG_BASIS_REFERENCE_CODE_NO_COUNTRY_REPO = 2;
-  public const SLUG_BASIS_IDENTIFIER = 3;
-  public const SLUG_RESTRICTIVE = 0;
-  public const SLUG_PERMISSIVE = 1;
+    public const SLUG_BASIS_TITLE = 0;
+    public const SLUG_BASIS_REFERENCE_CODE = 1;
+    public const SLUG_BASIS_REFERENCE_CODE_NO_COUNTRY_REPO = 2;
+    public const SLUG_BASIS_IDENTIFIER = 3;
+    public const SLUG_RESTRICTIVE = 0;
+    public const SLUG_PERMISSIVE = 1;
 
-  public static function random($length = 12)
-  {
-    $separator = '-';
+    public static function random($length = 12)
+    {
+        $separator = '-';
 
-    // Adapted from http://stackoverflow.com/questions/5615490/random-code-generator/5615957#5615957
-    $alphabet = '23456789abcdefghkmnpqrstwxyz';
-    $alphabetSize = strlen($alphabet);
+        // Adapted from http://stackoverflow.com/questions/5615490/random-code-generator/5615957#5615957
+        $alphabet = '23456789abcdefghkmnpqrstwxyz';
+        $alphabetSize = strlen($alphabet);
 
-    $blockLength = 4;
-    $numBlocks = ceil($length / $blockLength);
+        $blockLength = 4;
+        $numBlocks = ceil($length / $blockLength);
 
-    $slug = '';
-    for ($i = 0; $i < $numBlocks; ++$i) {
-      for ($j = 0; $j < $blockLength; ++$j) {
-        $slug .= $alphabet[mt_rand(0, $alphabetSize - 1)];
-      }
+        $slug = '';
+        for ($i = 0; $i < $numBlocks; ++$i) {
+            for ($j = 0; $j < $blockLength; ++$j) {
+                $slug .= $alphabet[mt_rand(0, $alphabetSize - 1)];
+            }
 
-      if ($i != $numBlocks - 1) {
-        $slug .= $separator;
-      }
+            if ($i != $numBlocks - 1) {
+                $slug .= $separator;
+            }
+        }
+
+        return $slug;
     }
 
-    return $slug;
-  }
+    /**
+     * Slugify a specified string.
+     *
+     * @param string     $slug         The string we want to slugify
+     * @param bool       $dropArticles Whether or not to drop English articles from the slug.
+     *                                 We can disable this when we generate slugs by identifier.
+     * @param null|mixed $creationType
+     */
+    public static function slugify($slug, $creationType = null)
+    {
+        // 0, 1, or null
+        $slugCreation = (null === $creationType) ? sfConfig::get('app_permissive_slug_creation', QubitSlug::SLUG_RESTRICTIVE) : $creationType;
 
-  /**
-   * Slugify a specified string.
-   *
-   * @param string     $slug         The string we want to slugify
-   * @param bool       $dropArticles Whether or not to drop English articles from the slug.
-   *                                 We can disable this when we generate slugs by identifier.
-   * @param null|mixed $creationType
-   */
-  public static function slugify($slug, $creationType = null)
-  {
-    // 0, 1, or null
-    $slugCreation = (null === $creationType) ? sfConfig::get('app_permissive_slug_creation', QubitSlug::SLUG_RESTRICTIVE) : $creationType;
-
-    switch ($slugCreation) {
+        switch ($slugCreation) {
       case QubitSlug::SLUG_PERMISSIVE:
         // Remove apostrophes
         $slug = preg_replace('/\'/', '', $slug);
@@ -82,7 +82,7 @@ class QubitSlug extends BaseSlug
         // Handle exotic characters gracefully.
         // TRANSLIT doesn't work in musl's iconv, see #9855.
         if ((false !== $result = iconv('utf-8', 'ascii//TRANSLIT', $slug)) || (false !== $result = iconv('utf-8', 'ascii', $slug))) {
-          $slug = $result;
+            $slug = $result;
         }
 
         // Remove apostrophes
@@ -93,52 +93,52 @@ class QubitSlug extends BaseSlug
         $slug = preg_replace('/[^0-9a-z]+/', '-', $slug);
     }
 
-    $slug = "-{$slug}-";
+        $slug = "-{$slug}-";
 
-    return trim($slug, '-');
-  }
-
-  public static function getUnique($connection = null)
-  {
-    if (!isset($connection)) {
-      $connection = Propel::getConnection();
+        return trim($slug, '-');
     }
 
-    // Try a max of 10 times before giving up (avoid infinite loops when
-    // possible slugs exhausted)
-    for ($i = 0; $i < 10; ++$i) {
-      $slug = self::random();
+    public static function getUnique($connection = null)
+    {
+        if (!isset($connection)) {
+            $connection = Propel::getConnection();
+        }
 
-      $statement = $connection->prepare('
+        // Try a max of 10 times before giving up (avoid infinite loops when
+        // possible slugs exhausted)
+        for ($i = 0; $i < 10; ++$i) {
+            $slug = self::random();
+
+            $statement = $connection->prepare('
         SELECT COUNT(*)
         FROM '.QubitSlug::TABLE_NAME.'
         WHERE '.QubitSlug::SLUG.' = ?;');
-      $statement->execute([$slug]);
+            $statement->execute([$slug]);
 
-      if (0 == $statement->fetchColumn(0)) {
-        return $slug;
-      }
+            if (0 == $statement->fetchColumn(0)) {
+                return $slug;
+            }
+        }
     }
-  }
 
-  public static function getByObjectId($id, array $options = [])
-  {
-    $criteria = new Criteria();
-    $criteria->add(QubitSlug::OBJECT_ID, $id);
+    public static function getByObjectId($id, array $options = [])
+    {
+        $criteria = new Criteria();
+        $criteria->add(QubitSlug::OBJECT_ID, $id);
 
-    if (1 == count($query = self::get($criteria, $options))) {
-      return $query[0];
+        if (1 == count($query = self::get($criteria, $options))) {
+            return $query[0];
+        }
     }
-  }
 
-  public static function getRfc3987Set()
-  {
-    // From RFC 3987 IRI allowed chars. Not guaranteed to match \p{L}\p{Nd}.
-    return '\x{00A0}-\x{D7FF}'.'\x{F900}-\x{FDCF}'.'\x{FDF0}-\x{FFEF}'.
+    public static function getRfc3987Set()
+    {
+        // From RFC 3987 IRI allowed chars. Not guaranteed to match \p{L}\p{Nd}.
+        return '\x{00A0}-\x{D7FF}'.'\x{F900}-\x{FDCF}'.'\x{FDF0}-\x{FFEF}'.
       '\x{10000}-\x{1FFFD}'.'\x{20000}-\x{2FFFD}'.'\x{30000}-\x{3FFFD}'.
       '\x{40000}-\x{4FFFD}'.'\x{50000}-\x{5FFFD}'.'\x{60000}-\x{6FFFD}'.
       '\x{70000}-\x{7FFFD}'.'\x{80000}-\x{8FFFD}'.'\x{90000}-\x{9FFFD}'.
       '\x{A0000}-\x{AFFFD}'.'\x{B0000}-\x{BFFFD}'.'\x{C0000}-\x{CFFFD}'.
       '\x{D0000}-\x{DFFFD}'.'\x{E0000}-\x{EFFFD}';
-  }
+    }
 }

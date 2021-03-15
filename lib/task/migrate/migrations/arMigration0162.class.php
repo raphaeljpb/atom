@@ -25,38 +25,38 @@
  */
 class arMigration0162
 {
-  public const VERSION = 162;
-  public const // The new database version
+    public const VERSION = 162;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
   public function up($configuration)
   {
-    QubitMigrate::bumpTaxonomy(QubitTaxonomy::USER_ACTION_ID, $configuration);
-    $taxonomy = new QubitTaxonomy();
-    $taxonomy->id = QubitTaxonomy::USER_ACTION_ID;
-    $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
-    $taxonomy->sourceCulture = 'en';
-    $taxonomy->setName('User actions', ['culture' => 'en']);
-    $taxonomy->save();
+      QubitMigrate::bumpTaxonomy(QubitTaxonomy::USER_ACTION_ID, $configuration);
+      $taxonomy = new QubitTaxonomy();
+      $taxonomy->id = QubitTaxonomy::USER_ACTION_ID;
+      $taxonomy->parentId = QubitTaxonomy::ROOT_ID;
+      $taxonomy->sourceCulture = 'en';
+      $taxonomy->setName('User actions', ['culture' => 'en']);
+      $taxonomy->save();
 
-    $terms = [
-      QubitTerm::USER_ACTION_CREATION_ID => 'Creation',
-      QubitTerm::USER_ACTION_MODIFICATION_ID => 'Modification',
-    ];
+      $terms = [
+          QubitTerm::USER_ACTION_CREATION_ID => 'Creation',
+          QubitTerm::USER_ACTION_MODIFICATION_ID => 'Modification',
+      ];
 
-    foreach ($terms as $id => $name) {
-      QubitMigrate::bumpTerm($id, $configuration);
-      $term = new QubitTerm();
-      $term->id = $id;
-      $term->parentId = QubitTerm::ROOT_ID;
-      $term->taxonomyId = QubitTaxonomy::USER_ACTION_ID;
-      $term->sourceCulture = 'en';
-      $term->setName($name, ['culture' => 'en']);
-      $term->save();
-    }
+      foreach ($terms as $id => $name) {
+          QubitMigrate::bumpTerm($id, $configuration);
+          $term = new QubitTerm();
+          $term->id = $id;
+          $term->parentId = QubitTerm::ROOT_ID;
+          $term->taxonomyId = QubitTaxonomy::USER_ACTION_ID;
+          $term->sourceCulture = 'en';
+          $term->setName($name, ['culture' => 'en']);
+          $term->save();
+      }
 
-    // Add table audit_log
-    $sql = <<<'sql'
+      // Add table audit_log
+      $sql = <<<'sql'
 
 CREATE TABLE `audit_log`
 (
@@ -86,8 +86,8 @@ CREATE TABLE `audit_log`
 
 sql;
 
-    QubitPdo::modify($sql);
+      QubitPdo::modify($sql);
 
-    return true;
+      return true;
   }
 }

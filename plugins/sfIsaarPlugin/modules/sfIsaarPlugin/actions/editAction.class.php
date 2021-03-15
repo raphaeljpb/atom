@@ -24,69 +24,69 @@
  */
 class sfIsaarPluginEditAction extends ActorEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'authorizedFormOfName',
-    'corporateBodyIdentifiers',
-    'datesOfExistence',
-    'descriptionDetail',
-    'descriptionIdentifier',
-    'descriptionStatus',
-    'entityType',
-    'functions',
-    'generalContext',
-    'history',
-    'institutionResponsibleIdentifier',
-    'internalStructures',
-    'language',
-    'legalStatus',
-    'maintainingRepository',
-    'maintenanceNotes',
-    'mandates',
-    'otherName',
-    'parallelName',
-    'places',
-    'placeAccessPoints',
-    'revisionHistory',
-    'rules',
-    'script',
-    'sources',
-    'standardizedName',
-    'subjectAccessPoints', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'authorizedFormOfName',
+        'corporateBodyIdentifiers',
+        'datesOfExistence',
+        'descriptionDetail',
+        'descriptionIdentifier',
+        'descriptionStatus',
+        'entityType',
+        'functions',
+        'generalContext',
+        'history',
+        'institutionResponsibleIdentifier',
+        'internalStructures',
+        'language',
+        'legalStatus',
+        'maintainingRepository',
+        'maintenanceNotes',
+        'mandates',
+        'otherName',
+        'parallelName',
+        'places',
+        'placeAccessPoints',
+        'revisionHistory',
+        'rules',
+        'script',
+        'sources',
+        'standardizedName',
+        'subjectAccessPoints', ];
 
-  protected function earlyExecute()
-  {
-    parent::earlyExecute();
+    protected function earlyExecute()
+    {
+        parent::earlyExecute();
 
-    $this->isaar = new sfIsaarPlugin($this->resource);
+        $this->isaar = new sfIsaarPlugin($this->resource);
 
-    $title = $this->context->i18n->__('Add new authority record');
-    if (isset($this->getRoute()->resource)) {
-      if (1 > strlen($title = $this->resource)) {
-        $title = $this->context->i18n->__('Untitled');
-      }
+        $title = $this->context->i18n->__('Add new authority record');
+        if (isset($this->getRoute()->resource)) {
+            if (1 > strlen($title = $this->resource)) {
+                $title = $this->context->i18n->__('Untitled');
+            }
 
-      $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
+            $title = $this->context->i18n->__('Edit %1%', ['%1%' => $title]);
+        }
+
+        $this->response->setTitle("{$title} - {$this->response->getTitle()}");
+
+        $this->eventComponent = new sfIsaarPluginEventComponent($this->context, 'sfIsaarPlugin', 'event');
+        $this->eventComponent->resource = $this->resource;
+        $this->eventComponent->execute($this->request);
+
+        $this->relatedAuthorityRecordComponent = new sfIsaarPluginRelatedAuthorityRecordComponent($this->context, 'sfIsaarPlugin', 'relatedAuthorityRecord');
+        $this->relatedAuthorityRecordComponent->resource = $this->resource;
+        $this->relatedAuthorityRecordComponent->execute($this->request);
+
+        $this->occupationsComponent = new ActorOccupationsComponent($this->context, 'actor', 'occupations');
+        $this->occupationsComponent->resource = $this->resource;
+        $this->occupationsComponent->execute($this->request);
     }
 
-    $this->response->setTitle("{$title} - {$this->response->getTitle()}");
-
-    $this->eventComponent = new sfIsaarPluginEventComponent($this->context, 'sfIsaarPlugin', 'event');
-    $this->eventComponent->resource = $this->resource;
-    $this->eventComponent->execute($this->request);
-
-    $this->relatedAuthorityRecordComponent = new sfIsaarPluginRelatedAuthorityRecordComponent($this->context, 'sfIsaarPlugin', 'relatedAuthorityRecord');
-    $this->relatedAuthorityRecordComponent->resource = $this->resource;
-    $this->relatedAuthorityRecordComponent->execute($this->request);
-
-    $this->occupationsComponent = new ActorOccupationsComponent($this->context, 'actor', 'occupations');
-    $this->occupationsComponent->resource = $this->resource;
-    $this->occupationsComponent->execute($this->request);
-  }
-
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'maintenanceNotes':
         $this->form->setDefault('maintenanceNotes', $this->isaar->maintenanceNotes);
         $this->form->setValidator('maintenanceNotes', new sfValidatorString());
@@ -96,12 +96,12 @@ class sfIsaarPluginEditAction extends ActorEditAction
 
       case 'descriptionIdentifier':
         if (sfConfig::get('app_prevent_duplicate_actor_identifiers', false)) {
-          $this->form->setDefault($name, $this->resource[$name]);
-          $identifierValidator = new QubitValidatorActorDescriptionIdentifier(['resource' => $this->resource]);
-          $this->form->setValidator($name, $identifierValidator);
-          $this->form->setWidget($name, new sfWidgetFormInput());
+            $this->form->setDefault($name, $this->resource[$name]);
+            $identifierValidator = new QubitValidatorActorDescriptionIdentifier(['resource' => $this->resource]);
+            $this->form->setValidator($name, $identifierValidator);
+            $this->form->setWidget($name, new sfWidgetFormInput());
         } else {
-          return parent::addField($name);
+            return parent::addField($name);
         }
 
         break;
@@ -109,11 +109,11 @@ class sfIsaarPluginEditAction extends ActorEditAction
       default:
         return parent::addField($name);
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'maintenanceNotes':
         $this->isaar->maintenanceNotes = $this->form->getValue('maintenanceNotes');
 
@@ -122,14 +122,14 @@ class sfIsaarPluginEditAction extends ActorEditAction
       default:
         return parent::processField($field);
     }
-  }
+    }
 
-  protected function processForm()
-  {
-    $this->eventComponent->processForm();
-    $this->relatedAuthorityRecordComponent->processForm();
-    $this->occupationsComponent->processForm();
+    protected function processForm()
+    {
+        $this->eventComponent->processForm();
+        $this->relatedAuthorityRecordComponent->processForm();
+        $this->occupationsComponent->processForm();
 
-    return parent::processForm();
-  }
+        return parent::processForm();
+    }
 }

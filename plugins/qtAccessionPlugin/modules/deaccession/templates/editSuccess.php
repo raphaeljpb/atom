@@ -26,28 +26,28 @@
         <legend><?php echo __('Deaccession area'); ?></legend>
 
         <?php echo $form->identifier
-          ->label(__('Deaccession number').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>')
-          ->renderRow(); ?>
+            ->label(__('Deaccession number').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>')
+            ->renderRow(); ?>
 
         <?php echo $form->scope
-          ->help(__('Identify if the whole accession is being deaccessioned or if only a part of the accession is being deaccessioned.'))
-          ->label(__('Scope').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>')
-          ->renderRow(); ?>
+            ->help(__('Identify if the whole accession is being deaccessioned or if only a part of the accession is being deaccessioned.'))
+            ->label(__('Scope').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>')
+            ->renderRow(); ?>
 
         <?php echo $form->date
-          ->help(__('Date of deaccession'))
-          ->label(__('Date').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>')
-          ->renderRow(); ?>
+            ->help(__('Date of deaccession'))
+            ->label(__('Date').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>')
+            ->renderRow(); ?>
 
         <?php echo render_field($form->description
-          ->help(__('Identify what materials are being deaccessioned.'))
-          ->label(__('Description').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>'), $resource, ['class' => 'resizable']); ?>
+            ->help(__('Identify what materials are being deaccessioned.'))
+            ->label(__('Description').' <span class="form-required" title="'.__('This is a mandatory element.').'">*</span>'), $resource, ['class' => 'resizable']); ?>
 
         <?php echo render_field($form->extent
-          ->help(__('The number of units as a whole number and the measurement of the records to be deaccessioned.')), $resource, ['class' => 'resizable']); ?>
+            ->help(__('The number of units as a whole number and the measurement of the records to be deaccessioned.')), $resource, ['class' => 'resizable']); ?>
 
         <?php echo render_field($form->reason
-          ->help(__('Provide a reason why the records are being deaccessioned.')), $resource, ['class' => 'resizable']); ?>
+            ->help(__('Provide a reason why the records are being deaccessioned.')), $resource, ['class' => 'resizable']); ?>
 
       </fieldset>
 

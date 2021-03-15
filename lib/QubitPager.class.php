@@ -25,75 +25,75 @@
  */
 class QubitPager extends sfPropelPager
 {
-  // Override sfPager::$nbResults = 0
-  protected $nbResults;
+    // Override sfPager::$nbResults = 0
+    protected $nbResults;
 
-  /**
-   * BasePeer::doCount() returns PDOStatement.
-   */
-  public function doCount(Criteria $criteria)
-  {
-    call_user_func([$this->class, 'addSelectColumns'], $criteria);
+    /**
+     * BasePeer::doCount() returns PDOStatement.
+     */
+    public function doCount(Criteria $criteria)
+    {
+        call_user_func([$this->class, 'addSelectColumns'], $criteria);
 
-    return BasePeer::doCount($criteria)->fetchColumn(0);
-  }
-
-  public function doSelect(Criteria $criteria)
-  {
-    return call_user_func([$this->class, 'get'], $criteria);
-  }
-
-  /**
-   * @see sfPropelPager
-   */
-  public function getClassPeer()
-  {
-    return $this;
-  }
-
-  /**
-   * Override ::getNbResults() to call ->init() first.
-   *
-   * @see sfPager
-   */
-  public function getNbResults()
-  {
-    if (!isset($this->nbResults)) {
-      $this->init();
+        return BasePeer::doCount($criteria)->fetchColumn(0);
     }
 
-    return parent::getNbResults();
-  }
+    public function doSelect(Criteria $criteria)
+    {
+        return call_user_func([$this->class, 'get'], $criteria);
+    }
 
-  /**
-   * Override ::getResults() to call ->init() first.
-   *
-   * @see sfPager
-   */
-  public function getResults()
-  {
-    $this->init();
+    /**
+     * @see sfPropelPager
+     */
+    public function getClassPeer()
+    {
+        return $this;
+    }
 
-    return parent::getResults();
-  }
+    /**
+     * Override ::getNbResults() to call ->init() first.
+     *
+     * @see sfPager
+     */
+    public function getNbResults()
+    {
+        if (!isset($this->nbResults)) {
+            $this->init();
+        }
 
-  /**
-   * Similar to getResults but gets raw row data, not objects.
-   *
-   * Columns need to be selected using the criteria
-   *
-   * Example: $criteria->addSelectColumn(QubitInformationObject::ID);
-   */
-  public function getRows(Criteria $criteria)
-  {
-    $this->init();
+        return parent::getNbResults();
+    }
 
-    $class = $this->class;
+    /**
+     * Override ::getResults() to call ->init() first.
+     *
+     * @see sfPager
+     */
+    public function getResults()
+    {
+        $this->init();
 
-    $options = [];
-    $options['connection'] = Propel::getConnection($class::DATABASE_NAME);
-    $options['rows'] = true;
+        return parent::getResults();
+    }
 
-    return QubitQuery::createFromCriteria($criteria, $this->class, $options);
-  }
+    /**
+     * Similar to getResults but gets raw row data, not objects.
+     *
+     * Columns need to be selected using the criteria
+     *
+     * Example: $criteria->addSelectColumn(QubitInformationObject::ID);
+     */
+    public function getRows(Criteria $criteria)
+    {
+        $this->init();
+
+        $class = $this->class;
+
+        $options = [];
+        $options['connection'] = Propel::getConnection($class::DATABASE_NAME);
+        $options['rows'] = true;
+
+        return QubitQuery::createFromCriteria($criteria, $this->class, $options);
+    }
 }

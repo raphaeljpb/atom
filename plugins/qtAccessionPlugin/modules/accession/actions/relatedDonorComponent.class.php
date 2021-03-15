@@ -19,36 +19,36 @@
 
 class AccessionRelatedDonorComponent extends RelationEditComponent
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'authorizedFormOfName',
-    'type',
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'authorizedFormOfName',
+        'type',
 
-    // Must be processed before the contact information fields
-    // because sets $this->contactInformation property
-    'resource',
+        // Must be processed before the contact information fields
+        // because sets $this->contactInformation property
+        'resource',
 
-    // Contact information
-    'city',
-    'contactPerson',
-    'countryCode',
-    'email',
-    'postalCode',
-    'region',
-    'streetAddress',
-    'telephone',
-    'contactType',
-    'website',
-    'fax',
-    'latitude',
-    'longitude',
-    'note', ];
+        // Contact information
+        'city',
+        'contactPerson',
+        'countryCode',
+        'email',
+        'postalCode',
+        'region',
+        'streetAddress',
+        'telephone',
+        'contactType',
+        'website',
+        'fax',
+        'latitude',
+        'longitude',
+        'note', ];
 
-  public function processForm()
-  {
-    parent::processForm();
+    public function processForm()
+    {
+        parent::processForm();
 
-    if (isset($this->contactInformation->city)
+        if (isset($this->contactInformation->city)
         || isset($this->contactInformation->contactPerson)
         || isset($this->contactInformation->email)
         || isset($this->contactInformation->postalCode)
@@ -62,24 +62,24 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
         || isset($this->contactInformation->note)
         || isset($this->contactInformation->fax)
         || isset($this->contactInformation->website)) {
-      $this->contactInformation->actor = $this->relation->object;
-      $this->contactInformation->save();
-      $this->contactInformation->makePrimaryContact();
+            $this->contactInformation->actor = $this->relation->object;
+            $this->contactInformation->save();
+            $this->contactInformation->makePrimaryContact();
+        }
     }
-  }
 
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    $this->form->getWidgetSchema()->setNameFormat('relatedDonor[%s]');
+        $this->form->getWidgetSchema()->setNameFormat('relatedDonor[%s]');
 
-    $this->relatedDonorRecord = QubitRelation::getRelationsBySubjectId($this->resource->id, ['typeId' => QubitTerm::DONOR_ID]);
-  }
+        $this->relatedDonorRecord = QubitRelation::getRelationsBySubjectId($this->resource->id, ['typeId' => QubitTerm::DONOR_ID]);
+    }
 
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'authorizedFormOfName':
         $this->form->setValidator('authorizedFormOfName', new sfValidatorString());
         $this->form->setWidget('authorizedFormOfName', new sfWidgetFormSelect(['choices' => []]));
@@ -129,23 +129,23 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
       default:
         return parent::addField($name);
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       // Override RelationEditComponent
       case 'resource':
         unset($this->relation->object);
 
         $value = $this->form->getValue('resource');
         if (isset($value)) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          $this->relation->object = $params['_sf_route']->resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($value));
+            $this->relation->object = $params['_sf_route']->resource;
 
-          if (null === $this->contactInformation = $this->relation->object->getPrimaryContact()) {
-            $this->contactInformation = new QubitContactInformation();
-          }
+            if (null === $this->contactInformation = $this->relation->object->getPrimaryContact()) {
+                $this->contactInformation = new QubitContactInformation();
+            }
         }
 
         break;
@@ -171,5 +171,5 @@ class AccessionRelatedDonorComponent extends RelationEditComponent
       default:
         parent::processField($field);
     }
-  }
+    }
 }

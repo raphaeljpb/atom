@@ -26,31 +26,31 @@
  */
 class SettingsSiteInformationAction extends SettingsEditAction
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'siteTitle',
-    'siteDescription',
-    'siteBaseUrl', ];
-  public static $I18N = [
-    'siteTitle',
-    'siteDescription',
-    'siteBaseUrl', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'siteTitle',
+        'siteDescription',
+        'siteBaseUrl', ];
+    public static $I18N = [
+        'siteTitle',
+        'siteDescription',
+        'siteBaseUrl', ];
 
-  public function earlyExecute()
-  {
-    parent::earlyExecute();
+    public function earlyExecute()
+    {
+        parent::earlyExecute();
 
-    $this->updateMessage = $this->i18n->__('Site information saved.');
+        $this->updateMessage = $this->i18n->__('Site information saved.');
 
-    // Set form decorator
-    $decorator = new QubitWidgetFormSchemaFormatterList($this->form->getWidgetSchema());
-    $this->form->getWidgetSchema()->addFormFormatter('list', $decorator);
-    $this->form->getWidgetSchema()->setFormFormatterName('list');
-  }
+        // Set form decorator
+        $decorator = new QubitWidgetFormSchemaFormatterList($this->form->getWidgetSchema());
+        $this->form->getWidgetSchema()->addFormFormatter('list', $decorator);
+        $this->form->getWidgetSchema()->setFormFormatterName('list');
+    }
 
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'siteTitle':
         $this->form->setWidget($name, new sfWidgetFormInput());
         $this->form->setValidator($name, new sfValidatorString(['required' => false]));
@@ -69,9 +69,10 @@ class SettingsSiteInformationAction extends SettingsEditAction
         $this->form->setWidget($name, new sfWidgetFormInput());
         $this->form->setValidator($name, new sfValidatorString(['required' => false]));
         $this->form->getWidgetSchema()->{$name}->setLabel(
-          $this->i18n->__('Site base URL (used in MODS and EAD exports)'));
+            $this->i18n->__('Site base URL (used in MODS and EAD exports)')
+        );
 
         break;
     }
-  }
+    }
 }

@@ -14,16 +14,16 @@
     <div class="row">
       <div class="span6">
         <?php echo get_component('search', 'inlineSearch', [
-          'label' => __('Search rights holder'), ]); ?>
+            'label' => __('Search rights holder'), ]); ?>
       </div>
 
       <div class="pickers">
         <?php echo get_partial('default/sortPickers',
           [
-            'options' => [
-              'lastUpdated' => __('Date modified'),
-              'alphabetic' => __('Name'),
-              'identifier' => __('Identifier'), ], ]); ?>
+              'options' => [
+                  'lastUpdated' => __('Date modified'),
+                  'alphabetic' => __('Name'),
+                  'identifier' => __('Identifier'), ], ]); ?>
       </div>
     </div>
   </section>

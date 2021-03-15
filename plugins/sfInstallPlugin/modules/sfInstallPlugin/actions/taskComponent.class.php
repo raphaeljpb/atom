@@ -19,15 +19,15 @@
 
 class sfInstallPluginTaskComponent extends sfAction
 {
-  public function execute($request)
-  {
-    $this->checkSystemStatus;
-    $this->configureDatabaseStatus;
-    $this->configureSearchStatus;
-    $this->loadDataStatus;
-    $this->configureSiteStatus;
+    public function execute($request)
+    {
+        $this->checkSystemStatus;
+        $this->configureDatabaseStatus;
+        $this->configureSearchStatus;
+        $this->loadDataStatus;
+        $this->configureSiteStatus;
 
-    switch ($request->action) {
+        switch ($request->action) {
       case 'checkSystem':
         $this->checkSystemStatus = 'active';
 
@@ -72,5 +72,5 @@ class sfInstallPluginTaskComponent extends sfAction
 
         break;
     }
-  }
+    }
 }

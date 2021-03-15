@@ -19,116 +19,116 @@
 
 class SettingsMenuComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    $i18n = $this->context->i18n;
-    $this->nodes = [
-      [
-        'label' => $i18n->__('Clipboard'),
-        'action' => 'clipboard',
-      ],
-      [
-        'label' => $i18n->__('Default page elements'),
-        'action' => 'pageElements',
-      ],
-      [
-        'label' => $i18n->__('Default template'),
-        'action' => 'template',
-      ],
-      [
-        'label' => $i18n->__('Digital object derivatives'),
-        'action' => 'digitalObjectDerivatives',
-      ],
-      [
-        'label' => $i18n->__('DIP upload'),
-        'action' => 'dipUpload',
-      ],
-      [
-        'label' => $i18n->__('Finding Aid'),
-        'action' => 'findingAid',
-      ],
-      [
-        'label' => $i18n->__('Global'),
-        'action' => 'global',
-      ],
-      [
-        'label' => $i18n->__('I18n languages'),
-        'action' => 'language',
-      ],
-      [
-        'label' => $i18n->__('Identifiers'),
-        'action' => 'identifier',
-      ],
-      [
-        'label' => $i18n->__('Inventory'),
-        'action' => 'inventory',
-      ],
-      // Only show LDAP authentication settings if LDAP authentication's used
-      [
-        'label' => $i18n->__('LDAP Authentication'),
-        'action' => 'ldap',
-        'hide' => !($this->context->user instanceof ldapUser),
-      ],
-      [
-        'label' => $i18n->__('Markdown'),
-        'action' => 'markdown',
-      ],
-      [
-        'label' => $i18n->__('OAI repository'),
-        'action' => 'oai',
-        'hide' => !$this->context->getConfiguration()->isPluginEnabled('arOaiPlugin'),
-      ],
-      [
-        'label' => $i18n->__('Permissions'),
-        'action' => 'permissions',
-      ],
-      [
-        'label' => $i18n->__('Privacy Notification'),
-        'action' => 'privacyNotification',
-      ],
-      [
-        'label' => $i18n->__('Security'),
-        'action' => 'security',
-      ],
-      [
-        'label' => $i18n->__('Site information'),
-        'action' => 'siteInformation',
-      ],
-      [
-        'label' => $i18n->__('Storage service'),
-        'module' => 'arStorageServiceSettings',
-        'action' => 'settings',
-        'hide' => !$this->context->getConfiguration()->isPluginEnabled(
-          'arStorageServicePlugin'
-        ),
-      ],
-      [
-        'label' => $i18n->__('Treeview'),
-        'action' => 'treeview',
-      ],
-      [
-        'label' => $i18n->__('Uploads'),
-        'action' => 'uploads',
-      ],
-      [
-        'label' => $i18n->__('User interface labels'),
-        'action' => 'interfaceLabel',
-      ],
-    ];
+    public function execute($request)
+    {
+        $i18n = $this->context->i18n;
+        $this->nodes = [
+            [
+                'label' => $i18n->__('Clipboard'),
+                'action' => 'clipboard',
+            ],
+            [
+                'label' => $i18n->__('Default page elements'),
+                'action' => 'pageElements',
+            ],
+            [
+                'label' => $i18n->__('Default template'),
+                'action' => 'template',
+            ],
+            [
+                'label' => $i18n->__('Digital object derivatives'),
+                'action' => 'digitalObjectDerivatives',
+            ],
+            [
+                'label' => $i18n->__('DIP upload'),
+                'action' => 'dipUpload',
+            ],
+            [
+                'label' => $i18n->__('Finding Aid'),
+                'action' => 'findingAid',
+            ],
+            [
+                'label' => $i18n->__('Global'),
+                'action' => 'global',
+            ],
+            [
+                'label' => $i18n->__('I18n languages'),
+                'action' => 'language',
+            ],
+            [
+                'label' => $i18n->__('Identifiers'),
+                'action' => 'identifier',
+            ],
+            [
+                'label' => $i18n->__('Inventory'),
+                'action' => 'inventory',
+            ],
+            // Only show LDAP authentication settings if LDAP authentication's used
+            [
+                'label' => $i18n->__('LDAP Authentication'),
+                'action' => 'ldap',
+                'hide' => !($this->context->user instanceof ldapUser),
+            ],
+            [
+                'label' => $i18n->__('Markdown'),
+                'action' => 'markdown',
+            ],
+            [
+                'label' => $i18n->__('OAI repository'),
+                'action' => 'oai',
+                'hide' => !$this->context->getConfiguration()->isPluginEnabled('arOaiPlugin'),
+            ],
+            [
+                'label' => $i18n->__('Permissions'),
+                'action' => 'permissions',
+            ],
+            [
+                'label' => $i18n->__('Privacy Notification'),
+                'action' => 'privacyNotification',
+            ],
+            [
+                'label' => $i18n->__('Security'),
+                'action' => 'security',
+            ],
+            [
+                'label' => $i18n->__('Site information'),
+                'action' => 'siteInformation',
+            ],
+            [
+                'label' => $i18n->__('Storage service'),
+                'module' => 'arStorageServiceSettings',
+                'action' => 'settings',
+                'hide' => !$this->context->getConfiguration()->isPluginEnabled(
+                    'arStorageServicePlugin'
+                ),
+            ],
+            [
+                'label' => $i18n->__('Treeview'),
+                'action' => 'treeview',
+            ],
+            [
+                'label' => $i18n->__('Uploads'),
+                'action' => 'uploads',
+            ],
+            [
+                'label' => $i18n->__('User interface labels'),
+                'action' => 'interfaceLabel',
+            ],
+        ];
 
-    foreach ($this->nodes as $i => &$node) {
-      // Remove hidden nodes
-      if (!empty($node['hide']) && true === $node['hide']) {
-        unset($this->nodes[$i]);
-      }
+        foreach ($this->nodes as $i => &$node) {
+            // Remove hidden nodes
+            if (!empty($node['hide']) && true === $node['hide']) {
+                unset($this->nodes[$i]);
+            }
 
-      // Active bool
-      $node['active'] = $this->context->getActionName() === $node['action'];
+            // Active bool
+            $node['active'] = $this->context->getActionName() === $node['action'];
+        }
+
+        // Sort alphabetically
+        usort($this->nodes, function ($el1, $el2) {
+            return strnatcmp($el1['label'], $el2['label']);
+        });
     }
-
-    // Sort alphabetically
-    usort($this->nodes, function ($el1, $el2) {
-      return strnatcmp($el1['label'], $el2['label']);
-    });
-  }
 }

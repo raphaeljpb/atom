@@ -25,32 +25,32 @@
  */
 class arMigration0159
 {
-  public const VERSION = 159;
-  public const // The new database version
+    public const VERSION = 159;
+    public const // The new database version
     MIN_MILESTONE = 2; // The minimum milestone required
 
-  /**
-   * Upgrade.
-   *
-   * @param mixed $configuration
-   *
-   * @return bool True if the upgrade succeeded, False otherwise
-   */
-  public function up($configuration)
-  {
-    if (null === QubitSetting::getByName('permissive_slug_creation')) {
-      $setting = new QubitSetting();
-      $setting->name = 'permissive_slug_creation';
-      $setting->value = QubitSlug::SLUG_RESTRICTIVE;
-      $setting->editable = 1;
-      $setting->source_culture = 'en';
-      $setting->setValue(QubitSlug::SLUG_RESTRICTIVE, ['culture' => 'en']);
-      $setting->save();
+    /**
+     * Upgrade.
+     *
+     * @param mixed $configuration
+     *
+     * @return bool True if the upgrade succeeded, False otherwise
+     */
+    public function up($configuration)
+    {
+        if (null === QubitSetting::getByName('permissive_slug_creation')) {
+            $setting = new QubitSetting();
+            $setting->name = 'permissive_slug_creation';
+            $setting->value = QubitSlug::SLUG_RESTRICTIVE;
+            $setting->editable = 1;
+            $setting->source_culture = 'en';
+            $setting->setValue(QubitSlug::SLUG_RESTRICTIVE, ['culture' => 'en']);
+            $setting->save();
+        }
+
+        $sql = 'ALTER TABLE `slug` MODIFY `slug` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin';
+        QubitPdo::modify($sql);
+
+        return true;
     }
-
-    $sql = 'ALTER TABLE `slug` MODIFY `slug` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin';
-    QubitPdo::modify($sql);
-
-    return true;
-  }
 }

@@ -24,71 +24,71 @@
  */
 class listJobsTask extends arBaseTask
 {
-  protected $namespace = 'jobs';
-  protected $name = 'list';
-  protected $briefDescription = 'List AtoM jobs';
+    protected $namespace = 'jobs';
+    protected $name = 'list';
+    protected $briefDescription = 'List AtoM jobs';
 
-  protected $detailedDescription = <<<'EOF'
+    protected $detailedDescription = <<<'EOF'
 List AtoM jobs. If no options are set it will list ALL the jobs.
 EOF;
 
-  /**
-   * @see sfTask
-   *
-   * @param mixed $arguments
-   * @param mixed $options
-   */
-  public function execute($arguments = [], $options = [])
-  {
-    parent::execute($arguments, $options);
+    /**
+     * @see sfTask
+     *
+     * @param mixed $arguments
+     * @param mixed $options
+     */
+    public function execute($arguments = [], $options = [])
+    {
+        parent::execute($arguments, $options);
 
-    // initialized data connection in case it's needed
-    $databaseManager = new sfDatabaseManager($this->configuration);
-    $conn = $databaseManager->getDatabase('propel')->getConnection();
+        // initialized data connection in case it's needed
+        $databaseManager = new sfDatabaseManager($this->configuration);
+        $conn = $databaseManager->getDatabase('propel')->getConnection();
 
-    $criteria = new Criteria();
-    if ($options['completed']) {
-      $criteria->add(QubitJob::STATUS_ID, QubitTerm::JOB_STATUS_COMPLETED_ID);
-      $criteria->add(QubitJob::STATUS_ID, QubitTerm::JOB_STATUS_ERROR_ID);
-    }
-
-    if ($options['running']) {
-      $criteria->add(QubitJob::STATUS_ID, QubitTerm::JOB_STATUS_IN_PROGRESS_ID);
-    }
-
-    $jobs = QubitJob::get($criteria);
-    foreach ($jobs as $job) {
-      echo "{$job->name}\n";
-      echo ' Status: '.$job->getStatusString()."\n";
-      echo ' Started: '.$job->getCreationDateString()."\n";
-      echo ' Completed: '.$job->getCompletionDateString()."\n";
-      echo ' User: '.QubitJob::getUserString($job)."\n";
-
-      // Add notes (indented for readability)
-      if (count($notes = $job->getNotes()) > 0) {
-        $notesLabel = ' Notes: ';
-
-        foreach ($notes as $note) {
-          echo $notesLabel.$note."\n";
-          $notesLabel = '        ';
+        $criteria = new Criteria();
+        if ($options['completed']) {
+            $criteria->add(QubitJob::STATUS_ID, QubitTerm::JOB_STATUS_COMPLETED_ID);
+            $criteria->add(QubitJob::STATUS_ID, QubitTerm::JOB_STATUS_ERROR_ID);
         }
-      }
 
-      echo "\n";
+        if ($options['running']) {
+            $criteria->add(QubitJob::STATUS_ID, QubitTerm::JOB_STATUS_IN_PROGRESS_ID);
+        }
+
+        $jobs = QubitJob::get($criteria);
+        foreach ($jobs as $job) {
+            echo "{$job->name}\n";
+            echo ' Status: '.$job->getStatusString()."\n";
+            echo ' Started: '.$job->getCreationDateString()."\n";
+            echo ' Completed: '.$job->getCompletionDateString()."\n";
+            echo ' User: '.QubitJob::getUserString($job)."\n";
+
+            // Add notes (indented for readability)
+            if (count($notes = $job->getNotes()) > 0) {
+                $notesLabel = ' Notes: ';
+
+                foreach ($notes as $note) {
+                    echo $notesLabel.$note."\n";
+                    $notesLabel = '        ';
+                }
+            }
+
+            echo "\n";
+        }
     }
-  }
 
-  /**
-   * @see sfBaseTask
-   */
-  protected function configure()
-  {
-    $this->addOptions([
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      new sfCommandOption('completed', null, sfCommandOption::PARAMETER_NONE, 'List only completed jobs'),
-      new sfCommandOption('running', null, sfCommandOption::PARAMETER_NONE, 'List only running jobs'),
-    ]);
-  }
+    /**
+     * @see sfBaseTask
+     */
+    protected function configure()
+    {
+        $this->addOptions([
+            new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', true),
+            new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'cli'),
+            new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+            new sfCommandOption('completed', null, sfCommandOption::PARAMETER_NONE, 'List only completed jobs'),
+            new sfCommandOption('running', null, sfCommandOption::PARAMETER_NONE, 'List only running jobs'),
+        ]);
+    }
 }

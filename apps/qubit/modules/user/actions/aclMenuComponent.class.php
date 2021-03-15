@@ -24,15 +24,15 @@
  */
 class userAclMenuComponent extends sfComponent
 {
-  public function execute($request)
-  {
-    // Get menu
-    $criteria = new Criteria();
-    $criteria->add(QubitMenu::NAME, 'users');
+    public function execute($request)
+    {
+        // Get menu
+        $criteria = new Criteria();
+        $criteria->add(QubitMenu::NAME, 'users');
 
-    $this->userAclMenu = null;
-    if (null !== $menu = QubitMenu::getOne($criteria)) {
-      $this->userAclMenu = $menu;
+        $this->userAclMenu = null;
+        if (null !== $menu = QubitMenu::getOne($criteria)) {
+            $this->userAclMenu = $menu;
+        }
     }
-  }
 }

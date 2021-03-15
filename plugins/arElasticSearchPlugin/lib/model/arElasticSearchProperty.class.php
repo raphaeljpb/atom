@@ -19,13 +19,13 @@
 
 class arElasticSearchProperty extends arElasticSearchModelBase
 {
-  public static function serialize($object)
-  {
-    $serialized = [];
+    public static function serialize($object)
+    {
+        $serialized = [];
 
-    $serialized['sourceCulture'] = $object->source_culture;
-    $serialized['i18n'] = self::serializeI18ns($object->id, ['QubitProperty']);
+        $serialized['sourceCulture'] = $object->source_culture;
+        $serialized['i18n'] = self::serializeI18ns($object->id, ['QubitProperty']);
 
-    return $serialized;
-  }
+        return $serialized;
+    }
 }

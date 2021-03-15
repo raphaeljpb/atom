@@ -23,8 +23,8 @@
     <?php echo $form->siteDescription->renderRow(); ?>
 
     <?php echo $form->siteBaseUrl
-      ->label('Site base URL')
-      ->renderRow(); ?>
+        ->label('Site base URL')
+        ->renderRow(); ?>
 
     <div class="description">
       <p>
@@ -51,19 +51,19 @@
     <div>
 
       <?php $settings = json_encode([
-        'password' => [
-          'strengthTitle' => __('Password strength:'),
-          'hasWeaknesses' => __('To make your password stronger:'),
-          'tooShort' => __('Make it at least six characters'),
-          'addLowerCase' => __('Add lowercase letters'),
-          'addUpperCase' => __('Add uppercase letters'),
-          'addNumbers' => __('Add numbers'),
-          'addPunctuation' => __('Add punctuation'),
-          'sameAsUsername' => __('Make it different from your username'),
-          'confirmSuccess' => __('Yes'),
-          'confirmFailure' => __('No'),
-          'confirmTitle' => __('Passwords match:'),
-          'username' => '', ], ]); ?>
+          'password' => [
+              'strengthTitle' => __('Password strength:'),
+              'hasWeaknesses' => __('To make your password stronger:'),
+              'tooShort' => __('Make it at least six characters'),
+              'addLowerCase' => __('Add lowercase letters'),
+              'addUpperCase' => __('Add uppercase letters'),
+              'addNumbers' => __('Add numbers'),
+              'addPunctuation' => __('Add punctuation'),
+              'sameAsUsername' => __('Make it different from your username'),
+              'confirmSuccess' => __('Yes'),
+              'confirmFailure' => __('No'),
+              'confirmTitle' => __('Passwords match:'),
+              'username' => '', ], ]); ?>
       <?php echo javascript_tag(<<<EOF
 jQuery.extend(Drupal.settings, {$settings});
 EOF

@@ -24,19 +24,19 @@
  */
 class InformationObjectEventComponent extends EventEditComponent
 {
-  // Arrays not allowed in class constants
-  public static $NAMES = [
-    'actor',
-    'date',
-    'endDate',
-    'startDate',
-    'description',
-    'place',
-    'type', ];
+    // Arrays not allowed in class constants
+    public static $NAMES = [
+        'actor',
+        'date',
+        'endDate',
+        'startDate',
+        'description',
+        'place',
+        'type', ];
 
-  protected function addField($name)
-  {
-    switch ($name) {
+    protected function addField($name)
+    {
+        switch ($name) {
       case 'actor':
         $this->form->setValidator('actor', new sfValidatorString());
         $this->form->setWidget('actor', new sfWidgetFormSelect(['choices' => []]));
@@ -62,18 +62,18 @@ class InformationObjectEventComponent extends EventEditComponent
       default:
         return parent::addField($name);
     }
-  }
+    }
 
-  protected function processField($field)
-  {
-    switch ($field->getName()) {
+    protected function processField($field)
+    {
+        switch ($field->getName()) {
       case 'actor':
         unset($this->event->actor);
 
         $value = $this->form->getValue('actor');
         if (isset($value)) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          $this->event->actor = $params['_sf_route']->resource;
+            $params = $this->context->routing->parse(Qubit::pathInfo($value));
+            $this->event->actor = $params['_sf_route']->resource;
         }
 
         break;
@@ -82,18 +82,18 @@ class InformationObjectEventComponent extends EventEditComponent
         // Get related term id
         $value = $this->form->getValue('place');
         if (!empty($value)) {
-          $params = $this->context->routing->parse(Qubit::pathInfo($value));
-          $termId = $params['_sf_route']->resource->id;
+            $params = $this->context->routing->parse(Qubit::pathInfo($value));
+            $termId = $params['_sf_route']->resource->id;
         }
 
         // Get term relation
         if (isset($this->event->id)) {
-          $relation = QubitObjectTermRelation::getOneByObjectId($this->event->id);
+            $relation = QubitObjectTermRelation::getOneByObjectId($this->event->id);
         }
 
         // Nothing to do
         if (!isset($termId) && !isset($relation)) {
-          break;
+            break;
         }
 
         // The relation needs to be deleted/updated independently
@@ -102,16 +102,16 @@ class InformationObjectEventComponent extends EventEditComponent
         // If the event is new, the relation needs to be created and attached
         // to the event in the objectTermRelationsRelatedByobjectId array.
         if (!isset($termId) && isset($relation)) {
-          $relation->delete();
+            $relation->delete();
 
-          break;
+            break;
         }
 
         if (isset($termId, $relation)) {
-          $relation->termId = $termId;
-          $relation->save();
+            $relation->termId = $termId;
+            $relation->save();
 
-          break;
+            break;
         }
 
         $relation = new QubitObjectTermRelation();
@@ -124,5 +124,5 @@ class InformationObjectEventComponent extends EventEditComponent
       default:
         return parent::processField($field);
     }
-  }
+    }
 }

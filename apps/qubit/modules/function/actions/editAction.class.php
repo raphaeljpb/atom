@@ -24,46 +24,46 @@
  */
 class FunctionEditAction extends DefaultEditAction
 {
-  public function execute($request)
-  {
-    parent::execute($request);
+    public function execute($request)
+    {
+        parent::execute($request);
 
-    if ($request->isMethod('post')) {
-      $this->form->bind($request->getPostParameters());
-      if ($this->form->isValid()) {
-        $this->processForm();
+        if ($request->isMethod('post')) {
+            $this->form->bind($request->getPostParameters());
+            if ($this->form->isValid()) {
+                $this->processForm();
 
-        $this->resource->save();
+                $this->resource->save();
 
-        $this->redirect([$this->resource, 'module' => 'function']);
-      }
+                $this->redirect([$this->resource, 'module' => 'function']);
+            }
+        }
+
+        QubitDescription::addAssets($this->response);
     }
 
-    QubitDescription::addAssets($this->response);
-  }
+    protected function earlyExecute()
+    {
+        $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 
-  protected function earlyExecute()
-  {
-    $this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+        $this->resource = new QubitFunctionObject();
+        if (isset($this->getRoute()->resource)) {
+            $this->resource = $this->getRoute()->resource;
 
-    $this->resource = new QubitFunctionObject();
-    if (isset($this->getRoute()->resource)) {
-      $this->resource = $this->getRoute()->resource;
+            // Check user authorization
+            if (!QubitAcl::check($this->resource, 'update') && !QubitAcl::check($this->resource, 'translate')) {
+                QubitAcl::forwardUnauthorized();
+            }
 
-      // Check user authorization
-      if (!QubitAcl::check($this->resource, 'update') && !QubitAcl::check($this->resource, 'translate')) {
-        QubitAcl::forwardUnauthorized();
-      }
-
-      // Add optimistic lock
-      $this->form->setDefault('serialNumber', $this->resource->serialNumber);
-      $this->form->setValidator('serialNumber', new sfValidatorInteger());
-      $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
-    } else {
-      // Check authorization
-      if (!QubitAcl::check($this->parent, 'create')) {
-        QubitAcl::forwardUnauthorized();
-      }
+            // Add optimistic lock
+            $this->form->setDefault('serialNumber', $this->resource->serialNumber);
+            $this->form->setValidator('serialNumber', new sfValidatorInteger());
+            $this->form->setWidget('serialNumber', new sfWidgetFormInputHidden());
+        } else {
+            // Check authorization
+            if (!QubitAcl::check($this->parent, 'create')) {
+                QubitAcl::forwardUnauthorized();
+            }
+        }
     }
-  }
 }

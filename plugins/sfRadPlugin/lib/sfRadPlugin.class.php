@@ -25,41 +25,41 @@
  */
 class sfRadPlugin implements ArrayAccess
 {
-  protected $resource;
-  protected $property;
+    protected $resource;
+    protected $property;
 
-  public function __construct($resource)
-  {
-    $this->resource = $resource;
-  }
-
-  public function __toString()
-  {
-    $string = '';
-
-    if (0 < strlen($title = $this->resource->__toString())) {
-      $string .= $title;
+    public function __construct($resource)
+    {
+        $this->resource = $resource;
     }
 
-    $publicationStatus = $this->resource->getPublicationStatus();
-    if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId) {
-      $string .= (!empty($string)) ? ' ' : '';
-      $string .= "({$publicationStatus->status->__toString()})";
+    public function __toString()
+    {
+        $string = '';
+
+        if (0 < strlen($title = $this->resource->__toString())) {
+            $string .= $title;
+        }
+
+        $publicationStatus = $this->resource->getPublicationStatus();
+        if (isset($publicationStatus) && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $publicationStatus->statusId) {
+            $string .= (!empty($string)) ? ' ' : '';
+            $string .= "({$publicationStatus->status->__toString()})";
+        }
+
+        return $string;
     }
 
-    return $string;
-  }
+    public function __get($name)
+    {
+        $args = func_get_args();
 
-  public function __get($name)
-  {
-    $args = func_get_args();
+        $options = [];
+        if (1 < count($args)) {
+            $options = $args[1];
+        }
 
-    $options = [];
-    if (1 < count($args)) {
-      $options = $args[1];
-    }
-
-    switch ($name) {
+        switch ($name) {
       case 'editionStatementOfResponsibility':
       case 'issuingJurisdictionAndDenomination':
       case 'noteOnPublishersSeries':
@@ -86,11 +86,11 @@ class sfRadPlugin implements ArrayAccess
       case 'languageNotes':
         return $this->resource->getNotesByType(['noteTypeId' => QubitTerm::LANGUAGE_NOTE_ID])->offsetGet(0);
     }
-  }
+    }
 
-  public function __set($name, $value)
-  {
-    switch ($name) {
+    public function __set($name, $value)
+    {
+        switch ($name) {
       case 'editionStatementOfResponsibility':
       case 'issuingJurisdictionAndDenomination':
       case 'noteOnPublishersSeries':
@@ -115,73 +115,73 @@ class sfRadPlugin implements ArrayAccess
         $missingNote = 0 === count($note);
 
         if (0 == strlen($value)) {
-          // Delete note if it's available
-          if (!$missingNote) {
-            $note->delete();
-          }
+            // Delete note if it's available
+            if (!$missingNote) {
+                $note->delete();
+            }
 
-          break;
+            break;
         }
 
         if ($missingNote) {
-          $note = new QubitNote();
-          $note->typeId = QubitTerm::LANGUAGE_NOTE_ID;
-          $note->userId = sfContext::getInstance()->user->getAttribute('user_id');
+            $note = new QubitNote();
+            $note->typeId = QubitTerm::LANGUAGE_NOTE_ID;
+            $note->userId = sfContext::getInstance()->user->getAttribute('user_id');
 
-          $this->resource->notes[] = $note;
+            $this->resource->notes[] = $note;
         }
 
         $note->content = $value;
 
         return $this;
     }
-  }
-
-  public function offsetExists($offset)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array([$this, '__isset'], $args);
-  }
-
-  public function offsetGet($offset)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array([$this, '__get'], $args);
-  }
-
-  public function offsetSet($offset, $value)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array([$this, '__set'], $args);
-  }
-
-  public function offsetUnset($offset)
-  {
-    $args = func_get_args();
-
-    return call_user_func_array([$this, '__unset'], $args);
-  }
-
-  protected function property($name)
-  {
-    if (!isset($this->property[$name])) {
-      $criteria = new Criteria();
-      $this->resource->addPropertysCriteria($criteria);
-      $criteria->add(QubitProperty::NAME, $name);
-
-      if (1 == count($query = QubitProperty::get($criteria))) {
-        $this->property[$name] = $query[0];
-      } else {
-        $this->property[$name] = new QubitProperty();
-        $this->property[$name]->name = $name;
-
-        $this->resource->propertys[] = $this->property[$name];
-      }
     }
 
-    return $this->property[$name];
-  }
+    public function offsetExists($offset)
+    {
+        $args = func_get_args();
+
+        return call_user_func_array([$this, '__isset'], $args);
+    }
+
+    public function offsetGet($offset)
+    {
+        $args = func_get_args();
+
+        return call_user_func_array([$this, '__get'], $args);
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        $args = func_get_args();
+
+        return call_user_func_array([$this, '__set'], $args);
+    }
+
+    public function offsetUnset($offset)
+    {
+        $args = func_get_args();
+
+        return call_user_func_array([$this, '__unset'], $args);
+    }
+
+    protected function property($name)
+    {
+        if (!isset($this->property[$name])) {
+            $criteria = new Criteria();
+            $this->resource->addPropertysCriteria($criteria);
+            $criteria->add(QubitProperty::NAME, $name);
+
+            if (1 == count($query = QubitProperty::get($criteria))) {
+                $this->property[$name] = $query[0];
+            } else {
+                $this->property[$name] = new QubitProperty();
+                $this->property[$name]->name = $name;
+
+                $this->resource->propertys[] = $this->property[$name];
+            }
+        }
+
+        return $this->property[$name];
+    }
 }

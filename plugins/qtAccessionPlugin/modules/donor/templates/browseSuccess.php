@@ -11,16 +11,16 @@
     <div class="row">
       <div class="span6">
         <?php echo get_component('search', 'inlineSearch', [
-          'label' => __('Search %1%', ['%1%' => strtolower(sfConfig::get('app_ui_label_donor'))]), ]); ?>
+            'label' => __('Search %1%', ['%1%' => strtolower(sfConfig::get('app_ui_label_donor'))]), ]); ?>
       </div>
 
       <div class="pickers">
         <?php echo get_partial('default/sortPickers',
           [
-            'options' => [
-              'alphabetic' => __('Name'),
-              'lastUpdated' => __('Date modified'),
-              'identifier' => __('Identifier'), ], ]); ?>
+              'options' => [
+                  'alphabetic' => __('Name'),
+                  'lastUpdated' => __('Date modified'),
+                  'identifier' => __('Identifier'), ], ]); ?>
       </div>
     </div>
   </section>
