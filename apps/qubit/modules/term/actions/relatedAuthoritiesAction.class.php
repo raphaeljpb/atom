@@ -94,22 +94,22 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
     protected function populateAgg($name, $buckets)
     {
         switch ($name) {
-      case 'occupations':
-      case 'places':
-      case 'subjects':
-        $ids = array_column($buckets, 'key');
-        $criteria = new Criteria();
-        $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
+            case 'occupations':
+            case 'places':
+            case 'subjects':
+                $ids = array_column($buckets, 'key');
+                $criteria = new Criteria();
+                $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
 
-        foreach (QubitTerm::get($criteria) as $item) {
-            $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
+                foreach (QubitTerm::get($criteria) as $item) {
+                    $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
+                }
+
+                break;
+
+            default:
+                return parent::populateAgg($name, $buckets);
         }
-
-        break;
-
-      default:
-        return parent::populateAgg($name, $buckets);
-    }
 
         return $buckets;
     }
@@ -117,21 +117,21 @@ class TermRelatedAuthoritiesAction extends TermIndexAction
     protected function setSort($request)
     {
         switch ($request->sort) {
-      case 'alphabetic':
-        $field = sprintf('i18n.%s.authorizedFormOfName.alphasort', $this->selectedCulture);
-        $this->search->query->setSort([$field => $request->sortDir]);
+            case 'alphabetic':
+                $field = sprintf('i18n.%s.authorizedFormOfName.alphasort', $this->selectedCulture);
+                $this->search->query->setSort([$field => $request->sortDir]);
 
-        break;
+                break;
 
-      case 'identifier':
-        $this->search->query->setSort(['descriptionIdentifier.untouched' => $request->sortDir]);
+            case 'identifier':
+                $this->search->query->setSort(['descriptionIdentifier.untouched' => $request->sortDir]);
 
-        break;
+                break;
 
-      case 'lastUpdated':
-      default:
-        $this->search->query->setSort(['updatedAt' => $request->sortDir]);
-    }
+            case 'lastUpdated':
+            default:
+                $this->search->query->setSort(['updatedAt' => $request->sortDir]);
+        }
     }
 
     protected function doSearch($request)

@@ -97,27 +97,27 @@ class DigitalObjectViewAction extends sfAction
     private function getObjAndAction()
     {
         switch ($this->resource->usageId) {
-      case QubitTerm::MASTER_ID:
-        $action = 'readMaster';
-        $obj = $this->resource->object;
+            case QubitTerm::MASTER_ID:
+                $action = 'readMaster';
+                $obj = $this->resource->object;
 
-        break;
+                break;
 
-      case QubitTerm::REFERENCE_ID:
-        $action = 'readReference';
-        $obj = $this->resource->parent->object;
+            case QubitTerm::REFERENCE_ID:
+                $action = 'readReference';
+                $obj = $this->resource->parent->object;
 
-        break;
+                break;
 
-      case QubitTerm::THUMBNAIL_ID:
-        $action = 'readThumbnail';
-        $obj = $this->resource->parent->object;
+            case QubitTerm::THUMBNAIL_ID:
+                $action = 'readThumbnail';
+                $obj = $this->resource->parent->object;
 
-        break;
+                break;
 
-      default:
-        throw new sfException("Invalid usageId given in digitalobject/view: {$this->resource->usageId}");
-    }
+            default:
+                throw new sfException("Invalid usageId given in digitalobject/view: {$this->resource->usageId}");
+        }
 
         return [$obj, $action];
     }

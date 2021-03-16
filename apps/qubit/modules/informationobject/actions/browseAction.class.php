@@ -212,42 +212,42 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
 
         // Sort
         switch ($request->sort) {
-      // Sort by highest ES score
-      case 'relevance':
-        $this->search->query->addSort(['_score' => $request->sortDir]);
+            // Sort by highest ES score
+            case 'relevance':
+                $this->search->query->addSort(['_score' => $request->sortDir]);
 
-        break;
+                break;
 
-      case 'identifier':
-        $this->search->query->addSort(['identifier.untouched' => $request->sortDir]);
+            case 'identifier':
+                $this->search->query->addSort(['identifier.untouched' => $request->sortDir]);
 
-        break;
+                break;
 
-      case 'referenceCode':
-        $this->search->query->addSort(['referenceCode.untouched' => $request->sortDir]);
+            case 'referenceCode':
+                $this->search->query->addSort(['referenceCode.untouched' => $request->sortDir]);
 
-        break;
+                break;
 
-      case 'alphabetic':
-        $field = sprintf('i18n.%s.title.alphasort', $this->selectedCulture);
-        $this->search->query->addSort([$field => $request->sortDir]);
+            case 'alphabetic':
+                $field = sprintf('i18n.%s.title.alphasort', $this->selectedCulture);
+                $this->search->query->addSort([$field => $request->sortDir]);
 
-        break;
+                break;
 
-      case 'startDate':
-        $this->search->query->setSort(['startDateSort' => $request->sortDir]);
+            case 'startDate':
+                $this->search->query->setSort(['startDateSort' => $request->sortDir]);
 
-        break;
+                break;
 
-      case 'endDate':
-        $this->search->query->setSort(['endDateSort' => $request->sortDir]);
+            case 'endDate':
+                $this->search->query->setSort(['endDateSort' => $request->sortDir]);
 
-        break;
+                break;
 
-      case 'lastUpdated':
-      default:
-        $this->search->query->setSort(['updatedAt' => $request->sortDir]);
-    }
+            case 'lastUpdated':
+            default:
+                $this->search->query->setSort(['updatedAt' => $request->sortDir]);
+        }
 
         $this->setView($request);
 
@@ -265,199 +265,200 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'copyrightStatus':
-        $this->form->setValidator($name, new sfValidatorString());
+            case 'copyrightStatus':
+                $this->form->setValidator($name, new sfValidatorString());
 
-        $choices = [];
-        $choices[null] = null;
-        foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::COPYRIGHT_STATUS_ID) as $item) {
-            $choices[$item->id] = $item->__toString();
+                $choices = [];
+                $choices[null] = null;
+                foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::COPYRIGHT_STATUS_ID) as $item) {
+                    $choices[$item->id] = $item->__toString();
+                }
+
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'onlyMedia':
+                $choices = [
+                    '' => '',
+                    '1' => $this->context->i18n->__('Yes'),
+                    '0' => $this->context->i18n->__('No'),
+                ];
+
+                $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'levels':
+                $criteria = new Criteria();
+                $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
+
+                // Do source culture fallback
+                $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitTerm');
+                $criteria->addAscendingOrderByColumn('name');
+
+                $choices = [];
+                $choices[null] = null;
+                foreach (QubitTerm::get($criteria) as $item) {
+                    $choices[$item->id] = $item->__toString();
+                }
+
+                $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'materialType':
+                $criteria = new Criteria();
+                $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MATERIAL_TYPE_ID);
+
+                // Do source culture fallback
+                $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitTerm');
+                $criteria->addAscendingOrderByColumn('name');
+
+                $choices = [];
+                $choices[null] = null;
+                foreach (QubitTerm::get($criteria) as $item) {
+                    $choices[$item->id] = $item->__toString();
+                }
+
+                $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'repos':
+                // Get list of repositories
+                $criteria = new Criteria();
+
+                // Do source culture fallback
+                $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');
+
+                // Ignore root repository
+                $criteria->add(QubitActor::ID, QubitRepository::ROOT_ID, Criteria::NOT_EQUAL);
+
+                $criteria->addAscendingOrderByColumn('authorized_form_of_name');
+
+                $cache = QubitCache::getInstance();
+                $cacheKey = 'search:list-of-repositories:'.$this->context->user->getCulture();
+                if ($cache->has($cacheKey)) {
+                    $choices = $cache->get($cacheKey);
+                } else {
+                    $choices = [];
+                    $choices[null] = null;
+                    foreach (QubitRepository::get($criteria) as $repository) {
+                        $choices[$repository->id] = $repository->__toString();
+                    }
+
+                    $cache->set($cacheKey, $choices, 3600);
+                }
+
+                $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'collection':
+                $this->form->setValidator($name, new sfValidatorString());
+
+                $choices = [];
+                if (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection'])
+                && null !== $collection = QubitInformationObject::getById($this->getParameters['collection'])) {
+                    sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
+                    $collectionUrl = url_for($collection);
+
+                    $this->form->setDefault($name, $collectionUrl);
+                    $choices[$collectionUrl] = $collection;
+                }
+
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'startDate':
+            case 'endDate':
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormInput([], ['placeholder' => 'YYYY-MM-DD']));
+                $this->form->setValidator($name, new sfValidatorDate([
+                    'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
+                    'date_format_error' => 'YYYY-MM-DD',
+                ]));
+
+                break;
+
+            case 'findingAidStatus':
+                $choices = [
+                    '' => '',
+                    'yes' => $this->context->i18n->__('Yes'),
+                    'no' => $this->context->i18n->__('No'),
+                    'generated' => $this->context->i18n->__('Generated'),
+                    'uploaded' => $this->context->i18n->__('Uploaded'),
+                ];
+
+                $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
         }
-
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'onlyMedia':
-        $choices = [
-            '' => '',
-            '1' => $this->context->i18n->__('Yes'),
-            '0' => $this->context->i18n->__('No'),
-        ];
-
-        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'levels':
-        $criteria = new Criteria();
-        $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID);
-
-        // Do source culture fallback
-        $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitTerm');
-        $criteria->addAscendingOrderByColumn('name');
-
-        $choices = [];
-        $choices[null] = null;
-        foreach (QubitTerm::get($criteria) as $item) {
-            $choices[$item->id] = $item->__toString();
-        }
-
-        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'materialType':
-        $criteria = new Criteria();
-        $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::MATERIAL_TYPE_ID);
-
-        // Do source culture fallback
-        $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitTerm');
-        $criteria->addAscendingOrderByColumn('name');
-
-        $choices = [];
-        $choices[null] = null;
-        foreach (QubitTerm::get($criteria) as $item) {
-            $choices[$item->id] = $item->__toString();
-        }
-
-        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'repos':
-        // Get list of repositories
-        $criteria = new Criteria();
-
-        // Do source culture fallback
-        $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');
-
-        // Ignore root repository
-        $criteria->add(QubitActor::ID, QubitRepository::ROOT_ID, Criteria::NOT_EQUAL);
-
-        $criteria->addAscendingOrderByColumn('authorized_form_of_name');
-
-        $cache = QubitCache::getInstance();
-        $cacheKey = 'search:list-of-repositories:'.$this->context->user->getCulture();
-        if ($cache->has($cacheKey)) {
-            $choices = $cache->get($cacheKey);
-        } else {
-            $choices = [];
-            $choices[null] = null;
-            foreach (QubitRepository::get($criteria) as $repository) {
-                $choices[$repository->id] = $repository->__toString();
-            }
-
-            $cache->set($cacheKey, $choices, 3600);
-        }
-
-        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'collection':
-        $this->form->setValidator($name, new sfValidatorString());
-
-        $choices = [];
-        if (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection'])
-          && null !== $collection = QubitInformationObject::getById($this->getParameters['collection'])) {
-            sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
-            $collectionUrl = url_for($collection);
-
-            $this->form->setDefault($name, $collectionUrl);
-            $choices[$collectionUrl] = $collection;
-        }
-
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'startDate':
-      case 'endDate':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput([], ['placeholder' => 'YYYY-MM-DD']));
-        $this->form->setValidator($name, new sfValidatorDate([
-            'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
-            'date_format_error' => 'YYYY-MM-DD', ]));
-
-        break;
-
-      case 'findingAidStatus':
-        $choices = [
-            '' => '',
-            'yes' => $this->context->i18n->__('Yes'),
-            'no' => $this->context->i18n->__('No'),
-            'generated' => $this->context->i18n->__('Generated'),
-            'uploaded' => $this->context->i18n->__('Uploaded'),
-        ];
-
-        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-    }
     }
 
     protected function populateAgg($name, $buckets)
     {
         switch ($name) {
-      case 'repos':
-        $ids = array_column($buckets, 'key');
-        $criteria = new Criteria();
-        $criteria->add(QubitRepository::ID, $ids, Criteria::IN);
+            case 'repos':
+                $ids = array_column($buckets, 'key');
+                $criteria = new Criteria();
+                $criteria->add(QubitRepository::ID, $ids, Criteria::IN);
 
-        foreach (QubitRepository::get($criteria) as $item) {
-            $buckets[array_search($item->id, $ids)]['display'] = $item->__toString();
+                foreach (QubitRepository::get($criteria) as $item) {
+                    $buckets[array_search($item->id, $ids)]['display'] = $item->__toString();
+                }
+
+                break;
+
+            case 'levels':
+            case 'mediatypes':
+            case 'places':
+            case 'subjects':
+            case 'genres':
+                $ids = array_column($buckets, 'key');
+                $criteria = new Criteria();
+                $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
+
+                foreach (QubitTerm::get($criteria) as $item) {
+                    $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
+                }
+
+                break;
+
+            case 'creators':
+            case 'names':
+                $ids = array_column($buckets, 'key');
+                $criteria = new Criteria();
+                $criteria->add(QubitActor::ID, $ids, Criteria::IN);
+
+                foreach (QubitActor::get($criteria) as $item) {
+                    $buckets[array_search($item->id, $ids)]['display'] = $item->__toString();
+                }
+
+                break;
+
+            case 'collection':
+                $ids = array_column($buckets, 'key');
+                $criteria = new Criteria();
+                $criteria->add(QubitInformationObject::ID, $ids, Criteria::IN);
+
+                foreach (QubitInformationObject::get($criteria) as $item) {
+                    $buckets[array_search($item->id, $ids)]['display'] = $item->__toString();
+                }
+
+                break;
+
+            default:
+                return parent::populateAgg($name, $buckets);
         }
-
-        break;
-
-      case 'levels':
-      case 'mediatypes':
-      case 'places':
-      case 'subjects':
-      case 'genres':
-        $ids = array_column($buckets, 'key');
-        $criteria = new Criteria();
-        $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
-
-        foreach (QubitTerm::get($criteria) as $item) {
-            $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
-        }
-
-        break;
-
-      case 'creators':
-      case 'names':
-        $ids = array_column($buckets, 'key');
-        $criteria = new Criteria();
-        $criteria->add(QubitActor::ID, $ids, Criteria::IN);
-
-        foreach (QubitActor::get($criteria) as $item) {
-            $buckets[array_search($item->id, $ids)]['display'] = $item->__toString();
-        }
-
-        break;
-
-      case 'collection':
-        $ids = array_column($buckets, 'key');
-        $criteria = new Criteria();
-        $criteria->add(QubitInformationObject::ID, $ids, Criteria::IN);
-
-        foreach (QubitInformationObject::get($criteria) as $item) {
-            $buckets[array_search($item->id, $ids)]['display'] = $item->__toString();
-        }
-
-        break;
-
-      default:
-        return parent::populateAgg($name, $buckets);
-    }
 
         return $buckets;
     }

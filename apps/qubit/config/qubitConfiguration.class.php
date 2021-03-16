@@ -19,8 +19,8 @@
 
 class qubitConfiguration extends sfApplicationConfiguration
 {
-    public const // Required format: x.y.z
-    VERSION = '2.6.0';
+    // Required format: x.y.z
+    public const VERSION = '2.6.0';
 
     public function responseFilterContent(sfEvent $event, $content)
     {
@@ -144,8 +144,9 @@ class qubitConfiguration extends sfApplicationConfiguration
         // The settings.yml file requires an intermediate '.settings' key for
         // some reason :-/
         if (
-      'config/settings.yml' == $configFile
-      && isset($config[$env]['.settings'][$varname])) {
+            'config/settings.yml' == $configFile
+            && isset($config[$env]['.settings'][$varname])
+        ) {
             return $config[$env]['.settings'][$varname];
         }
 

@@ -35,7 +35,8 @@ class ContactInformationEditComponent extends sfComponent
         'primaryContact',
         'telephone',
         'streetAddress',
-        'website', ];
+        'website',
+    ];
 
     public function processForm()
     {
@@ -109,46 +110,43 @@ class ContactInformationEditComponent extends sfComponent
     protected function addField($name)
     {
         switch ($name) {
-      case 'countryCode':
-        $this->form->setValidator('countryCode', new sfValidatorI18nChoiceCountry());
-        $this->form->setWidget('countryCode', new sfWidgetFormI18nChoiceCountry(['add_empty' => true, 'culture' => $this->context->user->getCulture()]));
+            case 'countryCode':
+                $this->form->setValidator('countryCode', new sfValidatorI18nChoiceCountry());
+                $this->form->setWidget('countryCode', new sfWidgetFormI18nChoiceCountry(['add_empty' => true, 'culture' => $this->context->user->getCulture()]));
 
-        break;
+                break;
 
-      case 'primaryContact':
-        $this->form->setDefault('primaryContact', false);
-        $this->form->setValidator('primaryContact', new sfValidatorBoolean());
-        $this->form->setWidget('primaryContact', new sfWidgetFormInputCheckbox());
+            case 'primaryContact':
+                $this->form->setDefault('primaryContact', false);
+                $this->form->setValidator('primaryContact', new sfValidatorBoolean());
+                $this->form->setWidget('primaryContact', new sfWidgetFormInputCheckbox());
 
-        break;
+                break;
 
-      case 'latitude':
-      case 'longitude':
-        $this->form->setValidator($name, new sfValidatorNumber());
-        $this->form->setWidget($name, new sfWidgetFormInput());
+            case 'latitude':
+            case 'longitude':
+                $this->form->setValidator($name, new sfValidatorNumber());
+                $this->form->setWidget($name, new sfWidgetFormInput());
 
-        break;
+                break;
 
-      case 'streetAddress':
-      case 'note':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormTextArea([], ['rows' => 2]));
+            case 'streetAddress':
+            case 'note':
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormTextArea([], ['rows' => 2]));
 
-        break;
+                break;
 
-      default:
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
+            default:
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormInput());
 
-        break;
-    }
+                break;
+        }
     }
 
     protected function processField($field)
     {
-        switch ($field->getName()) {
-      default:
         $this->contactInformation[$field->getName()] = $this->form->getValue($field->getName());
-    }
     }
 }

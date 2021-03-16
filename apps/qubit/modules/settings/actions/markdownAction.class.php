@@ -49,34 +49,34 @@ class SettingsMarkdownAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'enabled':
-        $default = 1;
-        if (null !== $this->settingEnabled = QubitSetting::getByName('markdown_enabled')) {
-            $default = $this->settingEnabled->getValue(['sourceCulture' => true]);
+            case 'enabled':
+                $default = 1;
+                if (null !== $this->settingEnabled = QubitSetting::getByName('markdown_enabled')) {
+                    $default = $this->settingEnabled->getValue(['sourceCulture' => true]);
+                }
+
+                $this->form->setDefault($name, $default);
+                $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
+                $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
+
+                break;
         }
-
-        $this->form->setDefault($name, $default);
-        $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
-
-        break;
-    }
     }
 
     protected function processField($field)
     {
         switch ($field->getName()) {
-      case 'enabled':
-        if (null === $this->settingEnabled) {
-            $this->settingEnabled = new QubitSetting();
-            $this->settingEnabled->name = 'markdown_enabled';
-            $this->settingEnabled->sourceCulture = 'en';
+            case 'enabled':
+                if (null === $this->settingEnabled) {
+                    $this->settingEnabled = new QubitSetting();
+                    $this->settingEnabled->name = 'markdown_enabled';
+                    $this->settingEnabled->sourceCulture = 'en';
+                }
+
+                $this->settingEnabled->setValue($field->getValue(), ['culture' => 'en']);
+                $this->settingEnabled->save();
+
+                break;
         }
-
-        $this->settingEnabled->setValue($field->getValue(), ['culture' => 'en']);
-        $this->settingEnabled->save();
-
-        break;
-    }
     }
 }

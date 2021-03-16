@@ -46,7 +46,8 @@ class ProjectConfiguration extends sfProjectConfiguration
             // sfInstallPlugin and sfPluginAdminPlugin depend on sfPropelPlugin, so
             // must be enabled last
             'sfInstallPlugin',
-            'sfPluginAdminPlugin', ];
+            'sfPluginAdminPlugin',
+        ];
 
         $this->enablePlugins($plugins);
 
@@ -77,7 +78,8 @@ class ProjectConfiguration extends sfProjectConfiguration
         $loader->registerNamespaces([
             'Elastica' => $rootDir.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'elastica',
             'Elasticsearch' => $rootDir.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'elastica',
-            'Psr' => $rootDir.DIRECTORY_SEPARATOR.'vendor', ]);
+            'Psr' => $rootDir.DIRECTORY_SEPARATOR.'vendor',
+        ]);
 
         $loader->register();
     }

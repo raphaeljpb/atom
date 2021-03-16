@@ -42,15 +42,15 @@ class UserListAction extends sfAction
         $criteria->addAscendingOrderByColumn(QubitUser::USERNAME);
 
         switch ($request->filter) {
-      case 'onlyInactive':
-        $criteria->add(QubitUser::ACTIVE, 0);
+            case 'onlyInactive':
+                $criteria->add(QubitUser::ACTIVE, 0);
 
-        break;
+                break;
 
-      case 'onlyActive':
-      default:
-        $criteria->add(QubitUser::ACTIVE, 1);
-    }
+            case 'onlyActive':
+            default:
+                $criteria->add(QubitUser::ACTIVE, 1);
+        }
 
         $this->pager = new QubitPager('QubitUser');
         $this->pager->setCriteria($criteria);

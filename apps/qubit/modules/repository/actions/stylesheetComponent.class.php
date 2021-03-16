@@ -28,19 +28,19 @@ class RepositoryStylesheetComponent extends sfComponent
         $resource = $request->getAttribute('sf_route')->resource;
 
         switch (true) {
-      case $resource instanceof QubitInformationObject:
-        $repository = $resource->getRepository(['inherit' => true]);
+            case $resource instanceof QubitInformationObject:
+                $repository = $resource->getRepository(['inherit' => true]);
 
-        break;
+                break;
 
-      case $resource instanceof QubitRepository:
-        $repository = $resource;
+            case $resource instanceof QubitRepository:
+                $repository = $resource;
 
-        break;
+                break;
 
-      default:
-        return sfView::NONE;
-    }
+            default:
+                return sfView::NONE;
+        }
 
         if (null === $repository || null === $repository->backgroundColor) {
             return sfView::NONE;

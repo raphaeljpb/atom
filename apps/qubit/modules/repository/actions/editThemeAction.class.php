@@ -25,7 +25,8 @@ class RepositoryEditThemeAction extends sfAction
         'banner_delete',
         'htmlSnippet',
         'logo',
-        'logo_delete', ];
+        'logo_delete',
+    ];
 
     public function processForm()
     {
@@ -99,101 +100,107 @@ class RepositoryEditThemeAction extends sfAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'backgroundColor':
-        $this->form->setDefault('backgroundColor', $this->resource->backgroundColor);
-        $this->form->setValidator('backgroundColor', new sfValidatorRegex(['pattern' => '/^#(?:[0-9a-fA-F]{3}){1,2}$/'], ['invalid' => $this->context->i18n->__('Only hexadecimal color value')]));
-        $this->form->setWidget('backgroundColor', new sfWidgetFormInput(['type' => 'minicolors']));
+            case 'backgroundColor':
+                $this->form->setDefault('backgroundColor', $this->resource->backgroundColor);
+                $this->form->setValidator('backgroundColor', new sfValidatorRegex(['pattern' => '/^#(?:[0-9a-fA-F]{3}){1,2}$/'], ['invalid' => $this->context->i18n->__('Only hexadecimal color value')]));
+                $this->form->setWidget('backgroundColor', new sfWidgetFormInput(['type' => 'minicolors']));
 
-        break;
+                break;
 
-      case 'htmlSnippet':
-        $this->form->setDefault('htmlSnippet', $this->resource->htmlSnippet);
-        $this->form->setValidator('htmlSnippet', new sfValidatorString());
-        $this->form->setWidget('htmlSnippet', new sfWidgetFormTextarea());
+            case 'htmlSnippet':
+                $this->form->setDefault('htmlSnippet', $this->resource->htmlSnippet);
+                $this->form->setValidator('htmlSnippet', new sfValidatorString());
+                $this->form->setWidget('htmlSnippet', new sfWidgetFormTextarea());
 
-        break;
+                break;
 
-      case 'banner':
-        sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
+            case 'banner':
+                sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
 
-        $this->form->setValidator($name, new sfValidatorFile([
-            'max_size' => '262144', // 256K
-            'mime_types' => ['image/png'],
-            // Crop image, it is synchronous but it should be fast
-            'validated_file_class' => 'arRepositoryThemeCropValidatedFile',
-            'path' => $this->resource->getUploadsPath(true),
-            'required' => false, ]));
+                $this->form->setValidator($name, new sfValidatorFile([
+                    'max_size' => '262144', // 256K
+                    'mime_types' => ['image/png'],
+                    // Crop image, it is synchronous but it should be fast
+                    'validated_file_class' => 'arRepositoryThemeCropValidatedFile',
+                    'path' => $this->resource->getUploadsPath(true),
+                    'required' => false,
+                ]));
 
-        $this->form->setWidget($name, new arWidgetFormInputFileEditable([
-            'label' => $this->context->i18n->__('Banner'),
-            'help' => $this->context->i18n->__(
-                'Requirements: PNG format, 256K max. size.<br />Recommended dimensions of %1%x%2%px, it will be cropped if ImageMagick is installed.',
-                [
-                    '%1%' => arRepositoryThemeCropValidatedFile::BANNER_MAX_WIDTH,
-                    '%2%' => arRepositoryThemeCropValidatedFile::BANNER_MAX_HEIGHT, ]
-            ),
-            'file_src' => $this->existsBanner ? public_path($this->resource->getBannerPath()) : false,
-            'edit_mode' => true,
-            'is_image' => true,
-            'with_delete' => $this->existsBanner, ]));
+                $this->form->setWidget($name, new arWidgetFormInputFileEditable([
+                    'label' => $this->context->i18n->__('Banner'),
+                    'help' => $this->context->i18n->__(
+                        'Requirements: PNG format, 256K max. size.<br />Recommended dimensions of %1%x%2%px, it will be cropped if ImageMagick is installed.',
+                        [
+                            '%1%' => arRepositoryThemeCropValidatedFile::BANNER_MAX_WIDTH,
+                            '%2%' => arRepositoryThemeCropValidatedFile::BANNER_MAX_HEIGHT,
+                        ]
+                    ),
+                    'file_src' => $this->existsBanner ? public_path($this->resource->getBannerPath()) : false,
+                    'edit_mode' => true,
+                    'is_image' => true,
+                    'with_delete' => $this->existsBanner,
+                ]));
 
-        break;
+                break;
 
-      case 'banner_delete':
-        if ($this->existsBanner) {
-            $this->form->setValidator('banner_delete', new sfValidatorBoolean());
-            $this->form->setWidget('banner_delete', new sfWidgetFormInputCheckbox());
+            case 'banner_delete':
+                if ($this->existsBanner) {
+                    $this->form->setValidator('banner_delete', new sfValidatorBoolean());
+                    $this->form->setWidget('banner_delete', new sfWidgetFormInputCheckbox());
+                }
+
+                break;
+
+            case 'logo':
+                sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
+
+                $this->form->setValidator($name, new sfValidatorFile([
+                    'max_size' => '262144', // 256K
+                    'mime_types' => ['image/png'],
+                    // Crop image, it is synchronous but it should be fast
+                    'validated_file_class' => 'arRepositoryThemeCropValidatedFile',
+                    'path' => $this->resource->getUploadsPath(true),
+                    'required' => false,
+                ]));
+
+                $this->form->setWidget($name, new arWidgetFormInputFileEditable([
+                    'label' => $this->context->i18n->__('Logo'),
+                    'help' => $this->context->i18n->__(
+                        'Requirements: PNG format, 256K max. size.<br />Recommended dimensions of %1%x%2%px, it will be cropped if ImageMagick is installed.',
+                        [
+                            '%1%' => arRepositoryThemeCropValidatedFile::LOGO_MAX_WIDTH,
+                            '%2%' => arRepositoryThemeCropValidatedFile::LOGO_MAX_HEIGHT,
+                        ]
+                    ),
+                    'file_src' => $this->existsLogo ? public_path($this->resource->getLogoPath()) : false,
+                    'edit_mode' => true,
+                    'is_image' => true,
+                    'with_delete' => $this->existsLogo,
+                ]));
+
+                break;
+
+            case 'logo_delete':
+                if ($this->existsLogo) {
+                    $this->form->setValidator($name, new sfValidatorBoolean());
+                    $this->form->setWidget($name, new sfWidgetFormInputCheckbox());
+                }
+
+                break;
         }
-
-        break;
-
-      case 'logo':
-        sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
-
-        $this->form->setValidator($name, new sfValidatorFile([
-            'max_size' => '262144', // 256K
-            'mime_types' => ['image/png'],
-            // Crop image, it is synchronous but it should be fast
-            'validated_file_class' => 'arRepositoryThemeCropValidatedFile',
-            'path' => $this->resource->getUploadsPath(true),
-            'required' => false, ]));
-
-        $this->form->setWidget($name, new arWidgetFormInputFileEditable([
-            'label' => $this->context->i18n->__('Logo'),
-            'help' => $this->context->i18n->__(
-                'Requirements: PNG format, 256K max. size.<br />Recommended dimensions of %1%x%2%px, it will be cropped if ImageMagick is installed.',
-                [
-                    '%1%' => arRepositoryThemeCropValidatedFile::LOGO_MAX_WIDTH,
-                    '%2%' => arRepositoryThemeCropValidatedFile::LOGO_MAX_HEIGHT, ]
-            ),
-            'file_src' => $this->existsLogo ? public_path($this->resource->getLogoPath()) : false,
-            'edit_mode' => true,
-            'is_image' => true,
-            'with_delete' => $this->existsLogo, ]));
-
-        break;
-
-      case 'logo_delete':
-        if ($this->existsLogo) {
-            $this->form->setValidator($name, new sfValidatorBoolean());
-            $this->form->setWidget($name, new sfWidgetFormInputCheckbox());
-        }
-
-        break;
-    }
     }
 
     protected function processField($field)
     {
         switch ($name = $field->getName()) {
-      case 'backgroundColor':
-        $this->resource->setBackgroundColor($this->form->getValue($field->getName()), ['sourceCulture' => true]);
+            case 'backgroundColor':
+                $this->resource->setBackgroundColor($this->form->getValue($field->getName()), ['sourceCulture' => true]);
 
-        // no break
-      case 'htmlSnippet':
-        $this->resource->setHtmlSnippet($this->form->getValue($field->getName()));
+                // no break
+            case 'htmlSnippet':
+                $this->resource->setHtmlSnippet($this->form->getValue($field->getName()));
 
-        break;
-    }
+                break;
+        }
     }
 }

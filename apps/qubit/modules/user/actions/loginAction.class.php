@@ -43,17 +43,20 @@ class UserLoginAction extends sfAction
         // Use string validation if LDAP authentication's used as email not used to log in
         if ($this->context->user instanceof ldapUser) {
             $this->form->setValidator('email', new sfValidatorString(['required' => true], [
-                'required' => $this->context->i18n->__('You must enter your username'), ]));
+                'required' => $this->context->i18n->__('You must enter your username'),
+            ]));
         } else {
             $this->form->setValidator('email', new sfValidatorEmail(['required' => true], [
                 'required' => $this->context->i18n->__('You must enter your email address'),
-                'invalid' => $this->context->i18n->__('This isn\'t a valid email address'), ]));
+                'invalid' => $this->context->i18n->__('This isn\'t a valid email address'),
+            ]));
         }
 
         $this->form->setWidget('email', new sfWidgetFormInput());
 
         $this->form->setValidator('password', new sfValidatorString(['required' => true], [
-            'required' => $this->context->i18n->__('You must enter your password'), ]));
+            'required' => $this->context->i18n->__('You must enter your password'),
+        ]));
         $this->form->setWidget('password', new sfWidgetFormInputPassword());
 
         if ($request->isMethod('post')) {

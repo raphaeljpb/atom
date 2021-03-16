@@ -29,59 +29,59 @@ class TermTreeViewAction extends sfAction
         $numberOfPreviousOrNextSiblings = 4;
 
         switch ($request->show) {
-      case 'itemAndSiblings':
-        // Previous siblings
-        $prevItems = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous']);
+            case 'itemAndSiblings':
+                // Previous siblings
+                $prevItems = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous']);
 
-        $this->hasPrevSiblings = count($prevItems) > $numberOfPreviousOrNextSiblings;
-        if ($this->hasPrevSiblings) {
-            array_pop($prevItems);
+                $this->hasPrevSiblings = count($prevItems) > $numberOfPreviousOrNextSiblings;
+                if ($this->hasPrevSiblings) {
+                    array_pop($prevItems);
+                }
+
+                // Reverse array
+                $prevItems = array_reverse($prevItems);
+
+                // Next siblings
+                $nextItems = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'next']);
+
+                $this->hasNextSiblings = count($nextItems) > $numberOfPreviousOrNextSiblings;
+                if ($this->hasNextSiblings) {
+                    array_pop($nextItems);
+                }
+
+                //Merge siblings and self
+                $this->items = array_merge($prevItems, [$this->resource], $nextItems);
+
+                break;
+
+            case 'prevSiblings':
+                $this->items = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous']);
+
+                $this->hasPrevSiblings = count($this->items) > $numberOfPreviousOrNextSiblings;
+                if ($this->hasPrevSiblings) {
+                    array_pop($this->items);
+                }
+
+                // Reverse array
+                $this->items = array_reverse($this->items);
+
+                break;
+
+            case 'nextSiblings':
+                $this->items = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'next']);
+
+                $this->hasNextSiblings = count($this->items) > $numberOfPreviousOrNextSiblings;
+                if ($this->hasNextSiblings) {
+                    array_pop($this->items);
+                }
+
+                break;
+
+            case 'item':
+            default:
+                list($this->items, $this->hasNextSiblings) = $this->resource->getTreeViewChildren(['numberOfPreviousOrNextSiblings' => $numberOfPreviousOrNextSiblings]);
+
+                break;
         }
-
-        // Reverse array
-        $prevItems = array_reverse($prevItems);
-
-        // Next siblings
-        $nextItems = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'next']);
-
-        $this->hasNextSiblings = count($nextItems) > $numberOfPreviousOrNextSiblings;
-        if ($this->hasNextSiblings) {
-            array_pop($nextItems);
-        }
-
-        //Merge siblings and self
-        $this->items = array_merge($prevItems, [$this->resource], $nextItems);
-
-        break;
-
-      case 'prevSiblings':
-        $this->items = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'previous']);
-
-        $this->hasPrevSiblings = count($this->items) > $numberOfPreviousOrNextSiblings;
-        if ($this->hasPrevSiblings) {
-            array_pop($this->items);
-        }
-
-        // Reverse array
-        $this->items = array_reverse($this->items);
-
-        break;
-
-      case 'nextSiblings':
-        $this->items = $this->resource->getTreeViewSiblings(['limit' => $numberOfPreviousOrNextSiblings + 1, 'position' => 'next']);
-
-        $this->hasNextSiblings = count($this->items) > $numberOfPreviousOrNextSiblings;
-        if ($this->hasNextSiblings) {
-            array_pop($this->items);
-        }
-
-        break;
-
-      case 'item':
-      default:
-        list($this->items, $this->hasNextSiblings) = $this->resource->getTreeViewChildren(['numberOfPreviousOrNextSiblings' => $numberOfPreviousOrNextSiblings]);
-
-        break;
-    }
     }
 }

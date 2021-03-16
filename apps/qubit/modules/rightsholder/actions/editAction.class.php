@@ -21,7 +21,8 @@ class RightsHolderEditAction extends DefaultEditAction
 {
     // Arrays not allowed in class constants
     public static $NAMES = [
-        'authorizedFormOfName', ];
+        'authorizedFormOfName',
+    ];
 
     public function execute($request)
     {
@@ -86,15 +87,15 @@ class RightsHolderEditAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'authorizedFormOfName':
-        $this->form->setDefault('authorizedFormOfName', $this->resource['authorizedFormOfName']);
-        $this->form->setValidator('authorizedFormOfName', new sfValidatorString());
-        $this->form->setWidget('authorizedFormOfName', new sfWidgetFormInput());
+            case 'authorizedFormOfName':
+                $this->form->setDefault('authorizedFormOfName', $this->resource['authorizedFormOfName']);
+                $this->form->setValidator('authorizedFormOfName', new sfValidatorString());
+                $this->form->setWidget('authorizedFormOfName', new sfWidgetFormInput());
 
-        break;
+                break;
 
-      default:
-        return parent::addField($name);
-    }
+            default:
+                return parent::addField($name);
+        }
     }
 }

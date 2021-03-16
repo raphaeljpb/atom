@@ -57,8 +57,10 @@ class TaxonomyIndexAction extends sfAction
         $unrestrictedTaxonomies = [QubitTaxonomy::GENRE_ID, QubitTaxonomy::PLACE_ID, QubitTaxonomy::SUBJECT_ID];
         $allowedGroups = [QubitAclGroup::EDITOR_ID, QubitAclGroup::ADMINISTRATOR_ID];
 
-        if (!in_array($this->resource->id, $unrestrictedTaxonomies)
-       && !$this->context->user->hasGroup($allowedGroups)) {
+        if (
+            !in_array($this->resource->id, $unrestrictedTaxonomies)
+            && !$this->context->user->hasGroup($allowedGroups)
+        ) {
             $this->getResponse()->setStatusCode(403);
 
             return sfView::HEADER_ONLY;
@@ -87,9 +89,9 @@ class TaxonomyIndexAction extends sfAction
 
             // Show alert
             $message = $this->context->i18n->__(
-                "We've redirected you to the first page of results.".
-        ' To avoid using vast amounts of memory, AtoM limits pagination to %1% records.'.
-        ' To view the last records in the current result set, try changing the sort direction.',
+                "We've redirected you to the first page of results."
+                .' To avoid using vast amounts of memory, AtoM limits pagination to %1% records.'
+                .' To view the last records in the current result set, try changing the sort direction.',
                 ['%1%' => $maxResultWindow]
             );
             $this->getUser()->setFlash('notice', $message);
@@ -125,26 +127,26 @@ class TaxonomyIndexAction extends sfAction
         $this->addActorCountColumn = false;
 
         switch ($this->resource->id) {
-      case QubitTaxonomy::PLACE_ID:
-        $this->icon = 'places';
-        $this->addIoCountColumn = true;
-        $this->addActorCountColumn = true;
+            case QubitTaxonomy::PLACE_ID:
+                $this->icon = 'places';
+                $this->addIoCountColumn = true;
+                $this->addActorCountColumn = true;
 
-        break;
+                break;
 
-      case QubitTaxonomy::SUBJECT_ID:
-        $this->icon = 'subjects';
-        $this->addIoCountColumn = true;
-        $this->addActorCountColumn = true;
+            case QubitTaxonomy::SUBJECT_ID:
+                $this->icon = 'subjects';
+                $this->addIoCountColumn = true;
+                $this->addActorCountColumn = true;
 
-        break;
+                break;
 
-      case QubitTaxonomy::GENRE_ID:
-        $this->addIoCountColumn = true;
-        $this->addActorCountColumn = true;
+            case QubitTaxonomy::GENRE_ID:
+                $this->addIoCountColumn = true;
+                $this->addActorCountColumn = true;
 
-        break;
-    }
+                break;
+        }
 
         $culture = $this->context->user->getCulture();
 
@@ -160,23 +162,23 @@ class TaxonomyIndexAction extends sfAction
 
         if (1 !== preg_match('/^[\s\t\r\n]*$/', $request->subquery)) {
             switch ($request->subqueryField) {
-        case 'preferredLabel':
-          $fields = ['i18n.%s.name' => 1];
+                case 'preferredLabel':
+                    $fields = ['i18n.%s.name' => 1];
 
-          break;
+                    break;
 
-        case 'useForLabels':
-          $fields = ['useFor.i18n.%s.name' => 1];
+                case 'useForLabels':
+                    $fields = ['useFor.i18n.%s.name' => 1];
 
-          break;
+                    break;
 
-        case 'allLabels':
-        default:
-          // Search over preferred label (boosted by five) and "Use for" labels
-          $fields = ['i18n.%s.name' => 5, 'useFor.i18n.%s.name' => 1];
+                case 'allLabels':
+                default:
+                    // Search over preferred label (boosted by five) and "Use for" labels
+                    $fields = ['i18n.%s.name' => 5, 'useFor.i18n.%s.name' => 1];
 
-          break;
-      }
+                    break;
+            }
 
             // Filter results by subquery
             $this->queryBool->addMust(
@@ -189,17 +191,17 @@ class TaxonomyIndexAction extends sfAction
 
         // Set order
         switch ($request->sort) {
-      // I don't think that this is going to scale, but let's leave it for now
-      case 'alphabetic':
-        $field = sprintf('i18n.%s.name.alphasort', $culture);
-        $this->query->setSort([$field => $request->sortDir]);
+            // I don't think that this is going to scale, but let's leave it for now
+            case 'alphabetic':
+                $field = sprintf('i18n.%s.name.alphasort', $culture);
+                $this->query->setSort([$field => $request->sortDir]);
 
-        break;
+                break;
 
-      case 'lastUpdated':
-      default:
-        $this->query->setSort(['updatedAt' => $request->sortDir]);
-    }
+            case 'lastUpdated':
+            default:
+                $this->query->setSort(['updatedAt' => $request->sortDir]);
+        }
 
         $resultSet = QubitSearch::getInstance()->index->getType('QubitTerm')->search($this->query);
 
@@ -222,7 +224,8 @@ class TaxonomyIndexAction extends sfAction
                     'url' => url_for(['module' => 'term', 'slug' => $data['slug']]),
                     'title' => render_title(get_search_i18n($data, 'name')),
                     'identifier' => '',
-                    'level' => '', ];
+                    'level' => '',
+                ];
 
                 $response['results'][] = $result;
             }

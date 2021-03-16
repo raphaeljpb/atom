@@ -22,7 +22,8 @@ class StaticPageEditAction extends DefaultEditAction
     public static $NAMES = [
         'title',
         'slug',
-        'content', ];
+        'content',
+    ];
 
     public function execute($request)
     {
@@ -75,42 +76,45 @@ class StaticPageEditAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'content':
-        $this->form->setDefault('content', $this->resource->content);
-        $this->form->setValidator('content', new sfValidatorString());
-        $this->form->setWidget('content', new sfWidgetFormTextarea());
+            case 'content':
+                $this->form->setDefault('content', $this->resource->content);
+                $this->form->setValidator('content', new sfValidatorString());
+                $this->form->setWidget('content', new sfWidgetFormTextarea());
 
-        break;
+                break;
 
-      case 'slug':
-        $this->form->setDefault('slug', $this->resource->slug);
-        $this->form->setValidator('slug', new sfValidatorRegex(['pattern' => '/^[^;]*$/'], ['invalid' => $this->context->i18n->__('Mustn\'t contain ";"')]));
-        $this->form->setWidget('slug', new sfWidgetFormInput());
+            case 'slug':
+                $this->form->setDefault('slug', $this->resource->slug);
+                $this->form->setValidator('slug', new sfValidatorRegex(
+                    ['pattern' => '/^[^;]*$/'],
+                    ['invalid' => $this->context->i18n->__('Mustn\'t contain ";"')]
+                ));
+                $this->form->setWidget('slug', new sfWidgetFormInput());
 
-        // no break
-      case 'title':
-        $this->form->setDefault('title', $this->resource->title);
-        $this->form->setValidator('title', new sfValidatorString());
-        $this->form->setWidget('title', new sfWidgetFormInput());
+                // no break
+            case 'title':
+                $this->form->setDefault('title', $this->resource->title);
+                $this->form->setValidator('title', new sfValidatorString());
+                $this->form->setWidget('title', new sfWidgetFormInput());
 
-        // no break
-      default:
-        return parent::addField($name);
-    }
+                // no break
+            default:
+                return parent::addField($name);
+        }
     }
 
     protected function processField($field)
     {
         switch ($field->getName()) {
-      case 'slug':
-        if (!$this->resource->isProtected()) {
-            $this->resource->slug = $this->form->getValue('slug');
+            case 'slug':
+                if (!$this->resource->isProtected()) {
+                    $this->resource->slug = $this->form->getValue('slug');
+                }
+
+                break;
+
+            default:
+                return parent::processField($field);
         }
-
-        break;
-
-      default:
-        return parent::processField($field);
-    }
     }
 }

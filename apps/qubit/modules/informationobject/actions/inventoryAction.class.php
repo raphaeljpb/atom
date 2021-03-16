@@ -51,9 +51,9 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
         if ((int) $limit * $page > $maxResultWindow) {
             // Show alert
             $message = $this->context->i18n->__(
-                "We've redirected you to the first page of results.".
-        ' To avoid using vast amounts of memory, AtoM limits pagination to %1% records.'.
-        ' To view the last records in the current result set, try changing the sort direction.',
+                "We've redirected you to the first page of results."
+                .' To avoid using vast amounts of memory, AtoM limits pagination to %1% records.'
+                .' To view the last records in the current result set, try changing the sort direction.',
                 ['%1%' => $maxResultWindow]
             );
             $this->getUser()->setFlash('notice', $message);
@@ -124,52 +124,54 @@ class InformationObjectInventoryAction extends DefaultBrowseAction
         $i18n = sprintf('i18n.%s.', sfContext::getInstance()->getUser()->getCulture());
 
         switch ($sort) {
-      case 'identifierDown':
-        $query->setSort(['identifier.untouched' => 'desc']);
+            case 'identifierDown':
+                $query->setSort(['identifier.untouched' => 'desc']);
 
-        break;
+                break;
 
-      case 'titleUp':
-        $query->setSort([$i18n.'title.alphasort' => 'asc']);
+            case 'titleUp':
+                $query->setSort([$i18n.'title.alphasort' => 'asc']);
 
-        break;
+                break;
 
-      case 'titleDown':
-        $query->setSort([$i18n.'title.alphasort' => 'desc']);
+            case 'titleDown':
+                $query->setSort([$i18n.'title.alphasort' => 'desc']);
 
-        break;
+                break;
 
-      case 'levelUp':
-        $query->setSort(['levelOfDescriptionId' => 'asc']);
+            case 'levelUp':
+                $query->setSort(['levelOfDescriptionId' => 'asc']);
 
-        break;
+                break;
 
-      case 'levelDown':
-        $query->setSort(['levelOfDescriptionId' => 'desc']);
+            case 'levelDown':
+                $query->setSort(['levelOfDescriptionId' => 'desc']);
 
-        break;
+                break;
 
-      case 'dateUp':
-        $query->setSort([
-            'startDateSort' => 'asc',
-            'endDateSort' => 'asc', ]);
+            case 'dateUp':
+                $query->setSort([
+                    'startDateSort' => 'asc',
+                    'endDateSort' => 'asc',
+                ]);
 
-        break;
+                break;
 
-      case 'dateDown':
-        $query->setSort([
-            'startDateSort' => 'desc',
-            'endDateSort' => 'desc', ]);
+            case 'dateDown':
+                $query->setSort([
+                    'startDateSort' => 'desc',
+                    'endDateSort' => 'desc',
+                ]);
 
-        break;
-      // Avoid sorting when we are just counting records
-      case null:
-        break;
+                break;
+            // Avoid sorting when we are just counting records
+            case null:
+                break;
 
-      case 'identifierUp':
-      default:
-        $query->setSort(['identifier.untouched' => 'asc']);
-    }
+            case 'identifierUp':
+            default:
+                $query->setSort(['identifier.untouched' => 'asc']);
+        }
 
         QubitAclSearch::filterDrafts($queryBool);
         $query->setQuery($queryBool);

@@ -87,236 +87,236 @@ class RepositoryEditAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'type':
-        $criteria = new Criteria();
-        $criteria = $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
-        $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
-        $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::REPOSITORY_TYPE_ID);
+            case 'type':
+                $criteria = new Criteria();
+                $criteria = $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
+                $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
+                $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::REPOSITORY_TYPE_ID);
 
-        $value = [];
-        foreach ($this->relations = QubitObjectTermRelation::get($criteria) as $item) {
-            $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
+                $value = [];
+                foreach ($this->relations = QubitObjectTermRelation::get($criteria) as $item) {
+                    $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
+                }
+
+                $this->form->setDefault('type', $value);
+                $this->form->setValidator('type', new sfValidatorPass());
+
+                $choices = [];
+                foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::REPOSITORY_TYPE_ID) as $item) {
+                    $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
+                }
+
+                $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
+
+                break;
+
+            case 'thematicArea':
+                $criteria = new Criteria();
+                $criteria = $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
+                $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
+                $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::THEMATIC_AREA_ID);
+
+                $value = [];
+                foreach ($this->thematicAreaRelations = QubitObjectTermRelation::get($criteria) as $item) {
+                    $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
+                }
+
+                $this->form->setDefault('thematicArea', $value);
+                $this->form->setValidator('thematicArea', new sfValidatorPass());
+
+                $choices = [];
+                foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::THEMATIC_AREA_ID) as $item) {
+                    $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
+                }
+
+                $choice[] = asort($choices);
+
+                $this->form->setWidget('thematicArea', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
+
+                break;
+
+            case 'geographicSubregion':
+                $criteria = new Criteria();
+                $criteria = $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
+                $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
+                $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID);
+
+                $value = [];
+                foreach ($this->geographicSubregionRelations = QubitObjectTermRelation::get($criteria) as $item) {
+                    $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
+                }
+
+                $this->form->setDefault('geographicSubregion', $value);
+                $this->form->setValidator('geographicSubregion', new sfValidatorPass());
+
+                $choices = [];
+                foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID) as $item) {
+                    $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
+                }
+
+                $choice[] = asort($choices);
+
+                $this->form->setWidget('geographicSubregion', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
+
+                break;
+
+            case 'descDetail':
+            case 'descStatus':
+                $this->form->setDefault($name, $this->context->routing->generate(null, [$this->resource[$name], 'module' => 'term']));
+                $this->form->setValidator($name, new sfValidatorString());
+
+                switch ($name) {
+                    case 'descDetail':
+                        $id = QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID;
+
+                        break;
+
+                    case 'descStatus':
+                        $id = QubitTaxonomy::DESCRIPTION_STATUS_ID;
+
+                        break;
+                }
+
+                $choices = [];
+                $choices[null] = null;
+                foreach (QubitTaxonomy::getTermsById($id) as $item) {
+                    $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
+                }
+
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'identifier':
+            case 'authorizedFormOfName':
+            case 'descIdentifier':
+            case 'descInstitutionIdentifier':
+                $this->form->setDefault($name, $this->resource[$name]);
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormInput());
+
+                break;
+
+            case 'history':
+            case 'geoculturalContext':
+            case 'mandates':
+            case 'internalStructures':
+            case 'collectingPolicies':
+            case 'buildings':
+            case 'holdings':
+            case 'findingAids':
+            case 'openingTimes':
+            case 'accessConditions':
+            case 'disabledAccess':
+            case 'researchServices':
+            case 'reproductionServices':
+            case 'publicFacilities':
+            case 'descRules':
+            case 'descRevisionHistory':
+            case 'descSources':
+                $this->form->setDefault($name, $this->resource[$name]);
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormTextarea());
+
+                break;
+
+            default:
+                return parent::addField($name);
         }
-
-        $this->form->setDefault('type', $value);
-        $this->form->setValidator('type', new sfValidatorPass());
-
-        $choices = [];
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::REPOSITORY_TYPE_ID) as $item) {
-            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
-        }
-
-        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
-
-        break;
-
-      case 'thematicArea':
-        $criteria = new Criteria();
-        $criteria = $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
-        $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
-        $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::THEMATIC_AREA_ID);
-
-        $value = [];
-        foreach ($this->thematicAreaRelations = QubitObjectTermRelation::get($criteria) as $item) {
-            $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
-        }
-
-        $this->form->setDefault('thematicArea', $value);
-        $this->form->setValidator('thematicArea', new sfValidatorPass());
-
-        $choices = [];
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::THEMATIC_AREA_ID) as $item) {
-            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
-        }
-
-        $choice[] = asort($choices);
-
-        $this->form->setWidget('thematicArea', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
-
-        break;
-
-      case 'geographicSubregion':
-        $criteria = new Criteria();
-        $criteria = $this->resource->addObjectTermRelationsRelatedByObjectIdCriteria($criteria);
-        $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
-        $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID);
-
-        $value = [];
-        foreach ($this->geographicSubregionRelations = QubitObjectTermRelation::get($criteria) as $item) {
-            $value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term']);
-        }
-
-        $this->form->setDefault('geographicSubregion', $value);
-        $this->form->setValidator('geographicSubregion', new sfValidatorPass());
-
-        $choices = [];
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::GEOGRAPHIC_SUBREGION_ID) as $item) {
-            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
-        }
-
-        $choice[] = asort($choices);
-
-        $this->form->setWidget('geographicSubregion', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
-
-        break;
-
-      case 'descDetail':
-      case 'descStatus':
-        $this->form->setDefault($name, $this->context->routing->generate(null, [$this->resource[$name], 'module' => 'term']));
-        $this->form->setValidator($name, new sfValidatorString());
-
-        switch ($name) {
-          case 'descDetail':
-            $id = QubitTaxonomy::DESCRIPTION_DETAIL_LEVEL_ID;
-
-            break;
-
-          case 'descStatus':
-            $id = QubitTaxonomy::DESCRIPTION_STATUS_ID;
-
-            break;
-        }
-
-        $choices = [];
-        $choices[null] = null;
-        foreach (QubitTaxonomy::getTermsById($id) as $item) {
-            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
-        }
-
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'identifier':
-      case 'authorizedFormOfName':
-      case 'descIdentifier':
-      case 'descInstitutionIdentifier':
-        $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
-
-        break;
-
-      case 'history':
-      case 'geoculturalContext':
-      case 'mandates':
-      case 'internalStructures':
-      case 'collectingPolicies':
-      case 'buildings':
-      case 'holdings':
-      case 'findingAids':
-      case 'openingTimes':
-      case 'accessConditions':
-      case 'disabledAccess':
-      case 'researchServices':
-      case 'reproductionServices':
-      case 'publicFacilities':
-      case 'descRules':
-      case 'descRevisionHistory':
-      case 'descSources':
-        $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormTextarea());
-
-        break;
-
-      default:
-        return parent::addField($name);
-    }
     }
 
     protected function processField($field)
     {
         switch ($field->getName()) {
-      case 'type':
-        $value = $filtered = [];
-        foreach ($this->form->getValue('type') as $item) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($item));
-            $resource = $params['_sf_route']->resource;
-            $value[$resource->id] = $filtered[$resource->id] = $resource;
+            case 'type':
+                $value = $filtered = [];
+                foreach ($this->form->getValue('type') as $item) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($item));
+                    $resource = $params['_sf_route']->resource;
+                    $value[$resource->id] = $filtered[$resource->id] = $resource;
+                }
+
+                foreach ($this->relations as $item) {
+                    if (isset($value[$item->termId])) {
+                        unset($filtered[$item->termId]);
+                    } else {
+                        $item->delete();
+                    }
+                }
+
+                foreach ($filtered as $item) {
+                    $relation = new QubitObjectTermRelation();
+                    $relation->term = $item;
+
+                    $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
+                }
+
+                break;
+
+            case 'geographicSubregion':
+                $value = $filtered = [];
+                foreach ($this->form->getValue('geographicSubregion') as $item) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($item));
+                    $resource = $params['_sf_route']->resource;
+                    $value[$resource->id] = $filtered[$resource->id] = $resource;
+                }
+
+                foreach ($this->geographicSubregionRelations as $item) {
+                    if (isset($value[$item->termId])) {
+                        unset($filtered[$item->termId]);
+                    } else {
+                        $item->delete();
+                    }
+                }
+
+                foreach ($filtered as $item) {
+                    $relation = new QubitObjectTermRelation();
+                    $relation->term = $item;
+
+                    $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
+                }
+
+                break;
+
+            case 'thematicArea':
+                $value = $filtered = [];
+                foreach ($this->form->getValue('thematicArea') as $item) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($item));
+                    $resource = $params['_sf_route']->resource;
+                    $value[$resource->id] = $filtered[$resource->id] = $resource;
+                }
+
+                foreach ($this->thematicAreaRelations as $item) {
+                    if (isset($value[$item->termId])) {
+                        unset($filtered[$item->termId]);
+                    } else {
+                        $item->delete();
+                    }
+                }
+
+                foreach ($filtered as $item) {
+                    $relation = new QubitObjectTermRelation();
+                    $relation->term = $item;
+
+                    $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
+                }
+
+                break;
+
+            case 'descStatus':
+            case 'descDetail':
+                unset($this->resource[$field->getName()]);
+
+                $value = $this->form->getValue($field->getName());
+                if (isset($value)) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($value));
+                    $this->resource[$field->getName()] = $params['_sf_route']->resource;
+                }
+
+                break;
+
+            default:
+                return parent::processField($field);
         }
-
-        foreach ($this->relations as $item) {
-            if (isset($value[$item->termId])) {
-                unset($filtered[$item->termId]);
-            } else {
-                $item->delete();
-            }
-        }
-
-        foreach ($filtered as $item) {
-            $relation = new QubitObjectTermRelation();
-            $relation->term = $item;
-
-            $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
-        }
-
-        break;
-
-      case 'geographicSubregion':
-        $value = $filtered = [];
-        foreach ($this->form->getValue('geographicSubregion') as $item) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($item));
-            $resource = $params['_sf_route']->resource;
-            $value[$resource->id] = $filtered[$resource->id] = $resource;
-        }
-
-        foreach ($this->geographicSubregionRelations as $item) {
-            if (isset($value[$item->termId])) {
-                unset($filtered[$item->termId]);
-            } else {
-                $item->delete();
-            }
-        }
-
-        foreach ($filtered as $item) {
-            $relation = new QubitObjectTermRelation();
-            $relation->term = $item;
-
-            $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
-        }
-
-        break;
-
-      case 'thematicArea':
-        $value = $filtered = [];
-        foreach ($this->form->getValue('thematicArea') as $item) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($item));
-            $resource = $params['_sf_route']->resource;
-            $value[$resource->id] = $filtered[$resource->id] = $resource;
-        }
-
-        foreach ($this->thematicAreaRelations as $item) {
-            if (isset($value[$item->termId])) {
-                unset($filtered[$item->termId]);
-            } else {
-                $item->delete();
-            }
-        }
-
-        foreach ($filtered as $item) {
-            $relation = new QubitObjectTermRelation();
-            $relation->term = $item;
-
-            $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
-        }
-
-        break;
-
-      case 'descStatus':
-      case 'descDetail':
-        unset($this->resource[$field->getName()]);
-
-        $value = $this->form->getValue($field->getName());
-        if (isset($value)) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($value));
-            $this->resource[$field->getName()] = $params['_sf_route']->resource;
-        }
-
-        break;
-
-      default:
-        return parent::processField($field);
-    }
     }
 }

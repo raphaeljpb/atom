@@ -22,7 +22,8 @@ class ObjectImportSelectAction extends DefaultEditAction
     // Arrays not allowed in class constants
     public static $NAMES = [
         'repos',
-        'collection', ];
+        'collection',
+    ];
 
     public function execute($request)
     {
@@ -47,21 +48,21 @@ class ObjectImportSelectAction extends DefaultEditAction
             }
 
             switch ($this->type) {
-        case 'csv':
-          $this->title = $this->context->i18n->__('Import CSV');
+                case 'csv':
+                    $this->title = $this->context->i18n->__('Import CSV');
 
-          break;
+                break;
 
-        case 'xml':
-          $this->title = $this->context->i18n->__('Import XML');
+                case 'xml':
+                    $this->title = $this->context->i18n->__('Import XML');
 
-          break;
+                break;
 
-        default:
-          $this->redirect(['module' => 'object', 'action' => 'importSelect', 'type' => 'xml']);
+                default:
+                    $this->redirect(['module' => 'object', 'action' => 'importSelect', 'type' => 'xml']);
 
-          break;
-      }
+                break;
+            }
         }
     }
 
@@ -81,70 +82,72 @@ class ObjectImportSelectAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'repos':
-        // Get list of repositories
-        $criteria = new Criteria();
-        // Do source culture fallback
-        $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');
-        // Ignore root repository
-        $criteria->add(QubitActor::ID, QubitRepository::ROOT_ID, Criteria::NOT_EQUAL);
-        $criteria->addAscendingOrderByColumn('authorized_form_of_name');
-        $cache = QubitCache::getInstance();
-        $cacheKey = 'file-import:list-of-repositories:'.$this->context->user->getCulture();
+            case 'repos':
+                // Get list of repositories
+                $criteria = new Criteria();
+                // Do source culture fallback
+                $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');
+                // Ignore root repository
+                $criteria->add(QubitActor::ID, QubitRepository::ROOT_ID, Criteria::NOT_EQUAL);
+                $criteria->addAscendingOrderByColumn('authorized_form_of_name');
+                $cache = QubitCache::getInstance();
+                $cacheKey = 'file-import:list-of-repositories:'.$this->context->user->getCulture();
 
-        if ($cache->has($cacheKey)) {
-            $choices = $cache->get($cacheKey);
-        } else {
-            $choices = [];
-            $choices[null] = null;
-            foreach (QubitRepository::get($criteria) as $repository) {
-                $choices[$repository->slug] = $repository->__toString();
-            }
-            $cache->set($cacheKey, $choices, 3600);
+                if ($cache->has($cacheKey)) {
+                    $choices = $cache->get($cacheKey);
+                } else {
+                    $choices = [];
+                    $choices[null] = null;
+                    foreach (QubitRepository::get($criteria) as $repository) {
+                        $choices[$repository->slug] = $repository->__toString();
+                    }
+                    $cache->set($cacheKey, $choices, 3600);
+                }
+                $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'collection':
+                $this->form->setValidator($name, new sfValidatorString());
+                $choices = [];
+
+                if (
+                    isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection'])
+                    && null !== $collection = QubitInformationObject::getById($this->getParameters['collection'])
+                ) {
+                    sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
+                    $collectionUrl = url_for($collection);
+                    $this->form->setDefault($name, $collectionUrl);
+
+                    $choices[$collectionUrl] = $collection;
+                }
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            default:
+                return parent::addField($name);
         }
-        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'collection':
-        $this->form->setValidator($name, new sfValidatorString());
-        $choices = [];
-
-        if (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection'])
-          && null !== $collection = QubitInformationObject::getById($this->getParameters['collection'])) {
-            sfContext::getInstance()->getConfiguration()->loadHelpers(['Url']);
-            $collectionUrl = url_for($collection);
-            $this->form->setDefault($name, $collectionUrl);
-
-            $choices[$collectionUrl] = $collection;
-        }
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      default:
-        return parent::addField($name);
-    }
     }
 
     protected function processField($field)
     {
         switch ($field->getName()) {
-      case 'repos':
-        $this->repositorySlug = $this->request->getPostParameter('repos');
+            case 'repos':
+                $this->repositorySlug = $this->request->getPostParameter('repos');
 
-        break;
+                break;
 
-      case 'collection':
-        $url = $this->request->getPostParameter('collection');
-        if (!empty($url)) {
-            $parts = explode('/', $url);
-            $this->collectionSlug = end($parts);
+            case 'collection':
+                $url = $this->request->getPostParameter('collection');
+                if (!empty($url)) {
+                    $parts = explode('/', $url);
+                    $this->collectionSlug = end($parts);
+                }
+
+                break;
         }
-
-        break;
-    }
     }
 
     /**
@@ -186,7 +189,8 @@ class ObjectImportSelectAction extends DefaultEditAction
             $this->redirect($importSelectRoute);
         }
 
-        $options = ['index' => ('on' == $request->getParameter('noIndex')) ? false : true,
+        $options = [
+            'index' => ('on' == $request->getParameter('noIndex')) ? false : true,
             'doCsvTransform' => ('on' == $request->getParameter('doCsvTransform')) ? true : false,
             'skip-unmatched' => ('on' == $request->getParameter('skipUnmatched')) ? true : false,
             'skip-matched' => ('on' == $request->getParameter('skipMatched')) ? true : false,
@@ -199,7 +203,8 @@ class ObjectImportSelectAction extends DefaultEditAction
             'update' => $request->getParameter('updateType'),
             'repositorySlug' => $this->repositorySlug,
             'collectionSlug' => $this->collectionSlug,
-            'file' => $file, ];
+            'file' => $file,
+        ];
 
         try {
             $job = QubitJob::runJob('arFileImportJob', $options);

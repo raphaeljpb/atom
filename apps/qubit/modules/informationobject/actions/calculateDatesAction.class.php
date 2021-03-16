@@ -75,13 +75,13 @@ class InformationObjectCalculateDatesAction extends sfAction
         $eventTypes = [];
 
         $sql = 'SELECT
-      DISTINCT e.type_id
-      FROM
-        information_object i
-        INNER JOIN event e ON i.id=e.object_id
-      WHERE
-        i.lft > :lft
-        AND i.lft < :rgt';
+            DISTINCT e.type_id
+            FROM
+                information_object i
+                INNER JOIN event e ON i.id=e.object_id
+            WHERE
+                i.lft > :lft
+                AND i.lft < :rgt';
 
         $params = [
             ':lft' => $resource->lft,
@@ -101,37 +101,37 @@ class InformationObjectCalculateDatesAction extends sfAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'eventIdOrTypeId':
-        if (count($this->events) || count($this->descendantEventTypes)) {
-            $eventIdChoices = $this->events + $this->descendantEventTypes;
-            $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $eventIdChoices]));
-            $this->form->setValidator($name, new sfValidatorInteger(['required' => true]));
-        }
+            case 'eventIdOrTypeId':
+                if (count($this->events) || count($this->descendantEventTypes)) {
+                    $eventIdChoices = $this->events + $this->descendantEventTypes;
+                    $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $eventIdChoices]));
+                    $this->form->setValidator($name, new sfValidatorInteger(['required' => true]));
+                }
 
-        break;
-    }
+                break;
+        }
     }
 
     protected function processField($field)
     {
         switch ($name = $field->getName()) {
-      case 'eventIdOrTypeId':
-        $this->eventIdOrTypeId = $field->getValue();
+            case 'eventIdOrTypeId':
+                $this->eventIdOrTypeId = $field->getValue();
 
-        // Determine whether ID belongs to an event or a type (term)
-        $criteria = new Criteria();
-        $criteria->add(QubitObject::ID, $this->eventIdOrTypeId);
+                // Determine whether ID belongs to an event or a type (term)
+                $criteria = new Criteria();
+                $criteria->add(QubitObject::ID, $this->eventIdOrTypeId);
 
-        if (null !== $object = QubitObject::getOne($criteria)) {
-            if ('QubitEvent' == $object->className) {
-                $this->eventId = $object->id;
-            } else {
-                $this->eventTypeId = $object->id;
-            }
+                if (null !== $object = QubitObject::getOne($criteria)) {
+                    if ('QubitEvent' == $object->className) {
+                        $this->eventId = $object->id;
+                    } else {
+                        $this->eventTypeId = $object->id;
+                    }
+                }
+
+                break;
         }
-
-        break;
-    }
     }
 
     protected function processForm()

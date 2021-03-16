@@ -112,19 +112,19 @@ class InformationObjectFindingAidComponent extends sfComponent
             $this->showStatus = $this->showDownload = true;
 
             switch ((int) $findingAidStatus) {
-        case arFindingAidJob::GENERATED_STATUS:
-          $this->status = $i18n->__('Generated');
+                case arFindingAidJob::GENERATED_STATUS:
+                    $this->status = $i18n->__('Generated');
 
-          break;
+                    break;
 
-        case arFindingAidJob::UPLOADED_STATUS:
-          $this->status = $i18n->__('Uploaded');
+                case arFindingAidJob::UPLOADED_STATUS:
+                    $this->status = $i18n->__('Uploaded');
 
-          break;
-        // It should never get here if we don't add more finding aid statuses
-        default:
-          $this->status = $i18n->__('Unknown');
-      }
+                    break;
+                // It should never get here if we don't add more finding aid statuses
+                default:
+                    $this->status = $i18n->__('Unknown');
+            }
 
             // Check ACL to show delete option
             if (QubitAcl::check($this->resource, 'update')) {
@@ -153,8 +153,10 @@ class InformationObjectFindingAidComponent extends sfComponent
         // Generate is allowed for published descriptions and for drafts
         // if the public finding aid setting is set to false
         $setting = QubitSetting::getByName('publicFindingAid');
-        if (QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->resource->getPublicationStatus()->statusId
-      || (isset($setting) && !$setting->getValue(['sourceCulture' => true]))) {
+        if (
+            QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID == $this->resource->getPublicationStatus()->statusId
+            || (isset($setting) && !$setting->getValue(['sourceCulture' => true]))
+        ) {
             $this->showGenerate = true;
         }
 

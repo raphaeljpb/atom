@@ -168,319 +168,319 @@ class InformationObjectEditAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'levelOfDescription':
-        $this->form->setDefault('levelOfDescription', $this->context->routing->generate(null, [$this->resource->levelOfDescription, 'module' => 'term']));
-        $this->form->setValidator('levelOfDescription', new sfValidatorString());
+            case 'levelOfDescription':
+                $this->form->setDefault('levelOfDescription', $this->context->routing->generate(null, [$this->resource->levelOfDescription, 'module' => 'term']));
+                $this->form->setValidator('levelOfDescription', new sfValidatorString());
 
-        $choices = [];
-        $choices[null] = null;
-        foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID) as $item) {
-            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
+                $choices = [];
+                $choices[null] = null;
+                foreach (QubitTaxonomy::getTaxonomyTerms(QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID) as $item) {
+                    $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item;
+                }
+
+                $this->form->setWidget('levelOfDescription', new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'displayStandard':
+                $this->form->setDefault('displayStandard', $this->resource->displayStandardId);
+                $this->form->setValidator('displayStandard', new sfValidatorString());
+
+                $choices = [];
+                $choices[null] = null;
+                foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID) as $item) {
+                    $choices[$item->id] = $item;
+                }
+
+                $this->form->setWidget('displayStandard', new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'displayStandardUpdateDescendants':
+                $this->form->setValidator('displayStandardUpdateDescendants', new sfValidatorBoolean());
+                $this->form->setWidget('displayStandardUpdateDescendants', new sfWidgetFormInputCheckbox());
+
+                break;
+
+            case 'repository':
+                $this->form->setDefault('repository', $this->context->routing->generate(null, [$this->resource->repository, 'module' => 'repository']));
+                $this->form->setValidator('repository', new sfValidatorString());
+
+                $choices = [];
+                if (isset($this->resource->repository)) {
+                    $choices[$this->context->routing->generate(null, [$this->resource->repository, 'module' => 'repository'])] = $this->resource->repository;
+                }
+
+                $this->form->setWidget('repository', new sfWidgetFormSelect(['choices' => $choices]));
+
+                if (isset($this->getRoute()->resource)) {
+                    $this->repoAcParams = ['module' => 'repository', 'action' => 'autocomplete', 'aclAction' => 'update'];
+                } else {
+                    $this->repoAcParams = ['module' => 'repository', 'action' => 'autocomplete', 'aclAction' => 'create'];
+                }
+
+                break;
+
+            case 'accessConditions':
+            case 'accruals':
+            case 'acquisition':
+            case 'archivalHistory':
+            case 'arrangement':
+            case 'extentAndMedium':
+            case 'findingAids':
+            case 'locationOfCopies':
+            case 'locationOfOriginals':
+            case 'physicalCharacteristics':
+            case 'relatedUnitsOfDescription':
+            case 'reproductionConditions':
+            case 'revisionHistory':
+            case 'rules':
+            case 'scopeAndContent':
+            case 'sources':
+                $this->form->setDefault($name, $this->resource[$name]);
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormTextarea());
+
+                break;
+
+            case 'descriptionIdentifier':
+            case 'identifier':
+            case 'institutionResponsibleIdentifier':
+            case 'title':
+                $this->form->setDefault($name, $this->resource[$name]);
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormInput());
+
+                break;
+
+            case 'genreAccessPoints':
+            case 'subjectAccessPoints':
+            case 'placeAccessPoints':
+                $criteria = new Criteria();
+                $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->resource->id);
+                $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
+
+                switch ($name) {
+                    case 'genreAccessPoints':
+                        $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::GENRE_ID);
+
+                        break;
+
+                    case 'subjectAccessPoints':
+                        $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::SUBJECT_ID);
+
+                        break;
+
+                    case 'placeAccessPoints':
+                        $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::PLACE_ID);
+
+                        break;
+                }
+
+                $value = $choices = [];
+                foreach ($this[$name] = QubitObjectTermRelation::get($criteria) as $item) {
+                    $choices[$value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term'])] = $item->term;
+                }
+
+                $this->form->setDefault($name, $value);
+                $this->form->setValidator($name, new sfValidatorPass());
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
+
+                break;
+
+            case 'nameAccessPoints':
+            case 'relatedMaterialDescriptions':
+                $criteria = new Criteria();
+                $criteria->add(QubitRelation::SUBJECT_ID, $this->resource->id);
+
+                $value = $choices = [];
+
+                switch ($name) {
+                    case 'nameAccessPoints':
+                        $criteria->add(QubitRelation::TYPE_ID, QubitTerm::NAME_ACCESS_POINT_ID);
+
+                        foreach ($this->nameAccessPoints = QubitRelation::get($criteria) as $item) {
+                            $choices[$value[] = $this->context->routing->generate(null, [$item->object, 'module' => 'actor'])] = $item->object;
+                        }
+
+                        break;
+
+                    case 'relatedMaterialDescriptions':
+                        $criteria->add(QubitRelation::TYPE_ID, QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID);
+
+                        foreach ($this->relatedMaterialDescriptions = QubitRelation::get($criteria) as $item) {
+                            $choices[$value[] = $this->context->routing->generate(null, [$item->object, 'module' => 'informationobject'])] = $item->object;
+                        }
+
+                        // Add also relations where it's the object
+                        $criteria = new Criteria();
+                        $criteria->add(QubitRelation::OBJECT_ID, $this->resource->id);
+                        $criteria->add(QubitRelation::TYPE_ID, QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID);
+
+                        foreach (QubitRelation::get($criteria) as $item) {
+                            $this->relatedMaterialDescriptions[] = $item;
+                            $choices[$value[] = $this->context->routing->generate(null, [$item->subject, 'module' => 'informationobject'])] = $item->subject;
+                        }
+
+                        break;
+                }
+
+                $this->form->setDefault($name, $value);
+                $this->form->setValidator($name, new sfValidatorPass());
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
+
+                break;
+
+            default:
+                return parent::addField($name);
         }
-
-        $this->form->setWidget('levelOfDescription', new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'displayStandard':
-          $this->form->setDefault('displayStandard', $this->resource->displayStandardId);
-          $this->form->setValidator('displayStandard', new sfValidatorString());
-
-          $choices = [];
-          $choices[null] = null;
-          foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID) as $item) {
-              $choices[$item->id] = $item;
-          }
-
-          $this->form->setWidget('displayStandard', new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'displayStandardUpdateDescendants':
-        $this->form->setValidator('displayStandardUpdateDescendants', new sfValidatorBoolean());
-        $this->form->setWidget('displayStandardUpdateDescendants', new sfWidgetFormInputCheckbox());
-
-        break;
-
-      case 'repository':
-        $this->form->setDefault('repository', $this->context->routing->generate(null, [$this->resource->repository, 'module' => 'repository']));
-        $this->form->setValidator('repository', new sfValidatorString());
-
-        $choices = [];
-        if (isset($this->resource->repository)) {
-            $choices[$this->context->routing->generate(null, [$this->resource->repository, 'module' => 'repository'])] = $this->resource->repository;
-        }
-
-        $this->form->setWidget('repository', new sfWidgetFormSelect(['choices' => $choices]));
-
-        if (isset($this->getRoute()->resource)) {
-            $this->repoAcParams = ['module' => 'repository', 'action' => 'autocomplete', 'aclAction' => 'update'];
-        } else {
-            $this->repoAcParams = ['module' => 'repository', 'action' => 'autocomplete', 'aclAction' => 'create'];
-        }
-
-        break;
-
-      case 'accessConditions':
-      case 'accruals':
-      case 'acquisition':
-      case 'archivalHistory':
-      case 'arrangement':
-      case 'extentAndMedium':
-      case 'findingAids':
-      case 'locationOfCopies':
-      case 'locationOfOriginals':
-      case 'physicalCharacteristics':
-      case 'relatedUnitsOfDescription':
-      case 'reproductionConditions':
-      case 'revisionHistory':
-      case 'rules':
-      case 'scopeAndContent':
-      case 'sources':
-        $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormTextarea());
-
-        break;
-
-      case 'descriptionIdentifier':
-      case 'identifier':
-      case 'institutionResponsibleIdentifier':
-      case 'title':
-        $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
-
-        break;
-
-      case 'genreAccessPoints':
-      case 'subjectAccessPoints':
-      case 'placeAccessPoints':
-        $criteria = new Criteria();
-        $criteria->add(QubitObjectTermRelation::OBJECT_ID, $this->resource->id);
-        $criteria->addJoin(QubitObjectTermRelation::TERM_ID, QubitTerm::ID);
-
-        switch ($name) {
-          case 'genreAccessPoints':
-            $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::GENRE_ID);
-
-            break;
-
-          case 'subjectAccessPoints':
-            $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::SUBJECT_ID);
-
-            break;
-
-          case 'placeAccessPoints':
-            $criteria->add(QubitTerm::TAXONOMY_ID, QubitTaxonomy::PLACE_ID);
-
-            break;
-        }
-
-        $value = $choices = [];
-        foreach ($this[$name] = QubitObjectTermRelation::get($criteria) as $item) {
-            $choices[$value[] = $this->context->routing->generate(null, [$item->term, 'module' => 'term'])] = $item->term;
-        }
-
-        $this->form->setDefault($name, $value);
-        $this->form->setValidator($name, new sfValidatorPass());
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
-
-        break;
-
-      case 'nameAccessPoints':
-      case 'relatedMaterialDescriptions':
-        $criteria = new Criteria();
-        $criteria->add(QubitRelation::SUBJECT_ID, $this->resource->id);
-
-        $value = $choices = [];
-
-        switch ($name) {
-          case 'nameAccessPoints':
-            $criteria->add(QubitRelation::TYPE_ID, QubitTerm::NAME_ACCESS_POINT_ID);
-
-            foreach ($this->nameAccessPoints = QubitRelation::get($criteria) as $item) {
-                $choices[$value[] = $this->context->routing->generate(null, [$item->object, 'module' => 'actor'])] = $item->object;
-            }
-
-            break;
-
-          case 'relatedMaterialDescriptions':
-            $criteria->add(QubitRelation::TYPE_ID, QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID);
-
-            foreach ($this->relatedMaterialDescriptions = QubitRelation::get($criteria) as $item) {
-                $choices[$value[] = $this->context->routing->generate(null, [$item->object, 'module' => 'informationobject'])] = $item->object;
-            }
-
-            // Add also relations where it's the object
-            $criteria = new Criteria();
-            $criteria->add(QubitRelation::OBJECT_ID, $this->resource->id);
-            $criteria->add(QubitRelation::TYPE_ID, QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID);
-
-            foreach (QubitRelation::get($criteria) as $item) {
-                $this->relatedMaterialDescriptions[] = $item;
-                $choices[$value[] = $this->context->routing->generate(null, [$item->subject, 'module' => 'informationobject'])] = $item->subject;
-            }
-
-            break;
-        }
-
-        $this->form->setDefault($name, $value);
-        $this->form->setValidator($name, new sfValidatorPass());
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true]));
-
-        break;
-
-      default:
-        return parent::addField($name);
-    }
     }
 
     protected function processField($field)
     {
         switch ($field->getName()) {
-      case 'title':
-        // Avoid duplicates (used in autocomplete.js)
-        if (filter_var($this->request->getPostParameter('linkExisting'), FILTER_VALIDATE_BOOLEAN)) {
-            $criteria = new Criteria();
-            $criteria->addJoin(QubitInformationObject::ID, QubitInformationObjectI18n::ID);
-            $criteria->add(QubitInformationObjectI18n::CULTURE, $this->context->user->getCulture());
-            $criteria->add(QubitInformationObjectI18n::TITLE, $this->form->getValue('title'));
-            if (null !== $io = QubitInformationObject::getOne($criteria)) {
-                $this->redirect([$io, 'module' => 'informationobject']);
+            case 'title':
+                // Avoid duplicates (used in autocomplete.js)
+                if (filter_var($this->request->getPostParameter('linkExisting'), FILTER_VALIDATE_BOOLEAN)) {
+                    $criteria = new Criteria();
+                    $criteria->addJoin(QubitInformationObject::ID, QubitInformationObjectI18n::ID);
+                    $criteria->add(QubitInformationObjectI18n::CULTURE, $this->context->user->getCulture());
+                    $criteria->add(QubitInformationObjectI18n::TITLE, $this->form->getValue('title'));
+                    if (null !== $io = QubitInformationObject::getOne($criteria)) {
+                        $this->redirect([$io, 'module' => 'informationobject']);
 
-                return;
-            }
-        }
+                        return;
+                    }
+                }
 
-        return parent::processField($field);
+                return parent::processField($field);
 
-      case 'levelOfDescription':
-      case 'parent':
-      case 'repository':
-        unset($this->resource[$field->getName()]);
+            case 'levelOfDescription':
+            case 'parent':
+            case 'repository':
+                unset($this->resource[$field->getName()]);
 
-        $value = $this->form->getValue($field->getName());
-        if (isset($value)) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($value));
-            $this->resource[$field->getName()] = $params['_sf_route']->resource;
-        }
+                $value = $this->form->getValue($field->getName());
+                if (isset($value)) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($value));
+                    $this->resource[$field->getName()] = $params['_sf_route']->resource;
+                }
 
-        break;
+                break;
 
-      case 'genreAccessPoints':
-      case 'subjectAccessPoints':
-      case 'placeAccessPoints':
-        $value = $filtered = [];
-        foreach ($this->form->getValue($field->getName()) as $item) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($item));
-            $resource = $params['_sf_route']->resource;
-            $value[$resource->id] = $filtered[$resource->id] = $resource;
-        }
+            case 'genreAccessPoints':
+            case 'subjectAccessPoints':
+            case 'placeAccessPoints':
+                $value = $filtered = [];
+                foreach ($this->form->getValue($field->getName()) as $item) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($item));
+                    $resource = $params['_sf_route']->resource;
+                    $value[$resource->id] = $filtered[$resource->id] = $resource;
+                }
 
-        foreach ($this[$field->getName()] as $item) {
-            if (isset($value[$item->term->id])) {
-                unset($filtered[$item->term->id]);
-            } else {
-                $item->indexObjectOnDelete = false;
-                $item->delete();
-            }
-        }
+                foreach ($this[$field->getName()] as $item) {
+                    if (isset($value[$item->term->id])) {
+                        unset($filtered[$item->term->id]);
+                    } else {
+                        $item->indexObjectOnDelete = false;
+                        $item->delete();
+                    }
+                }
 
-        foreach ($filtered as $item) {
-            $relation = new QubitObjectTermRelation();
-            $relation->term = $item;
+                foreach ($filtered as $item) {
+                    $relation = new QubitObjectTermRelation();
+                    $relation->term = $item;
 
-            $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
-        }
+                    $this->resource->objectTermRelationsRelatedByobjectId[] = $relation;
+                }
 
-        break;
+                break;
 
-      case 'nameAccessPoints':
-      case 'relatedMaterialDescriptions':
-        $value = $filtered = [];
-        foreach ($this->form->getValue($field->getName()) as $item) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($item));
-            $resource = $params['_sf_route']->resource;
-            $value[$resource->id] = $filtered[$resource->id] = $resource;
-        }
-
-        foreach ($this->{$field->getName()} as $item) {
-            if (isset($value[$item->objectId])) {
-                unset($filtered[$item->objectId]);
-            } else {
-                $item->indexSubjectOnDelete = false;
-                $item->delete();
-            }
-        }
-
-        foreach ($filtered as $item) {
-            $relation = new QubitRelation();
-            $relation->object = $item;
-
-            switch ($field->getName()) {
             case 'nameAccessPoints':
-              $relation->typeId = QubitTerm::NAME_ACCESS_POINT_ID;
-
-              break;
-
             case 'relatedMaterialDescriptions':
-              // Don't allow self-relations
-              if (!isset($this->resource->id) || ($this->resource->id != $item->id)) {
-                  $relation->typeId = QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID;
-              } else {
-                  $message = $this->context->i18n->__('Self-relation ignored.');
-                  $this->getUser()->setFlash('notice', $message);
-              }
+                $value = $filtered = [];
+                foreach ($this->form->getValue($field->getName()) as $item) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($item));
+                    $resource = $params['_sf_route']->resource;
+                    $value[$resource->id] = $filtered[$resource->id] = $resource;
+                }
 
-              break;
-          }
+                foreach ($this->{$field->getName()} as $item) {
+                    if (isset($value[$item->objectId])) {
+                        unset($filtered[$item->objectId]);
+                    } else {
+                        $item->indexSubjectOnDelete = false;
+                        $item->delete();
+                    }
+                }
 
-            // Don't create if no relation type has been set
-            if (isset($relation->typeId)) {
-                $this->resource->relationsRelatedBysubjectId[] = $relation;
-            }
+                foreach ($filtered as $item) {
+                    $relation = new QubitRelation();
+                    $relation->object = $item;
+
+                    switch ($field->getName()) {
+                        case 'nameAccessPoints':
+                            $relation->typeId = QubitTerm::NAME_ACCESS_POINT_ID;
+
+                            break;
+
+                        case 'relatedMaterialDescriptions':
+                            // Don't allow self-relations
+                            if (!isset($this->resource->id) || ($this->resource->id != $item->id)) {
+                                $relation->typeId = QubitTerm::RELATED_MATERIAL_DESCRIPTIONS_ID;
+                            } else {
+                                $message = $this->context->i18n->__('Self-relation ignored.');
+                                $this->getUser()->setFlash('notice', $message);
+                            }
+
+                            break;
+                    }
+
+                    // Don't create if no relation type has been set
+                    if (isset($relation->typeId)) {
+                        $this->resource->relationsRelatedBysubjectId[] = $relation;
+                    }
+                }
+
+                break;
+
+            case 'displayStandard':
+                // Use null when the user wants to inherit the global setting
+                if (null === $displayStandardId = $this->form->getValue('displayStandard')) {
+                    $this->resource->displayStandardId = null;
+
+                    break;
+                }
+
+                // If this is a new record, assign the standard to the object
+                if (null === $this->resource->id) {
+                    $this->resource->displayStandardId = $displayStandardId;
+
+                    break;
+                }
+
+                $selectCriteria = new Criteria();
+                if (true === $this->form->getValue('displayStandardUpdateDescendants')) {
+                    $selectCriteria->add(QubitInformationObject::LFT, $this->resource->lft, Criteria::GREATER_EQUAL);
+                    $selectCriteria->add(QubitInformationObject::RGT, $this->resource->rgt, Criteria::LESS_EQUAL);
+                } else {
+                    $selectCriteria->add(QubitInformationObject::ID, $this->resource->id);
+                }
+
+                $updateCriteria = new Criteria();
+                $updateCriteria->add(QubitInformationObject::DISPLAY_STANDARD_ID, $displayStandardId);
+
+                BasePeer::doUpdate(
+                    $selectCriteria,
+                    $updateCriteria,
+                    Propel::getConnection(QubitObject::DATABASE_NAME)
+                );
+
+                break;
+
+            default:
+                return parent::processField($field);
         }
-
-        break;
-
-      case 'displayStandard':
-        // Use null when the user wants to inherit the global setting
-        if (null === $displayStandardId = $this->form->getValue('displayStandard')) {
-            $this->resource->displayStandardId = null;
-
-            break;
-        }
-
-        // If this is a new record, assign the standard to the object
-        if (null === $this->resource->id) {
-            $this->resource->displayStandardId = $displayStandardId;
-
-            break;
-        }
-
-        $selectCriteria = new Criteria();
-        if (true === $this->form->getValue('displayStandardUpdateDescendants')) {
-            $selectCriteria->add(QubitInformationObject::LFT, $this->resource->lft, Criteria::GREATER_EQUAL);
-            $selectCriteria->add(QubitInformationObject::RGT, $this->resource->rgt, Criteria::LESS_EQUAL);
-        } else {
-            $selectCriteria->add(QubitInformationObject::ID, $this->resource->id);
-        }
-
-        $updateCriteria = new Criteria();
-        $updateCriteria->add(QubitInformationObject::DISPLAY_STANDARD_ID, $displayStandardId);
-
-        BasePeer::doUpdate(
-            $selectCriteria,
-            $updateCriteria,
-            Propel::getConnection(QubitObject::DATABASE_NAME)
-        );
-
-        break;
-
-      default:
-        return parent::processField($field);
-    }
     }
 
     protected function processForm()
@@ -645,9 +645,11 @@ class InformationObjectEditAction extends DefaultEditAction
                 $childLevel->eventsRelatedByobjectId[] = $creationEvent;
             }
 
-            if (0 < strlen($item['levelOfDescription'])
-          || 0 < strlen($item['identifier'])
-          || 0 < strlen($item['title'])) {
+            if (
+                0 < strlen($item['levelOfDescription'])
+                || 0 < strlen($item['identifier'])
+                || 0 < strlen($item['title'])
+            ) {
                 $this->resource->informationObjectsRelatedByparentId[] = $childLevel;
             }
         }

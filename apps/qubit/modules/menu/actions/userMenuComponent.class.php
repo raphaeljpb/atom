@@ -33,11 +33,13 @@ class MenuUserMenuComponent extends sfComponent
 
         $this->form->setValidator('email', new sfValidatorEmail(['required' => true], [
             'required' => $this->context->i18n->__('You must enter your email address'),
-            'invalid' => $this->context->i18n->__('This isn\'t a valid email address'), ]));
+            'invalid' => $this->context->i18n->__('This isn\'t a valid email address'),
+        ]));
         $this->form->setWidget('email', new sfWidgetFormInput());
 
         $this->form->setValidator('password', new sfValidatorString(['required' => true], [
-            'required' => $this->context->i18n->__('You must enter your password'), ]));
+            'required' => $this->context->i18n->__('You must enter your password'),
+        ]));
         $this->form->setWidget('password', new sfWidgetFormInputPassword());
 
         $this->showLogin = false;
@@ -66,14 +68,14 @@ class MenuUserMenuComponent extends sfComponent
         }
 
         switch ($name) {
-      case 'login':
-        return $this->context->getI18n()->__('Log in');
+            case 'login':
+                return $this->context->getI18n()->__('Log in');
 
-      case 'logout':
-        return $this->context->getI18n()->__('Log out');
+            case 'logout':
+                return $this->context->getI18n()->__('Log out');
 
-      case 'myProfile':
-        return $this->context->getI18n()->__('Profile');
-    }
+            case 'myProfile':
+                return $this->context->getI18n()->__('Profile');
+        }
     }
 }

@@ -66,9 +66,9 @@ class DefaultBrowseAction extends sfAction
         if ((int) $this->limit + (int) $skip > $maxResultWindow) {
             // Show alert
             $message = $this->context->i18n->__(
-                "We've redirected you to the first page of results.".
-        ' To avoid using vast amounts of memory, AtoM limits pagination to %1% records.'.
-        ' To view the last records in the current result set, try changing the sort direction.',
+                "We've redirected you to the first page of results."
+                .' To avoid using vast amounts of memory, AtoM limits pagination to %1% records.'
+                .' To view the last records in the current result set, try changing the sort direction.',
                 ['%1%' => $maxResultWindow]
             );
             $this->getUser()->setFlash('notice', $message);
@@ -155,7 +155,8 @@ class DefaultBrowseAction extends sfAction
                 $uniqueTerm = [
                     'key' => 'unique_language',
                     'display' => $i18n->__('Unique records'),
-                    'doc_count' => $count, ];
+                    'doc_count' => $count,
+                ];
 
                 // Add unique term at the biginning of the array
                 // only when there are other terms
@@ -169,13 +170,13 @@ class DefaultBrowseAction extends sfAction
     protected function populateAgg($name, $buckets)
     {
         switch ($name) {
-      case 'languages':
-        foreach ($buckets as $key => $bucket) {
-            $buckets[$key]['display'] = ucfirst(sfCultureInfo::getInstance(sfContext::getInstance()->user->getCulture())->getLanguage($bucket['key']));
-        }
+            case 'languages':
+                foreach ($buckets as $key => $bucket) {
+                    $buckets[$key]['display'] = ucfirst(sfCultureInfo::getInstance(sfContext::getInstance()->user->getCulture())->getLanguage($bucket['key']));
+                }
 
-        break;
-    }
+                break;
+        }
 
         return $buckets;
     }

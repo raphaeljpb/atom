@@ -35,7 +35,8 @@ class TermAutocompleteAction extends sfAction
             if (isset($params['_sf_route']->resource->id)) {
                 // TODO Self join would be ideal
                 $criteria->add($criteria->getNewCriterion(QubitTerm::LFT, $params['_sf_route']->resource->lft, Criteria::LESS_THAN)
-                    ->addOr($criteria->getNewCriterion(QubitTerm::RGT, $params['_sf_route']->resource->rgt, Criteria::GREATER_THAN)));
+                    ->addOr($criteria->getNewCriterion(QubitTerm::RGT, $params['_sf_route']->resource->rgt, Criteria::GREATER_THAN)))
+                ;
             }
 
             // Filter by parent if it's set
@@ -75,24 +76,24 @@ class TermAutocompleteAction extends sfAction
             }
 
             $s1 = 'SELECT qt.id, null, qti.name
-        FROM '.QubitTerm::TABLE_NAME.' qt
-          LEFT JOIN (SELECT id, name, culture FROM '.QubitTermI18n::TABLE_NAME.$where.') qti
-            ON qt.id = qti.id
-        WHERE taxonomy_id = :p1
-          AND qti.culture = :p2';
+                FROM '.QubitTerm::TABLE_NAME.' qt
+                    LEFT JOIN (SELECT id, name, culture FROM '.QubitTermI18n::TABLE_NAME.$where.') qti
+                        ON qt.id = qti.id
+                WHERE taxonomy_id = :p1
+                    AND qti.culture = :p2';
 
             if (isset($request->parent)) {
                 $s1 .= ' AND parent_id = :p5';
             }
 
             $s2 = 'SELECT qt.id, qon.id as altId, qoni.name
-        FROM '.QubitOtherName::TABLE_NAME.' qon
-          INNER JOIN (SELECT id, culture, name FROM '.QubitOtherNameI18n::TABLE_NAME.$where.') qoni
-            ON qon.id = qoni.id
-          INNER JOIN '.QubitTerm::TABLE_NAME.' qt
-            ON qon.object_id = qt.id
-        WHERE qt.taxonomy_id = :p1
-          AND qoni.culture = :p2';
+                FROM '.QubitOtherName::TABLE_NAME.' qon
+                    INNER JOIN (SELECT id, culture, name FROM '.QubitOtherNameI18n::TABLE_NAME.$where.') qoni
+                        ON qon.id = qoni.id
+                    INNER JOIN '.QubitTerm::TABLE_NAME.' qt
+                        ON qon.object_id = qt.id
+                WHERE qt.taxonomy_id = :p1
+                    AND qoni.culture = :p2';
 
             // Narrow results by query
             if (isset($request->query)) {

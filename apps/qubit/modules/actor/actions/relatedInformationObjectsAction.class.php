@@ -23,9 +23,11 @@ class ActorRelatedInformationObjectsAction extends sfAction
     {
         $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
 
-        if ((empty($request->actorId) || !ctype_digit($request->actorId))
-      || (empty($request->page) || !ctype_digit($request->page))
-      || (isset($request->eventTypeId) && !ctype_digit($request->eventTypeId))) {
+        if (
+            (empty($request->actorId) || !ctype_digit($request->actorId))
+            || (empty($request->page) || !ctype_digit($request->page))
+            || (isset($request->eventTypeId) && !ctype_digit($request->eventTypeId))
+        ) {
             $this->forward404();
         }
 

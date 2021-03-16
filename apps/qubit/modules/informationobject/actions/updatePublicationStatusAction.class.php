@@ -22,7 +22,8 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
     // Arrays not allowed in class constants
     public static $NAMES = [
         'publicationStatus',
-        'updateDescendants', ];
+        'updateDescendants',
+    ];
 
     public function execute($request)
     {
@@ -76,30 +77,30 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'publicationStatus':
-        $publicationStatus = $this->resource->getStatus(['typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID]);
-        if (isset($publicationStatus)) {
-            $this->form->setDefault('publicationStatus', $publicationStatus->statusId);
-        } else {
-            $this->form->setDefault('publicationStatus', sfConfig::get('app_defaultPubStatus'));
+            case 'publicationStatus':
+                $publicationStatus = $this->resource->getStatus(['typeId' => QubitTerm::STATUS_TYPE_PUBLICATION_ID]);
+                if (isset($publicationStatus)) {
+                    $this->form->setDefault('publicationStatus', $publicationStatus->statusId);
+                } else {
+                    $this->form->setDefault('publicationStatus', sfConfig::get('app_defaultPubStatus'));
+                }
+
+                $this->form->setValidator('publicationStatus', new sfValidatorString());
+
+                $choices = [];
+                foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::PUBLICATION_STATUS_ID) as $item) {
+                    $choices[$item->id] = $item;
+                }
+
+                $this->form->setWidget('publicationStatus', new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'updateDescendants':
+                $this->form->setValidator('updateDescendants', new sfValidatorBoolean());
+                $this->form->setWidget('updateDescendants', new sfWidgetFormInputCheckbox());
+
+                break;
         }
-
-        $this->form->setValidator('publicationStatus', new sfValidatorString());
-
-        $choices = [];
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::PUBLICATION_STATUS_ID) as $item) {
-            $choices[$item->id] = $item;
-        }
-
-        $this->form->setWidget('publicationStatus', new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'updateDescendants':
-        $this->form->setValidator('updateDescendants', new sfValidatorBoolean());
-        $this->form->setWidget('updateDescendants', new sfWidgetFormInputCheckbox());
-
-        break;
-    }
     }
 }

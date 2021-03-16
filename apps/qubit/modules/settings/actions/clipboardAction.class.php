@@ -27,7 +27,8 @@ class SettingsClipboardAction extends SettingsEditAction
         'clipboard_send_button_text',
         'clipboard_send_message_html',
         'clipboard_send_http_method',
-        'clipboard_export_digitalobjects_enabled', ];
+        'clipboard_export_digitalobjects_enabled',
+    ];
     public static $I18N = [
         'clipboard_send_button_text',
         'clipboard_send_message_html',
@@ -53,28 +54,28 @@ class SettingsClipboardAction extends SettingsEditAction
     {
         // Set form field format
         switch ($name) {
-      case 'clipboard_save_max_age':
-      case 'clipboard_send_url':
-      case 'clipboard_send_button_text':
-      case 'clipboard_send_message_html':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
+            case 'clipboard_save_max_age':
+            case 'clipboard_send_url':
+            case 'clipboard_send_button_text':
+            case 'clipboard_send_message_html':
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormInput());
 
-        break;
+                break;
 
-      case 'clipboard_send_enabled':
-      case 'clipboard_send_http_method':
-      case 'clipboard_export_digitalobjects_enabled':
-        if ('clipboard_send_enabled' == $name || 'clipboard_export_digitalobjects_enabled' == $name) {
-            $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
-        } else {
-            $options = ['POST' => 'POST', 'GET' => 'GET'];
+            case 'clipboard_send_enabled':
+            case 'clipboard_send_http_method':
+            case 'clipboard_export_digitalobjects_enabled':
+                if ('clipboard_send_enabled' == $name || 'clipboard_export_digitalobjects_enabled' == $name) {
+                    $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
+                } else {
+                    $options = ['POST' => 'POST', 'GET' => 'GET'];
+                }
+
+                $this->form->setValidator($name, new sfValidatorString(['required' => false]));
+                $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => $options], ['class' => 'radio']));
+
+                break;
         }
-
-        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => $options], ['class' => 'radio']));
-
-        break;
-    }
     }
 }

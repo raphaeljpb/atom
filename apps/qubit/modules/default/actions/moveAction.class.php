@@ -103,9 +103,9 @@ class DefaultMoveAction extends sfAction
         if ((int) $limit * $page > $maxResultWindow) {
             // Show alert
             $message = $this->context->i18n->__(
-                "We've redirected you to the first page of results.".
-        ' To avoid using vast amounts of memory, AtoM limits pagination to %1% records.'.
-        ' Please, narrow down your results.',
+                "We've redirected you to the first page of results."
+                .' To avoid using vast amounts of memory, AtoM limits pagination to %1% records.'
+                .' Please, narrow down your results.',
                 ['%1%' => $maxResultWindow]
             );
             $this->getUser()->setFlash('notice', $message);
@@ -126,7 +126,8 @@ class DefaultMoveAction extends sfAction
             $fields = [
                 'identifier' => 1,
                 'referenceCode' => 1,
-                sprintf('i18n.%s.title', sfContext::getInstance()->user->getCulture()) => 1, ];
+                sprintf('i18n.%s.title', sfContext::getInstance()->user->getCulture()) => 1,
+            ];
             $this->queryBool->addMust(
                 arElasticSearchPluginUtil::generateBoolQueryString($request->query, $fields)
             );

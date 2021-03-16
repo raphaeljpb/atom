@@ -74,11 +74,11 @@ class SettingsPermissionsAction extends sfAction
 
             // Validate all forms at once and avoid redirection to show global errors
             if (
-        !$this->permissionsForm->isValid()
-        || !$this->permissionsAccessStatementsForm->isValid()
-        || !$this->permissionsCopyrightStatementForm->isValid()
-        || !$this->permissionsPreservationSystemAccessStatementForm->isValid()
-      ) {
+                !$this->permissionsForm->isValid()
+                || !$this->permissionsAccessStatementsForm->isValid()
+                || !$this->permissionsCopyrightStatementForm->isValid()
+                || !$this->permissionsPreservationSystemAccessStatementForm->isValid()
+            ) {
                 return;
             }
 

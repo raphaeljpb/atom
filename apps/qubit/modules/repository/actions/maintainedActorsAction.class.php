@@ -23,8 +23,10 @@ class RepositoryMaintainedActorsAction extends sfAction
     {
         $this->response->setHttpHeader('Content-Type', 'application/json; charset=utf-8');
 
-        if ((empty($request->repositoryId) || !ctype_digit($request->repositoryId))
-      || (empty($request->page) || !ctype_digit($request->page))) {
+        if (
+            (empty($request->repositoryId) || !ctype_digit($request->repositoryId))
+            || (empty($request->page) || !ctype_digit($request->page))
+        ) {
             $this->forward404();
         }
 

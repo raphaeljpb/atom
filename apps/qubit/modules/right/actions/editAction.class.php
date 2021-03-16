@@ -38,7 +38,8 @@ class RightEditAction extends sfAction
         'statuteJurisdiction',
         'statuteCitation',
         'statuteDeterminationDate',
-        'statuteNote', ];
+        'statuteNote',
+    ];
 
     public function execute($request)
     {
@@ -66,171 +67,171 @@ class RightEditAction extends sfAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'endDate':
-        $this->form->setDefault('endDate', ($this->right->endDate));
-        $this->form->setValidator('endDate', new sfValidatorString());
-        $this->form->setWidget('endDate', $this->dateWidget());
-        $this->form->getWidgetSchema()->endDate->setLabel($this->context->i18n->__('End'));
+            case 'endDate':
+                $this->form->setDefault('endDate', ($this->right->endDate));
+                $this->form->setValidator('endDate', new sfValidatorString());
+                $this->form->setWidget('endDate', $this->dateWidget());
+                $this->form->getWidgetSchema()->endDate->setLabel($this->context->i18n->__('End'));
 
-        break;
+                break;
 
-      case 'startDate':
-        $this->form->setDefault('startDate', $this->right->startDate);
-        $this->form->setValidator('startDate', new sfValidatorString());
-        $this->form->setWidget('startDate', $this->dateWidget());
-        $this->form->getWidgetSchema()->startDate->setLabel($this->context->i18n->__('Start'));
+            case 'startDate':
+                $this->form->setDefault('startDate', $this->right->startDate);
+                $this->form->setValidator('startDate', new sfValidatorString());
+                $this->form->setWidget('startDate', $this->dateWidget());
+                $this->form->getWidgetSchema()->startDate->setLabel($this->context->i18n->__('Start'));
 
-        break;
+                break;
 
-      case 'statuteDeterminationDate':
-      case 'copyrightStatusDate':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, $this->dateWidget());
-        $this->form->setDefault($name, $this->right[$name]);
-        if ('copyrightStatusDate' == $name) {
-            $this->form->getWidgetSchema()->{$name}->setLabel($this->context->i18n->__('Copyright status determination date'));
+            case 'statuteDeterminationDate':
+            case 'copyrightStatusDate':
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, $this->dateWidget());
+                $this->form->setDefault($name, $this->right[$name]);
+                if ('copyrightStatusDate' == $name) {
+                    $this->form->getWidgetSchema()->{$name}->setLabel($this->context->i18n->__('Copyright status determination date'));
+                }
+
+                break;
+
+            case 'basis':
+                foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item) {
+                    if (QubitTerm::RIGHT_BASIS_POLICY_ID == $item->id) {
+                        $this->form->setDefault('basis', $this->context->routing->generate(null, [$item, 'module' => 'term']));
+                    }
+                    $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
+                }
+                $this->form->setValidator('basis', new sfValidatorString());
+                $this->form->setWidget('basis', new sfWidgetFormSelect(['choices' => $choices]));
+                $this->form->setDefault('basis', $this->context->routing->generate(null, [$this->right->basis, 'module' => 'term']));
+
+                break;
+
+            case 'copyrightStatus':
+                foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::COPYRIGHT_STATUS_ID) as $item) {
+                    $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
+                }
+
+                $this->form->setValidator('copyrightStatus', new sfValidatorString());
+                $this->form->setWidget('copyrightStatus', new sfWidgetFormSelect(['choices' => $choices]));
+                $this->form->setDefault('copyrightStatus', $this->context->routing->generate(null, [$this->right->copyrightStatus, 'module' => 'term']));
+
+                break;
+
+            case 'rightsHolder':
+                $choices = [];
+                if ($this->right->rightsHolder) {
+                    $choices[$this->context->routing->generate(null, [$this->right->rightsHolder, 'module' => 'actor'])] = $this->right->rightsHolder->__toString();
+                }
+                $this->form->setValidator('rightsHolder', new sfValidatorString());
+                $this->form->setWidget('rightsHolder', new sfWidgetFormSelect(['choices' => $choices]));
+                $this->form->setDefault('rightsHolder', $this->context->routing->generate(null, [$this->right->rightsHolder, 'module' => 'actor']));
+
+                break;
+
+            case 'copyrightJurisdiction':
+                $this->form->setValidator('copyrightJurisdiction', new sfValidatorI18nChoiceCountry());
+                $this->form->setWidget('copyrightJurisdiction', new sfWidgetFormI18nChoiceCountry(['add_empty' => true, 'culture' => $this->context->user->getCulture()]));
+                $this->form->setDefault('copyrightJurisdiction', $this->right->copyrightJurisdiction);
+
+                break;
+
+            case 'copyrightNote':
+            case 'licenseNote':
+            case 'statuteJurisdiction':
+            case 'statuteNote':
+            case 'rightsNote':
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormTextarea());
+                $this->form->setDefault($name, $this->right[$name]);
+
+                break;
+
+            case 'statuteCitation':
+                $this->form->setDefault('statuteCitation', $this->context->routing->generate(null, [$this->right->statuteCitation, 'module' => 'term']));
+                $this->form->setValidator('statuteCitation', new sfValidatorString());
+
+                $choices = [];
+                if (isset($this->right->statuteCitation)) {
+                    $choices[$this->context->routing->generate(null, [$this->right->statuteCitation, 'module' => 'term'])] = $this->right->statuteCitation;
+                }
+
+                $this->form->setWidget('statuteCitation', new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'identifierType':
+            case 'identifierValue':
+            case 'identifierRole':
+            case 'licenseTerms':
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormInput());
+                $this->form->setDefault($name, $this->right[$name]);
+
+                break;
         }
-
-        break;
-
-      case 'basis':
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::RIGHT_BASIS_ID) as $item) {
-            if (QubitTerm::RIGHT_BASIS_POLICY_ID == $item->id) {
-                $this->form->setDefault('basis', $this->context->routing->generate(null, [$item, 'module' => 'term']));
-            }
-            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
-        }
-        $this->form->setValidator('basis', new sfValidatorString());
-        $this->form->setWidget('basis', new sfWidgetFormSelect(['choices' => $choices]));
-        $this->form->setDefault('basis', $this->context->routing->generate(null, [$this->right->basis, 'module' => 'term']));
-
-        break;
-
-      case 'copyrightStatus':
-        foreach (QubitTaxonomy::getTermsById(QubitTaxonomy::COPYRIGHT_STATUS_ID) as $item) {
-            $choices[$this->context->routing->generate(null, [$item, 'module' => 'term'])] = $item->__toString();
-        }
-
-        $this->form->setValidator('copyrightStatus', new sfValidatorString());
-        $this->form->setWidget('copyrightStatus', new sfWidgetFormSelect(['choices' => $choices]));
-        $this->form->setDefault('copyrightStatus', $this->context->routing->generate(null, [$this->right->copyrightStatus, 'module' => 'term']));
-
-        break;
-
-      case 'rightsHolder':
-        $choices = [];
-        if ($this->right->rightsHolder) {
-            $choices[$this->context->routing->generate(null, [$this->right->rightsHolder, 'module' => 'actor'])] = $this->right->rightsHolder->__toString();
-        }
-        $this->form->setValidator('rightsHolder', new sfValidatorString());
-        $this->form->setWidget('rightsHolder', new sfWidgetFormSelect(['choices' => $choices]));
-        $this->form->setDefault('rightsHolder', $this->context->routing->generate(null, [$this->right->rightsHolder, 'module' => 'actor']));
-
-        break;
-
-      case 'copyrightJurisdiction':
-        $this->form->setValidator('copyrightJurisdiction', new sfValidatorI18nChoiceCountry());
-        $this->form->setWidget('copyrightJurisdiction', new sfWidgetFormI18nChoiceCountry(['add_empty' => true, 'culture' => $this->context->user->getCulture()]));
-        $this->form->setDefault('copyrightJurisdiction', $this->right->copyrightJurisdiction);
-
-        break;
-
-      case 'copyrightNote':
-      case 'licenseNote':
-      case 'statuteJurisdiction':
-      case 'statuteNote':
-      case 'rightsNote':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormTextarea());
-        $this->form->setDefault($name, $this->right[$name]);
-
-        break;
-
-      case 'statuteCitation':
-        $this->form->setDefault('statuteCitation', $this->context->routing->generate(null, [$this->right->statuteCitation, 'module' => 'term']));
-        $this->form->setValidator('statuteCitation', new sfValidatorString());
-
-        $choices = [];
-        if (isset($this->right->statuteCitation)) {
-            $choices[$this->context->routing->generate(null, [$this->right->statuteCitation, 'module' => 'term'])] = $this->right->statuteCitation;
-        }
-
-        $this->form->setWidget('statuteCitation', new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'identifierType':
-      case 'identifierValue':
-      case 'identifierRole':
-      case 'licenseTerms':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
-        $this->form->setDefault($name, $this->right[$name]);
-
-        break;
-    }
     }
 
     protected function processField($field)
     {
         switch ($field->getName()) {
-      case 'basis':
-      case 'copyrightStatus':
-      case 'rightsHolder':
-      case 'statuteCitation':
-        unset($this->right[$field->getName()]);
+            case 'basis':
+            case 'copyrightStatus':
+            case 'rightsHolder':
+            case 'statuteCitation':
+                unset($this->right[$field->getName()]);
 
-        $value = $this->form->getValue($field->getName());
-        if (isset($value)) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($value));
-            $this->right[$field->getName()] = $params['_sf_route']->resource;
+                $value = $this->form->getValue($field->getName());
+                if (isset($value)) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($value));
+                    $this->right[$field->getName()] = $params['_sf_route']->resource;
+                }
+
+                break;
+
+            case 'grantedRights':
+                foreach ($field->getValue() as $data) {
+                    $grantedRight = null;
+
+                    // try and find pre-existing record with this id
+                    $grantedRight = $this->right->grantedRightsFindById($data['id']);
+
+                    // if one was found, but user
+                    // has requested it be deleted
+                    // then lets delete it.
+                    if (null !== $grantedRight && 'true' === $data['delete']) {
+                        $grantedRight->delete();
+
+                        continue;
+                    }
+
+                    // none found, so make a new one
+                    if (false === $grantedRight) {
+                        $grantedRight = new QubitGrantedRight();
+                    }
+
+                    $actparams = $this->context->routing->parse(Qubit::pathInfo($data['act']));
+                    $grantedRight->act = $actparams['_sf_route']->resource;
+                    $grantedRight->restriction = $data['restriction'];
+
+                    // empty dates come in as empty strings, but propel wants 'null' or it'll default to today's date
+                    $grantedRight->startDate = strlen($data['startDate'] > 0) ? $data['startDate'] : null;
+                    $grantedRight->endDate = strlen($data['endDate'] > 0) ? $data['endDate'] : null;
+                    $grantedRight->notes = $data['notes'];
+
+                    // relate it to the Right if it is new
+                    if (null === $grantedRight->id) {
+                        $this->right->grantedRights[] = $grantedRight;
+                    }
+                }
+
+                // no break
+            case 'blank':
+                break;
+
+            default:
+                $this->right[$field->getName()] = $this->form->getValue($field->getName());
         }
-
-        break;
-
-      case 'grantedRights':
-        foreach ($field->getValue() as $data) {
-            $grantedRight = null;
-
-            // try and find pre-existing record with this id
-            $grantedRight = $this->right->grantedRightsFindById($data['id']);
-
-            // if one was found, but user
-            // has requested it be deleted
-            // then lets delete it.
-            if (null !== $grantedRight && 'true' === $data['delete']) {
-                $grantedRight->delete();
-
-                continue;
-            }
-
-            // none found, so make a new one
-            if (false === $grantedRight) {
-                $grantedRight = new QubitGrantedRight();
-            }
-
-            $actparams = $this->context->routing->parse(Qubit::pathInfo($data['act']));
-            $grantedRight->act = $actparams['_sf_route']->resource;
-            $grantedRight->restriction = $data['restriction'];
-
-            // empty dates come in as empty strings, but propel wants 'null' or it'll default to today's date
-            $grantedRight->startDate = strlen($data['startDate'] > 0) ? $data['startDate'] : null;
-            $grantedRight->endDate = strlen($data['endDate'] > 0) ? $data['endDate'] : null;
-            $grantedRight->notes = $data['notes'];
-
-            // relate it to the Right if it is new
-            if (null === $grantedRight->id) {
-                $this->right->grantedRights[] = $grantedRight;
-            }
-        }
-
-        // no break
-      case 'blank':
-        break;
-
-      default:
-        $this->right[$field->getName()] = $this->form->getValue($field->getName());
-    }
     }
 
     protected function processForm()
@@ -304,17 +305,17 @@ class RightEditAction extends sfAction
     protected function setRedirect($type)
     {
         switch ($type) {
-      case 'QubitInformationObject':
-      case 'QubitDigitalObject':
-        $this->redirectTo = [$this->informationObject, 'module' => 'informationObject'];
+            case 'QubitInformationObject':
+            case 'QubitDigitalObject':
+                $this->redirectTo = [$this->informationObject, 'module' => 'informationObject'];
 
-        break;
+                break;
 
-      case 'QubitAccession':
-        $this->redirectTo = [$this->resource, 'module' => 'accession'];
+            case 'QubitAccession':
+                $this->redirectTo = [$this->resource, 'module' => 'accession'];
 
-        break;
-    }
+                break;
+        }
     }
 
     protected function earlyExecute()

@@ -87,16 +87,16 @@ class SearchDescriptionUpdatesAction extends sfAction
         // Add user action type filtering, if specified
         if ('both' != $this->form->getValue('dateOf')) {
             switch ($this->form->getValue('dateOf')) {
-        case 'CREATED_AT':
-          $criteria->add(QubitAuditLog::ACTION_TYPE_ID, QubitTerm::USER_ACTION_CREATION_ID);
+                case 'CREATED_AT':
+                    $criteria->add(QubitAuditLog::ACTION_TYPE_ID, QubitTerm::USER_ACTION_CREATION_ID);
 
-          break;
+                break;
 
-        case 'UPDATED_AT':
-          $criteria->add(QubitAuditLog::ACTION_TYPE_ID, QubitTerm::USER_ACTION_MODIFICATION_ID);
+                case 'UPDATED_AT':
+                    $criteria->add(QubitAuditLog::ACTION_TYPE_ID, QubitTerm::USER_ACTION_MODIFICATION_ID);
 
-          break;
-      }
+                break;
+            }
         }
 
         // Add repository restriction, if specified
@@ -169,9 +169,9 @@ class SearchDescriptionUpdatesAction extends sfAction
         if ((int) $limit * $page > $maxResultWindow) {
             // Show alert
             $message = $this->context->i18n->__(
-                "We've redirected you to the first page of results.".
-        ' To avoid using vast amounts of memory, AtoM limits pagination to %1% records.'.
-        ' Please, narrow down your results.',
+                "We've redirected you to the first page of results."
+                .' To avoid using vast amounts of memory, AtoM limits pagination to %1% records.'
+                .' Please, narrow down your results.',
                 ['%1%' => $maxResultWindow]
             );
             $this->getUser()->setFlash('notice', $message);
@@ -198,123 +198,124 @@ class SearchDescriptionUpdatesAction extends sfAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'className':
-        $choices = [
-            'QubitInformationObject' => sfConfig::get('app_ui_label_informationobject'),
-            'QubitActor' => sfConfig::get('app_ui_label_actor'),
-            'QubitRepository' => sfConfig::get('app_ui_label_repository'),
-            'QubitTerm' => sfConfig::get('app_ui_label_term'),
-            'QubitFunctionObject' => sfConfig::get('app_ui_label_function'), ];
+            case 'className':
+                $choices = [
+                    'QubitInformationObject' => sfConfig::get('app_ui_label_informationobject'),
+                    'QubitActor' => sfConfig::get('app_ui_label_actor'),
+                    'QubitRepository' => sfConfig::get('app_ui_label_repository'),
+                    'QubitTerm' => sfConfig::get('app_ui_label_term'),
+                    'QubitFunctionObject' => sfConfig::get('app_ui_label_function'),
+                ];
 
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
 
-        break;
+                break;
 
-      case 'startDate':
-        $this->form->setValidator($name, new sfValidatorDate([], ['invalid' => $this->context->i18n->__('Invalid start date')]));
-        $this->form->setWidget($name, new sfWidgetFormInput());
+            case 'startDate':
+                $this->form->setValidator($name, new sfValidatorDate([], ['invalid' => $this->context->i18n->__('Invalid start date')]));
+                $this->form->setWidget($name, new sfWidgetFormInput());
 
-        break;
+                break;
 
-      case 'endDate':
-        $this->form->setValidator($name, new sfValidatorDate([], ['invalid' => $this->context->i18n->__('Invalid end date')]));
-        $this->form->setWidget($name, new sfWidgetFormInput());
+            case 'endDate':
+                $this->form->setValidator($name, new sfValidatorDate([], ['invalid' => $this->context->i18n->__('Invalid end date')]));
+                $this->form->setWidget($name, new sfWidgetFormInput());
 
-        break;
+                break;
 
-      case 'dateOf':
-        $choices = [
-            'CREATED_AT' => $this->context->i18n->__('Creation'),
-            'UPDATED_AT' => $this->context->i18n->__('Revision'),
-            'both' => $this->context->i18n->__('Both'),
-        ];
+            case 'dateOf':
+                $choices = [
+                    'CREATED_AT' => $this->context->i18n->__('Creation'),
+                    'UPDATED_AT' => $this->context->i18n->__('Revision'),
+                    'both' => $this->context->i18n->__('Both'),
+                ];
 
-        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
-        $this->form->setWidget($name, new arWidgetFormSelectRadio(['choices' => $choices, 'class' => 'radio inline']));
+                $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+                $this->form->setWidget($name, new arWidgetFormSelectRadio(['choices' => $choices, 'class' => 'radio inline']));
 
-        break;
+                break;
 
-      case 'publicationStatus':
-        $choices = [
-            QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID => QubitTerm::getById(QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)->name,
-            QubitTerm::PUBLICATION_STATUS_DRAFT_ID => QubitTerm::getById(QubitTerm::PUBLICATION_STATUS_DRAFT_ID)->name,
-            'all' => $this->context->i18n->__('All'),
-        ];
+            case 'publicationStatus':
+                $choices = [
+                    QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID => QubitTerm::getById(QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)->name,
+                    QubitTerm::PUBLICATION_STATUS_DRAFT_ID => QubitTerm::getById(QubitTerm::PUBLICATION_STATUS_DRAFT_ID)->name,
+                    'all' => $this->context->i18n->__('All'),
+                ];
 
-        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
-        $this->form->setWidget($name, new arWidgetFormSelectRadio(['choices' => $choices, 'class' => 'radio inline']));
+                $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+                $this->form->setWidget($name, new arWidgetFormSelectRadio(['choices' => $choices, 'class' => 'radio inline']));
 
-        break;
+                break;
 
-      case 'repository':
-        // Get list of repositories
-        $criteria = new Criteria();
+            case 'repository':
+                // Get list of repositories
+                $criteria = new Criteria();
 
-        // Do source culture fallback
-        $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');
+                // Do source culture fallback
+                $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitActor');
 
-        // Ignore root repository
-        $criteria->add(QubitActor::ID, QubitRepository::ROOT_ID, Criteria::NOT_EQUAL);
+                // Ignore root repository
+                $criteria->add(QubitActor::ID, QubitRepository::ROOT_ID, Criteria::NOT_EQUAL);
 
-        $criteria->addAscendingOrderByColumn('authorized_form_of_name');
+                $criteria->addAscendingOrderByColumn('authorized_form_of_name');
 
-        $cache = QubitCache::getInstance();
-        $cacheKey = 'search:list-of-repositories:'.$this->context->user->getCulture();
-        if ($cache->has($cacheKey)) {
-            $choices = $cache->get($cacheKey);
-        } else {
-            $choices = [];
-            $choices[null] = null;
-            foreach (QubitRepository::get($criteria) as $repository) {
-                $choices[$repository->id] = $repository->__toString();
+                $cache = QubitCache::getInstance();
+                $cacheKey = 'search:list-of-repositories:'.$this->context->user->getCulture();
+                if ($cache->has($cacheKey)) {
+                    $choices = $cache->get($cacheKey);
+                } else {
+                    $choices = [];
+                    $choices[null] = null;
+                    foreach (QubitRepository::get($criteria) as $repository) {
+                        $choices[$repository->id] = $repository->__toString();
+                    }
+
+                    $cache->set($cacheKey, $choices, 3600);
+                }
+
+                $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
+
+            case 'user':
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => []], ['class' => 'form-autocomplete']));
+
+                break;
             }
-
-            $cache->set($cacheKey, $choices, 3600);
-        }
-
-        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-
-      case 'user':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormSelect(['choices' => []], ['class' => 'form-autocomplete']));
-
-        break;
-    }
     }
 
     private function addDateRangeQuery($queryBool, $dateOf)
     {
         switch ($dateOf) {
-      case 'CREATED_AT':
-        $this->addDateRangeQueryClause($queryBool, 'createdAt', $this->form->getValue('startDate'), $this->form->getValue('endDate'));
+            case 'CREATED_AT':
+                $this->addDateRangeQueryClause($queryBool, 'createdAt', $this->form->getValue('startDate'), $this->form->getValue('endDate'));
 
-        break;
+                break;
 
-      case 'UPDATED_AT':
-        $this->addDateRangeQueryClause($queryBool, 'updatedAt', $this->form->getValue('startDate'), $this->form->getValue('endDate'));
+            case 'UPDATED_AT':
+                $this->addDateRangeQueryClause($queryBool, 'updatedAt', $this->form->getValue('startDate'), $this->form->getValue('endDate'));
 
-        break;
+                break;
 
-      default:
-        // Subquery for finding created at dates within range
-        $createdAtQueryBool = new \Elastica\Query\BoolQuery();
-        $this->addDateRangeQueryClause($createdAtQueryBool, 'createdAt', $this->form->getValue('startDate'), $this->form->getValue('endDate'));
+            default:
+                // Subquery for finding created at dates within range
+                $createdAtQueryBool = new \Elastica\Query\BoolQuery();
+                $this->addDateRangeQueryClause($createdAtQueryBool, 'createdAt', $this->form->getValue('startDate'), $this->form->getValue('endDate'));
 
-        // Subquery for finding updated at dates within range
-        $updatedAtQueryBool = new \Elastica\Query\BoolQuery();
-        $this->addDateRangeQueryClause($updatedAtQueryBool, 'updatedAt', $this->form->getValue('startDate'), $this->form->getValue('endDate'));
+                // Subquery for finding updated at dates within range
+                $updatedAtQueryBool = new \Elastica\Query\BoolQuery();
+                $this->addDateRangeQueryClause($updatedAtQueryBool, 'updatedAt', $this->form->getValue('startDate'), $this->form->getValue('endDate'));
 
-        // Combined subquery
-        $bothDatesQueryBool = new \Elastica\Query\BoolQuery();
-        $bothDatesQueryBool->addShould($createdAtQueryBool);
-        $bothDatesQueryBool->addShould($updatedAtQueryBool);
+                // Combined subquery
+                $bothDatesQueryBool = new \Elastica\Query\BoolQuery();
+                $bothDatesQueryBool->addShould($createdAtQueryBool);
+                $bothDatesQueryBool->addShould($updatedAtQueryBool);
 
-        $queryBool->addMust($bothDatesQueryBool);
-    }
+                $queryBool->addMust($bothDatesQueryBool);
+        }
     }
 
     private function addDateRangeQueryClause($queryBool, $field, $startDate, $endDate)

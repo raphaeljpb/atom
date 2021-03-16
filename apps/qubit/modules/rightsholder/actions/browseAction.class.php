@@ -62,21 +62,21 @@ class RightsHolderBrowseAction extends sfAction
         }
 
         switch ($request->sort) {
-      case 'identifier':
-        $criteria->{$sortFunction}(QubitActor::DESCRIPTION_IDENTIFIER);
-        // And continue to sort by alphabetic
-        // no break
-      case 'alphabetic':
-        $criteria->{$sortFunction}('authorized_form_of_name');
+            case 'identifier':
+                $criteria->{$sortFunction}(QubitActor::DESCRIPTION_IDENTIFIER);
+                // And continue to sort by alphabetic
+                // no break
+            case 'alphabetic':
+                $criteria->{$sortFunction}('authorized_form_of_name');
 
-        break;
+                break;
 
-      case 'lastUpdated':
-      default:
-        $criteria->{$sortFunction}(QubitObject::UPDATED_AT);
+            case 'lastUpdated':
+            default:
+                $criteria->{$sortFunction}(QubitObject::UPDATED_AT);
 
-        break;
-    }
+                break;
+        }
 
         // Page results
         $this->pager = new QubitPager('QubitRightsHolder');

@@ -30,11 +30,13 @@ class SettingsSiteInformationAction extends SettingsEditAction
     public static $NAMES = [
         'siteTitle',
         'siteDescription',
-        'siteBaseUrl', ];
+        'siteBaseUrl',
+    ];
     public static $I18N = [
         'siteTitle',
         'siteDescription',
-        'siteBaseUrl', ];
+        'siteBaseUrl',
+    ];
 
     public function earlyExecute()
     {
@@ -51,28 +53,28 @@ class SettingsSiteInformationAction extends SettingsEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'siteTitle':
-        $this->form->setWidget($name, new sfWidgetFormInput());
-        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
-        $this->form->getWidgetSchema()->{$name}->setLabel($this->i18n->__('Site title'));
+            case 'siteTitle':
+                $this->form->setWidget($name, new sfWidgetFormInput());
+                $this->form->setValidator($name, new sfValidatorString(['required' => false]));
+                $this->form->getWidgetSchema()->{$name}->setLabel($this->i18n->__('Site title'));
 
-        break;
+                break;
 
-      case 'siteDescription':
-        $this->form->setWidget($name, new sfWidgetFormInput());
-        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
-        $this->form->getWidgetSchema()->{$name}->setLabel($this->i18n->__('Site description'));
+            case 'siteDescription':
+                $this->form->setWidget($name, new sfWidgetFormInput());
+                $this->form->setValidator($name, new sfValidatorString(['required' => false]));
+                $this->form->getWidgetSchema()->{$name}->setLabel($this->i18n->__('Site description'));
 
-        break;
+                break;
 
-      case 'siteBaseUrl':
-        $this->form->setWidget($name, new sfWidgetFormInput());
-        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
-        $this->form->getWidgetSchema()->{$name}->setLabel(
-            $this->i18n->__('Site base URL (used in MODS and EAD exports)')
-        );
+            case 'siteBaseUrl':
+                $this->form->setWidget($name, new sfWidgetFormInput());
+                $this->form->setValidator($name, new sfValidatorString(['required' => false]));
+                $this->form->getWidgetSchema()->{$name}->setLabel(
+                    $this->i18n->__('Site base URL (used in MODS and EAD exports)')
+                );
 
-        break;
-    }
+                break;
+        }
     }
 }

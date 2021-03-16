@@ -99,20 +99,20 @@ class UserEditInformationObjectAclAction extends DefaultEditAction
                     $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
 
                     switch ($resource->className) {
-            case 'QubitInformationObject':
-              $aclPermission->objectId = $resource->id;
+                        case 'QubitInformationObject':
+                            $aclPermission->objectId = $resource->id;
 
-              break;
+                            break;
 
-            case 'QubitRepository':
-              $aclPermission->objectId = QubitInformationObject::ROOT_ID;
-              $aclPermission->setRepository($resource);
+                        case 'QubitRepository':
+                            $aclPermission->objectId = QubitInformationObject::ROOT_ID;
+                            $aclPermission->setRepository($resource);
 
-              break;
+                            break;
 
-            default:
-              break;
-          }
+                        default:
+                            break;
+                    }
 
                     $this->resource->aclPermissions[] = $aclPermission;
                 }

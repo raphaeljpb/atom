@@ -22,7 +22,8 @@ class ClipboardLoadAction extends DefaultEditAction
     // Arrays not allowed in class constants
     public static $NAMES = [
         'password',
-        'mode', ];
+        'mode',
+    ];
 
     public function execute($request)
     {
@@ -97,37 +98,37 @@ class ClipboardLoadAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'password':
-        $this->form->setValidator('password', new sfValidatorString(['required' => true]));
-        $this->form->setWidget('password', new sfWidgetFormInput());
+            case 'password':
+                $this->form->setValidator('password', new sfValidatorString(['required' => true]));
+                $this->form->setWidget('password', new sfWidgetFormInput());
 
-        break;
+                break;
 
-      case 'mode':
-        $this->form->setDefault('mode', 'merge');
-        $this->form->setValidator('mode', new sfValidatorString());
-        $choices = [
-            'merge' => $this->context->i18n->__('Merge saved clipboard with existing clipboard results'),
-            'replace' => $this->context->i18n->__('Replace existing clipboard results with saved clipboard'),
-        ];
-        $this->form->setWidget('mode', new sfWidgetFormSelect(['choices' => $choices]));
+            case 'mode':
+                $this->form->setDefault('mode', 'merge');
+                $this->form->setValidator('mode', new sfValidatorString());
+                $choices = [
+                    'merge' => $this->context->i18n->__('Merge saved clipboard with existing clipboard results'),
+                    'replace' => $this->context->i18n->__('Replace existing clipboard results with saved clipboard'),
+                ];
+                $this->form->setWidget('mode', new sfWidgetFormSelect(['choices' => $choices]));
 
-        break;
-    }
+                break;
+        }
     }
 
     protected function processField($field)
     {
         switch ($field->getName()) {
-      case 'password':
-        $this->password = $this->form->getValue($field->getName());
+            case 'password':
+                $this->password = $this->form->getValue($field->getName());
 
-        break;
+                break;
 
-      case 'mode':
-        $this->mode = $this->form->getValue($field->getName());
+            case 'mode':
+                $this->mode = $this->form->getValue($field->getName());
 
-        break;
-    }
+                break;
+        }
     }
 }

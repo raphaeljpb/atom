@@ -176,7 +176,7 @@ class DefaultFullTreeViewAction extends sfAction
             ->index
             ->getType('QubitInformationObject')
             ->search($query->getQuery(false, false))
-    ;
+        ;
     }
 
     /**
@@ -239,7 +239,7 @@ class DefaultFullTreeViewAction extends sfAction
             ->index
             ->getType('QubitInformationObject')
             ->count($query->getQuery(false, false))
-    ;
+        ;
     }
 
     /**
@@ -310,9 +310,9 @@ class DefaultFullTreeViewAction extends sfAction
 
             // If this node is an ancestor of the target node, add child data
             if (
-        isset($options['recursive']) && $options['recursive']
-        && in_array($node['id'], $this->ancestorIds)
-      ) {
+                isset($options['recursive']) && $options['recursive']
+                && in_array($node['id'], $this->ancestorIds)
+            ) {
                 $children = $this->getChildren($node['id'], $options);
 
                 $node['children'] = $children['nodes'];
@@ -382,9 +382,9 @@ class DefaultFullTreeViewAction extends sfAction
         ];
 
         if (
-      isset($options['orderColumn'])
-      && in_array($options['orderColumn'], $allowedSorts)
-    ) {
+            isset($options['orderColumn'])
+            && in_array($options['orderColumn'], $allowedSorts)
+        ) {
             $sortField = $options['orderColumn'];
         }
 
@@ -464,8 +464,9 @@ class DefaultFullTreeViewAction extends sfAction
 
         // If show identifier setting is "reference code", use it
         if (
-      'referenceCode' === $this->showIdentifier
-      && isset($record['referenceCode'])) {
+            'referenceCode' === $this->showIdentifier
+            && isset($record['referenceCode'])
+        ) {
             $identifier = $record['referenceCode'];
         }
 
@@ -487,9 +488,10 @@ class DefaultFullTreeViewAction extends sfAction
      */
     protected function addLevelOfDescription($text, $record)
     {
-        if ('yes' === sfConfig::get('app_treeview_show_level_of_description', 'yes')
-      && !empty($record['levelOfDescriptionId'])
-    ) {
+        if (
+            'yes' === sfConfig::get('app_treeview_show_level_of_description', 'yes')
+            && !empty($record['levelOfDescriptionId'])
+        ) {
             return sprintf(
                 '[%s] %s',
                 render_value_inline(
@@ -516,9 +518,9 @@ class DefaultFullTreeViewAction extends sfAction
 
         // Check that treeview dates setting is "yes"
         if (
-      'yes' === sfConfig::get('app_treeview_show_dates', 'no')
-      && isset($record['dates'])
-    ) {
+            'yes' === sfConfig::get('app_treeview_show_dates', 'no')
+            && isset($record['dates'])
+        ) {
             $dates = render_search_result_date($record['dates']);
         }
 
@@ -541,9 +543,9 @@ class DefaultFullTreeViewAction extends sfAction
     protected function addDraftText($text, $record)
     {
         if (
-      isset($record['publicationStatusId'])
-      && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $record['publicationStatusId']
-    ) {
+            isset($record['publicationStatusId'])
+            && QubitTerm::PUBLICATION_STATUS_DRAFT_ID == $record['publicationStatusId']
+        ) {
             // Prepend "(Draft) " to draft records
             $text = sprintf(
                 '(%s) %s',

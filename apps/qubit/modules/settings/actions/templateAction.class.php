@@ -81,18 +81,27 @@ class SettingsTemplateAction extends sfAction
     protected function updateDefaultTemplateSettings($form)
     {
         if (null !== $newValue = $form->getValue('informationobject')) {
-            $setting = QubitSetting::findAndSave('informationobject', $newValue, [
-                'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true, ]);
+            $setting = QubitSetting::findAndSave(
+                'informationobject',
+                $newValue,
+                ['scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true]
+            );
         }
 
         if (null !== $newValue = $form->getValue('actor')) {
-            $setting = QubitSetting::findAndSave('actor', $newValue, [
-                'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true, ]);
+            $setting = QubitSetting::findAndSave(
+                'actor',
+                $newValue,
+                ['scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true]
+            );
         }
 
         if (null !== $newValue = $form->getValue('repository')) {
-            $setting = QubitSetting::findAndSave('repository', $newValue, [
-                'scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true, ]);
+            $setting = QubitSetting::findAndSave(
+                'repository',
+                $newValue,
+                ['scope' => 'default_template', 'createNew' => true, 'sourceCulture' => true]
+            );
         }
 
         return $this;

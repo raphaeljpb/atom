@@ -49,7 +49,8 @@ class ActorContextMenuComponent extends sfComponent
                 'label' => $this->context->i18n->__('Subject'),
                 'pager' => $pager,
                 'dataUrl' => url_for(['module' => 'actor', 'action' => 'relatedInformationObjects', 'actorId' => $this->resource->id]),
-                'moreUrl' => url_for(['module' => 'informationobject', 'action' => 'browse', 'topLod' => 0, 'names' => $this->resource->id]), ];
+                'moreUrl' => url_for(['module' => 'informationobject', 'action' => 'browse', 'topLod' => 0, 'names' => $this->resource->id]),
+            ];
         }
 
         // All event types
@@ -66,7 +67,8 @@ class ActorContextMenuComponent extends sfComponent
                     'label' => $eventType->getRole(),
                     'pager' => $pager,
                     'dataUrl' => url_for(['module' => 'actor', 'action' => 'relatedInformationObjects', 'actorId' => $this->resource->id, 'eventTypeId' => $eventType->id]),
-                    'moreUrl' => url_for(['module' => 'informationobject', 'action' => 'browse', 'topLod' => 0, 'actorId' => $this->resource->id, 'eventTypeId' => $eventType->id]), ];
+                    'moreUrl' => url_for(['module' => 'informationobject', 'action' => 'browse', 'topLod' => 0, 'actorId' => $this->resource->id, 'eventTypeId' => $eventType->id]),
+                ];
             }
         }
     }

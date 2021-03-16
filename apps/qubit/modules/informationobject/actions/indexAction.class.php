@@ -67,64 +67,65 @@ class InformationObjectIndexAction extends sfAction
     protected function addField($validatorSchema, $name)
     {
         switch ($name) {
-      case 'levelOfDescription':
-        $forbiddenValues = [];
-        foreach ($this->resource->ancestors->orderBy('rgt') as $item) {
-            if (isset($item->levelOfDescription)) {
-                switch ($item->levelOfDescription->getName(['sourceCulture' => true])) {
-              case 'Item':
-                $forbiddenValues[] = 'Item';
+            case 'levelOfDescription':
+                $forbiddenValues = [];
+                foreach ($this->resource->ancestors->orderBy('rgt') as $item) {
+                    if (isset($item->levelOfDescription)) {
+                        switch ($item->levelOfDescription->getName(['sourceCulture' => true])) {
+                            case 'Item':
+                                $forbiddenValues[] = 'Item';
 
-                // no break
-              case 'File':
-                $forbiddenValues[] = 'File';
+                                // no break
+                            case 'File':
+                                $forbiddenValues[] = 'File';
 
-                // no break
-              case 'Sub-subseries':
-                $forbiddenValues[] = 'Sub-subseries';
+                                // no break
+                            case 'Sub-subseries':
+                                $forbiddenValues[] = 'Sub-subseries';
 
-                // no break
-              case 'Subseries':
-                $forbiddenValues[] = 'Subseries';
+                                // no break
+                            case 'Subseries':
+                                $forbiddenValues[] = 'Subseries';
 
-                // no break
-              case 'Series':
-                $forbiddenValues[] = 'Series';
+                                // no break
+                            case 'Series':
+                                $forbiddenValues[] = 'Series';
 
-                // no break
-              case 'Sub-subfonds':
-                $forbiddenValues[] = 'Sub-subfonds';
+                                // no break
+                            case 'Sub-subfonds':
+                                $forbiddenValues[] = 'Sub-subfonds';
 
-                // no break
-              case 'Subfonds':
-                $forbiddenValues[] = 'Subfonds';
+                                // no break
+                            case 'Subfonds':
+                                $forbiddenValues[] = 'Subfonds';
 
-                // no break
-              case 'Fonds':
-                // Collection may not be a descendant of fonds
-                $forbiddenValues[] = 'Fonds';
-                $forbiddenValues[] = 'Collection';
+                                // no break
+                            case 'Fonds':
+                                // Collection may not be a descendant of fonds
+                                $forbiddenValues[] = 'Fonds';
+                                $forbiddenValues[] = 'Collection';
+
+                                break;
+
+                            case 'Collection':
+                                // Neither fonds nor subfonds may be descendants of collection
+                                $forbiddenValues[] = 'Subfonds';
+                                $forbiddenValues[] = 'Fonds';
+                                $forbiddenValues[] = 'Collection';
+
+                                break;
+                        }
+
+                        break;
+                    }
+                }
+
+                $validatorSchema->levelOfDescription = new QubitValidatorForbiddenValues([
+                    'forbidden_values' => $forbiddenValues,
+                    'required' => true,
+                ]);
 
                 break;
-
-              case 'Collection':
-                // Neither fonds nor subfonds may be descendants of collection
-                $forbiddenValues[] = 'Subfonds';
-                $forbiddenValues[] = 'Fonds';
-                $forbiddenValues[] = 'Collection';
-
-                break;
-            }
-
-                break;
-            }
         }
-
-        $validatorSchema->levelOfDescription = new QubitValidatorForbiddenValues([
-            'forbidden_values' => $forbiddenValues,
-            'required' => true, ]);
-
-        break;
-    }
     }
 }

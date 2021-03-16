@@ -40,9 +40,9 @@ class DigitalObjectShowComponent extends sfComponent
 
         // Don't show anything if trying to view a master DO without authorization
         if (
-      QubitTerm::MASTER_ID == $this->usageType
-      && !QubitAcl::check($this->resource->object, 'readMaster')
-    ) {
+            QubitTerm::MASTER_ID == $this->usageType
+            && !QubitAcl::check($this->resource->object, 'readMaster')
+        ) {
             return sfView::NONE;
         }
 
@@ -75,12 +75,12 @@ class DigitalObjectShowComponent extends sfComponent
     private function checkShowGenericIcon()
     {
         switch ($this->usageType) {
-      case QubitTerm::REFERENCE_ID:
-        return !QubitAcl::check($this->resource->object, 'readReference');
+            case QubitTerm::REFERENCE_ID:
+                return !QubitAcl::check($this->resource->object, 'readReference');
 
-      case QubitTerm::THUMBNAIL_ID:
-        return !QubitAcl::check($this->resource->object, 'readThumbnail');
-    }
+            case QubitTerm::THUMBNAIL_ID:
+                return !QubitAcl::check($this->resource->object, 'readThumbnail');
+        }
     }
 
     /**
@@ -110,40 +110,46 @@ class DigitalObjectShowComponent extends sfComponent
     {
         // Figure out which show component to call
         switch ($this->resource->mediaTypeId) {
-      case QubitTerm::IMAGE_ID:
-        if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceof QubitInformationObject) {
-            $this->showComponent = 'showCompound';
-        } elseif ($this->resource->isWebCompatibleImageFormat()) {
-            $this->showComponent = 'showImage';
-        } else {
-            $this->showComponent = 'showDownload';
+            case QubitTerm::IMAGE_ID:
+                if (
+                    $this->resource->showAsCompoundDigitalObject()
+                    && $this->resource->object instanceof QubitInformationObject
+                ) {
+                    $this->showComponent = 'showCompound';
+                } elseif ($this->resource->isWebCompatibleImageFormat()) {
+                    $this->showComponent = 'showImage';
+                } else {
+                    $this->showComponent = 'showDownload';
+                }
+
+                break;
+
+            case QubitTerm::AUDIO_ID:
+                $this->showComponent = 'showAudio';
+
+                break;
+
+            case QubitTerm::VIDEO_ID:
+                $this->showComponent = 'showVideo';
+
+                break;
+
+            case QubitTerm::TEXT_ID:
+                if (
+                    $this->resource->showAsCompoundDigitalObject()
+                    && $this->resource->object instanceof QubitInformationObject
+                ) {
+                    $this->showComponent = 'showCompound';
+                } else {
+                    $this->showComponent = 'showText';
+                }
+
+                break;
+
+            default:
+                $this->showComponent = 'showDownload';
+
+                break;
         }
-
-        break;
-
-      case QubitTerm::AUDIO_ID:
-        $this->showComponent = 'showAudio';
-
-        break;
-
-      case QubitTerm::VIDEO_ID:
-        $this->showComponent = 'showVideo';
-
-        break;
-
-      case QubitTerm::TEXT_ID:
-        if ($this->resource->showAsCompoundDigitalObject() && $this->resource->object instanceof QubitInformationObject) {
-            $this->showComponent = 'showCompound';
-        } else {
-            $this->showComponent = 'showText';
-        }
-
-        break;
-
-      default:
-        $this->showComponent = 'showDownload';
-
-        break;
-    }
     }
 }

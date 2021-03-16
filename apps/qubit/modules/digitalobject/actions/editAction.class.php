@@ -39,8 +39,10 @@ class DigitalObjectEditAction extends sfAction
         $this->object = $this->resource->object;
 
         // Check user authorization
-        if (!QubitAcl::check($this->object, 'update')
-      && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)) {
+        if (
+            !QubitAcl::check($this->object, 'update')
+            && !$this->getUser()->hasGroup(QubitAclGroup::EDITOR_ID)
+        ) {
             QubitAcl::forwardUnauthorized();
         }
 
@@ -52,7 +54,8 @@ class DigitalObjectEditAction extends sfAction
         // Get representations
         $this->representations = [
             QubitTerm::REFERENCE_ID => $this->resource->getChildByUsageId(QubitTerm::REFERENCE_ID),
-            QubitTerm::THUMBNAIL_ID => $this->resource->getChildByUsageId(QubitTerm::THUMBNAIL_ID), ];
+            QubitTerm::THUMBNAIL_ID => $this->resource->getChildByUsageId(QubitTerm::THUMBNAIL_ID),
+        ];
 
         $this->addFormFields();
 
@@ -183,11 +186,12 @@ class DigitalObjectEditAction extends sfAction
 
         if ($this->showCompoundObjectToggle) {
             $this->form->setValidator('displayAsCompound', new sfValidatorBoolean());
-            $this->form->setWidget('displayAsCompound', new sfWidgetFormSelectRadio(
-                ['choices' => [
+            $this->form->setWidget('displayAsCompound', new sfWidgetFormSelectRadio([
+                'choices' => [
                     '1' => $this->context->i18n->__('Yes'),
-                    '0' => $this->context->i18n->__('No'), ]]
-            ));
+                    '0' => $this->context->i18n->__('No'),
+                ],
+            ]));
 
             // Set "displayAsCompound" value from QubitProperty
             $criteria = new Criteria();

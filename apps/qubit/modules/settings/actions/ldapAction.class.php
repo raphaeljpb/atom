@@ -24,7 +24,8 @@ class SettingsLdapAction extends DefaultEditAction
         'ldapHost',
         'ldapPort',
         'ldapBaseDn',
-        'ldapBindAttribute', ];
+        'ldapBindAttribute',
+    ];
 
     public function execute($request)
     {
@@ -46,49 +47,49 @@ class SettingsLdapAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'ldapHost':
-      case 'ldapPort':
-      case 'ldapBaseDn':
-      case 'ldapBindAttribute':
-        // Determine and set field default value
-        if (null !== $this->{$name} = QubitSetting::getByName($name)) {
-            $default = $this->{$name}->getValue(['sourceCulture' => true]);
-        } else {
-            $defaults = [
-                'ldapPort' => '389',
-                'ldapBindAttribute' => 'uid',
-            ];
+            case 'ldapHost':
+            case 'ldapPort':
+            case 'ldapBaseDn':
+            case 'ldapBindAttribute':
+                // Determine and set field default value
+                if (null !== $this->{$name} = QubitSetting::getByName($name)) {
+                    $default = $this->{$name}->getValue(['sourceCulture' => true]);
+                } else {
+                    $defaults = [
+                        'ldapPort' => '389',
+                        'ldapBindAttribute' => 'uid',
+                    ];
 
-            $default = (isset($defaults[$name])) ? $defaults[$name] : '';
+                    $default = (isset($defaults[$name])) ? $defaults[$name] : '';
+                }
+
+                $this->form->setDefault($name, $default);
+
+                // Set validator and widget
+                $validator = ('ldapPort' == $name) ? new sfValidatorInteger(['min' => 1, 'max' => 65535]) : new sfValidatorPass();
+                $this->form->setValidator($name, $validator);
+                $this->form->setWidget($name, new sfWidgetFormInput());
+
+                break;
         }
-
-        $this->form->setDefault($name, $default);
-
-        // Set validator and widget
-        $validator = ('ldapPort' == $name) ? new sfValidatorInteger(['min' => 1, 'max' => 65535]) : new sfValidatorPass();
-        $this->form->setValidator($name, $validator);
-        $this->form->setWidget($name, new sfWidgetFormInput());
-
-        break;
-    }
     }
 
     protected function processField($field)
     {
         switch ($name = $field->getName()) {
-      case 'ldapHost':
-      case 'ldapPort':
-      case 'ldapBaseDn':
-      case 'ldapBindAttribute':
-        if (null === $this->{$name}) {
-            $this->{$name} = new QubitSetting();
-            $this->{$name}->name = $name;
-            $this->{$name}->scope = 'ldap';
-        }
-        $this->{$name}->setValue($field->getValue(), ['sourceCulture' => true]);
-        $this->{$name}->save();
+            case 'ldapHost':
+            case 'ldapPort':
+            case 'ldapBaseDn':
+            case 'ldapBindAttribute':
+                if (null === $this->{$name}) {
+                    $this->{$name} = new QubitSetting();
+                    $this->{$name}->name = $name;
+                    $this->{$name}->scope = 'ldap';
+                }
+                $this->{$name}->setValue($field->getValue(), ['sourceCulture' => true]);
+                $this->{$name}->save();
 
-        break;
-    }
+                break;
+        }
     }
 }

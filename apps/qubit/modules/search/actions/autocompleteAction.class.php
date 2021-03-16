@@ -44,40 +44,42 @@ class SearchAutocompleteAction extends sfAction
         // Multisearch object
         $mSearch = new \Elastica\Multi\Search($client);
 
-        foreach ([
+        $items = [
             [
                 'type' => 'QubitInformationObject',
                 'field' => sprintf('i18n.%s.title', $culture),
-                'fields' => ['slug', sprintf('i18n.%s.title', $culture), 'levelOfDescriptionId'], ],
+                'fields' => ['slug', sprintf('i18n.%s.title', $culture), 'levelOfDescriptionId'],
+            ],
             [
                 'type' => 'QubitRepository',
                 'field' => sprintf('i18n.%s.authorizedFormOfName', $culture),
-                'fields' => ['slug', sprintf('i18n.%s.authorizedFormOfName', $culture)], ],
+                'fields' => ['slug', sprintf('i18n.%s.authorizedFormOfName', $culture)],
+            ],
             [
                 'type' => 'QubitActor',
                 'field' => sprintf('i18n.%s.authorizedFormOfName', $culture),
-                'fields' => ['slug', sprintf('i18n.%s.authorizedFormOfName', $culture)], ],
+                'fields' => ['slug', sprintf('i18n.%s.authorizedFormOfName', $culture)],
+            ],
             [
                 'type' => 'QubitTerm',
                 'field' => sprintf('i18n.%s.name', $culture),
                 'fields' => ['slug', sprintf('i18n.%s.name', $culture)],
-                'term_filter' => ['taxonomyId' => QubitTaxonomy::PLACE_ID], ],
+                'term_filter' => ['taxonomyId' => QubitTaxonomy::PLACE_ID],
+            ],
             [
                 'type' => 'QubitTerm',
                 'field' => sprintf('i18n.%s.name', $culture),
                 'fields' => ['slug', sprintf('i18n.%s.name', $culture)],
-                'term_filter' => ['taxonomyId' => QubitTaxonomy::SUBJECT_ID], ], ] as $item) {
+                'term_filter' => ['taxonomyId' => QubitTaxonomy::SUBJECT_ID],
+            ],
+        ];
+
+        foreach ($items as $item) {
             $search = new \Elastica\Search($client);
-            $search
-                ->addIndex($index)
-                ->addType($index->getType($item['type']))
-      ;
+            $search->addIndex($index)->addType($index->getType($item['type']));
 
             $query = new \Elastica\Query();
-            $query
-                ->setSize(3)
-                ->setSource($item['fields'])
-      ;
+            $query->setSize(3)->setSource($item['fields']);
 
             $queryBool = new \Elastica\Query\BoolQuery();
 
@@ -133,14 +135,15 @@ class SearchAutocompleteAction extends sfAction
         // Preload levels of descriptions
         if (0 < $this->descriptions->getTotalHits()) {
             $sql = '
-        SELECT
-          t.id,
-          ti18n.name
-        FROM
-          '.QubitTerm::TABLE_NAME.' AS t
-        LEFT JOIN '.QubitTermI18n::TABLE_NAME.' AS ti18n ON (t.id = ti18n.id AND ti18n.culture = ?)
-        WHERE
-          t.taxonomy_id = ?';
+                SELECT
+                    t.id,
+                    ti18n.name
+                FROM
+                    '.QubitTerm::TABLE_NAME.' AS t
+                LEFT JOIN '.QubitTermI18n::TABLE_NAME.' AS ti18n ON (t.id = ti18n.id AND ti18n.culture = ?)
+                WHERE
+                    t.taxonomy_id = ?
+            ';
 
             $this->levelsOfDescription = [];
             foreach (QubitPdo::fetchAll($sql, [$this->context->user->getCulture(), QubitTaxonomy::LEVEL_OF_DESCRIPTION_ID]) as $item) {

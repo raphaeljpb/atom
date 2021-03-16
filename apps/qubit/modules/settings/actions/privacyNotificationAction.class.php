@@ -22,7 +22,8 @@ class SettingsPrivacyNotificationAction extends SettingsEditAction
     // Arrays not allowed in class constants
     public static $NAMES = [
         'privacy_notification_enabled',
-        'privacy_notification', ];
+        'privacy_notification',
+    ];
     public static $I18N = [
         'privacy_notification',
     ];
@@ -37,19 +38,19 @@ class SettingsPrivacyNotificationAction extends SettingsEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'privacy_notification_enabled':
-        $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
+            case 'privacy_notification_enabled':
+                $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
 
-        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => $options], ['class' => 'radio']));
+                $this->form->setValidator($name, new sfValidatorString(['required' => false]));
+                $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => $options], ['class' => 'radio']));
 
-        break;
+                break;
 
-      case 'privacy_notification':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
+            case 'privacy_notification':
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormInput());
 
-        break;
-    }
+                break;
+        }
     }
 }

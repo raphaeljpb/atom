@@ -78,76 +78,77 @@ class RelationEditComponent extends sfComponent
     protected function addField($name)
     {
         switch ($name) {
-      case 'date':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
+            case 'date':
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormInput());
 
-        $this->form->getWidgetSchema()->date->setHelp($this->context->i18n->__('"Record, when relevant, the start and the end date of the relationship." (ISDF 6.3) Enter the date as you would like it to appear in the show page for the function, using qualifiers and/or typographical symbols to express uncertainty if desired.'));
+                $this->form->getWidgetSchema()->date->setHelp($this->context->i18n->__('"Record, when relevant, the start and the end date of the relationship." (ISDF 6.3) Enter the date as you would like it to appear in the show page for the function, using qualifiers and/or typographical symbols to express uncertainty if desired.'));
 
-        break;
+                break;
 
-      case 'endDate':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
+            case 'endDate':
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormInput());
 
-        $this->form->getWidgetSchema()->endDate->setHelp($this->context->i18n->__('Enter the end year. Do not use any qualifiers or typographical symbols to express uncertainty. If the start and end years are the same, enter data only in the "Date" field and leave the "End date" blank.'));
-        $this->form->getWidgetSchema()->endDate->setLabel($this->context->i18n->__('End'));
+                $this->form->getWidgetSchema()->endDate->setHelp($this->context->i18n->__('Enter the end year. Do not use any qualifiers or typographical symbols to express uncertainty. If the start and end years are the same, enter data only in the "Date" field and leave the "End date" blank.'));
+                $this->form->getWidgetSchema()->endDate->setLabel($this->context->i18n->__('End'));
 
-        break;
+                break;
 
-      case 'startDate':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
+            case 'startDate':
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormInput());
 
-        $this->form->getWidgetSchema()->startDate->setHelp($this->context->i18n->__('Enter the start year. Do not use any qualifiers or typographical symbols to express uncertainty.'));
-        $this->form->getWidgetSchema()->startDate->setLabel($this->context->i18n->__('Start'));
+                $this->form->getWidgetSchema()->startDate->setHelp($this->context->i18n->__('Enter the start year. Do not use any qualifiers or typographical symbols to express uncertainty.'));
+                $this->form->getWidgetSchema()->startDate->setLabel($this->context->i18n->__('Start'));
 
-        break;
+                break;
 
-      case 'description':
-        $this->form->setValidator('description', new sfValidatorString());
-        $this->form->setWidget('description', new sfWidgetFormTextarea());
+            case 'description':
+                $this->form->setValidator('description', new sfValidatorString());
+                $this->form->setWidget('description', new sfWidgetFormTextarea());
 
-        $this->form->getWidgetSchema()->description->setHelp($this->context->i18n->__('Describe the nature of the relationship between the function and the related resource. (ISDF 6.2)'));
+                $this->form->getWidgetSchema()->description->setHelp($this->context->i18n->__('Describe the nature of the relationship between the function and the related resource. (ISDF 6.2)'));
 
-        break;
+                break;
 
-      case 'resource':
-        $this->form->setValidator('resource', new QubitValidatorForbiddenValues([
-            'forbidden_values' => [$this->context->routing->generate(null, $this->resource)], ]));
-        $this->form->setWidget('resource', new sfWidgetFormSelect(['choices' => []]));
+            case 'resource':
+                $this->form->setValidator('resource', new QubitValidatorForbiddenValues([
+                    'forbidden_values' => [$this->context->routing->generate(null, $this->resource)],
+                ]));
+                $this->form->setWidget('resource', new sfWidgetFormSelect(['choices' => []]));
 
-        break;
-    }
+                break;
+        }
     }
 
     protected function processField($field)
     {
         switch ($field->getName()) {
-      case 'resource':
-        unset($this->relation->object);
+            case 'resource':
+                unset($this->relation->object);
 
-        $value = $this->form->getValue('resource');
-        if (isset($value)) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($value));
-            $this->relation->object = $params['_sf_route']->resource;
+                $value = $this->form->getValue('resource');
+                if (isset($value)) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($value));
+                    $this->relation->object = $params['_sf_route']->resource;
+                }
+
+                break;
+
+            case 'type':
+                unset($this->relation->type);
+
+                $value = $this->form->getValue('type');
+                if (isset($value)) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($value));
+                    $this->relation->type = $params['_sf_route']->resource;
+                }
+
+                break;
+
+            default:
+                $this->relation[$field->getName()] = $this->form->getValue($field->getName());
         }
-
-        break;
-
-      case 'type':
-        unset($this->relation->type);
-
-        $value = $this->form->getValue('type');
-        if (isset($value)) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($value));
-            $this->relation->type = $params['_sf_route']->resource;
-        }
-
-        break;
-
-      default:
-        $this->relation[$field->getName()] = $this->form->getValue($field->getName());
-    }
     }
 }

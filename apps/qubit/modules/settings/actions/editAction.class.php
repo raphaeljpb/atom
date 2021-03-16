@@ -67,19 +67,16 @@ class SettingsEditAction extends DefaultEditAction
     protected function setFormFieldDefault($name)
     {
         // If there's no settings default set, use blank string as default
-        $settingDefault = (isset($this->settingDefaults[$name]))
-      ? $this->settingDefaults[$name] : '';
+        $settingDefault = (isset($this->settingDefaults[$name])) ? $this->settingDefaults[$name] : '';
 
         // Default setting value in form will be current setting value or, if none exists, settings default
         $settingGetOptions = (in_array($name, $this::$I18N)) ? ['culture' => $this->culture] : ['cultureFallback' => true];
 
         // Use setting default if setting hasn't been saved yet
-        $settingValue = (null !== $this->settings[$name]->id)
-      ? $this->settings[$name]->getValue($settingGetOptions) : $settingDefault;
+        $settingValue = (null !== $this->settings[$name]->id) ? $this->settings[$name]->getValue($settingGetOptions) : $settingDefault;
 
         // Turn empty values to false for checkboxes
-        $settingValue = ($this->form[$name]->getWidget() instanceof sfWidgetFormInputCheckbox && empty($settingValue))
-      ? false : $settingValue;
+        $settingValue = ($this->form[$name]->getWidget() instanceof sfWidgetFormInputCheckbox && empty($settingValue)) ? false : $settingValue;
 
         $this->form->setDefault($name, $settingValue);
     }

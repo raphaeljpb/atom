@@ -30,7 +30,8 @@ class SettingsSecurityAction extends SettingsEditAction
     public static $NAMES = [
         'limit_admin_ip',
         'require_ssl_admin',
-        'require_strong_passwords', ];
+        'require_strong_passwords',
+    ];
 
     public function earlyExecute()
     {
@@ -47,29 +48,29 @@ class SettingsSecurityAction extends SettingsEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'limit_admin_ip':
-        $this->form->setWidget($name, new sfWidgetFormInput());
-        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
-        $labelText = $this->i18n->__('Limit administrator functionality to one or more IP addresses, separated by semicolons.');
-        $this->form->getWidgetSchema()->{$name}->setLabel($labelText);
+            case 'limit_admin_ip':
+                $this->form->setWidget($name, new sfWidgetFormInput());
+                $this->form->setValidator($name, new sfValidatorString(['required' => false]));
+                $labelText = $this->i18n->__('Limit administrator functionality to one or more IP addresses, separated by semicolons.');
+                $this->form->getWidgetSchema()->{$name}->setLabel($labelText);
 
-        break;
+                break;
 
-      case 'require_ssl_admin':
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
-        $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
-        $labelText = $this->i18n->__('Require SSL for all administrator functionality');
-        $this->form->getWidgetSchema()->{$name}->setLabel($labelText);
+            case 'require_ssl_admin':
+                $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
+                $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
+                $labelText = $this->i18n->__('Require SSL for all administrator functionality');
+                $this->form->getWidgetSchema()->{$name}->setLabel($labelText);
 
-        break;
+                break;
 
-      case 'require_strong_passwords':
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
-        $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
-        $labelText = $this->i18n->__('Require strong passwords');
-        $this->form->getWidgetSchema()->{$name}->setLabel($labelText);
+            case 'require_strong_passwords':
+                $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
+                $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
+                $labelText = $this->i18n->__('Require strong passwords');
+                $this->form->getWidgetSchema()->{$name}->setLabel($labelText);
 
-        break;
-    }
+                break;
+        }
     }
 }

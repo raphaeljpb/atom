@@ -20,7 +20,8 @@
 class UserEditTermAclAction extends DefaultEditAction
 {
     public static $NAMES = [
-        'taxonomy', ];
+        'taxonomy',
+    ];
 
     public function execute($request)
     {
@@ -72,20 +73,20 @@ class UserEditTermAclAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'taxonomy':
-        $choices = [];
-        $choices[null] = null;
+            case 'taxonomy':
+                $choices = [];
+                $choices[null] = null;
 
-        foreach (QubitTaxonomy::getEditableTaxonomies() as $item) {
-            $choices[$this->context->routing->generate(null, [$item, 'module' => 'taxonomy'])] = $item;
+                foreach (QubitTaxonomy::getEditableTaxonomies() as $item) {
+                    $choices[$this->context->routing->generate(null, [$item, 'module' => 'taxonomy'])] = $item;
+                }
+
+                $this->form->setDefault('taxonomy', null);
+                $this->form->setValidator('taxonomy', new sfValidatorString());
+                $this->form->setWidget('taxonomy', new sfWidgetFormSelect(['choices' => $choices]));
+
+                break;
         }
-
-        $this->form->setDefault('taxonomy', null);
-        $this->form->setValidator('taxonomy', new sfValidatorString());
-        $this->form->setWidget('taxonomy', new sfWidgetFormSelect(['choices' => $choices]));
-
-        break;
-    }
     }
 
     protected function processForm()
@@ -103,16 +104,16 @@ class UserEditTermAclAction extends DefaultEditAction
                     $aclPermission->grantDeny = (QubitAcl::GRANT == $value) ? 1 : 0;
 
                     switch ($resource->className) {
-            case 'QubitTaxonomy':
-              // Taxonomy specific rules
-              $aclPermission->objectId = QubitTerm::ROOT_ID;
-              $aclPermission->setTaxonomy($resource);
+                        case 'QubitTaxonomy':
+                            // Taxonomy specific rules
+                            $aclPermission->objectId = QubitTerm::ROOT_ID;
+                            $aclPermission->setTaxonomy($resource);
 
-              break;
+                            break;
 
-            default:
-              $aclPermission->objectId = $resource->id;
-          }
+                        default:
+                            $aclPermission->objectId = $resource->id;
+                    }
 
                     $this->resource->aclPermissions[] = $aclPermission;
                 }

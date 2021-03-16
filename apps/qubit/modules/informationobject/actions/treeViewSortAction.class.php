@@ -30,8 +30,10 @@ class InformationObjectTreeViewSortAction extends sfAction
 
         // Check permissions and make sure that the user is not playing with
         // the root object, we do not want to sort that one
-        if (QubitInformationObject::ROOT_ID == $this->resource->id
-        || !QubitAcl::check($this->resource, 'update')) {
+        if (
+            QubitInformationObject::ROOT_ID == $this->resource->id
+            || !QubitAcl::check($this->resource, 'update')
+        ) {
             QubitAcl::forwardUnauthorized();
         }
 
@@ -48,18 +50,18 @@ class InformationObjectTreeViewSortAction extends sfAction
         // Go! This operation is delegated to the ORM
         // It could take a long time if the tree is very big
         switch ($request->move) {
-      case 'moveAfter':
-        $this->resource->moveToNextSiblingOf($target);
-        echo 'after';
+            case 'moveAfter':
+                $this->resource->moveToNextSiblingOf($target);
+                echo 'after';
 
-        break;
+                break;
 
-      case 'moveBefore':
-        $this->resource->moveToPrevSiblingOf($target);
-        echo 'before';
+            case 'moveBefore':
+                $this->resource->moveToPrevSiblingOf($target);
+                echo 'before';
 
-        break;
-    }
+                break;
+        }
 
         return sfView::NONE;
     }

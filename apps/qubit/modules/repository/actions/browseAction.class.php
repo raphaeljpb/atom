@@ -96,49 +96,49 @@ class RepositoryBrowseAction extends DefaultBrowseAction
         $i18n = sprintf('i18n.%s.', $this->selectedCulture);
 
         switch ($request->sort) {
-      case 'nameUp':
-        $this->search->query->setSort([$i18n.'authorizedFormOfName.alphasort' => 'asc']);
+            case 'nameUp':
+                $this->search->query->setSort([$i18n.'authorizedFormOfName.alphasort' => 'asc']);
 
-        break;
+                break;
 
-      case 'nameDown':
-        $this->search->query->setSort([$i18n.'authorizedFormOfName.alphasort' => 'desc']);
+            case 'nameDown':
+                $this->search->query->setSort([$i18n.'authorizedFormOfName.alphasort' => 'desc']);
 
-        break;
+                break;
 
-      case 'regionUp':
-        $this->search->query->setSort([$i18n.'region.untouched' => 'asc']);
+            case 'regionUp':
+                $this->search->query->setSort([$i18n.'region.untouched' => 'asc']);
 
-        break;
+                break;
 
-      case 'regionDown':
-        $this->search->query->setSort([$i18n.'region.untouched' => 'desc']);
+            case 'regionDown':
+                $this->search->query->setSort([$i18n.'region.untouched' => 'desc']);
 
-        break;
+                break;
 
-      case 'localityUp':
-        $this->search->query->setSort([$i18n.'city.untouched' => 'asc']);
+            case 'localityUp':
+                $this->search->query->setSort([$i18n.'city.untouched' => 'asc']);
 
-        break;
+                break;
 
-      case 'localityDown':
-        $this->search->query->setSort([$i18n.'city.untouched' => 'desc']);
+            case 'localityDown':
+                $this->search->query->setSort([$i18n.'city.untouched' => 'desc']);
 
-        break;
+                break;
 
-      case 'identifier':
-        $this->search->query->addSort(['identifier.untouched' => $request->sortDir]);
+            case 'identifier':
+                $this->search->query->addSort(['identifier.untouched' => $request->sortDir]);
 
-        // no break
-      case 'alphabetic':
-        $this->search->query->addSort([$i18n.'authorizedFormOfName.alphasort' => $request->sortDir]);
+                // no break
+            case 'alphabetic':
+                $this->search->query->addSort([$i18n.'authorizedFormOfName.alphasort' => $request->sortDir]);
 
-        break;
+                break;
 
-      case 'lastUpdated':
-      default:
-        $this->search->query->setSort(['updatedAt' => $request->sortDir]);
-    }
+            case 'lastUpdated':
+            default:
+                $this->search->query->setSort(['updatedAt' => $request->sortDir]);
+        }
 
         $this->search->query->setQuery($this->search->queryBool);
 
@@ -163,30 +163,30 @@ class RepositoryBrowseAction extends DefaultBrowseAction
     protected function populateAgg($name, $buckets)
     {
         switch ($name) {
-      case 'types':
-      case 'geographicSubregions':
-      case 'thematicAreas':
-        $ids = array_column($buckets, 'key');
-        $criteria = new Criteria();
-        $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
+            case 'types':
+            case 'geographicSubregions':
+            case 'thematicAreas':
+                $ids = array_column($buckets, 'key');
+                $criteria = new Criteria();
+                $criteria->add(QubitTerm::ID, $ids, Criteria::IN);
 
-        foreach (QubitTerm::get($criteria) as $item) {
-            $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
+                foreach (QubitTerm::get($criteria) as $item) {
+                    $buckets[array_search($item->id, $ids)]['display'] = $item->getName(['cultureFallback' => true]);
+                }
+
+                break;
+
+            case 'regions':
+            case 'locality':
+                foreach ($buckets as $key => $bucket) {
+                    $buckets[$key]['display'] = $bucket['key'];
+                }
+
+                break;
+
+            default:
+                return parent::populateAgg($name, $buckets);
         }
-
-        break;
-
-      case 'regions':
-      case 'locality':
-        foreach ($buckets as $key => $bucket) {
-            $buckets[$key]['display'] = $bucket['key'];
-        }
-
-        break;
-
-      default:
-        return parent::populateAgg($name, $buckets);
-    }
 
         return $buckets;
     }

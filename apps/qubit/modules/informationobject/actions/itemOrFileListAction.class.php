@@ -63,54 +63,58 @@ class InformationObjectItemOrFileListAction extends sfAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'sortBy':
-        $choices = [
-            'referenceCode' => $this->context->i18n->__('Reference code'),
-            'title' => $this->context->i18n->__('Title'),
-            'startDate' => $this->context->i18n->__('Date (based on start date)'),
-        ];
+            case 'sortBy':
+                $choices = [
+                    'referenceCode' => $this->context->i18n->__('Reference code'),
+                    'title' => $this->context->i18n->__('Title'),
+                    'startDate' => $this->context->i18n->__('Date (based on start date)'),
+                ];
 
-        if ($this->getUser()->isAuthenticated()) {
-            $choices['locations'] = $this->context->i18n->__('Retrieval information');
-        }
+                if ($this->getUser()->isAuthenticated()) {
+                    $choices['locations'] = $this->context->i18n->__('Retrieval information');
+                }
 
-        $this->form->setDefault($name, 'referenceCode');
-        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
-        $this->form->setWidget($name, new sfWidgetFormChoice([
-            'expanded' => true,
-            'choices' => $choices, ]));
+                $this->form->setDefault($name, 'referenceCode');
+                $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+                $this->form->setWidget($name, new sfWidgetFormChoice([
+                    'expanded' => true,
+                    'choices' => $choices,
+                ]));
 
-        break;
+                break;
 
-      case 'includeThumbnails':
-        $choices = [
-            '1' => $this->context->i18n->__('Yes'), ];
+            case 'includeThumbnails':
+                $choices = ['1' => $this->context->i18n->__('Yes')];
 
-        $this->form->setValidator($name, new sfValidatorChoice([
-            'choices' => array_keys($choices),
-            'multiple' => true, ]));
+                $this->form->setValidator($name, new sfValidatorChoice([
+                    'choices' => array_keys($choices),
+                    'multiple' => true,
+                ]));
 
-        $this->form->setWidget($name, new sfWidgetFormChoice([
-            'expanded' => true,
-            'multiple' => true,
-            'choices' => $choices, ]));
+                $this->form->setWidget($name, new sfWidgetFormChoice([
+                    'expanded' => true,
+                    'multiple' => true,
+                    'choices' => $choices,
+                ]));
 
-        break;
+                break;
 
-      case 'format':
-        $choices = ['html' => 'HTML', 'csv' => 'CSV'];
-        $this->form->setDefault($name, 'html');
-        $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
-        $this->form->setWidget($name, new sfWidgetFormChoice(['expanded' => true, 'choices' => $choices]));
-    }
+            case 'format':
+                $choices = ['html' => 'HTML', 'csv' => 'CSV'];
+                $this->form->setDefault($name, 'html');
+                $this->form->setValidator($name, new sfValidatorChoice(['choices' => array_keys($choices)]));
+                $this->form->setWidget($name, new sfWidgetFormChoice(['expanded' => true, 'choices' => $choices]));
+            }
     }
 
     private function initiateReportGeneration()
     {
         $reportType = (false === strpos(strtolower($this->type), 'item')) ? 'fileList' : 'itemList';
 
-        if (is_array($this->form->includeThumbnails->getValue())
-        && '1' === array_pop($this->form->includeThumbnails->getValue())) {
+        if (
+            is_array($this->form->includeThumbnails->getValue())
+            && '1' === array_pop($this->form->includeThumbnails->getValue())
+        ) {
             $includeThumbnails = true;
         } else {
             $includeThumbnails = false;

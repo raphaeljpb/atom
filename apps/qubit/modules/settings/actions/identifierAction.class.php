@@ -60,71 +60,67 @@ class SettingsIdentifierAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'accession_mask':
-      case 'accession_counter':
-      case 'identifier_mask':
-      case 'identifier_counter':
-      case 'separator_character':
-        // Determine default value
-        $default = (null !== $this->{$name} = QubitSetting::getByName($name))
-          ? $this->{$name}->getValue(['sourceCulture' => true])
-          : '';
+            case 'accession_mask':
+            case 'accession_counter':
+            case 'identifier_mask':
+            case 'identifier_counter':
+            case 'separator_character':
+                // Determine default value
+                $default = (null !== $this->{$name} = QubitSetting::getByName($name)) ? $this->{$name}->getValue(['sourceCulture' => true]) : '';
 
-        // Set default, validator, and widget
-        $this->form->setDefault($name, $default);
-        $this->form->setValidator($name, new sfValidatorString(['required' => true]));
-        $this->form->setWidget($name, new sfWidgetFormInput());
+                // Set default, validator, and widget
+                $this->form->setDefault($name, $default);
+                $this->form->setValidator($name, new sfValidatorString(['required' => true]));
+                $this->form->setWidget($name, new sfWidgetFormInput());
 
-        break;
+                break;
 
-      case 'accession_mask_enabled':
-      case 'identifier_mask_enabled':
-      case 'inherit_code_informationobject':
-      case 'inherit_code_dc_xml':
-      case 'prevent_duplicate_actor_identifiers':
-        // Determine default value
-        // (accession mask enabled setting doesn't get created in DB by default)
-        $defaults = [
-            'accession_mask_enabled' => 1,
-            'inherit_code_dc_xml' => 0,
-            'prevent_duplicate_actor_identifiers' => 0,
-        ];
+            case 'accession_mask_enabled':
+            case 'identifier_mask_enabled':
+            case 'inherit_code_informationobject':
+            case 'inherit_code_dc_xml':
+            case 'prevent_duplicate_actor_identifiers':
+                // Determine default value
+                // (accession mask enabled setting doesn't get created in DB by default)
+                $defaults = [
+                    'accession_mask_enabled' => 1,
+                    'inherit_code_dc_xml' => 0,
+                    'prevent_duplicate_actor_identifiers' => 0,
+                ];
 
-        $default = (null !== $this->{$name} = QubitSetting::getByName($name))
-          ? $this->{$name}->getValue(['sourceCulture' => true])
-          : $defaults[$name];
+                $default = (null !== $this->{$name} = QubitSetting::getByName($name)) ? $this->{$name}->getValue(['sourceCulture' => true]) : $defaults[$name];
 
-        // Set default, validator, and widget
-        $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
-        $this->form->setDefault($name, $default);
-        $this->form->setValidator($name, new sfValidatorString(['required' => false]));
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => $options], ['class' => 'radio']));
+                // Set default, validator, and widget
+                $options = [$this->i18n->__('No'), $this->i18n->__('Yes')];
+                $this->form->setDefault($name, $default);
+                $this->form->setValidator($name, new sfValidatorString(['required' => false]));
+                $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => $options], ['class' => 'radio']));
 
-        break;
-    }
+                break;
+            }
     }
 
     protected function processField($field)
     {
         switch ($name = $field->getName()) {
-      case 'accession_mask_enabled':
-      case 'accession_mask':
-      case 'accession_counter':
-      case 'identifier_mask_enabled':
-      case 'identifier_mask':
-      case 'identifier_counter':
-      case 'separator_character':
-      case 'inherit_code_informationobject':
-      case 'inherit_code_dc_xml':
-      case 'prevent_duplicate_actor_identifiers':
-        if (null === $this->{$name}) {
-            $this->{$name} = new QubitSetting();
-            $this->{$name}->name = $name;
-        }
-        $this->{$name}->setValue($field->getValue(), ['sourceCulture' => true]);
-        $this->{$name}->save();
+            case 'accession_mask_enabled':
+            case 'accession_mask':
+            case 'accession_counter':
+            case 'identifier_mask_enabled':
+            case 'identifier_mask':
+            case 'identifier_counter':
+            case 'separator_character':
+            case 'inherit_code_informationobject':
+            case 'inherit_code_dc_xml':
+            case 'prevent_duplicate_actor_identifiers':
+                if (null === $this->{$name}) {
+                    $this->{$name} = new QubitSetting();
+                    $this->{$name}->name = $name;
+                }
+                $this->{$name}->setValue($field->getValue(), ['sourceCulture' => true]);
+                $this->{$name}->save();
 
-        break;
-    }
+                break;
+        }
     }
 }

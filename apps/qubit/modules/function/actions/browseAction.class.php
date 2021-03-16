@@ -68,21 +68,21 @@ class FunctionBrowseAction extends sfAction
         }
 
         switch ($request->sort) {
-      case 'identifier':
-        $criteria->{$sortFunction}(QubitFunctionObject::DESCRIPTION_IDENTIFIER);
-        // And then back to authorized form of name
-        // no break
-      case 'alphabetic':
-        $criteria->{$sortFunction}('authorized_form_of_name');
+            case 'identifier':
+                $criteria->{$sortFunction}(QubitFunctionObject::DESCRIPTION_IDENTIFIER);
+                // And then back to authorized form of name
+                // no break
+            case 'alphabetic':
+                $criteria->{$sortFunction}('authorized_form_of_name');
 
-        break;
+                break;
 
-      case 'lastUpdated':
-      default:
-        $criteria->{$sortFunction}(QubitObject::UPDATED_AT);
+            case 'lastUpdated':
+            default:
+                $criteria->{$sortFunction}(QubitObject::UPDATED_AT);
 
-        break;
-    }
+                break;
+        }
 
         // Do source culture fallback
         $criteria = QubitCultureFallback::addFallbackCriteria($criteria, 'QubitFunctionObject');

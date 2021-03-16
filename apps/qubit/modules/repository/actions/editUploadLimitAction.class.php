@@ -46,21 +46,21 @@ class RepositoryEditUploadLimitAction extends sfAction
         $uploadLimit = $request->getParameter('uploadLimit');
 
         switch ($uploadLimit['type']) {
-      case 'disabled':
-        $this->resource->uploadLimit = 0;
+            case 'disabled':
+                $this->resource->uploadLimit = 0;
 
-        break;
+                break;
 
-      case 'unlimited':
-        $this->resource->uploadLimit = -1;
+            case 'unlimited':
+                $this->resource->uploadLimit = -1;
 
-        break;
+                break;
 
-      case 'limited':
-        $this->resource->uploadLimit = $uploadLimit['value'];
+            case 'limited':
+                $this->resource->uploadLimit = $uploadLimit['value'];
 
-        break;
-    }
+                break;
+        }
 
         // Don't update the repository search index document
         $this->resource->indexOnSave = false;

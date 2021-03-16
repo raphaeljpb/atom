@@ -37,18 +37,18 @@ class InformationObjectFindingAidLinkComponent extends sfComponent
         $i18n = $this->context->i18n;
 
         switch ((int) $this->resource->getFindingAidStatus()) {
-      case arFindingAidJob::GENERATED_STATUS:
-        $this->label = $i18n->__('Generated finding aid');
+            case arFindingAidJob::GENERATED_STATUS:
+                $this->label = $i18n->__('Generated finding aid');
 
-        break;
+            break;
 
-      case arFindingAidJob::UPLOADED_STATUS:
-        $this->label = $i18n->__('Uploaded finding aid');
+            case arFindingAidJob::UPLOADED_STATUS:
+                $this->label = $i18n->__('Uploaded finding aid');
 
-        break;
-      // It should never get here if we don't add more finding aid statuses
-      default:
-        $this->label = $i18n->__('Finding aid');
-    }
+            break;
+            // It should never get here if we don't add more finding aid statuses
+            default:
+                $this->label = $i18n->__('Finding aid');
+        }
     }
 }

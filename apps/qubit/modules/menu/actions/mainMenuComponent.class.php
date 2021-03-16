@@ -55,8 +55,9 @@ class MenuMainMenuComponent extends sfComponent
     private function userCanCreate()
     {
         return QubitAcl::check(QubitInformationObject::getById(QubitInformationObject::ROOT_ID), 'create')
-           || QubitAcl::check(QubitActor::getById(QubitActor::ROOT_ID), 'create')
-           || QubitAcl::check(QubitRepository::getById(QubitRepository::ROOT_ID), 'create')
-           || QubitAcl::check(QubitTerm::getById(QubitTerm::ROOT_ID), 'create');
+            || QubitAcl::check(QubitActor::getById(QubitActor::ROOT_ID), 'create')
+            || QubitAcl::check(QubitRepository::getById(QubitRepository::ROOT_ID), 'create')
+            || QubitAcl::check(QubitTerm::getById(QubitTerm::ROOT_ID), 'create')
+        ;
     }
 }

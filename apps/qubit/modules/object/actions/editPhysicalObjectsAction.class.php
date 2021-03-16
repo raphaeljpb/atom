@@ -28,7 +28,8 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
         'containers',
         'location',
         'name',
-        'type', ];
+        'type',
+    ];
     public static $MODEL_MODULE = [
         'QubitInformationObject' => 'informationobject',
         'QubitAccession' => 'accession',
@@ -77,28 +78,28 @@ class ObjectEditPhysicalObjectsAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'containers':
-        $this->form->setValidator('containers', new sfValidatorPass());
-        $this->form->setWidget('containers', new sfWidgetFormSelect(['choices' => [], 'multiple' => true]));
+            case 'containers':
+                $this->form->setValidator('containers', new sfValidatorPass());
+                $this->form->setWidget('containers', new sfWidgetFormSelect(['choices' => [], 'multiple' => true]));
 
-        break;
+                break;
 
-      case 'location':
-      case 'name':
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
+            case 'location':
+            case 'name':
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormInput());
 
-        break;
+                break;
 
-      case 'type':
-        $this->form->setValidator('type', new sfValidatorString());
-        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => QubitTerm::getIndentedChildTree(QubitTerm::CONTAINER_ID, '&nbsp;', ['returnObjectInstances' => true])]));
+            case 'type':
+                $this->form->setValidator('type', new sfValidatorString());
+                $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => QubitTerm::getIndentedChildTree(QubitTerm::CONTAINER_ID, '&nbsp;', ['returnObjectInstances' => true])]));
 
-        break;
+                break;
 
-      default:
-        return parent::addField($name);
-    }
+            default:
+                return parent::addField($name);
+        }
     }
 
     protected function processForm()

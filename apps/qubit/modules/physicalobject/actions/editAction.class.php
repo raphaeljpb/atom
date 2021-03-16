@@ -27,7 +27,8 @@ class PhysicalObjectEditAction extends DefaultEditAction
     public static $NAMES = [
         'location',
         'name',
-        'type', ];
+        'type',
+    ];
 
     public function execute($request)
     {
@@ -71,39 +72,39 @@ class PhysicalObjectEditAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'location':
-      case 'name':
-        $this->form->setDefault($name, $this->resource[$name]);
-        $this->form->setValidator($name, new sfValidatorString());
-        $this->form->setWidget($name, new sfWidgetFormInput());
+            case 'location':
+            case 'name':
+                $this->form->setDefault($name, $this->resource[$name]);
+                $this->form->setValidator($name, new sfValidatorString());
+                $this->form->setWidget($name, new sfWidgetFormInput());
 
-        break;
+                break;
 
-      case 'type':
-        $this->form->setDefault('type', $this->context->routing->generate(null, [$this->resource->type, 'module' => 'term']));
-        $this->form->setValidator('type', new sfValidatorString());
-        $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => QubitTerm::getIndentedChildTree(QubitTerm::CONTAINER_ID, '&nbsp;', ['returnObjectInstances' => true])]));
+            case 'type':
+                $this->form->setDefault('type', $this->context->routing->generate(null, [$this->resource->type, 'module' => 'term']));
+                $this->form->setValidator('type', new sfValidatorString());
+                $this->form->setWidget('type', new sfWidgetFormSelect(['choices' => QubitTerm::getIndentedChildTree(QubitTerm::CONTAINER_ID, '&nbsp;', ['returnObjectInstances' => true])]));
 
-        break;
+                break;
 
-      default:
-        return parent::addField($name);
-    }
+            default:
+                return parent::addField($name);
+        }
     }
 
     protected function processField($field)
     {
         switch ($field->getName()) {
-      case 'type':
-        unset($this->resource->type);
+            case 'type':
+                unset($this->resource->type);
 
-        $params = $this->context->routing->parse(Qubit::pathInfo($this->form->getValue('type')));
-        $this->resource->type = $params['_sf_route']->resource;
+                $params = $this->context->routing->parse(Qubit::pathInfo($this->form->getValue('type')));
+                $this->resource->type = $params['_sf_route']->resource;
 
-        break;
+                break;
 
-      default:
-        return parent::processField($field);
-    }
+            default:
+                return parent::processField($field);
+        }
     }
 }

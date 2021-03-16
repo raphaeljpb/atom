@@ -32,97 +32,98 @@ class InformationObjectEventComponent extends EventEditComponent
         'startDate',
         'description',
         'place',
-        'type', ];
+        'type',
+    ];
 
     protected function addField($name)
     {
         switch ($name) {
-      case 'actor':
-        $this->form->setValidator('actor', new sfValidatorString());
-        $this->form->setWidget('actor', new sfWidgetFormSelect(['choices' => []]));
+            case 'actor':
+                $this->form->setValidator('actor', new sfValidatorString());
+                $this->form->setWidget('actor', new sfWidgetFormSelect(['choices' => []]));
 
-        $this->form->getWidgetSchema()->actor->setHelp($this->context->i18n->__('Use the actor name field to link an authority record to this description. Search for an existing name in the authority records by typing the first few characters of the name. Alternatively, type a new name to create and link to a new authority record.'));
+                $this->form->getWidgetSchema()->actor->setHelp($this->context->i18n->__('Use the actor name field to link an authority record to this description. Search for an existing name in the authority records by typing the first few characters of the name. Alternatively, type a new name to create and link to a new authority record.'));
 
-        break;
+                break;
 
-      case 'description':
-        $this->form->setValidator('description', new sfValidatorString());
-        $this->form->setWidget('description', new sfWidgetFormInput());
+            case 'description':
+                $this->form->setValidator('description', new sfValidatorString());
+                $this->form->setWidget('description', new sfWidgetFormInput());
 
-        break;
+                break;
 
-      case 'place':
-        $this->form->setValidator('place', new sfValidatorString());
-        $this->form->setWidget('place', new sfWidgetFormSelect(['choices' => []]));
+            case 'place':
+                $this->form->setValidator('place', new sfValidatorString());
+                $this->form->setWidget('place', new sfWidgetFormSelect(['choices' => []]));
 
-        $this->form->getWidgetSchema()->place->setHelp($this->context->i18n->__('Search for an existing term in the places taxonomy by typing the first few characters of the term name. Alternatively, type a new term to create and link to a new place term.'));
+                $this->form->getWidgetSchema()->place->setHelp($this->context->i18n->__('Search for an existing term in the places taxonomy by typing the first few characters of the term name. Alternatively, type a new term to create and link to a new place term.'));
 
-        break;
+                break;
 
-      default:
-        return parent::addField($name);
-    }
+            default:
+                return parent::addField($name);
+        }
     }
 
     protected function processField($field)
     {
         switch ($field->getName()) {
-      case 'actor':
-        unset($this->event->actor);
+            case 'actor':
+                unset($this->event->actor);
 
-        $value = $this->form->getValue('actor');
-        if (isset($value)) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($value));
-            $this->event->actor = $params['_sf_route']->resource;
+                $value = $this->form->getValue('actor');
+                if (isset($value)) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($value));
+                    $this->event->actor = $params['_sf_route']->resource;
+                }
+
+                break;
+
+            case 'place':
+                // Get related term id
+                $value = $this->form->getValue('place');
+                if (!empty($value)) {
+                    $params = $this->context->routing->parse(Qubit::pathInfo($value));
+                    $termId = $params['_sf_route']->resource->id;
+                }
+
+                // Get term relation
+                if (isset($this->event->id)) {
+                    $relation = QubitObjectTermRelation::getOneByObjectId($this->event->id);
+                }
+
+                // Nothing to do
+                if (!isset($termId) && !isset($relation)) {
+                    break;
+                }
+
+                // The relation needs to be deleted/updated independently
+                // if the event exits, otherwise when deleting, it will try to
+                // save it again from the objectTermRelationsRelatedByobjectId array.
+                // If the event is new, the relation needs to be created and attached
+                // to the event in the objectTermRelationsRelatedByobjectId array.
+                if (!isset($termId) && isset($relation)) {
+                    $relation->delete();
+
+                    break;
+                }
+
+                if (isset($termId, $relation)) {
+                    $relation->termId = $termId;
+                    $relation->save();
+
+                    break;
+                }
+
+                $relation = new QubitObjectTermRelation();
+                $relation->termId = $termId;
+
+                $this->event->objectTermRelationsRelatedByobjectId[] = $relation;
+
+                break;
+
+            default:
+                return parent::processField($field);
         }
-
-        break;
-
-      case 'place':
-        // Get related term id
-        $value = $this->form->getValue('place');
-        if (!empty($value)) {
-            $params = $this->context->routing->parse(Qubit::pathInfo($value));
-            $termId = $params['_sf_route']->resource->id;
-        }
-
-        // Get term relation
-        if (isset($this->event->id)) {
-            $relation = QubitObjectTermRelation::getOneByObjectId($this->event->id);
-        }
-
-        // Nothing to do
-        if (!isset($termId) && !isset($relation)) {
-            break;
-        }
-
-        // The relation needs to be deleted/updated independently
-        // if the event exits, otherwise when deleting, it will try to
-        // save it again from the objectTermRelationsRelatedByobjectId array.
-        // If the event is new, the relation needs to be created and attached
-        // to the event in the objectTermRelationsRelatedByobjectId array.
-        if (!isset($termId) && isset($relation)) {
-            $relation->delete();
-
-            break;
-        }
-
-        if (isset($termId, $relation)) {
-            $relation->termId = $termId;
-            $relation->save();
-
-            break;
-        }
-
-        $relation = new QubitObjectTermRelation();
-        $relation->termId = $termId;
-
-        $this->event->objectTermRelationsRelatedByobjectId[] = $relation;
-
-        break;
-
-      default:
-        return parent::processField($field);
-    }
     }
 }

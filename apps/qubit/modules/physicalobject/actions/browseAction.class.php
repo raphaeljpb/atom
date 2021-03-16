@@ -56,26 +56,26 @@ class PhysicalObjectBrowseAction extends sfAction
         }
 
         switch ($request->sort) {
-      case 'nameDown':
-        $criteria->addDescendingOrderByColumn('name');
+            case 'nameDown':
+                $criteria->addDescendingOrderByColumn('name');
 
-        break;
+                break;
 
-      case 'locationDown':
-        $criteria->addDescendingOrderByColumn('location');
+            case 'locationDown':
+                $criteria->addDescendingOrderByColumn('location');
 
-        break;
+                break;
 
-      case 'locationUp':
-        $criteria->addAscendingOrderByColumn('location');
+            case 'locationUp':
+                $criteria->addAscendingOrderByColumn('location');
 
-        break;
+                break;
 
-      case 'nameUp':
-      default:
-        $request->sort = 'nameUp';
-        $criteria->addAscendingOrderByColumn('name');
-    }
+            case 'nameUp':
+            default:
+                $request->sort = 'nameUp';
+                $criteria->addAscendingOrderByColumn('name');
+        }
 
         // Page results
         $this->pager = new QubitPager('QubitPhysicalObject');

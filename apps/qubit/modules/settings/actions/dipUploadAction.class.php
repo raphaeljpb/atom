@@ -21,7 +21,8 @@ class SettingsDipUploadAction extends SettingsEditAction
 {
     // Arrays not allowed in class constants
     public static $NAMES = [
-        'stripExtensions', ];
+        'stripExtensions',
+    ];
 
     public function earlyExecute()
     {
@@ -37,11 +38,11 @@ class SettingsDipUploadAction extends SettingsEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'stripExtensions':
-        $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
-        $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
+            case 'stripExtensions':
+                $this->form->setWidget($name, new sfWidgetFormSelectRadio(['choices' => [1 => 'yes', 0 => 'no']], ['class' => 'radio']));
+                $this->form->setValidator($name, new sfValidatorInteger(['required' => false]));
 
-        break;
-    }
+                break;
+        }
     }
 }

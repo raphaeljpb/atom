@@ -21,7 +21,8 @@ class SettingsInventoryAction extends DefaultEditAction
 {
     // Arrays not allowed in class constants
     public static $NAMES = [
-        'levels', ];
+        'levels',
+    ];
 
     public function execute($request)
     {
@@ -59,48 +60,48 @@ class SettingsInventoryAction extends DefaultEditAction
     protected function addField($name)
     {
         switch ($name) {
-      case 'levels':
-        $value = unserialize($this->settingLevels->getValue());
-        if (false !== $value) {
-            foreach ($value as $key => $item) {
-                if (null === QubitTerm::getById($item)) {
-                    $this->unknownValueDetected = true;
-                    unset($value[$key]);
+            case 'levels':
+                $value = unserialize($this->settingLevels->getValue());
+                if (false !== $value) {
+                    foreach ($value as $key => $item) {
+                        if (null === QubitTerm::getById($item)) {
+                            $this->unknownValueDetected = true;
+                            unset($value[$key]);
+                        }
+                    }
+
+                    $this->form->setDefault('levels', $value);
                 }
-            }
 
-            $this->form->setDefault('levels', $value);
+                $this->form->setValidator('levels', new sfValidatorPass());
+
+                $choices = [];
+                foreach (QubitTerm::getLevelsOfDescription() as $item) {
+                    $choices[$item->id] = $item->__toString();
+                }
+
+                $size = count($choices);
+                if (0 === $size) {
+                    $size = 4;
+                }
+
+                $this->form->setWidget('levels', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true], ['size' => $size]));
+
+                break;
         }
-
-        $this->form->setValidator('levels', new sfValidatorPass());
-
-        $choices = [];
-        foreach (QubitTerm::getLevelsOfDescription() as $item) {
-            $choices[$item->id] = $item->__toString();
-        }
-
-        $size = count($choices);
-        if (0 === $size) {
-            $size = 4;
-        }
-
-        $this->form->setWidget('levels', new sfWidgetFormSelect(['choices' => $choices, 'multiple' => true], ['size' => $size]));
-
-        break;
-    }
     }
 
     protected function processField($field)
     {
         switch ($field->getName()) {
-      case 'levels':
-        $levels = $this->form->getValue('levels');
-        if (empty($levels)) {
-            $levels = [];
-        }
-        $this->settingLevels->value = serialize($levels);
+            case 'levels':
+                $levels = $this->form->getValue('levels');
+                if (empty($levels)) {
+                    $levels = [];
+                }
+                $this->settingLevels->value = serialize($levels);
 
-        break;
-    }
+                break;
+        }
     }
 }

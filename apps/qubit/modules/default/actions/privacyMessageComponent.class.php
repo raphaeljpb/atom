@@ -27,8 +27,10 @@ class DefaultPrivacyMessageComponent extends sfComponent
     public function execute($request)
     {
         // Do not display the banner if it has previously been dismissed or is deactivated.
-        if ((null !== $this->context->user->getAttribute('privacy_message_dismissed'))
-      || !sfConfig::get('app_privacy_notification_enabled', false)) {
+        if (
+            null !== $this->context->user->getAttribute('privacy_message_dismissed')
+            || !sfConfig::get('app_privacy_notification_enabled', false)
+        ) {
             return sfView::NONE;
         }
 

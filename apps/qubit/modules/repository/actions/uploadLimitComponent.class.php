@@ -38,19 +38,19 @@ class RepositoryUploadLimitComponent extends sfComponent
 
         // Get upload type
         switch ($this->resource->uploadLimit) {
-      case -1:
-        $this->quotaType = 'unlimited';
+            case -1:
+                $this->quotaType = 'unlimited';
 
-        break;
+                break;
 
-      case 0:
-        $this->quotaType = 'disabled';
+            case 0:
+                $this->quotaType = 'disabled';
 
-        break;
+                break;
 
-      default:
-        $this->quotaType = 'limited';
-    }
+            default:
+                $this->quotaType = 'limited';
+        }
 
         // Usage bar defaults
         $this->usageBarPixels = 0;
