@@ -5,6 +5,9 @@ volumes:
   elasticsearch_data:
   percona_data:
   composer_deps:
+  archivematica_pipeline_data:
+    external:
+      name: "am-pipeline-data"
 
 services:
 
@@ -14,6 +17,7 @@ services:
     volumes:
       - composer_deps:/atom/src/vendor/composer
       - ..:/atom/src:rw
+      - "archivematica_pipeline_data:/var/archivematica/sharedDirectory:rw"
 
   atom_worker:
     build: ..
@@ -26,6 +30,7 @@ services:
     volumes:
       - composer_deps:/atom/src/vendor/composer
       - ..:/atom/src:rw
+      - "archivematica_pipeline_data:/var/archivematica/sharedDirectory:rw"
 
   nginx:
     image: nginx:latest
