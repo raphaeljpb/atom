@@ -16,10 +16,9 @@ services:
 
   atom:
     build: ..
+    image: ${DOCKER_REGISTRY:?registry}/atom:latest
     env_file: etc/environment
     volumes:
-      - composer_deps:/atom/src/vendor/composer
-      - ..:/atom/src:rw
       - "dip_uploads_data:/var/archivematica/dip-uploads:rw"
       - "archivematica_pipeline_data:/var/archivematica/sharedDirectory:rw"
     depends_on:
@@ -35,6 +34,7 @@ services:
 
   atom_worker:
     build: ..
+    image: ${DOCKER_REGISTRY:?registry}/atom-worker:latest
     command: worker
     env_file: etc/environment
     depends_on:
@@ -46,8 +46,6 @@ services:
         condition: service_started  
     restart: unless-stopped
     volumes:
-      - composer_deps:/atom/src/vendor/composer
-      - ..:/atom/src:rw
       - "dip_uploads_data:/var/archivematica/dip-uploads:rw"
       - "archivematica_pipeline_data:/var/archivematica/sharedDirectory:rw"
 
