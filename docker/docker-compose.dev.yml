@@ -5,6 +5,9 @@ volumes:
   elasticsearch_data:
   percona_data:
   composer_deps:
+  dip_uploads_data:
+    external:
+      name: "dip-upload-data"
   archivematica_pipeline_data:
     external:
       name: "am-pipeline-data"
@@ -17,6 +20,7 @@ services:
     volumes:
       - composer_deps:/atom/src/vendor/composer
       - ..:/atom/src:rw
+      - "dip_uploads_data:/var/archivematica/dip-uploads:rw"
       - "archivematica_pipeline_data:/var/archivematica/sharedDirectory:rw"
 
   atom_worker:
@@ -30,6 +34,7 @@ services:
     volumes:
       - composer_deps:/atom/src/vendor/composer
       - ..:/atom/src:rw
+      - "dip_uploads_data:/var/archivematica/dip-uploads:rw"
       - "archivematica_pipeline_data:/var/archivematica/sharedDirectory:rw"
 
   nginx:
