@@ -30,3 +30,6 @@
 
 # PHPUnit cache
 /.phpunit.result.cache
+
+#Env file
+.env
