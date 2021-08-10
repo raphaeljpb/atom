@@ -50,7 +50,7 @@ RUN set -xe \
 		&& ln -sf /usr/share/fop-2.1/fop /usr/local/bin/fop \
 		&& make -C /atom/src/plugins/arDominionPlugin \
 		&& make -C /atom/src/plugins/arArchivesCanadaPlugin \
-		&& composer install -d /atom/src
+		&& composer install -d /atom/src --no-dev
 
 WORKDIR /atom/src
 
